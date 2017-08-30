@@ -42,65 +42,43 @@ module('Acceptance: Program Year - Terms', {
   }
 });
 
-test('list terms', function(assert) {
+test('list terms', async function(assert) {
   assert.expect(2);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-taxonomies');
-    var items = find('ul.selected-taxonomy-terms li', container);
-    assert.equal(items.length, 1);
-    assert.equal(getElementText(items.eq(0)), getText('term 0'));
-  });
+  await visit(url);
+  var container = find('.detail-taxonomies');
+  var items = find('ul.selected-taxonomy-terms li', container);
+  assert.equal(items.length, 1);
+  assert.equal(getElementText(items.eq(0)), getText('term 0'));
 });
 
-test('manage terms', function(assert) {
+test('manage terms', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.taxonomy-manager');
-    click(find('.actions button', container));
-    andThen(function(){
-      assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
-      assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
-      assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
-    });
-  });
+  await visit(url);
+  var container = find('.taxonomy-manager');
+  await click(find('.actions button', container));
+  assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
+  assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
+  assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
 });
 
-test('save term changes', function(assert) {
+test('save term changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    var container = find('.taxonomy-manager');
-    click(find('.actions button', container));
-    andThen(function(){
-      click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){
-          click('button.bigadd', container);
-        });
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.taxonomy-manager');
+  await click(find('.actions button', container));
+  await click(find('.removable-list li:eq(0)', container));
+  await click(find('.selectable-terms-list li:eq(1) > div', container));
+  await click('button.bigadd', container);
+  assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
 });
 
-test('cancel term changes', function(assert) {
+test('cancel term changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    var container = find('.taxonomy-manager');
-    click(find('.actions button', container));
-    andThen(function(){
-      click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-terms-list li:eq(1) > div', container)).then(function(){
-          click('button.bigcancel', container);
-        });
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.taxonomy-manager');
+  await click(find('.actions button', container));
+  await click(find('.removable-list li:eq(0)', container));
+  await click(find('.selectable-terms-list li:eq(1) > div', container));
+  await click('button.bigcancel', container);
+  assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
 });

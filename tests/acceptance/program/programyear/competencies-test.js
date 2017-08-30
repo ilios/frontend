@@ -50,40 +50,32 @@ module('Acceptance: Program Year - Competencies', {
   }
 });
 
-test('list', function(assert) {
-
-  visit(url);
-  andThen(function() {
-    let container = find('.programyear-competencies');
-    assert.equal(getElementText(find('.title', container)), getText('Competencies (2)'));
-    let competencies = 'competency 0 competency 1 competency 2';
-    assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
-  });
+test('list', async function(assert) {
+  await visit(url);
+  let container = find('.programyear-competencies');
+  assert.equal(getElementText(find('.title', container)), getText('Competencies (2)'));
+  let competencies = 'competency 0 competency 1 competency 2';
+  assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
 });
 
-test('manager', function(assert) {
-  visit(url);
-  andThen(function() {
-    let container = find('.programyear-competencies');
-    click('.programyear-competencies-actions button', container).then(function(){
-      let checkboxes = find('input[type=checkbox]', container);
-      assert.equal(checkboxes.length, 6);
-      assert.ok(checkboxes.eq(0).prop('indeterminate'));
-      assert.ok(!checkboxes.eq(0).prop('checked'));
-      assert.ok(checkboxes.eq(1).prop('checked'));
-      assert.ok(checkboxes.eq(2).prop('checked'));
-      assert.ok(!checkboxes.eq(3).prop('checked'));
-      assert.ok(!checkboxes.eq(4).prop('checked'));
-      assert.ok(!checkboxes.eq(5).prop('checked'));
+test('manager', async function(assert) {
+  await visit(url);
+  let container = find('.programyear-competencies');
+  await click('.programyear-competencies-actions button', container);
+  let checkboxes = find('input[type=checkbox]', container);
+  assert.equal(checkboxes.length, 6);
+  assert.ok(checkboxes.eq(0).prop('indeterminate'));
+  assert.ok(!checkboxes.eq(0).prop('checked'));
+  assert.ok(checkboxes.eq(1).prop('checked'));
+  assert.ok(checkboxes.eq(2).prop('checked'));
+  assert.ok(!checkboxes.eq(3).prop('checked'));
+  assert.ok(!checkboxes.eq(4).prop('checked'));
+  assert.ok(!checkboxes.eq(5).prop('checked'));
 
-      click('input[type=checkbox]:eq(1)', container);
-      click('input[type=checkbox]:eq(4)', container);
-      click('.bigadd', container);
+  await click('input[type=checkbox]:eq(1)', container);
+  await click('input[type=checkbox]:eq(4)', container);
+  await click('.bigadd', container);
 
-      andThen(function(){
-        let competencies = 'competency 0 competency 2 competency 3 competency 4';
-        assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
-      });
-    });
-  });
+  let competencies = 'competency 0 competency 2 competency 3 competency 4';
+  assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
 });

@@ -5,7 +5,10 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import wait from 'ember-test-helpers/wait';
 import Ember from 'ember';
+
+const { run } = Ember;
 
 var application;
 var fixtures = {};
@@ -31,58 +34,46 @@ module('Acceptance: Session - Objective Create', {
   }
 });
 
-test('save new objective', function(assert) {
+test('save new objective', async function(assert) {
   assert.expect(8);
-  visit(url);
+  await visit(url);
   var newObjectiveTitle = 'Test junk 123';
-  andThen(function() {
-    let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, fixtures.session.objectives.length, 'correct number ob initial objectives');
-    click('.detail-objectives .detail-objectives-actions button');
-    //wait for the editor to load
-    Ember.run.later(()=>{
-      find('.detail-objectives .newobjective .fr-box').froalaEditor('html.set', newObjectiveTitle);
-      find('.detail-objectives .newobjective .fr-box').froalaEditor('events.trigger', 'contentChanged');
-      Ember.run.later(()=>{
-        click('.detail-objectives .newobjective button.done');
-        andThen(function(){
-          objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
-          assert.equal(objectiveRows.length, fixtures.session.objectives.length + 1);
-          let tds = find('td', objectiveRows.eq(0));
-          assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
-          assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-          assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-          tds = find('td', objectiveRows.eq(1));
-          assert.equal(getElementText(tds.eq(0)), getText(newObjectiveTitle));
-          assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-          assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-        });
-      }, 100);
-    }, 100);
-  });
+  let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
+  assert.equal(objectiveRows.length, fixtures.session.objectives.length, 'correct number ob initial objectives');
+  await click('.detail-objectives .detail-objectives-actions button');
+  find('.detail-objectives .newobjective .fr-box').froalaEditor('html.set', newObjectiveTitle);
+  find('.detail-objectives .newobjective .fr-box').froalaEditor('events.trigger', 'contentChanged');
+  await click('.detail-objectives .newobjective button.done');
+  objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
+  assert.equal(objectiveRows.length, fixtures.session.objectives.length + 1);
+  let tds = find('td', objectiveRows.eq(0));
+  assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
+  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
+  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
+  tds = find('td', objectiveRows.eq(1));
+  assert.equal(getElementText(tds.eq(0)), getText(newObjectiveTitle));
+  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
+  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
 
+  await wait();
 });
 
-test('cancel new objective', function(assert) {
+test('cancel new objective', async function(assert) {
   assert.expect(5);
-  visit(url);
-  andThen(function() {
-    let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, fixtures.session.objectives.length);
-    click('.detail-objectives .detail-objectives-actions button');
-    click('.detail-objectives .newobjective button.cancel');
-  });
-  andThen(function(){
-    let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, fixtures.session.objectives.length);
-    let tds = find('td', objectiveRows.eq(0));
-    assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
-    assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-    assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-  });
+  await visit(url);
+  let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
+  assert.equal(objectiveRows.length, fixtures.session.objectives.length);
+  await click('.detail-objectives .detail-objectives-actions button');
+  await click('.detail-objectives .newobjective button.cancel');
+  objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
+  assert.equal(objectiveRows.length, fixtures.session.objectives.length);
+  let tds = find('td', objectiveRows.eq(0));
+  assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
+  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
+  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
 });
 
-test('empty objective title can not be created', function(assert) {
+test('empty objective title can not be created', async function(assert) {
   assert.expect(3);
   const container = '.detail-objectives:eq(0)';
   const expandNewObjective = `${container} .detail-objectives-actions button`;
@@ -90,21 +81,18 @@ test('empty objective title can not be created', function(assert) {
   const editor = `${newObjective} .fr-box`;
   const save = `${newObjective} .done`;
   const errorMessage = `${newObjective} .validation-error-message`;
-  visit(url);
-  click(expandNewObjective);
+  await visit(url);
+  await click(expandNewObjective);
 
-  andThen(function() {
-    //wait for the editor to load
-    Ember.run.later(()=>{
-      let editorContents = find(editor).data('froala.editor').$el.text();
-      assert.equal(getText(editorContents), '');
+  let editorContents = find(editor).data('froala.editor').$el.text();
+  assert.equal(getText(editorContents), '');
 
-      find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
-      find(editor).froalaEditor('events.trigger', 'contentChanged');
-      Ember.run.later(()=>{
-        assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
-        assert.ok(find(save).is(':disabled'));
-      }, 100);
-    }, 100);
+  find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
+  find(editor).froalaEditor('events.trigger', 'contentChanged');
+  run.later(()=>{
+    assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
+    assert.ok(find(save).is(':disabled'));
   });
+
+  await wait();
 });

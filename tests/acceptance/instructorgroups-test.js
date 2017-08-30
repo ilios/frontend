@@ -6,6 +6,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import Ember from 'ember';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import wait from 'ember-test-helpers/wait';
 
 var application;
 
@@ -20,16 +21,14 @@ module('Acceptance: Instructor Groups', {
   }
 });
 
-test('visiting /instructorgroups', function(assert) {
+test('visiting /instructorgroups', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(currentPath(), 'instructorGroups');
-  });
+  await visit('/instructorgroups');
+  assert.equal(currentPath(), 'instructorGroups');
 });
 
-test('list groups', function(assert) {
+test('list groups', async function(assert) {
   server.create('user', {id: 4136});
   server.createList('user', 5, {
     instructorGroups: [1]
@@ -68,80 +67,72 @@ test('list groups', function(assert) {
     school: 1
   });
   assert.expect(7);
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(2, find('.list tbody tr').length);
-    var rows = find('.list tbody tr');
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 5);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
+  await visit('/instructorgroups');
+  assert.equal(2, find('.list tbody tr').length);
+  var rows = find('.list tbody tr');
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 5);
+  assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
 
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
-  });
+  assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondInstructorgroup.title));
+  assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
+  assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
 });
 
-test('filters by title', function(assert) {
+test('filters by title', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school', {
     instructorGroups: [1,2,3]
   });
-  var firstInstructorgroup = server.create('instructorGroup', {
+  let firstInstructorgroup = server.create('instructorGroup', {
     title: 'specialfirstinstructorgroup',
     school: 1,
   });
-  var secondInstructorgroup = server.create('instructorGroup', {
+  let secondInstructorgroup = server.create('instructorGroup', {
     title: 'specialsecondinstructorgroup',
     school: 1
   });
-  var regularInstructorgroup = server.create('instructorGroup', {
+  let regularInstructorgroup = server.create('instructorGroup', {
     title: 'regularinstructorgroup',
     school: 1
   });
   assert.expect(15);
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(3, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+  await visit('/instructorgroups');
+  assert.equal(3, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
 
-    //put these in nested later blocks because there is a 500ms debounce on the title filter
-    fillIn('.titlefilter input', 'first');
-    Ember.run.later(function(){
+  //put these in nested later blocks because there is a 500ms debounce on the title filter
+  await fillIn('.titlefilter input', 'first');
+  Ember.run.later(async () =>{
+    assert.equal(1, find('.list tbody tr').length);
+    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+    await fillIn('.titlefilter input', 'second');
+    Ember.run.later(async () =>{
       assert.equal(1, find('.list tbody tr').length);
-      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-      fillIn('.titlefilter input', 'second');
-      andThen(function(){
-        Ember.run.later(function(){
-          assert.equal(1, find('.list tbody tr').length);
-          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
-          fillIn('.titlefilter input', 'special');
-          andThen(function(){
-            Ember.run.later(function(){
-              assert.equal(2, find('.list tbody tr').length);
-              assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-              assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
+      await fillIn('.titlefilter input', 'special');
+      Ember.run.later(async () =>{
+        assert.equal(2, find('.list tbody tr').length);
+        assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+        assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
 
-              fillIn('.titlefilter input', '');
-              andThen(function(){
-                Ember.run.later(function(){
-                  assert.equal(3, find('.list tbody tr').length);
-                  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-                  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-                  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
-                }, 750);
-              });
-            }, 750);
-          });
+        await fillIn('.titlefilter input', '');
+        Ember.run.later(async () =>{
+          assert.equal(3, find('.list tbody tr').length);
+          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+          assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+          assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
         }, 750);
-      });
+      }, 750);
     }, 750);
-  });
+  }, 750);
+
+  await wait();
 });
 
-test('filters options', function(assert) {
+test('filters options', async function(assert) {
   assert.expect(4);
   server.create('user', {id: 4136, permissions: [1], school: 2});
   server.createList('school', 2);
@@ -154,31 +145,27 @@ test('filters options', function(assert) {
   const schoolSelect = '.schoolsfilter select';
   const schools = `${schoolSelect} option`;
 
-  visit('/instructorgroups');
-  andThen(function() {
-    let schoolOptions = find(schools);
-    assert.equal(schoolOptions.length, 2);
-    assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
-    assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
-    assert.equal(find(schoolSelect).val(), '2');
-  });
+  await visit('/instructorgroups');
+  let schoolOptions = find(schools);
+  assert.equal(schoolOptions.length, 2);
+  assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
+  assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
+  assert.equal(find(schoolSelect).val(), '2');
 });
 
-test('add new instructorgroup', function(assert) {
+test('add new instructorgroup', async function(assert) {
   server.create('user', {id: 4136});
   server.create('school');
   assert.expect(1);
-  visit('/instructorgroups');
+  await visit('/instructorgroups');
   let newTitle = 'new test tile';
-  click('.actions button');
-  fillIn('.newinstructorgroup-title input', newTitle);
-  click('.newinstructorgroup .done');
-  andThen(() => {
-    assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
-  });
+  await click('.actions button');
+  await fillIn('.newinstructorgroup-title input', newTitle);
+  await click('.newinstructorgroup .done');
+  assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
 });
 
-test('cancel adding new instructorgroup', function(assert) {
+test('cancel adding new instructorgroup', async function(assert) {
   assert.expect(6);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -187,23 +174,18 @@ test('cancel adding new instructorgroup', function(assert) {
   server.create('instructorGroup', {
     school: 1,
   });
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.actions button').then(function(){
-      assert.equal(find('.newinstructorgroup').length, 1);
-      click('.newinstructorgroup .cancel');
-    });
-  });
-  andThen(function(){
-    assert.equal(find('.newinstructorgroup').length, 0);
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-  });
+  await visit('/instructorgroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  await click('.actions button');
+  assert.equal(find('.newinstructorgroup').length, 1);
+  await click('.newinstructorgroup .cancel');
+  assert.equal(find('.newinstructorgroup').length, 0);
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
 });
 
-test('remove instructorgroup', function(assert) {
+test('remove instructorgroup', async function(assert) {
   assert.expect(3);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -212,20 +194,15 @@ test('remove instructorgroup', function(assert) {
   server.create('instructorGroup', {
     school: 1,
   });
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
-      click('.confirm-buttons .remove');
-    });
-  });
-  andThen(function(){
-    assert.equal(0, find('.list tbody tr').length);
-  });
+  await visit('/instructorgroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  await click('.confirm-buttons .remove');
+  assert.equal(0, find('.list tbody tr').length);
 });
 
-test('cancel remove instructorgroup', function(assert) {
+test('cancel remove instructorgroup', async function(assert) {
   assert.expect(4);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -234,21 +211,16 @@ test('cancel remove instructorgroup', function(assert) {
   server.create('instructorGroup', {
     school: 1,
   });
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
-      click('.confirm-buttons .done');
-    });
-  });
-  andThen(function(){
-    assert.equal(find('.list tbody tr').length, 1);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-  });
+  await visit('/instructorgroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  await click('.confirm-buttons .done');
+  assert.equal(find('.list tbody tr').length, 1);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
 });
 
-test('confirmation of remove message', function(assert) {
+test('confirmation of remove message', async function(assert) {
   server.create('user', {id: 4136});
   server.createList('user', 5, {
     instructorGroups: [1]
@@ -284,19 +256,16 @@ test('confirmation of remove message', function(assert) {
     offerings: [1,2]
   });
   assert.expect(5);
-  visit('/instructorgroups');
-  andThen(function() {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-    click('.list tbody tr:eq(0) td:eq(3) .remove').then(function(){
-      assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
-      assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
-    });
-  });
+  await visit('/instructorgroups');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+  await click('.list tbody tr:eq(0) td:eq(3) .remove');
+  assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
+  assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
+  assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
 });
 
-test('click edit takes you to instructorgroup route', function(assert) {
+test('click edit takes you to instructorgroup route', async function(assert) {
   assert.expect(1);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -305,17 +274,13 @@ test('click edit takes you to instructorgroup route', function(assert) {
   server.create('instructorGroup', {
     school: 1,
   });
-  visit('/instructorgroups');
-  andThen(function() {
-    let edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
-    click(edit);
-  });
-  andThen(function(){
-    assert.equal(currentURL(), '/instructorgroups/1');
-  });
+  await visit('/instructorgroups');
+  let edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
+  await click(edit);
+  assert.equal(currentURL(), '/instructorgroups/1');
 });
 
-test('click title takes you to instructorgroup route', function(assert) {
+test('click title takes you to instructorgroup route', async function(assert) {
   assert.expect(1);
   server.create('user', {id: 4136});
   server.create('school', {
@@ -324,13 +289,9 @@ test('click title takes you to instructorgroup route', function(assert) {
   server.create('instructorGroup', {
     school: 1,
   });
-  visit('/instructorgroups');
-  andThen(function() {
-    click('.list tbody tr:eq(0) td:eq(0) a');
-  });
-  andThen(function(){
-    assert.equal(currentURL(), '/instructorgroups/1');
-  });
+  await visit('/instructorgroups');
+  await click('.list tbody tr:eq(0) td:eq(0) a');
+  assert.equal(currentURL(), '/instructorgroups/1');
 });
 
 test('title filter escapes regex', async function(assert) {

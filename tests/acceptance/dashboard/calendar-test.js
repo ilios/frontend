@@ -97,7 +97,7 @@ module('Acceptance: Dashboard Calendar', {
   }
 });
 
-test('load month calendar', function(assert) {
+test('load month calendar', async function(assert) {
   let today = moment().hour(8);
   let startOfMonth = today.clone().startOf('month');
   let endOfMonth = today.clone().endOf('month').hour(22).minute(59);
@@ -113,20 +113,17 @@ test('load month calendar', function(assert) {
     startDate: endOfMonth.format(),
     endDate: endOfMonth.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=month');
-  andThen(function() {
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    let eventInfo = '';
-    eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
-    eventInfo += endOfMonth.format('h:mma') + '-' + endOfMonth.clone().add(1, 'hour').format('h:mma') + ': end of month';
-    assert.equal(getElementText(events), getText(eventInfo));
-
-  });
+  await visit('/dashboard?show=calendar&view=month');
+  assert.equal(currentPath(), 'dashboard');
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  let eventInfo = '';
+  eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
+  eventInfo += endOfMonth.format('h:mma') + '-' + endOfMonth.clone().add(1, 'hour').format('h:mma') + ': end of month';
+  assert.equal(getElementText(events), getText(eventInfo));
 });
 
-test('load week calendar', function(assert) {
+test('load week calendar', async function(assert) {
   let today = moment().hour(8);
   let startOfWeek = today.clone().startOf('week');
   let endOfWeek = today.clone().endOf('week').hour(22).minute(59);
@@ -142,20 +139,17 @@ test('load week calendar', function(assert) {
     startDate: endOfWeek.format(),
     endDate: endOfWeek.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar');
-  andThen(function() {
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-    let eventInfo = '';
-    eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
-    eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
-    assert.equal(getElementText(events), getText(eventInfo));
-
-  });
+  await visit('/dashboard?show=calendar');
+  assert.equal(currentPath(), 'dashboard');
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  let eventInfo = '';
+  eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
+  eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
+  assert.equal(getElementText(events), getText(eventInfo));
 });
 
-test('load day calendar', function(assert) {
+test('load day calendar', async function(assert) {
   let today = moment().hour(8);
   let tomorow = today.clone().add(1, 'day');
   let yesterday = today.clone().subtract(1, 'day');
@@ -177,19 +171,16 @@ test('load day calendar', function(assert) {
     startDate: yesterday.format(),
     endDate: yesterday.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=day');
-  andThen(function() {
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
-    assert.equal(events.length, 1);
-    let eventInfo = '';
-    eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ' today';
-    assert.equal(getElementText(events), getText(eventInfo));
-
-  });
+  await visit('/dashboard?show=calendar&view=day');
+  assert.equal(currentPath(), 'dashboard');
+  let events = find('div.event');
+  assert.equal(events.length, 1);
+  let eventInfo = '';
+  eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ' today';
+  assert.equal(getElementText(events), getText(eventInfo));
 });
 
-test('click month day number and go to day', function(assert) {
+test('click month day number and go to day', async function(assert) {
   let aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
   server.create('userevent', {
     user: 4136,
@@ -197,19 +188,16 @@ test('click month day number and go to day', function(assert) {
     startDate: aDayInTheMonth.format(),
     endDate: aDayInTheMonth.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=month');
-  andThen(function() {
-    let dayOfMonth = aDayInTheMonth.date();
-    let link = find('.day .clickable').filter(function(){
-      return parseInt($(this).text()) === dayOfMonth;
-    }).eq(0);
-    click(link).then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=month');
+  let dayOfMonth = aDayInTheMonth.date();
+  let link = find('.day .clickable').filter(function(){
+    return parseInt($(this).text()) === dayOfMonth;
+  }).eq(0);
+  await click(link);
+  assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
 });
 
-test('click week day title and go to day', function(assert) {
+test('click week day title and go to day', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -217,16 +205,13 @@ test('click week day title and go to day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=week');
-  andThen(function() {
-    let dayOfWeek = today.day();
-    click(find('.week-titles .clickable').eq(dayOfWeek)).then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=week');
+  let dayOfWeek = today.day();
+  await click(find('.week-titles .clickable').eq(dayOfWeek));
+  assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
 });
 
-test('click forward on a day goes to next day', function(assert) {
+test('click forward on a day goes to next day', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -234,15 +219,12 @@ test('click forward on a day goes to next day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=day');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=day');
+  await click('.calendar-time-picker li:eq(2)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
 });
 
-test('click forward on a week goes to next week', function(assert) {
+test('click forward on a week goes to next week', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -250,15 +232,12 @@ test('click forward on a week goes to next week', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=week');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=week');
+  await click('.calendar-time-picker li:eq(2)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
 });
 
-test('click forward on a month goes to next month', function(assert) {
+test('click forward on a month goes to next month', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -266,15 +245,12 @@ test('click forward on a month goes to next month', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=month');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(2)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=month');
+  await click('.calendar-time-picker li:eq(2)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
 });
 
-test('click back on a day goes to previous day', function(assert) {
+test('click back on a day goes to previous day', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -282,15 +258,12 @@ test('click back on a day goes to previous day', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=day');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=day');
+  await click('.calendar-time-picker li:eq(0)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
 });
 
-test('click back on a week goes to previous week', function(assert) {
+test('click back on a week goes to previous week', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -298,15 +271,12 @@ test('click back on a week goes to previous week', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=week');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=week');
+  await click('.calendar-time-picker li:eq(0)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
 });
 
-test('click back on a month goes to previous month', function(assert) {
+test('click back on a month goes to previous month', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -314,15 +284,12 @@ test('click back on a month goes to previous month', function(assert) {
     startDate: today.format(),
     endDate: today.clone().add(1, 'hour').format()
   });
-  visit('/dashboard?show=calendar&view=month');
-  andThen(function() {
-    click('.calendar-time-picker li:eq(0)').then(()=>{
-      assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
-    });
-  });
+  await visit('/dashboard?show=calendar&view=month');
+  await click('.calendar-time-picker li:eq(0)');
+  assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
 });
 
-test('show user events', function(assert) {
+test('show user events', async function(assert) {
   let today = moment().hour(8);
   server.create('userevent', {
     user: 4136,
@@ -336,11 +303,9 @@ test('show user events', function(assert) {
     endDate: today.clone().add(1, 'hour').format(),
     offering: 2
   });
-  visit('/dashboard?show=calendar');
-  andThen(function() {
-    let events = find('div.event');
-    assert.equal(events.length, 2);
-  });
+  await visit('/dashboard?show=calendar');
+  let events = find('div.event');
+  assert.equal(events.length, 2);
 });
 
 let chooseSchoolEvents = async function(){
@@ -582,12 +547,10 @@ test('agenda show next seven days of events', async function(assert) {
     offering: 3
   });
   await visit('/dashboard?show=agenda');
-  andThen(function() {
-    let events = find('tr');
-    assert.equal(events.length, 2);
-    assert.equal(getElementText(events.eq(0)), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
-    assert.equal(getElementText(events.eq(1)), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
-  });
+  let events = find('tr');
+  assert.equal(events.length, 2);
+  assert.equal(getElementText(events.eq(0)), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
+  assert.equal(getElementText(events.eq(1)), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
 });
 
 test('academic year filters cohort', async function(assert) {

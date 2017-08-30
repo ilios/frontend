@@ -25,7 +25,7 @@ module('Acceptance: Course - Overview', {
   }
 });
 
-test('check fields', function(assert) {
+test('check fields', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -50,26 +50,23 @@ test('check fields', function(assert) {
   var clerkshipType = server.create('courseClerkshipType', {
     courses: [1]
   });
-  visit(url);
+  await visit(url);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    var container = find('.course-overview');
-    var startDate = moment.utc(course.startDate).format('L');
-    assert.equal(getElementText(find('.coursestartdate', container)), 'Start:' + startDate);
-    assert.equal(getElementText(find('.courseexternalid', container)), 'CourseID:123');
-    assert.equal(getElementText(find('.courselevel', container)), 'Level:3');
-    var endDate = moment.utc(course.endDate).format('L');
-    assert.equal(getElementText(find('.courseenddate', container)), 'End:' + endDate);
-    assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
-    assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
-    assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
-    assert.ok(find('a.rollover', container).prop('href').search(/courses\/1\/rollover/) > -1);
-
-  });
+  assert.equal(currentPath(), 'course.index');
+  var container = find('.course-overview');
+  var startDate = moment.utc(course.startDate).format('L');
+  assert.equal(getElementText(find('.coursestartdate', container)), 'Start:' + startDate);
+  assert.equal(getElementText(find('.courseexternalid', container)), 'CourseID:123');
+  assert.equal(getElementText(find('.courselevel', container)), 'Level:3');
+  var endDate = moment.utc(course.endDate).format('L');
+  assert.equal(getElementText(find('.courseenddate', container)), 'End:' + endDate);
+  assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
+  assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
+  assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
+  assert.ok(find('a.rollover', container).prop('href').search(/courses\/1\/rollover/) > -1);
 });
 
-test('check detail fields', function(assert) {
+test('check detail fields', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -83,22 +80,20 @@ test('check detail fields', function(assert) {
   var clerkshipType = server.create('courseClerkshipType', {
     courses: [1]
   });
-  visit(url + '?details=true');
+  await visit(url + '?details=true');
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    var container = find('.course-overview');
-    var startDate = moment.utc(course.startDate).format('L');
-    assert.equal(getElementText(find('.coursestartdate .editable', container)), startDate);
-    assert.equal(getElementText(find('.courseexternalid .editable', container)), 123);
-    assert.equal(getElementText(find('.courselevel .editable', container)), 3);
-    var endDate = moment.utc(course.endDate).format('L');
-    assert.equal(getElementText(find('.courseenddate .editable', container)), endDate);
-    assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(clerkshipType.title));
-  });
+  assert.equal(currentPath(), 'course.index');
+  var container = find('.course-overview');
+  var startDate = moment.utc(course.startDate).format('L');
+  assert.equal(getElementText(find('.coursestartdate .editable', container)), startDate);
+  assert.equal(getElementText(find('.courseexternalid .editable', container)), 123);
+  assert.equal(getElementText(find('.courselevel .editable', container)), 3);
+  var endDate = moment.utc(course.endDate).format('L');
+  assert.equal(getElementText(find('.courseenddate .editable', container)), endDate);
+  assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(clerkshipType.title));
 });
 
-test('pick clerkship type', function(assert) {
+test('pick clerkship type', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -106,33 +101,25 @@ test('pick clerkship type', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-overview .clerkshiptype')), getText('Clerkship Type: Not a Clerkship'));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    var container = find('.course-overview');
-    assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
-    click(find('.clerkshiptype .editable', container));
-    andThen(function(){
-      let options = find('.clerkshiptype select option', container);
-      //add one for the blank option
-      assert.equal(options.length, fixtures.clerkshipTypes.length + 1);
-      for(let i = 0; i < fixtures.clerkshipTypes.length + 1; i++){
-        let title = i===0?'Not a Clerkship':fixtures.clerkshipTypes[i-1].title;
-        assert.equal(getElementText(options.eq(i)), getText(title));
-      }
-      pickOption(find('.clerkshiptype select', container), fixtures.clerkshipTypes[1].title, assert);
-      click(find('.clerkshiptype .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(fixtures.clerkshipTypes[1].title));
-      });
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-overview .clerkshiptype')), getText('Clerkship Type: Not a Clerkship'));
+  await visit(url + '?details=true');
+  var container = find('.course-overview');
+  assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
+  await click(find('.clerkshiptype .editable', container));
+  let options = find('.clerkshiptype select option', container);
+  //add one for the blank option
+  assert.equal(options.length, fixtures.clerkshipTypes.length + 1);
+  for(let i = 0; i < fixtures.clerkshipTypes.length + 1; i++){
+    let title = i===0?'Not a Clerkship':fixtures.clerkshipTypes[i-1].title;
+    assert.equal(getElementText(options.eq(i)), getText(title));
+  }
+  await pickOption(find('.clerkshiptype select', container), fixtures.clerkshipTypes[1].title, assert);
+  await click(find('.clerkshiptype .actions .done', container));
+  assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText(fixtures.clerkshipTypes[1].title));
 });
 
-test('remove clerkship type', function(assert) {
+test('remove clerkship type', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -144,22 +131,16 @@ test('remove clerkship type', function(assert) {
   server.create('courseClerkshipType', {
     courses: [1]
   });
-  visit(url + '?details=true');
+  await visit(url + '?details=true');
 
-  andThen(function() {
-    var container = find('.course-overview');
-    click(find('.clerkshiptype .editable', container));
-    andThen(function(){
-      pickOption(find('.clerkshiptype select', container), 'Not a Clerkship', assert);
-      click(find('.clerkshiptype .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
-      });
-    });
-  });
+  var container = find('.course-overview');
+  await click(find('.clerkshiptype .editable', container));
+  await pickOption(find('.clerkshiptype select', container), 'Not a Clerkship', assert);
+  await click(find('.clerkshiptype .actions .done', container));
+  assert.equal(getElementText(find('.clerkshiptype .editable', container)), getText('Not a Clerkship'));
 });
 
-test('open and close details', function(assert) {
+test('open and close details', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -168,26 +149,19 @@ test('open and close details', function(assert) {
     school: 1
   });
 
-  visit(url);
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    assert.equal(find('.course-details .title').length, 3);
-    click('.detail-collapsed-control').then(function(){
-      assert.ok(find('.title').length > 2);
-      assert.equal(currentURL(), '/courses/1?details=true');
-    });
-  });
-
-  andThen(function() {
-    assert.ok(find('.course-details .title').length > 2);
-    click('.detail-collapsed-control').then(function(){
-      assert.equal(find('.course-details .title').length, 3);
-      assert.equal(currentURL(), '/courses/1');
-    });
-  });
+  await visit(url);
+  assert.equal(currentPath(), 'course.index');
+  assert.equal(find('.course-details .title').length, 3);
+  await click('.detail-collapsed-control');
+  assert.ok(find('.title').length > 2);
+  assert.equal(currentURL(), '/courses/1?details=true');
+  assert.ok(find('.course-details .title').length > 2);
+  await click('.detail-collapsed-control');
+  assert.equal(find('.course-details .title').length, 3);
+  assert.equal(currentURL(), '/courses/1');
 });
 
-test('change title', function(assert) {
+test('change title', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -195,28 +169,20 @@ test('change title', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-header .title')), getText('course 0 2013-2014'));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    let container = find('.course-header .title');
-    assert.equal(getElementText(find('.editable', container)), getText('course 0'));
-    click(find('.editable', container));
-    andThen(function(){
-      let input = find('input', container);
-      assert.equal(getText(input.val()), getText('course 0'));
-      fillIn(input, 'test new title');
-      click(find('.done', container));
-      andThen(function(){
-        assert.equal(getElementText(container), getText('test new title 2013-2014'));
-      });
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-header .title')), getText('course 0 2013-2014'));
+  await visit(url + '?details=true');
+  let container = find('.course-header .title');
+  assert.equal(getElementText(find('.editable', container)), getText('course 0'));
+  await click(find('.editable', container));
+  let input = find('input', container);
+  assert.equal(getText(input.val()), getText('course 0'));
+  await fillIn(input, 'test new title');
+  await click(find('.done', container));
+  assert.equal(getElementText(container), getText('test new title 2013-2014'));
 });
 
-test('change start date', function(assert) {
+test('change start date', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -227,32 +193,23 @@ test('change start date', function(assert) {
     school: 1,
   });
   var startDate = moment.utc(course.startDate).format('L');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-overview .coursestartdate')), getText('Start:' + startDate));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    var container = find('.course-overview');
-    assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + startDate));
-    click(find('.coursestartdate .editable', container));
-    andThen(function(){
-      var input = find('.coursestartdate .editinplace input', container);
-      assert.equal(getText(input.val()), getText(startDate));
-      var interactor = openDatepicker(find('.coursestartdate input', container));
-      assert.equal(interactor.selectedYear(), moment(course.startDate).format('YYYY'));
-      var newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
-      interactor.selectDate(newDate.toDate());
-      click(find('.coursestartdate .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + newDate.format('L')));
-      });
-
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-overview .coursestartdate')), getText('Start:' + startDate));
+  await visit(url + '?details=true');
+  var container = find('.course-overview');
+  assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + startDate));
+  await click(find('.coursestartdate .editable', container));
+  var input = find('.coursestartdate .editinplace input', container);
+  assert.equal(getText(input.val()), getText(startDate));
+  var interactor = openDatepicker(find('.coursestartdate input', container));
+  assert.equal(interactor.selectedYear(), moment(course.startDate).format('YYYY'));
+  var newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
+  interactor.selectDate(newDate.toDate());
+  await click(find('.coursestartdate .editinplace .actions .done', container));
+  assert.equal(getElementText(find('.coursestartdate', container)), getText('Start:' + newDate.format('L')));
 });
 
-test('start date validation', function(assert) {
+test('start date validation', async function(assert) {
   assert.expect(2);
   server.create('user', {
     id: 4136
@@ -263,24 +220,18 @@ test('start date validation', function(assert) {
     endDate: new Date('2013-05-22'),
     school: 1,
   });
-  visit(url + '?details=true');
-  andThen(function() {
-    const container = find('.course-overview');
-    click(find('.coursestartdate .editable', container));
-    andThen(function(){
-      assert.notOk(find('.coursestartdate .validation-error-message', container).length, 'no validation error shown.');
-      const interactor = openDatepicker(find('.coursestartdate input', container));
-      const newDate = moment(course.startDate).add(1, 'year');
-      interactor.selectDate(newDate.toDate());
-      click(find('.coursestartdate .editinplace .actions .done', container));
-      andThen(function(){
-        assert.ok(find('.coursestartdate .validation-error-message', container).length, 'validation error shows.');
-      });
-    });
-  });
+  await visit(url + '?details=true');
+  const container = find('.course-overview');
+  await click(find('.coursestartdate .editable', container));
+  assert.notOk(find('.coursestartdate .validation-error-message', container).length, 'no validation error shown.');
+  const interactor = openDatepicker(find('.coursestartdate input', container));
+  const newDate = moment(course.startDate).add(1, 'year');
+  interactor.selectDate(newDate.toDate());
+  await click(find('.coursestartdate .editinplace .actions .done', container));
+  assert.ok(find('.coursestartdate .validation-error-message', container).length, 'validation error shows.');
 });
 
-test('change end date', function(assert) {
+test('change end date', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -291,32 +242,23 @@ test('change end date', function(assert) {
     endDate: new Date('2015-05-22'),
   });
   var endDate = moment.utc(course.endDate).format('L');
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courseenddate')), getText('End:' + endDate));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    var container = find('.course-overview');
-    assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + endDate));
-    click(find('.courseenddate .editable', container));
-    andThen(function(){
-      var input = find('.courseenddate .editinplace input', container);
-      assert.equal(getText(input.val()), getText(endDate));
-      var interactor = openDatepicker(find('.courseenddate input', container));
-      assert.equal(interactor.selectedYear(), moment(course.endDate).format('YYYY'));
-      var newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
-      interactor.selectDate(newDate.toDate());
-      click(find('.courseenddate .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('L')));
-      });
-
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-overview .courseenddate')), getText('End:' + endDate));
+  await visit(url + '?details=true');
+  var container = find('.course-overview');
+  assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + endDate));
+  await click(find('.courseenddate .editable', container));
+  var input = find('.courseenddate .editinplace input', container);
+  assert.equal(getText(input.val()), getText(endDate));
+  var interactor = openDatepicker(find('.courseenddate input', container));
+  assert.equal(interactor.selectedYear(), moment(course.endDate).format('YYYY'));
+  var newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
+  interactor.selectDate(newDate.toDate());
+  await click(find('.courseenddate .editinplace .actions .done', container));
+  assert.equal(getElementText(find('.courseenddate', container)), getText('End:' + newDate.format('L')));
 });
 
-test('end date validation', function(assert) {
+test('end date validation', async function(assert) {
   assert.expect(2);
   server.create('user', {
     id: 4136
@@ -327,24 +269,18 @@ test('end date validation', function(assert) {
     endDate: new Date('2013-05-22'),
     school: 1,
   });
-  visit(url + '?details=true');
-  andThen(function() {
-    const container = find('.course-overview');
-    click(find('.courseenddate .editable', container));
-    andThen(function(){
-      assert.notOk(find('.courseenddate .validation-error-message', container).length, 'no validation error shown.');
-      const interactor = openDatepicker(find('.courseenddate input', container));
-      const newDate = moment(course.endDate).subtract(1, 'year');
-      interactor.selectDate(newDate.toDate());
-      click(find('.courseenddate .editinplace .actions .done', container));
-      andThen(function(){
-        assert.ok(find('.courseenddate .validation-error-message', container).length, 'validation error shows.');
-      });
-    });
-  });
+  await visit(url + '?details=true');
+  const container = find('.course-overview');
+  await click(find('.courseenddate .editable', container));
+  assert.notOk(find('.courseenddate .validation-error-message', container).length, 'no validation error shown.');
+  const interactor = openDatepicker(find('.courseenddate input', container));
+  const newDate = moment(course.endDate).subtract(1, 'year');
+  interactor.selectDate(newDate.toDate());
+  await click(find('.courseenddate .editinplace .actions .done', container));
+  assert.ok(find('.courseenddate .validation-error-message', container).length, 'validation error shows.');
 });
 
-test('change externalId', function(assert) {
+test('change externalId', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -353,28 +289,20 @@ test('change externalId', function(assert) {
     school: 1,
     externalId: 'abc123'
   });
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courseexternalid')), getText('CourseID: abc123'));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    var container = find('.course-overview');
-    assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: abc123'));
-    click(find('.courseexternalid .editable', container));
-    andThen(function(){
-      var input = find('.courseexternalid .editinplace input', container);
-      assert.equal(getText(input.val()), getText('abc123'));
-      fillIn(input, 'testnewid');
-      click(find('.courseexternalid .editinplace .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: testnewid'));
-      });
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-overview .courseexternalid')), getText('CourseID: abc123'));
+  await visit(url + '?details=true');
+  var container = find('.course-overview');
+  assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: abc123'));
+  await click(find('.courseexternalid .editable', container));
+  var input = find('.courseexternalid .editinplace input', container);
+  assert.equal(getText(input.val()), getText('abc123'));
+  await fillIn(input, 'testnewid');
+  await click(find('.courseexternalid .editinplace .actions .done', container));
+  assert.equal(getElementText(find('.courseexternalid', container)), getText('CourseID: testnewid'));
 });
 
-test('change level', function(assert) {
+test('change level', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -383,30 +311,22 @@ test('change level', function(assert) {
     school: 1,
     level: 3
   });
-  visit(url);
-  andThen(function() {
-    assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 3'));
-  });
-  visit(url + '?details=true');
-  andThen(function() {
-    var container = find('.course-overview');
-    assert.equal(getElementText(find('.courselevel .editable', container)), 3);
-    click(find('.courselevel .editable', container));
-    andThen(function(){
-      let options = find('.courselevel select option', container);
-      for(let i = 0; i < 5; i++){
-        assert.equal(getElementText(options.eq(i)), i+1);
-      }
-      pickOption(find('.courselevel select', container), '1', assert);
-      click(find('.courselevel .actions .done', container));
-      andThen(function(){
-        assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 1'));
-      });
-    });
-  });
+  await visit(url);
+  assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 3'));
+  await visit(url + '?details=true');
+  var container = find('.course-overview');
+  assert.equal(getElementText(find('.courselevel .editable', container)), 3);
+  await click(find('.courselevel .editable', container));
+  let options = find('.courselevel select option', container);
+  for(let i = 0; i < 5; i++){
+    assert.equal(getElementText(options.eq(i)), i+1);
+  }
+  await pickOption(find('.courselevel select', container), '1', assert);
+  await click(find('.courselevel .actions .done', container));
+  assert.equal(getElementText(find('.course-overview .courselevel')), getText('Level: 1'));
 });
 
-test('remove director', function(assert) {
+test('remove director', async function(assert) {
   server.create('user', {
     id: 4136
   });
@@ -423,15 +343,14 @@ test('remove director', function(assert) {
     directors: [2]
   });
   visit(url);
-  click('.coursedirectors .clickable');
-  click('.coursedirectors li:eq(0)');
-  return click('.coursedirectors .bigadd').then(()=> {
-    assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
-  });
+  await click('.coursedirectors .clickable');
+  await click('.coursedirectors li:eq(0)');
+  await click('.coursedirectors .bigadd');
+  assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
 });
 
 
-test('manage directors', function(assert) {
+test('manage directors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -468,42 +387,35 @@ test('manage directors', function(assert) {
     level: 3,
     directors: [2]
   });
-  visit(url);
-  click('.coursedirectors .clickable');
+  await visit(url);
+  await click('.coursedirectors .clickable');
 
-  andThen(function() {
-    let directors = find('.coursedirectors');
-    let searchBox = find('.search-box', directors);
-    assert.equal(searchBox.length, 1);
-    searchBox = searchBox.eq(0);
-    let searchBoxInput = find('input', searchBox);
-    fillIn(searchBoxInput, 'guy');
-    click('span.search-icon', searchBox);
-    andThen(function(){
-      let searchResults = find('.live-search li', directors);
-      assert.equal(searchResults.length, 4);
-      assert.equal(getElementText($(searchResults[0])), getText('3 Results'));
-      assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
-      assert.ok(!$(searchResults[1]).hasClass('inactive'));
-      assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
-      assert.ok($(searchResults[2]).hasClass('inactive'));
-      assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'));
-      assert.ok($(searchResults[3]).hasClass('inactive'));
+  let directors = find('.coursedirectors');
+  let searchBox = find('.search-box', directors);
+  assert.equal(searchBox.length, 1);
+  searchBox = searchBox.eq(0);
+  let searchBoxInput = find('input', searchBox);
+  await fillIn(searchBoxInput, 'guy');
+  await click('span.search-icon', searchBox);
+  let searchResults = find('.live-search li', directors);
+  assert.equal(searchResults.length, 4);
+  assert.equal(getElementText($(searchResults[0])), getText('3 Results'));
+  assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
+  assert.ok(!$(searchResults[1]).hasClass('inactive'));
+  assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
+  assert.ok($(searchResults[2]).hasClass('inactive'));
+  assert.equal(getElementText($(searchResults[3])), getText('Disabled M. Guy'));
+  assert.ok($(searchResults[3]).hasClass('inactive'));
 
-      click('li:eq(0)', directors).then(function(){
-        assert.ok(!$(find('.live-search li:eq(2)', directors)).hasClass('inactive'));
-        click(searchResults[1]);
-        click('.coursedirectors .bigadd');
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
-      });
-    });
-  });
+  await click('li:eq(0)', directors);
+  assert.ok(!$(find('.live-search li:eq(2)', directors)).hasClass('inactive'));
+  await click(searchResults[1]);
+  await click('.coursedirectors .bigadd');
+  assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
 });
 
 //test for a bug where the search results were not cleared between searches
-test('search twice and list should be correct', function(assert) {
+test('search twice and list should be correct', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -524,39 +436,32 @@ test('search twice and list should be correct', function(assert) {
     level: 3,
     directors: [2]
   });
-  visit(url);
-  click('.coursedirectors .clickable');
-  andThen(function() {
-    let directors = find('.coursedirectors');
-    let searchBox = find('.search-box', directors);
-    assert.equal(searchBox.length, 1);
-    searchBox = searchBox.eq(0);
-    let searchBoxInput = find('input', searchBox);
-    fillIn(searchBoxInput, 'guy');
-    click('span.search-icon', searchBox);
-    andThen(function(){
-      let searchResults = find('.live-search li', directors);
-      assert.equal(searchResults.length, 3);
-      assert.equal(getElementText($(searchResults[0])), getText('2 Results'));
-      assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
-      assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
-      click(searchResults[1]).then(function(){
-        searchBoxInput = find('input', searchBox);
-        fillIn(searchBoxInput, 'guy');
-        click('span.search-icon', searchBox);
-        andThen(function(){
-          searchResults = find('.live-search li', directors);
-          assert.equal(searchResults.length, 3);
-          assert.equal(getElementText($(searchResults[0])), getText('2 Results'));
-          assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
-          assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
-        });
-      });
-    });
-  });
+  await visit(url);
+  await click('.coursedirectors .clickable');
+  let directors = find('.coursedirectors');
+  let searchBox = find('.search-box', directors);
+  assert.equal(searchBox.length, 1);
+  searchBox = searchBox.eq(0);
+  let searchBoxInput = find('input', searchBox);
+  await fillIn(searchBoxInput, 'guy');
+  await click('span.search-icon', searchBox);
+  let searchResults = find('.live-search li', directors);
+  assert.equal(searchResults.length, 3);
+  assert.equal(getElementText($(searchResults[0])), getText('2 Results'));
+  assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
+  await click(searchResults[1]);
+  searchBoxInput = find('input', searchBox);
+  await fillIn(searchBoxInput, 'guy');
+  await click('span.search-icon', searchBox);
+  searchResults = find('.live-search li', directors);
+  assert.equal(searchResults.length, 3);
+  assert.equal(getElementText($(searchResults[0])), getText('2 Results'));
+  assert.equal(getElementText($(searchResults[1])), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText($(searchResults[2])), getText('Added M. Guy'));
 });
 
-test('click rollover', function(assert) {
+test('click rollover', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -570,15 +475,13 @@ test('click rollover', function(assert) {
     school: 1,
   });
   const rollover = '.course-overview a.rollover';
-  visit(url);
-  click(rollover);
+  await visit(url);
+  await click(rollover);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.rollover');
-  });
+  assert.equal(currentPath(), 'course.rollover');
 });
 
-test('rollover hidden from instructors', function(assert) {
+test('rollover hidden from instructors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -591,17 +494,15 @@ test('rollover hidden from instructors', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.course-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 0);
-  });
+  assert.equal(currentPath(), 'course.index');
+  assert.equal(find(rollover).length, 0);
 });
 
-test('rollover visible to developers', function(assert) {
+test('rollover visible to developers', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -614,17 +515,15 @@ test('rollover visible to developers', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.course-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1);
-  });
+  assert.equal(currentPath(), 'course.index');
+  assert.equal(find(rollover).length, 1);
 });
 
-test('rollover visible to course directors', function(assert) {
+test('rollover visible to course directors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -637,17 +536,15 @@ test('rollover visible to course directors', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.course-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1);
-  });
+  assert.equal(currentPath(), 'course.index');
+  assert.equal(find(rollover).length, 1);
 });
 
-test('rollover hidden on rollover route', function(assert) {
+test('rollover hidden on rollover route', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -660,12 +557,10 @@ test('rollover hidden on rollover route', function(assert) {
     year: 2013,
     school: 1,
   });
-  visit(`${url}/rollover`);
+  await visit(`${url}/rollover`);
   const container = '.course-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'course.rollover');
-    assert.equal(find(rollover).length, 0);
-  });
+  assert.equal(currentPath(), 'course.rollover');
+  assert.equal(find(rollover).length, 0);
 });

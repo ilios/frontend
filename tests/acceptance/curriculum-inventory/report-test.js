@@ -17,7 +17,7 @@ module('Acceptance: Curriculum Inventory: Report', {
   }
 });
 
-test('create new sequence block Issue #2108', function(assert) {
+test('create new sequence block Issue #2108', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -36,21 +36,18 @@ test('create new sequence block Issue #2108', function(assert) {
   const newBlockForm = '.new-curriculum-inventory-sequence-block';
   const newFormTitle = `${newBlockForm} .new-result-title`;
 
-  visit(url);
-  andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(newBlockForm).length, 0);
-    assert.equal(find(newFormTitle).length, 0);
-    click(addSequenceBlock).then(()=>{
-      assert.equal(find(newBlockForm).length, 1);
-      assert.equal(find(newFormTitle).length, 1);
-      assert.equal(getElementText(newFormTitle), getText('New Sequence Block'));
-    });
-  });
+  await visit(url);
+  assert.equal(currentPath(), 'curriculumInventoryReport.index');
+  assert.equal(find(newBlockForm).length, 0);
+  assert.equal(find(newFormTitle).length, 0);
+  await click(addSequenceBlock);
+  assert.equal(find(newBlockForm).length, 1);
+  assert.equal(find(newFormTitle).length, 1);
+  assert.equal(getElementText(newFormTitle), getText('New Sequence Block'));
 });
 
 
-test('rollover hidden from instructors', function(assert) {
+test('rollover hidden from instructors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -70,17 +67,15 @@ test('rollover hidden from instructors', function(assert) {
     description: 'lorem ipsum',
     program: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.curriculum-inventory-report-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0);
-  });
+  assert.equal(currentPath(), 'curriculumInventoryReport.index');
+  assert.equal(find(rollover).length, 0);
 });
 
-test('rollover visible to developers', function(assert) {
+test('rollover visible to developers', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -100,18 +95,15 @@ test('rollover visible to developers', function(assert) {
     description: 'lorem ipsum',
     program: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.curriculum-inventory-report-overview';
   const rollover = `${container} a.rollover`;
 
-  //return pauseTest();
-  andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 1);
-  });
+  assert.equal(currentPath(), 'curriculumInventoryReport.index');
+  assert.equal(find(rollover).length, 1);
 });
 
-test('rollover not visible to course directors', function(assert) {
+test('rollover not visible to course directors', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -131,17 +123,15 @@ test('rollover not visible to course directors', function(assert) {
     description: 'lorem ipsum',
     program: 1,
   });
-  visit(url);
+  await visit(url);
   const container = '.curriculum-inventory-report-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0);
-  });
+  assert.equal(currentPath(), 'curriculumInventoryReport.index');
+  assert.equal(find(rollover).length, 0);
 });
 
-test('rollover hidden on rollover route', function(assert) {
+test('rollover hidden on rollover route', async function(assert) {
   server.create('user', {
     id: 4136,
     roles: [1],
@@ -161,12 +151,10 @@ test('rollover hidden on rollover route', function(assert) {
     description: 'lorem ipsum',
     program: 1,
   });
-  visit(`${url}/rollover`);
+  await visit(`${url}/rollover`);
   const container = '.curriculum-inventory-report-overview';
   const rollover = `${container} a.rollover`;
 
-  andThen(function() {
-    assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
-    assert.equal(find(rollover).length, 0);
-  });
+  assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
+  assert.equal(find(rollover).length, 0);
 });

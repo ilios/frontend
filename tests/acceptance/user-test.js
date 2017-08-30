@@ -35,7 +35,7 @@ module('Acceptance: User', {
   }
 });
 
-test('can search for users', function(assert) {
+test('can search for users', async function(assert) {
   server.createList('user', 20, { email: 'user@example.edu' });
   server.createList('authentication', 20);
 
@@ -45,17 +45,13 @@ test('can search for users', function(assert) {
   const secondResultEmail = `${secondResult} .email`;
   const name = '.user-display-name';
 
-  visit(url);
-  fillIn(userSearch, 'son');
-  triggerEvent(userSearch, 'keyup');
-  andThen(() => {
-    assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
-    assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
-  });
+  await visit(url);
+  await fillIn(userSearch, 'son');
+  await triggerEvent(userSearch, 'keyup');
+  assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
+  assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
 
-  click(secondResultUsername);
-  andThen(() => {
-    assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-    assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
-  });
+  await click(secondResultUsername);
+  assert.equal(currentURL(), '/users/2', 'new user profile is shown');
+  assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
 });

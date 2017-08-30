@@ -37,164 +37,134 @@ module('Acceptance: Program Year - Publish', {
   }
 });
 
-test('check published program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.published.id);
+test('check published program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.published.id);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'program.programYear.index');
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    assert.equal(getElementText(selector), getText('Published'));
-    //we have to click the button to create the options
-    click(selector);
-    let items = find(choices);
-    assert.equal(items.length, 3);
-    let expectedItems = ['Review 4 Missing Items', 'Mark as Scheduled', 'UnPublish Program Year'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-    }
-  });
+  assert.equal(currentPath(), 'program.programYear.index');
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  assert.equal(getElementText(selector), getText('Published'));
+  //we have to click the button to create the options
+  await click(selector);
+  let items = find(choices);
+  assert.equal(items.length, 3);
+  let expectedItems = ['Review 4 Missing Items', 'Mark as Scheduled', 'UnPublish Program Year'];
+  for(let i = 0; i < items.length; i++){
+    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+  }
 });
 
-test('check scheduled program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.scheduled.id);
+test('check scheduled program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.scheduled.id);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'program.programYear.index');
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    assert.equal(getElementText(selector), getText('Scheduled'));
-    //we have to click the button to create the options
-    click(selector);
-    let items = find(choices);
-    assert.equal(items.length, 3);
-    let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'UnPublish Program Year'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-    }
-  });
+  assert.equal(currentPath(), 'program.programYear.index');
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  assert.equal(getElementText(selector), getText('Scheduled'));
+  //we have to click the button to create the options
+  await click(selector);
+  let items = find(choices);
+  assert.equal(items.length, 3);
+  let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'UnPublish Program Year'];
+  for(let i = 0; i < items.length; i++){
+    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+  }
 });
 
-test('check draft program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.draft.id);
+test('check draft program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.draft.id);
 
-  andThen(function() {
-    assert.equal(currentPath(), 'program.programYear.index');
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    assert.equal(getElementText(selector), getText('Not Published'));
-    //we have to click the button to create the options
-    click(selector);
-    let items = find(choices);
-    assert.equal(items.length, 3);
-    let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'Mark as Scheduled'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-    }
-  });
+  assert.equal(currentPath(), 'program.programYear.index');
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  assert.equal(getElementText(selector), getText('Not Published'));
+  //we have to click the button to create the options
+  await click(selector);
+  let items = find(choices);
+  assert.equal(items.length, 3);
+  let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'Mark as Scheduled'];
+  for(let i = 0; i < items.length; i++){
+    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+  }
 });
 
-test('check publish draft program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.draft.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const publish = `${choices}:eq(0)`;
-    click(selector);
-    click(publish);
+test('check publish draft program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.draft.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const publish = `${choices}:eq(0)`;
+  await click(selector);
+  await click(publish);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Published'));
-    });
-  });
+  assert.equal(getElementText(selector), getText('Published'));
 });
 
-test('check schedule draft program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.draft.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const schedule = `${choices}:eq(2)`;
-    click(selector);
-    click(schedule);
+test('check schedule draft program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.draft.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const schedule = `${choices}:eq(2)`;
+  await click(selector);
+  await click(schedule);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Scheduled'));
-    });
-  });
+  assert.equal(getElementText(selector), getText('Scheduled'));
 });
 
-test('check publish scheduled program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.scheduled.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const publish = `${choices}:eq(0)`;
-    click(selector);
-    click(publish);
+test('check publish scheduled program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.scheduled.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const publish = `${choices}:eq(0)`;
+  await click(selector);
+  await click(publish);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Published'));
-    });
-  });
+  assert.equal(getElementText(selector), getText('Published'));
 });
 
-test('check unpublish scheduled program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.scheduled.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const unPublish = `${choices}:eq(2)`;
-    click(selector);
-    click(unPublish);
+test('check unpublish scheduled program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.scheduled.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const unPublish = `${choices}:eq(2)`;
+  await click(selector);
+  await click(unPublish);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Not Published'));
-    });
-  });
+  assert.equal(getElementText(selector), getText('Not Published'));
 });
 
-test('check schedule published program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.published.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const schedule = `${choices}:eq(1)`;
-    click(selector);
-    click(schedule);
+test('check schedule published program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.published.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const schedule = `${choices}:eq(1)`;
+  await click(selector);
+  await click(schedule);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Scheduled'));
-      let items = find(choices);
-      assert.equal(items.length, 3);
-      let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'UnPublish Program Year'];
-      for(let i = 0; i < items.length; i++){
-        assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-      }
-    });
-  });
+  assert.equal(getElementText(selector), getText('Scheduled'));
+  let items = find(choices);
+  assert.equal(items.length, 3);
+  let expectedItems = ['Publish As-is', 'Review 4 Missing Items', 'UnPublish Program Year'];
+  for(let i = 0; i < items.length; i++){
+    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
+  }
 });
 
-test('check unpublish published program year', function(assert) {
-  visit('/programs/1/programyears/' + fixtures.published.id);
-  andThen(function() {
-    const menu = '.publish-menu:eq(1)';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
-    const unPublish = `${choices}:eq(2)`;
-    click(selector);
-    click(unPublish);
+test('check unpublish published program year', async function(assert) {
+  await visit('/programs/1/programyears/' + fixtures.published.id);
+  const menu = '.publish-menu:eq(1)';
+  const selector = `${menu} .rl-dropdown-toggle`;
+  const choices = `${menu} .rl-dropdown button`;
+  const unPublish = `${choices}:eq(2)`;
+  await click(selector);
+  await click(unPublish);
 
-    andThen(function(){
-      assert.equal(getElementText(selector), getText('Not Published'));
-    });
-  });
+  assert.equal(getElementText(selector), getText('Not Published'));
 });
