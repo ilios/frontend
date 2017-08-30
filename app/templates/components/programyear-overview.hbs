@@ -5,7 +5,7 @@
     {{#if editable}}
       <ul class='removable-list tag-list'>
         {{#each sortedDirectors as |user|}}
-          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' class='removex'}}</li>
         {{/each}}
       </ul>
     {{else}}
