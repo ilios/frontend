@@ -11,7 +11,7 @@
       <span>
         <ul class='removable-list tag-list'>
           {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
-            <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
+            <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='removex'}}</li>
           {{/each}}
         </ul>
       </span>
