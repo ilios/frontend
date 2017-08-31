@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
 import moment from 'moment';
+import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, observer, inject, run } = Ember;
-const { debounce } = run;
+const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
 const { Promise } = RSVP;
 const { service } = inject;
 const { gt, sort } = computed;
@@ -24,7 +23,6 @@ export default Controller.extend({
     this._super(...arguments);
     this.set('newCourse', null);
   },
-  placeholderValue: t('general.courseTitleFilterPlaceholder'),
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
@@ -59,16 +57,14 @@ export default Controller.extend({
     });
   }),
 
-  //in order to delay rendering until a user is done typing debounce the title filter
-  debouncedFilter: null,
-  watchFilter: observer('titleFilter', function(){
-    debounce(this, this.setFilter, 500);
-  }),
-  setFilter() {
-    const titleFilter = this.get('titleFilter');
-    const clean = escapeRegExp(titleFilter);
-    this.set('debouncedFilter', clean);
-  },
+  changeTitleFilter: task(function * (value) {
+    const clean = escapeRegExp(value);
+    this.set('titleFilter', clean);
+    yield timeout(250);
+
+    return clean;
+  }).restartable(),
+
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
   allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function(){
@@ -80,12 +76,12 @@ export default Controller.extend({
   }),
 
   filteredCourses: computed(
-    'debouncedFilter',
+    'changeTitleFilter.lastSuccessful.value',
     'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
     async function(){
-      let title = this.get('debouncedFilter');
+      let title = this.get('changeTitleFilter.lastSuccessful.value');
       let filterMyCourses = this.get('userCoursesOnly');
       let exp = new RegExp(title, 'gi');
       const courses = await this.get('courses');

@@ -6,7 +6,6 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import Ember from 'ember';
-import wait from 'ember-test-helpers/wait';
 
 const { isEmpty, isPresent } = Ember;
 
@@ -369,33 +368,24 @@ test('filters by title', async function(assert) {
   assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
   assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
 
-  //put these in nested later blocks because there is a 500ms debounce on the title filter
   await fillIn('.titlefilter input', 'first');
-  Ember.run.later(async () => {
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-    await fillIn('.titlefilter input', 'second');
-    Ember.run.later(async () => {
-      assert.equal(1, find('.list tbody tr').length);
-      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
-      await fillIn('.titlefilter input', 'special');
-      Ember.run.later(async () => {
-        assert.equal(2, find('.list tbody tr').length);
-        assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-        assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
 
-        await fillIn('.titlefilter input', '');
-        Ember.run.later(async () => {
-          assert.equal(3, find('.list tbody tr').length);
-          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-          assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-          assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
-        }, 750);
-      }, 750);
-    }, 750);
-  }, 750);
+  await fillIn('.titlefilter input', 'second');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
 
-  await wait();
+  await fillIn('.titlefilter input', 'special');
+  assert.equal(2, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
+
+  await fillIn('.titlefilter input', '');
+  assert.equal(3, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
 });
 
 function getCellData(row, cell) {

@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { translationMacro as t } from "ember-i18n";
+import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, inject, observer } = Ember;
+const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
 const { gt } = computed;
 const { service } = inject;
 const { PromiseArray } = DS;
@@ -15,7 +15,6 @@ export default Controller.extend({
     schoolId: 'school',
     titleFilter: 'filter'
   },
-  placeholderValue: t('general.instructorGroupTitleFilterPlaceholder'),
   schoolId: null,
   titleFilter: null,
   showNewInstructorGroupForm: false,
@@ -39,23 +38,22 @@ export default Controller.extend({
       promise: defer.promise
     });
   }),
-  //in order to delay rendering until a user is done typing debounce the title filter
-  debouncedFilter: null,
-  watchFilter: observer('titleFilter', function(){
-    Ember.run.debounce(this, this.setFilter, 500);
-  }),
-  setFilter() {
-    const titleFilter = this.get('titleFilter');
-    const clean = escapeRegExp(titleFilter);
-    this.set('debouncedFilter', clean);
-  },
+
+  changeTitleFilter: task(function * (value) {
+    const clean = escapeRegExp(value);
+    this.set('titleFilter', clean);
+    yield timeout(250);
+
+    return clean;
+  }).restartable(),
+
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   filteredInstructorGroups: computed(
-    'debouncedFilter',
+    'changeTitleFilter.lastSuccessful.value',
     'instructorGroups.[]',
     function(){
       let defer = RSVP.defer();
-      let title = this.get('debouncedFilter');
+      let title = this.get('changeTitleFilter.lastSuccessful.value');
       let exp = new RegExp(title, 'gi');
       this.get('instructorGroups').then(instructorGroups => {
         let filteredInstructorGroups;
