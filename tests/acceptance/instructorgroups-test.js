@@ -4,9 +4,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import Ember from 'ember';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import wait from 'ember-test-helpers/wait';
 
 var application;
 
@@ -103,33 +101,24 @@ test('filters by title', async function(assert) {
   assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
   assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
 
-  //put these in nested later blocks because there is a 500ms debounce on the title filter
   await fillIn('.titlefilter input', 'first');
-  Ember.run.later(async () =>{
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-    await fillIn('.titlefilter input', 'second');
-    Ember.run.later(async () =>{
-      assert.equal(1, find('.list tbody tr').length);
-      assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondInstructorgroup.title));
-      await fillIn('.titlefilter input', 'special');
-      Ember.run.later(async () =>{
-        assert.equal(2, find('.list tbody tr').length);
-        assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-        assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstInstructorgroup.title));
 
-        await fillIn('.titlefilter input', '');
-        Ember.run.later(async () =>{
-          assert.equal(3, find('.list tbody tr').length);
-          assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-          assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-          assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
-        }, 750);
-      }, 750);
-    }, 750);
-  }, 750);
+  await fillIn('.titlefilter input', 'second');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondInstructorgroup.title));
 
-  await wait();
+  await fillIn('.titlefilter input', 'special');
+  assert.equal(2, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+
+  await fillIn('.titlefilter input', '');
+  assert.equal(3, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
 });
 
 test('filters options', async function(assert) {

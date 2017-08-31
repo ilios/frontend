@@ -27,7 +27,11 @@
     </div>
 
     <div class="titlefilter">
-      {{input type='text' value=titleFilter placeholder=placeholderValue}}
+      {{one-way-input
+        value=titleFilter
+        update=(perform changeTitleFilter)
+        placeholder=(t 'general.courseTitleFilterPlaceholder')
+      }}
     </div>
   </div>
   <section class='courses'>
