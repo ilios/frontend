@@ -5,9 +5,9 @@ import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 
-const { computed, RSVP } = Ember;
+const { computed, ObjectProxy, RSVP } = Ember;
 const { alias } = computed;
-const { Promise } = RSVP;
+const { Promise, all } = RSVP;
 
 export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   startYear: DS.attr('string'),
@@ -39,7 +39,52 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
   ),
   requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
   optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
+
+  /**
+   * All top-level competencies ("domains"), along with their sub-competencies, associated with this program-year.
+   *
+   * @property competencyDomains
+   * @type {Ember.computed}
+   * @public
+   */
+  competencyDomains: computed('competencies.@each.domain', async function() {
+    let promises = [];
+    let domainContainer = {};
+    let domainIds = [];
+    const competencies = await this.get('competencies');
+
+    competencies.forEach(competency => {
+      promises.pushObject(competency.get('domain').then(domain => {
+        if(!domainContainer.hasOwnProperty(domain.get('id'))){
+          domainIds.pushObject(domain.get('id'));
+          domainContainer[domain.get('id')] = ObjectProxy.create({
+            content: domain,
+            subCompetencies: []
+          });
+        }
+        if(competency.get('id') !== domain.get('id')){
+          let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
+          if(!subCompetencies.includes(competency)){
+            subCompetencies.pushObject(competency);
+          }
+        }
+      }));
+    });
+
+    await all(promises);
+    return domainIds.map(id => {
+      return domainContainer[id];
+    }).sortBy('title');
+  }),
+
+  /**
+   * @property domains
+   * @public
+   * @type {Ember.computed}
+   * @deprecated Use competencyDomains instead. [ST 2017/08/31]
+   */
   domains: computed('competencies.@each.domain', function(){
+    Ember.deprecate('Use competencyDomains instead.');
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
