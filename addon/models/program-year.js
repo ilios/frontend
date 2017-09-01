@@ -39,6 +39,13 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
   ),
   requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
   optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
+
+  /**
+   * @property domains
+   * @public
+   * @type {Ember.computed}
+   * @deprecated Use competencyDomains instead. [ST 2017/08/31]
+   */
   domains: computed('competencies.@each.domain', function(){
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
