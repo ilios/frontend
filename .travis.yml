@@ -1,25 +1,28 @@
 ---
-dist: trusty
 language: node_js
 node_js:
   - "6"
 
 sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
 
 cache:
   yarn: true
-  directories:
-    - $HOME/.npm
-    - $HOME/.cache
 
 env:
-  - EMBER_TRY_SCENARIO=ember-2.12
+  - EMBER_TRY_SCENARIO=ember-lts-2.12
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
   - EMBER_TRY_SCENARIO=ember-default
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - env: EMBER_TRY_SCENARIO=ember-canary
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -29,13 +32,9 @@ before_install:
 install:
   - yarn install
 
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - greenkeeper-lockfile-update
-  - sleep 3 # give xvfb some time to start
+before_script: greenkeeper-lockfile-update
 
 script:
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
 
 after_script: greenkeeper-lockfile-upload
