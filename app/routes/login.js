@@ -2,8 +2,9 @@ import Ember from 'ember';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { Route, inject, isPresent }  = Ember;
+const { Route, inject, isPresent, RSVP }  = Ember;
 const { service } = inject;
+const { Promise } = RSVP;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
@@ -55,7 +56,10 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     const response = await commonAjax.request(loginUrl);
     if(response.status === 'redirect'){
       let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
-      return window.location.replace(casLoginUrl);
+      await new Promise(() => {
+        //this promise never resolves so we don't render anything before the redirect
+        window.location.replace(casLoginUrl);
+      });
     }
     if(response.status === 'noAccountExists'){
       this.set('noAccountExistsError', true);
@@ -78,7 +82,10 @@ export default Route.extend(UnauthenticatedRouteMixin, {
         let attemptedRoute = encodeURIComponent(window.location.href);
         shibbolethLoginUrl += '?target=' + attemptedRoute;
       }
-      window.location.replace(shibbolethLoginUrl);
+      await new Promise(() => {
+        //this promise never resolves so we don't render anything before the redirect
+        window.location.replace(shibbolethLoginUrl);
+      });
     }
     if(status === 'noAccountExists'){
       this.set('noAccountExistsError', true);
