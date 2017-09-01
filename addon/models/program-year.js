@@ -66,7 +66,6 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
           let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
           if(!subCompetencies.includes(competency)){
             subCompetencies.pushObject(competency);
-            subCompetencies.sortBy('title');
           }
         }
       }));
