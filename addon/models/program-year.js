@@ -84,6 +84,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
    * @deprecated Use competencyDomains instead. [ST 2017/08/31]
    */
   domains: computed('competencies.@each.domain', function(){
+    Ember.deprecate('Use competencyDomains instead.');
     var defer = Ember.RSVP.defer();
     var domainContainer = {};
     var domainIds = [];
