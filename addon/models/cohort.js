@@ -4,7 +4,7 @@ import DS from 'ember-data';
 
 const { computed, RSVP } = Ember;
 const { alias } = computed;
-const { Model, PromiseArray } = DS;
+const { Model } = DS;
 const { Promise } = RSVP;
 
 export default Model.extend({
@@ -37,16 +37,32 @@ export default Model.extend({
       });
     });
   }),
+  /**
+   * @deprecated Use rootLevelLearnerGroups instead [ST 2017/08/31]
+   */
   topLevelLearnerGroups: computed('learnerGroups.[]', function(){
+    Ember.deprecate('Use rootLevelLearnerGroups instead.');
     let defer = Ember.RSVP.defer();
     this.get('learnerGroups').then(learnerGroups => {
       let topLevelGroups = learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
       defer.resolve(topLevelGroups);
     });
 
-    return PromiseArray.create({
+    return DS.PromiseArray.create({
       promise: defer.promise
     });
+  }),
+
+  /**
+   * All top-level learner groups associated with this cohort.
+   *
+   * @property rootLevelLearnerGroups
+   * @type {Ember.computed}
+   * @public
+   */
+  rootLevelLearnerGroups: computed('learnerGroups.[]', async function() {
+    let learnerGroups = await this.get('learnerGroups');
+    return learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
   }),
 
   currentLevel: computed('programYear.startYear', function(){
