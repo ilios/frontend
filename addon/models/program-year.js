@@ -41,7 +41,7 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
   optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
 
   /**
-   * All top-level competencies ("domains") associated with this program-year.
+   * All top-level competencies ("domains"), along with their sub-competencies, associated with this program-year.
    *
    * @property competencyDomains
    * @type {Ember.computed}
