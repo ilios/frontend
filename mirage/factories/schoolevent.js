@@ -1,8 +1,8 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   name:  (i) => `event ${i}`,
   isPublished: false,
   isScheduled: false,
-  instructors: []
+  instructors: [],
 });

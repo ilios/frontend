@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   name: (i) => `descriptor ${i}`,
   annotation: (i) => `descriptor annotation ${i}`
 });

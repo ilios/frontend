@@ -1,10 +1,11 @@
 import moment from 'moment';
-import Mirage from 'ember-cli-mirage';
+import { Factory, association } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
+export default Factory.extend({
   title: (i) => `course ${i}`,
   year: 2013,
-  school: 1,
+  school: association(),
+  level: 1,
   startDate: () => moment().format(),
   endDate: () => moment().add(7, 'weeks').format(),
   archived: false,

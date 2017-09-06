@@ -1,6 +1,6 @@
-import Mirage from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
-export default Mirage.Factory.extend({
-  title: (i) => `objective ${i}`,
-  position: (i) => i,
+export default Factory.extend({
+  title: i => `objective ${i}`,
+  position: i => i,
 });

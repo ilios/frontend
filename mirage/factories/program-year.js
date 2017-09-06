@@ -1,10 +1,10 @@
 import { Factory, association } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  title: (i) => `program ${i}`,
-  shortTitle: (i) => `short_${i}`,
-  school: association(),
-  duration: 4,
+  startYear: (i) => 2012 + i,
+  program: association(),
   published: true,
   publishedAsTbd: false,
+  cohort: association(),
+  archived: false,
 });
