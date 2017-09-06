@@ -49,4 +49,15 @@ export default Ember.Mixin.create({
       });
     });
   }),
+
+  /**
+   * The number of terms attached to this model
+   * @property termCount
+   * @type {Ember.computed}
+   * @public
+   */
+  termCount: computed('terms.[]', function(){
+    const termIds = this.hasMany('terms').ids();
+    return termIds.length;
+  }),
 });
