@@ -35,7 +35,7 @@ export default function() {
   this.delete('api/authentications/:id', 'authentication');
   this.post('api/authentications', 'authentication');
 
-  this.get('api/cohorts', (db, request) => {
+  this.get('api/cohorts', ({ db }, request) => {
     const params = request.queryParams;
     const keys = Object.keys(params);
     const schoolKey = 'filters[schools]';
@@ -78,17 +78,7 @@ export default function() {
   this.get('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.put('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.delete('api/courselearningmaterials/:id', 'courseLearningMaterial');
-  this.post('api/courselearningmaterials', function(db, request) {
-    let attrs = JSON.parse(request.requestBody);
-    let record = db.courseLearningMaterials.insert(attrs);
-    let lm = db.learningMaterials.find(record.learningMaterial);
-    if(lm){
-      lm.courseLearningMaterials.pushObject(record);
-    }
-    return {
-      courseLearningMaterial: record
-    };
-  });
+  this.post('api/courselearningmaterials', 'courseLearningMaterial');
 
   this.get('api/courses', getAll);
   this.get('api/courses/:id', 'course');
@@ -217,58 +207,23 @@ export default function() {
   this.delete('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
   this.post('api/meshpreviousindexings', 'meshPreviousIndexing');
 
-  this.get('api/objectives', (db, request) => {
-    const params = request.queryParams;
-    const keys = Object.keys(params);
-    const courseKey = 'filters[courses]';
-    if (keys.includes(courseKey)) {
-      const coursesFilter = params[courseKey];
-      const objectives = db.objectives.filter(objective => {
-        const courseId = parseInt(objective.course);
-        return coursesFilter.includes(courseId.toString());
-      });
-
-      return {objectives};
-
-    } else {
-      return getAll(db, request);
-    }
-  });
+  this.get('api/objectives', getAll);
   this.get('api/objectives/:id', 'objective');
   this.put('api/objectives/:id', 'objective');
   this.delete('api/objectives/:id', 'objective');
   this.post('api/objectives', 'objective');
 
-  this.get('api/offerings', (db, request) => {
-    const params = request.queryParams;
-    const keys = Object.keys(params);
-    const courseKey = 'filters[courses]';
-    if (keys.includes(courseKey)) {
-      const coursesFilter = params[courseKey];
-      const offerings = db.offerings.filter(offering => {
-        const sessionId = parseInt(offering.session);
-        const session = db.sessions.find(sessionId);
-        const courseId = session.course;
-
-        return coursesFilter.includes(courseId.toString());
-      });
-
-      return {offerings};
-
-    } else {
-      return getAll(db, request);
-    }
-  });
+  this.get('api/offerings', getAll);
   this.get('api/offerings/:id', 'offering');
   this.put('api/offerings/:id', 'offering');
   this.delete('api/offerings/:id', 'offering');
   this.post('api/offerings', 'offering');
 
   this.get('api/pendinguserupdates', getAll);
-  this.get('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.put('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.delete('api/pendinguserupdates/:id', 'pendingUserUpdate');
-  this.post('api/pendinguserupdates', 'pendingUserUpdate');
+  this.get('api/pendinguserupdates/:id');
+  this.put('api/pendinguserupdates/:id');
+  this.del('api/pendinguserupdates/:id');
+  this.post('api/pendinguserupdates');
 
   this.get('api/permissions', getAll);
   this.get('api/permissions/:id', 'permission');
@@ -280,7 +235,7 @@ export default function() {
   this.get('api/programyears/:id', 'programYear');
   this.put('api/programyears/:id', 'programYear');
   this.delete('api/programyears/:id', 'programYear');
-  this.post('api/programyears', function(db, request) {
+  this.post('api/programyears', function({ db }, request) {
     let attrs = JSON.parse(request.requestBody);
     let record = db.programYears.insert(attrs);
     let programRecord = db.programs.find(record.programYear.program);
@@ -336,19 +291,7 @@ export default function() {
   this.get('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.put('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.delete('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
-
-  this.post('api/sessionlearningmaterials', function(db, request) {
-    let attrs = JSON.parse(request.requestBody);
-    let record = db.sessionLearningMaterials.insert(attrs);
-    let lm = db.learningMaterials.find(record.learningMaterial);
-
-    if(lm){
-      lm.sessionLearningMaterials.pushObject(record);
-    }
-    return {
-      sessionLearningMaterial: record
-    };
-  });
+  this.post('api/sessionlearningmaterials', 'sessionLearningMaterial') ;
 
   this.get('api/sessiontypes', getAll);
   this.get('api/sessiontypes/:id', 'sessionType');
@@ -369,12 +312,12 @@ export default function() {
   this.post('api/userroles', 'userRole');
 
   this.get('api/users', getAll);
-  this.get('api/users/:id', 'user');
-  this.put('api/users/:id', 'user');
-  this.delete('api/users/:id', 'user');
-  this.post('api/users', 'user');
+  this.get('api/users/:id');
+  this.put('api/users/:id');
+  this.del('api/users/:id');
+  this.post('api/users');
 
-  this.get('api/userevents/:userid', function(db, request) {
+  this.get('api/userevents/:userid', function({ db }, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
     let userid = parseInt(request.params.userid);
@@ -390,7 +333,7 @@ export default function() {
     };
   });
 
-  this.get('api/schoolevents/:schoolid', function(db, request) {
+  this.get('api/schoolevents/:schoolid', function({ db }, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
     let schoolId = parseInt(request.params.schoolid);
@@ -406,7 +349,7 @@ export default function() {
     };
   });
 
-  this.post('auth/login', function(db, request) {
+  this.post('auth/login', function({ db }, request) {
     let errors = [];
     var attrs = JSON.parse(request.requestBody);
     if(!('username' in attrs) || !attrs.username){
