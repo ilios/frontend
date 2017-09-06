@@ -1,0 +1,35 @@
+.connection-status {
+  $height: $base-font-size * 2.5;
+  background-color: $warning-color;
+  color: $text-grey;
+  display: none;
+  margin: 0;
+  min-height: $height;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+
+  &.offline {
+    display: block;
+  }
+
+  span {
+    line-height: $height;
+    margin-right: $base-font-size * 2;
+  }
+
+  .buttons {
+    display: inline-block;
+    height: $height;
+
+    button {
+      background-color: $text-grey;
+      border: 0;
+      color: $white;
+      display: inline-block;
+      height: 100%;
+    }
+  }
+
+
+}
