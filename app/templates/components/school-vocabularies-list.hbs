@@ -59,14 +59,12 @@
               <td class='text-left text-top' colspan=3>
                 <span class='clickable link' {{action this.attrs.manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
               </td>
-              <td class='text-left text-top' colspan=1>
-                {{vocabulary.terms.length}}
-              </td>
+              <td class='text-left text-top' colspan=1>{{vocabulary.termCount}}</td>
 
               <td class='text-left text-top' colspan=1>
                 {{#if editable}}
                   <span class='clickable edit' {{action this.attrs.manageVocabulary vocabulary.id}}>{{fa-icon 'edit'}}</span>
-                  {{#if (eq vocabulary.terms.length 0)}}
+                  {{#if (eq vocabulary.termCount 0)}}
                     {{fa-icon 'trash' class='remove clickable' click=(action 'confirmRemoval' vocabulary)}}
                   {{/if}}
                 {{/if}}
