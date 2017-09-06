@@ -1,0 +1,17 @@
+{{#liquid-if unableToReconnect class='crossFade'}}
+  <span>{{fa-icon 'exclamation-triangle'}}{{t 'general.unableToReconnect'}}</span>
+{{else}}
+  <span>
+    {{fa-icon 'exclamation-circle'}}
+    {{t 'general.connectionLost'}}
+    {{#unless stopAttemptingToReconnect}}
+      {{t 'general.reconnectionSeconds' count=timer}}
+    {{/unless}}
+  </span>
+  <div class='buttons'>
+    <button {{action (perform reconnect true)}}>{{t 'general.reconnectNow'}}</button>
+    {{#unless stopAttemptingToReconnect}}
+      <button {{action (toggle 'stopAttemptingToReconnect' this)}}>{{t 'general.ignore'}}</button>
+    {{/unless}}
+  </div>
+{{/liquid-if}}
