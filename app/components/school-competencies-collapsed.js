@@ -1,16 +1,27 @@
 import Ember from 'ember';
 
 const { Component, computed } = Ember;
-const { reads, filterBy, sort } = computed;
 
 export default Component.extend({
   school: null,
   tagName: 'section',
   classNames: ['school-competencies-collapsed'],
-  competencies: reads('school.competencies'),
-  allDomains: filterBy('competencies', 'isDomain'),
-  allCompetencies: filterBy('competencies', 'isNotDomain'),
-  sortDomainsBy: ['title'],
-  domains: sort('allDomains', 'sortDomainsBy'),
+  competencies: computed('school.competencies.[]', async function(){
+    const school = this.get('school');
+    const competencies = await school.get('competencies');
 
+    return competencies;
+  }),
+  domains: computed('school.competencies.[]', async function(){
+    const competencies = await this.get('competencies');
+    const domains = competencies.filterBy('isDomain');
+
+    return domains;
+  }),
+  childCompetencies: computed('school.competencies.[]', async function(){
+    const competencies = await this.get('competencies');
+    const childCompetencies = competencies.filterBy('isNotDomain');
+
+    return childCompetencies;
+  }),
 });
