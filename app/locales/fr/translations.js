@@ -191,6 +191,7 @@ export default {
     'icsFeed': 'Données de ICS',
     'ignore': 'Ignorer',
     'ilios': 'Ilios',
+    'iliosUpdatePending': "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant.",
     'inactive': 'inactif',
     'include': 'Inclure',
     'incompleteSessions': "Séances incomplète: ne peut être pas publiée",

@@ -191,6 +191,7 @@ export default {
     'icsFeed': 'ICS Feed',
     'ignore': 'Ignore',
     'ilios': 'Ilios',
+    'iliosUpdatePending': "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now.",
     'inactive': 'inactive',
     'include': 'Include',
     'incompleteSessions': 'Sessions Incomplete: cannot publish',
