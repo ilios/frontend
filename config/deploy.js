@@ -24,18 +24,25 @@ module.exports = function(deployTarget) {
     archive: {
       archiveName: 'frontend.tar.gz',
     },
+    cloudfront: {
+      objectPaths(context){
+        return `/${context.archiveName}`;
+      },
+    }
   };
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
     ENV['s3-index'].bucket = 'frontend-archive-staging';
     ENV['s3-index'].prefix = API_VERSION;
+    ENV['cloudfront'].distribution = 'E1W0LI6DFZEQOV';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
     ENV['s3-index'].bucket = 'frontend-archive-production';
     ENV['s3-index'].prefix = API_VERSION;
+    ENV['cloudfront'].distribution = 'E1RJJYSB507IYA';
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
