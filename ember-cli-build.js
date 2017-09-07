@@ -31,6 +31,9 @@ module.exports = function(defaults) {
       plugins: ['lists', 'code_view', 'link'],
       themes: 'gray'
     },
+    'ember-service-worker': {
+      versionStrategy: 'every-build',
+    },
     'asset-cache': {
       version: '2',
       include: [
