@@ -35,10 +35,31 @@ module.exports = function(defaults) {
       versionStrategy: 'every-build',
     },
     'asset-cache': {
-      version: '2',
+      version: '3',
       include: [
         'assets/**/*',
-        'ilios-prerender/*'
+        'ilios-prerender/*',
+        'fonts/**/*',
+      ]
+    },
+    'esw-index': {
+      version: '2',
+      includeScope: [
+        /\/course(\/.*)?$/,
+        /\/course-materials(\/.*)?$/,
+        /\/instructorgroups(\/.*)?$/,
+        /\/learnergroups(\/.*)?$/,
+        /\/programs(\/.*)?$/,
+        /\/admin(\/.*)?$/,
+        /\/logout(\/.*)?$/,
+        /\/schools(\/.*)?$/,
+        /\/myprofile(\/.*)?$/,
+        /\/mymaterials(\/.*)?$/,
+        /\/course-rollover(\/.*)?$/,
+        /\/curriculum-inventory-reports(\/.*)?$/,
+        /\/curriculum-inventory-sequence-block(\/.*)?$/,
+        /\/data(\/.*)?$/,
+        /\/weeklyevents(\/.*)?$/,
       ]
     },
   });
