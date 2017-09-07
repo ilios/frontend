@@ -2,41 +2,65 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/ember-i18n";
-import startMirage from '../../helpers/start-mirage';
 import Ember from 'ember';
 
 const { Object:EmberObject, Service, RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('school-vocabularies-list', 'Integration | Component | school vocabularies list', {
   integration: true,
   setup(){
     initializer.initialize(this);
-    startMirage(this.container);
   }
 });
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   assert.expect(4);
-  let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
-  let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
-  server.createList('term', { vocabulary: [1]}, 2);
-  server.createList('term', { vocabulary: [2]}, 1);
-
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
-
-  const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
+  let term1 = EmberObject.create({
+    id: 1,
+    title: 'term1'
   });
+  let term2 = EmberObject.create({
+    id: 2,
+    title: 'term2'
+  });
+  let term3 = EmberObject.create({
+    id: 3,
+    title: 'term3'
+  });
+  let  vocabulary1 =  EmberObject.create({
+    id: 1,
+    title: 'Vocabulary 1',
+    terms: resolve([term1, term2]),
+    termCount: 2,
+    isNew: false
+  });
+  term1.set('vocabulary', resolve(vocabulary1));
+  term2.set('vocabulary', resolve(vocabulary1));
+  let  vocabulary2 =  EmberObject.create({
+    id: 2,
+    title: 'Vocabulary 2',
+    terms: resolve([term3]),
+    termCount: 1,
+    isNew: false
+  });
+  term3.set('vocabulary', resolve(vocabulary2));
+  const school = EmberObject.create({
+    vocabularies: resolve([vocabulary1, vocabulary2])
+  });
+  vocabulary1.set('school', resolve(school));
+  vocabulary2.set('school', resolve(school));
+
 
   this.on('edit', parseInt);
   this.set('school', school);
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-  return wait().then(() => {
-    assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'Vocabulary 1');
-    assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'Vocabulary 2');
-    assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), '2');
-    assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), '1');
-  });
+
+  await wait();
+  assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'Vocabulary 1');
+  assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'Vocabulary 2');
+  assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), '2');
+  assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), '1');
 
 });
 
@@ -78,28 +102,66 @@ test('can create new vocabulary', function(assert) {
 
 });
 
-test('cannot delete vocabularies with terms', function(assert) {
+test('cannot delete vocabularies with terms', async function(assert) {
   assert.expect(3);
-  let  vocabulary1 = server.create('vocabulary', {school: 1, terms: [1, 2], isNew: false});
-  let  vocabulary2 = server.create('vocabulary', {school: 1, terms: [3], isNew: false});
-  let  vocabulary3 = server.create('vocabulary', {school: 1, isNew: false});
-  server.createList('term', { vocabulary: [1]}, 2);
-  server.createList('term', { vocabulary: [2]}, 1);
 
-  let vocabularies = [vocabulary1, vocabulary2, vocabulary3].map(obj => EmberObject.create(obj));
+  let term1 = EmberObject.create({
+    id: 1,
+    title: 'term1'
+  });
+  let term2 = EmberObject.create({
+    id: 2,
+    title: 'term2'
+  });
+  let term3 = EmberObject.create({
+    id: 3,
+    title: 'term3'
+  });
+  let  vocabulary1 =  EmberObject.create({
+    id: 1,
+    title: 'Vocabulary 1',
+    terms: resolve([term1, term2]),
+    termCount: 2,
+    isNew: false
+  });
+  term1.set('vocabulary', resolve(vocabulary1));
+  term2.set('vocabulary', resolve(vocabulary1));
+
+  let  vocabulary2 =  EmberObject.create({
+    id: 2,
+    title: 'Vocabulary 2',
+    terms: resolve([term3]),
+    termCount: 1,
+    isNew: false
+  });
+
+  term3.set('vocabulary', resolve(vocabulary2));
+
+  let  vocabulary3 =  EmberObject.create({
+    id: 3,
+    title: 'Vocabulary 3',
+    terms: resolve([]),
+    termCount: 0,
+    isNew: false
+  });
 
   const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
+    vocabularies: resolve([vocabulary1, vocabulary2, vocabulary3])
   });
+
+  vocabulary1.set('school', resolve(school));
+  vocabulary2.set('school', resolve(school));
+  vocabulary3.set('school', resolve(school));
+
 
   this.on('edit', parseInt);
   this.set('school', school);
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-  return wait().then(() => {
-    assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
-    assert.equal(this.$('tr:eq(2) td:eq(2) i').length, 1);
-    assert.equal(this.$('tr:eq(3) td:eq(2) i').length, 2);
-  });
+
+  await wait();
+  assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
+  assert.equal(this.$('tr:eq(2) td:eq(2) i').length, 1);
+  assert.equal(this.$('tr:eq(3) td:eq(2) i').length, 2);
 
 });
 
@@ -107,6 +169,7 @@ test('clicking delete removes the vocabulary', function(assert) {
   assert.expect(6);
   let  vocabulary = {
     terms: [],
+    termCount: 0,
     title: 'nothing important',
     isNew: false,
     deleteRecord(){
@@ -117,7 +180,7 @@ test('clicking delete removes the vocabulary', function(assert) {
     }
   };
 
-  let vocabularies = [vocabulary].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
@@ -141,14 +204,25 @@ test('clicking delete removes the vocabulary', function(assert) {
 
 test('clicking edit fires the action to manage the vocab', function(assert) {
   assert.expect(1);
-  let  vocabulary1 = server.create('vocabulary', {school: 1, isNew: false});
-  let  vocabulary2 = server.create('vocabulary', {school: 1, isNew: false});
+  let vocabulary1 =  EmberObject.create({
+    id: 1,
+    title: 'Vocabulary 1',
+    isNew: false
+  });
+  let vocabulary2 =  EmberObject.create({
+    id: 2,
+    title: 'Vocabulary 2',
+    isNew: false
+  });
 
-  let vocabularies = [vocabulary1, vocabulary2].map(obj => EmberObject.create(obj));
+  let vocabularies = [vocabulary1, vocabulary2];
 
   const school = EmberObject.create({
     vocabularies: RSVP.resolve(vocabularies)
   });
+
+  vocabulary1.set('school', resolve(school));
+  vocabulary2.set('school', resolve(school));
 
   this.set('school', school);
   this.on('edit', function(id){

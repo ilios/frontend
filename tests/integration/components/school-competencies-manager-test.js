@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import initializer from "ilios/instance-initializers/ember-i18n";
 
 const { Object:EmberObject } = Ember;
 
@@ -28,7 +29,10 @@ let Competency = EmberObject.extend({
 });
 
 moduleForComponent('school-competencies-manager', 'Integration | Component | school competencies manager', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(this);
+  }
 });
 
 test('it renders', function(assert) {
