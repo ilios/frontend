@@ -1,20 +1,14 @@
 .connection-status {
   $height: $base-font-size * 2.5;
-  background-color: $warning-color;
-  color: $text-grey;
+  @include critical-notice($warning-color, $text-grey, $height);
+
   display: none;
-  margin: 0;
-  min-height: $height;
-  padding: 0;
-  text-align: center;
-  width: 100%;
 
   &.offline {
     display: block;
   }
 
   span {
-    line-height: $height;
     margin-right: $base-font-size * 2;
   }
 

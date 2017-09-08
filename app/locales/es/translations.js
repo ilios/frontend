@@ -191,6 +191,7 @@
     'icsFeed': 'Fuente de ICS',
     'ignore': 'Ignorar',
     'ilios': 'Ilios',
+    'iliosUpdatePending': "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora.",
     'inactive': 'inactivo',
     'include': 'Incluir',
     'incompleteSessions': 'Sesiónes Incompletas: No se pueden publicar',

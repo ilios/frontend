@@ -4014,6 +4014,13 @@ ember-service-worker-asset-cache@^0.6.1:
     ember-cli-babel "^5.1.6"
     glob "^7.1.1"
 
+ember-service-worker-update-notify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-service-worker-update-notify/-/ember-service-worker-update-notify-1.0.1.tgz#b6b9a38dbe21b8528e6586e1930b7adfb2627a08"
+  dependencies:
+    ember-cli-babel "^6.3.0"
+    ember-cli-htmlbars "^2.0.1"
+
 ember-service-worker@^0.6.8:
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/ember-service-worker/-/ember-service-worker-0.6.8.tgz#2a8de37c46e54b3ef2467a54577c25699113c9a8"
