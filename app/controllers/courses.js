@@ -35,26 +35,24 @@ export default Controller.extend({
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourse: null,
   deletedCourses: [],
-  courses: computed('selectedSchool', 'selectedYear', 'deletedCourses.[]', 'newCourse', function(){
-    return new Promise(resolve => {
-      const selectedSchool = this.get('selectedSchool');
-      const selectedYear = this.get('selectedYear');
-      if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
-        resolve([]);
-      } else {
-        let schoolId = selectedSchool.get('id');
-        let yearTitle = selectedYear.get('title');
-        this.get('store').query('course', {
-          filters: {
-            school: schoolId,
-            year: yearTitle,
-            archived: false
-          }
-        }).then(courses => {
-          resolve(courses.toArray());
-        });
+  courses: computed('selectedSchool', 'selectedYear', 'deletedCourses.[]', 'newCourse', async function(){
+    const selectedSchool = this.get('selectedSchool');
+    const selectedYear = this.get('selectedYear');
+    if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
+      return [];
+    }
+
+    let schoolId = selectedSchool.get('id');
+    let yearTitle = selectedYear.get('title');
+    const courses = await this.get('store').query('course', {
+      filters: {
+        school: schoolId,
+        year: yearTitle,
+        archived: false
       }
     });
+
+    return courses;
   }),
 
   changeTitleFilter: task(function * (value) {

@@ -1,7 +1,7 @@
-<section class='courses-list'>
+<section class='courses-list' data-test-courses>
   <div class="filters">
-    {{toggle-mycourses isChecked=userCoursesOnly toggleMyCourses='toggleMyCourses'}}
-    <div id='schoolsfilter' class="schoolsfilter">
+    {{toggle-mycourses data-test-my-courses-filter isChecked=userCoursesOnly toggleMyCourses='toggleMyCourses'}}
+    <div class="schoolsfilter" data-test-school-filter>
       {{fa-icon 'university' fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
@@ -17,7 +17,7 @@
     </div>
     <div class="yearsfilter">
       {{fa-icon 'calendar' fixedWidth=true}}
-      <select onchange={{action "changeSelectedYear" value="target.value"}}>
+      <select onchange={{action "changeSelectedYear" value="target.value"}} data-test-year-filter>
         {{#each sortedYears as |year|}}
           <option value={{year.year}} selected={{is-equal year selectedYear}}>
             {{year.academicYearTitle}}
@@ -28,6 +28,7 @@
 
     <div class="titlefilter">
       {{one-way-input
+        data-test-title-filter
         value=titleFilter
         update=(perform changeTitleFilter)
         placeholder=(t 'general.courseTitleFilterPlaceholder')
@@ -40,7 +41,7 @@
         <h2>{{t 'general.courses'}}</h2>
       </div>
       <div class='actions'>
-        {{expand-collapse-button value=showNewCourseForm action="toggleNewCourseForm"}}
+        {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
     <section class='new'>
@@ -54,7 +55,7 @@
       {{/if}}
 
       {{#if newCourse}}
-        <div class='saved-result'>
+        <div class='saved-result' data-test-new-course>
           {{#link-to 'course' newCourse}}
             {{fa-icon 'external-link-square'}} {{newCourse.title}}
           {{/link-to}}
@@ -65,7 +66,7 @@
     <div class='list'>
       {{#if (is-fulfilled filteredCourses)}}
         {{ilios-course-list
-          courses=filteredCourses
+          courses=(await filteredCourses)
           remove='removeCourse'
           sortBy=sortCoursesBy
           setSortBy=(action (mut sortCoursesBy))

@@ -1,11 +1,12 @@
 <div class="new-result-title">{{t 'general.newCourse'}}</div>
 
-<div class="detail-content">
+<div class="detail-content" data-test-new-course>
   <label class="form-col form-col-12">
     <div class="form-label">{{t 'general.title'}}:</div>
 
     <div class="form-data form-data-text form-input-row">
       {{one-way-input
+        data-test-title
         value=title
         update=(action (mut title))
         onenter=(action 'save')
@@ -24,7 +25,7 @@
   <label class="form-col form-col-12">
     <div class="form-label">{{t 'general.academicYear'}}:</div>
     <div class="form-data form-data-select form-input-row new-course-year">
-      <select onchange={{action "setYear" value="target.value"}}>
+      <select onchange={{action "setYear" value="target.value"}} data-test-year>
         {{#each years as |year|}}
           <option value={{year}} selected={{is-equal year selectedYear}}>
             {{year}} - {{inc year}}
