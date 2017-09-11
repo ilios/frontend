@@ -1,0 +1,6 @@
+.update-notification {
+  $height: $base-font-size * 2.5;
+  @include critical-notice($info-color, $super-light-grey, $height);
+
+  cursor: pointer;
+}

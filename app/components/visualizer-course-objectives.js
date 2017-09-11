@@ -23,14 +23,17 @@ export default Component.extend({
         const parents = await sessionObjective.get('parents');
         return isPresent(parents);
       });
-      const courseSessionObjectives = await map(sessionObjectivesWithParents.toArray(), sessionObjective => {
-        const courseObjective = sessionObjective.get('parents');
-        return courseObjective.get('firstObject').get('id');
+      const courseSessionObjectives = await map(sessionObjectivesWithParents.toArray(), async sessionObjective => {
+        const parents = await sessionObjective.get('parents');
+        return parents.mapBy('id');
       });
+      let flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
+        return flattened.pushObjects(obj.toArray());
+      }, []);
 
       return {
         sessionTitle: session.get('title'),
-        objectives: courseSessionObjectives,
+        objectives: flatObjectives,
         minutes
       };
 

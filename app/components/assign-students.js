@@ -68,7 +68,6 @@ export default Component.extend({
       filters: {
         schools: [school.get('id')],
       },
-      limit: 1000,
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.

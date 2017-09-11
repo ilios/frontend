@@ -118,7 +118,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const store = this.get('store');
     const school = await this.get('currentSchool');
     let query = {
-      limit: 1000,
       filters: {}
     };
     if (isPresent(school)) {

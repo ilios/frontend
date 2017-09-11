@@ -21,7 +21,7 @@ module('Acceptance: API Version Check', {
   }
 });
 
-test('No warning shows up when api versions match', function(assert) {
+test('No warning shows up when api versions match', async function(assert) {
   assert.expect(2);
   server.get('application/config', function() {
     assert.ok(true, 'our config override was called');
@@ -32,13 +32,11 @@ test('No warning shows up when api versions match', function(assert) {
   });
   const warningOverlay = '.api-version-check-warning';
 
-  visit(url);
-  andThen(() => {
-    assert.equal($(warningOverlay).length, 0);
-  });
+  await visit(url);
+  assert.equal($(warningOverlay).length, 0);
 });
 
-test('Warning shows up when api versions do not match', function(assert) {
+test('Warning shows up when api versions do not match', async function(assert) {
   assert.expect(2);
   server.get('application/config', function() {
     assert.ok(true, 'our config override was called');
@@ -49,8 +47,6 @@ test('Warning shows up when api versions do not match', function(assert) {
   });
   const warningOverlay = '.api-version-check-warning';
 
-  visit(url);
-  andThen(() => {
-    assert.equal($(warningOverlay).length, 1);
-  });
+  await visit(url);
+  assert.equal($(warningOverlay).length, 1);
 });

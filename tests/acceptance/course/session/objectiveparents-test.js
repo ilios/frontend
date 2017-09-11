@@ -55,127 +55,95 @@ module('Acceptance: Session - Objective Parents', {
   }
 });
 
-test('list session objectives', function(assert) {
+test('list session objectives', async function(assert) {
   assert.expect(11);
-  visit(url);
-  andThen(function() {
-    let tds = find('.session-objective-list tbody tr:eq(0) td');
-    assert.equal(tds.length, 4);
-    click('.link', tds.eq(1));
-    andThen(function() {
-      assert.equal(getElementText(find('.specific-title')), 'SelectParentObjectives');
-      let objectiveManager = find('.objective-manager').eq(0);
-      let objective = fixtures.sessionObjectives[0];
-      assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
-      let expectedCourseTitle = fixtures.course.title;
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
-      //every course objective in the list
-      let ul = find('ul', parentPicker).eq(0);
-      let items = find('li', ul);
-      assert.equal(items.length, fixtures.course.objectives.length);
-      for(let i = 0; i < fixtures.course.objectives.length; i++){
-        let li = items.eq(i);
-        assert.equal(getElementText(li), getText(fixtures.parentObjectives[fixtures.course.objectives[i] - 1].title));
-        if(objective.parents.indexOf(fixtures.course.objectives[i]) !== -1){
-          assert.ok($(li).hasClass('selected'));
-        } else {
-          assert.ok(!$(li).hasClass('selected'));
-        }
-      }
-    });
-  });
+  await visit(url);
+  let tds = find('.session-objective-list tbody tr:eq(0) td');
+  assert.equal(tds.length, 4);
+  await click('.link', tds.eq(1));
+  assert.equal(getElementText(find('.specific-title')), 'SelectParentObjectives');
+  let objectiveManager = find('.objective-manager').eq(0);
+  let objective = fixtures.sessionObjectives[0];
+  assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
+  let expectedCourseTitle = fixtures.course.title;
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
+  //every course objective in the list
+  let ul = find('ul', parentPicker).eq(0);
+  let items = find('li', ul);
+  assert.equal(items.length, fixtures.course.objectives.length);
+  for(let i = 0; i < fixtures.course.objectives.length; i++){
+    let li = items.eq(i);
+    assert.equal(getElementText(li), getText(fixtures.parentObjectives[fixtures.course.objectives[i] - 1].title));
+    if(objective.parents.indexOf(fixtures.course.objectives[i]) !== -1){
+      assert.ok($(li).hasClass('selected'));
+    } else {
+      assert.ok(!$(li).hasClass('selected'));
+    }
+  }
 });
 
-test('change session objective parent', function(assert) {
+test('change session objective parent', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      click('li:eq(0)', parentPicker);
-      click('li:eq(2)', parentPicker);
-      andThen(function(){
-        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(find('li:eq(2)', parentPicker).hasClass('selected'));
-        assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-      });
-    });
-  });
+  await visit(url);
+  await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
+  let objectiveManager = find('.objective-manager').eq(0);
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  await click('li:eq(0)', parentPicker);
+  await click('li:eq(2)', parentPicker);
+  assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+  assert.ok(find('li:eq(2)', parentPicker).hasClass('selected'));
+  assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
 });
 
-test('deselect all parents for session objective', function(assert) {
+test('deselect all parents for session objective', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      click('li:eq(1)', parentPicker);
-      click('li:eq(0)', parentPicker);
-      andThen(function(){
-        for(let i = 0; i < 3; i++){
-          let item = find('li', parentPicker).eq(i);
-          assert.ok(!item.hasClass('selected'));
-        }
-      });
-
-    });
-  });
+  await visit(url);
+  await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
+  let objectiveManager = find('.objective-manager').eq(0);
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  await click('li:eq(1)', parentPicker);
+  await click('li:eq(0)', parentPicker);
+  for(let i = 0; i < 3; i++){
+    let item = find('li', parentPicker).eq(i);
+    assert.ok(!item.hasClass('selected'));
+  }
 });
 
-test('multiple parents for session objective', function(assert) {
+test('multiple parents for session objective', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-    andThen(function() {
-      let objectiveManager = find('.objective-manager').eq(0);
-      let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-      click('li:eq(1)', parentPicker);
-      andThen(function(){
-        assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
-        assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-        assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
-      });
-    });
-  });
+  await visit(url);
+  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
+  let objectiveManager = find('.objective-manager').eq(0);
+  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
+  await click('li:eq(1)', parentPicker);
+  assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
+  assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
+  assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
 });
 
-test('save changes', function(assert) {
+test('save changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-    click('.detail-objectives:eq(0) button.bigadd');
-    andThen(function(){
-      let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-      assert.equal(getElementText(td), getText(
-        fixtures.parentObjectives[1].title
-      ));
-    });
-  });
-
+  await visit(url);
+  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+  await click('.detail-objectives:eq(0) button.bigadd');
+  let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+  assert.equal(getElementText(td), getText(
+    fixtures.parentObjectives[1].title
+  ));
 });
 
-test('cancel changes', function(assert) {
+test('cancel changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-    click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
-    click('.detail-objectives:eq(0) button.bigcancel');
-  });
-  andThen(function(){
-    let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-    assert.equal(getElementText(td), getText(
-      fixtures.parentObjectives[0].title
-    ));
-  });
+  await visit(url);
+  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
+  await click('.detail-objectives:eq(0) button.bigcancel');
+  let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+  assert.equal(getElementText(td), getText(
+    fixtures.parentObjectives[0].title
+  ));
 });

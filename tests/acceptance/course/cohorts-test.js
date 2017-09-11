@@ -62,20 +62,18 @@ module('Acceptance: Course - Cohorts', {
   }
 });
 
-test('list cohorts', function(assert) {
+test('list cohorts', async function(assert) {
   assert.expect(4);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-cohorts');
-    var rows = find('tbody tr', container);
-    assert.equal(rows.length, fixtures.course.cohorts.length);
-    for(let i = 0; i < fixtures.course.cohorts.length; i++){
-      let cohort = fixtures.cohorts[fixtures.course.cohorts[i] - 1];
-      assert.equal(getElementText(find('td:eq(0)', rows[i])), getText('school 0'));
-      assert.equal(getElementText(find('td:eq(1)', rows[i])), getText('program 0'));
-      assert.equal(getElementText(find('td:eq(2)', rows[i])), getText(cohort.title));
-    }
-  });
+  await visit(url);
+  var container = find('.detail-cohorts');
+  var rows = find('tbody tr', container);
+  assert.equal(rows.length, fixtures.course.cohorts.length);
+  for(let i = 0; i < fixtures.course.cohorts.length; i++){
+    let cohort = fixtures.cohorts[fixtures.course.cohorts[i] - 1];
+    assert.equal(getElementText(find('td:eq(0)', rows[i])), getText('school 0'));
+    assert.equal(getElementText(find('td:eq(1)', rows[i])), getText('program 0'));
+    assert.equal(getElementText(find('td:eq(2)', rows[i])), getText(cohort.title));
+  }
 });
 
 test('manage cohorts', async function(assert) {
@@ -87,63 +85,42 @@ test('manage cohorts', async function(assert) {
   assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
 });
 
-test('save cohort chages', function(assert) {
+test('save cohort chages', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-cohorts');
-    click(find('.actions button', container));
-    andThen(function(){
-      click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-list ul li:eq(0)', container)).then(function(){
-          click('button.bigadd', container);
-        });
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[1].title));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.detail-cohorts');
+  await click(find('.actions button', container));
+  await click(find('.removable-list li:eq(0)', container));
+  await click(find('.selectable-list ul li:eq(0)', container));
+  await click('button.bigadd', container);
+
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[1].title));
 });
 
-test('cancel cohort changes', function(assert) {
+test('cancel cohort changes', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    var container = find('.detail-cohorts');
-    click(find('.actions button', container));
-    andThen(function(){
-      click(find('.removable-list li:eq(0)', container)).then(function(){
-        click(find('.selectable-list ul li:eq(0)', container)).then(function(){
-          click('button.bigcancel', container);
-        });
-      });
-      andThen(function(){
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
-        assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[0].title));
-      });
-    });
-  });
+  await visit(url);
+  var container = find('.detail-cohorts');
+  await click(find('.actions button', container));
+  await click(find('.removable-list li:eq(0)', container));
+  await click(find('.selectable-list ul li:eq(0)', container));
+  await click('button.bigcancel', container);
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
+  assert.equal(getElementText(find('tbody tr:eq(0) td:eq(2)', container)), getText(fixtures.cohorts[0].title));
 });
 
-test('removing a cohort remove course objectives parents linked to that cohort', function(assert) {
+test('removing a cohort remove course objectives parents linked to that cohort', async function(assert) {
   assert.expect(3);
-  visit(url);
-  andThen(function() {
-    let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    assert.equal(parents.length, 2);
-    click('.detail-cohorts .actions button');
-    andThen(function(){
-      click('.detail-cohorts .removable-list li:eq(0)');
-      click('.detail-cohorts button.bigadd');
-      andThen(function(){
-        parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-        assert.equal(parents.length, 1);
-        assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
-      });
-    });
-  });
+  await visit(url);
+  let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
+  assert.equal(parents.length, 2);
+  await click('.detail-cohorts .actions button');
+  await click('.detail-cohorts .removable-list li:eq(0)');
+  await click('.detail-cohorts button.bigadd');
+  parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
+  assert.equal(parents.length, 1);
+  assert.equal(getElementText(parents), getText(fixtures.parentObjective2.title));
 });

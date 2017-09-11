@@ -26,8 +26,7 @@ test('it renders', function(assert) {
   });
 
   let storeMock = Service.extend({
-    query(what, {limit, filters}){
-      assert.equal(limit, 1000);
+    query(what, {filters}){
       assert.equal(filters.school, 1);
       assert.equal('user', what);
       return resolve([1, 2, 3, 4, 5]);

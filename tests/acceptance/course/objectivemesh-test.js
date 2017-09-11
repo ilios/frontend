@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import wait from 'ember-test-helpers/wait';
 
 var application;
 var url = '/courses/1?details=true&courseObjectiveDetails=true';
@@ -56,123 +57,98 @@ module('Acceptance: Course - Objective Mesh Descriptors', {
   }
 });
 
-test('manage terms', function(assert) {
+test('manage terms', async function(assert) {
   assert.expect(27);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.course-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives).then(function(){
-      assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
-    });
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.course-objective-list tbody tr:eq(1) td:eq(2) .link', detailObjectives);
+  assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
 
-    andThen(function() {
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let objective = fixtures.courseObjectives[1];
-      let removableItems = find('.removable-list li', meshManager);
-      assert.equal(removableItems.length, objective.meshDescriptors.length);
-      for (let i = 0; i < objective.meshDescriptors.length; i++){
-        let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-        assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
-      }
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let objective = fixtures.courseObjectives[1];
+  let removableItems = find('.removable-list li', meshManager);
+  assert.equal(removableItems.length, objective.meshDescriptors.length);
+  for (let i = 0; i < objective.meshDescriptors.length; i++){
+    let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
+  }
 
-      let searchBox = find('.search-box', meshManager);
-      assert.equal(searchBox.length, 1);
-      searchBox = searchBox.eq(0);
-      let searchBoxInput = find('input', searchBox);
-      assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
-      fillIn(searchBoxInput, 'descriptor');
-      click('span.search-icon', searchBox);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        assert.equal(searchResults.length, fixtures.meshDescriptors.length);
-        for(let i = 0; i < fixtures.meshDescriptors.length; i++){
-          let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
-          assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
-        }
+  let searchBox = find('.search-box', meshManager);
+  assert.equal(searchBox.length, 1);
+  searchBox = searchBox.eq(0);
+  let searchBoxInput = find('input', searchBox);
+  assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('span.search-icon', searchBox);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+  for(let i = 0; i < fixtures.meshDescriptors.length; i++){
+    let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
+  }
 
-        for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-          if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-            assert.ok($(searchResults[i]).hasClass('disabled'));
-          } else {
-            assert.ok(!$(searchResults[i]).hasClass('disabled'));
-          }
-        }
-        click('.removable-list li:eq(0)', meshManager).then(function(){
-          assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
-        });
-        click(searchResults[0]);
-        andThen(function(){
-          assert.ok($(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
+  for (let i = 0; i < fixtures.meshDescriptors.length; i++){
+    if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+      assert.ok($(searchResults[i]).hasClass('disabled'));
+    } else {
+      assert.ok(!$(searchResults[i]).hasClass('disabled'));
+    }
+  }
+  await click('.removable-list li:eq(0)', meshManager);
+  assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+  await click(searchResults[0]);
+  assert.ok($(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
 
-          let newExpectedMesh = [
-            fixtures.meshDescriptors[0].name,
-            fixtures.meshDescriptors[2].name,
-            fixtures.meshDescriptors[3].name,
-            fixtures.meshDescriptors[4].name,
-            fixtures.meshDescriptors[5].name,
-          ];
-          removableItems = find('.removable-list li', meshManager);
-          assert.equal(removableItems.length, 5);
-          for (let i = 0; i < 2; i++){
-            let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-            assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i]));
-          }
-        });
-      });
-    });
-  });
+  let newExpectedMesh = [
+    fixtures.meshDescriptors[0].name,
+    fixtures.meshDescriptors[2].name,
+    fixtures.meshDescriptors[3].name,
+    fixtures.meshDescriptors[4].name,
+    fixtures.meshDescriptors[5].name,
+  ];
+  removableItems = find('.removable-list li', meshManager);
+  assert.equal(removableItems.length, 5);
+  for (let i = 0; i < 2; i++){
+    let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
+    assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i]));
+  }
+  await wait();
 });
 
-test('save terms', function(assert) {
+test('save terms', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.course-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
-    andThen(function() {
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let searchBoxInput = find('.search-box input', meshManager);
-      fillIn(searchBoxInput, 'descriptor');
-      click('.search-box span.search-icon', meshManager);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        click('.removable-list li:eq(0)', meshManager);
-        click(searchResults[1]);
-        click('button.bigadd', detailObjectives);
-        andThen(function(){
-          let expectedMesh = fixtures.meshDescriptors[1].name;
-          let tds = find('.course-objective-list tbody tr:eq(0) td');
-          assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
-        });
-      });
-    });
-  });
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.course-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let searchBoxInput = find('.search-box input', meshManager);
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('.search-box span.search-icon', meshManager);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  await click('.removable-list li:eq(0)', meshManager);
+  await click(searchResults[1]);
+  await click('button.bigadd', detailObjectives);
+  let expectedMesh = fixtures.meshDescriptors[1].name;
+  let tds = find('.course-objective-list tbody tr:eq(0) td');
+  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
 });
 
-test('cancel changes', function(assert) {
+test('cancel changes', async function(assert) {
   assert.expect(1);
-  visit(url);
-  andThen(function() {
-    let detailObjectives = find('.detail-objectives').eq(0);
-    click('.course-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
-    andThen(function() {
-      let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-      let searchBoxInput = find('.search-box input', meshManager);
-      fillIn(searchBoxInput, 'descriptor');
-      click('.search-box span.search-icon', meshManager);
-      andThen(function(){
-        let searchResults = find('.mesh-search-results li', meshManager);
-        click('.removable-list li:eq(0)', meshManager);
-        click(searchResults[1]);
-        click(searchResults[2]);
-        click(searchResults[3]);
-        click('button.bigcancel', detailObjectives);
-        andThen(function(){
-          let tds = find('.course-objective-list tbody tr:eq(0) td');
-          let expectedMesh = fixtures.meshDescriptors[fixtures.courseObjectives[0].meshDescriptors[0] - 1].name;
-          assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
-        });
-      });
-    });
-  });
+  await visit(url);
+  let detailObjectives = find('.detail-objectives').eq(0);
+  await click('.course-objective-list tbody tr:eq(0) td:eq(2) .link', detailObjectives);
+  let meshManager = find('.mesh-manager', detailObjectives).eq(0);
+  let searchBoxInput = find('.search-box input', meshManager);
+  await fillIn(searchBoxInput, 'descriptor');
+  await click('.search-box span.search-icon', meshManager);
+  let searchResults = find('.mesh-search-results li', meshManager);
+  await click('.removable-list li:eq(0)', meshManager);
+  await click(searchResults[1]);
+  await click(searchResults[2]);
+  await click(searchResults[3]);
+  await click('button.bigcancel', detailObjectives);
+  let tds = find('.course-objective-list tbody tr:eq(0) td');
+  let expectedMesh = fixtures.meshDescriptors[fixtures.courseObjectives[0].meshDescriptors[0] - 1].name;
+  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
 });

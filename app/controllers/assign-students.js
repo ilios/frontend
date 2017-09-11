@@ -28,7 +28,6 @@ export default Controller.extend({
     return new Promise(resolve => {
       let school = this.get('selectedSchool');
       this.get('store').query('user', {
-        limit: 1000,
         filters: {
           roles: [4],
           school: school.get('id'),

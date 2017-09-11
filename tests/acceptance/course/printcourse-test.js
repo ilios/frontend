@@ -79,18 +79,15 @@ module('Acceptance: Course - Print Course', {
 
 });
 
-test('test print course learning materials', function(assert) {
+test('test print course learning materials', async function(assert) {
+  await visit('/course/1/print');
 
-  visit('/course/1/print');
-
-  andThen(function() {
-    assert.equal(find('.detail-header h2:eq(0)').text(), 'Back to the Future');
-    assert.equal(find('.detail-content ul li:eq(0)').text().trim(), 'Time Travel');
-    assert.equal(find('.detail-content ul li:eq(1)').text(), 'Gigawatt Conversion');
-    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
-    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(1)').text(), 'file');
-    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(2)').text().trim(), 'No');
-    assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(4)').text().trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
-    assert.equal(find('.detail-content ul li:eq(2)').text(), 'Flux Capacitor');
-  });
+  assert.equal(find('.detail-header h2:eq(0)').text(), 'Back to the Future');
+  assert.equal(find('.detail-content ul li:eq(0)').text().trim(), 'Time Travel');
+  assert.equal(find('.detail-content ul li:eq(1)').text(), 'Gigawatt Conversion');
+  assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
+  assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(1)').text(), 'file');
+  assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(2)').text().trim(), 'No');
+  assert.equal(find('.detail-view-details .detail-content tbody tr td:eq(4)').text().trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
+  assert.equal(find('.detail-content ul li:eq(2)').text(), 'Flux Capacitor');
 });

@@ -4,34 +4,45 @@ const API_VERSION = require('./api-version.js');
 module.exports = function(deployTarget) {
   var ENV = {
     build: {},
-    exclude: ['.DS_Store', '*-test.js'],
-    s3: {
-      acl: 'public-read',
-      region: 'us-west-2',
-      bucket: 'ilios-frontend-assets'
+    pipeline: {
+      runOrder: {
+        'archive': { after: 'json-config' },
+      },
     },
     's3-index': {
       region: 'us-west-2',
-      filePattern: 'index.json',
-      bucket: 'frontend-json-config',
+      filePattern(context){
+        return context.archiveName;
+      },
+      distDir(context){
+        return context.archivePath;
+      },
     },
     'revision-data': {
       type: 'git-commit',
     },
-    gzip: {
-      //dont gzip the json index file
-      ignorePattern: '**/index.json'
+    archive: {
+      archiveName: 'frontend.tar.gz',
+    },
+    cloudfront: {
+      objectPaths(context){
+        return `/${context.archiveName}`;
+      },
     }
   };
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'stage-' + API_VERSION;
+    ENV['s3-index'].bucket = 'frontend-archive-staging';
+    ENV['s3-index'].prefix = API_VERSION;
+    ENV['cloudfront'].distribution = 'E1W0LI6DFZEQOV';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV['s3-index'].prefix = 'prod-' + API_VERSION;
+    ENV['s3-index'].bucket = 'frontend-archive-production';
+    ENV['s3-index'].prefix = API_VERSION;
+    ENV['cloudfront'].distribution = 'E1RJJYSB507IYA';
   }
 
   // Note: if you need to build some configuration asynchronously, you can return

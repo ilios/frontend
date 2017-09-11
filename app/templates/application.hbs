@@ -1,5 +1,9 @@
 {{ember-load-remover}}
 {{api-version-check}}
+{{connection-status}}
+{{#service-worker-update-notify}}
+  {{update-notification}}
+{{/service-worker-update-notify}}
 {{#if showHeader}}
   {{ilios-header title=translatedTitle}}
 {{/if}}

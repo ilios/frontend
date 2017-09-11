@@ -1,0 +1,11 @@
+@mixin critical-notice ($background-color, $color, $height) {
+  background-color: $background-color;
+  color: $color;
+  display: block;
+  line-height: $height;
+  margin: 0;
+  min-height: $height;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}

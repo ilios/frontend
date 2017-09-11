@@ -6,12 +6,10 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let env = EmberApp.env() || 'development';
   let isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
-  let prependCloudfrontUrl = ['production', 'staging'].indexOf(env) > -1;
 
   let app = new EmberApp(defaults, {
     fingerprint: {
       enabled: isProductionLikeBuild,
-      prepend: prependCloudfrontUrl?'https://d26vzvixg52o0d.cloudfront.net/':null
     },
     sourcemaps: {
       enabled: !isProductionLikeBuild,
@@ -32,7 +30,17 @@ module.exports = function(defaults) {
       languages: ['fr','es'],
       plugins: ['lists', 'code_view', 'link'],
       themes: 'gray'
-    }
+    },
+    'ember-service-worker': {
+      versionStrategy: 'every-build',
+    },
+    'asset-cache': {
+      version: '2',
+      include: [
+        'assets/**/*',
+        'ilios-prerender/*'
+      ]
+    },
   });
 
   return app.toTree();

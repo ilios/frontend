@@ -18,7 +18,7 @@ moduleForAcceptance('Acceptance: Learnergroup', {
 });
 
 
-test('generate new subgroups', function(assert) {
+test('generate new subgroups', async function(assert) {
   server.create('cohort', {
     learnerGroups: [1, 2, 3]
   });
@@ -56,32 +56,28 @@ test('generate new subgroups', function(assert) {
   const parentLearnergroupTitle = `learner group 0`;
   const table = `${subgroupList} .learnergroup-subgroup-list-list table tbody`;
 
-  visit('/learnergroups/1');
+  await visit('/learnergroups/1');
   // add five subgroups
-  click(expandButton);
-  click(multiGroupsButton);
-  fillIn(input, '5');
-  click(done);
+  await click(expandButton);
+  await click(multiGroupsButton);
+  await fillIn(input, '5');
+  await click(done);
   function getCellData(row, cell) {
     return find(`${table} tr:eq(${row}) td:eq(${cell})`).text().trim();
   }
-  andThen(() => {
-    assert.equal(find(`${table} tr`).length, 7, 'all subgroups are displayed.');
-    for (let i = 0; i < 5; i++) {
-      assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
-    }
-    assert.equal(getCellData(5, 0), 'learner group 1');
-    assert.equal(getCellData(6, 0), 'learner group 2');
+  assert.equal(find(`${table} tr`).length, 7, 'all subgroups are displayed.');
+  for (let i = 0; i < 5; i++) {
+    assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
+  }
+  assert.equal(getCellData(5, 0), 'learner group 1');
+  assert.equal(getCellData(6, 0), 'learner group 2');
 
-    // add two more subgroups
-    click(expandButton);
-    click(multiGroupsButton);
-    fillIn(input, '2');
-    click(done);
-    andThen(() => {
-      assert.equal(find(`${table} tr`).length, 9, 'all subgroups are still displayed.');
-      assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
-      assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
-    });
-  });
+  // add two more subgroups
+  await click(expandButton);
+  await click(multiGroupsButton);
+  await fillIn(input, '2');
+  await click(done);
+  assert.equal(find(`${table} tr`).length, 9, 'all subgroups are still displayed.');
+  assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
+  assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
 });

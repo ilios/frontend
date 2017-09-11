@@ -1,54 +1,47 @@
 ---
 dist: trusty
 language: node_js
-node_js:
-  - "6"
-
+node_js: 6
 sudo: false
-
-env:
-  matrix:
-    - PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
-    - PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
-
 cache:
   yarn: true
   directories:
     - node_modules
-    - $HOME/.cache
-
-matrix:
-  fast_finish: true
+    - $HOME/.cache/bower
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - npm install -g bower
+  - yarn global add bower
   - yarn global add greenkeeper-lockfile@1
 
 install:
-  - yarn install
+  - yarn
   - bower install
 
-before_script:
-  - greenkeeper-lockfile-update
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
-script:
-  - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
-
-after_script:
-  - greenkeeper-lockfile-upload
-
-after_success:
-  - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
-
-#encrypted the slack token to post to #info so that it doesn't run on pull requests or forks
-notifications:
-    slack:
-      secure: oloxDKdwXmNHKhh5WSR8DDxA3WJdAnyj+vj/8yawF1zG0tgL4fyPzzFqSpEhfsfgBrJlvxFtSnnsWEIMSMdT1LTwReClyjsy3PFQnHIiLMv/IZUS7ijahXQ4XL+ejfyPV4rJtFuKOLuNMww8uniy705/QkqBYwFUAcXXQ3gV5V8=
+jobs:
+  include:
+    - stage: prepare
+      before_script: greenkeeper-lockfile-update
+      after_script: greenkeeper-lockfile-upload
+      script: true
+    - stage: test
+      env: PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
+    - stage: test
+      env: PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: deploy
+      script: true
+      after_success:
+        - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy staging --activate
+        - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
+      notifications:
+        slack:
+          secure: oloxDKdwXmNHKhh5WSR8DDxA3WJdAnyj+vj/8yawF1zG0tgL4fyPzzFqSpEhfsfgBrJlvxFtSnnsWEIMSMdT1LTwReClyjsy3PFQnHIiLMv/IZUS7ijahXQ4XL+ejfyPV4rJtFuKOLuNMww8uniy705/QkqBYwFUAcXXQ3gV5V8=

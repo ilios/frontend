@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import { translationMacro as t } from "ember-i18n";
+import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { Controller, computed, inject, isEmpty, isPresent, observer, RSVP, run } = Ember;
+const { Controller, computed, inject, isEmpty, isPresent, RSVP } = Ember;
 const { service } = inject;
 const { gt } = computed;
-const { debounce } = run;
 const { PromiseArray } = DS;
 
 export default Controller.extend({
@@ -18,30 +17,23 @@ export default Controller.extend({
     titleFilter: 'filter'
   },
 
-  placeholderValue: t('general.programTitleFilterPlaceholder'),
-
   schoolId: null,
   titleFilter: null,
 
-  //in order to delay rendering until a user is done typing debounce the title filter
-  debouncedFilter: null,
+  changeTitleFilter: task(function * (value) {
+    const clean = escapeRegExp(value);
+    this.set('titleFilter', clean);
+    yield timeout(250);
 
-  watchFilter: observer('titleFilter', function() {
-    debounce(this, this.setFilter, 500);
-  }),
-
-  setFilter() {
-    const titleFilter = this.get('titleFilter');
-    const clean = escapeRegExp(titleFilter);
-    this.set('debouncedFilter', clean);
-  },
+    return clean;
+  }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  filteredPrograms: computed('debouncedFilter', 'programs.[]', {
+  filteredPrograms: computed('changeTitleFilter.lastSuccessful.value', 'programs.[]', {
     get() {
       let defer = RSVP.defer();
-      let title = this.get('debouncedFilter');
+      let title = this.get('changeTitleFilter.lastSuccessful.value');
       let exp = new RegExp(title, 'gi');
 
       this.get('programs').then(programs => {
@@ -88,8 +80,7 @@ export default Controller.extend({
         this.get('store').query('program', {
           filters: {
             school: schoolId
-          },
-          limit: 500
+          }
         }).then(programs => {
           defer.resolve(programs);
         });
