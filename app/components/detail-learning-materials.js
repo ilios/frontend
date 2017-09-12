@@ -1,13 +1,11 @@
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { isEmpty, Component, computed, inject, RSVP, ObjectProxy, Object:EmberObject } = Ember;
+const { isEmpty, Component, computed, inject, RSVP, Object:EmberObject } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
-const { all, Promise } = RSVP;
+const { all, map } = RSVP;
 
-export default Component.extend(SortableByPosition, {
+export default Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
@@ -24,7 +22,6 @@ export default Component.extend(SortableByPosition, {
   managingMaterial: null,
   meshMaterial: null,
   isSession: not('isCourse'),
-  newButtonTitle: t('general.add'),
   bufferMaterial: null,
   bufferTerms: [],
   totalMaterialsToSave: null,
@@ -33,74 +30,39 @@ export default Component.extend(SortableByPosition, {
   isEditing: false,
   type: null,
 
-  displaySearchBox: computed('isManaging', 'isEditing', 'isSorting', {
-    get() {
-      const isManaging = this.get('isManaging');
-      const isEditing = this.get('isEditing');
-      const editable = this.get('editable');
-      const isSorting = this.get('isSorting');
+  displaySearchBox: computed('isManaging', 'isEditing', 'isSorting', function(){
+    const isManaging = this.get('isManaging');
+    const isEditing = this.get('isEditing');
+    const editable = this.get('editable');
+    const isSorting = this.get('isSorting');
 
-      return (!isManaging && !isEditing && !isSorting && editable);
-    }
-  }).readOnly(),
-
-  learningMaterialStatuses: computed(function() {
-    return new Promise(resolve => {
-      this.get('store').findAll('learning-material-status').then(statuses => {
-        resolve(statuses);
-      });
-    });
+    return (!isManaging && !isEditing && !isSorting && editable);
   }),
 
-  learningMaterialUserRoles: computed(function() {
-    return new Promise(resolve => {
-      this.get('store').findAll('learning-material-user-role').then(roles => {
-        resolve(roles);
-      });
-    });
+  learningMaterialStatuses: computed(async function () {
+    const store = this.get('store');
+    return await store.findAll('learning-material-status');
   }),
 
-  proxyMaterials: computed('subject.learningMaterials.@each.{position}', function(){
-    return new Promise(resolve => {
-      let materialProxy = ObjectProxy.extend({
-        sortTerms: ['name'],
-        confirmRemoval: false,
-        sortedDescriptors: computed.sort('content.meshDescriptors', 'sortTerms')
-      });
-      this.get('subject').get('learningMaterials').then(materials => {
-        let sortedMaterials = materials.toArray().sort(this.positionSortingCallback);
-        resolve(sortedMaterials.map(material => {
-          return materialProxy.create({
-            content: material
-          });
-        }));
-      });
-    });
+  learningMaterialUserRoles: computed(async function () {
+    const store = this.get('store');
+    return await store.findAll('learning-material-user-role');
   }),
 
-  parentMaterials: computed('subject.learningMaterials.[]', function(){
-    return new Promise(resolve => {
-      this.get('subject.learningMaterials').then(subLms => {
-        let promises = [];
-        let learningMaterials = [];
-        subLms.forEach(lm => {
-          promises.pushObject(lm.get('learningMaterial').then(learningMaterial => {
-            learningMaterials.pushObject(learningMaterial);
-          }));
-        });
-        all(promises).then(()=>{
-          resolve(learningMaterials);
-        });
-      });
+  parentMaterials: computed('subject.learningMaterials.[]', async function () {
+    const subLms = await this.get('subject.learningMaterials');
+    const learningMaterials = map(subLms.toArray(), async subjectMaterial => {
+      return await subjectMaterial.get('learningMaterial');
     });
+
+    return learningMaterials;
   }),
 
-  hasMoreThanOneLearningMaterial: computed('subject.learningMaterials.[]', function() {
-    return new Promise(resolve => {
-      this.get('subject').get('learningMaterials').then(materials => {
-        resolve(materials.length > 1);
-      });
-    });
+  hasMoreThanOneLearningMaterial: computed('subject.learningMaterials.[]', async function () {
+    const subject = this.get('subject');
+    const learningMaterials = await subject.get('learningMaterials');
+
+    return learningMaterials.length > 1;
   }),
 
   saveSomeMaterials(arr){
@@ -114,24 +76,22 @@ export default Component.extend(SortableByPosition, {
   },
 
   actions: {
-    manageMaterial(learningMaterial){
+    async manageMaterial(learningMaterial){
+      const parent = await learningMaterial.get('learningMaterial');
+      const status = await parent.get('status');
+
       let buffer = EmberObject.create();
       buffer.set('publicNotes', learningMaterial.get('publicNotes'));
       buffer.set('required', learningMaterial.get('required'));
       buffer.set('notes', learningMaterial.get('notes'));
-      learningMaterial.get('learningMaterial').then( parent => {
-        parent.get('status').then(status => {
-          buffer.set('status',status);
-          this.set('bufferMaterial', buffer);
-          this.set('managingMaterial', learningMaterial);
-        });
-      });
+      buffer.set('status',status);
+      this.set('bufferMaterial', buffer);
+      this.set('managingMaterial', learningMaterial);
     },
-    manageDescriptors(learningMaterial){
-      learningMaterial.get('meshDescriptors').then(descriptors => {
-        this.set('bufferTerms', descriptors.toArray());
-        this.set('meshMaterial', learningMaterial);
-      });
+    async manageDescriptors(learningMaterial) {
+      const descriptors = await learningMaterial.get('meshDescriptors');
+      this.set('bufferTerms', descriptors.toArray());
+      this.set('meshMaterial', learningMaterial);
     },
     save(){
       if(this.get('isManagingMaterial')){
@@ -195,31 +155,26 @@ export default Component.extend(SortableByPosition, {
       this.setProperties({ type, isEditing: true });
     },
 
-    saveNewLearningMaterial(lm) {
-      return new Promise(resolve => {
-        const store = this.get('store');
-        const isCourse = this.get('isCourse');
-        const subject = this.get('subject');
-        lm.save().then((savedLm) => {
-          subject.get('learningMaterials').then(learningMaterials => {
-            let lmSubject;
-            let position = 0;
-            if (! isEmpty(learningMaterials)) {
-              position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
-            }
-            if (isCourse) {
-              lmSubject = store.createRecord('course-learning-material', { course: subject, position });
-            } else {
-              lmSubject = store.createRecord('session-learning-material', { session: subject, position });
-            }
-            lmSubject.set('learningMaterial', savedLm);
-            lmSubject.save().then(() => {
-              this.set('isEditing', false);
-              resolve();
-            });
-          });
-        });
-      });
+    async saveNewLearningMaterial(lm) {
+      const store = this.get('store');
+      const isCourse = this.get('isCourse');
+      const subject = this.get('subject');
+      const savedLm = await lm.save();
+      const learningMaterials = await subject.get('learningMaterials');
+
+      let lmSubject;
+      let position = 0;
+      if (! isEmpty(learningMaterials)) {
+        position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
+      }
+      if (isCourse) {
+        lmSubject = store.createRecord('course-learning-material', { course: subject, position });
+      } else {
+        lmSubject = store.createRecord('session-learning-material', { session: subject, position });
+      }
+      lmSubject.set('learningMaterial', savedLm);
+      await lmSubject.save();
+      this.set('isEditing', false);
     },
 
     saveSortOrder(learningMaterials){
@@ -263,69 +218,44 @@ export default Component.extend(SortableByPosition, {
     changeNotes(value){
       this.get('bufferMaterial').set('notes', value);
     },
-    addLearningMaterial(parentLearningMaterial){
-      return new Promise(resolve => {
-        let newLearningMaterial;
-        let lmCollectionType;
-        let subject = this.get('subject');
-
-        if(this.get('isCourse')){
-          newLearningMaterial = this.get('store').createRecord('course-learning-material', {
-            course: subject,
-            learningMaterial: parentLearningMaterial,
-            position: 0,
-          });
-          lmCollectionType = 'courseLearningMaterials';
-
-        }
-        if(this.get('isSession')){
-          newLearningMaterial = this.get('store').createRecord('session-learning-material', {
-            session: subject,
-            learningMaterial: parentLearningMaterial,
-            position: 0
-          });
-          lmCollectionType = 'sessionLearningMaterials';
-        }
-        subject.get('learningMaterials').then(learningMaterials => {
-          let position = 0;
-          if (learningMaterials.length > 1) {
-            position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
-          }
-          newLearningMaterial.set('position', position);
-          newLearningMaterial.save().then(savedLearningMaterial => {
-            parentLearningMaterial.get(lmCollectionType).then(children => {
-              children.pushObject(savedLearningMaterial);
-              resolve(savedLearningMaterial);
-            });
-          });
-        });
-      });
-    },
-    confirmRemoval(lmProxy){
-      lmProxy.set('showRemoveConfirmation', true);
-    },
-    cancelRemove(lmProxy){
-      lmProxy.set('showRemoveConfirmation', false);
-    },
-    remove(lmProxy){
-      let subjectLearningMaterial = lmProxy.get('content');
+    async addLearningMaterial(parentLearningMaterial) {
+      const store = this.get('store');
+      let newLearningMaterial;
       let lmCollectionType;
+      let subject = this.get('subject');
+
       if(this.get('isCourse')){
+        newLearningMaterial = store.createRecord('course-learning-material', {
+          course: subject,
+          learningMaterial: parentLearningMaterial,
+          position: 0,
+        });
         lmCollectionType = 'courseLearningMaterials';
+
       }
       if(this.get('isSession')){
+        newLearningMaterial = store.createRecord('session-learning-material', {
+          session: subject,
+          learningMaterial: parentLearningMaterial,
+          position: 0
+        });
         lmCollectionType = 'sessionLearningMaterials';
       }
-      this.get('subject').get('learningMaterials').then(lms => {
-        subjectLearningMaterial.get('learningMaterial').then(parentLearningMaterial => {
-          parentLearningMaterial.get(lmCollectionType).then(children => {
-            children.removeObject(subjectLearningMaterial);
-            lms.removeObject(subjectLearningMaterial);
-            subjectLearningMaterial.deleteRecord();
-            subjectLearningMaterial.save();
-          });
-        });
-      });
+      const learningMaterials = await subject.get('learningMaterials');
+      let position = 0;
+      if (learningMaterials.length > 1) {
+        position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
+      }
+      newLearningMaterial.set('position', position);
+      const savedLearningMaterial = await newLearningMaterial.save();
+      const children = await parentLearningMaterial.get(lmCollectionType);
+      children.pushObject(savedLearningMaterial);
+
+      return savedLearningMaterial;
+    },
+    async remove(subjectLearningMaterial){
+      subjectLearningMaterial.deleteRecord();
+      return subjectLearningMaterial.save();
     },
   }
 });

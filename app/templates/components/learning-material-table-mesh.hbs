@@ -1,0 +1,17 @@
+{{#if (get (await row.meshDescriptors) 'length')}}
+  <ul>
+    {{#each (sort-by 'name' (await row.meshDescriptors)) as |descriptor|}}
+      {{#if editable}}
+        <li class='clickable link' {{action tableActions.manageDescriptors row.content}}>{{descriptor.name}}</li>
+      {{else}}
+        <li>{{descriptor.name}}</li>
+      {{/if}}
+    {{/each}}
+  </ul>
+{{else}}
+  {{#if editable}}
+    <button {{action tableActions.manageDescriptors row.content}}>{{t 'general.addNew'}}</button>
+  {{else}}
+    {{t 'general.none'}}
+  {{/if}}
+{{/if}}

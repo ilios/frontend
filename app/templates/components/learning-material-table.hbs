@@ -1,0 +1,36 @@
+{{#light-table table responsive=true tableActions=(hash
+  manageMaterial=manageMaterial
+  manageDescriptors=manageDescriptors
+) extra=(hash
+  editable=editable
+) as |t|}}
+  {{t.head}}
+
+  {{#t.body
+    canExpand=false
+    canSelect=false
+    rowComponent=(component 'removeable-row')
+    as |body|
+  }}
+    {{#body.expanded-row as |row|}}
+      {{#if row.confirmDelete}}
+        <div class='confirm-removal'>
+          <p>
+            {{t 'general.confirmRemoval'}}
+            <div class="confirm-buttons">
+              <button {{action (perform removeLearningMaterial row.content)}} class='remove {{if removeLearningMaterial.isIdle "clickable"}}'>
+                {{#if removeLearningMaterial.isRunning}}
+                  {{fa-icon 'spinner' spin=true}}
+                {{else}}
+                  {{t 'general.yes'}}
+                {{/if}}
+              </button>
+              <button {{action 'cancelRemove' row}} class='done text'>{{t 'general.cancel'}}</button>
+            </div>
+          </p>
+        </div>
+      {{/if}}
+    {{/body.expanded-row}}
+  {{/t.body}}
+
+{{/light-table}}
