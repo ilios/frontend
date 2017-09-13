@@ -359,7 +359,6 @@ test('choosing course fires action', function(assert) {
   this.render(hbs`{{my-materials
     materials=materials
     sortBy='firstOfferingDate'
-    setCourseIdFilter=(action nothing)
     setFilter=(action nothing)
     setCourseIdFilter=(action setCourseIdFilter)
     courseIdFilter=courseIdFilter
