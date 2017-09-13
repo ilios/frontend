@@ -3624,9 +3624,9 @@ ember-debug-handlers-polyfill@^1.0.2:
   dependencies:
     ember-cli-babel "^5.0.0"
 
-ember-drag-drop@0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.4.5.tgz#10b507e82499c5910126e31e20c150bc047ee67d"
+ember-drag-drop@0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.4.6.tgz#f1101a288fd35d5127c13320650196004b2ea36b"
   dependencies:
     ember-cli-babel "^5.2.4"
 
