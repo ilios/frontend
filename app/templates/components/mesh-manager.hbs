@@ -8,9 +8,15 @@
         <span class="title">{{term.name}}</span>
         <span class="details">
           {{term.id}}
-          {{#if term.trees}}
-            - {{term.trees.lastObject.treeNumber}}
+          {{#if term.deleted}}
+            - <span class="deprecated">({{t 'general.deprecatedAbbreviation'}})</span>
+          {{else}}
+            {{#if term.trees}}
+              - {{term.trees.lastObject.treeNumber}}
+            {{/if}}
           {{/if}}
+
+
         </span>
       </div>
       {{fa-icon 'remove'}}
