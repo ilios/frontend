@@ -14,8 +14,12 @@ module('Acceptance: Session - Mesh Terms', {
     setupAuthentication(application);
     server.create('school');
     server.create('sessionType');
-    server.createList('meshDescriptor', 3, {
+    server.createList('meshDescriptor', 2, {
       courses: [1]
+    });
+    server.create('meshDescriptor', {
+      courses: [1],
+      deleted: true
     });
     server.createList('meshDescriptor', 3, {
     });
@@ -47,7 +51,7 @@ test('list mesh', async function(assert) {
 });
 
 test('manage mesh', async function(assert) {
-  assert.expect(24);
+  assert.expect(25);
   await visit(url);
   var container = find('.detail-mesh');
   await click(find('.actions button', container));
@@ -65,6 +69,10 @@ test('manage mesh', async function(assert) {
   assert.equal(
     getElementText(find('.content .title', removableItems.eq(2)).eq(0)),
     getText('descriptor 2')
+  );
+  assert.equal(
+    getElementText(find('.content .details', removableItems.eq(2)).eq(0)),
+    getText('3 - (depr.)')
   );
 
   let searchBox = find('.search-box', meshManager);
