@@ -10,8 +10,8 @@ export function initialize(instance) {
   const currentEnv = config.environment;
 
   if (currentEnv !== 'test') {
-    const controller = instance.container.lookup('controller:application');
-    const commonAjax = instance.container.lookup('service:commonAjax');
+    const controller = instance.lookup('controller:application');
+    const commonAjax = instance.lookup('service:commonAjax');
 
     // Global error handler in Ember run loop
     Ember.onerror = (error) => {
