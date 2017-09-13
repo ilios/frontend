@@ -130,6 +130,7 @@ export default {
     'defaultLocation': "Localisation par Défaut",
     'defaultLocationNotLoaded': "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)",
     'departments': "Facultés",
+    'deprecatedAbbreviation': 'obs.',
     'description': "Description",
     'details': "Détails de Cours",
     'developer': 'Administrateur',

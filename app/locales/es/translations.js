@@ -130,6 +130,7 @@
     'defaultLocation': 'Ubicación Predeterminada',
     'defaultLocationNotLoaded': '(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)',
     'departments': 'Departmentos',
+    'deprecatedAbbreviation': 'obs.',
     'description': 'Descripción',
     'details': 'Detalles de Curso',
     'developer': 'Desarrollador',
