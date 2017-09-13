@@ -9,7 +9,7 @@
 
 ## Web interface for accessing and managing [Ilios Platform](https://github.com/ilios/ilios) data.
 
-### Directions for devlopers working with this ember-cli app
+### Directions for developers working with this ember-cli app
 
 #### Prerequisites
 
@@ -46,8 +46,8 @@ environmental variable or just create a `.env` file in your code directory.
 
 #### Further Reading / Useful Links
 
-* ember: http://emberjs.com/
-* ember-cli: http://www.ember-cli.com/
+* [ember.js](https://emberjs.com/)
+* [ember-cli](https://ember-cli.com/)
 * [Ilios User Guide](https://www.gitbook.com/book/iliosproject/ilios-user-guide/details)
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
