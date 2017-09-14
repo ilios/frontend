@@ -14,7 +14,7 @@ export default Component.extend({
   allLearnerGroups: computed('cohorts.[]', function(){
     return new Promise(resolve => {
       let cohorts = this.get('cohorts');
-      all(cohorts.mapBy('topLevelLearnerGroups')).then(allLearnerGroups => {
+      all(cohorts.mapBy('rootLevelLearnerGroups')).then(allLearnerGroups => {
         let flat = allLearnerGroups.reduce((flattened, arr) => {
           return flattened.pushObjects(arr);
         }, []);

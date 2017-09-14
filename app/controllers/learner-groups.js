@@ -90,14 +90,14 @@ export default Controller.extend({
   sortedProgramYears: sort('programYears', 'sortByStartYear'),
   hasMoreThanOneProgramYear: gt('programYears.length', 1),
 
-  learnerGroups: computed('selectedProgramYear.cohort.topLevelLearnerGroups.[]', function(){
+  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', function(){
     let defer = RSVP.defer();
     this.get('selectedProgramYear').then(programYear => {
       if(isEmpty(programYear)){
         defer.resolve([]);
       } else {
         programYear.get('cohort').then(cohort => {
-          cohort.get('topLevelLearnerGroups').then(groups => {
+          cohort.get('rootLevelLearnerGroups').then(groups => {
             defer.resolve(groups);
           });
         });
