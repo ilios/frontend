@@ -5,6 +5,7 @@ export default DS.Model.extend({
   annotation: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
+  deleted: DS.attr('boolean'),
   courses: DS.hasMany('course', {async: true}),
   objectives: DS.hasMany('objectives', {async: true}),
   sessions: DS.hasMany('session', {async: true}),
