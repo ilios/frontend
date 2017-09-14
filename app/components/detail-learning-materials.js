@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { isEmpty, Component, computed, inject, RSVP, Object:EmberObject } = Ember;
+const { isEmpty, Component, computed, inject, RSVP } = Ember;
 const { notEmpty, or, not } = computed;
 const { service } = inject;
 const { all, map } = RSVP;
@@ -22,7 +22,6 @@ export default Component.extend({
   managingMaterial: null,
   meshMaterial: null,
   isSession: not('isCourse'),
-  bufferMaterial: null,
   bufferTerms: [],
   totalMaterialsToSave: null,
   currentMaterialsSaved: null,
@@ -37,16 +36,6 @@ export default Component.extend({
     const isSorting = this.get('isSorting');
 
     return (!isManaging && !isEditing && !isSorting && editable);
-  }),
-
-  learningMaterialStatuses: computed(async function () {
-    const store = this.get('store');
-    return await store.findAll('learning-material-status');
-  }),
-
-  learningMaterialUserRoles: computed(async function () {
-    const store = this.get('store');
-    return await store.findAll('learning-material-user-role');
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', async function () {
@@ -74,18 +63,13 @@ export default Component.extend({
       }
     });
   },
+  learningMaterialStatuses: computed(async function () {
+    const store = this.get('store');
+    return await store.findAll('learning-material-status');
+  }),
 
   actions: {
     async manageMaterial(learningMaterial){
-      const parent = await learningMaterial.get('learningMaterial');
-      const status = await parent.get('status');
-
-      let buffer = EmberObject.create();
-      buffer.set('publicNotes', learningMaterial.get('publicNotes'));
-      buffer.set('required', learningMaterial.get('required'));
-      buffer.set('notes', learningMaterial.get('notes'));
-      buffer.set('status',status);
-      this.set('bufferMaterial', buffer);
       this.set('managingMaterial', learningMaterial);
     },
     async manageDescriptors(learningMaterial) {
@@ -94,25 +78,6 @@ export default Component.extend({
       this.set('meshMaterial', learningMaterial);
     },
     save(){
-      if(this.get('isManagingMaterial')){
-        let buffer = this.get('bufferMaterial');
-        let learningMaterial = this.get('managingMaterial');
-        let promises = [];
-        learningMaterial.set('publicNotes', buffer.get('publicNotes'));
-        learningMaterial.set('required', buffer.get('required'));
-        learningMaterial.set('notes', buffer.get('notes'));
-        promises.pushObject(learningMaterial.save());
-        promises.pushObject(learningMaterial.get('learningMaterial').then( parent => {
-          parent.set('status', buffer.get('status'));
-          promises.pushObject(parent.save());
-        }));
-
-        all(promises).then(()=> {
-          this.set('bufferMaterial', null);
-          this.set('managingMaterial', null);
-        });
-      }
-
       if(this.get('isManagingMesh')){
         let lm = this.get('meshMaterial');
         let terms = lm .get('meshDescriptors');
@@ -145,10 +110,6 @@ export default Component.extend({
           this.set('bufferTerms', []);
         });
       }
-    },
-
-    cancel() {
-      this.setProperties({ bufferMaterial: null, managingMaterial: null, bufferTerms: [], meshMaterial: null });
     },
 
     addNewLearningMaterial(type){
@@ -205,18 +166,6 @@ export default Component.extend({
     },
     removeTermFromBuffer(term){
       this.get('bufferTerms').removeObject(term);
-    },
-    changeStatus(newStatus){
-      this.get('bufferMaterial').set('status', newStatus);
-    },
-    changeRequired(value){
-      this.get('bufferMaterial').set('required', value);
-    },
-    changePublicNotes(value){
-      this.get('bufferMaterial').set('publicNotes', value);
-    },
-    changeNotes(value){
-      this.get('bufferMaterial').set('notes', value);
     },
     async addLearningMaterial(parentLearningMaterial) {
       const store = this.get('store');

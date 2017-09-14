@@ -17,7 +17,7 @@
   {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
 {{/if}}
 <div class='detail-learningmaterials-actions'>
-  {{#if isManaging}}
+  {{#if isManagingMesh}}
     {{#if editable}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
     {{/if}}
@@ -40,14 +40,10 @@
     {{#if isManagingMaterial}}
       {{learningmaterial-manager
         learningMaterial=managingMaterial
-        valueBuffer=bufferMaterial
-        learningMaterialStatuses=learningMaterialStatuses
         isCourse=isCourse
         editable=editable
-        changeStatus='changeStatus'
-        changeNotes=(action 'changeNotes')
-        changeRequired='changeRequired'
-        changePublicNotes='changePublicNotes'
+        close=(action (mut managingMaterial) null)
+        learningMaterialStatuses=(await learningMaterialStatuses)
       }}
     {{/if}}
     {{#if isManagingMesh}}
@@ -81,7 +77,7 @@
       {{learning-material-table
         learningMaterials=(await subject.learningMaterials)
         editable=editable
-        manageMaterial=(action 'manageMaterial')
+        manageMaterial=(action (mut managingMaterial))
         manageDescriptors=(action 'manageDescriptors')
         remove=(action 'remove')
       }}
