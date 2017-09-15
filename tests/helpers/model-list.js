@@ -33,7 +33,6 @@ export default [
   'model:mesh-descriptor',
   'model:mesh-previous-indexing',
   'model:mesh-qualifier',
-  'model:mesh-semantic-type',
   'model:mesh-term',
   'model:mesh-tree',
   'model:objective',
