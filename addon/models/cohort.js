@@ -37,21 +37,6 @@ export default Model.extend({
       });
     });
   }),
-  /**
-   * @deprecated Use rootLevelLearnerGroups instead [ST 2017/08/31]
-   */
-  topLevelLearnerGroups: computed('learnerGroups.[]', function(){
-    Ember.deprecate('Use rootLevelLearnerGroups instead.');
-    let defer = Ember.RSVP.defer();
-    this.get('learnerGroups').then(learnerGroups => {
-      let topLevelGroups = learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
-      defer.resolve(topLevelGroups);
-    });
-
-    return DS.PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
 
   /**
    * All top-level learner groups associated with this cohort.
