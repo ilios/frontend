@@ -10,7 +10,6 @@ export default DS.Model.extend({
   scopeNote: DS.attr('string'),
   cash1Name: DS.attr('string'),
   registryNumber: DS.attr('string'),
-  symanticTypes: DS.hasMany('mesh-semantic-type', {async: true}),
   terms: DS.hasMany('mesh-term', {async: true}),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
