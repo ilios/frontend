@@ -10,6 +10,8 @@ export default {
     'calendar': 'Calendario',
     'citation': 'Citación',
     'clearFilters': 'Borrar Filtros',
+    'copiedSuccessfully': 'Copiado con Éxito',
+    'copyIcsFeedUrl': 'Copiar Mi Enlace ICS',
     'course': 'Curso',
     'courseLearningMaterials': 'Materiales de Aprendizaje del Curso',
     'courseLevels': 'Niveles de Curso',
