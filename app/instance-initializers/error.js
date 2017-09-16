@@ -84,11 +84,14 @@ export default {
   /**
    * Only send an error condition to the server every a second
    * Otherwise we can DDOS ourselfes with a bad browser error loop
+   * Since it is possible to load the app offline with a service worker
+   * we also need to check to ensure the browser is even online before attempting
+   * to send errors.
    * @return boolean
    */
-  shouldWeSendAnotherError(){
+  shouldWeSendAnotherError() {
     let diff = moment().unix() - this.lastErrorSent;
-    return diff > 1;
+    return navigator.onLine && diff > 1;
   },
 
   logError(error, commonAjax) {
