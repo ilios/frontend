@@ -38,7 +38,13 @@ module.exports = function(defaults) {
       version: '3',
       include: [
         'assets/**/*',
-        'ilios-prerender/*'
+        'ilios-prerender/*',
+      ]
+    },
+    'esw-cache-first': {
+      version: '1',
+      patterns: [
+        'fonts/fontawesome(.+)',
       ]
     },
     'esw-index': {
