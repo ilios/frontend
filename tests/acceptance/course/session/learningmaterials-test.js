@@ -189,12 +189,12 @@ test('create new link learning material', async function(assert) {
   await click('.detail-learningmaterials-actions ul li:eq(1)');
   assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
   //check that we got the right form
-  let labels = find('.detail-learningmaterials .new-learning-material label');
+  let labels = find('.detail-learningmaterials .new-learningmaterial label');
   assert.equal(labels.length, 7);
   const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
   const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-  assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
-  let newLmContainer = find('.detail-learningmaterials .new-learning-material');
+  assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
+  let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
   let inputs = find('input', newLmContainer);
   let selectBoxes = find('select', newLmContainer);
   await fillIn(inputs.eq(0), testTitle);
@@ -204,7 +204,7 @@ test('create new link learning material', async function(assert) {
   await pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
   find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
   find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-  await click('.detail-learningmaterials .new-learning-material .done');
+  await click('.detail-learningmaterials .new-learningmaterial .done');
   container = find('.detail-learningmaterials');
   rows = find('.learning-material-table tbody tr', container);
   assert.equal(rows.length, fixtures.session.learningMaterials.length + 1);
@@ -230,12 +230,12 @@ test('create new citation learning material', async function(assert) {
   await click('.detail-learningmaterials-actions ul li:eq(2)');
   assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
   //check that we got the right form
-  let labels = find('.detail-learningmaterials .new-learning-material label');
+  let labels = find('.detail-learningmaterials .new-learningmaterial label');
   assert.equal(labels.length, 7);
   const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
   const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
-  assert.equal(getElementText(find('.detail-learningmaterials .new-learning-material .owninguser')), getText(userName));
-  let newLmContainer = find('.detail-learningmaterials .new-learning-material');
+  assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
+  let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
   let inputs = find('input', newLmContainer);
   let selectBoxes = find('select', newLmContainer);
   await fillIn(inputs.eq(0), testTitle);
@@ -245,7 +245,7 @@ test('create new citation learning material', async function(assert) {
   await pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
   find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
   find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-  await click('.detail-learningmaterials .new-learning-material .done');
+  await click('.detail-learningmaterials .new-learningmaterial .done');
   container = find('.detail-learningmaterials');
   rows = find('.learning-material-table tbody tr', container);
   assert.equal(rows.length, fixtures.session.learningMaterials.length + 1);
@@ -257,7 +257,7 @@ test('can only add one learning-material at a time', async function(assert) {
   const addButton = '.detail-learningmaterials-actions .button';
   const fileButton = '.detail-learningmaterials-actions ul li:eq(0)';
   const collapseButton = '.collapse-button';
-  const component = '.new-learning-material';
+  const component = '.new-learningmaterial';
 
   await visit(url);
   await click(addButton);
@@ -279,7 +279,7 @@ test('cancel new learning material', async function(assert) {
   assert.equal(rows.length, fixtures.session.learningMaterials.length);
   await click('.detail-learningmaterials-actions .button', container);
   await click('.detail-learningmaterials-actions ul li:eq(0)');
-  await click('.detail-learningmaterials .new-learning-material .cancel');
+  await click('.detail-learningmaterials .new-learningmaterial .cancel');
   rows = find('.detail-learningmaterials .learning-material-table tbody tr');
   assert.equal(rows.length, fixtures.session.learningMaterials.length);
   await wait();

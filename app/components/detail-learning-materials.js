@@ -65,7 +65,7 @@ export default Component.extend({
   }),
   learningMaterialUserRoles: computed(async function () {
     const store = this.get('store');
-    return await store.findAll('learning-material-user-roles');
+    return await store.findAll('learning-material-user-role');
   }),
 
   actions: {

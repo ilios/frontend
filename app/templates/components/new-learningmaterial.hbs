@@ -1,161 +1,159 @@
-<div class="form-container">
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.displayName'}}:</label>
-    <div class="form-data">
+<div class="item">
+  <label>{{t 'general.displayName'}}:</label>
+  <span>
+    {{one-way-input
+      value=title
+      update=(action (mut title))
+      disabled=prepareSave.isRunning
+      focusOut=(action 'addErrorDisplayFor' 'title')
+    }}
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </span>
+</div>
+
+<div class="item">
+  <label>{{t 'general.status'}}:</label>
+  <span>
+    <select  onchange={{action (mut statusId) value="target.value"}}>
+      {{#each learningMaterialStatuses as |lmStatus|}}
+        <option value={{lmStatus.id}} selected={{is-equal lmStatus selectedStatus}}>
+          {{lmStatus.title}}
+        </option>
+      {{/each}}
+    </select>
+  </span>
+</div>
+
+<div class="item">
+  <label>{{t 'general.owner'}}:</label>
+  <span class='owninguser'>{{get (await currentUser.model) 'fullName'}}</span>
+</div>
+
+<div class="item">
+  <label>{{t 'general.contentAuthor'}}:</label>
+  <span>
+    {{one-way-input
+      value=originalAuthor
+      update=(action (mut originalAuthor))
+      disabled=prepareSave.isRunning
+      focusOut=(action 'addErrorDisplayFor' 'originalAuthor')
+    }}
+    {{#if (and (v-get this 'originalAuthor' 'isInvalid') (is-in showErrorsFor 'originalAuthor'))}}
+      <span class="validation-error-message">{{v-get this 'originalAuthor' 'message'}}</span>
+    {{/if}}
+  </span>
+</div>
+
+<div class="item">
+  <label>{{t 'general.userRole'}}:</label>
+  <span>
+    <select  onchange={{action (mut userRoleId) value="target.value"}}>
+      {{#each learningMaterialUserRoles as |role|}}
+        <option value={{role.id}} selected={{is-equal role selectedUserRole}}>
+          {{role.title}}
+        </option>
+      {{/each}}
+    </select>
+  </span>
+</div>
+
+{{#if isLink}}
+  <div class="item">
+    <label>{{t 'general.url'}}:</label>
+    <span>
       {{one-way-input
-        value=title
-        update=(action (mut title))
-        disabled=isSaving
-        focusOut=(action 'addErrorDisplayFor' 'title')
+        value=link
+        update=(action (mut link))
+        disabled=prepareSave.isRunning
+        focusOut=(action 'addErrorDisplayFor' 'link')
+        keyDown=(action 'addErrorDisplayFor' 'link')
       }}
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{#if (and (v-get this 'link' 'isInvalid') (is-in showErrorsFor 'link'))}}
+        <span class="validation-error-message">{{v-get this 'link' 'message'}}</span>
       {{/if}}
-    </div>
+    </span>
   </div>
+{{/if}}
 
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.status'}}:</label>
-    <div class="form-data">
-      <select  onchange={{action "changeStatus" value="target.value"}}>
-        {{#each (await learningMaterialStatuses) as |lmStatus|}}
-          <option value={{lmStatus.id}} selected={{is-equal lmStatus status}}>
-            {{lmStatus.title}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
-  </div>
-
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.owner'}}:</label>
-    <div class="form-data"><span class='owninguser'>{{owner.fullName}}</span></div>
-  </div>
-
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.contentAuthor'}}:</label>
-    <div class="form-data">
-      {{one-way-input
-        value=originalAuthor
-        update=(action (mut originalAuthor))
-        disabled=isSaving
-        focusOut=(action 'addErrorDisplayFor' 'originalAuthor')
-      }}
-      {{#if (and (v-get this 'originalAuthor' 'isInvalid') (is-in showErrorsFor 'originalAuthor'))}}
-        <span class="validation-error-message">{{v-get this 'originalAuthor' 'message'}}</span>
+{{#if isCitation}}
+  <div class="item">
+    <label>{{t 'general.citation'}}:</label>
+    <span class="citation">
+      {{textarea value=citation focus-out=(action 'addErrorDisplayFor' 'citation') key-press=(action 'addErrorDisplayFor' 'citation') }}
+      {{#if (and (v-get this 'citation' 'isInvalid') (is-in showErrorsFor 'citation'))}}
+        <span class="validation-error-message">{{v-get this 'citation' 'message'}}</span>
       {{/if}}
-    </div>
+    </span>
   </div>
+{{/if}}
 
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.userRole'}}:</label>
-    <div class="form-data">
-      <select  onchange={{action "changeUserRole" value="target.value"}}>
-        {{#each (await learningMaterialUserRoles) as |role|}}
-          <option value={{role.id}} selected={{is-equal role userRole}}>
-            {{role.title}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
-  </div>
+<div class="item">
+  <label>{{t 'general.description'}}:</label>
+  <span>
+    {{html-editor
+      content=description
+      update=(action (mut description))
+    }}
+  </span>
+</div>
 
-  {{#if isLink}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.url'}}:</label>
-      <div class="form-data">
-        {{one-way-input
-          value=link
-          update=(action (mut link))
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'link')
-          keyDown=(action 'addErrorDisplayFor' 'link')
+{{#if isFile}}
+  <div class="item">
+    <label>{{t 'general.copyrightPermission'}}:</label>
+    <span>
+      <p id="lm-copyright-agreement-text">
+        {{one-way-checkbox
+            checked=copyrightPermission
+            update=(action (mut copyrightPermission))
         }}
-        {{#if (and (v-get this 'link' 'isInvalid') (is-in showErrorsFor 'link'))}}
-          <span class="validation-error-message">{{v-get this 'link' 'message'}}</span>
-        {{/if}}
-      </div>
-    </div>
-  {{/if}}
+        {{t 'general.copyrightAgreement'}}
+      </p>
+    </span>
+  </div>
 
-  {{#if isCitation}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.citation'}}:</label>
-      <div class="form-data citation">
-        {{textarea value=citation focus-out=(action 'addErrorDisplayFor' 'citation') key-press=(action 'addErrorDisplayFor' 'citation') }}
-        {{#if (and (v-get this 'citation' 'isInvalid') (is-in showErrorsFor 'citation'))}}
-          <span class="validation-error-message">{{v-get this 'citation' 'message'}}</span>
+  {{#unless copyrightPermission}}
+    <div class="item">
+      <label>{{t 'general.copyrightRationale'}}:</label>
+      <span>
+        {{textarea value=copyrightRationale focus-out=(action 'addErrorDisplayFor' 'copyrightRationale') key-press=(action 'addErrorDisplayFor' 'copyrightRationale') }}
+        {{#if (and (v-get this 'copyrightRationale' 'isInvalid') (is-in showErrorsFor 'copyrightRationale'))}}
+          <span class="validation-error-message">{{v-get this 'copyrightRationale' 'message'}}</span>
         {{/if}}
-      </div>
+      </span>
     </div>
-  {{/if}}
+  {{/unless}}
 
-  <div class="form-col-12">
-    <label class="form-label">{{t 'general.description'}}:</label>
-    <div class="form-data">
-      {{html-editor
-        content=description
-        update=(action 'changeDescription')
+  <div class="item">
+    <label>{{t 'general.file'}}:</label>
+    <span>
+      {{file-upload
+        finishedUploading=(action 'setFile')
+        startUploading=(action 'startUploadingFile')
+        setUploadPercentage=(action 'setFileUploadPercentage')
+        setErrorMessage=(action (mut fileUploadErrorMessage))
+        url=uploadPath
       }}
-    </div>
-  </div>
-
-  {{#if isFile}}
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.copyrightPermission'}}:</label>
-      <div class="form-data">
-        <p id="lm-copyright-agreement-text">
-          {{one-way-checkbox
-              checked=copyrightPermission
-              update=(action (mut copyrightPermission))
-          }}
-          {{t 'general.copyrightAgreement'}}
-        </p>
-      </div>
-    </div>
-
-    {{#unless copyrightPermission}}
-      <div class="form-col-12">
-        <label class="form-label">{{t 'general.copyrightRationale'}}:</label>
-        <div class="form-data">
-          {{textarea value=copyrightRationale focus-out=(action 'addErrorDisplayFor' 'copyrightRationale') key-press=(action 'addErrorDisplayFor' 'copyrightRationale') }}
-          {{#if (and (v-get this 'copyrightRationale' 'isInvalid') (is-in showErrorsFor 'copyrightRationale'))}}
-            <span class="validation-error-message">{{v-get this 'copyrightRationale' 'message'}}</span>
-          {{/if}}
-        </div>
-      </div>
-    {{/unless}}
-
-    <div class="form-col-12">
-      <label class="form-label">{{t 'general.file'}}:</label>
-      <div class="form-data">
-        {{file-upload
-          finishedUploading=(action 'setFile')
-          startUploading=(action 'startUploadingFile')
-          setUploadPercentage=(action 'setFileUploadPercentage')
-          setErrorMessage=(action (mut fileUploadErrorMessage))
-          url=uploadPath
-        }}
-        {{#if showUploadStatus}}
-          {{fa-icon 'spinner' spin=true}} {{fileUploadPercentage}}%
-        {{else if fileHash}}
-          {{fa-icon 'check' class='add'}}
-        {{/if}}
-        {{#if fileUploadErrorMessage}}
-          <span class="validation-error-message">{{fileUploadErrorMessage}}</span>
-        {{/if}}
-      </div>
-    </div>
-  {{/if}}
-
-  <div class="form-col-12 form-data-submit">
-    <button class='done text' {{action 'save'}}>
-      {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
-      {{else}}
-        {{t 'general.done'}}
+      {{#if showUploadStatus}}
+        {{fa-icon 'spinner' spin=true}} {{fileUploadPercentage}}%
+      {{else if fileHash}}
+        {{fa-icon 'check' class='add'}}
       {{/if}}
-    </button>
-    <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
+      {{#if fileUploadErrorMessage}}
+        <span class="validation-error-message">{{fileUploadErrorMessage}}</span>
+      {{/if}}
+    </span>
   </div>
+{{/if}}
+
+<div class="item buttons">
+  <button class='done text' {{action (perform prepareSave)}}>
+    {{#if prepareSave.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      {{t 'general.done'}}
+    {{/if}}
+  </button>
+  <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
 </div>
