@@ -15,6 +15,9 @@ export default Component.extend({
   learnerGroup: null,
 	learnerGroupEvents: computed('learnerGroups.[]', 'startDate', 'endDate', async function () {
 	    const learnerGroups = this.get('learnerGroups');
+		if (!learnerGroups) {
+			return []
+		}
 	    let data = await map(learnerGroups, async learnerGroup => {
 	      let offerings = await learnerGroup.get('offerings');
 	      let events = await map(offerings.toArray(), async offering => {
@@ -45,6 +48,9 @@ export default Component.extend({
 
 	  sessionEvents: computed('session', async function () {
 	    const session = this.get('session');
+		if (!session) {
+			return []
+		}
 	    const offerings = await session.get('offerings');
 	    let events = await map(offerings.toArray(), async offering => {
 	      let course = await session.get('course');
@@ -68,6 +74,9 @@ export default Component.extend({
 	    const startDate = this.get('startDate');
 	    const endDate = this.get('endDate');
 	    const session = this.get('session');
+		if (!session) {
+			return null;
+		}
 	    const location = this.get('location');
 	    const sessionType = await session.get('sessionType');
 	    const course = await session.get('course');
@@ -84,27 +93,37 @@ export default Component.extend({
 	  }),
 
 	  calendarEvents: computed('learnerGroupEvents.[]', 'sessionEvents.[]', 'currentEvent', async function(){
-	    const learnerGroupEvents = await this.get('learnerGroupEvents');
+	    
+		  try {
+		const learnerGroupEvents = await this.get('learnerGroupEvents');
 	    const sessionEvents = await this.get('sessionEvents');
 	    const currentEvent = await this.get('currentEvent');
-
-	    return [].concat([currentEvent], learnerGroupEvents, sessionEvents);
+		
+		if(!currentEvent) {
+			return [];
+		}
+		
+	    const events = [].concat(learnerGroupEvents, sessionEvents);
+        
+		const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
+		
+		let filteredEvents = events.filter(event => {
+			if(!event) {
+				return false;
+			}
+			
+			const eventIdentifier = event.name + event.startDate + event.endDate;
+			
+			if(eventIdentifier === currentEventIdentifier) {
+				return false;
+			}
+			return true;
+		});
+		
+        filteredEvents.pushObject(currentEvent);		
+		return filteredEvents;
+	}
+	catch(e) {debugger}
 	  }),
-
-  actions: {
-    goForward(){
-      const date = this.get('date');
-      let newDate = moment(date).add(1, 'week').toDate();
-      this.set('date', newDate);
-    },
-    goBack(){
-      const date = this.get('date');
-      let newDate = moment(date).subtract(1, 'week').toDate();
-      this.set('date', newDate);
-    },
-    gotoToday(){
-      let newDate = moment().toDate();
-      this.set('date', newDate);
-    },
-  }
+	  
 });
