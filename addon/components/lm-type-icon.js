@@ -21,7 +21,7 @@ export default Ember.Component.extend({
       if(mimetype.search(/pdf/) !== -1){
         return 'fa-file-pdf-o';
       }
-      if(mimetype.search(/ppt|keynote|pps|ppx/) !== -1){
+      if(mimetype.search(/ppt|keynote|pps|pptx|powerpoint/) !== -1){
         return 'fa-file-powerpoint-o';
       }
       if(mimetype.search(/mp4|mpg|mpeg|mov/) !== -1){

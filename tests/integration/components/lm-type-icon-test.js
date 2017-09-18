@@ -22,13 +22,14 @@ test('citation', function(assert) {
 });
 
 test('file', function(assert) {
-  assert.expect(15);
+  assert.expect(16);
   let fixtures = [
     { lm: { type: 'file', mimetype: 'application/pdf' }, icon: 'fa-file-pdf-o' },
     { lm: { type: 'file', mimetype: 'ppt' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'keynote' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'pps' }, icon: 'fa-file-powerpoint-o' },
-    { lm: { type: 'file', mimetype: 'ppx' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'pptx' }, icon: 'fa-file-powerpoint-o' },
+    { lm: { type: 'file', mimetype: 'powerpoint' }, icon: 'fa-file-powerpoint-o' },
     { lm: { type: 'file', mimetype: 'video/mp4' }, icon: 'fa-file-movie-o' },
     { lm: { type: 'file', mimetype: 'video/mpg' }, icon: 'fa-file-movie-o' },
     { lm: { type: 'file', mimetype: 'video/mpeg' }, icon: 'fa-file-movie-o' },
