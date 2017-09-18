@@ -5,7 +5,6 @@ const { computed } = Ember;
 
 export default DS.Model.extend({
   name: DS.attr('string'),
-  umlsUid: DS.attr('string'),
   preferred: DS.attr('boolean'),
   scopeNote: DS.attr('string'),
   cash1Name: DS.attr('string'),

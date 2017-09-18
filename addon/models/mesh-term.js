@@ -7,7 +7,6 @@ export default DS.Model.extend({
   conceptPreferred: DS.attr('string'),
   recordPreferred: DS.attr('string'),
   permuted: DS.attr('string'),
-  printable: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   concepts: DS.hasMany('mesh-concept', {async: true}),
