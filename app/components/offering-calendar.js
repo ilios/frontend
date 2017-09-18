@@ -94,7 +94,6 @@ export default Component.extend({
 
 	  calendarEvents: computed('learnerGroupEvents.[]', 'sessionEvents.[]', 'currentEvent', async function(){
 	    
-		  try {
 		const learnerGroupEvents = await this.get('learnerGroupEvents');
 	    const sessionEvents = await this.get('sessionEvents');
 	    const currentEvent = await this.get('currentEvent');
@@ -122,8 +121,7 @@ export default Component.extend({
 		
         filteredEvents.pushObject(currentEvent);		
 		return filteredEvents;
-	}
-	catch(e) {debugger}
+
 	  }),
 	  
 });
