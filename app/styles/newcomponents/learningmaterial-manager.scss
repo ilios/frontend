@@ -1,6 +1,7 @@
 .learningmaterial-manager {
   .learningmaterial-manager-form {
     margin-left: 2em;
+    min-height: 25vh;
 
     .item {
       margin-bottom: .5em;
@@ -14,6 +15,22 @@
     .notes,
     .description {
       @include ilios-browser-defaults;
+    }
+  }
+
+  .loading {
+    @include ilios-heading-h1;
+    display: block;
+    padding: 5vh 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .mesh-manager {
+    margin: 2em 0;
+
+    h2 {
+      @include ilios-heading-h4;
     }
   }
 }

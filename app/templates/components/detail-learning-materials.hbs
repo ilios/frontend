@@ -1,76 +1,52 @@
 <div class='title'>
-  {{#unless isManaging}}
-    {{t 'general.learningMaterials'}} ({{get (await subject.learningMaterials) 'length'}})
-  {{/unless}}
-  {{#if isManagingMaterial}}
+  {{#if isManaging}}
     <span class='specific-title'>
       {{t 'general.learningMaterialManageTitle'}}
     </span>
-  {{/if}}
-  {{#if isManagingMesh}}
-    <span class='specific-title'>
-      {{t 'general.lmDescriptorTitle'}}
-    </span>
+  {{else}}
+    {{t 'general.learningMaterials'}} ({{get (await subject.learningMaterials) 'length'}})
   {{/if}}
 </div>
 {{#if displaySearchBox}}
   {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
 {{/if}}
 <div class='detail-learningmaterials-actions'>
-  {{#if isManagingMesh}}
-    {{#if editable}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-    {{/if}}
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else}}
-    {{#if isEditing}}
-      <button class="collapse-button" {{action 'cancelNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
-    {{else if (and editable (not isSorting))}}
-      {{#action-menu title=(t 'general.add') icon=false classNames='blend-button right-edge'}}
-        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'general.file'}}</li>
-        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'general.link'}}</li>
-        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'general.citation'}}</li>
-      {{/action-menu}}
-    {{/if}}
+  {{#if displayAddNewForm}}
+    <button class="collapse-button" {{action (mut displayAddNewForm) false}}>{{fa-icon 'minus'}}</button>
+  {{else if (and editable (not isSorting))}}
+    {{#action-menu title=(t 'general.add') icon=false classNames='blend-button right-edge'}}
+      <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'general.file'}}</li>
+      <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'general.link'}}</li>
+      <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'general.citation'}}</li>
+    {{/action-menu}}
   {{/if}}
 </div>
 
 <div class='detail-learningmaterials-content'>
-  {{#if isManaging class="horizontal"}}
-    {{#if isManagingMaterial}}
-      {{learningmaterial-manager
-        learningMaterial=managingMaterial
-        isCourse=isCourse
-        editable=editable
-        close=(action (mut managingMaterial) null)
-        learningMaterialStatuses=(await learningMaterialStatuses)
-      }}
-    {{/if}}
-    {{#if isManagingMesh}}
-      {{mesh-manager
-        terms=bufferTerms
-        add='addTermToBuffer'
-        remove='removeTermFromBuffer'
-        targetItemTitle=meshMaterial.learningMaterial.title
-      }}
-    {{/if}}
+  {{#if isManaging}}
+    {{learningmaterial-manager
+      learningMaterial=managingMaterial
+      isCourse=isCourse
+      editable=editable
+      closeManager=(action (mut managingMaterial) null)
+      learningMaterialStatuses=(await learningMaterialStatuses)
+    }}
   {{else if isSorting}}
     {{learning-materials-sort-manager
       save=(action 'saveSortOrder')
-      cancel=(action 'cancelSorting')
+      cancel=(action (mut isSorting) false)
       subject=subject
     }}
   {{else}}
-    {{#liquid-if isEditing class="vertical"}}
+    {{#if displayAddNewForm}}
       {{new-learningmaterial
         type=type
         learningMaterialStatuses=learningMaterialStatuses
         learningMaterialUserRoles=learningMaterialUserRoles
         save=(action 'saveNewLearningMaterial')
-        cancel=(action 'cancelNewLearningMaterial')}}
-    {{/liquid-if}}
-
-    {{#if (get (await subject.learningMaterials) 'length')}}
+        cancel=(action (mut displayAddNewForm) false)
+      }}
+    {{else if (get (await subject.learningMaterials) 'length')}}
       {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortMaterials'}}</button>
       {{/if}}
@@ -78,16 +54,15 @@
         learningMaterials=(await subject.learningMaterials)
         editable=editable
         manageMaterial=(action (mut managingMaterial))
-        manageDescriptors=(action 'manageDescriptors')
         remove=(action 'remove')
       }}
     {{/if}}
   {{/if}}
 </div>
-{{#liquid-if isSaving class='crossFade'}}
+{{#if isSaving class='crossFade'}}
   {{wait-saving
     showProgress=true
     totalProgress=totalMaterialsToSave
     currentProgress=currentMaterialsSaved
   }}
-{{/liquid-if}}
+{{/if}}

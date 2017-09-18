@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const { isEmpty, Component, computed, inject, RSVP } = Ember;
-const { notEmpty, or, not } = computed;
+const { notEmpty, not } = computed;
 const { service } = inject;
 const { all, map } = RSVP;
 
@@ -16,26 +16,22 @@ export default Component.extend({
   editable: true,
   isSorting: false,
   isSaving: false,
-  isManaging: or('isManagingMaterial', 'isManagingMesh'),
-  isManagingMaterial: notEmpty('managingMaterial'),
-  isManagingMesh: notEmpty('meshMaterial'),
+  isManaging: notEmpty('managingMaterial'),
   managingMaterial: null,
-  meshMaterial: null,
   isSession: not('isCourse'),
-  bufferTerms: [],
   totalMaterialsToSave: null,
   currentMaterialsSaved: null,
 
-  isEditing: false,
+  displayAddNewForm: false,
   type: null,
 
-  displaySearchBox: computed('isManaging', 'isEditing', 'isSorting', function(){
+  displaySearchBox: computed('isManaging', 'displayAddNewForm', 'isSorting', function(){
     const isManaging = this.get('isManaging');
-    const isEditing = this.get('isEditing');
+    const displayAddNewForm = this.get('displayAddNewForm');
     const editable = this.get('editable');
     const isSorting = this.get('isSorting');
 
-    return (!isManaging && !isEditing && !isSorting && editable);
+    return (!isManaging && !displayAddNewForm && !isSorting && editable);
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', async function () {
@@ -67,53 +63,14 @@ export default Component.extend({
     const store = this.get('store');
     return await store.findAll('learning-material-status');
   }),
+  learningMaterialUserRoles: computed(async function () {
+    const store = this.get('store');
+    return await store.findAll('learning-material-user-roles');
+  }),
 
   actions: {
-    async manageMaterial(learningMaterial){
-      this.set('managingMaterial', learningMaterial);
-    },
-    async manageDescriptors(learningMaterial) {
-      const descriptors = await learningMaterial.get('meshDescriptors');
-      this.set('bufferTerms', descriptors.toArray());
-      this.set('meshMaterial', learningMaterial);
-    },
-    save(){
-      if(this.get('isManagingMesh')){
-        let lm = this.get('meshMaterial');
-        let terms = lm .get('meshDescriptors');
-        let promises = [];
-
-        let oldTerms = terms.filter(term => {
-          return !this.get('bufferTerms').includes(term);
-        });
-        terms.clear();
-        terms.addObjects(this.get('bufferTerms'));
-        this.get('bufferTerms').forEach((term)=>{
-          if(this.get('isCourse')){
-            term.get('courseLearningMaterials').pushObject(lm);
-          }
-          if(this.get('isSession')){
-            term.get('sessionLearningMaterials').pushObject(lm);
-          }
-        });
-        oldTerms.forEach(term => {
-          if(this.get('isCourse')){
-            term.get('courseLearningMaterials').removeObject(lm);
-          }
-          if(this.get('isSession')){
-            term.get('sessionLearningMaterials').removeObject(lm);
-          }
-        });
-        promises.pushObject(lm.save());
-        all(promises).then(()=> {
-          this.set('meshMaterial', null);
-          this.set('bufferTerms', []);
-        });
-      }
-    },
-
     addNewLearningMaterial(type){
-      this.setProperties({ type, isEditing: true });
+      this.setProperties({ type, displayAddNewForm: true });
     },
 
     async saveNewLearningMaterial(lm) {
@@ -135,7 +92,7 @@ export default Component.extend({
       }
       lmSubject.set('learningMaterial', savedLm);
       await lmSubject.save();
-      this.set('isEditing', false);
+      this.set('displayAddNewForm', false);
     },
 
     saveSortOrder(learningMaterials){
@@ -153,20 +110,6 @@ export default Component.extend({
       });
     },
 
-    cancelSorting() {
-      this.set('isSorting', false);
-    },
-
-    cancelNewLearningMaterial() {
-      this.set('isEditing', false);
-    },
-
-    addTermToBuffer(term){
-      this.get('bufferTerms').addObject(term);
-    },
-    removeTermFromBuffer(term){
-      this.get('bufferTerms').removeObject(term);
-    },
     async addLearningMaterial(parentLearningMaterial) {
       const store = this.get('store');
       let newLearningMaterial;

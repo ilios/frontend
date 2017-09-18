@@ -1,5 +1,7 @@
-{{#unless setup.isRunning}}
-  <div class="learningmaterial-manager-form">
+<div class="learningmaterial-manager-form">
+  {{#if setup.isRunning}}
+    <span class='loading'>{{fa-icon 'spinner' spin=true}}</span>
+  {{else}}
     <div class="item">
       <label>{{t 'general.displayName'}}:</label>
       <span class='displayname'>{{title}}</span>
@@ -63,7 +65,7 @@
     </div>
     <div class="item">
       <label>{{t 'general.userRole'}}:</label>
-      <span class='userrole'>{{userRoletitle}}</span>
+      <span class='userrole'>{{userRoleTitle}}</span>
     </div>
     <div class="item">
       <label>{{t 'general.description'}}:</label>
@@ -123,20 +125,28 @@
           {{/copy-button}}
         </span>
       </div>
-      <div class="item">
-        <label>{{t 'general.uploadDate'}}:</label>
-        <span class='upload-date'>{{moment-format uploadDate 'M-D-YYYY'}}</span>
-      </div>
     {{/if}}
-  </div>
-  <div class='buttons'>
-    <button class='done text' {{action (perform save)}} disabled={{save.isRunning}}>
-      {{#if save.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
-      {{else}}
-        {{t 'general.done'}}
-      {{/if}}
-    </button>
-    <button class='cancel text' {{action (action close)}}>{{t 'general.cancel'}}</button>
-  </div>
-{{/unless}}
+    <div class="item">
+      <label>{{t 'general.uploadDate'}}:</label>
+      <span class='upload-date'>{{moment-format uploadDate 'M-D-YYYY'}}</span>
+    </div>
+
+    {{mesh-manager
+      terms=terms
+      add='addTerm'
+      remove='removeTerm'
+      targetItemTitle=title
+    }}
+
+    <div class='buttons'>
+      <button class='done text' {{action (perform save)}} disabled={{save.isRunning}}>
+        {{#if save.isRunning}}
+          {{fa-icon 'spinner' spin=true}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action (action closeManager)}}>{{t 'general.cancel'}}</button>
+    </div>
+  {{/if}}
+</div>

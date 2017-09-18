@@ -64,6 +64,7 @@ module('Acceptance: Course - Learning Materials', {
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       status: 1,
+      userRole: 1,
       owningUser: 4136,
       courseLearningMaterials: [3],
       uploadDate: new Date(),
@@ -72,6 +73,7 @@ module('Acceptance: Course - Learning Materials', {
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       status: 1,
+      userRole: 1,
       owningUser: 4136,
       courseLearningMaterials: [4],
       uploadDate: new Date('2016-12-12'),
@@ -158,7 +160,7 @@ test('list learning materials', async function(assert) {
         assert.equal(getElementText(find('td:eq(4) li').eq(i)), getText(fixtures.meshDescriptors[courseLm.meshDescriptors[i] - 1].name));
       }
     } else {
-      assert.equal(getElementText(find('td:eq(4)', row)), 'AddNew');
+      assert.equal(getElementText(find('td:eq(4)', row)), 'None');
     }
   }
 });
@@ -324,8 +326,7 @@ test('view link learning material details', async function(assert) {
   assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
   assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
   assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
-  assert.equal(getElementText(find('.upload-date', container)),
-    moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
+  assert.equal(getElementText(find('.upload-date', container)), moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
   assert.equal(find('.copyrightpermission', container).length, 0);
   assert.equal(find('.copyrightrationale', container).length, 0);
   assert.equal(find('.citation', container).length, 0);
@@ -348,37 +349,29 @@ test('view citation learning material details', async function(assert) {
 });
 
 test('edit learning material', async function(assert) {
-  const searchBox = '.search-box';
+  const searchBox = '.learningmaterial-search .search-box';
 
   await visit(url);
   assert.ok(isPresent(find(searchBox)), 'learner-gorup search box is visible');
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
   let container = $('.learningmaterial-manager');
-  assert.ok(isEmpty(find(searchBox)), 'learner-gorup search box is hidden while in edit mode');
+  assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while in edit mode');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
-  await click(find('.status .editable', container));
   await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
-  await click(find('.status .done', container));
   let newNote = 'text text.  Woo hoo!';
-  await click(find('.notes .editable', container));
-  //wait for the editor to load
-  later(async ()=>{
-    find('.notes .fr-box', container).froalaEditor('html.set', newNote);
-    find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
-    await click(find('.notes .done', container));
-    assert.equal(getElementText(find('.notes', container)), getText(`InstructionalNotes: ${newNote}`));
-    await click('.detail-learningmaterials button.bigadd');
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('Yes'));
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('Yes'), 'there is content in notes');
-    assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is false and `eye` icon is not visible');
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText(fixtures.statuses[2].title));
+  find('.notes .fr-box', container).froalaEditor('html.set', newNote);
+  find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
+  await click('.buttons .done', container);
+  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('Yes'));
+  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('Yes'), 'there is content in notes');
+  assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is false and `eye` icon is not visible');
+  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText(fixtures.statuses[2].title));
 
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-    container = $('.learningmaterial-manager');
-    assert.equal(getElementText(find('.notes', container)), getText(`InstructionalNotes: ${newNote}`));
-    assert.equal(getElementText(find('.status', container)), getText('Status: status 2'));
-  }, 100);
+  await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
+  container = $('.learningmaterial-manager');
+  assert.equal(getElementText(find('.notes .fr-box', container).froalaEditor('html.get')), getText(`${newNote}`));
+  assert.equal(getElementText(find('.status option:selected', container)), getText('status 2'));
   await wait();
 });
 
@@ -388,10 +381,8 @@ test('cancel editing learning material', async function(assert) {
   var container = $('.learningmaterial-manager');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
-  await click(find('.status .editable', container));
   await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
-  await click(find('.status .done', container));
-  await click('.detail-learningmaterials button.bigcancel');
+  await click(find('.buttons .cancel', container));
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('No'));
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('No'), 'no content is available under notes');
   assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
@@ -400,11 +391,10 @@ test('cancel editing learning material', async function(assert) {
 });
 
 test('manage terms', async function(assert) {
-  assert.expect(24);
+  assert.expect(23);
   await visit(url);
   let container = find('.detail-learningmaterials').eq(0);
-  await click('.learning-material-table tbody tr:eq(0) td:eq(4) .link', container);
-  assert.equal(getElementText(find('.specific-title', container)), 'SelectMeSHDescriptorsforLearningMaterials');
+  await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
 
   let meshManager = find('.mesh-manager', container).eq(0);
   let material = fixtures.courseLearningMaterials[0];
@@ -460,7 +450,7 @@ test('save terms', async function(assert) {
   assert.expect(1);
   await visit(url);
   let container = find('.detail-learningmaterials').eq(0);
-  await click('.learning-material-table tbody tr:eq(0) td:eq(4) .link', container);
+  await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
   let meshManager = find('.mesh-manager', container).eq(0);
   let searchBoxInput = find('.search-box input', meshManager);
   await fillIn(searchBoxInput, 'descriptor');
@@ -468,7 +458,7 @@ test('save terms', async function(assert) {
   let searchResults = find('.mesh-search-results li', meshManager);
   await click('.removable-list li:eq(0)', meshManager);
   await click(searchResults[0]);
-  await click('button.bigadd', container);
+  await click('.buttons .done', container);
   let expectedMesh = fixtures.meshDescriptors[0].name + fixtures.meshDescriptors[2].name;
   let tds = find('.learning-material-table tbody tr:eq(0) td');
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
@@ -478,7 +468,7 @@ test('cancel term changes', async function(assert) {
   assert.expect(1);
   await visit(url);
   let container = find('.detail-learningmaterials').eq(0);
-  await click('.learning-material-table tbody tr:eq(0) td:eq(4) .link', container);
+  await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
   let meshManager = find('.mesh-manager', container).eq(0);
   let searchBoxInput = find('.search-box input', meshManager);
   await fillIn(searchBoxInput, 'descriptor');
@@ -488,7 +478,7 @@ test('cancel term changes', async function(assert) {
   await click(searchResults[2]);
   await click(searchResults[3]);
   await click(searchResults[4]);
-  await click('button.bigcancel', container);
+  await click('.buttons .cancel', container);
   let tds = find('.learning-material-table tbody tr:eq(0) td');
   let expectedMesh = fixtures.meshDescriptors[1].name + fixtures.meshDescriptors[2].name;
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));

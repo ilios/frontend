@@ -44,6 +44,6 @@ test('it renders', async function(assert) {
   assert.equal(this.$(owner).text().trim(), 'Jolly Green Champ');
   assert.equal(this.$(required).text().trim(), 'Yes');
   assert.equal(this.$(notes).text().trim(), 'Yes');
-  assert.equal(this.$(mesh).text().trim(), 'Add New');
+  assert.equal(this.$(mesh).text().trim(), 'None');
   assert.equal(this.$(status).text().trim(), 'Good');
 });

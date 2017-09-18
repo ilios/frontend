@@ -30,6 +30,8 @@ export default Component.extend({
   absoluteFileUri: null,
   filename: null,
   uploadDate: null,
+  closeManager: null,
+  terms: null,
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -50,6 +52,8 @@ export default Component.extend({
       'required',
       'publicNotes',
     ));
+    const meshDescriptors = yield learningMaterial.get('meshDescriptors');
+    this.set('terms', meshDescriptors.toArray());
     const parent = yield learningMaterial.get('learningMaterial');
     this.setProperties(parent.getProperties(
       'type',
@@ -73,15 +77,16 @@ export default Component.extend({
     const userRole = yield parent.get('userRole');
     this.set('userRoleTitle', userRole.get('title'));
   }),
-  save: task(function* () {
-    const close = this.get('close');
+  save: task(function * () {
     const {
       learningMaterial,
       notes,
       required,
       publicNotes,
       statusId,
-    } = this.getProperties('learningMaterial', 'notes', 'required', 'publicNotes', 'statusId');
+      terms,
+      closeManager,
+    } = this.getProperties('learningMaterial', 'notes', 'required', 'publicNotes', 'statusId', 'terms', 'closeManager');
     learningMaterial.set('publicNotes', publicNotes);
     learningMaterial.set('required', required);
     learningMaterial.set('notes', notes);
@@ -92,14 +97,24 @@ export default Component.extend({
     const parent = yield learningMaterial.get('learningMaterial');
     parent.set('status', status);
 
-
+    learningMaterial.set('meshDescriptors', terms);
     yield learningMaterial.save();
     yield parent.save();
-    close();
+    closeManager();
   }),
   currentStatus: computed('statusId', 'learningMaterialStatuses.[]', async function () {
     const statusId = this.get('statusId');
     const learningMaterialStatuses = await this.get('learningMaterialStatuses');
     return learningMaterialStatuses.findBy('id', statusId);
   }),
+  actions: {
+    addTerm(term) {
+      const terms = this.get('terms');
+      terms.pushObject(term);
+    },
+    removeTerm(term) {
+      const terms = this.get('terms');
+      terms.removeObject(term);
+    },
+  }
 });
