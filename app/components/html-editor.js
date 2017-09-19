@@ -16,6 +16,15 @@ const defaultButtons = [
 export default Component.extend({
   i18n: service(),
   content: '',
+
+  /**
+   * Disable Froala's built in beacon tracking
+   * Has to be done on the global jQuery plugin object
+   */
+  init() {
+    this._super(...arguments);
+    Ember.$.FE.DT = true;
+  },
   options: computed('i18n.locale', function(){
     const i18n = this.get('i18n');
     const language = i18n.get('locale');
