@@ -7,10 +7,14 @@ export default Component.extend({
   errors: null,
   now: null,
   showDetails: true,
+  isOffline: false,
 
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('now', new Date());
+    if (!navigator.onLine) {
+      this.set('isOffline', true);
+    }
   },
 
   is404: computed('errors.[]', function(){
@@ -28,6 +32,9 @@ export default Component.extend({
   actions: {
     toggleDetails() {
       this.set('showDetails', !this.get('showDetails'));
+    },
+    refresh() {
+      window.location.reload();
     }
   }
 });

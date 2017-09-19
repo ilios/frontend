@@ -1,6 +1,9 @@
 {{! template-lint-disable bare-strings }}
 <div class="error-main">
-  {{#if is404}}
+  {{#if isOffline}}
+    <h2>{{t 'general.connectionLost'}}</h2>
+    <p class='clear-errors'><button {{action 'refresh'}}>{{fa-icon 'refresh'}} {{t 'general.reconnectNow'}}</button></p>
+  {{else if is404}}
     {{not-found}}
   {{else}}
     <h2>{{t 'general.errorDisplayMessage'}}</h2>

@@ -13,7 +13,7 @@ export default Component.extend(DomMixin, {
   didInsertElement() {
     this._super(...arguments);
     if (!navigator.onLine) {
-      this.wentOffline();
+      this.get('changeConnectionState').perform(false);
     }
     this.addEventListener(window, 'online', () => {
       this.get('changeConnectionState').perform(true);
