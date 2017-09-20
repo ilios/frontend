@@ -76,7 +76,7 @@ export default Component.extend({
     if (!session) {
       return null;
     }
-    const location = this.get('location');
+    const loc = this.get('location');
     const sessionType = await session.get('sessionType');
     const course = await session.get('course');
     return {
@@ -86,7 +86,7 @@ export default Component.extend({
       name: session.get('title'),
       isPublished: session.get('isPublished'),
       offering: 1,
-      location,
+      loc,
       color: sessionType.get('calendarColor')
     };
   }),
