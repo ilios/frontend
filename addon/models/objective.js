@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
-const { Promise } = RSVP;
+const { map } = RSVP;
 const { Model, attr, belongsTo, hasMany, PromiseArray } = DS;
 
 export default Model.extend({
@@ -42,29 +42,33 @@ export default Model.extend({
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),
-  treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', function(){
-    let promise = new Promise(resolve => {
-      this.get('competency').then(competency => {
-        this.get('parents').then(parents => {
-          let promises = parents.getEach('treeCompetencies');
-          RSVP.all(promises).then(function(trees){
-            let competencies = trees.reduce(function(array, set){
-              return array.pushObjects(set.toArray());
-            }, []);
-            competencies.pushObject(competency);
-            competencies = competencies.uniq().filter(function(item){
-              return item != null;
-            });
-            resolve(competencies);
-          });
-        });
-      });
+
+  /**
+   * All competencies associated with any objectives in the parentage tree, and this objective itself.
+   *
+   * @property treeCompetencies
+   * @type {Ember.computed}
+   * @public
+   */
+  treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', async function() {
+    const parents = await this.get('parents');
+    let competencies = [];
+    await map(parents.mapBy('treeCompetencies'), trees => {
+      competencies.pushObjects(trees.reduce(function(array, competency){
+        array.pushObject(competency);
+        return array;
+      }, []));
+    });
+    const competency = await this.get('competency');
+    competencies.pushObject(competency);
+
+    competencies = competencies.uniq().filter(function(item){
+      return !isEmpty(item);
     });
 
-    return PromiseArray.create({
-      promise: promise
-    });
+    return competencies;
   }),
+
   topParents: computed('parents.[]', function(){
     var defer = RSVP.defer();
     this.get('parents').then(parents => {
