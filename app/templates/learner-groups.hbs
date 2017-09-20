@@ -22,9 +22,6 @@
       {{fa-icon 'users' fixedWidth=true}}
       {{#if hasMoreThanOneProgram}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-          <option value=null selected={{is-equal null selectedProgram.content}}>
-            {{t 'general.selectProgram'}}
-          </option>
           {{#each sortedPrograms as |program|}}
             <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
               {{program.title}}
