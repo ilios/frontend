@@ -9,5 +9,7 @@ export default Model.extend({
   session: belongsTo('session', { async: true }),
   learningMaterial: belongsTo('learning-material', { async: true }),
   meshDescriptors: hasMany('mesh-descriptors', { async: true }),
-  position: attr('number', { defaultValue: 0 })
+  position: attr('number', { defaultValue: 0 }),
+  startDate: attr('date'),
+  endDate: attr('date'),
 });
