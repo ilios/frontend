@@ -1,173 +1,68 @@
 <div class='title'>
-  {{#unless isManaging}}
-    {{t 'general.learningMaterials'}} ({{get (await proxyMaterials) 'length'}})
-  {{/unless}}
-  {{#if isManagingMaterial}}
+  {{#if isManaging}}
     <span class='specific-title'>
       {{t 'general.learningMaterialManageTitle'}}
     </span>
-  {{/if}}
-  {{#if isManagingMesh}}
-    <span class='specific-title'>
-      {{t 'general.lmDescriptorTitle'}}
-    </span>
+  {{else}}
+    {{t 'general.learningMaterials'}} ({{get (await subject.learningMaterials) 'length'}})
   {{/if}}
 </div>
 {{#if displaySearchBox}}
   {{learningmaterial-search add='addLearningMaterial' currentMaterials=parentMaterials}}
 {{/if}}
 <div class='detail-learningmaterials-actions'>
-  {{#if isManaging}}
-    {{#if editable}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-    {{/if}}
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else}}
-    {{#if isEditing}}
-      <button class="collapse-button" {{action 'cancelNewLearningMaterial'}}>{{fa-icon 'minus'}}</button>
-    {{else if (and editable (not isSorting))}}
-      {{#action-menu title=newButtonTitle icon=false classNames='blend-button right-edge'}}
-        <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'general.file'}}</li>
-        <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'general.link'}}</li>
-        <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'general.citation'}}</li>
-      {{/action-menu}}
-    {{/if}}
+  {{#if displayAddNewForm}}
+    <button class="collapse-button" {{action (mut displayAddNewForm) false}}>{{fa-icon 'minus'}}</button>
+  {{else if (and editable (not isSorting) (not isManaging))}}
+    {{#action-menu title=(t 'general.add') icon=false classNames='blend-button right-edge'}}
+      <li {{action 'addNewLearningMaterial' 'file'}}>{{t 'general.file'}}</li>
+      <li {{action 'addNewLearningMaterial' 'link'}}>{{t 'general.link'}}</li>
+      <li {{action 'addNewLearningMaterial' 'citation'}}>{{t 'general.citation'}}</li>
+    {{/action-menu}}
   {{/if}}
 </div>
 
 <div class='detail-learningmaterials-content'>
-  {{#if isManaging class="horizontal"}}
-    {{#if isManagingMaterial}}
-      {{learningmaterial-manager
-        learningMaterial=managingMaterial
-        valueBuffer=bufferMaterial
-        learningMaterialStatuses=learningMaterialStatuses
-        isCourse=isCourse
-        editable=editable
-        changeStatus='changeStatus'
-        changeNotes=(action 'changeNotes')
-        changeRequired='changeRequired'
-        changePublicNotes='changePublicNotes'
-      }}
-    {{/if}}
-    {{#if isManagingMesh}}
-      {{mesh-manager
-        terms=bufferTerms
-        add='addTermToBuffer'
-        remove='removeTermFromBuffer'
-        targetItemTitle=meshMaterial.learningMaterial.title
-      }}
-    {{/if}}
+  {{#if isManaging}}
+    {{learningmaterial-manager
+      learningMaterial=managingMaterial
+      isCourse=isCourse
+      editable=editable
+      closeManager=(action (mut managingMaterial) null)
+      learningMaterialStatuses=(await learningMaterialStatuses)
+    }}
   {{else if isSorting}}
     {{learning-materials-sort-manager
       save=(action 'saveSortOrder')
-      cancel=(action 'cancelSorting')
+      cancel=(action (mut isSorting) false)
       subject=subject
     }}
   {{else}}
-    {{#liquid-if isEditing class="vertical"}}
+    {{#if displayAddNewForm}}
       {{new-learningmaterial
         type=type
-        learningMaterialStatuses=learningMaterialStatuses
-        learningMaterialUserRoles=learningMaterialUserRoles
+        learningMaterialStatuses=(await learningMaterialStatuses)
+        learningMaterialUserRoles=(await learningMaterialUserRoles)
         save=(action 'saveNewLearningMaterial')
-        cancel=(action 'cancelNewLearningMaterial')}}
-    {{/liquid-if}}
-
-    {{#if (get (await proxyMaterials) 'length')}}
+        cancel=(action (mut displayAddNewForm) false)
+      }}
+    {{else if (get (await subject.learningMaterials) 'length')}}
       {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortMaterials'}}</button>
       {{/if}}
-      <table>
-        <thead>
-          <tr>
-            <th class='text-left' colspan=3>{{t 'general.displayName'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.type'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.owner'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.required'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.notes'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.mesh'}}</th>
-            <th class='text-center' colspan=2>{{t 'general.status'}}</th>
-            <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each (await proxyMaterials) as |lmProxy|}}
-            <tr class="{{if lmProxy.showRemoveConfirmation 'confirm-removal'}}">
-              <td class='text-left clickable link' colspan=3 {{action 'manageMaterial' lmProxy.content}}>
-                {{lm-type-icon type=lmProxy.learningMaterial.type mimetype=lmProxy.learningMaterial.mimetype}} {{lmProxy.learningMaterial.title}}
-              </td>
-              <td class='text-center' colspan=2>{{lmProxy.learningMaterial.type}}</td>
-              <td class='text-center' colspan=2>{{lmProxy.learningMaterial.owningUser.fullName}}</td>
-              <td class='text-center' colspan=2>
-                {{#if lmProxy.required}}
-                  <span class='add'>{{t 'general.yes'}}</span>
-                {{else}}
-                  <span class='remove'>{{t 'general.no'}}</span>
-                {{/if}}
-              </td>
-              <td class='text-center' colspan=2>
-                {{#if lmProxy.notes}}
-                  <span class='add'>{{t 'general.yes'}}</span>
-                  {{#if lmProxy.publicNotes}}
-                    {{fa-icon 'eye'}}
-                  {{/if}}
-                {{else}}
-                  <span class='remove'>{{t 'general.no'}}</span>
-                {{/if}}
-              </td>
-              <td class='text-center' colspan=2>
-                {{#if lmProxy.sortedDescriptors.length}}
-                  <ul>
-                    {{#each lmProxy.sortedDescriptors as |descriptor|}}
-                      {{#if editable}}
-                        <li class='clickable link' {{action 'manageDescriptors' lmProxy.content}}>{{descriptor.name}}</li>
-                      {{else}}
-                        <li>{{descriptor.name}}</li>
-                      {{/if}}
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  {{#if editable}}
-                    <button {{action 'manageDescriptors' lmProxy.content}}>{{t 'general.addNew'}}</button>
-                  {{else}}
-                    {{t 'general.none'}}
-                  {{/if}}
-                {{/if}}
-              </td>
-              <td class='text-center' colspan=2>
-                {{lmProxy.learningMaterial.status.title}}
-              </td>
-              <td class='text-left text-center' colspan=1>
-                {{#if editable}}
-                  <span class='clickable remove' {{action 'confirmRemoval' lmProxy}}>{{fa-icon 'trash'}}</span>
-                {{/if}}
-              </td>
-            </tr>
-
-            {{#if lmProxy.showRemoveConfirmation}}
-              <tr class='confirm-removal'>
-                <td colspan=16>
-                  <div class='confirm-message'>
-                    {{t 'general.confirmRemoval'}}<br>
-                    <div class="confirm-buttons">
-                      <button {{action 'remove' lmProxy}} class='remove text'>{{t 'general.yes'}}</button>
-                      <button {{action 'cancelRemove' lmProxy}} class='done text'>{{t 'general.cancel'}}</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
+      {{learning-material-table
+        learningMaterials=(await subject.learningMaterials)
+        editable=editable
+        manageMaterial=(action (mut managingMaterial))
+        remove=(action 'remove')
+      }}
     {{/if}}
   {{/if}}
 </div>
-{{#liquid-if isSaving class='crossFade'}}
+{{#if isSaving class='crossFade'}}
   {{wait-saving
     showProgress=true
     totalProgress=totalMaterialsToSave
     currentProgress=currentMaterialsSaved
   }}
-{{/liquid-if}}
+{{/if}}
