@@ -101,6 +101,8 @@
     'copySession': 'Copiar una Sesión',
     'copySessionSummary': 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".',
     'copySuccess': 'La Copia se ha Completado con Éxito',
+    'copyWithLearners': 'Copiar Con Alumnos',
+    'copyWithoutLearners': 'Copiar Sin Alumnos',
     'countAsOneOffering': 'Cuenta como un Ofrecimiento',
     'courseDirector': 'Director del Curso',
     'courseRollover': 'Copiar Curso',

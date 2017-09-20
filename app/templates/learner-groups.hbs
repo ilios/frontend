@@ -94,6 +94,7 @@
         {{learnergroup-list
           learnerGroups=filteredLearnerGroups
           remove=(action 'removeLearnerGroup')
+          copy=(perform copyGroup)
         }}
       {{else}}
         {{pulse-loader}}
@@ -101,3 +102,10 @@
     </div>
   </section>
 </section>
+{{#liquid-if copyGroup.isRunning class='crossFade'}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalGroupsToSave
+    currentProgress=currentGroupsSaved
+  }}
+{{/liquid-if}}

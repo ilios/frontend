@@ -700,3 +700,199 @@ test('title filter escapes regex', async function(assert) {
   assert.equal(find(groups).length, 1);
   assert.equal(getElementText(firstGroupTitle), 'yes\\no');
 });
+
+test('copy learnergroup without learners', async function(assert) {
+  assert.expect(20);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1,
+    learnerGroups: [1]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    children: [2, 3]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 1,
+    children: [4]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 1,
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 2,
+  });
+  const groups = '.list tbody tr';
+  const firstGroup = `${groups}:eq(0)`;
+  const firstTitle = `${firstGroup} td:eq(0)`;
+  const firstLink = `${firstTitle} a`;
+  const firstMembers = `${firstGroup} td:eq(1)`;
+  const firstSubgroups = `${firstGroup} td:eq(2)`;
+  const firstGroupCopy = `${firstGroup} td:eq(3) .fa-copy`;
+  const firstGroupCopyNoLearners = '.list tbody tr:eq(1) .done:eq(1)';
+  const secondGroup = `${groups}:eq(1)`;
+  const secondTitle = `${secondGroup} td:eq(0)`;
+  const secondLink = `${secondTitle} a`;
+  const secondMembers = `${secondGroup} td:eq(1)`;
+  const secondSubgroups = `${secondGroup} td:eq(2)`;
+
+  const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
+  const firstSubgroup = `${subGroupList}:eq(0)`;
+  const firstSubgroupTitle = `${firstSubgroup} td:eq(0)`;
+  const firstSubgroupMembers = `${firstSubgroup} td:eq(1)`;
+  const firstSubgroupSubgroups = `${firstSubgroup} td:eq(2)`;
+  const secondSubgroup = `${subGroupList}:eq(1)`;
+  const secondSubgroupTitle = `${secondSubgroup} td:eq(0)`;
+  const secondSubgroupMembers = `${secondSubgroup} td:eq(1)`;
+  const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
+
+
+  await visit('/learnergroups');
+  assert.equal(1, find(groups).length);
+  assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(firstMembers)), getText('0'));
+  assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+  await click(firstGroupCopy);
+  await click(firstGroupCopyNoLearners);
+  assert.equal(2, find(groups).length);
+  assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(firstMembers)), getText('0'));
+  assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(secondMembers)), getText('0'));
+  assert.equal(getElementText(find(secondSubgroups)), getText('2'));
+  await click(firstLink);
+  assert.equal(currentURL(), '/learnergroups/1');
+  await visit('/learnergroups');
+  await click(secondLink);
+  assert.equal(currentURL(), '/learnergroups/5');
+
+  assert.equal(2, find(subGroupList).length);
+
+  assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
+  assert.equal(getElementText(find(firstSubgroupMembers)), getText('0'));
+  assert.equal(getElementText(find(firstSubgroupSubgroups)), getText('1'));
+  assert.equal(getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
+  assert.equal(getElementText(find(secondSubgroupMembers)), getText('0'));
+  assert.equal(getElementText(find(secondSubgroupSubgroups)), getText('0'));
+});
+
+test('copy learnergroup with learners', async function(assert) {
+  assert.expect(20);
+  server.create('user', {id: 4136});
+  server.create('school', {
+    programs: [1]
+  });
+  server.create('program', {
+    school: 1,
+    programYears: [1]
+  });
+  server.create('programYear', {
+    program: 1,
+    cohort: 1
+  });
+  server.create('cohort', {
+    programYear: 1,
+    learnerGroups: [1]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    children: [2, 3],
+    users: [2, 3, 4, 5, 6, 7, 8]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 1,
+    children: [4],
+    users: [8]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 1,
+    users: [5, 6, 7]
+  });
+  server.create('learnerGroup', {
+    cohort: 1,
+    parent: 2,
+    users: [8]
+  });
+  server.createList('user', 3, {
+    learnerGroups: [1]
+  });
+  server.createList('user', 3, {
+    learnerGroups: [1, 3]
+  });
+  server.createList('user', 3, {
+    learnerGroups: [1, 4]
+  });
+  server.create('user', {
+    learnerGroups: [1, 2, 5]
+  });
+
+  const groups = '.list tbody tr';
+  const firstGroup = `${groups}:eq(0)`;
+  const firstTitle = `${firstGroup} td:eq(0)`;
+  const firstLink = `${firstTitle} a`;
+  const firstMembers = `${firstGroup} td:eq(1)`;
+  const firstSubgroups = `${firstGroup} td:eq(2)`;
+  const firstGroupCopy = `${firstGroup} td:eq(3) .fa-copy`;
+  const firstGroupCopyWithLearners = '.list tbody tr:eq(1) .done:eq(0)';
+  const secondGroup = `${groups}:eq(1)`;
+  const secondTitle = `${secondGroup} td:eq(0)`;
+  const secondLink = `${secondTitle} a`;
+  const secondMembers = `${secondGroup} td:eq(1)`;
+  const secondSubgroups = `${secondGroup} td:eq(2)`;
+
+  const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
+  const firstSubgroup = `${subGroupList}:eq(0)`;
+  const firstSubgroupTitle = `${firstSubgroup} td:eq(0)`;
+  const firstSubgroupMembers = `${firstSubgroup} td:eq(1)`;
+  const firstSubgroupSubgroups = `${firstSubgroup} td:eq(2)`;
+  const secondSubgroup = `${subGroupList}:eq(1)`;
+  const secondSubgroupTitle = `${secondSubgroup} td:eq(0)`;
+  const secondSubgroupMembers = `${secondSubgroup} td:eq(1)`;
+  const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
+
+  await visit('/learnergroups');
+  assert.equal(1, find(groups).length);
+  assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(firstMembers)), getText('7'));
+  assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+  await click(firstGroupCopy);
+  await click(firstGroupCopyWithLearners);
+  assert.equal(2, find(groups).length);
+  assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(firstMembers)), getText('7'));
+  assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(secondMembers)), getText('7'));
+  assert.equal(getElementText(find(secondSubgroups)), getText('2'));
+  await click(firstLink);
+  assert.equal(currentURL(), '/learnergroups/1');
+  await visit('/learnergroups');
+  await click(secondLink);
+  assert.equal(currentURL(), '/learnergroups/5');
+
+  assert.equal(2, find(subGroupList).length);
+
+  assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
+  assert.equal(getElementText(find(firstSubgroupMembers)), getText('1'));
+  assert.equal(getElementText(find(firstSubgroupSubgroups)), getText('1'));
+  assert.equal(getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
+  assert.equal(getElementText(find(secondSubgroupMembers)), getText('3'));
+  assert.equal(getElementText(find(secondSubgroupSubgroups)), getText('0'));
+});

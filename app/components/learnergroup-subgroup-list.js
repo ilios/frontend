@@ -1,6 +1,9 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
+
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
+import cloneLearnerGroup from '../utils/clone-learner-group';
 
 const { Component, RSVP, inject } = Ember;
 const { service } = inject;
@@ -22,6 +25,21 @@ export default Component.extend({
     this.set('saved', false);
     this.set('savedGroup', null);
   },
+  copyGroup: task(function * (withLearners, learnerGroup) {
+    this.set('saved', false);
+    const store = this.get('store');
+    const cohort = yield learnerGroup.get('cohort');
+    const parentGroup = yield learnerGroup.get('parent');
+    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
+    this.set('totalGroupsToSave', newGroups.length);
+    // save groups one at a time because we need to save in this order so parents are saved before children
+    for (let i = 0; i < newGroups.length; i++) {
+      yield newGroups[i].save();
+      this.set('currentGroupsSaved', i + 1);
+    }
+    this.set('saved', true);
+    this.set('savedGroup', newGroups[0]);
+  }),
 
   actions: {
     saveNewLearnerGroup(title) {

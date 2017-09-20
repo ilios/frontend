@@ -101,6 +101,8 @@ export default {
     'copySession': 'Copier Séance',
     'copySessionSummary': "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matiéres d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\".",
     'copySuccess': 'Copie achevée avec succès',
+    'copyWithLearners': 'Copiér avec étudiants',
+    'copyWithoutLearners': 'Copiér sans étudiants',
     'countAsOneOffering': 'Comptent pour un séance',
     'courseDirector': 'Directeur de Cours',
     'courseRollover': 'Roulement Cours',

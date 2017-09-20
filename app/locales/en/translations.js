@@ -101,6 +101,8 @@ export default {
     'copySession': 'Copy Session',
     'copySessionSummary': 'You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click "done".  To return to your current session click "cancel".',
     'copySuccess': 'Copy Completed Successfully',
+    'copyWithLearners': 'Copy With Learners',
+    'copyWithoutLearners': 'Copy Without Learners',
     'countAsOneOffering': 'Count as one offering',
     'courseDirector': 'Course Director',
     'courseRollover': 'Rollover Course',
