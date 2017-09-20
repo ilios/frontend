@@ -48,14 +48,17 @@ module.exports = function(defaults) {
       ]
     },
     'esw-index': {
-      version: '2',
+      version: '3',
+      excludeScope: [/\/tests(\?.*)?$/],
       includeScope: [
-        /\/course(\/.*)?$/,
+        /\/dashboard(\/.*)?$/,
+        /\/courses(\/.*)?$/,
         /\/course-materials(\/.*)?$/,
         /\/instructorgroups(\/.*)?$/,
         /\/learnergroups(\/.*)?$/,
         /\/programs(\/.*)?$/,
         /\/admin(\/.*)?$/,
+        /\/login(\/.*)?$/,
         /\/logout(\/.*)?$/,
         /\/schools(\/.*)?$/,
         /\/myprofile(\/.*)?$/,
