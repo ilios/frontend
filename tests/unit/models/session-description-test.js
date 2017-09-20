@@ -13,3 +13,10 @@ test('it exists', function(assert) {
   // let store = this.store();
   assert.ok(!!model);
 });
+
+test('text description', function(assert) {
+  let model = this.subject({
+    description: '<p>This is a <a href="http://localhost">test</a>.</p>'
+  });
+  assert.equal('This is a test.', model.get('textDescription'));
+});
