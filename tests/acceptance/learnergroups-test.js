@@ -98,8 +98,8 @@ test('multi-option filters', async function(assert) {
   assert.equal(find(schoolsFilter).length, 2);
   assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
   assert.equal(find(schoolSelect).val(), '1', 'default school is selected');
-  assert.equal(find(programsFilter).length, 3);
-  assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+  assert.equal(find(programsFilter).length, 2);
+  assert.equal(getElementText(find(programsFilter)), getText('program 0 program 1'));
   assert.equal(find(programyearsfilter).length, 2);
   assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
 });
@@ -162,8 +162,8 @@ test('multi-option filters', async function(assert) {
   await visit('/learnergroups');
   assert.equal(find(schoolsFilter).length, 2);
   assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
-  assert.equal(find(programsFilter).length, 3);
-  assert.equal(getElementText(find(programsFilter)), getText('Select a Program program 0 program 1'));
+  assert.equal(find(programsFilter).length, 2);
+  assert.equal(getElementText(find(programsFilter)), getText('program 0 program 1'));
   assert.equal(find(programyearsfilter).length, 2);
   assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
 });
@@ -173,7 +173,7 @@ test('multiple programs filter', async function(assert) {
   const programOptions = '.programsfilter select option';
   const programSelectList = '.programsfilter select';
   const firstListedLearnerGroup = '.list tbody tr td:eq(0)';
-  assert.expect(8);
+  assert.expect(7);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1,2]
@@ -212,10 +212,9 @@ test('multiple programs filter', async function(assert) {
   assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
   assert.equal(getElementText(find(firstListedLearnerGroup)),getText(firstLearnergroup.title));
   var options = find(programOptions);
-  assert.equal(options.length, 3);
-  assert.equal(getElementText(options.eq(0)), getText('Select a Program'));
-  assert.equal(getElementText(options.eq(1)), getText('program 0'));
-  assert.equal(getElementText(options.eq(2)), getText('program 1'));
+  assert.equal(options.length, 2);
+  assert.equal(getElementText(options.eq(0)), getText('program 0'));
+  assert.equal(getElementText(options.eq(1)), getText('program 1'));
   await pickOption(programSelectList, 'program 1', assert);
   assert.equal(getElementText(find(firstListedLearnerGroup)),getText(secondLearnergroup.title));
 });
