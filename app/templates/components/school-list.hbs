@@ -3,9 +3,11 @@
     <div class="title">
       <h2>{{t 'general.schools'}}</h2>
     </div>
-    <div class='actions'>
-      {{expand-collapse-button value=showNewSchoolForm action="toggleNewSchoolForm"}}
-    </div>
+    {{#if (await currentUser.userIsDeveloper)}}
+      <div class='actions'>
+        {{expand-collapse-button value=showNewSchoolForm action="toggleNewSchoolForm"}}
+      </div>
+    {{/if}}
   </div>
   <section class='new'>
     {{#if showNewSchoolForm class='vertical'}}
