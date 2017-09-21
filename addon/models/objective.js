@@ -54,7 +54,7 @@ export default Model.extend({
     const parents = await this.get('parents');
     let competencies = [];
     await map(parents.mapBy('treeCompetencies'), trees => {
-      competencies.pushObjects(trees.reduce(function(array, competency){
+      competencies.pushObjects(trees.reduce((array, competency) => {
         array.pushObject(competency);
         return array;
       }, []));
@@ -62,7 +62,7 @@ export default Model.extend({
     const competency = await this.get('competency');
     competencies.pushObject(competency);
 
-    competencies = competencies.uniq().filter(function(item){
+    competencies = competencies.uniq().filter(item => {
       return !isEmpty(item);
     });
 
