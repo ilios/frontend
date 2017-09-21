@@ -33,7 +33,11 @@ module('Acceptance: Course - Mesh Terms', {
       concepts: [1, 2, 3, 4],
       trees: [1, 2, 3]
     });
-    server.createList('meshDescriptor', 2, {
+    server.create('meshDescriptor', {
+      courses: [1],
+      deleted: true
+    });
+    server.create('meshDescriptor', {
       courses: [1]
     });
 
@@ -80,7 +84,7 @@ test('manage mesh', async function(assert) {
     getElementText(find('.content .title', removableItems.eq(1)).eq(0)),
     getText('descriptor 1')
   );
-  assert.equal(getElementText(find('.content .details', removableItems.eq(1)).eq(0)), '2');
+  assert.equal(getElementText(find('.content .details', removableItems.eq(1)).eq(0)), getText('2 - (depr.)'));
   assert.equal(
     getElementText(find('.content .title', removableItems.eq(2)).eq(0)),
     getText('descriptor 2')

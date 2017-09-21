@@ -1,4 +1,9 @@
 .mesh-manager {
+  .deprecated {
+    color: $ilios-red;
+    font-weight: bolder;
+  }
+
   .mesh-search-results {
     .descriptor-name {
       display: block;
