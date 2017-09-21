@@ -36,7 +36,7 @@
     <div class='single-event-learningmaterial-list'>
       <h2>{{t 'general.sessionLearningMaterials'}}</h2>
       {{single-event-learningmaterial-list
-        learningMaterials=(await sessionLearningMaterials)
+        learningMaterials=sessionLearningMaterials
       }}
     </div>
     <div class='single-event-objective-list'>
@@ -53,7 +53,7 @@
     <div class='single-event-learningmaterial-list'>
       <h2>{{t 'general.courseLearningMaterials'}}</h2>
       {{single-event-learningmaterial-list
-        learningMaterials=(await courseLearningMaterials)
+        learningMaterials=courseLearningMaterials
       }}
     </div>
     <div class='single-event-objective-list'>

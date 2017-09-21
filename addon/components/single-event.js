@@ -1,14 +1,13 @@
 import Ember from 'ember';
 import layout from '../templates/components/single-event';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import moment from 'moment';
 
-const { Component, computed, inject, RSVP, isEmpty} = Ember;
+const { Component, computed, inject, RSVP, isEmpty, isBlank} = Ember;
 const { notEmpty } = computed;
 const { service } = inject;
-const { Promise, map, resolve } = RSVP;
+const { Promise, map } = RSVP;
 
-export default Component.extend(SortableByPosition, {
+export default Component.extend({
   layout,
   store: service(),
   i18n: service(),
@@ -111,65 +110,49 @@ export default Component.extend(SortableByPosition, {
     });
   }),
 
-  /**
-   * Course learning materials that currently fall outside their timed release window.
-   * @property blankedSessionLms
-   * @type {Ember.computed}
-   * @public
-   */
-  blankedCourseLms: computed('event.learningMaterials', function() {
-    const eventLms = this.get('event.learningMaterials') || [];
-    return eventLms.filter(lm => {
-      return isEmpty(lm.session) && lm.isBlanked;
+  typedLearningMaterials: computed('event.learningMaterials', function() {
+    const lms = this.get('event.learningMaterials') || [];
+    lms.forEach(lm => {
+      if (lm.isBlanked) {
+        lm['type'] = 'unknown';
+        return;
+      }
+      if (!isBlank(lm.citation)) {
+        lm['type'] = 'citation';
+      } else if (!isBlank(lm.link)) {
+        lm['type'] = 'link';
+      } else {
+        lm['type'] = 'file';
+      }
+    });
+    return lms;
+  }),
+
+  courseLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
+    const eventLms = this.get('typedLearningMaterials') || [];
+    return eventLms.filterBy('clm').sort((lm1, lm2) => {
+      let pos1 = lm1.position || 0;
+      let pos2 = lm2.position || 0;
+
+      // 1. position, asc
+      if (pos1 > pos2) {
+        return 1;
+      } else if (pos1 < pos2) {
+        return -1;
+      }
+
+      // 2. course learning material id, desc
+      let id1 = lm1.clm;
+      let id2 = lm2.clm;
+      if (id1 > id2) {
+        return -1;
+      } else if (id1 < id2) {
+        return 1;
+      }
+      return 0;
     });
   }),
 
-  courseLearningMaterials: computed('i18n.locale', 'course', 'event.learningMaterials', function() {
-    const eventLms = this.get('event.learningMaterials') || [];
-    const nonBlankedCourseLmIds = eventLms.filter(lm => {
-      return isEmpty(lm.session) && !lm.isBlanked;
-    }).mapBy('id');
-    if (isEmpty(nonBlankedCourseLmIds)) {
-      return resolve([]);
-    }
-    return new Promise(resolve => {
-      const store = this.get('store');
-      store.query('courseLearningMaterial', {
-        filters: {
-          id: nonBlankedCourseLmIds
-        },
-      }).then((courseLearningMaterials) => {
-        let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
-        map(sortedMaterials, clm => {
-          return new Promise(resolve => {
-            clm.get('learningMaterial').then(learningMaterial => {
-              const { required, notes: storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
-              const notes = publicNotes?storedNotes:'';
-              const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
-                'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
-              ]);
-
-              let obj = {
-                title,
-                description,
-                required,
-                notes,
-                url,
-                type,
-                mimetype,
-                filesize,
-                citation,
-              };
-
-              resolve(obj);
-            });
-          });
-        }).then(mappedLearningMaterials => {
-          resolve(mappedLearningMaterials);
-        });
-      });
-    });
-  }),
   sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', function(){
     const i18n = this.get('i18n');
     return new Promise(resolve => {
@@ -209,64 +192,31 @@ export default Component.extend(SortableByPosition, {
     });
   }),
 
-  /**
-   * Session learning materials that currently fall outside their timed release window.
-   * @property blankedSessionLms
-   * @type {Ember.computed}
-   * @public
-   */
-  blankedSessionLms: computed('event.learningMaterials', function() {
-    const eventLms = this.get('event.learningMaterials') || [];
-    return eventLms.filter(lm => {
-      return !isEmpty(lm.session) && lm.isBlanked;
+  sessionLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
+    const eventLms = this.get('typedLearningMaterials') || [];
+    return eventLms.filterBy('slm').sort((lm1, lm2) => {
+      let pos1 = lm1.position || 0;
+      let pos2 = lm2.position || 0;
+
+      // 1. position, asc
+      if (pos1 > pos2) {
+        return 1;
+      } else if (pos1 < pos2) {
+        return -1;
+      }
+
+      // 2. session learning material id, desc
+      let id1 = lm1.slm;
+      let id2 = lm2.slm;
+      if (id1 > id2) {
+        return -1;
+      } else if (id1 < id2) {
+        return 1;
+      }
+      return 0;
     });
   }),
 
-  sessionLearningMaterials: computed('i18n.locale', 'session', 'event.learningMaterials', function() {
-    const eventLms = this.get('event.learningMaterials') || [];
-    const nonBlankedSessionLmIds = eventLms.filter(lm => {
-      return !isEmpty(lm.session) && !lm.isBlanked;
-    }).mapBy('id');
-    if (isEmpty(nonBlankedSessionLmIds)) {
-      return resolve([]);
-    }
-    return new Promise(resolve => {
-      this.get('store').query('sessionLearningMaterial', {
-        filters: {
-          id: nonBlankedSessionLmIds
-        },
-      }).then((sessionLearningMaterials) => {
-        let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
-        map(sortedMaterials, slm => {
-          return new Promise(resolve => {
-            slm.get('learningMaterial').then(learningMaterial => {
-              const { required, notes: storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
-              const notes = publicNotes?storedNotes:'';
-              const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
-                'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
-              ]);
-
-              let obj = {
-                title,
-                description,
-                required,
-                notes,
-                url,
-                type,
-                mimetype,
-                filesize,
-                citation,
-              };
-
-              resolve(obj);
-            });
-          });
-        }).then(lmObjects => {
-          resolve(lmObjects);
-        });
-      });
-    });
-  }),
   course: computed('session.course', function(){
     return new Promise(resolve => {
       this.get('session').then(session=>{

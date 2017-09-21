@@ -2,42 +2,53 @@
   <ul class='static-list fa-ul'>
     {{#each learningMaterials as |lm|}}
       <li class='single-event-learningmaterial-item'>
-        {{lm-type-icon type=lm.type mimetype=lm.mimetype listItem=true}}
-        <div class='single-event-learningmaterial-item-title'>
-          {{#if lm.required}}
-            {{fa-icon 'star' title=(t 'general.required')}}
-          {{/if}}
-          {{#if lm.url}}
-            {{#if (eq lm.mimetype 'application/pdf')}}
-              <a href='{{lm.url}}?inline'>{{lm.title}}</a>
-              <a target='_blank' href='{{lm.url}}' rel='noopener'>{{fa-icon 'download' title=(t 'general.download')}}</a>
-            {{else}}
-              <a target='_blank' href='{{lm.url}}' rel='noopener'>{{lm.title}}</a>
-            {{/if}}
-          {{else}}
+        {{#if lm.isBlanked}}
+          <span class="lm-type-icon">{{fa-icon 'clock-o fa-li' title=(t 'general.timedRelease')}}</span>
+          <div class='single-event-learningmaterial-item-title'>
             {{lm.title}}
+          </div>
+          <div class="single-event-learningmaterial-item-timing-info">
+            ({{timed-release-schedule startDate=lm.startDate endDate=lm.endDate}})
+          </div>
+        {{else}}
+          {{lm-type-icon type=lm.type mimetype=lm.mimetype listItem=true}}
+          <div class='single-event-learningmaterial-item-title'>
+            {{#if lm.required}}
+              {{fa-icon 'star' title=(t 'general.required')}}
+            {{/if}}
+            {{#if lm.absoluteFileUri}}
+              {{#if (eq lm.mimetype 'application/pdf')}}
+                <a href='{{lm.absoluteFileUri}}?inline'>{{lm.title}}</a>
+                <a target='_blank' href='{{lm.absoluteFileUri}}' rel='noopener'>{{fa-icon 'download' title=(t 'general.download')}}</a>
+              {{else}}
+                <a target='_blank' href='{{lm.absoluteFileUri}}' rel='noopener'>{{lm.title}}</a>
+              {{/if}}
+              <span class='single-event-learningmaterial-filesize'>
+                {{#if lm.filesize}} ({{filesize lm.filesize}}){{/if}}
+              </span>
+            {{else if lm.link}}
+              <a target='_blank' href='{{lm.link}}' rel='noopener'>{{lm.title}}</a>
+            {{else}}
+              {{lm.title}}
+            {{/if}}
+          </div>
+          {{#if lm.citation}}
+            <div class='single-event-learningmaterial-item-citation'>
+              {{lm.citation}}
+            </div>
           {{/if}}
-          <span class='single-event-learningmaterial-filesize'>
-            {{#if lm.filesize}} ({{filesize lm.filesize}}){{/if}}
-          </span>
-        </div>
 
-        {{#if lm.citation}}
-          <div class='single-event-learningmaterial-item-citation'>
-            {{lm.citation}}
-          </div>
-        {{/if}}
+          {{#if lm.description}}
+            <div class='single-event-learningmaterial-item-description'>
+              {{{lm.description}}}
+            </div>
+          {{/if}}
 
-        {{#if lm.description}}
-          <div class='single-event-learningmaterial-item-description'>
-            {{{lm.description}}}
-          </div>
-        {{/if}}
-
-        {{#if lm.notes}}
-          <div class='single-event-learningmaterial-item-notes'>
-            {{fa-icon 'pencil-square-o'}}<p>{{{lm.notes}}}</p>
-          </div>
+          {{#if lm.publicNotes}}
+            <div class='single-event-learningmaterial-item-notes'>
+              {{fa-icon 'pencil-square-o'}}<p>{{{lm.publicNotes}}}</p>
+            </div>
+          {{/if}}
         {{/if}}
       </li>
     {{/each}}
