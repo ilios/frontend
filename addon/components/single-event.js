@@ -6,7 +6,7 @@ import moment from 'moment';
 const { Component, computed, inject, RSVP, isEmpty} = Ember;
 const { notEmpty } = computed;
 const { service } = inject;
-const { Promise, map } = RSVP;
+const { Promise, map, resolve } = RSVP;
 
 export default Component.extend(SortableByPosition, {
   layout,
@@ -110,43 +110,62 @@ export default Component.extend(SortableByPosition, {
       });
     });
   }),
-  courseLearningMaterials: computed('i18n.locale', 'course', function() {
+
+  /**
+   * Course learning materials that currently fall outside their timed release window.
+   * @property blankedSessionLms
+   * @type {Ember.computed}
+   * @public
+   */
+  blankedCourseLms: computed('event.learningMaterials', function() {
+    const eventLms = this.get('event.learningMaterials') || [];
+    return eventLms.filter(lm => {
+      return isEmpty(lm.session) && lm.isBlanked;
+    });
+  }),
+
+  courseLearningMaterials: computed('i18n.locale', 'course', 'event.learningMaterials', function() {
+    const eventLms = this.get('event.learningMaterials') || [];
+    const nonBlankedCourseLmIds = eventLms.filter(lm => {
+      return isEmpty(lm.session) && !lm.isBlanked;
+    }).mapBy('id');
+    if (isEmpty(nonBlankedCourseLmIds)) {
+      return resolve([]);
+    }
     return new Promise(resolve => {
       const store = this.get('store');
-      this.get('course').then(course => {
-        store.query('courseLearningMaterial', {
-          filters: {
-            course: course.get('id')
-          },
-        }).then((courseLearningMaterials) => {
-          let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
-          map(sortedMaterials, clm => {
-            return new Promise(resolve => {
-              clm.get('learningMaterial').then(learningMaterial => {
-                const { required, notes: storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
-                const notes = publicNotes?storedNotes:'';
-                const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
-                  'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
-                ]);
+      store.query('courseLearningMaterial', {
+        filters: {
+          id: nonBlankedCourseLmIds
+        },
+      }).then((courseLearningMaterials) => {
+        let sortedMaterials = courseLearningMaterials.toArray().sort(this.positionSortingCallback);
+        map(sortedMaterials, clm => {
+          return new Promise(resolve => {
+            clm.get('learningMaterial').then(learningMaterial => {
+              const { required, notes: storedNotes, publicNotes } = clm.getProperties('required', 'notes', 'publicNotes');
+              const notes = publicNotes?storedNotes:'';
+              const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
+                'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
+              ]);
 
-                let obj = {
-                  title,
-                  description,
-                  required,
-                  notes,
-                  url,
-                  type,
-                  mimetype,
-                  filesize,
-                  citation,
-                };
+              let obj = {
+                title,
+                description,
+                required,
+                notes,
+                url,
+                type,
+                mimetype,
+                filesize,
+                citation,
+              };
 
-                resolve(obj);
-              });
+              resolve(obj);
             });
-          }).then(mappedLearningMaterials => {
-            resolve(mappedLearningMaterials);
           });
+        }).then(mappedLearningMaterials => {
+          resolve(mappedLearningMaterials);
         });
       });
     });
@@ -190,42 +209,60 @@ export default Component.extend(SortableByPosition, {
     });
   }),
 
-  sessionLearningMaterials: computed('i18n.locale', 'session', function() {
+  /**
+   * Session learning materials that currently fall outside their timed release window.
+   * @property blankedSessionLms
+   * @type {Ember.computed}
+   * @public
+   */
+  blankedSessionLms: computed('event.learningMaterials', function() {
+    const eventLms = this.get('event.learningMaterials') || [];
+    return eventLms.filter(lm => {
+      return !isEmpty(lm.session) && lm.isBlanked;
+    });
+  }),
+
+  sessionLearningMaterials: computed('i18n.locale', 'session', 'event.learningMaterials', function() {
+    const eventLms = this.get('event.learningMaterials') || [];
+    const nonBlankedSessionLmIds = eventLms.filter(lm => {
+      return !isEmpty(lm.session) && !lm.isBlanked;
+    }).mapBy('id');
+    if (isEmpty(nonBlankedSessionLmIds)) {
+      return resolve([]);
+    }
     return new Promise(resolve => {
-      this.get('session').then(session => {
-        this.get('store').query('sessionLearningMaterial', {
-          filters: {
-            session: session.get('id')
-          },
-        }).then((sessionLearningMaterials) => {
-          let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
-          map(sortedMaterials, slm => {
-            return new Promise(resolve => {
-              slm.get('learningMaterial').then(learningMaterial => {
-                const { required, notes: storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
-                const notes = publicNotes?storedNotes:'';
-                const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
-                  'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
-                ]);
+      this.get('store').query('sessionLearningMaterial', {
+        filters: {
+          id: nonBlankedSessionLmIds
+        },
+      }).then((sessionLearningMaterials) => {
+        let sortedMaterials = sessionLearningMaterials.toArray().sort(this.positionSortingCallback);
+        map(sortedMaterials, slm => {
+          return new Promise(resolve => {
+            slm.get('learningMaterial').then(learningMaterial => {
+              const { required, notes: storedNotes, publicNotes } = slm.getProperties('required', 'notes', 'publicNotes');
+              const notes = publicNotes?storedNotes:'';
+              const {title, description, url, type, mimetype, filesize, citation} = learningMaterial.getProperties([
+                'title', 'description', 'url', 'type', 'mimetype', 'filesize', 'citation'
+              ]);
 
-                let obj = {
-                  title,
-                  description,
-                  required,
-                  notes,
-                  url,
-                  type,
-                  mimetype,
-                  filesize,
-                  citation,
-                };
+              let obj = {
+                title,
+                description,
+                required,
+                notes,
+                url,
+                type,
+                mimetype,
+                filesize,
+                citation,
+              };
 
-                resolve(obj);
-              });
+              resolve(obj);
             });
-          }).then(lmObjects => {
-            resolve(lmObjects);
           });
+        }).then(lmObjects => {
+          resolve(lmObjects);
         });
       });
     });
