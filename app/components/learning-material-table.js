@@ -75,10 +75,11 @@ export default Component.extend(SortableByPosition, {
     };
     const status = {
       type: 'translatable-table-column',
+      cellComponent: 'learning-material-table-status',
       labelKey: 'general.status',
       valuePath: 'learningMaterial.status.title',
       width: '90px',
-      align: 'center',
+      align: 'left',
       breakpoints: ['mediumScreen', 'largeScreen', 'giantScreen'],
       sortable: false,
     };

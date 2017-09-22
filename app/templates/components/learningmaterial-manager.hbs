@@ -131,6 +131,46 @@
       <span class='upload-date'>{{moment-format uploadDate 'M-D-YYYY'}}</span>
     </div>
 
+    <label>{{t 'general.timedRelease'}}:</label>
+    {{timed-release-schedule startDate=startDate endDate=endDate}}
+
+    <div class='timed-release'>
+
+      {{#if startDate}}
+        <div class='item start-date'>
+          <label>{{t 'general.startDate'}}:</label>
+          {{pikaday-input value=startDate onSelection=(action 'updateDate' 'startDate') format='M/D/YYYY'}}
+        </div>
+
+        <div class='item start-time'>
+          <label>{{t 'general.startTime'}}:</label>
+          {{time-picker date=startDate action=(action 'updateTime' 'startDate')}}
+        </div>
+        <button class='remove-date' {{action (mut startDate null)}}>{{t 'general.timedReleaseClearStartDate'}}</button>
+      {{else}}
+        <p><button class='add-date' {{action 'addDate' 'startDate'}}>{{t 'general.timedReleaseAddStartDate'}}</button></p>
+      {{/if}}
+
+      {{#if endDate}}
+        <div class='item end-date'>
+          <label>{{t 'general.endDate'}}:</label>
+          {{pikaday-input value=endDate onSelection=(action 'updateDate' 'endDate') format='M/D/YYYY'}}
+        </div>
+
+        <div class='item end-time'>
+          <label>{{t 'general.endTime'}}:</label>
+          {{time-picker date=endDate action=(action 'updateTime' 'endDate')}}
+        </div>
+
+        {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
+          <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+        {{/if}}
+        <button class='remove-date' {{action (mut endDate null)}}>{{t 'general.timedReleaseClearEndDate'}}</button>
+      {{else}}
+        <p><button class='add-date' {{action 'addDate' 'endDate'}}>{{t 'general.timedReleaseAddEndDate'}}</button></p>
+      {{/if}}
+    </div>
+
     {{mesh-manager
       terms=terms
       add='addTerm'
