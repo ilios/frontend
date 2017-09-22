@@ -37,11 +37,9 @@ jobs:
       env: PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
     - stage: test
       env: PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - stage: deploy
-      script: true
-      after_success:
-        - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy staging --activate
-        - test $TRAVIS_TAG && node_modules/.bin/ember deploy production --activate
-      notifications:
-        slack:
-          secure: oloxDKdwXmNHKhh5WSR8DDxA3WJdAnyj+vj/8yawF1zG0tgL4fyPzzFqSpEhfsfgBrJlvxFtSnnsWEIMSMdT1LTwReClyjsy3PFQnHIiLMv/IZUS7ijahXQ4XL+ejfyPV4rJtFuKOLuNMww8uniy705/QkqBYwFUAcXXQ3gV5V8=
+    - stage: deploy staging
+      if: branch = master AND NOT type = pull_request
+      script: node_modules/.bin/ember deploy staging --activate
+    - stage: deploy production
+      if: tag IS present
+      script: node_modules/.bin/ember deploy production --activate
