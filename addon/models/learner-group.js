@@ -217,6 +217,13 @@ export default DS.Model.extend({
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
+
+  /**
+   * A list of all nested sub-groups of this group.
+   * @property allDescendants
+   * @type {Ember.computed}
+   * @public
+   */
   allDescendants: computed('children.@each.allDescendants', function(){
     var deferred = Ember.RSVP.defer();
     this.get('children').then(function(learnerGroups){
