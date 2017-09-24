@@ -24,6 +24,12 @@ export default DS.Model.extend({
     async: true,
     inverse: 'instructedLearnerGroups'
   }),
+  /**
+   * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
+   * @property courses
+   * @type {Ember.computed}
+   * @public
+   */
   courses: computed('offerings.[]', 'ilmSessions.[]', function(){
     var defer = Ember.RSVP.defer();
     let promises = [];
