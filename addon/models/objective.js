@@ -52,21 +52,20 @@ export default Model.extend({
    */
   treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', async function() {
     const parents = await this.get('parents');
-    let competencies = [];
-    await map(parents.mapBy('treeCompetencies'), trees => {
-      competencies.pushObjects(trees.reduce((array, competency) => {
-        array.pushObject(competency);
-        return array;
-      }, []));
+    const trees = await map(parents.mapBy('treeCompetencies'), treeCompetencies => {
+      return treeCompetencies;
     });
+    const competencies = trees.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []);
+
     const competency = await this.get('competency');
     competencies.pushObject(competency);
 
-    competencies = competencies.uniq().filter(item => {
+    return competencies.uniq().filter(item => {
       return !isEmpty(item);
     });
-
-    return competencies;
   }),
 
   topParents: computed('parents.[]', function(){
