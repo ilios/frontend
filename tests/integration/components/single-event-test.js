@@ -44,7 +44,7 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
     sessionLearningMaterials = [
       EmberObject.create({
         title: 'Lecture Notes',
-        slm: '1',
+        sessionLearningMaterial: '1',
         description: 'Lecture Notes in PDF format',
         absoluteFileUri: 'http://example.edu/notes.pdf',
         mimetype: 'application/pdf',
@@ -55,7 +55,7 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
       }),
       EmberObject.create({
         title: 'Mystery Meat',
-        slm: '2',
+        sessionLearningMaterial: '2',
         position: 1,
         isBlanked: true,
         endDate: new Date('2013-03-01T01:10:00')
