@@ -342,16 +342,16 @@ test('changing passed properties re-renders', async function(assert) {
       const to = moment(toStamp, 'X');
       switch (count) {
       case 1:
-        assert.ok(from.isSame(today, 'year'));
-        assert.ok(to.isSame(today, 'year'));
-        assert.ok(from.isSame(today, 'week'));
-        assert.ok(to.isSame(today, 'week'));
+        assert.ok(from.isSame(today, 'year'), 'From-date has same year as today.');
+        assert.ok(to.isSame(today, 'year'), 'To-date has same year as today.');
+        assert.ok(from.isSame(today, 'week'), 'From-date has same week as today.');
+        assert.ok(to.isSame(today, 'week'), 'To-date has same wek as today.');
         break;
       case 2:
-        assert.ok(from.isSame(nextYear, 'year'));
-        assert.ok(to.isSame(nextYear, 'year'));
-        assert.ok(from.isSame(nextYear, 'week'));
-        assert.ok(to.isSame(nextYear, 'week'));
+        assert.ok(from.isSame(nextYear, 'year'), 'From-date has same year as next year.');
+        assert.ok(to.isSame(nextYear, 'year'), 'To-date has same year as next year.');
+        assert.ok(from.isSame(nextYear, 'week'), 'From-date has same week as next year.');
+        assert.ok(to.isSame(nextYear, 'week'), 'To-date has same week as next year.');
         break;
       default:
         assert.notOk(true, 'Called too many times');
