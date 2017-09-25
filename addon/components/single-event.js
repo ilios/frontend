@@ -130,7 +130,7 @@ export default Component.extend({
 
   courseLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
-    return eventLms.filterBy('clm').sort((lm1, lm2) => {
+    return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
       let pos1 = lm1.position || 0;
       let pos2 = lm2.position || 0;
 
@@ -142,8 +142,8 @@ export default Component.extend({
       }
 
       // 2. course learning material id, desc
-      let id1 = lm1.clm;
-      let id2 = lm2.clm;
+      let id1 = lm1.courseLearningMaterial;
+      let id2 = lm2.courseLearningMaterial;
       if (id1 > id2) {
         return -1;
       } else if (id1 < id2) {
@@ -194,7 +194,7 @@ export default Component.extend({
 
   sessionLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
-    return eventLms.filterBy('slm').sort((lm1, lm2) => {
+    return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
       let pos1 = lm1.position || 0;
       let pos2 = lm2.position || 0;
 
@@ -206,8 +206,8 @@ export default Component.extend({
       }
 
       // 2. session learning material id, desc
-      let id1 = lm1.slm;
-      let id2 = lm2.slm;
+      let id1 = lm1.sessionLearningMaterial;
+      let id2 = lm2.sessionLearningMaterial;
       if (id1 > id2) {
         return -1;
       } else if (id1 < id2) {
