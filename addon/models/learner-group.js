@@ -24,57 +24,29 @@ export default DS.Model.extend({
     async: true,
     inverse: 'instructedLearnerGroups'
   }),
-  courses: computed('offerings.[]', 'ilmSessions.[]', function(){
-    var defer = Ember.RSVP.defer();
-    let promises = [];
-    let allCourses = [];
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        if(!offerings.length){
-          resolve();
-        }
-        let promises2 = [];
-        offerings.forEach(offering => {
-          promises2.pushObject(offering.get('session').then(session =>{
-            return session.get('course').then(course => {
-              allCourses.pushObject(course);
-            });
-          }));
-        });
-        Ember.RSVP.all(promises2).then(()=>{
-          resolve();
-        });
-      });
-    }));
-    promises.pushObject(new Ember.RSVP.Promise(resolve => {
-      this.get('ilmSessions').then(ilmSessions => {
-        if(!ilmSessions.length){
-          resolve();
-        }
-        let promises2 = [];
-        ilmSessions.forEach(ilmSession => {
-          promises2.pushObject(ilmSession.get('session').then(session =>{
-            if(!session){
-              return;
-            }
-            return session.get('course').then(course => {
-              allCourses.pushObject(course);
-            });
-          }));
-        });
-        Ember.RSVP.all(promises2).then(()=>{
-          resolve();
-        });
-      });
-    }));
+  /**
+   * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
+   * @property courses
+   * @type {Ember.computed}
+   * @public
+   */
+  courses: computed('offerings.[]', 'ilmSessions.[]', async function(){
+    const offerings = await this.get('offerings').toArray();
+    const ilms = await this.get('ilmSessions').toArray();
+    const arr = [].pushObjects(offerings).pushObjects(ilms);
 
-    Ember.RSVP.all(promises).then(()=>{
-      defer.resolve(allCourses.uniq());
+    let sessions = await map(arr.mapBy('session'), session => {
+      return session;
+    });
+    sessions = sessions.filter(session => {
+      return !isEmpty(session);
+    }).uniq();
+
+    const courses = await map(sessions.mapBy('course'), course => {
+      return course;
     });
 
-    return DS.PromiseArray.create({
-      promise: defer.promise
-    });
+    return courses.uniq();
   }),
   childUsers: mapBy('children', 'users'),
   childUserLengths: mapBy('childUsers', 'length'),
