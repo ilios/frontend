@@ -7,7 +7,7 @@ import wait from 'ember-test-helpers/wait';
 const { Service, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
-let lm1, lm2, lm3, lm4, userMaterials;
+let lm1, lm2, lm3, lm4, lm5, userMaterials;
 let today = moment();
 let tomorrow = moment().add(1, 'day');
 
@@ -55,14 +55,23 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
       instructors: ['Instructor3name', 'Instructor4name'],
       firstOfferingDate: tomorrow.toDate(),
     });
-    userMaterials = [lm1, lm2, lm3, lm4];
+    lm5 = EmberObject.create({
+      title: 'title5',
+      isBlanked: true,
+      course: '5',
+      sessionTitle: 'session5title',
+      courseTitle: 'course5title',
+      firstOfferingDate: tomorrow.toDate(),
+      endDate: new Date('2013-03-01T01:10:00')
+    });
+    userMaterials = [lm1, lm2, lm3, lm4, lm5];
   }
 });
 
 
 
 test('it renders with materials', async function(assert) {
-  assert.expect(33);
+  assert.expect(40);
   const currentUserMock = Service.extend({
     currentUserId: 11
   });
@@ -128,6 +137,13 @@ test('it renders with materials', async function(assert) {
   const fourthLmInstructor = `${materials}:eq(3) td:eq(3)`;
   const fourthLmFirstOffering = `${materials}:eq(3) td:eq(4)`;
 
+  const fifthLmTitle = `${materials}:eq(4) td:eq(0)`;
+  const fifthLmTypeIcon = `${fifthLmTitle} i.fa-clock-o`;
+  const fifthLmCourseTitle = `${materials}:eq(4) td:eq(1)`;
+  const fifthLmSessionTitle = `${materials}:eq(4) td:eq(2)`;
+  const fifthLmInstructor = `${materials}:eq(4) td:eq(3)`;
+  const fifthFirstOffering = `${materials}:eq(4) td:eq(4)`;
+
   await wait();
   assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
 
@@ -162,6 +178,14 @@ test('it renders with materials', async function(assert) {
   assert.equal(this.$(fourthLmCourseTitle).text().trim(), 'course4title');
   assert.equal(this.$(fourthLmInstructor).text().trim(), 'Instructor3name, Instructor4name');
   assert.equal(this.$(fourthLmFirstOffering).text().trim(), tomorrow.format('L'));
+
+  assert.ok(this.$(fifthLmTitle).text().includes('title5'));
+  assert.ok(this.$(fifthLmTitle).text().includes('Available before 03/01/2013 1:10 AM'));
+  assert.equal(this.$(fifthLmTypeIcon).length, 1, 'LM type icon is present');
+  assert.equal(this.$(fifthLmSessionTitle).text().trim(), 'session5title');
+  assert.equal(this.$(fifthLmCourseTitle).text().trim(), 'course5title');
+  assert.equal(this.$(fifthLmInstructor).text().trim(), '');
+  assert.equal(this.$(fifthFirstOffering).text().trim(), tomorrow.format('L'));
 });
 
 test('it renders blank', async function(assert) {

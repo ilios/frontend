@@ -7,6 +7,12 @@
     @include ilios-static-list;
   }
 
+  .single-event-learningmaterial-item-timing-info {
+    color: $ilios-red;
+    font-size: smaller;
+    font-weight: normal;
+
+  }
   .single-event-learningmaterial-item-notes {
     i {
       display: inline;

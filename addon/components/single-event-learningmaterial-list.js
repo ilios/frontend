@@ -4,5 +4,5 @@ import layout from '../templates/components/single-event-learningmaterial-list';
 export default Ember.Component.extend({
   layout: layout,
   classNames: ['single-event-learningmaterial-list'],
-  learningMaterials: null
+  learningMaterials: null,
 });

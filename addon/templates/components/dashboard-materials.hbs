@@ -15,23 +15,31 @@
         {{#each (sort-by 'firstOfferingDate' (await materials)) as |lmObject|}}
           <tr>
             <td colspan="3">
-              {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
-              {{#if lmObject.absoluteFileUri}}
-                {{#if (eq lmObject.mimetype 'application/pdf')}}
-                  <a href="{{lmObject.absoluteFileUri}}?inline">
-                    {{lmObject.title}}
-                  </a>
-                  <a href="{{lmObject.absoluteFileUri}}" target="_blank" rel="noopener">
-                    {{fa-icon 'download' title=(t 'general.download')}}
-                  </a>
-                {{else}}
-                  <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
-                {{/if}}
-              {{else if lmObject.link}}
-                <a href={{lmObject.link}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+              {{#if lmObject.isBlanked}}
+                <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
+                {{lmObject.title}}
+                <span class="timed-release-info">
+                  ({{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate}})
+                </span>
               {{else}}
-                {{lmObject.title}}<br>
-                <small>{{lmObject.citation}}</small>
+                {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
+                {{#if lmObject.absoluteFileUri}}
+                  {{#if (eq lmObject.mimetype 'application/pdf')}}
+                    <a href="{{lmObject.absoluteFileUri}}?inline">
+                      {{lmObject.title}}
+                    </a>
+                    <a href="{{lmObject.absoluteFileUri}}" target="_blank" rel="noopener">
+                      {{fa-icon 'download' title=(t 'general.download')}}
+                    </a>
+                  {{else}}
+                    <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+                  {{/if}}
+                {{else if lmObject.link}}
+                  <a href={{lmObject.link}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+                {{else}}
+                  {{lmObject.title}}<br>
+                  <small>{{lmObject.citation}}</small>
+                {{/if}}
               {{/if}}
             </td>
             <td colspan="3">{{lmObject.courseTitle}}</td>

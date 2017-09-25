@@ -6,11 +6,12 @@ moduleForComponent('single-event-learningmaterial-list', 'Integration | Componen
 });
 
 test('it renders', function(assert) {
-  assert.expect(8);
+  assert.expect(11);
 
   this.set('learningMaterials', [
-    {title: 'first one', mimetype: 'application/pdf', url: 'http://firstlink'},
-    {title: 'second one', mimetype: 'audio/wav', url: 'http://secondlink'},
+    {title: 'first one', mimetype: 'application/pdf', absoluteFileUri: 'http://firstlink'},
+    {title: 'second one', mimetype: 'audio/wav', absoluteFileUri: 'http://secondlink'},
+    {title: 'third one', endDate: new Date('2013-03-01T01:10:00'), isBlanked: true}
   ]);
   this.render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
 
@@ -24,6 +25,13 @@ test('it renders', function(assert) {
   assert.equal(this.$('li:eq(1)').text().trim().search(/^second one/), 0);
   assert.equal(this.$('li:eq(1) i.fa-file-audio-o').length, 1, 'LM type icon is present.');
   assert.equal(this.$('li:eq(1) a').attr('href').trim(), 'http://secondlink');
+
+  assert.equal(this.$('li:eq(2)').text().trim().search(/^third one/), 0);
+  assert.equal(this.$('li:eq(2) i.fa-clock-o').length, 1, 'LM type icon is present.');
+  assert.ok(
+    this.$('li:eq(2) .single-event-learningmaterial-item-timing-info').text().includes('Available before 03/01/2013 1:10 AM'),
+    'Timed release info is visible'
+  );
 });
 
 test('displays `None` when provided no content', function(assert) {
