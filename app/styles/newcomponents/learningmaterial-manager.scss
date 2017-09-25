@@ -5,17 +5,17 @@
 
     .item {
       margin-bottom: .5em;
-
-      label {
-        @include ilios-label;
-        margin-right: .5em;
-      }
     }
 
     .notes,
     .description {
       @include ilios-browser-defaults;
     }
+  }
+
+  label {
+    @include ilios-label;
+    margin-right: .5em;
   }
 
   .loading {
@@ -26,11 +26,48 @@
     width: 100%;
   }
 
+  h2 {
+    @include ilios-heading;
+    color: $default-text-color;
+    font-size: $base-font-size;
+    font-weight: bold;
+  }
+
   .mesh-manager {
     margin: 2em 0;
+  }
 
-    h2 {
-      @include ilios-heading-h4;
+  .timed-release-schedule {
+    font-style: italic;
+    margin: 1em .5em;
+  }
+
+  .timed-release {
+    margin-bottom: 2em;
+    padding-left: 1em;
+
+    .item {
+      margin-top: 1em;
     }
+
+    p {
+      margin: 0;
+    }
+
+    button {
+      background-color: transparent;
+      margin: .5em 0 0;
+    }
+
+    .add-date {
+      border: 1px solid $ilios-green;
+      color: $ilios-green;
+    }
+
+    .remove-date {
+      border: 1px solid $ilios-red;
+      color: $ilios-red;
+    }
+
   }
 }

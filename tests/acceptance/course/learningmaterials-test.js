@@ -8,6 +8,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import wait from 'ember-test-helpers/wait';
 import Ember from 'ember';
 import moment from 'moment';
+import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 const { isEmpty, isPresent, run } = Ember;
 const { later } = run;
@@ -352,7 +353,7 @@ test('edit learning material', async function(assert) {
   const searchBox = '.learningmaterial-search .search-box';
 
   await visit(url);
-  assert.ok(isPresent(find(searchBox)), 'learner-gorup search box is visible');
+  assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
   let container = $('.learningmaterial-manager');
   assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while in edit mode');
@@ -512,4 +513,184 @@ test('find and add learning material', async function(assert) {
     assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
   }, 1000);
   await wait();
+});
+
+test('add timed release start date', async function (assert) {
+  const container = '.detail-learningmaterials';
+  const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
+  const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
+  const manageFirstLm = `${firstLm} td:eq(0) .link`;
+  const manager = `${container} .learningmaterial-manager`;
+  const addStartDate = `${manager} .add-date:eq(0)`;
+  const startDate = `${manager} .start-date`;
+  const startTime = `${manager} .start-time`;
+  const startDatePicker = `${startDate} input`;
+  const startTimePicker = `${startTime} select`;
+  const releaseSummary = `${manager} .timed-release-schedule`;
+  const done = `${manager} .buttons .done`;
+
+  await visit(url);
+  assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+  await click(manageFirstLm);
+
+  await click(addStartDate);
+
+  const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
+  const interactor = openDatepicker(find(startDatePicker));
+  interactor.selectDate(newDate.toDate());
+
+  let startBoxes = find(startTimePicker);
+  await pickOption(startBoxes[0], '10', assert);
+  await pickOption(startBoxes[1], '10', assert);
+  await pickOption(startBoxes[2], 'AM', assert);
+
+  await click(done);
+  assert.ok(find(statusIcon).length, 'the clock icon is visible');
+
+  await click(manageFirstLm);
+  assert.equal(getElementText(find(releaseSummary)), getText('Available after ' + newDate.format('L LT')));
+});
+
+test('add timed release start and end date', async function (assert) {
+  const container = '.detail-learningmaterials';
+  const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
+  const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
+  const manageFirstLm = `${firstLm} td:eq(0) .link`;
+  const manager = `${container} .learningmaterial-manager`;
+  const addStartDate = `${manager} .add-date:eq(0)`;
+  const startDate = `${manager} .start-date`;
+  const startTime = `${manager} .start-time`;
+  const startDatePicker = `${startDate} input`;
+  const startTimePicker = `${startTime} select`;
+  const addEndDate = `${manager} .add-date:eq(0)`;
+  const endDate = `${manager} .end-date`;
+  const endTime = `${manager} .end-time`;
+  const endDatePicker = `${endDate} input`;
+  const endTimePicker = `${endTime} select`;
+  const releaseSummary = `${manager} .timed-release-schedule`;
+  const done = `${manager} .buttons .done`;
+
+  await visit(url);
+  assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+  await click(manageFirstLm);
+
+  await click(addStartDate);
+
+  const startDateInteractor = openDatepicker(find(startDatePicker));
+
+  const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
+  startDateInteractor.selectDate(newStartDate.toDate());
+
+  let startBoxes = find(startTimePicker);
+  await pickOption(startBoxes[0], '10', assert);
+  await pickOption(startBoxes[1], '10', assert);
+  await pickOption(startBoxes[2], 'AM', assert);
+
+  await click(addEndDate);
+
+  const newEndDate = newStartDate.clone().add(1, 'minute');
+  const endDateInteractor = openDatepicker(find(endDatePicker));
+  endDateInteractor.selectDate(newEndDate.toDate());
+
+  let endBoxes = find(endTimePicker);
+  await pickOption(endBoxes[0], '10', assert);
+  await pickOption(endBoxes[1], '11', assert);
+  await pickOption(endBoxes[2], 'AM', assert);
+
+  await click(done);
+  assert.ok(find(statusIcon).length, 'the clock icon is visible');
+
+  await click(manageFirstLm);
+  assert.equal(getElementText(find(releaseSummary)), getText('Available from ' + newStartDate.format('L LT') + ' until ' + newEndDate.format('L LT')));
+});
+
+test('add timed release end date', async function (assert) {
+  const container = '.detail-learningmaterials';
+  const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
+  const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
+  const manageFirstLm = `${firstLm} td:eq(0) .link`;
+  const manager = `${container} .learningmaterial-manager`;
+  const addEndDate = `${manager} .add-date:eq(1)`;
+  const endDate = `${manager} .end-date`;
+  const endTime = `${manager} .end-time`;
+  const endDatePicker = `${endDate} input`;
+  const endTimePicker = `${endTime} select`;
+  const releaseSummary = `${manager} .timed-release-schedule`;
+  const done = `${manager} .buttons .done`;
+
+  await visit(url);
+  assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+  await click(manageFirstLm);
+
+  await click(addEndDate);
+
+  const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
+  const interactor = openDatepicker(find(endDatePicker));
+  interactor.selectDate(newDate.toDate());
+
+  let endBoxes = find(endTimePicker);
+  await pickOption(endBoxes[0], '10', assert);
+  await pickOption(endBoxes[1], '10', assert);
+  await pickOption(endBoxes[2], 'AM', assert);
+
+  await click(done);
+  assert.ok(find(statusIcon).length, 'the clock icon is visible');
+
+  await click(manageFirstLm);
+  assert.equal(getElementText(find(releaseSummary)), getText('Available before ' + newDate.format('L LT')));
+});
+
+test('end date is after start date', async function (assert) {
+  const container = '.detail-learningmaterials';
+  const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
+  const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
+  const manageFirstLm = `${firstLm} td:eq(0) .link`;
+  const manager = `${container} .learningmaterial-manager`;
+  const addStartDate = `${manager} .add-date:eq(0)`;
+  const startDate = `${manager} .start-date`;
+  const startTime = `${manager} .start-time`;
+  const startDatePicker = `${startDate} input`;
+  const startTimePicker = `${startTime} select`;
+  const addEndDate = `${manager} .add-date:eq(0)`;
+  const endDate = `${manager} .end-date`;
+  const endTime = `${manager} .end-time`;
+  const endDatePicker = `${endDate} input`;
+  const endTimePicker = `${endTime} select`;
+  const releaseSummary = `${manager} .timed-release-schedule`;
+  const done = `${manager} .buttons .done`;
+  const errorMessage = `${manager} .validation-error-message`;
+
+  await visit(url);
+  assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+  assert.equal(find(manager).length, 0, 'manager is not initially displayed');
+  await click(manageFirstLm);
+
+  await click(addStartDate);
+
+  const startDateInteractor = openDatepicker(find(startDatePicker));
+
+  const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
+  startDateInteractor.selectDate(newStartDate.toDate());
+
+  let startBoxes = find(startTimePicker);
+  await pickOption(startBoxes[0], '10', assert);
+  await pickOption(startBoxes[1], '10', assert);
+  await pickOption(startBoxes[2], 'AM', assert);
+
+  await click(addEndDate);
+
+  const newEndDate = newStartDate.clone();
+  const endDateInteractor = openDatepicker(find(endDatePicker));
+  endDateInteractor.selectDate(newEndDate.toDate());
+
+  let endBoxes = find(endTimePicker);
+  await pickOption(endBoxes[0], '10', assert);
+  await pickOption(endBoxes[1], '10', assert);
+  await pickOption(endBoxes[2], 'AM', assert);
+
+  assert.equal(find(errorMessage).length, 0, 'ne error displays initially');
+  await click(done);
+  assert.equal(find(manager).length, 1, 'the manager is still showing since there was an error');
+  assert.equal(getElementText(find(releaseSummary)), getText('Available from ' + newStartDate.format('L LT') + ' until ' + newEndDate.format('L LT')), 'Check summary text');
+  assert.equal(find(errorMessage).length, 1, 'the error message shows up');
 });

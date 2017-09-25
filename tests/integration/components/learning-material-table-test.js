@@ -1,10 +1,14 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-const { Object:EmberObject } = Ember;
+import initializer from "ilios/instance-initializers/load-common-translations";
+const { getOwner, Object:EmberObject } = Ember;
 
 moduleForComponent('learning-material-table', 'Integration | Component | learning material table', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
 
 test('it renders', async function(assert) {
