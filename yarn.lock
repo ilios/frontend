@@ -2878,7 +2878,7 @@ ember-assign-polyfill@^2.0.1:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^1.2.0"
 
-ember-chrome-devtools@0.2.0:
+ember-chrome-devtools@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ember-chrome-devtools/-/ember-chrome-devtools-0.2.0.tgz#f3287ddf60d0ea9127c93292de86fff2f1c36df8"
   dependencies:
@@ -5345,9 +5345,9 @@ ignore@^3.1.2, ignore@^3.3.3:
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.5.tgz#c4e715455f6073a8d7e5dae72d2fc9d71663dba6"
 
-ilios-common@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-4.0.0.tgz#2565bf348c2f321e50ba64260abdd92f6dcd8f0f"
+ilios-common@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-4.1.0.tgz#33bdb59327961c829f4682b81620829f92c8a97c"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.0.0"
