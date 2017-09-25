@@ -58,7 +58,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
         let promises = objectives.getEach('treeCompetencies');
         all(promises).then(trees => {
           let competencies = trees.reduce((array, set) => {
-            return array.pushObjects(set.toArray());
+            return array.pushObjects(set);
           }, []);
           competencies = competencies.uniq().filter(item => {
             return item != null;
