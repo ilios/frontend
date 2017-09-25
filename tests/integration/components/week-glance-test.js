@@ -350,8 +350,9 @@ test('changing passed properties re-renders', async function(assert) {
       case 2:
         assert.ok(from.isSame(nextYear, 'year'), 'From-date has same year as next year.');
         assert.ok(to.isSame(nextYear, 'year'), 'To-date has same year as next year.');
-        assert.ok(from.isSame(nextYear, 'week'), 'From-date has same week as next year.');
-        assert.ok(to.isSame(nextYear, 'week'), 'To-date has same week as next year.');
+        // comparing weeks needs some wiggle room as dates may be shifting across week lines.
+        assert.ok(1 >= Math.abs(from.week() - nextYear.week()), 'From-date is at the most one week off from next year.');
+        assert.ok(1 >= Math.abs(to.week() - nextYear.week()), 'To-date has is at the most one week off from next year.');
         break;
       default:
         assert.notOk(true, 'Called too many times');
