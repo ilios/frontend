@@ -189,31 +189,27 @@ export default DS.Model.extend({
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
-  allDescendants: computed('children.@each.allDescendants', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('children').then(function(learnerGroups){
-      var groups = [];
-      var promises = [];
-      learnerGroups.forEach(function(learnerGroup){
-        groups.pushObject(learnerGroup);
-        var promise = new Ember.RSVP.Promise(function(resolve) {
-          learnerGroup.get('allDescendants').then(function(descendants){
-            descendants.forEach(function(descendant){
-              groups.pushObject(descendant);
-            });
-            resolve();
-          });
-        });
-        promises.pushObject(promise);
-      });
-      Ember.RSVP.all(promises).then(function(){
-        deferred.resolve(groups);
-      });
+
+  /**
+   * A list of all nested sub-groups of this group.
+   * @property allDescendants
+   * @type {Ember.computed}
+   * @public
+   */
+  allDescendants: computed('children.@each.allDescendants', async function(){
+    const descendants = [];
+    const children = await this.get('children');
+    descendants.pushObjects(children.toArray());
+    const childrenDescendants = await map(children.mapBy('allDescendants'), childDescendants => {
+      return childDescendants;
     });
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
+    descendants.pushObjects(childrenDescendants.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []));
+    return descendants;
   }),
+
   filterTitle: computed('allDescendants.[].title', function(){
     return new Promise(resolve => {
       this.get('allDescendants').then(allDescendants => {
