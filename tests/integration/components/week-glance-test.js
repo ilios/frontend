@@ -88,6 +88,47 @@ const mockEvents = [
     isPublished: true,
     isScheduled: true,
   },
+  {
+    name: 'Schedule some materials',
+    startDate: today.format(),
+    location: 'Room 123',
+    sessionTypeTitle: 'Lecture',
+    courseExternalId: 'C1',
+    sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+    isBlanked: false,
+    isPublished: true,
+    isScheduled: false,
+    learningMaterials: [
+      {
+        title: 'In the window',
+        type: 'citation',
+        required: true,
+        isBlanked: false,
+        citation: 'citationtext',
+        endDate: today.clone().add(1, 'day').toDate(),
+        startDate: today.clone().subtract(1, 'day').toDate(),
+      },
+      {
+        title: 'Too Early',
+        type: 'citation',
+        required: true,
+        isBlanked: true,
+        citation: 'citationtext',
+        startDate: moment('2001-12-31').toDate(),
+      },
+      {
+        title: 'Too Late',
+        type: 'citation',
+        required: true,
+        isBlanked: true,
+        citation: 'citationtext',
+        endDate: moment('2035-06-01').toDate(),
+      },
+    ],
+    attireRequired: true,
+    equipmentRequired: true,
+    attendanceRequired: true,
+  },
 ];
 const userEventsMock = Service.extend({
   getEvents(){
@@ -133,7 +174,7 @@ const getTitle = function(fullTitle){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(32);
+  assert.expect(39);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
   this.set('today', today);
@@ -148,6 +189,7 @@ test('it renders with events', async function(assert) {
   const events = '.event';
   const firstEvent = `${events}:eq(0)`;
   const secondEvent = `${events}:eq(1)`;
+  const thirdEvent = `${events}:eq(2)`;
 
   const firstEventTitle = `${firstEvent} .title`;
   const firstSessionType = `${firstEvent} .sessiontype`;
@@ -178,13 +220,21 @@ test('it renders with events', async function(assert) {
   const secondLm1Notes = `${secondLm1} .public-notes`;
   const secondInstructors = `${secondEvent} .instructors`;
   const secondAttributes = `${secondAttributes} .session-attributes i`;
+  const thirdEventTitle = `${thirdEvent} .title`;
+  const thirdLearningMaterials = `${thirdEvent} .learning-material`;
+  const thirdLm1 = `${thirdLearningMaterials}:eq(0)`;
+  const thirdLm1Schedule = `${thirdLm1} .timed-release-info`;
+  const thirdLm2 = `${thirdLearningMaterials}:eq(1)`;
+  const thirdLm2Schedule = `${thirdLm2} .timed-release-info`;
+  const thirdLm3 = `${thirdLearningMaterials}:eq(2)`;
+  const thirdLm3Schedule = `${thirdLm3} .timed-release-info`;
 
 
   await wait();
 
   const expectedTitle = getTitle(true);
   assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-  assert.equal(this.$(events).length, 2, 'Blank events are not shown');
+  assert.equal(this.$(events).length, 3, 'Blank events are not shown');
   assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
   assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
   assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
@@ -216,6 +266,14 @@ test('it renders with events', async function(assert) {
   assert.equal(this.$(secondLm1Link).attr('href'), 'http://myhost.com/url1?inline');
   assert.equal(this.$(secondInstructors).text().replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
   assert.equal(this.$(secondAttributes).length, 0, 'no attributes flags show up');
+
+  assert.equal(this.$(thirdEventTitle).text().trim(), 'Schedule some materials');
+  assert.equal(this.$(thirdLearningMaterials).length, 3, 'all lms are visible');
+  assert.equal(this.$(thirdLm1Schedule).length, 0, 'event in between says nothing');
+  assert.equal(this.$(thirdLm2Schedule).length, 1, 'early LM says something');
+  assert.equal(this.$(thirdLm3Schedule).length, 1, 'late LM says something');
+  assert.ok(this.$(thirdLm2Schedule).text().includes('Available after 12/31/2001 12:00 AM'));
+  assert.ok(this.$(thirdLm3Schedule).text().includes('Available before 06/01/2035 12:00 AM'));
 
 
 });
