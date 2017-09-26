@@ -4,7 +4,7 @@ import Ember from 'ember';
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
 const { map } = RSVP;
-const { Model, attr, belongsTo, hasMany, PromiseArray } = DS;
+const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
   title: attr('string'),
@@ -68,28 +68,31 @@ export default Model.extend({
     });
   }),
 
-  topParents: computed('parents.[]', function(){
-    var defer = RSVP.defer();
-    this.get('parents').then(parents => {
-      if(isEmpty(parents)){
-        defer.resolve([this]);
-      }
-      let allTopParents = [];
-      let promises = [];
-      parents.forEach( objective => {
-        promises.pushObject(objective.get('topParents').then(topParents => {
-          allTopParents.pushObjects(topParents.toArray());
-        }));
-      });
+  /**
+   * A list of top-level objectives of this objective's parentage tree.
+   * If this objective has no ancestors, it is included in this list itself.
+   * @property topParents
+   * @type {Ember.computed}
+   * @public
+   */
+  topParents: computed('parents', 'parents.@each.topParents', async function(){
+    const parents = await this.get('parents');
+    if (isEmpty(parents)) {
+      const rhett = [];
+      rhett.pushObject(this);
+      return rhett;
+    }
 
-      RSVP.all(promises).then(()=>{
-        defer.resolve(allTopParents);
-      });
+    const allTopParents = await map(parents.mapBy('topParents'), topParents => {
+      return topParents;
     });
-    return PromiseArray.create({
-      promise: defer.promise
-    });
+
+    return allTopParents.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []);
   }),
+
   shortTitle: computed('title', function(){
     var title = this.get('title');
     if(title === undefined){
