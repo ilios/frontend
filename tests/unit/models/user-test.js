@@ -5,6 +5,9 @@ import {
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 
+const { RSVP, run } = Ember;
+const { resolve } = RSVP;
+
 moduleForModel('user', 'Unit | Model | User', {
   needs: modelList
 });
@@ -459,5 +462,54 @@ test('gets secondary cohorts (all cohorts not the primary cohort)', function(ass
       assert.notOk(cohorts.includes(primaryCohort));
     });
   });
+});
 
+test('all associated schools - user has only primary school, no school permissions', async function(assert) {
+  assert.expect(2);
+  let model = this.subject();
+  let store = this.store();
+  run( async () => {
+    const school = store.createRecord('school');
+    model.set('school', school);
+
+    const schools = await model.get('schools');
+    assert.equal(schools.length, 1);
+    assert.ok(schools.includes(school));
+  });
+});
+
+test('all associated schools - user has school permissions', async function(assert) {
+  assert.expect(10);
+  let model = this.subject();
+  let store = this.store();
+  run( async () => {
+    const school1 = store.createRecord('school', { id: 1 });
+    const school2 = store.createRecord('school', { id: 2 });
+    const school3 = store.createRecord('school', { id: 3 });
+    store.createRecord('permission', { user: model, tableRowId: 1, tableName: 'school'});
+    store.createRecord('permission', { user: model, tableRowId: 2, tableName: 'school'});
+    store.createRecord('permission', { user: model, tableRowId: 3, tableName: 'school'});
+    model.set('school', school1);
+
+    store.reopen({
+      findRecord(what, id){
+        assert.equal(what, 'school');
+        assert.ok(id >= 1 && id <= 3);
+        switch (id) {
+        case 1:
+          return resolve(school1);
+        case 2:
+          return resolve(school2);
+        case 3:
+          return resolve(school3);
+        }
+      },
+    });
+
+    const schools = await model.get('schools');
+    assert.equal(schools.length, 3);
+    assert.ok(schools.includes(school1));
+    assert.ok(schools.includes(school2));
+    assert.ok(schools.includes(school3));
+  });
 });

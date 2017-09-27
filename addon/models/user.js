@@ -97,26 +97,28 @@ export default Model.extend({
   primaryCohort: belongsTo('cohort', {async: true}),
   pendingUserUpdates: hasMany('pending-user-update', {async: true}),
   permissions: hasMany('permission', {async: true}),
-  schools: computed('school', function(){
+  /**
+   * All schools that this user is associated with directly.
+   * This includes the user's school affiliation, as well as any additional schools that
+   * the user has read- and/or write-permissions to.
+   * @property schools
+   * @type {Ember.computed}
+   * @public
+   */
+  schools: computed('school', async function(){
     const store = this.get('store');
-    let deferred = defer();
-    this.get('school').then(primarySchool => {
-      this.get('permissions').then(permissions => {
-        let schoolIds = permissions.filter(permission => {
-          return permission.get('tableName') === 'school';
-        }).mapBy('tableRowId');
-        let promises = schoolIds.map(id => {
-          return store.findRecord('school', id);
-        });
-        all(promises).then(schools => {
-          schools.pushObject(primarySchool);
-          deferred.resolve(schools.uniq());
-        });
-      });
-    });
-    return PromiseArray.create({
-      promise: deferred.promise
-    });
+    const primarySchool = await this.get('school');
+    const permissions = await this.get('permissions');
+    const schoolIds = permissions.toArray().filter(permission => {
+      return 'school' === permission.get('tableName');
+    }).mapBy('tableRowId');
+
+    const schools = await all(schoolIds.map(id => {
+      return store.findRecord('school', id);
+    }));
+
+    schools.pushObject(primarySchool);
+    return schools.uniq();
   }),
 
   fullName: computed('firstName', 'middleName', 'lastName', function() {
