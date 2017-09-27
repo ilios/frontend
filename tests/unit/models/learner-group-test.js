@@ -108,8 +108,17 @@ test('top level groups return false for the list of available users', function(a
   });
 });
 
-test('check allDescendantUsers', async function(assert) {
-  assert.expect(11);
+test('check allDescendantUsers on empty group', async function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  run( async () => {
+    let allDescendantUsers = await learnerGroup.get('allDescendantUsers');
+    assert.equal(allDescendantUsers.length, 0);
+  });
+});
+
+test('check allDescendantUsers on populated group with sub-groups', async function(assert) {
+  assert.expect(6);
   let learnerGroup = this.subject();
   let store = this.store();
 
@@ -120,23 +129,12 @@ test('check allDescendantUsers', async function(assert) {
     let user4 = store.createRecord('user');
     let user5 = store.createRecord('user');
     let subGroup1 = store.createRecord('learner-group', {users: [user2]});
-    let subGroup2 = store.createRecord('learner-group', {users: [user3]});
-    let subGroup3 = store.createRecord('learner-group', {users: [user5]});
+    let subSubGroup1 = store.createRecord('learner-group', {users: [user3]});
+    let subGroup2 = store.createRecord('learner-group', {users: [user5], children: [ subSubGroup1 ]});
+    learnerGroup.get('users').pushObjects([user1, user4]);
+    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
 
     let allDescendantUsers = await learnerGroup.get('allDescendantUsers');
-    assert.equal(allDescendantUsers.length, 0);
-
-    learnerGroup.get('users').pushObject(user1);
-    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
-    allDescendantUsers = await learnerGroup.get('allDescendantUsers');
-    assert.equal(allDescendantUsers.length, 3);
-    assert.ok(allDescendantUsers.includes(user1));
-    assert.ok(allDescendantUsers.includes(user2));
-    assert.ok(allDescendantUsers.includes(user3));
-
-    learnerGroup.get('users').pushObject(user4);
-    learnerGroup.get('children').pushObject(subGroup3);
-    allDescendantUsers = await learnerGroup.get('allDescendantUsers');
     assert.equal(allDescendantUsers.length, 5);
     assert.ok(allDescendantUsers.includes(user1));
     assert.ok(allDescendantUsers.includes(user2));
