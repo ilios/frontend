@@ -114,22 +114,30 @@ export default DS.Model.extend({
     });
   }),
 
-  allDescendantUsers: computed('users.[]', 'children.@each.users', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('users').then(users => {
-      this.get('children').then(children => {
-        map(children.mapBy('allDescendantUsers'), childUsers => {
-          users.addObjects(childUsers);
-        }).then(() => {
-          deferred.resolve(users.uniq());
-        });
-      });
+  /**
+   * A list of all users in this group and any of its sub-groups.
+   * @property allDescendantUsers
+   * @type {Ember.computed}
+   * @public
+   */
+  allDescendantUsers: computed('users.[]', 'children.@each.allDescendantUsers', async function(){
+    const allUsers = [];
+    let users = await this.get('users').toArray();
+    let subgroups = await this.get('children').toArray();
+
+    let usersInSubgroups = await map(subgroups.mapBy('allDescendantUsers'), allDescendantUsers => {
+      return allDescendantUsers;
     });
 
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
+    allUsers.pushObjects(usersInSubgroups.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []));
+    allUsers.pushObjects(users);
+
+    return allUsers.uniq();
   }),
+
   usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
     return new Promise(resolve => {
       this.get('users').then(users => {
