@@ -2,8 +2,8 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed, PromiseProxyMixin, Object:EmberObject, RSVP } = Ember;
-const { attr, belongsTo, hasMany, PromiseArray, Model } = DS;
-const { all, defer, Promise } = RSVP;
+const { attr, belongsTo, hasMany, Model } = DS;
+const { all, map, Promise } = RSVP;
 
 const ProxyContent = EmberObject.extend(PromiseProxyMixin);
 
@@ -137,6 +137,12 @@ export default Model.extend({
     }
   }),
 
+  /**
+   * A list of all courses that this user is associated with - be it as learner, instructor or director.
+   * @property allRelatedCourses
+   * @type {Ember.computed}
+   * @public
+   */
   allRelatedCourses: computed(
     'directedCourses.[]',
     'learnerGroups.[]',
@@ -146,84 +152,50 @@ export default Model.extend({
     'instructorGroupCourses.[]',
     'learnerIlmSessions.[]',
     'instructorIlmSessions.[]',
-    function(){
-      let deferred = defer();
-      let promises = [];
-      let allCourses = [];
-      promises.pushObject(new Promise(resolve => {
-        this.get('directedCourses').then(courses => {
-          allCourses.pushObjects(courses.toArray());
-          resolve();
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('learnerGroups').then(groups => {
-          all(groups.mapBy('courses')).then(courses => {
-            courses.forEach(arr => {
-              allCourses.pushObjects(arr);
-            });
-            resolve();
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructorGroups').then(groups => {
-          all(groups.mapBy('courses')).then(courses => {
-            courses.forEach(arr => {
-              allCourses.pushObjects(arr);
-            });
-            resolve();
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructedOfferings').then(offerings => {
-          all(offerings.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('offerings').then(offerings => {
-          all(offerings.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('learnerIlmSessions').then(ilmSessions => {
-          all(ilmSessions.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      promises.pushObject(new Promise(resolve => {
-        this.get('instructorIlmSessions').then(ilmSessions => {
-          all(ilmSessions.mapBy('session')).then(sessions => {
-            all(sessions.mapBy('course')).then(courses => {
-              allCourses.pushObjects(courses);
-              resolve();
-            });
-          });
-        });
-      }));
-      all(promises).then(()=>{
-        deferred.resolve(allCourses.uniq());
+    async function() {
+      const directedCourses = await this.get('directedCourses');
+      const learnerGroups = await this.get('learnerGroups');
+      const instructorGroups = await this.get('instructorGroups');
+      const instructedOfferings = await this.get('instructedOfferings');
+      const offerings = await this.get('offerings');
+      const learnerIlmSessions = await this.get('learnerIlmSessions');
+      const instructorIlmSessions = await this.get('instructorIlmSessions');
+
+      // get lists of courses associated with this user's learner- and instructor-groups
+      const groups = [];
+      groups.pushObjects(learnerGroups.toArray());
+      groups.pushObjects(instructorGroups.toArray());
+      const listsOfCourses = await map(groups.mapBy('courses'), courses => {
+        return courses.toArray();
       });
-      return PromiseArray.create({
-        promise: deferred.promise
+
+      // get a list of sessions associated with this user's offerings and ILMs
+      const offeringsAndIlms = [];
+      offeringsAndIlms.pushObjects(instructedOfferings.toArray());
+      offeringsAndIlms.pushObjects(offerings.toArray());
+      offeringsAndIlms.pushObjects(learnerIlmSessions.toArray());
+      offeringsAndIlms.pushObjects(instructorIlmSessions.toArray());
+      const sessions = await map(offeringsAndIlms.mapBy('session'), session => {
+        return session;
       });
+
+      // get a list of courses from these sessions and add it to the lists of courses
+      const listOfCourses = await map(sessions.uniq().mapBy('course'), course => {
+        return course;
+      });
+      listsOfCourses.pushObject(listOfCourses);
+
+      // add the list of directed courses to the lists of courses
+      listsOfCourses.pushObject(directedCourses.toArray());
+
+      // flatten these lists down to one list of courses, and de-dupe that list
+      return listsOfCourses.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, []).uniq();
     }
   ),
+
   absoluteIcsUri: computed('icsFeedKey', function(){
     return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
   }),

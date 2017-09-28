@@ -37,11 +37,11 @@ test('full name no middle name', function(assert) {
   });
 });
 
-test('gets all directed courses', function(assert) {
+test('gets all directed courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
   let courses = [];
-  Ember.run(()=>{
+  run( async () => {
     courses.pushObject(store.createRecord('course', {
       directors: [model],
       id: 1,
@@ -50,20 +50,18 @@ test('gets all directed courses', function(assert) {
       directors: [model],
       id: 2
     }));
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all learner group courses', function(assert) {
+test('gets all learner group courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  Ember.run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -91,20 +89,18 @@ test('gets all learner group courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all instructor group courses', function(assert) {
+test('gets all instructor group courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -132,20 +128,18 @@ test('gets all instructor group courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all instructed offering courses', function(assert) {
+test('gets all instructed offering courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -168,20 +162,18 @@ test('gets all instructed offering courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all learner offering courses', function(assert) {
+test('gets all learner offering courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -204,20 +196,18 @@ test('gets all learner offering courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all learner group ILMSession courses', function(assert) {
+test('gets all learner group ILMSession courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1,
@@ -245,20 +235,18 @@ test('gets all learner group ILMSession courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all instructor group ILMSession courses', function(assert) {
+test('gets all instructor group ILMSession courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1,
@@ -292,20 +280,18 @@ test('gets all instructor group ILMSession courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all learner ilm courses', function(assert) {
+test('gets all learner ilm courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  Ember.run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -324,20 +310,18 @@ test('gets all learner ilm courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
-test('gets all instructor ilm courses', function(assert) {
+test('gets all instructor ilm courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run(()=>{
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -356,14 +340,12 @@ test('gets all instructor ilm courses', function(assert) {
     });
 
     let courses = [course1, course2];
-    model.get('allRelatedCourses').then(allRelatedCourses => {
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
-
 });
 
 test('find lowest group at top of tree', function(assert) {
