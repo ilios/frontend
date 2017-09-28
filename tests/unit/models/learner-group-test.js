@@ -176,25 +176,43 @@ test('check allDescendants', async function(assert) {
   });
 });
 
-test('check subgroupNumberingOffset', function(assert) {
+test('check subgroupNumberingOffset on group with no sub-groups', async function(assert) {
+  assert.expect(1);
+  const groupTitle = 'Lorem Ipsum';
+  let learnerGroup = this.subject();
+  run( async () => {
+    learnerGroup.set('title', groupTitle);
+    let offset = await learnerGroup.get('subgroupNumberingOffset');
+    assert.equal(offset, 1, 'no subgroups. offset is 1.');
+  });
+});
+
+test('check subgroupNumberingOffset on group with sub-groups', async function(assert) {
+  assert.expect(1);
   const groupTitle = 'Lorem Ipsum';
   let store = this.store();
   let learnerGroup = this.subject();
-  assert.expect(3);
-  run(() => {
+  run( async () => {
     learnerGroup.set('title', groupTitle);
-    learnerGroup.get('subgroupNumberingOffset').then((offset) => {
-      assert.equal(offset, 1); // no subgroups. offset is 1.
-      store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 1' });
-      store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 3' });
-      learnerGroup.get('subgroupNumberingOffset').then(subgroupNumberingOffset => {
-        assert.equal(subgroupNumberingOffset, 4); // highest number is 3. 3 + 1 = 4. offset is 4.
-        store.createRecord('learner-group', {parent: learnerGroup, title: 'not the parent title 4' });
-        learnerGroup.get('subgroupNumberingOffset').then(subgroupNumberingOffset2 => {
-          assert.equal(subgroupNumberingOffset2, 4); // subgroup with title-mismatch is ignored, offset is still 4.
-        });
-      });
-    });
+    store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 1' });
+    store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 3' });
+    let offset = await learnerGroup.get('subgroupNumberingOffset');
+    assert.equal(offset, 4, 'highest number is 3. 3 + 1 = 4. offset is 4.');
+  });
+});
+
+test('check subgroupNumberingOffset on group with sub-groups and mis-matched sub-group title', async function(assert) {
+  assert.expect(1);
+  const groupTitle = 'Lorem Ipsum';
+  let store = this.store();
+  let learnerGroup = this.subject();
+  run( async () => {
+    learnerGroup.set('title', groupTitle);
+    store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 1' });
+    store.createRecord('learner-group', {parent: learnerGroup, title: groupTitle + ' 3' });
+    store.createRecord('learner-group', {parent: learnerGroup, title: 'not the parent title 4' });
+    let offset = await learnerGroup.get('subgroupNumberingOffset');
+    assert.equal(offset, 4, 'subgroup with title-mismatch is ignored, offset is 4 not 5.');
   });
 });
 

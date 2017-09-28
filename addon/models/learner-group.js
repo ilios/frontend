@@ -95,23 +95,18 @@ export default DS.Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  subgroupNumberingOffset: computed('children.[]', function () {
+  subgroupNumberingOffset: computed('children.[]', async function () {
     const regex = new RegExp('^' + escapeRegExp(this.get('title')) + ' ([0-9]+)$');
-    let deferred = Ember.RSVP.defer();
-    this.get('children').then(groups => {
-      let offset = groups.reduce((previousValue, item) => {
-        let rhett = previousValue;
-        let matches = regex.exec(item.get('title'));
-        if (! isEmpty(matches)) {
-          rhett = Math.max(rhett, parseInt(matches[1], 10));
-        }
-        return rhett;
-      }, 0);
-      deferred.resolve(++offset);
-    });
-    return DS.PromiseObject.create({
-      promise: deferred.promise
-    });
+    const groups = this.get('children');
+    let offset = groups.reduce((previousValue, item) => {
+      let rhett = previousValue;
+      let matches = regex.exec(item.get('title'));
+      if (! isEmpty(matches)) {
+        rhett = Math.max(rhett, parseInt(matches[1], 10));
+      }
+      return rhett;
+    }, 0);
+    return ++offset;
   }),
 
   allDescendantUsers: computed('users.[]', 'children.@each.users', function(){
