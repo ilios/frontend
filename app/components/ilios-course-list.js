@@ -77,35 +77,33 @@ export default Component.extend({
   i18n: service(),
   courses: [],
   proxiedCourses: computed('courses.[]', function(){
-    return new Promise(resolve => {
-      const i18n = this.get('i18n');
-      return this.get('courses').then(courses => {
-        resolve(courses.map(course => {
-          return CourseProxy.create({
-            content: course,
-            i18n,
-            currentUser: this.get('currentUser')
-          });
-        }));
+    const i18n = this.get('i18n');
+    const courses = this.get('courses');
+    if (!courses) {
+      return [];
+    }
+    return courses.map(course => {
+      return CourseProxy.create({
+        content: course,
+        i18n,
+        currentUser: this.get('currentUser')
       });
     });
   }),
   sortBy: 'title',
   sortedCourses: computed('proxiedCourses.[]', 'sortBy', 'sortedAscending', function(){
-    return new Promise(resolve => {
-      let sortBy = this.get('sortBy');
-      if (-1 !== sortBy.indexOf(':')) {
-        sortBy = sortBy.split(':', 1)[0];
-      }
-      let sortedAscending = this.get('sortedAscending');
-      this.get('proxiedCourses').then(courses => {
-        let sortedCourses = courses.sortBy(sortBy);
-        if (!sortedAscending) {
-          sortedCourses = sortedCourses.slice().reverse();
-        }
-        resolve(sortedCourses);
-      });
-    });
+    let sortBy = this.get('sortBy');
+    if (-1 !== sortBy.indexOf(':')) {
+      sortBy = sortBy.split(':', 1)[0];
+    }
+    let sortedAscending = this.get('sortedAscending');
+    const courses = this.get('proxiedCourses');
+    let sortedCourses = courses.sortBy(sortBy);
+    if (!sortedAscending) {
+      sortedCourses = sortedCourses.slice().reverse();
+    }
+
+    return sortedCourses;
   }),
 
   sortedAscending: computed('sortBy', function(){
