@@ -6016,9 +6016,9 @@ liquid-fire@^0.28.0:
     match-media "^0.2.0"
     velocity-animate ">= 0.11.8"
 
-liquid-tether@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/liquid-tether/-/liquid-tether-2.0.4.tgz#6abcb53c3b3750d2b714a875f83de362c06e528a"
+liquid-tether@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/liquid-tether/-/liquid-tether-2.0.5.tgz#a8a1c5ec1ccdc607a67778a3cf5242917efe5ac4"
   dependencies:
     broccoli-funnel "^1.1.0"
     broccoli-merge-trees "^1.2.4"
