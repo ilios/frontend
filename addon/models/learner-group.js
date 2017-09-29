@@ -109,22 +109,25 @@ export default DS.Model.extend({
     return ++offset;
   }),
 
-  allDescendantUsers: computed('users.[]', 'children.@each.users', function(){
-    var deferred = Ember.RSVP.defer();
-    this.get('users').then(users => {
-      this.get('children').then(children => {
-        map(children.mapBy('allDescendantUsers'), childUsers => {
-          users.addObjects(childUsers);
-        }).then(() => {
-          deferred.resolve(users.uniq());
-        });
-      });
-    });
+  /**
+   * A list of all users in this group and any of its sub-groups.
+   * @property allDescendantUsers
+   * @type {Ember.computed}
+   * @public
+   */
+  allDescendantUsers: computed('users.[]', 'children.@each.allDescendantUsers', async function(){
+    let users = await this.get('users').toArray();
+    let subgroups = await this.get('children').toArray();
+    let usersInSubgroups = await all(subgroups.mapBy('allDescendantUsers'));
+    let allUsers = (usersInSubgroups.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []));
+    allUsers.pushObjects(users);
 
-    return DS.PromiseArray.create({
-      promise: deferred.promise
-    });
+    return allUsers.uniq();
   }),
+
   usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
     return new Promise(resolve => {
       this.get('users').then(users => {

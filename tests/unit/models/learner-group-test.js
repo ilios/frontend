@@ -108,43 +108,39 @@ test('top level groups return false for the list of available users', function(a
   });
 });
 
-test('check allDescendantUsers', function(assert) {
-  assert.expect(11);
+test('check allDescendantUsers on empty group', async function(assert) {
+  assert.expect(1);
+  let learnerGroup = this.subject();
+  run( async () => {
+    let allDescendantUsers = await learnerGroup.get('allDescendantUsers');
+    assert.equal(allDescendantUsers.length, 0);
+  });
+});
+
+test('check allDescendantUsers on populated group with sub-groups', async function(assert) {
+  assert.expect(6);
   let learnerGroup = this.subject();
   let store = this.store();
 
-  return learnerGroup.get('allDescendantUsers').then(users => {
-    assert.equal(users.length, 0);
-
+  run( async () => {
     let user1 = store.createRecord('user');
     let user2 = store.createRecord('user');
     let user3 = store.createRecord('user');
-    learnerGroup.get('users').pushObject(user1);
+    let user4 = store.createRecord('user');
+    let user5 = store.createRecord('user');
     let subGroup1 = store.createRecord('learner-group', {users: [user2]});
-    let subGroup2 = store.createRecord('learner-group', {users: [user3]});
+    let subSubGroup1 = store.createRecord('learner-group', {users: [user3]});
+    let subGroup2 = store.createRecord('learner-group', {users: [user5], children: [ subSubGroup1 ]});
+    learnerGroup.get('users').pushObjects([user1, user4]);
     learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
 
-    return learnerGroup.get('allDescendantUsers').then(allDescendantUsers => {
-      assert.equal(allDescendantUsers.length, 3);
-      assert.ok(allDescendantUsers.includes(user1));
-      assert.ok(allDescendantUsers.includes(user2));
-      assert.ok(allDescendantUsers.includes(user3));
-      let user4 = store.createRecord('user');
-      let user5 = store.createRecord('user');
-      learnerGroup.get('users').pushObject(user4);
-      let subGroup3 = store.createRecord('learner-group', {users: [user5]});
-      learnerGroup.get('children').pushObject(subGroup3);
-
-      return learnerGroup.get('allDescendantUsers').then(allDescendantUsers2 => {
-        assert.equal(allDescendantUsers2.length, 5);
-        assert.ok(allDescendantUsers2.includes(user1));
-        assert.ok(allDescendantUsers2.includes(user2));
-        assert.ok(allDescendantUsers2.includes(user3));
-        assert.ok(allDescendantUsers2.includes(user4));
-        assert.ok(allDescendantUsers2.includes(user5));
-      });
-
-    });
+    let allDescendantUsers = await learnerGroup.get('allDescendantUsers');
+    assert.equal(allDescendantUsers.length, 5);
+    assert.ok(allDescendantUsers.includes(user1));
+    assert.ok(allDescendantUsers.includes(user2));
+    assert.ok(allDescendantUsers.includes(user3));
+    assert.ok(allDescendantUsers.includes(user4));
+    assert.ok(allDescendantUsers.includes(user5));
   });
 });
 
