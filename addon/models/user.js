@@ -170,19 +170,14 @@ export default Model.extend({
       });
 
       // get a list of sessions associated with this user's offerings and ILMs
-      const offeringsAndIlms = [];
-      offeringsAndIlms.pushObjects(instructedOfferings.toArray());
+      const offeringsAndIlms = instructedOfferings.toArray();
       offeringsAndIlms.pushObjects(offerings.toArray());
       offeringsAndIlms.pushObjects(learnerIlmSessions.toArray());
       offeringsAndIlms.pushObjects(instructorIlmSessions.toArray());
-      const sessions = await map(offeringsAndIlms.mapBy('session'), session => {
-        return session;
-      });
+      const sessions = await all(offeringsAndIlms.mapBy('session'));
 
       // get a list of courses from these sessions and add it to the lists of courses
-      const listOfCourses = await map(sessions.uniq().mapBy('course'), course => {
-        return course;
-      });
+      const listOfCourses = await all(sessions.uniq().mapBy('course'));
       listsOfCourses.pushObject(listOfCourses);
 
       // add the list of directed courses to the lists of courses
