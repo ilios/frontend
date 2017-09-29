@@ -3,7 +3,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
+const { computed, Controller, RSVP, isBlank, isEmpty, isPresent, inject } = Ember;
 const { Promise } = RSVP;
 const { service } = inject;
 const { gt, sort } = computed;
@@ -56,11 +56,9 @@ export default Controller.extend({
   }),
 
   changeTitleFilter: task(function * (value) {
-    const clean = escapeRegExp(value);
-    this.set('titleFilter', clean);
+    this.set('titleFilter', value);
     yield timeout(250);
-
-    return clean;
+    return value;
   }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
@@ -80,11 +78,16 @@ export default Controller.extend({
     'allRelatedCourses.[]',
     async function(){
       let title = this.get('changeTitleFilter.lastSuccessful.value');
+      if (!isPresent(title)) {
+        const titleFilter = this.get('titleFilter');
+        title = isBlank(titleFilter) ? '' : titleFilter ;
+      }
+      const cleanTitle = escapeRegExp(title);
       let filterMyCourses = this.get('userCoursesOnly');
-      let exp = new RegExp(title, 'gi');
+      let exp = new RegExp(cleanTitle, 'gi');
       const courses = await this.get('courses');
       let filteredCourses;
-      if (isEmpty(title)) {
+      if (isEmpty(cleanTitle)) {
         filteredCourses = courses.sortBy('title');
       } else {
         filteredCourses = courses.filter(course => {
