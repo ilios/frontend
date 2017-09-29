@@ -121,15 +121,10 @@ export default DS.Model.extend({
    * @public
    */
   allDescendantUsers: computed('users.[]', 'children.@each.allDescendantUsers', async function(){
-    const allUsers = [];
     let users = await this.get('users').toArray();
     let subgroups = await this.get('children').toArray();
-
-    let usersInSubgroups = await map(subgroups.mapBy('allDescendantUsers'), allDescendantUsers => {
-      return allDescendantUsers;
-    });
-
-    allUsers.pushObjects(usersInSubgroups.reduce((array, set) => {
+    let usersInSubgroups = await all(subgroups.mapBy('allDescendantUsers'));
+    let allUsers = (usersInSubgroups.reduce((array, set) => {
       array.pushObjects(set);
       return array;
     }, []));
