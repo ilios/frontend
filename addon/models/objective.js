@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
-const { map } = RSVP;
+const { all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
@@ -52,9 +52,8 @@ export default Model.extend({
    */
   treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', async function() {
     const parents = await this.get('parents');
-    const trees = await map(parents.mapBy('treeCompetencies'), treeCompetencies => {
-      return treeCompetencies;
-    });
+    const trees = await all(parents.mapBy('treeCompetencies'));
+
     const competencies = trees.reduce((array, set) => {
       array.pushObjects(set);
       return array;
@@ -78,14 +77,10 @@ export default Model.extend({
   topParents: computed('parents', 'parents.@each.topParents', async function(){
     const parents = await this.get('parents');
     if (isEmpty(parents)) {
-      const rhett = [];
-      rhett.pushObject(this);
-      return rhett;
+      return [ this ];
     }
 
-    const allTopParents = await map(parents.mapBy('topParents'), topParents => {
-      return topParents;
-    });
+    const allTopParents = await all(parents.mapBy('topParents'));
 
     return allTopParents.reduce((array, set) => {
       array.pushObjects(set);
