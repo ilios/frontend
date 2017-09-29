@@ -24,9 +24,36 @@ test('visiting /courses', async function(assert) {
   assert.equal(currentPath(), 'courses');
 });
 
+test('visiting /courses with title filter', async function(assert) {
+  server.create('academicYear', {id: 2014});
+  server.create('course', {
+    title: 'specialfirstcourse',
+    year: 2014,
+    school: 1,
+  });
+  server.create('course', {
+    title: 'specialsecondcourse',
+    year: 2014,
+    school: 1
+  });
+  server.create('course', {
+    title: 'regularcourse',
+    year: 2014,
+    school: 1
+  });
+  let lastCourse = server.create('course', {
+    title: 'aaLastcourse',
+    year: 2014,
+    school: 1
+  });
+  await visit('/courses?filter=Last');
+  assert.equal(find('.courses-list [data-test-courses] tr').length, 1);
+  assert.equal(getElementText(find('.courses-list [data-test-courses] tr:eq(0) td:eq(0)')), lastCourse.title);
+});
+
 test('filters by title', async function(assert) {
   server.create('academicYear', {id: 2014});
-  assert.expect(22);
+  assert.expect(26);
   let firstCourse = server.create('course', {
     title: 'specialfirstcourse',
     year: 2014,
@@ -47,6 +74,12 @@ test('filters by title', async function(assert) {
     year: 2014,
     school: 1
   });
+  let regexCourse = server.create('course', {
+    title: '\\yoo hoo',
+    year: 2014,
+    school: 1
+  });
+
   server.create('course', {
     title: 'archivedCourse',
     year: 2014,
@@ -54,11 +87,12 @@ test('filters by title', async function(assert) {
     archived: true
   });
   await page.visit();
-  assert.equal(page.courses().count, 4);
-  assert.equal(page.courses(0).title, lastCourse.title);
-  assert.equal(page.courses(1).title, regularCourse.title);
-  assert.equal(page.courses(2).title, firstCourse.title);
-  assert.equal(page.courses(3).title, secondCourse.title);
+  assert.equal(page.courses().count, 5);
+  assert.equal(page.courses(0).title, regexCourse.title);
+  assert.equal(page.courses(1).title, lastCourse.title);
+  assert.equal(page.courses(2).title, regularCourse.title);
+  assert.equal(page.courses(3).title, firstCourse.title);
+  assert.equal(page.courses(4).title, secondCourse.title);
 
   await page.filterByTitle('first');
   assert.equal(page.courses().count, 1);
@@ -81,11 +115,16 @@ test('filters by title', async function(assert) {
   assert.equal(page.courses(3).title, secondCourse.title);
 
   await page.filterByTitle('');
-  assert.equal(page.courses().count, 4);
-  assert.equal(page.courses(0).title, lastCourse.title);
-  assert.equal(page.courses(1).title, regularCourse.title);
-  assert.equal(page.courses(2).title, firstCourse.title);
-  assert.equal(page.courses(3).title, secondCourse.title);
+  assert.equal(page.courses().count, 5);
+  assert.equal(page.courses(0).title, regexCourse.title);
+  assert.equal(page.courses(1).title, lastCourse.title);
+  assert.equal(page.courses(2).title, regularCourse.title);
+  assert.equal(page.courses(3).title, firstCourse.title);
+  assert.equal(page.courses(4).title, secondCourse.title);
+
+  await page.filterByTitle('\\');
+  assert.equal(page.courses().count, 1);
+  assert.equal(page.courses(0).title, regexCourse.title);
 });
 
 test('filters by year', async function(assert) {
