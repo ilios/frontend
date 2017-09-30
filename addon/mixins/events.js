@@ -3,83 +3,94 @@ import Ember from 'ember';
 const { Mixin } = Ember;
 
 export default Mixin.create({
-  getSessionForEvent(event){
-    let promise;
+
+  /**
+   * Returns the session for a given event.
+   * @method getSessionForEvent
+   * @param {Object} event
+   * @return {Promise.<Object>}
+   */
+  async getSessionForEvent(event){
+    let intermediary;
     if(event.offering){
-      promise = this.get('store').findRecord('offering', event.offering).then( offering => {
-        return offering.get('session');
-      });
+      intermediary = await this.get('store').findRecord('offering', event.offering);
+    } else {
+      intermediary = await this.get('store').findRecord('ilmSession', event.ilmSession);
     }
-    if(event.ilmSession){
-      promise = this.get('store').findRecord('ilmSession', event.ilmSession).then( ilmSession => {
-        return ilmSession.get('session');
-      });
-    }
-
-    return promise;
+    return await intermediary.get('session');
   },
-  getTermIdsForEvent(event){
-    var defer = Ember.RSVP.defer();
-    this.getSessionForEvent(event).then( session => {
-      let promises = [];
-      let selectedTerms = [];
-      promises.pushObject(session.get('terms').then( terms => {
-        let termIds = terms.mapBy('id');
-        selectedTerms.pushObjects(termIds);
-      }));
-      promises.pushObject(session.get('course').then( course => {
-        promises.pushObject(course.get('terms').then( terms => {
-          let termIds = terms.mapBy('id');
-          selectedTerms.pushObjects(termIds);
-        }));
-      }));
-      Ember.RSVP.all(promises).then(() => {
-        defer.resolve(selectedTerms.uniq());
-      });
-    });
 
-    return defer.promise;
+  /**
+   * Returns the course for a given event.
+   * @method getCourseForEvent
+   * @param {Object} event
+   * @return {Promise.<Object>}
+   */
+  async getCourseForEvent(event){
+    const session = await this.getSessionForEvent(event);
+    return await session.get('course');
   },
-  getSessionTypeIdForEvent(event){
-    var defer = Ember.RSVP.defer();
-    this.getSessionForEvent(event).then( session => {
-      session.get('sessionType').then( sessionType => {
-        defer.resolve(sessionType.get('id'));
-      });
-    });
 
-    return defer.promise;
+  /**
+   * Returns a list of vocabulary term ids for a given event.
+   * @method getTermIdsForEvent
+   * @param {Object} event
+   * @return {Promise.<Array>}
+   */
+  async getTermIdsForEvent(event){
+    const terms = [];
+    const session = await this.getSessionForEvent(event);
+    const sessionTerms = await session.get('terms');
+    const course = await session.get('course');
+    const courseTerms = await course.get('terms');
+    terms.pushObjects(sessionTerms.toArray());
+    terms.pushObjects(courseTerms.toArray());
+    return terms.mapBy('id').uniq();
   },
-  getCourseLevelForEvent(event){
-    var defer = Ember.RSVP.defer();
-    this.getSessionForEvent(event).then( session => {
-      session.get('course').then( course => {
-        defer.resolve(course.get('level'));
-      });
-    });
 
-    return defer.promise;
+  /**
+   * Returns the session-type id for a given event.
+   * @method getSessionTypeIdForEvent
+   * @param {Object} event
+   * @return {Promise.<int>}
+   */
+  async getSessionTypeIdForEvent(event){
+    const session = await this.getSessionForEvent(event);
+    const sessionType = await session.get('sessionType');
+    return sessionType.get('id');
   },
-  getCourseIdForEvent(event){
-    var defer = Ember.RSVP.defer();
-    this.getSessionForEvent(event).then( session => {
-      session.get('course').then( course => {
-        defer.resolve(course.get('id'));
-      });
-    });
 
-    return defer.promise;
+  /**
+   * Returns the course level for a given event.
+   * @method getCourseLevelForEvent
+   * @param {Object} event
+   * @return {Promise.<int>}
+   */
+  async getCourseLevelForEvent(event){
+    const course = await this.getCourseForEvent(event);
+    return course.get('level');
   },
-  getCohortIdsForEvent(event){
-    var defer = Ember.RSVP.defer();
-    this.getSessionForEvent(event).then( session => {
-      session.get('course').then( course => {
-        course.get('cohorts').then( cohorts => {
-          defer.resolve(cohorts.mapBy('id'));
-        });
-      });
-    });
 
-    return defer.promise;
+  /**
+   * Returns the course id for a given event.
+   * @method getCourseIdForEvent
+   * @param {Object} event
+   * @return {Promise.<int>}
+   */
+  async getCourseIdForEvent(event){
+    const course = await this.getCourseForEvent(event);
+    return course.get('id');
+  },
+
+  /**
+   * Returns the cohort id for a given event.
+   * @method getCohortIdsForEvent
+   * @param {Object} event
+   * @return {Promise.<Array>}
+   */
+  async getCohortIdsForEvent(event){
+    const course = await this.getCourseForEvent(event);
+    const cohorts = await course.get('cohorts');
+    return cohorts.toArray().mapBy('id');
   },
 });
