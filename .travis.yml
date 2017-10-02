@@ -22,6 +22,11 @@ script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --para
 
 jobs:
   include:
+    - stage: greenkeeper
+      if: branch =~ ^greenkeeper
+      script:
+        - greenkeeper-lockfile-update
+        - greenkeeper-lockfile-upload
     - stage: test
       env: PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
     - stage: test
