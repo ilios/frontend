@@ -7,7 +7,7 @@ const { map } = RSVP;
 export default Component.extend({
   commonAjax: inject.service(),
   iliosConfig: inject.service(),
-  classNames: ['user-profile-calendar'],
+  classNames: ['offering-calendar'],
 
   namespace: reads('iliosConfig.apiNameSpace'),
   offering: null,
@@ -44,7 +44,7 @@ export default Component.extend({
 
     return flat;
   }),
-  
+
   sessionEvents: computed('session', async function () {
     const session = this.get('session');
     if (!session) {
@@ -68,7 +68,7 @@ export default Component.extend({
 
     return events;
   }),
-  
+
   currentEvent: computed('startDate', 'endDate', 'location', 'session', async function () {
     const startDate = this.get('startDate');
     const endDate = this.get('endDate');
@@ -90,27 +90,27 @@ export default Component.extend({
       color: sessionType.get('calendarColor')
     };
   }),
-  
-  calendarEvents: computed('learnerGroupEvents.[]', 'sessionEvents.[]', 'currentEvent', async function(){   
+
+  calendarEvents: computed('learnerGroupEvents.[]', 'sessionEvents.[]', 'currentEvent', async function(){
     const learnerGroupEvents = await this.get('learnerGroupEvents');
     const sessionEvents = await this.get('sessionEvents');
-    const currentEvent = await this.get('currentEvent');	
+    const currentEvent = await this.get('currentEvent');
     if(!currentEvent) {
       return [];
     }
-    const events = [].concat(learnerGroupEvents, sessionEvents);   
+    const events = [].concat(learnerGroupEvents, sessionEvents);
     const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
     let filteredEvents = events.filter(event => {
       if(!event) {
         return false;
       }
-      const eventIdentifier = event.name + event.startDate + event.endDate;		
+      const eventIdentifier = event.name + event.startDate + event.endDate;
       if(eventIdentifier === currentEventIdentifier) {
         return false;
       }
       return true;
     });
-    filteredEvents.pushObject(currentEvent);		
+    filteredEvents.pushObject(currentEvent);
     return filteredEvents;
   }),
 });

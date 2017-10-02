@@ -1,4 +1,4 @@
-.user-profile-calendar {
+.offering-calendar {
   @include fill-parent;
   @include omega;
   border: 1px solid $black;
@@ -14,6 +14,8 @@
     @include ilios-heading;
     font-size: 1.25 * $base-font-size;
     margin-bottom: 1em;
+    text-align: center;
+    width: 100%;
   }
 
   .loding-indicator {
