@@ -46,9 +46,9 @@ test('visiting /courses with title filter', async function(assert) {
     year: 2014,
     school: 1
   });
-  await visit('/courses?filter=Last');
-  assert.equal(find('.courses-list [data-test-courses] tr').length, 1);
-  assert.equal(getElementText(find('.courses-list [data-test-courses] tr:eq(0) td:eq(0)')), lastCourse.title);
+  await page.visit({filter: 'Last'});
+  assert.equal(page.courses().count, 1);
+  assert.equal(page.courses(0).title, lastCourse.title);
 });
 
 test('filters by title', async function(assert) {
