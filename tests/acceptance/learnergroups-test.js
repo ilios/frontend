@@ -772,7 +772,7 @@ test('copy learnergroup without learners', async function(assert) {
   assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
   assert.equal(getElementText(find(firstMembers)), getText('0'));
   assert.equal(getElementText(find(firstSubgroups)), getText('2'));
-  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
   assert.equal(getElementText(find(secondMembers)), getText('0'));
   assert.equal(getElementText(find(secondSubgroups)), getText('2'));
   await click(firstLink);
@@ -878,7 +878,7 @@ test('copy learnergroup with learners', async function(assert) {
   assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
   assert.equal(getElementText(find(firstMembers)), getText('7'));
   assert.equal(getElementText(find(firstSubgroups)), getText('2'));
-  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0'));
+  assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
   assert.equal(getElementText(find(secondMembers)), getText('7'));
   assert.equal(getElementText(find(secondSubgroups)), getText('2'));
   await click(firstLink);

@@ -200,9 +200,12 @@ export default Controller.extend({
   copyGroup: task(function * (withLearners, learnerGroup) {
     this.set('saved', false);
     const store = this.get('store');
+    const i18n = this.get('i18n');
     const cohort = yield learnerGroup.get('cohort');
     const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners);
     this.set('totalGroupsToSave', newGroups.length);
+    // indicate that the top group is a copy
+    newGroups[0].set('title', newGroups[0].get('title') + ` (${i18n.t('general.copy')})`);
     // save groups one at a time because we need to save in this order so parents are saved before children
     for (let i = 0; i < newGroups.length; i++) {
       yield newGroups[i].save();
