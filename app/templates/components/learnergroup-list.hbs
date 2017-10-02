@@ -27,7 +27,7 @@
           {{else}}
             {{fa-icon 'spinner' spin=true}}
           {{/if}}
-          {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup)}}
+          {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup) title=(t 'general.copy')}}
         </td>
       </tr>
       {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}
