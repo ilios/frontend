@@ -6,7 +6,6 @@ sudo: false
 cache:
   yarn: true
   directories:
-    - node_modules
     - $HOME/.cache/bower
 
 before_install:
@@ -23,10 +22,11 @@ script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --para
 
 jobs:
   include:
-    - stage: prepare
-      before_script: greenkeeper-lockfile-update
-      after_script: greenkeeper-lockfile-upload
-      script: true
+    - stage: greenkeeper
+      if: branch =~ ^greenkeeper
+      script:
+        - greenkeeper-lockfile-update
+        - greenkeeper-lockfile-upload
     - stage: test
       env: PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
     - stage: test
