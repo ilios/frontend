@@ -4,7 +4,6 @@ import {
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
-import wait from 'ember-test-helpers/wait';
 
 const { run } = Ember;
 
@@ -18,23 +17,22 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-test('top parent with no parents should be self', function(assert) {
+test('top parent with no parents should be self', async function(assert) {
   assert.expect(2);
 
   let model = this.subject();
-  return wait().then(()=>{
-    model.get('topParents').then(topParents => {
-      assert.ok(topParents.get('length') === 1);
-      assert.equal(topParents.get('firstObject'), model);
-    });
+  run(async () => {
+    let topParents = await model.get('topParents');
+    assert.ok(topParents.length === 1);
+    assert.equal(topParents.get('firstObject'), model);
   });
 });
 
-test('current top parents with single parent tree', function(assert) {
+test('current top parents with single parent tree', async function(assert) {
   assert.expect(2);
   let store = this.store();
   let model = this.subject();
-  run(function(){
+  run(async () => {
     let parent1 = store.createRecord('objective', {
       children: [model]
     });
@@ -42,19 +40,17 @@ test('current top parents with single parent tree', function(assert) {
       children: [parent1]
     });
 
-    model.get('topParents').then(topParents => {
-      assert.ok(topParents.get('length') === 1);
-      assert.equal(topParents.get('firstObject'), parent2);
-    });
+    let topParents = await model.get('topParents');
+    assert.ok(topParents.length === 1);
+    assert.equal(topParents.get('firstObject'), parent2);
   });
-
 });
 
-test('current top parents with multi parent tree', function(assert) {
+test('current top parents with multi parent tree', async function(assert) {
   assert.expect(3);
   let store = this.store();
   let model = this.subject();
-  run(function(){
+  run(async () => {
     let parent1 = store.createRecord('objective', {
       children: [model]
     });
@@ -68,11 +64,10 @@ test('current top parents with multi parent tree', function(assert) {
       children: [parent2]
     });
 
-    model.get('topParents').then(topParents => {
-      assert.ok(topParents.get('length') === 2);
-      assert.ok(topParents.includes(parent3));
-      assert.ok(topParents.includes(parent4));
-    });
+    let topParents = await model.get('topParents');
+    assert.ok(topParents.length === 2);
+    assert.ok(topParents.includes(parent3));
+    assert.ok(topParents.includes(parent4));
   });
 
 });

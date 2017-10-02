@@ -3,8 +3,8 @@ import Ember from 'ember';
 
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
-const { map } = RSVP;
-const { Model, attr, belongsTo, hasMany, PromiseArray } = DS;
+const { all } = RSVP;
+const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
   title: attr('string'),
@@ -52,9 +52,8 @@ export default Model.extend({
    */
   treeCompetencies: computed('competency', 'parents.@each.treeCompetencies', async function() {
     const parents = await this.get('parents');
-    const trees = await map(parents.mapBy('treeCompetencies'), treeCompetencies => {
-      return treeCompetencies;
-    });
+    const trees = await all(parents.mapBy('treeCompetencies'));
+
     const competencies = trees.reduce((array, set) => {
       array.pushObjects(set);
       return array;
@@ -68,28 +67,27 @@ export default Model.extend({
     });
   }),
 
-  topParents: computed('parents.[]', function(){
-    var defer = RSVP.defer();
-    this.get('parents').then(parents => {
-      if(isEmpty(parents)){
-        defer.resolve([this]);
-      }
-      let allTopParents = [];
-      let promises = [];
-      parents.forEach( objective => {
-        promises.pushObject(objective.get('topParents').then(topParents => {
-          allTopParents.pushObjects(topParents.toArray());
-        }));
-      });
+  /**
+   * A list of top-level objectives of this objective's parentage tree.
+   * If this objective has no ancestors, it is included in this list itself.
+   * @property topParents
+   * @type {Ember.computed}
+   * @public
+   */
+  topParents: computed('parents', 'parents.@each.topParents', async function(){
+    const parents = await this.get('parents');
+    if (isEmpty(parents)) {
+      return [ this ];
+    }
 
-      RSVP.all(promises).then(()=>{
-        defer.resolve(allTopParents);
-      });
-    });
-    return PromiseArray.create({
-      promise: defer.promise
-    });
+    const allTopParents = await all(parents.mapBy('topParents'));
+
+    return allTopParents.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []);
   }),
+
   shortTitle: computed('title', function(){
     var title = this.get('title');
     if(title === undefined){
