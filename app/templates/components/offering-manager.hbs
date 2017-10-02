@@ -9,6 +9,7 @@
     save=(action 'save')
     smallGroupMode=false
     offering=offering
+    session=(await offering.session)
   }}
 {{else}}
   <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
