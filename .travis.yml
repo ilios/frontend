@@ -4,6 +4,10 @@ node_js: 6
 sudo: false
 dist: trusty
 
+env:
+  global:
+    - JOBS=2
+
 addons:
   chrome: stable
 
