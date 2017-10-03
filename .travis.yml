@@ -1,8 +1,16 @@
 ---
-dist: trusty
 language: node_js
 node_js: 6
 sudo: false
+dist: trusty
+
+env:
+  global:
+    - JOBS=2
+
+addons:
+  chrome: stable
+
 cache:
   yarn: true
   directories:
@@ -15,7 +23,7 @@ before_install:
   - yarn global add greenkeeper-lockfile@1
 
 install:
-  - yarn
+  - yarn install
   - bower install
 
 script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
