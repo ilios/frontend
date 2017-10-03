@@ -26,28 +26,28 @@ moduleFor('service:school-events', 'Integration | Service | school events', {
 
 test('getEvents', async function(assert){
   assert.expect(6);
-  let event1 = {
+  const event1 = {
     offering: 1,
     startDate: '2011-04-21',
     school: 7
   };
-  let event2 = {
+  const event2 = {
     ilmSession: 3,
     startDate: '2008-09-02',
     school: 7
   };
+  const from = moment('20150305', 'YYYYMMDD').hour(0);
+  const to = from.clone().hour(24);
   this.commonAjax.reopen({
     request(url) {
-      assert.equal(url, '/schoolevents/7?from=1425542400000&to=1425628800000');
+      assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
       return resolve({ events: [ event1, event2 ] });
     }
   });
-  const from = moment('20150305', 'YYYYMMDD').hour(0);
-  const to = from.clone().hour(24);
   const schoolId = 7;
   const subject = this.subject();
   run(async () => {
-    const events = await subject.getEvents(schoolId, from, to);
+    const events = await subject.getEvents(schoolId, from.unix(), to.unix());
     assert.equal(events.length, 2);
     assert.equal(events[0], event2);
     assert.equal(events[0].slug, 'S0720080902I3');
@@ -61,68 +61,72 @@ test('getEvents - with configured namespace', async function(assert){
   this.iliosConfig.reopen({
     apiNameSpace: 'geflarknik'
   });
+  const from = moment('20150305', 'YYYYMMDD').hour(0);
+  const to = from.clone().hour(24);
   this.commonAjax.reopen({
     request(url) {
-      assert.equal(url, '/geflarknik/schoolevents/3?from=1425542400000&to=1425628800000');
+      assert.equal(url, `/geflarknik/schoolevents/3?from=${from.unix()}&to=${to.unix()}`);
       return resolve({ events: [] });
     }
   });
   const subject = this.subject();
   const schoolId = 3;
-  let from = moment('20150305', 'YYYYMMDD').hour(0);
-  let to = from.clone().hour(24);
   run( async () => {
-    let events = await subject.getEvents(schoolId, from, to);
+    const events = await subject.getEvents(schoolId, from.unix(), to.unix());
     assert.equal(events.length, 0);
   });
 });
 
 test('getEventForSlug - offering', async function(assert){
   assert.expect(2);
-  let event1 = {
+  const event1 = {
     offering: 1,
     startDate: '2011-04-21',
     school: 7,
   };
-  let event2 = {
+  const event2 = {
     ilmSession: 3,
     startDate: '2008-09-02',
     school: 7
   };
   this.commonAjax.reopen({
     request(url) {
-      assert.equal(url, '/schoolevents/7?from=1303369200&to=1303455600');
+      const from = moment('20110421', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
       return resolve({ events: [event1, event2] });
     }
   });
   const subject = this.subject();
   run( async () => {
-    let event = await subject.getEventForSlug('S0720110421O1');
+    const event = await subject.getEventForSlug('S0720110421O1');
     assert.equal(event, event1);
   });
 });
 
 test('getEventForSlug - ILM', async function(assert){
   assert.expect(2);
-  let event1 = {
+  const event1 = {
     offering: 1,
     startDate: '2011-04-21',
     school: 7,
   };
-  let event2 = {
+  const event2 = {
     ilmSession: 3,
     startDate: '2008-09-02',
     school: 7
   };
   this.commonAjax.reopen({
     request(url) {
-      assert.equal(url, '/schoolevents/7?from=1220338800&to=1220425200');
+      const from = moment('20080902', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
       return resolve({ events: [event1, event2] });
     }
   });
   const subject = this.subject();
   run( async () => {
-    let event = await subject.getEventForSlug('S0720080902I3');
+    const event = await subject.getEventForSlug('S0720080902I3');
     assert.equal(event, event2);
   });
 });
