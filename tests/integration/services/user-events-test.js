@@ -5,7 +5,7 @@ import moment from 'moment';
 const { Object: EmberObject, RSVP, run, Service } = Ember;
 const { resolve } = RSVP;
 
-moduleFor('service:user-events', 'Unit | Service | user events', {
+moduleFor('service:user-events', 'Integration | Service | user events', {
   integration: true,
   beforeEach() {
     const MockCurrentUserService = Service.extend({

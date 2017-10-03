@@ -5,7 +5,7 @@ import moment from 'moment';
 const { RSVP, run, Service } = Ember;
 const { resolve } = RSVP;
 
-moduleFor('service:school-events', 'Unit | Service | school events', {
+moduleFor('service:school-events', 'Integration | Service | school events', {
   integration: true,
   beforeEach() {
     const MockCommonAjaxService = Service.extend({
