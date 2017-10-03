@@ -2,11 +2,11 @@ import Ember from 'ember';
 import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
-const { inject, computed } = Ember;
+const { inject, computed, Service } = Ember;
 const { service } = inject;
 const { reads } = computed;
 
-export default Ember.Service.extend(EventMixin, {
+export default Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
   commonAjax: service(),
@@ -14,48 +14,66 @@ export default Ember.Service.extend(EventMixin, {
 
   namespace: reads('iliosConfig.apiNameSpace'),
 
-  getEvents(schoolId, from, to){
-    var deferred = Ember.RSVP.defer();
-    var url = '/' + this.get('namespace') + '/schoolevents/' +
-    schoolId + '?from=' + from + '&to=' + to;
+  /**
+   * Retrieves a list of school-events for a given school that occur in a given date range,
+   * sorted by start dates.
+   * @method getEvents
+   * @param {int} schoolId
+   * @param {int} from
+   * @param {int} to
+   * @return {Promise.<Array>}
+   */
+  async getEvents(schoolId, from, to){
+    let url = '';
+    const namespace = this.get('namespace');
+    if (namespace) {
+      url += '/' + namespace;
+    }
+    url += '/schoolevents/' + schoolId + '?from=' + from + '&to=' + to;
+
     const commonAjax = this.get('commonAjax');
-    commonAjax.request(url).then(data => {
-      let events = data.events.map(event => {
-        event.slug = this.getSlugForEvent(event);
-        return event;
-      }).sortBy('startDate');
+    const data = await commonAjax.request(url);
 
-      deferred.resolve(events);
-    });
-
-    return deferred.promise;
+    return data.events.map(event => {
+      event.slug = this.getSlugForEvent(event);
+      return event;
+    }).sortBy('startDate');
   },
-  getEventForSlug(slug){
-    let schoolId = parseInt(slug.substring(1, 3));
-    let from = moment(slug.substring(3, 11), 'YYYYMMDD').hour(0);
-    let to = from.clone().hour(24);
-    let type = slug.substring(11, 12);
-    let id = parseInt(slug.substring(12));
-    return new Ember.RSVP.Promise(resolved => {
-      this.getEvents(schoolId, from.unix(), to.unix()).then(events => {
-        let event = events.find( event => {
-          if(type === 'O'){
-            return parseInt(event.offering) === id;
-          }
-          if(type === 'I'){
-            return parseInt(event.ilmSession) === id;
-          }
-        });
 
-        resolved(event);
-      });
+  /**
+   * Retrieves and event by it's given slug.
+   * @method getEventForSlug
+   * @param {String} slug
+   * @return {Promise.<Object>}
+   */
+  async getEventForSlug(slug){
+    const schoolId = parseInt(slug.substring(1, 3), 10);
+    const from = moment(slug.substring(3, 11), 'YYYYMMDD').hour(0);
+    const to = from.clone().hour(24);
+    const type = slug.substring(11, 12);
+    const id = parseInt(slug.substring(12), 10);
+
+    const events = await this.getEvents(schoolId, from.unix(), to.unix());
+
+    return events.find( event => {
+      if(type === 'O'){
+        return parseInt(event.offering, 10) === id;
+      }
+      if(type === 'I'){
+        return parseInt(event.ilmSession, 10) === id;
+      }
     });
-
-
   },
+
+  /**
+   * Generates a slug for a given event.
+   * @method getSlugForEvent
+   * @param {Object} event
+   * @return {String}
+   */
   getSlugForEvent(event){
     let slug = 'S';
-    let schoolId = parseInt(event.school).toString();
+    let schoolId = parseInt(event.school, 10).toString();
     //always use a two digit schoolId
     if(schoolId.length === 1){
       schoolId = '0' + schoolId;
@@ -68,7 +86,6 @@ export default Ember.Service.extend(EventMixin, {
     if(event.ilmSession){
       slug += 'I' + event.ilmSession;
     }
-
     return slug;
   },
 });
