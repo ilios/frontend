@@ -27,6 +27,7 @@
           {{else}}
             {{fa-icon 'spinner' spin=true}}
           {{/if}}
+          {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup) title=(t 'general.copy')}}
         </td>
       </tr>
       {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}
@@ -35,9 +36,20 @@
             <div class='confirm-message'>
               {{t 'general.confirmRemoveLearnerGroup' subgroupCount=learnerGroup.children.length}} <br>
               <div class="confirm-buttons">
-                <button {{action this.attrs.remove learnerGroup}} class='remove text'>{{t 'general.yes'}}</button>
+                <button {{action remove learnerGroup}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' learnerGroup}} class='done text'>{{t 'general.cancel'}}</button>
               </div>
+            </div>
+          </td>
+        </tr>
+      {{/if}}
+      {{#if (contains learnerGroup learnerGroupsForCopy)}}
+        <tr class='confirm-copy'>
+          <td colspan=5>
+            <div class="confirm-buttons">
+              <button {{action 'copy' true learnerGroup}} class='done text'>{{t 'general.copyWithLearners'}}</button>
+              <button {{action 'copy' false learnerGroup}} class='done text'>{{t 'general.copyWithoutLearners'}}</button>
+              <button {{action 'cancelCopy' learnerGroup}} class='cancel text'>{{t 'general.cancel'}}</button>
             </div>
           </td>
         </tr>

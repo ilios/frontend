@@ -40,6 +40,7 @@
         {{learnergroup-list
           learnerGroups=(await parentGroup.children)
           remove=(action 'removeLearnerGroup')
+          copy=(perform copyGroup)
         }}
       {{/if}}
     {{else}}

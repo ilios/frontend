@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
+import cloneLearnerGroup from '../utils/clone-learner-group';
 
 const { computed, Controller, inject, isPresent, isEmpty, RSVP } = Ember;
 const { service } = inject;
@@ -26,6 +27,9 @@ export default Controller.extend({
   titleFilter: null,
   saved: false,
   savedGroup: null,
+  isSaving: false,
+  totalGroupsToSave: 0,
+  currentGroupsSaved: 0,
 
   changeTitleFilter: task(function * (value) {
     const clean = escapeRegExp(value);
@@ -193,6 +197,23 @@ export default Controller.extend({
       promise: defer.promise
     });
   }),
+  copyGroup: task(function * (withLearners, learnerGroup) {
+    this.set('saved', false);
+    const store = this.get('store');
+    const i18n = this.get('i18n');
+    const cohort = yield learnerGroup.get('cohort');
+    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners);
+    this.set('totalGroupsToSave', newGroups.length);
+    // indicate that the top group is a copy
+    newGroups[0].set('title', newGroups[0].get('title') + ` (${i18n.t('general.copy')})`);
+    // save groups one at a time because we need to save in this order so parents are saved before children
+    for (let i = 0; i < newGroups.length; i++) {
+      yield newGroups[i].save();
+      this.set('currentGroupsSaved', i + 1);
+    }
+    this.set('saved', true);
+    this.set('savedGroup', newGroups[0]);
+  }),
   actions: {
     editLearnerGroup(learnerGroup) {
       this.transitionToRoute('learnerGroup', learnerGroup);
@@ -258,6 +279,6 @@ export default Controller.extend({
       this.set('schoolId', schoolId);
       this.set('programId', null);
       this.set('programYearId', null);
-    }
+    },
   }
 });
