@@ -10,9 +10,11 @@ export default Component.extend({
   classNames: ['offering-calendar'],
 
   namespace: reads('iliosConfig.apiNameSpace'),
-  offering: null,
-  learnerGroup: null,
-  learnerGroupEvents: computed('learnerGroups.[]', 'startDate', 'endDate', async function () {
+  session: null,
+  learnerGroups: null,
+  startDate: null,
+  endDate: null,
+  learnerGroupEvents: computed('learnerGroups.[]', async function () {
     const learnerGroups = this.get('learnerGroups');
     if (!learnerGroups) {
       return [];
