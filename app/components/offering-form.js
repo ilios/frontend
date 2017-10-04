@@ -82,6 +82,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   showRoom: false,
   showMakeRecurring: false,
   showInstructors: false,
+  showOfferingCalendar: false,
   makeRecurring: false,
   recurringDays: null,
   numberOfWeeks: 1,

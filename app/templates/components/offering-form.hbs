@@ -1,5 +1,15 @@
 {{#unless loadAttrsFromOffering.isRunning}}
-  {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
+  <p class='toggle-offering-calendar'>
+    {{toggle-buttons
+      firstOptionSelected=(not showOfferingCalendar)
+      firstLabel=(t 'general.hideCalendar')
+      secondLabel=(t 'general.showCalendar')
+      toggle=(toggle 'showOfferingCalendar' this)
+    }}
+  </p>
+  {{#if showOfferingCalendar}}
+    {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
+  {{/if}}
 
   <div class='item start-date'>
     <label>{{t 'general.startDate'}}:</label>
