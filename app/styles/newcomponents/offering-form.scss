@@ -94,4 +94,10 @@
   .buttons {
     @include ilios-form-buttons;
   }
+
+  .timezone {
+    color: $darker-grey;
+    font-size: .8 * $base-font-size;
+    margin-left: 1em;
+  }
 }

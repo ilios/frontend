@@ -50,7 +50,8 @@ module.exports = function(environment) {
     },
     moment: {
       // Full list of locales: https://github.com/moment/moment/tree/2.10.3/locale
-      includeLocales: ['es', 'fr']
+      includeLocales: ['es', 'fr'],
+      includeTimezone: 'all',
     },
     EmberENV: {
       FEATURES: {
