@@ -4,7 +4,7 @@ import { test, skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import tHelper from "ember-i18n/helper";
-const { Object:EmberObject, RSVP } = Ember;
+const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('objective-sort-manager', 'Integration | Component | objective sort manager', {
@@ -12,7 +12,7 @@ moduleForComponent('objective-sort-manager', 'Integration | Component | objectiv
   integration: true,
 
   beforeEach: function () {
-    this.container.lookup('service:i18n').set('locale', 'en');
+    getOwner(this).lookup('service:i18n').set('locale', 'en');
     this.register('helper:t', tHelper);
   }
 });
