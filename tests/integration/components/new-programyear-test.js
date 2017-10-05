@@ -6,7 +6,7 @@ moduleForComponent('new-programyear', 'Integration | Component | new programyear
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    this.register('helper:t', tHelper);
   }
 });
 

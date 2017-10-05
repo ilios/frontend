@@ -13,7 +13,7 @@ moduleForComponent('learning-materials-sort-manager', 'Integration | Component |
 
   beforeEach: function () {
     this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    this.register('helper:t', tHelper);
   }
 });
 

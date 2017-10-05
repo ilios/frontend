@@ -11,7 +11,7 @@ moduleForComponent('curriculum-inventory-sequence-block-session-list', 'Integrat
 
   beforeEach: function () {
     this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    this.register('helper:t', tHelper);
   }
 });
 

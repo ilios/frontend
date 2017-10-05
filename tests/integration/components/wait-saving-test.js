@@ -6,7 +6,7 @@ moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
   integration: true,
   beforeEach: function() {
     this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    this.register('helper:t', tHelper);
   }
 });
 
@@ -15,6 +15,6 @@ test('it renders', function(assert) {
   let modalDialogService = this.container.lookup('service:modal-dialog');
   modalDialogService.destinationElementId = 'modal-testing-div';
   this.render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
-  
+
   assert.equal(this.$().text().trim(), 'saving... one moment...');
 });
