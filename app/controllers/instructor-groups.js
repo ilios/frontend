@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isEmpty, isPresent, inject } = Ember;
+const { computed, Controller, RSVP, isBlank, isEmpty, isPresent, inject } = Ember;
 const { gt } = computed;
+const { resolve } = RSVP;
 const { service } = inject;
-const { PromiseArray } = DS;
 
 export default Controller.extend({
   i18n: service(),
@@ -19,58 +18,47 @@ export default Controller.extend({
   titleFilter: null,
   showNewInstructorGroupForm: false,
   newInstructorGroups: [],
-  instructorGroups: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    let schoolId = this.get('selectedSchool').get('id');
-    if(isEmpty(schoolId)){
-      defer.resolve([]);
-    } else {
-      this.get('store').query('instructor-group', {
-        filters: {
-          school: schoolId
-        }
-      }).then(instructorGroups => {
-        defer.resolve(instructorGroups);
-      });
-    }
 
-    return PromiseArray.create({
-      promise: defer.promise
+  instructorGroups: computed('selectedSchool', async function(){
+    let schoolId = this.get('selectedSchool').get('id');
+    if(isEmpty(schoolId)) {
+      resolve([]);
+    }
+    return await this.get('store').query('instructor-group', {
+      filters: {
+        school: schoolId
+      }
     });
   }),
 
   changeTitleFilter: task(function * (value) {
-    const clean = escapeRegExp(value);
-    this.set('titleFilter', clean);
+    this.set('titleFilter', value);
     yield timeout(250);
-
-    return clean;
+    return value;
   }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   filteredInstructorGroups: computed(
     'changeTitleFilter.lastSuccessful.value',
     'instructorGroups.[]',
-    function(){
-      let defer = RSVP.defer();
+    async function(){
       let title = this.get('changeTitleFilter.lastSuccessful.value');
-      let exp = new RegExp(title, 'gi');
-      this.get('instructorGroups').then(instructorGroups => {
-        let filteredInstructorGroups;
-        if(isEmpty(title)){
-          filteredInstructorGroups = instructorGroups;
-        } else {
-          filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
-            return isPresent(instructorGroup.get('title')) && instructorGroup.get('title').match(exp);
-          });
-        }
-        defer.resolve(filteredInstructorGroups.sortBy('title'));
-      });
-
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
+      if (!isPresent(title)) {
+        const titleFilter = this.get('titleFilter');
+        title = isBlank(titleFilter) ? '' : titleFilter ;
+      }
+      const cleanTitle = escapeRegExp(title);
+      let exp = new RegExp(cleanTitle, 'gi');
+      const instructorGroups = await this.get('instructorGroups');
+      let filteredInstructorGroups;
+      if(isEmpty(title)){
+        filteredInstructorGroups = instructorGroups;
+      } else {
+        filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
+          return isPresent(instructorGroup.get('title')) && instructorGroup.get('title').match(exp);
+        });
+      }
+      return filteredInstructorGroups.sortBy('title');
     }
   ),
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){

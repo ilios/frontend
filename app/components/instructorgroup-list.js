@@ -1,17 +1,23 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, ObjectProxy } = Ember;
 
 export default Component.extend({
   instructorGroups: [],
+
   proxiedInstructorGroups: computed('instructorGroups.[]', function(){
-    return this.get('instructorGroups').map(function(instructorGroup){
-      return Ember.ObjectProxy.create({
+    const instructorGroups = this.get('instructorGroups');
+    if (!instructorGroups) {
+      return [];
+    }
+    return instructorGroups.map(instructorGroup => {
+      return ObjectProxy.create({
         content: instructorGroup,
         showRemoveConfirmation: false
       });
     });
   }),
+
   actions: {
     edit(instructorGroupProxy) {
       this.sendAction('edit', instructorGroupProxy.get('content'));

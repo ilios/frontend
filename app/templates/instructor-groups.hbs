@@ -49,9 +49,9 @@
       {{/each}}
     </section>
     <div class='list'>
-      {{#if filteredInstructorGroups.isFulfilled}}
+      {{#if (is-fulfilled filteredInstructorGroups)}}
         {{instructorgroup-list
-          instructorGroups=filteredInstructorGroups
+          instructorGroups=(await filteredInstructorGroups)
           edit='editInstructorGroup'
           remove='removeInstructorGroup'
         }}
