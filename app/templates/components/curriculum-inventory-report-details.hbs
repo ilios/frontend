@@ -15,7 +15,10 @@
 {{/if}}
 {{curriculum-inventory-report-overview report=report}}
 {{#liquid-if isFinalizing class='crossFade'}}
-  {{#modal-dialog translucentOverlay=true}}
+  {{#modal-dialog
+    translucentOverlay=true
+    animatable=false
+  }}
     {{pulse-loader}}
     <h2 class='page-title'>{{t 'general.finalizingReport'}}</h2>
   {{/modal-dialog}}
