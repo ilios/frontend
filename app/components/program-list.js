@@ -1,12 +1,16 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, ObjectProxy } = Ember;
 
 export default Component.extend({
   programs: [],
   proxiedPrograms: computed('programs.[]', function(){
-    return this.get('programs').map(function(program){
-      return Ember.ObjectProxy.create({
+    const programs = this.get('programs');
+    if (!programs) {
+      return [];
+    }
+    return programs.map(program => {
+      return ObjectProxy.create({
         content: program,
         showRemoveConfirmation: false
       });

@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { Controller, computed, inject, isEmpty, isPresent, RSVP } = Ember;
+const { Controller, computed, inject, isBlank, isEmpty, isPresent, RSVP } = Ember;
+const { resolve } = RSVP;
 const { service } = inject;
 const { gt } = computed;
-const { PromiseArray } = DS;
 
 export default Controller.extend({
   currentUser: service(),
@@ -21,40 +20,34 @@ export default Controller.extend({
   titleFilter: null,
 
   changeTitleFilter: task(function * (value) {
-    const clean = escapeRegExp(value);
-    this.set('titleFilter', clean);
+    this.set('titleFilter', value);
     yield timeout(250);
-
-    return clean;
+    return value;
   }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  filteredPrograms: computed('changeTitleFilter.lastSuccessful.value', 'programs.[]', {
-    get() {
-      let defer = RSVP.defer();
-      let title = this.get('changeTitleFilter.lastSuccessful.value');
-      let exp = new RegExp(title, 'gi');
+  filteredPrograms: computed('changeTitleFilter.lastSuccessful.value', 'programs.[]', async function() {
+    let title = this.get('changeTitleFilter.lastSuccessful.value');
+    if (!isPresent(title)) {
+      const titleFilter = this.get('titleFilter');
+      title = isBlank(titleFilter) ? '' : titleFilter ;
+    }
+    const cleanTitle = escapeRegExp(title);
+    let exp = new RegExp(cleanTitle, 'gi');
 
-      this.get('programs').then(programs => {
-        let filteredPrograms;
-
-        if(isEmpty(title)){
-          filteredPrograms = programs;
-        } else {
-          filteredPrograms = programs.filter(program => {
-            return isPresent(program.get('title')) && program.get('title').match(exp);
-          });
-        }
-
-        defer.resolve(filteredPrograms.sortBy('title'));
-      });
-
-      return PromiseArray.create({
-        promise: defer.promise
+    const programs = await this.get('programs');
+    let filteredPrograms;
+    if(isEmpty(cleanTitle)){
+      filteredPrograms = programs;
+    } else {
+      filteredPrograms = programs.filter(program => {
+        return isPresent(program.get('title')) && program.get('title').match(exp);
       });
     }
+    return filteredPrograms.sortBy('title');
   }),
+
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
@@ -69,27 +62,17 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  programs: computed('selectedSchool', 'saved', {
-    get() {
-      let defer = RSVP.defer();
-      let schoolId = this.get('selectedSchool').get('id');
-
-      if(isEmpty(schoolId)) {
-        defer.resolve([]);
-      } else {
-        this.get('store').query('program', {
-          filters: {
-            school: schoolId
-          }
-        }).then(programs => {
-          defer.resolve(programs);
-        });
-      }
-
-      return PromiseArray.create({
-        promise: defer.promise
-      });
+  programs: computed('selectedSchool', 'saved', async function() {
+    let schoolId = this.get('selectedSchool').get('id');
+    if(isEmpty(schoolId)) {
+      return resolve([]);
     }
+
+    return await this.get('store').query('program', {
+      filters: {
+        school: schoolId
+      }
+    });
   }),
 
   editorOn: false,

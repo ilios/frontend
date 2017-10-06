@@ -53,9 +53,9 @@
     {{/if}}
 
     <div class='list'>
-      {{#if filteredPrograms.isFulfilled}}
+      {{#if (is-fulfilled filteredCourses)}}
         {{program-list
-          programs=filteredPrograms
+          programs=(await filteredPrograms)
           edit='editProgram'
           remove='removeProgram'
         }}
