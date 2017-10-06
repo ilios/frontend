@@ -17,9 +17,10 @@ export default Controller.extend({
   schoolId: null,
   titleFilter: null,
   showNewInstructorGroupForm: false,
-  newInstructorGroups: [],
+  newInstructorGroup: null,
+  deletedInstructorGroups: [],
 
-  instructorGroups: computed('selectedSchool', async function(){
+  instructorGroups: computed('selectedSchool', 'deletedInstructorGroups.[]', 'newInstructorGroup', async function(){
     let schoolId = this.get('selectedSchool').get('id');
     if(isEmpty(schoolId)) {
       resolve([]);
@@ -75,18 +76,28 @@ export default Controller.extend({
     return primarySchool;
   }),
   actions: {
-    removeInstructorGroup(instructorGroup) {
-      instructorGroup.deleteRecord();
-      instructorGroup.save();
+    async removeInstructorGroup(instructorGroup) {
+      const school = this.get('selectedSchool');
+      const instructorGroups = await school.get('instructorGroups');
+      instructorGroups.removeObject(instructorGroup);
+      await instructorGroup.destroyRecord();
+      this.get('deletedInstructorGroups').pushObject(instructorGroup);
+      const newInstructorGroup = this.get('newInstructorGroup');
+      if (newInstructorGroup === instructorGroup) {
+        this.set('newInstructorGroup', null);
+      }
     },
-    saveNewInstructorGroup(newInstructorGroup) {
-      let newInstructorGroups = this.get('newInstructorGroups').toArray();
-      return newInstructorGroup.save().then(savedInstructorGroup => {
-        newInstructorGroups.pushObject(savedInstructorGroup);
-        this.set('newInstructorGroups', newInstructorGroups);
-        this.set('showNewInstructorGroupForm', false);
-      });
+
+    async saveNewInstructorGroup(newInstructorGroup){
+      const savedInstructorGroup = await newInstructorGroup.save();
+      this.set('showNewInstructorGroupForm', false);
+      this.set('newInstructorGroup', savedInstructorGroup);
+      const school = await this.get('selectedSchool');
+      const instructorGroups = await school.get('instructorGroups');
+      instructorGroups.pushObject(savedInstructorGroup);
+      return savedInstructorGroup;
     },
+
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },

@@ -39,14 +39,14 @@
           cancel='toggleNewInstructorGroupForm'
         }}
       {{/if}}
-      {{#each newInstructorGroups as |instructorGroup|}}
+      {{#if newInstructorGroup}}
         <div class='saved-result'>
-          {{#link-to 'instructorGroup' instructorGroup}}
-            {{fa-icon 'external-link-square'}} {{instructorGroup.title}}
+          {{#link-to 'instructorGroup' newInstructorGroup}}
+            {{fa-icon 'external-link-square'}} {{newInstructorGroup.title}}
           {{/link-to}}
           {{t 'general.savedSuccessfully'}}
         </div>
-      {{/each}}
+      {{/if}}
     </section>
     <div class='list'>
       {{#if (is-fulfilled filteredInstructorGroups)}}

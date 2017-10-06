@@ -62,7 +62,7 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  programs: computed('selectedSchool', 'saved', async function() {
+  programs: computed('selectedSchool', 'deletedPrograms.[]', 'newProgram', async function() {
     let schoolId = this.get('selectedSchool').get('id');
     if(isEmpty(schoolId)) {
       return resolve([]);
@@ -75,18 +75,17 @@ export default Controller.extend({
     });
   }),
 
-  editorOn: false,
+  showNewProgramForm: false,
 
-  saved: false,
-  removed: false,
-  savedProgram: null,
+  deletedPrograms: [],
+  newProgram: null,
 
   actions: {
     toggleEditor() {
-      if (this.get('editorOn')) {
-        this.set('editorOn', false);
+      if (this.get('showNewProgramForm')) {
+        this.set('showNewProgramForm', false);
       } else {
-        this.setProperties({ editorOn: true, saved: false });
+        this.setProperties({ showNewProgramForm: true, newProgram: null });
       }
     },
 
@@ -94,28 +93,32 @@ export default Controller.extend({
       this.transitionToRoute('program', program);
     },
 
-    removeProgram(program) {
-      this.get('model.schools').removeObject(program);
-      program.deleteRecord();
-      return program.save().then((savedProgram) => {
-        this.setProperties({ deleted: true, saved: false, savedProgram });
-      });
+    async removeProgram(program) {
+      const school = await this.get('selectedSchool');
+      const programs = await school.get('programs');
+      programs.removeObject(program);
+      await program.destroyRecord();
+      this.get('deletedPrograms').pushObject(program);
+      const newProgram = this.get('newProgram');
+      if (newProgram === program) {
+        this.set('newProgram', null);
+      }
     },
 
-    save(program) {
-      const school = this.get('selectedSchool');
+    async saveNewProgram(newProgram){
+      const school = await this.get('selectedSchool');
       const duration = 4;
-
-      program.setProperties({school, duration});
-
-      return program.save().then((savedProgram) => {
-        this.send('cancel');
-        this.setProperties({ saved: true, savedProgram });
-      });
+      newProgram.setProperties({school, duration});
+      const savedProgram = await newProgram.save();
+      this.set('showNewProgramForm', false);
+      this.set('newProgram', savedProgram);
+      const programs = await school.get('programs');
+      programs.pushObject(savedProgram);
+      return savedProgram;
     },
 
     cancel() {
-      this.set('editorOn', false);
+      this.set('showNewProgramForm', false);
     },
 
     changeSelectedSchool(schoolId) {

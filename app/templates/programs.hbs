@@ -29,18 +29,18 @@
         <h2>{{t 'general.programs'}}</h2>
       </div>
       <div class='actions'>
-        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+        {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
       </div>
     </div>
 
-    {{#if editorOn}}
-      {{new-program save=(action 'save') cancel=(action 'cancel')}}
+    {{#if showNewProgramForm}}
+      {{new-program save=(action 'saveNewProgram') cancel=(action 'cancel')}}
     {{/if}}
 
-    {{#if saved}}
+    {{#if newProgram}}
       <div class='saved-result'>
-        {{#link-to 'program' savedProgram}}
-          {{fa-icon 'external-link-square'}} {{savedProgram.title}}
+        {{#link-to 'program' newProgram}}
+          {{fa-icon 'external-link-square'}} {{newProgram.title}}
         {{/link-to}}
         {{t 'general.savedSuccessfully'}}
       </div>
