@@ -1,13 +1,15 @@
 {{#if (await versionMismatch)}}
-  {{#tether-dialog
+  {{#modal-dialog
     alignmentTarget='body'
     attachment='middle center'
-    overlay-class='api-version-check-warning'
-    container-class='api-version-check-container'
+    overlayClass='api-version-check-warning'
+    containerClass='api-version-check-container'
+    tetherTarget='body'
+    animatable=false
   }}
     <div class='content'>
       <h1>{{t 'general.apiVersionMismatch'}}</h1>
       <p>{{t 'general.apiVersionMismatchDetails'}}</p>
     </div>
-  {{/tether-dialog}}
+  {{/modal-dialog}}
 {{/if}}
