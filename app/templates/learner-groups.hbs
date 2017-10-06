@@ -2,56 +2,56 @@
   <div class="filters">
     <div class="schoolsfilter">
       {{fa-icon 'university' fixedWidth=true}}
-      {{#if hasMoreThanOneSchool}}
-        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each sortedSchools as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool.content}}>
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{#if selectedSchool}}
-          {{selectedSchool.title}}
-        {{else if schools.isFulfilled}}
-          {{t 'general.none'}}
+      {{#if (get (await sortedSchools) 'length')}}
+        {{#if (gt (get (await sortedSchools) 'length') 1)}}
+          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+            {{#each (await sortedSchools) as |school|}}
+              <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{get (await selectedSchool) 'title'}}
         {{/if}}
+      {{else}}
+        {{t 'general.none'}}
       {{/if}}
     </div>
     <div class="programsfilter">
       {{fa-icon 'users' fixedWidth=true}}
-      {{#if hasMoreThanOneProgram}}
-        <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-          {{#each sortedPrograms as |program|}}
-            <option value={{program.id}} selected={{is-equal program selectedProgram.content}}>
-              {{program.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{#if selectedProgram}}
-          {{selectedProgram.title}}
-        {{else if programs.isFulfilled}}
-          {{t 'general.none'}}
+      {{#if (get (await sortedPrograms) 'length')}}
+        {{#if (gt (get (await sortedPrograms) 'length') 1)}}
+          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+            {{#each (await sortedPrograms) as |program|}}
+              <option value={{program.id}} selected={{is-equal program (await selectedProgram)}}>
+                {{program.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{get (await selectedProgram) 'title'}}
         {{/if}}
+      {{else}}
+        {{t 'general.none'}}
       {{/if}}
     </div>
     <div class="programyearsfilter">
       {{fa-icon 'calendar' fixedWidth=true}}
-      {{#if hasMoreThanOneProgramYear}}
-        <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
-          {{#each sortedProgramYears as |programYear|}}
-            <option value={{programYear.id}} selected={{is-equal programYear selectedProgramYear.content}}>
-              {{programYear.cohort.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{#if selectedProgramYear}}
-          {{selectedProgramYear.cohort.title}}
-        {{else if programYears.isFulfilled}}
-          {{t 'general.none'}}
+      {{#if (get (await sortedProgramYears) 'length')}}
+        {{#if (gt (get (await sortedProgramYears) 'length') 1)}}
+          <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
+            {{#each (await sortedProgramYears) as |programYear|}}
+              <option value={{programYear.id}} selected={{is-equal programYear (await selectedProgramYear)}}>
+                {{programYear.cohort.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{get (get (await selectedProgramYear) 'cohort') 'title'}}
         {{/if}}
+      {{else}}
+        {{t 'general.none'}}
       {{/if}}
     </div>
     <div class="titlefilter">
@@ -68,7 +68,7 @@
         <h2>{{t 'general.learnerGroups'}}</h2>
       </div>
       <div class='actions'>
-        {{#if selectedProgramYear}}
+        {{#if (await selectedProgramYear)}}
           {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
         {{/if}}
       </div>
@@ -80,19 +80,19 @@
       {{/if}}
     </section>
 
-    {{#if saved}}
+    {{#if newGroup}}
       <div class='saved-result'>
-        {{#link-to 'learnerGroup' savedGroup}}
-          {{fa-icon 'external-link-square'}} {{savedGroup.title}}
+        {{#link-to 'learnerGroup' newGroup}}
+          {{fa-icon 'external-link-square'}} {{newGroup.title}}
         {{/link-to}}
         {{t 'general.savedSuccessfully'}}
       </div>
     {{/if}}
 
     <div class='list'>
-      {{#if learnerGroups.isFulfilled}}
+      {{#if (is-fulfilled learnerGroups)}}
         {{learnergroup-list
-          learnerGroups=filteredLearnerGroups
+          learnerGroups=(await filteredLearnerGroups)
           remove=(action 'removeLearnerGroup')
           copy=(perform copyGroup)
         }}

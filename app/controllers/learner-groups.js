@@ -1,15 +1,10 @@
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
-import { isEmpty, isPresent } from '@ember/utils';
-import RSVP from 'rsvp';
-import DS from 'ember-data';
+import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
-
-const { gt, oneWay, sort } = computed;
-const { PromiseArray, PromiseObject } = DS;
 
 export default Controller.extend({
   currentUser: service(),
@@ -27,180 +22,135 @@ export default Controller.extend({
   programId: null,
   programYearId: null,
   titleFilter: null,
-  saved: false,
-  savedGroup: null,
-  isSaving: false,
+  deletedGroup: null,
+  newGroup: null,
   totalGroupsToSave: 0,
   currentGroupsSaved: 0,
-
-  changeTitleFilter: task(function * (value) {
-    const clean = escapeRegExp(value);
-    this.set('titleFilter', clean);
-    yield timeout(250);
-
-    return clean;
-  }).restartable(),
-
-  schools: oneWay('model.schools'),
-
-  sortByTitle:['title'],
-  sortedSchools: sort('schools', 'sortByTitle'),
-  hasMoreThanOneSchool: gt('schools.length', 1),
-
-  programs: computed('selectedSchool', function(){
-    let defer = RSVP.defer();
-    this.get('selectedSchool').then(school => {
-      if(isEmpty(school)){
-        defer.resolve([]);
-      } else {
-        this.get('store').query('program', {
-          filters: {
-            school: school.get('id'),
-            published: true
-          }
-        }).then(programs => {
-          defer.resolve(programs);
-        });
-      }
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-  sortedPrograms: sort('programs', 'sortByTitle'),
-  hasMoreThanOneProgram: gt('programs.length', 1),
-
-  programYears: computed('selectedProgram.programYears.[]', function(){
-    let defer = RSVP.defer();
-    this.get('selectedProgram').then(program => {
-      if(isEmpty(program)){
-        defer.resolve([]);
-      } else {
-        this.get('store').query('programYear', {
-          filters: {
-            program: program.get('id'),
-            published: true
-          }
-        }).then(programs => {
-          defer.resolve(programs);
-        });
-      }
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-  sortByStartYear: ['startYear:desc'],
-  sortedProgramYears: sort('programYears', 'sortByStartYear'),
-  hasMoreThanOneProgramYear: gt('programYears.length', 1),
-
-  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', function(){
-    let defer = RSVP.defer();
-    this.get('selectedProgramYear').then(programYear => {
-      if(isEmpty(programYear)){
-        defer.resolve([]);
-      } else {
-        programYear.get('cohort').then(cohort => {
-          cohort.get('rootLevelLearnerGroups').then(groups => {
-            defer.resolve(groups);
-          });
-        });
-      }
-    });
-
-    return PromiseArray.create({
-      promise: defer.promise
-    });
-  }),
-
-  filteredLearnerGroups: computed('changeTitleFilter.lastSuccessful.value', 'learnerGroups.[]', {
-    get() {
-      const title = this.get('changeTitleFilter.lastSuccessful.value');
-      const learnerGroups = this.get('learnerGroups');
-      const exp = new RegExp(title, 'gi');
-
-      return learnerGroups.filter((learnerGroup) => {
-        let match = true;
-
-        if (title != null && !learnerGroup.get('title').match(exp)) {
-          match = false;
-        }
-
-        return match;
-      }).sortBy('title');
-    }
-  }).readOnly(),
-
   showNewLearnerGroupForm: false,
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', function(){
-    let schools = this.get('model.schools');
+  changeTitleFilter: task(function * (value) {
+    this.set('titleFilter', value);
+    yield timeout(250);
+    return value;
+  }).restartable(),
+
+  sortedSchools: computed('model.schools', async function() {
+    const schools = await this.get('model.schools');
+    return schools.sortBy('title');
+  }),
+
+  programs: computed('selectedSchool', async function(){
+    const school = await this.get('selectedSchool');
+    if(isEmpty(school)){
+      return [];
+    }
+    return await this.get('store').query('program', {
+      filters: {
+        school: school.get('id'),
+        published: true
+      }
+    });
+  }),
+
+  sortedPrograms: computed('programs', async function(){
+    const programs = await this.get('programs');
+    return programs.sortBy('title');
+  }),
+
+  programYears: computed('selectedProgram.programYears.[]', async function(){
+    const program = await this.get('selectedProgram');
+    if(isEmpty(program)){
+      return [];
+    }
+    return await this.get('store').query('programYear', {
+      filters: {
+        program: program.get('id'),
+        published: true
+      }
+    });
+  }),
+
+  sortedProgramYears: computed('programYears', async function() {
+    const programYears = await this.get('programYears');
+    return programYears.sortBy('startYear').reverse();
+  }),
+
+  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function(){
+    const programYear = await this.get('selectedProgramYear');
+    if(isEmpty(programYear)) {
+      return [];
+    }
+    const cohort = await programYear.get('cohort');
+    return await cohort.get('rootLevelLearnerGroups');
+  }),
+
+  filteredLearnerGroups: computed('changeTitleFilter.lastSuccessful.value', 'learnerGroups.[]', async function(){
+    let title = this.get('changeTitleFilter.lastSuccessful.value');
+    if (!isPresent(title)) {
+      const titleFilter = this.get('titleFilter');
+      title = isBlank(titleFilter) ? '' : titleFilter ;
+    }
+    const cleanTitle = escapeRegExp(title);
+    const learnerGroups = await this.get('learnerGroups');
+    const exp = new RegExp(cleanTitle, 'gi');
+    let filteredGroups;
+    if (isEmpty(cleanTitle)) {
+      filteredGroups = learnerGroups.sortBy('title');
+    } else {
+      filteredGroups = learnerGroups.filter(learnerGroup => {
+        return isPresent(learnerGroup.get('title')) && learnerGroup.get('title').match(exp);
+      });
+    }
+    return filteredGroups.sortBy('title');
+  }),
+
+  selectedSchool: computed('model.schools.[]', 'schoolId', async function(){
+    let schools = await this.get('model.schools');
     const schoolId = this.get('schoolId');
     if(isPresent(schoolId)){
       const school = schools.findBy('id', schoolId);
       if(school){
-        return PromiseObject.create({
-          promise: RSVP.resolve(school)
-        });
+        return school;
       }
     }
-    return PromiseObject.create({
-      promise: this.get('currentUser').get('model').then(user => {
-        return user.get('school').then(school => {
-          return school;
-        });
-      })
-    });
+
+    const user = await this.get('currentUser').get('model');
+    return await user.get('school');
   }),
 
-  selectedProgram: computed('programs.[]', 'programId', function(){
-    let defer = RSVP.defer();
-    this.get('programs').then(programs => {
-      let program;
-      const programId = this.get('programId');
-      if(isPresent(programId)){
-        program = programs.findBy('id', programId);
-      }
-      if(program){
-        defer.resolve(program);
-      } else {
-        if(programs.length > 1){
-          defer.resolve(null);
-        } else {
-          defer.resolve(programs.sortBy('title').get('firstObject'));
-        }
-      }
-    });
+  selectedProgram: computed('programs.[]', 'programId', async function(){
+    const programs = await this.get('programs');
+    let program;
+    const programId = this.get('programId');
+    if(isPresent(programId)){
+      program = programs.findBy('id', programId);
+    }
 
+    if(program){
+      return program;
+    }
 
-    return PromiseObject.create({
-      promise: defer.promise
-    });
+    if(programs.length > 1) {
+      return null;
+    }
+
+    return programs.sortBy('title').get('firstObject');
   }),
 
-  selectedProgramYear: computed('programYears.[]', 'programYearId', function(){
-    let defer = RSVP.defer();
-    this.get('programYears').then(programYears => {
-      let programYear;
-      const programYearId = this.get('programYearId');
-      if(isPresent(programYearId)){
-        programYear = programYears.findBy('id', programYearId);
-      }
-      if(programYear){
-        defer.resolve(programYear);
-      } else {
-        defer.resolve(programYears.sortBy('startYear').get('lastObject'));
-      }
-    });
-
-    return PromiseObject.create({
-      promise: defer.promise
-    });
+  selectedProgramYear: computed('programYears.[]', 'programYearId', async function(){
+    const programYears = await this.get('programYears');
+    let programYear;
+    const programYearId = this.get('programYearId');
+    if(isPresent(programYearId)){
+      programYear = programYears.findBy('id', programYearId);
+    }
+    if(programYear) {
+      return programYear;
+    }
+    return programYears.sortBy('startYear').get('lastObject');
   }),
+
   copyGroup: task(function * (withLearners, learnerGroup) {
-    this.set('saved', false);
     const store = this.get('store');
     const i18n = this.get('i18n');
     const cohort = yield learnerGroup.get('cohort');
@@ -213,68 +163,71 @@ export default Controller.extend({
       yield newGroups[i].save();
       this.set('currentGroupsSaved', i + 1);
     }
-    this.set('saved', true);
-    this.set('savedGroup', newGroups[0]);
+    this.set('newGroup', newGroups[0]);
   }),
+
   actions: {
     editLearnerGroup(learnerGroup) {
       this.transitionToRoute('learnerGroup', learnerGroup);
     },
 
-    removeLearnerGroup(learnerGroup) {
-      return learnerGroup.destroyRecord();
+    async removeLearnerGroup(learnerGroup) {
+      const programYear = await this.get('selectedProgramYear');
+      const cohort = await programYear.get('cohort');
+      const learnerGroups = await cohort.get('learnerGroups');
+      learnerGroups.removeObject(learnerGroup);
+      await learnerGroup.destroyRecord();
+      this.set('deletedGroup', learnerGroup);
+      const newGroup = this.get('newGroup');
+      if (newGroup === learnerGroup) {
+        this.set('newGroup', null);
+      }
     },
 
     toggleNewLearnerGroupForm() {
       this.set('showNewLearnerGroupForm', !this.get('showNewLearnerGroupForm'));
     },
 
-    saveNewLearnerGroup(title, fillWithCohort) {
-      const { selectedProgramYear, store } = this.getProperties('selectedProgramYear', 'store');
-
-      return selectedProgramYear.get('cohort').then((cohort) => {
-        const newLearnerGroup = store.createRecord('learner-group', { title, cohort });
-        if (fillWithCohort) {
-          return cohort.get('users').then(users => {
-            newLearnerGroup.get('users').pushObjects(users);
-            return newLearnerGroup.save().then(() => {
-              this.set('saved', true);
-              this.set('savedGroup', newLearnerGroup);
-              this.send('cancel');
-            });
-          });
-        } else {
-          return newLearnerGroup.save().then(() => {
-            this.set('saved', true);
-            this.set('savedGroup', newLearnerGroup);
-            this.send('cancel');
-          });
-        }
-      });
+    async saveNewLearnerGroup(title, fillWithCohort) {
+      const store = this.get('store');
+      const selectedProgramYear = await this.get('selectedProgramYear');
+      const cohort = await selectedProgramYear.get('cohort');
+      const newLearnerGroup = store.createRecord('learner-group', { title, cohort });
+      if (fillWithCohort) {
+        const users = await cohort.get('users');
+        newLearnerGroup.get('users').pushObjects(users.toArray());
+        await newLearnerGroup.save();
+        this.set('newGroup', newLearnerGroup);
+        this.send('cancel');
+      } else {
+        await newLearnerGroup.save();
+        this.set('newGroup', newLearnerGroup);
+        this.send('cancel');
+      }
     },
 
     cancel() {
       this.set('showNewLearnerGroupForm', false);
     },
 
-    changeSelectedProgram(programId) {
-      let program = this.get('programs').findBy('id', programId);
-      program.get('school').then(school => {
-        this.set('schoolId', school.get('id'));
-        this.set('programId', programId);
-        this.set('programYearId', null);
-      });
+    async changeSelectedProgram(programId) {
+      const programs = await this.get('programs');
+      const program = programs.findBy('id', programId);
+      const school = await program.get('school');
+      this.set('schoolId', school.get('id'));
+      this.set('programId', programId);
+      this.set('programYearId', null);
+
     },
 
-    changeSelectedProgramYear(programYearId) {
-      let programYear = this.get('programYears').findBy('id', programYearId);
-      programYear.get('program').then(program => {
-        program.get('school').then(school => {
-          this.set('schoolId', school.get('id'));
-          this.set('programId', program.get('id'));
-          this.set('programYearId', programYearId);
-        });
-      });
+    async changeSelectedProgramYear(programYearId) {
+      const programYears = await this.get('programYears');
+      const programYear = programYears.findBy('id', programYearId);
+      const program = await programYear.get('program');
+      const school = await program.get('school');
+      this.set('schoolId', school.get('id'));
+      this.set('programId', program.get('id'));
+      this.set('programYearId', programYearId);
     },
 
     changeSelectedSchool(schoolId) {
