@@ -2749,7 +2749,7 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^3.1.0:
+debug@^3.0.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -3479,15 +3479,15 @@ ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
 
-ember-cli-template-lint@0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-0.7.3.tgz#ddc3ec6bb30a2b1d0af7d3af4e1de68011d3aa15"
+ember-cli-template-lint@0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-0.7.4.tgz#d6c26e8a53ba09721583550271db48bfd51aaa26"
   dependencies:
     aot-test-generators "^0.1.0"
     broccoli-concat "^3.2.2"
     broccoli-persistent-filter "^1.2.0"
     chalk "^2.0.1"
-    debug "^2.6.8"
+    debug "^3.0.0"
     ember-cli-version-checker "^2.0.0"
     ember-template-lint "^0.8.1"
     json-stable-stringify "^1.0.1"
