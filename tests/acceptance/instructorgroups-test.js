@@ -94,12 +94,17 @@ test('filters by title', async function(assert) {
     title: 'regularinstructorgroup',
     school: 1
   });
-  assert.expect(15);
+  let regexInstructorgroup = server.create('instructorGroup', {
+    title: '\\yoo hoo',
+    school: 1
+  });
+  assert.expect(19);
   await visit('/instructorgroups');
-  assert.equal(3, find('.list tbody tr').length);
-  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+  assert.equal(4, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondInstructorgroup.title));
 
   await fillIn('.titlefilter input', 'first');
   assert.equal(1, find('.list tbody tr').length);
@@ -114,11 +119,16 @@ test('filters by title', async function(assert) {
   assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
   assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
 
+  await fillIn('.titlefilter input', '\\');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
+
   await fillIn('.titlefilter input', '');
-  assert.equal(3, find('.list tbody tr').length);
-  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularInstructorgroup.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstInstructorgroup.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondInstructorgroup.title));
+  assert.equal(4, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstInstructorgroup.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondInstructorgroup.title));
 });
 
 test('filters options', async function(assert) {
