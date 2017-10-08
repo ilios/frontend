@@ -115,7 +115,8 @@ export default Component.extend({
     }
 
     let filterExpressions = filterBy.split(' ').map(function (string) {
-      return new RegExp(string, 'gi');
+      const clean = escapeRegExp(string);
+      return new RegExp(clean, 'gi');
     });
 
     return sessions.filter(session => {
@@ -165,10 +166,9 @@ export default Component.extend({
 
   changeFilterBy: task(function * (value){
     const setFilterBy = this.get('setFilterBy');
-    const clean = escapeRegExp(value);
-    this.set('filterByLocalCache', clean);
+    this.set('filterByLocalCache', value);
     yield timeout(250);
-    setFilterBy(clean);
+    setFilterBy(value);
   }).restartable(),
 
   removeSession: task(function * (session){
