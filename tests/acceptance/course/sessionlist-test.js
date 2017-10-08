@@ -42,6 +42,7 @@ module('Acceptance: Course - Session List', {
     fixtures.sessions.pushObject(server.create('session', {
       course: 1,
       sessionType: 1,
+      title: 'session3\\'
     }));
     let today = moment().hour(8);
     fixtures.offerings = [];
@@ -94,7 +95,7 @@ test('session list', async function(assert) {
   assert.equal(getElementText(thirdTitle), getText('session2'));
   assert.equal(getElementText(thirdType), getText('sessiontype0'));
   assert.equal(getElementText(thirdOfferingCount), getText('0'));
-  assert.equal(getElementText(fourthTitle), getText('session3'));
+  assert.equal(getElementText(fourthTitle), getText('session3\\'));
   assert.equal(getElementText(fourthType), getText('sessiontype0'));
   assert.equal(getElementText(fourthOfferingCount), getText('0'));
 });
@@ -176,7 +177,7 @@ test('new session', async function(assert) {
   const input = `${container} .new-session input`;
   const saveButton = `${container} .new-session .done`;
   const savedLink = `${container} .save-result a`;
-  const newSession =  '.session-table table tbody tr:eq(4)';
+  const newSession =  '.session-table table tbody tr:eq(3)';
   const newSessionTitle =  `${newSession} td:eq(1)`;
   const newSessionOfferingCount =  `${newSession} td:eq(5)`;
 
@@ -269,7 +270,7 @@ test('first offering is updated when offering is updated #1276', async function(
 });
 
 test('title filter escapes regex', async function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   const block = '.course-sessions';
   const sessions = `${block} tbody tr`;
   const firstSessionTitle = `${sessions}:eq(0) td:eq(1)`;
@@ -278,7 +279,9 @@ test('title filter escapes regex', async function(assert) {
   assert.equal(find(sessions).length, 4);
   assert.equal(getElementText(firstSessionTitle), getText('session 0'));
   await fillIn(titleFilter, '\\');
-  assert.equal(find(sessions).length, 0);
+  assert.equal(find(sessions).length, 1);
+  assert.equal(getElementText(firstSessionTitle), getText('session3\\'));
+
 });
 
 test('delete session', async function(assert) {
