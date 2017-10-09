@@ -3,8 +3,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isBlank, isEmpty, isPresent, inject } = Ember;
-const { Promise } = RSVP;
+const { computed, Controller, isBlank, isEmpty, isPresent, inject } = Ember;
 const { service } = inject;
 const { gt, sort } = computed;
 
@@ -135,36 +134,28 @@ export default Controller.extend({
 
     return defaultYear;
   }),
+
   actions: {
-    removeCourse(course){
-      return new Promise(resolve => {
-        let school = this.get('selectedSchool');
-        school.get('courses').then(courses => {
-          courses.removeObject(course);
-          course.destroyRecord().then(() => {
-            this.get('deletedCourses').pushObject(course);
-            let newCourse = this.get('newCourse');
-            if (newCourse === course) {
-              this.set('newCourse', null);
-            }
-            resolve();
-          });
-        });
-      });
+    async removeCourse(course){
+      const school = await this.get('selectedSchool');
+      const courses = school.get('courses');
+      courses.removeObject(course);
+      await course.destroyRecord();
+      this.get('deletedCourses').pushObject(course);
+      let newCourse = this.get('newCourse');
+      if (newCourse === course) {
+        this.set('newCourse', null);
+      }
     },
-    saveNewCourse(newCourse){
-      return new Promise(resolve => {
-        newCourse.setDatesBasedOnYear();
-        newCourse.save().then(savedCourse => {
-          this.set('showNewCourseForm', false);
-          this.set('newCourse', savedCourse);
-          let school = this.get('selectedSchool');
-          school.get('courses').then(courses => {
-            courses.pushObject(savedCourse);
-            resolve(savedCourse);
-          });
-        });
-      });
+    async saveNewCourse(newCourse){
+      newCourse.setDatesBasedOnYear();
+      const savedCourse = await newCourse.save();
+      this.set('showNewCourseForm', false);
+      this.set('newCourse', savedCourse);
+      const school = await this.get('selectedSchool');
+      const courses = await school.get('courses');
+      courses.pushObject(savedCourse);
+      return savedCourse;
     },
     changeSelectedYear(yearTitle) {
       this.set('yearTitle', yearTitle);
