@@ -64,7 +64,7 @@
     "ember-d3": "0.3.3",
     "ember-data": "2.16.2",
     "ember-drag-drop": "0.4.6",
-    "ember-exam": "0.8.0",
+    "ember-exam": "0.8.1",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "^3.0.5",
     "ember-froala-editor": "2.7.0",
