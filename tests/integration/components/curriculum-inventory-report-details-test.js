@@ -6,15 +6,15 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object:EmberObject, Service } = Ember;
+const { getOwner, RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-details', 'Integration | Component | curriculum inventory report details', {
   integration: true,
 
   beforeEach: function () {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    getOwner(this).lookup('service:i18n').set('locale', 'en');
+    this.register('helper:t', tHelper);
   }
 });
 

@@ -3,12 +3,14 @@ import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 import Ember from 'ember';
 
+const { getOwner } = Ember;
+
 moduleForComponent('offering-editor-learnergroups', 'Integration | Component | offering editor learnergroups', {
   integration: true,
 
   beforeEach() {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    getOwner(this).lookup('service:i18n').set('locale', 'en');
+    this.register('helper:t', tHelper);
   }
 });
 

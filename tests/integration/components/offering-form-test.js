@@ -6,7 +6,7 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { RSVP, Object:EmberObject } = Ember;
+const { getOwner, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 const nothing = ()=>{};
@@ -14,7 +14,7 @@ const nothing = ()=>{};
 moduleForComponent('offering-form', 'Integration | Component | offering form', {
   integration: true,
   beforeEach(){
-    let modalDialogService = this.container.lookup('service:modal-dialog');
+    let modalDialogService = getOwner(this).lookup('service:modal-dialog');
     modalDialogService.destinationElementId = 'ember-testing';
   }
 });

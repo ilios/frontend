@@ -4,14 +4,14 @@ import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-const { RSVP, Object:EmberObject } = Ember;
+const { getOwner, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 moduleForComponent('curriculum-inventory-sequence-block-session-list', 'Integration | Component | curriculum inventory sequence block session list', {
   integration: true,
 
   beforeEach: function () {
-    this.container.lookup('service:i18n').set('locale', 'en');
-    this.registry.register('helper:t', tHelper);
+    getOwner(this).lookup('service:i18n').set('locale', 'en');
+    this.register('helper:t', tHelper);
   }
 });
 
