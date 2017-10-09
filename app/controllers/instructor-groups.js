@@ -43,11 +43,8 @@ export default Controller.extend({
     'changeTitleFilter.lastSuccessful.value',
     'instructorGroups.[]',
     async function(){
-      let title = this.get('changeTitleFilter.lastSuccessful.value');
-      if (!isPresent(title)) {
-        const titleFilter = this.get('titleFilter');
-        title = isBlank(titleFilter) ? '' : titleFilter ;
-      }
+      const titleFilter = this.get('titleFilter');
+      const title = isBlank(titleFilter) ? '' : titleFilter ;
       const cleanTitle = escapeRegExp(title);
       let exp = new RegExp(cleanTitle, 'gi');
       const instructorGroups = await this.get('instructorGroups');
