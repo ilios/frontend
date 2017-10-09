@@ -33,8 +33,8 @@ export default Controller.extend({
   sortYearsBy:['title:desc'],
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourse: null,
-  deletedCourses: [],
-  courses: computed('selectedSchool', 'selectedYear', 'deletedCourses.[]', 'newCourse', async function(){
+  deletedCourse: null,
+  courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function(){
     const selectedSchool = this.get('selectedSchool');
     const selectedYear = this.get('selectedYear');
     if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
@@ -131,7 +131,7 @@ export default Controller.extend({
       const courses = school.get('courses');
       courses.removeObject(course);
       await course.destroyRecord();
-      this.get('deletedCourses').pushObject(course);
+      this.set('deletedCourse', course);
       let newCourse = this.get('newCourse');
       if (newCourse === course) {
         this.set('newCourse', null);
