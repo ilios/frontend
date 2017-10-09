@@ -665,7 +665,7 @@ test('no add button when there is no cohort', async function(assert) {
 });
 
 test('title filter escapes regex', async function(assert) {
-  assert.expect(4);
+  assert.expect(5);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1]
@@ -697,6 +697,7 @@ test('title filter escapes regex', async function(assert) {
   await fillIn(filter, '\\');
   assert.equal(find(groups).length, 1);
   assert.equal(getElementText(firstGroupTitle), 'yes\\no');
+  assert.equal(find(filter).val(), '\\');
 });
 
 test('copy learnergroup without learners', async function(assert) {
