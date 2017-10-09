@@ -18,9 +18,9 @@ export default Controller.extend({
   titleFilter: null,
   showNewInstructorGroupForm: false,
   newInstructorGroup: null,
-  deletedInstructorGroups: [],
+  deletedInstructorGroup: null,
 
-  instructorGroups: computed('selectedSchool', 'deletedInstructorGroups.[]', 'newInstructorGroup', async function(){
+  instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function(){
     let schoolId = this.get('selectedSchool').get('id');
     if(isEmpty(schoolId)) {
       resolve([]);
@@ -81,7 +81,7 @@ export default Controller.extend({
       const instructorGroups = await school.get('instructorGroups');
       instructorGroups.removeObject(instructorGroup);
       await instructorGroup.destroyRecord();
-      this.get('deletedInstructorGroups').pushObject(instructorGroup);
+      this.set('deletedInstructorGroup', instructorGroup);
       const newInstructorGroup = this.get('newInstructorGroup');
       if (newInstructorGroup === instructorGroup) {
         this.set('newInstructorGroup', null);

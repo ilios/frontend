@@ -62,7 +62,7 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  programs: computed('selectedSchool', 'deletedPrograms.[]', 'newProgram', async function() {
+  programs: computed('selectedSchool', 'deletedProgram', 'newProgram', async function() {
     let schoolId = this.get('selectedSchool').get('id');
     if(isEmpty(schoolId)) {
       return resolve([]);
@@ -77,7 +77,7 @@ export default Controller.extend({
 
   showNewProgramForm: false,
 
-  deletedPrograms: [],
+  deletedProgram: null,
   newProgram: null,
 
   actions: {
@@ -98,7 +98,7 @@ export default Controller.extend({
       const programs = await school.get('programs');
       programs.removeObject(program);
       await program.destroyRecord();
-      this.get('deletedPrograms').pushObject(program);
+      this.set('deletedProgram', program);
       const newProgram = this.get('newProgram');
       if (newProgram === program) {
         this.set('newProgram', null);
