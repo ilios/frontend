@@ -43,15 +43,13 @@ export default Controller.extend({
 
     let schoolId = selectedSchool.get('id');
     let yearTitle = selectedYear.get('title');
-    const courses = await this.get('store').query('course', {
+    return await this.get('store').query('course', {
       filters: {
         school: schoolId,
         year: yearTitle,
         archived: false
       }
     });
-
-    return courses;
   }),
 
   changeTitleFilter: task(function * (value) {
@@ -65,9 +63,7 @@ export default Controller.extend({
   allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function(){
     const currentUser = this.get('currentUser');
     const user = await currentUser.get('model');
-    const allRelatedCourses = await user.get('allRelatedCourses');
-
-    return allRelatedCourses;
+    return await user.get('allRelatedCourses');
   }),
 
   filteredCourses: computed(
@@ -96,12 +92,9 @@ export default Controller.extend({
       }
       if (filterMyCourses) {
         const allRelatedCourses = await this.get('allRelatedCourses');
-        let myFilteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
-
-        return myFilteredCourses;
-      } else {
-        return filteredCourses;
+        filteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
       }
+      return filteredCourses;
     }
   ),
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
