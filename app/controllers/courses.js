@@ -72,11 +72,8 @@ export default Controller.extend({
     'userCoursesOnly',
     'allRelatedCourses.[]',
     async function(){
-      let title = this.get('changeTitleFilter.lastSuccessful.value');
-      if (!isPresent(title)) {
-        const titleFilter = this.get('titleFilter');
-        title = isBlank(titleFilter) ? '' : titleFilter ;
-      }
+      const titleFilter = this.get('titleFilter');
+      const title = isBlank(titleFilter) ? '' : titleFilter ;
       const cleanTitle = escapeRegExp(title);
       let filterMyCourses = this.get('userCoursesOnly');
       let exp = new RegExp(cleanTitle, 'gi');
