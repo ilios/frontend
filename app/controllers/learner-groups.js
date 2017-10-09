@@ -85,11 +85,8 @@ export default Controller.extend({
   }),
 
   filteredLearnerGroups: computed('changeTitleFilter.lastSuccessful.value', 'learnerGroups.[]', async function(){
-    let title = this.get('changeTitleFilter.lastSuccessful.value');
-    if (!isPresent(title)) {
-      const titleFilter = this.get('titleFilter');
-      title = isBlank(titleFilter) ? '' : titleFilter ;
-    }
+    const titleFilter = this.get('titleFilter');
+    const title = isBlank(titleFilter) ? '' : titleFilter ;
     const cleanTitle = escapeRegExp(title);
     const learnerGroups = await this.get('learnerGroups');
     const exp = new RegExp(cleanTitle, 'gi');
