@@ -1,7 +1,10 @@
-{{#modal-dialog translucentOverlay=true}}
+{{#modal-dialog
+  translucentOverlay=true
+  animatable=false
+}}
   {{pulse-loader}}
   <h2 class='page-title'>{{t 'general.waitSaving'}}</h2>
-  
+
   {{#if showProgress}}
     {{progress-bar percentage=progress}}
   {{/if}}
