@@ -67,7 +67,7 @@ export default Controller.extend({
   }),
 
   filteredCourses: computed(
-    'changeTitleFilter.lastSuccessful.value',
+    'titleFilter',
     'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
