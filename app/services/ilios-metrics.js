@@ -40,16 +40,13 @@ export default Service.extend({
       this.setup().then(setupSuccessful => {
         if (setupSuccessful) {
           const metrics = this.get('metrics');
-          //Disabled due to issues with currentUser abilities observers misbehaving
-          //Can be re-enabled when abilities are removed
-          // const currentUser = this.get('currentUser');
-          // currentUser.get('model').then(user => {
-          //   if (user) {
-          //     metrics.set('context.user', user.get('id'));
-          //   }
-          //   metrics.trackPage({ page, title });
-          // });
-          metrics.trackPage({ page, title });
+          const currentUser = this.get('currentUser');
+          currentUser.get('model').then(user => {
+            if (user) {
+              metrics.set('context.userId', user.get('id'));
+            }
+            metrics.trackPage({ page, title });
+          });
         }
 
       });
