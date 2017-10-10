@@ -39,26 +39,24 @@ export default Controller.extend({
   }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
-  filteredInstructorGroups: computed(
-    'changeTitleFilter.lastSuccessful.value',
-    'instructorGroups.[]',
-    async function(){
-      const titleFilter = this.get('titleFilter');
-      const title = isBlank(titleFilter) ? '' : titleFilter ;
-      const cleanTitle = escapeRegExp(title);
-      let exp = new RegExp(cleanTitle, 'gi');
-      const instructorGroups = await this.get('instructorGroups');
-      let filteredInstructorGroups;
-      if(isEmpty(title)){
-        filteredInstructorGroups = instructorGroups;
-      } else {
-        filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
-          return isPresent(instructorGroup.get('title')) && instructorGroup.get('title').match(exp);
-        });
-      }
-      return filteredInstructorGroups.sortBy('title');
+
+  filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function(){
+    const titleFilter = this.get('titleFilter');
+    const title = isBlank(titleFilter) ? '' : titleFilter ;
+    const cleanTitle = escapeRegExp(title);
+    let exp = new RegExp(cleanTitle, 'gi');
+    const instructorGroups = await this.get('instructorGroups');
+    let filteredInstructorGroups;
+    if(isEmpty(title)){
+      filteredInstructorGroups = instructorGroups;
+    } else {
+      filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
+        return isPresent(instructorGroup.get('title')) && instructorGroup.get('title').match(exp);
+      });
     }
-  ),
+    return filteredInstructorGroups.sortBy('title');
+  }),
+
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');

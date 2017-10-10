@@ -27,7 +27,7 @@ export default Controller.extend({
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  filteredPrograms: computed('changeTitleFilter.lastSuccessful.value', 'programs.[]', async function() {
+  filteredPrograms: computed('titleFilter', 'programs.[]', async function() {
     const titleFilter = this.get('titleFilter');
     const title = isBlank(titleFilter) ? '' : titleFilter ;
     const cleanTitle = escapeRegExp(title);
