@@ -3079,9 +3079,9 @@ ember-cli-deploy-archive@^0.2.0:
     rsvp "^3.5.0"
     tar.gz "^1.0.3"
 
-ember-cli-deploy-build@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.1.0.tgz#44ef2e09301319a1fc5807e9ec30491a753e2483"
+ember-cli-deploy-build@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.1.1.tgz#de515b04536a569f42626ef28aea139f32ef00e8"
   dependencies:
     chalk "^1.0.0"
     ember-cli-deploy-plugin "^0.2.1"
