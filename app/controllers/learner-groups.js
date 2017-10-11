@@ -84,9 +84,9 @@ export default Controller.extend({
     return await cohort.get('rootLevelLearnerGroups');
   }),
 
-  filteredLearnerGroups: computed('changeTitleFilter.lastSuccessful.value', 'learnerGroups.[]', async function(){
+  filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function(){
     const titleFilter = this.get('titleFilter');
-    const title = isBlank(titleFilter) ? '' : titleFilter ;
+    const title = isBlank(titleFilter) ? '' : titleFilter;
     const cleanTitle = escapeRegExp(title);
     const learnerGroups = await this.get('learnerGroups');
     const exp = new RegExp(cleanTitle, 'gi');
