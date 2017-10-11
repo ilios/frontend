@@ -27,28 +27,33 @@ test('visiting /programs', async function(assert) {
 });
 
 test('filters by title', async function(assert) {
+  assert.expect(19);
   server.create('user', {id: 4136});
   server.create('school', {
     programs: [1,2,3]
   });
-  var firstProgram = server.create('program', {
+  let firstProgram = server.create('program', {
     title: 'specialfirstprogram',
     school: 1,
   });
-  var secondProgram = server.create('program', {
+  let secondProgram = server.create('program', {
     title: 'specialsecondprogram',
     school: 1
   });
-  var regularProgram = server.create('program', {
+  let regularProgram = server.create('program', {
     title: 'regularprogram',
     school: 1
   });
-  assert.expect(15);
+  let regexProgram = server.create('program', {
+    title: '\\yoo hoo',
+    school: 1
+  });
   await visit('/programs');
-  assert.equal(3, find('.list tbody tr').length);
-  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
+  assert.equal(4, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondProgram.title));
 
   await fillIn('.titlefilter input', 'first');
   assert.equal(1, find('.list tbody tr').length);
@@ -60,12 +65,17 @@ test('filters by title', async function(assert) {
   assert.equal(2, find('.list tbody tr').length);
   assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
   assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondProgram.title));
+  await fillIn('.titlefilter input', '\\');
+  assert.equal(1, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
 
   await fillIn('.titlefilter input', '');
-  assert.equal(3, find('.list tbody tr').length);
-  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularProgram.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstProgram.title));
-  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondProgram.title));
+  assert.equal(4, find('.list tbody tr').length);
+  assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstProgram.title));
+  assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondProgram.title));
+
 });
 
 test('filters options', async function(assert) {
