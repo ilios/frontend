@@ -3,8 +3,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isBlank, isEmpty, isPresent, inject } = Ember;
-const { Promise } = RSVP;
+const { computed, Controller, isBlank, isEmpty, isPresent, inject } = Ember;
 const { service } = inject;
 const { gt, sort } = computed;
 
@@ -34,8 +33,8 @@ export default Controller.extend({
   sortYearsBy:['title:desc'],
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourse: null,
-  deletedCourses: [],
-  courses: computed('selectedSchool', 'selectedYear', 'deletedCourses.[]', 'newCourse', async function(){
+  deletedCourse: null,
+  courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function(){
     const selectedSchool = this.get('selectedSchool');
     const selectedYear = this.get('selectedYear');
     if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
@@ -44,15 +43,13 @@ export default Controller.extend({
 
     let schoolId = selectedSchool.get('id');
     let yearTitle = selectedYear.get('title');
-    const courses = await this.get('store').query('course', {
+    return await this.get('store').query('course', {
       filters: {
         school: schoolId,
         year: yearTitle,
         archived: false
       }
     });
-
-    return courses;
   }),
 
   changeTitleFilter: task(function * (value) {
@@ -66,22 +63,17 @@ export default Controller.extend({
   allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function(){
     const currentUser = this.get('currentUser');
     const user = await currentUser.get('model');
-    const allRelatedCourses = await user.get('allRelatedCourses');
-
-    return allRelatedCourses;
+    return await user.get('allRelatedCourses');
   }),
 
   filteredCourses: computed(
-    'changeTitleFilter.lastSuccessful.value',
+    'titleFilter',
     'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
     async function(){
-      let title = this.get('changeTitleFilter.lastSuccessful.value');
-      if (!isPresent(title)) {
-        const titleFilter = this.get('titleFilter');
-        title = isBlank(titleFilter) ? '' : titleFilter ;
-      }
+      const titleFilter = this.get('titleFilter');
+      const title = isBlank(titleFilter) ? '' : titleFilter ;
       const cleanTitle = escapeRegExp(title);
       let filterMyCourses = this.get('userCoursesOnly');
       let exp = new RegExp(cleanTitle, 'gi');
@@ -97,12 +89,9 @@ export default Controller.extend({
       }
       if (filterMyCourses) {
         const allRelatedCourses = await this.get('allRelatedCourses');
-        let myFilteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
-
-        return myFilteredCourses;
-      } else {
-        return filteredCourses;
+        filteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
       }
+      return filteredCourses;
     }
   ),
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
@@ -135,36 +124,28 @@ export default Controller.extend({
 
     return defaultYear;
   }),
+
   actions: {
-    removeCourse(course){
-      return new Promise(resolve => {
-        let school = this.get('selectedSchool');
-        school.get('courses').then(courses => {
-          courses.removeObject(course);
-          course.destroyRecord().then(() => {
-            this.get('deletedCourses').pushObject(course);
-            let newCourse = this.get('newCourse');
-            if (newCourse === course) {
-              this.set('newCourse', null);
-            }
-            resolve();
-          });
-        });
-      });
+    async removeCourse(course){
+      const school = await this.get('selectedSchool');
+      const courses = school.get('courses');
+      courses.removeObject(course);
+      await course.destroyRecord();
+      this.set('deletedCourse', course);
+      let newCourse = this.get('newCourse');
+      if (newCourse === course) {
+        this.set('newCourse', null);
+      }
     },
-    saveNewCourse(newCourse){
-      return new Promise(resolve => {
-        newCourse.setDatesBasedOnYear();
-        newCourse.save().then(savedCourse => {
-          this.set('showNewCourseForm', false);
-          this.set('newCourse', savedCourse);
-          let school = this.get('selectedSchool');
-          school.get('courses').then(courses => {
-            courses.pushObject(savedCourse);
-            resolve(savedCourse);
-          });
-        });
-      });
+    async saveNewCourse(newCourse){
+      newCourse.setDatesBasedOnYear();
+      const savedCourse = await newCourse.save();
+      this.set('showNewCourseForm', false);
+      this.set('newCourse', savedCourse);
+      const school = await this.get('selectedSchool');
+      const courses = await school.get('courses');
+      courses.pushObject(savedCourse);
+      return savedCourse;
     },
     changeSelectedYear(yearTitle) {
       this.set('yearTitle', yearTitle);
