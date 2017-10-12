@@ -1,6 +1,5 @@
 import Mixin from '@ember/object/mixin';
-const { service } = inject;
-
+import { inject as service } from '@ember/service';
 
 export default Mixin.create({
   i18n: service(),

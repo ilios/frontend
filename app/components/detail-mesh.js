@@ -2,7 +2,6 @@ import { oneWay, sort } from '@ember/object/computed';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { translationMacro as t } from "ember-i18n";
 
 export default Component.extend({
