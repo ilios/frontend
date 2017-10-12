@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-
-const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   tagName: 'span',

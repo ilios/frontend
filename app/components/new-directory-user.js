@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 import NewUser from 'ilios/mixins/newuser';
 
-const { inject, computed, isEmpty, isPresent, RSVP } = Ember;
-const { service } = inject;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -40,7 +42,7 @@ const Validations = buildValidations({
   ],
 });
 
-export default Ember.Component.extend(NewUser, Validations, {
+export default Component.extend(NewUser, Validations, {
   i18n: service(),
   commonAjax: service(),
   iliosConfig: service(),

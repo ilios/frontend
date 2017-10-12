@@ -1,15 +1,17 @@
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import Ember from 'ember';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from '../config/environment';
 
 const { IliosFeatures: { schoolSessionAttributes } } = config;
-const { Component, computed, RSVP, isEmpty, inject } = Ember;
 const { oneWay, sort } = computed;
 const { Promise, all } = RSVP;
-const { service } = inject;
 
 const Validations = buildValidations({
   title: [

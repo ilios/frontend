@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('course-objective-list-item', 'Integration | Component | course objective list item', {

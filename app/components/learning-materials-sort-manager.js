@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import { task } from 'ember-concurrency';
-
-const { Component } = Ember;
 
 export default Component.extend(SortableByPosition, {
   classNames: ['learning-materials-sort-manager'],

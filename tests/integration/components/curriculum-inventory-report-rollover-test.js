@@ -1,10 +1,11 @@
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-rollover', 'Integration | Component | curriculum inventory report rollover', {
@@ -94,7 +95,7 @@ test('rollover report', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.curriculumInventoryReportRolloverSuccess');
     }
@@ -159,7 +160,7 @@ test('rollover report with new name, description and year', function(assert) {
     }
   });
   this.register('service:store', storeMock);
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(){}
   });
   this.register('service:flashMessages', flashmessagesMock);

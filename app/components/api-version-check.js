@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
 import ENV from 'ilios/config/environment';
 
-const { Component, RSVP, computed, inject } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 
 const { apiVersion } = ENV.APP;
 

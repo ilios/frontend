@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-
-const { Object: EmberObject } = Ember;
 
 moduleForComponent('learning-material-table-title', 'Integration | Component | learning material table title', {
   integration: true

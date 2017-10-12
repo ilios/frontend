@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
-
-const { Component, computed, inject, Object: EmberObject } = Ember;
-const { service } = inject;
 
 export default Component.extend({
   store: service(),

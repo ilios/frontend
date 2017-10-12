@@ -1,12 +1,10 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { moduleForComponent } from 'ember-qunit';
 import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
-
-const { Object:EmberObject } = Ember;
 
 moduleForComponent(
   'curriculum-inventory-sequence-block-dates-duration-editor',

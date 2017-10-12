@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { sort } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import ObjectProxy from '@ember/object/proxy';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { Component, computed, RSVP, ObjectProxy, inject } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 
 export default Component.extend(SortableByPosition, {
   store: service(),
@@ -13,8 +16,8 @@ export default Component.extend(SortableByPosition, {
   classNames: ['printable', 'course', 'print-course'],
   sortTitle: ['title'],
   sortDirectorsBy: ['lastName', 'firstName'],
-  sortedDirectors: computed.sort('course.directors', 'sortDirectorsBy'),
-  sortedMeshDescriptors: computed.sort('course.meshDescriptors', 'sortTitle'),
+  sortedDirectors: sort('course.directors', 'sortDirectorsBy'),
+  sortedMeshDescriptors: sort('course.meshDescriptors', 'sortTitle'),
 
   /**
    * A list of proxied course sessions, sorted by title.
@@ -33,7 +36,7 @@ export default Component.extend(SortableByPosition, {
 
       let SessionProxy = ObjectProxy.extend({
         sortTitle: ['title'],
-        sortedMeshDescriptors: computed.sort('content.meshDescriptors', 'sortTitle'),
+        sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
           return new Promise(resolve => {
             let session = this.get('content').get('id');

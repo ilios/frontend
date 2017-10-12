@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import EmberObject from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
-
-const { Component, Object:EmberObject, isEmpty } = Ember;
 
 export default Component.extend({
   tagName: 'section',

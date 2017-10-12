@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
 
-const { trim } = Ember.$;
+const { trim } = $;
 
 export function cleanQuery(query) {
   return trim(query).replace(/[-,?~!@#$%&*+'="]/, ' ');

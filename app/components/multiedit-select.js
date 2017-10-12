@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Component, computed, observer } = Ember;
+import Component from '@ember/component';
+import { observer, computed } from '@ember/object';
 
 export default Component.extend({
   displayValueOverride: null,

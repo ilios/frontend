@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
+import RSVP from 'rsvp';
+import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { computed, Controller, RSVP, isBlank, isEmpty, isPresent, inject } = Ember;
 const { gt } = computed;
 const { resolve } = RSVP;
-const { service } = inject;
 
 export default Controller.extend({
   i18n: service(),

@@ -1,15 +1,17 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isPresent } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
-const { computed, RSVP, inject, isPresent } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 const { reads } = computed;
 
 
-export default Ember.Component.extend({
+export default Component.extend({
   init(){
     this._super(...arguments);
     this.reset();

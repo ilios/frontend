@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
-
-const { Component, inject } = Ember;
-const { service } = inject;
 
 export default Component.extend({
   store: service(),
@@ -43,7 +42,7 @@ export default Component.extend({
 
   actions: {
     search(query){
-      if (Ember.$.trim(query) === '') {
+      if ($.trim(query) === '') {
         this.set('searchReturned', false);
         this.set('searching', false);
         this.set('searchPage', 1);

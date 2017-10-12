@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import ENV from 'ilios/config/environment';
 
 const { apiVersion } = ENV.APP;
 
-const { Service, RSVP, $:jQuery } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('api-version-check', 'Integration | Component | api version check', {
@@ -19,7 +20,7 @@ test('shows no warning when versions match', function(assert) {
   const warningOverlay = '.api-version-check-warning';
   this.register('service:iliosConfig', iliosConfigMock);
   this.render(hbs`{{api-version-check}}`);
-  assert.equal(jQuery(warningOverlay).length, 0);
+  assert.equal($(warningOverlay).length, 0);
 
 });
 

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-vocabulary-term-manager', 'Integration | Component | school vocabulary term manager', {

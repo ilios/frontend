@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import Service from '@ember/service';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 import wait from 'ember-test-helpers/wait';

@@ -1,14 +1,13 @@
-import Ember from 'ember';
+import Service from '@ember/service';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-const { Object:EmberObject } = Ember;
-
 moduleForComponent('course-summary-header', 'Integration | Component | course summary header', {
   integration: true,
   beforeEach(){
-    let currentUserMock = Ember.Service.extend({
+    let currentUserMock = Service.extend({
       userIsCourseDirector: true,
     });
     this.register('service:currentUser', currentUserMock);
@@ -54,7 +53,7 @@ test('it renders', function(assert) {
 });
 
 test('no link to materials when that is the current route', function(assert) {
-  let routerMock = Ember.Service.extend({
+  let routerMock = Service.extend({
     generateURL(){},
     currentRouteName: 'course-materials',
   });
@@ -77,7 +76,7 @@ test('no link to materials when that is the current route', function(assert) {
 });
 
 test('no link to rollover when that is the current route', function(assert) {
-  let routerMock = Ember.Service.extend({
+  let routerMock = Service.extend({
     generateURL(){},
     currentRouteName: 'course.rollover',
   });

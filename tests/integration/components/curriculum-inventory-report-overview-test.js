@@ -1,13 +1,15 @@
-import Ember from 'ember';
-import {moduleForComponent} from 'ember-qunit';
-import {test} from 'qunit';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
+import { moduleForComponent } from 'ember-qunit';
+import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
-import {openDatepicker} from 'ember-pikaday/helpers/pikaday';
+import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { getOwner, RSVP, Object:EmberObject, Service } = Ember;
 const {resolve} = RSVP;
 
 moduleForComponent('curriculum-inventory-report-overview', 'Integration | Component | curriculum inventory report overview', {

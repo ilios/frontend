@@ -1,8 +1,9 @@
-import Ember from 'ember';
-
-const { Component, computed, Object:EmberObject, RSVP, inject, isEmpty } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 const { map } = RSVP;
-const { service } = inject;
 
 export default Component.extend({
   i18n: service(),

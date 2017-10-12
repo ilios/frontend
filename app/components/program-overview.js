@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, computed, RSVP } = Ember;
 const { Promise } = RSVP;
 const Validations = buildValidations({
   shortTitle: [
@@ -29,7 +30,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     get() {
       const arr = [];
       for (let i = 1; i <= 10; i++) {
-        arr.pushObject(Ember.Object.create({
+        arr.pushObject(EmberObject.create({
           id: i,
           title: i
         }));

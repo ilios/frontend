@@ -1,9 +1,8 @@
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-import Ember from 'ember';
-
-const { getOwner } = Ember;
 
 moduleForComponent('offering-editor-learnergroups', 'Integration | Component | offering editor learnergroups', {
   integration: true,
@@ -17,12 +16,12 @@ moduleForComponent('offering-editor-learnergroups', 'Integration | Component | o
 test('actions get trigger appropriately', function(assert) {
   assert.expect(2);
 
-  const group1 = Ember.Object.create({
+  const group1 = EmberObject.create({
     title: 'Anatomy 1',
     allParentTitles: ['Parent Title']
   });
 
-  const group2 = Ember.Object.create({
+  const group2 = EmberObject.create({
     title: 'Anatomy 2',
     allParentTitles: ['Parent Title']
   });

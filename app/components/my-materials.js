@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import SortableTable from 'ilios/mixins/sortable-table';
 import escapeRegExp from '../utils/escape-reg-exp';
-
-const { Component, computed, isPresent } = Ember;
 
 export default Component.extend(SortableTable, {
   classNames: ['my-materials'],

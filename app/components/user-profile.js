@@ -1,7 +1,5 @@
-import Ember from 'ember';
-
-const { Component, inject } = Ember;
-const { service } = inject;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 export default Component.extend({
   currentUser: service(),

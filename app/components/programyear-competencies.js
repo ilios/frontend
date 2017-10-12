@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, RSVP, computed } = Ember;
 const { not } = computed;
 const { Promise, all, filter } = RSVP;
 

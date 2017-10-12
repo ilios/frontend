@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { typeOf, isEmpty } = Ember;
+import { helper } from '@ember/component/helper';
+import { isEmpty, typeOf } from '@ember/utils';
 
 export function countRelated(params) {
   if (typeOf(params) !== 'array' || params.length < 2) {
@@ -21,4 +20,4 @@ export function countRelated(params) {
   return object.hasMany(what).ids().length;
 }
 
-export default Ember.Helper.helper(countRelated);
+export default helper(countRelated);

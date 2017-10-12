@@ -1,11 +1,12 @@
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/start-mirage';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-session-types-collapsed', 'Integration | Component | school session types collapsed', {

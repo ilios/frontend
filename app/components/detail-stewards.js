@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, RSVP, computed, inject, isEmpty, isPresent } = Ember;
 const { map, all } = RSVP;
-const { service } = inject;
 
 export default Component.extend({
   store: service(),

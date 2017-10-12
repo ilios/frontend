@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { Object:EmberObject, RSVP, String:EmberString } = Ember;
-const { htmlSafe } = EmberString;
 const { resolve } = RSVP;
 
 moduleForComponent('school-session-types-list', 'Integration | Component | school session types list', {

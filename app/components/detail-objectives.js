@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import scrollTo from '../utils/scroll-to';
 
-const { Component, computed, inject, isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
-const { service } = inject;
 const { or, notEmpty, alias } = computed;
 
 export default Component.extend({

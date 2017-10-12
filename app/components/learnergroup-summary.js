@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import { isPresent } from '@ember/utils';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Component, RSVP, isPresent, computed, ObjectProxy } = Ember;
 const { Promise, all } = RSVP;
 
 const Validations = buildValidations({

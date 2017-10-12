@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
@@ -6,7 +8,6 @@ import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { getOwner, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 const nothing = ()=>{};

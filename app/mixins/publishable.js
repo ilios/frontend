@@ -1,10 +1,9 @@
-import Ember from 'ember';
-
-const { inject, computed } = Ember;
-const { service } = inject;
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 const { not, or } = computed;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   publishTarget: null,
   currentUser: service(),
   flashMessages: service(),

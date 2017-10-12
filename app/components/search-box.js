@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 
-const { Component, isPresent } = Ember;
 const DEBOUNCE_TIMEOUT = 250;
 
 export default Component.extend({

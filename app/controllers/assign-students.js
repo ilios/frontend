@@ -1,8 +1,9 @@
-import Ember from 'ember';
-
-const { Controller, computed, RSVP, inject, isPresent, isEmpty, isBlank } = Ember;
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isBlank, isEmpty, isPresent } from '@ember/utils';
 const { gt } = computed;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Controller.extend({

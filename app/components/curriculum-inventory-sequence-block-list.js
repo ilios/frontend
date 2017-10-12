@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isPresent } from '@ember/utils';
+import ObjectProxy from '@ember/object/proxy';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, RSVP, isPresent, ObjectProxy } = Ember;
 const { Promise } = RSVP;
 
 const SequenceBlockProxy = ObjectProxy.extend({

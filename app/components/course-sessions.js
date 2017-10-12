@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, RSVP } = Ember;
 const { map } = RSVP;
 const { not } = computed;
 
 export default Component.extend({
-  i18n: inject.service(),
+  i18n: service(),
   tagName: 'section',
   classNames: ['course-sessions'],
 

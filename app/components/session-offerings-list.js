@@ -1,13 +1,15 @@
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import EmberObject, { computed } from '@ember/object';
 import moment from 'moment';
-import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, RSVP, Object:EmberObject } = Ember;
 const { oneWay, sort } = computed;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
   session: null,
   offerings: oneWay('session.offerings'),
   editable: true,

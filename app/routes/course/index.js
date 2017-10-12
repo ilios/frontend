@@ -1,8 +1,7 @@
-import Ember from 'ember';
-
-const { Route, RSVP, inject } = Ember;
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
 const { all } = RSVP;
-const { service } = inject;
 
 export default  Route.extend({
   store: service(),

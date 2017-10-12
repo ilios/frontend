@@ -1,9 +1,13 @@
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { isEmpty, isPresent } from '@ember/utils';
 import moment from 'moment';
-import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, ObjectProxy, RSVP, run, isPresent, isEmpty } = Ember;
-const { service } = inject;
 const { mapBy, sort } = computed;
 const { Promise, hash } = RSVP;
 

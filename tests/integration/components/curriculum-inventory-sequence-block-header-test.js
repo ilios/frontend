@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
 import { moduleForComponent } from 'ember-qunit';
 import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-header', 'Integration | Component | curriculum inventory sequence block header', {

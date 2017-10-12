@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import BaseValidator from 'ember-cp-validations/validators/base';
 
-const { isEmpty, RSVP } = Ember;
 const { Promise } = RSVP;
 
 export default BaseValidator.extend({

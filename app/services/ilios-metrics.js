@@ -1,7 +1,7 @@
-import Ember from 'ember';
-
-const { Service, RSVP, run, inject, isEmpty } = Ember;
-const { service } = inject;
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
 const { scheduleOnce } = run;
 const { Promise } = RSVP;
 

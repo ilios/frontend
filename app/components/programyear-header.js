@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import Publishable from 'ilios/mixins/publishable';
 
-const { Component, computed } = Ember;
 const { alias, not } = computed;
 
 export default Component.extend(Publishable, {

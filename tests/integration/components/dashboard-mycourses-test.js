@@ -1,10 +1,13 @@
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import { run } from '@ember/runloop';
+import RSVP from 'rsvp';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, Object:EmberObject, run, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let mockCourses = [

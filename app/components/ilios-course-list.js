@@ -1,7 +1,8 @@
-import Ember from 'ember';
-
-const { computed, inject, RSVP, ObjectProxy, Component } = Ember;
-const { service } = inject;
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import ObjectProxy from '@ember/object/proxy';
+import Component from '@ember/component';
 const { Promise }= RSVP;
 
 const CourseProxy = ObjectProxy.extend({

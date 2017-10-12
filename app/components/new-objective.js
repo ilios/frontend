@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Component } = Ember;
 
 const Validations = buildValidations({
   title: [

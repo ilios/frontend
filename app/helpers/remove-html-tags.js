@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import $ from 'jquery';
 
 export function removeHtmlTags(params) {
   if (!(params[0] === undefined)) {
-    return Ember.$("<p>" + params[0] + "</p>").text();
+    return $("<p>" + params[0] + "</p>").text();
   }  
 }
 
-export default Ember.Helper.helper(removeHtmlTags);
+export default helper(removeHtmlTags);
 

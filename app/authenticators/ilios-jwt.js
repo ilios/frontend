@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import { get } from '@ember/object';
+import { Promise as EmberPromise } from 'rsvp';
+import { inject as service } from '@ember/service';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
-const { inject } = Ember;
-const { service } = inject;
 
 export default JwtTokenAuthenticator.extend({
   commonAjax: service(),
@@ -17,11 +18,11 @@ export default JwtTokenAuthenticator.extend({
                                  otherwise
   */
   authenticate(credentials, headers) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new EmberPromise((resolve, reject) => {
       if(this.tokenPropertyName in credentials){
-        const token = Ember.get(credentials, this.tokenPropertyName);
+        const token = get(credentials, this.tokenPropertyName);
         const tokenData = this.getTokenData(token);
-        const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+        const expiresAt = get(tokenData, this.tokenExpireName);
 
         this.scheduleAccessTokenRefresh(expiresAt, token);
 
@@ -34,13 +35,13 @@ export default JwtTokenAuthenticator.extend({
         var data = this.getAuthenticateData(credentials);
 
         this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
-          const token = Ember.get(response, this.tokenPropertyName);
+          const token = get(response, this.tokenPropertyName);
           const tokenData = this.getTokenData(token);
-          const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+          const expiresAt = get(tokenData, this.tokenExpireName);
           const tokenExpireData = {};
           this.scheduleAccessTokenRefresh(expiresAt, token);
           tokenExpireData[this.tokenExpireName] = expiresAt;
-          response = Ember.merge(response, tokenExpireData);
+          response = merge(response, tokenExpireData);
           resolve(this.getResponseData(response));
         }, e => {
           let error = {

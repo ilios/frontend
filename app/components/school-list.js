@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { sort } from '@ember/object/computed';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Component, computed, inject } = Ember;
-const { sort } = computed;
-const { service } = inject;
 
 const Validations = buildValidations({
   title: [

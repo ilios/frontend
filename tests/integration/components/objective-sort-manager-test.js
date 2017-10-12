@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent } from 'ember-qunit';
 import { test, skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import tHelper from "ember-i18n/helper";
-const { getOwner, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('objective-sort-manager', 'Integration | Component | objective sort manager', {

@@ -1,3 +1,4 @@
+import { isPresent, isEmpty } from '@ember/utils';
 import destroyApp from '../helpers/destroy-app';
 import {
   module,
@@ -5,9 +6,6 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import Ember from 'ember';
-
-const { isEmpty, isPresent } = Ember;
 
 var application;
 const url = '/learnergroups';

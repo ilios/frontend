@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Component } = Ember;
 
 const Validations = buildValidations({
   title: [

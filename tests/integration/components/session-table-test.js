@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-const { Object:EmberObject } = Ember;
 
 moduleForComponent('session-table', 'Integration | Component | session table', {
   integration: true

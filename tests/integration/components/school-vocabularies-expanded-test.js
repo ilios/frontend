@@ -1,10 +1,9 @@
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import wait from 'ember-test-helpers/wait';
-import Ember from 'ember';
-
-const { Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('school-vocabularies-expanded', 'Integration | Component | school vocabularies expanded', {

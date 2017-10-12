@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { isEmpty, isArray, Helper, observer } = Ember;
+import { isEmpty } from '@ember/utils';
+import { isArray } from '@ember/array';
+import Helper from '@ember/component/helper';
+import { observer } from '@ember/object';
 
 export function intersectionCount([a, b]/*, hash*/) {
   if (! isArray(a) || ! isArray(b) || isEmpty(a) || isEmpty(b)) {

@@ -1,7 +1,6 @@
-import Ember from 'ember';
-
-const { Controller, computed, inject } = Ember;
-const { service } = inject;
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   currentUser: service(),

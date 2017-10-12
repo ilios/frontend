@@ -1,5 +1,5 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('curriculum-inventory-report', 'Unit | Serializer | curriculum inventory report', {
   // Specify the other units that are required for this test.
@@ -22,7 +22,7 @@ test('it serializes records', function(assert) {
 
 test('it removes all non postable fields', function(assert) {
   let record = this.subject();
-  Ember.run(()=> {
+  run(()=> {
     let uri = "/abandon/all/hope/ye/who/enter/here";
     record.set('absoluteFileUri', uri);
     assert.equal(record.get('absoluteFileUri'), uri);
@@ -33,7 +33,7 @@ test('it removes all non postable fields', function(assert) {
 
 test('start and end date are formatted during serialization', function(assert) {
   let record = this.subject();
-  Ember.run(()=> {
+  run(()=> {
     record.set('startDate', new Date());
     record.set('endDate', new Date());
     let serializedRecord = record.serialize();

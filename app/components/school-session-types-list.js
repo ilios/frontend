@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { timeout, task } from 'ember-concurrency';
-
-const { Component } = Ember;
 
 export default Component.extend({
   classNames: ['school-session-types-list'],

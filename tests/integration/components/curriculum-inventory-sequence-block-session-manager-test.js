@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
 import { moduleForComponent } from 'ember-qunit';
 import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-const { getOwner, RSVP, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-session-manager', 'Integration | Component | curriculum inventory sequence block session manager', {

@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 
-const { String:EmberString, computed } = Ember;
-const { htmlSafe } = EmberString;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['progress-bar'],
   percentage: 0,
   widthStyle: computed('percentage', function(){

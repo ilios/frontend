@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Object:EmberObject, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleForComponent('learnergroup-subgroup-list', 'Integration | Component | learnergroup subgroup list', {
@@ -177,7 +178,7 @@ test('add multiple new groups', async function(assert) {
   });
   this.register('service:store', storeMock);
 
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.savedSuccessfully');
     }
@@ -244,7 +245,7 @@ test('truncates multiple group with long name', async function(assert) {
   });
   this.register('service:store', storeMock);
 
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.savedSuccessfully');
     }

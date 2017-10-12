@@ -1,10 +1,7 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
 
-const { inject } = Ember;
-const { service } = inject;
-
-
-export default Ember.Mixin.create({
+export default Mixin.create({
   i18n: service(),
   store: service(),
   report: null,

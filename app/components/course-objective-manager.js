@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { isEmpty } from '@ember/utils';
+import EmberObject, { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, inject, isEmpty, Object:EmberObject, ObjectProxy, RSVP } = Ember;
 const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
-const { service } = inject;
 
 const competencyGroup = EmberObject.extend({
   title: '',

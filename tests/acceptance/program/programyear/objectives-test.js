@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { later } from '@ember/runloop';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -272,7 +272,7 @@ test('empty objective title can not be saved', async function(assert) {
 
   find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
   find(editor).froalaEditor('events.trigger', 'contentChanged');
-  Ember.run.later(()=>{
+  later(()=>{
     assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
     assert.ok(find(save).is(':disabled'));
   }, 100);

@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { inject, Component } = Ember;
-const { service } = inject;
 
 const Validations = buildValidations({
   name: [
@@ -29,7 +28,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const currentYear = new Date().getFullYear();
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
       let title = i + ' - ' + (i + 1);
-      let year = Ember.Object.create({ 'id': i, 'title': title });
+      let year = EmberObject.create({ 'id': i, 'title': title });
       years.pushObject(year);
     }
     const selectedYear = years.findBy('id', currentYear);

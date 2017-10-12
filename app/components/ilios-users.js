@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { cleanQuery } from '../utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;
-
-const { Component, inject, computed } = Ember;
-const { service } = inject;
 
 export default Component.extend({
   store: service(),

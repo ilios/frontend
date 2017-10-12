@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 
-const { inject, Service, RSVP, computed, isEmpty } = Ember;
-const { service } = inject;
 const { all, Promise, resolve, map } = RSVP;
 
 export default Service.extend({

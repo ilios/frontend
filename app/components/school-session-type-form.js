@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
-
-const { computed, Component, inject, isPresent } = Ember;
-const { service } = inject;
 
 const Validations = buildValidations({
   title: [

@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import {
+  registerAsyncHelper,
+  registerHelper
+} from '@ember/test';
 
 var customHelpers = function() {
-  Ember.Test.registerAsyncHelper('pickOption', function(app, selector, optionText, assert){
+  registerAsyncHelper('pickOption', function(app, selector, optionText, assert){
     let el = find(selector);
     assert.equal(el.length, 1, selector + ' is a valid selector');
     let options = el.find('option').filter(function() {
@@ -17,13 +20,13 @@ var customHelpers = function() {
     
     return app.testHelpers.wait();
   });
-  Ember.Test.registerHelper('getElementText', function(app, element){
+  registerHelper('getElementText', function(app, element){
     if (typeof element === 'string'){
       element = find(element);
     }
     return element.text().replace(/[\t\n\s]+/g, "");
   });
-  Ember.Test.registerHelper('getText', function(app, string){
+  registerHelper('getText', function(app, string){
     return string.replace(/[\t\n\s]+/g, "");
   });
 }();

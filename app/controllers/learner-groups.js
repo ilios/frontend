@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
+import { isEmpty, isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { computed, Controller, inject, isPresent, isEmpty, RSVP } = Ember;
-const { service } = inject;
 const { gt, oneWay, sort } = computed;
 const { PromiseArray, PromiseObject } = DS;
 

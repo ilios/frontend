@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { isEmpty } = Ember;
+import { helper } from '@ember/component/helper';
+import { isEmpty } from '@ember/utils';
 
 export function hasManyLength([model, property]) {
   if(isEmpty(model) || typeof model !== 'object') {
@@ -19,4 +18,4 @@ export function hasManyLength([model, property]) {
   return rel.ids().length;
 }
 
-export default Ember.Helper.helper(hasManyLength);
+export default helper(hasManyLength);

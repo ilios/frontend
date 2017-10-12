@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-const { getOwner, Object:EmberObject, RSVP, Service } = Ember;
 const { resolve } = RSVP;
 
 let storeMock;

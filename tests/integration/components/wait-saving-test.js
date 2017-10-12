@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
-
-const { getOwner } = Ember;
 
 moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
   integration: true,

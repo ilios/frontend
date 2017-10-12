@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
-const { getOwner, Object:EmberObject } = Ember;
 
 moduleForComponent('learning-material-table', 'Integration | Component | learning material table', {
   integration: true,

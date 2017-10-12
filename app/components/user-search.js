@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import ObjectProxy from '@ember/object/proxy';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
-const { Component, computed, isEmpty, inject } = Ember;
-const { service } = inject;
 const { oneWay } = computed;
 
-let userProxy = Ember.ObjectProxy.extend({
+let userProxy = ObjectProxy.extend({
   isUser: true,
   currentlyActiveUsers: null,
   isActive: computed('content', 'currentlyActiveUsers.[]', function(){
@@ -19,7 +21,7 @@ let userProxy = Ember.ObjectProxy.extend({
     return this.get('content.lastName')+this.get('content.firstName');
   }),
 });
-let instructorGroupProxy = Ember.ObjectProxy.extend({
+let instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
   isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){

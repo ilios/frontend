@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { timeout, task } from 'ember-concurrency';
-
-const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   value: null,

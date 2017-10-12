@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import moment from 'moment';
 
-const { Component, computed, inject } = Ember;
 const { reads } = computed;
 
 export default Component.extend({
-  commonAjax: inject.service(),
-  iliosConfig: inject.service(),
+  commonAjax: service(),
+  iliosConfig: service(),
   classNames: ['user-profile-calendar'],
 
   namespace: reads('iliosConfig.apiNameSpace'),

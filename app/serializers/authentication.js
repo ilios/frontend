@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
 
 const { RESTSerializer } = DS;
-const { isEmpty } = Ember;
 
 export default RESTSerializer.extend({
   isNewSerializerAPI: true,

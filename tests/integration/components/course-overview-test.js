@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
@@ -12,7 +14,6 @@ moduleForComponent('course-overview', 'Integration | Component | course overview
   }
 });
 
-const { Object:EmberObject, Service, RSVP } = Ember;
 const { resolve } = RSVP;
 
 test('renders with no course id', function(assert) {

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import scrollTo from '../utils/scroll-to';
 
-const { Component, computed } = Ember;
 const { not } = computed;
 
 export default Component.extend({

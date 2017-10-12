@@ -1,12 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { Component, RSVP, inject } = Ember;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Component.extend({

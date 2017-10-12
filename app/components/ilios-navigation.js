@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import config from 'ilios/config/environment';
 
-const { Component, inject, computed, RSVP } = Ember;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Component.extend({

@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Component, RSVP } = Ember;
+import Component from '@ember/component';
+import RSVP from 'rsvp';
 
 export default Component.extend({
   tagName: 'section',

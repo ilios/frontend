@@ -1,11 +1,14 @@
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import { run } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, RSVP, Object:EmberObject, run, getOwner } = Ember;
 const { Promise, resolve } = RSVP;
 
 let storeMock;
@@ -94,7 +97,7 @@ test('rollover course', function(assert) {
       return [];
     }
   });
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(message){
       assert.equal(message, 'general.courseRolloverSuccess');
     }
@@ -152,7 +155,7 @@ test('rollover course with new title', function(assert) {
       return [];
     }
   });
-  let flashmessagesMock = Ember.Service.extend({
+  let flashmessagesMock = Service.extend({
     success(){}
   });
   this.register('service:flashMessages', flashmessagesMock);

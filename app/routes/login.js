@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import { isPresent } from '@ember/utils';
+import RSVP from 'rsvp';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { Route, inject, isPresent, RSVP }  = Ember;
-const { service } = inject;
 const { Promise } = RSVP;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
