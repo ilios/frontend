@@ -26,7 +26,6 @@ module.exports = {
     'ember/new-module-imports': 2,
     'ember/no-old-shims': 2,
     'ember/closure-actions': 0,
-    'ember/no-observers': 0,
     'ember/alias-model-in-controller': 0,
     'ember/use-ember-get-and-set': 0,
     'ember/named-functions-in-promises': 0,

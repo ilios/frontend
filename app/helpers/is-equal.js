@@ -20,6 +20,7 @@ export default Helper.extend({
     return isEqual([ value1, value2 ]);
   },
 
+  /* eslint ember/no-observers: 0 */
   recomputeOnArrayChange: observer('value1', 'value2', function() {
     once(this, () => {
       this.recompute();

@@ -34,6 +34,7 @@ export default Helper.extend({
     return intersectionCount([a, b]);
   },
 
+  /* eslint ember/no-observers: 0 */
   recomputeOnArrayChange: observer('a.[]', 'b.[]', function() {
     this.recompute();
   })

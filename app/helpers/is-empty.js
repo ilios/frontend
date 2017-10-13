@@ -17,6 +17,7 @@ export default Helper.extend({
     return isEmpty([ value1 ]);
   },
 
+  /* eslint ember/no-observers: 0 */
   recomputeOnArrayChange: observer('value1', function() {
     once(this, () => {
       this.recompute();
