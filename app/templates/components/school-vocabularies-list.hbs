@@ -46,7 +46,7 @@
     {{/if}}
   </section>
   <div class='resultslist-list'>
-    {{#liquid-if (is-fulfilled sortedVocabularies) 'crossFade'}}
+    {{#if (is-fulfilled sortedVocabularies)}}
       <table>
         <thead>
           <tr>
@@ -90,6 +90,6 @@
       </table>
     {{else}}
       {{fa-icon 'spinner' spin=true}}
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>
