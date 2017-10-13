@@ -166,18 +166,15 @@ test('cannot delete vocabularies with terms', async function(assert) {
 });
 
 test('clicking delete removes the vocabulary', function(assert) {
-  assert.expect(6);
+  assert.expect(5);
   let  vocabulary = {
     terms: [],
     termCount: 0,
     title: 'nothing important',
     isNew: false,
-    deleteRecord(){
+    destroyRecord(){
       assert.ok(true);
     },
-    save(){
-      assert.ok(true);
-    }
   };
 
   let vocabularies = [vocabulary];
