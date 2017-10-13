@@ -13,7 +13,7 @@
             {{one-way-input
               value=newVocabularyTitle
               update=(action (mut newVocabularyTitle))
-              onenter=(action 'add' newVocabularyTitle)
+              onenter=(action (perform saveNew) newVocabularyTitle)
               onescape=(action 'toggleShowNewVocabularyForm')
               focusOut=(action 'addErrorDisplayFor' 'newVocabularyTitle')
             }}
@@ -24,8 +24,8 @@
         </div>
 
         <div class="form-col-6 form-data-submit">
-          <button class='done text' {{action 'add' newVocabularyTitle}}>
-            {{#if isSavingNewVocabulary}}
+          <button class='done text' {{action (perform saveNew) newVocabularyTitle}}>
+            {{#if saveNew.isRunning}}
               {{fa-icon 'spinner' spin=true}}
             {{else}}
               {{t 'general.done'}}
@@ -36,15 +36,17 @@
       </div>
     {{/liquid-if}}
 
-    {{#each newVocabularies as |vocabulary|}}
+    {{#if newVocabulary}}
       <div class='savedvocabulary saved-result'>
-        <span class='clickable link'>{{fa-icon 'external-link-square'}} {{vocabulary.title}}</span>
+        <span class='clickable link' {{action manageVocabulary newVocabulary.id}}>
+          {{fa-icon 'external-link-square'}} {{newVocabulary.title}}
+        </span>
         {{t 'general.savedSuccessfully'}}
       </div>
-    {{/each}}
+    {{/if}}
   </section>
   <div class='resultslist-list'>
-    {{#liquid-if (is-fulfilled sortedVocabularies) 'crossFade'}}
+    {{#if (is-fulfilled sortedVocabularies)}}
       <table>
         <thead>
           <tr>
@@ -55,29 +57,29 @@
         </thead>
         <tbody>
           {{#each (await sortedVocabularies) as |vocabulary|}}
-            <tr class="{{if (is-in showRemovalConfirmationFor vocabulary) 'confirm-removal'}}">
+            <tr class="{{if (eq showRemovalConfirmationFor vocabulary) 'confirm-removal'}}">
               <td class='text-left text-top' colspan=3>
-                <span class='clickable link' {{action this.attrs.manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
+                <span class='clickable link' {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
               </td>
               <td class='text-left text-top' colspan=1>{{vocabulary.termCount}}</td>
 
               <td class='text-left text-top' colspan=1>
                 {{#if editable}}
-                  <span class='clickable edit' {{action this.attrs.manageVocabulary vocabulary.id}}>{{fa-icon 'edit'}}</span>
+                  <span class='clickable edit' {{action manageVocabulary vocabulary.id}}>{{fa-icon 'edit'}}</span>
                   {{#if (eq vocabulary.termCount 0)}}
                     {{fa-icon 'trash' class='remove clickable' click=(action 'confirmRemoval' vocabulary)}}
                   {{/if}}
                 {{/if}}
               </td>
             </tr>
-            {{#if (is-in showRemovalConfirmationFor vocabulary)}}
+            {{#if (eq showRemovalConfirmationFor vocabulary)}}
               <tr class='confirm-removal'>
                 <td colspan=5>
                   <div class='confirm-message'>
                     {{t 'general.confirmVocabularyRemoval'}}<br>
                     <div class="confirm-buttons">
-                      <button {{action 'remove' vocabulary}} class='remove text'>{{t 'general.yes'}}</button>
-                      <button {{action 'cancelRemove' vocabulary}} class='done text'>{{t 'general.cancel'}}</button>
+                      <button {{action (perform remove) vocabulary}} class='remove text'>{{t 'general.yes'}}</button>
+                      <button {{action 'cancelRemoval'}} class='done text'>{{t 'general.cancel'}}</button>
                     </div>
                   </div>
                 </td>
@@ -88,6 +90,6 @@
       </table>
     {{else}}
       {{fa-icon 'spinner' spin=true}}
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>

@@ -1,12 +1,11 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { isPresent } from '@ember/utils';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Promise } = RSVP;
+import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   newVocabularyTitle: [
@@ -20,65 +19,60 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('newVocabularies', []);
-  },
   school: null,
-  newVocabularies: [],
-  sortedVocabularies: computed('school.vocabularies.[]', function(){
+  newVocabulary: null,
+
+  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function(){
     const school = this.get('school');
-    return new Promise((resolve, reject) => {
-      if (isPresent(school)) {
-        school.get('vocabularies').then(vocabularies => {
-          resolve(vocabularies.filterBy('isNew', false).sortBy('title').toArray());
-        });
-      } else {
-        reject();
-      }
-    });
+    if (! isPresent(school)) {
+      resolve([]);
+    }
+    const vocabularies = await school.get('vocabularies');
+    return vocabularies.filterBy('isNew', false).sortBy('title').toArray();
   }),
+
   editable: true,
   showNewVocabularyForm: false,
   newVocabularyTitle: null,
-  isSavingNewVocabulary: false,
-  showRemovalConfirmationFor: [],
+  showRemovalConfirmationFor: null,
+
+  saveNew: task(function * (title){
+    this.send('addErrorDisplayFor', 'newVocabularyTitle');
+    const { validations } = yield this.validate();
+    if (validations.get('isValid')) {
+      const school = this.get('school');
+      const vocabulary = this.get('store').createRecord('vocabulary', {title, school});
+      const savedVocabulary = yield vocabulary.save();
+      const vocabularies = yield school.get('vocabularies');
+      vocabularies.pushObject(savedVocabulary);
+      this.send('removeErrorDisplayFor', 'newVocabularyTitle');
+      this.set('showNewVocabularyForm', false);
+      this.set('newVocabularyTitle', null);
+      this.set('newVocabulary', savedVocabulary);
+    }
+  }).drop(),
+
+  remove: task(function * (vocabulary){
+    const school = this.get('school');
+    const vocabularies = yield school.get('vocabularies');
+    vocabularies.removeObject(vocabulary);
+    yield vocabulary.destroyRecord();
+    const newVocabulary = this.get('newVocabulary');
+    if (newVocabulary === vocabulary) {
+      this.set('newVocabulary', null);
+    }
+  }).drop(),
+
   actions: {
     toggleShowNewVocabularyForm(){
       this.set('newVocabularyTitle', null);
       this.set('showNewVocabularyForm', !this.get('showNewVocabularyForm'));
     },
-    add(title){
-      let self = this;
-      this.set('isSavingNewVocabulary', true);
-      this.send('addErrorDisplayFor', 'newVocabularyTitle');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const school = this.get('school');
-          let vocabulary = this.get('store').createRecord('vocabulary', {title, school});
-          vocabulary.save().then(savedVocabulary => {
-            this.get('newVocabularies').pushObject(savedVocabulary);
-          }).finally(() => {
-            if (!self.get('isDestroyed')) {
-              self.send('removeErrorDisplayFor', 'newVocabularyTitle');
-              self.set('showNewVocabularyForm', false);
-              self.set('isSavingNewVocabulary', false);
-              self.set('newVocabularyTitle', null);
-            }
-          });
-        }
-      });
-    },
     confirmRemoval(vocabulary){
-      this.get('showRemovalConfirmationFor').pushObject(vocabulary);
+      this.set('showRemovalConfirmationFor', vocabulary);
     },
-    cancelRemoval(vocabulary){
-      this.get('showRemovalConfirmationFor').removeObject(vocabulary);
-    },
-    remove(vocabulary){
-      this.get('newVocabularies').removeObject(vocabulary);
-      vocabulary.deleteRecord();
-      vocabulary.save();
+    cancelRemoval(){
+      this.set('showRemovalConfirmationFor', null);
     },
   }
 });
