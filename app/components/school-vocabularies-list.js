@@ -1,13 +1,11 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { isPresent } from '@ember/utils';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
-
-const { resolve } = RSVP;
 
 const Validations = buildValidations({
   newVocabularyTitle: [
