@@ -22,6 +22,7 @@ export default Helper.extend({
     return isIn([values, item]);
   },
 
+  /* eslint ember/no-observers: 0 */
   recomputeOnArrayChange: observer('values.[]', function() {
     this.recompute();
   })
