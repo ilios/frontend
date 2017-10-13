@@ -13,7 +13,7 @@
             {{one-way-input
               value=newVocabularyTitle
               update=(action (mut newVocabularyTitle))
-              onenter=(action 'add' newVocabularyTitle)
+              onenter=(action (perform saveNew) newVocabularyTitle)
               onescape=(action 'toggleShowNewVocabularyForm')
               focusOut=(action 'addErrorDisplayFor' 'newVocabularyTitle')
             }}
@@ -24,8 +24,8 @@
         </div>
 
         <div class="form-col-6 form-data-submit">
-          <button class='done text' {{action 'add' newVocabularyTitle}}>
-            {{#if isSavingNewVocabulary}}
+          <button class='done text' {{action (perform saveNew) newVocabularyTitle}}>
+            {{#if saveNew.isRunning}}
               {{fa-icon 'spinner' spin=true}}
             {{else}}
               {{t 'general.done'}}
@@ -36,12 +36,14 @@
       </div>
     {{/liquid-if}}
 
-    {{#each newVocabularies as |vocabulary|}}
+    {{#if newVocabulary}}
       <div class='savedvocabulary saved-result'>
-        <span class='clickable link'>{{fa-icon 'external-link-square'}} {{vocabulary.title}}</span>
+        <span class='clickable link' {{action this.attrs.manageVocabulary newVocabulary.id}}>
+          {{fa-icon 'external-link-square'}} {{newVocabulary.title}}
+        </span>
         {{t 'general.savedSuccessfully'}}
       </div>
-    {{/each}}
+    {{/if}}
   </section>
   <div class='resultslist-list'>
     {{#liquid-if (is-fulfilled sortedVocabularies) 'crossFade'}}
