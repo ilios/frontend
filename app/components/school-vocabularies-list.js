@@ -22,7 +22,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   school: null,
   newVocabulary: null,
 
-  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', 'deletedVocabulary', async function(){
+  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function(){
     const school = this.get('school');
     if (! isPresent(school)) {
       resolve([]);
@@ -57,7 +57,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const vocabularies = yield school.get('vocabularies');
     vocabularies.removeObject(vocabulary);
     yield vocabulary.destroyRecord();
-    this.set('deletedVocabulary', vocabulary);
     const newVocabulary = this.get('newVocabulary');
     if (newVocabulary === vocabulary) {
       this.set('newVocabulary', null);
