@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "elemental-calendar": "^0.0.9",
-    "ember-cli-babel": "^6.3.0",
+    "ember-cli-babel": "^6.6.0",
     "ember-cli-clipboard": "^0.8.0",
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-moment-shim": "^3.1.0",
@@ -59,7 +59,7 @@
     "ember-inflector": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.3.0",
-    "ember-source": "~2.15.0",
+    "ember-source": "~2.16.0",
     "loader.js": "^4.6.0"
   },
   "engines": {
