@@ -7,7 +7,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { Promise } = RSVP;
+const { resolve } = RSVP;
 
 const Validations = buildValidations({
   newVocabularyTitle: [
@@ -24,22 +24,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   school: null,
   newVocabulary: null,
 
-  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', 'deletedVocabulary', function(){
+  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', 'deletedVocabulary', async function(){
     const school = this.get('school');
-    return new Promise((resolve, reject) => {
-      if (isPresent(school)) {
-        school.get('vocabularies').then(vocabularies => {
-          resolve(vocabularies.filterBy('isNew', false).sortBy('title').toArray());
-        });
-      } else {
-        reject();
-      }
-    });
+    if (! isPresent(school)) {
+      resolve([]);
+    }
+    const vocabularies = await school.get('vocabularies');
+    return vocabularies.filterBy('isNew', false).sortBy('title').toArray();
   }),
+
   editable: true,
   showNewVocabularyForm: false,
   newVocabularyTitle: null,
-  showRemovalConfirmationFor: [],
+  showRemovalConfirmationFor: null,
 
   saveNew: task(function * (title){
     this.send('addErrorDisplayFor', 'newVocabularyTitle');
@@ -75,10 +72,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('showNewVocabularyForm', !this.get('showNewVocabularyForm'));
     },
     confirmRemoval(vocabulary){
-      this.get('showRemovalConfirmationFor').pushObject(vocabulary);
+      this.set('showRemovalConfirmationFor', vocabulary);
     },
-    cancelRemoval(vocabulary){
-      this.get('showRemovalConfirmationFor').removeObject(vocabulary);
+    cancelRemoval(){
+      this.set('showRemovalConfirmationFor', null);
     },
   }
 });
