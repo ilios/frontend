@@ -24,7 +24,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   school: null,
   newVocabulary: null,
 
-  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', function(){
+  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', 'deletedVocabulary', function(){
     const school = this.get('school');
     return new Promise((resolve, reject) => {
       if (isPresent(school)) {
@@ -40,6 +40,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   showNewVocabularyForm: false,
   newVocabularyTitle: null,
   showRemovalConfirmationFor: [],
+
   saveNew: task(function * (title){
     this.send('addErrorDisplayFor', 'newVocabularyTitle');
     const { validations } = yield this.validate();
@@ -56,6 +57,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }).drop(),
 
+  remove: task(function * (vocabulary){
+    const school = this.get('school');
+    const vocabularies = yield school.get('vocabularies');
+    vocabularies.removeObject(vocabulary);
+    yield vocabulary.destroyRecord();
+    this.set('deletedVocabulary', vocabulary);
+    const newVocabulary = this.get('newVocabulary');
+    if (newVocabulary === vocabulary) {
+      this.set('newVocabulary', null);
+    }
+  }).drop(),
+
   actions: {
     toggleShowNewVocabularyForm(){
       this.set('newVocabularyTitle', null);
@@ -66,11 +79,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     cancelRemoval(vocabulary){
       this.get('showRemovalConfirmationFor').removeObject(vocabulary);
-    },
-    remove(vocabulary){
-      this.set('newVocabulary', null);
-      vocabulary.deleteRecord();
-      vocabulary.save();
     },
   }
 });
