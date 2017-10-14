@@ -69,10 +69,10 @@ export default Component.extend({
         return startDiff;
       }
 
-      let durrationA = moment(a.startDate).diff(moment(a.endDate));
-      let durrationB = moment(b.startDate).diff(moment(b.endDate));
+      let durationA = moment(a.startDate).diff(moment(a.endDate));
+      let durationB = moment(b.startDate).diff(moment(b.endDate));
 
-      let durationDiff = durrationA - durrationB;
+      let durationDiff = durationA - durationB;
 
       if (durationDiff !== 0) {
         return durationDiff;
