@@ -5,7 +5,7 @@ import moment from 'moment';
 const { Component, computed, inject, RSVP, isEmpty, isBlank} = Ember;
 const { notEmpty } = computed;
 const { service } = inject;
-const { Promise, map } = RSVP;
+const { map, resolve } = RSVP;
 
 export default Component.extend({
   layout,
@@ -13,63 +13,44 @@ export default Component.extend({
   i18n: service(),
   event: null,
   classNames: ['single-event'],
-  description: computed('session.description.description', function(){
-    return new Promise(resolve => {
-      this.get('session').then(session=>{
-        session.get('sessionDescription').then(description=>{
-          if(isEmpty(description)){
-            resolve(null);
-          } else {
-            resolve(description.get('description'));
-          }
-        });
-      });
-    });
+  description: computed('session.description.description', async function(){
+    const session = await this.get('session');
+    const description = await session.get('sessionDescription');
+    if (isEmpty(description)) {
+      return null;
+    }
+    return description.get('description');
   }),
   isOffering: notEmpty('event.offering'),
   taughtBy: computed('i18n.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
     if (isEmpty(instructors)) {
       return '';
-    } else {
-      return this.get('i18n').t('general.taughtBy', {instructors});
     }
+    return this.get('i18n').t('general.taughtBy', {instructors});
   }),
-  sessionIs: computed('session.sessionType', 'i18n.locale', function(){
-    return new Promise(resolve => {
-      const i18n = this.get('i18n');
-      this.get('session').then(session => {
-        session.get('sessionType').then(sessionType => {
-          resolve(i18n.t('general.sessionIs', {type: sessionType.get('title')}));
-        });
-      });
-    });
+  sessionIs: computed('session.sessionType', 'i18n.locale', async function(){
+    const i18n = this.get('i18n');
+    const session = await this.get('session');
+    const sessionType = await session.get('sessionType');
+    return i18n.t('general.sessionIs', { type: sessionType.get('title') });
   }),
-  offering: computed('event.offering', function(){
+  offering: computed('event.offering', async function(){
     const offeringId = this.get('event.offering');
     const store = this.get('store');
-    return new Promise(resolve => {
-      if(!offeringId){
-        resolve(null);
-      } else {
-        store.findRecord('offering', offeringId).then(offering => {
-          resolve(offering);
-        });
-      }
-    });
+    if(!offeringId){
+      return resolve(null);
+    }
+    return store.findRecord('offering', offeringId);
   }),
-  ilmSession: computed('event.ilmSession', function(){
+
+  ilmSession: computed('event.ilmSession', async function(){
     const ilmSessionId = this.get('event.ilmSession');
     const store = this.get('store');
-    return new Promise(resolve => {
-      if(!ilmSessionId){
-        resolve(null);
-      } else {
-        store.findRecord('ilm-session', ilmSessionId).then(ilmSession => {
-          resolve(ilmSession);
-        });
-      }
-    });
+    if(!ilmSessionId) {
+      resolve(null);
+    }
+    return await store.findRecord('ilm-session', ilmSessionId);
   }),
   courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', function(){
     const i18n = this.get('i18n');
@@ -217,38 +198,27 @@ export default Component.extend({
     });
   }),
 
-  course: computed('session.course', function(){
-    return new Promise(resolve => {
-      this.get('session').then(session=>{
-        session.get('course').then(course=>{
-          resolve(course);
-        });
-      });
-    });
+  course: computed('session.course', async function(){
+    const session = await this.get('session');
+    return await session.get('course');
   }),
-  sessionTitle: computed('session.title', 'isOffering', function(){
-    return new Promise(resolve => {
-      let prefix = this.get('isOffering')?'':'ILM: ';
-      this.get('session').then(session => {
-        resolve(prefix + session.get('title'));
-      });
-    });
+
+  sessionTitle: computed('session.title', 'isOffering', async function(){
+    let prefix = this.get('isOffering')?'':'ILM: ';
+    const session = await this.get('session');
+    return (prefix + session.get('title'));
   }),
-  session: computed('offering.session', 'ilmSession.session', function(){
+
+  session: computed('offering.session', 'ilmSession.session', async function(){
     const relationship = this.get('isOffering')?'offering':'ilmSession';
-    return new Promise(resolve => {
-      this.get(relationship).then(related => {
-        related.get('session').then(session=>{
-          resolve(session);
-        });
-      });
-    });
+    const related = await this.get(relationship);
+    return await related.get('session');
   }),
+
   recentlyUpdated: computed('lastModified', function(){
     const lastModifiedDate = moment(this.get('lastModified'));
     const today = moment();
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
-
-    return daysSinceLastUpdate < 6 ? true : false;
+    return daysSinceLastUpdate < 6;
   }),
 });
