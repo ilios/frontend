@@ -2,8 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/ilios-calendar';
 import moment from 'moment';
 
-const { Component, computed, RSVP, copy } = Ember;
-const { Promise } = RSVP;
+const { Component, computed, copy } = Ember;
 
 export default Component.extend({
   layout,
@@ -13,39 +12,33 @@ export default Component.extend({
   calendarEventsPromise: false,
   icsFeedUrl: null,
   showIcsFeed: false,
-  compiledCalendarEvents: computed('calendarEventsPromise.[]', 'selectedView', function(){
-    return new Promise(resolve => {
-      this.get('calendarEventsPromise').then(events => {
-        if(this.get('selectedView') === 'day'){
-          resolve(events);
-        } else {
-          let hashedEvents = {};
-
-          events.forEach(event => {
-            let hash = moment(event.startDate).format() +
-                       moment(event.endDate).format() +
-                       event.name;
-            if(!(hash in hashedEvents)){
-              hashedEvents[hash] = Ember.A();
-            }
-            //clone our event so we don't trample on the original when we change location
-            hashedEvents[hash].pushObject(copy(event));
-          });
-          let compiledEvents = Ember.A();
-          for(let hash in hashedEvents){
-            let arr = hashedEvents[hash];
-            let event = arr[0];
-            if(arr.length > 1){
-              event.isMulti = true;
-            }
-            compiledEvents.pushObject(event);
-
-          }
-
-          resolve(compiledEvents);
+  compiledCalendarEvents: computed('calendarEventsPromise.[]', 'selectedView', async function(){
+    const events = await this.get('calendarEventsPromise');
+    if(this.get('selectedView') === 'day'){
+      return events;
+    } else {
+      let hashedEvents = {};
+      events.forEach(event => {
+        let hash = moment(event.startDate).format() +
+          moment(event.endDate).format() +
+          event.name;
+        if (!(hash in hashedEvents)) {
+          hashedEvents[hash] = Ember.A();
         }
+        //clone our event so we don't trample on the original when we change location
+        hashedEvents[hash].pushObject(copy(event));
       });
-    });
+      let compiledEvents = Ember.A();
+      for (let hash in hashedEvents) {
+        let arr = hashedEvents[hash];
+        let event = arr[0];
+        if (arr.length > 1) {
+          event.isMulti = true;
+        }
+        compiledEvents.pushObject(event);
+      }
+      return compiledEvents;
+    }
   }),
   actions: {
     changeDate(newDate){
