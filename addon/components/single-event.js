@@ -13,7 +13,8 @@ export default Component.extend({
   i18n: service(),
   event: null,
   classNames: ['single-event'],
-  description: computed('session.description.description', async function(){
+
+  description: computed('session.session.description', async function(){
     const session = await this.get('session');
     const description = await session.get('sessionDescription');
     if (isEmpty(description)) {
@@ -21,7 +22,9 @@ export default Component.extend({
     }
     return description.get('description');
   }),
+
   isOffering: notEmpty('event.offering'),
+
   taughtBy: computed('i18n.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
     if (isEmpty(instructors)) {
@@ -29,19 +32,21 @@ export default Component.extend({
     }
     return this.get('i18n').t('general.taughtBy', {instructors});
   }),
+
   sessionIs: computed('session.sessionType', 'i18n.locale', async function(){
     const i18n = this.get('i18n');
     const session = await this.get('session');
     const sessionType = await session.get('sessionType');
     return i18n.t('general.sessionIs', { type: sessionType.get('title') });
   }),
+
   offering: computed('event.offering', async function(){
     const offeringId = this.get('event.offering');
     const store = this.get('store');
     if(!offeringId){
       return resolve(null);
     }
-    return store.findRecord('offering', offeringId);
+    return await store.findRecord('offering', offeringId);
   }),
 
   ilmSession: computed('event.ilmSession', async function(){
@@ -52,42 +57,30 @@ export default Component.extend({
     }
     return await store.findRecord('ilm-session', ilmSessionId);
   }),
-  courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', function(){
+  courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', async function(){
     const i18n = this.get('i18n');
-    return new Promise(resolve => {
-      this.get('course').then(course => {
-        course.get('sortedObjectives').then(objectives => {
-          map(objectives, objective => {
-            return new Promise(resolve => {
-              objective.get('topParents').then(parents => {
-                let parent = parents.get('firstObject');
-                parent.get('competency').then(competency => {
-                  //strip all HTML
-                  let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
-                  let position = objective.get('position');
-                  if(isEmpty(competency)){
-                    resolve({
-                      title,
-                      domain: i18n.t('general.noAssociatedCompetencies'),
-                      position
-                    });
-                  } else {
-                    competency.get('domain').then(domain => {
-                      resolve({
-                        title,
-                        domain: competency.get('title') + ' (' + domain.get('title') + ')',
-                        position
-                      });
-                    });
-                  }
-                });
-              });
-            });
-          }).then(mappedObjectives => {
-            resolve(mappedObjectives);
-          });
-        });
-      });
+    const course = await this.get('course');
+    const objectives = await course.get('sortedObjectives');
+    return await map(objectives, async objective => {
+      const parents = await objective.get('topParents');
+      const parent = parents.get('firstObject');
+      const competency = await parent.get('competency');
+      //strip all HTML
+      const title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
+      const position = objective.get('position');
+      if(isEmpty(competency)) {
+        return {
+          title,
+          domain: i18n.t('general.noAssociatedCompetencies'),
+          position
+        };
+      }
+      const domain = await competency.get('domain');
+      return {
+        title,
+        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+        position
+      };
     });
   }),
 
@@ -134,42 +127,30 @@ export default Component.extend({
     });
   }),
 
-  sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', function(){
+  sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', async function(){
     const i18n = this.get('i18n');
-    return new Promise(resolve => {
-      this.get('session').then(session => {
-        session.get('sortedObjectives').then(objectives => {
-          map(objectives, objective => {
-            return new Promise(resolve => {
-              objective.get('topParents').then(parents => {
-                let parent = parents.get('firstObject');
-                parent.get('competency').then(competency => {
-                  //strip all HTML
-                  let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
-                  let position = objective.get('position');
-                  if(isEmpty(competency)){
-                    resolve({
-                      title,
-                      domain: i18n.t('general.noAssociatedCompetencies'),
-                      position
-                    });
-                  } else {
-                    competency.get('domain').then(domain => {
-                      resolve({
-                        title,
-                        domain: competency.get('title') + ' (' + domain.get('title') + ')',
-                        position
-                      });
-                    });
-                  }
-                });
-              });
-            });
-          }).then(mappedObjectives => {
-            resolve(mappedObjectives);
-          });
-        });
-      });
+    const session = await this.get('session');
+    const objectives = await session.get('sortedObjectives');
+    return await map(objectives, async objective => {
+      const parents = await objective.get('topParents');
+      const parent =  parents.get('firstObject');
+      const competency = await parent.get('competency');
+      //strip all HTML
+      let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
+      let position = objective.get('position');
+      if(isEmpty(competency)) {
+        return {
+          title,
+          domain: i18n.t('general.noAssociatedCompetencies'),
+          position
+        };
+      }
+      const domain = await competency.get('domain');
+      return {
+        title,
+        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+        position
+      };
     });
   }),
 
@@ -210,7 +191,7 @@ export default Component.extend({
   }),
 
   session: computed('offering.session', 'ilmSession.session', async function(){
-    const relationship = this.get('isOffering')?'offering':'ilmSession';
+    const relationship = this.get('isOffering') ? 'offering' : 'ilmSession';
     const related = await this.get(relationship);
     return await related.get('session');
   }),
