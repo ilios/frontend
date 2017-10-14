@@ -5,7 +5,7 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
 const { service } = inject;
-const { all, map, Promise } = RSVP;
+const { map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -69,12 +69,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  academicYears: computed('allAcademicYears.[]', function(){
-    return new Promise(resolve => {
-      this.get('allAcademicYears').then(years => {
-        resolve(years.sortBy('title'));
-      });
-    });
+  academicYears: computed('allAcademicYears.[]', async function(){
+    const years = await this.get('allAcademicYears');
+    return years.sortBy('title');
   }),
 
   /**
@@ -91,8 +88,7 @@ export default Component.extend({
       if (isEmpty(displayTitle)) {
         const i18n = this.get('i18n');
         const classOfYear = await cohort.get('classOfYear');
-
-        displayTitle = i18n.t('general.classOf', {year: classOfYear});
+        displayTitle = i18n.t('general.classOf', { year: classOfYear });
       }
 
       return EmberObject.create({
@@ -101,10 +97,7 @@ export default Component.extend({
       });
     });
 
-    const sortedProxies = cohortProxies.sortBy('displayTitle');
-    const sortedCohorts = sortedProxies.mapBy('cohort');
-
-    return sortedCohorts;
+    return cohortProxies.sortBy('displayTitle').mapBy('cohort');
   }),
 
   /**
@@ -119,21 +112,16 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  courses: computed('bestSelectedSchool', 'bestSelectedAcademicYear', function(){
-    return new Promise(resolve => {
-      this.get('bestSelectedSchool').then(school => {
-        this.get('bestSelectedAcademicYear').then(year => {
-          this.get('store').query('course', {
-            filters: {
-              school: school.get('id'),
-              year: year.get('title')
-            },
-          }).then((courses) => {
-            resolve(courses.sortBy('title'));
-          });
-        });
-      });
+  courses: computed('bestSelectedSchool', 'bestSelectedAcademicYear', async function(){
+    const school = await this.get('bestSelectedSchool');
+    const year = await this.get('bestSelectedAcademicYear');
+    const courses = await this.get('store').query('course', {
+      filters: {
+        school: school.get('id'),
+        year: year.get('title')
+      },
     });
+    return courses.sortBy('title');
   }),
 
   /**
@@ -147,31 +135,22 @@ export default Component.extend({
     'eventsWithSelectedCourseLevels.[]',
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
-    function() {
-      return new Promise(resolve => {
-        let promises = [];
-        let eventTypes = [
-          'eventsWithSelectedSessionTypes',
-          'eventsWithSelectedCourseLevels',
-          'eventsWithSelectedCohorts',
-          'eventsWithSelectedCourses',
-        ];
-        let allFilteredEvents = [];
-        eventTypes.forEach(name => {
-          promises.pushObject(this.get(name).then(events => {
-            allFilteredEvents.pushObject(events);
-          }));
-        });
+    async function() {
+      const eventTypes = [
+        'eventsWithSelectedSessionTypes',
+        'eventsWithSelectedCourseLevels',
+        'eventsWithSelectedCohorts',
+        'eventsWithSelectedCourses',
+      ];
+      const allFilteredEvents = await map(eventTypes, async name => {
+        return await this.get(name);
+      });
 
-        all(promises).then(()=> {
-          this.get('ourEvents').then(events => {
-            let filteredEvents = events.filter(event => {
-              return allFilteredEvents.every(arr => {
-                return arr.includes(event);
-              });
-            });
-            resolve(filteredEvents);
-          });
+      const events = await this.get('ourEvents');
+
+      return events.filter(event => {
+        return allFilteredEvents.every(arr => {
+          return arr.includes(event);
         });
       });
     }
@@ -182,59 +161,48 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  filterTags: computed('activeFilters', {
-    get() {
-      const activeFilters = this.get('activeFilters');
+  filterTags: computed('activeFilters', async function() {
+    const activeFilters = this.get('activeFilters');
 
-      return activeFilters.map((filter) => {
-        let hash = {};
-        hash.filter = filter;
+    return map(activeFilters, async (filter) => {
+      let hash = {};
+      hash.filter = filter;
 
-        if (typeof filter === 'number') {
-          hash.class = 'tag-course-level';
-          hash.name = `Course Level ${filter}`;
-        } else {
-          let model = filter.get('constructor.modelName');
-
-          switch (model) {
-          case 'session-type':
-            hash.class = 'tag-session-type';
-            hash.name = new Promise(resolve => {
-              resolve(filter.get('title'));
-            });
-            break;
-          case 'cohort':
-            hash.class = 'tag-cohort';
-            hash.name = new Promise(resolve => {
-              let displayTitle = filter.get('title');
-              const i18n = this.get('i18n');
-              filter.get('classOfYear').then(classOfYear => {
-                if (isEmpty(displayTitle)) {
-                  displayTitle = i18n.t('general.classOf', {year: classOfYear});
-                }
-                filter.get('programYear.program').then(program => {
-                  resolve(`${displayTitle} ${program.get('title')}`);
-                });
-              });
-            });
-            break;
-          case 'course':
-            hash.class = 'tag-course';
-            hash.name = new Promise(resolve => {
-              resolve(filter.get('title'));
-            });
-            break;
+      if (typeof filter === 'number') {
+        hash.class = 'tag-course-level';
+        hash.name = `Course Level ${filter}`;
+      } else {
+        let model = filter.get('constructor.modelName');
+        switch (model) {
+        case 'session-type':
+          hash.class = 'tag-session-type';
+          hash.name = filter.get('title');
+          break;
+        case 'cohort': {
+          hash.class = 'tag-cohort';
+          let displayTitle = filter.get('title');
+          const i18n = this.get('i18n');
+          const classOfYear = await filter.get('classOfYear');
+          if (isEmpty(displayTitle)) {
+            displayTitle = i18n.t('general.classOf', {year: classOfYear});
           }
+          const program = await filter.get('programYear.program');
+          hash.name = `${displayTitle} ${program.get('title')}`;
+          break;
         }
-        return hash;
-      });
-    }
+        case 'course':
+          hash.class = 'tag-course';
+          hash.name = filter.get('title');
+          break;
+        }
+      }
+      return hash;
+    });
   }),
 
-  hasMoreThanOneSchool: computed('schools.[]', function() {
-    return this.get('schools').then(schools => {
-      return (schools.length > 1);
-    });
+  hasMoreThanOneSchool: computed('schools.[]', async function() {
+    const schools = await this.get('schools');
+    return (schools.length > 1);
   }),
 
   /**
@@ -242,19 +210,13 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  bestSelectedSchool: computed('selectedSchool', 'currentUser.model.school', function(){
+  bestSelectedSchool: computed('selectedSchool', 'currentUser.model.school', async function(){
     const selectedSchool = this.get('selectedSchool');
-    return new Promise(resolve => {
-      if (selectedSchool)  {
-        resolve(selectedSchool);
-      } else {
-        this.get('currentUser').get('model').then(user => {
-          user.get('school').then(school => {
-            resolve(school);
-          });
-        });
-      }
-    });
+    if (selectedSchool)  {
+      return selectedSchool;
+    }
+    const user = await this.get('currentUser').get('model');
+    return await user.get('school');
   }),
 
   /**
@@ -262,12 +224,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('allSchools.[]', function(){
-    return new Promise(resolve => {
-      this.get('allSchools').then(schools => {
-        resolve(schools.sortBy('title'));
-      });
-    });
+  schools: computed('allSchools.[]', async function(){
+    const schools = await this.get('allSchools');
+    return schools.sortBy('title');
   }),
 
   /**
@@ -275,18 +234,13 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  bestSelectedAcademicYear: computed('selectedAcademicYear', 'allAcademicYears.[]', function(){
+  bestSelectedAcademicYear: computed('selectedAcademicYear', 'allAcademicYears.[]', async function(){
     const selectedAcademicYear = this.get('selectedAcademicYear');
-    return new Promise(resolve => {
-      if (selectedAcademicYear)  {
-        resolve(selectedAcademicYear);
-      } else {
-        this.get('allAcademicYears').then(years => {
-          const year = years.sortBy('title').get('lastObject');
-          resolve(year);
-        });
-      }
-    });
+    if (selectedAcademicYear) {
+      return selectedAcademicYear;
+    }
+    const years = await this.get('allAcademicYears');
+    return years.sortBy('title').get('lastObject');
   }),
 
   /**
@@ -294,14 +248,10 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  sessionTypes: computed('bestSelectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', function(){
-    return new Promise(resolve => {
-      this.get('bestSelectedSchool').then(school => {
-        school.get('sessionTypes').then(types => {
-          resolve(types.sortBy('title'));
-        });
-      });
-    });
+  sessionTypes: computed('bestSelectedSchool.sessionTypes.[]', 'selectedSessionTypes.[]', async function(){
+    const school = await this.get('bestSelectedSchool');
+    const types = await school.get('sessionTypes');
+    return types.toArray().sortBy('title');
   }),
 
   /**
@@ -328,24 +278,12 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'bestSelectedSchool', 'selectedView', function(){
-    return new Promise(resolve => {
-      if(this.get('mySchedule')) {
-        this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp')).then(userEvents => {
-          resolve(userEvents);
-        });
-      } else {
-        this.get('bestSelectedSchool').then(school => {
-          this.get('schoolEvents').getEvents(
-            school.get('id'),
-            this.get('fromTimeStamp'),
-            this.get('toTimeStamp')
-          ).then(schoolEvents => {
-            resolve(schoolEvents);
-          });
-        });
-      }
-    });
+  ourEvents: computed('mySchedule', 'fromTimeStamp', 'toTimeStamp', 'bestSelectedSchool', 'selectedView', async function(){
+    if(this.get('mySchedule')) {
+      return await this.get('userEvents').getEvents(this.get('fromTimeStamp'), this.get('toTimeStamp'));
+    }
+    const school = await this.get('bestSelectedSchool');
+    return await this.get('schoolEvents').getEvents(school.get('id'), this.get('fromTimeStamp'), this.get('toTimeStamp'));
   }),
 
   /**
@@ -353,29 +291,24 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', function(){
-    return new Promise(resolve => {
-      this.get('ourEvents').then(events => {
-        let selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
-        if(selectedSessionTypes.length === 0) {
-          resolve(events);
-          return;
+  eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
+    if(isEmpty(selectedSessionTypes)) {
+      return events;
+    }
+    const matchingEvents = await map(events, async event => {
+      if(event.ilmSession || event.offering) {
+        const id = await this.get('userEvents').getSessionTypeIdForEvent(event);
+        if (selectedSessionTypes.includes(id)) {
+          return event;
         }
-        let matchingEvents = [];
-        let promises = [];
-        events.forEach(event => {
-          if (event.ilmSession || event.offering) {
-            promises.pushObject(this.get('userEvents').getSessionTypeIdForEvent(event).then(id => {
-              if (selectedSessionTypes.includes(id)) {
-                matchingEvents.pushObject(event);
-              }
-            }));
-          }
-        });
-        all(promises).then(()=> {
-          resolve(matchingEvents);
-        });
-      });
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
     });
   }),
 
@@ -384,29 +317,24 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  eventsWithSelectedCourseLevels: computed('ourEvents.[]', 'selectedCourseLevels.[]', function(){
-    return new Promise(resolve => {
-      this.get('ourEvents').then(events => {
-        let selectedCourseLevels = this.get('selectedCourseLevels');
-        if(selectedCourseLevels.length === 0) {
-          resolve(events);
-          return;
+  eventsWithSelectedCourseLevels: computed('ourEvents.[]', 'selectedCourseLevels.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedCourseLevels = this.get('selectedCourseLevels');
+    if(isEmpty(selectedCourseLevels)) {
+      return;
+    }
+    const matchingEvents = await map(events, async event => {
+      if(event.ilmSession || event.offering) {
+        const level = await this.get('userEvents').getCourseLevelForEvent(event);
+        if (selectedCourseLevels.includes(level)) {
+          return event;
         }
-        let matchingEvents = [];
-        let promises = [];
-        events.forEach(event => {
-          if (event.ilmSession || event.offering) {
-            promises.pushObject(this.get('userEvents').getCourseLevelForEvent(event).then(level => {
-              if (selectedCourseLevels.includes(level)) {
-                matchingEvents.pushObject(event);
-              }
-            }));
-          }
-        });
-        all(promises).then(()=> {
-          resolve(matchingEvents);
-        });
-      });
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
     });
   }),
 
@@ -415,31 +343,26 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  eventsWithSelectedCohorts: computed('ourEvents.[]', 'selectedCohorts.[]', function(){
-    return new Promise(resolve => {
-      this.get('ourEvents').then(events => {
-        let selectedCohorts = this.get('selectedCohorts').mapBy('id');
-        if(selectedCohorts.length === 0) {
-          resolve(events);
-          return;
+  eventsWithSelectedCohorts: computed('ourEvents.[]', 'selectedCohorts.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedCohorts = this.get('selectedCohorts').mapBy('id');
+    if(isEmpty(selectedCohorts)) {
+      return events;
+    }
+    const matchingEvents = await map(events, async event => {
+      if (event.ilmSession || event.offering) {
+        const cohorts = await this.get('userEvents').getCohortIdsForEvent(event);
+        if(cohorts.any(cohortId => {
+          return selectedCohorts.includes(cohortId);
+        })) {
+          return event;
         }
-        let matchingEvents = [];
-        let promises = [];
-        events.forEach(event => {
-          if (event.ilmSession || event.offering) {
-            promises.pushObject(this.get('userEvents').getCohortIdsForEvent(event).then(cohorts => {
-              if (cohorts.any(cohortId => {
-                return selectedCohorts.includes(cohortId);
-              })) {
-                matchingEvents.pushObject(event);
-              }
-            }));
-          }
-        });
-        all(promises).then(()=> {
-          resolve(matchingEvents);
-        });
-      });
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
     });
   }),
 
@@ -448,29 +371,25 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', function(){
-    return new Promise(resolve => {
-      let selectedCourses = this.get('selectedCourses').mapBy('id');
-      this.get('ourEvents').then(events => {
-        if(selectedCourses.length === 0) {
-          resolve(events);
-          return;
+  eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedCourses = this.get('selectedCourses').mapBy('id');
+    if(isEmpty(selectedCourses)) {
+      return events;
+    }
+
+    const matchingEvents = await map(events, async event => {
+      if(event.ilmSession || event.offering) {
+        const courseId = await this.get('userEvents').getCourseIdForEvent(event);
+        if(selectedCourses.includes(courseId)) {
+          return event;
         }
-        let matchingEvents = [];
-        let promises = [];
-        events.forEach(event => {
-          if (event.ilmSession || event.offering) {
-            promises.pushObject(this.get('userEvents').getCourseIdForEvent(event).then(courseId => {
-              if (selectedCourses.includes(courseId)) {
-                matchingEvents.pushObject(event);
-              }
-            }));
-          }
-        });
-        all(promises).then(()=> {
-          resolve(matchingEvents);
-        });
-      });
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
     });
   }),
 
@@ -479,14 +398,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  allSchools: computed(function(){
-    return new Promise(resolve => {
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          resolve(schools);
-        });
-      });
-    });
+  allSchools: computed(async function(){
+    const user = await this.get('currentUser.model');
+    return await user.get('schools');
   }),
 
   /**
