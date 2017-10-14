@@ -23,12 +23,12 @@ export default Component.extend({
           moment(event.endDate).format() +
           event.name;
         if (!(hash in hashedEvents)) {
-          hashedEvents[hash] = Ember.A();
+          hashedEvents[hash] = [];
         }
         //clone our event so we don't trample on the original when we change location
         hashedEvents[hash].pushObject(copy(event));
       });
-      let compiledEvents = Ember.A();
+      let compiledEvents = [];
       for (let hash in hashedEvents) {
         let arr = hashedEvents[hash];
         let event = arr[0];
