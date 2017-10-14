@@ -9,7 +9,7 @@ export default Component.extend({
   classNames: ['ilios-calendar'],
   selectedView: null,
   selectedDate: null,
-  calendarEventsPromise: false,
+  calendarEventsPromise: null,
   icsFeedUrl: null,
   showIcsFeed: false,
   compiledCalendarEvents: computed('calendarEventsPromise.[]', 'selectedView', async function(){
