@@ -14,7 +14,7 @@ export default Component.extend({
   event: null,
   classNames: ['single-event'],
 
-  description: computed('session.session.description', async function(){
+  description: computed('session.sessionDescription.description', async function(){
     const session = await this.get('session');
     const description = await session.get('sessionDescription');
     if (isEmpty(description)) {
