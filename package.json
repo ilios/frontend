@@ -107,6 +107,7 @@
   },
   "ember-addon": {
     "paths": [
+      "lib/ilios-loading",
       "lib/ilios-prerender"
     ]
   },
