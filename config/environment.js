@@ -1,6 +1,7 @@
 /* eslint-env node */
 'use strict';
 const API_VERSION = require('./api-version.js');
+require('dotenv').config('../.env');
 
 module.exports = function(environment) {
   let ENV = {
