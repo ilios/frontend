@@ -2858,7 +2858,7 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-dotenv@^1.0.0, dotenv@^1.2.0:
+dotenv@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-1.2.0.tgz#7cd73e16e07f057c8072147a5bc3a8677f0ab5c6"
 
@@ -3131,13 +3131,6 @@ ember-cli-document-title@0.3.3:
   resolved "https://registry.yarnpkg.com/ember-cli-document-title/-/ember-cli-document-title-0.3.3.tgz#0441d64e3ab7a64b220f8c54a144ab927d6138af"
   dependencies:
     ember-cli-babel "^5.1.6"
-
-ember-cli-dotenv@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-dotenv/-/ember-cli-dotenv-1.2.0.tgz#11aab75ee3d98305799778dad58072fca97c57f1"
-  dependencies:
-    dotenv "^1.0.0"
-    exists-sync "0.0.3"
 
 ember-cli-eslint@^4.1.0:
   version "4.2.1"

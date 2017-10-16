@@ -37,7 +37,6 @@
     "ember-cli-deploy-s3-index": "1.0.0",
     "ember-cli-deprecation-workflow": "0.2.3",
     "ember-cli-document-title": "0.3.3",
-    "ember-cli-dotenv": "1.2.0",
     "ember-cli-eslint": "^4.1.0",
     "ember-cli-flash": "1.5.0",
     "ember-cli-head": "0.4.0",
