@@ -6,10 +6,12 @@ const inflector = Ember.Inflector.inflector;
 inflector.irregular('vocabulary', 'vocabularies');
 
 const { computed } =  Ember;
-const { filterBy } = computed;
 
 export default DS.Model.extend(CategorizableModel, {
   title: DS.attr('string'),
   school: DS.belongsTo('school', {async: true}),
-  topLevelTerms: filterBy('terms', 'isTopLevel', true)
+  topLevelTerms: computed('terms.[]', async function() {
+    const terms = await this.get('terms');
+    return terms.toArray().filterBy('isTopLevel');
+  })
 });
