@@ -12,10 +12,10 @@
   {{/simple-chart}}
 
 {{else}}
-    <div class='with-hours'>
-      <p>{{t 'general.objectivesWithNoLink'}}</p>
-      <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
-    </div>
+  <div class='with-hours'>
+    <p>{{t 'general.objectivesWithNoLink'}}</p>
+    <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
+  </div>
 {{/if}}
 
 {{#unless (or icon (eq (get (await objectiveWithoutMinutes) 'length') 0))}}
