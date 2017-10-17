@@ -22,4 +22,8 @@
     </div>
   {{/if}}
 </div>
-<h1>{{title}}</h1>
+{{#if currentlyLoading}}
+  {{pulse-loader}}
+{{else}}
+  <h1>{{title}}</h1>
+{{/if}}

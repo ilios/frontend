@@ -37,6 +37,21 @@
     }
   }
 
+  .pulse-loader {
+    margin: 0;
+    padding-left: 1em;
+
+    svg {
+      height: $header-height;
+      opacity: .75;
+      width: 1.35 * $header-height;
+
+      path {
+        stroke: $white;
+      }
+    }
+  }
+
   // Elements on the far right
   .tools {
     background: transparent;

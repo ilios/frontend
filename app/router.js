@@ -60,7 +60,6 @@ Router.map(function() {
   this.route('instructorGroup', { path: 'instructorgroups/:instructor_group_id'});
 
   this.route("testModels");
-  this.route("loading");
   this.route('programs');
   this.route('learnerGroup', { path: 'learnergroups/:learner_group_id'});
   this.route('learnerGroups', { path: 'learnergroups'});

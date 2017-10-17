@@ -6,7 +6,7 @@
   {{update-notification}}
 {{/service-worker-update-notify}}
 {{#if showHeader}}
-  {{ilios-header title=translatedTitle}}
+  {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
 {{/if}}
 {{#if session.isAuthenticated}}
   {{#if showNavigation}}
