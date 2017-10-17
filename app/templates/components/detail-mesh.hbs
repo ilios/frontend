@@ -24,10 +24,10 @@
       remove='removeTermFromBuffer'
     }}
   {{else}}
-  <ul class='columnar-list'>
-    {{#each sortedTerms as |term|}}
-      <li>{{term.name}}</li>
-    {{/each}}
-  </ul>
+    <ul class='columnar-list'>
+      {{#each sortedTerms as |term|}}
+        <li>{{term.name}}</li>
+      {{/each}}
+    </ul>
   {{/if}}
 </div>
