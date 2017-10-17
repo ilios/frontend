@@ -30,4 +30,20 @@
       opacity: 0;
     }
   }
+
+  .offering-calendar-filter-options {
+    @include fill-parent;
+    text-align: left;
+
+    .filter {
+      display: block;
+      margin-bottom: 1em;
+      width: 100%;
+
+      label {
+        @include ilios-label;
+        cursor: pointer;
+      }
+    }
+  }
 }

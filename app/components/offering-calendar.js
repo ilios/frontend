@@ -14,6 +14,8 @@ export default Component.extend({
   learnerGroups: null,
   startDate: null,
   endDate: null,
+  showLearnerGroupEvents: true,
+  showSessionEvents: true,
   learnerGroupEvents: computed('learnerGroups.[]', async function () {
     const learnerGroups = this.get('learnerGroups');
     if (!learnerGroups) {
@@ -93,26 +95,41 @@ export default Component.extend({
     };
   }),
 
-  calendarEvents: computed('learnerGroupEvents.[]', 'sessionEvents.[]', 'currentEvent', async function(){
-    const learnerGroupEvents = await this.get('learnerGroupEvents');
-    const sessionEvents = await this.get('sessionEvents');
-    const currentEvent = await this.get('currentEvent');
-    if(!currentEvent) {
-      return [];
+  calendarEvents: computed(
+    'learnerGroupEvents.[]',
+    'sessionEvents.[]',
+    'currentEvent',
+    'showLearnerGroupEvents',
+    'showSessionEvents',
+    async function () {
+      const currentEvent = await this.get('currentEvent');
+      const showLearnerGroupEvents = await this.get('showLearnerGroupEvents');
+      const showSessionEvents = await this.get('showSessionEvents');
+      if(!currentEvent) {
+        return [];
+      }
+      let events = [];
+      if (showLearnerGroupEvents) {
+        const learnerGroupEvents = await this.get('learnerGroupEvents');
+        events.pushObjects(learnerGroupEvents);
+      }
+      if (showSessionEvents) {
+        const sessionEvents = await this.get('sessionEvents');
+        events.pushObjects(sessionEvents);
+      }
+      const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
+      let filteredEvents = events.filter(event => {
+        if(!event) {
+          return false;
+        }
+        const eventIdentifier = event.name + event.startDate + event.endDate;
+        if(eventIdentifier === currentEventIdentifier) {
+          return false;
+        }
+        return true;
+      });
+      filteredEvents.pushObject(currentEvent);
+      return filteredEvents;
     }
-    const events = [].concat(learnerGroupEvents, sessionEvents);
-    const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
-    let filteredEvents = events.filter(event => {
-      if(!event) {
-        return false;
-      }
-      const eventIdentifier = event.name + event.startDate + event.endDate;
-      if(eventIdentifier === currentEventIdentifier) {
-        return false;
-      }
-      return true;
-    });
-    filteredEvents.pushObject(currentEvent);
-    return filteredEvents;
-  }),
+  ),
 });
