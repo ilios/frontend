@@ -107,7 +107,8 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/ilios-prerender"
+      "lib/ilios-error",
+      "lib/ilios-loading"
     ]
   },
   "greenkeeper": {
