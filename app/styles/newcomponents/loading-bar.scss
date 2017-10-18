@@ -4,6 +4,11 @@
   text-align: left;
   width: 100%;
 
+  @include media($giant-screen) {
+    // get out of the way of the navigation block on huge screens
+    padding-left: 180px;
+  }
+
   .bar {
     background-color: $ilios-blue;
     border: 0;
