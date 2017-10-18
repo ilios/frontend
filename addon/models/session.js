@@ -7,7 +7,7 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 
 const { computed, isEmpty, isPresent, RSVP } = Ember;
-const { alias, mapBy, notEmpty, sum } = computed;
+const { alias, mapBy, sum } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all, Promise } = RSVP;
 
@@ -30,10 +30,13 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     async: true,
     inverse: 'administeredSessions'
   }),
-  isIndependentLearning: notEmpty('ilmSession.content'),
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
+
+  isIndependentLearning: computed('ilmSession', function(){
+    return !isEmpty(this.belongsTo('ilmSession').id());
+  }),
 
   /**
    * All offerings for this session, sorted by offering startdate in ascending order.
