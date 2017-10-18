@@ -12,7 +12,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     this.controllerFor('application').set('showHeader', false);
     this.controllerFor('application').set('showNavigation', false);
   },
-  // only allow priviligeds users to view unpublished courses
+  // only allow privileged users to view unpublished courses
   afterModel(course, transition){
     if (course.get('isPublishedOrScheduled')) {
       return this.preloadCourseData(course);

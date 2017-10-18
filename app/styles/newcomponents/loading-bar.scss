@@ -1,0 +1,28 @@
+.loading-bar {
+  height: .5em;
+  margin-bottom: .25em;
+  text-align: left;
+  width: 100%;
+
+  .bar {
+    background-color: $ilios-blue;
+    border: 0;
+    border-bottom-right-radius: 20px;
+    border-right-color: $ilios-blue;
+    border-top-right-radius: 20px;
+
+    display: block;
+    height: 100%;
+    opacity: .75;
+    transition: width .25s linear;
+
+    &[value='0'] {
+      opacity: 0;
+      transition: none;
+    }
+
+    &[value='100'] {
+      transition: none;
+    }
+  }
+}

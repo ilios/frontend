@@ -47,6 +47,13 @@ export default Route.extend(ApplicationRouteMixin, {
       let controller = this.controllerFor('application');
       controller.set('errors', []);
       controller.set('showErrorDisplay', false);
+    },
+    loading(transition) {
+      let controller = this.controllerFor('application');
+      controller.set('currentlyLoading', true);
+      transition.promise.finally(() => {
+        controller.set('currentlyLoading', false);
+      });
     }
   }
 });

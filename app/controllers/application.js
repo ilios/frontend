@@ -14,6 +14,8 @@ export default Controller.extend({
   showNavigation: true,
   titleTokenKeys: null,
 
+  currentlyLoading: false,
+
   init() {
     this._super(...arguments);
 
