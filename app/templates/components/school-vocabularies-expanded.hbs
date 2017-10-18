@@ -6,19 +6,19 @@
     {{school-vocabulary-term-manager
       vocabulary=managedVocabulary
       term=managedTerm
-      manageTerm=this.attrs.setSchoolManagedVocabularyTerm
-      manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      manageTerm=setSchoolManagedVocabularyTerm
+      manageVocabulary=setSchoolManagedVocabulary
     }}
   {{else if managedVocabularyId}}
     {{school-vocabulary-manager
       vocabulary=managedVocabulary
-      manageTerm=this.attrs.setSchoolManagedVocabularyTerm
-      manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      manageTerm=setSchoolManagedVocabularyTerm
+      manageVocabulary=setSchoolManagedVocabulary
     }}
   {{else}}
     {{school-vocabularies-list
       school=school
-      manageVocabulary=this.attrs.setSchoolManagedVocabulary
+      manageVocabulary=setSchoolManagedVocabulary
     }}
   {{/if}}
 </div>

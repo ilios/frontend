@@ -2,14 +2,14 @@
   <div class='hierarchical-list'>
     {{competency-title-editor competency=obj.domain}}
     {{#if (eq obj.competencies.length 0)}}
-      {{fa-icon 'trash' class='remove clickable' click=(action this.attrs.remove obj.domain)}}
+      {{fa-icon 'trash' class='remove clickable' click=(action remove obj.domain)}}
     {{/if}}
     <ul>
       {{#each obj.competencies as |competency|}}
         <li>
           {{competency-title-editor competency=competency}}
           {{#if (eq competency.objectives.length 0)}}
-            {{fa-icon 'trash' class='remove clickable' click=(action this.attrs.remove competency)}}
+            {{fa-icon 'trash' class='remove clickable' click=(action remove competency)}}
           {{else}}
             ({{competency.objectives.length}})
           {{/if}}

@@ -27,8 +27,8 @@
               session=session
               showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
               remove=(action 'confirmRemoval')
-              manageParents=this.attrs.manageParents
-              manageDescriptors=this.attrs.manageDescriptors
+              manageParents=manageParents
+              manageDescriptors=manageDescriptors
             }}
             {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
               <tr class='confirm-removal'>

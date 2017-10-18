@@ -1,4 +1,4 @@
-<div class='title'  {{action (action this.attrs.expand)}}>
+<div class='title'  {{action (action expand)}}>
   {{t 'general.objectives'}} ({{get (await objectives) 'length'}})
 </div>
 {{#if (and (is-fulfilled objectives) (is-fulfilled objectivesWithMesh) (is-fulfilled objectivesWithParents))}}
