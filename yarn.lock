@@ -3119,14 +3119,13 @@ ember-cli-deploy@1.0.1:
     rsvp "^3.3.3"
     silent-error "^1.0.0"
 
-ember-cli-deprecation-workflow@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-0.2.3.tgz#c8cb7aa029f2d30ca24143138f4664964108c5da"
+ember-cli-deprecation-workflow@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-0.2.4.tgz#33b18a006ae9dc91b1ad1b544261a55353eeffcf"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-kitchen-sink-helpers "^0.3.1"
     broccoli-merge-trees "^1.1.1"
-    ember-cli-babel "^5.1.5"
     ember-debug-handlers-polyfill "^1.0.2"
     quick-temp "^0.1.5"
     rimraf "^2.5.2"
