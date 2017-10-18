@@ -332,12 +332,13 @@ test('check sortTitle on sub group', function(assert) {
 
   run(() => {
     learnerGroup.set('title', 'top group');
+    learnerGroup.set('id', 1);
     return learnerGroup.get('allDescendants').then(groups => {
       assert.equal(groups.length, 0);
 
-      let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
-      let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
-      let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
+      let subGroup1 = store.createRecord('learner-group', {id: 2, parent: learnerGroup, title: 'subGroup1'});
+      let subGroup2 = store.createRecord('learner-group', {id: 3, parent: subGroup1, title: 'subGroup2'});
+      let subGroup3 = store.createRecord('learner-group', {id: 4, parent: subGroup2, title: 'subGroup3'});
 
       let sortTitle = subGroup3.get('sortTitle');
       assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');

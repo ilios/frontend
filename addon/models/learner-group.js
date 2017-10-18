@@ -174,7 +174,7 @@ export default DS.Model.extend({
   }),
   allParentTitles: computed('parent.{title,allParentTitles}', function(){
     let titles = [];
-    if(this.get('parent.content')){
+    if(!this.get('isTopLevelGroup')){
       if(this.get('parent.allParentTitles')){
         titles.pushObjects(this.get('parent.allParentTitles'));
       }
