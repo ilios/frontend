@@ -202,3 +202,15 @@ test('check learner groups count', function(assert) {
     assert.equal(session.get('learnerGroupCount'), 5);
   });
 });
+
+test('isIndependentLearning', function(assert) {
+  assert.expect(2);
+  const model = this.subject();
+  const store = model.store;
+  run(() => {
+    assert.notOk(model.get('isIndependentLearning'));
+    const ilmSession = store.createRecord('ilmSession', { id: 1 });
+    model.set('ilmSession', ilmSession);
+    assert.ok(model.get('isIndependentLearning'));
+  });
+});

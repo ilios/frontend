@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed, RSVP } =  Ember;
-const { empty, notEmpty, collect, sum, gte } = computed;
+const { computed, isEmpty, RSVP } =  Ember;
+const { collect, sum, gte } = computed;
 const { Promise } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
 
@@ -12,16 +12,21 @@ export default Model.extend({
   vocabulary: belongsTo('vocabulary', {async: true}),
   parent: belongsTo('term', { inverse: 'children', async: true }),
   children: hasMany('term', { inverse: 'parent', async: true }),
-  isTopLevel: empty('parent.content'),
   programYears: hasMany('programYear', { async: true }),
   sessions: hasMany('session', { async: true }),
   courses: hasMany('course', { async: true }),
   aamcResourceTypes: hasMany('aamcResourceType', { async: true }),
-  hasChildren: notEmpty('children.content'),
   associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
 
+  isTopLevel: computed('parent', function() {
+    return isEmpty(this.belongsTo('parent').id());
+  }),
+
+  hasChildren: computed('children', function() {
+    return (this.hasMany('children').ids().length > 0);
+  }),
 
   /**
    * A list of parent terms of this term, sorted by ancestry (oldest ancestor first).
