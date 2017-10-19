@@ -10,6 +10,7 @@ export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
   i18n: service(),
   moment: service(),
+  currentUser: service(),
 
   /**
   * Leave titles as an array
@@ -40,6 +41,18 @@ export default Route.extend(ApplicationRouteMixin, {
     const i18n = this.get('i18n');
     const moment = this.get('moment');
     moment.setLocale(i18n.get('locale'));
+  },
+
+  /**
+   * Preload the user model and the users roles
+   * This makes the initial page rendering (especially the navigation) much smoother
+   */
+  async afterModel() {
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
+    if (user) {
+      await user.get('roles');
+    }
   },
 
   actions: {
