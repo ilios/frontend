@@ -8,7 +8,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import moment from 'moment';
 import { task } from 'ember-concurrency';
 
-const { mapBy, sort } = computed;
+const { mapBy } = computed;
 const { Promise, hash } = RSVP;
 
 export default Component.extend({
@@ -18,13 +18,20 @@ export default Component.extend({
   currentUser: service(),
 
   program: null,
-  programYears: [],
+  programYears: null,
 
-  sortBy: ['academicYear'],
-  sortedContent: sort('programYears', 'sortBy'),
-  proxiedProgramYears: computed('sortedContent.[]', function(){
+  sortedContent: computed('programYears.[]', async function() {
+    const programYears = await this.get('programYears');
+    if (isEmpty(programYears)) {
+      return [];
+    }
+    return programYears.toArray().sortBy('academicYear');
+  }),
+
+  proxiedProgramYears: computed('sortedContent.[]', async function(){
     const currentUser = this.get('currentUser');
-    return this.get('sortedContent').map(programYear => {
+    const programYears = await this.get('sortedContent');
+    return programYears.map(programYear => {
       return ProgramYearProxy.create({
         content: programYear,
         currentUser
@@ -68,7 +75,8 @@ export default Component.extend({
   },
 
   save: task(function * (startYear){
-    const latestProgramYear = this.get('sortedContent').get('lastObject');
+    const programYears = yield this.get('sortedContent');
+    const latestProgramYear = programYears.get('lastObject');
     const program = this.get('program');
     const store = this.get('store');
     let itemsToSave = 0;

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 const { all, Promise } = RSVP;
 
@@ -34,7 +35,7 @@ export default Component.extend({
    * @type {Array}
    * @public
    */
-  terms: [],
+  terms: null,
 
   /**
    * A sorted list of the filtered terms.
@@ -76,6 +77,9 @@ export default Component.extend({
    */
   filteredTerms: computed('terms.[]', 'vocabulary', function () {
     let terms = this.get('terms');
+    if (isEmpty(terms)) {
+      return [];
+    }
     let vocab = this.get('vocabulary');
     let filteredTerms = [];
     terms.forEach((term) => {

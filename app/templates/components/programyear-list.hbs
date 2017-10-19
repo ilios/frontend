@@ -20,7 +20,7 @@
     {{/if}}
   </section>
   <div class='list'>
-    {{#if sortedContent.length}}
+    {{#if (get (await sortedContent) 'length')}}
       <table>
         <thead>
           <tr>
@@ -34,7 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each proxiedProgramYears as |programYearProxy|}}
+          {{#each (await proxiedProgramYears) as |programYearProxy|}}
             {{#unless programYearProxy.archived}}
               <tr class="{{if programYearProxy.showRemoveConfirmation 'confirm-removal'}}">
                 <td class='text-left'>

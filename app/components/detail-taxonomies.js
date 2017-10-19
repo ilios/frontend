@@ -7,12 +7,17 @@ export default Component.extend({
   i18n: service(),
   flashMessages: service(),
   subject: null,
-  bufferedTerms: [],
+  bufferedTerms: null,
   tagName: 'section',
   classNameBindings: [':detail-taxonomies', ':taxonomy-manager', 'showCollapsible:collapsible'],
   isManaging: false,
   isSaving: false,
   editable: true,
+
+  init(){
+    this._super(...arguments);
+    this.set('bufferedTerms', []);
+  },
 
   showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
     const isManaging = this.get('isManaging');
