@@ -26,7 +26,9 @@
     remove='removeTermFromBuffer'}}
   {{else}}
     {{#each (await subject.associatedVocabularies) as |vocab| }}
-      {{detail-terms-list vocabulary=vocab terms=subject.terms canEdit=false}}
+      {{#if vocab.termCount}}
+        {{detail-terms-list vocabulary=vocab terms=(await subject.terms) canEdit=false}}
+      {{/if}}
     {{/each}}
   {{/if}}
 </div>

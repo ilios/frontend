@@ -2,8 +2,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import RSVP from 'rsvp';
-const { Promise } = RSVP;
 const { sort } = computed;
 
 export default Component.extend({
@@ -46,25 +44,46 @@ export default Component.extend({
   sortedTerms: sort('selectedTerms', 'termsSorting'),
 
   /**
-   * The currently selected vocabulary, defaults to the first assignable vocabulary if no user selection was made.
+   * All assignable vocabularies, excluding those without any terms.
+   * @property filteredVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  filteredVocabularies: computed('subject.assignableVocabularies.[]', async function(){
+    const vocabularies = await this.get('subject.assignableVocabularies');
+    return vocabularies.toArray().filter(vocab => {
+      return (vocab.get('termCount') > 0);
+    });
+  }),
+
+  /**
+   * The currently selected vocabulary,
+   * defaults to the first assignable vocabulary with terms if no user selection was made.
    * @property selectedVocabulary
    * @type {Ember.computed}
    * @public
    */
-  selectedVocabulary: computed('subject.assignableVocabularies.[]', 'vocabId', function(){
-    return new Promise(resolve => {
-      this.get('subject.assignableVocabularies').then(vocabs => {
-        if(isPresent(this.get('vocabId'))){
-          let vocab = vocabs.find(v => {
-            return v.get('id') === this.get('vocabId');
-          });
-          if(vocab){
-            resolve(vocab);
-          }
-        }
-        resolve(vocabs.get('firstObject'));
+  selectedVocabulary: computed('filteredVocabularies.[]', 'vocabId', async function(){
+    const vocabs = await this.get('filteredVocabularies');
+    if(isPresent(this.get('vocabId'))){
+      let vocab = vocabs.find(v => {
+        return v.get('id') === this.get('vocabId');
       });
-    });
+      if(vocab){
+        return vocab;
+      }
+    }
+    return vocabs.get('firstObject');
+  }),
+
+  /**
+   * @property topLevelTerms
+   * @type {Ember.computed}
+   * @public
+   */
+  topLevelTerms: computed('selectedVocabulary', async function() {
+    const vocabulary = await this.get('selectedVocabulary');
+    return vocabulary.get('topLevelTerms');
   }),
 
   actions: {

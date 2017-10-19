@@ -1,6 +1,6 @@
-{{#if sortedInstructorGroups.length}}
+{{#if (get (await instructorGroups) 'length')}}
   <ul class='removable-list tag-list'>
-    {{#each sortedInstructorGroups as |instructorGroup|}}
+    {{#each (sort-by 'title' (await instructorGroups)) as |instructorGroup|}}
       <li {{action 'removeInstructorGroup' instructorGroup}}>
         {{fa-icon 'group'}} {{instructorGroup.title}} {{fa-icon 'times'}}
       </li>
@@ -8,9 +8,9 @@
   </ul>
 {{/if}}
 
-{{#if sortedInstructors.length}}
+{{#if (get (await instructors) 'length')}}
   <ul class='removable-list tag-list'>
-    {{#each sortedInstructors as |user|}}
+    {{#each (sort-by 'title' (await instructors)) as |user|}}
       <li {{action 'removeInstructor' user}}>
         {{user.fullName}} {{fa-icon 'times'}}
       </li>
