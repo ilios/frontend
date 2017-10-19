@@ -1,5 +1,5 @@
 <div class='breadcrumbs'>
-  <span {{action this.attrs.manageVocabulary null}}>{{t 'general.allVocabularies'}}</span>
+  <span {{action manageVocabulary null}}>{{t 'general.allVocabularies'}}</span>
   <span>{{vocabulary.title}}</span>
 </div><br>
 
@@ -22,7 +22,7 @@
 
 {{#each newTerms as |term|}}
   <div class='saved-result'>
-    <span class='clickable link' {{action this.attrs.manageTerm term.id}}>
+    <span class='clickable link' {{action manageTerm term.id}}>
       {{fa-icon 'external-link-square'}} {{term.title}}
     </span>
     {{t 'general.savedSuccessfully'}}
@@ -54,7 +54,7 @@
   {{#if (is-fulfilled sortedTerms)}}
     <ul>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+        <li {{action manageTerm term.id}}>{{term.title}}</li>
       {{/each}}
     </ul>
   {{else}}

@@ -1,4 +1,4 @@
-<div class='title'  {{action (action this.attrs.expand)}}>
+<div class='title'  {{action (action expand)}}>
   {{t 'general.competencies'}} ({{get (await subject.competencies) 'length'}})
 </div>
 {{#unless (is-fulfilled summary)}}

@@ -1,4 +1,4 @@
-<div class='title clickable'  {{action (action this.attrs.expand)}}>
+<div class='title clickable'  {{action (action expand)}}>
   {{t 'general.vocabularies'}} ({{get (await school.vocabularies) 'length'}})
 </div>
 {{#if (is-pending school.vocabularies)}}

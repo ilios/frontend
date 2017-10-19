@@ -40,7 +40,7 @@
           value=otherId
           update=(action (mut otherId))
           onenter=(perform save)
-          onescape=(action this.attrs.close)
+          onescape=(action close)
           focusOut=(action 'addErrorDisplayFor' 'otherId')
         }}
         {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
@@ -54,7 +54,7 @@
             value=username
             update=(action (mut username))
             onenter=(perform save)
-            onescape=(action this.attrs.close)
+            onescape=(action close)
             focusOut=(action 'addErrorDisplayFor' 'username')
           }}
           {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
@@ -72,7 +72,7 @@
             value=password
             update=(action (mut password))
             onenter=(perform save)
-            onescape=(action this.attrs.close)
+            onescape=(action close)
             focusOut=(action 'addErrorDisplayFor' 'password')
           }}
           {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}

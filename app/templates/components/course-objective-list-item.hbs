@@ -34,7 +34,7 @@
           <br>
         {{/if}}
         {{#if editable}}
-          <span class='clickable link' {{action this.attrs.manageParents objective}}>
+          <span class='clickable link' {{action manageParents objective}}>
             {{parent.textTitle}}
           </span>
         {{else}}
@@ -47,7 +47,7 @@
       {{/each}}
     {{else}}
       {{#if editable}}
-        <button {{action this.attrs.manageParents objective}}>{{t 'general.addNew'}}</button>
+        <button {{action manageParents objective}}>{{t 'general.addNew'}}</button>
       {{else}}
         {{t 'general.none'}}
       {{/if}}
@@ -58,7 +58,7 @@
       <ul>
         {{#each objective.meshDescriptors as |descriptor|}}
           {{#if editable}}
-            <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+            <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
           {{else}}
             <li>{{descriptor.name}}</li>
           {{/if}}
@@ -66,7 +66,7 @@
       </ul>
     {{else}}
       {{#if editable}}
-        <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+        <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
       {{else}}
         {{t 'general.none'}}
       {{/if}}
@@ -74,6 +74,6 @@
   </td>
   <td class='text-left text-top' colspan=1>
     {{#if editable}}
-      <span class='clickable remove' {{action this.attrs.remove objective}}>{{fa-icon 'trash'}}</span>
+      <span class='clickable remove' {{action remove objective}}>{{fa-icon 'trash'}}</span>
     {{/if}}
   </td>

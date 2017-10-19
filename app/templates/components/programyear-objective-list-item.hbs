@@ -22,7 +22,7 @@
 <td class='text-left text-top' colspan=2>
   {{#if (await objective.competency)}}
     {{#if editable}}
-      <span class='clickable link' {{action this.attrs.manageCompetency objective}}>
+      <span class='clickable link' {{action manageCompetency objective}}>
         {{get (await objective.competency) "title"}}
       </span>
     {{else}}
@@ -33,7 +33,7 @@
     {{/if}}
   {{else}}
     {{#if editable}}
-      <button {{action this.attrs.manageCompetency objective}}>{{t 'general.addNew'}}</button>
+      <button {{action manageCompetency objective}}>{{t 'general.addNew'}}</button>
     {{else}}
       {{t 'general.none'}}
     {{/if}}
@@ -44,7 +44,7 @@
     <ul>
       {{#each (await objective.meshDescriptors) as |descriptor|}}
         {{#if editable}}
-          <li class='clickable link' {{action this.attrs.manageDescriptors objective}}>{{descriptor.name}}</li>
+          <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
         {{else}}
           <li>{{descriptor.name}}</li>
         {{/if}}
@@ -52,7 +52,7 @@
     </ul>
   {{else}}
     {{#if editable}}
-      <button {{action this.attrs.manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+      <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
     {{else}}
       {{t 'general.none'}}
     {{/if}}

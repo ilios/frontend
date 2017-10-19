@@ -1,9 +1,9 @@
 {{#if (is-fulfilled allParents)}}
   <div class='breadcrumbs'>
     <span {{action 'clearVocabAndTerm'}}>{{t 'general.allVocabularies'}}</span>
-    <span {{action this.attrs.manageTerm null}}>{{vocabulary.title}}</span>
+    <span {{action manageTerm null}}>{{vocabulary.title}}</span>
     {{#each (await allParents) as |parent|}}
-      <span {{action this.attrs.manageTerm parent.id}}>{{parent.title}}</span>
+      <span {{action manageTerm parent.id}}>{{parent.title}}</span>
     {{/each}}
     <span>{{term.title}}</span>
   </div>
@@ -48,7 +48,7 @@
 {{/if}}
 {{#each newTerms as |term|}}
   <div class='saved-result'>
-    <span class='clickable link' {{action this.attrs.manageTerm term.id}}>
+    <span class='clickable link' {{action manageTerm term.id}}>
       {{fa-icon 'external-link-square'}} {{term.title}}
     </span>
     {{t 'general.savedSuccessfully'}}
@@ -79,7 +79,7 @@
   {{#if (is-fulfilled sortedTerms)}}
     <ul>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action this.attrs.manageTerm term.id}}>{{term.title}}</li>
+        <li {{action manageTerm term.id}}>{{term.title}}</li>
       {{/each}}
     </ul>
   {{else}}

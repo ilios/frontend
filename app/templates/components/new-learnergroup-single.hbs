@@ -5,7 +5,7 @@
       value=title
       update=(action (mut title))
       onenter=(action 'save')
-      onescape=(action this.attrs.cancel)
+      onescape=(action cancel)
       disabled=isSaving
       focusOut=(action 'addErrorDisplayFor' 'title')
       placeholder=(t 'general.learnerGroupTitlePlaceholder')
@@ -34,5 +34,5 @@
       {{t 'general.done'}}
     {{/if}}
   </button>
-  <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
+  <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
 </div>

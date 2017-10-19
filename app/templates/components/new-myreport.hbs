@@ -5,7 +5,7 @@
     {{one-way-input
       value=title
       update=(action (mut title))
-      onescape=(action this.attrs.close)
+      onescape=(action close)
       disabled=save.isRunning
       focusOut=(action 'addErrorDisplayFor' 'title')
       keyDown=(action 'addErrorDisplayFor' 'title')
@@ -112,6 +112,6 @@
         {{t 'general.save'}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action this.attrs.close}}>{{t 'general.cancel'}}</button>
+    <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
   </div>
 </div>

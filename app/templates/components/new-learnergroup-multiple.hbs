@@ -10,7 +10,7 @@
         value=numSubGroups
         update=(action (mut numSubGroups))
         onenter=(action 'save')
-        onescape=(action this.attrs.cancel)
+        onescape=(action cancel)
         disabled=isSaving
         focusOut=(action 'addErrorDisplayFor' 'numSubGroups')
         placeholder=(t 'general.numberOfGroupsToGenerate')
@@ -22,6 +22,6 @@
   </label>
   <div class="form-col-6 form-data-submit">
     <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-    <button class='cancel text' {{action this.attrs.cancel}}>{{t 'general.cancel'}}</button>
+    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
   </div>
 {{/if}}
