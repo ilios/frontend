@@ -318,6 +318,41 @@ test('gets all learner ilm courses', async function(assert) {
   });
 });
 
+test('isStudent - no roles', async function(assert){
+  assert.expect(1);
+  let model = this.subject();
+  run( async () => {
+    let isStudent = await model.get('isStudent');
+    assert.notOk(isStudent);
+  });
+});
+
+test('isStudent - roles, but no student role', async function(assert){
+  assert.expect(1);
+  let model = this.subject();
+  let store = this.store();
+  run( async () => {
+    const notAStudentRole = store.createRecord('user-role', { title: 'East-German Pie Eating Champion of 1997' });
+    const notAStudentRoleEither = store.createRecord('user-role', { title: 'Alien Overlord' });
+    model.get('roles').pushObjects([ notAStudentRole, notAStudentRoleEither ]);
+    const isStudent = await model.get('isStudent');
+    assert.notOk(isStudent);
+  });
+});
+
+test('isStudent - has student role', async function(assert){
+  assert.expect(1);
+  let model = this.subject();
+  let store = this.store();
+  run( async () => {
+    const notAStudentRole = store.createRecord('user-role', { title: 'Non-student' });
+    const studentRole = store.createRecord('user-role', { title: 'Student' });
+    model.get('roles').pushObjects([ notAStudentRole, studentRole ]);
+    const isStudent = await model.get('isStudent');
+    assert.ok(isStudent);
+  });
+});
+
 test('gets all instructor ilm courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
@@ -348,101 +383,97 @@ test('gets all instructor ilm courses', async function(assert) {
   });
 });
 
-test('find lowest group at top of tree', function(assert) {
-  let model = this.subject();
-  let store = this.store();
-  Ember.run(()=>{
-    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
-    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
-    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
-    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+test('find lowest group at top of tree', async function(assert) {
+  assert.expect(2);
+  const model = this.subject();
+  const store = this.store();
+  run( async ()=>{
+    const learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [ model ]});
+    const learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
+    const learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    const tree = [ learnerGroup, learnerGroup2, learnerGroup3 ];
+    model.get('learnerGroups').pushObject(learnerGroup);
 
-    model.set('learerGroups', [learnerGroup]);
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
-    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
-      assert.ok(lowestGroup);
-      assert.equal(lowestGroup.get('id'), learnerGroup.get('id'));
-    });
+    assert.ok(lowestGroup);
+    assert.equal(lowestGroup.get('id'), learnerGroup.get('id'));
   });
-
 });
 
-test('find lowest group in middle of tree', function(assert) {
-  let model = this.subject();
-  let store = this.store();
-  Ember.run(()=>{
-    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
-    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [model]});
-    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
-    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+test('find lowest group in middle of tree', async function(assert) {
+  assert.expect(2);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [ model ]});
+    const learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [ model ]});
+    const learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    const tree = [ learnerGroup, learnerGroup2, learnerGroup3 ];
+    model.get('learnerGroups').pushObjects([ learnerGroup, learnerGroup2 ]);
 
-    model.set('learerGroups', [learnerGroup, learnerGroup2]);
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
-    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
-      assert.ok(lowestGroup);
-      assert.equal(lowestGroup.get('id'), learnerGroup2.get('id'));
-    });
+    assert.ok(lowestGroup);
+    assert.equal(lowestGroup.get('id'), learnerGroup2.get('id'));
   });
-
 });
 
-test('find lowest group in bottom of tree', function(assert) {
-  let model = this.subject();
-  let store = this.store();
-  Ember.run(()=>{
-    let learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [model]});
-    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [model]});
-    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2, users: [model]});
-    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+test('find lowest group in bottom of tree', async function(assert) {
+  assert.expect(2);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const learnerGroup = store.createRecord('learnerGroup', {id: 1, users: [ model ]});
+    const learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup, users: [ model ]});
+    const learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2, users: [ model ]});
+    const tree = [ learnerGroup, learnerGroup2, learnerGroup3 ];
+    model.get('learnerGroups').pushObjects([ learnerGroup, learnerGroup2, learnerGroup3 ]);
 
-    model.set('learerGroups', [learnerGroup, learnerGroup2, learnerGroup3]);
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
-    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
-      assert.ok(lowestGroup);
-      assert.equal(lowestGroup.get('id'), learnerGroup3.get('id'));
-    });
+    assert.ok(lowestGroup);
+    assert.equal(lowestGroup.get('id'), learnerGroup3.get('id'));
   });
-
 });
 
-test('return null when there is no group in the tree', function(assert) {
-  let model = this.subject();
-  let store = this.store();
-  Ember.run(()=>{
-    let learnerGroup = store.createRecord('learnerGroup', {id: 1});
-    let learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
-    let learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
-    let tree = [learnerGroup, learnerGroup2, learnerGroup3];
+test('return null when there is no group in the tree', async function(assert) {
+  assert.expect(1);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const learnerGroup = store.createRecord('learnerGroup', {id: 1});
+    const learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
+    const learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
+    const tree = [ learnerGroup, learnerGroup2, learnerGroup3 ];
 
-    model.getLowestMemberGroupInALearnerGroupTree(tree).then(lowestGroup => {
-      assert.ok(lowestGroup == null);
-    });
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
+    assert.ok(lowestGroup === null);
   });
-
 });
 
-test('gets secondary cohorts (all cohorts not the primary cohort)', function(assert) {
-  let model = this.subject();
-  let store = this.store();
-  Ember.run(()=>{
-    let primaryCohort = store.createRecord('cohort', {
+test('gets secondary cohorts (all cohorts not the primary cohort)', async function(assert) {
+  assert.expect(4);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const primaryCohort = store.createRecord('cohort', {
       users: [model]
     });
-    let secondaryCohort = store.createRecord('cohort', {
+    const secondaryCohort = store.createRecord('cohort', {
       users: [model]
     });
-    let anotherCohort = store.createRecord('cohort', {
+    const anotherCohort = store.createRecord('cohort', {
       users: [model]
     });
     model.set('primaryCohort', primaryCohort);
-    model.set('cohorts', [primaryCohort, secondaryCohort, anotherCohort]);
+    model.get('cohorts').pushObjects([ primaryCohort, secondaryCohort, anotherCohort ]);
 
-    model.get('secondaryCohorts').then(cohorts => {
-      assert.equal(cohorts.length, 2);
-      assert.ok(cohorts.includes(secondaryCohort));
-      assert.ok(cohorts.includes(anotherCohort));
-      assert.notOk(cohorts.includes(primaryCohort));
-    });
+    const cohorts = await model.get('secondaryCohorts');
+    assert.equal(cohorts.length, 2);
+    assert.ok(cohorts.includes(secondaryCohort));
+    assert.ok(cohorts.includes(anotherCohort));
+    assert.notOk(cohorts.includes(primaryCohort));
   });
 });
 
