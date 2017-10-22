@@ -5,7 +5,7 @@ import moment from 'moment';
 import wait from 'ember-test-helpers/wait';
 
 const { Object: EmberObject, RSVP, Service } = Ember;
-const { Promise, resolve } = RSVP;
+const { resolve } = RSVP;
 
 let ourEvent;
 let course;
@@ -18,7 +18,6 @@ let sessionLearningMaterials;
 moduleForComponent('single-event', 'Integration | Component | ilios calendar single event', {
   integration: true,
   beforeEach() {
-    window.Promise = Promise;
     const now = moment().hour(8).minute(0).second(0);
     course = EmberObject.create({
       id: 1,

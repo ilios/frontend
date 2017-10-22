@@ -2,7 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 
-const {RSVP} = Ember;
+const { RSVP } = Ember;
+const { resolve } = RSVP;
 
 moduleForComponent('ilios-calendar', 'Integration | Component | ilios calendar', {
   integration: true
@@ -10,7 +11,7 @@ moduleForComponent('ilios-calendar', 'Integration | Component | ilios calendar',
 
 test('it renders', function(assert) {
   assert.expect(1);
-  let events = RSVP.resolve([]);
+  let events = resolve([]);
   this.set('events', events);
   let date = new Date('2015-09-30T12:00:00');
   this.set('date', date);
