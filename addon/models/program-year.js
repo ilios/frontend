@@ -4,10 +4,8 @@ import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-
-const { computed, RSVP } = Ember;
+const { computed } = Ember;
 const { alias } = computed;
-const { Promise } = RSVP;
 
 export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   startYear: DS.attr('string'),
@@ -45,12 +43,10 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
    * A list of program-year objectives, sorted by position and title.
    * @property sortedObjectives
    * @type {Ember.computed}
+   * @public
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.positionSortingCallback));
-      });
-    });
+  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
+    const objectives = await this.get('objectives');
+    return objectives.toArray().sort(this.positionSortingCallback);
   })
 });
