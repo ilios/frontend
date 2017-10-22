@@ -5,18 +5,19 @@ import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { computed } = Ember;
+const { attr, belongsTo, hasMany, Model } = DS;
 const { alias } = computed;
 
-export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
-  startYear: DS.attr('string'),
-  locked: DS.attr('boolean'),
-  archived: DS.attr('boolean'),
-  program: DS.belongsTo('program', {async: true}),
-  cohort: DS.belongsTo('cohort', {async: true}),
-  directors: DS.hasMany('user', {async: true}),
-  competencies: DS.hasMany('competency', {async: true}),
-  objectives: DS.hasMany('objective', {async: true}),
-  stewards: DS.hasMany('program-year-steward', {async: true}),
+export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
+  startYear: attr('string'),
+  locked: attr('boolean'),
+  archived: attr('boolean'),
+  program: belongsTo('program', {async: true}),
+  cohort: belongsTo('cohort', {async: true}),
+  directors: hasMany('user', {async: true}),
+  competencies: hasMany('competency', {async: true}),
+  objectives: hasMany('objective', {async: true}),
+  stewards: hasMany('program-year-steward', {async: true}),
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
   }),
