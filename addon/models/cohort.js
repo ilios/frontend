@@ -28,8 +28,8 @@ export default Model.extend({
     return learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
   }),
 
-  currentLevel: computed('programYear.startYear', function(){
-    var startYear = this.get('programYear.startYear');
+  currentLevel: computed('programYear.startYear', async function(){
+    const startYear = await this.get('programYear.startYear');
     if(startYear){
       return Math.abs(moment().year(startYear).diff(moment(), 'years'));
     }
