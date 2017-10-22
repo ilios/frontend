@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, PromiseProxyMixin, Object:EmberObject, RSVP } = Ember;
+const { computed, RSVP } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
-const { all, map, Promise } = RSVP;
-
-const ProxyContent = EmberObject.extend(PromiseProxyMixin);
+const { all, map } = RSVP;
 
 export default Model.extend({
   lastName: attr('string'),
@@ -80,16 +78,6 @@ export default Model.extend({
     inverse: 'directors'
   }),
 
-  isStudent: computed('roles', function() {
-    const isStudent = this.get('roles').then((roles) => {
-      return !!roles.find((role) => role.get('title') === 'Student');
-    });
-
-    return ProxyContent.create({
-      promise: isStudent
-    });
-  }),
-
   cohorts: hasMany('cohort', {
     async: true,
     inverse: 'users'
@@ -97,6 +85,18 @@ export default Model.extend({
   primaryCohort: belongsTo('cohort', {async: true}),
   pendingUserUpdates: hasMany('pending-user-update', {async: true}),
   permissions: hasMany('permission', {async: true}),
+
+  /**
+   * Resolves to TRUE if this user has the "Student" role, otherwise FALSE.
+   * @property isStudent
+   * @type {Ember.computed}
+   * @public
+   */
+  isStudent: computed('roles.[]', async function() {
+    const roles = await this.get('roles');
+    return !!roles.toArray().findBy('title', 'Student');
+  }),
+
   /**
    * All schools that this user is associated with directly.
    * This includes the user's school affiliation, as well as any additional schools that
@@ -195,38 +195,30 @@ export default Model.extend({
     return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
   }),
   /**
-   * Compare a users learner groups to a list of learner groups and find the one
-   * that is the lowest leaf in the learner group tree
-   * @property summary
+   * Compare a user's learner groups to a list of learner groups and find the one
+   * that is the lowest leaf in the learner group tree.
+   * @property getLowestMemberGroupInALearnerGroupTree
    * @param {Array} learnerGroupTree all the groups we want to look into
+   * @return {Object|null} The learner-group model or NULL if none could be found.
    * @type function
    * @public
    */
-  getLowestMemberGroupInALearnerGroupTree(learnerGroupTree){
-    const user = this;
-    return new Promise(resolve => {
-      user.get('learnerGroups').then(userGroups => {
-        //all the groups a user is in that are in our current learner groups tree
-        let relevantGroups = userGroups.filter(group => learnerGroupTree.includes(group));
-        let relevantGroupIds = relevantGroups.mapBy('id');
-        let lowestGroup = relevantGroups.find( group => {
-          let childIds = group.hasMany('children').ids();
-          let childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.includes(id));
-          return childGroupsWhoAreUserGroupMembers.length === 0;
-        });
-
-        resolve(lowestGroup?lowestGroup:null);
-      });
-
+  async getLowestMemberGroupInALearnerGroupTree(learnerGroupTree){
+    const learnerGroups = await this.get('learnerGroups');
+    //all the groups a user is in that are in our current learner groups tree
+    let relevantGroups = learnerGroups.toArray().filter(group => learnerGroupTree.includes(group));
+    let relevantGroupIds = relevantGroups.mapBy('id');
+    let lowestGroup = relevantGroups.find(group => {
+      const childIds = group.hasMany('children').ids();
+      const childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.includes(id));
+      return (childGroupsWhoAreUserGroupMembers.length === 0);
     });
+    return (lowestGroup ? lowestGroup : null);
   },
-  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', function(){
-    return new Promise(resolve => {
-      this.get('cohorts').then((cohorts) => {
-        this.get('primaryCohort').then((primaryCohort) => {
-          resolve(cohorts.filter(cohort => cohort !== primaryCohort));
-        });
-      });
-    });
+
+  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function(){
+    const cohorts = await this.get('cohorts');
+    const primaryCohort = await this.get('primaryCohort');
+    return cohorts.toArray().filter(cohort => cohort !== primaryCohort);
   })
 });
