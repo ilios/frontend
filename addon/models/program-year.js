@@ -20,10 +20,10 @@ export default DS.Model.extend(PublishableModel, CategorizableModel, SortableByP
   objectives: DS.hasMany('objective', {async: true}),
   stewards: DS.hasMany('program-year-steward', {async: true}),
   academicYear: computed('startYear', function(){
-    return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'))+1);
+    return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
   }),
   classOfYear: computed('startYear', 'program.duration', function(){
-    return (parseInt(this.get('startYear'))+parseInt(this.get('program.duration')));
+    return (parseInt(this.get('startYear'), 10) + parseInt(this.get('program.duration'), 10));
   }),
   requiredPublicationIssues: computed('startYear', 'cohort', 'program', function(){
     return this.getRequiredPublicationIssues();
