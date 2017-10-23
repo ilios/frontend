@@ -26,17 +26,19 @@ export default Component.extend({
   }),
 
   actions: {
-    manage(){
-      this.attrs.expand();
+    manage() {
+      const expand = this.get('expand');
+      expand();
       this.get('subject.terms').then(terms => {
         this.set('bufferedTerms', terms.toArray());
         this.set('isManaging', true);
       });
     },
     collapse(){
+      const collapse = this.get('collapse');
       this.get('subject.terms').then(terms => {
         if (terms.get('length')) {
-          this.attrs.collapse();
+          collapse();
         }
       });
     },

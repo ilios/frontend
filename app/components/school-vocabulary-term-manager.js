@@ -116,9 +116,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     deleteTerm(){
       const term = this.get('term');
+      const manageTerm = this.get('manageTerm');
       term.get('parent').then(parent => {
         let goTo = isEmpty(parent)?null:parent.get('id');
-        this.attrs.manageTerm(goTo);
+        manageTerm(goTo);
         term.deleteRecord();
         term.save().then(() => {
           this.get('flashMessages').success('general.successfullyRemovedTerm');
@@ -127,8 +128,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     },
     clearVocabAndTerm(){
-      this.attrs.manageVocabulary(null);
-      this.attrs.manageTerm(null);
+      const manageVocabulary = this.get('manageVocabulary');
+      const manageTerm = this.get('manageTerm');
+      manageVocabulary(null);
+      manageTerm(null);
     }
   }
 });

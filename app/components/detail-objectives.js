@@ -175,15 +175,17 @@ export default Component.extend({
       });
     },
     toggleNewObjectiveEditor() {
+      const expand = this.get('expand');
       //force expand the objective component
       //otherwise adding the first new objective will cause it to close
-      this.attrs.expand();
+      expand();
       this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
     },
-    collapse(){
+    collapse() {
+      const collapse = this.get('collapse');
       this.get('objectives').then(objectives => {
         if(objectives.length){
-          this.attrs.collapse();
+          collapse();
         }
       });
     },
