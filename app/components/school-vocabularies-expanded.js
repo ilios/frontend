@@ -48,16 +48,20 @@ export default Component.extend({
   },
   actions: {
     collapse(){
+      const collapse = this.get('collapse');
+      const setSchoolManagedVocabulary = this.get('setSchoolManagedVocabulary');
+      const setSchoolManagedVocabularyTerm = this.get('setSchoolManagedVocabularyTerm');
       this.get('school.vocabularies').then(vocabularies => {
         if(vocabularies.get('length')){
-          this.attrs.collapse();
-          this.attrs.setSchoolManagedVocabulary(null);
-          this.attrs.setSchoolManagedVocabularyTerm(null);
+          collapse();
+          setSchoolManagedVocabulary(null);
+          setSchoolManagedVocabularyTerm(null);
         }
       });
     },
     cancel(){
-      this.attrs.setSchoolManagedVocabulary(null);
+      const setSchoolManagedVocabulary = this.get('setSchoolManagedVocabulary');
+      setSchoolManagedVocabulary(null);
       this.set('bufferedTerms', []);
     },
   }

@@ -26,8 +26,9 @@ export default Component.extend({
   actions: {
     collapse(){
       this.get('course.competencies').then(competencies => {
+        const collapse = this.get('collapse');
         if (competencies.length) {
-          this.attrs.collapse();
+          collapse();
         }
       });
     },

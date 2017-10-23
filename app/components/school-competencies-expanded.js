@@ -47,9 +47,10 @@ export default Component.extend({
   },
   actions: {
     collapse(){
+      const collapse = this.get('collapse');
       this.get('school.competencies').then(competencies => {
         if(competencies.length){
-          this.attrs.collapse();
+          collapse();
         }
       });
     },
@@ -107,13 +108,15 @@ export default Component.extend({
       });
     },
     cancel(){
+      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
       this.set('bufferedCompetencies', []);
-      this.attrs.setSchoolManageCompetencies(false);
+      setSchoolManageCompetencies(false);
     },
     manage(){
+      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
       this.get('school.competencies').then(competencies => {
         this.set('bufferedCompetencies', competencies.toArray());
-        this.attrs.setSchoolManageCompetencies(true);
+        setSchoolManageCompetencies(true);
       });
     }
   }
