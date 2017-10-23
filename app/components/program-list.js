@@ -4,13 +4,12 @@ import ObjectProxy from '@ember/object/proxy';
 
 const ProgramProxy = ObjectProxy.extend({
   showRemoveConfirmation: false,
-  hasCurriculumInventoryReports: computed('content.curriculumInventoryReports.[]', function(){
-    return (this.get('content').hasMany('curriculumInventoryReports').ids().length > 0);
-  }),
-  hasProgramYears: computed('content.programYears.[]', function(){
-    return (this.get('content').hasMany('programYears').ids().length > 0);
+  isDeletable: computed('content.curriculumInventoryReports.[]', 'content.programYears.[]', function(){
+    return (this.get('content').hasMany('curriculumInventoryReports').ids().length === 0)
+      && (this.get('content').hasMany('programYears').ids().length === 0);
   })
 });
+
 
 export default Component.extend({
   programs: null,
