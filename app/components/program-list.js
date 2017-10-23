@@ -8,7 +8,7 @@ const ProgramProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  programs: [],
+  programs: null,
   proxiedPrograms: computed('programs.[]', function(){
     const programs = this.get('programs');
     if (!programs) {
