@@ -21,9 +21,11 @@
           {{#link-to 'program' program class='edit'}}
             {{fa-icon 'edit'}}
           {{/link-to}}
-          {{#unless (or program.hasCurriculumInventoryReports program.hasProgramYears)}}
+          {{#if (or program.hasCurriculumInventoryReports program.hasProgramYears)}}
+            {{fa-icon 'trash' class='disabled'}}
+          {{else}}
             <span class='clickable remove' {{action 'confirmRemove' program}}>{{fa-icon 'trash'}}</span>
-          {{/unless}}
+          {{/if}}
         </td>
       </tr>
       {{#if program.showRemoveConfirmation}}
