@@ -2,6 +2,11 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 
+const ProgramProxy = ObjectProxy.extend({
+  content: null,
+  showRemoveConfirmation: false
+});
+
 export default Component.extend({
   programs: [],
   proxiedPrograms: computed('programs.[]', function(){
@@ -10,9 +15,8 @@ export default Component.extend({
       return [];
     }
     return programs.map(program => {
-      return ObjectProxy.create({
+      return ProgramProxy.create({
         content: program,
-        showRemoveConfirmation: false
       });
     });
   }),
