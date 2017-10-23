@@ -3063,9 +3063,9 @@ ember-cli-deploy-display-revisions@1.0.0:
     moment "^2.18.0"
     rsvp "^3.5.0"
 
-ember-cli-deploy-json-config@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-json-config/-/ember-cli-deploy-json-config-1.0.0.tgz#10a39c5a03800624da91ec29dd49f59d77c7112f"
+ember-cli-deploy-json-config@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-json-config/-/ember-cli-deploy-json-config-1.0.1.tgz#ef1df38eaef4c96b5bcd5e93aabc3f304095bd04"
   dependencies:
     chalk "^1.0.0"
     cheerio "^0.22.0"
