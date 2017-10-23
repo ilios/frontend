@@ -87,7 +87,7 @@ export default {
     'confirmRemoveCourse': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',
     'confirmRemoveInstructorGroup': 'Are you sure you want to delete this instructor group, with {{instructorCount}} instructors and {{courseCount}} courses? This action cannot be undone.',
     'confirmRemoveLearnerGroup': 'Are you sure you want to delete this learner group, with {{subgroupCount}} subgroups? This action cannot be undone.',
-    'confirmRemoveProgram': 'Are you sure you want to delete this program, with {{programYearCount}} program years and {{courseCount}} courses? This action will remove all courses and activities related to this program, and cannot be undone.',
+    'confirmRemoveProgram': 'Are you sure you want to delete this program? This action cannot be undone.',
     'confirmRemoveProgramYear': 'Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {{courseCount}} course(s), and cannot be undone.',
     'confirmSessionRemoval': 'Are you sure you want to delete this session?',
     'confirmVocabularyRemoval': 'Are you sure you want to delete this vocabulary?',
