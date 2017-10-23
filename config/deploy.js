@@ -28,6 +28,28 @@ module.exports = function(deployTarget) {
       objectPaths(context){
         return `/${context.archiveName}`;
       },
+    },
+    'json-config': {
+      jsonBlueprint(context, pluginHelper) {
+        var jsonBlueprint = pluginHelper.readConfigDefault('jsonBlueprint');
+        jsonBlueprint.style = {
+          selector: 'style',
+          attributes: ['type'],
+          includeContent: true,
+        };
+        jsonBlueprint.noScript = {
+          selector: 'noscript',
+          attributes: false,
+          includeHtmlContent: true,
+        };
+        jsonBlueprint.div = {
+          selector: '[data-deploy]',
+          attributes: ['id', 'class'],
+          includeHtmlContent: true,
+        };
+
+        return jsonBlueprint;
+      }
     }
   };
 
