@@ -1,9 +1,17 @@
 /* eslint-env node */
 'use strict';
-const API_VERSION = require('./api-version.js');
-require('dotenv').config('../.env');
+const existsSync = require('exists-sync');
+const dotenv = require('dotenv');
+const path = require('path');
+const dotEnvPath = path.join(__dirname, '../.env');
+if (existsSync(dotEnvPath)) {
+  dotenv.config({ path: dotEnvPath });
+}
 
-module.exports = function(environment) {
+const API_VERSION = require('./api-version.js');
+
+module.exports = function (environment) {
+
   let ENV = {
     modulePrefix: 'ilios',
     environment,
