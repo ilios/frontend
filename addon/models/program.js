@@ -4,7 +4,7 @@ import PublishableModel from 'ilios-common/mixins/publishable-model';
 
 const { computed, RSVP } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
-const { all, Promise} = RSVP;
+const { all } = RSVP;
 
 export default Model.extend(PublishableModel,{
   title: attr('string'),
@@ -15,37 +15,23 @@ export default Model.extend(PublishableModel,{
   directors: hasMany('user', { async: true, inverse: 'directedPrograms' }),
   curriculumInventoryReports: hasMany('curriculum-inventory-report', {async: true}),
 
+  hasCurriculumInventoryReports: computed('curriculumInventoryReports.[]', function(){
+    return (this.hasMany('curriculumInventoryReports').ids().length > 0);
+  }),
+
+  hasProgramYears: computed('programYears.[]', function(){
+    return (this.hasMany('programYears').ids().length > 0);
+  }),
+
   /**
    * All cohorts associated with this program via its program years.
    * @property cohorts
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('programYears.[]', function() {
-    return new Promise(resolve => {
-      let allCohorts = [];
-      let promises = [];
-      promises.pushObject(new Promise(resolve => {
-        this.get('programYears').then(programYears => {
-          if(!programYears.length){
-            resolve();
-          }
-          let promises2 = [];
-          programYears.forEach(programYear => {
-            promises2.pushObject(programYear.get('cohort').then(cohort =>{
-              allCohorts.pushObject(cohort);
-            }));
-          });
-          all(promises2).then(()=>{
-            resolve();
-          });
-        });
-      }));
-
-      all(promises).then(()=>{
-        resolve(allCohorts);
-      });
-    });
+  cohorts: computed('programYears.[]', async function() {
+    const programYears = await this.get('programYears');
+    return all(programYears.toArray().mapBy('cohort'));
   }),
 
   /**
@@ -54,33 +40,13 @@ export default Model.extend(PublishableModel,{
    * @type {Ember.computed}
    * @public
    */
-  courses: computed('cohorts.[]', function() {
-    return new Promise(resolve => {
-      let allCourses = [];
-      let promises = [];
-      promises.pushObject(new Promise(resolve => {
-        this.get('cohorts').then(cohorts => {
-          if(!cohorts.length){
-            resolve();
-          }
-          let promises2 = [];
-          cohorts.forEach(cohort => {
-            promises2.pushObject(cohort.get('courses').then(courses =>{
-              courses.forEach(course => {
-                allCourses.pushObject(course);
-              });
-            }));
-          });
-          all(promises2).then(()=>{
-            resolve();
-          });
-        });
-      }));
-
-      all(promises).then(()=>{
-        resolve(allCourses.uniq());
-      });
-    });
+  courses: computed('cohorts.[]', async function() {
+    const cohorts = await this.get('cohorts');
+    const courses = await all(cohorts.mapBy('courses'));
+    return courses.reduce((array, set) => {
+      array.pushObjects(set.toArray());
+      return array;
+    }, []).uniq();
   }),
 
   requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
