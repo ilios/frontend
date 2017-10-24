@@ -1,9 +1,8 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
-// import Ember from 'ember';
+import Ember from 'ember';
+
+const { run } = Ember;
 
 moduleForModel('program', 'Unit | Model | Program', {
   needs: modelList
@@ -13,6 +12,68 @@ test('it exists', function(assert) {
   let model = this.subject();
   // let store = this.store();
   assert.ok(!!model);
+});
+
+test('hasCurriculumInventoryReports', function(assert){
+  assert.expect(2);
+  const model = this.subject();
+  const store = this.store();
+  run(() => {
+    assert.notOk(model.get('hasCurriculumInventoryReports'));
+    const report = store.createRecord('curriculum-inventory-report', { id: 1 });
+    model.get('curriculumInventoryReports').pushObject(report);
+    assert.ok(model.get('hasCurriculumInventoryReports'));
+  });
+});
+
+test('hasProgramYears', function(assert){
+  assert.expect(2);
+  const model = this.subject();
+  const store = this.store();
+  run(() => {
+    assert.notOk(model.get('hasProgramYears'));
+    const report = store.createRecord('program-year', { id: 1 });
+    model.get('programYears').pushObject(report);
+    assert.ok(model.get('hasProgramYears'));
+  });
+});
+
+test('cohorts', async function(assert){
+  assert.expect(3);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const cohort1 = store.createRecord('cohort', { id: 1 });
+    const programYear1 = store.createRecord('program-year', { id: 1, cohort: cohort1 });
+    const cohort2 = store.createRecord('cohort', { id: 2 });
+    const programYear2 = store.createRecord('program-year', { id: 2, cohort: cohort2 });
+    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const cohorts = await model.get('cohorts');
+    assert.equal(cohorts.length, 2);
+    assert.ok(cohorts.includes(cohort1));
+    assert.ok(cohorts.includes(cohort2));
+  });
+});
+
+test('courses', async function(assert){
+  assert.expect(4);
+  const model = this.subject();
+  const store = this.store();
+  run( async () => {
+    const course1 = store.createRecord('course', { id: 1 });
+    const course2 = store.createRecord('course', { id: 2 });
+    const course3 = store.createRecord('course', { id: 3 });
+    const cohort1 = store.createRecord('cohort', { id: 1, courses: [ course1, course2 ] });
+    const programYear1 = store.createRecord('program-year', { id: 1, cohort: cohort1 });
+    const cohort2 = store.createRecord('cohort', { id: 2, courses: [ course1, course3 ]});
+    const programYear2 = store.createRecord('program-year', { id: 2, cohort: cohort2 });
+    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const courses = await model.get('courses');
+    assert.equal(courses.length, 3);
+    assert.ok(courses.includes(course1));
+    assert.ok(courses.includes(course2));
+    assert.ok(courses.includes(course3));
+  });
 });
 
 //
