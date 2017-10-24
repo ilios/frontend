@@ -3,22 +3,17 @@ import DS from 'ember-data';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 
 const { computed, RSVP } = Ember;
+const { attr, belongsTo, hasMany, Model } = DS;
 const { all, Promise} = RSVP;
 
-export default DS.Model.extend(PublishableModel,{
-  title: DS.attr('string'),
-  shortTitle: DS.attr('string'),
-  duration: DS.attr('number', { defaultValue: 1 }),
-  school: DS.belongsTo('school', {async: true}),
-  programYears: DS.hasMany('program-year', {
-    async: true,
-    inverse: 'program'
-  }),
-  directors: DS.hasMany('user', {
-    async: true,
-    inverse: 'directedPrograms'
-  }),
-  curriculumInventoryReports: DS.hasMany('curriculum-inventory-report', {async: true}),
+export default Model.extend(PublishableModel,{
+  title: attr('string'),
+  shortTitle: attr('string'),
+  duration: attr('number', { defaultValue: 1 }),
+  school: belongsTo('school', {async: true}),
+  programYears: hasMany('program-year', { async: true, inverse: 'program' }),
+  directors: hasMany('user', { async: true, inverse: 'directedPrograms' }),
+  curriculumInventoryReports: hasMany('curriculum-inventory-report', {async: true}),
 
   /**
    * All cohorts associated with this program via its program years.
