@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed, RSVP } = Ember;
-const { Promise, all } = RSVP;
+const { hasMany } = DS;
+const { computed, Mixin, RSVP } = Ember;
+const { all } = RSVP;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   /**
    * Associated taxonomy terms.
@@ -12,7 +13,7 @@ export default Ember.Mixin.create({
    * @type {Ember.computed}
    * @public
    */
-  terms: DS.hasMany('term', {async: true}),
+  terms: hasMany('term', {async: true}),
 
   /**
    * A list of all vocabularies that are associated via terms.
@@ -20,34 +21,25 @@ export default Ember.Mixin.create({
    * @type {Ember.computed}
    * @public
    */
-  associatedVocabularies: computed('terms.@each.vocabulary', function () {
-    return new Promise(resolve => {
-      this.get('terms').then(terms => {
-        all(terms.mapBy('vocabulary')).then(vocabs => {
-          let v = [].concat.apply([], vocabs);
-          v = v ? v.uniq().sortBy('title') : [];
-          resolve(v);
-        });
-      });
-    });
+  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
+    const terms = await this.get('terms');
+    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
+    return vocabularies.uniq().sortBy('title');
   }),
 
   /**
-   * A list containing all associated terms, plus all parents/superior parents to those nodes.
+   * A list containing all associated terms and their parent terms.
    * @property termsWithAllParents
    * @type {Ember.computed}
    * @public
    */
-  termsWithAllParents: computed('terms.[]', function () {
-    return new Promise(resolve => {
-      this.get('terms').then(terms => {
-        all(terms.mapBy('termWithAllParents')).then(parentTerms => {
-          let t = [].concat.apply([], parentTerms);
-          t = t ? t.uniq() : [];
-          resolve(t);
-        });
-      });
-    });
+  termsWithAllParents: computed('terms.[]', async function () {
+    const terms = await this.get('terms');
+    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
+    return (allTerms.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, [])).uniq();
   }),
 
   /**
