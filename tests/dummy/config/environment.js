@@ -1,6 +1,14 @@
 /* eslint-env node */
 'use strict';
 
+const existsSync = require('exists-sync');
+const dotenv = require('dotenv');
+const path = require('path');
+const dotEnvPath = path.join(__dirname, '../../../.env');
+if (existsSync(dotEnvPath)) {
+  dotenv.config({ path: dotEnvPath });
+}
+
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'dummy',
