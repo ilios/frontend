@@ -41,9 +41,9 @@ export default Model.extend({
     }
 
     const terms = [];
-    terms.pushObject(parentTerm);
     const allParents = await parentTerm.get('allParents');
     terms.pushObjects(allParents);
+    terms.pushObject(parentTerm);
     return terms;
   }),
 
