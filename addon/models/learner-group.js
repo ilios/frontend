@@ -254,7 +254,7 @@ export default Model.extend({
   hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
     return new Promise(resolve => {
       const userIds = this.hasMany('users').ids();
-      if (userIlength) {
+      if (userIds.length) {
         resolve(true);
       }
       this.get('children').then(children => {
