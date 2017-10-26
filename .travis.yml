@@ -47,7 +47,7 @@ jobs:
     - stage: test
       env: PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
     - stage: deploy staging
-      if: branch = master AND NOT type = pull_request
+      if: branch = master AND NOT type = pull_request AND NOT type = cron
       script: node_modules/.bin/ember deploy staging --activate
     - stage: deploy production
       if: tag IS present
