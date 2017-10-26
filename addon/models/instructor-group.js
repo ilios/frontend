@@ -1,16 +1,18 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+const { attr, belongsTo, hasMany, Model } = DS;
 const { RSVP, computed } = Ember;
 const { Promise, map } = RSVP;
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  school: DS.belongsTo('school', {async: true}),
-  learnerGroups: DS.hasMany('learner-group', {async: true}),
-  ilmSessions: DS.hasMany('ilm-session', {async: true}),
-  users: DS.hasMany('user', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
+export default Model.extend({
+  title: attr('string'),
+  school: belongsTo('school', {async: true}),
+  learnerGroups: hasMany('learner-group', {async: true}),
+  ilmSessions: hasMany('ilm-session', {async: true}),
+  users: hasMany('user', {async: true}),
+  offerings: hasMany('offering', {async: true}),
+
   coursesFromOfferings: computed('offerings.[]', function(){
     return new Promise(resolve => {
       this.get('offerings').then(offerings => {
