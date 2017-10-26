@@ -51,10 +51,6 @@ export default Model.extend({
     return courses.uniq();
   }),
 
-  usersCount: computed('users.length', 'childUsersTotal', 'childrenUsersTotal', function(){
-    return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
-  }),
-
   /**
    * Get the offset for numbering generated subgroups.
    *
