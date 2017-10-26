@@ -1,21 +1,22 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP } = Ember;
 const { Promise, all } = RSVP;
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  description: DS.attr('string'),
-  year: DS.attr('string'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  absoluteFileUri: DS.attr('string'),
-  export: DS.belongsTo('curriculum-inventory-export', {async: true}),
-  sequence: DS.belongsTo('curriculum-inventory-sequence', {async: true}),
-  sequenceBlocks: DS.hasMany('curriculum-inventory-sequence-block', {async: true}),
-  program: DS.belongsTo('program', {async: true}),
-  academicLevels: DS.hasMany('curriculum-inventory-academic-level', {async: true}),
+export default Model.extend({
+  name: attr('string'),
+  description: attr('string'),
+  year: attr('string'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  absoluteFileUri: attr('string'),
+  export: belongsTo('curriculum-inventory-export', {async: true}),
+  sequence: belongsTo('curriculum-inventory-sequence', {async: true}),
+  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {async: true}),
+  program: belongsTo('program', {async: true}),
+  academicLevels: hasMany('curriculum-inventory-academic-level', {async: true}),
 
   /**
    * A list of top-level sequence blocks owned by this report.
