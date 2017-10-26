@@ -19,6 +19,13 @@ export default Model.extend({
   users: hasMany('user', { async: true, inverse: 'learnerGroups' }),
   instructors: hasMany('user', { async: true, inverse: 'instructedLearnerGroups' }),
 
+  childUsers: mapBy('children', 'users'),
+  childUserLengths: mapBy('childUsers', 'length'),
+  childrenUsersCounts: mapBy('children', 'childUsersTotal'),
+
+  childUsersTotal: sum('childUserLengths'),
+  childrenUsersTotal: sum('childrenUsersCounts'),
+
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    * @property courses
@@ -43,14 +50,11 @@ export default Model.extend({
 
     return courses.uniq();
   }),
-  childUsers: mapBy('children', 'users'),
-  childUserLengths: mapBy('childUsers', 'length'),
-  childUsersTotal: sum('childUserLengths'),
-  childrenUsersCounts: mapBy('children', 'childUsersTotal'),
-  childrenUsersTotal: sum('childrenUsersCounts'),
+
   usersCount: computed('users.length', 'childUsersTotal', 'childrenUsersTotal', function(){
     return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
   }),
+
   availableUsers: computed('users', 'parent.users.[]', 'parent.childUsers.[]', function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {
@@ -77,6 +81,7 @@ export default Model.extend({
       });
     });
   }),
+
   /**
    * Get the offset for numbering generated subgroups.
    *
@@ -145,20 +150,7 @@ export default Model.extend({
       });
     });
   }),
-  destroyChildren: function(){
-    var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      var promises = [];
-      group.get('children').then(function(children){
-        children.forEach(function(child){
-          promises.push(child.destroyChildren().then(function(){
-            child.destroyRecord();
-          }));
-        });
-        resolve(Ember.RSVP.all(promises));
-      });
-    });
-  },
+
   allParentsTitle: computed('allParentTitles', function(){
     let title = '';
     this.get('allParentTitles').forEach(str => {
@@ -167,6 +159,7 @@ export default Model.extend({
 
     return title;
   }),
+
   allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', function(){
     let titles = [];
     if(!this.get('isTopLevelGroup')){
@@ -178,6 +171,7 @@ export default Model.extend({
 
     return titles;
   }),
+
   sortTitle: computed('title', 'allParentsTitle', function(){
     var title = this.get('allParentsTitle') + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
@@ -223,6 +217,7 @@ export default Model.extend({
       });
     });
   }),
+
   allParents: computed('parent', 'parent.allParents.[]', async function(){
     const parent = await this.get('parent');
     if (!parent) {
@@ -232,6 +227,7 @@ export default Model.extend({
 
     return [parent].concat(allParents);
   }),
+
   topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
     return new Ember.RSVP.Promise(
       resolve => {
@@ -251,9 +247,87 @@ export default Model.extend({
       }
     );
   }),
+
   isTopLevelGroup: computed('parent', function(){
     return isEmpty(this.belongsTo('parent').id());
   }),
+
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
+    return new Promise(resolve => {
+      let users = [];
+      this.get('instructors').then(instructors => {
+        users.pushObjects(instructors.toArray());
+        this.get('instructorGroups').then(instructorGroups => {
+          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
+            arr.forEach(groupInstructors =>{
+              users.pushObjects(groupInstructors.toArray());
+            });
+            resolve(users.uniq());
+          });
+        });
+      });
+    });
+  }),
+
+  school: computed('cohort.programYear.program.school', function(){
+    return new Promise(resolve => {
+      this.get('cohort').then(cohort => {
+        cohort.get('programYear').then(programYear => {
+          programYear.get('program').then(program => {
+            program.get('school').then(school => {
+              resolve(school);
+            });
+          });
+        });
+      });
+    });
+  }),
+
+  /**
+   * Checks if this group or any of its subgroups has any learners.
+   * @property hasLearnersInGroupOrSubgroups
+   * @type {Ember.computed}
+   * @public
+   */
+  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
+    return new Promise(resolve => {
+      const userIds = this.hasMany('users').ids();
+      if (userIlength) {
+        resolve(true);
+      }
+      this.get('children').then(children => {
+        if(! children.get('length')) {
+          resolve(false);
+          return;
+        }
+
+        let promises = children.map(subgroup => {
+          return subgroup.get('hasLearnersInGroupOrSubgroups');
+        });
+        all(promises).then(hasLearnersInSubgroups => {
+          resolve(hasLearnersInSubgroups.reduce((acc, val) => {
+            return (acc || val);
+          }, false));
+        });
+      });
+    });
+  }),
+
+  destroyChildren: function(){
+    var group = this;
+    return new Ember.RSVP.Promise(function(resolve) {
+      var promises = [];
+      group.get('children').then(function(children){
+        children.forEach(function(child){
+          promises.push(child.destroyChildren().then(function(){
+            child.destroyRecord();
+          }));
+        });
+        resolve(Ember.RSVP.all(promises));
+      });
+    });
+  },
+
   /**
    * Takes a user out of  a group and then traverses child groups recursivly
    * to remove the user from them as well.  Will only modify groups where the
@@ -310,63 +384,4 @@ export default Model.extend({
       });
     });
   },
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
-    return new Promise(resolve => {
-      let users = [];
-      this.get('instructors').then(instructors => {
-        users.pushObjects(instructors.toArray());
-        this.get('instructorGroups').then(instructorGroups => {
-          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
-            arr.forEach(groupInstructors =>{
-              users.pushObjects(groupInstructors.toArray());
-            });
-            resolve(users.uniq());
-          });
-        });
-      });
-    });
-  }),
-  school: computed('cohort.programYear.program.school', function(){
-    return new Promise(resolve => {
-      this.get('cohort').then(cohort => {
-        cohort.get('programYear').then(programYear => {
-          programYear.get('program').then(program => {
-            program.get('school').then(school => {
-              resolve(school);
-            });
-          });
-        });
-      });
-    });
-  }),
-
-  /**
-   * Checks if this group or any of its subgroups has any learners.
-   * @property hasLearnersInGroupOrSubgroups
-   * @type {Ember.computed}
-   * @public
-   */
-  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
-    return new Promise(resolve => {
-      const userIds = this.hasMany('users').ids();
-      if (userIlength) {
-        resolve(true);
-      }
-      this.get('children').then(children => {
-        if(! children.get('length')) {
-          resolve(false);
-          return;
-        }
-
-        let promises = children.map(subgroup => {
-          return subgroup.get('hasLearnersInGroupOrSubgroups');
-        });
-        all(promises).then(hasLearnersInSubgroups => {
-          resolve(hasLearnersInSubgroups.reduce((acc, val) => {
-            return (acc || val);
-          }, false));
-        });
-      });
-    });
-  }),
 });
