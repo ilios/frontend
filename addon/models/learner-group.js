@@ -3,24 +3,25 @@ import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 
+const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP } = Ember;
 const { mapBy, sum } = computed;
 const { Promise, map, all } = RSVP;
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  location: DS.attr('string'),
-  cohort: DS.belongsTo('cohort', {async: true}),
-  parent: DS.belongsTo('learner-group', {async: true, inverse: 'children'}),
-  children: DS.hasMany('learner-group', {async: true, inverse: 'parent'}),
-  ilmSessions: DS.hasMany('ilm-session', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  users: DS.hasMany('user', {
+export default Model.extend({
+  title: attr('string'),
+  location: attr('string'),
+  cohort: belongsTo('cohort', {async: true}),
+  parent: belongsTo('learner-group', {async: true, inverse: 'children'}),
+  children: hasMany('learner-group', {async: true, inverse: 'parent'}),
+  ilmSessions: hasMany('ilm-session', {async: true}),
+  offerings: hasMany('offering', {async: true}),
+  instructorGroups: hasMany('instructor-group', {async: true}),
+  users: hasMany('user', {
     async: true,
     inverse: 'learnerGroups'
   }),
-  instructors: DS.hasMany('user', {
+  instructors: hasMany('user', {
     async: true,
     inverse: 'instructedLearnerGroups'
   }),
@@ -354,7 +355,7 @@ export default DS.Model.extend({
   hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
     return new Promise(resolve => {
       const userIds = this.hasMany('users').ids();
-      if (userIds.length) {
+      if (userIlength) {
         resolve(true);
       }
       this.get('children').then(children => {
