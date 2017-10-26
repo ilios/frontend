@@ -47,67 +47,6 @@ test('list courses', function(assert) {
   });
 });
 
-test('list available users', function(assert) {
-  assert.expect(4);
-  let model = this.subject();
-  var store = model.store;
-  var newUsers = [];
-
-  run(function(){
-    var parent = store.createRecord('learner-group', {title:'parent'});
-    model.set('parent', parent);
-    for(var i = 0; i < 5; i++){
-      newUsers[i] = store.createRecord('user', {firstName: i});
-    }
-    for(i = 10; i < 25; i++){
-      store.createRecord('user', {firstName: i});
-    }
-
-    var sibling = store.createRecord('learner-group', {title:'sibling'});
-    sibling.get('users').then(function(users){
-      users.pushObject(newUsers[0]);
-      users.pushObject(newUsers[1]);
-    });
-    parent.get('children').then(function(children){
-      children.pushObject(sibling);
-    });
-    parent.get('users').then(function(users){
-      for(var i = 0; i < 5; i++){
-        users.pushObject(newUsers[i]);
-      }
-    });
-  });
-
-  run(function(){
-    model.get('availableUsers').then(function(users){
-      var names = users.mapBy('firstName');
-      assert.equal(users.get('length'), 3);
-      assert.ok(names.includes(2));
-      assert.ok(names.includes(3));
-      assert.ok(names.includes(4));
-    });
-  });
-});
-
-test('top level groups return false for the list of available users', function(assert) {
-  assert.expect(1);
-  let model = this.subject();
-  var store = model.store;
-  var newUsers = [];
-
-  run(function(){
-    for(var i = 0; i < 10; i++){
-      newUsers[i] = store.createRecord('user', {firstName: i});
-    }
-  });
-
-  run(function(){
-    model.get('availableUsers').then(function(users){
-      assert.ok(!users);
-    });
-  });
-});
-
 test('check allDescendantUsers on empty group', async function(assert) {
   assert.expect(1);
   let learnerGroup = this.subject();

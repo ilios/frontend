@@ -56,39 +56,6 @@ export default Model.extend({
   }),
 
   /**
-   * A list of users in this group, its parent group and its sibling-groups.
-   * @property availableUsers
-   * @type {Ember.computed}
-   * @public
-   */
-  availableUsers: computed('users', 'parent.users.[]', 'parent.childUsers.[]', function(){
-    var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      group.get('parent').then(function(parent){
-        if(parent == null){
-          resolve(false);
-        } else {
-          parent.get('users').then(function(parentUsers){
-            var childUsers = parent.get('childUsers');
-            var selectedUsers = Ember.A();
-            Ember.RSVP.all(childUsers).then(function(){
-              childUsers.forEach(function(userSet){
-                userSet.forEach(function(c){
-                  selectedUsers.pushObject(c);
-                });
-              });
-              var availableUsers = parentUsers.filter(function(user){
-                return !selectedUsers.includes(user);
-              });
-              resolve(availableUsers);
-            });
-          });
-        }
-      });
-    });
-  }),
-
-  /**
    * Get the offset for numbering generated subgroups.
    *
    * This is best explained by an example:
