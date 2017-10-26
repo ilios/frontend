@@ -1,7 +1,7 @@
 .new-offering {
   margin-top: 2em;
 
-  .title {
+  .new-offering-title {
     @include fill-parent;
     @include ilios-heading-h5;
     text-align: center;
