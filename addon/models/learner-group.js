@@ -19,13 +19,6 @@ export default Model.extend({
   users: hasMany('user', { async: true, inverse: 'learnerGroups' }),
   instructors: hasMany('user', { async: true, inverse: 'instructedLearnerGroups' }),
 
-  childUsers: mapBy('children', 'users'),
-  childUserLengths: mapBy('childUsers', 'length'),
-  childrenUsersCounts: mapBy('children', 'childUsersTotal'),
-
-  childUsersTotal: sum('childUserLengths'),
-  childrenUsersTotal: sum('childrenUsersCounts'),
-
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    * @property courses
