@@ -3328,13 +3328,13 @@ ember-cli-page-object@^1.11.0:
     ember-test-helpers "^0.6.3"
     rsvp "^3.2.1"
 
-ember-cli-password-strength@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-password-strength/-/ember-cli-password-strength-1.0.3.tgz#690a7771bbb6e9c4994a73259df4df785a2287df"
+ember-cli-password-strength@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-password-strength/-/ember-cli-password-strength-1.1.0.tgz#fda9f922011a234c66ef347d32fcbc1c51b5d527"
   dependencies:
     broccoli-funnel "^1.1.0"
     broccoli-merge-trees "^2.0.0"
-    ember-cli-babel "^6.0.0"
+    ember-cli-babel "^6.8.0"
     zxcvbn "^4.3.0"
 
 ember-cli-path-utils@^1.0.0:
@@ -4136,7 +4136,7 @@ ember-simple-charts@^0.4.0:
     ember-cli-htmlbars "^1.1.1"
     ember-cli-sass "^6.2.0"
 
-ember-source@2.16.0:
+ember-source@~2.16.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-2.16.0.tgz#2becd7966278fe453046b91178ede665c2cf241a"
   dependencies:
