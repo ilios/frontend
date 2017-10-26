@@ -1,98 +1,110 @@
 .offering-form {
-  @include ilios-form;
-  @include fill-parent;
-  @include clearfix;
-  clear: both;
-  display: block;
-  margin-top: 2em;
+  .form {
+    @include ilios-form;
+    @include fill-parent;
+    @include clearfix;
+    clear: both;
+    display: block;
+    margin-top: 2em;
 
-  .item {
-    @include ilios-form-item;
-  }
-
-  .start-time {
-    select {
-      width: 4em;
-    }
-  }
-
-  .offering-duration {
-
-    input {
-      min-width: 3em;
-      width: 3em;
+    .item {
+      @include ilios-form-item;
     }
 
-    .hours,
-    .minutes {
-      display: inline-block;
-      padding-right: 1em;
-    }
-  }
-
-  .end-date-time .text {
-    color: $darker-grey;
-    font-size: 1.2 * $base-font-size;
-    font-style: italic;
-    font-weight: bold;
-  }
-
-  .make-recurring {
-    height: 100%;
-  }
-
-  .make-recurring-options {
-    .make-recurring-days {
-      div {
-        clear: both;
-      }
-
-      input,
-      label {
-        float: left;
-        margin: 0;
-        width: 2em;
-      }
-
-      label {
-        width: 40%;
+    .start-time {
+      select {
+        width: 4em;
       }
     }
 
-    .make-recurring-input-container {
-      @include fill-parent;
-      clear: left;
-      padding-top: .5em;
+    .offering-duration {
 
       input {
-        float: left;
         min-width: 3em;
         width: 3em;
       }
 
-      label {
+      .hours,
+      .minutes {
         display: inline-block;
-        margin: .5em 0 0 .5em;
-        width: 5em;
+        padding-right: 1em;
       }
+    }
+
+    .end-date-time .text {
+      color: $darker-grey;
+      font-size: 1.2 * $base-font-size;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .make-recurring {
+      height: 100%;
+    }
+
+    .make-recurring-options {
+      .make-recurring-days {
+        div {
+          clear: both;
+        }
+
+        input,
+        label {
+          float: left;
+          margin: 0;
+          width: 2em;
+        }
+
+        label {
+          width: 40%;
+        }
+      }
+
+      .make-recurring-input-container {
+        @include fill-parent;
+        clear: left;
+        padding-top: .5em;
+
+        input {
+          float: left;
+          min-width: 3em;
+          width: 3em;
+        }
+
+        label {
+          display: inline-block;
+          margin: .5em 0 0 .5em;
+          width: 5em;
+        }
+      }
+    }
+
+    .learner-groups {
+      @include fill-parent;
+      @include clearfix;
+      clear: both;
+      padding-top: 1em;
+    }
+
+    .instructors {
+      @include fill-parent;
+      clear: both;
+      padding-top: 1em;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
     }
   }
 
-  .learner-groups {
+  .toggle-offering-calendar {
     @include fill-parent;
-    @include clearfix;
-    clear: both;
-    padding-top: 1em;
-  }
+    margin-bottom: 1em;
+    overflow: auto;
 
-  .instructors {
-    @include fill-parent;
-    clear: both;
-    padding-top: 1em;
-  }
-
-  .buttons {
-    @include ilios-form-buttons;
+    .toggle-buttons {
+      float: right;
+    }
   }
 
   .timezone {

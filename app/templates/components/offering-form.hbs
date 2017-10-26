@@ -1,4 +1,16 @@
 {{#unless loadAttrsFromOffering.isRunning}}
+  <p class='toggle-offering-calendar'>
+    {{toggle-buttons
+      firstOptionSelected=(not showOfferingCalendar)
+      firstLabel=(t 'general.hideCalendar')
+      secondLabel=(t 'general.showCalendar')
+      toggle=(toggle 'showOfferingCalendar' this)
+    }}
+  </p>
+  {{#if showOfferingCalendar}}
+    {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
+  {{/if}}
+
   <div class='item start-date'>
     <label>{{t 'general.startDate'}}:</label>
     {{pikaday-input value=startDate onSelection=(action 'updateStartDate') format='M/D/YYYY'}}

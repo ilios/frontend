@@ -1,8 +1,15 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import initializer from "ilios/instance-initializers/load-common-translations";
+
+const { getOwner } = Ember;
 
 moduleForComponent('new-offering', 'Integration | Component | new offering', {
-  integration: true
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  }
 });
 
 test('it renders', function(assert) {
@@ -17,5 +24,5 @@ test('it renders', function(assert) {
     close=(action nothing)
   }}`);
 
-  assert.equal(this.$('.title').text().trim(), 'New Offering');
+  assert.equal(this.$('.title:eq(0)').text().trim(), 'New Offering');
 });
