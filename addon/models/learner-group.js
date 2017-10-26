@@ -55,6 +55,12 @@ export default Model.extend({
     return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
   }),
 
+  /**
+   * A list of users in this group, its parent group and its sibling-groups.
+   * @property availableUsers
+   * @type {Ember.computed}
+   * @public
+   */
   availableUsers: computed('users', 'parent.users.[]', 'parent.childUsers.[]', function(){
     var group = this;
     return new Ember.RSVP.Promise(function(resolve) {
