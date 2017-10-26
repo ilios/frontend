@@ -4,7 +4,6 @@ import escapeRegExp from '../utils/escape-reg-exp';
 
 const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP } = Ember;
-const { mapBy, sum } = computed;
 const { Promise, map, all } = RSVP;
 
 export default Model.extend({
