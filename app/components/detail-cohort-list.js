@@ -7,7 +7,7 @@ const { map } = RSVP;
 
 export default Component.extend({
   i18n: service(),
-  cohorts: [],
+  cohorts: null,
   /**
    * A list of cohorts, sorted by school and display title.
    * @property sortedCohorts
@@ -16,6 +16,9 @@ export default Component.extend({
    */
   sortedCohorts: computed('cohorts.[]', async function(){
     const cohorts = this.get('cohorts');
+    if (isEmpty(cohorts)) {
+      return [];
+    }
     const sortProxies = await map(cohorts.toArray(), async cohort => {
       const school = await cohort.get('school');
       const schoolTitle = school.get('title');
@@ -23,7 +26,6 @@ export default Component.extend({
       if (isEmpty(displayTitle)) {
         const i18n = this.get('i18n');
         const classOfYear = await cohort.get('classOfYear');
-
         displayTitle = i18n.t('general.classOf', {year: classOfYear});
       }
 
