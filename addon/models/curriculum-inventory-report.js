@@ -1,21 +1,22 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
+const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP } = Ember;
-const { Promise, all } = RSVP;
+const { all } = RSVP;
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  description: DS.attr('string'),
-  year: DS.attr('string'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  absoluteFileUri: DS.attr('string'),
-  export: DS.belongsTo('curriculum-inventory-export', {async: true}),
-  sequence: DS.belongsTo('curriculum-inventory-sequence', {async: true}),
-  sequenceBlocks: DS.hasMany('curriculum-inventory-sequence-block', {async: true}),
-  program: DS.belongsTo('program', {async: true}),
-  academicLevels: DS.hasMany('curriculum-inventory-academic-level', {async: true}),
+export default Model.extend({
+  name: attr('string'),
+  description: attr('string'),
+  year: attr('string'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  absoluteFileUri: attr('string'),
+  export: belongsTo('curriculum-inventory-export', {async: true}),
+  sequence: belongsTo('curriculum-inventory-sequence', {async: true}),
+  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {async: true}),
+  program: belongsTo('program', {async: true}),
+  academicLevels: hasMany('curriculum-inventory-academic-level', {async: true}),
 
   /**
    * A list of top-level sequence blocks owned by this report.
@@ -24,14 +25,10 @@ export default DS.Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  topLevelSequenceBlocks: computed('sequenceBlocks.[]', function () {
-    return new Promise(resolve => {
-      this.get('sequenceBlocks').then(sequenceBlocks => {
-        let topLevelBlocks = sequenceBlocks.filter(function (block) {
-          return !block.belongsTo('parent').id();
-        });
-        resolve(topLevelBlocks);
-      });
+  topLevelSequenceBlocks: computed('sequenceBlocks.[]', async function () {
+    const sequenceBlocks = await this.get('sequenceBlocks');
+    return sequenceBlocks.filter(block => {
+      return !block.belongsTo('parent').id();
     });
   }),
 
@@ -63,22 +60,11 @@ export default DS.Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  linkedCourses: computed('sequenceBlocks.@each.course', function () {
-    return new Promise(resolve => {
-      this.get('sequenceBlocks').then(sequenceBlocks => {
-        let promises = [];
-
-        sequenceBlocks.forEach(block => {
-          promises.pushObject(block.get('course'));
-        });
-
-        all(promises).then(courses => {
-          courses = courses.filter(function (course) {
-            return !isEmpty(course);
-          });
-          resolve(courses);
-        });
-      });
+  linkedCourses: computed('sequenceBlocks.@each.course', async function () {
+    const sequenceBlocks = await this.get('sequenceBlocks');
+    const courses = await all(sequenceBlocks.toArray().mapBy('course'));
+    return courses.filter(course => {
+      return !isEmpty(course);
     });
   }),
 
@@ -88,13 +74,9 @@ export default DS.Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  hasLinkedCourses: computed('linkedCourses.[]', function () {
-    return new Promise(resolve => {
-      this.get('linkedCourses').then(linkedCourses => {
-        let hasCourses = !Ember.isEmpty(linkedCourses);
-        resolve(hasCourses);
-      });
-    });
+  hasLinkedCourses: computed('linkedCourses.[]', async function () {
+    const linkedCourses = await this.get('linkedCourses');
+    return !isEmpty(linkedCourses);
   })
 });
 
