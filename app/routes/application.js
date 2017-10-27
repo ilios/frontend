@@ -67,6 +67,8 @@ export default Route.extend(ApplicationRouteMixin, {
       transition.promise.finally(() => {
         controller.set('currentlyLoading', false);
       });
+
+      return true;
     }
   }
 });
