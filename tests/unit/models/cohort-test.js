@@ -9,12 +9,6 @@ moduleForModel('cohort', 'Unit | Model | Cohort', {
   needs :modelList
 });
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
-
 test('list root level groups', async function(assert) {
   assert.expect(3);
 
