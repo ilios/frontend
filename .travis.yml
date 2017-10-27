@@ -27,7 +27,7 @@ install:
   - yarn install --non-interactive
   - bower install
 
-script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
+script: yarn test
 
 jobs:
   include:
@@ -37,15 +37,6 @@ jobs:
         - greenkeeper-lockfile-update
         - greenkeeper-lockfile-upload
     - stage: test
-      env: PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
-    - stage: test
-      env: PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - stage: test
-      env: PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - stage: test
-      env: PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
-    - stage: test
-      env: PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
     - stage: deploy staging
       if: branch = master AND NOT type = pull_request AND NOT type = cron
       script: node_modules/.bin/ember deploy staging --activate
