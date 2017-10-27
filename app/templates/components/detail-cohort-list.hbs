@@ -21,7 +21,7 @@
                 {{t 'general.classOf' year = cohort.programYear.classOfYear}}
               {{/if}}
             </td>
-            <td class='text-center'>{{cohort.currentLevel}}</td>
+            <td class='text-center'>{{await cohort.currentLevel}}</td>
           </tr>
         {{/each}}
       </tbody>
