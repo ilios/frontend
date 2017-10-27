@@ -1,0 +1,9 @@
+.course-loading {
+  width: 95%;
+
+  .box {
+    @include loading-box;
+    animation-duration: 4s;
+    height: 25em;
+  }
+}
