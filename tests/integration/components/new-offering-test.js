@@ -24,5 +24,5 @@ test('it renders', function(assert) {
     close=(action nothing)
   }}`);
 
-  assert.equal(this.$('.title:eq(0)').text().trim(), 'New Offering');
+  assert.equal(this.$('.new-offering-title:eq(0)').text().trim(), 'New Offering');
 });
