@@ -3,18 +3,24 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed } = Ember;
-const { alias } = computed;
-const { Model } = DS;
+const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
-  title: DS.attr('string'),
-  programYear: DS.belongsTo('program-year', {async: true}),
-  courses: DS.hasMany('course', {async: true}),
-  learnerGroups: DS.hasMany('learner-group', {async: true}),
-  users: DS.hasMany('user', {async: true}),
+  title: attr('string'),
+  programYear: belongsTo('program-year', {async: true}),
+  courses: hasMany('course', {async: true}),
+  learnerGroups: hasMany('learner-group', {async: true}),
+  users: hasMany('user', {async: true}),
 
-  competencies: alias('programYear.competencies'),
-  objectives: alias('programYear.objectives'),
+  competencies: computed('programYear.competencies.[]', async function() {
+    const programYear = await this.get('programYear');
+    return await programYear.get('competencies');
+  }),
+
+  objectives: computed('programYear.objectives.[]', async function() {
+    const programYear = await this.get('programYear');
+    return await programYear.get('objectives');
+  }),
 
   /**
    * All top-level learner groups associated with this cohort.
@@ -29,20 +35,31 @@ export default Model.extend({
   }),
 
   currentLevel: computed('programYear.startYear', async function(){
-    const startYear = await this.get('programYear.startYear');
+    const programYear = await this.get('programYear');
+    const startYear = programYear.get('startYear');
     if(startYear){
       return Math.abs(moment().year(startYear).diff(moment(), 'years'));
     }
     return '';
   }),
-  program: alias('programYear.program'),
-  school: alias('program.school'),
-  sortedObjectives: alias('programYear.sortedObjectives'),
+  program: computed('programYear.program', async function() {
+    const programYear = await this.get('programYear');
+    return await programYear.get('program');
+  }),
+  school: computed('program.school', async function() {
+    const program = await this.get('program');
+    return await program.get('school');
+  }),
+
+  sortedObjectives: computed('programYear.sortedObjectives.[]', async function() {
+    const programYear = await this.get('programYear');
+    return await programYear.get('sortedObjectives');
+  }),
   classOfYear: computed('programYear.startYear', 'programYear.program.duration', async function(){
     const programYear = await this.get('programYear');
-    const startYear = parseInt(programYear.get('startYear'));
+    const startYear = parseInt(programYear.get('startYear'), 10);
     const program = await programYear.get('program');
-    const duration = parseInt(program.get('duration'));
+    const duration = parseInt(program.get('duration'), 10);
     return (startYear + duration);
   }),
 });
