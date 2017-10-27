@@ -3,14 +3,14 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed } = Ember;
-const { Model } = DS;
+const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
-  title: DS.attr('string'),
-  programYear: DS.belongsTo('program-year', {async: true}),
-  courses: DS.hasMany('course', {async: true}),
-  learnerGroups: DS.hasMany('learner-group', {async: true}),
-  users: DS.hasMany('user', {async: true}),
+  title: attr('string'),
+  programYear: belongsTo('program-year', {async: true}),
+  courses: hasMany('course', {async: true}),
+  learnerGroups: hasMany('learner-group', {async: true}),
+  users: hasMany('user', {async: true}),
 
   competencies: computed('programYear.competencies.[]', async function() {
     const programYear = await this.get('programYear');
