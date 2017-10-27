@@ -37,7 +37,7 @@ jobs:
         - greenkeeper-lockfile-update
         - greenkeeper-lockfile-upload
     - stage: test
-      env: PARTITION=false FILTER='!acceptance' SPLIT=4 PARALLEL=true
+      env: PARTITION=false FILTER='!acceptance' SPLIT=2 PARALLEL=true
     - stage: test
       env: PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
     - stage: test
