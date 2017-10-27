@@ -57,9 +57,9 @@ export default Model.extend({
   }),
   classOfYear: computed('programYear.startYear', 'programYear.program.duration', async function(){
     const programYear = await this.get('programYear');
-    const startYear = parseInt(programYear.get('startYear'));
+    const startYear = parseInt(programYear.get('startYear'), 10);
     const program = await programYear.get('program');
-    const duration = parseInt(program.get('duration'));
+    const duration = parseInt(program.get('duration'), 10);
     return (startYear + duration);
   }),
 });
