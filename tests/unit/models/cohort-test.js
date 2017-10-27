@@ -1,4 +1,4 @@
-import { moduleForModel,  test, skip } from 'ember-qunit';
+import { moduleForModel,  test } from 'ember-qunit';
 import moment from 'moment';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
