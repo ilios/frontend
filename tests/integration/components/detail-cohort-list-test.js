@@ -1,0 +1,70 @@
+import EmberObject from '@ember/object';
+import { moduleForComponent, test } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
+import $ from 'jquery';
+
+moduleForComponent('detail-cohort-list', 'Integration | Component | detail cohort list', {
+  integration: true
+});
+
+test('it renders', async function(assert) {
+  assert.expect(13);
+  const school1 = EmberObject.create({
+    title: 'School of Life'
+  });
+  const school2 = EmberObject.create({
+    title: 'Starfleet Academy'
+  });
+
+  const program1 = EmberObject.create({
+    title: 'Professional Pie Eating',
+    school: school1
+  });
+  const program2 = EmberObject.create({
+    title: 'Doctor of Rocket Surgery',
+    school: school2
+  });
+  const programYear1 = EmberObject.create({
+    program: program1,
+    classOfYear: 2015,
+  }) ;
+  const programYear2 = EmberObject.create({
+    program: program2,
+    classOfYear: 2011,
+  });
+  const cohort1 = EmberObject.create({
+    title: 'Aardvark',
+    classOfYear: programYear1.get('classOfYear'),
+    programYear: programYear1,
+    school: school1,
+    currentLevel: 1
+  });
+  const cohort2 = EmberObject.create({
+    classOfYear: programYear2.get('classOfYear'),
+    programYear: programYear2,
+    school: school2,
+    currentLevel: 2
+  });
+
+  const cohorts = [ cohort1, cohort2 ];
+
+  this.set('cohorts', cohorts);
+  this.render(hbs`{{detail-cohort-list cohorts=cohorts}}`);
+  await wait();
+  assert.equal($('th:eq(0)').text(), 'School');
+  assert.equal($('th:eq(1)').text(), 'Program');
+  assert.equal($('th:eq(2)').text(), 'Cohort');
+  assert.equal($('th:eq(3)').text(), 'Level');
+  assert.equal($('tbody tr').length, 2);
+  assert.equal($('tbody tr:eq(0) td:eq(0)').text().trim(), 'School of Life');
+  assert.equal($('tbody tr:eq(0) td:eq(1)').text().trim(), 'Professional Pie Eating');
+  assert.equal($('tbody tr:eq(0) td:eq(2)').text().trim(), 'Aardvark');
+  assert.equal($('tbody tr:eq(0) td:eq(3)').text().trim(), '1');
+  assert.equal($('tbody tr:eq(1) td:eq(0)').text().trim(), 'Starfleet Academy');
+  assert.equal($('tbody tr:eq(1) td:eq(1)').text().trim(), 'Doctor of Rocket Surgery');
+  assert.equal($('tbody tr:eq(1) td:eq(2)').text().trim(), 'Class of 2011');
+  assert.equal($('tbody tr:eq(1) td:eq(3)').text().trim(), '2');
+});
+
+
