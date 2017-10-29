@@ -23,6 +23,9 @@ module.exports = function(defaults) {
       includePolyfill: true,
       sourceMaps: isProductionLikeBuild?false:'inline'
     },
+    'ember-cli-password-strength': {
+      bundleZxcvbn: false
+    },
     'ember-cli-qunit': {
       useLintTree: false
     },

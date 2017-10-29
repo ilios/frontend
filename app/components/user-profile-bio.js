@@ -6,7 +6,6 @@ import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
-import strength from 'password-strength';
 
 const { Promise } = RSVP;
 
@@ -82,6 +81,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
   iliosConfig: service(),
   commonAjax: service(),
+  passwordStrength: service(),
 
   init(){
     this._super(...arguments);
@@ -273,9 +273,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     });
   }),
 
-  passwordStrength: computed('password', function () {
+  passwordStrengthScore: computed('password', async function () {
+    const passwordStrength = this.get('passwordStrength');
     const password = isEmpty(this.get('password'))?'':this.get('password');
-    return strength(password);
+    const obj = await passwordStrength.strength(password);
+    return obj.score;
   }),
 
   usernameMissing: computed('user.authentication', function(){
