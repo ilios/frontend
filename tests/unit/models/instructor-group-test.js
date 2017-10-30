@@ -5,46 +5,41 @@ import {
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 
-const { RSVP, run } = Ember;
-const { Promise } = RSVP;
+const { run } = Ember;
 
 moduleForModel('instructor-group', 'Unit | Model | InstructorGroup', {
   needs: modelList
 });
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
+test('list courses', async function(assert) {
+  assert.expect(4);
+  run( async () => {
+    const model = this.subject();
+    const store = model.store;
+    const course1 = store.createRecord('course', { title:'course1', id: 1 });
+    const course2 = store.createRecord('course', { title:'course2', id: 2 });
+    const course3 = store.createRecord('course', { title:'course3', id: 3 });
+    const session1 = store.createRecord('session', { course: course1 });
+    const session2 = store.createRecord('session', { course: course1 });
+    const session3 = store.createRecord('session', { course: course2 });
+    const session4 = store.createRecord('session', { course: course3 });
 
-test('list courses', function(assert) {
-  assert.expect(3);
-  return new Promise(resolve => {
-    run(()=> {
-      let model = this.subject();
-      let store = model.store;
-      let course1 = store.createRecord('course', {title:'course1', id: 1});
-      let course2 = store.createRecord('course', {title:'course2', id: 2});
-      let session1 = store.createRecord('session', {course: course1});
-      let session2 = store.createRecord('session', {course: course1});
-      let session3 = store.createRecord('session', {course: course2});
-      model.get('offerings').then(function(offerings){
-        offerings.pushObject(store.createRecord('offering', {session: session1}));
-        offerings.pushObject(store.createRecord('offering', {session: session1}));
-        offerings.pushObject(store.createRecord('offering', {session: session1}));
-        offerings.pushObject(store.createRecord('offering', {session: session2}));
-        offerings.pushObject(store.createRecord('offering', {session: session2}));
-        offerings.pushObject(store.createRecord('offering', {session: session3}));
-      });
-      model.get('courses').then(function(courses){
-        assert.equal(courses.length, 2);
-        assert.equal(courses.objectAt(0).get('title'), 'course1');
-        assert.equal(courses.objectAt(1).get('title'), 'course2');
-
-        resolve();
-      });
-    });
+    model.get('offerings').pushObjects([
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session3 })
+    ]);
+    model.get('ilmSessions').pushObjects([
+      store.createRecord('ilmSession', { session: session3 }),
+      store.createRecord('ilmSession', { session: session4 })
+    ]);
+    const courses = await model.get('courses');
+    assert.equal(courses.length, 3);
+    assert.ok(courses.contains(course1));
+    assert.ok(courses.contains(course2));
+    assert.ok(courses.contains(course3));
   });
-
 });
