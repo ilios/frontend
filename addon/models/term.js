@@ -1,9 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed, isEmpty, RSVP } =  Ember;
+const { computed, isEmpty } =  Ember;
 const { collect, sum, gte } = computed;
-const { Promise } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
@@ -35,21 +34,17 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allParents: computed('parent', 'parent.allParents.[]', function(){
-    return new Promise(resolve => {
-      this.get('parent').then(parentTerm => {
-        let parents = [];
-        if(!parentTerm){
-          resolve(parents);
-        } else {
-          parents.pushObject(parentTerm);
-          parentTerm.get('allParents').then(allParents => {
-            parents.pushObjects(allParents);
-            resolve(parents);
-          });
-        }
-      });
-    });
+  allParents: computed('parent', 'parent.allParents.[]', async function(){
+    const parentTerm = await this.get('parent');
+    if(!parentTerm) {
+      return [];
+    }
+
+    const terms = [];
+    const allParents = await parentTerm.get('allParents');
+    terms.pushObjects(allParents);
+    terms.pushObject(parentTerm);
+    return terms;
   }),
 
   /**
@@ -59,16 +54,12 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termWithAllParents: computed('allParents.[]', function(){
-    return new Promise(resolve => {
-      let terms = [];
-      let term = this;
-      this.get('allParents').then(allParents => {
-        terms.pushObjects(allParents);
-        terms.pushObject(term);
-        resolve(terms);
-      });
-    });
+  termWithAllParents: computed('allParents.[]', async function(){
+    const terms = [];
+    const allParents = await this.get('allParents');
+    terms.pushObjects(allParents);
+    terms.pushObject(this);
+    return terms;
   }),
 
   /**
@@ -78,21 +69,16 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allParentTitles: computed('parent.{title,allParentTitles.[]}', function() {
-    return new Promise(resolve => {
-      this.get('parent').then(parentTerm => {
-        let titles = [];
-        if(!parentTerm){
-          resolve(titles);
-        } else {
-          parentTerm.get('allParents').then(parents => {
-            titles = titles.concat(parents.mapBy('title'));
-            titles.push(this.get('parent.title'));
-            resolve(titles);
-          });
-        }
-      });
-    });
+  allParentTitles: computed('parent.{title,allParentTitles.[]}', async function() {
+    const parentTerm = await this.get('parent');
+    if(!parentTerm){
+      return [];
+    }
+
+    const parents = await parentTerm.get('allParents');
+    const titles = parents.mapBy('title');
+    titles.push(parentTerm.get('title'));
+    return titles;
   }),
 
   /**
@@ -102,17 +88,11 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  titleWithParentTitles: computed('title', 'allParentTitles.[]', function() {
-    return new Promise(resolve => {
-      this.get('allParentTitles').then(parentTitles => {
-        let title;
-        if (! parentTitles.get('length')) {
-          title = this.get('title');
-        } else {
-          title = parentTitles.join(' > ') + ' > ' + this.get('title');
-        }
-        resolve(title);
-      });
-    });
+  titleWithParentTitles: computed('title', 'allParentTitles.[]', async function() {
+    const parentTitles = await this.get('allParentTitles');
+    if(isEmpty(parentTitles)) {
+      return this.get('title');
+    }
+    return parentTitles.join(' > ') + ' > ' + this.get('title');
   }),
 });
