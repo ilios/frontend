@@ -77,7 +77,7 @@ export default Model.extend({
 
     const parents = await parentTerm.get('allParents');
     const titles = parents.mapBy('title');
-    titles.push(this.get('parent.title'));
+    titles.push(parentTerm.get('title'));
     return titles;
   }),
 
