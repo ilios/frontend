@@ -15,8 +15,8 @@ export default Model.extend({
 
   coursesFromOfferings: computed('offerings.[]', async function () {
     const offerings = await this.get('offerings');
-    const courses = await map(offerings.toArray(), async ilmSession => {
-      const session = await ilmSession.get('session');
+    const courses = await map(offerings.toArray(), async offering => {
+      const session = await offering.get('session');
       return session.get('course');
     });
     return courses.uniq();
