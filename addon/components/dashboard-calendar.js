@@ -321,7 +321,7 @@ export default Component.extend({
     const events = await this.get('ourEvents');
     const selectedCourseLevels = this.get('selectedCourseLevels');
     if(isEmpty(selectedCourseLevels)) {
-      return;
+      return events;
     }
     const matchingEvents = await map(events, async event => {
       if(event.ilmSession || event.offering) {
