@@ -55,11 +55,8 @@ export default Model.extend({
     const programYear = await this.get('programYear');
     return await programYear.get('sortedObjectives');
   }),
-  classOfYear: computed('programYear.startYear', 'programYear.program.duration', async function(){
+  classOfYear: computed('programYear.classOfYear', async function(){
     const programYear = await this.get('programYear');
-    const startYear = parseInt(programYear.get('startYear'), 10);
-    const program = await programYear.get('program');
-    const duration = parseInt(program.get('duration'), 10);
-    return (startYear + duration);
+    return await programYear.get('classOfYear');
   }),
 });
