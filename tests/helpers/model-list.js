@@ -5,8 +5,6 @@ const models = [
   'model:aamc-pcrs',
   'model:aamc-resource-type',
   'model:academic-year',
-  'model:alert-change-type',
-  'model:alert',
   'model:assessment-option',
   'model:authentication',
   'model:cohort',
