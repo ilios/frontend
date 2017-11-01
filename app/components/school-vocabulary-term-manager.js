@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -45,6 +46,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTerms: null,
   description: null,
   title: null,
+  isActive: null,
   classNames: ['school-vocabulary-term-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
@@ -53,6 +55,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (term) {
       this.set('description', term.get('description'));
       this.set('title', term.get('title'));
+      this.set('isActive', term.get('active'));
     }
   },
   sortedTerms: computed('term.children.[]', function(){
@@ -87,6 +90,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
+
+  changeIsActive: task(function * (isActive){
+    const term = this.get('term');
+    term.set('active', isActive);
+    yield term.save();
+    this.set('isActive', term.get('active'));
+  }).drop(),
+
+>>>>>>> added active control to edit term form.
   actions: {
     changeTermTitle(){
       const term = this.get('term');
