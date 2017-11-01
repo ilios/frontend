@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -80,18 +81,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
+
+  changeIsActive: task(function * (isActive){
+    const vocabulary = this.get('vocabulary');
+    vocabulary.set('active', isActive);
+    yield vocabulary.save();
+    this.set('isActive', vocabulary.get('active'));
+  }).drop(),
+
   actions: {
     changeVocabularyTitle(){
       const vocabulary = this.get('vocabulary');
       const title = this.get('title');
       vocabulary.set('title', title);
       return vocabulary.save();
-    },
-    async changeIsActive(isActive){
-      const vocabulary = this.get('vocabulary');
-      vocabulary.set('active', isActive);
-      await vocabulary.save();
-      this.set('isActive', isActive);
     },
     revertVocabularyTitleChanges(){
       const vocabulary = this.get('vocabulary');
