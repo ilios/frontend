@@ -39,6 +39,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   vocabulary: null,
   title: null,
+  isActive: null,
   newTermTitle: null,
   isSavingNewTerm: false,
   newTerms: null,
@@ -48,6 +49,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const vocabulary = this.get('vocabulary');
     if (vocabulary) {
       this.set('title', vocabulary.get('title'));
+      this.set('isActive', vocabulary.get('active'));
     }
   },
   sortedTerms: computed('vocabulary.terms.[]', function(){
@@ -83,6 +85,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const title = this.get('title');
       vocabulary.set('title', title);
       return vocabulary.save();
+    },
+    async changeIsActive(isActive){
+      const vocabulary = this.get('vocabulary');
+      vocabulary.set('active', isActive);
+      await vocabulary.save();
+      this.set('isActive', isActive);
     },
     revertVocabularyTitleChanges(){
       const vocabulary = this.get('vocabulary');
