@@ -24,7 +24,11 @@
 
   <div class='item is-active'>
     <label>{{t 'general.active'}}:</label>
-    {{toggle-yesno yes=isActive toggle=(action 'changeIsActive')}}
+    {{toggle-yesno
+      yes=isActive
+      disabled=(if changeIsActive.isRunning true false)
+      toggle=(action (perform changeIsActive))
+    }}
   </div>
 </div>
 
