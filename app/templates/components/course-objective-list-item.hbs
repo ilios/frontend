@@ -1,79 +1,79 @@
-  <td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
-    {{#if editable}}
-      {{#editable-field
-        value=title
-        renderHtml=true
-        isSaveDisabled=(and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))
-        save=(action 'saveTitleChanges' )
-        close=(action 'revertTitleChanges')
+<td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
+  {{#if editable}}
+    {{#editable-field
+      value=title
+      renderHtml=true
+      isSaveDisabled=(and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))
+      save=(action 'saveTitleChanges' )
+      close=(action 'revertTitleChanges')
+    }}
+      {{html-editor
+        content=title
+        update=(action "changeTitle")
       }}
-        {{html-editor
-          content=title
-          update=(action "changeTitle")
-        }}
-        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-        {{/if}}
-      {{/editable-field}}
-    {{else}}
-      {{{objective.title}}}
-    {{/if}}
-  </td>
-  <td class='text-left text-top' colspan=2>
-    {{#if objective.hasParents}}
-      {{#each objective.parents as |parent|}}
-        {{#if course.hasMultipleCohorts}}
-          <strong>
-            {{get (await parent.firstProgram) 'title'}}
-            {{#if (get (await parent.firstCohort) 'title')}}
-              {{get (await parent.firstCohort) 'title'}}
-            {{else}}
-              {{t 'general.classOf' year=(await (get (await parent.firstCohort) 'classOfYear'))}}
-            {{/if}}
-          </strong>
-          <br>
-        {{/if}}
-        {{#if editable}}
-          <span class='clickable link' {{action manageParents objective}}>
-            {{parent.textTitle}}
-          </span>
-        {{else}}
-          {{parent.textTitle}}
-        {{/if}}
-        {{#if parent.competency}}
-          ({{parent.competency.title}})
-        {{/if}}
-        <br>
-      {{/each}}
-    {{else}}
-      {{#if editable}}
-        <button {{action manageParents objective}}>{{t 'general.addNew'}}</button>
-      {{else}}
-        {{t 'general.none'}}
+      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
       {{/if}}
-    {{/if}}
-  </td>
-  <td class='text-left text-top' colspan=2>
-    {{#if objective.meshDescriptors.length}}
-      <ul>
-        {{#each objective.meshDescriptors as |descriptor|}}
-          {{#if editable}}
-            <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
+    {{/editable-field}}
+  {{else}}
+    {{{objective.title}}}
+  {{/if}}
+</td>
+<td class='text-left text-top' colspan=2>
+  {{#if objective.hasParents}}
+    {{#each objective.parents as |parent|}}
+      {{#if course.hasMultipleCohorts}}
+        <strong>
+          {{get (await parent.firstProgram) 'title'}}
+          {{#if (get (await parent.firstCohort) 'title')}}
+            {{get (await parent.firstCohort) 'title'}}
           {{else}}
-            <li>{{descriptor.name}}</li>
+            {{t 'general.classOf' year=(await (get (await parent.firstCohort) 'classOfYear'))}}
           {{/if}}
-        {{/each}}
-      </ul>
-    {{else}}
-      {{#if editable}}
-        <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
-      {{else}}
-        {{t 'general.none'}}
+        </strong>
+        <br>
       {{/if}}
-    {{/if}}
-  </td>
-  <td class='text-left text-top' colspan=1>
+      {{#if editable}}
+        <span class='clickable link' {{action manageParents objective}}>
+          {{parent.textTitle}}
+        </span>
+      {{else}}
+        {{parent.textTitle}}
+      {{/if}}
+      {{#if parent.competency}}
+        ({{parent.competency.title}})
+      {{/if}}
+      <br>
+    {{/each}}
+  {{else}}
     {{#if editable}}
-      <span class='clickable remove' {{action remove objective}}>{{fa-icon 'trash'}}</span>
+      <button {{action manageParents objective}}>{{t 'general.addNew'}}</button>
+    {{else}}
+      {{t 'general.none'}}
     {{/if}}
-  </td>
+  {{/if}}
+</td>
+<td class='text-left text-top' colspan=2>
+  {{#if objective.meshDescriptors.length}}
+    <ul>
+      {{#each objective.meshDescriptors as |descriptor|}}
+        {{#if editable}}
+          <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
+        {{else}}
+          <li>{{descriptor.name}}</li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{else}}
+    {{#if editable}}
+      <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+    {{else}}
+      {{t 'general.none'}}
+    {{/if}}
+  {{/if}}
+</td>
+<td class='text-left text-top' colspan=1>
+  {{#if editable}}
+    <span class='clickable remove' {{action remove objective}}>{{fa-icon 'trash'}}</span>
+  {{/if}}
+</td>
