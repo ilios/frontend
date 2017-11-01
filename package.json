@@ -35,7 +35,7 @@
     "ember-tether": "^0.4.1",
     "ember-tooltips": "^2.8.2",
     "ember-truth-helpers": "^2.0.0",
-    "liquid-fire": "^0.28.0"
+    "liquid-fire": "^0.29.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
