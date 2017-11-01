@@ -3,22 +3,30 @@
   <span>{{vocabulary.title}}</span>
 </div><br>
 
-<p class='vocabulary-title'>
-  {{#editable-field
-    value=(if title title (t 'general.clickToEdit'))
-    save=(action 'changeVocabularyTitle')
-    close=(action 'revertVocabularyTitleChanges')
-    saveOnEnter=true
-    closeOnEscape=true
+<div class='form'>
+  <div class='item'>
+    <label>{{t 'general.title'}}: </label>
+    {{#editable-field
+      value=(if title title (t 'general.clickToEdit'))
+      save=(action 'changeVocabularyTitle')
+      close=(action 'revertVocabularyTitleChanges')
+      saveOnEnter=true
+      closeOnEscape=true
     as |isSaving|
-  }}
-    <input
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-    >
-  {{/editable-field}}
-</p>
+    }}
+      <input
+        value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+        disabled={{isSaving}}
+      >
+    {{/editable-field}}
+  </div>
+
+  <div class='item is-active'>
+    <label>{{t 'general.active'}}:</label>
+    {{toggle-yesno yes=isActive toggle=(action 'changeIsActive')}}
+  </div>
+</div>
 
 {{#each newTerms as |term|}}
   <div class='saved-result'>
