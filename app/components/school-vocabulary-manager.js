@@ -43,6 +43,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTermTitle: null,
   isSavingNewTerm: false,
   newTerms: null,
+  classNames: ['school-vocabulary-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);

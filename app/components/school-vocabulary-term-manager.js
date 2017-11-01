@@ -45,6 +45,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTerms: null,
   description: null,
   title: null,
+  classNames: ['school-vocabulary-term-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);
