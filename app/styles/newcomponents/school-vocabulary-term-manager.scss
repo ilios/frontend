@@ -1,7 +1,28 @@
 .school-vocabulary-term-manager {
 
-  .term-title {
-    font-size: 1.1 * $base-font-size;
-    font-weight: bold;
+  .form {
+    @include ilios-form;
+    @include fill-parent;
+    display: block;
+    width: 80%;
+
+    .item {
+      @include ilios-form-item;
+      @include media($large-screen) {
+        @include fill-parent;
+      }
+
+      label {
+        @include fill-parent;
+        display: block;
+      }
+
+      &.is-active {
+        height: 5em;
+      }
+      &.term-description {
+        height: 6em;
+      }
+    }
   }
 }
