@@ -4,13 +4,13 @@
     @include ilios-form;
     @include fill-parent;
     display: block;
+    width: 80%;
 
     .item {
       @include ilios-form-item;
       @include media($large-screen) {
         @include fill-parent;
       }
-      height: 4em;
 
       label {
         @include fill-parent;
