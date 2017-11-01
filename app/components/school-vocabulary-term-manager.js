@@ -118,7 +118,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           const parent = this.get('term');
           const vocabulary = this.get('vocabulary');
           const store = this.get('store');
-          let term = store.createRecord('term', {title, parent, vocabulary});
+          let term = store.createRecord('term', {title, parent, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);
             this.get('newTerms').pushObject(newTerm);
