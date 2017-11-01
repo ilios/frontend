@@ -29,18 +29,6 @@ export default function() {
   this.delete('api/academicyears/:id', 'academicYear');
   this.post('api/academicyears', 'academicYear');
 
-  this.get('api/alertchangetypes', getAll);
-  this.get('api/alertchangetypes/:id', 'alertChangeType');
-  this.put('api/alertchangetypes/:id', 'alertChangeType');
-  this.delete('api/alertchangetypes/:id', 'alertChangeType');
-  this.post('api/alertchangetypes', 'alertChangeType');
-
-  this.get('api/alerts', getAll);
-  this.get('api/alerts/:id', 'alert');
-  this.put('api/alerts/:id', 'alert');
-  this.delete('api/alerts/:id', 'alert');
-  this.post('api/alerts', 'alert');
-
   this.get('api/authentications', getAll);
   this.get('api/authentications/:id', 'authentication');
   this.put('api/authentications/:id', 'authentication');
