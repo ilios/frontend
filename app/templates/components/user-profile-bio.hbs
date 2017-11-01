@@ -171,20 +171,20 @@
         {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
           <span class="message error">{{v-get this 'password' 'message'}}</span>
         {{else if (gt password.length 0)}}
-          <span class='password-strength {{concat "strength-" passwordStrength.score}}'>
-            {{#if (eq passwordStrength.score 0)}}
+          <span class='password-strength {{concat "strength-" (await passwordStrengthScore)}}'>
+            {{#if (eq (await passwordStrengthScore) 0)}}
               {{t 'general.tryHarder'}}
-            {{else if (eq passwordStrength.score 1)}}
+            {{else if (eq (await passwordStrengthScore) 1)}}
               {{t 'general.bad'}}
-            {{else if (eq passwordStrength.score 2)}}
+            {{else if (eq (await passwordStrengthScore) 2)}}
               {{t 'general.weak'}}
-            {{else if (eq passwordStrength.score 3)}}
+            {{else if (eq (await passwordStrengthScore) 3)}}
               {{t 'general.good'}}
-            {{else if (eq passwordStrength.score 4)}}
+            {{else if (eq (await passwordStrengthScore) 4)}}
               {{t 'general.strong'}}
             {{/if}}
           </span>
-          <meter max="4" value={{passwordStrength.score}}></meter>
+          <meter max="4" value={{await passwordStrengthScore}}></meter>
         {{/if}}
         <span class='cancel-password-field clickable link' onclick={{action 'cancelChangeUserPassword'}}>{{t 'general.cancel'}}</span>
 
