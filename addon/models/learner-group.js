@@ -154,25 +154,25 @@ export default Model.extend({
   }),
 
 
-  filterTitle: computed('allDescendants.@each.title', function(){
-    return new Promise(resolve => {
-      this.get('allDescendants').then(allDescendants => {
-        this.get('allParents').then(allParents => {
-          all([
-            map(allDescendants, learnerGroup => learnerGroup.get('title')),
-            map(allParents, learnerGroup => learnerGroup.get('title'))
-          ]).then(titles => {
-            let flat = titles.reduce((flattened, arr) => {
-              return flattened.pushObjects(arr);
-            }, []);
-            flat.pushObject(this.get('title'));
-
-            resolve(flat.join(''));
-          });
-        });
-
-      });
-    });
+  /**
+   * A text string comprised of all learner-group titles in this group's tree.
+   * This includes that titles of all of its ancestors, all its descendants and this group's title itself.
+   * @property filterTitle
+   * @type {Ember.computed}
+   * @public
+   */
+  filterTitle: computed('allDescendants.@each.title', async function(){
+    const allDescendants = await this.get('allDescendants');
+    const allParents = await this.get('allParents');
+    const titles = all([
+      map(allDescendants, learnerGroup => learnerGroup.get('title')),
+      map(allParents, learnerGroup => learnerGroup.get('title'))
+    ]);
+    const flat = titles.reduce((flattened, arr) => {
+      return flattened.pushObjects(arr);
+    }, []);
+    flat.pushObject(this.get('title'));
+    return flat.join('');
   }),
 
   allParents: computed('parent', 'parent.allParents.[]', async function(){
