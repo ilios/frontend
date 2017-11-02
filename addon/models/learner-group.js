@@ -185,7 +185,7 @@ export default Model.extend({
     return [parent].concat(allParents);
   }),
 
-  topLevelGroup: computed('parent', 'parent.topLevelGroup', async function(){
+  topLevelGroup: computed('parent.topLevelGroup', async function(){
     const parent = await this.get('parent');
     if (isEmpty(parent)) {
       return this;
