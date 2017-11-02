@@ -154,7 +154,7 @@ export default Model.extend({
   }),
 
 
-  filterTitle: computed('allDescendants.[].title', function(){
+  filterTitle: computed('allDescendants.@each.title', function(){
     return new Promise(resolve => {
       this.get('allDescendants').then(allDescendants => {
         this.get('allParents').then(allParents => {
