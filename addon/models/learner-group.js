@@ -161,7 +161,7 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  filterTitle: computed('allDescendants.@each.title', async function(){
+  filterTitle: computed('allDescendants.@each.title', 'allParents.@each.title', 'title', async function(){
     const allDescendants = await this.get('allDescendants');
     const allParents = await this.get('allParents');
     const titles = all([
