@@ -185,24 +185,12 @@ export default Model.extend({
     return [parent].concat(allParents);
   }),
 
-  topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
-    return new Ember.RSVP.Promise(
-      resolve => {
-        this.get('parent').then(
-          parent => {
-            if(!parent){
-              resolve(this);
-            } else {
-              parent.get('topLevelGroup').then(
-                topLevelGroup => {
-                  resolve(topLevelGroup);
-                }
-              );
-            }
-          }
-        );
-      }
-    );
+  topLevelGroup: computed('parent', 'parent.topLevelGroup', async function(){
+    const parent = await this.get('parent');
+    if (isEmpty(parent)) {
+      return this;
+    }
+    return await parent.get('topLevelGroup');
   }),
 
   isTopLevelGroup: computed('parent', function(){
