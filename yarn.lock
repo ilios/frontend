@@ -4542,7 +4542,7 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-liquid-fire@0.29.0:
+liquid-fire@^0.29.0:
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/liquid-fire/-/liquid-fire-0.29.0.tgz#d64d07dda3015c0f39215bf2e8c8cb4a67737a1c"
   dependencies:
