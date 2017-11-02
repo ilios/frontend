@@ -3,7 +3,7 @@ import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 const { attr, belongsTo, hasMany, Model } = DS;
-const { computed, isEmpty, RSVP } = Ember;
+const { computed, isEmpty, isNone, RSVP } = Ember;
 const { Promise, map, all } = RSVP;
 
 export default Model.extend({
@@ -89,27 +89,22 @@ export default Model.extend({
     return allUsers.uniq();
   }),
 
-  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
-    return new Promise(resolve => {
-      this.get('users').then(users => {
-        this.get('allDescendants').then(descendants => {
-          let membersAtThisLevel = [];
-          let promises = [];
-          users.forEach(user => {
-            let promise = user.get('learnerGroups').then(userGroups => {
-              var subGroups = userGroups.filter(group => descendants.includes(group));
-              if(subGroups.length === 0){
-                membersAtThisLevel.pushObject(user);
-              }
-            });
-            promises.pushObject(promise);
-          });
-          Ember.RSVP.all(promises).then(() => {
-            resolve(membersAtThisLevel);
-          });
-        });
-      });
+  /**
+   * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
+   * @property usersOnlyAtThisLevel
+   * @type {Ember.computed}
+   * @public
+   */
+  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', async function(){
+    const users = await this.get('users');
+    const descendants = await this.get('allDescendants');
+    const membersAtThisLevel = await map(users, async user => {
+      const userGroups = await user.get('learnerGroups');
+      const subGroups = userGroups.toArray().filter(group => descendants.includes(group));
+      return isEmpty(subGroups) ? user : null;
     });
+
+    return membersAtThisLevel.filter(user => !isNone(user));
   }),
 
   allParentsTitle: computed('allParentTitles', function(){
@@ -157,6 +152,7 @@ export default Model.extend({
     }, []));
     return descendants;
   }),
+
 
   filterTitle: computed('allDescendants.[].title', function(){
     return new Promise(resolve => {
@@ -312,6 +308,7 @@ export default Model.extend({
             return flattened.pushObjects(arr);
           }, []);
           modifiedGroups.pushObjects(flat);
+
           resolve(modifiedGroups.uniq());
         });
       });
