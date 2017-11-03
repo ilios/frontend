@@ -96,6 +96,7 @@
     "ember-truth-helpers": "^2.0.0",
     "ember-uploader": "1.2.3",
     "ember-watson": "^0.9.1",
+    "ember-web-app": "^2.2.0",
     "eslint-plugin-ember": "^4.5.0",
     "ilios-common": "5.2.1",
     "liquid-tether": "2.0.6",

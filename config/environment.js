@@ -19,13 +19,14 @@ module.exports = function (environment) {
     locationType: 'auto',
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
-      'default-src': ["'none'"],
-      'script-src':  ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
-      'font-src':    ["'self'"],
-      'connect-src': ["'self'", 'www.google-analytics.com'],
-      'img-src':     ["'self'", 'data:', 'www.google-analytics.com'],
-      'style-src':   ["'self'", "'unsafe-inline'"],
-      'media-src':   ["'self'"]
+      'default-src':  ["'none'"],
+      'script-src':   ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
+      'font-src':     ["'self'"],
+      'connect-src':  ["'self'", 'www.google-analytics.com'],
+      'img-src':      ["'self'", 'data:', 'www.google-analytics.com'],
+      'style-src':    ["'self'", "'unsafe-inline'"],
+      'media-src':    ["'self'"],
+      'manifest-src': ["'self'"],
     },
     flashMessageDefaults: {
       timeout: 2000,
