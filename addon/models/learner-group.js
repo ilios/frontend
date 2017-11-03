@@ -185,6 +185,12 @@ export default Model.extend({
     return [parent].concat(allParents);
   }),
 
+  /**
+   * The top-level group in this group's parentage tree, or this group itself if it has no parent.
+   * @property topLevelGroup
+   * @type {Ember.computed}
+   * @public
+   */
   topLevelGroup: computed('parent.topLevelGroup', async function(){
     const parent = await this.get('parent');
     if (isEmpty(parent)) {
