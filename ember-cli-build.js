@@ -2,6 +2,7 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
 
 module.exports = function(defaults) {
   let env = EmberApp.env() || 'development';
@@ -9,6 +10,7 @@ module.exports = function(defaults) {
 
   let app = new EmberApp(defaults, {
     fingerprint: {
+      extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest']),
       enabled: isProductionLikeBuild,
     },
     sourcemaps: {
