@@ -14,114 +14,96 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 const { later } = run;
 
 var application;
-var fixtures = {};
 var url = '/courses/1?details=true';
+const today = moment();
 module('Acceptance: Course - Learning Materials', {
   beforeEach: function() {
     application = startApp();
-    fixtures.user = setupAuthentication(application);
-    server.create('school');
+    setupAuthentication(application);
     server.create('academicYear');
-    fixtures.statuses = [];
-    fixtures.statuses.pushObject(server.create('learningMaterialStatus', {
-      learningMaterials: [1]
-    }));
-    fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 5));
-    fixtures.roles = server.createList('learningMaterialUserRole', 3);
-    fixtures.meshDescriptors = [];
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor'));
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      courseLearningMaterials: [1],
-    }));
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      courseLearningMaterials: [1],
-    }));
-    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 3));
-    fixtures.learningMaterials = [];
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+    server.create('learningMaterialStatus', {
+      learningMaterialIds: [1]
+    });
+    server.createList('learningMaterialStatus', 5);
+    server.createList('learningMaterialUserRole', 3);
+    server.createList('meshDescriptor', 6);
+    server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: true,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-      courseLearningMaterials: [1],
-      uploadDate: new Date('2015-02-12'),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      uploadDate: moment('2015-02-12').toDate(),
+    });
+    server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
-      courseLearningMaterials: [2],
-      uploadDate: new Date('2011-03-14'),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      uploadDate: moment('2011-03-14').toDate(),
+    });
+    server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
-      status: 1,
-      userRole: 1,
-      owningUser: 4136,
-      courseLearningMaterials: [3],
-      uploadDate: new Date(),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      statusId: 1,
+      owningUserId: 4136,
+      userRoleId: 1,
+      uploadDate: today.toDate(),
+    });
+    server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
-      status: 1,
-      userRole: 1,
-      owningUser: 4136,
-      courseLearningMaterials: [4],
-      uploadDate: new Date('2016-12-12'),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      statusId: 1,
+      userRoleId: 1,
+      owningUserId: 4136,
+      uploadDate: moment('2016-12-12').toDate(),
+    });
+    server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
       originalAuthor: 'Marty McFly',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: true,
-      courseLearningMaterials: [],
-      uploadDate: new Date('2016-03-03'),
+      uploadDate: moment('2016-03-03').toDate(),
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt'
-    }));
-    fixtures.courseLearningMaterials = [];
-    fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
-      learningMaterial: 1,
-      course: 1,
+    });
+    server.create('courseLearningMaterial',{
+      learningMaterialId: 1,
+      courseId: 1,
       required: false,
-      meshDescriptors: [2,3],
+      meshDescriptorIds: [2,3],
       position: 0,
-    }));
-    fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
-      learningMaterial: 2,
-      course: 1,
+    });
+    server.create('courseLearningMaterial',{
+      learningMaterialId: 2,
+      courseId: 1,
       required: false,
       position: 1,
-    }));
-    fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
-      learningMaterial: 3,
-      course: 1,
+    });
+    server.create('courseLearningMaterial',{
+      learningMaterialId: 3,
+      courseId: 1,
       publicNotes: false,
       position: 2,
-    }));
-    fixtures.courseLearningMaterials.pushObject(server.create('courseLearningMaterial',{
-      learningMaterial: 4,
-      course: 1,
+    });
+    server.create('courseLearningMaterial',{
+      learningMaterialId: 4,
+      courseId: 1,
       position: 3,
       notes: 'test notes',
-    }));
+    });
 
-    fixtures.course = server.create('course', {
+    server.create('course', {
       year: 2013,
-      school: 1,
-      learningMaterials: [1, 2, 3, 4],
+      schoolId: 1,
     });
   },
 
@@ -130,40 +112,74 @@ module('Acceptance: Course - Learning Materials', {
   }
 });
 
-test('list learning materials', async function(assert) {
+test('list learning materials', async function (assert) {
+  server.logging = true;
   await visit(url);
-  const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
-  const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
   assert.equal(currentPath(), 'course.index');
-  let container = find('.detail-learningmaterials');
-  let rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
-  for (let i = 0; i < fixtures.course.learningMaterials.length; i++){
-    let row = rows.eq(i);
-    let courseLm = fixtures.courseLearningMaterials[fixtures.course.learningMaterials[i] - 1];
-    let lm = fixtures.learningMaterials[courseLm.learningMaterial - 1];
-    assert.equal(getElementText(find('td:eq(0)', row)), getText(lm.title));
-    // TODO: not checking for exact type icon yet, see comment below [ST 2017/08/01]
-    assert.equal(find('td:eq(0) .lm-type-icon i.fa', row).length, 1, 'LM type icon is present.');
-    //TODO: we are no longer populating for 'type', so we need to pull all these tests out
-    //of the loop and test individually
-    //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
-    assert.equal(getElementText(find('td:eq(1)', row)), getText(userName));
-    let required = courseLm.required?'Yes':'No';
-    assert.equal(getElementText(find('td:eq(2)', row)), getText(required));
-    let notes = courseLm.notes? 'Yes' : 'No';
-    assert.equal(getElementText(find('td:eq(3)', row)), getText(notes));
-    let notesBool = courseLm.notes? true : false;
-    let publicNotes = courseLm.publicNotes ? true : false;
-    assert.equal(find('td:eq(3) i', row).hasClass('fa-eye'), publicNotes && notesBool);
-    if ('meshDescriptors' in courseLm) {
-      for(let i = 0; i < courseLm.meshDescriptors.length; i++){
-        assert.equal(getElementText(find('td:eq(4) li').eq(i)), getText(fixtures.meshDescriptors[courseLm.meshDescriptors[i] - 1].name));
-      }
-    } else {
-      assert.equal(getElementText(find('td:eq(4)', row)), 'None');
-    }
-  }
+  const courseLearningMaterials = '.detail-learningmaterials .detail-learningmaterials-content tbody tr';
+  const title = 'td:eq(0)';
+  const owner = 'td:eq(1)';
+  const required = 'td:eq(2)';
+  const notes = 'td:eq(3)';
+  const mesh = 'td:eq(4)';
+  const status = 'td:eq(5)';
+
+  const firstTitle = `${courseLearningMaterials}:eq(0) ${title}`;
+  const firstOwner = `${courseLearningMaterials}:eq(0) ${owner}`;
+  const firstRequired = `${courseLearningMaterials}:eq(0) ${required}`;
+  const firstNotes = `${courseLearningMaterials}:eq(0) ${notes}`;
+  const firstMesh = `${courseLearningMaterials}:eq(0) ${mesh}`;
+  const firstStatus = `${courseLearningMaterials}:eq(0) ${status}`;
+
+  const secondTitle = `${courseLearningMaterials}:eq(1) ${title}`;
+  const secondOwner = `${courseLearningMaterials}:eq(1) ${owner}`;
+  const secondRequired = `${courseLearningMaterials}:eq(1) ${required}`;
+  const secondNotes = `${courseLearningMaterials}:eq(1) ${notes}`;
+  const secondMesh = `${courseLearningMaterials}:eq(1) ${mesh}`;
+  const secondStatus = `${courseLearningMaterials}:eq(1) ${status}`;
+
+  const thirdTitle = `${courseLearningMaterials}:eq(2) ${title}`;
+  const thirdOwner = `${courseLearningMaterials}:eq(2) ${owner}`;
+  const thirdRequired = `${courseLearningMaterials}:eq(2) ${required}`;
+  const thirdNotes = `${courseLearningMaterials}:eq(2) ${notes}`;
+  const thirdMesh = `${courseLearningMaterials}:eq(2) ${mesh}`;
+  const thirdStatus = `${courseLearningMaterials}:eq(2) ${status}`;
+
+  const fourthTitle = `${courseLearningMaterials}:eq(3) ${title}`;
+  const fourthOwner = `${courseLearningMaterials}:eq(3) ${owner}`;
+  const fourthRequired = `${courseLearningMaterials}:eq(3) ${required}`;
+  const fourthNotes = `${courseLearningMaterials}:eq(3) ${notes}`;
+  const fourthMesh = `${courseLearningMaterials}:eq(3) ${mesh}`;
+  const fourthStatus = `${courseLearningMaterials}:eq(3) ${status}`;
+
+  assert.equal(find(courseLearningMaterials).length, 4);
+  assert.equal(getElementText(firstTitle), getText('learning material 0'));
+  assert.equal(getElementText(firstOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(firstRequired), getText('No'));
+  assert.equal(getElementText(firstNotes), getText('No'));
+  assert.equal(getElementText(firstMesh), getText('descriptor 1 descriptor 2'));
+  assert.equal(getElementText(firstStatus), getText('status 0'));
+
+  assert.equal(getElementText(secondTitle), getText('learning material 1'));
+  assert.equal(getElementText(secondOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(secondRequired), getText('No'));
+  assert.equal(getElementText(secondNotes), getText('No'));
+  assert.equal(getElementText(secondMesh), getText('None'));
+  assert.equal(getElementText(secondStatus), getText('status 0'));
+
+  assert.equal(getElementText(thirdTitle), getText('learning material 2'));
+  assert.equal(getElementText(thirdOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(thirdRequired), getText('Yes'));
+  assert.equal(getElementText(thirdNotes), getText('No'));
+  assert.equal(getElementText(thirdMesh), getText('None'));
+  assert.equal(getElementText(thirdStatus), getText('status 0'));
+
+  assert.equal(getElementText(fourthTitle), getText('learning material 3'));
+  assert.equal(getElementText(fourthOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(fourthRequired), getText('Yes'));
+  assert.equal(getElementText(fourthNotes), getText('Yes'));
+  assert.equal(getElementText(fourthMesh), getText('None'));
+  assert.equal(getElementText(fourthStatus), getText('status 0'));
 });
 
 test('create new link learning material', async function(assert) {
@@ -178,7 +194,7 @@ test('create new link learning material', async function(assert) {
   let rows = find('.learning-material-table tbody tr', container);
 
   assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 4);
   await click('.detail-learningmaterials-actions .button', container);
   //pick the link type
   await click('.detail-learningmaterials-actions ul li:eq(1)');
@@ -186,8 +202,7 @@ test('create new link learning material', async function(assert) {
   //check that we got the right form
   let labels = find('.detail-learningmaterials .new-learningmaterial label');
   assert.equal(labels.length, 7);
-  const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
-  const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
+  const userName = `0 guy M. Mc0son`;
   assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
   let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
   let inputs = find('input', newLmContainer);
@@ -195,15 +210,15 @@ test('create new link learning material', async function(assert) {
   await fillIn(inputs.eq(0), testTitle);
   await fillIn(inputs.eq(1), testAuthor);
   await fillIn(inputs.eq(2), testUrl);
-  await pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
-  await pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
+  await pickOption(selectBoxes[0], 'status 2', assert);
+  await pickOption(selectBoxes[1], 'Role 2', assert);
   find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
   find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
   await click('.detail-learningmaterials .new-learningmaterial .done');
   container = find('.detail-learningmaterials');
   rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
-  let row = rows.eq(fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 5);
+  let row = rows.eq(4);
   assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
 });
 
@@ -219,7 +234,7 @@ test('create new citation learning material', async function(assert) {
   let rows = find('.learning-material-table tbody tr', container);
 
   assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 4);
   await click('.detail-learningmaterials-actions .button', container);
   //pick the citation type
   await click('.detail-learningmaterials-actions ul li:eq(2)');
@@ -227,8 +242,7 @@ test('create new citation learning material', async function(assert) {
   //check that we got the right form
   let labels = find('.detail-learningmaterials .new-learningmaterial label');
   assert.equal(labels.length, 7);
-  const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
-  const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
+  const userName = `0 guy M. Mc0son`;
   assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
   let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
   let inputs = find('input', newLmContainer);
@@ -236,15 +250,15 @@ test('create new citation learning material', async function(assert) {
   await fillIn(inputs.eq(0), testTitle);
   await fillIn(inputs.eq(1), testAuthor);
   await fillIn(find('textarea', newLmContainer).eq(0), testCitation);
-  await pickOption(selectBoxes[0], fixtures.statuses[2].title, assert);
-  await pickOption(selectBoxes[1], fixtures.roles[2].title, assert);
+  await pickOption(selectBoxes[0], 'status 2', assert);
+  await pickOption(selectBoxes[1], 'Role 2', assert);
   find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
   find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
   await click('.detail-learningmaterials .new-learningmaterial .done');
   container = find('.detail-learningmaterials');
   rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
-  let row = rows.eq(fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 5);
+  let row = rows.eq(4);
   assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
 });
 
@@ -271,12 +285,12 @@ test('cancel new learning material', async function(assert) {
   await visit(url);
   let container = find('.detail-learningmaterials');
   let rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 4);
   await click('.detail-learningmaterials-actions .button', container);
   await click('.detail-learningmaterials-actions ul li:eq(0)');
   await click('.detail-learningmaterials .new-learningmaterial .cancel');
   rows = find('.detail-learningmaterials .learning-material-table tbody tr');
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 4);
 
   await wait();
 });
@@ -285,9 +299,9 @@ test('view copyright file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
   var container = $('.learningmaterial-manager');
-  assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
-  assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
-  assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
+  assert.equal(getElementText(find('.displayname', container)), getText('learning material 0'));
+  assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
+  assert.equal(getElementText(find('.description', container)), getText('0 lm description'));
   assert.equal(getElementText(find('.copyrightpermission', container)), getText('Yes'));
   assert.equal(find('.copyrightrationale', container).length, 0);
 });
@@ -296,10 +310,10 @@ test('view rationale file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(1) td:eq(0) .link');
   var container = $('.learningmaterial-manager');
-  assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
-  assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
-  assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
-  assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
+  assert.equal(getElementText(find('.displayname', container)), getText('learning material 1'));
+  assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
+  assert.equal(getElementText(find('.description', container)), getText('1 lm description'));
+  assert.equal(getElementText(find('.copyrightrationale', container)), getText('reason is thus'));
   assert.equal(find('.citation', container).length, 0);
   assert.equal(find('.link', container).length, 0);
 });
@@ -308,13 +322,12 @@ test('view url file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(1) td:eq(0) .link');
   var container = $('.learningmaterial-manager');
-  assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
-  assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
-  assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
-  assert.equal(getElementText(find('.upload-date', container)),
-    moment(fixtures.learningMaterials[1].uploadDate).format('M-D-YYYY'));
-  assert.equal(getElementText(find('.downloadurl', container)), getText(fixtures.learningMaterials[1].filename));
-  assert.equal(find('.downloadurl a', container).attr('href'), fixtures.learningMaterials[1].absoluteFileUri);
+  assert.equal(getElementText(find('.displayname', container)), getText('learning material 1'));
+  assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
+  assert.equal(getElementText(find('.description', container)), getText('1 lm description'));
+  assert.equal(getElementText(find('.upload-date', container)), moment('2011-03-14').format('M-D-YYYY'));
+  assert.equal(getElementText(find('.downloadurl', container)), getText('filename'));
+  assert.equal(find('.downloadurl a', container).attr('href'), 'http://example.com/file');
   assert.equal(find('.citation', container).length, 0);
   assert.equal(find('.link', container).length, 0);
 });
@@ -323,11 +336,11 @@ test('view link learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(2) td:eq(0) .link');
   var container = $('.learningmaterial-manager');
-  assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[2].title));
-  assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
-  assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
-  assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
-  assert.equal(getElementText(find('.upload-date', container)), moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
+  assert.equal(getElementText(find('.displayname', container)), getText('learning material 2'));
+  assert.equal(getElementText(find('.originalauthor', container)), getText('Hunter Pence'));
+  assert.equal(getElementText(find('.description', container)), getText('2 lm description'));
+  assert.equal(getElementText(find('.link', container)), getText('www.example.com'));
+  assert.equal(getElementText(find('.upload-date', container)), today.format('M-D-YYYY'));
   assert.equal(find('.copyrightpermission', container).length, 0);
   assert.equal(find('.copyrightrationale', container).length, 0);
   assert.equal(find('.citation', container).length, 0);
@@ -338,12 +351,11 @@ test('view citation learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(3) td:eq(0) .link');
   var container = $('.learningmaterial-manager');
-  assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[3].title));
-  assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
-  assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
-  assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
-  assert.equal(getElementText(find('.upload-date', container)),
-    moment(fixtures.learningMaterials[3].uploadDate).format('M-D-YYYY'));
+  assert.equal(getElementText(find('.displayname', container)), getText('learning material 3'));
+  assert.equal(getElementText(find('.originalauthor', container)), getText('Willie Mays'));
+  assert.equal(getElementText(find('.description', container)), getText('3 lm description'));
+  assert.equal(getElementText(find('.citation', container)), getText('a citation'));
+  assert.equal(getElementText(find('.upload-date', container)), moment('2016-12-12').format('M-D-YYYY'));
   assert.equal(find('.copyrightrationale', container).length, 0);
   assert.equal(find('.file', container).length, 0);
   assert.equal(find('.copyrightpermission', container).length, 0);
@@ -359,7 +371,7 @@ test('edit learning material', async function(assert) {
   assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while in edit mode');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
-  await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
+  await pickOption(find('.status select', container), 'status 2', assert);
   let newNote = 'text text.  Woo hoo!';
   find('.notes .fr-box', container).froalaEditor('html.set', newNote);
   find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
@@ -367,7 +379,7 @@ test('edit learning material', async function(assert) {
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('Yes'));
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('Yes'), 'there is content in notes');
   assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is false and `eye` icon is not visible');
-  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText(fixtures.statuses[2].title));
+  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText('status 2'));
 
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
   container = $('.learningmaterial-manager');
@@ -382,12 +394,12 @@ test('cancel editing learning material', async function(assert) {
   var container = $('.learningmaterial-manager');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
-  await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
+  await pickOption(find('.status select', container), 'status 2', assert);
   await click(find('.buttons .cancel', container));
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('No'));
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('No'), 'no content is available under notes');
   assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
-  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText(fixtures.statuses[0].title));
+  assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText('status 0'));
   await wait();
 });
 
@@ -398,13 +410,10 @@ test('manage terms', async function(assert) {
   await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
 
   let meshManager = find('.mesh-manager', container).eq(0);
-  let material = fixtures.courseLearningMaterials[0];
   let removableItems = find('.removable-list li', meshManager);
-  assert.equal(removableItems.length, material.meshDescriptors.length);
-  for (let i = 0; i < material.meshDescriptors.length; i++){
-    let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
-  }
+  assert.equal(removableItems.length, 2);
+  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 1'));
+  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   let searchBox = find('.search-box', meshManager);
   assert.equal(searchBox.length, 1);
@@ -414,35 +423,29 @@ test('manage terms', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('span.search-icon', searchBox);
   let searchResults = find('.mesh-search-results li', meshManager);
-  assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+  assert.equal(searchResults.length, 6);
 
-  for(let i = 0; i < fixtures.meshDescriptors.length; i++){
+  for(let i = 0; i < 6; i++){
     let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
+    assert.equal(getElementText(meshDescriptorName), getText(`descriptor ${i}`));
   }
 
-  for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-    if(material.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-      assert.ok($(searchResults[i]).hasClass('disabled'));
-    } else {
-      assert.ok(!$(searchResults[i]).hasClass('disabled'));
-    }
-  }
+  assert.notOk($(searchResults[0]).hasClass('disabled'));
+  assert.ok($(searchResults[1]).hasClass('disabled'));
+  assert.ok($(searchResults[2]).hasClass('disabled'));
+  assert.notOk($(searchResults[3]).hasClass('disabled'));
+  assert.notOk($(searchResults[4]).hasClass('disabled'));
+  assert.notOk($(searchResults[5]).hasClass('disabled'));
+
   await click('.removable-list li:eq(0)', meshManager);
   assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
   await click(searchResults[0]);
   assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
 
-  let newExpectedMesh = [
-    fixtures.meshDescriptors[0],
-    fixtures.meshDescriptors[2]
-  ];
   removableItems = find('.removable-list li', meshManager);
   assert.equal(removableItems.length, 2);
-  for (let i = 0; i < 2; i++){
-    let meshDescriptorName = find('.title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
-  }
+  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 0'));
+  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   await wait();
 });
@@ -460,7 +463,7 @@ test('save terms', async function(assert) {
   await click('.removable-list li:eq(0)', meshManager);
   await click(searchResults[0]);
   await click('.buttons .done', container);
-  let expectedMesh = fixtures.meshDescriptors[0].name + fixtures.meshDescriptors[2].name;
+  let expectedMesh = 'descriptor 0' + 'descriptor 2';
   let tds = find('.learning-material-table tbody tr:eq(0) td');
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
 });
@@ -481,7 +484,7 @@ test('cancel term changes', async function(assert) {
   await click(searchResults[4]);
   await click('.buttons .cancel', container);
   let tds = find('.learning-material-table tbody tr:eq(0) td');
-  let expectedMesh = fixtures.meshDescriptors[1].name + fixtures.meshDescriptors[2].name;
+  let expectedMesh = 'descriptor 1' + 'descriptor 2';
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
 });
 
@@ -490,7 +493,7 @@ test('find and add learning material', async function(assert) {
   assert.equal(currentPath(), 'course.index');
   let container = find('.detail-learningmaterials');
   let rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.course.learningMaterials.length);
+  assert.equal(rows.length, 4);
 
   let searchBoxInput = find('input', container);
   await fillIn(searchBoxInput, 'doc');
@@ -505,12 +508,12 @@ test('find and add learning material', async function(assert) {
     assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)')),
       getText('Owner: 0 guy M. Mc0son'));
     assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(1)')),
-      getText('Content Author: ' + fixtures.learningMaterials[4].originalAuthor));
+      getText('Content Author: ' + 'Marty Mc Fly'));
     assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(2)')),
-      getText('Upload date: ' + moment(fixtures.learningMaterials[4].uploadDate).format('M-D-YYYY')));
+      getText('Upload date: ' + moment('2016-03-03').format('M-D-YYYY')));
     await click(searchResults[0]);
     rows = find('.learning-material-table tbody tr', container);
-    assert.equal(rows.length, fixtures.course.learningMaterials.length + 1);
+    assert.equal(rows.length, 5);
   }, 1000);
   await wait();
 });
