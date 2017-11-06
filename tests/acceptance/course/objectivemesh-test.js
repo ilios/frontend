@@ -21,34 +21,25 @@ module('Acceptance: Course - Objective Mesh Descriptors', {
     server.createList('cohort', 2);
 
     fixtures.meshDescriptors = [];
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      objectives: [1],
-    }));
-    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 5, {
-      objectives: [2],
-    }));
+    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 6));
     fixtures.courseObjectives = [];
     fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1],
-      meshDescriptors: [1]
+      meshDescriptorIds: [1]
     }));
     fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1],
-      meshDescriptors: [2,3,4,5,6]
+      meshDescriptorIds: [2,3,4,5,6]
     }));
-    fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1]
-    }));
+    fixtures.courseObjectives.pushObject(server.create('objective'));
     //create some other objectives not in this course
     server.createList('objective', 2);
 
-    //create some extra descriptors that shoulnd't be found in search
+    //create some extra descriptors that shouldn't be found in search
     server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
 
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      objectives: [1,2,3]
+      schoolId: 1,
+      objectiveIds: [1,2,3]
     });
   },
 
@@ -70,7 +61,7 @@ test('manage terms', async function(assert) {
   assert.equal(removableItems.length, objective.meshDescriptors.length);
   for (let i = 0; i < objective.meshDescriptors.length; i++){
     let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors.models[i].id - 1].name));
   }
 
   let searchBox = find('.search-box', meshManager);
@@ -86,9 +77,8 @@ test('manage terms', async function(assert) {
     let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
     assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
   }
-
   for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-    if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+    if(objective.attrs.meshDescriptorIds.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
       assert.ok($(searchResults[i]).hasClass('disabled'));
     } else {
       assert.ok(!$(searchResults[i]).hasClass('disabled'));
@@ -149,6 +139,5 @@ test('cancel changes', async function(assert) {
   await click(searchResults[3]);
   await click('button.bigcancel', detailObjectives);
   let tds = find('.course-objective-list tbody tr:eq(0) td');
-  let expectedMesh = fixtures.meshDescriptors[fixtures.courseObjectives[0].meshDescriptors[0] - 1].name;
-  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
+  assert.equal(getElementText(tds.eq(2)), getText('descriptor 0'));
 });

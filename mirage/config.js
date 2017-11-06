@@ -35,11 +35,12 @@ export default function() {
   this.delete('api/authentications/:id', 'authentication');
   this.post('api/authentications', 'authentication');
 
-  this.get('api/cohorts', ({ db }, request) => {
+  this.get('api/cohorts', (schema, request) => {
     const params = request.queryParams;
     const keys = Object.keys(params);
     const schoolKey = 'filters[schools]';
     if (keys.includes(schoolKey)) {
+      const { db } = schema;
       const schoolsFilter = params[schoolKey];
       const cohorts = db.cohorts.filter(cohort => {
         const programYearId = parseInt(cohort.programYear);
@@ -54,7 +55,7 @@ export default function() {
       return {cohorts};
 
     } else {
-      return getAll(db, request);
+      return getAll(schema, request);
     }
   });
   this.get('api/cohorts/:id', 'cohort');
