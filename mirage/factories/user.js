@@ -1,4 +1,4 @@
-import { Factory, association } from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
   id: i => i + 1,
@@ -7,6 +7,4 @@ export default Factory.extend({
   email: 'user@example.edu',
   middleName: 'M,',
   enabled: true,
-  roles: [],
-  school: association(),
 });
