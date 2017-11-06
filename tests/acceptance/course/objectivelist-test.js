@@ -9,7 +9,6 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import wait from 'ember-test-helpers/wait';
 
 var application;
-var fixtures = {};
 var url = '/courses/1?details=true&courseObjectiveDetails=true';
 module('Acceptance: Course - Objective List', {
   beforeEach: function() {
@@ -30,71 +29,54 @@ module('Acceptance: Course - Objective List', {
 
 test('list objectives', async function(assert) {
   assert.expect(40);
-  fixtures.competencies = [];
-  fixtures.competencies.pushObjects(server.createList('competency', 2));
-  fixtures.parentObjectives = [];
-  fixtures.parentObjectives.pushObject(server.create('objective', {
-    children: [3],
-    competency: 1
-  }));
-  fixtures.parentObjectives.pushObject(server.create('objective', {
-    children: [4]
-  }));
+  let competencies = [];
+  competencies.pushObjects(server.createList('competency', 2));
 
-  fixtures.meshDescriptors = [];
-  fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-    objectives: [2,3],
+  let parentObjectives = [];
+  parentObjectives.pushObject(server.create('objective', {
+    competencyId: 1
   }));
-  fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-    objectives: [3],
+  parentObjectives.pushObject(server.create('objective'));
+
+  let meshDescriptors = [];
+  meshDescriptors.pushObject(server.createList('meshDescriptor', 3));
+  let courseObjectives = [];
+  courseObjectives.pushObject(server.create('objective', {
+    parentIds: [1],
+    meshDescriptorIds: [1]
   }));
-  fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 5, {
-    objectives: [3],
+  courseObjectives.pushObject(server.create('objective', {
+    parentIds: [2],
+    meshDescriptorIds: [1,2]
   }));
-  fixtures.courseObjectives = [];
-  fixtures.courseObjectives.pushObject(server.create('objective', {
-    courses: [1, 2],
-    parents: [1],
-    meshDecriptors: [1]
-  }));
-  fixtures.courseObjectives.pushObject(server.create('objective', {
-    courses: [1],
-    parents: [2],
-    meshDecriptors: [1,2]
-  }));
-  fixtures.courseObjectives.pushObjects(server.createList('objective', 11, {
-    courses: [1],
-  }));
-  fixtures.course = server.create('course', {
+  courseObjectives.pushObjects(server.createList('objective', 11));
+  server.create('course', {
     year: 2013,
-    school: 1,
-    objectives: [3,4,5,6,7,8,9,10,11,12,13,14,15]
+    schoolId: 1,
+    objectiveIds: [3,4,5,6,7,8,9,10,11,12,13,14,15]
   });
   await visit(url);
   let objectiveRows = find('.course-objective-list tbody tr');
-  assert.equal(objectiveRows.length, fixtures.courseObjectives.length);
+  assert.equal(objectiveRows.length, courseObjectives.length);
 
-  var extractMeshName = function(id){
-    return fixtures.meshDescriptors[id - 1].name;
-  };
-
-  for(let i = 0; i < fixtures.courseObjectives.length; i++){
+  for(let i = 0; i < courseObjectives.length; i++){
     let tds = find('td', objectiveRows.eq(i));
-    let objective = fixtures.courseObjectives[i];
+    let objective = courseObjectives[i];
 
     let parentTitle = '';
-    if('parents' in objective){
-      let parentObjective = fixtures.parentObjectives[objective.parents[0] - 1];
-      parentTitle = parentObjective.title;
-      if('competency' in parentObjective){
-        parentTitle += `(${fixtures.competencies[parentObjective.competency - 1].title})`;
+    if (objective.parents.length) {
+      const parent = objective.parents.models[0]
+      parentTitle = parent.title;
+      const competency = parent.competency;
+      if(competency){
+        parentTitle += `(${competency.title})`;
       }
     } else {
       parentTitle = 'Add New';
     }
     let meshTitle;
-    if('meshDescriptors' in objective){
-      meshTitle = objective.meshDescriptors.map(extractMeshName).join('');
+    if(objective.meshDescriptors.length){
+      meshTitle =  objective.meshDescriptors.models.mapBy('name').join('');
     } else {
       meshTitle = 'Add New';
     }
@@ -109,14 +91,13 @@ test('long objective', async function(assert) {
   assert.expect(3);
   var longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tempor neque ut egestas. In cursus dignissim erat, sed porttitor mauris tincidunt at. Nunc et tortor in purus facilisis molestie. Phasellus in ligula nisi. Nam nec mi in urna mollis pharetra. Suspendisse in nibh ex. Curabitur maximus diam in condimentum pulvinar. Phasellus sit amet metus interdum, molestie turpis vel, bibendum eros. In fermentum elit in odio cursus cursus. Nullam ipsum ipsum, fringilla a efficitur non, vehicula vitae enim. Duis ultrices vitae neque in pulvinar. Nulla molestie vitae quam eu faucibus. Vestibulum tempor, tellus in dapibus sagittis, velit purus maximus lectus, quis ullamcorper sem neque quis sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed commodo risus sed tellus imperdiet, ac suscipit justo scelerisque. Quisque sit amet nulla efficitur, sollicitudin sem in, venenatis mi. Quisque sit amet neque varius, interdum quam id, condimentum ipsum. Quisque tincidunt efficitur diam ut feugiat. Duis vehicula mauris elit, vel vehicula eros commodo rhoncus. Phasellus ac eros vel turpis egestas aliquet. Nam id dolor rutrum, imperdiet purus ac, faucibus nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquam leo eget quam varius ultricies. Suspendisse pellentesque varius mi eu luctus. Integer lacinia ornare magna, in egestas quam molestie non.';
   server.create('objective', {
-    courses: [1],
     title: longTitle
   });
 
-  fixtures.course = server.create('course', {
+  server.create('course', {
     year: 2013,
-    school: 1,
-    objectives: [1]
+    schoolId: 1,
+    objectiveIds: [1]
   });
   await visit(url);
   let objectiveRows = find('.course-objective-list tbody tr');
@@ -129,14 +110,12 @@ test('long objective', async function(assert) {
 
 test('edit objective title', async function(assert) {
   assert.expect(3);
-  var objective = server.create('objective', {
-    courses: [1],
-  });
+  var objective = server.create('objective');
 
-  fixtures.course = server.create('course', {
+  server.create('course', {
     year: 2013,
-    school: 1,
-    objectives: [1]
+    schoolId: 1,
+    objectiveIds: [1]
   });
   await visit(url);
   var container = find('.course-objective-list');
@@ -155,14 +134,12 @@ test('edit objective title', async function(assert) {
 
 test('empty objective title can not be saved', async function(assert) {
   assert.expect(4);
-  server.create('objective', {
-    courses: [1],
-  });
+  server.create('objective');
 
   server.create('course', {
     year: 2013,
-    school: 1,
-    objectives: [1]
+    schoolId: 1,
+    objectiveIds: [1]
   });
   await visit(url);
   const container = '.course-objective-list';
