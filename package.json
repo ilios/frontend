@@ -97,7 +97,7 @@
     "ember-watson": "^0.9.1",
     "eslint-plugin-ember": "^4.5.0",
     "ilios-common": "5.2.1",
-    "liquid-tether": "2.0.5",
+    "liquid-tether": "2.0.6",
     "loader.js": "^4.2.3",
     "normalize.css": "^7.0.0",
     "validator": "^9.0.0"
