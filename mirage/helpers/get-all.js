@@ -1,5 +1,6 @@
 /*eslint no-console: 0*/
 import getName from './get-name';
+import { Collection } from 'ember-cli-mirage';
 
 export default function getAll(schema, request){
   //turn /api/programyears?limit=1 into 'programYears'
@@ -22,7 +23,7 @@ export default function getAll(schema, request){
 }
 
 /*
- * querParams is kind of a mess and comes with values like filters[id]: [4,5,6]
+ * queryParams is kind of a mess and comes with values like filters[id]: [4,5,6]
  * so we have to pull out the params with filter in them then test against their
  * values in order to see if an object meets all the requirements
  */
@@ -76,7 +77,7 @@ const filterByFilterParams = function(all, filterParams){
   if (filterParams.length == 0) {
     return all;
   }
-  const results = all.filter(function(obj){
+  const results = all.filter(function (obj) {
     let match = true;
     filterParams.forEach(filter => {
       let value = filter.value;
@@ -91,6 +92,11 @@ const filterByFilterParams = function(all, filterParams){
           match = obj[param].some(function(p) {
             return (arr.indexOf(p.toString()) !== -1);
           });
+        } else if (obj[param] instanceof Collection) {
+          let result = obj[param].filter(model => {
+            return (arr.indexOf(model.id.toString()) !== -1);
+          });
+          match = result.length > 0;
         } else {
           if(!(param in obj) || arr.indexOf(obj[param].toString()) === -1) {
             match = false;
