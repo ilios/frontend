@@ -46,6 +46,14 @@ export default Ember.Service.extend({
     return this.itemFromConfig('trackingCode');
   }),
 
+  loginUrl: computed('config.loginUrl', function(){
+    return this.itemFromConfig('loginUrl');
+  }),
+
+  casLoginUrl: computed('config.casLoginUrl', function(){
+    return this.itemFromConfig('casLoginUrl');
+  }),
+
   apiNameSpace: computed('serverVariables.apiNameSpace', function(){
     const serverVariables = this.get('serverVariables');
     const apiNameSpace = serverVariables.get('apiNameSpace');
