@@ -203,21 +203,16 @@ export default Model.extend({
     return isEmpty(this.belongsTo('parent').id());
   }),
 
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
-    return new Promise(resolve => {
-      let users = [];
-      this.get('instructors').then(instructors => {
-        users.pushObjects(instructors.toArray());
-        this.get('instructorGroups').then(instructorGroups => {
-          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
-            arr.forEach(groupInstructors =>{
-              users.pushObjects(groupInstructors.toArray());
-            });
-            resolve(users.uniq());
-          });
-        });
-      });
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', async function(){
+    const allInstructors = [];
+    const instructors = await this.get('instructors');
+    allInstructors.pushObjects(instructors.toArray());
+    const instructorGroups = await this.get('instructorGroups');
+    const listsOfGroupInstructors = await all(instructorGroups.mapBy('users'));
+    listsOfGroupInstructors.forEach(groupInstructors => {
+      allInstructors.pushObjects(groupInstructors.toArray());
     });
+    return users;
   }),
 
   school: computed('cohort.programYear.program.school', async function(){
