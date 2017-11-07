@@ -2968,7 +2968,7 @@ ember-cli-broccoli-sane-watcher@^2.0.4:
     rsvp "^3.0.18"
     sane "^1.1.1"
 
-ember-cli-clipboard@0.8.0, ember-cli-clipboard@^0.8.0:
+ember-cli-clipboard@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/ember-cli-clipboard/-/ember-cli-clipboard-0.8.0.tgz#c2e91290b2746c1a4903097f5d7a55406de539b1"
   dependencies:
