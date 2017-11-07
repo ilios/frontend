@@ -240,28 +240,21 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
-    return new Promise(resolve => {
-      const userIds = this.hasMany('users').ids();
-      if (userIds.length) {
-        resolve(true);
-      }
-      this.get('children').then(children => {
-        if(! children.get('length')) {
-          resolve(false);
-          return;
-        }
+  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', async function() {
+    const userIds = this.hasMany('users').ids();
+    if (userIds.length) {
+      return true;
+    }
 
-        let promises = children.map(subgroup => {
-          return subgroup.get('hasLearnersInGroupOrSubgroups');
-        });
-        all(promises).then(hasLearnersInSubgroups => {
-          resolve(hasLearnersInSubgroups.reduce((acc, val) => {
-            return (acc || val);
-          }, false));
-        });
-      });
-    });
+    const children = await this.get('children');
+    if(! children.get('length')) {
+      return false;
+    }
+
+    const hasLearnersInSubgroups = await all(children.map('hasLearnersInGroupOrSubgroups'));
+    return hasLearnersInSubgroups.reduce((acc, val) => {
+      return (acc || val);
+    }, false);
   }),
 
   destroyChildren: function(){
