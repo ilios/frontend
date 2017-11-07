@@ -214,7 +214,7 @@ export default Model.extend({
     listsOfGroupInstructors.forEach(groupInstructors => {
       allInstructors.pushObjects(groupInstructors.toArray());
     });
-    return users;
+    return allInstructors;
   }),
 
   school: computed('cohort.programYear.program.school', async function(){
