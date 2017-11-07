@@ -220,18 +220,11 @@ export default Model.extend({
     });
   }),
 
-  school: computed('cohort.programYear.program.school', function(){
-    return new Promise(resolve => {
-      this.get('cohort').then(cohort => {
-        cohort.get('programYear').then(programYear => {
-          programYear.get('program').then(program => {
-            program.get('school').then(school => {
-              resolve(school);
-            });
-          });
-        });
-      });
-    });
+  school: computed('cohort.programYear.program.school', async function(){
+    const cohort = await this.get('cohort');
+    const programYear = await cohort.get('programYear');
+    const program = await programYear.get('program');
+    return await program.get('school');
   }),
 
   /**
