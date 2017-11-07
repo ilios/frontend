@@ -254,33 +254,30 @@ export default Model.extend({
   },
 
   /**
-   * Takes a user out of  a group and then traverses child groups recursivly
+   * Takes a user out of  a group and then traverses child groups recursively
    * to remove the user from them as well.  Will only modify groups where the
    * user currently exists.
-   * @param User user
-   * @return modified LearnerGroup[]
+   * @param {Object} user The user model.
+   * @return {Array} The modified learner groups.
    */
-  removeUserFromGroupAndAllDescendants(user){
-    let modifiedGroups = [];
+  async removeUserFromGroupAndAllDescendants(user){
+    const modifiedGroups = [];
     const userId = user.get('id');
-    return new Promise(resolve => {
-      if (this.hasMany('users').ids().includes(userId)) {
-        this.get('users').removeObject(user);
-        modifiedGroups.pushObject(this);
-      }
-      this.get('children').then(children => {
-        map(children.toArray(), (group => {
-          return group.removeUserFromGroupAndAllDescendants(user);
-        })).then(groups => {
-          let flat = groups.reduce((flattened, arr) => {
-            return flattened.pushObjects(arr);
-          }, []);
-          modifiedGroups.pushObjects(flat);
+    if (this.hasMany('users').ids().includes(userId)) {
+      this.get('users').removeObject(user);
+      modifiedGroups.pushObject(this);
+    }
 
-          resolve(modifiedGroups.uniq());
-        });
-      });
+    const children = await this.get('children');
+    const groups = await map(children.toArray(), async group => {
+      return group.removeUserFromGroupAndAllDescendants(user);
     });
+    const flat = groups.reduce((flattened, arr) => {
+      return flattened.pushObjects(arr);
+    }, []);
+
+    modifiedGroups.pushObjects(flat);
+    return modifiedGroups.uniq();
   },
   /**
    * Adds a user to a group and then traverses parent groups recursivly
