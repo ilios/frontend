@@ -116,15 +116,16 @@ export default Model.extend({
     return title;
   }),
 
-  allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', function(){
-    let titles = [];
+  allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', async function(){
+    const titles = [];
     if(!this.get('isTopLevelGroup')){
-      if(this.get('parent.allParentTitles')){
-        titles.pushObjects(this.get('parent.allParentTitles'));
+      const parent = await this.get('patent');
+      const allParentTitles = await parent.get('allParentTitles');
+      if(!isEmpty(allParentTitles)){
+        titles.pushObjects(allParentTitles);
       }
-      titles.pushObject(this.get('parent.title'));
+      titles.pushObject(parent.get('title'));
     }
-
     return titles;
   }),
 
