@@ -279,32 +279,26 @@ export default Model.extend({
     modifiedGroups.pushObjects(flat);
     return modifiedGroups.uniq();
   },
+
   /**
-   * Adds a user to a group and then traverses parent groups recursivly
+   * Adds a user to a group and then traverses parent groups recursively
    * to add the user to them as well.  Will only modify groups where the
    * user currently does not exist.
-   * @param User user
-   * @return modified LearnerGroup[]
+   * @param {Object} user The user model.
+   * @return {Array} The modified learner groups.
    */
-  addUserToGroupAndAllParents(user){
-    let modifiedGroups = [];
+  async addUserToGroupAndAllParents(user){
+    const modifiedGroups = [];
     const userId = user.get('id');
-    return new Promise(resolve => {
-      if (!this.hasMany('users').ids().includes(userId)) {
-        this.get('users').pushObject(user);
-        modifiedGroups.pushObject(this);
-      }
-      this.get('parent').then(parentGroup => {
-        if (isEmpty(parentGroup)) {
-          resolve(modifiedGroups.uniq());
-        } else {
-          parentGroup.addUserToGroupAndAllParents(user).then(parentGroups => {
-            modifiedGroups.pushObjects(parentGroups);
-            resolve(modifiedGroups.uniq());
-          });
-        }
-
-      });
-    });
+    if (!this.hasMany('users').ids().includes(userId)) {
+      this.get('users').pushObject(user);
+      modifiedGroups.pushObject(this);
+    }
+    const parentGroup = await this.get('parent');
+    if (! isEmpty(parentGroup)) {
+      const parentGroups = await parentGroup.addUserToGroupAndAllParents(user);
+      modifiedGroups.pushObjects(parentGroups);
+    }
+    return modifiedGroups.uniq();
   },
 });
