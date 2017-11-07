@@ -203,7 +203,7 @@ export default Model.extend({
     return isEmpty(this.belongsTo('parent').id());
   }),
 
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', async function(){
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function(){
     const allInstructors = [];
     const instructors = await this.get('instructors');
     allInstructors.pushObjects(instructors.toArray());
