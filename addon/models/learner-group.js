@@ -107,12 +107,12 @@ export default Model.extend({
     return membersAtThisLevel.filter(user => !isNone(user));
   }),
 
-  allParentsTitle: computed('allParentTitles', function(){
+  allParentsTitle: computed('allParentTitles', async function(){
     let title = '';
-    this.get('allParentTitles').forEach(str => {
+    const allParentTitles = await this.get('allParentTitles');
+    allParentTitles.forEach(str => {
       title += str + ' > ';
     });
-
     return title;
   }),
 
