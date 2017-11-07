@@ -129,8 +129,9 @@ export default Model.extend({
     return titles;
   }),
 
-  sortTitle: computed('title', 'allParentsTitle', function(){
-    var title = this.get('allParentsTitle') + this.get('title');
+  sortTitle: computed('title', 'allParentsTitle', async function(){
+    const allParentsTitle = await this.get('allParentsTitle');
+    const title = allParentsTitle + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
 
