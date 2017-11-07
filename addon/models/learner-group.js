@@ -245,19 +245,12 @@ export default Model.extend({
     }, false);
   }),
 
-  destroyChildren: function(){
-    var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      var promises = [];
-      group.get('children').then(function(children){
-        children.forEach(function(child){
-          promises.push(child.destroyChildren().then(function(){
-            child.destroyRecord();
-          }));
-        });
-        resolve(Ember.RSVP.all(promises));
-      });
-    });
+  async destroyChildren() {
+    const children = await this.get('children');
+    return await all(children.toArray().forEach(async child => {
+      await child.destroyChildren();
+      child.destroyRecord();
+    }));
   },
 
   /**
