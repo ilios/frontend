@@ -508,3 +508,18 @@ test('isTopLevelGroup', async function(assert) {
     assert.notOk(isTopLevelGroup);
   });
 });
+
+test('school', async function(assert) {
+  assert.expect(1);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  run( async () => {
+    const school = store.createRecord('school');
+    const program = store.createRecord('program', { school });
+    const programYear = store.createRecord('program-year', { program });
+    const cohort = store.createRecord('cohort', { programYear });
+    learnerGroup.set('cohort', cohort);
+    const owningSchool = await learnerGroup.get('school');
+    assert.equal(owningSchool, school);
+  });
+});
