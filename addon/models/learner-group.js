@@ -98,7 +98,7 @@ export default Model.extend({
   usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', async function(){
     const users = await this.get('users');
     const descendants = await this.get('allDescendants');
-    const membersAtThisLevel = await map(users, async user => {
+    const membersAtThisLevel = await map(users.toArray(), async user => {
       const userGroups = await user.get('learnerGroups');
       const subGroups = userGroups.toArray().filter(group => descendants.includes(group));
       return isEmpty(subGroups) ? user : null;
