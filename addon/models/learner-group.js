@@ -247,14 +247,6 @@ export default Model.extend({
     }, false);
   }),
 
-  async destroyChildren() {
-    const children = await this.get('children');
-    return await all(children.toArray().forEach(async child => {
-      await child.destroyChildren();
-      child.destroyRecord();
-    }));
-  },
-
   /**
    * Takes a user out of  a group and then traverses child groups recursively
    * to remove the user from them as well.  Will only modify groups where the
