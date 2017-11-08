@@ -419,3 +419,24 @@ test('users only at this level', async function(assert) {
     assert.ok(users.includes(user2));
   });
 });
+
+
+test('allParentTitles', async function(assert) {
+  assert.expect(4);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  await run( async () => {
+    learnerGroup.set('title', 'Foo');
+    learnerGroup.set('id', 1);
+    const titles = await learnerGroup.get('allParentTitles');
+    assert.equal(titles.length, 0);
+  });
+  run( async () => {
+    const subGroup = store.createRecord('learner-group', { id: 2, title: 'Bar', parent: learnerGroup });
+    const subSubGroup = store.createRecord('learner-group', {id: 3, title: 'Baz', parent: subGroup });
+    const titles = await subSubGroup.get('allParentTitles');
+    assert.equal(titles.length, 2);
+    assert.equal(titles[0], 'Foo');
+    assert.equal(titles[1], 'Bar');
+  });
+});
