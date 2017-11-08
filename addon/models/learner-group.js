@@ -119,7 +119,7 @@ export default Model.extend({
   allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', async function(){
     const titles = [];
     if(!this.get('isTopLevelGroup')){
-      const parent = await this.get('patent');
+      const parent = await this.get('parent');
       const allParentTitles = await parent.get('allParentTitles');
       if(!isEmpty(allParentTitles)){
         titles.pushObjects(allParentTitles);
