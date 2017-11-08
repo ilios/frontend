@@ -222,16 +222,12 @@ test('check filterTitle on top group', async function(assert) {
 
 test('check filterTitle on sub group', async function(assert) {
   assert.expect(2);
-  let store = this.store();
-
+  const store = this.store();
   run( async () => {
-
-
-    let learnerGroup = store.createRecord('learner-group', {title: 'top group'});
-    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
-    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
-    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
-
+    const learnerGroup = store.createRecord('learner-group', {title: 'top group'});
+    const subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+    const subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
+    const subGroup3 = store.createRecord('learner-group', {parent: subGroup2, title: 'subGroup3'});
     const groups = await learnerGroup.get('allDescendants');
     assert.equal(groups.length, 3);
     const filterTitle = await subGroup3.get('filterTitle');
@@ -333,44 +329,37 @@ test('check addUserToGroupAndAllParents', async function(assert) {
 });
 
 
-test('has no learners in group without learners and without subgroups', function(assert) {
+test('has no learners in group without learners and without subgroups', async function(assert) {
   assert.expect(1);
-  let learnerGroup = this.subject();
-  run(() => {
-    learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
-      assert.notOk(hasLearners);
-    });
+  const learnerGroup = this.subject();
+  run( async () => {
+    const hasLearners = await learnerGroup.get('hasLearnersInGroupOrSubgroups');
+    assert.notOk(hasLearners);
   });
 });
 
-test('has learners in group with learners and but without learners in subgroups', function(assert) {
+test('has learners in group with learners and but without learners in subgroups', async function(assert) {
   assert.expect(1);
-  let learnerGroup = this.subject();
-  let store = this.store();
-  run(() => {
+  const learnerGroup = this.subject();
+  const store = this.store();
+  run( async () => {
     let learner = store.createRecord('user');
-    learnerGroup.get('users').then(users => {
-      users.pushObject(learner);
-      learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
-        assert.ok(hasLearners);
-      });
-    });
+    learnerGroup.get('users').pushObject(learner);
+    const hasLearners = await learnerGroup.get('hasLearnersInGroupOrSubgroups');
+    assert.ok(hasLearners);
   });
 });
 
 
-test('has no learners with no learners in group nor in subgroups', function(assert) {
+test('has no learners with no learners in group nor in subgroups', async function(assert) {
   assert.expect(1);
-  let learnerGroup = this.subject();
-  let store = this.store();
-  run(() => {
-    let subgroup = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
-    learnerGroup.get('children').then(subgroups => {
-      subgroups.pushObject(subgroup);
-      learnerGroup.get('hasLearnersInGroupOrSubgroups').then(hasLearners => {
-        assert.notOk(hasLearners);
-      });
-    });
+  const learnerGroup = this.subject();
+  const store = this.store();
+  run( async () => {
+    const subgroup = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
+    learnerGroup.get('children').pushObject(subgroup);
+    const hasLearners = await learnerGroup.get('hasLearnersInGroupOrSubgroups');
+    assert.notOk(hasLearners);
   });
 });
 
