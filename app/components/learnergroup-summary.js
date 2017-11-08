@@ -7,7 +7,7 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { Promise, all } = RSVP;
+const { Promise, all, map } = RSVP;
 
 const Validations = buildValidations({
   location: [
@@ -21,8 +21,6 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
 
-  showUserManagerLoader: false,
-  showCohortManagerLoader: false,
   learnerGroup: null,
   learnerGroupId: null,
   learnerGroupTitle: null,
@@ -39,8 +37,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentGroupsSaved: 0,
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('showUserManagerLoader', true);
-    this.set('showCohortManagerLoader', true);
     const learnerGroup = this.get('learnerGroup');
     if (isPresent(learnerGroup)) {
       this.set('location', learnerGroup.get('location'));
@@ -52,8 +48,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.get('topLevelGroup').then(topLevelGroup => {
         this.set('topLevelGroupTitle', topLevelGroup.get('title'));
       });
-      this.get('usersToPassToManager').perform();
-      this.get('usersToPassToCohortManager').perform();
     }
   },
   treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
@@ -85,15 +79,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     let groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
-    yield this.get('usersToPassToManager').perform();
-    yield this.get('usersToPassToCohortManager').perform();
   }).enqueue(),
   removeUserToCohort: task(function * (user) {
     const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
     let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
-    yield this.get('usersToPassToManager').perform();
-    yield this.get('usersToPassToCohortManager').perform();
   }).enqueue(),
   addUsersToGroup: task(function * (users) {
     const learnerGroup = this.get('learnerGroup');
@@ -113,8 +103,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('totalGroupsToSave', 0);
     this.set('currentGroupsSaved', 0);
 
-    yield this.get('usersToPassToManager').perform();
-    yield this.get('usersToPassToCohortManager').perform();
     this.set('isSaving', false);
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
@@ -132,55 +120,42 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('isSaving', false);
     this.set('totalGroupsToSave', 0);
     this.set('currentGroupsSaved', 0);
-
-    yield this.get('usersToPassToManager').perform();
-    yield this.get('usersToPassToCohortManager').perform();
     this.set('isSaving', false);
   }).enqueue(),
-  usersToPassToManager: task(function * () {
+  usersToPassToManager: computed('isEditing', 'learnerGroup.{topLevelGroup,users.[]}', 'treeGroups.[]', async function () {
     const isEditing = this.get('isEditing');
     const learnerGroup = this.get('learnerGroup');
     if (isEditing) {
-      let topLevelGroup = yield learnerGroup.get('topLevelGroup');
-      let users = yield topLevelGroup.get('users').toArray();
-      let treeGroups = yield this.get('treeGroups');
+      let topLevelGroup = await learnerGroup.get('topLevelGroup');
+      let users = await topLevelGroup.get('users').toArray();
+      let treeGroups = await this.get('treeGroups');
 
-      let proxiedUsers = [];
-      for (let i = 0; i < users.length; i++){
-        const user = users[i];
-        let lowestGroupInTree = yield user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-        let userProxy = ObjectProxy.create({
+      return await map(users, async user => {
+        let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+        return ObjectProxy.create({
           content: user,
           lowestGroupInTree,
           //special sorting property
           lowestGroupInTreeTitle: lowestGroupInTree.get('title')
         });
-        proxiedUsers.pushObject(userProxy);
-      }
-
-      this.set('showUserManagerLoader', false);
-      return proxiedUsers;
+      });
     } else {
-      let users = yield learnerGroup.get('usersOnlyAtThisLevel');
-
-      this.set('showUserManagerLoader', false);
-      return users;
+      return await learnerGroup.get('usersOnlyAtThisLevel');
     }
-  }).enqueue(),
-  usersToPassToCohortManager: task(function * () {
+  }),
+  usersToPassToCohortManager: computed('learnerGroup.{topLevelGroup,allDescendantUsers.[]}', 'cohort.users.[]', async function () {
     const learnerGroup = this.get('learnerGroup');
-    const cohort = yield learnerGroup.get('cohort');
-    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    const currentUsers = yield topLevelGroup.get('allDescendantUsers');
-    const users = yield cohort.get('users');
+    const cohort = await learnerGroup.get('cohort');
+    const topLevelGroup = await learnerGroup.get('topLevelGroup');
+    const currentUsers = await topLevelGroup.get('allDescendantUsers');
+    const users = await cohort.get('users');
 
     let filteredUsers = users.filter(
       user => !currentUsers.includes(user)
     );
 
-    this.set('showCohortManagerLoader', false);
     return filteredUsers;
-  }).enqueue(),
+  }),
   actions: {
     changeLocation() {
       const newLocation = this.get('location');
