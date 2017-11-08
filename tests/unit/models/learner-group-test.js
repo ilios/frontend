@@ -17,33 +17,29 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-test('list courses', function(assert) {
+test('list courses', async function(assert) {
   assert.expect(3);
-  let model = this.subject();
-  var store = model.store;
-  run(function(){
+  const model = this.subject();
+  const store = model.store;
+  run( async () => {
+    const course1 = store.createRecord('course', {title:'course1'});
+    const course2 = store.createRecord('course', {title:'course2'});
+    const session1 = store.createRecord('session', {course: course1});
+    const session2 = store.createRecord('session', {course: course1});
+    const session3 = store.createRecord('session', {course: course2});
+    model.get('offerings').pushObjects([
+      store.createRecord('offering', {session: session1}),
+      store.createRecord('offering', {session: session1}),
+      store.createRecord('offering', {session: session1}),
+      store.createRecord('offering', {session: session2}),
+      store.createRecord('offering', {session: session2}),
+      store.createRecord('offering', {session: session3}),
+    ]);
 
-    var course1 = store.createRecord('course', {title:'course1'});
-    var course2 = store.createRecord('course', {title:'course2'});
-    var session1 = store.createRecord('session', {course: course1});
-    var session2 = store.createRecord('session', {course: course1});
-    var session3 = store.createRecord('session', {course: course2});
-    model.get('offerings').then(function(offerings){
-      offerings.pushObject(store.createRecord('offering', {session: session1}));
-      offerings.pushObject(store.createRecord('offering', {session: session1}));
-      offerings.pushObject(store.createRecord('offering', {session: session1}));
-      offerings.pushObject(store.createRecord('offering', {session: session2}));
-      offerings.pushObject(store.createRecord('offering', {session: session2}));
-      offerings.pushObject(store.createRecord('offering', {session: session3}));
-    });
-  });
-
-  run(function(){
-    model.get('courses').then(function(courses){
-      assert.equal(courses.length, 2);
-      assert.equal(courses.objectAt(0).get('title'), 'course1');
-      assert.equal(courses.objectAt(1).get('title'), 'course2');
-    });
+    const courses = await model.get('courses');
+    assert.equal(courses.length, 2);
+    assert.equal(courses.objectAt(0).get('title'), 'course1');
+    assert.equal(courses.objectAt(1).get('title'), 'course2');
   });
 });
 
@@ -151,43 +147,43 @@ test('check subgroupNumberingOffset on group with sub-groups and mis-matched sub
   });
 });
 
-test('check allinstructors', function(assert) {
-  assert.expect(11);
-  let learnerGroup = this.subject();
-  let store = this.store();
+test('check allinstructors', async function(assert) {
+  assert.expect(8);
+  const learnerGroup = this.subject();
+  const store = this.store();
 
-  return learnerGroup.get('allInstructors').then(users => {
-    assert.equal(users.length, 0);
+  await run( async () => {
+    const allInstructors = await learnerGroup.get('allInstructors');
+    assert.equal(allInstructors.length, 0);
+  });
 
-    let user1 = store.createRecord('user');
-    let user2 = store.createRecord('user');
-    let user3 = store.createRecord('user');
+  await run( async () => {
+    const user1 = store.createRecord('user');
+    const user2 = store.createRecord('user');
+    const user3 = store.createRecord('user');
     learnerGroup.get('instructors').pushObject(user1);
-    let instructorGroup1 = store.createRecord('instructor-group', {users: [user2]});
-    let instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
+    const instructorGroup1 = store.createRecord('instructor-group', {users: [user2]});
+    const instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
     learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
-    return learnerGroup.get('allInstructors').then(allInstructors => {
-      assert.equal(allInstructors.length, 3);
-      assert.ok(allInstructors.includes(user1));
-      assert.ok(allInstructors.includes(user2));
-      assert.ok(allInstructors.includes(user3));
-      let user4 = store.createRecord('user');
-      let user5 = store.createRecord('user');
-      learnerGroup.get('instructors').pushObject(user4);
-      let instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
-      learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
+    const allInstructors = await learnerGroup.get('allInstructors');
+    assert.equal(allInstructors.length, 3);
+    assert.ok(allInstructors.includes(user1));
+    assert.ok(allInstructors.includes(user2));
+    assert.ok(allInstructors.includes(user3));
+  });
 
-      return learnerGroup.get('allInstructors').then(allInstructors2 => {
-        assert.equal(allInstructors2.length, 5);
-        assert.ok(allInstructors2.includes(user1));
-        assert.ok(allInstructors2.includes(user2));
-        assert.ok(allInstructors2.includes(user3));
-        assert.ok(allInstructors2.includes(user4));
-        assert.ok(allInstructors2.includes(user5));
-      });
+  run( async () => {
+    const user4 = store.createRecord('user');
+    const user5 = store.createRecord('user');
+    learnerGroup.get('instructors').pushObject(user4);
+    let instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
+    learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
 
-    });
+    let allInstructors = await learnerGroup.get('allInstructors');
+    assert.equal(allInstructors.length, 5);
+    assert.ok(allInstructors.includes(user4));
+    assert.ok(allInstructors.includes(user5));
   });
 });
 

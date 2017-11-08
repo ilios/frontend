@@ -166,7 +166,7 @@ export default Model.extend({
   filterTitle: computed('allDescendants.@each.title', 'allParents.@each.title', 'title', async function(){
     const allDescendants = await this.get('allDescendants');
     const allParents = await this.get('allParents');
-    const titles = all([
+    const titles = await all([
       map(allDescendants, learnerGroup => learnerGroup.get('title')),
       map(allParents, learnerGroup => learnerGroup.get('title'))
     ]);
