@@ -492,3 +492,19 @@ test('topLevelGroup', async function(assert) {
     assert.equal(topLevelGroup, learnerGroup);
   });
 });
+
+test('isTopLevelGroup', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  learnerGroup.set('id', 1);
+  await run( async () => {
+    const isTopLevelGroup = await learnerGroup.get('isTopLevelGroup');
+    assert.ok(isTopLevelGroup);
+  });
+  run( async () => {
+    const subGroup = store.createRecord('learner-group', { parent: learnerGroup });
+    const isTopLevelGroup = await subGroup.get('isTopLevelGroup');
+    assert.notOk(isTopLevelGroup);
+  });
+});
