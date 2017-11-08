@@ -208,8 +208,6 @@ test('check filterTitle on top group', async function(assert) {
   let store = this.store();
 
   run( async () => {
-
-
     let learnerGroup = store.createRecord('learner-group', {title: 'top group'});
     let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
     let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, title: 'subGroup2'});
@@ -241,96 +239,96 @@ test('check filterTitle on sub group', async function(assert) {
   });
 });
 
-test('check sortTitle on top group', function(assert) {
+test('check sortTitle on top group', async function(assert) {
   assert.expect(2);
-  let learnerGroup = this.subject();
-  let store = this.store();
+  const learnerGroup = this.subject();
+  const store = this.store();
 
-  run(() => {
+  await run( async () => {
     learnerGroup.set('title', 'top group');
-    return learnerGroup.get('allDescendants').then(groups => {
-      assert.equal(groups.length, 0);
-
-      store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
-
-      let sortTitle = learnerGroup.get('sortTitle');
-      assert.equal(sortTitle, 'topgroup');
-    });
+    const groups = await learnerGroup.get('allDescendants');
+    assert.equal(groups.length, 0);
   });
 
+  run( async () => {
+    store.createRecord('learner-group', {parent: learnerGroup, title: 'subGroup1'});
+    const sortTitle = await learnerGroup.get('sortTitle');
+    assert.equal(sortTitle, 'topgroup');
+  });
 });
 
-test('check sortTitle on sub group', function(assert) {
+test('check sortTitle on sub group', async function(assert) {
   assert.expect(2);
-  let learnerGroup = this.subject();
-  let store = this.store();
+  const learnerGroup = this.subject();
+  const store = this.store();
 
-  run(() => {
+  await run( async () => {
     learnerGroup.set('title', 'top group');
     learnerGroup.set('id', 1);
-    return learnerGroup.get('allDescendants').then(groups => {
-      assert.equal(groups.length, 0);
-
-      let subGroup1 = store.createRecord('learner-group', {id: 2, parent: learnerGroup, title: 'subGroup1'});
-      let subGroup2 = store.createRecord('learner-group', {id: 3, parent: subGroup1, title: 'subGroup2'});
-      let subGroup3 = store.createRecord('learner-group', {id: 4, parent: subGroup2, title: 'subGroup3'});
-
-      let sortTitle = subGroup3.get('sortTitle');
-      assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
-    });
+    const groups = await learnerGroup.get('allDescendants');
+    assert.equal(groups.length, 0);
   });
 
-});
+  run( async () => {
+    const subGroup1 = store.createRecord('learner-group', {id: 2, parent: learnerGroup, title: 'subGroup1'});
+    const subGroup2 = store.createRecord('learner-group', {id: 3, parent: subGroup1, title: 'subGroup2'});
+    const subGroup3 = store.createRecord('learner-group', {id: 4, parent: subGroup2, title: 'subGroup3'});
 
-test('check removeUserFromGroupAndAllDescendants', function(assert) {
-  assert.expect(7);
-  let learnerGroup = this.subject();
-  let store = this.store();
-
-  return learnerGroup.get('allParents').then(groups => {
-    assert.equal(groups.length, 0);
-
-    let user1 = store.createRecord('user');
-
-    let subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, users: [user1]});
-    let subGroup2 = store.createRecord('learner-group', {parent: subGroup1, users: [user1]});
-    let subGroup3 = store.createRecord('learner-group', {parent: subGroup2, users: [user1]});
-    let subGroup4 = store.createRecord('learner-group', {parent: subGroup1});
-
-    return subGroup1.removeUserFromGroupAndAllDescendants(user1).then(groupsToRemove => {
-      assert.equal(groupsToRemove.length, 3);
-      assert.notOk(groupsToRemove.includes(learnerGroup));
-      assert.ok(groupsToRemove.includes(subGroup1));
-      assert.ok(groupsToRemove.includes(subGroup2));
-      assert.ok(groupsToRemove.includes(subGroup3));
-      assert.notOk(groupsToRemove.includes(subGroup4));
-    });
+    const sortTitle = await subGroup3.get('sortTitle');
+    assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
   });
 });
 
-test('check addUserToGroupAndAllParents', function(assert) {
+test('check removeUserFromGroupAndAllDescendants', async function(assert) {
   assert.expect(7);
-  let learnerGroup = this.subject();
-  let store = this.store();
+  const learnerGroup = this.subject();
+  const store = this.store();
 
-  return learnerGroup.get('allParents').then(groups => {
+  await run( async () => {
+    const groups = await learnerGroup.get('allParents');
     assert.equal(groups.length, 0);
+  });
 
-    let user1 = store.createRecord('user', {id: 1});
+  run( async () => {
+    const user1 = store.createRecord('user');
+    const subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, users: [user1]});
+    const subGroup2 = store.createRecord('learner-group', {parent: subGroup1, users: [user1]});
+    const subGroup3 = store.createRecord('learner-group', {parent: subGroup2, users: [user1]});
+    const subGroup4 = store.createRecord('learner-group', {parent: subGroup1});
 
-    let subGroup1 = store.createRecord('learner-group', {id: 1, parent: learnerGroup, users: [user1]});
-    let subGroup2 = store.createRecord('learner-group', {id: 2, parent: subGroup1});
-    let subGroup3 = store.createRecord('learner-group', {id: 3, parent: subGroup2});
-    let subGroup4 = store.createRecord('learner-group', {id: 4, parent: subGroup1});
+    const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
+    assert.equal(groupsToRemove.length, 3);
+    assert.notOk(groupsToRemove.includes(learnerGroup));
+    assert.ok(groupsToRemove.includes(subGroup1));
+    assert.ok(groupsToRemove.includes(subGroup2));
+    assert.ok(groupsToRemove.includes(subGroup3));
+    assert.notOk(groupsToRemove.includes(subGroup4));
+  });
+});
 
-    return subGroup3.addUserToGroupAndAllParents(user1).then(groupsToAdd => {
-      assert.equal(groupsToAdd.length, 3);
-      assert.ok(groupsToAdd.includes(learnerGroup));
-      assert.notOk(groupsToAdd.includes(subGroup1));
-      assert.ok(groupsToAdd.includes(subGroup2));
-      assert.ok(groupsToAdd.includes(subGroup3));
-      assert.notOk(groupsToAdd.includes(subGroup4));
-    });
+test('check addUserToGroupAndAllParents', async function(assert) {
+  assert.expect(7);
+  const learnerGroup = this.subject();
+  const store = this.store();
+
+  await run( async () => {
+    const groups = await learnerGroup.get('allParents');
+    assert.equal(groups.length, 0);
+  });
+
+  run( async () => {
+    const user1 = store.createRecord('user', {id: 1});
+    const subGroup1 = store.createRecord('learner-group', {id: 1, parent: learnerGroup, users: [user1]});
+    const subGroup2 = store.createRecord('learner-group', {id: 2, parent: subGroup1});
+    const subGroup3 = store.createRecord('learner-group', {id: 3, parent: subGroup2});
+    const subGroup4 = store.createRecord('learner-group', {id: 4, parent: subGroup1});
+    const groupsToAdd = await subGroup3.addUserToGroupAndAllParents(user1);
+    assert.equal(groupsToAdd.length, 3);
+    assert.ok(groupsToAdd.includes(learnerGroup));
+    assert.notOk(groupsToAdd.includes(subGroup1));
+    assert.ok(groupsToAdd.includes(subGroup2));
+    assert.ok(groupsToAdd.includes(subGroup3));
+    assert.notOk(groupsToAdd.includes(subGroup4));
   });
 });
 

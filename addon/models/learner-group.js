@@ -241,7 +241,7 @@ export default Model.extend({
       return false;
     }
 
-    const hasLearnersInSubgroups = await all(children.map('hasLearnersInGroupOrSubgroups'));
+    const hasLearnersInSubgroups = await all(children.mapBy('hasLearnersInGroupOrSubgroups'));
     return hasLearnersInSubgroups.reduce((acc, val) => {
       return (acc || val);
     }, false);
