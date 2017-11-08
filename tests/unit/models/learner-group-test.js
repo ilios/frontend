@@ -476,3 +476,19 @@ test('sortTitle', async function(assert) {
     assert.equal(title, 'FooBarBaz');
   });
 });
+
+test('topLevelGroup', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const topLevelGroup = await learnerGroup.get('topLevelGroup');
+    assert.equal(topLevelGroup, learnerGroup);
+  });
+  run( async () => {
+    const subGroup = store.createRecord('learner-group', { parent: learnerGroup });
+    const subSubGroup = store.createRecord('learner-group', { parent: subGroup });
+    const topLevelGroup = await subSubGroup.get('topLevelGroup');
+    assert.equal(topLevelGroup, learnerGroup);
+  });
+});
