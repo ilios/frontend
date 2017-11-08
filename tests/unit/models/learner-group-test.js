@@ -440,3 +440,21 @@ test('allParentTitles', async function(assert) {
     assert.equal(titles[1], 'Bar');
   });
 });
+
+test('allParentsTitle', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  await run( async () => {
+    learnerGroup.set('title', 'Foo');
+    learnerGroup.set('id', 1);
+    const titles = await learnerGroup.get('allParentsTitle');
+    assert.equal(titles, '');
+  });
+  run( async () => {
+    const subGroup = store.createRecord('learner-group', { id: 2, title: 'Bar', parent: learnerGroup });
+    const subSubGroup = store.createRecord('learner-group', {id: 3, title: 'Baz', parent: subGroup });
+    const titles = await subSubGroup.get('allParentsTitle');
+    assert.equal(titles, 'Foo > Bar > ');
+  });
+});
