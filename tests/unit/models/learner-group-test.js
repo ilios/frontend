@@ -399,3 +399,23 @@ test('has learners with learners in group and with learners in subgroups', funct
     });
   });
 });
+
+test('users only at this level', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  const store = this.store();
+  run( async () => {
+    const user1 = store.createRecord('user', {id: 1});
+    const user2 = store.createRecord('user', {id: 2});
+    const user3 = store.createRecord('user', {id: 3});
+    const user4 = store.createRecord('user', {id: 4});
+
+    const subgroup = store.createRecord('learner-group', { id: 2, parent: learnerGroup, 'users': [ user1, user3 ] });
+    store.createRecord('learner-group', {id: 3, parent: subgroup, 'users': [ user4 ]});
+    learnerGroup.get('users').pushObjects([user1, user2, user3, user4 ]);
+    learnerGroup.get('children').pushObject(subgroup);
+    const users = await learnerGroup.get('usersOnlyAtThisLevel');
+    assert.equal(users.length, 1);
+    assert.ok(users.includes(user2));
+  });
+});
