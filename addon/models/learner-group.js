@@ -58,7 +58,7 @@ export default Model.extend({
    */
   subgroupNumberingOffset: computed('children.[]', async function () {
     const regex = new RegExp('^' + escapeRegExp(this.get('title')) + ' ([0-9]+)$');
-    const groups = this.get('children');
+    const groups = await this.get('children');
     let offset = groups.reduce((previousValue, item) => {
       let rhett = previousValue;
       let matches = regex.exec(item.get('title'));
