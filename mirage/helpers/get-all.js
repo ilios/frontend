@@ -1,6 +1,6 @@
 /*eslint no-console: 0*/
 import getName from './get-name';
-import { Collection } from 'ember-cli-mirage';
+import { Collection, Model } from 'ember-cli-mirage';
 
 export default function getAll(schema, request){
   //turn /api/programyears?limit=1 into 'programYears'
@@ -88,11 +88,7 @@ const filterByFilterParams = function(all, filterParams){
         if(obj[param] === undefined){
           match = false;
         }
-        if (obj[param] instanceof Array) {
-          match = obj[param].some(function(p) {
-            return (arr.indexOf(p.toString()) !== -1);
-          });
-        } else if (obj[param] instanceof Collection) {
+        if (obj[param] instanceof Collection) {
           let result = obj[param].filter(model => {
             return (arr.indexOf(model.id.toString()) !== -1);
           });
@@ -106,6 +102,10 @@ const filterByFilterParams = function(all, filterParams){
         //sometimes we are looking for empty values like courses with no sessions
         if(obj[param] === undefined && value !== 'null'){
           match = false;
+        } else if (obj[param] instanceof Model) {
+          if(obj[param].id.toString() !== value.toString()){
+            match = false;
+          }
         } else
         //convert everything to a string and do a strict comparison
         if(obj[param].toString() !== value.toString()){
