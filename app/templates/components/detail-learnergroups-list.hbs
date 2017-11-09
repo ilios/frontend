@@ -22,7 +22,7 @@
               <div class='badge {{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}}'>
                 <div class='text'>
                   <div class='sub-text'>
-                    {{join ' > ' (without tree.topLevelGroup.title learnerGroup.allParentTitles)}}
+                    {{join ' > ' (without tree.topLevelGroup.title (await learnerGroup.allParentTitles))}}
                   </div>
                   <div class='main-text'>
                     {{learnerGroup.title}} ({{count-related learnerGroup 'users'}})

@@ -1,21 +1,22 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
-const { sort } = computed;
+import RSVP from 'rsvp';
+
+const { map } = RSVP;
 
 export default Component.extend({
   classNames: ['offering-editor-learnergroups'],
 
   revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', {
-    get() {
+    async get() {
       const cohortId = this.get('cohort.id');
       let learnerGroups = this.get('learnerGroups')[cohortId];
-      let revisedGroups = [];
 
       if (isPresent(learnerGroups)) {
-        learnerGroups.forEach((group) => {
+        return await map(learnerGroups, async group => {
           let groupObject = {};
-          let parentTitle = group.get('allParentTitles');
+          let parentTitle = await group.get('allParentTitles');
           groupObject.group = group;
 
           if (isEmpty(parentTitle)) {
@@ -24,17 +25,19 @@ export default Component.extend({
             groupObject.sortName = `${parentTitle[0]} > ${group.get('title')}`;
           }
 
-          revisedGroups.push(groupObject);
+          return groupObject;
         });
       }
 
-      return revisedGroups;
+      return [];
     }
   }).readOnly(),
 
-  sortBy: ['sortName'],
 
-  sortedLearnerGroups: sort('revisedLearnerGroups', 'sortBy'),
+  sortedLearnerGroups: computed('revisedLearnerGroups.[]', async function() {
+    const groups = await this.get('revisedLearnerGroups');
+    return groups.sortBy('sortName');
+  }),
 
   actions: {
     addLearnerGroup(group) {
