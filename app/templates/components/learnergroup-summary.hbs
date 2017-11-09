@@ -2,19 +2,19 @@
 <section class='learnergroup-overview'>
   <div class='learnergroup-overview-actions'>
     {{#if isEditing}}
-      <button {{action (action toggleEditMode)}}>{{t 'general.close'}}</button>
+      <button {{action toggleEditMode}}>{{t 'general.close'}}</button>
     {{else}}
-      <button {{action (pipe (action toggleEditMode) (toggle 'showUserManagerLoader' this) (perform usersToPassToManager))}}>{{t 'general.manage'}}</button>
+      <button {{action toggleEditMode}}>{{t 'general.manage'}}</button>
     {{/if}}
   </div>
-  {{#unless showUserManagerLoader}}
+  {{#if (is-fulfilled usersToPassToManager)}}
     <div class='learnergroup-overview-content'>
       {{learnergroup-user-manager
         learnerGroupId=learnerGroupId
         learnerGroupTitle=learnerGroupTitle
         topLevelGroupTitle=topLevelGroupTitle
         cohortTitle=cohortTitle
-        users=usersToPassToManager.lastSuccessful.value
+        users=(await usersToPassToManager)
         sortBy=sortUsersBy
         setSortBy=setSortUsersBy
         isEditing=isEditing
@@ -26,7 +26,7 @@
     </div>
   {{else}}
     <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
-  {{/unless}}
+  {{/if}}
 
   <div class="block defaultlocation">
     <label>{{t 'general.defaultLocation'}}:</label>
@@ -95,9 +95,9 @@
 {{learnergroup-subgroup-list parentGroup=learnerGroup}}
 
 <section class='cohortmembers'>
-  {{#unless showCohortManagerLoader}}
+  {{#if (is-fulfilled usersToPassToCohortManager)}}
     {{learnergroup-cohort-user-manager
-      users=usersToPassToCohortManager.lastSuccessful.value
+      users=(await usersToPassToCohortManager)
       learnerGroupTitle=learnerGroupTitle
       topLevelGroupTitle=topLevelGroupTitle
       sortBy=sortUsersBy
@@ -107,7 +107,7 @@
     }}
   {{else}}
     <span class='cohortmembers-loading'>{{fa-icon 'spinner' spin=true}}</span>
-  {{/unless}}
+  {{/if}}
 </section>
 {{#liquid-if isSaving class='crossFade'}}
   {{wait-saving

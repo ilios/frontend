@@ -16,8 +16,8 @@ export default Component.extend({
   classNames: ['learnergroup-cohort-user-manager'],
   sortBy: 'firstName',
   users: [],
-  usersBeingMoved: [],
-  selectedUsers: [],
+  usersBeingMoved: null,
+  selectedUsers: null,
   sortedAscending: computed('sortBy', function(){
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
@@ -60,8 +60,8 @@ export default Component.extend({
   }),
 
   setCheckAllState(){
-    const selectedUsers = this.get('selectedUsers').get('length');
-    const filteredUsers = this.get('filteredUsers').get('length');
+    const selectedUsers = this.get('selectedUsers.length');
+    const filteredUsers = this.get('filteredUsers.length');
     let el = this.$('th:eq(0) input');
     if (selectedUsers === 0) {
       el.prop('indeterminate', false);
