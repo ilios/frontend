@@ -39,11 +39,13 @@ moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users',
   integration: true,
   beforeEach(){
     storeMock = Service.extend({
-      query(what){
+      findAll(what){
         if (what === 'authentication') {
           return resolve([{user: 199, username: 'existingName'}]);
         }
-
+        throw new Error('findAll record called in untested context');
+      },
+      query(){
         return resolve([]);
       },
       createRecord(){
@@ -162,7 +164,7 @@ test('select student mode display cohort', async function(assert) {
   });
 });
 
-test('parses file into table', async function(assert) {
+test('parses file into table', async function (assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -203,7 +205,10 @@ test('saves valid faculty users', async function(assert) {
   let facultyRole = {id: '3'};
   let studentRole = {id: '4'};
   storeMock.reopen({
-    findAll(what){
+    findAll(what) {
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       assert.equal(what, 'user-role');
       return [facultyRole, studentRole];
     },
@@ -298,6 +303,9 @@ test('saves valid student users', async function(assert) {
   let studentRole = {id: '4'};
   storeMock.reopen({
     findAll(what){
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       assert.equal(what, 'user-role');
       return [facultyRole, studentRole];
     },
@@ -545,7 +553,10 @@ test('validate username', async function(assert) {
 test('duplicate username errors on save', async function(assert) {
   let called = 0;
   storeMock.reopen({
-    findAll(what){
+    findAll(what) {
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
       assert.equal(what, 'user-role');
@@ -596,7 +607,10 @@ test('duplicate username errors on save', async function(assert) {
 test('error saving user', async function(assert) {
   let called = 0;
   storeMock.reopen({
-    findAll(what){
+    findAll(what) {
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
       let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
       assert.equal(what, 'user-role');
@@ -673,10 +687,14 @@ test('password not required if username is blank', async function(assert) {
 });
 
 test('dont create authentication if username is not set', async function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   let called = 0;
   storeMock.reopen({
-    findAll(){
+    findAll(what) {
+      if (what === 'authentication') {
+        return resolve([{user: 199, username: 'existingName'}]);
+      }
+      assert.equal(what, 'user-role');
       return [{id: '3'}, {id: '4'}];
     },
     createRecord(what, obj) {

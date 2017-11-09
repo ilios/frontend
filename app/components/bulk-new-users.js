@@ -101,7 +101,7 @@ export default Component.extend(NewUser, {
   existingUsernames(){
     const store = this.get('store');
     return new Promise(resolve => {
-      store.query('authentication').then(authentications => {
+      store.findAll('authentication').then(authentications => {
         resolve(authentications.mapBy('username'));
       });
     });
