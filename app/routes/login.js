@@ -11,6 +11,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
   commonAjax: service(),
+  iliosConfig: service(),
   titleToken: 'general.login',
 
   noAccountExistsError: false,
@@ -21,23 +22,21 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     return this.attemptSSOAuth();
   },
   async attemptSSOAuth(){
-    const configUrl = '/application/config';
-    const commonAjax = this.get('commonAjax');
-    const data = await commonAjax.request(configUrl);
-    const config = data.config;
-    const type = config.type;
+    const iliosConfig = this.get('iliosConfig');
+    const type = await iliosConfig.get('authenticationType');
     if(type === 'form' || type === 'ldap'){
       return;
     }
     if(type === 'shibboleth'){
-      return await this.shibbolethAuth(config);
+      return await this.shibbolethAuth();
     }
 
-    if(config.type === 'cas'){
-      return await this.casLogin(config);
+    if(type === 'cas'){
+      return await this.casLogin();
     }
   },
-  async casLogin(config){
+  async casLogin() {
+    const iliosConfig = this.get('iliosConfig');
     const commonAjax = this.get('commonAjax');
 
     let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
@@ -55,11 +54,11 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       loginUrl += `&ticket=${queryParams.ticket}`;
     }
     const response = await commonAjax.request(loginUrl);
-    if(response.status === 'redirect'){
-      let casLoginUrl = config.casLoginUrl + `?service=${currentUrl}`;
+    if (response.status === 'redirect') {
+      const casLoginUrl = await iliosConfig.itemFromConfig('casLoginUrl');
       await new Promise(() => {
         //this promise never resolves so we don't render anything before the redirect
-        window.location.replace(casLoginUrl);
+        window.location.replace(`${casLoginUrl}?service=${currentUrl}`);
       });
     }
     if(response.status === 'noAccountExists'){
@@ -72,13 +71,14 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       this.get('session').authenticate(authenticator, {jwt: response.jwt});
     }
   },
-  async shibbolethAuth(config){
+  async shibbolethAuth(){
+    const iliosConfig = this.get('iliosConfig');
     const commonAjax = this.get('commonAjax');
     const loginUrl = '/auth/login';
     const response = await commonAjax.request(loginUrl);
     const status = response.status;
     if(status === 'redirect'){
-      let shibbolethLoginUrl = config.loginUrl;
+      let shibbolethLoginUrl = await iliosConfig.itemFromConfig('loginUrl');
       if(EmberConfig.redirectAfterShibLogin){
         let attemptedRoute = encodeURIComponent(window.location.href);
         shibbolethLoginUrl += '?target=' + attemptedRoute;
