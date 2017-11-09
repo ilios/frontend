@@ -2,28 +2,22 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
+const { attr, belongsTo, hasMany, Model } = DS;
+const { computed, isEmpty, isNone, RSVP } = Ember;
+const { map, all } = RSVP;
 
-const { computed, isEmpty, RSVP } = Ember;
-const { mapBy, sum } = computed;
-const { Promise, map, all } = RSVP;
+export default Model.extend({
+  title: attr('string'),
+  location: attr('string'),
+  cohort: belongsTo('cohort', { async: true }),
+  parent: belongsTo('learner-group', { async: true, inverse: 'children' }),
+  children: hasMany('learner-group', { async: true, inverse: 'parent' }),
+  ilmSessions: hasMany('ilm-session', { async: true }),
+  offerings: hasMany('offering', { async: true }),
+  instructorGroups: hasMany('instructor-group', { async: true }),
+  users: hasMany('user', { async: true, inverse: 'learnerGroups' }),
+  instructors: hasMany('user', { async: true, inverse: 'instructedLearnerGroups' }),
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  location: DS.attr('string'),
-  cohort: DS.belongsTo('cohort', {async: true}),
-  parent: DS.belongsTo('learner-group', {async: true, inverse: 'children'}),
-  children: DS.hasMany('learner-group', {async: true, inverse: 'parent'}),
-  ilmSessions: DS.hasMany('ilm-session', {async: true}),
-  offerings: DS.hasMany('offering', {async: true}),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  users: DS.hasMany('user', {
-    async: true,
-    inverse: 'learnerGroups'
-  }),
-  instructors: DS.hasMany('user', {
-    async: true,
-    inverse: 'instructedLearnerGroups'
-  }),
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    * @property courses
@@ -48,40 +42,7 @@ export default DS.Model.extend({
 
     return courses.uniq();
   }),
-  childUsers: mapBy('children', 'users'),
-  childUserLengths: mapBy('childUsers', 'length'),
-  childUsersTotal: sum('childUserLengths'),
-  childrenUsersCounts: mapBy('children', 'childUsersTotal'),
-  childrenUsersTotal: sum('childrenUsersCounts'),
-  usersCount: computed('users.length', 'childUsersTotal', 'childrenUsersTotal', function(){
-    return this.get('users.length') + this.get('childUsersTotal') + this.get('childrenUsersTotal');
-  }),
-  availableUsers: computed('users', 'parent.users.[]', 'parent.childUsers.[]', function(){
-    var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      group.get('parent').then(function(parent){
-        if(parent == null){
-          resolve(false);
-        } else {
-          parent.get('users').then(function(parentUsers){
-            var childUsers = parent.get('childUsers');
-            var selectedUsers = Ember.A();
-            Ember.RSVP.all(childUsers).then(function(){
-              childUsers.forEach(function(userSet){
-                userSet.forEach(function(c){
-                  selectedUsers.pushObject(c);
-                });
-              });
-              var availableUsers = parentUsers.filter(function(user){
-                return !selectedUsers.includes(user);
-              });
-              resolve(availableUsers);
-            });
-          });
-        }
-      });
-    });
-  }),
+
   /**
    * Get the offset for numbering generated subgroups.
    *
@@ -97,7 +58,7 @@ export default DS.Model.extend({
    */
   subgroupNumberingOffset: computed('children.[]', async function () {
     const regex = new RegExp('^' + escapeRegExp(this.get('title')) + ' ([0-9]+)$');
-    const groups = this.get('children');
+    const groups = await this.get('children');
     let offset = groups.reduce((previousValue, item) => {
       let rhett = previousValue;
       let matches = regex.exec(item.get('title'));
@@ -128,63 +89,49 @@ export default DS.Model.extend({
     return allUsers.uniq();
   }),
 
-  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', function(){
-    return new Promise(resolve => {
-      this.get('users').then(users => {
-        this.get('allDescendants').then(descendants => {
-          let membersAtThisLevel = [];
-          let promises = [];
-          users.forEach(user => {
-            let promise = user.get('learnerGroups').then(userGroups => {
-              var subGroups = userGroups.filter(group => descendants.includes(group));
-              if(subGroups.length === 0){
-                membersAtThisLevel.pushObject(user);
-              }
-            });
-            promises.pushObject(promise);
-          });
-          Ember.RSVP.all(promises).then(() => {
-            resolve(membersAtThisLevel);
-          });
-        });
-      });
+  /**
+   * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
+   * @property usersOnlyAtThisLevel
+   * @type {Ember.computed}
+   * @public
+   */
+  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', async function(){
+    const users = await this.get('users');
+    const descendants = await this.get('allDescendants');
+    const membersAtThisLevel = await map(users.toArray(), async user => {
+      const userGroups = await user.get('learnerGroups');
+      const subGroups = userGroups.toArray().filter(group => descendants.includes(group));
+      return isEmpty(subGroups) ? user : null;
     });
+
+    return membersAtThisLevel.filter(user => !isNone(user));
   }),
-  destroyChildren: function(){
-    var group = this;
-    return new Ember.RSVP.Promise(function(resolve) {
-      var promises = [];
-      group.get('children').then(function(children){
-        children.forEach(function(child){
-          promises.push(child.destroyChildren().then(function(){
-            child.destroyRecord();
-          }));
-        });
-        resolve(Ember.RSVP.all(promises));
-      });
-    });
-  },
-  allParentsTitle: computed('allParentTitles', function(){
+
+  allParentsTitle: computed('allParentTitles', async function(){
     let title = '';
-    this.get('allParentTitles').forEach(str => {
+    const allParentTitles = await this.get('allParentTitles');
+    allParentTitles.forEach(str => {
       title += str + ' > ';
     });
-
     return title;
   }),
-  allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', function(){
-    let titles = [];
-    if(!this.get('isTopLevelGroup')){
-      if(this.get('parent.allParentTitles')){
-        titles.pushObjects(this.get('parent.allParentTitles'));
-      }
-      titles.pushObject(this.get('parent.title'));
-    }
 
+  allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', async function(){
+    const titles = [];
+    if(!this.get('isTopLevelGroup')){
+      const parent = await this.get('parent');
+      const allParentTitles = await parent.get('allParentTitles');
+      if(!isEmpty(allParentTitles)){
+        titles.pushObjects(allParentTitles);
+      }
+      titles.pushObject(parent.get('title'));
+    }
     return titles;
   }),
-  sortTitle: computed('title', 'allParentsTitle', function(){
-    var title = this.get('allParentsTitle') + this.get('title');
+
+  sortTitle: computed('title', 'allParentsTitle', async function(){
+    const allParentsTitle = await this.get('allParentsTitle');
+    const title = allParentsTitle + this.get('title');
     return title.replace(/([\s->]+)/ig,"");
   }),
 
@@ -208,26 +155,28 @@ export default DS.Model.extend({
     return descendants;
   }),
 
-  filterTitle: computed('allDescendants.[].title', function(){
-    return new Promise(resolve => {
-      this.get('allDescendants').then(allDescendants => {
-        this.get('allParents').then(allParents => {
-          all([
-            map(allDescendants, learnerGroup => learnerGroup.get('title')),
-            map(allParents, learnerGroup => learnerGroup.get('title'))
-          ]).then(titles => {
-            let flat = titles.reduce((flattened, arr) => {
-              return flattened.pushObjects(arr);
-            }, []);
-            flat.pushObject(this.get('title'));
 
-            resolve(flat.join(''));
-          });
-        });
-
-      });
-    });
+  /**
+   * A text string comprised of all learner-group titles in this group's tree.
+   * This includes that titles of all of its ancestors, all its descendants and this group's title itself.
+   * @property filterTitle
+   * @type {Ember.computed}
+   * @public
+   */
+  filterTitle: computed('allDescendants.@each.title', 'allParents.@each.title', 'title', async function(){
+    const allDescendants = await this.get('allDescendants');
+    const allParents = await this.get('allParents');
+    const titles = await all([
+      map(allDescendants, learnerGroup => learnerGroup.get('title')),
+      map(allParents, learnerGroup => learnerGroup.get('title'))
+    ]);
+    const flat = titles.reduce((flattened, arr) => {
+      return flattened.pushObjects(arr);
+    }, []);
+    flat.pushObject(this.get('title'));
+    return flat.join('');
   }),
+
   allParents: computed('parent', 'parent.allParents.[]', async function(){
     const parent = await this.get('parent');
     if (!parent) {
@@ -237,112 +186,42 @@ export default DS.Model.extend({
 
     return [parent].concat(allParents);
   }),
-  topLevelGroup: computed('parent', 'parent.topLevelGroup', function(){
-    return new Ember.RSVP.Promise(
-      resolve => {
-        this.get('parent').then(
-          parent => {
-            if(!parent){
-              resolve(this);
-            } else {
-              parent.get('topLevelGroup').then(
-                topLevelGroup => {
-                  resolve(topLevelGroup);
-                }
-              );
-            }
-          }
-        );
-      }
-    );
+
+  /**
+   * The top-level group in this group's parentage tree, or this group itself if it has no parent.
+   * @property topLevelGroup
+   * @type {Ember.computed}
+   * @public
+   */
+  topLevelGroup: computed('parent.topLevelGroup', async function(){
+    const parent = await this.get('parent');
+    if (isEmpty(parent)) {
+      return this;
+    }
+    return await parent.get('topLevelGroup');
   }),
+
   isTopLevelGroup: computed('parent', function(){
     return isEmpty(this.belongsTo('parent').id());
   }),
-  /**
-   * Takes a user out of  a group and then traverses child groups recursivly
-   * to remove the user from them as well.  Will only modify groups where the
-   * user currently exists.
-   * @param User user
-   * @return modified LearnerGroup[]
-   */
-  removeUserFromGroupAndAllDescendants(user){
-    let modifiedGroups = [];
-    const userId = user.get('id');
-    return new Promise(resolve => {
-      if (this.hasMany('users').ids().includes(userId)) {
-        this.get('users').removeObject(user);
-        modifiedGroups.pushObject(this);
-      }
-      this.get('children').then(children => {
-        map(children.toArray(), (group => {
-          return group.removeUserFromGroupAndAllDescendants(user);
-        })).then(groups => {
-          let flat = groups.reduce((flattened, arr) => {
-            return flattened.pushObjects(arr);
-          }, []);
-          modifiedGroups.pushObjects(flat);
-          resolve(modifiedGroups.uniq());
-        });
-      });
-    });
-  },
-  /**
-   * Adds a user to a group and then traverses parent groups recursivly
-   * to add the user to them as well.  Will only modify groups where the
-   * user currently does not exist.
-   * @param User user
-   * @return modified LearnerGroup[]
-   */
-  addUserToGroupAndAllParents(user){
-    let modifiedGroups = [];
-    const userId = user.get('id');
-    return new Promise(resolve => {
-      if (!this.hasMany('users').ids().includes(userId)) {
-        this.get('users').pushObject(user);
-        modifiedGroups.pushObject(this);
-      }
-      this.get('parent').then(parentGroup => {
-        if (isEmpty(parentGroup)) {
-          resolve(modifiedGroups.uniq());
-        } else {
-          parentGroup.addUserToGroupAndAllParents(user).then(parentGroups => {
-            modifiedGroups.pushObjects(parentGroups);
-            resolve(modifiedGroups.uniq());
-          });
-        }
 
-      });
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function(){
+    const allInstructors = [];
+    const instructors = await this.get('instructors');
+    allInstructors.pushObjects(instructors.toArray());
+    const instructorGroups = await this.get('instructorGroups');
+    const listsOfGroupInstructors = await all(instructorGroups.mapBy('users'));
+    listsOfGroupInstructors.forEach(groupInstructors => {
+      allInstructors.pushObjects(groupInstructors.toArray());
     });
-  },
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
-    return new Promise(resolve => {
-      let users = [];
-      this.get('instructors').then(instructors => {
-        users.pushObjects(instructors.toArray());
-        this.get('instructorGroups').then(instructorGroups => {
-          RSVP.all(instructorGroups.mapBy('users')).then(arr => {
-            arr.forEach(groupInstructors =>{
-              users.pushObjects(groupInstructors.toArray());
-            });
-            resolve(users.uniq());
-          });
-        });
-      });
-    });
+    return allInstructors;
   }),
-  school: computed('cohort.programYear.program.school', function(){
-    return new Promise(resolve => {
-      this.get('cohort').then(cohort => {
-        cohort.get('programYear').then(programYear => {
-          programYear.get('program').then(program => {
-            program.get('school').then(school => {
-              resolve(school);
-            });
-          });
-        });
-      });
-    });
+
+  school: computed('cohort.programYear.program.school', async function(){
+    const cohort = await this.get('cohort');
+    const programYear = await cohort.get('programYear');
+    const program = await programYear.get('program');
+    return await program.get('school');
   }),
 
   /**
@@ -351,27 +230,69 @@ export default DS.Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', function() {
-    return new Promise(resolve => {
-      const userIds = this.hasMany('users').ids();
-      if (userIds.length) {
-        resolve(true);
-      }
-      this.get('children').then(children => {
-        if(! children.get('length')) {
-          resolve(false);
-          return;
-        }
+  hasLearnersInGroupOrSubgroups: computed('users.[]', 'children.@each.hasLearnersInGroupOrSubgroup', async function() {
+    const userIds = this.hasMany('users').ids();
+    if (userIds.length) {
+      return true;
+    }
 
-        let promises = children.map(subgroup => {
-          return subgroup.get('hasLearnersInGroupOrSubgroups');
-        });
-        all(promises).then(hasLearnersInSubgroups => {
-          resolve(hasLearnersInSubgroups.reduce((acc, val) => {
-            return (acc || val);
-          }, false));
-        });
-      });
-    });
+    const children = await this.get('children');
+    if(! children.get('length')) {
+      return false;
+    }
+
+    const hasLearnersInSubgroups = await all(children.mapBy('hasLearnersInGroupOrSubgroups'));
+    return hasLearnersInSubgroups.reduce((acc, val) => {
+      return (acc || val);
+    }, false);
   }),
+
+  /**
+   * Takes a user out of  a group and then traverses child groups recursively
+   * to remove the user from them as well.  Will only modify groups where the
+   * user currently exists.
+   * @param {Object} user The user model.
+   * @return {Array} The modified learner groups.
+   */
+  async removeUserFromGroupAndAllDescendants(user){
+    const modifiedGroups = [];
+    const userId = user.get('id');
+    if (this.hasMany('users').ids().includes(userId)) {
+      this.get('users').removeObject(user);
+      modifiedGroups.pushObject(this);
+    }
+
+    const children = await this.get('children');
+    const groups = await map(children.toArray(), async group => {
+      return group.removeUserFromGroupAndAllDescendants(user);
+    });
+    const flat = groups.reduce((flattened, arr) => {
+      return flattened.pushObjects(arr);
+    }, []);
+
+    modifiedGroups.pushObjects(flat);
+    return modifiedGroups.uniq();
+  },
+
+  /**
+   * Adds a user to a group and then traverses parent groups recursively
+   * to add the user to them as well.  Will only modify groups where the
+   * user currently does not exist.
+   * @param {Object} user The user model.
+   * @return {Array} The modified learner groups.
+   */
+  async addUserToGroupAndAllParents(user){
+    const modifiedGroups = [];
+    const userId = user.get('id');
+    if (!this.hasMany('users').ids().includes(userId)) {
+      this.get('users').pushObject(user);
+      modifiedGroups.pushObject(this);
+    }
+    const parentGroup = await this.get('parent');
+    if (! isEmpty(parentGroup)) {
+      const parentGroups = await parentGroup.addUserToGroupAndAllParents(user);
+      modifiedGroups.pushObjects(parentGroups);
+    }
+    return modifiedGroups.uniq();
+  },
 });
