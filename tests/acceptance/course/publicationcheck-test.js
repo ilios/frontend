@@ -12,36 +12,25 @@ module('Acceptance: Course - Publication Check', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      vocabularies: [1],
-    });
-    server.create('vocabulary', {
-      terms: [1],
-    });
-    server.create('cohort', {
-      courses: [1],
-    });
-    server.create('objective', {
-      courses: [1],
-    });
+    server.create('school');
+    server.create('vocabulary');
+    server.create('cohort');
+    server.create('objective');
     server.create('term', {
-      courses: [1],
-      vocabulary: 1,
+      vocabularyId: 1,
     });
-    server.create('meshDescriptor', {
-      courses: [1],
-    });
+    server.create('meshDescriptor');
     fixtures.fullCourse = server.create('course', {
       year: 2013,
-      school: 1,
-      cohorts: [1],
-      objectives: [1],
-      terms: [1],
-      meshDescriptors: [1],
+      schoolId: 1,
+      cohortIds: [1],
+      objectiveIds: [1],
+      termIds: [1],
+      meshDescriptorIds: [1],
     });
     fixtures.emptyCourse = server.create('course', {
       year: 2013,
-      school: 1
+      schoolId: 1
     });
   },
 

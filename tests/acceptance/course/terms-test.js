@@ -13,29 +13,24 @@ module('Acceptance: Course - Terms', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      vocabularies: [1],
-      courses: [1]
-    });
+    server.create('school');
     server.create('vocabulary', {
-      terms: [1, 2],
-      school: 1,
+      schoolId: 1,
     });
     server.create('academicYear', {id: 2013});
 
     fixtures.terms = [];
     fixtures.terms.pushObject(server.create('term', {
-      courses: [1],
-      vocabulary: 1
+      vocabularyId: 1
     }));
     fixtures.terms.pushObject(server.create('term', {
-      vocabulary: 1
+      vocabularyId: 1
     }));
 
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      terms: [1]
+      schoolId: 1,
+      termIds: [1]
     });
   },
 

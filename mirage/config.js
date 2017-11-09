@@ -350,7 +350,7 @@ export default function() {
     };
   });
 
-  this.post('auth/login', function({ db }, request) {
+  this.post('auth/login', function(schema, request) {
     let errors = [];
     var attrs = JSON.parse(request.requestBody);
     if(!('username' in attrs) || !attrs.username){

@@ -14,50 +14,45 @@ var url = '/courses/1';
 module('Acceptance: Course - Session List', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application, {id: 4136, directedCourses: [1]});
-    server.create('school', {
-      sessionTypes: [1]
-    });
-    fixtures.sessionTypes = server.createList('sessionType', 1, {
-      sessions: [1,2,3,4],
-    });
+    setupAuthentication(application, {id: 4136});
+    server.create('school');
+    fixtures.sessionTypes = [server.create('sessionType', {schoolId: 1})];
     server.create('course', {
-      sessions: [1,2,3,4],
-      school: 1
+      schoolId: 1,
+      directorIds: [4136]
     });
     fixtures.sessions = [];
     fixtures.sessions.pushObject(server.create('session', {
-      course: 1,
-      sessionType: 1,
-      offerings: [1,2,3]
+      courseId: 1,
+      sessionTypeId: 1
     }));
     fixtures.sessions.pushObject(server.create('session', {
-      course: 1,
-      sessionType: 1,
+      courseId: 1,
+      sessionTypeId: 1,
     }));
     fixtures.sessions.pushObject(server.create('session', {
-      course: 1,
-      sessionType: 1,
+      courseId: 1,
+      sessionTypeId: 1,
     }));
     fixtures.sessions.pushObject(server.create('session', {
-      course: 1,
-      sessionType: 1,
+      courseId: 1,
+      sessionTypeId: 1,
       title: 'session3\\'
     }));
     let today = moment().hour(8);
     fixtures.offerings = [];
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
+      sessionId: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
     }));
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
+      sessionId: 1,
       startDate: today.clone().add(1, 'day').add(1, 'hour').format(),
       endDate: today.clone().add(1, 'day').add(4, 'hour').format(),
     }));
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
+      sessionId: 1,
       startDate: today.clone().add(2, 'days').format(),
       endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
     }));

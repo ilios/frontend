@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Factory, association } from 'ember-cli-mirage';
+import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
   name: (i) => `report ${i} `,
@@ -7,8 +7,6 @@ export default Factory.extend({
   year: 2013,
   startDate: () => moment().format(),
   endDate: () => moment().add(7, 'weeks').format(),
-  sequence: association(),
-  program: association(),
   sequenceBlocks: [],
   academicLevels: [],
 });

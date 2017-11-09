@@ -8,7 +8,7 @@ var url = '/curriculum-inventory-reports/1';
 module('Acceptance: Curriculum Inventory: Report', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application, false);
+    setupAuthentication(application);
     server.create('school');
   },
 
@@ -18,18 +18,13 @@ module('Acceptance: Curriculum Inventory: Report', {
 });
 
 test('create new sequence block Issue #2108', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
+  const developer = server.create('userRole', {
+    title: 'developer'
   });
-  server.create('userRole', {
-    id: 1,
-    users: [4136],
-    title: 'developer',
-  });
-  server.create('program');
-  server.create('curriculumInventoryReport');
-  server.create('curriculumInventorySequence');
+  server.db.users.update(4136, {roles: [developer]});
+  const program = server.create('program', {schoolId: 1});
+  const report = server.create('curriculumInventoryReport', {program});
+  server.create('curriculumInventorySequence', {report});
 
   const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
   const addSequenceBlock = `${sequenceBlockList} .expand-button`;
@@ -48,24 +43,19 @@ test('create new sequence block Issue #2108', async function(assert) {
 
 
 test('rollover hidden from instructors', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('program', {
     id: 1,
     'title': 'Doctor of Medicine',
   });
-  server.create('userRole', {
-    id: 1,
-    users: [4136],
+  const instructor = server.create('userRole', {
     title: 'instructor'
   });
+  server.db.users.update(4136, {roles: [instructor]});
   server.create('curriculumInventoryReport', {
     year: 2013,
     name: 'foo bar',
     description: 'lorem ipsum',
-    program: 1,
+    programId: 1,
   });
   await visit(url);
   const container = '.curriculum-inventory-report-overview';
@@ -75,16 +65,11 @@ test('rollover hidden from instructors', async function(assert) {
   assert.equal(find(rollover).length, 0);
 });
 
-test('rollover visible to developers', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
+test('rollover visible to developers', async function (assert) {
+  const developer = server.create('userRole', {
+    title: 'developer'
   });
-  server.create('userRole', {
-    id: 1,
-    users: [4136],
-    title: 'developer',
-  });
+  server.db.users.update(4136, {roles: [developer]});
   server.create('program', {
     id: 1,
     'title': 'Doctor of Medicine',
@@ -93,7 +78,7 @@ test('rollover visible to developers', async function(assert) {
     year: 2013,
     name: 'foo bar',
     description: 'lorem ipsum',
-    program: 1,
+    programId: 1,
   });
   await visit(url);
   const container = '.curriculum-inventory-report-overview';
@@ -104,15 +89,10 @@ test('rollover visible to developers', async function(assert) {
 });
 
 test('rollover not visible to course directors', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
-  server.create('userRole', {
-    id: 1,
-    users: [4136],
+  const director = server.create('userRole', {
     title: 'course director'
   });
+  server.db.users.update(4136, {roles: [director]});
   server.create('program', {
     id: 1,
     'title': 'Doctor of Medicine',
@@ -121,7 +101,7 @@ test('rollover not visible to course directors', async function(assert) {
     year: 2013,
     name: 'foo bar',
     description: 'lorem ipsum',
-    program: 1,
+    programId: 1,
   });
   await visit(url);
   const container = '.curriculum-inventory-report-overview';
@@ -132,15 +112,10 @@ test('rollover not visible to course directors', async function(assert) {
 });
 
 test('rollover hidden on rollover route', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
-  server.create('userRole', {
-    id: 1,
-    users: [4136],
+  const director = server.create('userRole', {
     title: 'course director'
   });
+  server.db.users.update(4136, {roles: [director]});
   server.create('program', {
     id: 1,
     'title': 'Doctor of Medicine',
@@ -149,7 +124,7 @@ test('rollover hidden on rollover route', async function(assert) {
     year: 2013,
     name: 'foo bar',
     description: 'lorem ipsum',
-    program: 1,
+    programId: 1,
   });
   await visit(`${url}/rollover`);
   const container = '.curriculum-inventory-report-overview';

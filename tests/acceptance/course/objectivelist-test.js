@@ -65,7 +65,7 @@ test('list objectives', async function(assert) {
 
     let parentTitle = '';
     if (objective.parents.length) {
-      const parent = objective.parents.models[0]
+      const parent = objective.parents.models[0];
       parentTitle = parent.title;
       const competency = parent.competency;
       if(competency){

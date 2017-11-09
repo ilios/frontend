@@ -15,31 +15,28 @@ module('Acceptance: Course - Print Course', {
     setupAuthentication(application);
     server.create('school');
     server.create('academicYear');
+    server.create('cohort');
+    server.create('learning-material-user-role');
+    server.create('learning-material-status');
     server.create('course', {
       year: 2013,
-      school: 1,
+      schoolId: 1,
       published: true,
       title: 'Back to the Future',
-      cohorts: [1],
-      terms: [1],
-      objectives: [1],
-      learningMaterials: [1],
-      meshDescriptors: [1]
+      cohortIds: [1],
     });
     server.create('vocabulary', {
       title: 'Topics',
-      terms: [1],
-      school: 1,
+      schoolId: 1,
     });
     server.create('term', {
       title: 'Time Travel',
-      sessions: [1],
-      vocabulary: 1,
+      courseIds: [1],
+      vocabularyId: 1,
     });
     server.create('objective', {
-      sessions: [1],
-      school: 1,
-      courses: [1],
+      schoolId: 1,
+      courseIds: [1],
       title: 'Gigawatt Conversion'
     });
     server.create('user', {
@@ -51,22 +48,21 @@ module('Acceptance: Course - Print Course', {
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
-      owningUser: 1,
-      status: 1,
-      userRole: 1,
+      owningUserId: 1,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: true,
-      courseLearningMaterials: [1],
       citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       description: 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.'
     });
     server.create('courseLearningMaterial',{
-      learningMaterial: 1,
-      course: 1,
+      learningMaterialId: 1,
+      courseId: 1,
       required: false,
-      meshDescriptors: [1]
     });
     server.create('meshDescriptor', {
-      courses: [1],
+      courseIds: [1],
+      objectiveIds: [1],
       name: "Flux Capacitor"
     });
 
@@ -79,7 +75,7 @@ module('Acceptance: Course - Print Course', {
 
 });
 
-test('test print course learning materials', async function(assert) {
+test('test print course learning materials', async function (assert) {
   await visit('/course/1/print');
 
   assert.equal(find('.detail-header h2:eq(0)').text(), 'Back to the Future');
