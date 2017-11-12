@@ -113,7 +113,6 @@ module('Acceptance: Course - Learning Materials', {
 });
 
 test('list learning materials', async function (assert) {
-  server.logging = true;
   await visit(url);
   assert.equal(currentPath(), 'course.index');
   const courseLearningMaterials = '.detail-learningmaterials .detail-learningmaterials-content tbody tr';

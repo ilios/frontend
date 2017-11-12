@@ -15,7 +15,7 @@ module('Acceptance: Course - Mesh Terms', {
     server.create('school');
     server.create('academicYear');
     server.createList('meshTree', 3);
-    server.createList('meshConcept', 4);
+    server.createList('meshConcept', 3);
 
     server.create('meshConcept', {
       scopeNote: '1234567890'.repeat(30)

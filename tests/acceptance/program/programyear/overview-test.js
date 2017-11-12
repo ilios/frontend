@@ -13,18 +13,17 @@ module('Acceptance: Program Year - Overview', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.createList('user', 3, {
-      directedProgramYears: [1]
-    });
-    server.createList('user', 2);
+    server.createList('user', 5);
     server.create('program', {
-      programYears: [1]
+      schoolId: 1
     });
     server.create('programYear', {
-      program: 1,
-      directors: [2,3,4]
+      programId: 1,
+      directorIds: [2, 3, 4]
     });
-    server.create('cohort');
+    server.create('cohort', {
+      programYearId: 1
+    });
   },
 
   afterEach: function() {
@@ -53,17 +52,17 @@ test('search directors', async function(assert) {
     var searchResults = find('.results li', container);
     assert.equal(searchResults.length, 7);
     assert.equal(getElementText(searchResults.eq(0)), getText('6 Results'));
-    assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son'));
+    assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));
     assert.ok(searchResults.eq(1).hasClass('active'));
-    assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son'));
+    assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son user@example.edu'));
     assert.ok(searchResults.eq(2).hasClass('inactive'));
-    assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son'));
+    assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son user@example.edu'));
     assert.ok(searchResults.eq(3).hasClass('inactive'));
-    assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son'));
+    assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son user@example.edu'));
     assert.ok(searchResults.eq(4).hasClass('inactive'));
-    assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son'));
+    assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son user@example.edu'));
     assert.ok(searchResults.eq(5).hasClass('active'));
-    assert.equal(getElementText(searchResults.eq(6)), getText('5 guy M. Mc5son'));
+    assert.equal(getElementText(searchResults.eq(6)), getText('5 guy M. Mc5son user@example.edu'));
     assert.ok(searchResults.eq(6).hasClass('active'));
   });
 });
@@ -104,11 +103,12 @@ test('remove director', async function(assert) {
 test('first director added is disabled #2770', async function(assert) {
   assert.expect(5);
   server.create('programYear', {
-    program: 1,
-    directors: []
+    programId: 1,
+    directorIds: []
   });
-  server.create('cohort');
-  server.db.programs.update(1, {programYears: [1, 2]});
+  server.create('cohort', {
+    programYearId: 2
+  });
   const overview = '.programyear-overview';
   const directors = `${overview} .removable-list li`;
   const search = `${overview} .live-search`;

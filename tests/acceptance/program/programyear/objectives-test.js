@@ -14,61 +14,50 @@ module('Acceptance: Program Year - Objectives', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      school: 1,
-      programs: [1],
-      competencies: [1,2,3,4,5]
-    });
+    server.create('school');
     server.create('program', {
-      school: 1,
-      programYears: [1]
+      schoolId: 1,
     });
     server.create('programYear', {
-      program: 1,
-      competencies: [2,3,4,5],
-      objectives: [1,2,3]
+      programId: 1,
     });
-    server.create('cohort');
-    server.create('competency', {
-      school: 1,
-      children: [2,3]
+    server.create('cohort', {
+      programYearId: 1
     });
     server.create('competency', {
-      parent: 1,
-      school: 1,
-      programYears: [1],
-      objectives: [1]
+      schoolId: 1,
     });
     server.create('competency', {
-      parent: 1,
-      school: 1,
-      programYears: [1],
+      parentId: 1,
+      schoolId: 1,
+      programYearIds: [1],
     });
     server.create('competency', {
-      school: 1,
-      programYears: [1],
-      objectives: [2]
+      parentId: 1,
+      schoolId: 1,
+      programYearIds: [1],
     });
     server.create('competency', {
-      school: 1,
-      programYears: [1],
+      schoolId: 1,
+      programYearIds: [1],
     });
-    server.createList('meshDescriptor', 2, {
-      objectives: [1]
+    server.create('competency', {
+      schoolId: 1,
+      programYearIds: [1],
     });
-    server.createList('meshDescriptor', 2);
+    server.createList('meshDescriptor', 4);
 
     server.create('objective', {
-      programYears: [1],
-      competency: 2,
-      meshDescriptors: [1,2]
+      programYearIds: [1],
+      competencyId: 2,
+      meshDescriptorIds: [1, 2]
     });
     server.create('objective', {
-      programYears: [1],
-      competency: 4
+      programYearIds: [1],
+      competencyId: 4
     });
     server.create('objective', {
-      programYears: [1]
+      programYearIds: [1]
     });
   },
 

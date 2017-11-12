@@ -33,20 +33,16 @@ test('single option filters', async function(assert) {
   const programsFilter = '.programsfilter';
   const programyearsfilter = '.programyearsfilter';
   assert.expect(3);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
+    programYearId: 1,
   });
   await visit('/learnergroups');
   assert.equal(getElementText(find(schoolsFilter)), getText('school 0'));
@@ -61,36 +57,29 @@ test('multi-option filters', async function(assert) {
   const programyearsfilter = '.programyearsfilter option';
   assert.expect(7);
   server.create('permission', {
-    user: 4136,
     tableName: 'school',
     tableRowId: 2,
     canRead: true
   });
-  server.create('user', {id: 4136, permissions: [1]});
-  server.create('school', {
-    programs: [1]
-  });
-  server.create('school');
+  server.createList('school', 2);
+  server.create('user', {id: 4136, permissionIds: [1], schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1, 2]
+    schoolId: 1,
   });
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 2
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
+    programYearId: 1,
   });
   server.create('cohort', {
-    programYear: 2,
+    programYearId: 2,
   });
   await visit('/learnergroups');
   assert.equal(find(schoolsFilter).length, 2);
@@ -105,17 +94,13 @@ test('multi-option filters', async function(assert) {
 test('primary school is selected by default', async function(assert) {
   const schoolsFilter = '.schoolsfilter option:selected';
   assert.expect(1);
+  server.createList('school', 2);
   server.create('permission', {
-    user: 4136,
     tableName: 'school',
     tableRowId: 1,
     canRead: true
   });
-  server.create('user', {id: 4136, permissions: [1], school: 2});
-  server.create('school', {users: []});
-  server.create('school', {
-    users: [1]
-  });
+  server.create('user', {id: 4136, permissionIds: [1], schoolId: 2});
   await visit('/learnergroups');
   assert.equal(getElementText(find(schoolsFilter)), getText('school 1'));
 });
@@ -126,36 +111,29 @@ test('multi-option filters', async function(assert) {
   const programyearsfilter = '.programyearsfilter option';
   assert.expect(6);
   server.create('permission', {
-    user: 4136,
     tableName: 'school',
     tableRowId: 2,
     canRead: true
   });
-  server.create('user', {id: 4136, permissions: [1]});
-  server.create('school', {
-    programs: [1]
-  });
-  server.create('school');
+  server.createList('school', 2);
+  server.create('user', {id: 4136, permissionIds: [1], schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1, 2]
+    schoolId: 1,
   });
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 2
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
+    programYearId: 1,
   });
   server.create('cohort', {
-    programYear: 2,
+    programYearId: 2,
   });
   await visit('/learnergroups');
   assert.equal(find(schoolsFilter).length, 2);
@@ -172,39 +150,31 @@ test('multiple programs filter', async function(assert) {
   const programSelectList = '.programsfilter select';
   const firstListedLearnerGroup = '.list tbody tr td:eq(0)';
   assert.expect(7);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1,2]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('program', {
-    school: 1,
-    programYears: [2]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 2,
-    cohort: 2
+    programId: 2,
   });
   server.create('cohort', {
-    programYear: 2,
-    learnerGroups: [2]
+    programYearId: 2,
   });
   var firstLearnergroup = server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1
   });
   var secondLearnergroup = server.create('learnerGroup', {
-    cohort: 2
+    cohortId: 2
   });
   await visit('/learnergroups');
   assert.equal(getElementText(find(selectedProgram)), getText('program 0'));
@@ -223,35 +193,28 @@ test('multiple program years filter', async function(assert) {
   const programYearSelectList = '.programyearsfilter select';
   const firstListedLearnerGroup = '.list tbody tr td:eq(0)';
   assert.expect(7);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1,2]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 2
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 2,
-    learnerGroups: [2]
+    programYearId: 2,
   });
   var firstLearnergroup = server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1
   });
   var secondLearnergroup = server.create('learnerGroup', {
-    cohort: 2
+    cohortId: 2
   });
   await visit('/learnergroups');
   assert.equal(getElementText(find(selectedProgramYear)), getText('cohort 1'));
@@ -265,55 +228,39 @@ test('multiple program years filter', async function(assert) {
 });
 
 test('list groups', async function(assert) {
-  server.create('user', {id: 4136});
-  server.createList('user', 5, {
-    learnerGroups: [1]
-  });
-  server.createList('user', 2, {
-    learnerGroups: [3]
-  });
-  server.createList('user', 2, {
-    learnerGroups: [4]
-  });
-  server.createList('user', 2, {
-    learnerGroups: [5]
-  });
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 11);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1,2]
+    programYearId: 1,
   });
-  var firstLearnergroup = server.create('learnerGroup', {
-    cohort: 1,
-    users: [2,3,4,5,6],
-    offerings: [1,2],
-    children: [3,4]
+  let firstLearnergroup = server.create('learnerGroup', {
+    cohortId: 1,
+    userIds: [2, 3, 4, 5, 6],
   });
-  var secondLearnergroup = server.create('learnerGroup', {
-    cohort: 1
+  let secondLearnergroup = server.create('learnerGroup', {
+    cohortId: 1,
   });
   server.create('learnerGroup', {
-    parent: 1,
-    users: [7,8],
-    children: [5]
+    parentId: 1,
+    userIds: [7,8],
   });
   server.create('learnerGroup', {
-    parent: 1,
-    users: [9,10]
+    parentId: 1,
+    userIds: [9,10]
   });
   server.create('learnerGroup', {
-    parent: 3,
-    users: [11,12]
+    parentId: 3,
+    userIds: [11,12]
+  });
+  server.createList('offering', 2, {
+    learnerGroupIds: [1],
   });
 
   await visit('/learnergroups');
@@ -330,33 +277,28 @@ test('list groups', async function(assert) {
 });
 
 test('filters by title', async function(assert) {
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1,2,3]
+    programYearId: 1,
   });
   var firstLearnergroup = server.create('learnerGroup', {
     title: 'specialfirstlearnergroup',
-    cohort: 1,
+    cohortId: 1,
   });
   var secondLearnergroup = server.create('learnerGroup', {
     title: 'specialsecondlearnergroup',
-    cohort: 1
+    cohortId: 1,
   });
   var regularLearnergroup = server.create('learnerGroup', {
     title: 'regularlearnergroup',
-    cohort: 1
+    cohortId: 1,
   });
   assert.expect(15);
   await visit('/learnergroups');
@@ -392,18 +334,16 @@ function getCellData(row, cell) {
 test('add new learnergroup', async function(assert) {
   assert.expect(3);
 
-  server.create('user', { id: 4136 });
-  server.create('school', { programs: [1] });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1
+    programYearId: 1
   });
 
   const expandButton = '.expand-button';
@@ -423,24 +363,19 @@ test('add new learnergroup', async function(assert) {
 test('cancel adding new learnergroup', async function(assert) {
   assert.expect(8);
 
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1
   });
 
   const expandButton = '.expand-button';
@@ -467,24 +402,19 @@ test('cancel adding new learnergroup', async function(assert) {
 
 test('remove learnergroup', async function(assert) {
   assert.expect(3);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1
   });
   await visit('/learnergroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -496,24 +426,19 @@ test('remove learnergroup', async function(assert) {
 
 test('cancel remove learnergroup', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1
   });
   await visit('/learnergroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -525,33 +450,25 @@ test('cancel remove learnergroup', async function(assert) {
 });
 
 test('confirmation of remove message', async function(assert) {
-  server.create('user', {id: 4136});
-  server.createList('user', 5, {
-    learnerGroups: [1]
-  });
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 5);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    offerings: [1,2],
-    children: [2,3]
+    cohortId: 1,
   });
   server.createList('learnerGroup',2, {
-    parent: 1
+    parentId: 1
   });
+  server.createList('offering', 2, { learnerGroupIds: [1] });
   assert.expect(5);
   await visit('/learnergroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -563,30 +480,23 @@ test('confirmation of remove message', async function(assert) {
 });
 
 test('populated learner groups are not deletable', async function(assert) {
-  server.create('user', {id: 4136});
-  server.createList('user', 5, {
-    learnerGroups: [1]
-  });
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 5);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    users: [2, 3, 4],
-    offerings: [1,2]
+    cohortId: 1,
+    userIds: [2, 3, 4],
   });
+  server.createList('offering', 2, { learnerGroupIds: [1] });
 
   assert.expect(3);
   await visit('/learnergroups');
@@ -597,24 +507,19 @@ test('populated learner groups are not deletable', async function(assert) {
 
 test('click title takes you to learnergroup route', async function(assert) {
   assert.expect(1);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
+    cohortId: 1,
   });
   await visit('/learnergroups');
   await click('.list tbody tr:eq(0) td:eq(0) a');
@@ -624,20 +529,19 @@ test('click title takes you to learnergroup route', async function(assert) {
 test('add new learnergroup with full cohort', async function(assert) {
   assert.expect(2);
 
-  server.create('user', { id: 4136 });
-  server.create('school', { programs: [1] });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
-  server.createList('user', 5, {cohort: 1});
   server.create('cohort', {
-    programYear: 1,
-    users: [2,3,4,5,6]
+    programYearId: 1,
+  });
+  server.createList('user', 5, {
+    cohortIds: [1]
   });
 
   const expandButton = '.expand-button';
@@ -655,8 +559,8 @@ test('add new learnergroup with full cohort', async function(assert) {
 });
 
 test('no add button when there is no cohort', async function(assert) {
-  server.create('user', {id: 4136});
   server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   await visit('/learnergroups');
   const expandNewButton = '.actions .expand-button';
 
@@ -666,25 +570,20 @@ test('no add button when there is no cohort', async function(assert) {
 
 test('title filter escapes regex', async function(assert) {
   assert.expect(5);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
     title: 'yes\\no',
-    cohort: 1,
+    cohortId: 1
   });
 
   const groups = '.list tbody tr';
@@ -702,38 +601,31 @@ test('title filter escapes regex', async function(assert) {
 
 test('copy learnergroup without learners', async function(assert) {
   assert.expect(20);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    children: [2, 3]
+    cohortId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [4]
+    cohortId: 1,
+    parentId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
+    cohortId: 1,
+    parentId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 2,
+    cohortId: 1,
+    parentId: 2,
   });
   const groups = '.list tbody tr';
   const firstGroup = `${groups}:eq(0)`;
@@ -792,55 +684,38 @@ test('copy learnergroup without learners', async function(assert) {
 
 test('copy learnergroup with learners', async function(assert) {
   assert.expect(20);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 10);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    children: [2, 3],
-    users: [2, 3, 4, 5, 6, 7, 8]
+    cohortId: 1,
+    userIds: [2, 3, 4, 5, 6, 7, 8]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [4],
-    users: [8]
+    cohortId: 1,
+    parentId: 1,
+    userIds: [8]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    users: [5, 6, 7]
+    cohortId: 1,
+    parentId: 1,
+    userIds: [5, 6, 7]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 2,
-    users: [8]
+    cohortId: 1,
+    parentId: 2,
+    userIds: [8]
   });
-  server.createList('user', 3, {
-    learnerGroups: [1]
-  });
-  server.createList('user', 3, {
-    learnerGroups: [1, 3]
-  });
-  server.createList('user', 3, {
-    learnerGroups: [1, 4]
-  });
-  server.create('user', {
-    learnerGroups: [1, 2, 5]
-  });
+
 
   const groups = '.list tbody tr';
   const firstGroup = `${groups}:eq(0)`;

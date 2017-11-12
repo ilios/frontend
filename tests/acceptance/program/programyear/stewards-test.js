@@ -12,60 +12,43 @@ module('Acceptance: Program Year - Stewards', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      departments: [1,2,5,6,7,8,9],
-      programs: [1],
-      stewards: [1]
-    });
-    server.create('school', {
-      departments: [3],
-      stewards: [2]
-    });
-    server.create('school', {
-      departments: [4],
-      stewards: [3]
-    });
+    server.createList('school', 2);
     server.create('program', {
-      school: 1,
-      programYears: [1]
-    });
-    server.create('programYearSteward', {
-      programYear: 1,
-      school: 1,
-      department: 1
-    });
-    server.create('programYearSteward', {
-      programYear: 1,
-      school: 2,
-      department: 3
-    });
-    server.create('programYearSteward', {
-      programYear: 1,
-      school: 3
-    });
-    server.create('department', {
-      school: 1,
-      stewards: [1]
-    });
-    server.create('department', {
-      school: 1
-    });
-    server.create('department', {
-      school: 2,
-      stewards: [2]
-    });
-    server.create('department', {
-      school: 3
-    });
-
-    server.createList('department', 5, {
-      school: 1
+      schoolId: 1,
     });
     server.create('programYear', {
-      program: 1,
-      stewards: [1, 2, 3]
+      programId: 1,
     });
-    server.create('cohort');
+    server.create('cohort', { programId: 1});
+    server.create('department', {
+      schoolId: 1,
+    });
+    server.create('department', {
+      schoolId: 1
+    });
+    server.create('department', {
+      schoolId: 2,
+    });
+    server.create('department', {
+      schoolId: 3
+    });
+    server.createList('department', 5, {
+      schoolId: 1
+    });
+    server.create('programYearSteward', {
+      programYearId: 1,
+      schoolId: 1,
+      departmentId: 1
+    });
+    server.create('programYearSteward', {
+      programYearId: 1,
+      schoolId: 2,
+      departmentId: 3
+    });
+    server.create('programYearSteward', {
+      programYearId: 1,
+      schoolId: 3
+    });
   },
 
   afterEach: function() {

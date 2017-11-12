@@ -13,17 +13,16 @@ module('Acceptance: Program Year - Publication Check', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.create('programYear');
-    server.create('cohort');
     fixtures.fullProgram = server.create('program', {
       startYear: 2013,
-      school: 1,
-      programYears: [1],
+      schoolId: 1,
     });
     fixtures.emptyProgram = server.create('program', {
       startYear: 2013,
-      school: 1
+      schoolId: 1
     });
+    server.create('programYear', { programId: 1});
+    server.create('cohort', { programYearId: 1});
   },
 
   afterEach: function() {

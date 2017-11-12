@@ -27,43 +27,32 @@ test('visiting /instructorgroups', async function(assert) {
 });
 
 test('list groups', async function(assert) {
-  server.create('user', {id: 4136});
-  server.createList('user', 5, {
-    instructorGroups: [1]
-  });
-  server.create('course', {
-    sessions: [1]
-  });
-  server.create('course', {
-    sessions: [2]
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 5);
+  server.createList('course', 2, {schoolId: 1});
+  server.create('session', {
+    courseId: 1,
   });
   server.create('session', {
-    course: 1,
-    offerings: [1]
+    courseId: 2,
   });
-  server.create('session', {
-    course: 2,
-    offerings: [2]
+  let firstInstructorgroup = server.create('instructorGroup', {
+    schoolId: 1,
+    userIds: [2, 3, 4, 5, 6]
   });
-  server.create('offering', {
-    instructorGroups: [1],
-    session: 1
+  let secondInstructorgroup = server.create('instructorGroup', {
+    schoolId: 1
   });
   server.create('offering', {
-    instructorGroups: [1],
-    session: 2
+    instructorGroupIds: [1],
+    sessionId: 1
   });
-  server.create('school', {
-    instructorGroups: [1,2]
+  server.create('offering', {
+    instructorGroupIds: [1],
+    sessionId: 2
   });
-  var firstInstructorgroup = server.create('instructorGroup', {
-    school: 1,
-    users: [2,3,4,5,6],
-    offerings: [1,2]
-  });
-  var secondInstructorgroup = server.create('instructorGroup', {
-    school: 1
-  });
+
   assert.expect(7);
   await visit('/instructorgroups');
   assert.equal(2, find('.list tbody tr').length);
@@ -78,25 +67,24 @@ test('list groups', async function(assert) {
 });
 
 test('filters by title', async function(assert) {
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1,2,3]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.create('school');
   let firstInstructorgroup = server.create('instructorGroup', {
     title: 'specialfirstinstructorgroup',
-    school: 1,
+    schoolId: 1,
   });
   let secondInstructorgroup = server.create('instructorGroup', {
     title: 'specialsecondinstructorgroup',
-    school: 1
+    schoolId: 1
   });
   let regularInstructorgroup = server.create('instructorGroup', {
     title: 'regularinstructorgroup',
-    school: 1
+    schoolId: 1
   });
   let regexInstructorgroup = server.create('instructorGroup', {
     title: '\\yoo hoo',
-    school: 1
+    schoolId: 1
   });
   assert.expect(19);
   await visit('/instructorgroups');
@@ -133,13 +121,13 @@ test('filters by title', async function(assert) {
 
 test('filters options', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136, permissions: [1], school: 2});
   server.createList('school', 2);
   server.create('permission', {
     tableName: 'school',
-    tableRowId: 1,
-    user: 4136
+    tableRowId: 1
   });
+  server.create('user', { id: 4136, permissionIds: [1], schoolId: 2 });
+
 
   const schoolSelect = '.schoolsfilter select';
   const schools = `${schoolSelect} option`;
@@ -153,8 +141,8 @@ test('filters options', async function(assert) {
 });
 
 test('add new instructorgroup', async function(assert) {
-  server.create('user', {id: 4136});
   server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   assert.expect(1);
   await visit('/instructorgroups');
   let newTitle = 'new test tile';
@@ -166,12 +154,10 @@ test('add new instructorgroup', async function(assert) {
 
 test('cancel adding new instructorgroup', async function(assert) {
   assert.expect(6);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/instructorgroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -186,12 +172,10 @@ test('cancel adding new instructorgroup', async function(assert) {
 
 test('remove instructorgroup', async function(assert) {
   assert.expect(3);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/instructorgroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -203,12 +187,10 @@ test('remove instructorgroup', async function(assert) {
 
 test('cancel remove instructorgroup', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/instructorgroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -220,40 +202,31 @@ test('cancel remove instructorgroup', async function(assert) {
 });
 
 test('confirmation of remove message', async function(assert) {
-  server.create('user', {id: 4136});
-  server.createList('user', 5, {
-    instructorGroups: [1]
-  });
-  server.create('course', {
-    sessions: [1]
-  });
-  server.create('course', {
-    sessions: [2]
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
+  server.createList('user', 5);
+  server.createList('course', 2, {
+    schoolId: 1
   });
   server.create('session', {
-    course: 1,
-    offerings: [1]
+    courseId: 1,
   });
   server.create('session', {
-    course: 2,
-    offerings: [2]
-  });
-  server.create('offering', {
-    instructorGroups: [1],
-    session: 1
-  });
-  server.create('offering', {
-    instructorGroups: [1],
-    session: 2
-  });
-  server.create('school', {
-    instructorGroups: [1]
+    courseId: 2,
   });
   server.create('instructorGroup', {
-    school: 1,
-    users: [2,3,4,5,6],
-    offerings: [1,2]
+    schoolId: 1,
+    userIds: [2, 3, 4, 5, 6],
   });
+  server.create('offering', {
+    instructorGroupIds: [1],
+    sessionId: 1
+  });
+  server.create('offering', {
+    instructorGroupIds: [1],
+    sessionId: 2
+  });
+
   assert.expect(5);
   await visit('/instructorgroups');
   assert.equal(1, find('.list tbody tr').length);
@@ -266,12 +239,10 @@ test('confirmation of remove message', async function(assert) {
 
 test('click edit takes you to instructorgroup route', async function(assert) {
   assert.expect(1);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/instructorgroups');
   let edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
@@ -281,12 +252,10 @@ test('click edit takes you to instructorgroup route', async function(assert) {
 
 test('click title takes you to instructorgroup route', async function(assert) {
   assert.expect(1);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/instructorgroups');
   await click('.list tbody tr:eq(0) td:eq(0) a');
@@ -295,13 +264,11 @@ test('click title takes you to instructorgroup route', async function(assert) {
 
 test('title filter escapes regex', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    instructorGroups: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('instructorGroup', {
     title: 'yes\\no',
-    school: 1,
+    schoolId: 1,
   });
 
   const groups = '.list tbody tr';

@@ -9,10 +9,10 @@ let url = '/users';
 module('Acceptance: Users', {
   beforeEach() {
     application = startApp();
-    setupAuthentication(application, { id: 4136, campusId: '123', email: 'user@example.edu' });
-
     server.create('school');
-    server.createList('user', 90, { school: 1, campusId: '555', email: 'user@example.edu' });
+    setupAuthentication(application, { id: 4136, schoolId: 1, campusId: '123' });
+
+    server.createList('user', 90, { schoolId: 1, campusId: '555' });
     server.createList('authentication', 90);
   },
 
@@ -58,7 +58,7 @@ test('can page through list of users', async function(assert) {
 });
 
 test('can search for a user and transition to user route', async function(assert) {
-  server.createList('user', 40, { firstName: 'Test', lastName: 'Name', school: 1 });
+  server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
 
   const userSearch = '.user-search input';
   const firstStudent = 'tbody tr:eq(0) td:eq(1) a';

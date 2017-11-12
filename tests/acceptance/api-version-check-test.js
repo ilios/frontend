@@ -12,8 +12,8 @@ let url = '/';
 module('Acceptance: API Version Check', {
   beforeEach() {
     application = startApp();
-    setupAuthentication(application);
     server.create('school');
+    setupAuthentication(application, { id: 4136,  schoolId: 1});
   },
 
   afterEach() {

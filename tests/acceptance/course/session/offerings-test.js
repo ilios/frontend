@@ -17,112 +17,76 @@ module('Acceptance: Session - Offerings', {
     application = startApp();
     fixtures.users =  [];
 
-    fixtures.users.pushObject(setupAuthentication(application, {id: 4136, directedCourses: [1]}));
-    server.create('school', {
-      courses: [1],
-      instructorGroups: [1,2],
-      sessionTypes: [1],
-
-    });
-    server.create('program', {
-      programYears: [1],
-    });
-    server.create('programYear', {
-      cohort: 1
-    });
+    fixtures.users.pushObject(setupAuthentication(application, {id: 1}));
+    server.create('school');
+    server.create('program');
+    server.create('programYear', { programId: 1});
     server.create('cohort', {
-      courses: [1],
-      learnerGroups: [1,2],
-      programYear: 1
+      programYearId: 1
     });
     server.create('course', {
-      sessions: [1],
-      cohorts: [1],
-      school: 1,
-      directors: [4136]
+      cohortIds: [1],
+      schoolId: 1,
+      directorIds: [1]
     });
     server.create('sessionType', {
-      school: 1
+      schoolId: 1
     });
 
-    //users 2, 3
-    fixtures.users.pushObjects(server.createList('user', 2, {
-      instructorGroups: [1],
-      learnerGroups: [1],
-    }));
-    //users 4,5
-    fixtures.users.pushObjects(server.createList('user', 2, {
-      instructorGroups: [2],
-      learnerGroups: [2],
-    }));
-    //users 6,7
-    fixtures.users.pushObjects(server.createList('user', 2, {
-      instructedOfferings: [1],
-      instructorGroups: [1]
-    }));
-    //users 8,9
-    fixtures.users.pushObjects(server.createList('user', 2, {
-      instructedOfferings: [1, 2],
-    }));
+    fixtures.users.pushObjects(server.createList('user', 8));
 
     fixtures.instructorGroups = [];
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
-      users: [2,3,6,7],
-      offerings: [1],
-      school: 1,
-      learnerGroups: [2]
+      userIds: [2,3,6,7],
+      schoolId: 1,
     }));
     fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
-      users: [4,5],
-      offerings: [1, 2, 3],
-      school: 1
+      userIds: [4,5],
+      schoolId: 1
     }));
     fixtures.learnerGroups = [];
     fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
-      users: [2,3],
-      offerings: [1],
-      cohort: 1,
+      userIds: [2,3],
+      cohortId: 1,
       location: 'default 1',
-      instructors: [4136],
+      instructorIds: [1],
     }));
     fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
-      users: [4,5],
-      offerings: [1, 2, 3],
-      cohort: 1,
+      userIds: [4,5],
+      cohortId: 1,
       location: 'default 2',
-      instructorGroups: [1],
+      instructorGroupIds: [1],
     }));
+    fixtures.session = server.create('session', {
+      courseId: 1,
+    });
     fixtures.offerings = [];
     let today = moment().hour(9);
     fixtures.today = today;
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
-      instructors: [6,7,8,9],
-      instructorGroups: [1, 2],
-      learnerGroups: [1, 2],
+      sessionId: 1,
+      instructorIds: [6,7,8,9],
+      instructorGroupIds: [1, 2],
+      learnerGroupIds: [1, 2],
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
     }));
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
-      instructors: [8,9],
-      instructorGroups: [2],
-      learnerGroups: [2],
+      sessionId: 1,
+      instructorIds: [8,9],
+      instructorGroupIds: [2],
+      learnerGroupIds: [2],
       startDate:today.clone().add(1, 'day').format(),
       endDate: today.clone().add(1, 'day').add(1, 'hour').format(),
     }));
     fixtures.offerings.pushObject(server.create('offering', {
-      session: 1,
-      instructorGroups: [2],
-      learnerGroups: [2],
-      instructors: [],
+      sessionId: 1,
+      instructorGroupIds: [2],
+      learnerGroupIds: [2],
+      instructorIds: [],
       startDate: today.clone().add(2, 'days').format(),
       endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
     }));
-    fixtures.session = server.create('session', {
-      course: 1,
-      offerings: [1, 2, 3],
-    });
   },
 
   afterEach: function() {
@@ -180,7 +144,7 @@ test('learner groups', async function(assert) {
   let dateBlocks = find('.offering-block', container);
   for(let i = 0; i < fixtures.offerings.length; i++){
     let learnerGroups = find('.offering-block-time-offering-learner_groups li', dateBlocks.eq(i));
-    let offeringLearnerGroups = fixtures.offerings[i].learnerGroups;
+    let offeringLearnerGroups = fixtures.offerings[i].learnerGroupIds;
     assert.equal(learnerGroups.length, offeringLearnerGroups.length);
     for(let i = 0; i < offeringLearnerGroups.length; i++){
       let learnerGroup = fixtures.learnerGroups[offeringLearnerGroups[i] - 1];
@@ -194,17 +158,13 @@ test('instructors', async function(assert) {
   await visit(url);
   let container = find('.session-offerings');
   let dateBlocks = find('.offering-block', container);
-  var extractInstructorsFromOffering = function(offeringId){
+  let extractInstructorsFromOffering = function(offeringId){
     let offering = fixtures.offerings[offeringId];
     let arr = [];
-    offering.instructors.forEach(function(id){
-      arr.push(id);
-    });
-    offering.instructorGroups.forEach(function(groupId){
-      let instructorGroup = fixtures.instructorGroups[groupId -1];
-      instructorGroup.users.forEach(function(id){
-        arr.push(id);
-      });
+    arr.pushObjects(offering.instructorIds);
+    offering.instructorGroupIds.forEach(function(groupId){
+      let instructorGroup = fixtures.instructorGroups[groupId - 1];
+      arr.pushObjects(instructorGroup.userIds);
     });
 
     return arr.uniq().sort();
@@ -213,8 +173,9 @@ test('instructors', async function(assert) {
     let instructors = find('.offering-block-time-offering-instructors li', dateBlocks.eq(i));
     let offeringInstructors = extractInstructorsFromOffering(i);
     assert.equal(instructors.length, offeringInstructors.length);
-    for(let i = 0; i < offeringInstructors.length; i++){
-      let instructor = fixtures.users[offeringInstructors[i] - 1];
+    for (let i = 0; i < offeringInstructors.length; i++){
+      const userId = offeringInstructors[i];
+      const instructor = server.db.users.find(userId);
       const middleInitial = instructor.middleName.charAt(0).toUpperCase();
       const instructorTitle = `${instructor.firstName} ${middleInitial}. ${instructor.lastName}`;
       assert.equal(getElementText(instructors.eq(i)), getText(instructorTitle));
@@ -653,24 +614,21 @@ test('users can create recurring single offerings', async function(assert) {
 test('edit offerings twice #2850', async assert => {
   assert.expect(2);
   server.create('learnerGroup', {
-    cohort: 1,
-    children: [4],
+    cohortId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 3,
-    children: [5],
+    cohortId: 1,
+    parentId: 3,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 4,
-    children: [6],
+    cohortId: 1,
+    parentId: 4,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 5,
+    cohortId: 1,
+    parentId: 5,
   });
-  server.db.cohorts.update(1, {learnerGroups: [3, 4, 5, 6]});
+  server.db.cohorts.update(1, {learnerGroupIds: [3, 4, 5, 6]});
 
   const editButton = '.offering-detail-box i:first';
   const form = '.offering-form';

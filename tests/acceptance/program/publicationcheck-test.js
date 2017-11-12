@@ -16,22 +16,20 @@ module('Acceptance: Program - Publication Check', {
     server.create('objective');
     server.create('term');
     server.create('competency');
-    server.create('program', {
-      programYears: [1]
-    });
+    server.create('program');
     fixtures.fullProgramYear = server.create('programYear', {
       startYear: 2013,
-      school: 1,
-      program: 1,
-      directors: [4136],
-      objectives: [1],
-      terms: [1],
-      competencies: [1],
+      schoolId: 1,
+      programId: 1,
+      directorIds: [4136],
+      objectiveIds: [1],
+      termIds: [1],
+      competencyIds: [1],
     });
     fixtures.emptyProgramYear = server.create('programYear', {
       startYear: 2013,
-      school: 1,
-      program: 1
+      schoolId: 1,
+      programId: 1
     });
     server.createList('cohort', 2);
   },

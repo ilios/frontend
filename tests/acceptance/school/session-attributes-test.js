@@ -21,16 +21,14 @@ module('Acceptance: School - Session Attributes', {
 
 test('check fields collapsed', async function(assert) {
   assert.expect(12);
-  server.create('school', {
-    configurations: [1, 2]
-  });
+  server.create('school');
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSupplemental',
     value: true
   });
@@ -65,16 +63,14 @@ test('check fields collapsed', async function(assert) {
 
 test('check fields expanded', async function(assert) {
   assert.expect(12);
-  server.create('school', {
-    configurations: [1, 2]
-  });
+  server.create('school');
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSupplemental',
     value: true
   });
@@ -109,16 +105,14 @@ test('check fields expanded', async function(assert) {
 
 test('manage session attributes', async function(assert) {
   assert.expect(23);
-  server.create('school', {
-    configurations: [1, 2]
-  });
+  server.create('school');
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionAttendanceRequired',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSupplemental',
     value: true
   });

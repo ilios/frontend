@@ -10,8 +10,8 @@ var application;
 module('Acceptance: Courses', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
     server.createList('school', 2);
+    setupAuthentication(application, { id: 4136, schoolId: 1});
   },
 
   afterEach: function() {
@@ -29,22 +29,22 @@ test('visiting /courses with title filter', async function(assert) {
   server.create('course', {
     title: 'specialfirstcourse',
     year: 2014,
-    school: 1,
+    schoolId: 1,
   });
   server.create('course', {
     title: 'specialsecondcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   server.create('course', {
     title: 'regularcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let lastCourse = server.create('course', {
     title: 'aaLastcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   await page.visit({filter: 'Last'});
   assert.equal(page.courses().count, 1);
@@ -57,33 +57,33 @@ test('filters by title', async function(assert) {
   let firstCourse = server.create('course', {
     title: 'specialfirstcourse',
     year: 2014,
-    school: 1,
+    schoolId: 1,
   });
   let secondCourse = server.create('course', {
     title: 'specialsecondcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let regularCourse = server.create('course', {
     title: 'regularcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let lastCourse = server.create('course', {
     title: 'aaLastcourse',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let regexCourse = server.create('course', {
     title: '\\yoo hoo',
     year: 2014,
-    school: 1
+    schoolId: 1
   });
 
   server.create('course', {
     title: 'archivedCourse',
     year: 2014,
-    school: 1,
+    schoolId: 1,
     archived: true
   });
   await page.visit();
@@ -133,11 +133,11 @@ test('filters by year', async function(assert) {
   assert.expect(5);
   let firstCourse = server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   await page.visit();
   assert.equal(page.courses().count, 1);
@@ -156,11 +156,11 @@ test('initial filter by year', async function(assert) {
   assert.expect(4);
   let firstCourse = server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   await page.visit({ year: 2014 });
   assert.equal(page.courses().count, 1);
@@ -176,12 +176,12 @@ test('filters by mycourses', async function(assert) {
   assert.expect(5);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
-    directors: [4136]
+    schoolId: 1,
+    directorIds: [4136]
   });
 
   await page.visit();
@@ -200,9 +200,9 @@ test('year filter options', async function(assert) {
   server.create('permission', {
     tableName: 'school',
     tableRowId: 1,
-    user: 4136
+    userId: 4136
   });
-  server.db.users.update(4136, {permissions: [1], school: 2});
+  server.db.users.update(4136, {schoolId: 2});
 
   server.create('academicYear', {id: 2013});
   server.create('academicYear', {id: 2014});
@@ -226,25 +226,25 @@ test('user can only delete non-published courses with proper privileges', async 
   assert.expect(4);
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: false,
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
-    directors: [4136],
+    directorIds: [4136],
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: false,
-    directors: [4136]
+    directorIds: [4136]
   });
   await page.visit();
 
@@ -314,7 +314,7 @@ test('new course can be deleted', async function(assert) {
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]});
+  server.db.users.update(4136, {roleIds: [1]});
 
   assert.expect(9);
 
@@ -345,11 +345,11 @@ test('locked courses', async function(assert) {
   assert.expect(7);
   server.create('course', {
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     locked: true
   });
 
@@ -391,11 +391,11 @@ test('sort by title', async function(assert) {
   assert.expect(6);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1
+    schoolId: 1
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
   });
   await page.visit();
   assert.equal(page.courses().count, 2);
@@ -412,12 +412,12 @@ test('sort by level', async function(assert) {
   assert.expect(6);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     level: 1
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     level: 2
   });
 
@@ -437,12 +437,12 @@ test('sort by startDate', async function(assert) {
   assert.expect(6);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     startDate: moment().toDate()
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     startDate: moment().add(1, 'day').toDate()
   });
 
@@ -462,12 +462,12 @@ test('sort by endDate', async function(assert) {
   assert.expect(6);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     endDate: moment().toDate()
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     endDate: moment().add(1, 'day').toDate()
   });
 
@@ -487,19 +487,19 @@ test('sort by status', async function(assert) {
   assert.expect(8);
   let firstCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: false
   });
   let secondCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true
   });
   let thirdCourse = server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: false,
     publishedAsTbd: false
   });
@@ -523,17 +523,17 @@ test('developer users can lock and unlock course', async function(assert) {
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]});
+  server.db.users.update(4136, {roleIds: [1]});
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: false,
     locked: true,
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
     locked: false,
@@ -554,19 +554,19 @@ test('course directors users can lock but not unlock course', async function(ass
   server.create('academicYear', {id: 2014});
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: false,
     locked: true,
-    directors: [4136],
+    directorIds: [4136],
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
     locked: false,
-    directors: [4136],
+    directorIds: [4136],
   });
 
 
@@ -585,14 +585,14 @@ test('non-privileged users cannot lock and unlock course but can see the icon', 
   server.create('academicYear', {id: 2014});
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: false,
     locked: true,
   });
   server.create('course', {
     year: 2014,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
     locked: false,
@@ -614,7 +614,7 @@ test('title filter escapes regex', async function(assert) {
   let firstCourse = server.create('course', {
     title: 'yes\\no',
     year: 2014,
-    school: 1,
+    schoolId: 1,
   });
 
   await page.visit();

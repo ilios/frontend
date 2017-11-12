@@ -20,33 +20,31 @@ module('Acceptance: Programs', {
 });
 
 test('visiting /programs', async function(assert) {
-  server.create('user', {id: 4136});
   server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   await visit('/programs');
   assert.equal(currentPath(), 'programs');
 });
 
 test('filters by title', async function(assert) {
   assert.expect(19);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1,2,3]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   let firstProgram = server.create('program', {
     title: 'specialfirstprogram',
-    school: 1,
+    schoolId: 1,
   });
   let secondProgram = server.create('program', {
     title: 'specialsecondprogram',
-    school: 1
+    schoolId: 1
   });
   let regularProgram = server.create('program', {
     title: 'regularprogram',
-    school: 1
+    schoolId: 1
   });
   let regexProgram = server.create('program', {
     title: '\\yoo hoo',
-    school: 1
+    schoolId: 1
   });
   await visit('/programs');
   assert.equal(4, find('.list tbody tr').length);
@@ -80,13 +78,12 @@ test('filters by title', async function(assert) {
 
 test('filters options', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136, permissions: [1], school: 2});
   server.createList('school', 2);
   server.create('permission', {
     tableName: 'school',
     tableRowId: 1,
-    user: 4136
   });
+  server.create('user', {id: 4136, permissionIds: [1], schoolId: 2});
 
   const schoolSelect = '.schoolsfilter select';
   const schools = `${schoolSelect} option`;
@@ -102,8 +99,8 @@ test('filters options', async function(assert) {
 test('add new program', async function(assert) {
   assert.expect(3);
 
-  server.create('user', {id: 4136});
   server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
 
   const url = '/programs';
   const expandButton = '.expand-button';
@@ -126,12 +123,10 @@ test('add new program', async function(assert) {
 
 test('remove program', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/programs');
   assert.equal(1, find('.list tbody tr').length);
@@ -144,12 +139,10 @@ test('remove program', async function(assert) {
 
 test('cancel remove program', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/programs');
   assert.equal(1, find('.list tbody tr').length);
@@ -162,12 +155,10 @@ test('cancel remove program', async function(assert) {
 
 test('click edit takes you to program route', async function(assert) {
   assert.expect(1);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/programs');
   var edit = find('.list tbody tr:eq(0) td:eq(3) .edit');
@@ -177,12 +168,10 @@ test('click edit takes you to program route', async function(assert) {
 
 test('click title takes you to program route', async function(assert) {
   assert.expect(1);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   await visit('/programs');
   await click('.list tbody tr:eq(0) td:eq(0) a');
@@ -191,13 +180,11 @@ test('click title takes you to program route', async function(assert) {
 
 test('title filter escapes regex', async function(assert) {
   assert.expect(4);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
+  server.create('user', {id: 4136, schoolId: 1});
   server.create('program', {
     title: 'yes\\no',
-    school: 1,
+    schoolId: 1,
   });
 
   const programs = '.list tbody tr';

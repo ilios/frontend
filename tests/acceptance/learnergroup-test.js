@@ -1,15 +1,15 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ilios/tests/helpers/module-for-acceptance';
+import { test, module } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 let application;
 
-moduleForAcceptance('Acceptance: Learnergroup', {
+module('Acceptance: Learnergroup', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
+    server.create('school');
+    setupAuthentication(application, {id: 4136, schoolId: 1});
   },
 
   afterEach: function() {
@@ -19,32 +19,26 @@ moduleForAcceptance('Acceptance: Learnergroup', {
 
 
 test('generate new subgroups', async function(assert) {
-  server.create('cohort', {
-    learnerGroups: [1, 2, 3]
-  });
   server.create('programYear');
+  server.create('cohort', { programYearId: 1 });
+  server.createList('user', 2);
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [2,3],
+    cohortId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [4,5],
-    users: [2,3]
+    cohortId: 1,
+    parentId: 1,
+    userIds: [2,3]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1
+    cohortId: 1,
+    parentId: 1
   });
   server.createList('learnerGroup', 2, {
-    cohort: 1,
-    parent: 2
+    cohortId: 1,
+    parentId: 2
   });
-  server.createList('user', 2, {
-    learnerGroups: [2]
-  });
+
 
   assert.expect(11);
 
@@ -84,38 +78,30 @@ test('generate new subgroups', async function(assert) {
 
 test('copy learnergroup without learners', async function(assert) {
   assert.expect(20);
-  server.create('user', {id: 4136});
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    children: [2, 3]
+    cohortId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [4]
+    cohortId: 1,
+    parentId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
+    cohortId: 1,
+    parentId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 2,
+    cohortId: 1,
+    parentId: 2,
   });
   const groups = '.list tbody tr';
   const firstGroup = `${groups}:eq(0)`;
@@ -174,53 +160,34 @@ test('copy learnergroup without learners', async function(assert) {
 
 test('copy learnergroup with learners', async function(assert) {
   assert.expect(20);
-  server.create('school', {
-    programs: [1]
-  });
+  server.createList('user', 10);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    cohort: 1
+    programId: 1,
   });
   server.create('cohort', {
-    programYear: 1,
-    learnerGroups: [1]
+    programYearId: 1,
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    children: [2, 3],
-    users: [2, 3, 4, 5, 6, 7, 8]
+    cohortId: 1,
+    userIds: [2, 3, 4, 5, 6, 7, 8]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    children: [4],
-    users: [8]
+    cohortId: 1,
+    parentId: 1,
+    userIds: [8]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 1,
-    users: [5, 6, 7]
+    cohortId: 1,
+    parentId: 1,
+    userIds: [5, 6, 7]
   });
   server.create('learnerGroup', {
-    cohort: 1,
-    parent: 2,
-    users: [8]
-  });
-  server.createList('user', 3, {
-    learnerGroups: [1]
-  });
-  server.createList('user', 3, {
-    learnerGroups: [1, 3]
-  });
-  server.createList('user', 3, {
-    learnerGroups: [1, 4]
-  });
-  server.create('user', {
-    learnerGroups: [1, 2, 5]
+    cohortId: 1,
+    parentId: 2,
+    userIds: [8]
   });
 
   const groups = '.list tbody tr';

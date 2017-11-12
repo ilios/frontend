@@ -12,36 +12,30 @@ module('Acceptance: Program Year - Competencies', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      school: 1,
-      programYears: [1],
-      competencies: [1,2,3,4,5,6]
-    });
+    server.create('school');
     server.create('program', {
-      school: 1,
-      programYears: [1]
+      schoolId: 1,
     });
     server.create('programYear', {
-      program: 1,
-      competencies: [2,3]
+      programId: 1,
     });
-    server.create('cohort');
-    server.create('competency', {
-      school: 1,
-      children: [2,3]
-    });
-    server.createList('competency', 2, {
-      parent: 1,
-      school: 1,
-      programYears: [1]
+    server.create('cohort', {
+      programYearId: 1
     });
     server.create('competency', {
-      school: 1,
-      children: [5,6],
+      schoolId: 1,
     });
     server.createList('competency', 2, {
-      school: 1,
-      parent: 4
+      parentId: 1,
+      schoolId: 1,
+      programYearIds: [1]
+    });
+    server.create('competency', {
+      schoolId: 1,
+    });
+    server.createList('competency', 2, {
+      schoolId: 1,
+      parentId: 4
     });
   },
 

@@ -18,12 +18,10 @@ module('Acceptance: Session - Objective Create', {
     server.create('school');
     server.create('course');
     server.create('sessionType');
-    fixtures.objective = server.create('objective', {
-      sessions: [1],
-    });
+    fixtures.objective = server.create('objective');
     fixtures.session = server.create('session', {
-      course: 1,
-      objectives: [1]
+      courseId: 1,
+      objectiveIds: [1]
     });
   },
 

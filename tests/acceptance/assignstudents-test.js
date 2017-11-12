@@ -1,17 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ilios/tests/helpers/module-for-acceptance';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from 'ilios/tests/helpers/destroy-app';
+import destroyApp from '../helpers/destroy-app';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 let application;
-moduleForAcceptance('Acceptance | assign students', {
+module('Acceptance | assign students', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
-
     server.createList('school', 2);
-
+    setupAuthentication(application, { id: 4136, schoolId: 1});
   },
   afterEach: function() {
     destroyApp(application);
