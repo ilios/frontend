@@ -40,19 +40,14 @@ export default function() {
     const keys = Object.keys(params);
     const schoolKey = 'filters[schools]';
     if (keys.includes(schoolKey)) {
-      const { db } = schema;
       const schoolsFilter = params[schoolKey];
-      const cohorts = db.cohorts.filter(cohort => {
-        const programYearId = parseInt(cohort.programYear);
-        const programYear = db.programYears.find(programYearId);
-        const programId = parseInt(programYear.program);
-        const program = db.programs.find(programId);
-        const schoolId = program.school;
+      const cohorts = schema.cohorts.all().filter(cohort => {
+        const school = cohort.programYear.program.school;
 
-        return schoolsFilter.includes(schoolId.toString());
+        return schoolsFilter.includes(school.id);
       });
 
-      return {cohorts};
+      return cohorts;
 
     } else {
       return getAll(schema, request);
