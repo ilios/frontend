@@ -15,25 +15,25 @@ export default function() {
   this.get('api/aamcmethods', getAll);
   this.get('api/aamcmethods/:id', 'aamcMethod');
   this.put('api/aamcmethods/:id', 'aamcMethod');
-  this.delete('api/aamcmethods/:id', 'aamcMethod');
+  this.del('api/aamcmethods/:id', 'aamcMethod');
   this.post('api/aamcmethods', 'aamcMethod');
 
   this.get('api/aamcpcrs', getAll);
   this.get('api/aamcpcrs/:id', 'aamcPcr');
   this.put('api/aamcpcrs/:id', 'aamcPcr');
-  this.delete('api/aamcpcrs/:id', 'aamcPcr');
+  this.del('api/aamcpcrs/:id', 'aamcPcr');
   this.post('api/aamcpcrs', 'aamcPcr');
 
   this.get('api/academicyears', getAll);
   this.get('api/academicyears/:id', 'academicYear');
   this.put('api/academicyears/:id', 'academicYear');
-  this.delete('api/academicyears/:id', 'academicYear');
+  this.del('api/academicyears/:id', 'academicYear');
   this.post('api/academicyears', 'academicYear');
 
   this.get('api/authentications', getAll);
   this.get('api/authentications/:id', 'authentication');
   this.put('api/authentications/:id', 'authentication');
-  this.delete('api/authentications/:id', 'authentication');
+  this.del('api/authentications/:id', 'authentication');
   this.post('api/authentications', 'authentication');
 
   this.get('api/cohorts', (schema, request) => {
@@ -56,164 +56,164 @@ export default function() {
   });
   this.get('api/cohorts/:id', 'cohort');
   this.put('api/cohorts/:id', 'cohort');
-  this.delete('api/cohorts/:id', 'cohort');
+  this.del('api/cohorts/:id', 'cohort');
   this.post('api/cohorts', 'cohort');
 
   this.get('api/competencies', getAll);
   this.get('api/competencies/:id', 'competency');
   this.put('api/competencies/:id', 'competency');
-  this.delete('api/competencies/:id', 'competency');
+  this.del('api/competencies/:id', 'competency');
   this.post('api/competencies', 'competency');
 
   this.get('api/courseclerkshiptypes', getAll);
   this.get('api/courseclerkshiptypes/:id', 'courseClerkshipType');
   this.put('api/courseclerkshiptypes/:id', 'courseClerkshipType');
-  this.delete('api/courseclerkshiptypes/:id', 'courseClerkshipType');
+  this.del('api/courseclerkshiptypes/:id', 'courseClerkshipType');
   this.post('api/courseclerkshiptypes', 'courseClerkshipType');
 
   this.get('api/courselearningmaterials', getAll);
   this.get('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.put('api/courselearningmaterials/:id', 'courseLearningMaterial');
-  this.delete('api/courselearningmaterials/:id', 'courseLearningMaterial');
+  this.del('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.post('api/courselearningmaterials', 'courseLearningMaterial');
 
   this.get('api/courses', getAll);
   this.get('api/courses/:id', 'course');
   this.put('api/courses/:id', 'course');
-  this.delete('api/courses/:id', 'course');
+  this.del('api/courses/:id', 'course');
   this.post('api/courses', 'course');
 
   this.get('api/curriculuminventoryacademiclevels', getAll);
   this.get('api/curriculuminventoryacademiclevels/:id', 'curriculumInventoryAcademicLevel');
   this.put('api/curriculuminventoryacademiclevels/:id', 'curriculumInventoryAcademicLevel');
-  this.delete('api/curriculuminventoryacademiclevels/:id', 'curriculumInventoryAcademicLevel');
+  this.del('api/curriculuminventoryacademiclevels/:id', 'curriculumInventoryAcademicLevel');
   this.post('api/curriculuminventoryacademiclevels', 'curriculumInventoryAcademicLevel');
 
   this.get('api/curriculuminventoryexports', getAll);
   this.get('api/curriculuminventoryexports/:id', 'curriculumInventoryExport');
   this.put('api/curriculuminventoryexports/:id', 'curriculumInventoryExport');
-  this.delete('api/curriculuminventoryexports/:id', 'curriculumInventoryExport');
+  this.del('api/curriculuminventoryexports/:id', 'curriculumInventoryExport');
   this.post('api/curriculuminventoryexports', 'curriculumInventoryExport');
 
   this.get('api/curriculuminventoryinstitutions', getAll);
   this.get('api/curriculuminventoryinstitutions/:id', 'curriculumInventoryInstitution');
   this.put('api/curriculuminventoryinstitutions/:id', 'curriculumInventoryInstitution');
-  this.delete('api/curriculuminventoryinstitutions/:id', 'curriculumInventoryInstitution');
+  this.del('api/curriculuminventoryinstitutions/:id', 'curriculumInventoryInstitution');
   this.post('api/curriculuminventoryinstitutions', 'curriculumInventoryInstitution');
 
   this.get('api/curriculuminventoryreports', getAll);
   this.get('api/curriculuminventoryreports/:id', 'curriculumInventoryReport');
   this.put('api/curriculuminventoryreports/:id', 'curriculumInventoryReport');
-  this.delete('api/curriculuminventoryreports/:id', 'curriculumInventoryReport');
+  this.del('api/curriculuminventoryreports/:id', 'curriculumInventoryReport');
   this.post('api/curriculuminventoryreports', 'curriculumInventoryReport');
 
   this.get('api/curriculuminventorysequenceblocks', getAll);
   this.get('api/curriculuminventorysequenceblocks/:id', 'curriculumInventorySequenceBlock');
   this.put('api/curriculuminventorysequenceblocks/:id', 'curriculumInventorySequenceBlock');
-  this.delete('api/curriculuminventorysequenceblocks/:id', 'curriculumInventorySequenceBlock');
+  this.del('api/curriculuminventorysequenceblocks/:id', 'curriculumInventorySequenceBlock');
   this.post('api/curriculuminventorysequenceblocks', 'curriculumInventorySequenceBlock');
 
   this.get('api/curriculuminventorysequences', getAll);
   this.get('api/curriculuminventorysequences/:id', 'curriculumInventorySequence');
   this.put('api/curriculuminventorysequences/:id', 'curriculumInventorySequence');
-  this.delete('api/curriculuminventorysequences/:id', 'curriculumInventorySequence');
+  this.del('api/curriculuminventorysequences/:id', 'curriculumInventorySequence');
   this.post('api/curriculuminventorysequences', 'curriculumInventorySequence');
 
   this.get('api/departments', getAll);
   this.get('api/departments/:id', 'department');
   this.put('api/departments/:id', 'department');
-  this.delete('api/departments/:id', 'department');
+  this.del('api/departments/:id', 'department');
   this.post('api/departments', 'department');
 
   this.get('api/vocabularies', getAll);
   this.get('api/vocabularies/:id', 'vocabulary');
   this.put('api/vocabularies/:id', 'vocabulary');
-  this.delete('api/vocabularies/:id', 'vocabulary');
+  this.del('api/vocabularies/:id', 'vocabulary');
   this.post('api/vocabularies', 'vocabulary');
 
   this.get('api/terms', getAll);
   this.get('api/terms/:id', 'term');
   this.put('api/terms/:id', 'term');
-  this.delete('api/terms/:id', 'term');
+  this.del('api/terms/:id', 'term');
   this.post('api/terms', 'term');
 
   this.get('api/ilmsessions', getAll);
   this.get('api/ilmsessions/:id', 'ilmSession');
   this.put('api/ilmsessions/:id', 'ilmSession');
-  this.delete('api/ilmsessions/:id', 'ilmSession');
+  this.del('api/ilmsessions/:id', 'ilmSession');
   this.post('api/ilmsessions', 'ilmSession');
 
   this.get('api/instructorgroups', getAll);
   this.get('api/instructorgroups/:id', 'instructorGroup');
   this.put('api/instructorgroups/:id', 'instructorGroup');
-  this.delete('api/instructorgroups/:id', 'instructorGroup');
+  this.del('api/instructorgroups/:id', 'instructorGroup');
   this.post('api/instructorgroups', 'instructorGroup');
 
   this.get('api/learnergroups', getAll);
   this.get('api/learnergroups/:id', 'learnerGroup');
   this.put('api/learnergroups/:id', 'learnerGroup');
-  this.delete('api/learnergroups/:id', 'learnerGroup');
+  this.del('api/learnergroups/:id', 'learnerGroup');
   this.post('api/learnergroups', 'learnerGroup');
 
   this.get('api/learningmaterialstatuses', getAll);
   this.get('api/learningmaterialstatuses/:id', 'learningMaterialStatus');
   this.put('api/learningmaterialstatuses/:id', 'learningMaterialStatus');
-  this.delete('api/learningmaterialstatuses/:id', 'learningMaterialStatus');
+  this.del('api/learningmaterialstatuses/:id', 'learningMaterialStatus');
   this.post('api/learningmaterialstatuses', 'learningMaterialStatus');
 
   this.get('api/learningmaterialuserroles', getAll);
   this.get('api/learningmaterialuserroles/:id', 'learningMaterialUserRole');
   this.put('api/learningmaterialuserroles/:id', 'learningMaterialUserRole');
-  this.delete('api/learningmaterialuserroles/:id', 'learningMaterialUserRole');
+  this.del('api/learningmaterialuserroles/:id', 'learningMaterialUserRole');
   this.post('api/learningmaterialuserroles', 'learningMaterialUserRole');
 
   this.get('api/learningmaterials', getAll);
   this.get('api/learningmaterials/:id', 'learningMaterial');
   this.put('api/learningmaterials/:id', 'learningMaterial');
-  this.delete('api/learningmaterials/:id', 'learningMaterial');
+  this.del('api/learningmaterials/:id', 'learningMaterial');
   this.post('api/learningmaterials', 'learningMaterial');
 
   this.get('api/meshconcepts', getAll);
   this.get('api/meshconcepts/:id', 'meshConcept');
   this.put('api/meshconcepts/:id', 'meshConcept');
-  this.delete('api/meshconcepts/:id', 'meshConcept');
+  this.del('api/meshconcepts/:id', 'meshConcept');
   this.post('api/meshconcepts', 'meshConcept');
 
   this.get('api/meshdescriptors', getAll);
   this.get('api/meshdescriptors/:id', 'meshDescriptor');
   this.put('api/meshdescriptors/:id', 'meshDescriptor');
-  this.delete('api/meshdescriptors/:id', 'meshDescriptor');
+  this.del('api/meshdescriptors/:id', 'meshDescriptor');
   this.post('api/meshdescriptors', 'meshDescriptor');
 
   this.get('api/meshqualifiers', getAll);
   this.get('api/meshqualifiers/:id', 'meshQualifier');
   this.put('api/meshqualifiers/:id', 'meshQualifier');
-  this.delete('api/meshqualifiers/:id', 'meshQualifier');
+  this.del('api/meshqualifiers/:id', 'meshQualifier');
   this.post('api/meshqualifiers', 'meshQualifier');
 
   this.get('api/meshtrees', getAll);
   this.get('api/meshtrees/:id', 'meshTree');
   this.put('api/meshtrees/:id', 'meshTree');
-  this.delete('api/meshtrees/:id', 'meshTree');
+  this.del('api/meshtrees/:id', 'meshTree');
   this.post('api/meshtrees', 'meshTree');
 
 
   this.get('api/meshpreviousindexings', getAll);
   this.get('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
   this.put('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
-  this.delete('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
+  this.del('api/meshpreviousindexings/:id', 'meshPreviousIndexing');
   this.post('api/meshpreviousindexings', 'meshPreviousIndexing');
 
   this.get('api/objectives', getAll);
   this.get('api/objectives/:id', 'objective');
   this.put('api/objectives/:id', 'objective');
-  this.delete('api/objectives/:id', 'objective');
+  this.del('api/objectives/:id', 'objective');
   this.post('api/objectives', 'objective');
 
   this.get('api/offerings', getAll);
   this.get('api/offerings/:id', 'offering');
   this.put('api/offerings/:id', 'offering');
-  this.delete('api/offerings/:id', 'offering');
+  this.del('api/offerings/:id', 'offering');
   this.post('api/offerings', 'offering');
 
   this.get('api/pendinguserupdates', getAll);
@@ -225,13 +225,13 @@ export default function() {
   this.get('api/permissions', getAll);
   this.get('api/permissions/:id', 'permission');
   this.put('api/permissions/:id', 'permission');
-  this.delete('api/permissions/:id', 'permission');
+  this.del('api/permissions/:id', 'permission');
   this.post('api/permissions', 'permission');
 
   this.get('api/programyears', getAll);
   this.get('api/programyears/:id', 'programYear');
   this.put('api/programyears/:id', 'programYear');
-  this.delete('api/programyears/:id', 'programYear');
+  this.del('api/programyears/:id', 'programYear');
   this.post('api/programyears', function (schema, request) {
     const jsonData = this.serializerOrRegistry.normalize(JSON.parse(request.requestBody), 'program-year');
     const attrs = parseJsonData(jsonData);
@@ -248,61 +248,61 @@ export default function() {
   this.get('api/programyearstewards', getAll);
   this.get('api/programyearstewards/:id', 'programYearSteward');
   this.put('api/programyearstewards/:id', 'programYearSteward');
-  this.delete('api/programyearstewards/:id', 'programYearSteward');
+  this.del('api/programyearstewards/:id', 'programYearSteward');
   this.post('api/programyearstewards', 'programYearSteward');
 
   this.get('api/programs', getAll);
   this.get('api/programs/:id', 'program');
   this.put('api/programs/:id', 'program');
-  this.delete('api/programs/:id', 'program');
+  this.del('api/programs/:id', 'program');
   this.post('api/programs', 'program');
 
   this.get('api/reports', getAll);
   this.get('api/reports/:id', 'report');
   this.put('api/reports/:id', 'report');
-  this.delete('api/reports/:id', 'report');
+  this.del('api/reports/:id', 'report');
   this.post('api/reports', 'report');
 
   this.get('api/schools', getAll);
   this.get('api/schools/:id', 'school');
   this.put('api/schools/:id', 'school');
-  this.delete('api/schools/:id', 'school');
+  this.del('api/schools/:id', 'school');
   this.post('api/schools', 'school');
 
   this.get('api/schoolconfigs', getAll);
   this.get('api/schoolconfigs/:id', 'schoolConfig');
   this.put('api/schoolconfigs/:id', 'schoolConfig');
-  this.delete('api/schoolconfigs/:id', 'schoolConfig');
+  this.del('api/schoolconfigs/:id', 'schoolConfig');
   this.post('api/schoolconfigs', 'schoolConfig');
 
   this.get('api/sessiondescriptions', getAll);
   this.get('api/sessiondescriptions/:id', 'sessionDescription');
   this.put('api/sessiondescriptions/:id', 'sessionDescription');
-  this.delete('api/sessiondescriptions/:id', 'sessionDescription');
+  this.del('api/sessiondescriptions/:id', 'sessionDescription');
   this.post('api/sessiondescriptions', 'sessionDescription');
 
   this.get('api/sessionlearningmaterials', getAll);
   this.get('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.put('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
-  this.delete('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
+  this.del('api/sessionlearningmaterials/:id', 'sessionLearningMaterial');
   this.post('api/sessionlearningmaterials', 'sessionLearningMaterial') ;
 
   this.get('api/sessiontypes', getAll);
   this.get('api/sessiontypes/:id', 'sessionType');
   this.put('api/sessiontypes/:id', 'sessionType');
-  this.delete('api/sessiontypes/:id', 'sessionType');
+  this.del('api/sessiontypes/:id', 'sessionType');
   this.post('api/sessiontypes', 'sessionType');
 
   this.get('api/sessions', getAll);
   this.get('api/sessions/:id', 'session');
   this.put('api/sessions/:id', 'session');
-  this.delete('api/sessions/:id', 'session');
+  this.del('api/sessions/:id', 'session');
   this.post('api/sessions', 'session');
 
   this.get('api/userroles', getAll);
   this.get('api/userroles/:id', 'userRole');
   this.put('api/userroles/:id', 'userRole');
-  this.delete('api/userroles/:id', 'userRole');
+  this.del('api/userroles/:id', 'userRole');
   this.post('api/userroles', 'userRole');
 
   this.get('api/users', getAll);
