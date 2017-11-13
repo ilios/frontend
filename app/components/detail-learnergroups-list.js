@@ -31,9 +31,18 @@ export default Component.extend({
         const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
         return (thisGroupsTopLevelGroup === topLevelGroup);
       });
+
+      const sortProxies = await map(groups, async group => {
+        const sortTitle = await group.get('sortTitle');
+        return EmberObject.create({
+          group,
+          sortTitle
+        })
+      });
+
       return EmberObject.create({
         topLevelGroup,
-        groups
+        groups: sortProxies.sortBy('sortTitle').mapBy('group')
       });
     });
   }),
