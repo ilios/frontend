@@ -98,7 +98,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('totalGroupsToSave', groupsToSave.uniq().length);
     this.set('isSaving', true);
     yield this.saveSomeGroups(groupsToSave.uniq());
-    this.set('isSaving', false);
     this.set('totalGroupsToSave', 0);
     this.set('currentGroupsSaved', 0);
     this.set('isSaving', false);
@@ -115,7 +114,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('totalGroupsToSave', groupsToSave.uniq().length);
     this.set('isSaving', true);
     yield this.saveSomeGroups(groupsToSave.uniq());
-    this.set('isSaving', false);
     this.set('totalGroupsToSave', 0);
     this.set('currentGroupsSaved', 0);
     this.set('isSaving', false);
