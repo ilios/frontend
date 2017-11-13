@@ -37,7 +37,7 @@ export default Component.extend({
         return EmberObject.create({
           group,
           sortTitle
-        })
+        });
       });
 
       return EmberObject.create({
