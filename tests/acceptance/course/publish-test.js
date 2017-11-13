@@ -13,9 +13,7 @@ module('Acceptance: Course - Publish', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.create('cohort', {
-      courses: [1],
-    });
+    server.create('cohort');
   },
 
   afterEach: function() {
@@ -26,21 +24,21 @@ module('Acceptance: Course - Publish', {
 test('check published course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   server.create('course', {
     year: 2013,
-    school: 1,
-    cohorts: [1],
+    schoolId: 1,
+    cohortIds: [1],
   });
   await visit('/courses/1');
 
@@ -62,10 +60,10 @@ test('check published course', async function(assert) {
 test('check scheduled course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   await visit('/courses/1');
 
@@ -87,8 +85,8 @@ test('check scheduled course', async function(assert) {
 test('check draft course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
-    cohorts: [1],
+    schoolId: 1,
+    cohortIds: [1],
   });
   await visit('/courses/1');
 
@@ -110,8 +108,8 @@ test('check draft course', async function(assert) {
 test('check publish draft course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
-    cohorts: [1],
+    schoolId: 1,
+    cohortIds: [1],
   });
   await visit('/courses/1');
 
@@ -129,8 +127,8 @@ test('check publish draft course', async function(assert) {
 test('check schedule draft course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
-    cohorts: [1],
+    schoolId: 1,
+    cohortIds: [1],
   });
   await visit('/courses/1');
   const menu = '.publish-menu:eq(0)';
@@ -146,10 +144,10 @@ test('check schedule draft course', async function(assert) {
 test('check publish scheduled course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   await visit('/courses/1');
   const menu = '.publish-menu:eq(0)';
@@ -165,10 +163,10 @@ test('check publish scheduled course', async function(assert) {
 test('check unpublish scheduled course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
     publishedAsTbd: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   await visit('/courses/1');
   const menu = '.publish-menu:eq(0)';
@@ -184,9 +182,9 @@ test('check unpublish scheduled course', async function(assert) {
 test('check schedule published course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   await visit('/courses/1');
   const menu = '.publish-menu:eq(0)';
@@ -202,9 +200,9 @@ test('check schedule published course', async function(assert) {
 test('check unpublish published course', async function(assert) {
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
-    cohorts: [1],
+    cohortIds: [1],
   });
   await visit('/courses/1');
   const menu = '.publish-menu:eq(0)';

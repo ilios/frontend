@@ -14,40 +14,26 @@ module('Acceptance: Course - Mesh Terms', {
     setupAuthentication(application);
     server.create('school');
     server.create('academicYear');
-
-    server.createList('meshTree', 3, {
-      descriptor: 1
-    });
-
-    server.createList('meshConcept', 3, {
-      descriptors: [1]
-    });
+    server.createList('meshTree', 3);
+    server.createList('meshConcept', 3);
 
     server.create('meshConcept', {
-      descriptors: [1],
       scopeNote: '1234567890'.repeat(30)
     });
 
     server.create('meshDescriptor', {
-      courses: [1],
-      concepts: [1, 2, 3, 4],
-      trees: [1, 2, 3]
+      conceptIds: [1, 2, 3, 4],
+      treeIds: [1, 2, 3]
     });
     server.create('meshDescriptor', {
-      courses: [1],
       deleted: true
     });
-    server.create('meshDescriptor', {
-      courses: [1]
-    });
-
-    server.createList('meshDescriptor', 3, {
-    });
+    server.createList('meshDescriptor', 4);
 
     server.create('course', {
-      year: 1,
-      school: 1,
-      meshDescriptors: [1, 2, 3]
+      year: 2014,
+      schoolId: 1,
+      meshDescriptorIds: [1, 2, 3]
     });
   },
 

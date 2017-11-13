@@ -13,80 +13,67 @@ var application;
 module('Acceptance: Dashboard Calendar', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
-    server.create('school', {
-      sessionTypes: [1,2,3],
-      programs: [1],
-      courses: [1]
-    });
+    server.create('school');
+    setupAuthentication(application, {id: 4136, schoolId: 1});
     server.create('program', {
-      programYears: [1,2],
-      school: 1,
+      schoolId: 1,
     });
     server.create('programYear', {
-      cohort: 1,
-      program: 1,
+      programId: 1,
       startYear: 2015,
     });
     server.create('programYear', {
-      cohort: 2,
-      program: 1,
+      programId: 1,
       startYear: 2015,
     });
     server.create('cohort', {
-      courses: [1],
-      programYear: 1,
+      programYearId: 1,
     });
     server.create('cohort', {
-      programYear: 2,
+      programYearId: 2,
     });
     server.create('sessionType', {
-      sessions: [1],
-      school: 1,
+      schoolId: 1,
     });
     server.create('sessionType', {
-      sessions: [2],
-      school: 1,
+      schoolId: 1,
     });
     server.create('sessionType', {
-      school: 1,
+      schoolId: 1,
+    });
+    server.create('course', {
+      schoolId: 1,
+      year: 2015,
+      cohortIds: [1],
+    });
+    server.create('course', {
+      year: 2015,
+      schoolId: 1,
+      cohortIds: [1],
     });
     server.create('session', {
-      offerings: [1],
-      course: 1,
-      sessionType: 1,
+      courseId: 1,
+      sessionTypeId: 1,
     });
     server.create('session', {
-      offerings: [2],
-      course: 1,
-      sessionType: 2,
+      courseId: 1,
+      sessionTypeId: 2,
     });
     server.create('session', {
-      offerings: [3],
-      course: 2,
+      courseId: 2,
     });
     server.create('academicYear', {
       id: 2015,
       title: 2015
     });
-    server.create('course', {
-      sessions: [1,2],
-      level: 1,
-      school: 1,
-      year: 2015
-    });
-    server.create('course', {
-      sessions: [3],
-      year: 2015
+    server.create('offering', {
+      sessionId: 1
     });
     server.create('offering', {
-      session: 1
+      sessionId: 2
     });
     server.create('offering', {
-      session: 2
-    });
-    server.create('offering', {
-      session: 3
+      sessionId: 3
     });
   },
 
@@ -556,18 +543,15 @@ test('academic year filters cohort', async function(assert) {
     id: 2014,
     title: 2014
   });
-  server.db.schools.update({programs: [1,2]});
   server.create('program', {
-    programYears: [3],
-    school: 1,
+    schoolId: 1,
   });
   server.create('programYear', {
     startYear: 2014,
-    program: 2,
-    cohort: 3
+    programId: 2,
   });
   server.create('cohort', {
-    programYear: 3
+    programYearId: 3
   });
   await visit('/dashboard?show=calendar');
   await showFilters();
@@ -586,7 +570,8 @@ test('academic year filters courses', async function(assert) {
     title: 2014
   });
   server.create('course', {
-    year: 2014
+    year: 2014,
+    schoolId: 1
   });
   await visit('/dashboard?show=calendar');
   await showFilters();

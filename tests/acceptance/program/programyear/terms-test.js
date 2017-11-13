@@ -12,28 +12,23 @@ module('Acceptance: Program Year - Terms', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      vocabularies: [1],
-      programs: [1]
-    });
+    server.create('school');
     server.create('vocabulary', {
-      terms: [1, 2],
-      school: 1,
+      schoolId: 1,
     });
     server.create('program', {
-      programYears: [1]
+      schoolId: 1
     });
     server.create('programYear', {
-      program: 1,
-      terms: [1]
+      programId: 1,
     });
-    server.create('cohort');
+    server.create('cohort', { programYearId: 1});
     server.create('term', {
-      programYears: [1],
-      vocabulary: 1
+      programYearIds: [1],
+      vocabularyId: 1
     });
     server.create('term', {
-      vocabulary: 1
+      vocabularyId: 1
     });
   },
 

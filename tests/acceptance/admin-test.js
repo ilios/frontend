@@ -9,8 +9,8 @@ let url = '/admin';
 module('Acceptance: Admin', {
   beforeEach() {
     application = startApp();
-    setupAuthentication(application);
     server.create('school');
+    setupAuthentication(application, {id: 4136, schoolId: 1});
   },
 
   afterEach() {
@@ -27,7 +27,7 @@ test('can transition to `users` route', async function(assert) {
 });
 
 test('can search for users', async function(assert) {
-  server.createList('user', 20, { email: 'user@example.edu' });
+  server.createList('user', 20, {schoolId: 1});
   server.createList('authentication', 20);
 
   const userSearch = '.user-search input';

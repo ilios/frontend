@@ -22,114 +22,95 @@ module('Acceptance: Session - Learning Materials', {
     fixtures.user = setupAuthentication(application);
     server.create('school');
     server.create('academicYear');
-    server.create('course', {
-      sessions: [1]
-    });
+    server.create('course');
     server.create('sessionType');
     fixtures.statuses = [];
-    fixtures.statuses.pushObject(server.create('learningMaterialStatus', {
-      learningMaterials: [1]
-    }));
-    fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 5));
+    fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 6));
     fixtures.roles = server.createList('learningMaterialUserRole', 3);
     fixtures.meshDescriptors = [];
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor'));
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      sessionLearningMaterials: [1],
-    }));
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      sessionLearningMaterials: [1],
-    }));
-    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 3));
+    fixtures.meshDescriptors.pushObject(server.createList('meshDescriptor', 6));
     fixtures.learningMaterials = [];
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: true,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-      sessionLearningMaterials: [1],
       uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
-      sessionLearningMaterials: [2],
       uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
-      status: 1,
-      owningUser: 4136,
-      userRole: 1,
+      statusId: 1,
+      owningUserId: 4136,
+      userRoleId: 1,
       copyrightPermission: true,
-      sessionLearningMaterials: [3],
       uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
-      status: 1,
-      owningUser: 4136,
-      userRole: 1,
+      statusId: 1,
+      owningUserId: 4136,
+      userRoleId: 1,
       copyrightPermission: true,
-      sessionLearningMaterials: [4],
       uploadDate: new Date(),
     }));
     fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
       originalAuthor: 'Marty McFly',
-      owningUser: 4136,
-      status: 1,
-      userRole: 1,
+      owningUserId: 4136,
+      statusId: 1,
+      userRoleId: 1,
       copyrightPermission: true,
-      courseLearningMaterials: [],
       uploadDate: new Date(),
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt'
     }));
+    fixtures.session = server.create('session', {
+      schoolId: 1,
+      courseId: 1,
+    });
     fixtures.sessionLearningMaterials = [];
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
-      learningMaterial: 1,
-      session: 1,
+      learningMaterialId: 1,
+      sessionId: 1,
       required: false,
-      meshDescriptors: [2,3],
+      meshDescriptorIds: [2,3],
       position: 0,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
-      learningMaterial: 2,
-      session: 1,
+      learningMaterialId: 2,
+      sessionId: 1,
       required: false,
       position: 1,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
-      learningMaterial: 3,
-      session: 1,
+      learningMaterialId: 3,
+      sessionId: 1,
       publicNotes: false,
       position: 2,
     }));
     fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
-      learningMaterial: 4,
-      session: 1,
+      learningMaterialId: 4,
+      sessionId: 1,
       position: 3,
       notes: 'somethings tested this way comes',
       startDate: new Date(),
     }));
-
-    fixtures.session = server.create('session', {
-      year: 2013,
-      school: 1,
-      learningMaterials: [1, 2, 3, 4],
-    });
   },
 
   afterEach: function() {
@@ -137,46 +118,73 @@ module('Acceptance: Session - Learning Materials', {
   }
 });
 
-test('list learning materials', async function(assert) {
+test('list learning materials', async function (assert) {
   await visit(url);
-  const middleInitial = fixtures.user.middleName.charAt(0).toUpperCase();
-  const userName = `${fixtures.user.firstName} ${middleInitial}. ${fixtures.user.lastName}`;
   assert.equal(currentPath(), 'course.session.index');
-  let container = find('.detail-learningmaterials');
-  let rows = find('.learning-material-table tbody tr', container);
-  assert.equal(rows.length, fixtures.session.learningMaterials.length);
-  for (let i = 0; i < fixtures.session.learningMaterials.length; i++){
-    let row = rows.eq(i);
-    let sessionLm = fixtures.sessionLearningMaterials[fixtures.session.learningMaterials[i] - 1];
-    let lm = fixtures.learningMaterials[sessionLm.learningMaterial - 1];
-    assert.equal(getElementText(find('td:eq(0)', row)), getText(lm.title));
-    // TODO: not checking for exact type icon yet, see comment below [ST 2017/08/01]
-    assert.equal(find('td:eq(0) .lm-type-icon i.fa', row).length, 1, 'LM type icon is present.');
-    //TODO: we are no longer populating for 'type', so we need to pull all these tests out
-    //of the loop and test each fixture individually
-    //assert.equal(getElementText(find('td:eq(1)', row)), getText(lm.type));
-    let required = sessionLm.required?'Yes':'No';
-    assert.equal(getElementText(find('td:eq(1)', row)), getText(userName));
-    assert.equal(getElementText(find('td:eq(2)', row)), getText(required));
-    let notes = sessionLm.notes? 'Yes' : 'No';
-    assert.equal(getElementText(find('td:eq(3)', row)), getText(notes));
-    let notesBool = sessionLm.notes? true : false;
-    let publicNotes = sessionLm.publicNotes ? true : false;
-    assert.equal(find('td:eq(3) i', row).hasClass('fa-eye'), publicNotes && notesBool);
-    let meshTerms = find('td:eq(4) li', row);
-    if('meshDescriptors' in sessionLm){
-      assert.equal(meshTerms.length, sessionLm.meshDescriptors.length);
-      for(let i = 0; i < sessionLm.meshDescriptors.length; i++){
-        assert.equal(getElementText(meshTerms.eq(i)), getText(fixtures.meshDescriptors[sessionLm.meshDescriptors[i] - 1].name));
-      }
-    }
-    assert.equal(getElementText(find('td:eq(5)', row)), getText('status 0'));
-    if ('startDate' in sessionLm) {
-      assert.equal(find('td:eq(5) i.fa-clock-o', row).length, 1);
-    } else {
-      assert.equal(find('td:eq(5) i.fa-clock-o', row).length, 0);
-    }
-  }
+  const sessionLearningMaterials = '.detail-learningmaterials .detail-learningmaterials-content tbody tr';
+  const title = 'td:eq(0)';
+  const owner = 'td:eq(1)';
+  const required = 'td:eq(2)';
+  const notes = 'td:eq(3)';
+  const mesh = 'td:eq(4)';
+  const status = 'td:eq(5)';
+
+  const firstTitle = `${sessionLearningMaterials}:eq(0) ${title}`;
+  const firstOwner = `${sessionLearningMaterials}:eq(0) ${owner}`;
+  const firstRequired = `${sessionLearningMaterials}:eq(0) ${required}`;
+  const firstNotes = `${sessionLearningMaterials}:eq(0) ${notes}`;
+  const firstMesh = `${sessionLearningMaterials}:eq(0) ${mesh}`;
+  const firstStatus = `${sessionLearningMaterials}:eq(0) ${status}`;
+
+  const secondTitle = `${sessionLearningMaterials}:eq(1) ${title}`;
+  const secondOwner = `${sessionLearningMaterials}:eq(1) ${owner}`;
+  const secondRequired = `${sessionLearningMaterials}:eq(1) ${required}`;
+  const secondNotes = `${sessionLearningMaterials}:eq(1) ${notes}`;
+  const secondMesh = `${sessionLearningMaterials}:eq(1) ${mesh}`;
+  const secondStatus = `${sessionLearningMaterials}:eq(1) ${status}`;
+
+  const thirdTitle = `${sessionLearningMaterials}:eq(2) ${title}`;
+  const thirdOwner = `${sessionLearningMaterials}:eq(2) ${owner}`;
+  const thirdRequired = `${sessionLearningMaterials}:eq(2) ${required}`;
+  const thirdNotes = `${sessionLearningMaterials}:eq(2) ${notes}`;
+  const thirdMesh = `${sessionLearningMaterials}:eq(2) ${mesh}`;
+  const thirdStatus = `${sessionLearningMaterials}:eq(2) ${status}`;
+
+  const fourthTitle = `${sessionLearningMaterials}:eq(3) ${title}`;
+  const fourthOwner = `${sessionLearningMaterials}:eq(3) ${owner}`;
+  const fourthRequired = `${sessionLearningMaterials}:eq(3) ${required}`;
+  const fourthNotes = `${sessionLearningMaterials}:eq(3) ${notes}`;
+  const fourthMesh = `${sessionLearningMaterials}:eq(3) ${mesh}`;
+  const fourthStatus = `${sessionLearningMaterials}:eq(3) ${status}`;
+
+  assert.equal(find(sessionLearningMaterials).length, 4);
+  assert.equal(getElementText(firstTitle), getText('learning material 0'));
+  assert.equal(getElementText(firstOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(firstRequired), getText('No'));
+  assert.equal(getElementText(firstNotes), getText('No'));
+  assert.equal(getElementText(firstMesh), getText('descriptor 1 descriptor 2'));
+  assert.equal(getElementText(firstStatus), getText('status 0'));
+
+  assert.equal(getElementText(secondTitle), getText('learning material 1'));
+  assert.equal(getElementText(secondOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(secondRequired), getText('No'));
+  assert.equal(getElementText(secondNotes), getText('No'));
+  assert.equal(getElementText(secondMesh), getText('None'));
+  assert.equal(getElementText(secondStatus), getText('status 0'));
+
+  assert.equal(getElementText(thirdTitle), getText('learning material 2'));
+  assert.equal(getElementText(thirdOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(thirdRequired), getText('Yes'));
+  assert.equal(getElementText(thirdNotes), getText('No'));
+  assert.equal(getElementText(thirdMesh), getText('None'));
+  assert.equal(getElementText(thirdStatus), getText('status 0'));
+
+  assert.equal(getElementText(fourthTitle), getText('learning material 3'));
+  assert.equal(getElementText(fourthOwner), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(fourthRequired), getText('Yes'));
+  assert.equal(getElementText(fourthNotes), getText('Yes'));
+  assert.equal(getElementText(fourthMesh), getText('None'));
+  assert.equal(getElementText(fourthStatus), getText('status 0'));
 });
 
 test('create new link learning material', async function(assert) {
@@ -394,13 +402,10 @@ test('manage terms', async function(assert) {
   await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
 
   let meshManager = find('.mesh-manager', container).eq(0);
-  let material = fixtures.sessionLearningMaterials[0];
   let removableItems = find('.removable-list li', meshManager);
-  assert.equal(removableItems.length, material.meshDescriptors.length);
-  for (let i = 0; i < material.meshDescriptors.length; i++){
-    let meshDescriptionName = find('.content .title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptionName), getText(fixtures.meshDescriptors[material.meshDescriptors[i] - 1].name));
-  }
+  assert.equal(removableItems.length, 2);
+  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 1'));
+  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   let searchBox = find('.search-box', meshManager);
   assert.equal(searchBox.length, 1);
@@ -410,35 +415,29 @@ test('manage terms', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('span.search-icon', searchBox);
   let searchResults = find('.mesh-search-results li', meshManager);
-  assert.equal(searchResults.length, fixtures.meshDescriptors.length);
+  assert.equal(searchResults.length, 6);
 
-  for(let i = 0; i < fixtures.meshDescriptors.length; i++){
+  for(let i = 0; i < 6; i++){
     let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
+    assert.equal(getElementText(meshDescriptorName), getText(`descriptor ${i}`));
   }
 
-  for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-    if(material.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-      assert.ok($(searchResults[i]).hasClass('disabled'));
-    } else {
-      assert.ok(!$(searchResults[i]).hasClass('disabled'));
-    }
-  }
+  assert.notOk($(searchResults[0]).hasClass('disabled'));
+  assert.ok($(searchResults[1]).hasClass('disabled'));
+  assert.ok($(searchResults[2]).hasClass('disabled'));
+  assert.notOk($(searchResults[3]).hasClass('disabled'));
+  assert.notOk($(searchResults[4]).hasClass('disabled'));
+  assert.notOk($(searchResults[5]).hasClass('disabled'));
+
   await click('.removable-list li:eq(0)', meshManager);
   assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
   await click(searchResults[0]);
   assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
 
-  let newExpectedMesh = [
-    fixtures.meshDescriptors[0],
-    fixtures.meshDescriptors[2]
-  ];
   removableItems = find('.removable-list li', meshManager);
   assert.equal(removableItems.length, 2);
-  for (let i = 0; i < 2; i++){
-    let meshDescriptorName = find('.title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
-  }
+  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 0'));
+  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   await wait();
 });
@@ -456,7 +455,7 @@ test('save terms', async function(assert) {
   await click('.removable-list li:eq(0)', meshManager);
   await click(searchResults[0]);
   await click('.buttons .done', container);
-  let expectedMesh = fixtures.meshDescriptors[0].name + fixtures.meshDescriptors[2].name;
+  let expectedMesh = 'descriptor 0' + 'descriptor 2';
   let tds = find('.learning-material-table tbody tr:eq(0) td');
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
 });
@@ -477,7 +476,7 @@ test('cancel term changes', async function(assert) {
   await click(searchResults[4]);
   await click('.buttons .cancel', container);
   let tds = find('.learning-material-table tbody tr:eq(0) td');
-  let expectedMesh = fixtures.meshDescriptors[1].name + fixtures.meshDescriptors[2].name;
+  let expectedMesh = 'descriptor 1' + 'descriptor 2';
   assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
 });
 

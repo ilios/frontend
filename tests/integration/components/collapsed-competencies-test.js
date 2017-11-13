@@ -11,6 +11,9 @@ moduleForComponent('collapsed-competencies', 'Integration | Component | collapse
   setup(){
     initializer.initialize(this);
     startMirage(this.container);
+  },
+  teardown() {
+    window.server.shutdown();
   }
 });
 
@@ -18,9 +21,9 @@ test('it renders', function(assert) {
   assert.expect(4);
   let schoolA = server.create('school', {title: 'Medicine'});
   let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
+  let competencyA = EmberObject.create(server.create('competency', { schoolId: 1 }));
   competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
+  let competencyB = EmberObject.create(server.create('competency', { schoolId: 2 }));
   competencyB.school = RSVP.resolve(schoolB);
   let competencies = [competencyA, competencyB];
 
@@ -44,9 +47,9 @@ test('clicking the header expands the list', function(assert) {
   assert.expect(2);
   let schoolA = server.create('school', {title: 'Medicine'});
   let schoolB = server.create('school', {title: 'Pharmacy'});
-  let competencyA = EmberObject.create(server.create('competency', { school: 1 }));
+  let competencyA = EmberObject.create(server.create('competency', { schoolId: 1 }));
   competencyA.school = RSVP.resolve(schoolA);
-  let competencyB = EmberObject.create(server.create('competency', { school: 2 }));
+  let competencyB = EmberObject.create(server.create('competency', { schoolId: 2 }));
   competencyB.school = RSVP.resolve(schoolB);
   let competencies = [competencyA, competencyB];
 

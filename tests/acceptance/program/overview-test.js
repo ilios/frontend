@@ -22,7 +22,7 @@ module('Acceptance: Program - Overview', {
 
 test('check fields', async function(assert) {
   var program = server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   await visit(url);
   assert.equal(currentPath(), 'program.index');
@@ -33,7 +33,7 @@ test('check fields', async function(assert) {
 
 test('change title', async function(assert) {
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   const container = '.program-details';
   const header = `${container} .program-header`;
@@ -54,7 +54,7 @@ test('change title', async function(assert) {
 
 test('change short title', async function(assert) {
   let program = server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   const container = '.program-details';
   const overview = `${container} .program-overview`;
@@ -75,7 +75,7 @@ test('change short title', async function(assert) {
 
 test('change duration', async function(assert) {
   let program = server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
   const container = '.program-details';
   const overview = `${container} .program-overview`;
@@ -102,7 +102,7 @@ test('change duration', async function(assert) {
 
 test('leave duration at 1', async function(assert) {
   let program = server.create('program', {
-    school: 1,
+    schoolId: 1,
     duration: 1,
   });
   const container = '.program-details';

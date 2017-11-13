@@ -19,13 +19,11 @@ module('Acceptance: Course - Objective Create', {
     server.createList('program', 2);
     server.createList('programYear', 2);
     server.createList('cohort', 2);
-    fixtures.objective = server.create('objective', {
-      courses: [1],
-    });
+    fixtures.objective = server.create('objective');
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      objectives: [1]
+      schoolId: 1,
+      objectiveIds: [1]
     });
   },
 

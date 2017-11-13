@@ -12,9 +12,10 @@ var url = '/courses/1/sessions/1?sessionLearnergroupDetails=true';
 module('Acceptance: Session - Learner Groups', {
   beforeEach: function() {
     application = startApp();
+    server.create('school');
     setupAuthentication(application, {
       id: 4136,
-      school: 1
+      schoolId: 1
     });
   },
 
@@ -24,64 +25,41 @@ module('Acceptance: Session - Learner Groups', {
 });
 
 let setupModels = function(){
-  server.create('school', {
-    courses: [1]
-  });
-  server.create('course', {
-    school: 1,
-    sessions: [1],
-    cohorts: [1],
-  });
-  server.create('sessionType', {
-    sessions: [1]
-  });
   server.create('program', {
-    programYears: [1],
-    school: 1
+    schoolId: 1
   });
   server.create('programYear', {
-    cohort: 1
+    programId: 1
   });
   server.create('cohort', {
-    learnerGroups: [1, 2, 3, 4, 5, 6, 7, 8],
-    courses: [1],
-    programYear: 1
+    programYearId: 1
+  });
+  server.create('course', {
+    schoolId: 1,
+    cohortIds: [1],
+  });
+  server.create('sessionType');
+  server.createList('learnerGroup', 5, {
+    cohortId: 1
   });
   server.createList('learnerGroup', 2, {
-    ilmSessions: [1],
-    cohort: 1
+    cohortId: 1,
+    parentId: 4
   });
   server.create('learnerGroup', {
-    cohort: 1
-  });
-  server.create('learnerGroup', {
-    ilmSessions: [1],
-    cohort: 1,
-    children: [6, 7]
-  });
-  server.create('learnerGroup', {
-    cohort: 1,
-    children: [8]
-  });
-  server.createList('learnerGroup', 2, {
-    cohort: 1,
-    parent: 4
-  });
-  server.createList('learnerGroup', 2, {
-    cohort: 1,
-    parent: 5
+    cohortId: 1,
+    parentId: 5
   });
   server.create('session', {
-    course: 1,
-    ilmSession: 1,
+    courseId: 1,
   });
 };
 
 test('initial selected learner groups', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
 
   const container = '.detail-learnergroups ';
@@ -109,8 +87,8 @@ test('initial selected learner groups', async function(assert) {
 test('learner group manager display', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   const container = '.detail-learnergroups ';
   const set1 = container + 'fieldset:eq(0)';
@@ -141,8 +119,8 @@ test('learner group manager display', async function(assert) {
 test('learner group manager display with no selected groups', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: []
+    sessionId: 1,
+    learnerGroupIds: []
   });
   const container = '.detail-learnergroups ';
   const selectedLearnerGroups = container + ' .selected-learner-groups';
@@ -155,8 +133,8 @@ test('learner group manager display with no selected groups', async function(ass
 test('filter learner groups by top group should include all subgroups', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   await fillIn('.search-box input', 3);
@@ -168,8 +146,8 @@ test('filter learner groups by top group should include all subgroups', async fu
 test('filter learner groups by subgroup should include top group', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   const lg3 = '.detail-learnergroups .tree-groups-list li:eq(3)';
@@ -187,8 +165,8 @@ test('filter learner groups by subgroup should include top group', async functio
 test('add learner group', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   const container = '.detail-learnergroups ';
   const set3 = container + 'fieldset:eq(2)';
@@ -209,8 +187,8 @@ test('add learner group', async function(assert) {
 test('add learner sub group', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   const container = '.detail-learnergroups ';
   const set3 = container + 'fieldset:eq(2)';
@@ -231,8 +209,8 @@ test('add learner sub group', async function(assert) {
 test('add learner group with children', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   const container = '.detail-learnergroups ';
@@ -260,8 +238,8 @@ test('add learner group with children', async function(assert) {
 test('add learner group with children and remove one child', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   const container = '.detail-learnergroups ';
@@ -294,8 +272,8 @@ test('add learner group with children and remove one child', async function(asse
 test('undo learner group change', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   const container = '.detail-learnergroups ';
@@ -329,8 +307,8 @@ test('undo learner group change', async function(assert) {
 test('save learner group change', async function(assert) {
   setupModels();
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4]
   });
   await visit(url + '&isManagingLearnerGroups=true');
   const container = '.detail-learnergroups ';
@@ -364,21 +342,17 @@ test('save learner group change', async function(assert) {
 test('collapsed learner groups', async function(assert) {
   setupModels();
   server.create('programYear', {
-    cohort: 2,
-    program: 1
+    programId: 1
   });
   server.create('cohort', {
-    learnerGroups: [9, 10],
-    courses: [1],
-    programYear: 2
+    programYearId: 2
   });
   server.createList('learnerGroup', 2, {
-    ilmSessions: [1],
-    cohort: 2
+    cohortId: 2
   });
   server.create('ilmSession', {
-    session: 1,
-    learnerGroups: [1, 2, 4, 10, 11]
+    sessionId: 1,
+    learnerGroupIds: [1, 2, 4, 9, 10]
   });
 
   const cohort1Title = 'table tr:eq(1) td:eq(0)';
@@ -396,38 +370,28 @@ test('collapsed learner groups', async function(assert) {
 });
 
 test('initial state with save works as expected #1773', async function(assert) {
-  server.create('school', {
-    courses: [1]
-  });
-  server.create('course', {
-    school: 1,
-    sessions: [1],
-    cohorts: [1],
-  });
-  server.create('sessionType', {
-    sessions: [1]
-  });
+  server.create('sessionType');
   server.create('program', {
-    programYears: [1],
-    school: 1
+    schoolId: 1
   });
   server.create('programYear', {
-    cohort: 1
+    programId: 1
   });
   server.create('cohort', {
-    learnerGroups: [1, 2],
-    courses: [1],
-    programYear: 1
+    programYearId: 1
+  });
+  server.create('course', {
+    schoolId: 1,
+    cohortIds: [1],
   });
   server.createList('learnerGroup', 2, {
-    cohort: 1
-  });
-  server.create('ilmSession', {
-    session: 1,
+    cohortId: 1
   });
   server.create('session', {
-    course: 1,
-    ilmSession: 1,
+    courseId: 1,
+  });
+  server.create('ilmSession', {
+    sessionId: 1,
   });
   const container = '.detail-learnergroups ';
   const manageButton = container + ' .actions button';

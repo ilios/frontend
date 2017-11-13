@@ -6,6 +6,7 @@ import {
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import wait from 'ember-test-helpers/wait';
+import { isEmpty } from '@ember/utils';
 
 var application;
 var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
@@ -15,47 +16,31 @@ module('Acceptance: Session - Objective Mesh Descriptors', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.create('course', {
-      sessions: [1]
-    });
+    server.create('course');
     server.create('sessionType');
 
     fixtures.meshDescriptors = [];
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      objectives: [1,2],
-    }));
-    fixtures.meshDescriptors.pushObject(server.create('meshDescriptor', {
-      objectives: [2],
-    }));
-    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 5, {
-      objectives: [3],
-    }));
+    fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 7));
 
     fixtures.sessionObjectives = [];
     fixtures.sessionObjectives.pushObject(server.create('objective', {
-      sessions: [1],
-      meshDescriptors: [1]
+      meshDescriptorIds: [1]
     }));
     fixtures.sessionObjectives.pushObject(server.create('objective', {
-      sessions: [1],
-      meshDescriptors: [1,2]
+      meshDescriptorIds: [1,2]
     }));
-    fixtures.sessionObjectives.pushObjects(server.createList('objective', 11, {
-      sessions: [1],
-    }));
+    fixtures.sessionObjectives.pushObjects(server.createList('objective', 11));
+    fixtures.course = server.create('course', {
+      year: 2013,
+      schoolId: 1
+    });
     fixtures.session = server.create('session', {
-      course: 1,
-      objectives: [1,2,3,4,5,6,7,8,9,10,11,12,13]
+      courseId: 1,
+      objectiveIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     });
 
     //create some extra descriptors that shouldn't be found in search
     server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
-
-    fixtures.course = server.create('course', {
-      year: 2013,
-      school: 1,
-      sessions: [1]
-    });
   },
 
   afterEach: function() {
@@ -66,19 +51,14 @@ module('Acceptance: Session - Objective Mesh Descriptors', {
 test('list terms', async function(assert) {
   assert.expect(1 + fixtures.sessionObjectives.length * 3);
   await visit(url);
-  let extractObjectives = function(position){
-    return fixtures.meshDescriptors[position - 1].name;
-  };
   let objectiveRows = find('.session-objective-list tbody tr');
   assert.equal(objectiveRows.length, fixtures.sessionObjectives.length);
   for(let i = 0; i < fixtures.sessionObjectives.length; i++){
     let tds = find('td', objectiveRows.eq(i));
     let objective = fixtures.sessionObjectives[i];
     assert.equal(tds.length, 4);
-    let descriptors;
-    if('meshDescriptors' in objective){
-      descriptors = objective.meshDescriptors.map(extractObjectives).join('');
-    } else {
+    let descriptors = objective.meshDescriptors.models.mapBy('name').join('');
+    if(isEmpty(descriptors)){
       descriptors = 'Add New';
     }
 
@@ -100,7 +80,7 @@ test('manage terms', async function(assert) {
   assert.equal(removableItems.length, objective.meshDescriptors.length);
   for (let i = 0; i < objective.meshDescriptors.length; i++){
     let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
-    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptors[i] - 1].name));
+    assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptorIds[i] - 1].name));
   }
 
   let searchBox = find('.search-box', meshManager);
@@ -119,7 +99,7 @@ test('manage terms', async function(assert) {
   }
 
   for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-    if(objective.meshDescriptors.indexOf(fixtures.meshDescriptors[i].id) !== -1){
+    if(objective.meshDescriptorIds.indexOf(fixtures.meshDescriptors[i].id) !== -1){
       assert.ok($(searchResults[i]).hasClass('disabled'));
     } else {
       assert.ok(!$(searchResults[i]).hasClass('disabled'));
@@ -176,6 +156,5 @@ test('cancel changes', async function(assert) {
   await click(searchResults[3]);
   await click('button.bigcancel', detailObjectives);
   let tds = find('.session-objective-list tbody tr:eq(0) td');
-  let expectedMesh = fixtures.meshDescriptors[fixtures.sessionObjectives[0].meshDescriptors[0] - 1].name;
-  assert.equal(getElementText(tds.eq(2)), getText(expectedMesh));
+  assert.equal(getElementText(tds.eq(2)), getText('descriptor 0'));
 });

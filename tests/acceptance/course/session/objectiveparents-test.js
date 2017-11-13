@@ -16,37 +16,23 @@ module('Acceptance: Session - Objective Parents', {
     server.create('school');
     server.create('sessionType');
     fixtures.parentObjectives = [];
-    fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [4,5],
-      courses: [1]
-    }));
-    fixtures.parentObjectives.pushObject(server.create('objective', {
-      courses: [1],
-      children: [4]
-    }));
-    fixtures.parentObjectives.pushObject(server.create('objective', {
-      courses: [1],
-    }));
+    fixtures.parentObjectives.pushObject(server.createList('objective', 3));
     fixtures.sessionObjectives = [];
     fixtures.sessionObjectives.pushObject(server.create('objective', {
-      sessions: [1],
-      parents: [1,2]
+      parentIds: [1,2]
     }));
     fixtures.sessionObjectives.pushObject(server.create('objective', {
-      sessions: [1],
-      parents: [1]
+      parentIds: [1]
     }));
-    fixtures.sessionObjectives.pushObject(server.create('objective', {
-      sessions: [1],
-    }));
+    fixtures.sessionObjectives.pushObject(server.create('objective'));
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      objectives: [1,2,3],
+      schoolId: 1,
+      objectiveIds: [1, 2, 3],
     });
     fixtures.session = server.create('session', {
-      course: 1,
-      objectives: [4,5,6]
+      courseId: 1,
+      objectiveIds: [4, 5, 6]
     });
   },
 
@@ -68,19 +54,20 @@ test('list session objectives', async function(assert) {
   let expectedCourseTitle = fixtures.course.title;
   let parentPicker = find('.parent-picker', objectiveManager).eq(0);
   assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
+
   //every course objective in the list
   let ul = find('ul', parentPicker).eq(0);
   let items = find('li', ul);
   assert.equal(items.length, fixtures.course.objectives.length);
-  for(let i = 0; i < fixtures.course.objectives.length; i++){
-    let li = items.eq(i);
-    assert.equal(getElementText(li), getText(fixtures.parentObjectives[fixtures.course.objectives[i] - 1].title));
-    if(objective.parents.indexOf(fixtures.course.objectives[i]) !== -1){
-      assert.ok($(li).hasClass('selected'));
-    } else {
-      assert.ok(!$(li).hasClass('selected'));
-    }
-  }
+
+  assert.equal(getElementText(items.eq(0)), getText('objective 0'));
+  assert.ok($(items.eq(0)).hasClass('selected'));
+
+  assert.equal(getElementText(items.eq(1)), getText('objective 1'));
+  assert.ok($(items.eq(1)).hasClass('selected'));
+
+  assert.equal(getElementText(items.eq(2)), getText('objective 2'));
+  assert.notOk($(items.eq(2)).hasClass('selected'));
 });
 
 test('change session objective parent', async function(assert) {
@@ -130,9 +117,7 @@ test('save changes', async function(assert) {
   await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
   await click('.detail-objectives:eq(0) button.bigadd');
   let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-  assert.equal(getElementText(td), getText(
-    fixtures.parentObjectives[1].title
-  ));
+  assert.equal(getElementText(td), getText('objective 1'));
 });
 
 test('cancel changes', async function(assert) {
@@ -143,7 +128,5 @@ test('cancel changes', async function(assert) {
   await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
   await click('.detail-objectives:eq(0) button.bigcancel');
   let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-  assert.equal(getElementText(td), getText(
-    fixtures.parentObjectives[0].title
-  ));
+  assert.equal(getElementText(td), getText('objective 0'));
 });

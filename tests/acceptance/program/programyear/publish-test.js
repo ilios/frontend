@@ -15,21 +15,23 @@ module('Acceptance: Program Year - Publish', {
     setupAuthentication(application);
     server.create('school');
     server.create('program', {
-      programYears: [1,2,3]
+      schoolId: 1
     });
     fixtures.published = server.create('programYear', {
-      program: 1,
+      programId: 1,
     });
+    server.create('cohort', { programYearId: 1 });
     fixtures.scheduled = server.create('programYear', {
-      program: 1,
+      programId: 1,
       publishedAsTbd: true
     });
+    server.create('cohort', { programYearId: 2 });
     fixtures.draft = server.create('programYear', {
-      program: 1,
+      programId: 1,
       published: false,
       publishedAsTbd: false
     });
-    server.createList('cohort', 3);
+    server.create('cohort', { programYearId: 3 });
   },
 
   afterEach: function() {

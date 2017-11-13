@@ -16,33 +16,40 @@ module('Acceptance: Session - Publish', {
     setupAuthentication(application);
     server.create('school');
     server.create('course');
-    server.create('offering', {
-      startDate: moment().format(),
-      endDate: moment().add('6 hours').format()
-    });
     server.create('sessionType');
     server.create('ilmSession', {
-      session: 4,
       dueDate: moment().format()
     });
     fixtures.publishedSession = server.create('session', {
       published: true,
-      course: 1,
-      offerings: [1]
+      courseId: 1,
     });
     fixtures.scheduledSession = server.create('session', {
-      course: 1,
+      courseId: 1,
       published: true,
       publishedAsTbd: true,
-      offerings: [1],
     });
     fixtures.draftSession = server.create('session', {
-      course: 1,
-      offerings: [1],
+      courseId: 1,
     });
     fixtures.ilmSession = server.create('session', {
-      course: 1,
-      ilmSession: 1
+      courseId: 1,
+      ilmSessionId: 1
+    });
+    server.create('offering', {
+      sessionId: 1,
+      startDate: moment().format(),
+      endDate: moment().add('6 hours').format()
+    });
+    server.create('offering', {
+      sessionId: 2,
+      startDate: moment().format(),
+      endDate: moment().add('6 hours').format()
+    });
+    server.create('offering', {
+      sessionId: 3,
+      startDate: moment().format(),
+      endDate: moment().add('6 hours').format()
     });
   },
 

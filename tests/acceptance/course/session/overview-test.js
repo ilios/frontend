@@ -15,15 +15,13 @@ module('Acceptance: Session - Overview', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application, false);
-    server.create('school', {
-      sessionTypes: [1,2]
-    });
+    server.create('school');
     server.create('academicYear');
     server.create('course', {
-      school: 1
+      schoolId: 1
     });
     fixtures.sessionTypes = server.createList('sessionType', 2, {
-      school: 1
+      schoolId: 1
     });
     fixtures.sessionDescription = server.create('sessionDescription');
   },
@@ -36,16 +34,15 @@ module('Acceptance: Session - Overview', {
 test('check fields', async function(assert) {
   server.create('user', {
     id: 4136,
-    roles: [1],
   });
   server.create('userRole', {
-    users: [4136],
+    userIds: [4136],
     title: 'course director'
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1,
-    sessionDescription: 1,
+    courseId: 1,
+    sessionTypeId: 1,
+    sessionDescriptionId: 1,
   });
   await visit(url);
 
@@ -60,12 +57,10 @@ test('check remove ilm', async function(assert) {
   server.create('user', {
     id: 4136
   });
-  var ilmSession = server.create('ilmSession', {
-    session: 1
-  });
+  var ilmSession = server.create('ilmSession');
   server.create('session', {
-    course: 1,
-    ilmSession: 1
+    courseId: 1,
+    ilmSessionId: 1
   });
   await visit(url);
 
@@ -87,8 +82,8 @@ test('check add ilm', async function(assert) {
   });
 
   server.create('session', {
-    course: 1,
-    sessionType: 1,
+    courseId: 1,
+    sessionTypeId: 1,
     description: 'some text',
   });
   await visit(url);
@@ -106,12 +101,10 @@ test('change ilm hours', async function(assert) {
   server.create('user', {
     id: 4136
   });
-  var ilmSession = server.create('ilmSession', {
-    session: 1
-  });
+  var ilmSession = server.create('ilmSession');
   server.create('session', {
-    course: 1,
-    ilmSession: 1
+    courseId: 1,
+    ilmSessionId: 1
   });
   await visit(url);
 
@@ -131,12 +124,10 @@ test('change ilm due date', async function(assert) {
   server.create('user', {
     id: 4136
   });
-  var ilmSession = server.create('ilmSession', {
-    session: 1
-  });
+  var ilmSession = server.create('ilmSession');
   server.create('session', {
-    course: 1,
-    ilmSession: 1
+    courseId: 1,
+    ilmSessionId: 1
   });
   await visit(url);
   var container = find('.sessionilmduedate');
@@ -158,8 +149,8 @@ test('change title', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   var container = find('.session-header .title');
@@ -177,8 +168,8 @@ test('change type', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   var container = find('.session-overview');
@@ -200,31 +191,31 @@ test('session attributes are shown by school config', async assert => {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 2
+    courseId: 1,
+    sessionTypeId: 2
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSupplemental',
     value: true
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSpecialAttireRequired',
     value: true
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSpecialEquipmentRequired',
     value: true
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionAttendanceRequired',
     value: true
   });
   server.db.schools.update(1, {
-    configurations: [1, 2, 3, 4]
+    configurationIds: [1, 2, 3, 4]
   });
   const sessionOverview = '.session-overview';
   const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
@@ -245,31 +236,31 @@ test('session attributes are hidden by school config', async assert => {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 2
+    courseId: 1,
+    sessionTypeId: 2
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSupplemental',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSpecialAttireRequired',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionSpecialEquipmentRequired',
     value: false
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: 'showSessionAttendanceRequired',
     value: false
   });
   server.db.schools.update(1, {
-    configurations: [1, 2, 3, 4]
+    configurationIds: [1, 2, 3, 4]
   });
   const sessionOverview = '.session-overview';
   const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
@@ -290,8 +281,8 @@ test('session attributes are hidden when there is no school config', async asser
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 2
+    courseId: 1,
+    sessionTypeId: 2
   });
 
   const sessionOverview = '.session-overview';
@@ -313,16 +304,16 @@ let testAttributeToggle = async function(assert, schoolVariableName, domclass){
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 2
+    courseId: 1,
+    sessionTypeId: 2
   });
   server.create('schoolConfig', {
-    school: 1,
+    schoolId: 1,
     name: schoolVariableName,
     value: true
   });
   server.db.schools.update(1, {
-    configurations: [1]
+    configurationIds: [1]
   });
   const sessionOverview = '.session-overview';
   const toggle = `${sessionOverview} .${domclass} .switch`;
@@ -356,9 +347,9 @@ test('change description', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1,
-    sessionDescription: 1
+    courseId: 1,
+    sessionTypeId: 1,
+    sessionDescriptionId: 1
   });
   await visit(url);
   var description = getText(fixtures.sessionDescription.description);
@@ -379,8 +370,8 @@ test('add description', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   var container = find('.sessiondescription');
@@ -400,8 +391,8 @@ test('empty description removes description', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   const container = '.sessiondescription';
   const description = `${container} .content`;
@@ -425,9 +416,9 @@ test('remove description', async function(assert) {
     id: 4136
   });
   server.create('session', {
-    course: 1,
-    sessionType: 1,
-    sessionDescription: 1
+    courseId: 1,
+    sessionTypeId: 1,
+    sessionDescriptionId: 1
   });
   const container = '.sessiondescription';
   const description = `${container} .content`;
@@ -449,17 +440,16 @@ test('remove description', async function(assert) {
 
 
 test('click copy', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('userRole', {
-    users: [4136],
     title: 'course director'
   });
+  server.create('user', {
+    id: 4136,
+    roleIds: [1]
+  });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
 
   const copy = '.session-overview a.copy';
@@ -470,17 +460,16 @@ test('click copy', async function(assert) {
 });
 
 test('copy hidden from instructors', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('userRole', {
-    users: [4136],
     title: 'instructor'
   });
+  server.create('user', {
+    id: 4136,
+    roleIds: [1],
+  });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   const container = '.session-overview';
@@ -491,17 +480,17 @@ test('copy hidden from instructors', async function(assert) {
 });
 
 test('copy visible to developers', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('userRole', {
-    users: [4136],
+    userIds: [4136],
     title: 'developer'
   });
+  server.create('user', {
+    id: 4136,
+    roleIds: [1],
+  });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   const container = '.session-overview';
@@ -512,17 +501,17 @@ test('copy visible to developers', async function(assert) {
 });
 
 test('copy visible to course directors', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('userRole', {
-    users: [4136],
+    userIds: [4136],
     title: 'course director'
   });
+  server.create('user', {
+    id: 4136,
+    roleIds: [1],
+  });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(url);
   const container = '.session-overview';
@@ -533,17 +522,17 @@ test('copy visible to course directors', async function(assert) {
 });
 
 test('copy hidden on copy route', async function(assert) {
-  server.create('user', {
-    id: 4136,
-    roles: [1],
-  });
   server.create('userRole', {
-    users: [4136],
+    userIds: [4136],
     title: 'course director'
   });
+  server.create('user', {
+    id: 4136,
+    roleIds: [1],
+  });
   server.create('session', {
-    course: 1,
-    sessionType: 1
+    courseId: 1,
+    sessionTypeId: 1
   });
   await visit(`${url}/copy`);
   const container = '.session-overview';

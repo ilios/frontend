@@ -16,77 +16,62 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', {
     fixtures.program = server.create('program');
     fixtures.programYears = [];
     fixtures.programYears.pushObject(server.create('programYear', {
-      cohort: 1,
-      program: 1,
-      objectives: [1,2,3],
-      competencies: [1,2]
+      programId: 1,
     }));
     fixtures.cohorts = [];
-    fixtures.cohorts.pushObject(fixtures.cohort = server.create('cohort', {
-      courses: [1],
-      programYear: 1
+    fixtures.cohorts.pushObject(server.create('cohort', {
+      programYearId: 1
     }));
     fixtures.programYears.pushObject(server.create('programYear', {
-      cohort: 2,
-      program: 1,
-      objectives: [4,5,6],
-      competencies: [1,2]
+      programId: 1,
     }));
     fixtures.cohorts.pushObject(server.create('cohort', {
-      courses: [1],
-      programYear: 2
+      programYearId: 2
     }));
     fixtures.competencies = [];
     fixtures.competencies.pushObject(server.create('competency', {
-      school: 1,
-      programYears: [1,2],
-      objectives: [1,4],
+      schoolId: 1,
+      programYearIds: [1,2],
     }));
     fixtures.competencies.pushObject(server.create('competency', {
-      school: 1,
-      programYears: [1,2],
-      objectives: [2,3,5,6],
+      schoolId: 1,
+      programYearIds: [1,2],
     }));
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [7],
-      programYears: [1],
-      competency: 1
+      programYearIds: [1],
+      competencyId: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [1],
+      competencyId: 2,
+      programYearIds: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [1],
+      competencyId: 2,
+      programYearIds: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [7],
-      programYears: [2],
-      competency: 1
+      programYearIds: [2],
+      competencyId: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [2],
+      competencyId: 2,
+      programYearIds: [2],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [2],
+      competencyId: 2,
+      programYearIds: [2],
     }));
     fixtures.courseObjectives = [];
     fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1],
-      parents: [1,4]
+      parentIds: [1,4]
     }));
-    fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1]
-    }));
+    fixtures.courseObjectives.pushObject(server.create('objective'));
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      objectives: [7,8],
-      cohorts: [1,2]
+      schoolId: 1,
+      objectiveIds: [7,8],
+      cohortIds: [1,2]
     });
   },
 
@@ -178,10 +163,10 @@ test('save changes', async function(assert) {
   assert.equal(getElementText(td), getText(
     'program0cohort0' +
     fixtures.parentObjectives[1].title +
-    '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')' +
+    '(' + fixtures.competencies[fixtures.parentObjectives[1].competency.id - 1].title + ')' +
     'program0cohort1' +
     fixtures.parentObjectives[4].title +
-    '(' + fixtures.competencies[fixtures.parentObjectives[4].competency - 1].title + ')'
+    '(' + fixtures.competencies[fixtures.parentObjectives[4].competency.id - 1].title + ')'
   ));
 });
 
@@ -197,9 +182,9 @@ test('cancel changes', async function(assert) {
   assert.equal(getElementText(td), getText(
     'program0cohort0' +
     fixtures.parentObjectives[0].title +
-    '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')' +
+    '(' + fixtures.competencies[fixtures.parentObjectives[0].competency.id - 1].title + ')' +
       'program0cohort1' +
       fixtures.parentObjectives[3].title +
-      '(' + fixtures.competencies[fixtures.parentObjectives[3].competency - 1].title + ')'
+      '(' + fixtures.competencies[fixtures.parentObjectives[3].competency.id - 1].title + ')'
   ));
 });

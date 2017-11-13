@@ -13,9 +13,7 @@ module('Acceptance: Course - Publish All Sessions', {
     application = startApp();
     setupAuthentication(application);
     server.create('school');
-    server.create('cohort', {
-      courses: [1],
-    });
+    server.create('cohort');
   },
 
   afterEach: function() {
@@ -24,51 +22,46 @@ module('Acceptance: Course - Publish All Sessions', {
 });
 
 test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
-  server.create('offering', { session: 1 });
-  server.create('offering', { session: 2 });
-  server.create('offering', { session: 3 });
-  server.create('objective', { sessions: [1] });
-  server.create('objective', { sessions: [2] });
-  server.create('objective', { sessions: [3] });
-  server.create('meshDescriptor', { sessions: [1, 2, 3] });
-  server.create('term', { sessions: [1, 2, 3] });
+  server.create('objective');
+  server.create('objective');
+  server.create('objective');
+  server.create('meshDescriptor');
+  server.create('term');
 
   server.create('course', {
     year: 2013,
-    school: 1,
+    schoolId: 1,
     published: true,
-    cohorts: [1],
-    sessions: [1, 2, 3],
+    cohortIds: [1],
   });
   server.create('session', {
-    course: 1,
-    published: true,
-    publishedAsTbd: false,
-    offerings: [1],
-    objectives: [1],
-    meshDescriptors: [1],
-    terms: [1],
-  });
-  server.create('session', {
-    course: 1,
+    courseId: 1,
     published: true,
     publishedAsTbd: false,
-    ilmSession: 1,
-    offerings: [2],
-    objectives: [2],
-    meshDescriptors: [1],
-    terms: [1],
+    objectiveIds: [1],
+    meshDescriptorIds: [1],
+    termIds: [1],
   });
-  server.create('ilmSession', { session: 2});
+  server.create('offering', {sessionId: 1});
   server.create('session', {
-    course: 1,
+    courseId: 1,
+    published: true,
+    publishedAsTbd: false,
+    objectiveIds: [2],
+    meshDescriptorIds: [1],
+    termIds: [1],
+  });
+  server.create('offering', {sessionId: 2});
+  server.create('ilmSession', { sessionId: 2});
+  server.create('session', {
+    courseId: 1,
     published: true,
     publishedAsTbd: true,
-    offerings: [3],
-    objectives: [3],
-    meshDescriptors: [1],
-    terms: [1],
+    objectiveIds: [3],
+    meshDescriptorIds: [1],
+    termIds: [1],
   });
+  server.create('offering', {sessionId: 3});
   await visit('/courses/1/publishall');
 
   let publishable = find('.publish-all-sessions-publishable');

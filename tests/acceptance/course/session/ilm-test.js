@@ -12,41 +12,30 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Independent Learning', {
   beforeEach: function() {
     application = startApp();
+    fixtures.school = server.create('school');
     setupAuthentication(application, {
       id: 4136,
-      school: 1
+      schoolId: 1
     });
-    server.createList('user', 3, {
-      instructorIlmSessions: [1]
-    });
-    server.createList('user', 3);
-    fixtures.school = server.create('school', {
-      instructorGroups: [1,2,3,4,5],
-      courses: [1]
-    });
+    server.createList('user', 6);
     server.create('academicYear');
     fixtures.course = server.create('course', {
-      school: 1
+      schoolId: 1
     });
 
     fixtures.instructorGroups = [];
-    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 3,{
-      ilmSession: 1,
-      school: 1
-    }));
-    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 2,{
-      school: 1
+    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 5,{
+      schoolId: 1
     }));
     fixtures.sessionType = server.create('sessionType');
     fixtures.sessionDescription = server.create('sessionDescription');
     fixtures.ilmSession = server.create('ilmSession', {
-      session: 1,
-      instructorGroups: [1,2,3],
-      instructors: [2,3,4]
+      instructorGroupIds: [1,2,3],
+      instructorIds: [2,3,4]
     });
     fixtures.session = server.create('session', {
-      course: 1,
-      ilmSession: 1
+      courseId: 1,
+      ilmSessionId: 1
     });
   },
 
@@ -63,7 +52,7 @@ test('initial selected instructors', async function(assert) {
   var selectedGroups = find('.columnar-list:eq(0) li', container);
   assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
   for(let i = 0; i < fixtures.ilmSession.instructorGroups.length; i++){
-    let expectedTitle = getText(fixtures.instructorGroups[fixtures.ilmSession.instructorGroups[i] - 1].title);
+    let expectedTitle = getText(fixtures.instructorGroups[fixtures.ilmSession.instructorGroupIds[i] - 1].title);
     let title = getElementText(selectedGroups.eq(i));
     assert.equal(title, expectedTitle);
   }
@@ -101,14 +90,14 @@ test('manage instructors search users', async function(assert) {
   await click('span.search-icon', searchBox);
   let searchResults = find('.live-search .results li', container);
   assert.equal(searchResults.length, 8);
-  let expectedResults = '7 Results 0 guy M. Mc0son 1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son 5 guy M. Mc5son 6 guy M. Mc6son';
+  let expectedResults = '7 Results 0 guy M. Mc0son user@example.edu 1 guy M. Mc1son user@example.edu 2 guy M. Mc2son user@example.edu 3 guy M. Mc3son user@example.edu 4 guy M. Mc4son user@example.edu 5 guy M. Mc5son user@example.edu 6 guy M. Mc6son user@example.edu';
   assert.equal(getElementText(searchResults), getText(expectedResults));
 
   let activeResults = find('.live-search .results li.active', container);
-  assert.equal(getElementText(activeResults), getText('0 guy M. Mc0son 4 guy M. Mc4son 5 guy M. Mc5son 6 guy M. Mc6son'));
+  assert.equal(getElementText(activeResults), getText('0 guy M. Mc0son user@example.edu 4 guy M. Mc4son user@example.edu 5 guy M. Mc5son user@example.edu 6 guy M. Mc6son user@example.edu'));
 
   let inActiveResults = find('.live-search .results li.inactive', container);
-  assert.equal(getElementText(inActiveResults), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
+  assert.equal(getElementText(inActiveResults), getText('1 guy M. Mc1son user@example.edu 2 guy M. Mc2son user@example.edu 3 guy M. Mc3son user@example.edu'));
 });
 
 

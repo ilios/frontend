@@ -2,8 +2,6 @@ import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import $ from 'jquery';
-
 
 moduleForComponent('program-list', 'Integration | Component | program list', {
   integration: true
@@ -47,22 +45,22 @@ test('it renders', async function(assert){
   this.set('programs', [ program1, program2 ]);
   this.render(hbs`{{program-list programs=programs}}`);
   await wait();
-  assert.equal($('thead tr:eq(0) th:eq(0)').text(), 'Program Title');
-  assert.equal($('thead tr:eq(0) th:eq(1)').text(), 'School');
-  assert.equal($('thead tr:eq(0) th:eq(2)').text(), 'Status');
-  assert.equal($('thead tr:eq(0) th:eq(3)').text(), 'Actions');
+  assert.equal(this.$('thead tr:eq(0) th:eq(0)').text(), 'Program Title');
+  assert.equal(this.$('thead tr:eq(0) th:eq(1)').text(), 'School');
+  assert.equal(this.$('thead tr:eq(0) th:eq(2)').text(), 'Status');
+  assert.equal(this.$('thead tr:eq(0) th:eq(3)').text(), 'Actions');
 
-  assert.equal($('tbody tr:eq(0) td:eq(0)').text().trim(), 'Aardvark');
-  assert.equal($('tbody tr:eq(0) td:eq(1)').text().trim(), 'Medicine');
-  assert.equal($('tbody tr:eq(0) td:eq(2)').text().trim(), 'Scheduled');
-  assert.equal($('tbody tr:eq(0) td:eq(3) a .fa-edit').length, 1);
-  assert.equal($('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'Aardvark');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'Medicine');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'Scheduled');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3) a .fa-edit').length, 1);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
 
-  assert.equal($('tbody tr:eq(1) td:eq(0)').text().trim(), 'Zeppelin');
-  assert.equal($('tbody tr:eq(1) td:eq(1)').text().trim(), 'Dentistry');
-  assert.equal($('tbody tr:eq(1) td:eq(2)').text().trim(), 'Published');
-  assert.equal($('tbody tr:eq(1) td:eq(3) a .fa-edit').length, 1);
-  assert.equal($('tbody tr:eq(1) td:eq(3) .remove .fa-trash').length, 1);
+  assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'Zeppelin');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Dentistry');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'Published');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3) a .fa-edit').length, 1);
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3) .remove .fa-trash').length, 1);
 });
 
 test('empty list', async function(assert){
@@ -70,8 +68,8 @@ test('empty list', async function(assert){
   this.set('programs', []);
   this.render(hbs`{{program-list programs=programs}}`);
   await wait();
-  assert.equal($('tbody').length, 1);
-  assert.equal($('tbody tr').length, 0);
+  assert.equal(this.$('tbody').length, 1);
+  assert.equal(this.$('tbody tr').length, 0);
 });
 
 test('edit', async function(assert){
@@ -99,7 +97,7 @@ test('edit', async function(assert){
 
   this.render(hbs`{{program-list programs=programs edit=editAction}}`);
   await wait();
-  $('tbody tr:eq(0) td:eq(1)').click();
+  this.$('tbody tr:eq(0) td:eq(1)').click();
 });
 
 test('remove and cancel', async function(assert){
@@ -126,12 +124,13 @@ test('remove and cancel', async function(assert){
   });
   this.render(hbs`{{program-list programs=programs remove=removeAction}}`);
   await wait();
-  assert.equal($('tbody tr').length, 1);
-  $('tbody tr:eq(0) td:eq(3) .remove').click();
-  assert.equal($('tbody tr').length, 2);
-  assert.ok($('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-  $('tbody tr:eq(1) .done').click();
-  assert.equal($('tbody tr').length, 1);
+  assert.equal(this.$('tbody tr').length, 1);
+  this.$('tbody tr:eq(0) td:eq(3) .remove').click();
+  await wait();
+  assert.equal(this.$('tbody tr').length, 2);
+  assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
+  this.$('tbody tr:eq(1) .done').click();
+  assert.equal(this.$('tbody tr').length, 1);
 });
 
 test('remove and confirm', async function(assert){
@@ -158,9 +157,10 @@ test('remove and confirm', async function(assert){
   });
   this.render(hbs`{{program-list programs=programs remove=removeAction}}`);
   await wait();
-  assert.equal($('tbody tr').length, 1);
-  $('tbody tr:eq(0) td:eq(3) .remove').click();
-  assert.equal($('tbody tr').length, 2);
-  assert.ok($('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-  $('tbody tr:eq(1) .remove').click();
+  assert.equal(this.$('tbody tr').length, 1);
+  this.$('tbody tr:eq(0) td:eq(3) .remove').click();
+  await wait();
+  assert.equal(this.$('tbody tr').length, 2);
+  assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
+  this.$('tbody tr:eq(1) .remove').click();
 });

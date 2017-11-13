@@ -17,53 +17,43 @@ module('Acceptance: Course - Objective Parents', {
     // server.create('academicYear', {id: 2013});
     fixtures.program = server.create('program');
     fixtures.programYear = server.create('programYear', {
-      cohort: 1,
-      program: 1,
-      objectives: [1,2,3],
-      competencies: [1,2]
+      programId: 1,
     });
     fixtures.cohort = server.create('cohort', {
-      courses: [1],
-      programYear: 1
+      programYearId: 1
     });
     fixtures.competencies = [];
     fixtures.competencies.pushObject(server.create('competency', {
-      school: 1,
-      programYears: [1],
-      objectives: [1],
+      schoolId: 1,
+      programYearIds: [1],
     }));
     fixtures.competencies.pushObject(server.create('competency', {
-      school: 1,
-      programYears: [1],
-      objectives: [2,3],
+      schoolId: 1,
+      programYearIds: [1],
     }));
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      children: [4],
-      programYears: [1],
-      competency: 1
+      programYearIds: [1],
+      competencyId: 1
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [1],
+      competencyId: 2,
+      programYearIds: [1],
     }));
     fixtures.parentObjectives.pushObject(server.create('objective', {
-      competency: 2,
-      programYears: [1],
+      competencyId: 2,
+      programYearIds: [1],
     }));
     fixtures.courseObjectives = [];
     fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1],
-      parents: [1]
+      parentIds: [1]
     }));
-    fixtures.courseObjectives.pushObject(server.create('objective', {
-      courses: [1]
-    }));
+    fixtures.courseObjectives.pushObject(server.create('objective'));
     fixtures.course = server.create('course', {
       year: 2013,
-      school: 1,
-      objectives: [4,5],
-      cohorts: [1]
+      schoolId: 1,
+      objectiveIds: [4,5],
+      cohortIds: [1]
     });
   },
 
@@ -73,7 +63,7 @@ module('Acceptance: Course - Objective Parents', {
 });
 
 test('list parent objectives by competency', async function(assert) {
-  assert.expect(16);
+  assert.expect(17);
   await visit(url);
   let tds = find('.course-objective-list tbody tr:eq(0) td');
   assert.equal(tds.length, 4);
@@ -88,25 +78,26 @@ test('list parent objectives by competency', async function(assert) {
   let parentPicker = find('.parent-picker', objectiveManager).eq(0);
   let competencyTitles = find('.competency-title', parentPicker);
   assert.equal(competencyTitles.length, fixtures.competencies.length);
-  //every competency is in the list
-  for(let i = 0; i < fixtures.programYear.competencies.length; i++){
-    let competency = fixtures.competencies[fixtures.programYear.competencies[i] - 1];
-    assert.equal(getElementText(competencyTitles.eq(i)), getText(competency.title));
-    let ul = find('ul', parentPicker).eq(i);
-    let items = find('li', ul);
-    let cohortObjectives = competency.objectives;
-    assert.equal(cohortObjectives.length, cohortObjectives.length);
-    for (let j = 0; j < cohortObjectives.length; j++){
-      let li = items.eq(j);
-      assert.equal(getElementText(li), getText(fixtures.parentObjectives[cohortObjectives[j] - 1].title));
-      if(objective.parents.indexOf(cohortObjectives[j]) !== -1){
-        assert.ok(competencyTitles.eq(i).hasClass('selected'));
-        assert.ok($(li).hasClass('selected'));
-      } else {
-        assert.ok(!$(li).hasClass('selected'));
-      }
-    }
-  }
+  assert.ok(competencyTitles.eq(0).hasClass('selected'));
+  assert.notOk(competencyTitles.eq(1).hasClass('selected'));
+
+  //first competency
+  assert.equal(getElementText(competencyTitles.eq(0)), getText('competency 0'));
+  let ul = find('ul', parentPicker).eq(0);
+  let items = find('li', ul);
+  assert.equal(items.length, 1);
+  assert.equal(getElementText(items.eq(0)), getText('objective 0'));
+  assert.ok($(items.eq(0)).hasClass('selected'));
+
+  //second competency
+  assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
+  ul = find('ul', parentPicker).eq(1);
+  items = find('li', ul);
+  assert.equal(items.length, 2);
+  assert.equal(getElementText(items.eq(0)), getText('objective 1'));
+  assert.notOk($(items.eq(0)).hasClass('selected'));
+  assert.equal(getElementText(items.eq(1)), getText('objective 2'));
+  assert.notOk($(items.eq(1)).hasClass('selected'));
 });
 
 test('change course objective parent', async function(assert) {
@@ -132,7 +123,7 @@ test('save changes', async function(assert) {
   let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
   assert.equal(getElementText(td), getText(
     fixtures.parentObjectives[1].title +
-    '(' + fixtures.competencies[fixtures.parentObjectives[1].competency - 1].title + ')'
+    '(' + fixtures.competencies[fixtures.parentObjectives[1].competency.id - 1].title + ')'
   ));
 });
 
@@ -145,6 +136,6 @@ test('cancel changes', async function(assert) {
   let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
   assert.equal(getElementText(td), getText(
     fixtures.parentObjectives[0].title +
-    '(' + fixtures.competencies[fixtures.parentObjectives[0].competency - 1].title + ')'
+    '(' + fixtures.competencies[fixtures.parentObjectives[0].competency.id - 1].title + ')'
   ));
 });

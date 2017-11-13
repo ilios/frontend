@@ -11,52 +11,39 @@ let url = '/instructorgroups/1';
 module('Acceptance: Instructor Group Details', {
   beforeEach: function() {
     application = startApp();
-    setupAuthentication(application);
-    server.createList('user', 2, {
-      instructorGroups: [1]
-    });
-    server.createList('user', 2);
-    server.create('course', {
-      sessions: [1]
-    });
-    server.create('course', {
-      sessions: [2]
+    server.create('school');
+    setupAuthentication(application, {id: 4136, schoolId: 1});
+    server.createList('user', 4);
+    server.createList('course', 2, {
+      schoolId: 1
     });
     server.create('session', {
-      course: 1,
-      offerings: [1]
+      courseId: 1,
     });
     server.create('session', {
-      course: 2,
-      offerings: [2,3]
-    });
-    server.create('sessionType');
-    server.create('offering', {
-      session: 1,
-      instructorGroups: [1]
-    });
-    server.create('offering', {
-      session: 2,
-      instructorGroups: [2]
-    });
-    server.create('offering', {
-      session: 2,
-      instructorGroups: [1]
-    });
-    server.create('school', {
-      instructorGroups: [1,2,3]
+      courseId: 2,
     });
     server.create('instructorGroup', {
-      school: 1,
-      users: [2,3],
-      offerings: [1,3]
+      schoolId: 1,
+      userIds: [2,3],
     });
     server.create('instructorGroup', {
-      school: 1,
-      offerings: [2]
+      schoolId: 1,
     });
     server.create('instructorGroup', {
-      school: 1
+      schoolId: 1
+    });
+    server.create('offering', {
+      sessionId: 1,
+      instructorGroupIds: [1]
+    });
+    server.create('offering', {
+      sessionId: 2,
+      instructorGroupIds: [2]
+    });
+    server.create('offering', {
+      sessionId: 2,
+      instructorGroupIds: [1]
     });
   },
 
@@ -105,15 +92,15 @@ test('search instructors', async function(assert) {
   let searchResults = find(results);
   assert.equal(searchResults.length, 6);
   assert.equal(getElementText(searchResults.eq(0)), getText('5 Results'));
-  assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son'));
+  assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));
   assert.ok(searchResults.eq(1).hasClass('active'));
-  assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son'));
+  assert.equal(getElementText(searchResults.eq(2)), getText('1 guy M. Mc1son user@example.edu'));
   assert.ok(!searchResults.eq(2).hasClass('active'));
-  assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son'));
+  assert.equal(getElementText(searchResults.eq(3)), getText('2 guy M. Mc2son user@example.edu'));
   assert.ok(!searchResults.eq(3).hasClass('active'));
-  assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son'));
+  assert.equal(getElementText(searchResults.eq(4)), getText('3 guy M. Mc3son user@example.edu'));
   assert.ok(searchResults.eq(4).hasClass('active'));
-  assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son'));
+  assert.equal(getElementText(searchResults.eq(5)), getText('4 guy M. Mc4son user@example.edu'));
   assert.ok(searchResults.eq(5).hasClass('active'));
 });
 

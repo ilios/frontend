@@ -14,23 +14,20 @@ module('Acceptance: Session - Mesh Terms', {
     setupAuthentication(application);
     server.create('school');
     server.create('sessionType');
-    server.createList('meshDescriptor', 2, {
-      courses: [1]
-    });
+    server.createList('meshDescriptor', 2);
     server.create('meshDescriptor', {
-      courses: [1],
       deleted: true
     });
     server.createList('meshDescriptor', 3, {
     });
 
     server.create('course', {
-      school: 1
+      schoolId: 1
     });
 
     server.create('session', {
-      course: 1,
-      meshDescriptors: [1,2,3]
+      courseId: 1,
+      meshDescriptorIds: [1,2,3]
     });
   },
 

@@ -24,31 +24,30 @@ module('Acceptance: Program - ProgramYear List', {
 
 test('check list', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1,2,3,4]
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2012,
-    cohort: 1,
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2010,
-    cohort: 2,
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2011,
-    cohort: 3,
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2009,
-    cohort: 4,
-    archived: true
+    schoolId: 1
   });
   server.createList('cohort', 4);
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2012,
+    cohortId: 1,
+  });
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2010,
+    cohortId: 2,
+  });
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2011,
+    cohortId: 3,
+  });
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2009,
+    cohortId: 4,
+    archived: true
+  });
   await visit(url);
   var container = find('.programyear-list');
   var rows = find('tbody tr', container);
@@ -61,91 +60,81 @@ test('check list', async function(assert) {
   assert.equal(getElementText(find('td:eq(1)', rows.eq(2))), getText('cohort0'));
 });
 
-test('check competencies', async function(assert) {
+test('check competencies', async function (assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
-  });
-  server.createList('competency', 5, {
-    programYear: 1
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    competencies: [1,2,3,4,5]
+    programId: 1
   });
-  server.create('cohort');
+  server.createList('competency', 5, {
+    programYearIds: [1]
+  });
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(2)')), 5);
 });
 
 test('check objectives', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
-  });
-  server.createList('objective', 5, {
-    programYear: 1
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    objectives: [1,2,3,4,5]
+    programId: 1,
   });
-  server.create('cohort');
+  server.createList('objective', 5, {
+    programYearIds: [1]
+  });
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(3)')), 5);
 });
 
 test('check directors', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
-  });
-  server.createList('user', 5, {
-    programYear: 1
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
-    directors: [2,3,4,5,6]
+    programId: 1,
   });
-  server.create('cohort');
+  server.createList('user', 5, {
+    programYearIds: [1]
+  });
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(4)')), 5);
 });
 
 test('check terms', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1],
-    vocabularies: [1],
+    schoolId: 1,
   });
 
   server.create('vocabulary', {
-    school: 1,
-    terms: [1, 2, 3, 4, 5],
+    schoolId: 1,
+    vocabularyId: 1,
+  });
+  server.create('programYear', {
+    programId: 1,
   });
 
   server.createList('term', 5, {
-    programYear: 1,
-    vocabulary: 1,
+    programYearIds: [1],
+    vocabularyId: 1,
   });
-  server.create('programYear', {
-    program: 1,
-    terms: [1,2,3,4,5]
-  });
-  server.create('cohort');
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(5)')), 5);
 });
 
 test('check warnings', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
+    programId: 1,
   });
-  server.create('cohort');
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   var tds = find('.programyear-list tbody tr:eq(0) td');
   for(let i =2; i< 6; i++){
@@ -157,13 +146,12 @@ test('check warnings', async function(assert) {
 
 test('check link', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
+    programId: 1,
   });
-  server.create('cohort');
+  server.create('cohort', { programYearId: 1});
   await visit(url);
   await click('.programyear-list tbody tr:eq(0) td:eq(0) a');
   assert.equal(currentPath(), 'program.programYear.index');
@@ -171,18 +159,17 @@ test('check link', async function(assert) {
 
 test('can delete a program-year', async function(assert) {
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('programYear', {
-    program: 1,
+    programId: 1,
     published: false,
   });
-  server.create('cohort');
+  server.create('cohort', { programYearId: 1});
   server.create('userRole', {
     title: 'Developer',
   });
-  server.db.users.update(4136, {roles: [1]});
+  server.db.users.update(4136, {roleIds: [1]});
 
   const deleteButton = '.remove';
   const confirmRemovalButton = '.confirm-message button.remove';
@@ -198,7 +185,7 @@ test('can delete a program-year', async function(assert) {
 
 test('canceling adding new program-year collapses select menu', async function(assert) {
   server.create('program', {
-    school: 1,
+    schoolId: 1,
   });
 
   const expandButton = '.expand-collapse-button';
@@ -220,7 +207,7 @@ function getTableDataText(n, i, element = '') {
 test('can add a program-year (with no pre-existing program-years)', async function(assert) {
   server.create('program', {
     id: 1,
-    school: 1,
+    schoolId: 1,
   });
 
   const listRows = '.programyears .list tbody tr';
@@ -248,64 +235,47 @@ test('can add a program-year (with no pre-existing program-years)', async functi
 
 test('can add a program-year (with pre-existing program-year)', async function(assert) {
   server.createList('user', 3, {
-    directedProgramYears: [1]
+    directedProgramYearIds: [1]
   });
-  server.createList('school', {
-    vocabularies: [1],
-    programs: [1],
-
-  });
-  server.createList('competency', 3, {
-    programYears: [1]
-  });
-  server.createList('term', 3, {
-    programYears: [1],
-    vocabulary: 1
-  });
-  server.create('objective', {
-    descendants: [4]
-  });
-
-  server.createList('objective', 2, {
-    programYears: [1]
-  });
-  server.create('objective', {
-    ancestor: 1,
-    programYears: [1],
-  });
-  server.create('programYearSteward', {
-    department: 1,
-    programYear: 1
-  });
+  server.create('school');
+  server.createList('competency', 3);
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1,
   });
   server.create('vocabulary', {
-    school: 1,
-    terms: [1, 2, 3],
+    schoolId: 1,
+  });
+  server.createList('term', 3, {
+    vocabularyId: 1
+  });
+  server.create('objective');
+  server.createList('objective', 2);
+  server.create('objective', {
+    ancestorId: 1,
+  });
+  server.create('department');
+  server.create('programYearSteward', {
+    departmentId: 1,
   });
   const currentYear = parseInt(moment().format('YYYY'));
   server.create('programYear', {
-    program: 1,
+    programId: 1,
     startYear: currentYear,
-    cohort: 1,
-    directors: [2,3,4],
-    competencies: [1,2,3],
-    terms: [1,2,3],
-    objectives: [2,3,4],
-    stewards: [1],
+    directorIds: [2,3,4],
+    competencyIds: [1,2,3],
+    termIds: [1,2,3],
+    objectiveIds: [2,3,4],
+    stewardIds: [1],
     published: false
   });
   server.create('cohort', {
-    programYear: 1
+    programYearId: 1
   });
 
   const expandButton = '.expand-collapse-button';
   const selectField = '.startyear-select select';
   const saveButton = '.new-programyear .done';
   const thisYear = new Date().getFullYear();
-
   await visit(url);
   const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
 
@@ -337,32 +307,29 @@ test('privileged users can lock and unlock program-year', async function(assert)
   const secondProgramYearRow = '.list tbody tr:eq(1)';
   const firstProgramYearLockedIcon = `${firstProgramYearRow} td:eq(6) i:eq(0)`;
   const secondProgramYearLockedIcon = `${secondProgramYearRow} td:eq(6) i:eq(0)`;
-  server.create('school', {
-    programs: [1]
-  });
+  server.create('school');
   server.create('program',  {
-    programYears: [1,2],
-    school: 1
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2014,
-    cohort: 1,
-    locked: true,
-    directors: [4136],
-  });
-  server.create('programYear', {
-    program: 1,
-    startYear: 2015,
-    cohort: 2,
-    locked: false,
-    directors: [4136],
+    schoolId: 1
   });
   server.createList('cohort', 2);
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2014,
+    cohortId: 1,
+    locked: true,
+    directorIds: [4136],
+  });
+  server.create('programYear', {
+    programId: 1,
+    startYear: 2015,
+    cohortId: 2,
+    locked: false,
+    directorIds: [4136],
+  });
   server.create('userRole', {
     title: 'Developer'
   });
-  server.db.users.update(4136, {roles: [1]});
+  server.db.users.update(4136, {roleIds: [1]});
 
   await visit(url);
   assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-lock'), 'first program year is locked');
@@ -375,58 +342,25 @@ test('privileged users can lock and unlock program-year', async function(assert)
   assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-lock'), 'second program year is now locked');
 });
 
-test('non-privileged users cannot lock and unlock course but can see the icon', async function(assert) {
-  assert.expect(4);
-  const firstCourseRow = '.list tbody tr:eq(0)';
-  const secondCourseRow = '.list tbody tr:eq(1)';
-  const firstCourseLockedIcon = `${firstCourseRow} td:eq(6) i:eq(0)`;
-  const secondCourseLockedIcon = `${secondCourseRow} td:eq(6) i:eq(0)`;
-  server.create('academicYear', {id: 2014});
-  server.create('course', {
-    year: 2014,
-    school: 1,
-    published: true,
-    publishedAsTbd: false,
-    locked: true,
-  });
-  server.create('course', {
-    year: 2014,
-    school: 1,
-    published: true,
-    publishedAsTbd: true,
-    locked: false,
-  });
-  await visit('/courses');
-  assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is locked');
-  assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is unlocked');
-  await click(find(firstCourseLockedIcon));
-  await click(find(secondCourseLockedIcon));
-  assert.ok(find(firstCourseLockedIcon).hasClass('fa-lock'), 'first course is still locked');
-  assert.ok(find(secondCourseLockedIcon).hasClass('fa-unlock'), 'second course is still unlocked');
-});
-
 test('delete-button is not visible for program years with populated cohorts', async function(assert) {
-  server.create('user', {
-    id: 1,
-    cohorts: [1]
-  });
   server.create('program', {
-    school: 1,
-    programYears: [1]
+    schoolId: 1
   });
   server.create('programYear', {
-    program: 1,
+    programId: 1,
     published: false,
-    cohort: 1
   });
   server.create('cohort', {
-    programYear: 1,
-    users: [1]
+    programYearId: 1,
+  });
+  server.create('user', {
+    id: 1,
+    cohortIds: [1]
   });
   server.create('userRole', {
     title: 'Developer',
   });
-  server.db.users.update(4136, {roles: [1]});
+  server.db.users.update(4136, {roleIds: [1]});
 
   const firstProgramYearRow = '.list tbody tr:eq(0)';
   const deleteButtonOnFirstRow = `${firstProgramYearRow} .remove`;

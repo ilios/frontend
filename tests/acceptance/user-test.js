@@ -14,18 +14,20 @@ module('Acceptance: User', {
       campusId: '123',
       email: 'user@example.edu',
       phone: '111-111-1111',
-      primaryCohort: 1,
-      cohorts: [1, 2, 3],
-      learnerGroups: [3, 5]
+      primaryCohortId: 1,
+      cohortIds: [1, 2, 3],
+      learnerGroupIds: [3, 5],
+      schoolId: 1
     };
-    setupAuthentication(application, userObject);
 
-    server.create('school', { programs: [1]});
-    server.create('program', {programYears: [1, 2, 3]});
-    server.createList('programYear', 3, { program: 1});
-    server.create('cohort', { title: 'Medicine', users: [ 4136 ], learnerGroups: [1, 2, 3, 4, 5] });
-    server.createList('cohort', 2, {  users: [ 4136 ] });
-    server.createList('learnerGroup', 5, { title: 'Group 1', users: [ 4136 ], cohort: 1 });
+    server.create('school');
+    server.create('program');
+    server.createList('programYear', 3, { programId: 1});
+    server.create('cohort', { title: 'Medicine', programYearId: 1 });
+    server.create('cohort', { programYearId: 2 });
+    server.create('cohort', { programYearId: 3 });
+    server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
+    setupAuthentication(application, userObject);
   },
 
   afterEach() {

@@ -16,16 +16,16 @@ module('Acceptance: Program - Publish', {
     server.create('school');
     fixtures.published = server.create('program', {
       startYear: 2013,
-      school: 1,
+      schoolId: 1,
     });
     fixtures.scheduled = server.create('program', {
       startYear: 2013,
-      school: 1,
+      schoolId: 1,
       publishedAsTbd: true
     });
     fixtures.draft = server.create('program', {
       startYear: 2013,
-      school: 1,
+      schoolId: 1,
       published: false,
     });
   },

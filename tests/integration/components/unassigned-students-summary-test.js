@@ -3,21 +3,23 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 
 const { resolve } = RSVP;
 
 moduleForComponent('unassigned-students-summary', 'Integration | Component | unassigned students summary', {
   integration: true,
-  setup(){
-    startMirage(this.container);
-  }
 });
 
 test('it renders', function(assert) {
-  let primarySchool = EmberObject.create(server.create('school'));
-  let secondarySchool = EmberObject.create(server.create('school'));
+  let primarySchool = EmberObject.create({
+    id: 1,
+    title: 'school 0',
+  });
+  let secondarySchool = EmberObject.create({
+    id: 1,
+    title: 'school 1',
+  });
   let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool, secondarySchool])
@@ -55,7 +57,10 @@ test('it renders', function(assert) {
 });
 
 test('it renders empty', function(assert) {
-  let primarySchool = EmberObject.create(server.create('school'));
+  let primarySchool = EmberObject.create({
+    id: 1,
+    title: 'school 0',
+  });
   let user = EmberObject.create({
     school: resolve(primarySchool),
     schools: resolve([primarySchool])

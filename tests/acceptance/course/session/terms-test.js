@@ -13,33 +13,27 @@ module('Acceptance: Session - Terms', {
   beforeEach: function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school', {
-      vocabularies: [1],
-      courses: [1]
-    });
+    server.create('school');
     server.create('vocabulary', {
-      terms: [1, 2],
-      school: 1,
+      schoolId: 1,
     });
 
     server.create('course', {
-      school: 1,
-      sessions: [1],
+      schoolId: 1,
     });
 
     server.create('sessionType');
 
     fixtures.terms = [];
     fixtures.terms.pushObject(server.create('term', {
-      sessions: [1],
-      vocabulary: 1
+      vocabularyId: 1
     }));
     fixtures.terms.pushObject(server.create('term', {
-      vocabulary: 1
+      vocabularyId: 1
     }));
     fixtures.session = server.create('session', {
-      course: 1,
-      terms: [1],
+      courseId: 1,
+      termIds: [1],
     });
   },
 
