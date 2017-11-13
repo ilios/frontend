@@ -21,9 +21,6 @@
             <li class={{if isManaging 'clickable'}} onclick={{if isManaging (action remove learnerGroup)}}>
               <div class='badge {{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}}'>
                 <div class='text'>
-                  <div class='sub-text'>
-                    {{learnerGroup.allParentsTitle}}
-                  </div>
                   <div class='main-text'>
                     {{learnerGroup.title}} ({{count-related learnerGroup 'users'}})
                   </div>
