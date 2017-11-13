@@ -63,14 +63,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     });
   }),
-  saveSomeGroups(arr){
+  async saveSomeGroups(arr){
     let chunk = arr.splice(0, 5);
-    return all(chunk.invoke('save')).then(() => {
-      if (arr.length){
-        this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
-        return this.saveSomeGroups(arr);
-      }
-    });
+    await chunk.invoke('save');
+    if (arr.length){
+      this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
+      await this.saveSomeGroups(arr);
+    }
   },
   addUserToGroup: task(function * (user) {
     const learnerGroup = this.get('learnerGroup');
@@ -102,7 +101,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('isSaving', false);
     this.set('totalGroupsToSave', 0);
     this.set('currentGroupsSaved', 0);
-
     this.set('isSaving', false);
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
