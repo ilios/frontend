@@ -2,7 +2,6 @@ import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import $ from 'jquery';
 
 moduleForComponent('detail-cohort-list', 'Integration | Component | detail cohort list', {
   integration: true
@@ -52,19 +51,19 @@ test('it renders', async function(assert) {
   this.set('cohorts', cohorts);
   this.render(hbs`{{detail-cohort-list cohorts=cohorts}}`);
   await wait();
-  assert.equal($('th:eq(0)').text(), 'School');
-  assert.equal($('th:eq(1)').text(), 'Program');
-  assert.equal($('th:eq(2)').text(), 'Cohort');
-  assert.equal($('th:eq(3)').text(), 'Level');
-  assert.equal($('tbody tr').length, 2);
-  assert.equal($('tbody tr:eq(0) td:eq(0)').text().trim(), 'School of Life');
-  assert.equal($('tbody tr:eq(0) td:eq(1)').text().trim(), 'Professional Pie Eating');
-  assert.equal($('tbody tr:eq(0) td:eq(2)').text().trim(), 'Aardvark');
-  assert.equal($('tbody tr:eq(0) td:eq(3)').text().trim(), '1');
-  assert.equal($('tbody tr:eq(1) td:eq(0)').text().trim(), 'Starfleet Academy');
-  assert.equal($('tbody tr:eq(1) td:eq(1)').text().trim(), 'Doctor of Rocket Surgery');
-  assert.equal($('tbody tr:eq(1) td:eq(2)').text().trim(), 'Class of 2011');
-  assert.equal($('tbody tr:eq(1) td:eq(3)').text().trim(), '2');
+  assert.equal(this.$('th:eq(0)').text(), 'School');
+  assert.equal(this.$('th:eq(1)').text(), 'Program');
+  assert.equal(this.$('th:eq(2)').text(), 'Cohort');
+  assert.equal(this.$('th:eq(3)').text(), 'Level');
+  assert.equal(this.$('tbody tr').length, 2);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'School of Life');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'Professional Pie Eating');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'Aardvark');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), '1');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'Starfleet Academy');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Doctor of Rocket Surgery');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'Class of 2011');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), '2');
 });
 
 
