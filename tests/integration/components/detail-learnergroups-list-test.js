@@ -96,7 +96,7 @@ test('it renders', function(assert) {
   assert.equal(this.$(set1Legend).text().trim(), 'tlg1 ( )');
   assert.equal(this.$(set1Group1).text().trim(), 'tlg1 (2)');
   assert.equal(this.$(set1Group2).text().trim(), 'sub group 1 (3)');
-  assert.equal(this.$(set1Group3).text().trim().replace(/[\n\s]+/g, ''), 'subgroup1subsubgroup1(1)');
+  assert.equal(this.$(set1Group3).text().trim().replace(/[\n\s]+/g, ''), 'subsubgroup1(1)');
 
   assert.equal(this.$(set2Legend).text().trim(), 'tlg2 ( )');
   assert.equal(this.$(set2Group1).text().trim(), 'tlg2 (2)');
