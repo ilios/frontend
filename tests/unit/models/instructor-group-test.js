@@ -38,8 +38,8 @@ test('list courses', async function(assert) {
     ]);
     const courses = await model.get('courses');
     assert.equal(courses.length, 3);
-    assert.ok(courses.contains(course1));
-    assert.ok(courses.contains(course2));
-    assert.ok(courses.contains(course3));
+    assert.ok(courses.includes(course1));
+    assert.ok(courses.includes(course2));
+    assert.ok(courses.includes(course3));
   });
 });
