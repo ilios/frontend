@@ -26,7 +26,7 @@ export default Component.extend({
 
     const topLevelGroups = await all(learnerGroups.toArray().mapBy('topLevelGroup'));
 
-    return await map(topLevelGroups, async topLevelGroup => {
+    return await map(topLevelGroups.uniq(), async topLevelGroup => {
       const groups = await filter(learnerGroups.toArray(), async learnerGroup => {
         const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
         return (thisGroupsTopLevelGroup === topLevelGroup);
