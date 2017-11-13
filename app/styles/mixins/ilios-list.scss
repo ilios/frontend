@@ -28,20 +28,10 @@
         @include span-columns(2 of 3);
         @include pad();
 
-        .main-text,
-        .sub-text {
-          @include fill-parent;
-        }
-
         .main-text {
+          @include fill-parent;
           font-size: $badges-font-size;
           font-weight: bold;
-        }
-
-        .sub-text {
-          color: $darker-grey;
-          font-size: .8 * $badges-font-size;
-          font-style: italic;
         }
       }
 
