@@ -5426,9 +5426,9 @@ ignore@^3.1.2, ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-ilios-common@5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-5.2.1.tgz#ade1b73d3e37a7f65755a83fe654404005bbf2e6"
+ilios-common@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-6.0.0.tgz#0cee2d15a45029ba4af93936ce9e9f6bc4f09c20"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.6.0"
@@ -5447,7 +5447,7 @@ ilios-common@5.2.1:
     ember-tether "^0.4.1"
     ember-tooltips "^2.8.2"
     ember-truth-helpers "^2.0.0"
-    liquid-fire "^0.28.0"
+    liquid-fire "^0.29.0"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -5996,14 +5996,14 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-liquid-fire@^0.28.0:
-  version "0.28.1"
-  resolved "https://registry.yarnpkg.com/liquid-fire/-/liquid-fire-0.28.1.tgz#62f03e145e0ae7ca8ecdeadddc0e6939fc1ff4cd"
+liquid-fire@^0.29.0:
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/liquid-fire/-/liquid-fire-0.29.1.tgz#bcfea12db65799def263721a2b9dd6142d426bdf"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.0.0"
     broccoli-stew "^1.4.2"
-    ember-cli-babel "^6.3.0"
+    ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.1"
     ember-cli-version-checker "^2.0.0"
     ember-getowner-polyfill "^2.0.1"
