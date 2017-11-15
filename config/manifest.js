@@ -64,6 +64,7 @@ module.exports = function (/* environment, appConfig */) {
         src: "assets/icons/sunburst-transparent150.png",
         sizes: "150x150",
         type: "image/png",
+        element: 'square150x150logo',
         targets: ['ms'],
       },
     ],
