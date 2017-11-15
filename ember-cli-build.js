@@ -25,6 +25,22 @@ module.exports = function(defaults) {
       includePolyfill: true,
       sourceMaps: isProductionLikeBuild?false:'inline'
     },
+    'ember-cli-image-transformer': {
+      images: [
+        {
+          inputFilename: 'lib/images/sunburst.svg',
+          outputFileName: 'sunburst-white-background',
+          convertTo: 'png',
+          sizes: [96, 180, 192],
+        },
+        {
+          inputFilename: 'lib/images/sunburst.svg',
+          outputFileName: 'sunburst-transparent',
+          convertTo: 'png',
+          sizes: [16, 32, 48, 150, 512],
+        },
+      ]
+    },
     'ember-cli-password-strength': {
       bundleZxcvbn: false
     },

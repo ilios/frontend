@@ -16,8 +16,6 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "broccoli-caching-writer": "^3.0.3",
-    "broccoli-funnel": "^2.0.1",
     "ember-ajax": "^3.0.0",
     "ember-chrome-devtools": "^0.2.0",
     "ember-cli": "2.16.2",
@@ -43,6 +41,7 @@
     "ember-cli-head": "0.4.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
+    "ember-cli-image-transformer": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-js-cookie": "0.1.1",
     "ember-cli-mirage": "^0.3.4",
@@ -102,8 +101,6 @@
     "liquid-tether": "2.0.6",
     "loader.js": "^4.2.3",
     "normalize.css": "^7.0.0",
-    "rsvp": "^4.7.0",
-    "sharp": "^0.18.4",
     "validator": "^9.0.0"
   },
   "engines": {
@@ -111,7 +108,6 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/build-icons",
       "lib/ilios-error",
       "lib/ilios-loading"
     ]
