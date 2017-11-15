@@ -67,7 +67,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let chunk = arr.splice(0, 5);
     await all(chunk.invoke('save'));
     if (arr.length){
-      this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
+      //this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
       await this.saveSomeGroups(arr);
     }
   },
@@ -95,12 +95,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(removeGroups);
       groupsToSave.pushObjects(addGroups);
     }
-    this.set('totalGroupsToSave', groupsToSave.uniq().length);
-    this.set('isSaving', true);
+
+    //this.set('totalGroupsToSave', groupsToSave.uniq().length);
+    //this.set('isSaving', true);
     yield this.saveSomeGroups(groupsToSave.uniq());
-    this.set('totalGroupsToSave', 0);
-    this.set('currentGroupsSaved', 0);
-    this.set('isSaving', false);
+    //this.set('totalGroupsToSave', 0);
+    //this.set('currentGroupsSaved', 0);
+    //this.set('isSaving', false);
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
     const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
@@ -111,12 +112,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(removeGroups);
     }
 
-    this.set('totalGroupsToSave', groupsToSave.uniq().length);
-    this.set('isSaving', true);
+    //this.set('totalGroupsToSave', groupsToSave.uniq().length);
+    //this.set('isSaving', true);
     yield this.saveSomeGroups(groupsToSave.uniq());
-    this.set('totalGroupsToSave', 0);
-    this.set('currentGroupsSaved', 0);
-    this.set('isSaving', false);
+    //this.set('totalGroupsToSave', 0);
+    //this.set('currentGroupsSaved', 0);
+    //this.set('isSaving', false);
   }).enqueue(),
   usersToPassToManager: computed('isEditing', 'learnerGroup.{topLevelGroup,users.[]}', 'treeGroups.[]', async function () {
     const isEditing = this.get('isEditing');
