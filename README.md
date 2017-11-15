@@ -17,7 +17,6 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/)
-* [Bower](https://bower.io/)
 
 We recommend installing Node.js though [NVM](https://github.com/creationix/nvm#installation)
 
@@ -26,7 +25,6 @@ We recommend installing Node.js though [NVM](https://github.com/creationix/nvm#i
 * `git clone git@github.com:ilios/frontend.git`
 * change into the new directory `cd frontend`
 * `npm install`
-* `bower install`
 
 #### Connection to the demo API server
 

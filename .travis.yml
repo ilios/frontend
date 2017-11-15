@@ -9,8 +9,6 @@ addons:
 
 cache:
   yarn: true
-  directories:
-    - $HOME/.cache/bower
 
 env:
   global:
@@ -20,12 +18,10 @@ env:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower
   - yarn global add greenkeeper-lockfile@1
 
 install:
   - yarn install --non-interactive
-  - bower install
 
 script: ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
