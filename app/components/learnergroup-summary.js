@@ -65,7 +65,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
   async saveSomeGroups(arr){
     let chunk = arr.splice(0, 5);
-    await chunk.invoke('save');
+    await all(chunk.invoke('save'));
     if (arr.length){
       this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
       await this.saveSomeGroups(arr);
