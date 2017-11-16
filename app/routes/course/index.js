@@ -22,14 +22,25 @@ export default  Route.extend({
       return;
     }
 
-    return all([
-      store.query('session', {filters: {course}}),
-      store.query('offering', {filters: {courses}}),
-      store.query('ilm-session', {filters: {courses}}),
-      store.query('objective', {filters: {courses}}),
-      store.query('objective', {filters: {sessions}}),
-      store.query('session-type', {filters: {sessions}}),
-    ]);
+    let promises = [
+      store.query('session', { filters: { course } }),
+      store.query('offering', { filters: { courses } }),
+      store.query('ilm-session', { filters: { courses } }),
+      store.query('objective', { filters: { courses } }),
+    ];
+    const maximumSessionLoad = 100;
+    if (sessions.length < maximumSessionLoad) {
+      promises.pushObject(store.query('objective', { filters: { sessions } }));
+      promises.pushObject(store.query('session-type', { filters: { sessions } }));
+    } else {
+      for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
+        let slice = sessions.slice(i, i + maximumSessionLoad);
+        promises.pushObject(store.query('objective', { filters: { sessions: slice } }));
+        promises.pushObject(store.query('session-type', { filters: { sessions: slice } }));
+      }
+    }
+
+    return all(promises);
   },
   queryParams: {
     sortSessionsBy: {
