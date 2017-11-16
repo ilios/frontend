@@ -1,6 +1,0 @@
-{
-  "name": "ilios",
-  "dependencies": {
-    "papaparse": "~4.1.2"
-  }
-}
