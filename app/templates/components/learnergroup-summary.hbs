@@ -109,10 +109,4 @@
     <span class='cohortmembers-loading'>{{fa-icon 'spinner' spin=true}}</span>
   {{/if}}
 </section>
-{{#liquid-if isSaving class='crossFade'}}
-  {{wait-saving
-    showProgress=true
-    totalProgress=totalGroupsToSave
-    currentProgress=currentGroupsSaved
-  }}
-{{/liquid-if}}
+
