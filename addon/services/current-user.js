@@ -25,17 +25,12 @@ export default Service.extend({
     return get(obj, 'user_id');
   }),
 
-  model: computed('currentUserId', function(){
-    return new Promise(resolve => {
-      let currentUserId = this.get('currentUserId');
-      if (!currentUserId) {
-        resolve(null);
-      } else {
-        this.get('store').find('user', currentUserId).then((user) => {
-          resolve(user);
-        });
-      }
-    });
+  model: computed('currentUserId', async function(){
+    let currentUserId = this.get('currentUserId');
+    if (!currentUserId) {
+      return null;
+    }
+    return await this.get('store').find('user', currentUserId);
   }),
 
   availableCohortsObserver: observer('availableCohorts.[]', function(){
