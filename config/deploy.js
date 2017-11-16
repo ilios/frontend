@@ -32,6 +32,8 @@ module.exports = function(deployTarget) {
     'json-config': {
       jsonBlueprint(context, pluginHelper) {
         var jsonBlueprint = pluginHelper.readConfigDefault('jsonBlueprint');
+        jsonBlueprint.link.attributes.push('sizes');
+        jsonBlueprint.link.attributes.push('type');
         jsonBlueprint.style = {
           selector: 'style',
           attributes: ['type'],
@@ -65,6 +67,14 @@ module.exports = function(deployTarget) {
     ENV['s3-index'].bucket = 'frontend-archive-production';
     ENV['s3-index'].prefix = API_VERSION;
     ENV['cloudfront'].distribution = 'E1RJJYSB507IYA';
+  }
+  if (deployTarget === 'development') {
+    ENV.pipeline = {
+      disabled: {
+        's3-index': true,
+        'cloudfront': true,
+      },
+    };
   }
 
   // Note: if you need to build some configuration asynchronously, you can return

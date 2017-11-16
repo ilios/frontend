@@ -2,6 +2,7 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
 
 module.exports = function(defaults) {
   let env = EmberApp.env() || 'development';
@@ -9,6 +10,7 @@ module.exports = function(defaults) {
 
   let app = new EmberApp(defaults, {
     fingerprint: {
+      extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest']),
       enabled: isProductionLikeBuild,
     },
     sourcemaps: {
@@ -22,6 +24,22 @@ module.exports = function(defaults) {
     'ember-cli-babel': {
       includePolyfill: true,
       sourceMaps: isProductionLikeBuild?false:'inline'
+    },
+    'ember-cli-image-transformer': {
+      images: [
+        {
+          inputFilename: 'lib/images/sunburst.svg',
+          outputFileName: 'sunburst-white-background',
+          convertTo: 'png',
+          sizes: [96, 180, 192],
+        },
+        {
+          inputFilename: 'lib/images/sunburst.svg',
+          outputFileName: 'sunburst-transparent',
+          convertTo: 'png',
+          sizes: [16, 32, 48, 150, 512],
+        },
+      ]
     },
     'ember-cli-password-strength': {
       bundleZxcvbn: false
