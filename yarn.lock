@@ -3810,7 +3810,13 @@ ember-k-codemod@^0.1.0:
     glob "^7.1.1"
     jscodeshift "^0.3.29"
 
-ember-lifeline@^1.0.4, ember-lifeline@^1.3.0:
+ember-lifeline@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-lifeline/-/ember-lifeline-2.0.0.tgz#ab2dadd3eed585605d1c4137c64aacec4d241c8e"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+
+ember-lifeline@^1.0.4:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/ember-lifeline/-/ember-lifeline-1.3.0.tgz#33baf11287ea425103cd6c3299b9d9d15d1e4c54"
   dependencies:
