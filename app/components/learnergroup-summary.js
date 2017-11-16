@@ -63,13 +63,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     });
   }),
-  async saveSomeGroups(arr){
-    let chunk = arr.splice(0, 5);
-    await all(chunk.invoke('save'));
-    if (arr.length){
-      await this.saveSomeGroups(arr);
-    }
-  },
   addUserToGroup: task(function * (user) {
     const learnerGroup = this.get('learnerGroup');
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
@@ -94,7 +87,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(removeGroups);
       groupsToSave.pushObjects(addGroups);
     }
-    yield this.saveSomeGroups(groupsToSave.uniq());
+    yield all(groupsToSave.uniq().invoke('save'));
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
     const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
@@ -104,7 +97,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
-    yield this.saveSomeGroups(groupsToSave.uniq());
+    yield all(groupsToSave.uniq().invoke('save'));
   }).enqueue(),
   usersToPassToManager: computed('isEditing', 'learnerGroup.{topLevelGroup,users.[]}', 'treeGroups.[]', async function () {
     const isEditing = this.get('isEditing');
