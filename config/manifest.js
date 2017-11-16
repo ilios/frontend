@@ -11,7 +11,7 @@ module.exports = function (/* environment, appConfig */) {
     short_name: "Ilios",
     description: "Curriculum management for the health professions",
     start_url: "/dashboard",
-    display: "fullscreen",
+    display: "standalone",
     background_color: "#ffffff",
     theme_color: "#cc6600",
     icons: [
