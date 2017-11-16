@@ -1,40 +1,41 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
-const { sort } = computed;
+import RSVP from 'rsvp';
+
+const { map } = RSVP;
 
 export default Component.extend({
   classNames: ['offering-editor-learnergroups'],
 
-  revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', {
-    get() {
-      const cohortId = this.get('cohort.id');
-      let learnerGroups = this.get('learnerGroups')[cohortId];
-      let revisedGroups = [];
+  revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', async function() {
+    const cohortId = this.get('cohort.id');
+    let learnerGroups = this.get('learnerGroups')[cohortId];
 
-      if (isPresent(learnerGroups)) {
-        learnerGroups.forEach((group) => {
-          let groupObject = {};
-          let parentTitle = group.get('allParentTitles');
-          groupObject.group = group;
+    if (isPresent(learnerGroups)) {
+      return await map(learnerGroups, async group => {
+        let groupObject = {};
+        let parentTitle = await group.get('allParentTitles');
+        groupObject.group = group;
 
-          if (isEmpty(parentTitle)) {
-            groupObject.sortName = group.get('title');
-          } else {
-            groupObject.sortName = `${parentTitle[0]} > ${group.get('title')}`;
-          }
+        if (isEmpty(parentTitle)) {
+          groupObject.sortName = group.get('title');
+        } else {
+          groupObject.sortName = `${parentTitle[0]} > ${group.get('title')}`;
+        }
 
-          revisedGroups.push(groupObject);
-        });
-      }
-
-      return revisedGroups;
+        return groupObject;
+      });
     }
-  }).readOnly(),
 
-  sortBy: ['sortName'],
+    return [];
+  }),
 
-  sortedLearnerGroups: sort('revisedLearnerGroups', 'sortBy'),
+
+  sortedLearnerGroups: computed('revisedLearnerGroups.[]', async function() {
+    const groups = await this.get('revisedLearnerGroups');
+    return groups.sortBy('sortName');
+  }),
 
   actions: {
     addLearnerGroup(group) {

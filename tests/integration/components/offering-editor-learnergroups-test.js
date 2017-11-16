@@ -3,6 +3,7 @@ import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('offering-editor-learnergroups', 'Integration | Component | offering editor learnergroups', {
   integration: true,
@@ -13,7 +14,7 @@ moduleForComponent('offering-editor-learnergroups', 'Integration | Component | o
   }
 });
 
-test('actions get trigger appropriately', function(assert) {
+test('actions get triggered appropriately', async function(assert) {
   assert.expect(2);
 
   const group1 = EmberObject.create({
@@ -47,6 +48,8 @@ test('actions get trigger appropriately', function(assert) {
     addLearnerGroup=(action externalActionAdd)
     removeLearnerGroup=(action externalActionRemove)
   }}`);
+
+  await wait();
 
   this.$('.selectable li:first').click();
   this.$('.removable li:first').click();

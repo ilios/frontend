@@ -2,46 +2,51 @@ import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { isEmpty } from '@ember/utils';
-const { Promise, filter, map, resolve } = RSVP;
+const { all, Promise, filter, map } = RSVP;
 
 export default Component.extend({
   tagName: 'ul',
   classNames: ['learnergroups-list'],
   learnerGroups: null,
   isManaging: false,
-  trees: computed('learnerGroups.[]', function(){
+
+  /**
+   * A list of objects, each representing a learner-group tree.
+   * Each tree object contains its top-level group and a flat list of all its groups.
+   * @property trees
+   * @type {Ember.computed}
+   * @public
+   */
+  trees: computed('learnerGroups.[]', async function(){
     const learnerGroups = this.get('learnerGroups');
 
     if (isEmpty(learnerGroups)) {
-      return resolve([]);
+      return [];
     }
 
-    return new Promise(resolve => {
-      map(learnerGroups.toArray(), (group => group.get('topLevelGroup'))).then(topLevelGroups => {
-        let trees = topLevelGroups.uniq().map(topLevelGroup => {
-          let groups = new Promise(resolve => {
-            filter(learnerGroups.toArray(), child => {
-              return new Promise(resolve => {
-                child.get('topLevelGroup').then(childTopLevelGroup => {
-                  resolve(childTopLevelGroup === topLevelGroup);
-                });
-              });
-            }).then(filteredGroups => {
-              resolve(filteredGroups);
-            });
-          });
-          return EmberObject.create({
-            topLevelGroup,
-            groups
-          });
-        });
+    const topLevelGroups = await all(learnerGroups.toArray().mapBy('topLevelGroup'));
 
-        resolve(trees);
+    return await map(topLevelGroups.uniq(), async topLevelGroup => {
+      const groups = await filter(learnerGroups.toArray(), async learnerGroup => {
+        const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
+        return (thisGroupsTopLevelGroup === topLevelGroup);
       });
 
+      const sortProxies = await map(groups, async group => {
+        const sortTitle = await group.get('sortTitle');
+        return EmberObject.create({
+          group,
+          sortTitle
+        });
+      });
 
+      return EmberObject.create({
+        topLevelGroup,
+        groups: sortProxies.sortBy('sortTitle').mapBy('group')
+      });
     });
   }),
+
   lowestLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups').toArray();
     const ids = learnerGroups.mapBy('id');

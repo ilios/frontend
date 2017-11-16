@@ -2,7 +2,7 @@
   <header class="title-selected-groups center">{{t 'general.selected'}}</header>
 
   <ul class='tree-list removable'>
-    {{#each sortedLearnerGroups as |learnerGroup|}}
+    {{#each (await sortedLearnerGroups) as |learnerGroup|}}
       <li {{action 'removeLearnerGroup' learnerGroup.group}}>
         <div class="selected-subgroup-style">
           {{learnerGroup.sortName}}
@@ -20,9 +20,9 @@
   <ul class='tree-list selectable'>
     {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
       <li {{action 'addLearnerGroup' learnerGroup}}>
-        {{#if learnerGroup.allParentTitles}}
+        {{#if (await learnerGroup.allParentTitles)}}
           <div class="available-subgroup-style">
-            {{separated-list icon='angle-right' list=learnerGroup.allParentTitles}}
+            {{separated-list icon='angle-right' list=(await learnerGroup.allParentTitles)}}
             {{learnerGroup.title}}
           </div>
         {{else}}
