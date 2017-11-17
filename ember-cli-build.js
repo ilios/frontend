@@ -31,13 +31,13 @@ module.exports = function(defaults) {
           inputFilename: 'lib/images/sunburst.svg',
           outputFileName: 'sunburst-white-background',
           convertTo: 'png',
-          sizes: [96, 180, 192],
+          sizes: [180, 192],
         },
         {
           inputFilename: 'lib/images/sunburst.svg',
           outputFileName: 'sunburst-transparent',
           convertTo: 'png',
-          sizes: [16, 32, 48, 150, 512],
+          sizes: [16, 32, 48, 96, 150, 512],
         },
       ]
     },
