@@ -92,61 +92,41 @@ export default Service.extend({
     }, []);
   }).readOnly(),
 
-  userRoleTitles: computed('model.roles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('model').then(user => {
-        if(!user){
-          resolve([]);
-        } else {
-          user.get('roles').then(roles => {
-            let roleTitles = roles.map(role => role.get('title').toLowerCase());
-            resolve(roleTitles);
-          });
-        }
-      });
-    });
+  userRoleTitles: computed('model.roles.[]', async function(){
+    const user = await this.get('model');
+    if(!user) {
+      return [];
+    }
+    const roles = await user.get('roles');
+    return roles.map(role => role.get('title').toLowerCase());
   }),
-  userIsCourseDirector: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('course director'));
-      });
-    });
+
+  userIsCourseDirector: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('course director');
   }),
-  userIsFaculty: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('faculty'));
-      });
-    });
+
+  userIsFaculty: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('faculty');
   }),
-  userIsDeveloper: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('developer'));
-      });
-    });
+
+  userIsDeveloper: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('developer');
+
   }),
-  userIsStudent: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('student'));
-      });
-    });
+  userIsStudent: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('student');
   }),
-  userIsPublic: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('public'));
-      });
-    });
+  userIsPublic: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('public');
   }),
-  userIsFormerStudent: computed('useRoleTitles.[]', function(){
-    return new Promise((resolve) => {
-      this.get('userRoleTitles').then(roleTitles => {
-        resolve(roleTitles.includes('former student'));
-      });
-    });
+  userIsFormerStudent: computed('useRoleTitles.[]', async function(){
+    const roleTitles = await this.get('userRoleTitles');
+    return roleTitles.includes('former student');
   }),
   activeRelatedCoursesInThisYearAndLastYear: computed(
     'model',
