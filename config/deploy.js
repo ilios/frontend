@@ -32,6 +32,9 @@ module.exports = function(deployTarget) {
     'json-config': {
       jsonBlueprint(context, pluginHelper) {
         var jsonBlueprint = pluginHelper.readConfigDefault('jsonBlueprint');
+        jsonBlueprint.meta.selector = 'meta';
+        jsonBlueprint.meta.attributes.push('charset');
+        jsonBlueprint.meta.attributes.push('http-equiv');
         jsonBlueprint.link.attributes.push('sizes');
         jsonBlueprint.link.attributes.push('type');
         jsonBlueprint.style = {
