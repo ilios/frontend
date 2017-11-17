@@ -135,31 +135,25 @@ export default Service.extend({
     'model.instructedLearnerGroups.[]',
     'model.directedCourses.[]',
     'model.instructorIlmSessions.[]',
-    function(){
-      return new Promise(resolve => {
-        this.get('model').then(user => {
-          if(isEmpty(user)){
-            resolve([]);
-            return;
-          }
-          let currentYear = moment().format('YYYY');
-          const currentMonth = parseInt(moment().format('M'));
-          if(currentMonth < 6){
-            currentYear--;
-          }
-          const previousYear = currentYear -1;
-          const nextYear = currentYear +1;
-          this.get('store').query('course', {
-            my: true,
-            filters: {
-              year: [previousYear, currentYear, nextYear],
-              locked: false,
-              archived: false
-            }
-          }).then(filteredCourses => {
-            resolve(filteredCourses);
-          });
-        });
+    async function(){
+      const user = await this.get('model');
+      if(isEmpty(user)){
+        return [];
+      }
+      let currentYear = moment().format('YYYY');
+      const currentMonth = parseInt(moment().format('M'));
+      if(currentMonth < 6){
+        currentYear--;
+      }
+      const previousYear = currentYear -1;
+      const nextYear = currentYear +1;
+      return await this.get('store').query('course', {
+        my: true,
+        filters: {
+          year: [previousYear, currentYear, nextYear],
+          locked: false,
+          archived: false
+        }
       });
     }
   )
