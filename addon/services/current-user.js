@@ -141,7 +141,7 @@ export default Service.extend({
         return [];
       }
       let currentYear = moment().format('YYYY');
-      const currentMonth = parseInt(moment().format('M'));
+      const currentMonth = parseInt(moment().format('M'), 10);
       if(currentMonth < 6){
         currentYear--;
       }
