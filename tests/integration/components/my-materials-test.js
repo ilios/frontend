@@ -371,7 +371,7 @@ test('choosing course fires action', function(assert) {
   this.set('nothing', parseInt);
 
   let count = 0;
-  let courses = ['1', '3', 'null'];
+  let courses = ['1', '3', ''];
   this.set('setCourseIdFilter', (what) => {
     assert.equal(what, courses[count]);
     this.set('courseIdFilter', what);
