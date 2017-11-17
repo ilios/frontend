@@ -2,7 +2,7 @@
   {{#if (gt (get materials 'length') 0)}}
     <span class='course-filter'>
       <select onchange={{action setCourseIdFilter value="target.value"}}>
-        <option value=null selected={{is-equal null courseIdFilter}}>
+        <option value="">
           {{t 'general.allCourses'}}
         </option>
         {{#each courses as |courseObj|}}
