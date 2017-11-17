@@ -33,13 +33,18 @@ export default Service.extend({
     return await this.get('store').find('user', currentUserId);
   }),
 
-  availableCohortsObserver: observer('availableCohorts.[]', function(){
-    this.get('availableCohorts').then(cohorts => {
-      if(!cohorts.includes(this.get('currentCohort'))){
-        this.set('currentCohort', null);
-      }
-    });
+  /**
+   * Observes available cohorts and sets the current cohort property to NULL if it is not included in that list.
+   * @property availableCohortsObserver
+   * @type {Ember.observer}
+   */
+  availableCohortsObserver: observer('availableCohorts.[]', async function(){
+    const cohorts = await this.get('availableCohorts');
+    if(!cohorts.includes(this.get('currentCohort'))){
+      this.set('currentCohort', null);
+    }
   }),
+
   currentCohort: null,
 
   /**
