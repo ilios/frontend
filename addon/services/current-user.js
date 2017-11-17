@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 const { computed, observer, RSVP, isEmpty, inject, get, Service, A } = Ember;
 const { service } = inject;
-const { hash, map, Promise } = RSVP;
+const { all, map, Promise } = RSVP;
 
 export default Service.extend({
   store: service(),
@@ -41,31 +41,21 @@ export default Service.extend({
     });
   }),
   currentCohort: null,
-  availableCohorts: computed('currentSchool', function(){
-    return new Promise(resolve => {
-      this.get('currentSchool').then(school => {
-        school.get('programs').then(programs => {
-          let promises = programs.map(program => {
-            return program.get('programYears');
-          });
-          hash(promises).then(obj => {
-            let promises2 = [];
-            Object.keys(obj).forEach(key => {
-              obj[key].forEach(programYear => {
-                promises2.push(programYear.get('cohort'));
-              });
-            });
-            hash(promises2).then(obj2 => {
-              let cohorts = A();
-              Object.keys(obj2).forEach(key => {
-                cohorts.pushObject(obj2[key]);
-              });
-              resolve(cohorts);
-            });
-          });
-        });
-      });
-    });
+
+  /**
+   * A list of all cohorts in the current school.
+   * @property availableCohorts
+   * @type {Ember.computed}
+   * @public
+   */
+  availableCohorts: computed('currentSchool', async function(){
+    const school = await this.get('currentSchool');
+    const programs = await school.get('programs');
+    let programYears = await all(programs.toArray().mapBy('programsYears'));
+    programYears = programYears.reduce((array, set) => {
+      return array.pushObjects(set.toArray());
+    }, []).uniq();
+    return await all(programYears.mapBy('cohort'));
   }),
 
   /**
