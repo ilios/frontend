@@ -66,8 +66,8 @@ export default Service.extend({
   /**
    * All cohorts from all schools that the current user is associated with,
    * via primary school association and the explicit schools permissions.
-   * @property availableCohortsForAllSchools
-   * @type Ember.computed
+   * @property cohortsInAllAssociatedSchools
+   * @type {Ember.computed}
    * @readOnly
    * @public
    */
@@ -80,22 +80,16 @@ export default Service.extend({
     const cohorts = await map(schools, async school => {
       const programs = await school.get('programs');
       const schoolCohorts = await map(programs.toArray(), async program => {
-        const programCohorts = await program.get('cohorts');
-
-        return programCohorts;
+        return await program.get('cohorts');
       });
-      let flatSchoolCohorts = schoolCohorts.reduce((array, set) => {
+      return schoolCohorts.reduce((array, set) => {
         return array.pushObjects(set.toArray());
       }, []);
-
-      return flatSchoolCohorts;
     });
 
-    let flatCohorts = cohorts.reduce((array, set) => {
+    return cohorts.reduce((array, set) => {
       return array.pushObjects(set.toArray());
     }, []);
-
-    return flatCohorts;
   }).readOnly(),
 
   userRoleTitles: computed('model.roles.[]', function(){
