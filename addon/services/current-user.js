@@ -2,9 +2,9 @@ import Ember from 'ember';
 import moment from 'moment';
 import jwtDecode from 'jwt-decode';
 
-const { computed, observer, RSVP, isEmpty, inject, get, Service, A } = Ember;
+const { computed, observer, RSVP, isEmpty, inject, get, Service } = Ember;
 const { service } = inject;
-const { all, map, Promise } = RSVP;
+const { all, map } = RSVP;
 
 export default Service.extend({
   store: service(),
