@@ -6,175 +6,168 @@
   }}
 {{/liquid-if}}
 
-<div class='publish-all-sessions-unpublishable'>
-  <section class='detail-block {{if unPublishableCollapsed 'collapsed' 'collapsible'}}'>
-    <div class='detail-title clickable' {{action 'toggleUnPublishableCollapsed'}}>
-      {{t 'general.incompleteSessions'}} ({{get (await unPublishableSessions) 'length'}})
-    </div>
-    {{#unless unPublishableCollapsed}}
-      <div class='detail-content'>
-        <table>
-          <thead>
+<section class='publish-all-sessions-unpublishable'>
+  <div class='title {{if unPublishableCollapsed 'collapsed' 'collapsible'}}' {{action 'toggleUnPublishableCollapsed'}}>
+    {{t 'general.incompleteSessions'}} ({{get (await unPublishableSessions) 'length'}})
+  </div>
+  {{#unless unPublishableCollapsed}}
+    <div class='content'>
+      <table>
+        <thead>
+          <tr>
+            <th>{{t 'general.sessionTitle'}}</th>
+            <th>{{t 'general.offerings'}}</th>
+            <th>{{t 'general.terms'}}</th>
+            <th>{{t 'general.objectives'}}</th>
+            <th>{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await unPublishableSessions) as |session|}}
             <tr>
-              <th>{{t 'general.sessionTitle'}}</th>
-              <th>{{t 'general.offerings'}}</th>
-              <th>{{t 'general.terms'}}</th>
-              <th>{{t 'general.objectives'}}</th>
-              <th>{{t 'general.meshTerms'}}</th>
+              <td>{{session.title}}</td>
+              {{#if session.offerings.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.terms.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.objectives.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.meshDescriptors.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
             </tr>
-          </thead>
-          <tbody>
-            {{#each (await unPublishableSessions) as |session|}}
-              <tr>
-                <td>{{session.title}}</td>
-                {{#if session.offerings.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.terms.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.objectives.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.meshDescriptors.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{/unless}}
-  </section>
-</div>
-
-<div class='publish-all-sessions-publishable'>
-
-  <section class="detail-block {{if publishableCollapsed 'collapsed' 'collapsible'}}">
-    <div class='detail-title clickable' {{action 'togglePublishableCollapsed'}}>
-      {{t 'general.completeSessions'}} ({{get (await publishableSessions) 'length'}})
+          {{/each}}
+        </tbody>
+      </table>
     </div>
-    {{#unless publishableCollapsed}}
-      <div class='detail-content'>
-        <table>
-          <thead>
+  {{/unless}}
+</section>
+
+<section class='publish-all-sessions-publishable'>
+  <div class='title {{if publishableCollapsed 'collapsed' 'collapsible'}}' {{action 'togglePublishableCollapsed'}}>
+    {{t 'general.completeSessions'}} ({{get (await publishableSessions) 'length'}})
+  </div>
+  {{#unless publishableCollapsed}}
+    <div class='content'>
+      <table>
+        <thead>
+          <tr>
+            <th>{{t 'general.sessionTitle'}}</th>
+            <th>{{t 'general.offerings'}}</th>
+            <th>{{t 'general.terms'}}</th>
+            <th>{{t 'general.objectives'}}</th>
+            <th>{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await publishableSessions) as |session|}}
             <tr>
-              <th>{{t 'general.sessionTitle'}}</th>
-              <th>{{t 'general.offerings'}}</th>
-              <th>{{t 'general.terms'}}</th>
-              <th>{{t 'general.objectives'}}</th>
-              <th>{{t 'general.meshTerms'}}</th>
+              <td>{{session.title}}</td>
+              {{#if session.offerings.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.terms.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.objectives.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.meshDescriptors.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
             </tr>
-          </thead>
-          <tbody>
-            {{#each (await publishableSessions) as |session|}}
-              <tr>
-                <td>{{session.title}}</td>
-                {{#if session.offerings.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.terms.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.objectives.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.meshDescriptors.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{/unless}}
-  </section>
-</div>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/unless}}
+</section>
 
-<div class='publish-all-sessions-overridable'>
-  <section class='detail-block'>
-    <div class='detail-title'>
-      {{t 'general.reviewSessions'}} ({{get (await overridableSessions) 'length'}})
-    </div>
-    <div class='detail-content'>
-      {{#if (get (await overridableSessions) 'length')}}
-        <button disabled={{await allSessionsAsIs}} {{action 'publishAllAsIs'}}>
-          {{t 'general.publishAsIs'}}
-        </button>
-        <button disabled={{noSessionsAsIs}} {{action 'publishNoneAsIs'}}>
-          {{t 'general.markAsScheduled'}}
-        </button>
-        <table>
-          <thead>
+<section class='publish-all-sessions-overridable'>
+  <div class='title'>
+    {{t 'general.reviewSessions'}} ({{get (await overridableSessions) 'length'}})
+  </div>
+  <div class='content'>
+    {{#if (get (await overridableSessions) 'length')}}
+      <button disabled={{await allSessionsAsIs}} {{action 'publishAllAsIs'}}>
+        {{t 'general.publishAsIs'}}
+      </button>
+      <button disabled={{noSessionsAsIs}} {{action 'publishNoneAsIs'}}>
+        {{t 'general.markAsScheduled'}}
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>{{t 'general.actions'}}</th>
+            <th>{{t 'general.sessionTitle'}}</th>
+            <th>{{t 'general.offerings'}}</th>
+            <th>{{t 'general.terms'}}</th>
+            <th>{{t 'general.objectives'}}</th>
+            <th>{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await overridableSessions) as |session|}}
             <tr>
-              <th>{{t 'general.actions'}}</th>
-              <th>{{t 'general.sessionTitle'}}</th>
-              <th>{{t 'general.offerings'}}</th>
-              <th>{{t 'general.terms'}}</th>
-              <th>{{t 'general.objectives'}}</th>
-              <th>{{t 'general.meshTerms'}}</th>
+              <td>
+                <ul>
+                  <li>
+                    {{one-way-checkbox checked=(is-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.publishAsIs'}}</span>
+                  </li>
+                  <li>
+                    {{one-way-checkbox checked=(not-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.markAsScheduled'}}</span>
+                  </li>
+                </ul>
+              </td>
+              <td>{{session.title}}</td>
+              {{#if session.offerings.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.terms.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.objectives.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
+              {{#if session.meshDescriptors.length}}
+                <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
+              {{else}}
+                <td class='no'>{{t 'general.no'}}</td>
+              {{/if}}
             </tr>
-          </thead>
-          <tbody>
-            {{#each (await overridableSessions) as |session|}}
-              <tr>
-                <td>
-                  <ul>
-                    <li>
-                      {{one-way-checkbox checked=(is-in sessionsToOverride session) click=(action 'toggleSession' session)}}
-                      <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.publishAsIs'}}</span>
-                    </li>
-                    <li>
-                      {{one-way-checkbox checked=(not-in sessionsToOverride session) click=(action 'toggleSession' session)}}
-                      <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.markAsScheduled'}}</span>
-                    </li>
-                  </ul>
-                </td>
-                <td>{{session.title}}</td>
-                {{#if session.offerings.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.offerings.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.terms.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.terms.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.objectives.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.objectives.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-                {{#if session.meshDescriptors.length}}
-                  <td class='yes'>{{t 'general.yes'}} ({{session.meshDescriptors.length}})</td>
-                {{else}}
-                  <td class='no'>{{t 'general.no'}}</td>
-                {{/if}}
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{/if}}
-    </div>
-  </section>
-</div>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  </div>
+</section>
 
 <div class='publish-all-sessions-review'>
   <p>

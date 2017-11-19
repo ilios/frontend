@@ -8,7 +8,7 @@ const { all, Promise } = RSVP;
 export default Component.extend({
   store: service(),
   isSaving: false,
-  classNames: ['detail-view'],
+  classNames: ['publish-all-sessions'],
   sessions: [],
   sessionsToOverride: [],
   noSessionsAsIs: equal('sessionsToOverride.length', 0),

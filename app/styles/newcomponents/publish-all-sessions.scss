@@ -1,0 +1,53 @@
+.publish-all-sessions {
+  background-color: $background-grey;
+  border: 1px solid $header-grey;
+  padding-left: 1em;
+
+  section {
+    @include detail-container($ilios-orange);
+
+    .title {
+      @include detail-container-title;
+      text-align: left;
+    }
+
+    .content {
+      @include detail-container-content;
+    }
+  }
+
+  .publish-all-sessions-unpublishable,
+  .publish-all-sessions-publishable, {
+    .title {
+      cursor: pointer;
+    }
+  }
+
+  .publish-all-sessions-overridable {
+    margin-bottom: 2em;
+  }
+
+  .publish-all-sessions-review {
+    border: 1px solid $published-green;
+    clear: both;
+    font-size: 1.5 * $base-font-size;
+    margin: 1em;
+    padding: 1em;
+    text-align: center;
+
+    p {
+      color: $published-green;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 1em;
+    }
+
+    button {
+      background: $publish-button-color;
+      color: $white;
+    }
+
+  }
+}
+
+
