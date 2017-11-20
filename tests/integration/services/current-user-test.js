@@ -1,5 +1,9 @@
 import { moduleFor, test } from 'ember-qunit';
-import { getOwner } from '@ember/application';
+import  Ember from 'ember';
+import RSVP from 'rsvp';
+
+const { getOwner, Object:EmberObject, run } = Ember;
+const { resolve } = RSVP;
 
 moduleFor('service:current-user', 'CurrentUserService', {
   integration: true,
@@ -69,4 +73,264 @@ test('no token - no model', async function(assert) {
   assert.equal(model, null);
 });
 
+test('cohortsInAllAssociatedSchools', async function(assert){
+  assert.expect(4);
+  const cohort1 = EmberObject.create();
+  const cohort2 = EmberObject.create();
+  const cohort3 = EmberObject.create();
+  const program1 = EmberObject.create({
+    cohorts: resolve([ cohort1, cohort2 ])
+  });
+  const program2 = EmberObject.create({
+    cohorts: resolve([])
+  });
+  const program3 = EmberObject.create({
+    cohorts: resolve([ cohort3 ])
+  });
+  const school1 = EmberObject.create({
+    programs: resolve([ program1, program2 ])
+  });
+  const school2 = EmberObject.create({
+    programs: resolve([ program3 ])
+  });
+  const user = EmberObject.create({
+    schools: resolve([school1, school2 ])
+  });
 
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+
+  const subject = this.subject();
+  const cohorts = await subject.get('cohortsInAllAssociatedSchools');
+  assert.equal(cohorts.length, 3);
+  assert.ok(cohorts.includes(cohort1));
+  assert.ok(cohorts.includes(cohort2));
+  assert.ok(cohorts.includes(cohort3));
+});
+
+test('userRoleTitles', async function(assert){
+  assert.expect(3);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'foo' }), EmberObject.create({ title: 'BAR' })])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const titles = await subject.get('userRoleTitles');
+  assert.equal(titles.length, 2);
+  assert.ok(titles.includes('foo'));
+  assert.ok(titles.includes('bar'));
+});
+
+test('userIsCourseDirector', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'Course Director' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isDirector = await subject.get('userIsCourseDirector');
+  assert.ok(isDirector);
+});
+
+test('not userIsCourseDirector', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'Pie Eating Champion' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isDirector = await subject.get('userIsCourseDirector');
+  assert.notOk(isDirector);
+});
+
+test('userIsFaculty', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'faculty' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isFaculty = await subject.get('userIsFaculty');
+  assert.ok(isFaculty);
+});
+
+test('not userIsFaculty', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isFaculty = await subject.get('userIsFaculty');
+  assert.notOk(isFaculty);
+});
+
+test('userIsDeveloper', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'developer' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isDeveloper = await subject.get('userIsDeveloper');
+  assert.ok(isDeveloper);
+});
+
+test('not userIsDeveloper', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isDeveloper = await subject.get('userIsDeveloper');
+  assert.notOk(isDeveloper);
+});
+
+test('userIsStudent', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'student' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isStudent = await subject.get('userIsStudent');
+  assert.ok(isStudent);
+});
+
+test('not userIsStudent', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isStudent = await subject.get('userIsStudent');
+  assert.notOk(isStudent);
+});
+
+test('userIsPublic', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'public' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isPublic = await subject.get('userIsPublic');
+  assert.ok(isPublic);
+});
+
+test('not userIsPublic', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isPublic = await subject.get('userIsPublic');
+  assert.notOk(isPublic);
+});
+
+test('userIsFormerStudent', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([ EmberObject.create({ title: 'FORMeR Student' }) ])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isFormerStudent = await subject.get('userIsFormerStudent');
+  assert.ok(isFormerStudent);
+});
+
+test('not userIsFormerStudent', async function(assert) {
+  assert.expect(1);
+  const user = EmberObject.create({
+    roles: resolve([])
+  });
+  this.store.reopen({
+    async find() {
+      return user;
+    }
+  });
+  const subject = this.subject();
+  const isFormerStudent = await subject.get('userIsFormerStudent');
+  assert.notOk(isFormerStudent);
+});
+
+test('activeRelatedCoursesInThisYearAndLastYear', async function(assert){
+  assert.expect(8);
+  const user = EmberObject.create();
+  const courses = [ EmberObject.create(), EmberObject.create() ];
+  this.store.reopen({
+    async find() {
+      return user;
+    },
+    query(what, params) {
+      assert.equal(what, 'course');
+      assert.equal(params.my, true);
+      const filters = params.filters;
+      assert.equal(filters.year.length, 3);
+      assert.equal(filters.locked, false);
+      assert.equal(filters.archived, false);
+      assert.equal(filters.year[0] + 1, filters.year[1]);
+      assert.equal(filters.year[1] + 1, filters.year[2]);
+      return resolve(courses);
+    }
+  });
+  const subject = this.subject();
+  run( async () => {
+    const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
+    assert.equal(activeRelatedCourses, courses);
+  });
+});
