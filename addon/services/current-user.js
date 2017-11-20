@@ -2,9 +2,9 @@ import Ember from 'ember';
 import moment from 'moment';
 import jwtDecode from 'jwt-decode';
 
-const { computed, observer, RSVP, isEmpty, inject, get, Service } = Ember;
+const { computed, RSVP, isEmpty, inject, get, Service } = Ember;
 const { service } = inject;
-const { all, map } = RSVP;
+const { map } = RSVP;
 
 export default Service.extend({
   store: service(),
@@ -31,36 +31,6 @@ export default Service.extend({
       return null;
     }
     return await this.get('store').find('user', currentUserId);
-  }),
-
-  /**
-   * Observes available cohorts and sets the current cohort property to NULL if it is not included in that list.
-   * @property availableCohortsObserver
-   * @type {Ember.observer}
-   */
-  availableCohortsObserver: observer('availableCohorts.[]', async function(){
-    const cohorts = await this.get('availableCohorts');
-    if(!cohorts.includes(this.get('currentCohort'))){
-      this.set('currentCohort', null);
-    }
-  }),
-
-  currentCohort: null,
-
-  /**
-   * A list of all cohorts in the current school.
-   * @property availableCohorts
-   * @type {Ember.computed}
-   * @public
-   */
-  availableCohorts: computed('currentSchool', async function(){
-    const school = await this.get('currentSchool');
-    const programs = await school.get('programs');
-    let programYears = await all(programs.toArray().mapBy('programsYears'));
-    programYears = programYears.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []).uniq();
-    return await all(programYears.mapBy('cohort'));
   }),
 
   /**
