@@ -8,6 +8,10 @@ $sliding-menu-background-hover: darken($sliding-menu-background, 5);
 $sliding-menu-color-hover: #fff;
 
 .sliding-navigation {
+  @media print {
+    display: none;
+  }
+
   .sliding-menu-button {
     @include position(fixed, 105px 0 0 -45px);
 
