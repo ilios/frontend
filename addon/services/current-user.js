@@ -53,7 +53,7 @@ export default Service.extend({
         return await program.get('cohorts');
       });
       return schoolCohorts.reduce((array, set) => {
-        return array.pushObjects(set.toArray());
+        return array.pushObjects(set);
       }, []);
     });
 
