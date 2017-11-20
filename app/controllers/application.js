@@ -10,8 +10,6 @@ export default Controller.extend({
   i18n: service(),
   headData: service(),
 
-  showHeader: true,
-  showNavigation: true,
   titleTokenKeys: null,
 
   currentlyLoading: false,

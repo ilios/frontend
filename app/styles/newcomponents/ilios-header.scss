@@ -1,3 +1,7 @@
 .ilios-header {
   @include header;
+
+  @media print {
+    display: none;
+  }
 }

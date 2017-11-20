@@ -5,14 +5,10 @@
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
-{{#if showHeader}}
-  {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
-  {{loading-bar isLoading=currentlyLoading}}
-{{/if}}
+{{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
+{{loading-bar isLoading=currentlyLoading}}
 {{#if session.isAuthenticated}}
-  {{#if showNavigation}}
-    {{ilios-navigation}}
-  {{/if}}
+  {{ilios-navigation}}
 {{/if}}
 <div id='site-container'>
   <div class='flash-messages'>
@@ -29,5 +25,3 @@
     {{liquid-outlet}}
   {{/if}}
 </div>
-
-{{outlet 'fullscreen'}}
