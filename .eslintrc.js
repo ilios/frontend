@@ -24,7 +24,7 @@ module.exports = {
     camelcase: 2, /* require camelCase variables */
     'no-shadow': [2, {
       builtinGlobals: true,
-      allow: ['event', 'i', 'name', 'parent', 'resolve', 'self', 'select', 'scrollTo', 'status', '$']
+      allow: ['event', 'i', 'name', 'parent', 'resolve', 'self', 'select', 'scrollTo', 'status', '$', 'Promise']
     },], /* Prevent shadowing globals like Object*/
     'ember/new-module-imports': 2,
     'ember/no-old-shims': 2,
