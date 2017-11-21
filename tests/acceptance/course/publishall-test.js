@@ -65,7 +65,7 @@ test('published sessions do not appear in the cannot publish list #1658', async 
   await visit('/courses/1/publishall');
 
   let publishable = find('.publish-all-sessions-publishable');
-  await click(find('.clickable', publishable));
+  await click(find('.title', publishable));
   assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)')), getText('session 0'));
   assert.equal(getElementText(find('tbody tr:eq(1) td:eq(0)')), getText('session 1'));
   assert.equal(getElementText(find('tbody tr:eq(2) td:eq(0)')), getText('session 2'));

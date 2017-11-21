@@ -1,5 +1,52 @@
 .print-course {
-  .static-list {
-    @include ilios-static-list;
+  .header {
+    background-color: $header-grey;
+    padding: 0 1em;
+    width: 100%;
+
+    h2 {
+      @include ilios-heading-h2;
+      display: inline-block;
+    }
+
+    h4 {
+      @include ilios-heading-h4;
+      display: inline-block;
+      margin-left: 1em;
+    }
+
+    .publication-status {
+      display: inline-block;
+      margin: 0 5em;
+    }
+  }
+
+
+  .block {
+    @include detail-container($ilios-orange);
+    background-color: $white;
+    padding: 0 1em;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+
+    .content {
+      @include detail-container-content;
+    }
+
+    ul {
+      list-style-position: outside;
+      list-style-type: disc;
+      margin-left: 1em;
+    }
+
+    .static-list {
+      @include ilios-static-list;
+    }
   }
 }

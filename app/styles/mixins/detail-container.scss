@@ -28,6 +28,12 @@
       content: '\25BC';
     }
   }
+
+  &.collapsed {
+    &::after {
+      content: '\25BA';
+    }
+  }
 }
 
 @mixin detail-container-title () {
@@ -36,12 +42,6 @@
 
   @include media($large-screen) {
     @include span-columns(8 of 12);
-  }
-
-  &.collapsible {
-    &::after {
-      content: '\25BC';
-    }
   }
 }
 

@@ -13,7 +13,7 @@ export default Component.extend(SortableByPosition, {
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',
-  classNames: ['printable', 'course', 'print-course'],
+  classNames: ['print-course'],
   sortTitle: ['title'],
   sortDirectorsBy: ['lastName', 'firstName'],
   sortedDirectors: sort('course.directors', 'sortDirectorsBy'),

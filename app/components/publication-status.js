@@ -12,6 +12,7 @@ export default Component.extend({
   tagName: 'span',
   classNameBindings: [
     ':status',
+    ':publication-status',
     'publicationStatus'
   ],
   textKey: computed('publishedLangKey', 'scheduledLangKey',  'notPublishedLangKey', 'isPublished', 'isScheduled', function(){
