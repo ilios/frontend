@@ -9,7 +9,7 @@ const { map, filter } = RSVP;
 
 export default Component.extend({
   store: service(),
-  stewards: [],
+  stewards: null,
   tagName: 'section',
   classNames: ['detail-steward-manager'],
   stewardsBySchoolLoaded: false,

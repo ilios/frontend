@@ -8,9 +8,9 @@ let Competency = EmberObject.extend({
   id: null,
   title: null,
   parent: null,
-  children: [],
+  children: null,
   isDomain: false,
-  objectives: [],
+  objectives: null,
   belongsTo(){
     let self = this;
     return {
@@ -38,17 +38,22 @@ test('it renders', function(assert) {
     id: 1,
     title: 'domain1',
     isDomain: true,
+    objectives: [],
+    children: [],
   });
   let competency1 = Competency.create({
     id: 2,
     title: 'competency1',
     parent: domain1,
-    objectives: [1, 2, 3]
+    objectives: [1, 2, 3],
+    children: [],
   });
   let competency2 = Competency.create({
     id: 3,
     title: 'competency2',
-    parent: domain1
+    parent: domain1,
+    objectives: [],
+    children: [],
   });
   domain1.set('children', [competency1, competency2]);
 

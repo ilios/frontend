@@ -15,7 +15,7 @@ export default Component.extend({
   },
   classNames: ['learnergroup-cohort-user-manager'],
   sortBy: 'firstName',
-  users: [],
+  users: null,
   usersBeingMoved: null,
   selectedUsers: null,
   sortedAscending: computed('sortBy', function(){

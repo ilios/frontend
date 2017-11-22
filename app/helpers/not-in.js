@@ -1,3 +1,4 @@
+/* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import Helper from '@ember/component/helper';
 import { observer } from '@ember/object';
 

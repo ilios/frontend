@@ -6,10 +6,14 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   store: service(),
   i18n: service(),
+  init(){
+    this._super(...arguments);
+    this.set('searchResults', []);
+  },
   classNames: ['learningmaterial-search'],
   currentMaterials: null,
   query: '',
-  searchResults: [],
+  searchResults: null,
   searchPage: 0,
   searchResultsPerPage: 50,
   hasMoreSearchResults: false,

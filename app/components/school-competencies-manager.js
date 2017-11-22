@@ -3,8 +3,7 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
-  competencies: [],
-
+  competencies: null,
   domains: computed('competencies.[]', function(){
     let competencies = this.get('competencies');
     if(isEmpty(competencies)){

@@ -20,7 +20,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentProgram: null,
   isSaving: false,
   selectedYear: null,
-  years: [],
+  years: null,
 
   didReceiveAttrs(){
     this._super(...arguments);

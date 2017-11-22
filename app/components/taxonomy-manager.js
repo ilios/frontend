@@ -8,6 +8,15 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   flashMessages: service(),
+  init() {
+    this._super(...arguments);
+    this.set('termsSorting', [
+      'vocabulary.school.title',
+      'vocabulary.title',
+      //'titleWithParentTitles.content', // @todo does not work, sorting on 'title instead. Revisit [ST 2016/02/19]
+      'title'
+    ]);
+  },
   subject: null,
   classNames: ['taxonomy-manager'],
   tagName: 'section',
@@ -28,12 +37,7 @@ export default Component.extend({
    * @type {Array}
    * @public
    */
-  termsSorting: [
-    'vocabulary.school.title',
-    'vocabulary.title',
-    //'titleWithParentTitles.content', // @todo does not work, sorting on 'title instead. Revisit [ST 2016/02/19]
-    'title',
-  ],
+  termsSorting: null,
 
   /**
    * All currently selected terms, in sort order.

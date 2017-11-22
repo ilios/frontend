@@ -11,12 +11,16 @@ const { all, Promise } = RSVP;
 export default Component.extend({
   i18n: service(),
   currentUser: service(),
+  init() {
+    this._super(...arguments);
+    this.set('sortBy', ['title']);
+  },
   tagName: 'section',
   classNames: ['detail-block'],
   placeholder: t('general.filterPlaceholder'),
   filter: '',
   selectedCohorts: null,
-  sortBy: ['title'],
+  sortBy: null,
   sortedCohorts: sort('selectedCohorts', 'sortBy'),
 
   /**

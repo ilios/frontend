@@ -3,10 +3,14 @@ import { computed } from '@ember/object';
 const { filterBy, sort, not } = computed;
 
 export default Component.extend({
+  init(){
+    this._super(...arguments);
+    this.set('directorsSort', ['lastName', 'firstName']);
+  },
   classNames: ['programyear-overview'],
   programYear: null,
   editable: not('programYear.locked'),
-  directorsSort: ['lastName', 'firstName'],
+  directorsSort: null,
   directorsWithFullName: filterBy('programYear.directors', 'fullName'),
   sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
   actions: {

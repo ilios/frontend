@@ -1,3 +1,4 @@
+/* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
@@ -18,10 +19,6 @@ export default Controller.extend({
     userCoursesOnly: 'mycourses',
     sortCoursesBy: 'sortBy',
 
-  },
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('newCourse', null);
   },
   schoolId: null,
   yearTitle: null,

@@ -6,11 +6,15 @@ const { Promise, all } = RSVP;
 
 export default Component.extend({
   i18n: service(),
+  init(){
+    this._super(...arguments);
+    this.set('sortBy', ['title']);
+  },
   classNames: ['learnergroup-selection-manager'],
   filter: '',
-  sortBy: ['title'],
-  cohorts: [],
-  learnerGroups: [],
+  sortBy: null,
+  cohorts: null,
+  learnerGroups: null,
   allLearnerGroups: computed('cohorts.[]', function(){
     return new Promise(resolve => {
       let cohorts = this.get('cohorts');

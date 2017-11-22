@@ -42,6 +42,10 @@ const Validations = buildValidations({
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
+  init() {
+    this._super(...arguments);
+    this.set('sortTypes', ['title']);
+  },
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('title', this.get('session.title'));
@@ -69,8 +73,8 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   description: null,
   publishTarget: oneWay('session'),
   editable: true,
-  sortTypes: ['title'],
-  sessionTypes: [],
+  sortTypes: null,
+  sessionTypes: null,
   sessionType: null,
   sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   showCheckLink: true,

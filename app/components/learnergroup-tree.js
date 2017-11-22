@@ -8,7 +8,7 @@ const { Promise, filter } = RSVP;
 
 export default Component.extend({
   learnerGroup: null,
-  selectedGroups: [],
+  selectedGroups: null,
   filter: '',
   tagName: 'li',
   didReceiveAttrs(){

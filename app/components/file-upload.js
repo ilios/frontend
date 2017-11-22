@@ -10,7 +10,7 @@ const { FileField, Uploader } = EmberUploader;
 const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
 let IliosUploader = Uploader.extend({
-  iliosHeaders: [],
+  iliosHeaders: null,
   ajaxSettings: computed('iliosHeaders.[]', function() {
     return {
       headers: this.get('iliosHeaders')

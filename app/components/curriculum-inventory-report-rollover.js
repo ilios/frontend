@@ -47,7 +47,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
   classNames: ['curriculum-inventory-report-rollover'],
-  years: [],
+  years: null,
   selectedYear: null,
   report: null,
   name: null,

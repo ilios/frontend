@@ -9,6 +9,7 @@ const { Promise, all, filter } = RSVP;
 export default Component.extend({
   init(){
     this._super(...arguments);
+    this.set('selectedCompetencies', []);
     this.get('loadSelectedCompetencies').perform();
   },
   didUpdateAttrs(){
@@ -20,7 +21,7 @@ export default Component.extend({
   classNames: ['programyear-competencies'],
   isSaving: false,
   editable: not('programYear.locked'),
-  selectedCompetencies: [],
+  selectedCompetencies: null,
 
   loadSelectedCompetencies: task(function * (){
     const programYear = this.get('programYear');

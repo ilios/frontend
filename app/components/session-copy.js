@@ -23,6 +23,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
   init(){
     this._super(...arguments);
+    this.set('years', []);
     this.get('loadYears').perform();
   },
   didReceiveAttrs(){
@@ -30,7 +31,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.get('loadCourses').perform();
   },
   classNames: ['session-copy'],
-  years: [],
+  years: null,
   selectedYear: null,
   session: null,
   selectedCourse: null,

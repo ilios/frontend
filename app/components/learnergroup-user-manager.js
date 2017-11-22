@@ -16,11 +16,11 @@ export default Component.extend({
   learnerGroupId: null,
   learnerGroupTitle: null,
   cohortTitle: null,
-  users: [],
-  selectedUsers: [],
+  users: null,
+  selectedUsers: null,
   classNames: ['learnergroup-user-manager'],
   isEditing: false,
-  usersBeingMoved: [],
+  usersBeingMoved: null,
   sortBy: 'firstName',
   sortedAscending: computed('sortBy', function(){
     const sortBy = this.get('sortBy');

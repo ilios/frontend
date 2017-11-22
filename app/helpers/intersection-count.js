@@ -1,3 +1,4 @@
+/* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import { isEmpty } from '@ember/utils';
 import { isArray } from '@ember/array';
 import Helper from '@ember/component/helper';

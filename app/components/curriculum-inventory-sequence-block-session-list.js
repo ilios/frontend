@@ -3,11 +3,17 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  linkedSessions: [],
-  linkableSessionsBuffer: [],
+  linkedSessions: null,
+  linkableSessionsBuffer: null,
   classNames: ['curriculum-inventory-sequence-block-session-list', 'resultslist'],
   tagName: 'section',
   sortBy: 'title',
+
+  init() {
+    this._super(...arguments);
+    this.set('linkedSessions', []);
+    this.set('linkableSessionsBuffer', []);
+  },
 
   didReceiveAttrs(){
     this._super(...arguments);

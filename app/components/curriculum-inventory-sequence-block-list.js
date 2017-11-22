@@ -13,10 +13,14 @@ const SequenceBlockProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
+  init() {
+    this._super(...arguments);
+    this.set('sequenceBlocks', []);
+  },
   classNames: ['curriculum-inventory-sequence-block-list'],
   parent: null,
   report: null,
-  sequenceBlocks: [],
+  sequenceBlocks: null,
   editorOn: false,
   saved: false,
   savedBlock: null,

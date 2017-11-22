@@ -23,14 +23,14 @@ export default Component.extend({
     this._super(...arguments);
     this.get('loadCohorts').perform();
   },
-  students: [],
+  students: null,
   school: null,
   offset: null,
   limit: null,
 
   primaryCohortId: null,
-  selectedUserIds: [],
-  savedUserIds: [],
+  selectedUserIds: null,
+  savedUserIds: null,
   isSaving: false,
 
   bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function(){

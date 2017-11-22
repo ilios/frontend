@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 
 export default Component.extend({
-  instructorGroups: [],
+  instructorGroups: null,
 
   proxiedInstructorGroups: computed('instructorGroups.[]', function(){
     const instructorGroups = this.get('instructorGroups');

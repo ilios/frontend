@@ -41,7 +41,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   vocabulary: null,
   newTermTitle: null,
   isSavingNewTerm: false,
-  newTerms: [],
+  newTerms: null,
   description: null,
   title: null,
   didReceiveAttrs(){

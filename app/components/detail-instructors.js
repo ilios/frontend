@@ -6,12 +6,17 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   currentUser: service(),
+  init() {
+    this._super(...arguments);
+    this.set('instructorGroupBuffer', []);
+    this.set('instructorBuffer', []);
+  },
   tagName: 'section',
   classNames: ['detail-instructors'],
   ilmSession: null,
   isManaging: false,
-  instructorGroupBuffer: [],
-  instructorBuffer: [],
+  instructorGroupBuffer: null,
+  instructorBuffer: null,
 
   titleCount: computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
     return this.get('ilmSession.instructorGroups.length') +

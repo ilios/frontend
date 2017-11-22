@@ -4,7 +4,7 @@ import Controller from '@ember/controller';
 export default Controller.extend({
   currentUser: service(),
   session: service(),
-  errors: [],
+  errors: null,
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   actions: {

@@ -7,6 +7,7 @@ const { Promise, map } = RSVP;
 export default Component.extend({
   init(){
     this._super(...arguments);
+    this.set('cohortSummariesLoaded', []);
     this.get('loadCohortSummaries').perform();
   },
   didUpdateAttrs(){
@@ -16,7 +17,7 @@ export default Component.extend({
   subject: null,
   tagName: 'section',
   classNames: ['collapsed-learnergroups'],
-  cohortSummariesLoaded: [],
+  cohortSummariesLoaded: null,
   loadCohortSummaries: task(function * (){
     const subject = this.get('subject');
     if (subject){

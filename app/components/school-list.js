@@ -26,15 +26,20 @@ const Validations = buildValidations({
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
   store: service(),
+  init(){
+    this._super(...arguments);
+    this.set('newSchools', []);
+    this.set('sortSchoolsBy', ['title']);
+  },
   classNames: ['school-list'],
   tagName: 'section',
-  schools: [],
-  newSchools: [],
+  schools: null,
+  newSchools: null,
   title: null,
   iliosAdministratorEmail: null,
   isSavingNewSchool: false,
 
-  sortSchoolsBy: ['title'],
+  sortSchoolsBy: null,
   sortedSchools: sort('schools', 'sortSchoolsBy'),
   showNewSchoolForm: false,
   actions: {

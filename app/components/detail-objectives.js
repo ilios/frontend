@@ -12,6 +12,11 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   flashMessages: service(),
+  init() {
+    this._super(...arguments);
+    this.set('initialStateForManageParentsObjective', []);
+    this.set('initialStateForManageMeshObjective', []);
+  },
   subject: null,
   objectives:  alias('subject.objectives'),
   tagName: 'section',
@@ -23,10 +28,10 @@ export default Component.extend({
   isManaging: or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
   isManagingParents: notEmpty('mangeParentsObjective'),
   mangeParentsObjective: null,
-  initialStateForManageParentsObjective: [],
+  initialStateForManageParentsObjective: null,
   isManagingDescriptors: notEmpty('manageDescriptorsObjective'),
   mangeMeshObjective: null,
-  initialStateForManageMeshObjective: [],
+  initialStateForManageMeshObjective: null,
   isManagingCompetency: notEmpty('manageCompetencyObjective'),
   manageCompetencyObjective: null,
   initialStateForManageCompetencyObjective: null,

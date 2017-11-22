@@ -7,7 +7,7 @@ const { not } = computed;
 export default Component.extend({
   tagName: 'section',
   classNames: ['session-details'],
-  sessionTypes: [],
+  sessionTypes: null,
   session: null,
   editable: not('course.locked'),
   sessionObjectiveDetails: null,
