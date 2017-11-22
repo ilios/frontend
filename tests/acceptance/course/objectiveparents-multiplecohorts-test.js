@@ -107,9 +107,9 @@ test('list parent objectives by competency', async function(assert) {
   assert.equal(getElementText(items.eq(0)), getText('objective 0'));
   assert.equal(getElementText(items.eq(1)), getText('objective 1'));
   assert.equal(getElementText(items.eq(2)), getText('objective 2'));
-  assert.ok($(items.eq(0)).hasClass('selected'));
-  assert.ok(!$(items.eq(1)).hasClass('selected'));
-  assert.ok(!$(items.eq(2)).hasClass('selected'));
+  assert.ok(find(items.eq(0)).hasClass('selected'));
+  assert.ok(!find(items.eq(1)).hasClass('selected'));
+  assert.ok(!find(items.eq(2)).hasClass('selected'));
 
   await pickOption(find('.group-picker select', objectiveManager), 'program 0 cohort 1', assert);
   parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -125,9 +125,9 @@ test('list parent objectives by competency', async function(assert) {
   assert.equal(getElementText(items.eq(0)), getText('objective 3'));
   assert.equal(getElementText(items.eq(1)), getText('objective 4'));
   assert.equal(getElementText(items.eq(2)), getText('objective 5'));
-  assert.ok($(items.eq(0)).hasClass('selected'));
-  assert.ok(!$(items.eq(1)).hasClass('selected'));
-  assert.ok(!$(items.eq(2)).hasClass('selected'));
+  assert.ok(find(items.eq(0)).hasClass('selected'));
+  assert.ok(!find(items.eq(1)).hasClass('selected'));
+  assert.ok(!find(items.eq(2)).hasClass('selected'));
 });
 
 test('change course objective parent', async function(assert) {

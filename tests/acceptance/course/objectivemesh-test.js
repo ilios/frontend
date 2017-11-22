@@ -79,15 +79,15 @@ test('manage terms', async function(assert) {
   }
   for (let i = 0; i < fixtures.meshDescriptors.length; i++){
     if(objective.attrs.meshDescriptorIds.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
-      assert.ok($(searchResults[i]).hasClass('disabled'));
+      assert.ok(find(searchResults[i]).hasClass('disabled'));
     } else {
-      assert.ok(!$(searchResults[i]).hasClass('disabled'));
+      assert.ok(!find(searchResults[i]).hasClass('disabled'));
     }
   }
   await click('.removable-list li:eq(0)', meshManager);
-  assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+  assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
   await click(searchResults[0]);
-  assert.ok($(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
+  assert.ok(find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
 
   let newExpectedMesh = [
     fixtures.meshDescriptors[0].name,

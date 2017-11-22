@@ -1,3 +1,4 @@
+/* eslint ember/no-global-jquery: 0 */
 import $ from 'jquery';
 import { next } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';

@@ -425,7 +425,7 @@ test('copy session into the first course in a different year year #2130', functi
     this.$(yearSelect).val(nextYear).change();
 
     return wait().then(()=>{
-      assert.equal($(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
+      assert.equal(this.$(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
       this.$('.done').click();
     });
   });

@@ -93,23 +93,23 @@ test('manage mesh', async function(assert) {
     assert.equal(getElementText(scopeNotes.eq(i)), getText(`scope note ${i}`));
   }
   assert.equal(getElementText(scopeNotes.eq(3)), '1234567890'.repeat(25));
-  assert.ok($(scopeNotes.eq(3)).hasClass('truncated'));
+  assert.ok(find(scopeNotes.eq(3)).hasClass('truncated'));
   assert.equal(getElementText(find('.descriptor-name', searchResults.eq(1)).eq(0)), getText('descriptor 1'));
   assert.equal(getElementText(find('.descriptor-name', searchResults.eq(2)).eq(0)), getText('descriptor 2'));
   assert.equal(getElementText(find('.descriptor-name', searchResults.eq(3)).eq(0)), getText('descriptor 3'));
   assert.equal(getElementText(find('.descriptor-name', searchResults.eq(4)).eq(0)), getText('descriptor 4'));
   assert.equal(getElementText(find('.descriptor-name', searchResults.eq(5)).eq(0)), getText('descriptor 5'));
-  assert.ok($(searchResults[0]).hasClass('disabled'));
-  assert.ok($(searchResults[1]).hasClass('disabled'));
-  assert.ok($(searchResults[2]).hasClass('disabled'));
-  assert.ok(!$(searchResults[3]).hasClass('disabled'));
-  assert.ok(!$(searchResults[4]).hasClass('disabled'));
-  assert.ok(!$(searchResults[5]).hasClass('disabled'));
+  assert.ok(find(searchResults[0]).hasClass('disabled'));
+  assert.ok(find(searchResults[1]).hasClass('disabled'));
+  assert.ok(find(searchResults[2]).hasClass('disabled'));
+  assert.ok(!find(searchResults[3]).hasClass('disabled'));
+  assert.ok(!find(searchResults[4]).hasClass('disabled'));
+  assert.ok(!find(searchResults[5]).hasClass('disabled'));
 
   await click('.removable-list li:eq(1)', meshManager);
-  assert.ok(!$(find('.mesh-search-results > li:eq(1)', meshManager)).hasClass('disabled'));
+  assert.ok(!find('.mesh-search-results > li:eq(1)', meshManager).hasClass('disabled'));
   await click(searchResults[3]);
-  assert.ok($(find('.mesh-search-results > li:eq(3)', meshManager)).hasClass('disabled'));
+  assert.ok(find('.mesh-search-results > li:eq(3)', meshManager).hasClass('disabled'));
   removableItems = find('.removable-list li', meshManager);
   assert.equal(
     getElementText(find('.content .title', removableItems.eq(0)).eq(0)),

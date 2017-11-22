@@ -87,7 +87,7 @@ test('list parent objectives by competency', async function(assert) {
   let items = find('li', ul);
   assert.equal(items.length, 1);
   assert.equal(getElementText(items.eq(0)), getText('objective 0'));
-  assert.ok($(items.eq(0)).hasClass('selected'));
+  assert.ok(find(items.eq(0)).hasClass('selected'));
 
   //second competency
   assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
@@ -95,9 +95,9 @@ test('list parent objectives by competency', async function(assert) {
   items = find('li', ul);
   assert.equal(items.length, 2);
   assert.equal(getElementText(items.eq(0)), getText('objective 1'));
-  assert.notOk($(items.eq(0)).hasClass('selected'));
+  assert.notOk(find(items.eq(0)).hasClass('selected'));
   assert.equal(getElementText(items.eq(1)), getText('objective 2'));
-  assert.notOk($(items.eq(1)).hasClass('selected'));
+  assert.notOk(find(items.eq(1)).hasClass('selected'));
 });
 
 test('change course objective parent', async function(assert) {
