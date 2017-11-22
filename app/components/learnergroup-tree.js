@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
+import { isEmpty } from '@ember/utils';
 
 const { gt } = computed;
 const { Promise, filter } = RSVP;
@@ -27,7 +28,7 @@ export default Component.extend({
     const selectedGroups = this.get('selectedGroups');
     return new Promise(resolve => {
       filter(children.toArray(), (child => {
-        if (!selectedGroups.includes(child)) {
+        if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
           return true;
         }
         return child.get('children').then(childChildren => {
@@ -57,7 +58,7 @@ export default Component.extend({
       let filterTitle = yield learnerGroup.get('filterTitle');
       filterMatch = filterTitle.match(exp) != null;
     }
-    let available = hasUnSelectedChildren || !selectedGroups.includes(learnerGroup);
+    let available = hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
 
     this.set('isVisible', filterMatch && available);
     this.set('selectable', available);
