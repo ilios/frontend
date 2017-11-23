@@ -23,16 +23,12 @@ export default Model.extend({
   }),
   isNotDomain: not('isDomain'),
 
-  domain: computed('parent', 'parent.domain', function() {
-    return new Promise(resolve => {
-      this.get('parent').then(parent => {
-        if (!parent) {
-          resolve(this);
-        } else {
-          parent.get('domain').then(domain => resolve(domain));
-        }
-      });
-    });
+  domain: computed('parent', 'parent.domain', async function() {
+    const parent = await this.get('parent');
+    if (!parent) {
+      return this;
+    }
+    return await parent.get('domain');
   }),
 
   treeChildren: computed('children.[]', function(){
