@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { computed, RSVP } = Ember;
+const { computed, isEmpty, RSVP } = Ember;
 const { not } = computed;
 const { Promise, all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
@@ -42,7 +42,7 @@ export default Model.extend({
     }, []);
     rhett.pushObjects(competencies);
     return rhett.uniq().filter(item => {
-      return item != null;
+      return !isEmpty(item);
     });
   }),
 
