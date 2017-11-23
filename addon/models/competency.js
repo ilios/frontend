@@ -31,24 +31,21 @@ export default Model.extend({
     return await parent.get('domain');
   }),
 
-  treeChildren: computed('children.[]', function(){
-    return new Promise(resolve => {
-      let rhett = [];
-      this.get('children').then(children => {
-        rhett.pushObjects(children.toArray());
-        all(children.mapBy('treeChildren')).then(trees => {
-          let competencies = trees.reduce(function(array, set){
-            return array.pushObjects(set.toArray());
-          }, []);
-          rhett.pushObjects(competencies);
-          rhett = rhett.uniq().filter(function(item){
-            return item != null;
-          });
-          resolve(rhett);
-        });
-      });
+  treeChildren: computed('children.[]', async function(){
+    let rhett = [];
+    const children = await this.get('children');
+    rhett.pushObjects(children.toArray());
+
+    const trees = await all(children.mapBy('treeChildren'));
+    let competencies = trees.reduce(function(array, set){
+      return array.pushObjects(set.toArray());
+    }, []);
+    rhett.pushObjects(competencies);
+    return rhett.uniq().filter(function(item){
+      return item != null;
     });
   }),
+
   childCount: computed('children.[]', function(){
     const childrenIds = this.hasMany('children').ids();
     return childrenIds.length;
