@@ -37,11 +37,11 @@ export default Model.extend({
     rhett.pushObjects(children.toArray());
 
     const trees = await all(children.mapBy('treeChildren'));
-    let competencies = trees.reduce(function(array, set){
+    let competencies = trees.reduce((array, set) => {
       return array.pushObjects(set.toArray());
     }, []);
     rhett.pushObjects(competencies);
-    return rhett.uniq().filter(function(item){
+    return rhett.uniq().filter(item => {
       return item != null;
     });
   }),
