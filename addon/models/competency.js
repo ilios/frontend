@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 const { computed, isEmpty, RSVP } = Ember;
 const { not } = computed;
-const { Promise, all } = RSVP;
+const { all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
 const inflector = Ember.Inflector.inflector;
