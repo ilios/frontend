@@ -22,23 +22,21 @@ export default Service.extend({
       });
     });
   }),
-  getResults(report){
-    return new Promise(resolve => {
-      const subject = report.get('subject');
-      const object = report.get('prepositionalObject');
-      const objectId = report.get('prepositionalObjectTableRowId');
-      report.get('school').then(school => {
-        this.get('store').query(
-          this.getModel(subject),
-          this.getQuery(subject, object, objectId, school)
-        ).then(results => {
-          let mapper = pluralize(subject.camelize()) + 'Results';
-          this[mapper](results).then(mappedResults => {
-            resolve(mappedResults.sortBy('value'));
-          });
-        });
-      });
-    });
+  async getResults(report, year){
+    const store = this.get('store');
+    const subject = report.get('subject');
+    const object = report.get('prepositionalObject');
+    const objectId = report.get('prepositionalObjectTableRowId');
+    const school = await report.get('school');
+
+    const results = await store.query(
+      this.getModel(subject),
+      this.getQuery(subject, object, objectId, school)
+    );
+    let mapper = pluralize(subject.camelize()) + 'Results';
+    const mappedResults = await this[mapper](results, year);
+
+    return mappedResults.sortBy('value');
   },
 
   getModel(subject){
@@ -114,10 +112,12 @@ export default Service.extend({
     }
   ),
 
-  async coursesResults(results){
+  async coursesResults(results, year){
     const canView = await this.get('canViewCourses');
     let mappedResults = results.map(course => {
-      let rhett = {};
+      let rhett = {
+        course
+      };
       rhett.value = course.get('academicYear') + ' ' + course.get('title');
       if(canView){
         rhett.route = 'course';
@@ -127,13 +127,13 @@ export default Service.extend({
       return rhett;
     });
 
-    return resolve(mappedResults);
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year')) === parseInt(year));
   },
-  async sessionsResults(results){
+  async sessionsResults(results, year){
     const canView = await this.get('canViewCourses');
     let mappedResults = await map(results.toArray(), async item => {
-      let rhett = {};
       const course = await item.get('course');
+      let rhett = { course };
       rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
       if(canView){
         rhett.route = 'session';
@@ -144,7 +144,7 @@ export default Service.extend({
       return rhett;
     });
 
-    return mappedResults;
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year')) === parseInt(year));
   },
   async programsResults(results){
     const canView = await this.get('canViewPrograms');

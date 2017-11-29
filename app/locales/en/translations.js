@@ -16,6 +16,7 @@ export default {
     'administrators': 'Administrators',
     'advancedOptions': 'Advanced Options',
     'all': 'All',
+    'allAcademicYears': 'All Academic Years',
     'allCourses': 'All Courses',
     'allOtherMembers': 'All other members of {{topLevelGroupTitle}}',
     'allReports': 'All Reports',

@@ -16,6 +16,7 @@
     'administrators': 'Administradores',
     'advancedOptions': 'Opciones Avanzadas',
     'all': 'Todos',
+    'allAcademicYears': 'Todos Los Años Académicos',
     'allCourses': 'Todos Los Cursos',
     'allOtherMembers': 'Todos otros miembros de {{topLevelGroupTitle}}',
     'allReports': 'todos reportes',
