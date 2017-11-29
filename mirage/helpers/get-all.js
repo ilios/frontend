@@ -106,6 +106,11 @@ const filterByFilterParams = function(all, filterParams){
           if(obj[param].id.toString() !== value.toString()){
             match = false;
           }
+        } else if (obj[param] instanceof Collection) {
+          let result = obj[param].filter(model => {
+            return model.id.toString() === value.toString();
+          });
+          match = result.length > 0;
         } else
         //convert everything to a string and do a strict comparison
         if(obj[param].toString() !== value.toString()){
