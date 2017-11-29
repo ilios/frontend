@@ -1,3 +1,4 @@
+/* eslint ember/no-global-jquery: 0 */
 import Service from '@ember/service';
 import RSVP from 'rsvp';
 import $ from 'jquery';

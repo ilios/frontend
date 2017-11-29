@@ -64,6 +64,18 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
+  init(){
+    this._super(...arguments);
+    this.set('recurringDayOptions', [
+      {day: '0', t: 'general.sunday'},
+      {day: '1', t: 'general.monday'},
+      {day: '2', t: 'general.tuesday'},
+      {day: '3', t: 'general.wednesday'},
+      {day: '4', t: 'general.thursday'},
+      {day: '5', t: 'general.friday'},
+      {day: '6', t: 'general.saturday'},
+    ]);
+  },
   didReceiveAttrs(){
     this._super(...arguments);
     const offering = this.get('offering');
@@ -93,15 +105,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   smallGroupMode: false,
   offeringsToSave: 0,
   savedOfferings: 0,
-  recurringDayOptions: [
-    {day: '0', t: 'general.sunday'},
-    {day: '1', t: 'general.monday'},
-    {day: '2', t: 'general.tuesday'},
-    {day: '3', t: 'general.wednesday'},
-    {day: '4', t: 'general.thursday'},
-    {day: '5', t: 'general.friday'},
-    {day: '6', t: 'general.saturday'},
-  ],
+  recurringDayOptions: null,
   associatedSchools: computed('cohorts.[]', function(){
     return new Promise(resolve => {
       const cohorts = this.get('cohorts');

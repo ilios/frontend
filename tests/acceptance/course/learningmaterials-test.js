@@ -297,7 +297,7 @@ test('cancel new learning material', async function(assert) {
 test('view copyright file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.displayname', container)), getText('learning material 0'));
   assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
   assert.equal(getElementText(find('.description', container)), getText('0 lm description'));
@@ -308,7 +308,7 @@ test('view copyright file learning material details', async function(assert) {
 test('view rationale file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(1) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.displayname', container)), getText('learning material 1'));
   assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
   assert.equal(getElementText(find('.description', container)), getText('1 lm description'));
@@ -320,7 +320,7 @@ test('view rationale file learning material details', async function(assert) {
 test('view url file learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(1) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.displayname', container)), getText('learning material 1'));
   assert.equal(getElementText(find('.originalauthor', container)), getText('Jennifer Johnson'));
   assert.equal(getElementText(find('.description', container)), getText('1 lm description'));
@@ -334,7 +334,7 @@ test('view url file learning material details', async function(assert) {
 test('view link learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(2) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.displayname', container)), getText('learning material 2'));
   assert.equal(getElementText(find('.originalauthor', container)), getText('Hunter Pence'));
   assert.equal(getElementText(find('.description', container)), getText('2 lm description'));
@@ -349,7 +349,7 @@ test('view link learning material details', async function(assert) {
 test('view citation learning material details', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(3) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.displayname', container)), getText('learning material 3'));
   assert.equal(getElementText(find('.originalauthor', container)), getText('Willie Mays'));
   assert.equal(getElementText(find('.description', container)), getText('3 lm description'));
@@ -366,7 +366,7 @@ test('edit learning material', async function(assert) {
   await visit(url);
   assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-  let container = $('.learningmaterial-manager');
+  let container = find('.learningmaterial-manager');
   assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while in edit mode');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
@@ -381,7 +381,7 @@ test('edit learning material', async function(assert) {
   assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText('status 2'));
 
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-  container = $('.learningmaterial-manager');
+  container = find('.learningmaterial-manager');
   assert.equal(getElementText(find('.notes .fr-box', container).froalaEditor('html.get')), getText(`${newNote}`));
   assert.equal(getElementText(find('.status option:selected', container)), getText('status 2'));
   await wait();
@@ -390,7 +390,7 @@ test('edit learning material', async function(assert) {
 test('cancel editing learning material', async function(assert) {
   await visit(url);
   await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-  var container = $('.learningmaterial-manager');
+  var container = find('.learningmaterial-manager');
   await click(find('.required .switch-handle', container));
   await click(find('.publicnotes .switch-handle', container));
   await pickOption(find('.status select', container), 'status 2', assert);
@@ -429,17 +429,17 @@ test('manage terms', async function(assert) {
     assert.equal(getElementText(meshDescriptorName), getText(`descriptor ${i}`));
   }
 
-  assert.notOk($(searchResults[0]).hasClass('disabled'));
-  assert.ok($(searchResults[1]).hasClass('disabled'));
-  assert.ok($(searchResults[2]).hasClass('disabled'));
-  assert.notOk($(searchResults[3]).hasClass('disabled'));
-  assert.notOk($(searchResults[4]).hasClass('disabled'));
-  assert.notOk($(searchResults[5]).hasClass('disabled'));
+  assert.notOk(find(searchResults[0]).hasClass('disabled'));
+  assert.ok(find(searchResults[1]).hasClass('disabled'));
+  assert.ok(find(searchResults[2]).hasClass('disabled'));
+  assert.notOk(find(searchResults[3]).hasClass('disabled'));
+  assert.notOk(find(searchResults[4]).hasClass('disabled'));
+  assert.notOk(find(searchResults[5]).hasClass('disabled'));
 
   await click('.removable-list li:eq(0)', meshManager);
-  assert.ok(!$(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
+  assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
   await click(searchResults[0]);
-  assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
+  assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
 
   removableItems = find('.removable-list li', meshManager);
   assert.equal(removableItems.length, 2);
@@ -500,15 +500,15 @@ test('find and add learning material', async function(assert) {
   later(async () =>{
     let searchResults = find('.lm-search-results > li', container);
     assert.equal(searchResults.length, 1);
-    assert.equal(getElementText($('.lm-search-results > li:eq(0) h4')), getText('Letter to Doc Brown'));
+    assert.equal(getElementText('.lm-search-results > li:eq(0) h4'), getText('Letter to Doc Brown'));
     assert.equal(find('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
     let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
     assert.equal(addlProps.length, 3);
-    assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)')),
+    assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)'),
       getText('Owner: 0 guy M. Mc0son'));
-    assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(1)')),
+    assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(1)'),
       getText('Content Author: ' + 'Marty Mc Fly'));
-    assert.equal(getElementText($('.lm-search-results > li:eq(0) .learning-material-properties li:eq(2)')),
+    assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(2)'),
       getText('Upload date: ' + moment('2016-03-03').format('M-D-YYYY')));
     await click(searchResults[0]);
     rows = find('.learning-material-table tbody tr', container);

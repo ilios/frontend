@@ -110,15 +110,15 @@ test('manage terms', async function(assert) {
   assert.equal(getElementText(find('.descriptor-name', searchResults[1]).eq(0)), getText('descriptor 1'));
   assert.equal(getElementText(find('.descriptor-name', searchResults[2]).eq(0)), getText('descriptor 2'));
   assert.equal(getElementText(find('.descriptor-name', searchResults[3]).eq(0)), getText('descriptor 3'));
-  assert.ok($(searchResults[0]).hasClass('disabled'));
-  assert.ok($(searchResults[1]).hasClass('disabled'));
-  assert.ok(!$(searchResults[2]).hasClass('disabled'));
-  assert.ok(!$(searchResults[3]).hasClass('disabled'));
+  assert.ok(find(searchResults[0]).hasClass('disabled'));
+  assert.ok(find(searchResults[1]).hasClass('disabled'));
+  assert.ok(!find(searchResults[2]).hasClass('disabled'));
+  assert.ok(!find(searchResults[3]).hasClass('disabled'));
   await click('.removable-list li:eq(0)', meshManager);
-  assert.ok(!$(find('.mesh-search-results li:eq(0)', meshManager)).hasClass('disabled'));
+  assert.ok(!find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
   await click(searchResults[2]);
-  assert.ok($(find('.mesh-search-results li:eq(1)', meshManager)).hasClass('disabled'));
-  assert.ok($(find('.mesh-search-results li:eq(2)', meshManager)).hasClass('disabled'));
+  assert.ok(find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
+  assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
 
   removableItems = find('.removable-list li', meshManager);
   assert.equal(removableItems.length, 2);
@@ -180,17 +180,17 @@ test('manage competencies', async function(assert) {
   let items = find('.parent-picker .clickable');
   assert.equal(items.length, 4);
   assert.ok(find('.parent-picker h5:eq(0)').hasClass('selected'));
-  assert.ok($(items[0]).hasClass('selected'));
-  assert.ok(!$(items[1]).hasClass('selected'));
+  assert.ok(find(items[0]).hasClass('selected'));
+  assert.ok(!find(items[1]).hasClass('selected'));
   assert.ok(!find('.parent-picker h5:eq(1)').hasClass('selected'));
   assert.ok(!find('.parent-picker h5:eq(2)').hasClass('selected'));
 
   await click('.parent-picker .clickable:eq(2)', objectiveManager);
   items = find('.parent-picker .clickable');
-  assert.ok(!$(items[0]).hasClass('selected'));
-  assert.ok(!$(items[1]).hasClass('selected'));
-  assert.ok($(items[2]).hasClass('selected'));
-  assert.ok(!$(items[3]).hasClass('selected'));
+  assert.ok(!find(items[0]).hasClass('selected'));
+  assert.ok(!find(items[1]).hasClass('selected'));
+  assert.ok(find(items[2]).hasClass('selected'));
+  assert.ok(!find(items[3]).hasClass('selected'));
 });
 
 test('save competency', async function(assert) {

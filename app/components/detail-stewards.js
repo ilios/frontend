@@ -9,9 +9,13 @@ const { map, all } = RSVP;
 
 export default Component.extend({
   store: service(),
+  init() {
+    this._super(...arguments);
+    this.set('bufferStewards', []);
+  },
   programYear: null,
   isManaging: false,
-  bufferStewards: [],
+  bufferStewards: null,
   classNameBindings: [':detail-stewards', ':stewards-manager', 'showCollapsible:collapsible'],
   editable: true,
 

@@ -5,6 +5,7 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   init(){
     this._super(...arguments);
+    this.set('learnerGroups', []);
     this.get('loadLearnerGroups').perform();
   },
   didUpdateAttrs(){
@@ -17,8 +18,7 @@ export default Component.extend({
   isIlmSession: false,
   editable: true,
   isManaging: false,
-  learnerGroups: [],
-  cohorts: [],
+  learnerGroups: null,
   loadLearnerGroups: task(function * (){
     const subject = this.get('subject');
     if (subject){

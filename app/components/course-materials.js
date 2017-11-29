@@ -7,10 +7,14 @@ import SortableTable from 'ilios/mixins/sortable-table';
 const { Promise, map } = RSVP;
 
 export default Component.extend(SortableTable, {
+  init(){
+    this._super(...arguments);
+    this.set('typesWithUrl', ['file', 'link']);
+  },
   course: null,
   sortBy: null,
   classNames: ['course-materials'],
-  typesWithUrl: ['file', 'link'],
+  typesWithUrl: null,
   filter: '',
   sessionLearningMaterials: computed('course.sessions.[]', function(){
     const course = this.get('course');

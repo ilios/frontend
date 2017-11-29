@@ -96,7 +96,7 @@
     "ember-uploader": "1.2.3",
     "ember-watson": "^0.9.1",
     "ember-web-app": "^2.2.0",
-    "eslint-plugin-ember": "^4.5.0",
+    "eslint-plugin-ember": "^5.0.1",
     "ilios-common": "6.1.0",
     "liquid-tether": "2.0.6",
     "loader.js": "^4.2.3",

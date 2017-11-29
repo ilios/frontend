@@ -7,18 +7,23 @@ import { translationMacro as t } from "ember-i18n";
 export default Component.extend({
   store: service(),
   i18n: service(),
+  init() {
+    this._super(...arguments);
+    this.set('sortTerms', ['title']);
+    this.set('bufferTerms', []);
+  },
   classNames: ['detail-mesh'],
   tagName: 'section',
   placeholder: t('general.meshSearchPlaceholder'),
   subject: null,
   terms: oneWay('subject.meshDescriptors'),
   isCourse: false,
-  sortTerms: ['title'],
+  sortTerms: null,
   sortedTerms: sort('terms', 'sortTerms'),
   isSession: false,
   isManaging: false,
   editable: true,
-  bufferTerms: [],
+  bufferTerms: null,
   actions: {
     manage() {
       var self = this;

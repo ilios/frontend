@@ -40,7 +40,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   title: null,
   newTermTitle: null,
   isSavingNewTerm: false,
-  newTerms: [],
+  newTerms: null,
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('newTerms', []);

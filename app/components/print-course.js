@@ -10,12 +10,17 @@ const { Promise } = RSVP;
 
 export default Component.extend(SortableByPosition, {
   store: service(),
+  init(){
+    this._super(...arguments);
+    this.set('sortTitle', ['title']);
+    this.set('sortDirectorsBy', ['lastName', 'firstName']);
+  },
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',
   classNames: ['print-course'],
-  sortTitle: ['title'],
-  sortDirectorsBy: ['lastName', 'firstName'],
+  sortTitle: null,
+  sortDirectorsBy: null,
   sortedDirectors: sort('course.directors', 'sortDirectorsBy'),
   sortedMeshDescriptors: sort('course.meshDescriptors', 'sortTitle'),
 
@@ -35,7 +40,11 @@ export default Component.extend(SortableByPosition, {
       }
 
       let SessionProxy = ObjectProxy.extend({
-        sortTitle: ['title'],
+        init() {
+          this._super(...arguments);
+          this.set('sortTitle', ['title']);
+        },
+        sortTitle: null,
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
           return new Promise(resolve => {

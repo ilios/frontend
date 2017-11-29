@@ -61,13 +61,13 @@ test('list session objectives', async function(assert) {
   assert.equal(items.length, fixtures.course.objectives.length);
 
   assert.equal(getElementText(items.eq(0)), getText('objective 0'));
-  assert.ok($(items.eq(0)).hasClass('selected'));
+  assert.ok(find(items.eq(0)).hasClass('selected'));
 
   assert.equal(getElementText(items.eq(1)), getText('objective 1'));
-  assert.ok($(items.eq(1)).hasClass('selected'));
+  assert.ok(find(items.eq(1)).hasClass('selected'));
 
   assert.equal(getElementText(items.eq(2)), getText('objective 2'));
-  assert.notOk($(items.eq(2)).hasClass('selected'));
+  assert.notOk(find(items.eq(2)).hasClass('selected'));
 });
 
 test('change session objective parent', async function(assert) {

@@ -76,7 +76,7 @@ const CourseProxy = ObjectProxy.extend({
 export default Component.extend({
   currentUser: service(),
   i18n: service(),
-  courses: [],
+  courses: null,
   proxiedCourses: computed('courses.[]', function(){
     const i18n = this.get('i18n');
     const courses = this.get('courses');

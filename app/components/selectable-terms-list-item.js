@@ -2,8 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  selectedTerms: [],
-  term: [],
+  selectedTerms: null,
+  term: null,
   tagName: 'div',
   classNameBindings: ['isSelected:selected'],
 

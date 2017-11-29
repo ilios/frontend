@@ -8,11 +8,15 @@ const { reads } = computed;
 export default Component.extend({
   commonAjax: service(),
   iliosConfig: service(),
+  init() {
+    this._super(...arguments);
+    this.set('date', new Date());
+  },
   classNames: ['user-profile-calendar'],
 
   namespace: reads('iliosConfig.apiNameSpace'),
   user: null,
-  date: new Date(),
+  date: null,
   calendarEvents: computed('user.id', 'date', async function(){
     const commonAjax = this.get('commonAjax');
     const user = this.get('user');

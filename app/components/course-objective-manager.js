@@ -10,10 +10,14 @@ const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
 const competencyGroup = EmberObject.extend({
+  init(){
+    this._super(...arguments);
+    this.set('objectiveSorting', ['title']);
+  },
   title: '',
-  originalObjectives: [],
+  originalObjectives: null,
   uniqueObjectives: uniq('originalObjectives'),
-  objectiveSorting: ['title'],
+  objectiveSorting: null,
   objectives: sort('uniqueObjectives', 'objectiveSorting'),
   selectedObjectives: filterBy('uniqueObjectives', 'selected', true),
   selected: gt('selectedObjectives.length', 0),

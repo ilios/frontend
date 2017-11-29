@@ -73,6 +73,13 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   i18n: service(),
+  init(){
+    this._super(...arguments);
+    this.set('orderInSequenceOptions', []);
+    this.set('academicLevels', []);
+    this.set('childSequenceOrderOptions', []);
+    this.set('requiredOptions', []);
+  },
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -91,12 +98,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   course: null,
   minimum: 0,
   maximum: 0,
-  orderInSequenceOptions: [],
+  orderInSequenceOptions: null,
   isSaving: false,
   isLoaded: false,
-  academicLevels: [],
-  childSequenceOrderOptions: [],
-  requiredOptions: [],
+  academicLevels: null,
+  childSequenceOrderOptions: null,
+  requiredOptions: null,
 
   didReceiveAttrs(){
     this._super(...arguments);

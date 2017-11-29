@@ -1,9 +1,14 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  learnerGroups: [],
-  learnerGroupsForRemovalConfirmation: [],
-  learnerGroupsForCopy: [],
+  init(){
+    this._super(...arguments);
+    this.set('learnerGroupsForRemovalConfirmation', []);
+    this.set('learnerGroupsForCopy', []);
+  },
+  learnerGroups: null,
+  learnerGroupsForRemovalConfirmation: null,
+  learnerGroupsForCopy: null,
   actions: {
     cancelRemove(learnerGroup) {
       this.get('learnerGroupsForRemovalConfirmation').removeObject(learnerGroup);

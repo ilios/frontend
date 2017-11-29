@@ -7,10 +7,14 @@ const { all, Promise } = RSVP;
 
 export default Component.extend({
   store: service(),
+  init(){
+    this._super(...arguments);
+    this.set('sessionsToOverride', []);
+  },
   isSaving: false,
   classNames: ['publish-all-sessions'],
-  sessions: [],
-  sessionsToOverride: [],
+  sessions: null,
+  sessionsToOverride: null,
   noSessionsAsIs: equal('sessionsToOverride.length', 0),
   publishableCollapsed: true,
   unPublishableCollapsed: true,

@@ -57,7 +57,7 @@ export default Component.extend(NewUser, Validations, {
   },
   classNames: ['new-directory-user'],
 
-  searchResults: [],
+  searchResults: null,
   selectedUser: false,
   isSearching: false,
   searchResultsReturned: false,

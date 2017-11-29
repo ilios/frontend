@@ -1,3 +1,5 @@
+/* eslint ember/no-global-jquery: 0 */
+import $ from 'jquery';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import destroyApp from '../helpers/destroy-app';

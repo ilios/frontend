@@ -50,7 +50,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   i18n: service(),
   store: service(),
 
-  years: [],
+  years: null,
 
   currentYear: null,
   currentSchool: null,

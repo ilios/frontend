@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
-
-const { getOwner } = Ember;
 
 moduleForComponent('new-offering', 'Integration | Component | new offering', {
   integration: true,

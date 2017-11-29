@@ -11,6 +11,10 @@ const { reads, gt, sort } = computed;
 export default Component.extend({
   store: service(),
   currentUser: service(),
+  init(){
+    this._super(...arguments);
+    this.set('sortSchoolsBy', ['title']);
+  },
   tagName: 'div',
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
   alert: gt('_updatesProxy.length', 0),
@@ -43,7 +47,7 @@ export default Component.extend({
       });
     });
   }),
-  sortSchoolsBy:['title'],
+  sortSchoolsBy: null,
   sortedSchools: sort('schools', 'sortSchoolsBy'),
 
 

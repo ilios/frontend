@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 import layout from '../templates/components/mesh-manager';
 
 var ProxiedDescriptors = ObjectProxy.extend({
-  terms: [],
+  terms: null,
   isActive: computed('content', 'terms.[]', function(){
     return !this.get('terms').includes(this.get('content'));
   })
@@ -15,18 +15,23 @@ var ProxiedDescriptors = ObjectProxy.extend({
 export default Component.extend({
   store: service(),
   i18n: service(),
+  init(){
+    this._super(...arguments);
+    this.set('searchResults', []);
+    this.set('sortTerms', ['name']);
+  },
   layout: layout,
   classNames: ['detail-block', 'mesh-manager'],
-  terms: [],
+  terms: null,
   query: '',
-  searchResults: [],
+  searchResults: null,
   searchPage: 0,
   searchResultsPerPage: 50,
   hasMoreSearchResults: false,
   targetItemTitle: '',
   searching: false,
   searchReturned: false,
-  sortTerms: ['name'],
+  sortTerms: null,
   sortedTerms: computed('terms.@each.name', function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){

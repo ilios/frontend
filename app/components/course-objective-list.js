@@ -5,8 +5,12 @@ import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
 const { alias } = computed;
 
 export default Component.extend(SortableObjectiveList, {
+  init(){
+    this._super(...arguments);
+    this.set('objectivesForRemovalConfirmation', []);
+  },
   classNames: ['course-objective-list'],
-  objectivesForRemovalConfirmation: [],
+  objectivesForRemovalConfirmation: null,
   editable: true,
   course: alias('subject'),
 

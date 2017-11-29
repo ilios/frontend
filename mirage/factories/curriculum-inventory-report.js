@@ -7,6 +7,4 @@ export default Factory.extend({
   year: 2013,
   startDate: () => moment().format(),
   endDate: () => moment().add(7, 'weeks').format(),
-  sequenceBlocks: [],
-  academicLevels: [],
 });

@@ -2,13 +2,17 @@ import Component from '@ember/component';
 import RSVP from 'rsvp';
 
 export default Component.extend({
+  init() {
+    this._super(...arguments);
+    this.set('bufferedCohorts', []);
+  },
   tagName: 'section',
   classNames: ['detail-cohorts'],
   subject: null,
   isManaging: false,
   isSaving: false,
   editable: true,
-  bufferedCohorts: [],
+  bufferedCohorts: null,
   actions: {
     manage(){
       this.get('course.cohorts').then(cohorts => {

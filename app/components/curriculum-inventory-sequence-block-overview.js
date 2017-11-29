@@ -17,7 +17,7 @@ export default Component.extend({
   report: null,
   minimum: 0,
   maximum: 0,
-  orderInSequenceOptions: [],
+  orderInSequenceOptions: null,
   startDate: null,
   endDate: null,
   duration: null,
@@ -34,7 +34,10 @@ export default Component.extend({
   required: null,
   academicLevel: null,
 
-
+  init() {
+    this._super(...arguments);
+    this.set('orderInSequenceOptions', []);
+  },
   didReceiveAttrs(){
     this._super(...arguments);
     const sequenceBlock = this.get('sequenceBlock');

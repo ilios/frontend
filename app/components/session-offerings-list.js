@@ -105,6 +105,10 @@ let OfferingDateBlock = OfferingBlock.extend({
 });
 
 let OfferingTimeBlock = OfferingBlock.extend({
+  init() {
+    this._super(...arguments);
+    this.set('sortOfferingsBy', ['learnerGroups.firstObject.title']);
+  },
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function(){
     return this.get('startDate').format('DDDDYYYY') !== this.get('endDate').format('DDDDYYYY');
@@ -122,6 +126,6 @@ let OfferingTimeBlock = OfferingBlock.extend({
   endTime: momentFormat('endDate', 'LT'),
   longStartText: momentFormat('startDate', 'dddd MMMM Do [@] LT'),
   longEndText: momentFormat('endDate', 'dddd MMMM Do [@] LT'),
-  sortOfferingsBy: ['learnerGroups.firstObject.title'],
+  sortOfferingsBy: null,
   sortedOfferings: sort('offerings', 'sortOfferingsBy'),
 });

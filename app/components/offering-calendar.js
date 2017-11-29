@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 
-const { Component, computed, inject, RSVP } = Ember;
 const { reads } = computed;
 const { map } = RSVP;
 
 export default Component.extend({
-  commonAjax: inject.service(),
-  iliosConfig: inject.service(),
+  commonAjax: service(),
+  iliosConfig: service(),
   classNames: ['offering-calendar'],
 
   namespace: reads('iliosConfig.apiNameSpace'),
