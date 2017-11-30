@@ -78,7 +78,7 @@ test('manage terms', async function(assert) {
     assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[i].name));
   }
   for (let i = 0; i < fixtures.meshDescriptors.length; i++){
-    if(objective.attrs.meshDescriptorIds.indexOf(parseInt(fixtures.meshDescriptors[i].id)) !== -1){
+    if(objective.attrs.meshDescriptorIds.indexOf(parseInt(fixtures.meshDescriptors[i].id, 10)) !== -1){
       assert.ok(find(searchResults[i]).hasClass('disabled'));
     } else {
       assert.ok(!find(searchResults[i]).hasClass('disabled'));

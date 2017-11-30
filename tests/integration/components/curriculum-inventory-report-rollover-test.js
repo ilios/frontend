@@ -21,7 +21,7 @@ test('it renders', function(assert) {
   });
   this.register('service:store', storeMock);
 
-  const thisYear = parseInt(moment().format('YYYY'));
+  const thisYear = parseInt(moment().format('YYYY'), 10);
   let report = EmberObject.create({
     id: 1,
     name: 'old report',
@@ -49,7 +49,7 @@ test('it renders', function(assert) {
 
 test('rollover report', function(assert) {
   assert.expect(12);
-  const thisYear = parseInt(moment().format('YYYY'));
+  const thisYear = parseInt(moment().format('YYYY'), 10);
   let report = EmberObject.create({
     id: 1,
     name: 'old report',
@@ -116,7 +116,7 @@ test('rollover report', function(assert) {
 
 test('rollover report with new name, description and year', function(assert) {
   assert.expect(7);
-  const thisYear = parseInt(moment().format('YYYY'));
+  const thisYear = parseInt(moment().format('YYYY'), 10);
   let report = EmberObject.create({
     id: 1,
     name: 'old report',

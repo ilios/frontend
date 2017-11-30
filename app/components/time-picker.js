@@ -27,7 +27,7 @@ export default Component.extend({
       const selectedIndex = select.selectedIndex;
       const hours = this.get('hours');
       const ampm = this.get('ampm');
-      let hour = parseInt(hours[selectedIndex]);
+      let hour = parseInt(hours[selectedIndex], 10);
 
       if (ampm === 'pm') {
         hour += 12;
@@ -40,7 +40,7 @@ export default Component.extend({
       const select = this.$('select')[1];
       const selectedIndex = select.selectedIndex;
       const minutes = this.get('minutes');
-      const minute = parseInt(minutes[selectedIndex]);
+      const minute = parseInt(minutes[selectedIndex], 10);
 
       this.sendAction('action', minute, 'minute');
     },

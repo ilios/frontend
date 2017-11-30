@@ -62,7 +62,7 @@ export default Component.extend({
         courseObjective,
         sessionObjectives
       };
-      const data = minutes.reduce((accumulator, current) => accumulator + parseInt(current), 0);
+      const data = minutes.reduce((accumulator, current) => accumulator + parseInt(current, 10), 0);
 
       return {
         data,

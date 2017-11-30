@@ -314,7 +314,7 @@ export default function() {
   this.get('api/userevents/:userid', function({ db }, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
-    let userid = parseInt(request.params.userid);
+    let userid = parseInt(request.params.userid, 10);
     let userEvents = db.userevents.filter(event => {
       return (
         event.user === userid &&
@@ -330,7 +330,7 @@ export default function() {
   this.get('api/schoolevents/:schoolid', function({ db }, request) {
     let from = moment.unix(request.queryParams.from);
     let to = moment.unix(request.queryParams.to);
-    let schoolId = parseInt(request.params.schoolid);
+    let schoolId = parseInt(request.params.schoolid, 10);
     let schoolEvents = db.schoolevents.filter(event => {
       return (
         event.school === schoolId &&

@@ -10,11 +10,11 @@ export default Component.extend({
   total: null,
   limitless: false,
   start: computed('offset', function(){
-    return parseInt(this.get('offset')) + 1;
+    return parseInt(this.get('offset'), 10) + 1;
   }),
   end: computed('offset', 'limit', function(){
     const total = this.get('total');
-    let end = parseInt(this.get('offset')) + parseInt(this.get('limit'));
+    let end = parseInt(this.get('offset'), 10) + parseInt(this.get('limit'), 10);
     if(end > total) {
       end = total;
     }
@@ -36,9 +36,9 @@ export default Component.extend({
       return false;
     }
 
-    const total = parseInt(this.get('total'));
-    const limit = parseInt(this.get('limit'));
-    const offset = parseInt(this.get('offset'));
+    const total = parseInt(this.get('total'), 10);
+    const limit = parseInt(this.get('limit'), 10);
+    const offset = parseInt(this.get('offset'), 10);
 
     return (offset + limit) >= total;
   }),
@@ -70,7 +70,7 @@ export default Component.extend({
       this.sendAction('setOffset', offset);
     },
     setLimit(limit){
-      this.sendAction('setLimit', parseInt(limit));
+      this.sendAction('setLimit', parseInt(limit, 10));
       this.sendAction('setOffset', 0);
     }
   }

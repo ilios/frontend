@@ -257,7 +257,7 @@ test('can add a program-year (with pre-existing program-year)', async function(a
   server.create('programYearSteward', {
     departmentId: 1,
   });
-  const currentYear = parseInt(moment().format('YYYY'));
+  const currentYear = parseInt(moment().format('YYYY'), 10);
   server.create('programYear', {
     programId: 1,
     startYear: currentYear,

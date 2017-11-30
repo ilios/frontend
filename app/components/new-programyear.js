@@ -17,6 +17,6 @@ export default Component.extend({
     if (isEmpty(startYear)) {
       return false;
     }
-    yield this.get('save')(parseInt(startYear));
+    yield this.get('save')(parseInt(startYear, 10));
   }).drop(),
 });

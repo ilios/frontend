@@ -29,7 +29,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
-    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
     let years = [];
     for (let i = 0; i < 6; i++) {
       years.push(lastYear + i);

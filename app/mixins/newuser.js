@@ -117,9 +117,9 @@ export default Mixin.create(ValidationErrorDisplay, {
       all.pushObject(obj);
     }
 
-    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
     return all.filter(obj=> {
-      let finalYear = parseInt(obj.startYear) + parseInt(obj.duration);
+      let finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
 

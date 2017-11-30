@@ -43,7 +43,7 @@ export default Component.extend({
 
   availableAcademicYears: computed('existingStartYears.[]', {
     get() {
-      let firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'));
+      let firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
       let years = [];
 
       for (let i = 0; i < 10; i++) {

@@ -176,7 +176,7 @@ test('click month day number and go to day', async function(assert) {
   await visit('/dashboard?show=calendar&view=month');
   let dayOfMonth = aDayInTheMonth.date();
   let link = find('.day .clickable').filter(function(){
-    return parseInt(find(this).text()) === dayOfMonth;
+    return parseInt(find(this).text(), 10) === dayOfMonth;
   }).eq(0);
   await click(link);
   assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
