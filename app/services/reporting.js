@@ -127,7 +127,7 @@ export default Service.extend({
       return rhett;
     });
 
-    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year')) === parseInt(year));
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year), 10);
   },
   async sessionsResults(results, year){
     const canView = await this.get('canViewCourses');
@@ -144,7 +144,7 @@ export default Service.extend({
       return rhett;
     });
 
-    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year')) === parseInt(year));
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year), 10);
   },
   async programsResults(results){
     const canView = await this.get('canViewPrograms');
