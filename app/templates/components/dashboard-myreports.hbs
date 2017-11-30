@@ -11,11 +11,24 @@
   </div>
 
   {{#liquid-if selectedReport class='crossFade'}}
-    <div class='dashboard-block-body'>
-      <h3>{{report-title selectedReport}}</h3>
+    <div class='dashboard-block-body' data-test-selected-report>
+      <h3 data-test-report-title>{{report-title selectedReport}}</h3>
+
+      {{#if showAcademicYearFilter}}
+        <div class="years-filter">
+          <select onchange={{action (mut selectedYear) value="target.value"}} data-test-year-filter>
+            <option value='' selected={{is-empty selectedYear}}>{{t 'general.allAcademicYears'}}</option>
+            {{#each (sort-by 'academicYearTitle:desc' (await allAcademicYears)) as |year|}}
+              <option value={{year.id}} selected={{is-equal year selectedYear}}>
+                {{year.academicYearTitle}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+      {{/if}}
       {{#if (is-fulfilled reportResultsList)}}
         {{#if (get (await reportResultsList) 'length')}}
-          <ul>
+          <ul data-test-results>
             {{#each (await reportResultsList) as |item|}}
               {{#if item.model2}}
                 <li>
@@ -50,7 +63,7 @@
       {{#if (is-fulfilled sortedReports)}}
         {{#if (get (await sortedReports) 'length')}}
           <table>
-            <tbody>
+            <tbody data-test-saved-reports>
               {{#each (await sortedReports) as |report|}}
                 <tr>
                   <td colspan=4>

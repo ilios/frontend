@@ -1,6 +1,10 @@
 .dashboard-myreports {
   @include dashboard-block;
 
+  h3 {
+    margin: 0;
+  }
+
   .form-title {
     color: $ilios-orange;
     font-weight: bold;
@@ -31,5 +35,12 @@
     border: $header-grey 2px solid;
     margin: 10px;
     padding: 10px;
+  }
+
+  .years-filter {
+    margin: .5em 0 1em;
+    padding-right: .5em;
+    text-align: right;
+    width: 100%;
   }
 }

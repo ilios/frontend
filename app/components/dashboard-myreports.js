@@ -10,10 +10,12 @@ const { Promise, resolve } = RSVP;
 export default Component.extend({
   currentUser: service(),
   reporting: service(),
+  store: service(),
   tagName: 'div',
   classNames: ['dashboard-myreports'],
   myReportEditorOn: false,
   selectedReport: null,
+  selectedYear: null,
   user: null,
 
   didReceiveAttrs() {
@@ -38,12 +40,29 @@ export default Component.extend({
       });
     });
   }),
-  reportResultsList: computed('selectedReport', function(){
+  reportResultsList: computed('selectedReport', 'selectedYear', function(){
     const report = this.get('selectedReport');
+    const year = this.get('selectedYear');
     if(!report){
       return resolve([]);
     }
-    return this.get('reporting').getResults(report);
+    return this.get('reporting').getResults(report, year);
+  }),
+  allAcademicYears: computed(async function () {
+    const store = this.get('store');
+    const years = await store.findAll('academic-year');
+
+    return years;
+  }),
+  showAcademicYearFilter: computed('selectedReport', function(){
+    const report = this.get('selectedReport');
+    if(!report){
+      return false;
+    }
+    const subject = report.get('subject');
+    const prepositionalObject = report.get('prepositionalObject');
+
+    return prepositionalObject != 'course' && ['course', 'session'].includes(subject);
   }),
   actions: {
     toggleEditor() {
