@@ -5,7 +5,7 @@
       {{#liquid-if selectedReport class='crossFade'}}
         <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
       {{else}}
-        {{expand-collapse-button value=myReportEditorOn action="toggleEditor"}}
+        {{expand-collapse-button value=myReportEditorOn action="toggleEditor" data-test-add-new-report=true}}
       {{/liquid-if}}
     </div>
   </div>

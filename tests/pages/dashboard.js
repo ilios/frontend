@@ -1,7 +1,9 @@
 import {
   clickable,
+  count,
   create,
   collection,
+  fillable,
   isPresent,
   text,
   visitable
@@ -14,6 +16,7 @@ export default create({
   visit: visitable('/dashboard'),
   myReports: {
     scope: '[data-test-myreports]',
+    addNewReport: clickable('[data-test-add-new-report]'),
     reports: collection({
       itemScope: '[data-test-saved-reports] tr',
       item: {
@@ -33,5 +36,16 @@ export default create({
         },
       }),
     },
+    newReport: {
+      scope: '[data-test-new-report]',
+      setTitle: fillable('[data-test-report-title]'),
+      chooseSchool: selectable('[data-test-report-school]'),
+      chooseSubject: selectable('[data-test-report-subject]'),
+      chooseObjectType: selectable('[data-test-report-object-type]'),
+      chooseObject: selectable('[data-test-report-object]'),
+      objectCount: count('[data-test-report-object] option'),
+      chooseAcademicYear: selectable('[data-test-report-year-filter]'),
+      save: clickable('[data-test-report-save]'),
+    }
   },
 });

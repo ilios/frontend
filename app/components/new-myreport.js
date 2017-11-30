@@ -50,7 +50,20 @@ const PrepositionObject = EmberObject.extend({
       return this.get('model').get('active');
     }
     return true;
-  })
+  }),
+  academicYear: computed('model', 'type', async function () {
+    const type = this.get('type');
+    const model = this.get('model');
+    if (type === 'course') {
+      return parseInt(model.get('year'), 10);
+    }
+    if (type === 'session') {
+      let course = await model.get('course');
+      return parseInt(course.get('year'), 10);
+    }
+
+    return null;
+  }),
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -66,6 +79,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
   isSaving: false,
+  selectedYear: null,
 
   subjectList: computed('i18n.locale', function(){
     let list = [
@@ -152,7 +166,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const label = await obj.get('label');
       const value = obj.get('value');
       const active = obj.get('active');
-      return {value, label, active};
+      const academicYear = await obj.get('academicYear');
+      return {value, label, active, academicYear};
+    });
+  }),
+
+  /**
+   * Filtered List of prepositional objects
+   * @property filteredPrepositionalObjectIdList
+   * @type {Ember.computed}
+   * @public
+   */
+  filteredPrepositionalObjectIdList: computed('prepositionalObjectIdList.[]', 'selectedYear', async function () {
+    const selectedYear = this.get('selectedYear')?parseInt(this.get('selectedYear'), 10): null;
+    const objects = await this.get('prepositionalObjectIdList');
+    const type = this.get('currentPrepositionalObject');
+
+    return objects.filter(obj => {
+      if (isEmpty(selectedYear) || !['course', 'session'].includes(type)) {
+        return true;
+      }
+
+      return obj.academicYear === selectedYear;
     });
   }),
 
@@ -219,6 +254,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const school = await user.get('school');
 
     return school;
+  }),
+
+  allAcademicYears: computed(async function () {
+    const store = this.get('store');
+    const years = await store.findAll('academic-year');
+
+    return years;
   }),
 
   save: task(function *(){
