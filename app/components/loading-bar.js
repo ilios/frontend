@@ -15,7 +15,7 @@ export default Component.extend({
   },
 
   barWidth: computed('progress', function () {
-    const progress = parseInt(this.get('progress'));
+    const progress = parseInt(this.get('progress'), 10);
 
     return htmlSafe(`width: ${progress}%;`);
   }),

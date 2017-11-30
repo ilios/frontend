@@ -35,7 +35,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{course-rollover course=course}}`);
 
-  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
   const yearSelect = '.year-select select';
   const title = '.title input';
 
@@ -59,7 +59,7 @@ test('rollover course', function(assert) {
 
   let ajaxMock = Service.extend({
     request(url, {method, data}){
-      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
       assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
       assert.equal(method, 'POST');
       assert.ok('year' in data);
@@ -176,7 +176,7 @@ test('rollover course with new title', function(assert) {
 
 test('disable years when title already exists', function(assert) {
   assert.expect(8);
-  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'));
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
 
   storeMock.reopen({
     query(what, {filters}){

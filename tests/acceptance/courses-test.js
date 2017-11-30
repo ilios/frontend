@@ -370,7 +370,7 @@ test('no academic years exist', async function(assert) {
   await page.visit();
   await page.toggleNewCourseForm();
 
-  let thisYear = parseInt(moment().format('YYYY'));
+  let thisYear = parseInt(moment().format('YYYY'), 10);
   let years = [
     thisYear-2,
     thisYear-1,

@@ -60,7 +60,7 @@ const extractQueryParams = function(request){
     }
 
     if(params.includes('limit')){
-      rhett.limit = parseInt(request.queryParams.limit);
+      rhett.limit = parseInt(request.queryParams.limit, 10);
     }
   }
 

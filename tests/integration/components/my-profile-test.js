@@ -103,9 +103,9 @@ test('generates token when asked with good expiration date', function(assert) {
   let ajaxMock = Service.extend({
     request(url){
       assert.ok(url.search(/\/auth\/token\?ttl=P14D/) === 0, `URL ${url} matches request pattern.`);
-      let hours = parseInt(url.substring(22, 24), 'too many hours');
-      let minutes = parseInt(url.substring(25, 27), 'too many minutes');
-      let seconds = parseInt(url.substring(28, 30), 'too many seconds');
+      let hours = parseInt(url.substring(22, 24), 10);
+      let minutes = parseInt(url.substring(25, 27), 10);
+      let seconds = parseInt(url.substring(28, 30), 10);
 
       assert.ok(hours < 24);
       assert.ok(minutes < 60);
@@ -180,9 +180,9 @@ test('Setting date changes request length', function(assert) {
   let ajaxMock = Service.extend({
     request(url){
       assert.ok(url.search(/\/auth\/token\?ttl=P41D/) === 0, `URL ${url} matches request pattern.`);
-      let hours = parseInt(url.substring(22, 24), 'too many hours');
-      let minutes = parseInt(url.substring(25, 27), 'too many minutes');
-      let seconds = parseInt(url.substring(28, 30), 'too many seconds');
+      let hours = parseInt(url.substring(22, 24), 10);
+      let minutes = parseInt(url.substring(25, 27), 10);
+      let seconds = parseInt(url.substring(28, 30), 10);
 
       assert.ok(hours < 24);
       assert.ok(minutes < 60);

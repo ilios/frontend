@@ -42,7 +42,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         const selectedSessionTypeId = this.get('selectedSessionTypeId');
         if(isPresent(selectedSessionTypeId)){
           selectedSessionType = sessionTypes.find(sessionType => {
-            return parseInt(sessionType.get('id')) === parseInt(selectedSessionTypeId);
+            return parseInt(sessionType.get('id'), 10) === parseInt(selectedSessionTypeId, 10);
           });
         }
 

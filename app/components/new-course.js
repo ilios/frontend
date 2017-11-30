@@ -26,7 +26,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this._super(...arguments);
 
     //build a list of years to seelct from
-    let thisYear = parseInt(moment().format('YYYY'));
+    let thisYear = parseInt(moment().format('YYYY'), 10);
     let years = [
       thisYear-2,
       thisYear-1,
@@ -38,7 +38,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('years', years);
 
     const currentYear = this.get('currentYear');
-    if (isPresent(currentYear) && years.includes(parseInt(currentYear.get('title')))) {
+    if (isPresent(currentYear) && years.includes(parseInt(currentYear.get('title'), 10))) {
       this.set('selectedYear', currentYear.get('title'));
     } else {
       this.set('selectedYear', thisYear);

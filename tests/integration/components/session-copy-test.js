@@ -87,7 +87,7 @@ test('it renders', function(assert) {
 test('copy session', function(assert) {
   assert.expect(21);
 
-  let thisYear = parseInt(moment().format('YYYY'));
+  let thisYear = parseInt(moment().format('YYYY'), 10);
 
   let school = EmberObject.create({
     id: 1
@@ -263,7 +263,7 @@ test('errors do not show up initially and save cannot be clicked', function(asse
 test('changing the year looks for new matching courses', function(assert) {
   assert.expect(6);
   let count = 0;
-  let thisYear = parseInt(moment().format('YYYY'));
+  let thisYear = parseInt(moment().format('YYYY'), 10);
   let nextYear = thisYear + 1;
 
   let school = EmberObject.create({
@@ -324,8 +324,8 @@ test('changing the year looks for new matching courses', function(assert) {
 test('copy session into the first course in a different year year #2130', function(assert) {
   assert.expect(9);
 
-  let thisYear = parseInt(moment().format('YYYY'));
-  let nextYear = parseInt(moment().add(1, 'year').format('YYYY'));
+  let thisYear = parseInt(moment().format('YYYY'), 10);
+  let nextYear = parseInt(moment().add(1, 'year').format('YYYY'), 10);
 
   let school = EmberObject.create({
     id: 1
@@ -374,7 +374,7 @@ test('copy session into the first course in a different year year #2130', functi
       assert.ok('school' in filters, 'filtered by school');
       assert.ok('year' in filters, 'filtered by year');
 
-      const year = parseInt(filters.year);
+      const year = parseInt(filters.year, 10);
       return [course, firstCourse, targetCourse].filter(c => c.get('year') === year);
     },
     findAll(){

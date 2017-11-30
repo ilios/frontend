@@ -6,6 +6,6 @@ export default Component.extend({
   classNames: ['pre-fill'],
   lines: 4,
   linesMinusOne: computed('lines', function(){
-    return parseInt(this.get('lines'))-1;
+    return parseInt(this.get('lines'), 10)-1;
   }),
 });

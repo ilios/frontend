@@ -21,7 +21,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
 
-  const currentYear = parseInt(moment().format('YYYY'));
+  const currentYear = parseInt(moment().format('YYYY'), 10);
   const currentYearLabel = `${currentYear} - ${currentYear + 1}`;
   const firstYear = currentYear - 5;
   const firstYearLabel = `${firstYear} - ${firstYear + 1}`;
@@ -84,7 +84,7 @@ test('save', function(assert) {
 
   this.set('program', EmberObject.create());
   this.set('saveReport', (report) => {
-    const currentYear = parseInt(moment().format('YYYY'));
+    const currentYear = parseInt(moment().format('YYYY'), 10);
     const expectedSelectedYear = currentYear - 5;
     assert.equal(report.get('name'), 'new report', 'Name gets passed.');
     assert.equal(report.get('description'), 'lorem ipsum', 'Description gets passed.');
