@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
-import jwtDecode from 'jwt-decode';
+import jwtDecode from '../utils/jwt-decode';
 
 const { computed, RSVP, isEmpty, inject, get, Service } = Ember;
 const { service } = inject;
