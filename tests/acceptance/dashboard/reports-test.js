@@ -39,6 +39,7 @@ module('Acceptance: Dashboard Reports', {
       terms: [term],
     });
     server.create('report', {
+      title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: firstCourse.id,
@@ -109,4 +110,67 @@ test('year filter works', async function (assert) {
   await page.myReports.selectedReport.chooseYear('2016 - 2017');
   assert.equal(page.myReports.selectedReport.results().count, 1);
   assert.equal(page.myReports.selectedReport.results(0).text, '2016 - 2017 course 1 session 1');
+});
+
+test('create new report', async function (assert) {
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+  await page.myReports.newReport.setTitle('New Report');
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Sessions');
+  await page.myReports.newReport.chooseObjectType('Course');
+  await page.myReports.newReport.chooseObject('course 0');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(2).select();
+
+  assert.equal(page.myReports.selectedReport.title, 'New Report');
+  assert.equal(page.myReports.selectedReport.results().count, 1);
+  assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0 session 0');
+});
+
+test('filter courses by year in new report form', async function (assert) {
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Sessions');
+  await page.myReports.newReport.chooseObjectType('Course');
+  assert.equal(page.myReports.newReport.objectCount, 2);
+  await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+  assert.equal(page.myReports.newReport.objectCount, 1);
+  await page.myReports.newReport.chooseObject('course 1');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+
+  assert.equal(page.myReports.selectedReport.title, 'All Sessions for course 1 in school 0');
+  assert.equal(page.myReports.selectedReport.results().count, 1);
+  assert.equal(page.myReports.selectedReport.results(0).text, '2016 - 2017 course 1 session 1');
+});
+
+test('filter session by year in new report form', async function (assert) {
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Terms');
+  await page.myReports.newReport.chooseObjectType('Session');
+  assert.equal(page.myReports.newReport.objectCount, 2);
+  await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+  assert.equal(page.myReports.newReport.objectCount, 1);
+  await page.myReports.newReport.chooseObject('session 1');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+
+  assert.equal(page.myReports.selectedReport.title, 'All Terms for session 1 in school 0');
+  assert.equal(page.myReports.selectedReport.results().count, 1);
+  assert.equal(page.myReports.selectedReport.results(0).text, 'Vocabulary 1 > term 0');
 });

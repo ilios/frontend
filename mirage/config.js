@@ -293,7 +293,24 @@ export default function() {
   this.del('api/sessiontypes/:id', 'sessionType');
   this.post('api/sessiontypes', 'sessionType');
 
-  this.get('api/sessions', getAll);
+  this.get('api/sessions', (schema, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const schoolKey = 'filters[schools]';
+    if (keys.includes(schoolKey)) {
+      const schoolsFilter = params[schoolKey];
+      const sessions = schema.sessions.all().filter(session => {
+        const school = session.course.school;
+
+        return schoolsFilter.includes(school.id);
+      });
+
+      return sessions;
+
+    } else {
+      return getAll(schema, request);
+    }
+  });
   this.get('api/sessions/:id', 'session');
   this.put('api/sessions/:id', 'session');
   this.del('api/sessions/:id', 'session');
