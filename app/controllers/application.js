@@ -1,3 +1,4 @@
+/* eslint ember/order-in-controllers: 0 */
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
