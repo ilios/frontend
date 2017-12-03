@@ -54,8 +54,8 @@ test('it renders', function(assert) {
 
 test('no link to materials when that is the current route', function(assert) {
   let routerMock = Service.extend({
-    generateURL(){},
     currentRouteName: 'course-materials',
+    generateURL(){},
   });
   this.register('service:-routing', routerMock);
 
@@ -77,8 +77,8 @@ test('no link to materials when that is the current route', function(assert) {
 
 test('no link to rollover when that is the current route', function(assert) {
   let routerMock = Service.extend({
-    generateURL(){},
     currentRouteName: 'course.rollover',
+    generateURL(){},
   });
   this.register('service:-routing', routerMock);
 

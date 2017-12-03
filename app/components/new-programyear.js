@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';

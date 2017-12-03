@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import RSVP from 'rsvp';

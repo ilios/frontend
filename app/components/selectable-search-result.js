@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import { A } from '@ember/array';
 import Component from '@ember/component';
 import { computed } from '@ember/object';

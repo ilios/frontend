@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import { oneWay, sort } from '@ember/object/computed';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
