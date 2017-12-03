@@ -55,6 +55,21 @@ export default Route.extend(ApplicationRouteMixin, {
     }
   },
 
+  activate() {
+    if ('serviceWorker' in navigator) {
+      const event = navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+      });
+      this.set('event', event);
+    }
+  },
+  deactivate() {
+    const event = this.get('event');
+    if (event && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.removeEventListener(event);
+    }
+  },
+
   actions: {
     willTransition() {
       let controller = this.controllerFor('application');
