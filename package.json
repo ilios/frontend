@@ -14,7 +14,7 @@
   "repository": "https://github.com/ilios/common",
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember serve",
     "test": "ember try:each"
   },
   "dependencies": {
@@ -42,23 +42,23 @@
     "ember-ajax": "^3.0.0",
     "ember-cli": "2.17.0",
     "ember-cli-dependency-checker": "^2.0.1",
-    "ember-cli-eslint": "^4.2.0",
+    "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.2",
     "ember-cli-inject-live-reload": "^1.7.0",
-    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-qunit": "^4.1.1",
     "ember-cli-sass": "^7.1.1",
     "ember-cli-sass-lint": "^1.0.5",
     "ember-cli-server-variables": "^2.1.0",
-    "ember-cli-shims": "^1.1.0",
+    "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
-    "ember-data": "^2.14.9",
+    "ember-data": "^2.17.0",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "^3.0.5",
     "ember-inflector": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.3.0",
-    "ember-source": "~2.16.0",
+    "ember-source": "~2.17.0",
     "loader.js": "^4.6.0"
   },
   "engines": {
