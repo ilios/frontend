@@ -36,7 +36,6 @@
     "ember-export-application-global": "^2.0.0",
     "ember-fetch": "^3.2.3",
     "ember-font-awesome": "^3.0.5",
-    "ember-jwt-decode-shim": "^1.0.0",
     "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
