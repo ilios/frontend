@@ -3395,14 +3395,14 @@ ember-cli-sass-lint@^1.0.3:
     broccoli-sass-lint "^1.1.2"
     ember-cli-babel "^6.6.0"
 
-ember-cli-sass@7.1.1, ember-cli-sass@^7.0.0:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.1.1.tgz#6ae75b0756e5dbc0db61ec27843929500a38343d"
+ember-cli-sass@7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.1.2.tgz#5756a92a526754878b32f3be4367cfe4bf2b5514"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.1.0"
     broccoli-sass-source-maps "^2.1.0"
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^1.0.2"
 
 ember-cli-sass@^6.2.0:
@@ -3414,6 +3414,16 @@ ember-cli-sass@^6.2.0:
     broccoli-sass-source-maps "^2.0.0"
     ember-cli-version-checker "^1.0.2"
     merge "^1.2.0"
+
+ember-cli-sass@^7.0.0:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.1.1.tgz#6ae75b0756e5dbc0db61ec27843929500a38343d"
+  dependencies:
+    broccoli-funnel "^1.0.0"
+    broccoli-merge-trees "^1.1.0"
+    broccoli-sass-source-maps "^2.1.0"
+    ember-cli-babel "^5.1.7"
+    ember-cli-version-checker "^1.0.2"
 
 ember-cli-server-variables@2.1.0:
   version "2.1.0"
