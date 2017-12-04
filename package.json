@@ -33,7 +33,7 @@
     "ember-cli-deploy-display-revisions": "1.0.0",
     "ember-cli-deploy-json-config": "1.0.1",
     "ember-cli-deploy-revision-data": "1.0.0",
-    "ember-cli-deploy-s3-index": "1.0.0",
+    "ember-cli-deploy-s3-index": "1.0.1",
     "ember-cli-deprecation-workflow": "0.2.4",
     "ember-cli-document-title": "0.3.3",
     "ember-cli-eslint": "^4.1.0",
