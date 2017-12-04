@@ -2,12 +2,17 @@ import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/mesh-manager';
 
-var ProxiedDescriptors = ObjectProxy.extend({
+const ProxiedDescriptors = ObjectProxy.extend({
   terms: null,
-  isActive: computed('content', 'terms.[]', function(){
+  isActive: computed('content', 'terms.[]', function () {
+    const terms = this.get('terms');
+    if (isEmpty(terms)) {
+      return true;
+    }
     return !this.get('terms').includes(this.get('content'));
   })
 });
@@ -20,6 +25,7 @@ export default Component.extend({
     this.set('searchResults', []);
     this.set('sortTerms', ['name']);
   },
+  'data-test-mesh-manager': true,
   layout: layout,
   classNames: ['detail-block', 'mesh-manager'],
   terms: null,

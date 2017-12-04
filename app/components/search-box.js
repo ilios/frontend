@@ -8,6 +8,7 @@ export default Component.extend({
   classNames: ['search-box'],
   value: '',
   liveSearch: true,
+  'data-test-search-box': true,
   searchTask: task(function * () {
     yield timeout(DEBOUNCE_TIMEOUT);
     const value = this.get('value');

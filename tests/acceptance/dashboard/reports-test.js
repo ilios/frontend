@@ -174,3 +174,31 @@ test('filter session by year in new report form', async function (assert) {
   assert.equal(page.myReports.selectedReport.results().count, 1);
   assert.equal(page.myReports.selectedReport.results(0).text, 'Vocabulary 1 > term 0');
 });
+
+test('get all courses associated with mesh term #3419', async function (assert) {
+  server.create('mesh-descriptor', {
+    id: 'D1234',
+    courseIds: [1, 2]
+  });
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Courses');
+  await page.myReports.newReport.chooseObjectType('MeSH Term');
+  await page.myReports.newReport.fillMeshSearch('0');
+  await page.myReports.newReport.runMeshSearch();
+  assert.equal(page.myReports.newReport.meshSearchResults().count, 1);
+  assert.equal(page.myReports.newReport.meshSearchResults(0).text, 'descriptor 0 D1234');
+  await page.myReports.newReport.meshSearchResults(0).pick();
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+
+  assert.equal(page.myReports.selectedReport.title, 'All Courses for descriptor 0 in school 0');
+  assert.equal(page.myReports.selectedReport.results().count, 2);
+  assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0');
+  assert.equal(page.myReports.selectedReport.results(1).text, '2016 - 2017 course 1');
+});

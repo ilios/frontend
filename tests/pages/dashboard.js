@@ -45,6 +45,15 @@ export default create({
       chooseObject: selectable('[data-test-report-object]'),
       objectCount: count('[data-test-report-object] option'),
       chooseAcademicYear: selectable('[data-test-report-year-filter]'),
+      fillMeshSearch: fillable('[data-test-mesh-manager] [data-test-search-box] input'),
+      runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
+      meshSearchResults: collection({
+        itemScope: '[data-test-search-results] li',
+        item: {
+          name: text('[data-test-name]'),
+          pick: clickable()
+        },
+      }),
       save: clickable('[data-test-report-save]'),
     }
   },
