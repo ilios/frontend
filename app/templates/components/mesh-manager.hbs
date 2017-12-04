@@ -32,10 +32,10 @@
 {{else}}
   {{#if searchResults.length}}
     <div class='selectable-list'>
-      <ul class='mesh-search-results'>
+      <ul class='mesh-search-results' data-test-search-results>
         {{#each searchResults as |term|}}
           <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
-            <span class="descriptor-name">{{term.name}}</span>
+            <span class="descriptor-name" data-test-name>{{term.name}}</span>
             <span class="descriptor-id">
               {{term.id}}
               {{#if term.trees }}
