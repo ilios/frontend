@@ -3873,15 +3873,6 @@ ember-invoke-action@^1.5.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-jwt-decode-shim@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-jwt-decode-shim/-/ember-jwt-decode-shim-1.2.0.tgz#4c4fb7d4cb6631b0bbe093b50bd3db5b991ffa0e"
-  dependencies:
-    broccoli-funnel "^2.0.0"
-    broccoli-merge-trees "^2.0.0"
-    ember-cli-babel "^6.6.0"
-    jwt-decode "^2.2.0"
-
 ember-k-codemod@^0.1.0:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-k-codemod/-/ember-k-codemod-0.1.6.tgz#e85a98a76d613ff1b6e67120dc12fe8aada3230d"
@@ -5592,9 +5583,9 @@ ignore@^3.1.2, ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-ilios-common@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-6.1.0.tgz#8228718a9a5bca111fc20cdf947afaaaaa0faf54"
+ilios-common@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-7.0.0.tgz#06bcd56f5a9df84c2751fdd5b178179a8a3c3fb2"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.6.0"
@@ -5604,7 +5595,6 @@ ilios-common@6.1.0:
     ember-composable-helpers "^2.0.1"
     ember-concurrency "0.7.19"
     ember-i18n "^5.0.1"
-    ember-jwt-decode-shim "^1.0.0"
     ember-moment "^7.4.1"
     ember-one-way-controls "^3.0.0"
     ember-promise-helpers "^1.0.3"
@@ -6119,10 +6109,6 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
-
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
 
 kind-of@^3.0.2:
   version "3.2.2"
