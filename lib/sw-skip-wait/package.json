@@ -1,0 +1,7 @@
+{
+  "name": "sw-skip-wait",
+  "keywords": [
+    "ember-addon",
+    "ember-service-worker-plugin"
+  ]
+}

@@ -53,6 +53,7 @@ module.exports = function(defaults) {
       themes: 'gray'
     },
     'ember-service-worker': {
+      immediateClaim: false,
       versionStrategy: 'every-build',
     },
     'asset-cache': {
