@@ -1,13 +1,13 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import Inflector from 'ember-inflector';
 
 const { computed, RSVP } = Ember;
 const { not } = computed;
 const { Promise, all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
-const inflector = Ember.Inflector.inflector;
-inflector.uncountable('aamc-pcrs');
+Inflector.inflector.uncountable('aamc-pcrs');
 
 export default Model.extend({
   title: attr('string'),
