@@ -140,44 +140,17 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('school', 'cohorts.[]', function() {
-    return new Promise(resolve => {
-      let schools = [];
-      let promises = [];
+  schools: computed('school', 'cohorts.[]', async function() {
 
-      // get course-owning school
-      let promise = new Promise(resolve => {
-        this.get('school').then(school => {
-          schools.pushObject(school);
-          resolve();
-        });
+    const courseOwningSchool = await this.get('school');
 
-      });
-      promises.pushObject(promise);
+    const cohorts = await this.get('cohorts');
+    const programYears = await all(cohorts.mapBy('programYear'));
+    const programs = await all(programYears.mapBy('program'));
+    const schools = await all(programs.mapBy('school'));
 
-      // get schools from associated cohorts
-      promise = new Promise(resolve => {
-        this.get('cohorts').then(cohorts => {
-          map(cohorts.mapBy('programYear'), programYear => {
-            return programYear.get('program').then(program => {
-              return program.get('school').then(school => {
-                schools.pushObject(school);
-              });
-            });
-          }).then(() => {
-            resolve();
-          });
-        });
-      });
-      promises.pushObject(promise);
-
-      // once the two promises above resolve,
-      // de-dupe all schools and return a promise-array containing the dupe-free list of schools.
-      all(promises).then(() => {
-        let s = schools.uniq();
-        resolve(s);
-      });
-    });
+    schools.pushObject(courseOwningSchool);
+    return schools.uniq();
   }),
 
   /**
@@ -186,21 +159,13 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    return new Promise(resolve => {
-      this.get('schools').then(schools => {
-        all(schools.mapBy('vocabularies')).then(schoolVocabs => {
-          let v = [];
-          schoolVocabs.forEach(vocabs => {
-            vocabs.forEach(vocab => {
-              v.pushObject(vocab);
-            });
-          });
-          v = v.sortBy('school.title', 'title');
-          resolve(v);
-        });
-      });
-    });
+  assignableVocabularies: computed('schools.@each.vocabularies', async function() {
+    const schools = await this.get('schools');
+    const vocabularies = await all(schools.mapBy('vocabularies'));
+    return vocabularies.reduce((array, set) => {
+      array.pushObjects(set.toArray());
+      return array;
+    }, []).sortBy('school.title', 'title');
   }),
 
   /**
