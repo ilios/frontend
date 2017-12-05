@@ -2,12 +2,14 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import RSVP from 'rsvp';
-import { task } from 'ember-concurrency';
-
+import { task, timeout } from 'ember-concurrency';
+import ReportTitleMixin from 'ilios/mixins/report-title';
+import PapaParse from 'papaparse';
+import createDownloadFile from '../utils/create-download-file';
 
 const { Promise, resolve } = RSVP;
 
-export default Component.extend({
+export default Component.extend(ReportTitleMixin, {
   currentUser: service(),
   reporting: service(),
   store: service(),
@@ -17,6 +19,7 @@ export default Component.extend({
   selectedReport: null,
   selectedYear: null,
   user: null,
+  finishedBuildingReport: false,
 
   didReceiveAttrs() {
     this._super(...arguments);
@@ -64,6 +67,17 @@ export default Component.extend({
 
     return prepositionalObject != 'course' && ['course', 'session'].includes(subject);
   }),
+  downloadReport: task(function* () {
+    const report = this.get('selectedReport');
+    const title = yield this.getReportTitle(report);
+    const year = this.get('selectedYear');
+    const data = yield this.get('reporting').getArrayResults(report, year);
+    this.set('finishedBuildingReport', true);
+    const csv = PapaParse.unparse(data);
+    createDownloadFile(`${title}.csv`, csv, 'text/csv');
+    yield timeout(2000);
+    this.set('finishedBuildingReport', false);
+  }).drop(),
   actions: {
     toggleEditor() {
       this.set('myReportEditorOn', !this.get('myReportEditorOn'));
@@ -77,6 +91,6 @@ export default Component.extend({
     deleteReport(report){
       report.deleteRecord();
       report.save();
-    }
+    },
   }
 });

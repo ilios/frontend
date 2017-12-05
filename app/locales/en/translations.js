@@ -145,6 +145,7 @@ export default {
     'domain': 'Domain',
     'done': 'Done',
     'downloadingCurriculumInventoryReport': 'Report download has started. This may take a while...',
+    'downloadResults': 'Download Results',
     'draft': 'Draft',
     'duration': 'Duration',
     'durationInDays': 'Duration (in Days)',

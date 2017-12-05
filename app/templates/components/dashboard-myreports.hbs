@@ -4,6 +4,16 @@
     <div class="dashboard-block-actions">
       {{#liquid-if selectedReport class='crossFade'}}
         <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
+        <button {{action (perform downloadReport)}} disabled={{downloadReport.isRunning}}>
+          {{#if finishedBuildingReport}}
+            {{fa-icon 'check'}}
+          {{else if downloadReport.isRunning}}
+            {{fa-icon 'spinner' spin=true}}
+          {{else}}
+            {{fa-icon 'download'}}
+          {{/if}}
+          {{t 'general.downloadResults'}}
+        </button>
       {{else}}
         {{expand-collapse-button value=myReportEditorOn action="toggleEditor" data-test-add-new-report=true}}
       {{/liquid-if}}

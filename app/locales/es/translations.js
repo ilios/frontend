@@ -145,6 +145,7 @@
     'domain': 'Dominio',
     'done': 'Acabado',
     'downloadingCurriculumInventoryReport': 'Informe descarga ha comenzado. Esto puede tardar un rato...',
+    'downloadResults': 'Descargar Resultados',
     'draft': 'Borrador',
     'duration': 'Duración',
     'durationInDays': 'Duración (en Días)',
