@@ -5,7 +5,7 @@ import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { computed, RSVP } = Ember;
+const { computed, RSVP, isEmpty } = Ember;
 const { filterBy, mapBy, sum } = computed;
 const { all, map, Promise } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
@@ -52,20 +52,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed('objectives.@each.treeCompetencies', function(){
-    return new Promise(resolve => {
-      this.get('objectives').then(function(objectives){
-        let promises = objectives.getEach('treeCompetencies');
-        all(promises).then(trees => {
-          let competencies = trees.reduce((array, set) => {
-            return array.pushObjects(set);
-          }, []);
-          competencies = competencies.uniq().filter(item => {
-            return item != null;
-          });
-          resolve(competencies);
-        });
-      });
+  competencies: computed('objectives.@each.treeCompetencies', async function(){
+    const objectives = await this.get('objectives');
+    const trees = await all(objectives.mapBy('treeCompetencies'));
+    const competencies = trees.reduce((array, set) => {
+      return array.pushObjects(set);
+    }, []);
+    return competencies.uniq().filter(item => {
+      return !isEmpty(item);
     });
   }),
 
