@@ -1,10 +1,9 @@
-import Ember from 'ember';
 import DS from 'ember-data';
+import Inflector from 'ember-inflector';
 
 const { Model, attr, hasMany } = DS;
 
-const inflector = Ember.Inflector.inflector;
-inflector.uncountable('aamc-pcrs');
+Inflector.inflector.uncountable('aamc-pcrs');
 
 export default Model.extend({
   description: attr('string'),
