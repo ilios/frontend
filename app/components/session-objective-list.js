@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';

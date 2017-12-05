@@ -35,9 +35,9 @@ module.exports = {
     'ember/no-capital-letters-in-routes': 0,
     'ember/routes-segments-snake-case': 0,
     'ember/avoid-leaking-state-in-components': 0,
-    'ember/order-in-components': 0,
-    'ember/order-in-controllers': 0,
-    'ember/order-in-routes': 0,
+    'ember/order-in-components': 2,
+    'ember/order-in-controllers': 2,
+    'ember/order-in-routes': 2,
     'ember/use-brace-expansion': 0,
     'generator-star-spacing': 0,
   }

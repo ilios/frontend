@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';

@@ -1,3 +1,4 @@
+/* eslint ember/order-in-routes: 0 */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { isPresent } from '@ember/utils';

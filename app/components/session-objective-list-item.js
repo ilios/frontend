@@ -1,3 +1,4 @@
+/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import ObjectiListItem from 'ilios/mixins/objective-list-item';
 

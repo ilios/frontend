@@ -1,3 +1,4 @@
+/* eslint ember/order-in-controllers: 0 */
 /* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
