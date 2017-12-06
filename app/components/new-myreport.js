@@ -323,6 +323,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('schoolChanged', true);
   }),
 
+  resetCurrentPrepositionalObjectId: task(function* () {
+    const list = yield this.get('filteredPrepositionalObjectIdList');
+    const first = list.get('firstObject');
+    if(first){
+      this.set('currentPrepositionalObjectId', first.value);
+    }
+  }).restartable(),
+
   actions: {
     changeSubject(subject){
       this.set('currentSubject', subject);
@@ -332,14 +340,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
       this.set('currentPrepositionalObjectId', null);
-      this.get('prepositionalObjectIdList').then(list => {
-        if(!this.get('currentPrepositionalObjectId')){
-          let first = list.get('firstObject');
-          if(first){
-            this.set('currentPrepositionalObjectId', first.value);
-          }
-        }
-      });
+      this.get('resetCurrentPrepositionalObjectId').perform();
+    },
+    changeSelectedYear(year){
+      this.set('selectedYear', year);
+      this.set('currentPrepositionalObjectId', null);
+      this.get('resetCurrentPrepositionalObjectId').perform();
     },
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);

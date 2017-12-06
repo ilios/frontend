@@ -202,3 +202,44 @@ test('get all courses associated with mesh term #3419', async function (assert) 
   assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0');
   assert.equal(page.myReports.selectedReport.results(1).text, '2016 - 2017 course 1');
 });
+
+test('Prepositional object resets when a new type is selected', async function (assert) {
+  server.create('course', {
+    year: '2016',
+    schoolId: 1
+  });
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Terms');
+  await page.myReports.newReport.chooseObjectType('Session');
+  await page.myReports.newReport.chooseObject('session 1');
+  await page.myReports.newReport.chooseObjectType('Course');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+  assert.equal(page.myReports.selectedReport.title, 'All Terms for course 0 in school 0');
+});
+
+test('Report Selector with Academic Year not selecting correct predicate #3427', async function (assert) {
+  server.create('course', {
+    year: '2016',
+    schoolId: 1
+  });
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+
+  await page.myReports.newReport.chooseSchool('school 0');
+  await page.myReports.newReport.chooseSubject('Terms');
+  await page.myReports.newReport.chooseObjectType('Course');
+  await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+  assert.equal(page.myReports.selectedReport.title, 'All Terms for course 1 in school 0');
+});
