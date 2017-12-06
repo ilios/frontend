@@ -1,7 +1,4 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import Ember from 'ember';
 
@@ -54,7 +51,7 @@ test('check competencies', async function(assert) {
   let course = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let competency1 = store.createRecord('competency');
     let competency2 = store.createRecord('competency');
     let competency3 = store.createRecord('competency');
@@ -99,5 +96,41 @@ test('check publishedSessionOfferingCounts count', function(assert) {
     session3.set('published', true);
 
     assert.equal(course.get('publishedOfferingCount'), 5);
+  });
+});
+
+test("domains", async function(assert) {
+  assert.expect(7);
+  let course = this.subject();
+  let store = this.store();
+  await run( async () => {
+    const domain1 = store.createRecord('competency', { id: 1 });
+    const domain2 = store.createRecord('competency', { id: 2 });
+    const domain3 = store.createRecord('competency', { id: 3 });
+    const competency1 = store.createRecord('competency', { id: 4, title: 'Zeppelin', parent: domain1 });
+    const competency2 = store.createRecord('competency', { id: 5, title: 'Aardvark', parent: domain1 });
+    const competency3 = store.createRecord('competency', { id: 6, title: 'Geflarknik', parent: domain2 });
+
+    let objective1 = store.createRecord('objective', { competency: competency1 });
+    let objective2 = store.createRecord('objective', { competency: competency2 });
+    let objective3 = store.createRecord('objective', { competency: competency3 });
+    let objective4 = store.createRecord('objective', { competency: domain3 });
+
+    course.get('objectives').pushObjects([ objective1, objective2, objective3, objective4 ]);
+
+    const domainProxies = await course.get('domains');
+    assert.equal(domainProxies.length, 3);
+
+    const domainProxy1 = domainProxies.findBy('content.id', domain1.get('id'));
+    assert.equal(domainProxy1.get('subCompetencies').length, 2);
+    assert.ok(domainProxy1.get('subCompetencies').includes(competency1));
+    assert.ok(domainProxy1.get('subCompetencies').includes(competency2));
+
+    const domainProxy2 = domainProxies.findBy('content.id', domain2.get('id'));
+    assert.equal(domainProxy2.get('subCompetencies').length, 1);
+    assert.ok(domainProxy2.get('subCompetencies').includes(competency3));
+
+    const domainProxy3 = domainProxies.findBy('content.id', domain3.get('id'));
+    assert.equal(domainProxy3.get('subCompetencies').length, 0);
   });
 });
