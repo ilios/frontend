@@ -160,8 +160,8 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    */
   sortedObjectives: computed('objectives.@each.position', async function() {
-      const objectives = await this.get('objectives');
-      return objectives.toArray().sort(this.positionSortingCallback);
+    const objectives = await this.get('objectives');
+    return objectives.toArray().sort(this.positionSortingCallback);
   }),
 
   hasMultipleCohorts: computed('cohorts.[]', function(){
