@@ -79,7 +79,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
 
       // filter out any competencies of this domain that are not linked to this course.
       subCompetencies = subCompetencies.filter(competency => {
-        return competencies.contains(competency);
+        return competencies.includes(competency);
       }).sortBy('title');
 
       return ObjectProxy.create({
