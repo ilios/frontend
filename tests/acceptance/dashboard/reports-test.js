@@ -25,6 +25,7 @@ module('Acceptance: Dashboard Reports', {
     const firstCourse = server.create('course', {
       school,
       year: 2015,
+      externalId: 'Theoretical Phys Ed',
     });
     server.create('session', {
       course: firstCourse,
@@ -199,7 +200,7 @@ test('get all courses associated with mesh term #3419', async function (assert) 
 
   assert.equal(page.myReports.selectedReport.title, 'All Courses for descriptor 0 in school 0');
   assert.equal(page.myReports.selectedReport.results().count, 2);
-  assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0');
+  assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0 (Theoretical Phys Ed)');
   assert.equal(page.myReports.selectedReport.results(1).text, '2016 - 2017 course 1');
 });
 
@@ -242,4 +243,21 @@ test('Report Selector with Academic Year not selecting correct predicate #3427',
   assert.equal(page.myReports.reports().count, 3);
   await page.myReports.reports(1).select();
   assert.equal(page.myReports.selectedReport.title, 'All Terms for course 1 in school 0');
+});
+
+test('course external Id in report', async function (assert) {
+  await page.visit();
+  assert.equal(page.myReports.reports().count, 2);
+  await page.myReports.addNewReport();
+  await page.myReports.newReport.chooseSchool('All Schools');
+  await page.myReports.newReport.chooseSubject('Course');
+  await page.myReports.newReport.save();
+
+  assert.equal(page.myReports.reports().count, 3);
+  await page.myReports.reports(1).select();
+
+  assert.equal(page.myReports.selectedReport.title, 'All Courses in All Schools');
+  assert.equal(page.myReports.selectedReport.results().count, 2);
+  assert.equal(page.myReports.selectedReport.results(0).text, '2015 - 2016 course 0 (Theoretical Phys Ed)');
+  assert.equal(page.myReports.selectedReport.results(1).text, '2016 - 2017 course 1');
 });
