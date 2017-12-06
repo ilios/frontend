@@ -155,11 +155,11 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   }),
 
   /**
-   * A list of course objectives, sorted by position and title.
+   * A list of course objectives, sorted by position (asc) and then id (desc).
    * @property sortedObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
+  sortedObjectives: computed('objectives.@each.position', async function() {
       const objectives = await this.get('objectives');
       return objectives.toArray().sort(this.positionSortingCallback);
   }),
