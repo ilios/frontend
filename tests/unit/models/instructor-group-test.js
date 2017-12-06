@@ -4,9 +4,11 @@ import {
 } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
 const { run } = Ember;
 
+initialize();
 moduleForModel('instructor-group', 'Unit | Model | InstructorGroup', {
   needs: modelList
 });

@@ -1,6 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
+initialize();
 moduleForModel('aamc-resource-type', 'Unit | Model | AAMC Resource Type', {
   // Specify the other units that are required for this test.
   needs: modelList

@@ -3,10 +3,12 @@ import {
   test
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 import Ember from 'ember';
 
 const { run } = Ember;
 
+initialize();
 moduleForModel('objective', 'Unit | Model | Objective', {
   needs: modelList
 });

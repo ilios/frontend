@@ -4,10 +4,12 @@ import {
 } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
 const { RSVP, run } = Ember;
 const { resolve } = RSVP;
 
+initialize();
 moduleForModel('user', 'Unit | Model | User', {
   needs: modelList
 });

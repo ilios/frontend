@@ -3,7 +3,9 @@ import {
   test
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
+initialize();
 moduleForModel('learning-material-status', 'Unit | Model | LearningMaterialStatus', {
   needs: modelList
 });
