@@ -5,9 +5,9 @@ import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { computed, RSVP } = Ember;
+const { computed, ObjectProxy, RSVP, isEmpty } = Ember;
 const { filterBy, mapBy, sum } = computed;
-const { all, map, Promise } = RSVP;
+const { all, map } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
@@ -52,63 +52,43 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed('objectives.@each.treeCompetencies', function(){
-    return new Promise(resolve => {
-      this.get('objectives').then(function(objectives){
-        let promises = objectives.getEach('treeCompetencies');
-        all(promises).then(trees => {
-          let competencies = trees.reduce((array, set) => {
-            return array.pushObjects(set);
-          }, []);
-          competencies = competencies.uniq().filter(item => {
-            return item != null;
-          });
-          resolve(competencies);
-        });
-      });
+  competencies: computed('objectives.@each.treeCompetencies', async function(){
+    const objectives = await this.get('objectives');
+    const trees = await all(objectives.mapBy('treeCompetencies'));
+    const competencies = trees.reduce((array, set) => {
+      return array.pushObjects(set);
+    }, []);
+    return competencies.uniq().filter(item => {
+      return !isEmpty(item);
     });
   }),
 
   /**
-   * All competency domains linked to this course via its objectives.
+   * A list of competency and their domains linked to this course via its objectives.
+   * Each item in this list is a proxy object, containing the domain and all competencies of this domain that are linked.
+   *
    * @property domains
    * @type {Ember.computed}
    * @public
    */
-  domains: computed('competencies.@each.domain', function(){
-    return new Promise(resolve => {
-      let domainContainer = {};
-      let domainIds = [];
-      let promises = [];
-      this.get('competencies').then(competencies => {
-        competencies.forEach(competency => {
-          promises.pushObject(competency.get('domain').then(domain => {
-            if(!domainContainer.hasOwnProperty(domain.get('id'))){
-              domainIds.pushObject(domain.get('id'));
-              domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
-                content: domain,
-                subCompetencies: []
-              });
-            }
-            if(competency.get('id') !== domain.get('id')){
-              let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-              if(!subCompetencies.includes(competency)){
-                subCompetencies.pushObject(competency);
-                subCompetencies.sortBy('title');
-              }
-            }
-          }));
-        });
+  domains: computed('competencies.@each.domain', async function(){
+    const competencies = await this.get('competencies');
+    const domains = await all(competencies.mapBy('domain'));
+    const domainProxies = await map(domains.uniq(), async domain => {
+      let subCompetencies = await domain.get('treeChildren');
 
-        all(promises).then(() => {
-          let domains = domainIds.map(id => {
-            return domainContainer[id];
-          }).sortBy('title');
+      // filter out any competencies of this domain that are not linked to this course.
+      subCompetencies = subCompetencies.filter(competency => {
+        return competencies.includes(competency);
+      }).sortBy('title');
 
-          resolve(domains);
-        });
+      return ObjectProxy.create({
+        content: domain,
+        subCompetencies
       });
     });
+
+    return domainProxies.sortBy('title');
   }),
 
   publishedSessions: filterBy('sessions', 'isPublished'),
@@ -146,44 +126,17 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('school', 'cohorts.[]', function() {
-    return new Promise(resolve => {
-      let schools = [];
-      let promises = [];
+  schools: computed('school', 'cohorts.[]', async function() {
 
-      // get course-owning school
-      let promise = new Promise(resolve => {
-        this.get('school').then(school => {
-          schools.pushObject(school);
-          resolve();
-        });
+    const courseOwningSchool = await this.get('school');
 
-      });
-      promises.pushObject(promise);
+    const cohorts = await this.get('cohorts');
+    const programYears = await all(cohorts.mapBy('programYear'));
+    const programs = await all(programYears.mapBy('program'));
+    const schools = await all(programs.mapBy('school'));
 
-      // get schools from associated cohorts
-      promise = new Promise(resolve => {
-        this.get('cohorts').then(cohorts => {
-          map(cohorts.mapBy('programYear'), programYear => {
-            return programYear.get('program').then(program => {
-              return program.get('school').then(school => {
-                schools.pushObject(school);
-              });
-            });
-          }).then(() => {
-            resolve();
-          });
-        });
-      });
-      promises.pushObject(promise);
-
-      // once the two promises above resolve,
-      // de-dupe all schools and return a promise-array containing the dupe-free list of schools.
-      all(promises).then(() => {
-        let s = schools.uniq();
-        resolve(s);
-      });
-    });
+    schools.pushObject(courseOwningSchool);
+    return schools.uniq();
   }),
 
   /**
@@ -192,35 +145,25 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @type {Ember.computed}
    * @public
    */
-  assignableVocabularies: computed('schools.@each.vocabularies', function() {
-    return new Promise(resolve => {
-      this.get('schools').then(schools => {
-        all(schools.mapBy('vocabularies')).then(schoolVocabs => {
-          let v = [];
-          schoolVocabs.forEach(vocabs => {
-            vocabs.forEach(vocab => {
-              v.pushObject(vocab);
-            });
-          });
-          v = v.sortBy('school.title', 'title');
-          resolve(v);
-        });
-      });
-    });
+  assignableVocabularies: computed('schools.@each.vocabularies', async function() {
+    const schools = await this.get('schools');
+    const vocabularies = await all(schools.mapBy('vocabularies'));
+    return vocabularies.reduce((array, set) => {
+      array.pushObjects(set.toArray());
+      return array;
+    }, []).sortBy('school.title', 'title');
   }),
 
   /**
-   * A list of course objectives, sorted by position and title.
+   * A list of course objectives, sorted by position (asc) and then id (desc).
    * @property sortedObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.positionSortingCallback));
-      });
-    });
+  sortedObjectives: computed('objectives.@each.position', async function() {
+    const objectives = await this.get('objectives');
+    return objectives.toArray().sort(this.positionSortingCallback);
   }),
+
   hasMultipleCohorts: computed('cohorts.[]', function(){
     const meta = this.hasMany('cohorts');
     const ids = meta.ids();
