@@ -1,6 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
+initialize();
 moduleForModel('permission', 'Unit | Model | permission ', {
   needs: modelList
 });

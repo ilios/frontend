@@ -1,7 +1,9 @@
 import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 import { singularize, pluralize } from 'ember-inflector';
 
+initialize();
 moduleForModel('aamc-pcrs', 'Unit | Model | AamcPcrs', {
   needs: modelList
 });

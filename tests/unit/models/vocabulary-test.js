@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 import { pluralize } from 'ember-inflector';
 
 const { run } = Ember;
 
+initialize();
 moduleForModel('vocabulary', 'Unit | Model | vocabulary', {
   // Specify the other units that are required for this test.
   needs: modelList

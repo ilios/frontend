@@ -1,7 +1,9 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
+initialize();
 moduleForModel('curriculum-inventory-sequence-block', 'Unit | Model | CurriculumInventorySequenceBlock ', {
   needs: modelList
 });

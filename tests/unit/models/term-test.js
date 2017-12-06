@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import { moduleForModel, test } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
+import { initialize } from '../../../initializers/replace-promise';
 
 const { run } = Ember;
 
+initialize();
 moduleForModel('term', 'Unit | Model | term', {
   // Specify the other units that are required for this test.
   needs: modelList
