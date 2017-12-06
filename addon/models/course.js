@@ -7,7 +7,7 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { computed, ObjectProxy, RSVP, isEmpty } = Ember;
 const { filterBy, mapBy, sum } = computed;
-const { all, map, Promise } = RSVP;
+const { all, map } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
