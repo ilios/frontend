@@ -100,13 +100,13 @@ test('check publishedSessionOfferingCounts count', function(assert) {
 });
 
 test("domains", async function(assert) {
-  assert.expect(7);
+  assert.expect(10);
   let course = this.subject();
   let store = this.store();
   await run( async () => {
-    const domain1 = store.createRecord('competency', { id: 1 });
-    const domain2 = store.createRecord('competency', { id: 2 });
-    const domain3 = store.createRecord('competency', { id: 3 });
+    const domain1 = store.createRecord('competency', { id: 1, title: 'Zylinder' });
+    const domain2 = store.createRecord('competency', { id: 2, title: 'Anton' });
+    const domain3 = store.createRecord('competency', { id: 3, title: 'Lexicon' });
     const competency1 = store.createRecord('competency', { id: 4, title: 'Zeppelin', parent: domain1 });
     const competency2 = store.createRecord('competency', { id: 5, title: 'Aardvark', parent: domain1 });
     const competency3 = store.createRecord('competency', { id: 6, title: 'Geflarknik', parent: domain2 });
@@ -121,16 +121,19 @@ test("domains", async function(assert) {
     const domainProxies = await course.get('domains');
     assert.equal(domainProxies.length, 3);
 
-    const domainProxy1 = domainProxies.findBy('content.id', domain1.get('id'));
-    assert.equal(domainProxy1.get('subCompetencies').length, 2);
-    assert.equal(domainProxy1.get('subCompetencies')[0], competency2);
-    assert.equal(domainProxy1.get('subCompetencies')[1], competency1);
+    const domainProxy1 = domainProxies[0];
+    assert.equal(domainProxy1.get('content'), domain2);
+    assert.equal(domainProxy1.get('subCompetencies').length, 1);
+    assert.ok(domainProxy1.get('subCompetencies').includes(competency3));
 
-    const domainProxy2 = domainProxies.findBy('content.id', domain2.get('id'));
-    assert.equal(domainProxy2.get('subCompetencies').length, 1);
-    assert.ok(domainProxy2.get('subCompetencies').includes(competency3));
+    const domainProxy2 = domainProxies[1];
+    assert.equal(domainProxy2.get('content'), domain3);
+    assert.equal(domainProxy2.get('subCompetencies').length, 0);
 
-    const domainProxy3 = domainProxies.findBy('content.id', domain3.get('id'));
-    assert.equal(domainProxy3.get('subCompetencies').length, 0);
+    const domainProxy3 = domainProxies[2];
+    assert.equal(domainProxy3.get('content'), domain1);
+    assert.equal(domainProxy3.get('subCompetencies').length, 2);
+    assert.equal(domainProxy3.get('subCompetencies')[0], competency2);
+    assert.equal(domainProxy3.get('subCompetencies')[1], competency1);
   });
 });
