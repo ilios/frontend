@@ -243,3 +243,44 @@ test('copy learnergroup with learners', async function(assert) {
   assert.equal(getElementText(find(secondSubgroupMembers)), getText('3'));
   assert.equal(getElementText(find(secondSubgroupSubgroups)), getText('0'));
 });
+
+
+test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
+  const groups = '.list tbody tr';
+  const firstGroup = `${groups}:eq(0)`;
+  const firstTitle = `${firstGroup} td:eq(0)`;
+  const firstLink = `${firstTitle} a`;
+  const members = '.learnergroup-overview-content table:eq(1) tbody tr';
+  const cohortMembers = `.cohortmembers tbody tr`;
+  assert.expect(5);
+  server.create('school');
+  server.create('program', {
+    schoolId: 1,
+  });
+  server.create('programYear', {
+    programId: 1
+  });
+  const cohort = server.create('cohort', {
+    programYearId: 1,
+  });
+  const learnerGroup = server.create('learnerGroup', {
+    cohort
+  });
+  server.createList('user', 5, {
+    cohorts: [cohort],
+    primaryCohort: cohort
+  });
+  server.createList('user', 5, {
+    cohorts: [cohort],
+    primaryCohort: cohort,
+    learnerGroups: [learnerGroup]
+  });
+
+  await visit('/learnergroups');
+  assert.equal(1, find(groups).length);
+  assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+  await click(firstLink);
+  assert.equal(currentURL(), '/learnergroups/1');
+  assert.equal(find(members).length, 5, 'lists members');
+  assert.equal(find(cohortMembers).length, 5, 'lists cohort non members');
+});
