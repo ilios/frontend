@@ -81,10 +81,10 @@ export default Model.extend({
     let users = await this.get('users');
     let subgroups = await this.get('children');
     let usersInSubgroups = await all(subgroups.mapBy('allDescendantUsers'));
-    let allUsers = (usersInSubgroups.reduce((array, set) => {
-      array.pushObjects(set);
+    let allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
+      array.pushObjects(subGroupUsers);
       return array;
-    }, []));
+    }, []);
     allUsers.pushObjects(users.toArray());
 
     return allUsers.uniq();
@@ -255,14 +255,13 @@ export default Model.extend({
    * @param {Object} user The user model.
    * @return {Array} The modified learner groups.
    */
-  async removeUserFromGroupAndAllDescendants(user){
+  async removeUserFromGroupAndAllDescendants(user) {
     const modifiedGroups = [];
     const userId = user.get('id');
     if (this.hasMany('users').ids().includes(userId)) {
       this.get('users').removeObject(user);
       modifiedGroups.pushObject(this);
     }
-
     const children = await this.get('children');
     const groups = await map(children.toArray(), async group => {
       return group.removeUserFromGroupAndAllDescendants(user);
