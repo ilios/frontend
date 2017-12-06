@@ -5,7 +5,7 @@ import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { computed, RSVP, isEmpty } = Ember;
+const { computed, ObjectProxy, RSVP, isEmpty } = Ember;
 const { filterBy, mapBy, sum } = computed;
 const { all, map, Promise } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;
@@ -64,45 +64,31 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   }),
 
   /**
-   * All competency domains linked to this course via its objectives.
+   * A list of competency and their domains linked to this course via its objectives.
+   * Each item in this list is a proxy object, containing the domain and all competencies of this domain that are linked.
+   *
    * @property domains
    * @type {Ember.computed}
    * @public
    */
-  domains: computed('competencies.@each.domain', function(){
-    return new Promise(resolve => {
-      let domainContainer = {};
-      let domainIds = [];
-      let promises = [];
-      this.get('competencies').then(competencies => {
-        competencies.forEach(competency => {
-          promises.pushObject(competency.get('domain').then(domain => {
-            if(!domainContainer.hasOwnProperty(domain.get('id'))){
-              domainIds.pushObject(domain.get('id'));
-              domainContainer[domain.get('id')] = Ember.ObjectProxy.create({
-                content: domain,
-                subCompetencies: []
-              });
-            }
-            if(competency.get('id') !== domain.get('id')){
-              let subCompetencies = domainContainer[domain.get('id')].get('subCompetencies');
-              if(!subCompetencies.includes(competency)){
-                subCompetencies.pushObject(competency);
-                domainContainer[domain.get('id')].set('subCompetencies', subCompetencies.sortBy('title'));
-              }
-            }
-          }));
-        });
+  domains: computed('competencies.@each.domain', async function(){
+    const competencies = await this.get('competencies');
+    const domains = await all(competencies.mapBy('domain'));
+    const domainProxies = await map(domains.uniq(), async domain => {
+      let subCompetencies = await domain.get('treeChildren');
 
-        all(promises).then(() => {
-          let domains = domainIds.map(id => {
-            return domainContainer[id];
-          }).sortBy('title');
+      // filter out any competencies of this domain that are not linked to this course.
+      subCompetencies = subCompetencies.filter(competency => {
+        return competencies.contains(competency);
+      }).sortBy('title');
 
-          resolve(domains);
-        });
+      return ObjectProxy.create({
+        content: domain,
+        subCompetencies
       });
     });
+
+    return domainProxies.sortBy('title');
   }),
 
   publishedSessions: filterBy('sessions', 'isPublished'),
