@@ -123,8 +123,8 @@ test("domains", async function(assert) {
 
     const domainProxy1 = domainProxies.findBy('content.id', domain1.get('id'));
     assert.equal(domainProxy1.get('subCompetencies').length, 2);
-    assert.ok(domainProxy1.get('subCompetencies').includes(competency1));
-    assert.ok(domainProxy1.get('subCompetencies').includes(competency2));
+    assert.equal(domainProxy1.get('subCompetencies')[0], competency2);
+    assert.equal(domainProxy1.get('subCompetencies')[1], competency1);
 
     const domainProxy2 = domainProxies.findBy('content.id', domain2.get('id'));
     assert.equal(domainProxy2.get('subCompetencies').length, 1);
