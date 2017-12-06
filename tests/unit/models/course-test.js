@@ -142,3 +142,34 @@ test("domains", async function(assert) {
     assert.equal(domainProxy3.get('subCompetencies')[1], competency1);
   });
 });
+
+
+test('schools', async function(assert) {
+  assert.expect(4);
+  let course = this.subject();
+  let store = this.store();
+  await run( async () => {
+    const school1 = store.createRecord('school');
+    const school2 = store.createRecord('school');
+    const school3 = store.createRecord('school');
+    const program1 = store.createRecord('program', { school: school2 });
+    const program2 = store.createRecord('program', { school: school2 });
+    const program3 = store.createRecord('program', { school: school3 });
+    const programYear1 = store.createRecord('programYear', { program: program1 });
+    const programYear2 = store.createRecord('programYear', { program: program2 });
+    const programYear3 = store.createRecord('programYear', { program: program3 });
+    const cohort1 = store.createRecord('cohort', { programYear: programYear1 });
+    const cohort2 = store.createRecord('cohort', { programYear: programYear2 });
+    const cohort3 = store.createRecord('cohort', { programYear: programYear3 });
+
+    course.get('cohorts').pushObjects([ cohort1, cohort2, cohort3 ]);
+    course.set('school', school1);
+
+    const schools = await course.get('schools');
+
+    assert.equal(schools.length, 3);
+    assert.ok(schools.includes(school1));
+    assert.ok(schools.includes(school2));
+    assert.ok(schools.includes(school3));
+  });
+});
