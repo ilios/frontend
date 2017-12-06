@@ -82,7 +82,7 @@ export default Model.extend({
     async: true,
     inverse: 'users'
   }),
-  primaryCohort: belongsTo('cohort', {async: true}),
+  primaryCohort: belongsTo('cohort', {async: true, inverse: null}),
   pendingUserUpdates: hasMany('pending-user-update', {async: true}),
   permissions: hasMany('permission', {async: true}),
 
