@@ -199,3 +199,47 @@ test('assignableVocabularies', async function(assert){
     assert.equal(vocabularies[3], vocabulary1);
   });
 });
+
+test('assignableVocabularies', async function(assert){
+  assert.expect(5);
+  let course = this.subject();
+  let store = this.store();
+  await run( async () => {
+    const school1 = store.createRecord('school', { title: 'Zeppelin' });
+    const school2 = store.createRecord('school', { title: 'Anton' });
+    const vocabulary1 = store.createRecord('vocabulary', { title: 'Sowjetunion',  school: school1 });
+    const vocabulary2 = store.createRecord('vocabulary', { title: 'DDR', school: school1 });
+    const vocabulary3 = store.createRecord('vocabulary', { title: 'Walter Ulbricht', school: school2 });
+    const vocabulary4 = store.createRecord('vocabulary', { title: 'Antifaschistischer Schutzwall', school: school2 });
+    const program = store.createRecord('program', { school: school1 });
+    const programYear = store.createRecord('programYear', { program });
+    const cohort = store.createRecord('cohort', { programYear });
+    course.get('cohorts').pushObject(cohort);
+    course.set('school', school2);
+
+    const vocabularies = await course.get('assignableVocabularies');
+    assert.equal(vocabularies.length, 4);
+    assert.equal(vocabularies[0], vocabulary4);
+    assert.equal(vocabularies[1], vocabulary3);
+    assert.equal(vocabularies[2], vocabulary2);
+    assert.equal(vocabularies[3], vocabulary1);
+  });
+});
+
+test('sortedObjectives', async function(assert) {
+  assert.expect(4);
+  let course = this.subject();
+  let store = this.store();
+  run( async () => {
+    const objective1 = store.createRecord('objective', { id: 1, position: 3, title: 'Aardvark'});
+    const objective2 = store.createRecord('objective', { id: 2, position: 2, title: 'Bar' });
+    const objective3 = store.createRecord('objective', { id: 3, position: 2, title: 'Foo' });
+    course.get('objectives').pushObjects([ objective1, objective2, objective3 ]);
+
+    const objectives = await course.get('sortedObjectives');
+    assert.equal(objectives.length, 3);
+    assert.equal(objectives[0], objective3);
+    assert.equal(objectives[1], objective2);
+    assert.equal(objectives[2], objective1);
+  });
+});
