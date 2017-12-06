@@ -110,6 +110,11 @@ test("domains", async function(assert) {
     const competency1 = store.createRecord('competency', { id: 4, title: 'Zeppelin', parent: domain1 });
     const competency2 = store.createRecord('competency', { id: 5, title: 'Aardvark', parent: domain1 });
     const competency3 = store.createRecord('competency', { id: 6, title: 'Geflarknik', parent: domain2 });
+    // competencies that are linked to these domains, but not to this course.
+    // they should not appear in the output.
+    store.createRecord('competency', { id: 7, parent: domain1 });
+    store.createRecord('competency', { id: 8, parent: domain2 });
+    store.createRecord('competency', { id: 9, parent: domain3 });
 
     let objective1 = store.createRecord('objective', { competency: competency1 });
     let objective2 = store.createRecord('objective', { competency: competency2 });
