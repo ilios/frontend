@@ -129,7 +129,7 @@ test('removeParentWithProgramYears', async function(assert) {
   await run( async () => {
     model.reopen({
       async save() {
-        assert.ok(true, 'save() was called.')
+        assert.ok(true, 'save() was called.');
       }
     });
     const programYear1 = store.createRecord('programYear');
