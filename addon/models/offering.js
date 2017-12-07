@@ -4,7 +4,7 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { computed, RSVP } = Ember;
 const { not } = computed;
-const { Promise, all } = RSVP;
+const { all } = RSVP;
 
 export default DS.Model.extend({
   room: DS.attr('string'),
@@ -62,19 +62,21 @@ export default DS.Model.extend({
       return key;
     }
   ),
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', function(){
-    return new Promise(resolve => {
-      this.get('instructorGroups').then(instructorGroups => {
-        let promises = instructorGroups.getEach('users');
-        promises.pushObject(this.get('instructors'));
-        all(promises).then(trees => {
-          let instructors = trees.reduce((array, set) => {
-            return array.pushObjects(set.toArray());
-          }, []);
-          instructors = instructors.uniq().sortBy('lastName', 'firstName');
-          resolve(instructors);
-        });
-      });
-    });
+  /**
+   * All instructors associated with this offering, either directly or indirectly via instructor groups.
+   * @property allInstructors
+   * @type {Ember.computed}
+   */
+  allInstructors: computed('instructors.[]', 'instructorGroups.[]', async function(){
+    const instructorGroups = await this.get('instructorGroups');
+    const instructors = await this.get('instructors');
+    const instructorsInInstructorGroups = await all(instructorGroups.mapBy('users'));
+    const allInstructors = instructorsInInstructorGroups.reduce((array, set) => {
+      return array.pushObjects(set.toArray());
+    }, []);
+
+    allInstructors.pushObjects(instructors.toArray());
+
+    return allInstructors.uniq().sortBy('lastName', 'firstName');
   }),
 });
