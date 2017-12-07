@@ -25,18 +25,19 @@ export default Model.extend({
    * @public
    */
   courses: computed('offerings.[]', 'ilmSessions.[]', async function(){
-    const offerings = await this.get('offerings').toArray();
-    const ilms = await this.get('ilmSessions').toArray();
-    const arr = [].pushObjects(offerings).pushObjects(ilms);
+    const offerings = await this.get('offerings');
+    const ilms = await this.get('ilmSessions');
+    const arr = [].concat(offerings.toArray(), ilms.toArray());
 
     let sessions = await map(arr.mapBy('session'), session => {
       return session;
     });
-    sessions = sessions.filter(session => {
+
+    let filteredSessions = sessions.filter(session => {
       return !isEmpty(session);
     }).uniq();
 
-    const courses = await map(sessions.mapBy('course'), course => {
+    const courses = await map(filteredSessions.mapBy('course'), course => {
       return course;
     });
 
@@ -77,14 +78,14 @@ export default Model.extend({
    * @public
    */
   allDescendantUsers: computed('users.[]', 'children.@each.allDescendantUsers', async function(){
-    let users = await this.get('users').toArray();
-    let subgroups = await this.get('children').toArray();
+    let users = await this.get('users');
+    let subgroups = await this.get('children');
     let usersInSubgroups = await all(subgroups.mapBy('allDescendantUsers'));
-    let allUsers = (usersInSubgroups.reduce((array, set) => {
-      array.pushObjects(set);
+    let allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
+      array.pushObjects(subGroupUsers);
       return array;
-    }, []));
-    allUsers.pushObjects(users);
+    }, []);
+    allUsers.pushObjects(users.toArray());
 
     return allUsers.uniq();
   }),
@@ -100,7 +101,7 @@ export default Model.extend({
     const descendants = await this.get('allDescendants');
     const membersAtThisLevel = await map(users.toArray(), async user => {
       const userGroups = await user.get('learnerGroups');
-      const subGroups = userGroups.toArray().filter(group => descendants.includes(group));
+      const subGroups = userGroups.filter(group => descendants.includes(group));
       return isEmpty(subGroups) ? user : null;
     });
 
@@ -254,14 +255,13 @@ export default Model.extend({
    * @param {Object} user The user model.
    * @return {Array} The modified learner groups.
    */
-  async removeUserFromGroupAndAllDescendants(user){
+  async removeUserFromGroupAndAllDescendants(user) {
     const modifiedGroups = [];
     const userId = user.get('id');
     if (this.hasMany('users').ids().includes(userId)) {
       this.get('users').removeObject(user);
       modifiedGroups.pushObject(this);
     }
-
     const children = await this.get('children');
     const groups = await map(children.toArray(), async group => {
       return group.removeUserFromGroupAndAllDescendants(user);
