@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import jwtDecode from 'jwt-decode';
+import jwtDecode from '../utils/jwt-decode';
 
 const { Route, inject } = Ember;
 const { service } = inject;
