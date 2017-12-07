@@ -1,7 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 
 const { all, filter, Promise, resolve, map } = RSVP;
@@ -133,6 +133,10 @@ export default Service.extend({
         course
       };
       rhett.value = course.get('academicYear') + ' ' + course.get('title');
+      const externalId = course.get('externalId');
+      if (isPresent(externalId)) {
+        rhett.value += ` (${externalId})`;
+      }
       if(canView){
         rhett.route = 'course';
         rhett.model = course;
