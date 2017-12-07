@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
-const { all } = RSVP;
+const { all, map } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
@@ -102,28 +102,27 @@ export default Model.extend({
     }
     return title.replace(/(<([^>]+)>)/ig,"");
   }),
-  //Remove any parents with a relationship to the cohort
-  removeParentWithProgramYears(programYearsToRemove){
-    return new RSVP.Promise(resolve => {
-      this.get('parents').then(parents => {
-        let promises = [];
-        parents.forEach(parent => {
-          promises.pushObject(parent.get('programYears').then(programYears => {
-            let programYear = programYears.get('firstObject');
-            if(programYearsToRemove.includes(programYear)){
-              parents.removeObject(parent);
-              parent.get('children').removeObject(this);
-            }
-          }));
-        });
-        RSVP.all(promises).then(() => {
-          this.save().then(() => {
-            resolve();
-          });
-        });
-      });
+
+  /**
+   * Remove any parents with a relationship to the cohort.
+   * @method removeParentWithProgramYears
+   * @param {Array} programYearsToRemove
+   */
+  async removeParentWithProgramYears(programYearsToRemove){
+    const parents = await this.get('parents');
+
+    await map(parents.toArray(), async parent => {
+      const programYears = await parent.get('programYears');
+      const programYear = programYears.get('firstObject');
+      if(programYearsToRemove.includes(programYear)){
+        parents.removeObject(parent);
+        parent.get('children').removeObject(this);
+      }
     });
+
+    await this.save();
   },
+
   firstProgram: computed('programYears.[]', async function(){
     const programYears = await this.get('programYears');
     const programYear = programYears.get('firstObject');
