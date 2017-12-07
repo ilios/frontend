@@ -22,12 +22,12 @@ module.exports = function (/* environment, appConfig */) {
         type: "image/png",
         targets: ['favicon'],
       })),
-      {
-        src: "/assets/icons/sunburst-white-background192.png",
-        sizes: "192x192",
+      ...[48, 96, 192].map(size => ({
+        src: `/assets/icons/sunburst-white-background${size}.png`,
+        sizes: `${size}x${size}`,
         type: "image/png",
         targets: ['manifest'],
-      },
+      })),
       {
         src: "/assets/icons/sunburst-transparent512.png",
         sizes: "512x512",
