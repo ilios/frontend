@@ -121,7 +121,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return await learnerGroup.get('usersOnlyAtThisLevel');
     }
   }),
-  usersToPassToCohortManager: computed('learnerGroup.{topLevelGroup,allDescendantUsers.[]}', 'cohort.users.[]', async function () {
+  usersToPassToCohortManager: computed('learnerGroup.topLevelGroup', 'learnerGroup.allDescendantUsers.[]', async function () {
     const learnerGroup = this.get('learnerGroup');
     const cohort = await learnerGroup.get('cohort');
     const topLevelGroup = await learnerGroup.get('topLevelGroup');

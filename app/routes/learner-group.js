@@ -11,7 +11,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return all([
       model.get('usersOnlyAtThisLevel'),
       model.get('allInstructors'),
-      model.get('courses'),
       model.get('allParents'),
       model.get('courses'),
     ]);
