@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 const { attr, belongsTo, hasMany, Model } = DS;
 const { computed, isEmpty, RSVP, $} = Ember;
-const { all, Promise } = RSVP;
+const {  map } = RSVP;
 
 export default Model.extend({
   title: attr('string'),
@@ -44,25 +44,23 @@ export default Model.extend({
     return cohortsForYear;
   },
 
-  getProgramYearsForYear(year){
-    return new Promise(resolve => {
-      this.get('programs').then(programs => {
-        let promises = [];
-        let filteredProgramYears = [];
-        programs.forEach(program => {
-          promises.pushObject(program.get('programYears').then(programYears => {
-            programYears.forEach(programYear => {
-              if(parseInt(programYear.get('startYear')) === year){
-                filteredProgramYears.pushObject(programYear);
-              }
-            });
-          }));
-          all(promises).then(()=> {
-            resolve(filteredProgramYears);
-          });
-        });
+  /**
+   * Get all program years starting in the given year.
+   * @method getProgramYearsForYear
+   * @param {Number} year
+   * @return {Promise.<Array>}
+   */
+  async getProgramYearsForYear(year){
+    const programs = await this.get('programs');
+    const rhett = await map(programs.mapBy('programYears'), programYears => {
+      return programYears.filter(programYear => {
+        return parseInt(programYear.get('startYear'), 10) === year;
       });
     });
+    return rhett.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []);
   },
 
   async getConfigByName(name){
