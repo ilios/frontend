@@ -24,7 +24,7 @@
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-moment-shim": "^3.1.0",
     "ember-composable-helpers": "^2.0.1",
-    "ember-concurrency": "0.7.19",
+    "ember-concurrency": "0.8.12",
     "ember-i18n": "^5.0.1",
     "ember-moment": "^7.4.1",
     "ember-one-way-controls": "^3.0.0",
@@ -66,10 +66,5 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "ember-concurrency"
-    ]
   }
 }
