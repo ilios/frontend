@@ -3,7 +3,7 @@ import layout from '../templates/components/dashboard-calendar';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
+const { Component, computed, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
 const { service } = inject;
 const { all, map } = RSVP;
 
@@ -25,7 +25,6 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   classNames: ['dashboard-calendar'],
-  activeFilters: null,
   selectedSchool: null,
   selectedDate: null,
   selectedView: null,
@@ -163,12 +162,11 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  filterTags: computed('activeFilters', async function() {
+  filterTags: computed('activeFilters.[]', async function() {
     const activeFilters = this.get('activeFilters');
 
     return map(activeFilters, async (filter) => {
-      let hash = {};
-      hash.filter = filter;
+      let hash = { filter };
 
       if (typeof filter === 'number') {
         hash.class = 'tag-course-level';
@@ -190,6 +188,14 @@ export default Component.extend({
           }
           const program = await filter.get('programYear.program');
           hash.name = `${displayTitle} ${program.get('title')}`;
+          break;
+        }
+        case 'term': {
+          hash.class = 'tag-term';
+          const allTitles = await filter.get('titleWithParentTitles');
+          const vocabulary = await filter.get('vocabulary');
+          const title = vocabulary.get('title');
+          hash.name = `${title} > ${allTitles}`;
           break;
         }
         case 'course':
@@ -273,19 +279,17 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
-    get() {
-      const a = this.get('selectedSessionTypes');
-      const b = this.get('selectedCourseLevels');
-      const c = this.get('selectedCohorts');
-      const d = this.get('selectedCourses');
+  activeFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', 'selectedTerms.[]', function () {
+    const a = this.get('selectedSessionTypes');
+    const b = this.get('selectedCourseLevels');
+    const c = this.get('selectedCohorts');
+    const d = this.get('selectedCourses');
+    const e = this.get('selectedTerms');
 
-      let results = a.concat(b, c, d);
-      this.set('activeFilters', results);
+    const activeFilters = [].concat(a, b, c, d, e);
 
-      return isPresent(results);
-    }
-  }).readOnly(),
+    return activeFilters;
+  }),
 
   /**
    * @property ourEvents

@@ -123,6 +123,10 @@
         background-color: lighten($ilios-blue, 60%);
       }
 
+      .tag-term {
+        background-color: lighten($ilios-blue, 40%);
+      }
+
       .filters-clear-filters {
         color: $ilios-blue;
         cursor: pointer;

@@ -171,7 +171,7 @@
   </div>
 </section>
 
-{{#if showClearFilters}}
+{{#if (gt activeFilters.length 0)}}
   <section class="filters-list">
     <header class="filters-header">{{t 'general.activeFilters'}}:</header>
     <div class="filter-tags">
