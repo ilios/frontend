@@ -136,12 +136,14 @@ export default Component.extend({
     'eventsWithSelectedCourseLevels.[]',
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
+    'eventsWithSelectedTerms.[]',
     async function() {
       const eventTypes = [
         'eventsWithSelectedSessionTypes',
         'eventsWithSelectedCourseLevels',
         'eventsWithSelectedCohorts',
         'eventsWithSelectedCourses',
+        'eventsWithSelectedTerms',
       ];
       const allFilteredEvents = await map(eventTypes, async name => {
         return await this.get(name);
@@ -400,6 +402,35 @@ export default Component.extend({
       if(event.ilmSession || event.offering) {
         const courseId = await this.get('userEvents').getCourseIdForEvent(event);
         if(selectedCourses.includes(courseId)) {
+          return event;
+        }
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
+    });
+  }),
+
+  /**
+   * @property eventsWithSelectedTerms
+   * @type {Ember.computed}
+   * @protected
+   */
+  eventsWithSelectedTerms: computed('ourEvents.[]', 'selectedTerms.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedTerms = this.get('selectedTerms').mapBy('id');
+    if(isEmpty(selectedTerms)) {
+      return events;
+    }
+    const matchingEvents = await map(events, async event => {
+      if (event.ilmSession || event.offering) {
+
+        const termIds = await this.get('userEvents').getTermIdsForEvent(event);
+        if(termIds.any(termId => {
+          return selectedTerms.includes(termId);
+        })) {
           return event;
         }
       }
