@@ -229,12 +229,9 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.positionSortingCallback));
-      });
-    });
+  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
+    const objectives = await this.get('objectives');
+    return objectives.toArray().sort(this.positionSortingCallback);
   })
 
 });
