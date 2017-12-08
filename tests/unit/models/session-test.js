@@ -262,3 +262,22 @@ test('termCount', function(assert) {
     assert.equal(subject.get('termCount'), 2);
   });
 });
+
+test('sortedObjectives', async function(assert){
+  assert.expect(5);
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const objective1 = store.createRecord('objective', { id: 1, position: 10});
+    const objective2 = store.createRecord('objective', { id: 2, position: 5 });
+    const objective3 = store.createRecord('objective', { id: 3, position: 5 });
+    const objective4 = store.createRecord('objective', { id: 4, position: 0 });
+    subject.get('objectives').pushObjects([ objective1, objective2, objective3, objective4 ]);
+    const sortedObjectives = await subject.get('sortedObjectives');
+    assert.equal(sortedObjectives.length, 4);
+    assert.equal(sortedObjectives[0], objective4);
+    assert.equal(sortedObjectives[1], objective3);
+    assert.equal(sortedObjectives[2], objective2);
+    assert.equal(sortedObjectives[3], objective1);
+  });
+});
