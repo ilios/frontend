@@ -3,7 +3,6 @@ import DS from 'ember-data';
 
 const { RSVP, computed }  = Ember;
 const { alias, equal } = computed;
-const { Promise } = RSVP;
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -43,20 +42,15 @@ export default DS.Model.extend({
    * @public
    * @todo Rename this property to 'ancestors'. [ST 2016/11/01]
    */
-  allParents: computed('parent', 'parent.allParents.[]', function(){
-    return new Promise(resolve => {
-      this.get('parent').then(parent => {
-        let parents = [];
-        if(!parent){
-          resolve(parents);
-        } else {
-          parents.pushObject(parent);
-          parent.get('allParents').then(allParents => {
-            parents.pushObjects(allParents);
-            resolve(parents);
-          });
-        }
-      });
-    });
+  allParents: computed('parent', 'parent.allParents.[]', async function(){
+    const rhett = [];
+    const parent = await this.get('parent');
+    if(!parent){
+      return [];
+    }
+    rhett.pushObject(parent);
+    const parentsAncestors = await parent.get('allParents');
+    rhett.pushObjects(parentsAncestors);
+    return rhett;
   }),
 });
