@@ -1,4 +1,9 @@
 .visualizer-course-objectives {
+  display: inline-block;
+  height: 1em;
+  margin: .2em 0;
+  width: 1em;
+
   .zero-hours {
     p {
       margin-top: .5em;
@@ -44,10 +49,21 @@
   }
 
   &.not-icon {
+    @include fill-parent;
+
     .simple-chart {
-      @include fill-parent;
+      height: 25em;
       @include media($large-screen) {
         @include span-columns(5);
+      }
+    }
+
+    .simple-chart-tooltip {
+      .title {
+        p {
+          margin: 0;
+          padding: 0;
+        }
       }
     }
 
