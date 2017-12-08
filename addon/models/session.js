@@ -165,21 +165,13 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
    */
-  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        all(offerings.mapBy('learnerGroups')).then(offeringLearnerGroups => {
-          let allGroups = [];
-          offeringLearnerGroups.forEach(learnerGroups => {
-            learnerGroups.forEach(group => {
-              allGroups.pushObject(group);
-            });
-          });
-          let groups = allGroups ? allGroups.uniq().sortBy('title') : [];
-          resolve(groups);
-        });
-      });
-    });
+  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', async function(){
+    const offerings = await this.get('offerings');
+    const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
+    return offeringLearnerGroups.reduce((array, set) => {
+      array.pushObjects(set.toArray());
+      return array;
+    }, []).uniq().sortBy('title');
   }),
 
   /**
