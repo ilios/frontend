@@ -59,6 +59,7 @@ export default {
     'specialEquipmentIs_Required_': "Équipage particulier est <strong><em>requis</em></strong>",
     'specialEquipmentRequired': "Équipage particulier requis",
     'taughtBy': "Dispensé à {{instructors}}",
+    'terms': 'Termes',
     'timedRelease': 'Période Limitée',
     'timedReleaseNoSchedule': 'Disponible immédiatement quand publié',
     'timedReleaseOnlyEndDate': 'Disponible avant {{endDate}}',

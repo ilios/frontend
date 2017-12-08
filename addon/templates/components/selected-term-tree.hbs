@@ -1,0 +1,13 @@
+{{#each (sort-by 'title' terms) as |term|}}
+  <li class='clickable'>
+    <input {{action toggle term on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedTerms term}}>
+    <span {{action toggle term}} class="list-indentation">{{term.title}}</span>
+  </li>
+  {{#if (gt (get (await term.children) 'length') 0)}}
+    {{selected-term-tree
+      terms=(await term.children)
+      selectedTerms=selectedTerms
+      toggle=toggle
+    }}
+  {{/if}}
+{{/each}}

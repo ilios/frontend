@@ -5,7 +5,7 @@ import momentFormat from 'ember-moment/computeds/format';
 
 const { Component, computed, isPresent, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
 const { service } = inject;
-const { map } = RSVP;
+const { all, map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -17,6 +17,7 @@ export default Component.extend({
     this.set('selectedCourseLevels', []);
     this.set('selectedCohorts', []);
     this.set('selectedCourses', []);
+    this.set('selectedTerms', []);
   },
   userEvents: service(),
   schoolEvents: service(),
@@ -33,6 +34,7 @@ export default Component.extend({
   selectedCourses: null,
   selectedSessionTypes: null,
   selectedAcademicYear: null,
+  selectedTerms: null,
 
   dayTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.day');
@@ -255,6 +257,18 @@ export default Component.extend({
   }),
 
   /**
+   * @property vocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  vocabularies: computed('bestSelectedSchool.vocabularies.[]', async function(){
+    const school = await this.get('bestSelectedSchool');
+    const vocabularies = await school.get('vocabularies');
+    await all(vocabularies.mapBy('terms'));
+    return vocabularies.toArray().sortBy('title');
+  }),
+
+  /**
    * @property showClearFilters
    * @type {Ember.computed}
    * @public
@@ -439,6 +453,13 @@ export default Component.extend({
         this.get('selectedCourses').removeObject(course);
       } else {
         this.get('selectedCourses').pushObject(course);
+      }
+    },
+    toggleTerm(term){
+      if(this.get('selectedTerms').includes(term)){
+        this.get('selectedTerms').removeObject(term);
+      } else {
+        this.get('selectedTerms').pushObject(term);
       }
     },
 
