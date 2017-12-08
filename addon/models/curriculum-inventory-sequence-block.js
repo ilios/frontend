@@ -1,27 +1,28 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { RSVP, computed }  = Ember;
+const { computed }  = Ember;
 const { alias, equal } = computed;
+const { attr, belongsTo, hasMany, Model } = DS;
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  required: DS.attr('number'),
-  childSequenceOrder: DS.attr('number'),
-  orderInSequence: DS.attr('number'),
-  minimum: DS.attr('number'),
-  maximum: DS.attr('number'),
-  track: DS.attr('boolean'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  duration: DS.attr('number'),
-  academicLevel: DS.belongsTo('curriculum-inventory-academic-level', {async: true}),
-  parent: DS.belongsTo('curriculum-inventory-sequence-block', {async: true, inverse: 'children'}),
-  children: DS.hasMany('curriculum-inventory-sequence-block', {async: true, inverse: 'parent'}),
-  report: DS.belongsTo('curriculum-inventory-report', {async: true}),
-  sessions: DS.hasMany('session', {async: true}),
-  course: DS.belongsTo('course', {async: true}),
+export default Model.extend({
+  title: attr('string'),
+  description: attr('string'),
+  required: attr('number'),
+  childSequenceOrder: attr('number'),
+  orderInSequence: attr('number'),
+  minimum: attr('number'),
+  maximum: attr('number'),
+  track: attr('boolean'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  duration: attr('number'),
+  academicLevel: belongsTo('curriculum-inventory-academic-level', {async: true}),
+  parent: belongsTo('curriculum-inventory-sequence-block', {async: true, inverse: 'children'}),
+  children: hasMany('curriculum-inventory-sequence-block', {async: true, inverse: 'parent'}),
+  report: belongsTo('curriculum-inventory-report', {async: true}),
+  sessions: hasMany('session', {async: true}),
+  course: belongsTo('course', {async: true}),
 
   isFinalized: alias('report.isFinalized'),
   isRequired: equal('required', 1),
