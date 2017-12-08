@@ -187,20 +187,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
    */
-  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    return new Promise(resolve => {
-      this.get('ilmSession').then(ilmSession => {
-        if (! isPresent(ilmSession)) {
-          resolve([]);
-          return;
-        }
+  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', async function(){
+    const ilmSession = await this.get('ilmSession');
+    if (! isPresent(ilmSession)) {
+      return [];
+    }
 
-        ilmSession.get('learnerGroups').then(learnerGroups => {
-          let sortedGroups = learnerGroups.sortBy('title');
-          resolve(sortedGroups);
-        });
-      });
-    });
+    const learnerGroups = await ilmSession.get('learnerGroups');
+    return learnerGroups.sortBy('title');
   }),
 
   /**
