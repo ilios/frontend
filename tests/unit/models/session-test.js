@@ -1,7 +1,4 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
@@ -11,12 +8,6 @@ const { run } = Ember;
 initialize();
 moduleForModel('session', 'Unit | Model | Session', {
   needs: modelList
-});
-
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
 });
 
 test('check required publication items', function(assert) {
@@ -66,7 +57,7 @@ test('check first level associatedOfferingLearnerGroups', async function(assert)
   let session = this.subject();
   let store = this.store();
 
-  run( async ()=>{
+  await run( async ()=>{
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -90,7 +81,7 @@ test('check multi level associatedOfferingLearnerGroups', async function(assert)
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -116,7 +107,7 @@ test('check empty associatedIlmLearnerGroups', async function(assert) {
   assert.expect(1);
   let session = this.subject();
 
-  run( async () => {
+  await run( async () => {
     let groups = await session.get('associatedIlmLearnerGroups');
     assert.equal(groups.length, 0);
   });
@@ -127,7 +118,7 @@ test('check associatedIlmLearnerGroups', async function(assert) {
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -155,7 +146,7 @@ test('check associatedLearnerGroups', async function(assert) {
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -222,7 +213,7 @@ test('associatedVocabularies', async function(assert) {
   assert.expect(3);
   const subject = this.subject();
   const store = this.store();
-  run( async () => {
+  await run( async () => {
     const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
     const vocab2 = store.createRecord('vocabulary', { title: 'Aardvark' });
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
@@ -240,7 +231,7 @@ test('termsWithAllParents', async function(assert) {
   assert.expect(7);
   const subject = this.subject();
   const store = this.store();
-  run( async () => {
+  await run( async () => {
     const term1 = store.createRecord('term');
     const term2 = store.createRecord('term', { parent: term1 });
     const term3 = store.createRecord('term', { parent: term1 });
