@@ -208,18 +208,11 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedLearnerGroups
    * @type {Ember.computed}
    */
-  associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', function(){
-    return new Promise(resolve => {
-      this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
-        this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
-          let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
-          if (! isEmpty(allGroups)) {
-            allGroups = allGroups.uniq().sortBy('title');
-          }
-          resolve(allGroups);
-        });
-      });
-    });
+  associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', async function(){
+    const ilmLearnerGroups = await this.get('associatedIlmLearnerGroups');
+    const offeringLearnerGroups = await this.get('associatedOfferingLearnerGroups');
+    const allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
+    return allGroups.uniq().sortBy('title');
   }),
 
   assignableVocabularies: alias('course.assignableVocabularies'),
