@@ -2,6 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
+import moment from 'moment';
 
 const { run } = Ember;
 
@@ -279,5 +280,23 @@ test('sortedObjectives', async function(assert){
     assert.equal(sortedObjectives[1], objective3);
     assert.equal(sortedObjectives[2], objective2);
     assert.equal(sortedObjectives[3], objective1);
+  });
+});
+
+test('totalSumOfferingsDuration', async function(assert){
+  assert.expect(2);
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const total = await subject.get('totalSumOfferingsDuration');
+    assert.equal(total, 0);
+  });
+
+  await run( async () => {
+    const offering1 = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+    const offering2 = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+    subject.get('offerings').pushObjects([ offering1, offering2 ]);
+    const total = await subject.get('totalSumOfferingsDuration');
+    assert.equal(total, 24.50);
   });
 });
