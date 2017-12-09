@@ -118,21 +118,19 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedTerms
    * @type {Ember.computed}
    */
-  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        if (!offerings.length) {
-          resolve(0);
-        } else {
-          let total = 0;
-          offerings.forEach(offering => {
-            total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-          });
-          resolve(total.toFixed(2));
-        }
-      });
-    });
+  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function() {
+    const offerings = await this.get('offerings');
+    if (isEmpty(offerings)) {
+      return 0;
+    }
+
+    const total = offerings.reduce((total, offering) => {
+      return total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+    }, 0);
+
+    return total.toFixed(2);
   }),
+
   optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
