@@ -114,8 +114,8 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
       return 0;
     }
 
-    const total = offerings.reduce((total, offering) => {
-      return total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+    const total = offerings.reduce((sum, offering) => {
+      return sum + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
     }, 0);
 
     return total.toFixed(2);
