@@ -66,22 +66,18 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property firstOfferingDate
    * @type {Ember.computed}
    */
-  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    return new Promise(resolve => {
-      this.get('ilmSession').then(ilmSession => {
-        if(ilmSession){
-          resolve(ilmSession.get('dueDate'));
-        } else {
-          this.get('sortedOfferingsByDate').then(offerings => {
-            if(isEmpty(offerings)){
-              resolve(null);
-            } else {
-              resolve(offerings.get('firstObject.startDate'));
-            }
-          });
-        }
-      });
-    });
+  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', async function(){
+    const ilmSession = await this.get('ilmSession');
+    if(ilmSession){
+      return ilmSession.get('dueDate');
+    }
+
+    const offerings = await this.get('sortedOfferingsByDate');
+    if(isEmpty(offerings)){
+      return null;
+    }
+
+    return offerings.get('firstObject.startDate');
   }),
 
   /**
