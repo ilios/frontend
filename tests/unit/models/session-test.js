@@ -317,3 +317,36 @@ test('maxSingleOfferingDuration', async function(assert){
     assert.equal(max, 24.00);
   });
 });
+
+
+test('firstOfferingDate - no offerings, and no ILM', async function(assert) {
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(firstDate, null);
+  });
+});
+
+test('firstOfferingDate - ILM', async function(assert) {
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const ilm = store.createRecord('ilmSession', { dueDate: moment('2015-01-01') });
+    subject.set('ilmSession', ilm);
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(firstDate, ilm.get('dueDate'));
+  });
+});
+
+test('firstOfferingDate - offerings', async function(assert) {
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const offering1 = store.createRecord('offering', { startDate: moment('2017-01-01') });
+    const offering2 = store.createRecord('offering', { startDate: moment('2016-01-01') });
+    subject.get('offerings').pushObjects([ offering1, offering2 ]);
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(offering2.get('startDate'), firstDate);
+  });
+});
