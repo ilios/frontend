@@ -9,7 +9,7 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, sum } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
-const { all, Promise } = RSVP;
+const { all } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   title: attr('string'),
@@ -39,24 +39,20 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   }),
 
   /**
-   * All offerings for this session, sorted by offering startdate in ascending order.
+   * All offerings for this session, sorted by offering start date in ascending order.
    * @property sortedOfferingsByDate
    * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed('offerings.@each.startDate', function() {
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        let filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
-        let sortedOfferings = filteredOfferings.sort((a, b) => {
-          let aDate = moment(a.get('startDate'));
-          let bDate = moment(b.get('startDate'));
-          if(aDate === bDate){
-            return 0;
-          }
-          return aDate > bDate ? 1 : -1;
-        });
-        resolve(sortedOfferings);
-      });
+  sortedOfferingsByDate: computed('offerings.@each.startDate', async function() {
+    const offerings = await this.get('offerings');
+    const filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
+    return filteredOfferings.sort((a, b) => {
+      let aDate = moment(a.get('startDate'));
+      let bDate = moment(b.get('startDate'));
+      if(aDate === bDate){
+        return 0;
+      }
+      return aDate > bDate ? 1 : -1;
     });
   }),
 
