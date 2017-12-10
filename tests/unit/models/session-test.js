@@ -302,6 +302,7 @@ test('totalSumOfferingsDuration', async function(assert){
 });
 
 test('maxSingleOfferingDuration', async function(assert){
+  assert.expect(2);
   const subject = this.subject();
   const store = this.store();
   await run( async () => {
@@ -320,8 +321,8 @@ test('maxSingleOfferingDuration', async function(assert){
 
 
 test('firstOfferingDate - no offerings, and no ILM', async function(assert) {
+  assert.expect(1);
   const subject = this.subject();
-  const store = this.store();
   await run(async () => {
     const firstDate = await subject.get('firstOfferingDate');
     assert.equal(firstDate, null);
@@ -329,6 +330,7 @@ test('firstOfferingDate - no offerings, and no ILM', async function(assert) {
 });
 
 test('firstOfferingDate - ILM', async function(assert) {
+  assert.expect(1);
   const subject = this.subject();
   const store = this.store();
   await run(async () => {
@@ -340,6 +342,7 @@ test('firstOfferingDate - ILM', async function(assert) {
 });
 
 test('firstOfferingDate - offerings', async function(assert) {
+  assert.expect(1);
   const subject = this.subject();
   const store = this.store();
   await run(async () => {
@@ -348,5 +351,23 @@ test('firstOfferingDate - offerings', async function(assert) {
     subject.get('offerings').pushObjects([ offering1, offering2 ]);
     const firstDate = await subject.get('firstOfferingDate');
     assert.equal(offering2.get('startDate'), firstDate);
+  });
+});
+
+test('sortedOfferingsByDate', async function(assert) {
+  assert.expect(4);
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const offering1 = store.createRecord('offering', { startDate: moment('2017-01-01') });
+    const offering2 = store.createRecord('offering', { startDate: moment('2016-01-01') });
+    const offering3 = store.createRecord('offering', { startDate: moment('2015-01-01') });
+    const offeringWithNoStartDate = store.createRecord('offering');
+    subject.get('offerings').pushObjects([ offering1, offering2, offering3, offeringWithNoStartDate ]);
+    const sortedDates = await subject.get('sortedOfferingsByDate');
+    assert.equal(sortedDates.length, 3);
+    assert.equal(sortedDates[0], offering3);
+    assert.equal(sortedDates[1], offering2);
+    assert.equal(sortedDates[2], offering1);
   });
 });
