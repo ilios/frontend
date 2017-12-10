@@ -293,10 +293,27 @@ test('totalSumOfferingsDuration', async function(assert){
   });
 
   await run( async () => {
-    const offering1 = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
-    const offering2 = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
-    subject.get('offerings').pushObjects([ offering1, offering2 ]);
+    const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+    const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+    subject.get('offerings').pushObjects([ allDayOffering, halfAnHourOffering ]);
     const total = await subject.get('totalSumOfferingsDuration');
     assert.equal(total, 24.50);
+  });
+});
+
+test('maxSingleOfferingDuration', async function(assert){
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const max = await subject.get('maxSingleOfferingDuration');
+    assert.equal(max, 0);
+  });
+
+  await run( async () => {
+    const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+    const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+    subject.get('offerings').pushObjects([ allDayOffering, halfAnHourOffering ]);
+    const max = await subject.get('maxSingleOfferingDuration');
+    assert.equal(max, 24.00);
   });
 });
