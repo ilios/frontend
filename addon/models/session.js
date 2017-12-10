@@ -99,9 +99,9 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
             const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
             const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
             if (diffA > diffB) {
-              return 1;
-            } else if (diffA < diffB) {
               return -1;
+            } else if (diffA < diffB) {
+              return 1;
             }
             return 0;
           });
