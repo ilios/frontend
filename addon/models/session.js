@@ -89,28 +89,26 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedTerms
    * @type {Ember.computed}
    */
-  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        if (! offerings.length) {
-          resolve(0);
-        } else {
-          const sortedOfferings = offerings.toArray().sort(function (a, b) {
-            const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-            const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-            if (diffA > diffB) {
-              return -1;
-            } else if (diffA < diffB) {
-              return 1;
-            }
-            return 0;
-          });
-          const offering = sortedOfferings[0];
-          const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-          resolve(duration.toFixed(2));
-        }
-      });
+  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function(){
+    const offerings = await this.get('offerings');
+    if (isEmpty(offerings)) {
+      return 0;
+    }
+    const sortedOfferings = offerings.toArray().sort(function (a, b) {
+      const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+      const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
+      if (diffA > diffB) {
+        return -1;
+      } else if (diffA < diffB) {
+        return 1;
+      }
+      return 0;
     });
+
+    const offering = sortedOfferings[0];
+    const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+
+    return duration.toFixed(2);
   }),
 
   /**
