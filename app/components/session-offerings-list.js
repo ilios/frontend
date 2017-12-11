@@ -1,13 +1,12 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
 const { oneWay, sort } = computed;
-const { Promise } = RSVP;
 
 export default Component.extend({
   store: service(),
@@ -20,31 +19,27 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', function() {
-    return new Promise(resolve => {
-      let offerings = this.get('offerings');
-      if (offerings == null) {
-        resolve([]);
-      }
-      offerings.then(arr => {
-        let dateBlocks = {};
-        arr.forEach(offering => {
-          let key = offering.get('dateKey');
-          if (!(key in dateBlocks)) {
-            dateBlocks[key] = OfferingDateBlock.create({
-              dateKey: key
-            });
-          }
-          dateBlocks[key].addOffering(offering);
+  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', async function() {
+    let offerings = await this.get('offerings');
+    if (isEmpty(offerings)) {
+      return [];
+    }
+    let dateBlocks = {};
+    offerings.forEach(offering => {
+      let key = offering.get('dateKey');
+      if (!(key in dateBlocks)) {
+        dateBlocks[key] = OfferingDateBlock.create({
+          dateKey: key
         });
-        //convert indexed object to array
-        let dateBlockArray = [];
-        for (let key in dateBlocks) {
-          dateBlockArray.pushObject(dateBlocks[key]);
-        }
-        resolve(dateBlockArray.sortBy('dateStamp'));
-      });
+      }
+      dateBlocks[key].addOffering(offering);
     });
+    //convert indexed object to array
+    let dateBlockArray = [];
+    for (let key in dateBlocks) {
+      dateBlockArray.pushObject(dateBlocks[key]);
+    }
+    return dateBlockArray.sortBy('dateStamp');
   }),
 
   actions: {
@@ -60,8 +55,6 @@ export default Component.extend({
 });
 
 let OfferingBlock = EmberObject.extend({
-  //we have to init the offerins array because otherwise it gets passed by reference
-  //and shared among isntances
   init() {
     this._super(...arguments);
     this.set('offerings', []);

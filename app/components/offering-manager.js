@@ -6,7 +6,6 @@ import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 const { Promise } = RSVP;
 
-
 export default Component.extend({
   currentUser: service(),
   classNames: ['offering-manager'],

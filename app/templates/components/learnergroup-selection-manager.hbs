@@ -13,22 +13,19 @@
     {{t 'general.availableLearnerGroups'}}
     {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{fa-icon 'spinner' spin=true}}{{/unless}}
   </h4>
-  {{#if (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}
-    {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
-    {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
-      <div class='cohort-learner-groups'>
-        {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program))}}
-          <h5 class='cohort-title'>{{cohort.programYear.program.title}} {{cohort.title}}</h5>
-          <ul class='tree-groups-list'>
-            {{#each (sort-by 'title' (filter-by 'cohort' (await (action 'compareCohorts' cohort)) (await allLearnerGroups))) as |learnerGroup|}}
-              {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
-            {{/each}}
-          </ul>
-        {{else}}
-          {{fa-icon 'spinner' spin=true}}
-        {{/if}}
-      </div>
-    {{/each}}
-  {{/if}}
-
+  {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
+  {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
+    <div class='cohort-learner-groups'>
+      {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program) (is-fulfilled cohort.rootLevelLearnerGroups))}}
+        <h5 class='cohort-title'>{{cohort.programYear.program.title}} {{cohort.title}}</h5>
+        <ul class='tree-groups-list'>
+          {{#each (sort-by 'title' (await cohort.rootLevelLearnerGroups)) as |learnerGroup|}}
+            {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
+          {{/each}}
+        </ul>
+      {{else}}
+        {{fa-icon 'spinner' spin=true}}
+      {{/if}}
+    </div>
+  {{/each}}
 </div>

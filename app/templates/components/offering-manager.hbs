@@ -1,4 +1,4 @@
-{{#liquid-if (and isEditing (is-fulfilled offering.session.course.cohorts)) class='horizontal'}}
+{{#if (and isEditing (is-fulfilled offering.session.course.cohorts)) class='horizontal'}}
   {{offering-form
     showRoom=true
     showInstructors=true
@@ -61,4 +61,4 @@
   </div>
 
 
-{{/liquid-if}}
+{{/if}}
