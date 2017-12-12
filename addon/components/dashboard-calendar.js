@@ -288,9 +288,7 @@ export default Component.extend({
     const d = this.get('selectedCourses');
     const e = this.get('selectedTerms');
 
-    const activeFilters = [].concat(a, b, c, d, e);
-
-    return activeFilters;
+    return [].concat(a, b, c, d, e);
   }),
 
   /**
