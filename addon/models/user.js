@@ -85,6 +85,10 @@ export default Model.extend({
   primaryCohort: belongsTo('cohort', {async: true, inverse: null}),
   pendingUserUpdates: hasMany('pending-user-update', {async: true}),
   permissions: hasMany('permission', {async: true}),
+  administeredCurriculumInventoryReports: hasMany('curriculum-inventory-report', {
+    async: true,
+    inverse: 'administrators'
+  }),
 
   /**
    * Resolves to TRUE if this user has the "Student" role, otherwise FALSE.

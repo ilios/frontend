@@ -17,6 +17,10 @@ export default Model.extend({
   sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {async: true}),
   program: belongsTo('program', {async: true}),
   academicLevels: hasMany('curriculum-inventory-academic-level', {async: true}),
+  administrators: hasMany('user', {
+    async: true,
+    inverse: 'administeredCurriculumInventoryReports'
+  }),
 
   /**
    * A list of top-level sequence blocks owned by this report.
