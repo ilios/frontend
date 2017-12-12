@@ -87,6 +87,9 @@ export default Service.extend({
           what = 'instructed' + what.capitalize();
         }
       }
+      if(subject === 'learning material' && object === 'course'){
+        what = 'fullCourses';
+      }
       query.filters[what] = objectId;
     } else {
       if(subject !== 'mesh term' && subject !== 'instructor' && subject !== 'learning material' && school){
