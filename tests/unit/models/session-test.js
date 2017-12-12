@@ -1,22 +1,14 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
+import moment from 'moment';
 
 const { run } = Ember;
 
 initialize();
 moduleForModel('session', 'Unit | Model | Session', {
   needs: modelList
-});
-
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
 });
 
 test('check required publication items', function(assert) {
@@ -66,7 +58,7 @@ test('check first level associatedOfferingLearnerGroups', async function(assert)
   let session = this.subject();
   let store = this.store();
 
-  run( async ()=>{
+  await run( async ()=>{
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -90,7 +82,7 @@ test('check multi level associatedOfferingLearnerGroups', async function(assert)
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -116,7 +108,7 @@ test('check empty associatedIlmLearnerGroups', async function(assert) {
   assert.expect(1);
   let session = this.subject();
 
-  run( async () => {
+  await run( async () => {
     let groups = await session.get('associatedIlmLearnerGroups');
     assert.equal(groups.length, 0);
   });
@@ -127,7 +119,7 @@ test('check associatedIlmLearnerGroups', async function(assert) {
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -155,7 +147,7 @@ test('check associatedLearnerGroups', async function(assert) {
   let session = this.subject();
   let store = this.store();
 
-  run( async () => {
+  await run( async () => {
     let learnerGroup1 = store.createRecord('learner-group');
     let learnerGroup2 = store.createRecord('learner-group');
     let learnerGroup3 = store.createRecord('learner-group');
@@ -222,7 +214,7 @@ test('associatedVocabularies', async function(assert) {
   assert.expect(3);
   const subject = this.subject();
   const store = this.store();
-  run( async () => {
+  await run( async () => {
     const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
     const vocab2 = store.createRecord('vocabulary', { title: 'Aardvark' });
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
@@ -240,7 +232,7 @@ test('termsWithAllParents', async function(assert) {
   assert.expect(7);
   const subject = this.subject();
   const store = this.store();
-  run( async () => {
+  await run( async () => {
     const term1 = store.createRecord('term');
     const term2 = store.createRecord('term', { parent: term1 });
     const term3 = store.createRecord('term', { parent: term1 });
@@ -269,5 +261,113 @@ test('termCount', function(assert) {
     const term2 = store.createRecord('term');
     subject.get('terms').pushObjects([ term1, term2 ]);
     assert.equal(subject.get('termCount'), 2);
+  });
+});
+
+test('sortedObjectives', async function(assert){
+  assert.expect(5);
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const objective1 = store.createRecord('objective', { id: 1, position: 10});
+    const objective2 = store.createRecord('objective', { id: 2, position: 5 });
+    const objective3 = store.createRecord('objective', { id: 3, position: 5 });
+    const objective4 = store.createRecord('objective', { id: 4, position: 0 });
+    subject.get('objectives').pushObjects([ objective1, objective2, objective3, objective4 ]);
+    const sortedObjectives = await subject.get('sortedObjectives');
+    assert.equal(sortedObjectives.length, 4);
+    assert.equal(sortedObjectives[0], objective4);
+    assert.equal(sortedObjectives[1], objective3);
+    assert.equal(sortedObjectives[2], objective2);
+    assert.equal(sortedObjectives[3], objective1);
+  });
+});
+
+test('totalSumOfferingsDuration', async function(assert){
+  assert.expect(2);
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const total = await subject.get('totalSumOfferingsDuration');
+    assert.equal(total, 0);
+  });
+
+  await run( async () => {
+    const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+    const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+    subject.get('offerings').pushObjects([ allDayOffering, halfAnHourOffering ]);
+    const total = await subject.get('totalSumOfferingsDuration');
+    assert.equal(total, 24.50);
+  });
+});
+
+test('maxSingleOfferingDuration', async function(assert){
+  assert.expect(2);
+  const subject = this.subject();
+  const store = this.store();
+  await run( async () => {
+    const max = await subject.get('maxSingleOfferingDuration');
+    assert.equal(max, 0);
+  });
+
+  await run( async () => {
+    const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+    const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+    subject.get('offerings').pushObjects([ allDayOffering, halfAnHourOffering ]);
+    const max = await subject.get('maxSingleOfferingDuration');
+    assert.equal(max, 24.00);
+  });
+});
+
+
+test('firstOfferingDate - no offerings, and no ILM', async function(assert) {
+  assert.expect(1);
+  const subject = this.subject();
+  await run(async () => {
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(firstDate, null);
+  });
+});
+
+test('firstOfferingDate - ILM', async function(assert) {
+  assert.expect(1);
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const ilm = store.createRecord('ilmSession', { dueDate: moment('2015-01-01') });
+    subject.set('ilmSession', ilm);
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(firstDate, ilm.get('dueDate'));
+  });
+});
+
+test('firstOfferingDate - offerings', async function(assert) {
+  assert.expect(1);
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const offering1 = store.createRecord('offering', { startDate: moment('2017-01-01') });
+    const offering2 = store.createRecord('offering', { startDate: moment('2016-01-01') });
+    subject.get('offerings').pushObjects([ offering1, offering2 ]);
+    const firstDate = await subject.get('firstOfferingDate');
+    assert.equal(offering2.get('startDate'), firstDate);
+  });
+});
+
+test('sortedOfferingsByDate', async function(assert) {
+  assert.expect(4);
+  const subject = this.subject();
+  const store = this.store();
+  await run(async () => {
+    const offering1 = store.createRecord('offering', { startDate: moment('2017-01-01') });
+    const offering2 = store.createRecord('offering', { startDate: moment('2016-01-01') });
+    const offering3 = store.createRecord('offering', { startDate: moment('2015-01-01') });
+    const offeringWithNoStartDate = store.createRecord('offering');
+    subject.get('offerings').pushObjects([ offering1, offering2, offering3, offeringWithNoStartDate ]);
+    const sortedDates = await subject.get('sortedOfferingsByDate');
+    assert.equal(sortedDates.length, 3);
+    assert.equal(sortedDates[0], offering3);
+    assert.equal(sortedDates[1], offering2);
+    assert.equal(sortedDates[2], offering1);
   });
 });

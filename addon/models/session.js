@@ -9,7 +9,7 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 const { computed, isEmpty, isPresent, RSVP } = Ember;
 const { alias, mapBy, sum } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
-const { all, Promise } = RSVP;
+const { all } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
   title: attr('string'),
@@ -39,24 +39,20 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   }),
 
   /**
-   * All offerings for this session, sorted by offering startdate in ascending order.
+   * All offerings for this session, sorted by offering start date in ascending order.
    * @property sortedOfferingsByDate
    * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed('offerings.@each.startDate', function() {
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        let filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
-        let sortedOfferings = filteredOfferings.sort((a, b) => {
-          let aDate = moment(a.get('startDate'));
-          let bDate = moment(b.get('startDate'));
-          if(aDate === bDate){
-            return 0;
-          }
-          return aDate > bDate ? 1 : -1;
-        });
-        resolve(sortedOfferings);
-      });
+  sortedOfferingsByDate: computed('offerings.@each.startDate', async function() {
+    const offerings = await this.get('offerings');
+    const filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
+    return filteredOfferings.sort((a, b) => {
+      let aDate = moment(a.get('startDate'));
+      let bDate = moment(b.get('startDate'));
+      if(aDate === bDate){
+        return 0;
+      }
+      return aDate > bDate ? 1 : -1;
     });
   }),
 
@@ -66,22 +62,18 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property firstOfferingDate
    * @type {Ember.computed}
    */
-  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', function(){
-    return new Promise(resolve => {
-      this.get('ilmSession').then(ilmSession => {
-        if(ilmSession){
-          resolve(ilmSession.get('dueDate'));
-        } else {
-          this.get('sortedOfferingsByDate').then(offerings => {
-            if(isEmpty(offerings)){
-              resolve(null);
-            } else {
-              resolve(offerings.get('firstObject.startDate'));
-            }
-          });
-        }
-      });
-    });
+  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', async function(){
+    const ilmSession = await this.get('ilmSession');
+    if(ilmSession){
+      return ilmSession.get('dueDate');
+    }
+
+    const offerings = await this.get('sortedOfferingsByDate');
+    if(isEmpty(offerings)){
+      return null;
+    }
+
+    return offerings.get('firstObject.startDate');
   }),
 
   /**
@@ -89,28 +81,26 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedTerms
    * @type {Ember.computed}
    */
-  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function(){
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        if (! offerings.length) {
-          resolve(0);
-        } else {
-          const sortedOfferings = offerings.toArray().sort(function (a, b) {
-            const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-            const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-            if (diffA > diffB) {
-              return 1;
-            } else if (diffA < diffB) {
-              return -1;
-            }
-            return 0;
-          });
-          const offering = sortedOfferings[0];
-          const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-          resolve(duration.toFixed(2));
-        }
-      });
+  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function(){
+    const offerings = await this.get('offerings');
+    if (isEmpty(offerings)) {
+      return 0;
+    }
+    const sortedOfferings = offerings.toArray().sort(function (a, b) {
+      const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+      const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
+      if (diffA > diffB) {
+        return -1;
+      } else if (diffA < diffB) {
+        return 1;
+      }
+      return 0;
     });
+
+    const offering = sortedOfferings[0];
+    const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+
+    return duration.toFixed(2);
   }),
 
   /**
@@ -118,21 +108,17 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedTerms
    * @type {Ember.computed}
    */
-  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', function() {
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        if (!offerings.length) {
-          resolve(0);
-        } else {
-          let total = 0;
-          offerings.forEach(offering => {
-            total = total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-          });
-          resolve(total.toFixed(2));
-        }
-      });
-    });
+  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function() {
+    const offerings = await this.get('offerings');
+    if (isEmpty(offerings)) {
+      return 0;
+    }
+
+    return offerings.reduce((total, offering) => {
+      return total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+    }, 0).toFixed(2);
   }),
+
   optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
@@ -165,21 +151,13 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
    */
-  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', function(){
-    return new Promise(resolve => {
-      this.get('offerings').then(offerings => {
-        all(offerings.mapBy('learnerGroups')).then(offeringLearnerGroups => {
-          let allGroups = [];
-          offeringLearnerGroups.forEach(learnerGroups => {
-            learnerGroups.forEach(group => {
-              allGroups.pushObject(group);
-            });
-          });
-          let groups = allGroups ? allGroups.uniq().sortBy('title') : [];
-          resolve(groups);
-        });
-      });
-    });
+  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', async function(){
+    const offerings = await this.get('offerings');
+    const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
+    return offeringLearnerGroups.reduce((array, set) => {
+      array.pushObjects(set.toArray());
+      return array;
+    }, []).uniq().sortBy('title');
   }),
 
   /**
@@ -187,20 +165,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
    */
-  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', function(){
-    return new Promise(resolve => {
-      this.get('ilmSession').then(ilmSession => {
-        if (! isPresent(ilmSession)) {
-          resolve([]);
-          return;
-        }
+  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', async function(){
+    const ilmSession = await this.get('ilmSession');
+    if (! isPresent(ilmSession)) {
+      return [];
+    }
 
-        ilmSession.get('learnerGroups').then(learnerGroups => {
-          let sortedGroups = learnerGroups.sortBy('title');
-          resolve(sortedGroups);
-        });
-      });
-    });
+    const learnerGroups = await ilmSession.get('learnerGroups');
+    return learnerGroups.sortBy('title');
   }),
 
   /**
@@ -208,33 +180,23 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property associatedLearnerGroups
    * @type {Ember.computed}
    */
-  associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', function(){
-    return new Promise(resolve => {
-      this.get('associatedIlmLearnerGroups').then(ilmLearnerGroups => {
-        this.get('associatedOfferingLearnerGroups').then(offeringLearnerGroups => {
-          let allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
-          if (! isEmpty(allGroups)) {
-            allGroups = allGroups.uniq().sortBy('title');
-          }
-          resolve(allGroups);
-        });
-      });
-    });
+  associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', async function(){
+    const ilmLearnerGroups = await this.get('associatedIlmLearnerGroups');
+    const offeringLearnerGroups = await this.get('associatedOfferingLearnerGroups');
+    const allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
+    return allGroups.uniq().sortBy('title');
   }),
 
   assignableVocabularies: alias('course.assignableVocabularies'),
 
   /**
-   * A list of session objectives, sorted by position and title.
+   * A list of session objectives, sorted by position (asc) and then id (desc).
    * @property sortedObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', function() {
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.toArray().sort(this.positionSortingCallback));
-      });
-    });
+  sortedObjectives: computed('objectives.@each.position', async function() {
+    const objectives = await this.get('objectives');
+    return objectives.toArray().sort(this.positionSortingCallback);
   })
 
 });
