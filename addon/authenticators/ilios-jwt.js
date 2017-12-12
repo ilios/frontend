@@ -12,45 +12,42 @@ export default JwtTokenAuthenticator.extend({
     @method authenticate
     @param {Object} credentials The credentials to authenticate the session with
     @param {Object} headers Request headers.
-    @return {Ember.RSVP.Promise} A promise that resolves when an auth token is
+    @return {Promise} A promise that resolves when an auth token is
                                  successfully acquired from the server and rejects
                                  otherwise
   */
-  authenticate: function(credentials, headers) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      if(this.tokenPropertyName in credentials){
-        const token = Ember.get(credentials, this.tokenPropertyName);
-        const tokenData = this.getTokenData(token);
-        const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+  async authenticate(credentials, headers) {
+    if(this.tokenPropertyName in credentials){
+      const token = Ember.get(credentials, this.tokenPropertyName);
+      const tokenData = this.getTokenData(token);
+      const expiresAt = Ember.get(tokenData, this.tokenExpireName);
 
-        this.scheduleAccessTokenRefresh(expiresAt, token);
+      this.scheduleAccessTokenRefresh(expiresAt, token);
 
-        let response  = {};
-        response[this.tokenPropertyName] = token;
-        response[this.tokenExpireName] = expiresAt;
+      let response  = {};
+      response[this.tokenPropertyName] = token;
+      response[this.tokenExpireName] = expiresAt;
 
-        resolve(this.getResponseData(response));
-      } else {
-        var data = this.getAuthenticateData(credentials);
+      return this.getResponseData(response);
+    }
 
-        this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
-          const token = Ember.get(response, this.tokenPropertyName);
-          const tokenData = this.getTokenData(token);
-          const expiresAt = Ember.get(tokenData, this.tokenExpireName);
-          const tokenExpireData = {};
-          this.scheduleAccessTokenRefresh(expiresAt, token);
-          tokenExpireData[this.tokenExpireName] = expiresAt;
-          response = Ember.merge(response, tokenExpireData);
-          resolve(this.getResponseData(response));
-        }, e => {
-          let error = {
-            'message': e.message,
-            'keys': e.payload.errors || [],
-          };
-          reject(error);
-        });
-      }
-    });
+    const data = this.getAuthenticateData(credentials);
+    try {
+      let response = await this.makeRequest(this.serverTokenEndpoint, data, headers);
+      const token = Ember.get(response, this.tokenPropertyName);
+      const tokenData = this.getTokenData(token);
+      const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+      const tokenExpireData = {};
+      this.scheduleAccessTokenRefresh(expiresAt, token);
+      tokenExpireData[this.tokenExpireName] = expiresAt;
+      response = Ember.merge(response, tokenExpireData);
+      return this.getResponseData(response);
+    } catch (e) {
+      throw {
+        'message': e.message,
+        'keys': e.payload.errors || [],
+      };
+    }
   },
 
   /**
@@ -61,7 +58,7 @@ export default JwtTokenAuthenticator.extend({
    * @param {string} url The URL to post to.
    * @param {Object} data The POST data.
    * @param {Object} providedHeaders Request headers.
-   * @return {Ember.RSVP.Promise} The result of the request.
+   * @return {Promise} The result of the request.
   */
   makeRequest(url, data, providedHeaders) {
     const commonAjax = this.get('commonAjax');
