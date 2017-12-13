@@ -1,7 +1,7 @@
 {{course-header course=course}}
 {{course-overview course=course}}
 {{#if (not showDetails)}}
-  <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'general.expandDetail'}}{{fa-icon "fa-plus-square"}}</span></div>
+  <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'general.expandDetail'}}{{fa-icon 'plus-square'}}</span></div>
 {{else}}
   {{course-editing
     course=course
@@ -12,5 +12,5 @@
     setCourseTaxonomyDetails=(action setCourseTaxonomyDetails)
     setCourseCompetencyDetails=(action setCourseCompetencyDetails)
   }}
-  <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'general.collapseDetail'}}{{fa-icon "fa-minus-square"}}</span></div>
+  <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'general.collapseDetail'}}{{fa-icon 'minus-square'}}</span></div>
 {{/if}}
