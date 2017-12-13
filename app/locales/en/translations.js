@@ -493,7 +493,6 @@ export default {
     'targetCourse': 'Target Course',
     'term': 'Term',
     'termCount': { 'one': 'There is 1 term', 'other': 'There are {{count}} terms' },
-    'terms': 'Terms',
     'termsManageTitle': 'Manage Terms',
     'thisReportIsNoLongerAvailable': 'This report is no longer available.',
     'thursday': 'Thursday',
