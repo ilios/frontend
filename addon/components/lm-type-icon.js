@@ -14,23 +14,23 @@ export default Ember.Component.extend({
     let type = this.get('type');
     let mimetype = this.get('mimetype') || '';
     if(type === 'link'){
-      return 'fa-link';
+      return 'link';
     } else if(type === 'citation'){
-      return 'fa-paragraph';
+      return 'paragraph';
     } else {
       if(mimetype.search(/pdf/) !== -1){
-        return 'fa-file-pdf-o';
+        return 'file-pdf-o';
       }
       if(mimetype.search(/ppt|keynote|pps|pptx|powerpoint/) !== -1){
-        return 'fa-file-powerpoint-o';
+        return 'file-powerpoint-o';
       }
       if(mimetype.search(/mp4|mpg|mpeg|mov/) !== -1){
-        return 'fa-file-movie-o';
+        return 'file-movie-o';
       }
       if(mimetype.search(/wav|mp3|aac|flac/) !== -1){
-        return 'fa-file-audio-o';
+        return 'file-audio-o';
       }
     }
-    return 'fa-file';
+    return 'file';
   })
 });
