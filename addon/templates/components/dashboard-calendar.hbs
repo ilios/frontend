@@ -99,6 +99,24 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
+
+        <div class='calendar-filter-list vocabularyfilter'>
+          <h5>{{t 'general.terms'}}</h5>
+          {{#if (is-fulfilled vocabularies)}}
+            <ul>
+              {{#each (await vocabularies) as |vocabulary|}}
+                <h6>{{vocabulary.title}}</h6>
+                {{selected-term-tree
+                  terms=(await vocabulary.topLevelTerms)
+                  selectedTerms=selectedTerms
+                  toggle=(action 'toggleTerm')
+                }}
+              {{/each}}
+            </ul>
+          {{else}}
+            {{fa-icon "spinner" spin=true}}
+          {{/if}}
+        </div>
       {{else}}
         <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
           <h5>{{t 'general.sessionTypes'}}</h5>
@@ -153,7 +171,7 @@
   </div>
 </section>
 
-{{#if showClearFilters}}
+{{#if (gt activeFilters.length 0)}}
   <section class="filters-list">
     <header class="filters-header">{{t 'general.activeFilters'}}:</header>
     <div class="filter-tags">

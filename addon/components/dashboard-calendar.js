@@ -3,9 +3,9 @@ import layout from '../templates/components/dashboard-calendar';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, isPresent, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
+const { Component, computed, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
 const { service } = inject;
-const { map } = RSVP;
+const { all, map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -17,6 +17,7 @@ export default Component.extend({
     this.set('selectedCourseLevels', []);
     this.set('selectedCohorts', []);
     this.set('selectedCourses', []);
+    this.set('selectedTerms', []);
   },
   userEvents: service(),
   schoolEvents: service(),
@@ -24,7 +25,6 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   classNames: ['dashboard-calendar'],
-  activeFilters: null,
   selectedSchool: null,
   selectedDate: null,
   selectedView: null,
@@ -33,6 +33,7 @@ export default Component.extend({
   selectedCourses: null,
   selectedSessionTypes: null,
   selectedAcademicYear: null,
+  selectedTerms: null,
 
   dayTranslation: computed('i18n.locale', function(){
     return this.get('i18n').t('general.day');
@@ -135,12 +136,14 @@ export default Component.extend({
     'eventsWithSelectedCourseLevels.[]',
     'eventsWithSelectedCohorts.[]',
     'eventsWithSelectedCourses.[]',
+    'eventsWithSelectedTerms.[]',
     async function() {
       const eventTypes = [
         'eventsWithSelectedSessionTypes',
         'eventsWithSelectedCourseLevels',
         'eventsWithSelectedCohorts',
         'eventsWithSelectedCourses',
+        'eventsWithSelectedTerms',
       ];
       const allFilteredEvents = await map(eventTypes, async name => {
         return await this.get(name);
@@ -161,12 +164,11 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  filterTags: computed('activeFilters', async function() {
+  filterTags: computed('activeFilters.[]', async function() {
     const activeFilters = this.get('activeFilters');
 
     return map(activeFilters, async (filter) => {
-      let hash = {};
-      hash.filter = filter;
+      let hash = { filter };
 
       if (typeof filter === 'number') {
         hash.class = 'tag-course-level';
@@ -188,6 +190,14 @@ export default Component.extend({
           }
           const program = await filter.get('programYear.program');
           hash.name = `${displayTitle} ${program.get('title')}`;
+          break;
+        }
+        case 'term': {
+          hash.class = 'tag-term';
+          const allTitles = await filter.get('titleWithParentTitles');
+          const vocabulary = await filter.get('vocabulary');
+          const title = vocabulary.get('title');
+          hash.name = `${title} > ${allTitles}`;
           break;
         }
         case 'course':
@@ -255,23 +265,31 @@ export default Component.extend({
   }),
 
   /**
+   * @property vocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  vocabularies: computed('bestSelectedSchool.vocabularies.[]', async function(){
+    const school = await this.get('bestSelectedSchool');
+    const vocabularies = await school.get('vocabularies');
+    await all(vocabularies.mapBy('terms'));
+    return vocabularies.toArray().sortBy('title');
+  }),
+
+  /**
    * @property showClearFilters
    * @type {Ember.computed}
    * @public
    */
-  showClearFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', {
-    get() {
-      const a = this.get('selectedSessionTypes');
-      const b = this.get('selectedCourseLevels');
-      const c = this.get('selectedCohorts');
-      const d = this.get('selectedCourses');
+  activeFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', 'selectedTerms.[]', function () {
+    const a = this.get('selectedSessionTypes');
+    const b = this.get('selectedCourseLevels');
+    const c = this.get('selectedCohorts');
+    const d = this.get('selectedCourses');
+    const e = this.get('selectedTerms');
 
-      let results = a.concat(b, c, d);
-      this.set('activeFilters', results);
-
-      return isPresent(results);
-    }
-  }).readOnly(),
+    return [].concat(a, b, c, d, e);
+  }),
 
   /**
    * @property ourEvents
@@ -394,6 +412,35 @@ export default Component.extend({
   }),
 
   /**
+   * @property eventsWithSelectedTerms
+   * @type {Ember.computed}
+   * @protected
+   */
+  eventsWithSelectedTerms: computed('ourEvents.[]', 'selectedTerms.[]', async function(){
+    const events = await this.get('ourEvents');
+    const selectedTerms = this.get('selectedTerms').mapBy('id');
+    if(isEmpty(selectedTerms)) {
+      return events;
+    }
+    const matchingEvents = await map(events, async event => {
+      if (event.ilmSession || event.offering) {
+
+        const termIds = await this.get('userEvents').getTermIdsForEvent(event);
+        if(termIds.any(termId => {
+          return selectedTerms.includes(termId);
+        })) {
+          return event;
+        }
+      }
+      return null;
+    });
+
+    return matchingEvents.filter(event => {
+      return ! isEmpty(event);
+    });
+  }),
+
+  /**
    * @property allSchools
    * @type {Ember.computed}
    * @protected
@@ -439,6 +486,13 @@ export default Component.extend({
         this.get('selectedCourses').removeObject(course);
       } else {
         this.get('selectedCourses').pushObject(course);
+      }
+    },
+    toggleTerm(term){
+      if(this.get('selectedTerms').includes(term)){
+        this.get('selectedTerms').removeObject(term);
+      } else {
+        this.get('selectedTerms').pushObject(term);
       }
     },
 

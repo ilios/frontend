@@ -45,6 +45,11 @@
         padding-bottom: .25em;
       }
 
+      h6 {
+        @include ilios-heading-h6;
+        padding-bottom: .25em;
+      }
+
       ul {
         @include ilios-list-reset;
 
@@ -59,7 +64,7 @@
       }
 
       &.large-filter-list {
-        width: 40%;
+        width: 33%;
       }
 
       .clickable {
@@ -116,6 +121,10 @@
 
       .tag-course {
         background-color: lighten($ilios-blue, 60%);
+      }
+
+      .tag-term {
+        background-color: lighten($ilios-blue, 40%);
       }
 
       .filters-clear-filters {

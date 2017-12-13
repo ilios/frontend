@@ -59,6 +59,7 @@ export default {
     'specialEquipmentIs_Required_': 'Se <strong><em>require</em></strong> equipo especial',
     'specialEquipmentRequired': 'Equipo Especial Requerido',
     'taughtBy': 'Ènsenada Por {{instructors}}',
+    'terms': 'Términos',
     'timedRelease': 'Lanzamiento Calculado',
     'timedReleaseNoSchedule': 'Disponible inmediatamente cuando publicado ',
     'timedReleaseOnlyEndDate': 'Disponible antes de {{endDate}}',
