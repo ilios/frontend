@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 
-const { computed, RSVP } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all, map } = RSVP;
 

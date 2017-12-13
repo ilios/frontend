@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import {
   moduleForModel,
   test
@@ -19,7 +19,7 @@ test('it exists', function(assert) {
 
 test('academic year string', function(assert) {
   let model = this.subject();
-  Ember.run(function(){
+  run(function(){
     model.set('startYear', 2000);
     assert.equal(model.get('academicYear'), '2000 - 2001');
   });
@@ -29,7 +29,7 @@ test('classOf string', function(assert) {
   assert.expect(3);
   let model = this.subject();
   var store = model.store;
-  Ember.run(function(){
+  run(function(){
     let program = store.createRecord('program', {id:99, duration:1});
     model.set('program', program);
     model.set('startYear', 2000);

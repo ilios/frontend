@@ -1,15 +1,16 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/dashboard-materials';
 import moment from 'moment';
 
-const { Component, computed } = Ember;
 const { reads } = computed;
 
 export default Component.extend({
   layout,
-  currentUser: Ember.inject.service(),
-  commonAjax: Ember.inject.service(),
-  iliosConfig: Ember.inject.service(),
+  currentUser: service(),
+  commonAjax: service(),
+  iliosConfig: service(),
   daysInAdvance: 60,
 
   namespace: reads('iliosConfig.apiNameSpace'),

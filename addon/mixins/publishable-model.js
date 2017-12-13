@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { collect, sum } from '@ember/object/computed';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-const { computed } = Ember;
 const { alias, oneWay, not } = computed;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   publishedAsTbd: DS.attr('boolean'),
   published: DS.attr('boolean'),
   isPublished: alias('published'),
@@ -13,8 +14,8 @@ export default Ember.Mixin.create({
   isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
     return this.get('publishedAsTbd') || this.get('isPublished');
   }),
-  allPublicationIssuesCollection: computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
-  allPublicationIssuesLength: computed.sum('allPublicationIssuesCollection'),
+  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
   requiredPublicationSetFields: [],
   requiredPublicationLengthFields: [],
   optionalPublicationSetFields: [],

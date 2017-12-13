@@ -1,12 +1,12 @@
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
 import {
   moduleForModel,
   test
 } from 'ember-qunit';
-import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 
-const { RSVP, run } = Ember;
 const { resolve } = RSVP;
 
 initialize();
@@ -22,7 +22,7 @@ test('it exists', function(assert) {
 
 test('full name', function(assert) {
   let model = this.subject();
-  Ember.run(()=>{
+  run(()=>{
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -32,7 +32,7 @@ test('full name', function(assert) {
 
 test('full name no middle name', function(assert) {
   let model = this.subject();
-  Ember.run(()=>{
+  run(()=>{
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     assert.equal(model.get('fullName'), 'first last');
@@ -63,7 +63,7 @@ test('gets all directed courses', async function(assert) {
 test('gets all learner group courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run( async () => {
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1
@@ -293,7 +293,7 @@ test('gets all instructor group ILMSession courses', async function(assert) {
 test('gets all learner ilm courses', async function(assert) {
   let model = this.subject();
   let store = this.store();
-  Ember.run( async () => {
+  run( async () => {
     let course1 = store.createRecord('course', {id: 1});
     let session1 = store.createRecord('session', {
       course: course1

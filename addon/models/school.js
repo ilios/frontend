@@ -1,8 +1,10 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP, { filter } from 'rsvp';
+import $ from 'jquery';
 import DS from 'ember-data';
-import Ember from 'ember';
 
 const { attr, belongsTo, hasMany, Model } = DS;
-const { computed, isEmpty, RSVP, $} = Ember;
 const {  map } = RSVP;
 
 export default Model.extend({
@@ -35,7 +37,7 @@ export default Model.extend({
 
   async getCohortsForYear(year){
     let cohorts = await this.get('cohorts');
-    let cohortsForYear = await Ember.RSVP.filter(cohorts.toArray(), async cohort => {
+    let cohortsForYear = await filter(cohorts.toArray(), async cohort => {
       const programYear = await cohort.get('programYear');
       let start = parseInt(programYear.get('startYear'));
       let end = parseInt(programYear.get('classOfYear'));

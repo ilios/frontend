@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
 
 const models = [
   'model:aamc-method',
@@ -53,4 +53,4 @@ const models = [
   'model:vocabulary',
 ];
 
-export default Ember.A(models);
+export default A(models);

@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 
 const { hasMany } = DS;
-const { computed, Mixin, RSVP } = Ember;
 const { all } = RSVP;
 
 export default Mixin.create({

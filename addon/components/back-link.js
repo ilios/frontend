@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/back-link';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
-  i18n: Ember.inject.service(),
+  i18n: service(),
   tagName: 'a',
   classNames: ['back-link'],
   attributeBindings: ['title'],

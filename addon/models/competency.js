@@ -1,8 +1,9 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 import Inflector from 'ember-inflector';
 
-const { computed, isEmpty, RSVP } = Ember;
 const { not } = computed;
 const { all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;

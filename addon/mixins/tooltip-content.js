@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import moment from 'moment';
 
-const { computed, isBlank } = Ember;
-
-export default Ember.Mixin.create({
-  i18n: Ember.inject.service(),
+export default Mixin.create({
+  i18n: service(),
   tooltipContent: computed('event', function() {
     const i18n = this.get('i18n');
     if (this.get('event') == null) {

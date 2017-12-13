@@ -1,12 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import AjaxService from 'ember-ajax/services/ajax';
 
-const { computed } = Ember;
 const { reads } = computed;
 
 export default AjaxService.extend({
-  iliosConfig: Ember.inject.service(),
-  session: Ember.inject.service(),
+  iliosConfig: service(),
+  session: service(),
 
   host: reads('iliosConfig.apiHost'),
 

@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event-objective-list';
-
-const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   layout,
@@ -27,14 +28,14 @@ export default Component.extend({
   domains: computed('objectives.[]', function(){
     const objectives = this.get('objectives');
     if (isEmpty(objectives)) {
-      return Ember.A();
+      return A();
     }
 
     let domainTitles = objectives.map(obj => {
       return obj.domain.toString();
     });
 
-    domainTitles = Ember.A(domainTitles).uniq();
+    domainTitles = A(domainTitles).uniq();
 
     let domains = domainTitles.map(title => {
       let domain = {
@@ -46,11 +47,11 @@ export default Component.extend({
       }).map(obj => {
         return obj.title;
       });
-      domain.objectives = Ember.A(filteredObjectives).sortBy('title');
+      domain.objectives = A(filteredObjectives).sortBy('title');
 
       return domain;
     });
 
-    return Ember.A(domains).sortBy('title');
+    return A(domains).sortBy('title');
   })
 });

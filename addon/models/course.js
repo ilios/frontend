@@ -1,11 +1,13 @@
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import DS from 'ember-data';
-import Ember from 'ember';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { computed, ObjectProxy, RSVP, isEmpty } = Ember;
 const { filterBy, mapBy, sum } = computed;
 const { all, map } = RSVP;
 const { attr, belongsTo, hasMany, Model } = DS;

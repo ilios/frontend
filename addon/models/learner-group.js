@@ -1,9 +1,10 @@
+import { computed } from '@ember/object';
+import { isNone, isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 const { attr, belongsTo, hasMany, Model } = DS;
-const { computed, isEmpty, isNone, RSVP } = Ember;
 const { map, all } = RSVP;
 
 export default Model.extend({

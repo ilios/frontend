@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
 export default JwtTokenAuthenticator.extend({
-  commonAjax: Ember.inject.service(),
+  commonAjax: service(),
   /**
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.
@@ -15,9 +17,9 @@ export default JwtTokenAuthenticator.extend({
   */
   async authenticate(credentials, headers) {
     if(this.tokenPropertyName in credentials){
-      const token = Ember.get(credentials, this.tokenPropertyName);
+      const token = get(credentials, this.tokenPropertyName);
       const tokenData = this.getTokenData(token);
-      const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+      const expiresAt = get(tokenData, this.tokenExpireName);
 
       this.scheduleAccessTokenRefresh(expiresAt, token);
 
@@ -31,13 +33,13 @@ export default JwtTokenAuthenticator.extend({
     const data = this.getAuthenticateData(credentials);
     try {
       let response = await this.makeRequest(this.serverTokenEndpoint, data, headers);
-      const token = Ember.get(response, this.tokenPropertyName);
+      const token = get(response, this.tokenPropertyName);
       const tokenData = this.getTokenData(token);
-      const expiresAt = Ember.get(tokenData, this.tokenExpireName);
+      const expiresAt = get(tokenData, this.tokenExpireName);
       const tokenExpireData = {};
       this.scheduleAccessTokenRefresh(expiresAt, token);
       tokenExpireData[this.tokenExpireName] = expiresAt;
-      response = Ember.merge(response, tokenExpireData);
+      response = merge(response, tokenExpireData);
       return this.getResponseData(response);
     } catch (e) {
       throw {

@@ -1,12 +1,10 @@
+import { run } from '@ember/runloop';
 import {
   moduleForModel,
   test
 } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
-import Ember from 'ember';
-
-const { run } = Ember;
 
 initialize();
 moduleForModel('learner-group', 'Unit | Model | LearnerGroup', {

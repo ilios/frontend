@@ -1,10 +1,11 @@
+import Service from '@ember/service';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { Service, Object:EmberObject, RSVP } = Ember;
 const { resolve } = RSVP;
 
 let lm1, lm2, lm3, lm4, lm5, userMaterials;

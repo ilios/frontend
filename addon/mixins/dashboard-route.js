@@ -1,10 +1,9 @@
-import Ember from 'ember';
-
-const { Mixin } = Ember;
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+  currentUser: service(),
+  store: service(),
   async model() {
     const store = this.get('store');
     const currentUser = this.get('currentUser');

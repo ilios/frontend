@@ -1,11 +1,9 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 
 initialize();
-
-const { run } = Ember;
 
 moduleForModel('school', 'Unit | Model | School', {
   needs: modelList

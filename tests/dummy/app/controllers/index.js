@@ -1,6 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import DashboardController from 'ilios-common/mixins/dashboard-controller';
-
-const { Controller } = Ember;
 
 export default Controller.extend(DashboardController);

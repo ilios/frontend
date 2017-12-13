@@ -1,10 +1,11 @@
+import RSVP from 'rsvp';
+import Service from '@ember/service';
+import EmberObject from '@ember/object';
 import moment from 'moment';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { RSVP, Service, Object:EmberObject } = Ember;
 const { resolve } = RSVP;
 
 let today = moment();

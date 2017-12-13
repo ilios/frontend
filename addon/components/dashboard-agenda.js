@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/dashboard-agenda';
 import moment from 'moment';
-
-const { Component, computed } = Ember;
 
 export default Component.extend({
   layout,
@@ -16,7 +16,7 @@ export default Component.extend({
 
   classNames: ['dashboard-agenda'],
 
-  userEvents: Ember.inject.service(),
+  userEvents: service(),
 
   weeksEvents: computed('daysInAdvance', function() {
     const daysInAdvance = this.get('daysInAdvance');

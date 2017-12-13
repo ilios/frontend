@@ -1,8 +1,8 @@
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, RSVP } = Ember;
 const { not } = computed;
 const { all } = RSVP;
 

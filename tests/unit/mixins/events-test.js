@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
 import EventsMixin from 'ilios-common/mixins/events';
 import { module, test } from 'qunit';
 
-const { Object: EmberObject, RSVP, run} = Ember;
 const { resolve } = RSVP;
 
 let course, session, intermediary, storeMock;

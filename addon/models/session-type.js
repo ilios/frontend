@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import DS from 'ember-data';
 
-const { String:EmberString, computed } = Ember;
 const { Model, attr, belongsTo, hasMany } = DS;
-const { htmlSafe } = EmberString;
 
 export default Model.extend({
   title: attr('string'),

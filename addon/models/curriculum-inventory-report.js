@@ -1,8 +1,9 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 
 const { attr, belongsTo, hasMany, Model } = DS;
-const { computed, isEmpty, RSVP } = Ember;
 const { all } = RSVP;
 
 export default Model.extend({
