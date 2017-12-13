@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import moment from 'moment';
 
-const { computed, isBlank, inject } = Ember;
-const { service } = inject;
+const { computed, isBlank } = Ember;
 
 export default Ember.Mixin.create({
-  i18n: service(),
+  i18n: Ember.inject.service(),
   tooltipContent: computed('event', function() {
     const i18n = this.get('i18n');
     if (this.get('event') == null) {

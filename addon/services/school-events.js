@@ -2,15 +2,14 @@ import Ember from 'ember';
 import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
-const { inject, computed, Service } = Ember;
-const { service } = inject;
+const { computed, Service } = Ember;
 const { reads } = computed;
 
 export default Service.extend(EventMixin, {
-  store: service(),
-  currentUser: service(),
-  commonAjax: service(),
-  iliosConfig: service(),
+  store: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  commonAjax: Ember.inject.service(),
+  iliosConfig:Ember.inject.service(),
 
   namespace: reads('iliosConfig.apiNameSpace'),
 

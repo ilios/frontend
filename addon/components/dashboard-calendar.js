@@ -3,8 +3,7 @@ import layout from '../templates/components/dashboard-calendar';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
-const { service } = inject;
+const { Component, computed, RSVP, Object:EmberObject, isEmpty } = Ember;
 const { all, map } = RSVP;
 
 export default Component.extend({
@@ -19,11 +18,11 @@ export default Component.extend({
     this.set('selectedCourses', []);
     this.set('selectedTerms', []);
   },
-  userEvents: service(),
-  schoolEvents: service(),
-  currentUser: service(),
-  store: service(),
-  i18n: service(),
+  userEvents: Ember.inject.service(),
+  schoolEvents: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   classNames: ['dashboard-calendar'],
   selectedSchool: null,
   selectedDate: null,

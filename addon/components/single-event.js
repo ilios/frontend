@@ -2,15 +2,14 @@ import Ember from 'ember';
 import layout from '../templates/components/single-event';
 import moment from 'moment';
 
-const { Component, computed, inject, RSVP, isEmpty, isBlank} = Ember;
+const { Component, computed, RSVP, isEmpty, isBlank} = Ember;
 const { notEmpty } = computed;
-const { service } = inject;
 const { map, resolve } = RSVP;
 
 export default Component.extend({
   layout,
-  store: service(),
-  i18n: service(),
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   event: null,
   classNames: ['single-event'],
 

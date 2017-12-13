@@ -2,13 +2,12 @@ import Ember from 'ember';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
 
-const { computed, RSVP, isEmpty, inject, get, Service } = Ember;
-const { service } = inject;
+const { computed, RSVP, isEmpty, get, Service } = Ember;
 const { map } = RSVP;
 
 export default Service.extend({
-  store: service(),
-  session: service(),
+  store: Ember.inject.service(),
+  session: Ember.inject.service(),
   currentUserId: computed('session.data.authenticated.jwt', function(){
     const session = this.get('session');
     if(isEmpty(session)){

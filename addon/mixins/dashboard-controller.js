@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import moment from 'moment';
 
-const { computed, Mixin, inject } = Ember;
-const { service } = inject;
+const { computed, Mixin } = Ember;
 
 export default Mixin.create({
   queryParams: [
@@ -24,7 +23,7 @@ export default Mixin.create({
   school: null,
   show: 'week',
 
-  currentUser: service(),
+  currentUser: Ember.inject.service(),
 
   selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function(){
     const academicYear = this.get('academicYear');

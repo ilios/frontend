@@ -5,15 +5,14 @@ import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
 
-const { computed, Handlebars, isArray, inject, String: EmberString } = Ember;
-const { service } = inject;
+const { computed, Handlebars, isArray, String: EmberString } = Ember;
 const { htmlSafe } = EmberString;
 const { notEmpty, or } = computed;
 const { Utils } = Handlebars;
 const { escapeExpression } = Utils;
 
 export default CalendarEvent.extend(TooltipContent, {
-  i18n: service(),
+  i18n: Ember.inject.service(),
   layout,
   event: null,
   timeFormat: 'h:mma',

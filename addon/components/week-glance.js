@@ -2,15 +2,14 @@ import Ember from 'ember';
 import moment from 'moment';
 import layout from '../templates/components/week-glance';
 
-const { Component, computed, inject } = Ember;
-const { service } = inject;
+const { Component, computed } = Ember;
 
 export default Component.extend({
   layout,
   classNames: ['week-glance'],
 
-  userEvents: service(),
-  i18n: service(),
+  userEvents: Ember.inject.service(),
+  i18n: Ember.inject.service(),
 
   startOfWeek: 0,
   endOfWeek: 6,
