@@ -584,7 +584,7 @@ test('academic year filters courses', async function(assert) {
 });
 
 test('clear all filters', async function(assert) {
-  const clearFilter = '.calendar-clear-filters';
+  const clearFilter = '.filters-clear-filters';
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
   const cohort = '.cohortfilter li:first input';
@@ -597,7 +597,8 @@ test('clear all filters', async function(assert) {
   await click(sessiontype);
   await click(courselevel);
   await click(cohort);
-  assert.ok(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
+
+  assert.equal(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
   assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
   assert.ok(find(courselevel).prop('checked'), 'filter is checked');
   assert.ok(find(cohort).prop('checked'), 'filter is checked');
