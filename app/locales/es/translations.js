@@ -493,7 +493,6 @@
     'targetCourse': 'Curso de Destino',
     'term': 'Término',
     'termCount': { 'one': 'Hay 1 término', 'other': 'Hay {{count}} términos' },
-    'terms': 'Términos',
     'termsManageTitle': 'Maneje Términos',
     'thisReportIsNoLongerAvailable': 'Este informe ya no está disponible.',
     'thursday': 'Jueves',

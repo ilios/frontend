@@ -493,7 +493,6 @@ export default {
     'targetCourse': 'Cours Cible',
     'term': 'Terme',
     'termCount': { 'one': 'Il y a 1 terme', 'other': 'Il y a {{count}} termes' },
-    'terms': 'Termes',
     'termsManageTitle': 'Manager des Termes',
     'thisReportIsNoLongerAvailable': "Ce rapport n'est plus disponsible.",
     'thursday': 'Jeudi',
