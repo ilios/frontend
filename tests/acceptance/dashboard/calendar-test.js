@@ -706,3 +706,46 @@ test('week summary displays the whole week', async function(assert) {
   assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
   assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
 });
+
+let pickTerm = async function(i) {
+  let terms = find('.vocabularyfilter');
+  return await click(find('li>span', terms).eq(i));
+};
+
+test('test term filter', async function(assert) {
+  const vocabulary = server.create('vocabulary', {
+    schoolId: 1
+  });
+  server.create('term', {
+    vocabulary,
+    sessionIds: [1, 2]
+  });
+  server.create('term', {
+    vocabulary
+  });
+  let today = moment().hour(8);
+  server.create('userevent', {
+    user: 4136,
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    offering: 1
+  });
+  server.create('userevent', {
+    user: 4136,
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    offering: 2
+  });
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  let events = find('div.event');
+  assert.equal(events.length, 2);
+  await pickTerm(0);
+  events = find('div.event');
+  assert.equal(events.length, 2);
+
+  await pickTerm(0);
+  await pickTerm(1);
+  events = find('div.event');
+  assert.equal(events.length, 0);
+});
