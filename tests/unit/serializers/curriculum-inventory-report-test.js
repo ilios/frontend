@@ -10,6 +10,7 @@ moduleForModel('curriculum-inventory-report', 'Unit | Serializer | curriculum in
     'model:curriculum-inventory-sequence',
     'model:curriculum-inventory-sequence-block',
     'model:program',
+    'model:user',
     'serializer:curriculum-inventory-report',
   ]
 });
