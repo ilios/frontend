@@ -3,11 +3,13 @@ import DS from 'ember-data';
 import Inflector from 'ember-inflector';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 
+const { attr, belongsTo, Model } = DS;
+
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
-export default DS.Model.extend(CategorizableModel, {
-  title: DS.attr('string'),
-  school: DS.belongsTo('school', {async: true}),
+export default Model.extend(CategorizableModel, {
+  title: attr('string'),
+  school: belongsTo('school', {async: true}),
   topLevelTerms: computed('terms.[]', async function() {
     const terms = await this.get('terms');
     return terms.toArray().filterBy('isTopLevel');

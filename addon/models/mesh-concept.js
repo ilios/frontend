@@ -1,16 +1,18 @@
 import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  preferred: DS.attr('boolean'),
-  scopeNote: DS.attr('string'),
-  cash1Name: DS.attr('string'),
-  registryNumber: DS.attr('string'),
-  createdAt: DS.attr('date'),
-  updatedAt: DS.attr('date'),
-  terms: DS.hasMany('mesh-term', {async: true}),
-  descriptors: DS.hasMany('mesh-descriptor', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  name: attr('string'),
+  preferred: attr('boolean'),
+  scopeNote: attr('string'),
+  cash1Name: attr('string'),
+  registryNumber: attr('string'),
+  createdAt: attr('date'),
+  updatedAt: attr('date'),
+  terms: hasMany('mesh-term', {async: true}),
+  descriptors: hasMany('mesh-descriptor', {async: true}),
   truncatedScopeNote: computed('scopeNote', function() {
     let scopeNote = this.get('scopeNote');
     if (250 < scopeNote.length) {

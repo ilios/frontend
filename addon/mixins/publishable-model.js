@@ -4,10 +4,11 @@ import { computed } from '@ember/object';
 import DS from 'ember-data';
 
 const { alias, oneWay, not } = computed;
+const { attr } = DS;
 
 export default Mixin.create({
-  publishedAsTbd: DS.attr('boolean'),
-  published: DS.attr('boolean'),
+  publishedAsTbd: attr('boolean'),
+  published: attr('boolean'),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),

@@ -1,24 +1,26 @@
 import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  uploadDate: DS.attr('date'),
-  originalAuthor: DS.attr('string'),
-  citation: DS.attr('string'),
-  copyrightPermission: DS.attr('boolean'),
-  copyrightRationale: DS.attr('string'),
-  filename: DS.attr('string'),
-  mimetype: DS.attr('string'),
-  filesize: DS.attr('number'),
-  link: DS.attr('string'),
-  absoluteFileUri: DS.attr('string'),
-  userRole: DS.belongsTo('learning-material-user-role', {async: true}),
-  status: DS.belongsTo('learning-material-status', {async: true}),
-  owningUser: DS.belongsTo('user', {async: true}),
-  sessionLearningMaterials: DS.hasMany('session-learning-material', {async: true}),
-  courseLearningMaterials: DS.hasMany('course-learning-material', {async: true}),
+const { attr, belongsTo, hasMany, Model } = DS;
+
+export default Model.extend({
+  title: attr('string'),
+  description: attr('string'),
+  uploadDate: attr('date'),
+  originalAuthor: attr('string'),
+  citation: attr('string'),
+  copyrightPermission: attr('boolean'),
+  copyrightRationale: attr('string'),
+  filename: attr('string'),
+  mimetype: attr('string'),
+  filesize: attr('number'),
+  link: attr('string'),
+  absoluteFileUri: attr('string'),
+  userRole: belongsTo('learning-material-user-role', {async: true}),
+  status: belongsTo('learning-material-status', {async: true}),
+  owningUser: belongsTo('user', {async: true}),
+  sessionLearningMaterials: hasMany('session-learning-material', {async: true}),
+  courseLearningMaterials: hasMany('course-learning-material', {async: true}),
   type: computed('filename', 'citation', 'link', function(){
     if (this.get('filename')) {
       return 'file';

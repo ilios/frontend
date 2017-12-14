@@ -1,7 +1,10 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  school: DS.belongsTo('school', {async: true}),
-  stewards: DS.hasMany('program-year-steward', {async: true}),
+const { attr, belongsTo, hasMany, Model } = DS;
+
+
+export default Model.extend({
+  title: attr('string'),
+  school: belongsTo('school', {async: true}),
+  stewards: hasMany('program-year-steward', {async: true}),
 });

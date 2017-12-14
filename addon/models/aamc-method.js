@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  description: DS.attr('string'),
-  sessionTypes: DS.hasMany('session-type', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  description: attr('string'),
+  sessionTypes: hasMany('session-type', {async: true}),
 });

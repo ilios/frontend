@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  courses: DS.hasMany('course', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  title: attr('string'),
+  courses: hasMany('course', {async: true}),
 });
