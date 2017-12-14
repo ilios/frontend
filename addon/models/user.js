@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 
-const { computed, RSVP } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all, map } = RSVP;
 
@@ -198,6 +198,13 @@ export default Model.extend({
   absoluteIcsUri: computed('icsFeedKey', function(){
     return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
   }),
+
+  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function(){
+    const cohorts = await this.get('cohorts');
+    const primaryCohort = await this.get('primaryCohort');
+    return cohorts.toArray().filter(cohort => cohort !== primaryCohort);
+  }),
+
   /**
    * Compare a user's learner groups to a list of learner groups and find the one
    * that is the lowest leaf in the learner group tree.
@@ -219,10 +226,4 @@ export default Model.extend({
     });
     return (lowestGroup ? lowestGroup : null);
   },
-
-  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function(){
-    const cohorts = await this.get('cohorts');
-    const primaryCohort = await this.get('primaryCohort');
-    return cohorts.toArray().filter(cohort => cohort !== primaryCohort);
-  })
 });

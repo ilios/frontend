@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  description: DS.attr('string'),
-  report: DS.belongsTo('curriculum-inventory-report', {async: true}),  
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  description: attr('string'),
+  report: belongsTo('curriculum-inventory-report', {async: true}),
 });

@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import moment from 'moment';
 import layout from '../templates/components/week-glance';
-
-const { Component, computed, inject } = Ember;
-const { service } = inject;
 
 export default Component.extend({
   layout,

@@ -1,8 +1,10 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  createdAt: DS.attr('date'),
-  updatedAt: DS.attr('date'),
-  descriptors: DS.hasMany('mesh-descriptor', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  name: attr('string'),
+  createdAt: attr('date'),
+  updatedAt: attr('date'),
+  descriptors: hasMany('mesh-descriptor', {async: true}),
 });

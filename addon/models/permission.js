@@ -1,9 +1,11 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  user: DS.belongsTo('user', {async: true}),
-  canRead: DS.attr('boolean'),
-  canWrite: DS.attr('boolean'),
-  tableRowId: DS.attr('string'),
-  tableName: DS.attr('string'),
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  canRead: attr('boolean'),
+  canWrite: attr('boolean'),
+  tableRowId: attr('string'),
+  tableName: attr('string'),
+  user: belongsTo('user', {async: true}),
 });

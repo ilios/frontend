@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/dashboard-materials';
 import moment from 'moment';
 
-const { Component, computed, inject } = Ember;
-const { service }= inject;
 const { reads } = computed;
 
 export default Component.extend({

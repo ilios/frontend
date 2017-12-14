@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import {default as en} from 'ilios-common/locales/en/translations';
-import {default as es} from 'ilios-common/locales/es/translations';
-import {default as fr} from 'ilios-common/locales/fr/translations';
+import { default as en } from 'ilios-common/locales/en/translations';
+import { default as es } from 'ilios-common/locales/es/translations';
+import { default as fr } from 'ilios-common/locales/fr/translations';
 
 moduleForComponent('ilios-header', 'Unit | Translations', {
   integration: true

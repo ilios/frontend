@@ -1,8 +1,7 @@
+import { computed } from '@ember/object';
 import moment from 'moment';
-import Ember from 'ember';
 import DS from 'ember-data';
 
-const { computed } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({

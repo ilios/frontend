@@ -1,8 +1,9 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 import Inflector from 'ember-inflector';
 
-const { computed, isEmpty, RSVP } = Ember;
 const { not } = computed;
 const { all } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
@@ -17,11 +18,11 @@ export default Model.extend({
   children: hasMany('competency', {async: true, inverse: 'parent'}),
   aamcPcrses: hasMany('aamc-pcrs', {async: true}),
   programYears: hasMany('program-year', {async: true}),
+  isNotDomain: not('isDomain'),
   isDomain: computed('parent', function(){
     const parentId = this.belongsTo('parent').id();
     return !parentId;
   }),
-  isNotDomain: not('isDomain'),
 
   domain: computed('parent', 'parent.domain', async function() {
     const parent = await this.get('parent');

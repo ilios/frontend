@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  previousIndexing: DS.attr('string'),
-  descriptor: DS.belongsTo('mesh-descriptor', {async: true}),
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  previousIndexing: attr('string'),
+  descriptor: belongsTo('mesh-descriptor', {async: true}),
 });

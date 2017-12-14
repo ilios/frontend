@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { copy } from '@ember/object/internals';
 import layout from '../templates/components/ilios-calendar';
 import moment from 'moment';
-
-const { Component, computed, copy } = Ember;
 
 export default Component.extend({
   layout,

@@ -1,7 +1,7 @@
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
-import Ember from 'ember';
-
-const { computed, RSVP, isEmpty } =  Ember;
 const { alias, gt, gte } = computed;
 const { all, map } = RSVP;
 const { Model, attr, belongsTo, hasMany } = DS;
@@ -10,18 +10,13 @@ export default Model.extend({
   title: attr('string'),
   position: attr('number', { defaultValue: 0 }),
   competency: belongsTo('competency', {async: true}),
+  ancestor: belongsTo('objective', {
+    inverse: 'descendants',
+    async: true
+  }),
   courses: hasMany('course', {async: true}),
-  //While it is possible at some point that objectives will be allowed to
-  //link to multiple courses, for now we just reflect a many to one relationship
-  course: alias('courses.firstObject'),
   programYears: hasMany('program-year', {async: true}),
-  //While it is possible at some point that objectives will be allowed to
-  //link to multiple program years, for now we just reflect a many to one relationship
-  programYear: alias('programYears.firstObject'),
   sessions: hasMany('session', {async: true}),
-  //While it is possible at some point that objectives will be allowed to
-  //link to multiple sessions, for now we just reflect a many to one relationship
-  session: alias('sessions.firstObject'),
   parents: hasMany('objective', {
     inverse: 'children',
     async: true
@@ -31,14 +26,19 @@ export default Model.extend({
     async: true
   }),
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),
-  ancestor: belongsTo('objective', {
-    inverse: 'descendants',
-    async: true
-  }),
   descendants: hasMany('objective', {
     inverse: 'ancestor',
     async: true
   }),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple courses, for now we just reflect a many to one relationship
+  course: alias('courses.firstObject'),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple program years, for now we just reflect a many to one relationship
+  programYear: alias('programYears.firstObject'),
+  //While it is possible at some point that objectives will be allowed to
+  //link to multiple sessions, for now we just reflect a many to one relationship
+  session: alias('sessions.firstObject'),
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),
@@ -103,6 +103,25 @@ export default Model.extend({
     return title.replace(/(<([^>]+)>)/ig,"");
   }),
 
+  firstProgram: computed('programYears.[]', async function(){
+    const programYears = await this.get('programYears');
+    const programYear = programYears.get('firstObject');
+    const program = await programYear.get('program');
+
+    return program;
+  }),
+  firstCohort: computed('programYears.[]', async function(){
+    const programYears = await this.get('programYears');
+    const programYear = programYears.get('firstObject');
+    if (!programYear) {
+      return null;
+    }
+
+    const cohort = await programYear.get('cohort');
+
+    return cohort;
+  }),
+
   /**
    * Remove any parents with a relationship to the cohort.
    * @method removeParentWithProgramYears
@@ -122,23 +141,4 @@ export default Model.extend({
 
     await this.save();
   },
-
-  firstProgram: computed('programYears.[]', async function(){
-    const programYears = await this.get('programYears');
-    const programYear = programYears.get('firstObject');
-    const program = await programYear.get('program');
-
-    return program;
-  }),
-  firstCohort: computed('programYears.[]', async function(){
-    const programYears = await this.get('programYears');
-    const programYear = programYears.get('firstObject');
-    if (!programYear) {
-      return null;
-    }
-
-    const cohort = await programYear.get('cohort');
-
-    return cohort;
-  }),
 });

@@ -1,10 +1,8 @@
-import { moduleForModel,  test } from 'ember-qunit';
+import { run } from '@ember/runloop';
+import { moduleForModel, test } from 'ember-qunit';
 import moment from 'moment';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
-import Ember from 'ember';
-
-const { run } = Ember;
 
 initialize();
 moduleForModel('cohort', 'Unit | Model | Cohort', {

@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import { typeOf } from '@ember/utils';
 import en from "ilios-common/locales/en/translations";
 import fr from "ilios-common/locales/fr/translations";
 import es from "ilios-common/locales/es/translations";
-const { typeOf } = Ember;
 
 export function initialize(app) {
   const i18n = app.lookup('service:i18n');

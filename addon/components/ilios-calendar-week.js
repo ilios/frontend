@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import layout from '../templates/components/ilios-calendar-week';
-
-const { Component, computed, run, isEmpty } = Ember;
 
 export default Component.extend({
   layout,

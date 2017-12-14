@@ -1,20 +1,22 @@
-import Ember from 'ember';
+import { collect, sum } from '@ember/object/computed';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-const { computed } = Ember;
 const { alias, oneWay, not } = computed;
+const { attr } = DS;
 
-export default Ember.Mixin.create({
-  publishedAsTbd: DS.attr('boolean'),
-  published: DS.attr('boolean'),
+export default Mixin.create({
+  publishedAsTbd: attr('boolean'),
+  published: attr('boolean'),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
   isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
     return this.get('publishedAsTbd') || this.get('isPublished');
   }),
-  allPublicationIssuesCollection: computed.collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
-  allPublicationIssuesLength: computed.sum('allPublicationIssuesCollection'),
+  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
   requiredPublicationSetFields: [],
   requiredPublicationLengthFields: [],
   optionalPublicationSetFields: [],

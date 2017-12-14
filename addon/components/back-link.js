@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/back-link';
 
-const { computed, inject } = Ember;
-const { service } = inject;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   i18n: service(),
   tagName: 'a',

@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  department: DS.belongsTo('department', {async: true}),
-  programYear: DS.belongsTo('program-year', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
+const { belongsTo, Model } = DS;
+
+export default Model.extend({
+  department: belongsTo('department', {async: true}),
+  programYear: belongsTo('program-year', {async: true}),
+  school: belongsTo('school', {async: true}),
 });

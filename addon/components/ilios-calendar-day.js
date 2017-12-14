@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import layout from '../templates/components/ilios-calendar-day';
 
-const { run, computed, isEmpty } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   classNames: ['ilios-calendar-day'],
   date: null,

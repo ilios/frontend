@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 
-const { computed, RSVP } = Ember;
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all } = RSVP;
 
@@ -48,13 +48,12 @@ export default Model.extend(PublishableModel,{
       return array;
     }, []).uniq();
   }),
-
-  requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
-  optionalPublicationLengthFields: ['programYears'],
   requiredPublicationIssues: computed('title', 'shortTitle', 'duration', function(){
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed('programYears.length', function(){
     return this.getOptionalPublicationIssues();
   }),
+  requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
+  optionalPublicationLengthFields: ['programYears'],
 });

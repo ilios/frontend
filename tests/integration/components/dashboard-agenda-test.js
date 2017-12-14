@@ -1,7 +1,8 @@
+import { resolve } from 'rsvp';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
 
@@ -18,14 +19,14 @@ moduleForComponent('dashboard-agenda', 'Integration | Component | dashboard agen
       {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), attendanceRequired: false, equipmentRequired: false, attireRequired: false},
       {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), attendanceRequired: false, equipmentRequired: false, attireRequired: false},
     ];
-    userEventsMock = Ember.Service.extend({
+    userEventsMock = Service.extend({
       getEvents(){
-        return new Ember.RSVP.resolve(mockEvents);
+        return new resolve(mockEvents);
       }
     });
-    blankEventsMock = Ember.Service.extend({
+    blankEventsMock = Service.extend({
       getEvents(){
-        return new Ember.RSVP.resolve([]);
+        return new resolve([]);
       }
     });
   }

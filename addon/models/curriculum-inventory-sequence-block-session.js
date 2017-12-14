@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  countOfferingsOnce: DS.attr('boolean'),
-  sequenceBlock: DS.belongsTo('curriculum-inventory-sequence-block', {async: true}),
-  session: DS.belongsTo('session', {async: true}),
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  countOfferingsOnce: attr('boolean'),
+  sequenceBlock: belongsTo('curriculum-inventory-sequence-block', {async: true}),
+  session: belongsTo('session', {async: true}),
 });

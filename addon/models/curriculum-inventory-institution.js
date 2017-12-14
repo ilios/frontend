@@ -1,11 +1,14 @@
 import DS from 'ember-data';
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  aamcCode: DS.attr('string'),
-  addressStreet: DS.attr('string'),
-  addressCity: DS.attr('string'),
-  addressStateOrProvince: DS.attr('string'),
-  addressZipCode: DS.attr('string'),
-  addressCountryCode: DS.attr('string'),
-  school: DS.belongsTo('school', {async: true}),
+
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  name: attr('string'),
+  aamcCode: attr('string'),
+  addressStreet: attr('string'),
+  addressCity: attr('string'),
+  addressStateOrProvince: attr('string'),
+  addressZipCode: attr('string'),
+  addressCountryCode: attr('string'),
+  school: belongsTo('school', {async: true}),
 });

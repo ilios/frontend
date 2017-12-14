@@ -1,7 +1,6 @@
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
-import Ember from 'ember';
-
-const { computed, isEmpty } =  Ember;
 const { collect, sum, gte } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
 

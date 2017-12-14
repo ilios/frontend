@@ -1,25 +1,27 @@
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
-import Ember from 'ember';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { computed, RSVP } = Ember;
 const { not } = computed;
 const { all } = RSVP;
 
-export default DS.Model.extend({
-  room: DS.attr('string'),
-  site: DS.attr('string'),
-  startDate: DS.attr('date'),
-  endDate: DS.attr('date'),
-  updatedAt: DS.attr('date'),
-  session: DS.belongsTo('session', {async: true}),
-  learnerGroups: DS.hasMany('learner-group', {async: true}),
-  instructorGroups: DS.hasMany('instructor-group', {async: true}),
-  learners: DS.hasMany('user', {
+const { attr, belongsTo, hasMany, Model } = DS;
+
+export default Model.extend({
+  room: attr('string'),
+  site: attr('string'),
+  startDate: attr('date'),
+  endDate: attr('date'),
+  updatedAt: attr('date'),
+  session: belongsTo('session', {async: true}),
+  learnerGroups: hasMany('learner-group', {async: true}),
+  instructorGroups: hasMany('instructor-group', {async: true}),
+  learners: hasMany('user', {
     async: true,
     inverse: 'offerings'
   }),
-  instructors: DS.hasMany('user', {
+  instructors: hasMany('user', {
     async: true,
     inverse: 'instructedOfferings'
   }),
@@ -32,10 +34,10 @@ export default DS.Model.extend({
   endTime: momentFormat('endDate', 'HHmm'),
   startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
   endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
+  isMultiDay: not('isSingleDay'),
   isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function(){
     return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
   }),
-  isMultiDay: not('isSingleDay'),
   dateKey: computed('startDayOfYear', 'startYear', function(){
     return this.get('startYear') + this.get('startDayOfYear');
   }),

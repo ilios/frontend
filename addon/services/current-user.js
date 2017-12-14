@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import { isEmpty } from '@ember/utils';
+import { get, computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
 
-const { computed, RSVP, isEmpty, inject, get, Service } = Ember;
-const { service } = inject;
 const { map } = RSVP;
 
 export default Service.extend({

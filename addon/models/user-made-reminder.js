@@ -1,9 +1,11 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  note: DS.attr('string'),
-  createdAt: DS.attr('date'),
-  dueDate: DS.attr('date'),
-  closed: DS.attr('boolean'),
-  user: DS.belongsTo('user', {async: false}),
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  note: attr('string'),
+  createdAt: attr('date'),
+  dueDate: attr('date'),
+  closed: attr('boolean'),
+  user: belongsTo('user', {async: false}),
 });

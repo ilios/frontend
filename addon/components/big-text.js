@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/big-text';
 
-const { Component, computed, String: EmberString, typeOf } = Ember;
-const { htmlSafe } = EmberString;
 const { collect, sum } = computed;
 
 export default Component.extend({

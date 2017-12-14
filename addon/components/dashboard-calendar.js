@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import EmberObject, { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/dashboard-calendar';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
-const { Component, computed, RSVP, Object:EmberObject, inject, isEmpty } = Ember;
-const { service } = inject;
 const { all, map } = RSVP;
 
 export default Component.extend({

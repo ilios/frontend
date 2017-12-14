@@ -1,10 +1,8 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 import moment from 'moment';
-
-const { run } = Ember;
 
 initialize();
 moduleForModel('session', 'Unit | Model | Session', {

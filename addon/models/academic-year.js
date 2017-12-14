@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-const { computed } = Ember;
+const { attr, Model } = DS;
 
-export default DS.Model.extend({
-  title: DS.attr('number'),
+export default Model.extend({
+  title: attr('number'),
   academicYearTitle: computed('title', function(){
     return this.get('title') + ' - ' + (parseInt(this.get('title')) + 1);
   }),

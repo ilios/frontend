@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
 
-const { computed } = Ember;
+const { attr, belongsTo, Model } = DS;
 
-export default DS.Model.extend({
-  description: DS.attr('string'),
-  session: DS.belongsTo('session', {async: true}),
+export default Model.extend({
+  description: attr('string'),
+  session: belongsTo('session', {async: true}),
   textDescription: computed('description', function(){
     var title = this.get('description');
     if(title === undefined){

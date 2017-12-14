@@ -1,8 +1,9 @@
+import { getOwner } from '@ember/application';
+import EmberObject from '@ember/object';
+import { run } from '@ember/runloop';
 import { moduleFor, test } from 'ember-qunit';
-import  Ember from 'ember';
 import RSVP from 'rsvp';
 
-const { getOwner, Object:EmberObject, run } = Ember;
 const { resolve } = RSVP;
 
 moduleFor('service:current-user', 'CurrentUserService', {

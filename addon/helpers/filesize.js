@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function filesize(params/*, hash*/) {
   let value = params[0];
@@ -18,4 +18,4 @@ export function filesize(params/*, hash*/) {
   return rhett;
 }
 
-export default Ember.Helper.helper(filesize);
+export default helper(filesize);

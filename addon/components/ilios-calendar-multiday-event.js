@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { or, notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/ilios-calendar-multiday-event';
 
-const { notEmpty, or } = Ember.computed;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   tagName: ['li'],
   event: null,

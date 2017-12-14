@@ -1,11 +1,13 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  createdAt: DS.attr('date'),
-  subject: DS.attr('string'),
-  prepositionalObject: DS.attr('string'),
-  prepositionalObjectTableRowId: DS.attr('string'),
-  user: DS.belongsTo('user', {async: true}),
-  school: DS.belongsTo('school', {async: true}),
+const { attr, belongsTo, Model } = DS;
+
+export default Model.extend({
+  title: attr('string'),
+  createdAt: attr('date'),
+  subject: attr('string'),
+  prepositionalObject: attr('string'),
+  prepositionalObjectTableRowId: attr('string'),
+  user: belongsTo('user', {async: true}),
+  school: belongsTo('school', {async: true}),
 });

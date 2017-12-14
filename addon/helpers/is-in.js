@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Helper, observer } = Ember;
+import Helper from '@ember/component/helper';
+import { observer } from '@ember/object';
 
 export function isIn([values, item]) {
   if (!values) {

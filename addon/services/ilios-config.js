@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
-const { inject, computed, isPresent } = Ember;
-const { service } = inject;
-
-export default Ember.Service.extend({
+export default Service.extend({
   commonAjax: service(),
   serverVariables: service(),
 

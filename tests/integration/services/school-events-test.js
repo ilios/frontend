@@ -1,8 +1,9 @@
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import Service from '@ember/service';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
 import moment from 'moment';
 
-const { RSVP, run, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleFor('service:school-events', 'Integration | Service | school events', {

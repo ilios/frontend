@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
+import { reads } from '@ember/object/computed';
 import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
-const { inject, computed, Service } = Ember;
-const { service } = inject;
-const { reads } = computed;
 
 export default Service.extend(EventMixin, {
   store: service(),

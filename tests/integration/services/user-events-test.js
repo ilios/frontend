@@ -1,8 +1,10 @@
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import Service from '@ember/service';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
 import moment from 'moment';
 
-const { Object: EmberObject, RSVP, run, Service } = Ember;
 const { resolve } = RSVP;
 
 moduleFor('service:user-events', 'Integration | Service | user events', {

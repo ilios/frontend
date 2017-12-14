@@ -1,13 +1,15 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  meshTermUid: DS.attr('string'),
-  name: DS.attr('string'),
-  lexicalTag: DS.attr('string'),
-  conceptPreferred: DS.attr('string'),
-  recordPreferred: DS.attr('string'),
-  permuted: DS.attr('string'),
-  createdAt: DS.attr('date'),
-  updatedAt: DS.attr('date'),
-  concepts: DS.hasMany('mesh-concept', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  meshTermUid: attr('string'),
+  name: attr('string'),
+  lexicalTag: attr('string'),
+  conceptPreferred: attr('string'),
+  recordPreferred: attr('string'),
+  permuted: attr('string'),
+  createdAt: attr('date'),
+  updatedAt: attr('date'),
+  concepts: hasMany('mesh-concept', {async: true}),
 });

@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  competencies: DS.hasMany('term', {async: true}),
+const { attr, hasMany, Model } = DS;
+
+export default Model.extend({
+  title: attr('string'),
+  description: attr('string'),
+  competencies: hasMany('term', {async: true}),
 });

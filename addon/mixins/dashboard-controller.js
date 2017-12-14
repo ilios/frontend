@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
 import moment from 'moment';
-
-const { computed, Mixin, inject } = Ember;
-const { service } = inject;
 
 export default Mixin.create({
   queryParams: [

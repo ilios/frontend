@@ -1,11 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { reads } from '@ember/object/computed';
 import DS from 'ember-data';
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 import { pluralize } from 'ember-inflector';
 
-const { inject, computed } = Ember;
-const { service } = inject;
-const { reads } = computed;
 const { RESTAdapter } = DS;
 
 export default RESTAdapter.extend(DataAdapterMixin, {

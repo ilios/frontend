@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
+import { isPresent } from '@ember/utils';
 import moment from 'moment';
-
-const { computed, Mixin, isPresent } = Ember;
 
 export default Mixin.create({
   queryParams: ['year', 'expanded'],

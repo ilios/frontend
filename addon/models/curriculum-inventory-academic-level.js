@@ -1,9 +1,11 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  description: DS.attr('string'),
-  level: DS.attr('number'),
-  report: DS.belongsTo('curriculum-inventory-report', {async: true}),
-  sequenceBlocks: DS.hasMany('curriculum-inventory-sequence-block', {async: true}),
+const { attr, belongsTo, hasMany, Model } = DS;
+
+export default Model.extend({
+  name: attr('string'),
+  description: attr('string'),
+  level: attr('number'),
+  report: belongsTo('curriculum-inventory-report', {async: true}),
+  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {async: true}),
 });

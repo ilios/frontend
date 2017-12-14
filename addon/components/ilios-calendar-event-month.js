@@ -1,14 +1,15 @@
 import Ember from 'ember';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import { default as CalendarEvent } from 'el-calendar/components/calendar-event';
 import layout from '../templates/components/ilios-calendar-event-month';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
 
-const { computed, Handlebars, String: EmberString } = Ember;
-const { htmlSafe } = EmberString;
-const { Utils } = Handlebars;
+const { Handlebars } = Ember;
 const { notEmpty, or } = computed;
+const { Utils } = Handlebars;
 const { escapeExpression } = Utils;
 
 export default CalendarEvent.extend(TooltipContent, {
