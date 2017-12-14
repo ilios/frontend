@@ -48,13 +48,12 @@ export default Model.extend(PublishableModel,{
       return array;
     }, []).uniq();
   }),
-
-  requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
-  optionalPublicationLengthFields: ['programYears'],
   requiredPublicationIssues: computed('title', 'shortTitle', 'duration', function(){
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed('programYears.length', function(){
     return this.getOptionalPublicationIssues();
   }),
+  requiredPublicationSetFields: ['title', 'shortTitle', 'duration'],
+  optionalPublicationLengthFields: ['programYears'],
 });

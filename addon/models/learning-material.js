@@ -6,11 +6,6 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   uploadDate: DS.attr('date'),
   originalAuthor: DS.attr('string'),
-  userRole: DS.belongsTo('learning-material-user-role', {async: true}),
-  status: DS.belongsTo('learning-material-status', {async: true}),
-  owningUser: DS.belongsTo('user', {async: true}),
-  sessionLearningMaterials: DS.hasMany('session-learning-material', {async: true}),
-  courseLearningMaterials: DS.hasMany('course-learning-material', {async: true}),
   citation: DS.attr('string'),
   copyrightPermission: DS.attr('boolean'),
   copyrightRationale: DS.attr('string'),
@@ -19,6 +14,11 @@ export default DS.Model.extend({
   filesize: DS.attr('number'),
   link: DS.attr('string'),
   absoluteFileUri: DS.attr('string'),
+  userRole: DS.belongsTo('learning-material-user-role', {async: true}),
+  status: DS.belongsTo('learning-material-status', {async: true}),
+  owningUser: DS.belongsTo('user', {async: true}),
+  sessionLearningMaterials: DS.hasMany('session-learning-material', {async: true}),
+  courseLearningMaterials: DS.hasMany('course-learning-material', {async: true}),
   type: computed('filename', 'citation', 'link', function(){
     if (this.get('filename')) {
       return 'file';
@@ -30,7 +30,6 @@ export default DS.Model.extend({
       return 'link';
     }
   }),
-  fileHash: null,
   url: computed('link', 'citation', 'absoluteFileUri', function(){
     if(this.get('type') === 'file'){
       return this.get('absoluteFileUri');
@@ -41,7 +40,7 @@ export default DS.Model.extend({
     if(this.get('type') === 'citation'){
       return null;
     }
-    
+
   }),
   isFile: computed('type', function() {
     return (this.get('type') === 'file');
@@ -51,5 +50,6 @@ export default DS.Model.extend({
   }),
   isCitation: computed('type', function() {
     return (this.get('type') === 'citation');
-  })
+  }),
+  fileHash: null,
 });

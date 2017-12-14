@@ -3,9 +3,9 @@ import DS from 'ember-data';
 const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
-  session: belongsTo('session', { async: true }),
   hours: attr('number'),
   dueDate: attr('date'),
+  session: belongsTo('session', { async: true }),
   learnerGroups: hasMany('learner-group', { async: true }),
   instructorGroups: hasMany('instructor-group', { async: true }),
   instructors: hasMany('user', {

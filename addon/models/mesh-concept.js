@@ -7,9 +7,9 @@ export default DS.Model.extend({
   scopeNote: DS.attr('string'),
   cash1Name: DS.attr('string'),
   registryNumber: DS.attr('string'),
-  terms: DS.hasMany('mesh-term', {async: true}),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
+  terms: DS.hasMany('mesh-term', {async: true}),
   descriptors: DS.hasMany('mesh-descriptor', {async: true}),
   truncatedScopeNote: computed('scopeNote', function() {
     let scopeNote = this.get('scopeNote');

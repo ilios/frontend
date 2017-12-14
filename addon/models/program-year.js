@@ -17,6 +17,9 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   competencies: hasMany('competency', {async: true}),
   objectives: hasMany('objective', {async: true}),
   stewards: hasMany('program-year-steward', {async: true}),
+
+  assignableVocabularies: alias('program.school.vocabularies'),
+
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
   }),
@@ -35,9 +38,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
       return this.getOptionalPublicationIssues();
     }
   ),
-  requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
-  optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
-  assignableVocabularies: alias('program.school.vocabularies'),
 
   /**
    * A list of program-year objectives, sorted by position and title.
@@ -48,5 +48,8 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
     const objectives = await this.get('objectives');
     return objectives.toArray().sort(this.positionSortingCallback);
-  })
+  }),
+
+  requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
+  optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
 });

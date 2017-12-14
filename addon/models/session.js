@@ -34,6 +34,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
+  assignableVocabularies: alias('course.assignableVocabularies'),
 
   isIndependentLearning: computed('ilmSession', function(){
     return !isEmpty(this.belongsTo('ilmSession').id());
@@ -120,7 +121,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     }, 0).toFixed(2);
   }),
 
-  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed(
     'title',
     'offerings.length',
@@ -188,8 +188,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return allGroups.uniq().sortBy('title');
   }),
 
-  assignableVocabularies: alias('course.assignableVocabularies'),
-
   /**
    * A list of session objectives, sorted by position (asc) and then id (desc).
    * @property sortedObjectives
@@ -198,6 +196,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   sortedObjectives: computed('objectives.@each.position', async function() {
     const objectives = await this.get('objectives');
     return objectives.toArray().sort(this.positionSortingCallback);
-  })
+  }),
 
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
 });

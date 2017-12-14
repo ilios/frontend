@@ -44,6 +44,12 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     inverse: 'ancestor',
     async: true
   }),
+
+  publishedSessions: filterBy('sessions', 'isPublished'),
+  publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
+  publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
+  publishedOfferingCount: sum('publishedSessionOfferingCounts'),
+
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
   }),
@@ -93,22 +99,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return domainProxies.sortBy('title');
   }),
 
-  publishedSessions: filterBy('sessions', 'isPublished'),
-  publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
-  publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
-  publishedOfferingCount: sum('publishedSessionOfferingCounts'),
-  setDatesBasedOnYear: function(){
-    let today = moment();
-    let firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
-    let startDate = today < firstDayOfYear?firstDayOfYear:today;
-    let endDate = moment(startDate).add('8', 'weeks');
-    this.set('startDate', startDate.toDate());
-    this.set('endDate', endDate.toDate());
-  },
-  requiredPublicationSetFields: ['startDate', 'endDate'],
-  requiredPublicationLengthFields: ['cohorts'],
-  optionalPublicationSetFields: [],
-  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
   requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function(){
     return this.getRequiredPublicationIssues();
   }),
@@ -172,4 +162,18 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
 
     return ids.length > 1;
   }),
+
+  requiredPublicationSetFields: ['startDate', 'endDate'],
+  requiredPublicationLengthFields: ['cohorts'],
+  optionalPublicationSetFields: [],
+  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
+
+  setDatesBasedOnYear: function(){
+    let today = moment();
+    let firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
+    let startDate = today < firstDayOfYear?firstDayOfYear:today;
+    let endDate = moment(startDate).add('8', 'weeks');
+    this.set('startDate', startDate.toDate());
+    this.set('endDate', endDate.toDate());
+  },
 });

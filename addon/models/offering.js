@@ -32,10 +32,10 @@ export default DS.Model.extend({
   endTime: momentFormat('endDate', 'HHmm'),
   startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
   endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
+  isMultiDay: not('isSingleDay'),
   isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function(){
     return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
   }),
-  isMultiDay: not('isSingleDay'),
   dateKey: computed('startDayOfYear', 'startYear', function(){
     return this.get('startYear') + this.get('startDayOfYear');
   }),
