@@ -1,14 +1,15 @@
+import Ember from 'ember';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
 import { htmlSafe } from '@ember/string';
-import { Handlebars } from '@ember/component/handlebars';
 import { default as CalendarEvent } from 'el-calendar/components/calendar-event';
 import layout from '../templates/components/ilios-calendar-event';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
 
+const { Handlebars } = Ember;
 const { notEmpty, or } = computed;
 const { Utils } = Handlebars;
 const { escapeExpression } = Utils;
