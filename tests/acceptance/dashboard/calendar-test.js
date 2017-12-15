@@ -583,7 +583,42 @@ test('academic year filters courses', async function(assert) {
   assert.equal(courseFilters.length, 1);
 });
 
-test('clear all filters', async function(assert) {
+
+
+test('clear all filters', async function (assert) {
+  const vocabulary = server.create('vocabulary', {
+    schoolId: 1
+  });
+  server.createList('term', 2, {
+    vocabulary
+  });
+
+  const clearFilter = '.filters-clear-filters';
+  const sessiontype = '.sessiontypefilter li:first input';
+  const course = '.coursefilter li:first input';
+  const term = '.vocabularyfilter li:first input';
+
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+
+  await click(sessiontype);
+  await click(course);
+  await click(term);
+
+  assert.equal(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
+  assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
+  assert.ok(find(course).prop('checked'), 'filter is checked');
+  assert.ok(find(term).prop('checked'), 'filter is checked');
+
+  await click(clearFilter);
+  assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+  assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
+  assert.ok(!find(course).prop('checked'), 'filter is unchecked');
+  assert.ok(!find(term).prop('checked'), 'filter is unchecked');
+});
+
+test('clear all detail filters', async function(assert) {
   const clearFilter = '.filters-clear-filters';
   const sessiontype = '.sessiontypefilter li:first input';
   const courselevel = '.courselevelfilter li:first input';
@@ -748,4 +783,40 @@ test('test term filter', async function(assert) {
   await pickTerm(1);
   events = find('div.event');
   assert.equal(events.length, 0);
+});
+
+test('clear vocab filter #3450', async function(assert) {
+  const vocabulary = server.create('vocabulary', {
+    schoolId: 1
+  });
+  server.create('term', {
+    vocabulary,
+    sessionIds: [1]
+  });
+  let today = moment().hour(8);
+  server.create('userevent', {
+    user: 4136,
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    offering: 1
+  });
+  server.create('userevent', {
+    user: 4136,
+    startDate: today.format(),
+    endDate: today.clone().add(1, 'hour').format(),
+    offering: 2
+  });
+  const filters = '.filter-tags .filter-tag';
+  const filter = `${filters}:eq(0)`;
+
+  await visit('/dashboard?show=calendar');
+  await showFilters();
+  assert.equal(find('div.event').length, 2);
+  await pickTerm(0);
+  assert.equal(find('div.event').length, 1);
+
+  assert.equal(find(filters).length, 1);
+  await click(filter);
+  assert.equal(find(filters).length, 0);
+  assert.equal(find('div.event').length, 2);
 });
