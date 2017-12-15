@@ -4,17 +4,17 @@ import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 const { map, filter } = RSVP;
 
 export default Component.extend({
   course: null,
-  height: 360,
-  width: 360,
-  icon: false,
-  classNameBindings: ['icon::not-icon', ':visualizer-course-objectives'],
+  isIcon: false,
+  classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],
   tagName: 'span',
+  tooltipContent: null,
+  tooltipTitle: null,
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
     const course = this.get('course');
     const sessions = await course.get('sessions');
@@ -96,8 +96,8 @@ export default Component.extend({
   }),
 
   async getTooltipData(obj){
-    const icon = this.get('icon');
-    if (icon || isEmpty(obj) || obj.empty) {
+    const isIcon = this.get('isIcon');
+    if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
     }
     const { meta } = obj;
@@ -117,7 +117,12 @@ export default Component.extend({
       title
     };
   },
-  donutHover: task(function * (obj){
-    return yield this.getTooltipData(obj);
+  donutHover: task(function* (obj) {
+    yield timeout(100);
+    const data = yield this.getTooltipData(obj);
+    if (isPresent(data)) {
+      this.set('tooltipTitle', data.title);
+      this.set('tooltipContent', data.content);
+    }
   }).restartable(),
 });

@@ -29,7 +29,7 @@
     {{#if editable}}
       {{#if isCourse}}
         {{#link-to 'course-visualize-objectives' subject}}
-          {{visualizer-course-objectives course=subject width=20 height=20 icon=true}}
+          {{visualizer-course-objectives course=subject width=20 height=20 isIcon=true}}
         {{/link-to}}
       {{/if}}
       {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}

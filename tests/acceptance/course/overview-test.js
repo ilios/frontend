@@ -128,13 +128,13 @@ test('open and close details', async function(assert) {
 
   await visit(url);
   assert.equal(currentPath(), 'course.index');
-  assert.equal(find('.course-details .title').length, 3);
+  assert.equal(find('.course-details .title').length, 2);
   await click('.detail-collapsed-control');
   assert.ok(find('.title').length > 2);
   assert.equal(currentURL(), '/courses/1?details=true');
   assert.ok(find('.course-details .title').length > 2);
   await click('.detail-collapsed-control');
-  assert.equal(find('.course-details .title').length, 3);
+  assert.equal(find('.course-details .title').length, 2);
   assert.equal(currentURL(), '/courses/1');
 });
 

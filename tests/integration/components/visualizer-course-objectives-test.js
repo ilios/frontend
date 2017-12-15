@@ -11,7 +11,7 @@ test('it renders', function(assert) {
     title: 'test'
   });
   this.set('course', course);
-  this.render(hbs`{{visualizer-course-objectives course=course icon=true}}`);
+  this.render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
 
   assert.equal(this.$().text().trim(), '');
 });

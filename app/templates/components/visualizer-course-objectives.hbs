@@ -1,14 +1,18 @@
-{{#if (or icon (gt (get (await objectiveWithMinutes) 'length') 0))}}
+{{#if (or isIcon (gt (get (await objectiveWithMinutes) 'length') 0))}}
   {{#simple-chart
     name='donut'
-    width=width
-    height=height
+    isIcon=isIcon
     data=(await objectiveWithMinutes)
     hover=(perform donutHover)
     leave=(perform donutHover)
+
     as |chart|
   }}
-    {{chart.tooltip content=donutHover.lastSuccessful.value.content title=donutHover.lastSuccessful.value.title}}
+    {{#if tooltipContent}}
+      {{#chart.tooltip title=tooltipTitle}}
+        {{tooltipContent}}
+      {{/chart.tooltip}}
+    {{/if}}
   {{/simple-chart}}
 
 {{else}}
@@ -18,7 +22,7 @@
   </div>
 {{/if}}
 
-{{#unless (or icon (eq (get (await objectiveWithoutMinutes) 'length') 0))}}
+{{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) 'length') 0))}}
   <div class='zero-hours'>
     <h4>{{fa-icon 'warning' class='warning'}} {{t 'general.unusedObjectives'}}:</h4>
     <p>{{t 'general.objectivesWithNoHours'}}</p>
