@@ -503,8 +503,9 @@ export default Component.extend({
       const selectedSessionTypes = [];
       const selectedCourseLevels = [];
       const selectedCohorts = [];
+      const selectedTerms = [];
 
-      this.setProperties({ selectedCourses, selectedSessionTypes, selectedCourseLevels, selectedCohorts });
+      this.setProperties({ selectedCourses, selectedSessionTypes, selectedCourseLevels, selectedCohorts, selectedTerms });
     },
 
     removeFilter(filter) {
@@ -522,6 +523,9 @@ export default Component.extend({
           break;
         case 'course':
           this.send('toggleCourse', filter);
+          break;
+        case 'term':
+          this.send('toggleTerm', filter);
           break;
         }
       }
