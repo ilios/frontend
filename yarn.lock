@@ -3023,9 +3023,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-plugin-ember@^4.5.0:
-  version "4.6.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-4.6.2.tgz#9916198e8ef091c5249f8b3f2d9d0a9c5d9a936d"
+eslint-plugin-ember@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-5.0.2.tgz#6b6cb50465173b67e82f7703458fd166c6953ba4"
   dependencies:
     ember-rfc176-data "^0.2.7"
     require-folder-tree "^1.4.5"
