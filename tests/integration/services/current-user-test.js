@@ -1,3 +1,4 @@
+/*eslint ember/avoid-leaking-state-in-ember-objects: 0*/
 import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
