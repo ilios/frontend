@@ -7,10 +7,6 @@ export default Component.extend({
   date: null,
   calendarEvents: null,
   showMore: null,
-  init() {
-    this._super(...arguments);
-    this.set('calendarEvents', []);
-  },
   actions: {
     changeToDayView(date){
       this.get('changeDate')(date);

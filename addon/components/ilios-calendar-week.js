@@ -15,10 +15,6 @@ export default Component.extend({
   weekOf: computed('date', function(){
     return moment(this.get('date')).startOf('week').format('MMMM Do YYYY');
   }),
-  init() {
-    this._super(...arguments);
-    this.set('calendarEvents', []);
-  },
   didInsertElement(){
     run.next(() => {
       this.$(".el-calendar .week").scrollTop(500);
