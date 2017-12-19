@@ -28,8 +28,9 @@ export default Route.extend({
 
     this.transitionTo('index');
   },
-  async getNewToken(ltiToken, apiHost){
-    const url = `${apiHost}/auth/token`;
+  async getNewToken(ltiToken, apiHost) {
+    const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, "");
+    const url = `${apiHostWithNoTrailingSlash}/auth/token`;
     const response = await fetch(url, {
       headers: {
         'X-JWT-Authorization': `Token ${ltiToken}`
