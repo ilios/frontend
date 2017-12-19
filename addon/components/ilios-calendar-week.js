@@ -9,7 +9,7 @@ export default Component.extend({
   layout,
   classNames: ['ilios-calendar-week'],
   date: null,
-  calendarEvents: [],
+  calendarEvents: null,
   areEventsSelectable: true,
   areDaysSelectable: true,
   weekOf: computed('date', function(){

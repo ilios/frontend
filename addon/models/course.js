@@ -163,10 +163,12 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return ids.length > 1;
   }),
 
-  requiredPublicationSetFields: ['startDate', 'endDate'],
-  requiredPublicationLengthFields: ['cohorts'],
-  optionalPublicationSetFields: [],
-  optionalPublicationLengthFields: ['terms', 'objectives', 'meshDescriptors'],
+  init() {
+    this._super(...arguments);
+    this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
+    this.set('requiredPublicationLengthFields', ['cohorts']);
+    this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+  },
 
   setDatesBasedOnYear: function(){
     let today = moment();

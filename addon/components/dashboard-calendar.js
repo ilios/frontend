@@ -20,6 +20,7 @@ export default Component.extend({
     this.set('selectedCohorts', []);
     this.set('selectedCourses', []);
     this.set('selectedTerms', []);
+    this.set('courseLevels', [1, 2, 3, 4, 5]);
   },
   userEvents: service(),
   schoolEvents: service(),
@@ -108,7 +109,7 @@ export default Component.extend({
    * @type {Array}
    * @public
    */
-  courseLevels: [1, 2, 3, 4, 5],
+  courseLevels: null,
 
   /**
    * @property courses

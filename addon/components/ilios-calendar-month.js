@@ -5,7 +5,7 @@ export default Component.extend({
   layout,
   classNames: ['ilios-calendar-month'],
   date: null,
-  calendarEvents: [],
+  calendarEvents: null,
   showMore: null,
   actions: {
     changeToDayView(date){
