@@ -14,7 +14,7 @@ export function isIn([values, item]) {
 }
 
 export default Helper.extend({
-  values: [],
+  values: null,
 
   compute([values, item]) {
     this.set('values', values);

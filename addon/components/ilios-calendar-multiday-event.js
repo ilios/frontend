@@ -4,7 +4,7 @@ import layout from '../templates/components/ilios-calendar-multiday-event';
 
 export default Component.extend({
   layout,
-  tagName: ['li'],
+  tagName: 'li',
   event: null,
   isIlm: notEmpty('event.ilmSession'),
   isOffering: notEmpty('event.offering'),

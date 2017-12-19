@@ -5,8 +5,12 @@ export default Component.extend({
   layout,
   classNames: ['ilios-calendar-month'],
   date: null,
-  calendarEvents: [],
+  calendarEvents: null,
   showMore: null,
+  init() {
+    this._super(...arguments);
+    this.set('calendarEvents', []);
+  },
   actions: {
     changeToDayView(date){
       this.get('changeDate')(date);

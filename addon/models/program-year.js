@@ -50,6 +50,12 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return objectives.toArray().sort(this.positionSortingCallback);
   }),
 
-  requiredPublicationSetFields: ['startYear', 'cohort', 'program'],
-  optionalPublicationLengthFields: ['directors', 'competencies', 'terms', 'objectives'],
+  requiredPublicationSetFields: null,
+  optionalPublicationLengthFields: null,
+
+  init() {
+    this._super(...arguments);
+    this.set('requiredPublicationSetFields', ['startYear', 'cohort', 'program']);
+    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'objectives']);
+  },
 });
