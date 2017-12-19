@@ -163,16 +163,10 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return ids.length > 1;
   }),
 
-  requiredPublicationSetFields: null,
-  requiredPublicationLengthFields: null,
-  optionalPublicationSetFields: null,
-  optionalPublicationLengthFields: null,
-
   init() {
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
-    this.set('optionalPublicationSetFields', []);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
   },
 

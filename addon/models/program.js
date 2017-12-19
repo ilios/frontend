@@ -54,8 +54,6 @@ export default Model.extend(PublishableModel,{
   optionalPublicationIssues: computed('programYears.length', function(){
     return this.getOptionalPublicationIssues();
   }),
-  requiredPublicationSetFields: null,
-  optionalPublicationLengthFields: null,
 
   init() {
     this._super(...arguments);

@@ -198,8 +198,6 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return objectives.toArray().sort(this.positionSortingCallback);
   }),
 
-  optionalPublicationLengthFields: null,
-
   init() {
     this._super(...arguments);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
