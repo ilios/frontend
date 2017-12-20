@@ -115,6 +115,5 @@
       "ember-tether"
     ]
   },
-  "private": true,
-  "dependencies": {}
+  "private": true
 }
