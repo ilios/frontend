@@ -2,6 +2,7 @@ import { test, module } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import moment from 'moment';
 
 let application;
 
@@ -283,4 +284,32 @@ test('Cohort members not in learner group appear after navigating to learner gro
   assert.equal(currentURL(), '/learnergroups/1');
   assert.equal(find(members).length, 5, 'lists members');
   assert.equal(find(cohortMembers).length, 5, 'lists cohort non members');
+});
+
+test('learner group calendar', async function(assert) {
+  assert.expect(2);
+  const program = server.create('program', {
+    schoolId: 1,
+  });
+  const programYear = server.create('programYear', { program });
+  const cohort = server.create('cohort', { programYear });
+  const learnerGroup = server.create('learnerGroup', { cohort });
+  const course = server.create('course', { cohorts: [cohort] });
+  const session = server.create('session', { course });
+  server.create('offering', {
+    session,
+    startDate: moment().toDate(),
+    endDate: moment().add(1, 'hour').toDate(),
+    learnerGroups: [learnerGroup],
+  });
+
+  server.create('offering');
+
+  const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
+  const event = '.event';
+
+  await visit('/learnergroups/1');
+  assert.equal(find(event).length, 0);
+  await click(calendarToggle);
+  assert.equal(find(event).length, 1);
 });
