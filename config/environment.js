@@ -125,15 +125,12 @@ module.exports = function (environment) {
 
     //silence warnings in tests when dates are not initialized
     ENV.moment.allowEmpty = true;
+    ENV.APP.autoboot = false;
   }
 
-  /*
   if (environment === 'production') {
+    // here you can enable a production-specific feature
   }
-
-  if (environment === 'staging') {
-  }
-  */
 
   if (environment === 'preview') {
     ENV.IliosFeatures.accessCourseVisualizations = true;
