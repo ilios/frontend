@@ -574,6 +574,7 @@ export default {
     'notANumber': "{{description}} doit contenir une valeur numérique",
     'notAnInteger': "{{description}} doit être un entier",
     'odd': "{{description}} doit étre une chiffre impair",
+    'onOrBefore': '{{description}} doit être en ou avant {{onOrBefore}}',
     'otherThan': "{{description}} doit être une valeur autre de {{value}}",
     'phone': "{{description}} doit être une téléphone valide",
     'positive': "{{description}} doit être une chiffre positif",
