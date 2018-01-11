@@ -238,4 +238,5 @@ test('clicking delete deletes the record', async function(assert) {
   const trash = `${rows}:eq(0) td:eq(6) .fa-trash`;
 
   this.$(trash).click();
+  await wait();
 });

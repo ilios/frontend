@@ -47,7 +47,7 @@ test('it renders', function(assert) {
   });
 });
 
-test('rollover report', function(assert) {
+test('rollover report', async function(assert) {
   assert.expect(12);
   const thisYear = parseInt(moment().format('YYYY'), 10);
   let report = EmberObject.create({
@@ -109,12 +109,12 @@ test('rollover report', function(assert) {
   });
   this.render(hbs`{{curriculum-inventory-report-rollover report=report visit=(action visit)}}`);
 
-  return wait().then(()=>{
-    this.$('.done').click();
-  });
+  await wait();
+  await this.$('.done').click();
+  await wait();
 });
 
-test('rollover report with new name, description and year', function(assert) {
+test('rollover report with new name, description and year', async function(assert) {
   assert.expect(7);
   const thisYear = parseInt(moment().format('YYYY'), 10);
   let report = EmberObject.create({
@@ -170,18 +170,18 @@ test('rollover report with new name, description and year', function(assert) {
 
   this.render(hbs`{{curriculum-inventory-report-rollover report=report visit=(action visit)}}`);
 
-  return wait().then(()=>{
-    const input = `.name input`;
-    const textarea = `.description textarea`;
-    const lastOption = `.years option:last`;
-    this.$(input).val(newName);
-    this.$(input).trigger('change');
-    this.$(textarea).val(newDescription);
-    this.$(textarea).trigger('change');
-    this.$(lastOption).prop('selected', true);
-    this.$(lastOption).trigger('change');
-    this.$('.done').click();
-  });
+  await wait();
+  const input = `.name input`;
+  const textarea = `.description textarea`;
+  const lastOption = `.years option:last`;
+  this.$(input).val(newName);
+  this.$(input).trigger('change');
+  this.$(textarea).val(newDescription);
+  this.$(textarea).trigger('change');
+  this.$(lastOption).prop('selected', true);
+  this.$(lastOption).trigger('change');
+  await this.$('.done').click();
+  await wait();
 });
 
 test('no input validation errors are shown initially', function(assert) {

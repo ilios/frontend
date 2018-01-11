@@ -49,7 +49,7 @@ test('it renders', function(assert) {
 
 });
 
-test('rollover course', function(assert) {
+test('rollover course', async function(assert) {
   assert.expect(14);
   let course = EmberObject.create({
     id: 1,
@@ -111,12 +111,12 @@ test('rollover course', function(assert) {
   });
   this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
 
-  return wait().then(()=>{
-    this.$('.done').click();
-  });
+  await wait();
+  await this.$('.done').click();
+  await wait();
 });
 
-test('rollover course with new title', function(assert) {
+test('rollover course with new title', async function(assert) {
   assert.expect(5);
   let course = EmberObject.create({
     id: 1,
@@ -168,9 +168,9 @@ test('rollover course with new title', function(assert) {
   const input = `${title} input`;
   this.$(input).val(newTitle);
   this.$(input).trigger('change');
-  return wait().then(()=>{
-    this.$('.done').click();
-  });
+  await wait();
+  await this.$('.done').click();
+  await wait();
 });
 
 
