@@ -313,3 +313,44 @@ test('learner group calendar', async function(assert) {
   await click(calendarToggle);
   assert.equal(find(event).length, 1);
 });
+
+test('learner group calendar with subgroup events', async function(assert) {
+  assert.expect(3);
+  const program = server.create('program', {
+    schoolId: 1,
+  });
+  const programYear = server.create('programYear', { program });
+  const cohort = server.create('cohort', { programYear });
+  const learnerGroup = server.create('learnerGroup', { cohort });
+  const course = server.create('course', { cohorts: [cohort] });
+  const session = server.create('session', { course });
+  const subgroup = server.create('learnerGroup', {
+    cohort,
+    parent: learnerGroup
+  });
+  server.create('offering', {
+    session,
+    startDate: moment().toDate(),
+    endDate: moment().add(1, 'hour').toDate(),
+    learnerGroups: [learnerGroup],
+  });
+  server.create('offering', {
+    session,
+    startDate: moment().toDate(),
+    endDate: moment().add(1, 'hour').toDate(),
+    learnerGroups: [subgroup],
+  });
+
+  server.create('offering');
+
+  const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
+  const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] input:eq(0)';
+  const event = '.event';
+
+  await visit('/learnergroups/1');
+  assert.equal(find(event).length, 0);
+  await click(calendarToggle);
+  assert.equal(find(event).length, 1);
+  await click(subgroupEventsToggle);
+  assert.equal(find(event).length, 2);
+});

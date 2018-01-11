@@ -15,7 +15,7 @@ moduleForComponent('user-profile-calendar', 'Integration | Component | user prof
     commonAjaxMock = Service.extend({});
     this.register('service:commonAjax', commonAjaxMock);
     const iliosConfigMock = Service.extend({
-      namesapce: ''
+      namespace: ''
     });
     this.register('service:iliosConfig', iliosConfigMock);
   }
