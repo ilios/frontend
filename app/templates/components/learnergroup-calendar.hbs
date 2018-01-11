@@ -1,3 +1,9 @@
+<p class='learnergroup-calendar-filter-options'>
+  <span class='filter' data-test-learnergroup-calendar-toggle-subgroup-events>
+    {{toggle-yesno yes=showSubgroupEvents toggle=(action (mut showSubgroupEvents))}}
+    <label onclick={{toggle 'showSubgroupEvents' this}}>{{t 'general.showSubgroupEvents'}}</label>
+  </span>
+</p>
 <ul class='inline learnergroup-calendar-time-picker'>
   <li class='clickable' {{action 'goBack'}}>{{fa-icon 'backward'}}</li>
   <li class='clickable' {{action 'gotoToday'}}>{{t 'general.today'}}</li>

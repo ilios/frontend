@@ -1,21 +1,36 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { map, all } from 'rsvp';
 import moment from 'moment';
-const { map } = RSVP;
 
 export default Component.extend({
   classNames: ['learnergroup-calendar'],
 
   learnerGroup: null,
   selectedDate: null,
+  showSubgroupEvents: false,
 
-  calendarEvents: computed('learnerGroup.offerings.[]', async function () {
+  offerings: computed('learnerGroup.offerings.[]', 'learnerGroup.allDescendants.[]', 'showSubgroupEvents', async function () {
     const learnerGroup = this.get('learnerGroup');
+    const showSubgroupEvents = this.get('showSubgroupEvents');
     if (!learnerGroup) {
       return [];
     }
-    const offerings = await learnerGroup.get('offerings');
+    let learnerGroups = [learnerGroup];
+    if (showSubgroupEvents) {
+      const allDescendants = await learnerGroup.get('allDescendants');
+      learnerGroups.pushObjects(allDescendants);
+    }
+    const offerings = await all(learnerGroups.mapBy('offerings'));
+    let flat = offerings.reduce((flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    }, []);
+
+    return flat;
+  }),
+
+  calendarEvents: computed('offerings.[]', async function () {
+    const offerings = await this.get('offerings');
     const events = await map(offerings.toArray(), async offering => {
       const session = await offering.get('session');
       const course = await session.get('course');
