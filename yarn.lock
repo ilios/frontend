@@ -3789,6 +3789,14 @@ ember-one-way-controls@^3.0.0:
     ember-invoke-action "^1.5.0"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
+ember-one-way-select@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ember-one-way-select/-/ember-one-way-select-4.0.0.tgz#4da2a8b8abb3360feaa69099ea31989ad3068e89"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-htmlbars "^2.0.1"
+    ember-invoke-action "^1.5.0"
+
 ember-pad@1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ember-pad/-/ember-pad-1.2.2.tgz#1c8ed9e7e93d2176f049eb8b3d3836aea9672a81"
@@ -3982,7 +3990,7 @@ ember-simple-charts@0.9.0:
     ember-tether v0.4.1
     merge "^1.2.0"
 
-ember-source@2.18.0:
+ember-source@~2.18.0:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-2.18.0.tgz#f61cf2701d8aa94a6adee6d47b1d5a73a4cef5f6"
   dependencies:

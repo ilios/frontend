@@ -74,6 +74,7 @@
     "ember-metrics": "0.12.1",
     "ember-normalize": "1.0.0",
     "ember-noscript": "^2.0.0",
+    "ember-one-way-select": "4.0.0",
     "ember-pad": "1.2.2",
     "ember-papaparse": "1.0.0",
     "ember-pikaday": "2.2.3",
