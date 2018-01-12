@@ -467,6 +467,7 @@ export default {
     'showMore': "Afficher plus",
     'showNotesToStudents': "Afficher notes aux étudiantes",
     'showSessionEvents': 'Montrez tous les autres <em>{{sessionTitle}}</em> événements',
+    'showSubgroupEvents': 'Afficher les événements pour tous les sous-groupes',
     'singleDay': "Seule Journée",
     'singleGroup': 'Seul groupe',
     'smallGroupMessage': "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de 'small groups'. Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton 'offre' au-dessus.",

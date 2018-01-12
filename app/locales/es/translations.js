@@ -467,6 +467,7 @@
     'showMore': 'Mostrar más',
     'showNotesToStudents': 'Mostrar Notas a Los Estudiantes',
     'showSessionEvents': 'Mostrar todos los <em>{{sessionTitle}}</em> eventos',
+    'showSubgroupEvents': 'Mostrar eventos para todos los grupos subordinados',
     'singleDay': 'Un Solo Día',
     'singleGroup': 'Solo grupo',
     'smallGroupMessage': "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba.",
