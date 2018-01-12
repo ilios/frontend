@@ -2921,11 +2921,11 @@ ember-runtime-enumerable-includes-polyfill@^2.0.0:
     ember-cli-babel "^6.9.0"
     ember-cli-version-checker "^2.1.0"
 
-ember-simple-auth-token@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth-token/-/ember-simple-auth-token-2.1.0.tgz#0b48cf643638816632f5d4d1e500adec0a2dc100"
+ember-simple-auth-token@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth-token/-/ember-simple-auth-token-3.0.0.tgz#5641c543a9ac5dfa42ce6100296e144aa40742a9"
   dependencies:
-    ember-cli-babel "^5.1.5"
+    ember-cli-babel "^6.6.0"
 
 ember-simple-auth@^1.4.0:
   version "1.4.0"
@@ -4117,9 +4117,9 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-ilios-common@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-8.1.0.tgz#7075db59b34c273fbac28c5364c1c2bf6b8714e0"
+ilios-common@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-8.2.0.tgz#86334fb101c62421f6d585f5498a69c263b90378"
   dependencies:
     elemental-calendar "^0.0.9"
     ember-cli-babel "^6.6.0"
@@ -4133,7 +4133,7 @@ ilios-common@8.1.0:
     ember-one-way-controls "^3.0.0"
     ember-promise-helpers "^1.0.3"
     ember-simple-auth "^1.4.0"
-    ember-simple-auth-token "^2.1.0"
+    ember-simple-auth-token "^3.0.0"
     ember-tether "^0.4.1"
     ember-tooltips "^2.8.2"
     ember-truth-helpers "^2.0.0"
