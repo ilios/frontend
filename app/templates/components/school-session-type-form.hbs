@@ -2,13 +2,11 @@
   <div class='item'>
     <label>{{t 'general.title'}}:</label>
     {{#if canEditTitle}}
-      {{one-way-input
-        value=title
-        update=(action (mut title))
-        onenter=(perform saveSessionType)
-        onescape=(action close)
-        focusOut=(action 'addErrorDisplayFor' 'title')
-      }}
+      <input
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+        onfocusout={{action 'addErrorDisplayFor' 'title'}}
+      >
       {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
         <span class="message error">{{v-get this 'title' 'message'}}</span>
       {{/if}}
@@ -43,12 +41,12 @@
   <div class='item calendar-color'>
     <label>{{t 'general.color'}}:</label>
     {{#if canEditCalendarColor}}
-      {{one-way-input
+      <input
         type='color'
-        value=calendarColor
-        update=(action (mut calendarColor))
-        focusOut=(action 'addErrorDisplayFor' 'calendarColor')
-      }}
+        value={{calendarColor}}
+        oninput={{action (mut calendarColor) value="target.value"}}
+        onfocusout={{action 'addErrorDisplayFor' 'calendarColor'}}
+      >
       {{#if (and (v-get this 'calendarColor' 'isInvalid') (is-in showErrorsFor 'calendarColor'))}}
         <span class="message error">{{v-get this 'calendarColor' 'message'}}</span>
       {{/if}}

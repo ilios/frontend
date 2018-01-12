@@ -12,117 +12,99 @@
   </div>
   <div class='item'>
     <label>{{t 'general.firstName'}}:</label>
-    {{one-way-input
-      value=firstName
-      update=(action (mut firstName))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'firstName')
-    }}
+    <input
+      value={{firstName}}
+      oninput={{action (mut firstName) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'firstName'}}
+    >
     {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
       <span class="message error">{{v-get this 'firstName' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.middleName'}}:</label>
-    {{one-way-input
-      value=middleName
-      update=(action (mut middleName))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'middleName')
-    }}
+    <input
+      value={{middleName}}
+      oninput={{action (mut middleName) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'middleName'}}
+    >
     {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
       <span class="message error">{{v-get this 'middleName' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.lastName'}}:</label>
-    {{one-way-input
-      value=lastName
-      update=(action (mut lastName))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'lastName')
-    }}
+    <input
+      value={{lastName}}
+      oninput={{action (mut lastName) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'lastName'}}
+    >
     {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
       <span class="message error">{{v-get this 'lastName' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.campusId'}}:</label>
-    {{one-way-input
-      value=campusId
-      update=(action (mut campusId))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'campusId')
-    }}
+    <input
+      value={{campusId}}
+      oninput={{action (mut campusId) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'campusId'}}
+    >
     {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
       <span class="message error">{{v-get this 'campusId' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.otherId'}}:</label>
-    {{one-way-input
-      value=otherId
-      update=(action (mut otherId))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'otherId')
-    }}
+    <input
+      value={{otherId}}
+      oninput={{action (mut otherId) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'otherId'}}
+    >
     {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
       <span class="message error">{{v-get this 'otherId' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.email'}}:</label>
-    {{one-way-input
-      value=email
-      update=(action (mut email))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'email')
-    }}
+    <input
+      value={{email}}
+      oninput={{action (mut email) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'email'}}
+    >
     {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
       <span class="message error">{{v-get this 'email' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.phone'}}:</label>
-    {{one-way-input
-      value=phone
-      update=(action (mut phone))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'phone')
-    }}
+    <input
+      value={{phone}}
+      oninput={{action (mut phone) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'phone'}}
+    >
     {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
       <span class="message error">{{v-get this 'phone' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.username'}}:</label>
-    {{one-way-input
-      value=username
-      update=(action (mut username))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'username')
-    }}
+    <input
+      value={{username}}
+      oninput={{action (mut username) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'username'}}
+    >
     {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
       <span class="message error">{{v-get this 'username' 'message'}}</span>
     {{/if}}
   </div>
   <div class='item'>
     <label>{{t 'general.password'}}:</label>
-    {{one-way-input
-      value=password
-      update=(action (mut password))
-      onenter=(perform save)
-      onescape=(action close)
-      focusOut=(action 'addErrorDisplayFor' 'password')
-    }}
+    <input
+      value={{password}}
+      oninput={{action (mut password) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'password'}}
+    >
     {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
       <span class="message error">{{v-get this 'password' 'message'}}</span>
     {{/if}}

@@ -13,11 +13,11 @@
       </select>
     </span>
     <span class="filter">
-      {{one-way-input
-        update=(action setFilter)
-        value=filter
-        placeholder=(t 'general.filterPlaceholder')
-      }}
+      <input
+        oninput={{action setFilter value="target.value"}}
+        value={{filter}}
+        placeholder={{t 'general.filterPlaceholder'}}
+      >
     </span>
     <table>
       <thead>

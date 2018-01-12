@@ -3,14 +3,12 @@
 <div class="new-session-content">
   <div class="item">
     <label>{{t 'general.title'}}:</label>
-    {{one-way-input
-      value=title
-      update=(action (mut title))
-      onenter=(perform saveNewSession)
-      onescape=(action cancel)
-      focusOut=(action 'addErrorDisplayFor' 'title')
-      class=(if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error')
-    }}
+    <input
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'title'}}
+      class={{if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error'}}
+    >
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}

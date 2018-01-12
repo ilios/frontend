@@ -5,15 +5,14 @@
 
   <div class='item name'>
     <label>{{t 'general.name'}}:</label>
-    {{one-way-input
-      value=name
-      update=(pipe (action 'changeName') (action 'addErrorDisplayFor' 'name'))
-      onenter=(perform save)
-      disabled=isSaving
-      focusOut=(action 'addErrorDisplayFor' 'name')
-      keyDown=(action 'addErrorDisplayFor' 'name')
-      placeholder=(t 'general.reportNamePlaceholder')
-    }}
+    <input
+      value={{name}}
+      oninput={{pipe (action 'changeName' value="target.value") (action 'addErrorDisplayFor' 'name')}}
+      disabled={{isSaving}}
+      onfocusout={{action 'addErrorDisplayFor' 'name'}}
+      onkeydown={{action 'addErrorDisplayFor' 'name'}}
+      placeholder={{t 'general.reportNamePlaceholder'}}
+    >
     {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
       <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
     {{/if}}

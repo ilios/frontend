@@ -17,13 +17,11 @@
       close=(action 'revertTermTitleChanges')
       as |isSaving save close|
     }}
-      {{one-way-input
-      	value=title
-      	update=(action (mut title))
-      	onenter=save
-      	onescape=close
-      	disabled=isSaving
-      }}
+      <input
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+        disabled={{isSaving}}
+      >
     {{/editable-field}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
@@ -57,13 +55,12 @@
 <h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
 <div class='selectable-list'>
   <div class='selectable-list-form'>
-    {{one-way-input
-      value=newTermTitle
-      update=(action (mut newTermTitle))
-      onenter=(action 'createTerm')
-      focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
-      keyPress=(action 'addErrorDisplayFor' 'newTermTitle')
-    }}
+    <input
+      value={{newTermTitle}}
+      oninput={{action (mut newTermTitle) value="target.value"}}
+      onfocusout={{action 'addErrorDisplayFor' 'newTermTitle'}}
+      onkeypress={{action 'addErrorDisplayFor' 'newTermTitle'}}
+    >
     <button class='save text' {{action 'createTerm'}}>
       {{#if isSavingNewTerm}}
         {{fa-icon 'spinner' spin=true}}

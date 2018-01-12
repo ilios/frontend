@@ -1,14 +1,12 @@
 <div class="item minimum">
   <label>{{t 'general.minimum'}}:</label>
-  {{one-way-input
-    value=minimum
-    update=(action (mut minimum))
-    onenter=(action 'save')
-    onescape=(action 'cancel')
-    disabled=isSaving
-    focusOut=(action 'addErrorDisplayFor' 'minimum')
-    keyDown=(action 'addErrorDisplayFor' 'minimum')
-  }}
+  <input
+    value={{minimum}}
+    oninput={{action (mut minimum) value="target.value"}}
+    disabled={{isSaving}}
+    onfocusout={{action 'addErrorDisplayFor' 'minimum'}}
+    onkeydown={{action 'addErrorDisplayFor' 'minimum'}}
+  >
   {{#if (and (v-get this 'minimum' 'isInvalid') (is-in showErrorsFor 'minimum'))}}
     <span class="validation-error-message">{{v-get this 'minimum' 'message'}}</span>
   {{/if}}
@@ -16,15 +14,13 @@
 
 <div class="item maximum">
   <label>{{t 'general.maximum'}}:</label>
-  {{one-way-input
-    value=maximum
-    update=(action (mut maximum))
-    onenter=(action 'save')
-    onescape=(action 'cancel')
-    disabled=isSaving
-    focusOut=(action 'addErrorDisplayFor' 'maximum')
-    keyDown=(action 'addErrorDisplayFor' 'maximum')
-  }}
+  <input
+    value={{maximum}}
+    oninput={{action (mut maximum) value="target.value"}}
+    disabled={{isSaving}}
+    onfocusout={{action 'addErrorDisplayFor' 'maximum'}}
+    onkeydown={{action 'addErrorDisplayFor' 'maximum'}}
+  >
   {{#if (and (v-get this 'maximum' 'isInvalid') (is-in showErrorsFor 'maximum'))}}
     <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
   {{/if}}

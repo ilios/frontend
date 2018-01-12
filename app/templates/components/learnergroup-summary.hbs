@@ -37,14 +37,12 @@
         close=(action 'revertLocationChanges')
         as |isSaving save close|
       }}
-        {{one-way-input
-          value=location
-          update=(action (mut location))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'location')
-        }}
+        <input
+          value={{location}}
+          oninput={{action (mut location) value="target.value"}}
+          disabled={{isSaving}}
+          onfocusout={{action 'addErrorDisplayFor' 'location'}}
+        >
         {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
           <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
         {{/if}}

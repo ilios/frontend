@@ -14,15 +14,13 @@
 </div>
 <div class="item duration">
   <label>{{t 'general.durationInDays'}}:</label>
-  {{one-way-input
-    value=duration
-    update=(action (mut duration))
-    onenter=(action 'save')
-    onescape=(action 'cancel')
-    disabled=isSaving
-    focusOut=(action 'addErrorDisplayFor' 'duration')
-    keyDown=(action 'addErrorDisplayFor' 'duration')
-  }}
+  <input
+    value={{duration}}
+    oninput={{action (mut duration) value="target.value"}}
+    disabled={{isSaving}}
+    onfocusout={{action 'addErrorDisplayFor' 'duration'}}
+    onkeydown={{action 'addErrorDisplayFor' 'duration'}}
+  >
   {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
     <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
   {{/if}}

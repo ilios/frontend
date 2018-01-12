@@ -7,14 +7,12 @@
         close=(action 'revertTitleChanges')
       as |isSaving save close|
       }}
-        {{one-way-input
-          value=title
-          update=(action (mut title))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'title')
-        }}
+        <input
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+          onfocusout={{action 'addErrorDisplayFor' 'title'}}
+        >
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
         {{/if}}
@@ -182,15 +180,13 @@
                 close=(action 'revertIlmHoursChanges')
                 as |isSaving save close|
               }}
-                {{one-way-input
-                  value=hours
-                  update=(action (mut hours))
-                  onenter=save
-                  onescape=close
-                  disabled=isSaving
-                  focusOut=(action 'addErrorDisplayFor' 'hours')
-                  keyDown=(action 'addErrorDisplayFor' 'hours')
-                }}
+                <input
+                  value={{hours}}
+                  oninput={{action (mut hours) value="target.value"}}
+                  disabled={{isSaving}}
+                  onfocusout={{action 'addErrorDisplayFor' 'hours'}}
+                  onkeydown={{action 'addErrorDisplayFor' 'hours'}}
+                >
                 {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
                   <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
                 {{/if}}

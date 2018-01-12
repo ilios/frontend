@@ -4,14 +4,12 @@
   close=(action 'revert')
   as |isSaving save close|
 }}
-  {{one-way-input
-    value=title
-    update=(action (mut title))
-    onenter=save
-    onescape=close
-    disabled=isSaving
-    focusOut=(action 'addErrorDisplayFor' 'title')
-  }}
+  <input
+    value={{title}}
+    oninput={{action (mut title) value="target.value"}}
+    disabled={{isSaving}}
+    onfocusout={{action 'addErrorDisplayFor' 'title'}}
+  >
 {{/editable-field}}
 {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
   <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>

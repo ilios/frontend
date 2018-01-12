@@ -10,15 +10,13 @@
          clickPrompt=(t 'general.clickToEdit')
          as |isSaving save close|
       }}
-        {{one-way-input
-          value=shortTitle
-          update=(action (mut shortTitle))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'shortTitle')
-          keyPress=(action 'addErrorDisplayFor' 'shortTitle')
-        }}
+        <input
+          value={{shortTitle}}
+          oninput={{action (mut shortTitle) value="target.value"}}
+          disabled={{isSaving}}
+          onfocusout={{action 'addErrorDisplayFor' 'shortTitle'}}
+          onkeypress={{action 'addErrorDisplayFor' 'shortTitle'}}
+        >
         {{#if (and (v-get this 'shortTitle' 'isInvalid') (is-in showErrorsFor 'shortTitle'))}}
           <span class="validation-error-message">{{v-get this 'shortTitle' 'message'}}</span>
         {{/if}}

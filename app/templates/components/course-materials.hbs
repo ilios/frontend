@@ -33,11 +33,11 @@
   <h2 class='session-material-title'>{{t 'general.sessionLearningMaterials'}} ({{get (await sessionLearningMaterials) 'length'}})</h2>
   {{#if (gt (get (await sessionLearningMaterials) 'length') 0)}}
     <span class="filter-session-lms">
-      {{one-way-input
-        value=filter
-        update=(action (mut filter))
-        placeholder=(t 'general.filterPlaceholder')
-      }}
+      <input
+        value={{filter}}
+        oninput={{action (mut filter) value="target.value"}}
+        placeholder={{t 'general.filterPlaceholder'}}
+      >
     </span>
     <table>
       <thead>

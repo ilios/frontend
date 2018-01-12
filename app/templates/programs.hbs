@@ -15,11 +15,11 @@
       {{/if}}
     </div>
     <div class="titlefilter">
-      {{one-way-input
-        value=titleFilter
-        update=(perform changeTitleFilter)
-        placeholder=(t 'general.programTitleFilterPlaceholder')
-      }}
+      <input
+        value={{titleFilter}}
+        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        placeholder={{t 'general.programTitleFilterPlaceholder'}}
+      >
     </div>
   </div>
 
