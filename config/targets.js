@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 // Which browsers are returned can be found at http://browserl.ist/
 module.exports = {
   browsers: [

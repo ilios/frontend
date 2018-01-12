@@ -11,6 +11,7 @@
   "repository": "https://github.com/ilios/frontend",
   "scripts": {
     "build": "ember build",
+    "lint:js": "eslint ./*.js app config lib server tests",
     "start": "ember serve",
     "test": "ember test"
   },
@@ -18,7 +19,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-chrome-devtools": "^0.2.0",
-    "ember-cli": "2.17.2",
+    "ember-cli": "2.18.0",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-autoprefixer": "0.8.1",
     "ember-cli-babel": "^6.6.0",
