@@ -191,7 +191,7 @@
     changeDate=changeDate
     changeView=changeView
     selectEvent=selectEvent
-    icsFeedUrl=(get (await currentUser.model) 'absoluteIcsUri')
+    icsFeedUrl=(await absoluteIcsUri)
     icsInstructions=icsInstructionsTranslation
   }}
 </section>

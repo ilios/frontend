@@ -195,10 +195,6 @@ export default Model.extend({
     }
   ),
 
-  absoluteIcsUri: computed('icsFeedKey', function(){
-    return window.location.protocol + '//' + window.location.hostname + '/ics/' + this.get('icsFeedKey');
-  }),
-
   secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function(){
     const cohorts = await this.get('cohorts');
     const primaryCohort = await this.get('primaryCohort');

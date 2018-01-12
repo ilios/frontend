@@ -27,6 +27,7 @@ export default Component.extend({
   currentUser: service(),
   store: service(),
   i18n: service(),
+  iliosConfig: service(),
   classNames: ['dashboard-calendar'],
   selectedSchool: null,
   selectedDate: null,
@@ -460,6 +461,20 @@ export default Component.extend({
    */
   allAcademicYears: computed(function(){
     return this.get('store').findAll('academic-year');
+  }),
+
+  /**
+   * @property absoluteIcsUri
+   * @type {Ember.computed}
+   * @protected
+   */
+  absoluteIcsUri: computed('currentUser.model.icsFeedKey', async function () {
+    const currentUser = this.get('currentUser');
+    const iliosConfig = this.get('iliosConfig');
+    const model = await currentUser.get('model');
+    const icsFeedKey = model.get('icsFeedKey');
+    const apiHost = iliosConfig.get('apiHost');
+    return apiHost + '/ics/' + icsFeedKey;
   }),
 
   actions: {
