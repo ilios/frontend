@@ -1,16 +1,16 @@
-{{one-way-radio
-  value=firstOptionSelected
-  option=true
-  id=(concat 'first-toggle-' elementId)
-  name=(concat 'toggle-' elementId)
-  update=(action 'firstChoice')
-}}
+<input
+  type="radio"
+  id={{concat 'first-toggle-' elementId}}
+  name={{concat 'toggle-' elementId}}
+  checked={{eq firstOptionSelected true}}
+  onclick={{action 'firstChoice'}}
+>
 <label for={{concat 'first-toggle-' elementId}}>{{firstLabel}}</label>
-{{one-way-radio
-  value=firstOptionSelected
-  option=false
-  id=(concat 'second-toggle-' elementId)
-  name=(concat 'toggle-' elementId)
-  update=(action 'secondChoice')
-}}
+<input
+  type="radio"
+  id={{concat 'second-toggle-' elementId}}
+    name={{concat 'toggle-' elementId}}
+  checked={{eq firstOptionSelected false}}
+    onclick={{action 'secondChoice'}}
+>
 <label for={{concat 'second-toggle-' elementId}}>{{secondLabel}}</label>
