@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - "6"
 
-sudo: false
+sudo: required # set to required instead of false as a temporary workaround for https://github.com/travis-ci/travis-ci/issues/8836
 dist: trusty
 
 addons:
