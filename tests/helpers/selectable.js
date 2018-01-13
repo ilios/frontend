@@ -17,6 +17,7 @@ export default function selectable(selector, options = {}) {
           triggerEvent(selectOptions, 'change');
         }
         await wait();
+        await wait();
         return wait();
       };
     }

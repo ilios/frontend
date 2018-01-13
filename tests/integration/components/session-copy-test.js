@@ -84,7 +84,7 @@ test('it renders', function(assert) {
 
 });
 
-test('copy session', function(assert) {
+test('copy session', async function(assert) {
   assert.expect(21);
 
   let thisYear = parseInt(moment().format('YYYY'), 10);
@@ -216,9 +216,9 @@ test('copy session', function(assert) {
   });
   this.render(hbs`{{session-copy session=session visit=(action visit)}}`);
 
-  return wait().then(()=>{
-    this.$('.done').click();
-  });
+  await wait();
+  await this.$('.done').click();
+  await wait();
 });
 
 test('errors do not show up initially and save cannot be clicked', function(assert) {
@@ -260,7 +260,7 @@ test('errors do not show up initially and save cannot be clicked', function(asse
   });
 });
 
-test('changing the year looks for new matching courses', function(assert) {
+test('changing the year looks for new matching courses', async function(assert) {
   assert.expect(6);
   let count = 0;
   let thisYear = parseInt(moment().format('YYYY'), 10);
@@ -316,12 +316,12 @@ test('changing the year looks for new matching courses', function(assert) {
   this.render(hbs`{{session-copy session=session}}`);
   const yearSelect = '.year-select select';
 
-  return wait().then(()=>{
-    this.$(yearSelect).val(nextYear).change();
-  });
+  await wait();
+  this.$(yearSelect).val(nextYear).change();
+  await wait();
 });
 
-test('copy session into the first course in a different year year #2130', function(assert) {
+test('copy session into the first course in a different year #2130', async function(assert) {
   assert.expect(9);
 
   let thisYear = parseInt(moment().format('YYYY'), 10);
@@ -421,12 +421,11 @@ test('copy session into the first course in a different year year #2130', functi
   this.render(hbs`{{session-copy session=session visit=(action visit)}}`);
   const yearSelect = '.year-select select';
   const courseSelect = '.course-select select';
-  return wait().then(()=>{
-    this.$(yearSelect).val(nextYear).change();
 
-    return wait().then(()=>{
-      assert.equal(this.$(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
-      this.$('.done').click();
-    });
-  });
+  await wait();
+  this.$(yearSelect).val(nextYear).change();
+  await wait();
+  assert.equal(this.$(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
+  this.$('.done').click();
+  await wait();
 });
