@@ -89,6 +89,18 @@
       {{/if}}
     </div>
   </div>
+
+  <p class='block' data-test-toggle-learnergroup-calendar>
+    {{toggle-buttons
+      firstOptionSelected=(not showLearnerGroupCalendar)
+      firstLabel=(t 'general.hideCalendar')
+      secondLabel=(t 'general.showCalendar')
+      toggle=(toggle 'showLearnerGroupCalendar' this)
+    }}
+  </p>
+  {{#if showLearnerGroupCalendar}}
+    {{learnergroup-calendar learnerGroup=learnerGroup}}
+  {{/if}}
 </section>
 
 

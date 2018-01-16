@@ -467,6 +467,7 @@ export default {
     'showMore': 'Show more',
     'showNotesToStudents': 'Show Notes to Students',
     'showSessionEvents': 'Show all other <em>{{sessionTitle}}</em> events',
+    'showSubgroupEvents': 'Show events for all subgroups',
     'singleDay': 'Single Day',
     'singleGroup': 'Single Group',
     'smallGroupMessage': "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above.",
