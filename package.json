@@ -87,7 +87,7 @@
     "ember-service-worker-index": "^0.6.3",
     "ember-service-worker-update-notify": "^1.0.1",
     "ember-simple-charts": "0.9.0",
-    "ember-source": "~2.18.0",
+    "ember-source": "~3.0.0-beta.3",
     "ember-test-selectors": "^0.3.7",
     "ember-tether": "0.4.1",
     "ember-truth-helpers": "^2.0.0",
