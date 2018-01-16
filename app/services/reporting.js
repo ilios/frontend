@@ -194,10 +194,19 @@ export default Service.extend({
     let sortedResults = filteredResults.sortBy('title');
     let mappedResults = await map(sortedResults, async session => {
       const course = await session.get('course');
-      return  [session.get('title'), course.get('title'), course.get('academicYear')];
+      const sessionDescription = await session.get('sessionDescription');
+      const sessionDescriptionText = sessionDescription ? sessionDescription.get('textDescription') : '';
+      const objectives = await session.get('objectives');
+      return  [session.get('title'), course.get('title'), course.get('academicYear'), sessionDescriptionText, objectives.mapBy('textTitle').join()];
     });
 
-    return [[i18n.t('general.session'), i18n.t('general.course'), i18n.t('general.academicYear')]].concat(mappedResults);
+    return [[
+      i18n.t('general.session'),
+      i18n.t('general.course'),
+      i18n.t('general.academicYear'),
+      i18n.t('general.description'),
+      i18n.t('general.objectives')
+    ]].concat(mappedResults);
   },
   async programsResults(results){
     const canView = await this.get('canViewPrograms');
