@@ -55,7 +55,7 @@
                   <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
                   {{lm.title}}
                   <span class="timed-release-info">
-                    ({{timed-release-schedule startDate=lm.startDate endDate=lm.endDate}})
+                    {{timed-release-schedule startDate=lm.startDate endDate=lm.endDate}}
                   </span>
                 {{else}}
                   {{lm-type-icon type=lm.type mimetype=lm.mimetype}}

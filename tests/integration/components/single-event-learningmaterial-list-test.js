@@ -6,7 +6,7 @@ moduleForComponent('single-event-learningmaterial-list', 'Integration | Componen
 });
 
 test('it renders', function(assert) {
-  assert.expect(11);
+  assert.expect(10);
 
   this.set('learningMaterials', [
     {title: 'first one', mimetype: 'application/pdf', absoluteFileUri: 'http://firstlink'},
@@ -28,10 +28,6 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('li:eq(2)').text().trim().search(/^third one/), 0);
   assert.equal(this.$('li:eq(2) i.fa-clock-o').length, 1, 'LM type icon is present.');
-  assert.ok(
-    this.$('li:eq(2) .single-event-learningmaterial-item-timing-info').text().includes('Available before 03/01/2013 1:10 AM'),
-    'Timed release info is visible'
-  );
 });
 
 test('displays `None` when provided no content', function(assert) {

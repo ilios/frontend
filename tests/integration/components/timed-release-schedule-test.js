@@ -13,28 +13,31 @@ test('it renders with no start and end date', function(assert) {
 });
 
 test('it renders with both start and end date', function (assert) {
-  const now = moment();
-  this.set('now', now.toDate());
-  this.render(hbs`{{timed-release-schedule startDate=now endDate=now}}`);
-  const expectedDate = now.format('L LT');
+  const startDate = moment().subtract(10, 'minutes');
+  const endDate = moment().add(1, 'day');
+  this.set('startDate', startDate.toDate());
+  this.set('endDate', endDate.toDate());
+  this.render(hbs`{{timed-release-schedule startDate=startDate endDate=endDate}}`);
+  const expectedStartDate = startDate.format('L LT');
+  const expectedEndDate = endDate.format('L LT');
 
-  assert.equal(this.$().text().trim(), `Available from ${expectedDate} until ${expectedDate}`);
+  assert.equal(this.$().text().trim(), `(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
 });
 
 test('it renders just start date', function (assert) {
-  const now = moment();
-  this.set('now', now.toDate());
-  this.render(hbs`{{timed-release-schedule startDate=now}}`);
-  const expectedDate = now.format('L LT');
+  const tomorrow = moment().add(1, 'day');
+  this.set('tomorrow', tomorrow.toDate());
+  this.render(hbs`{{timed-release-schedule startDate=tomorrow}}`);
+  const expectedDate = tomorrow.format('L LT');
 
-  assert.equal(this.$().text().trim(), `Available after ${expectedDate}`);
+  assert.equal(this.$().text().trim(), `(Available: ${expectedDate})`);
 });
 
 test('it renders just end date', function (assert) {
-  const now = moment();
-  this.set('now', now.toDate());
-  this.render(hbs`{{timed-release-schedule endDate=now}}`);
-  const expectedDate = now.format('L LT');
+  const tomorrow = moment().add(1, 'day');
+  this.set('tomorrow', tomorrow.toDate());
+  this.render(hbs`{{timed-release-schedule endDate=tomorrow}}`);
+  const expectedDate = tomorrow.format('L LT');
 
-  assert.equal(this.$().text().trim(), `Available before ${expectedDate}`);
+  assert.equal(this.$().text().trim(), `(Available until ${expectedDate})`);
 });

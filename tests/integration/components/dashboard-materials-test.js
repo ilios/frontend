@@ -72,7 +72,7 @@ moduleForComponent('dashboard-materials', 'Integration | Component | dashboard m
 
 
 test('it renders with materials', async function(assert) {
-  assert.expect(40);
+  assert.expect(39);
   const currentUserMock = Service.extend({
     currentUserId: 11
   });
@@ -180,8 +180,7 @@ test('it renders with materials', async function(assert) {
   assert.equal(this.$(fourthLmInstructor).text().trim(), 'Instructor3name, Instructor4name');
   assert.equal(this.$(fourthLmFirstOffering).text().trim(), tomorrow.format('L'));
 
-  assert.ok(this.$(fifthLmTitle).text().includes('title5'));
-  assert.ok(this.$(fifthLmTitle).text().includes('Available before 03/01/2013 1:10 AM'));
+  assert.equal(this.$(fifthLmTitle).text().trim(), 'title5');
   assert.equal(this.$(fifthLmTypeIcon).length, 1, 'LM type icon is present');
   assert.equal(this.$(fifthLmSessionTitle).text().trim(), 'session5title');
   assert.equal(this.$(fifthLmCourseTitle).text().trim(), 'course5title');

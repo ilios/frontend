@@ -175,7 +175,7 @@ const getTitle = function(fullTitle){
 };
 
 test('it renders with events', async function(assert) {
-  assert.expect(39);
+  assert.expect(37);
   this.register('service:user-events', userEventsMock);
   this.inject.service('user-events', { as: 'userEvents' });
   this.set('today', today);
@@ -270,13 +270,9 @@ test('it renders with events', async function(assert) {
 
   assert.equal(this.$(thirdEventTitle).text().trim(), 'Schedule some materials');
   assert.equal(this.$(thirdLearningMaterials).length, 3, 'all lms are visible');
-  assert.equal(this.$(thirdLm1Schedule).length, 0, 'event in between says nothing');
+  assert.equal(this.$(thirdLm1Schedule).length, 1, 'event in between says something');
   assert.equal(this.$(thirdLm2Schedule).length, 1, 'early LM says something');
   assert.equal(this.$(thirdLm3Schedule).length, 1, 'late LM says something');
-  assert.ok(this.$(thirdLm2Schedule).text().includes('Available after 12/31/2001 12:00 AM'));
-  assert.ok(this.$(thirdLm3Schedule).text().includes('Available before 06/01/2035 12:00 AM'));
-
-
 });
 
 test('it renders blank', async function(assert) {
