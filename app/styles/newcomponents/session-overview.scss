@@ -46,15 +46,28 @@
 
   .independentlearningcontrol {
     clear: both;
+    @include media($large-screen) {
+      @include span-columns(4);
+
+      label {
+        @include span-columns(3 of 4);
+      }
+    }
+  }
+
+  .independentlearningcontrol-value {
+    @include media($large-screen) {
+      @include span-columns(1);
+    }
   }
 
   .sessionilmhours,
   .sessionilmduedate {
     @include media($large-screen) {
-      @include span-columns(3);
+      @include span-columns(4);
 
       label {
-        @include span-columns(2 of 3);
+        @include span-columns(2 of 4);
         margin: 0 1em 0 0;
         text-align: right;
       }
