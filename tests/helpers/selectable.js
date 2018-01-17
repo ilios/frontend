@@ -18,6 +18,7 @@ export default function selectable(selector, options = {}) {
         }
         await wait();
         await wait();
+        await wait();
         return wait();
       };
     }
