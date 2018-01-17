@@ -9,6 +9,7 @@ import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from '../config/environment';
+import { task } from 'ember-concurrency';
 
 const { IliosFeatures: { schoolSessionAttributes } } = config;
 const { oneWay, sort } = computed;
@@ -140,6 +141,16 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     }
     const school = await this.get('school');
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
+  }),
+
+  revertDescriptionChanges: task(function * (){
+    const session = this.get('session');
+    const sessionDescription = yield session.get('sessionDescription');
+    if (sessionDescription) {
+      this.set('description', sessionDescription.get('description'));
+    } else {
+      this.set('description', null);
+    }
   }),
 
   actions: {
@@ -330,13 +341,6 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       }
 
       this.set('description', html);
-    },
-    revertDescriptionChanges(){
-      this.get('session').get('sessionDescription').then(sessionDescription => {
-        if (sessionDescription) {
-          this.set('description', sessionDescription.get('description'));
-        }
-      });
     },
   }
 });
