@@ -4102,9 +4102,9 @@ ember-simple-auth@^1.4.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.9.0.tgz#3a94c6a1178a2b1e99cb7bcbb3d0faeed2176ab8"
+ember-simple-charts@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.10.0.tgz#58aecd3257b0314e0c4b760cd5ff9f9481e6e263"
   dependencies:
     ember-cli-babel "^6.8.1"
     ember-cli-htmlbars "^2.0.1"
