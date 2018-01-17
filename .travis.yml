@@ -23,7 +23,9 @@ before_install:
 install:
   - yarn install --non-interactive
 
-script: yarn test --filter=$FILTER
+script:
+  - yarn lint:js
+  - yarn test --filter=$FILTER
 
 jobs:
   include:

@@ -1,4 +1,3 @@
-/* eslint-env node */
 'use strict';
 const existsSync = require('exists-sync');
 const dotenv = require('dotenv');
