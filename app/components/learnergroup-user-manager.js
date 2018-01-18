@@ -44,7 +44,7 @@ export default Component.extend({
     });
   }),
 
-  usersInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', function(){
+  usersInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', 'isEditing', function(){
     const isEditing = this.get('isEditing');
     const filteredUsers = this.get('filteredUsers');
     if (!isEditing) {

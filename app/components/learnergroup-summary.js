@@ -105,10 +105,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const learnerGroup = this.get('learnerGroup');
     if (isEditing) {
       let topLevelGroup = await learnerGroup.get('topLevelGroup');
-      let users = await topLevelGroup.get('users').toArray();
+      let allDescendantUsers = await topLevelGroup.get('allDescendantUsers');
       let treeGroups = await this.get('treeGroups');
 
-      return await map(users, async user => {
+      return await map(allDescendantUsers.toArray(), async user => {
         let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
         return ObjectProxy.create({
           content: user,

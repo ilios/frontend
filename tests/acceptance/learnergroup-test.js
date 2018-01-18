@@ -354,3 +354,45 @@ test('learner group calendar with subgroup events', async function(assert) {
   await click(subgroupEventsToggle);
   assert.equal(find(event).length, 2);
 });
+
+
+test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
+  const members = '.learnergroup-overview-content table:eq(1) tbody tr';
+  const manage = '.learnergroup-overview-actions button';
+  const manager = '.learnergroup-user-manager-content';
+  const membersOfGroup = `${manager} table:eq(1) tr`;
+  const membersOfTree = `${manager} table:eq(2) tr`;
+  assert.expect(4);
+  server.create('school');
+  server.create('program', {
+    schoolId: 1,
+  });
+  server.create('programYear', {
+    programId: 1
+  });
+  const cohort = server.create('cohort', {
+    programYearId: 1,
+  });
+  const learnerGroup = server.create('learnerGroup', {
+    cohort
+  });
+  const subGroup = server.create('learnerGroup', {
+    cohort,
+    parent: learnerGroup
+  });
+  server.createList('user', 2, {
+    cohorts: [cohort],
+    learnerGroups: [learnerGroup]
+  });
+  server.create('user', {
+    cohorts: [cohort],
+    learnerGroups: [subGroup]
+  });
+
+  await visit('/learnergroups/2');
+  assert.equal(currentURL(), '/learnergroups/2');
+  assert.equal(find(members).length, 1, 'lists members');
+  await click(manage);
+  assert.equal(find(membersOfGroup).length, 1, 'displays all group members');
+  assert.equal(find(membersOfTree).length, 2, 'lists all tree members');
+});
