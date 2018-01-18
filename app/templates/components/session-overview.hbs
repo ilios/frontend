@@ -159,7 +159,7 @@
       <hr>
       <div class="independentlearningcontrol switch-block">
         <label>{{t 'general.independentLearning'}}:</label>
-        <span>
+        <span class='independentlearningcontrol-value'>
           {{#if editable}}
             {{toggle-yesno yes=session.isIndependentLearning toggle=(action 'saveIndependentLearning')}}
           {{else}}
