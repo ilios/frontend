@@ -438,6 +438,27 @@ test('remove description', async function(assert) {
   assert.equal(getElementText(description), getText('Click to edit'));
 });
 
+test('cancel editing empty description #3210', async function(assert) {
+  server.create('user', {
+    id: 4136
+  });
+  server.create('session', {
+    courseId: 1,
+    sessionTypeId: 1
+  });
+  await visit(url);
+  const container = find('.sessiondescription');
+  assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
+  await click(find('.editable', container));
+  let editor = find('.sessiondescription .fr-box');
+  let editorContents = editor.data('froala.editor').$el.text();
+  assert.equal(getText(editorContents), '');
+  editor.froalaEditor('html.set', 'test new description');
+  editor.froalaEditor('events.trigger', 'contentChanged');
+  await click(find('.editinplace .actions .cancel', container));
+  assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
+});
+
 
 test('click copy', async function(assert) {
   server.create('userRole', {

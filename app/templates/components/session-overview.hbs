@@ -236,7 +236,7 @@
           {{#editable-field
             value=description
             save=(action 'saveDescription')
-            close=(action 'revertDescriptionChanges')
+            close=(perform revertDescriptionChanges)
             renderHtml=true
             isSaveDisabled=(and (v-get this 'description' 'isInvalid') (is-in showErrorsFor 'description'))
             clickPrompt=(t 'general.clickToEdit')
