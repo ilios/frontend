@@ -10,7 +10,7 @@
 
 {{#if (get (await instructors) 'length')}}
   <ul class='removable-list tag-list'>
-    {{#each (sort-by 'title' (await instructors)) as |user|}}
+    {{#each (sort-by 'fullName' (await instructors)) as |user|}}
       <li {{action 'removeInstructor' user}}>
         {{user.fullName}} {{fa-icon 'times'}}
       </li>
