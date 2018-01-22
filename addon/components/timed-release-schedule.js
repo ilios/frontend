@@ -10,6 +10,7 @@ export default Component.extend({
   startDate: null,
   endDate: null,
   now: null,
+  showNoSchedule: true,
   startDateInTheFuture: computed('startDate', 'now', function () {
     const startDate = this.get('startDate');
     const now = this.get('now');

@@ -54,9 +54,6 @@
                 {{#if lm.isBlanked}}
                   <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
                   {{lm.title}}
-                  <span class="timed-release-info">
-                    {{timed-release-schedule startDate=lm.startDate endDate=lm.endDate}}
-                  </span>
                 {{else}}
                   {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
                   {{#if lm.absoluteFileUri}}
@@ -84,6 +81,9 @@
                     <p class='public-notes'>{{big-text text=lm.publicNotes length=50}}</p>
                   {{/if}}
                 {{/if}}
+                <span class="timed-release-info">
+                  {{timed-release-schedule startDate=lm.startDate endDate=lm.endDate showNoSchedule=false}}
+                </span>
               </li>
             {{/each}}
           </ul>

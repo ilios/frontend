@@ -12,6 +12,12 @@ test('it renders with no start and end date', function(assert) {
   assert.equal(this.$().text().trim(), 'Available immediately when published');
 });
 
+test('it renders nothing with no start and end date and showNoSchedule set to false', function(assert) {
+  this.render(hbs`{{timed-release-schedule showNoSchedule=false}}`);
+
+  assert.equal(this.$().text().trim(), '');
+});
+
 test('it renders with both start and end date', function (assert) {
   const startDate = moment().subtract(10, 'minutes');
   const endDate = moment().add(1, 'day');

@@ -7,7 +7,6 @@
 {{#if (and endDate (not startDate) endDateInTheFuture)}}
   ({{t 'general.timedReleaseOnlyEndDate' endDate=(moment-format endDate 'L LT')}})
 {{/if}}
-{{#if (and (not startDate) (not endDate))}}
+{{#if (and (not startDate) (not endDate) showNoSchedule)}}
   {{t 'general.timedReleaseNoSchedule'}}
 {{/if}}
-{{startDateFromNow}}

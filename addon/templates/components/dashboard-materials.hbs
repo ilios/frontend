@@ -18,9 +18,6 @@
               {{#if lmObject.isBlanked}}
                 <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
                 {{lmObject.title}}
-                <span class="timed-release-info">
-                  {{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate}}
-                </span>
               {{else}}
                 {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
                 {{#if lmObject.absoluteFileUri}}
@@ -41,6 +38,9 @@
                   <small>{{lmObject.citation}}</small>
                 {{/if}}
               {{/if}}
+              <span class="timed-release-info">
+                {{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate showNoSchedule=false}}
+              </span>
             </td>
             <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">{{lmObject.sessionTitle}}</td>
