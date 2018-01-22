@@ -2672,13 +2672,12 @@ ember-composable-helpers@^2.0.1:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency@0.8.12:
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.12.tgz#fb91180e5efeb1024cfa2cfb99d2fe6721930c91"
+ember-concurrency@0.8.13:
+  version "0.8.13"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.13.tgz#e2e28255bf3835278ff8046cdb65240655a4c301"
   dependencies:
     babel-core "^6.24.1"
     ember-cli-babel "^6.8.2"
-    ember-getowner-polyfill "^2.0.0"
     ember-maybe-import-regenerator "^0.1.5"
 
 ember-cookies@^0.1.0:
@@ -2755,7 +2754,7 @@ ember-font-awesome@^3.0.5:
     ember-cli-htmlbars "^2.0.2"
     font-awesome "^4.7.0"
 
-"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1, ember-getowner-polyfill@^2.2.0:
+"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1, ember-getowner-polyfill@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
   dependencies:
