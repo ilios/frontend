@@ -3,7 +3,7 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
-  parallel: -1,
+  parallel: 5,
   launch_in_ci: [
     'Chrome'
   ],
@@ -14,11 +14,14 @@ module.exports = {
     Chrome: {
       mode: 'ci',
       args: [
+        // --no-sandbox is needed when running Chrome inside a container
+        process.env.TRAVIS ? '--no-sandbox' : null,
+
         '--disable-gpu',
         '--headless',
         '--remote-debugging-port=0',
         '--window-size=1440,900'
-      ]
+      ].filter(Boolean)
     }
   }
 };
