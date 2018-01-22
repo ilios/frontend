@@ -1,11 +1,10 @@
-/* eslint-env node */
 'use strict';
 
-const existsSync = require('exists-sync');
+const fs = require('fs');
 const dotenv = require('dotenv');
 const path = require('path');
 const dotEnvPath = path.join(__dirname, '../../../.env');
-if (existsSync(dotEnvPath)) {
+if (fs.existsSync(dotEnvPath)) {
   dotenv.config({ path: dotEnvPath });
 }
 
@@ -68,6 +67,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
