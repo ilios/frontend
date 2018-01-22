@@ -5,11 +5,11 @@
 </div>
 {{#if users.length}}
   <div class="actions">
-    {{one-way-input
-      value=filter
-      update=(action (mut filter))
-      placeholder=(t 'general.filterByNameOrEmail')
-    }}
+    <input
+      value={{filter}}
+      oninput={{action (mut filter) value="target.value"}}
+      placeholder={{t 'general.filterByNameOrEmail'}}
+    >
   </div>
   <div class='learnergroup-user-manager-content'>
     <div class='list'>

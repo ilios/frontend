@@ -24,26 +24,26 @@
   <div class='item offering-duration'>
     <label>{{t 'general.duration'}}:</label> <br>
     <div class='hours'>
-      {{one-way-input
-        value=durationHours
-        update=(perform updateDurationHours)
-        focusOut=(action 'addErrorDisplayFor' 'durationHours')
-        keyUp=(action 'addErrorDisplayFor' 'durationHours')
-        class=(if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours')) 'has-error')
-      }}
+      <input
+        value={{durationHours}}
+        oninput={{action (perform updateDurationHours) value="target.value"}}
+        onfocusout={{action 'addErrorDisplayFor' 'durationHours'}}
+        onkeyup={{action 'addErrorDisplayFor' 'durationHours'}}
+        class={{if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours')) 'has-error'}}
+      >
       {{#if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours'))}}
         <span class="validation-error-message">{{v-get this 'durationHours' 'message'}}</span>
       {{/if}}
       <label>{{t 'general.hours'}}</label>
     </div>
     <div class='minutes'>
-      {{one-way-input
-        value=durationMinutes
-        update=(perform updateDurationMinutes)
-        focusOut=(action 'addErrorDisplayFor' 'durationMinutes')
-        keyUp=(action 'addErrorDisplayFor' 'durationMinutes')
-        class=(if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes')) 'has-error')
-      }}
+      <input
+        value={{durationMinutes}}
+          oninput={{action (perform updateDurationMinutes) value="target.value"}}
+          onfocusout={{action 'addErrorDisplayFor' 'durationMinutes'}}
+          onkeyup={{action 'addErrorDisplayFor' 'durationMinutes'}}
+          class={{if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes')) 'has-error'}}
+      >
       {{#if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes'))}}
         <span class="validation-error-message">{{v-get this 'durationMinutes' 'message'}}</span>
       {{/if}}
@@ -82,13 +82,13 @@
           </div>
 
           <div class="make-recurring-input-container">
-            {{one-way-input
-              value=numberOfWeeks
-              update=(action (mut numberOfWeeks))
-              focusOut=(action 'addErrorDisplayFor' 'numberOfWeeks')
-              keyUp=(action 'addErrorDisplayFor' 'numberOfWeeks')
-              class=(concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error'))
-            }}
+            <input
+              value={{numberOfWeeks}}
+              oninput={{action (mut numberOfWeeks) value="target.value"}}
+              onfocusout={{action 'addErrorDisplayFor' 'numberOfWeeks'}}
+              onkeyup={{action 'addErrorDisplayFor' 'numberOfWeeks'}}
+              class={{concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error')}}
+            >
             <label class="make-recurring-input-label">{{t 'general.weeks'}}</label>
             {{#if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks'))}}
               <span class="validation-error-message">{{v-get this 'numberOfWeeks' 'message'}}</span>
@@ -107,12 +107,12 @@
           {{t 'general.defaultLocationNotLoaded'}}
         {{/unless}}
       </label>
-      {{one-way-input
-        value=room
-        update=(action (mut room))
-        keyUp=(action 'addErrorDisplayFor' 'room')
-        focusOut=(action 'addErrorDisplayFor' 'room')
-      }}
+      <input
+        value={{room}}
+        oninput={{action (mut room) value="target.value"}}
+        onkeyup={{action 'addErrorDisplayFor' 'room'}}
+        onfocusout={{action 'addErrorDisplayFor' 'room'}}
+      >
       {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
         <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
       {{/if}}

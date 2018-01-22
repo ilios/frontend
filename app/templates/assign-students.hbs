@@ -21,7 +21,11 @@
     </div>
 
     <div id='titlefilter' class="filter">
-      {{one-way-input filter placeholder=(t 'general.pendingUserUpdates.filterBy') update=(action (mut filter))}}
+      <input
+        value={{filter}}
+        oninput={{action (mut filter) value="target.value"}}
+        placeholder={{t 'general.pendingUserUpdates.filterBy'}}
+      >
     </div>
   </div>
 

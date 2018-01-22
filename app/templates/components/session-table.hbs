@@ -1,9 +1,9 @@
 <div class="filter">
-  {{one-way-input
-    value=filterByDebounced
-    update=(perform changeFilterBy)
-    placeholder=(t 'general.sessionTitleFilterPlaceholder')
-  }}
+  <input
+    value={{filterByDebounced}}
+    oninput={{action (perform changeFilterBy) value="target.value"}}
+    placeholder={{t 'general.sessionTitleFilterPlaceholder'}}
+  >
 </div>
 {{#light-table table height=height responsive=true as |t|}}
   {{t.head

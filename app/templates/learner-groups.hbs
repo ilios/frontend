@@ -55,11 +55,11 @@
       {{/if}}
     </div>
     <div class="titlefilter">
-      {{one-way-input
-        value=titleFilter
-        update=(perform changeTitleFilter)
-        placeholder=(t 'general.learnerGroupTitleFilterPlaceholder')
-      }}
+      <input
+        value={{titleFilter}}
+        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        placeholder={{t 'general.learnerGroupTitleFilterPlaceholder'}}
+      >
     </div>
   </div>
   <section class='learnergroups'>
