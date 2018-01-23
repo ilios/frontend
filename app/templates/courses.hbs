@@ -27,12 +27,12 @@
     </div>
 
     <div class="titlefilter">
-      {{one-way-input
+      <input
         data-test-title-filter
-        value=titleFilter
-        update=(perform changeTitleFilter)
-        placeholder=(t 'general.courseTitleFilterPlaceholder')
-      }}
+        value={{titleFilter}}
+        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        placeholder={{t 'general.courseTitleFilterPlaceholder'}}
+      >
     </div>
   </div>
   <section class='courses'>

@@ -1,12 +1,12 @@
 <div class="item">
   <label>{{t 'general.displayName'}}:</label>
   <span>
-    {{one-way-input
-      value=title
-      update=(action (mut title))
-      disabled=prepareSave.isRunning
-      focusOut=(action 'addErrorDisplayFor' 'title')
-    }}
+    <input
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      disabled={{prepareSave.isRunning}}
+      onfocusout={{action 'addErrorDisplayFor' 'title'}}
+    >
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
@@ -34,12 +34,12 @@
 <div class="item">
   <label>{{t 'general.contentAuthor'}}:</label>
   <span>
-    {{one-way-input
-      value=originalAuthor
-      update=(action (mut originalAuthor))
-      disabled=prepareSave.isRunning
-      focusOut=(action 'addErrorDisplayFor' 'originalAuthor')
-    }}
+    <input
+      value={{originalAuthor}}
+      oninput={{action (mut originalAuthor) value="target.value"}}
+      disabled={{prepareSave.isRunning}}
+      onfocusout={{action 'addErrorDisplayFor' 'originalAuthor'}}
+    >
     {{#if (and (v-get this 'originalAuthor' 'isInvalid') (is-in showErrorsFor 'originalAuthor'))}}
       <span class="validation-error-message">{{v-get this 'originalAuthor' 'message'}}</span>
     {{/if}}
@@ -63,13 +63,13 @@
   <div class="item">
     <label>{{t 'general.url'}}:</label>
     <span>
-      {{one-way-input
-        value=link
-        update=(action (mut link))
-        disabled=prepareSave.isRunning
-        focusOut=(action 'addErrorDisplayFor' 'link')
-        keyDown=(action 'addErrorDisplayFor' 'link')
-      }}
+      <input
+        value={{link}}
+        oninput={{action (mut link) value="target.value"}}
+        disabled={{prepareSave.isRunning}}
+        onfocusout={{action 'addErrorDisplayFor' 'link'}}
+        onkeydown={{action 'addErrorDisplayFor' 'link'}}
+      >
       {{#if (and (v-get this 'link' 'isInvalid') (is-in showErrorsFor 'link'))}}
         <span class="validation-error-message">{{v-get this 'link' 'message'}}</span>
       {{/if}}

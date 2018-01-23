@@ -281,9 +281,11 @@ test('save fires save', async function(assert) {
 
   assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');
 
-  this.$(titleInput).val('new title').change();
+  this.$(titleInput).val('new title');
+  this.$(titleInput).trigger('input');
   this.$(aamcMethodSelect).val(aamcMethodMock.get('id')).change();
-  this.$(colorInput).val('#a1b2c3').change();
+  this.$(colorInput).val('#a1b2c3');
+  this.$(colorInput).trigger('input');
   this.$(assessmentOptionSelect).val('1').change();
 
   assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');

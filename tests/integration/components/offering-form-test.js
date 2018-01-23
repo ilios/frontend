@@ -55,8 +55,8 @@ test('room validation errors show up when typing', function(assert) {
   const error = `${item} .validation-error-message`;
   const save = '.buttons .done';
   this.$(input).val(padStart('a', 300, 'a'));
-  this.$(input).trigger('change');
 
+  this.$(input).trigger('input');
   this.$(save).click();
 
   return wait().then(()=>{
@@ -128,7 +128,7 @@ test('recurring numberOfWeeks validation errors show up when saving', function(a
 
   this.$(toggle).click();
   const save = '.buttons .done';
-  this.$(input).val(0).trigger('change');
+  this.$(input).val(0).trigger('input');
 
   this.$(save).click();
 
@@ -378,7 +378,7 @@ test('save recurring 3 weeks should get lots of days', function(assert) {
   this.render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true save=(action save)}}`);
 
   this.$(toggle).click();
-  this.$(weeks).val(3).trigger('change');
+  this.$(weeks).val(3).trigger('input');
   let interactor = openDatepicker(this.$(startDateInput));
   interactor.selectDate(newStartDate);
   this.$(inputs).eq(thursday).click().change();
@@ -431,9 +431,11 @@ test('changing duration changes end date', function(assert) {
   const endDate = '.end-date-time .text';
   const format = 'M/D/YYYY h:mm a';
   assert.equal(moment().hour(9).minute(0).format(format), this.$(endDate).text().trim());
-  this.$(durationHour).val('2').change();
+  this.$(durationHour).val('2');
+  this.$(durationHour).trigger('input');
   return wait().then(()=>{
-    this.$(durationMinute).val('15').change();
+    this.$(durationMinute).val('15');
+    this.$(durationMinute).trigger('input');
     return wait().then(()=>{
       assert.equal(moment().hour(10).minute(15).format(format), this.$(endDate).text().trim());
     });
@@ -454,11 +456,15 @@ test('changing duration and start time changes end date', function(assert) {
   const format = 'M/D/YYYY h:mm a';
   assert.equal(moment().hour(9).minute(0).format(format), this.$(endDate).text().trim());
   this.$(startHour).val('2').change();
+  this.$(startHour).val('2').change();
   this.$(startMinute).val('10').change();
   this.$(startAmPm).val('pm').change();
-  this.$(durationHour).val('2').change();
+  this.$(durationHour).val('2');
+  this.$(durationHour).trigger('input');
+
   return wait().then(()=>{
     this.$(durationMinute).val('50').change();
+    this.$(durationMinute).trigger('input');
     return wait().then(()=>{
       assert.equal(moment().hour(17).minute(0).format(format), this.$(endDate).text().trim());
     });

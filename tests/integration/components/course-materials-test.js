@@ -208,7 +208,8 @@ test('filter by title', function(assert) {
   const filter = '.filter-session-lms input';
 
   assert.equal(this.$(sessionMaterials).length, 3);
-  this.$(filter).val('title1').change();
+  this.$(filter).val('title1');
+  this.$(filter).trigger('input');
   assert.equal(this.$(sessionMaterials).length, 1);
   assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title1');
 
@@ -232,7 +233,8 @@ test('filter by type', function(assert) {
   const filter = '.filter-session-lms input';
 
   assert.equal(this.$(sessionMaterials).length, 3);
-  this.$(filter).val('file').change();
+  this.$(filter).val('file');
+  this.$(filter).trigger('input');
   assert.equal(this.$(sessionMaterials).length, 1);
   assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
 
@@ -256,7 +258,8 @@ test('filter by author', function(assert) {
   const filter = '.filter-session-lms input';
 
   assert.equal(this.$(sessionMaterials).length, 3);
-  this.$(filter).val('author2').change();
+  this.$(filter).val('author2');
+  this.$(filter).trigger('input');
   assert.equal(this.$(sessionMaterials).length, 1);
   assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
 
@@ -280,7 +283,8 @@ test('filter by citation', function(assert) {
   const filter = '.filter-session-lms input';
 
   assert.equal(this.$(sessionMaterials).length, 3);
-  this.$(filter).val('citationtext').change();
+  this.$(filter).val('citationtext');
+  this.$(filter).trigger('input');
   assert.equal(this.$(sessionMaterials).length, 1);
   assert.equal(this.$(firstSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
 
