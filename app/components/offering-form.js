@@ -107,6 +107,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   offeringsToSave: 0,
   savedOfferings: 0,
   recurringDayOptions: null,
+  loaded: false,
   associatedSchools: computed('cohorts.[]', function(){
     return new Promise(resolve => {
       const cohorts = this.get('cohorts');
@@ -267,7 +268,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
 
-  loadDefaultAttrs(){
+  loadDefaultAttrs() {
+    let loaded = this.get('loaded');
+    if (loaded) {
+      return;
+    }
     let startDate = moment(this.get('defaultStartDate')).hour(8).minute(0).second(0).toDate();
     let endDate = moment(this.get('defaultStartDate')).hour(9).minute(0).second(0).toDate();
     const room = 'TBD';
@@ -275,11 +280,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const recurringDays = [];
     const instructors = [];
     const instructorGroups = [];
+    loaded = true;
 
-    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups});
+    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups, loaded});
   },
 
   loadAttrsFromOffering: task(function * (offering) {
+    let loaded = this.get('loaded');
+    if (loaded) {
+      return;
+    }
     const startDate = offering.get('startDate');
     const endDate = offering.get('endDate');
     const room = offering.get('room');
@@ -292,9 +302,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const learnerGroups = obj.learnerGroups.toArray();
     const instructors = obj.instructors.toArray();
     const instructorGroups = obj.instructorGroups.toArray();
+    loaded = true;
 
-    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups});
-  }),
+    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups, loaded});
+  }).drop(),
   saveOffering: task(function * () {
     this.set('offeringsToSave', 0);
     this.set('savedOfferings', 0);

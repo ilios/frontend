@@ -1,4 +1,4 @@
-{{#unless loadAttrsFromOffering.isRunning}}
+{{#if loaded}}
   <p class='toggle-offering-calendar'>
     {{toggle-buttons
       firstOptionSelected=(not showOfferingCalendar)
@@ -167,7 +167,7 @@
     </button>
     <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
   </div>
-{{/unless}}
+{{/if}}
 
 {{#if saveOffering.isRunning}}
   {{wait-saving
