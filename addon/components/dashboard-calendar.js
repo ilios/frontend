@@ -474,7 +474,9 @@ export default Component.extend({
     const model = await currentUser.get('model');
     const icsFeedKey = model.get('icsFeedKey');
     const apiHost = iliosConfig.get('apiHost');
-    return apiHost + '/ics/' + icsFeedKey;
+    const loc = window.location.protocol + '//' + window.location.hostname;
+    const server = apiHost ? apiHost : loc;
+    return server + '/ics/' + icsFeedKey;
   }),
 
   actions: {
