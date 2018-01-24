@@ -4,6 +4,9 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
+  plugins: [
+    'ember'
+  ],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended'
@@ -38,5 +41,55 @@ module.exports = {
     'ember/order-in-routes': 0,
     'ember/use-brace-expansion': 0,
     'generator-star-spacing': 0,
-  }
+  },
+  overrides: [
+    // node files
+    {
+      files: [
+        'index.js',
+        'testem.js',
+        'ember-cli-build.js',
+        'config/**/*.js',
+        'tests/dummy/config/**/*.js'
+      ],
+      excludedFiles: [
+        'app/**',
+        'addon/**',
+        'tests/dummy/app/**'
+      ],
+      parserOptions: {
+        sourceType: 'script',
+        ecmaVersion: 2015
+      },
+      env: {
+        browser: false,
+        node: true
+      },
+      plugins: ['node'],
+      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        // add your custom rules and overrides for node files here
+      })
+    },
+    // test files
+    {
+      files: ['tests/**/*.js'],
+      excludedFiles: ['tests/dummy/**/*.js'],
+      "globals": {
+        "server": true,
+        // embertest ENV globals manually added since we're not supporting andThen anymore
+        "click": true,
+        "currentPath": true,
+        "currentRouteName": true,
+        "currentURL": true,
+        "fillIn": true,
+        "find": true,
+        "findWithAssert": true,
+        "keyEvent": true,
+        "pauseTest": true,
+        "resumeTest": true,
+        "triggerEvent": true,
+        "visit": true,
+      },
+    },
+  ]
 };

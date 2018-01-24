@@ -7,6 +7,6 @@ export default Factory.extend({
   sessionTypeTitle:  'lecture',
   isPublished: true,
   isScheduled: false,
-  instructors: [],
-  learningMaterials: []
+  instructors: () => [],
+  learningMaterials: () => []
 });

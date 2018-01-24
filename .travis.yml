@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - "6"
 
-sudo: required # set to required instead of false as a temporary workaround for https://github.com/travis-ci/travis-ci/issues/8836
+sudo: false
 dist: trusty
 
 addons:
@@ -38,6 +38,7 @@ install:
 before_script: greenkeeper-lockfile-update
 
 script:
+  - yarn lint:js
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
