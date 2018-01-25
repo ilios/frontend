@@ -11,6 +11,8 @@ export default Component.extend({
   isSaveDisabled: false,
   renderHtml: false,
   classNames: ['editinplace'],
+  saveOnEnter: false,
+  cancelOnEscape: false,
   clickPrompt: null,
   looksEmpty: computed('value', function(){
     let value = this.get('value') || '';
@@ -40,4 +42,20 @@ export default Component.extend({
 
     control.focus();
   }).drop(),
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    // make sure that they key was pressed only on input element that we're supporting
+    if (! ['text', 'textarea'].includes(target.type)) {
+      return;
+    }
+
+    if (13 === keyCode && this.get('saveOnEnter')) {
+      this.get('saveData').perform();
+    } else if(27 === keyCode && this.get('closeOnEscape')) {
+      this.get('closeEditor').perform();
+    }
+  }
 });
