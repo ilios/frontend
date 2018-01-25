@@ -12,7 +12,7 @@ export default Component.extend({
   renderHtml: false,
   classNames: ['editinplace'],
   saveOnEnter: false,
-  cancelOnEscape: false,
+  closeOnEscape: false,
   clickPrompt: null,
   looksEmpty: computed('value', function(){
     let value = this.get('value') || '';
