@@ -8,15 +8,15 @@
     value=(if title title (t 'general.clickToEdit'))
     save=(action 'changeVocabularyTitle')
     close=(action 'revertVocabularyTitleChanges')
-    as |isSaving save close|
+    saveOnEnter=true
+    closeOnEscape=true
+    as |isSaving|
   }}
-    {{one-way-input
-      value=title
-      update=(action (mut title))
-      onenter=save
-      onescape=close
-      disabled=isSaving
-    }}
+    <input
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      disabled={{isSaving}}
+    >
   {{/editable-field}}
 </p>
 

@@ -5,16 +5,16 @@
         value=title
         save=(action 'changeTitle')
         close=(action 'revertTitleChanges')
-      as |isSaving save close|
+        saveOnEnter=true
+        closeOnEscape=true
+      as |isSaving|
       }}
-        {{one-way-input
-          value=title
-          update=(action (mut title))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'title')
-        }}
+        <input
+          value={{title}}
+          disabled={{isSaving}}
+          oninput={{action (mut title) value="target.value"}}
+          onfocusout={{action 'addErrorDisplayFor' 'title'}}
+        >
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
         {{/if}}

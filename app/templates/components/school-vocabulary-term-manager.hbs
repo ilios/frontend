@@ -15,15 +15,15 @@
       value=(if title title (t 'general.clickToEdit'))
       save=(action 'changeTermTitle')
       close=(action 'revertTermTitleChanges')
-      as |isSaving save close|
+      saveOnEnter=true
+      closeOnEscape=true
+      as |isSaving|
     }}
-      {{one-way-input
-      	value=title
-      	update=(action (mut title))
-      	onenter=save
-      	onescape=close
-      	disabled=isSaving
-      }}
+      <input
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+        disabled={{isSaving}}
+      >
     {{/editable-field}}
     {{#unless (or term.hasChildren term.hasAssociations)}}
       {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
@@ -34,15 +34,16 @@
       value=(if description description (t 'general.clickToAddTermDescription'))
       save=(action 'changeTermDescription')
       close=(action 'revertTermDescriptionChanges')
-      as |isSaving save close|
+      closeOnEscape=true
+      as |isSaving|
     }}
-      {{one-way-textarea
-        value=description
-        update=(action (mut description))
-        onenter=save
-        onescape=close
-        disabled=isSaving
-      }}
+      <textarea
+        value={{description}}
+        oninput={{action (mut description) value="target.value"}}
+        disabled={{isSaving}}
+      >
+        {{description}}
+      </textarea>
     {{/editable-field}}
   </p>
 {{/if}}

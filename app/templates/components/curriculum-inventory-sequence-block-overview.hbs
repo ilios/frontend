@@ -42,15 +42,16 @@
           value=(if description description (t 'general.clickToAddDescription'))
           save=(action 'changeDescription')
           close=(action 'revertDescriptionChanges')
-          as |isSaving save close|
+          closeOnEscape=true
+          as |isSaving|
         }}
-          {{one-way-textarea
-            value=description
-            update=(action (mut description))
-            onenter=save
-            onescape=close
-            disabled=isSaving
-          }}
+          <textarea
+            value={{description}}
+            oninput={{action (mut description) value="target.value"}}
+            disabled={{isSaving}}
+          >
+            {{description}}
+          </textarea>
         {{/editable-field}}
       {{/if}}
     </div>

@@ -7,17 +7,17 @@
     value=reportName
     save=(action 'changeName')
     close=(action 'revertNameChanges')
-    as |isSaving save close|
+    saveOnEnter=true
+    closeOnEscape=true
+    as |isSaving|
     }}
-      {{one-way-input
-      value=reportName
-      update=(action (mut reportName))
-      onenter=save
-      onescape=close
-      disabled=isSaving
-      focusOut=(action 'addErrorDisplayFor' 'reportName')
-      keyPress=(action 'addErrorDisplayFor' 'reportName')
-      }}
+      <input
+        value={{reportName}}
+        oninput={{action (mut reportName) value="target.value"}}
+        disabled={{isSaving}}
+        onfocusout={{action 'addErrorDisplayFor' 'reportName'}}
+        onkeypress={{action 'addErrorDisplayFor' 'reportName'}}
+      >
       {{#if (and (v-get this 'reportName' 'isInvalid') (is-in showErrorsFor 'reportName'))}}
         <span class="validation-error-message">{{v-get this 'reportName' 'message'}}</span>
       {{/if}}

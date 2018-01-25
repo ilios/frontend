@@ -26,16 +26,16 @@
           value=(if externalId externalId (t 'general.clickToEdit'))
           save=(action 'changeExternalId')
           close=(action 'revertExternalIdChanges')
-          as |isSaving save close|
+          saveOnEnter=true
+          closeOnEscape=true
+          as |isSaving|
         }}
-          {{one-way-input
-            value=externalId
-            update=(action (mut externalId))
-            onenter=save
-            onescape=close
-            disabled=isSaving
-            focusOut=(action 'addErrorDisplayFor' 'externalId')
-          }}
+          <input
+            value={{externalId}}
+            oninput={{action (mut externalId) value="target.value"}}
+            disabled={{isSaving}}
+            onfocusout={{action 'addErrorDisplayFor' 'externalId'}}
+          >
           {{#if (and (v-get this 'externalId' 'isInvalid') (is-in showErrorsFor 'externalId'))}}
             <span class="validation-error-message">{{v-get this 'externalId' 'message'}}</span>
           {{/if}}
