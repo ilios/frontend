@@ -7,7 +7,12 @@
 
   .actions {
     @include fill-parent;
+    @include ilios-input;
     text-align: right;
+
+    input {
+      width: 15em;
+    }
   }
 
   .learnergroup-cohort-user-manager-content {
