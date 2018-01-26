@@ -18,10 +18,11 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isCourseDirector)
-      update=(action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped))
-    }}
+    <input
+      type="checkbox"
+      checked={{await isCourseDirector}}
+      onclick={{action (mut isCourseDirectorFlipped) (not isCourseDirectorFlipped)}}
+    >
   {{/unless}}
 </div>
 <div class='item'>
@@ -35,10 +36,11 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isFaculty)
-      update=(action (mut isFacultyFlipped) (not isFacultyFlipped))
-    }}
+    <input
+      type="checkbox"
+      checked={{await isFaculty}}
+      onclick={{action (mut isFacultyFlipped) (not isFacultyFlipped)}}
+    >
   {{/unless}}
 </div>
 <div class='item'>
@@ -52,10 +54,11 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isDeveloper)
-      update=(action (mut isDeveloperFlipped) (not isDeveloperFlipped))
-    }}
+    <input
+      type="checkbox"
+      checked={{await isDeveloper}}
+      onclick={{action (mut isDeveloperFlipped) (not isDeveloperFlipped)}}
+    >
   {{/unless}}
 </div>
 <div class='item'>
@@ -69,10 +72,11 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isFormerStudent)
-      update=(action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))
-    }}
+    <input
+      type="checkbox"
+      checked={{await isFormerStudent}}
+      onclick={{action (mut isFormerStudentFlipped) (not isFormerStudentFlipped)}}
+    >
   {{/unless}}
 </div>
 
@@ -89,11 +93,12 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isEnabled)
-      update=(action (mut isEnabledFlipped) (not isEnabledFlipped))
-      disabled=(eq user.id currentUser.model.id)
-    }}
+    <input
+      type="checkbox"
+      checked={{await isEnabled}}
+      onclick={{action (mut isEnabledFlipped) (not isEnabledFlipped)}}
+      disabled={{if (eq user.id currentUser.model.id) true}}
+    >
   {{/unless}}
 </div>
 <div class='item'>
@@ -107,9 +112,10 @@
       {{/if}}
     </span>
   {{else}}
-    {{one-way-checkbox
-      checked=(await isUserSyncIgnored)
-      update=(action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))
-    }}
+    <input
+      type="checkbox"
+      checked={{await isUserSyncIgnored}}
+      onclick={{action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped)}}
+    >
   {{/unless}}
 </div>

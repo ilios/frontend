@@ -65,10 +65,11 @@
       <div class='included'>
         <span class='title'>{{t 'general.include'}}:</span>
         <div class='include'>
-          {{one-way-checkbox
-            checked=(not skipOfferings)
-            update=(toggle 'skipOfferings' this)
-          }}
+          <input
+            type="checkbox"
+            checked={{not skipOfferings}}
+            onclick={{toggle 'skipOfferings' this}}
+          >
           <span>{{t 'general.offerings'}}</span>
         </div>
       </div>

@@ -104,10 +104,11 @@
     <label>{{t 'general.copyrightPermission'}}:</label>
     <span>
       <p id="lm-copyright-agreement-text">
-        {{one-way-checkbox
-            checked=copyrightPermission
-            update=(action (mut copyrightPermission))
-        }}
+        <input
+          type="checkbox"
+          checked={{copyrightPermission}}
+          onclick={{action (mut copyrightPermission)}}
+        >
         {{t 'general.copyrightAgreement'}}
       </p>
     </span>
