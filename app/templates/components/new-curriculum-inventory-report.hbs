@@ -24,12 +24,12 @@
       <div class="form-col form-col-12 description">
         <label class="form-label">{{t 'general.description'}}:</label>
         <div class="form-data form-data-text form-input-row">
-          {{one-way-textarea
-            value=description
-            update=(action (mut description))
-            disabled=isSaving
-            placeholder=(t 'general.reportDescriptionPlaceholder')
-          }}
+          <textarea
+            value={{description}}
+            oninput={{action (mut description) value="target.value"}}
+            disabled={{if isSaving true}}
+            placeholder={{t 'general.reportDescriptionPlaceholder'}}
+          ></textarea>
         </div>
       </div>
 

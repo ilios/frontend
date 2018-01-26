@@ -40,12 +40,12 @@
   </div>
   <div class="item description">
     <label>{{t 'general.description'}}:</label>
-    {{one-way-textarea
-      value=description
-      update=(action (mut description))
-      disabled=isSaving
-      placeholder=(t 'general.sequenceBlockDescriptionPlaceholder')
-    }}
+    <textarea
+      value={{description}}
+      oninput={{action (mut description) value="target.value"}}
+      disabled={{if isSaving true}}
+      placeholder={{t 'general.sequenceBlockDescriptionPlaceholder'}}
+    ></textarea>
   </div>
 
   <div class="item required">
