@@ -39,3 +39,31 @@ test('it renders an edit icon when it looks empty', function(assert) {
   assert.equal(this.$().text().trim(), '');
   assert.equal(this.$(icon).length, 1);
 });
+
+test('save on enter', function(assert) {
+  assert.expect(1);
+  this.set('value', 'lorem');
+  this.on('save', () => {
+    assert.ok(true, 'save action fired.');
+  });
+  this.render(hbs`{{#editable-field save=(action 'save') saveOnEnter=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`);
+  this.$('.editable').click();
+  const e = $.Event("keyup");
+  e.which = 13;
+  e.keyCode = 13;
+  this.$('.editinplace input').trigger(e);
+});
+
+test('close on escape', function(assert) {
+  assert.expect(1);
+  this.set('value', 'lorem');
+  this.on('revert', () => {
+    assert.ok(true, 'revert action fired.');
+  });
+  this.render(hbs`{{#editable-field close=(action 'revert') closeOnEscape=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`);
+  this.$('.editable').click();
+  const e = $.Event("keyup");
+  e.which = 27;
+  e.keyCode = 27;
+  this.$('.editinplace input').trigger(e);
+});
