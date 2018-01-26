@@ -47,7 +47,7 @@ export default Component.extend({
     const keyCode = event.keyCode;
     const target = event.target;
 
-    // make sure that they key was pressed only on input element that we're supporting
+    // only process key events coming from text input/textarea.
     if (! ['text', 'textarea'].includes(target.type)) {
       return;
     }
