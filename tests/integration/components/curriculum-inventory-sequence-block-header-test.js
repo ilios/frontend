@@ -48,7 +48,7 @@ test('change title', function(assert) {
   assert.equal(this.$('.editinplace').text().trim(), block.title);
   this.$('.editable').click();
   this.$('.editinplace input').val(newTitle);
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.equal(this.$('.editinplace').text().trim(), newTitle);
@@ -68,7 +68,7 @@ test('change title fails on empty value', function(assert) {
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('');
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -88,7 +88,7 @@ test('change title fails on too-short value', function(assert) {
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('ab');
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -108,7 +108,7 @@ test('change title fails on overlong value', function(assert) {
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('0123456789'.repeat(21));
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');

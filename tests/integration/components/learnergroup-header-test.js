@@ -37,7 +37,7 @@ test('can change title', async function(assert) {
   assert.equal(this.$('h2').text().trim(), 'our group');
   this.$('h2 .editable').click();
   this.$('h2 input').val('new title');
-  this.$('h2 input').trigger('change');
+  this.$('h2 input').trigger('input');
   this.$('h2 .done').click();
   await wait();
 });
@@ -87,7 +87,7 @@ test('validate title length', async function(assert) {
   assert.equal(this.$(errors).length, 0, 'there are no errors');
   this.$(edit).click();
   const longTitle = 'x'.repeat(61);
-  this.$(input).val(longTitle).change();
+  this.$(input).val(longTitle).trigger('input');
   this.$(done).click();
   await wait();
   assert.equal(this.$(errors).length, 1, 'there is now an error');

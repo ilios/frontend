@@ -612,7 +612,7 @@ test('change description', function (assert) {
     this.$('.description .editinplace .editable').click();
     return wait().then(() => {
       const newDescription = 'Quidquid luce fuit, tenebris agit.';
-      this.$('.description textarea').val(newDescription).trigger('change');
+      this.$('.description textarea').val(newDescription).trigger('input');
       this.$('.description .actions .done').click();
       return wait().then(() => {
         assert.equal(this.$('.description .editinplace').text().trim(), newDescription);
@@ -668,7 +668,7 @@ test('description validation fails if text is too long', function (assert) {
         'Validation error is initially not shown.'
       );
       const newDescription = '0123456789'.repeat(5000);
-      this.$('.description textarea').val(newDescription).trigger('change');
+      this.$('.description textarea').val(newDescription).trigger('input');
       this.$('.description .actions .done').click();
       return wait().then(() => {
         assert.equal(this.$('.description .validation-error-message').length, 1, 'Validation error message is visible.');
