@@ -29,7 +29,7 @@ test('create new sequence block Issue #2108', async function(assert) {
   const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
   const addSequenceBlock = `${sequenceBlockList} .expand-button`;
   const newBlockForm = '.new-curriculum-inventory-sequence-block';
-  const newFormTitle = `${newBlockForm} .new-result-title`;
+  const newFormTitle = `${newBlockForm} h2.title`;
 
   await visit(url);
   assert.equal(currentPath(), 'curriculumInventoryReport.index');

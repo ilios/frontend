@@ -59,7 +59,7 @@ test('it renders', function(assert) {
   this.set('report', report);
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
-    assert.equal(this.$('.new-result-title').text().trim(), 'New Sequence Block', 'Component title shows.');
+    assert.equal(this.$('h2.title').text().trim(), 'New Sequence Block', 'Component title shows.');
     assert.equal(this.$('.title label').text().trim(), 'Title:', 'Title label is correct.');
     assert.equal(this.$('.title input').val(), '', 'Title input is initially empty.');
     assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
