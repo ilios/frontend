@@ -45,10 +45,11 @@
       <thead>
         <tr>
           <th class='text-left clickable' colspan="1" onclick={{action 'toggleCheck'}}>
-            <input
+            {{input
              type='checkbox'
-             checked={{eq selectedUserIds.length filteredStudents.length}}
-             indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}}>
+             checked=(eq selectedUserIds.length filteredStudents.length)
+             indeterminate=(and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length))
+            }}
             {{t 'general.all'}}
           </th>
           <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
