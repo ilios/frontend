@@ -75,7 +75,7 @@
                   type="checkbox"
                   checked={{or (is-in recurringDays obj.day) (eq (moment-format startDate 'd') obj.day)}}
                   onclick={{action 'toggleRecurringDay' obj.day}}
-                  disabled={{if (eq (moment-format startDate 'd') obj.day) true}}
+                  disabled={{eq (moment-format startDate 'd') obj.day}}
                 >
                 <label class="day-of-week">{{t obj.t}}</label>
               </div>

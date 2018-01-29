@@ -27,7 +27,7 @@
           <textarea
             value={{description}}
             oninput={{action (mut description) value="target.value"}}
-            disabled={{if isSaving true}}
+            disabled={{isSaving}}
             placeholder={{t 'general.reportDescriptionPlaceholder'}}
           ></textarea>
         </div>
