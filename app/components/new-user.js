@@ -58,4 +58,23 @@ const Validations = buildValidations({
 
 export default Component.extend(NewUser, Validations, {
   classNames: ['new-user'],
+
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('save').perform();
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.sendAction('close');
+    }
+  }
 });
