@@ -26,11 +26,12 @@
           <td colspan="3">{{school.title}}</td>
           <td>
             {{#if isManaging}}
-              {{one-way-checkbox
-                checked=(is-in (await readAndWriteSchoolIds) school.id)
-                update=(action 'toggleReadSchool' school)
-                disabled=(is-in (await writeSchoolIds) school.id)
-              }}
+              <input
+                type="checkbox"
+                checked={{is-in (await readAndWriteSchoolIds) school.id}}
+                onclick={{action 'toggleReadSchool' school}}
+                disabled={{if (is-in (await writeSchoolIds) school.id) true}}
+              >
             {{else}}
               {{fa-icon
                 (if (or (contains school.id (map-by 'id' (await readSchools))) (contains school.id (map-by 'id' (await writeSchools)))) 'check' 'ban')
@@ -40,10 +41,11 @@
           </td>
           <td>
             {{#if isManaging}}
-              {{one-way-checkbox
-                checked=(contains school.id (map-by 'id' (await writeSchools)))
-                update=(action 'toggleWriteSchool' school)
-              }}
+              <input
+                type="checkbox"
+                checked={{contains school.id (map-by 'id' (await writeSchools))}}
+                onclick={{action 'toggleWriteSchool' school}}
+              >
             {{else}}
               {{fa-icon
                 (if (contains school.id (map-by 'id' (await writeSchools))) 'check' 'ban')

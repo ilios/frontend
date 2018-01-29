@@ -71,11 +71,12 @@
           <div class="make-recurring-days">
             {{#each recurringDayOptions as |obj|}}
               <div>
-                {{one-way-checkbox
-                  checked=(or (is-in recurringDays obj.day) (eq (moment-format startDate 'd') obj.day))
-                  click=(action 'toggleRecurringDay' obj.day)
-                  disabled=(eq (moment-format startDate 'd') obj.day)
-                }}
+                <input
+                  type="checkbox"
+                  checked={{or (is-in recurringDays obj.day) (eq (moment-format startDate 'd') obj.day)}}
+                  onclick={{action 'toggleRecurringDay' obj.day}}
+                  disabled={{eq (moment-format startDate 'd') obj.day}}
+                >
                 <label class="day-of-week">{{t obj.t}}</label>
               </div>
             {{/each}}

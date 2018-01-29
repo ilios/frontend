@@ -5,17 +5,17 @@
         value=(if title title (t 'general.clickToEdit'))
         save=(perform changeTitle)
         close=(action 'revertTitleChanges')
-        as |isSaving save close|
+        saveOnEnter=true
+        closeOnEscape=true
+        as |isSaving|
       }}
-        {{one-way-input
-          value=title
-          update=(action (mut title))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'title')
-          keyPress=(action 'addErrorDisplayFor' 'title')
-        }}
+        <input
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+          onfocusout={{action 'addErrorDisplayFor' 'title'}}
+          onkeypress={{action 'addErrorDisplayFor' 'title'}}
+        >
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
         {{/if}}

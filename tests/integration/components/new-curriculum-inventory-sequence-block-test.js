@@ -273,7 +273,7 @@ test('save with defaults', function(assert) {
 
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   this.$('.title input').val(newTitle).change();
-  this.$('.description textarea').val(newDescription).change();
+  this.$('.description textarea').val(newDescription).trigger('input');
   let interactor = openDatepicker(this.$('.start-date input'));
   interactor.selectDate(newStartDate.toDate());
   interactor = openDatepicker(this.$('.end-date input'));
@@ -335,7 +335,7 @@ test('save with non-defaults', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   return wait().then(() => {
     this.$('.title input').val('foo bar').change();
-    this.$('.description textarea').val('lorem ipsum').change();
+    this.$('.description textarea').val('lorem ipsum').trigger('input');
     this.$('.duration input').val(duration).change();
     this.$('.minimum input').val(minimum).change();
     this.$('.maximum input').val(maximum).change();
@@ -393,7 +393,7 @@ test('save nested block in ordered sequence', function(assert) {
 
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`);
   this.$('.title input').val('Foo Bar').change();
-  this.$('.description textarea').val('Lorem Ipsum').change();
+  this.$('.description textarea').val('Lorem Ipsum').trigger('input');
   this.$('.order-in-sequence option:eq(1)').prop('selected', true).change();
   this.$('.duration input').val('19').change();
   this.$('button.done').click();
@@ -500,7 +500,7 @@ test('save fails when minimum is larger than maximum', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -542,7 +542,7 @@ test('save fails when minimum is less than zero', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -583,7 +583,7 @@ test('save fails when minimum is empty', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -624,7 +624,7 @@ test('save fails when maximum is empty', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -672,7 +672,7 @@ test('save with date range and a zero duration', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -718,7 +718,7 @@ test('save with non-zero duration and no date range', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     this.$('.duration input').val(duration).change();
     this.$('button.done').click();
   });
@@ -749,7 +749,7 @@ test('save fails if end-date is older than start-date', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -790,7 +790,7 @@ test('save fails on missing duration', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -831,7 +831,7 @@ test('save fails on invalid duration', function(assert) {
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     let startDateInput = this.$('.start-date input');
     let endDateInput = this.$('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -872,7 +872,7 @@ test('save fails if neither date range nor non-zero duration is provided', funct
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     this.$('.duration text').val('Lorem Ipsum').change();
     this.$('button.done').click();
     return wait().then(() => {
@@ -906,7 +906,7 @@ test('save fails if start-date is given but no end-date is provided', function(a
   this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
   return wait().then(() => {
     this.$('.title input').val('Foo Bar').change();
-    this.$('.description text').val('Lorem Ipsum').change();
+    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
     this.$('.duration text').val('Lorem Ipsum').change();
     let startDateInput = this.$('.start-date input');
     let interactor = openDatepicker(startDateInput);

@@ -42,7 +42,7 @@ test('can change title', function(assert) {
   assert.equal(this.$('.editinplace').text().trim(), 'lorem ipsum');
   this.$('.editable').click();
   this.$('.editinplace input').val('new title');
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.equal(this.$('.editinplace').text().trim(), 'new title');

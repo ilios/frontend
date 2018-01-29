@@ -6,17 +6,17 @@
         value=courseTitle
         save=(action 'changeTitle')
         close=(action 'revertTitleChanges')
-        as |isSaving save close|
+        saveOnEnter=true
+        closeOnEscape=true
+        as |isSaving|
       }}
-        {{one-way-input
-          value=courseTitle
-          update=(action (mut courseTitle))
-          onenter=save
-          onescape=close
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'courseTitle')
-          keyPress=(action 'addErrorDisplayFor' 'courseTitle')
-        }}
+        <input
+          value={{courseTitle}}
+          disabled={{isSaving}}
+          oninput={{action (mut courseTitle) value="target.value"}}
+          onfocusout={{action 'addErrorDisplayFor' 'courseTitle'}}
+          onkeypress={{action 'addErrorDisplayFor' 'courseTitle'}}
+        >
         {{#if (and (v-get this 'courseTitle' 'isInvalid') (is-in showErrorsFor 'courseTitle'))}}
           <span class="validation-error-message">{{v-get this 'courseTitle' 'message'}}</span>
         {{/if}}

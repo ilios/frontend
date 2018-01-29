@@ -65,10 +65,11 @@
               <td class='text-left' colspan=1>
                 {{#if user.enabled}}
                   {{#if isEditing}}
-                    {{one-way-checkbox
-                      checked=(contains user.content selectedUsers)
-                      update=(action 'toggleUserSelection' user.content)
-                    }}
+                    <input
+                      type="checkbox"
+                      checked={{contains user.content selectedUsers}}
+                      onclick={{action 'toggleUserSelection' user.content}}
+                    >
                   {{/if}}
                 {{else}}
                   {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
@@ -121,10 +122,11 @@
                 <td class='text-left' colspan=1>
                   {{#if user.enabled}}
                     {{#if isEditing}}
-                      {{one-way-checkbox
-                        checked=(contains user.content selectedUsers)
-                        update=(action 'toggleUserSelection' user.content)
-                      }}
+                      <input
+                        type="checkbox"
+                        checked={{contains user.content selectedUsers}}
+                        onclick={{action 'toggleUserSelection' user.content}}
+                      >
                     {{/if}}
                   {{else}}
                     {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}

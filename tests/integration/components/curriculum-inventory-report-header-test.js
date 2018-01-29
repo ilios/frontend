@@ -56,7 +56,7 @@ test('change name', function(assert) {
   assert.equal(this.$('.editinplace').text().trim(), report.name);
   this.$('.editable').click();
   this.$('.editinplace input').val(newName);
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.equal(this.$('.editinplace').text().trim(), newName);
@@ -78,7 +78,7 @@ test('change name fails on empty value', function(assert) {
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('');
-  this.$('.editinplace input').trigger('change');
+  this.$('.editinplace input').trigger('input');
   this.$('.editinplace .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');

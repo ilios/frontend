@@ -4,17 +4,17 @@
     value=programTitle
     save=(action 'changeTitle')
     close=(action 'revertTitleChanges')
-    as |isSaving save close|
+    saveOnEnter=true
+    closeOnEscape=true
+    as |isSaving|
   }}
-    {{one-way-input
-      value=programTitle
-      update=(action (mut programTitle))
-      onenter=save
-      onescape=close
-      disabled=isSaving
-      focusOut=(action 'addErrorDisplayFor' 'programTitle')
-      keyPress=(action 'addErrorDisplayFor' 'programTitle')
-    }}
+    <input
+      value={{programTitle}}
+      oninput={{action (mut programTitle) value="target.value"}}
+      disabled={{isSaving}}
+      onfocusout={{action 'addErrorDisplayFor' 'programTitle'}}
+      onkeypress={{action 'addErrorDisplayFor' 'programTitle'}}
+    >
     {{#if (and (v-get this 'programTitle' 'isInvalid') (is-in showErrorsFor 'programTitle'))}}
       <span class="validation-error-message">{{v-get this 'programTitle' 'message'}}</span>
     {{/if}}

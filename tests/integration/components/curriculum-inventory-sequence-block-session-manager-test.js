@@ -218,9 +218,9 @@ test('change count as one offering', function(assert) {
   this.set('setSortBy', function(){});
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
-  this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('change');
+  this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('click');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumOfferingsDuration);
-  this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', true).trigger('change');
+  this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', true).trigger('click');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
 });
 
@@ -259,11 +259,11 @@ test('change count as one offering for all sessions', function(assert) {
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
   assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumOfferingsDuration);
 
-  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('change');
+  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
   assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), maxSingleOfferingDuration);
 
-  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('change');
+  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumOfferingsDuration);
   assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumOfferingsDuration);
 });
@@ -303,7 +303,7 @@ test('save', function(assert) {
     assert.ok(sessions.includes(session2));
   });
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action 'save')}}`);
-  this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('change');
+  this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
   this.$('.detail-actions .bigadd').click();
 });
 

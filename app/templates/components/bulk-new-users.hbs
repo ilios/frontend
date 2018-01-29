@@ -68,11 +68,12 @@
           {{#each proposedUsers as |obj|}}
             <tr>
               <td>
-                {{one-way-checkbox
-                  checked=(and (v-get obj 'isValid') (contains obj selectedUsers))
-                  update=(action 'toggleUserSelection' obj)
-                  disabled=(v-get obj 'isInvalid')
-                }}
+                <input
+                  type="checkbox"
+                  checked={{and (v-get obj 'isValid') (contains obj selectedUsers)}}
+                  onclick={{action 'toggleUserSelection' obj}}
+                  disabled={{v-get obj 'isInvalid'}}
+                >
               </td>
               <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
               <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>

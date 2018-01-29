@@ -7,17 +7,17 @@
       value=blockTitle
       save=(action 'changeTitle')
       close=(action 'revertTitleChanges')
-      as |isSaving save close|
+      saveOnEnter=true
+      closeOnEscape=true
+      as |isSaving|
     }}
-      {{one-way-input
-        value=blockTitle
-        update=(action (mut blockTitle))
-        onenter=save
-        onescape=close
-        disabled=isSaving
-        focusOut=(action 'addErrorDisplayFor' 'blockTitle')
-        keyPress=(action 'addErrorDisplayFor' 'blockTitle')
-      }}
+      <input
+        value={{blockTitle}}
+        oninput={{action (mut blockTitle) value="target.value"}}
+        disabled={{isSaving}}
+        onfocusout={{action 'addErrorDisplayFor' 'blockTitle'}}
+        onkeypress={{action 'addErrorDisplayFor' 'blockTitle'}}
+      >
       {{#if (and (v-get this 'blockTitle' 'isInvalid') (is-in showErrorsFor 'blockTitle'))}}
         <span class="validation-error-message">{{v-get this 'blockTitle' 'message'}}</span>
       {{/if}}

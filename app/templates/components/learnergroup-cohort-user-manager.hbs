@@ -42,10 +42,11 @@
           <tr class="{{unless user.enabled 'disabled-user-account'}}">
             <td class='text-left' colspan=1>
               {{#if user.enabled}}
-                {{one-way-checkbox
-                  checked=(contains user selectedUsers)
-                  update=(action 'toggleUserSelection' user)
-                }}
+                <input
+                  type="checkbox"
+                  checked={{contains user selectedUsers}}
+                  onclick={{action 'toggleUserSelection' user}}
+                >
               {{else}}
                 {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
               {{/if}}

@@ -27,7 +27,7 @@ test('validation errors show up when saving', function(assert) {
   this.set('competency', competency);
   this.render(hbs`{{competency-title-editor competency=competency}}`);
   this.$('.content span:eq(0)').click();
-  this.$('input').val('').change();
+  this.$('input').val('').trigger('input');
   this.$('button.done').click();
   return wait().then(()=>{
     assert.equal(this.$('.validation-error-message').length, 1);

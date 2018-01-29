@@ -177,7 +177,7 @@ test('rollover report with new name, description and year', async function(asser
   this.$(input).val(newName);
   this.$(input).trigger('change');
   this.$(textarea).val(newDescription);
-  this.$(textarea).trigger('change');
+  this.$(textarea).trigger('input');
   this.$(lastOption).prop('selected', true);
   this.$(lastOption).trigger('change');
   await this.$('.done').click();

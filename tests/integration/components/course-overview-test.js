@@ -57,7 +57,7 @@ test('course external id validation fails if value is too short', function(asser
   this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-    this.$(input).val('a').change();
+    this.$(input).val('a').trigger('input');
     this.$(save).click();
     wait().then(() => {
       assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
@@ -87,7 +87,7 @@ test('course external id validation fails if value is too long', function(assert
   this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-    this.$(input).val('tooLong'.repeat(50)).change();
+    this.$(input).val('tooLong'.repeat(50)).trigger('input');
     this.$(save).click();
     wait().then(() => {
       assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
@@ -128,7 +128,7 @@ test('course external id validation passes on changed value within boundaries', 
   this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-    this.$(input).val('legit').change();
+    this.$(input).val('legit').trigger('input');
     this.$(save).click();
     wait().then(() => {
       assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');
@@ -169,7 +169,7 @@ test('course external id validation passes on empty value', function(assert) {
   this.$(button).click();
   return wait().then(()=>{
     assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-    this.$(input).val('').change();
+    this.$(input).val('').trigger('input');
     this.$(save).click();
     wait().then(() => {
       assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');

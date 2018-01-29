@@ -105,7 +105,7 @@ test('save', function(assert) {
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
   this.$('.name input').val('new report').change();
-  this.$('.description textarea').val('lorem ipsum').change();
+  this.$('.description textarea').val('lorem ipsum').trigger('input');
   this.$('.academic-year option:eq(0)').prop('selected', true).change();
   this.$('button.done').click();
 });

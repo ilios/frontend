@@ -556,7 +556,7 @@ test('change description', function(assert) {
     this.$('.description .editinplace .clickable').click();
     return wait().then(() => {
       const newDescription = 'Lorem Ipsum';
-      this.$('.description textarea').val(newDescription).trigger('change');
+      this.$('.description textarea').val(newDescription).trigger('input');
       this.$('.description .actions .done').click();
       return wait().then(() => {
         assert.equal(this.$('.description .editinplace').text().trim(), newDescription);

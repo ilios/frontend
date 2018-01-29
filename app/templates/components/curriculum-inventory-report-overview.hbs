@@ -92,10 +92,11 @@
           save=(action 'changeDescription')
           close=(action 'revertDescriptionChanges')
           clickPrompt=(if description description (t 'general.clickToEdit'))
+          closeOnEscape=true
           as |isSaving|
           }}
             <textarea
-              onchange={{action (mut description) value="target.value"}}
+              oninput={{action (mut description) value="target.value"}}
               value={{description}}
               disabled={{isSaving}}
               onkeypress={{action 'addErrorDisplayFor' 'description'}}

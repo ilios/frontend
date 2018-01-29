@@ -131,11 +131,19 @@
               <td>
                 <ul>
                   <li>
-                    {{one-way-checkbox checked=(is-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <input
+                      type="checkbox"
+                      checked={{is-in sessionsToOverride session}}
+                      onclick={{action 'toggleSession' session}}
+                    >
                     <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.publishAsIs'}}</span>
                   </li>
                   <li>
-                    {{one-way-checkbox checked=(not-in sessionsToOverride session) click=(action 'toggleSession' session)}}
+                    <input
+                      type="checkbox"
+                      checked={{not-in sessionsToOverride session}}
+                      onclick={{action 'toggleSession' session}}
+                    >
                     <span class='clickable' {{action 'toggleSession' session}}>{{t 'general.markAsScheduled'}}</span>
                   </li>
                 </ul>

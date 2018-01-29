@@ -125,7 +125,7 @@ test('Update location', function(assert) {
     assert.equal(this.$(defaultLocation).text().trim(), 'test location');
     this.$(editLocation).click();
     return wait().then(()=> {
-      this.$(input).val('new location name').change();
+      this.$(input).val('new location name').trigger('input');
       this.$(save).click();
       return wait().then(()=> {
         assert.equal(this.$(defaultLocation).text().trim(), 'new location name');
