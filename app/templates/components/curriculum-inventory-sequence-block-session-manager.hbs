@@ -10,12 +10,12 @@
       <thead>
         <tr>
           <th class='text-center' colspan=2>
-            {{input
-            type='checkbox'
-            checked=allSelected
-            change=(action 'toggleSelectAll')
-            indeterminate=someSelected
-            }}{{t 'general.countAsOneOffering'}}
+            <input
+            type="checkbox"
+            checked={{allSelected}}
+            onclick={{action 'toggleSelectAll' value="target.value"}}
+            indeterminate={{someSelected}}
+            >{{t 'general.countAsOneOffering'}}
           </th>
           {{#sortable-th
             colspan=3
