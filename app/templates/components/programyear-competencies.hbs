@@ -32,14 +32,9 @@
                 <input type='checkbox' checked>
                 {{domain.title}}
               </span>
-            {{else if (contains domain (await competenciesWithSelectedChildren))}}
-              <span class='clickable' onclick={{action 'addCompetencyToBuffer' domain}}>
-                <input type="checkbox" indeterminate={{true}}>
-                {{domain.title}}
-              </span>
             {{else}}
               <span class='clickable' onclick={{action 'addCompetencyToBuffer' domain}}>
-                <input type='checkbox'>
+                <input type="checkbox" indeterminate={{contains domain (await competenciesWithSelectedChildren)}}>
                 {{domain.title}}
               </span>
             {{/if}}
