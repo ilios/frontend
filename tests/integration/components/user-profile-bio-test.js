@@ -163,13 +163,13 @@ test('can edit user bio for ldap config', function(assert) {
     assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
     assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
     assert.ok(this.$(username).is(':disabled'), 'username is disabled');
-    this.$(firstName).val('new first').change();
-    this.$(middleName).val('new middle').change();
-    this.$(lastName).val('new last').change();
-    this.$(campusId).val('new campusId').change();
-    this.$(otherId).val('new otherId').change();
-    this.$(email).val('e@e.com').change();
-    this.$(phone).val('12345x').change();
+    this.$(firstName).val('new first').trigger('input');
+    this.$(middleName).val('new middle').trigger('input');
+    this.$(lastName).val('new last').trigger('input');
+    this.$(campusId).val('new campusId').trigger('input');
+    this.$(otherId).val('new otherId').trigger('input');
+    this.$(email).val('e@e.com').trigger('input');
+    this.$(phone).val('12345x').trigger('input');
 
     this.$('.bigadd').click();
 
@@ -225,14 +225,14 @@ test('can edit non-ldap without setting a password', function(assert) {
     assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
     assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
     assert.equal(this.$(activatePasswordField).text().trim(), 'Click here to reset password.');
-    this.$(firstName).val('new first').change();
-    this.$(middleName).val('new middle').change();
-    this.$(lastName).val('new last').change();
-    this.$(campusId).val('new campusId').change();
-    this.$(otherId).val('new otherId').change();
-    this.$(email).val('e@e.com').change();
-    this.$(phone).val('12345x').change();
-    this.$(username).val('new-test-user').change();
+    this.$(firstName).val('new first').trigger('input');
+    this.$(middleName).val('new middle').trigger('input');
+    this.$(lastName).val('new last').trigger('input');
+    this.$(campusId).val('new campusId').trigger('input');
+    this.$(otherId).val('new otherId').trigger('input');
+    this.$(email).val('e@e.com').trigger('input');
+    this.$(phone).val('12345x').trigger('input');
+    this.$(username).val('new-test-user').trigger('input');
     this.$('.bigadd').click();
 
     return wait();
@@ -292,15 +292,15 @@ test('can edit user bio for non-ldap config', function(assert) {
     return wait().then(()=>{
       assert.equal(this.$(inputs).length, 9, 'password input has been added');
       assert.equal(this.$(password).val().trim(), '', 'password is set');
-      this.$(firstName).val('new first').change();
-      this.$(middleName).val('new middle').change();
-      this.$(lastName).val('new last').change();
-      this.$(campusId).val('new campusId').change();
-      this.$(otherId).val('new otherId').change();
-      this.$(email).val('e@e.com').change();
-      this.$(phone).val('12345x').change();
-      this.$(username).val('new-test-user').change();
-      this.$(password).val('new-password').change();
+      this.$(firstName).val('new first').trigger('input');
+      this.$(middleName).val('new middle').trigger('input');
+      this.$(lastName).val('new last').trigger('input');
+      this.$(campusId).val('new campusId').trigger('input');
+      this.$(otherId).val('new otherId').trigger('input');
+      this.$(email).val('e@e.com').trigger('input');
+      this.$(phone).val('12345x').trigger('input');
+      this.$(username).val('new-test-user').trigger('input');
+      this.$(password).val('new-password').trigger('input');
       this.$('.bigadd').click();
 
       return wait();
@@ -334,7 +334,7 @@ test('closing password box clears input', function(assert) {
     return wait().then(()=>{
       assert.equal(this.$(inputs).length, 9, 'password input has been added');
       assert.equal(this.$(password).val().trim(), '', 'password is blank');
-      this.$(password).val('new-password').change();
+      this.$(password).val('new-password').trigger('input');
       return wait().then(()=>{
         this.$(cancelPasswordField).click();
         return wait().then(()=>{
@@ -364,7 +364,7 @@ test('password strength 0 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345').change();
+      this.$(passwordInput).val('12345').trigger('input');
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 0, 'meter is intially at 0');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Try Harder', 'try harder is displayed for level 0 password');
@@ -389,7 +389,7 @@ test('password strength 1 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab').change();
+      this.$(passwordInput).val('12345ab').trigger('input');
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 1, 'meter is intially at 1');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Bad', 'bad is displayed for level 1 password');
@@ -414,7 +414,7 @@ test('password strength 2 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab13&').change();
+      this.$(passwordInput).val('12345ab13&').trigger('input');
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 2, 'meter is intially at 2');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Weak', 'weak is displayed for level 2 password');
@@ -439,7 +439,7 @@ test('password strength 3 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab13&!!').change();
+      this.$(passwordInput).val('12345ab13&!!').trigger('input');
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 3, 'meter is intially at 3');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Good', 'good is displayed for level 3 password');
@@ -464,7 +464,7 @@ test('password strength 4 display', function(assert) {
   return wait().then(()=>{
     this.$(activatePasswordField).click();
     return wait().then(()=>{
-      this.$(passwordInput).val('12345ab14&HHtB').change();
+      this.$(passwordInput).val('12345ab14&HHtB').trigger('input');
       return wait().then(()=>{
         assert.equal(this.$(passwordStrengthMeter).val(), 4, 'meter is intially at 4');
         assert.equal(this.$(passwordStrengthText).text().trim(), 'Strong', 'strong is displayed for level 4 password');

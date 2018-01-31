@@ -290,6 +290,28 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     });
   }),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if (! ['text', 'password'].includes(target.type)) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('save').perform();
+      return;
+    }
+
+    if(27 === keyCode) {
+      if ('text' === target.type) {
+        this.get('cancel').perform();
+      } else {
+        this.send('cancelChangeUserPassword');
+      }
+    }
+  },
+
   actions: {
     cancelChangeUserPassword(){
       this.set('changeUserPassword', false);
