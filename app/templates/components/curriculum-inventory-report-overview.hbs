@@ -99,7 +99,7 @@
               oninput={{action (mut description) value="target.value"}}
               value={{description}}
               disabled={{isSaving}}
-              onkeypress={{action 'addErrorDisplayFor' 'description'}}
+              onkeyup={{action 'addErrorDisplayFor' 'description'}}
             >
               {{description}}
             </textarea>
