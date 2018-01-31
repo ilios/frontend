@@ -34,7 +34,7 @@
             value={{externalId}}
             oninput={{action (mut externalId) value="target.value"}}
             disabled={{isSaving}}
-            onfocusout={{action 'addErrorDisplayFor' 'externalId'}}
+            onkeyup={{action 'addErrorDisplayFor' 'externalId'}}
           >
           {{#if (and (v-get this 'externalId' 'isInvalid') (is-in showErrorsFor 'externalId'))}}
             <span class="validation-error-message">{{v-get this 'externalId' 'message'}}</span>
