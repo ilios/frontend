@@ -213,15 +213,15 @@ test('create new user', function(assert) {
   const password = '.item:eq(8) input';
 
   return wait().then(() => {
-    this.$(firstName).val('first').change();
-    this.$(middleName).val('middle').change();
-    this.$(lastName).val('last').change();
-    this.$(campusId).val('campusid').change();
-    this.$(otherId).val('otherid').change();
-    this.$(phone).val('phone').change();
-    this.$(email).val('test@test.com').change();
-    this.$(username).val('user123').change();
-    this.$(password).val('password123').change();
+    this.$(firstName).val('first').trigger('input');
+    this.$(middleName).val('middle').trigger('input');
+    this.$(lastName).val('last').trigger('input');
+    this.$(campusId).val('campusid').trigger('input');
+    this.$(otherId).val('otherid').trigger('input');
+    this.$(phone).val('phone').trigger('input');
+    this.$(email).val('test@test.com').trigger('input');
+    this.$(username).val('user123').trigger('input');
+    this.$(password).val('password123').trigger('input');
 
     this.$('.done').click();
     return wait();
