@@ -11,11 +11,11 @@
         as |isSaving|
       }}
         <input
+          type="text"
           value={{courseTitle}}
           disabled={{isSaving}}
           oninput={{action (mut courseTitle) value="target.value"}}
-          onfocusout={{action 'addErrorDisplayFor' 'courseTitle'}}
-          onkeypress={{action 'addErrorDisplayFor' 'courseTitle'}}
+          onkeyup={{action 'addErrorDisplayFor' 'courseTitle'}}
         >
         {{#if (and (v-get this 'courseTitle' 'isInvalid') (is-in showErrorsFor 'courseTitle'))}}
           <span class="validation-error-message">{{v-get this 'courseTitle' 'message'}}</span>

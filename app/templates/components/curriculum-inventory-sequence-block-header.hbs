@@ -12,6 +12,7 @@
       as |isSaving|
     }}
       <input
+        type="text"
         value={{blockTitle}}
         oninput={{action (mut blockTitle) value="target.value"}}
         disabled={{isSaving}}

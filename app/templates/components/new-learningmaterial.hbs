@@ -2,10 +2,11 @@
   <label>{{t 'general.displayName'}}:</label>
   <span>
     <input
+      type="text"
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{prepareSave.isRunning}}
-      onfocusout={{action 'addErrorDisplayFor' 'title'}}
+      onkeyup={{action 'addErrorDisplayFor' 'title'}}
     >
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
@@ -35,10 +36,11 @@
   <label>{{t 'general.contentAuthor'}}:</label>
   <span>
     <input
+      type="text"
       value={{originalAuthor}}
       oninput={{action (mut originalAuthor) value="target.value"}}
       disabled={{prepareSave.isRunning}}
-      onfocusout={{action 'addErrorDisplayFor' 'originalAuthor'}}
+      onkeyup={{action 'addErrorDisplayFor' 'originalAuthor'}}
     >
     {{#if (and (v-get this 'originalAuthor' 'isInvalid') (is-in showErrorsFor 'originalAuthor'))}}
       <span class="validation-error-message">{{v-get this 'originalAuthor' 'message'}}</span>
@@ -67,8 +69,7 @@
         value={{link}}
         oninput={{action (mut link) value="target.value"}}
         disabled={{prepareSave.isRunning}}
-        onfocusout={{action 'addErrorDisplayFor' 'link'}}
-        onkeydown={{action 'addErrorDisplayFor' 'link'}}
+        onkeyup={{action 'addErrorDisplayFor' 'link'}}
       >
       {{#if (and (v-get this 'link' 'isInvalid') (is-in showErrorsFor 'link'))}}
         <span class="validation-error-message">{{v-get this 'link' 'message'}}</span>

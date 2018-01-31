@@ -7,10 +7,11 @@
   as |isSaving|
 }}
   <input
+    type="text"
     value={{title}}
     oninput={{action (mut title) value="target.value"}}
     disabled={{isSaving}}
-    onfocusout={{action 'addErrorDisplayFor' 'title'}}
+    onkeyup={{action 'addErrorDisplayFor' 'title'}}
   >
 {{/editable-field}}
 {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}

@@ -46,7 +46,7 @@
       <input
         type="color"
         value={{calendarColor}}
-        onfocusout={{action 'addErrorDisplayFor' 'calendarColor'}}
+        onkeyup={{action 'addErrorDisplayFor' 'calendarColor'}}
         oninput={{action (mut calendarColor) value="target.value"}}
       >
       {{#if (and (v-get this 'calendarColor' 'isInvalid') (is-in showErrorsFor 'calendarColor'))}}
