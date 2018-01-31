@@ -31,6 +31,7 @@
           as |isSaving|
         }}
           <input
+            type="text"
             value={{externalId}}
             oninput={{action (mut externalId) value="target.value"}}
             disabled={{isSaving}}

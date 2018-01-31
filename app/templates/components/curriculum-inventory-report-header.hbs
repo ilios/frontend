@@ -12,11 +12,11 @@
     as |isSaving|
     }}
       <input
+        type="text"
         value={{reportName}}
         oninput={{action (mut reportName) value="target.value"}}
         disabled={{isSaving}}
-        onfocusout={{action 'addErrorDisplayFor' 'reportName'}}
-        onkeypress={{action 'addErrorDisplayFor' 'reportName'}}
+        onkeyup={{action 'addErrorDisplayFor' 'reportName'}}
       >
       {{#if (and (v-get this 'reportName' 'isInvalid') (is-in showErrorsFor 'reportName'))}}
         <span class="validation-error-message">{{v-get this 'reportName' 'message'}}</span>

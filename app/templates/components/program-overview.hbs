@@ -13,11 +13,11 @@
          as |isSaving|
       }}
         <input
+          type="text"
           value={{shortTitle}}
           oninput={{action (mut shortTitle) value="target.value"}}
           disabled={{isSaving}}
-          onfocusout={{action 'addErrorDisplayFor' 'shortTitle'}}
-          onkeypress={{action 'addErrorDisplayFor' 'shortTitle'}}
+          onkeyup={{action 'addErrorDisplayFor' 'shortTitle'}}
         >
         {{#if (and (v-get this 'shortTitle' 'isInvalid') (is-in showErrorsFor 'shortTitle'))}}
           <span class="validation-error-message">{{v-get this 'shortTitle' 'message'}}</span>

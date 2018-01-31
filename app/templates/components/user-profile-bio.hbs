@@ -156,7 +156,6 @@
           type="password"
           value={{password}}
           oninput={{action (mut password) value="target.value"}}
-          onkeypress={{action 'addErrorDisplayFor' 'password'}}
           onkeyup={{action 'addErrorDisplayFor' 'password'}}
         >
         {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}

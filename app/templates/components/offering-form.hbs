@@ -25,9 +25,9 @@
     <label>{{t 'general.duration'}}:</label> <br>
     <div class='hours'>
       <input
+        type="text"
         value={{durationHours}}
         oninput={{action (perform updateDurationHours) value="target.value"}}
-        onfocusout={{action 'addErrorDisplayFor' 'durationHours'}}
         onkeyup={{action 'addErrorDisplayFor' 'durationHours'}}
         class={{if (and (v-get this 'durationHours' 'isInvalid') (is-in showErrorsFor 'durationHours')) 'has-error'}}
       >
@@ -38,11 +38,11 @@
     </div>
     <div class='minutes'>
       <input
+        type="text"
         value={{durationMinutes}}
-          oninput={{action (perform updateDurationMinutes) value="target.value"}}
-          onfocusout={{action 'addErrorDisplayFor' 'durationMinutes'}}
-          onkeyup={{action 'addErrorDisplayFor' 'durationMinutes'}}
-          class={{if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes')) 'has-error'}}
+        oninput={{action (perform updateDurationMinutes) value="target.value"}}
+        onkeyup={{action 'addErrorDisplayFor' 'durationMinutes'}}
+        class={{if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes')) 'has-error'}}
       >
       {{#if (and (v-get this 'durationMinutes' 'isInvalid') (is-in showErrorsFor 'durationMinutes'))}}
         <span class="validation-error-message">{{v-get this 'durationMinutes' 'message'}}</span>
@@ -84,9 +84,9 @@
 
           <div class="make-recurring-input-container">
             <input
+              type="text"
               value={{numberOfWeeks}}
               oninput={{action (mut numberOfWeeks) value="target.value"}}
-              onfocusout={{action 'addErrorDisplayFor' 'numberOfWeeks'}}
               onkeyup={{action 'addErrorDisplayFor' 'numberOfWeeks'}}
               class={{concat 'make-recurring-input ' (if (and (v-get this 'numberOfWeeks' 'isInvalid') (is-in showErrorsFor 'numberOfWeeks')) 'has-error')}}
             >
@@ -109,10 +109,10 @@
         {{/unless}}
       </label>
       <input
+        type="text"
         value={{room}}
         oninput={{action (mut room) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'room'}}
-        onfocusout={{action 'addErrorDisplayFor' 'room'}}
       >
       {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
         <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>

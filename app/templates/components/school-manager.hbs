@@ -13,6 +13,7 @@
     as |isSaving|
   }}
     <input
+      type="text"
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{isSaving}}
