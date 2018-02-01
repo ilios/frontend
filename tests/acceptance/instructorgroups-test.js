@@ -146,7 +146,7 @@ test('add new instructorgroup', async function(assert) {
   assert.expect(1);
   await visit('/instructorgroups');
   let newTitle = 'new test tile';
-  await click('.actions button');
+  await click('.resultslist-actions button');
   await fillIn('.newinstructorgroup-title input', newTitle);
   await click('.newinstructorgroup .done');
   assert.equal(getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
@@ -162,7 +162,7 @@ test('cancel adding new instructorgroup', async function(assert) {
   await visit('/instructorgroups');
   assert.equal(1, find('.list tbody tr').length);
   assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
-  await click('.actions button');
+  await click('.resultslist-actions button');
   assert.equal(find('.newinstructorgroup').length, 1);
   await click('.newinstructorgroup .cancel');
   assert.equal(find('.newinstructorgroup').length, 0);
