@@ -1,10 +1,11 @@
 <div class="filters">
   <div class="filter user-search">
-    {{one-way-search
-      value=query
-      update=setQuery
-      placeholder=(t 'general.searchUsers')
-    }}
+    <input
+      type="search"
+      value={{query}}
+      oninput={{setQuery}}
+      placeholder={{t 'general.searchUsers'}}
+    >
   </div>
 </div>
 

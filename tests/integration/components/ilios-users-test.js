@@ -34,15 +34,15 @@ test('param passing', async function(assert) {
   this.register('service:store', storeMock);
 
   const query = '.user-search input';
-  const setQuery = (val) => {
-    assert.equal(val, 'test');
-  };
-  this.set('setQuery', setQuery);
-  this.render(hbs`{{ilios-users query='nothing' limit=25 offset=25 setQuery=(action setQuery)}}`);
+  const value = 'nothing';
+  this.set('value', value);
+  this.render(hbs`{{ilios-users query=value limit=25 offset=25 setQuery=(action (mut value) value="target.value")}}`);
   await wait();
 
   assert.equal(this.$(query).val().trim(), 'nothing');
-  this.$(query).val('test').change();
+  this.$(query).val('test').trigger('input');
+  assert.equal(this.get('value'), 'test');
+
 });
 
 test('add user form renders when configured to', async function(assert) {
