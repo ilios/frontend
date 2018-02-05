@@ -17,11 +17,9 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  tagName: 'section',
-  classNames: ['new-program', 'new-result', 'form-container', 'resultslist-new'],
   title: null,
   isSaving: false,
-
+  classNames: ['new-program'],
   actions: {
     save() {
       this.set('isSaving', true);

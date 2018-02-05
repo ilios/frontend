@@ -22,30 +22,29 @@
       >
     </div>
   </div>
-
-  <section class='programs'>
-    <div class="header">
-      <div class="title">
+  <section class='programs resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
         <h2>{{t 'general.programs'}}</h2>
       </div>
-      <div class='actions'>
+      <div class='resultslist-actions'>
         {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
       </div>
     </div>
+    <section class='resultslist-new'>
+      {{#liquid-if showNewProgramForm class="vertical"}}
+        {{new-program save=(action 'saveNewProgram') cancel=(action 'cancel')}}
+      {{/liquid-if}}
 
-    {{#if showNewProgramForm}}
-      {{new-program save=(action 'saveNewProgram') cancel=(action 'cancel')}}
-    {{/if}}
-
-    {{#if newProgram}}
-      <div class='saved-result'>
-        {{#link-to 'program' newProgram}}
-          {{fa-icon 'external-link-square'}} {{newProgram.title}}
-        {{/link-to}}
-        {{t 'general.savedSuccessfully'}}
-      </div>
-    {{/if}}
-
+      {{#if newProgram}}
+        <div class='saved-result'>
+          {{#link-to 'program' newProgram}}
+            {{fa-icon 'external-link-square'}} {{newProgram.title}}
+          {{/link-to}}
+          {{t 'general.savedSuccessfully'}}
+        </div>
+      {{/if}}
+    </section>
     {{#if deleted}}
       <div class='saved-program'>
         {{savedProgram.title}} {{t 'general.removedSuccessfully'}}
