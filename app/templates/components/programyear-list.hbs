@@ -1,14 +1,14 @@
-<section class='programyears'>
-  <div class="header">
-    <div class='title'>{{t 'general.programYears'}}</div>
-    <div class='actions'>
+<section class='programyears resultslist'>
+  <div class="resultslist-header">
+    <div class='resultslist-title'>{{t 'general.programYears'}}</div>
+    <div class='resultslist-actions'>
       {{expand-collapse-button value=editorOn action="toggleEditor"}}
     </div>
   </div>
-  <section class='new'>
-    {{#if editorOn}}
+  <section class='resultslist-new'>
+    {{#liquid-if editorOn class="vertical"}}
       {{new-programyear availableAcademicYears=availableAcademicYears save=(perform save) cancel=(action 'cancel')}}
-    {{/if}}
+    {{/liquid-if}}
 
     {{#if saved}}
       <div class='saved-result'>

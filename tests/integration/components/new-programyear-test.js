@@ -17,5 +17,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{new-programyear save=(action nothing) cancel=(action nothing)}}`);
 
-  assert.ok(this.$().text().search(/New Program Year/) === 0);
+  assert.ok(this.$('.new-result-title').text().search(/New Program Year/) === 0);
 });
