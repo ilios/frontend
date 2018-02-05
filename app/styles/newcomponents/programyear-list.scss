@@ -29,30 +29,3 @@
     @include main-list-box-table;
   }
 }
-
-.new-programyear {
-  @include fill-parent;
-  @include clearfix;
-
-  margin: 1em 5em;
-
-  .title {
-    @include fill-parent;
-    @include ilios-heading-h4;
-
-    margin: 1em 0;
-  }
-
-  .startyear-select,
-  .buttons {
-    float: left;
-  }
-
-  button {
-    margin-left: .5em;
-  }
-
-  label {
-    @include ilios-label;
-  }
-}

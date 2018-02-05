@@ -1,25 +1,28 @@
-<h4 class='title'>{{t 'general.newProgramYear'}}</h4>
+<section class='new-result form-container'>
+  <div class='new-result-title'>{{t 'general.newProgramYear'}}</div>
+  <div class='detail-content'>
+    <div class="form-col form-col-12 startyear-select">
+      <label class="form-label">{{t 'general.academicYear'}}:</label>
+      <div class="form-data form-data-select form-data-input-row">
+        <select onchange={{action (mut selectedYear) value="target.value"}}>
+          {{#each (sort-by 'value' availableAcademicYears) as |obj|}}
+            <option value={{obj.value}} selected={{eq obj.value selectedYear}}>
+              {{obj.label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
 
-<div class='form'>
-  <div class="startyear-select">
-    <label>{{t 'general.academicYear'}}:</label>
-    <select onchange={{action (mut selectedYear) value="target.value"}}>
-      {{#each (sort-by 'value' availableAcademicYears) as |obj|}}
-        <option value={{obj.value}} selected={{eq obj.value selectedYear}}>
-          {{obj.label}}
-        </option>
-      {{/each}}
-    </select>
+    <div class="form-col-6 form-data-submit">
+      <button class='done text' {{action (perform saveNewYear)}}>
+        {{#if saveNewYear.isRunning}}
+          {{fa-icon 'spinner' spin=true}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
+    </div>
   </div>
-
-  <div class='buttons'>
-    <button class='done text' {{action (perform saveNewYear)}}>
-      {{#if saveNewYear.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
-      {{else}}
-        {{t 'general.done'}}
-      {{/if}}
-    </button>
-    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
-  </div>
-</div>
+</section>
