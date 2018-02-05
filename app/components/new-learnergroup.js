@@ -5,8 +5,7 @@ export default Component.extend({
   multiModeSupported: false,
   fillModeSupported: false,
   singleMode: true,
-  tagName: 'section',
-  classNames: ['new-learnergroup', 'new-result', 'form-container'],
+  classNames: ['new-learnergroup'],
 
   actions: {
     generateNewLearnerGroups(num){
