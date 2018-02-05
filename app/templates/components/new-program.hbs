@@ -4,15 +4,14 @@
     <div class="form-col form-col-12">
       <label class="form-label">{{t 'general.title'}}:</label>
       <div class="form-data form-data-text form-data-input-row newinstructorgroup-title">
-        {{one-way-input
-          value=title
-          update=(action (mut title))
-          onenter=(action 'save')
-          onescape=(action cancel)
-          disabled=isSaving
-          focusOut=(action 'addErrorDisplayFor' 'title')
-          placeholder=(t 'general.programTitlePlaceholder')
-        }}
+        <input
+          type="text"
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action 'addErrorDisplayFor' 'title'}}
+          placeholder={{t 'general.programTitlePlaceholder'}}
+        >
         {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
           <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
         {{/if}}
