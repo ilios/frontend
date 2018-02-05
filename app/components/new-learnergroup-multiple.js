@@ -19,6 +19,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   numSubGroups: null,
   isSaving: false,
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('save');
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.sendAction('cancel');
+    }
+  },
+
   actions: {
     save() {
       this.send('addErrorDisplayFor', 'numSubGroups');

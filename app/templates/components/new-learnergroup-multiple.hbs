@@ -6,15 +6,14 @@
   <label class="form-col form-col-12">
     <div class="form-label">{{t 'general.numberOfGroups'}}:</div>
     <div class="form-data form-data-text form-input-row">
-      {{one-way-input
-        value=numSubGroups
-        update=(action (mut numSubGroups))
-        onenter=(action 'save')
-        onescape=(action cancel)
-        disabled=isSaving
-        focusOut=(action 'addErrorDisplayFor' 'numSubGroups')
-        placeholder=(t 'general.numberOfGroupsToGenerate')
-      }}
+      <input
+        type="text"
+        value={{numSubGroups}}
+        oninput={{action (mut numSubGroups) value="target.value"}}
+        disabled={{isSaving}}
+        onkeyup={{action 'addErrorDisplayFor' 'numSubGroups'}}
+        placeholder={{t 'general.numberOfGroupsToGenerate'}}
+      >
       {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
         <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>
       {{/if}}
