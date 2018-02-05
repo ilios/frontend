@@ -1,0 +1,19 @@
+<h3>{{t 'general.bulkAssign'}}</h3>
+{{#if validUsers}}
+  <p>{{t 'general.usersSelected' count=validUsers.length}} <br><button {{action (mut validUsers) null}}>{{t 'general.clearUploadedUsers'}}</button></p>
+
+  {{#if unmatchedGroups.length}}
+    {{t 'general.matchGroups'}}:
+    <ul data-test-match-groups-unmatched>
+      {{#each unmatchedGroups as |name|}}
+        {{learnergroup-bulk-group-matcher groupName=name setMatch=(action 'addMatch') unsetMatch=(action 'removeMatch')  createGroup=(action 'createGroup') matches=matchedGroups groups=(sort-by 'title' (await groups))}}
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if (and allUnmatchedGroupsMatched (gt validUsers.length 0))}}
+    {{learnergroup-bulk-finalize-users users=validUsers matchedGroups=matchedGroups learnerGroup=learnerGroup}}
+  {{/if}}
+{{else}}
+  {{learnergroup-upload-data learnerGroup=learnerGroup sendValidUsers=(action (mut validUsers))}}
+{{/if}}

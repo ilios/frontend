@@ -1,0 +1,14 @@
+<label for='sub-group-{{elementId}}'>
+  {{groupName}}
+  {{#if noGroupWithThisName}}
+    {{fa-icon 'plus' class='add clickable' click=(action createGroup groupName) title=(t 'general.createNewGroup' title=groupName)}}
+  {{/if}}
+  :
+</label>
+<select onchange={{action 'matchGroup' value="target.value"}} id='sub-group-{{elementId}}'>
+  {{#each groups as |learnerGroup|}}
+    <option value={{learnerGroup.id}} selected={{is-equal learnerGroup.id matchedGroupId}}>
+      {{learnerGroup.title}}
+    </option>
+  {{/each}}
+</select>

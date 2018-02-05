@@ -32,6 +32,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   location: null,
   manageInstructors: false,
   isEditing: false,
+  isBulkAssigning: false,
   isSaving: false,
   sortUsersBy: '',
   totalGroupsToSave: 0,

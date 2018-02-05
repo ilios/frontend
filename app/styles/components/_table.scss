@@ -9,6 +9,12 @@ table {
     background-color: $background-grey;
   }
 
+  caption {
+    border-bottom: 1px solid darken($base-border-color, 15);
+    font-weight: bold;
+    padding: ($base-line-height * .5em / 2) 0;
+    text-align: center;
+  }
 
   th {
     border-bottom: 1px solid darken($base-border-color, 15);

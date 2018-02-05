@@ -1,0 +1,71 @@
+{{#unless data}}
+  <label for='user-file'>
+    {{t 'general.uploadUsers'}}
+    (<a target='_blank' rel='noopener' download="SampleUserUpload.tsv" href='data:application/octet-stream;charset=utf-8;base64,{{sampleData}}'>{{t 'general.sampleFile'}}</a>)
+  </label>
+  <input id='user-file' type='file' onchange={{action 'updateSelectedFile' value="target.files"}} data-test-user-upload>
+{{else}}
+  <p><button {{action (mut data) null}}>{{t 'general.clearUploadedUsers'}}</button></p>
+{{/unless}}
+
+{{#if validUsers}}
+  <table class='valid-users' data-test-upload-data-valid-users>
+    <caption>{{t 'general.validUsers'}}</caption>
+    <thead>
+      <tr>
+        <th>{{t 'general.firstName'}}</th>
+        <th>{{t 'general.lastName'}}</th>
+        <th>{{t 'general.campusId'}}</th>
+        <th>{{t 'general.subgroupName'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each validUsers as |user|}}
+        <tr class={{unless user.isValid 'invalid'}}>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.campusId}}</td>
+          <td>{{user.subGroupName}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
+{{#if invalidUsers}}
+  <p class='error'>{{t 'general.canNotContinueWithInvalidRecords'}}</p>
+  <table class='invalid-users' data-test-upload-data-invalid-users>
+    <caption>{{t 'general.invalidUsers'}}</caption>
+    <thead>
+      <tr>
+        <th>{{t 'general.firstName'}}</th>
+        <th>{{t 'general.lastName'}}</th>
+        <th>{{t 'general.campusId'}}</th>
+        <th>{{t 'general.subgroupName'}}</th>
+        <th>{{t 'general.errors'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each invalidUsers as |user|}}
+        <tr class={{unless user.isValid 'invalid'}}>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.campusId}}</td>
+          <td>{{user.subGroupName}}</td>
+          <td>
+            {{#each user.errors as |error|}}
+              {{error}}
+            {{/each}}
+            {{#each user.warnings as |warning|}}
+              {{warning}}
+            {{/each}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
+{{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
+  <button {{action sendValidUsers validUsers}} data-test-upload-data-confirm>{{t 'general.continueWithTheseRecords'}}</button>
+{{/if}}

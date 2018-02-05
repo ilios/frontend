@@ -1,13 +1,16 @@
 {{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
 <section class='learnergroup-overview'>
   <div class='learnergroup-overview-actions'>
-    {{#if isEditing}}
-      <button {{action toggleEditMode}}>{{t 'general.close'}}</button>
+    {{#if (or isEditing isBulkAssigning)}}
+      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t 'general.close'}}</button>
     {{else}}
-      <button {{action toggleEditMode}}>{{t 'general.manage'}}</button>
+      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.bulkAssign'}}</button>
+      <button {{action setIsEditing true}}>{{t 'general.manage'}}</button>
     {{/if}}
   </div>
-  {{#if (is-fulfilled usersToPassToManager)}}
+  {{#if isBulkAssigning}}
+    {{learnergroup-bulk-assignment learnerGroup=learnerGroup done=(action setIsBulkAssigning false)}}
+  {{else if (is-fulfilled usersToPassToManager)}}
     <div class='learnergroup-overview-content'>
       {{learnergroup-user-manager
         learnerGroupId=learnerGroupId
