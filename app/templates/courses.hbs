@@ -35,24 +35,24 @@
       >
     </div>
   </div>
-  <section class='courses'>
-    <div class="header">
-      <div class="title">
+  <section class='courses resultslist'>
+    <div class="resultslist-header">
+      <div class="resultslist-title">
         <h2>{{t 'general.courses'}}</h2>
       </div>
-      <div class='actions'>
+      <div class='resultslist-actions'>
         {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
-    <section class='new'>
-      {{#if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
+    <section class='resultslist-new'>
+      {{#liquid-if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
         {{new-course
           currentSchool=selectedSchool
           currentYear=selectedYear
           save=(action 'saveNewCourse')
           cancel='toggleNewCourseForm'
         }}
-      {{/if}}
+      {{/liquid-if}}
 
       {{#if newCourse}}
         <div class='saved-result' data-test-new-course>
