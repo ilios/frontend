@@ -8,6 +8,10 @@
   <p><button {{action (mut data) null}}>{{t 'general.clearUploadedUsers'}}</button></p>
 {{/unless}}
 
+{{#if parseFile.isRunning}}
+  <div class='loading-file'>{{fa-icon 'spinner' spin=true}}</div>
+{{/if}}
+
 {{#if validUsers}}
   <table class='valid-users' data-test-upload-data-valid-users>
     <caption>{{t 'general.validUsers'}}</caption>
