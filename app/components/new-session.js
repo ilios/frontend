@@ -76,4 +76,22 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.sendAction('cancel');
     }
   }),
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('saveNewSession').perform();
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.sendAction('cancel');
+    }
+  },
 });

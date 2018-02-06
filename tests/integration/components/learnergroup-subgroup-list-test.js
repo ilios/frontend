@@ -139,7 +139,7 @@ test('add new group', function(assert) {
   let newTitle = 'new group';
   return wait().then(()=>{
     this.$('input').val(newTitle);
-    this.$('input').trigger('change');
+    this.$('input').trigger('input');
     this.$('.done').click();
     return wait().then(() => {
       assert.equal(this.$('.saved-result').text().trim().replace(/[\t\n\s]+/g, ''),
@@ -212,7 +212,7 @@ test('add multiple new groups', async function(assert) {
   await wait();
   this.$(multiGroupButton).click();
 
-  this.$(multiGroupCount).val(1).change();
+  this.$(multiGroupCount).val(1).trigger('input');
   this.$(done).click();
   await wait();
 
@@ -278,7 +278,7 @@ test('truncates multiple group with long name', async function(assert) {
   this.$(multiGroupButton).click();
 
 
-  this.$(multiGroupCount).val(1).change();
+  this.$(multiGroupCount).val(1).trigger('input');
   this.$(done).click();
   await wait();
 

@@ -192,6 +192,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if (! ['text', 'textarea'].includes(target.type)) {
+      return;
+    }
+
+    if (13 === keyCode && 'text' === target.type) {
+      this.send('save');
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.send('cancel');
+    }
+  },
+
   actions: {
     save() {
       this.set('isSaving', true);
