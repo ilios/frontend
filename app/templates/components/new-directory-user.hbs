@@ -36,13 +36,12 @@
       </div>
       <label class="form-label">{{t 'general.otherId'}}:</label>
       <div class="form-data">
-        {{one-way-input
-          value=otherId
-          update=(action (mut otherId))
-          onenter=(perform save)
-          onescape=(action close)
-          focusOut=(action 'addErrorDisplayFor' 'otherId')
-        }}
+        <input
+          type="text"
+          value={{otherId}}
+          oninput={{action (mut otherId) value="target.value"}}
+          onkeyup={{action 'addErrorDisplayFor' 'otherId'}}
+        >
         {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
           <span class="validation-error-message">{{v-get this 'otherId' 'message'}}</span>
         {{/if}}
@@ -50,13 +49,12 @@
       <label class="form-label">{{t 'general.username'}}:</label>
       <div class="form-data">
         {{#if (await allowCustomUserName)}}
-          {{one-way-input
-            value=username
-            update=(action (mut username))
-            onenter=(perform save)
-            onescape=(action close)
-            focusOut=(action 'addErrorDisplayFor' 'username')
-          }}
+          <input
+            type="text"
+            value={{username}}
+            oninput={{action (mut username) value="target.value"}}
+            onkeyup={{action 'addErrorDisplayFor' 'username'}}
+          >
           {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
             <span class="validation-error-message">{{v-get this 'username' 'message'}}</span>
           {{/if}}
@@ -68,13 +66,12 @@
       {{#if (await allowCustomUserName)}}
         <label class="form-label">{{t 'general.password'}}:</label>
         <div class="form-data">
-          {{one-way-input
-            value=password
-            update=(action (mut password))
-            onenter=(perform save)
-            onescape=(action close)
-            focusOut=(action 'addErrorDisplayFor' 'password')
-          }}
+          <input
+            type="text"
+            value={{password}}
+            oninput={{action (mut password) value="target.value"}}
+            onkeyup={{action 'addErrorDisplayFor' 'password'}}
+          >
           {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
             <span class="validation-error-message">{{v-get this 'password' 'message'}}</span>
           {{/if}}
@@ -126,12 +123,11 @@
 {{else}}
   <div class="new-result-title">{{t 'general.newUser'}}</div>
   <div class='new-directory-user-search-tools'>
-    {{one-way-input
-      value=searchTerms
-      update=setSearchTerms
-      onenter=(perform findUsersInDirectory searchTerms)
-      onescape=(action setSearchTerms '')
-    }}
+    <input
+      type="search"
+      value={{searchTerms}}
+      oninput={{setSearchTerms}}
+    >
     <button type='search' {{action (perform findUsersInDirectory) searchTerms}}>{{t 'general.searchDirectory'}}</button>
   </div>
   {{#if isSearching}}
