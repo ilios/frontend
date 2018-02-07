@@ -39,9 +39,9 @@ test('save', function(assert) {
   this.set('saveAction', saveAction);
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
   this.$('.minimum input').val(newMinimum);
-  this.$('.minimum input').trigger('change');
+  this.$('.minimum input').trigger('input');
   this.$('.maximum input').val(newMaximum);
-  this.$('.maximum input').trigger('change');
+  this.$('.maximum input').trigger('input');
   this.$('.buttons .done').click();
 });
 
@@ -71,9 +71,9 @@ test('save fails when minimum is larger than maximum', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.minimum input').val('100');
-  this.$('.minimum input').trigger('change');
+  this.$('.minimum input').trigger('input');
   this.$('.maximum input').val('50');
-  this.$('.maximum input').trigger('change');
+  this.$('.maximum input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -91,9 +91,9 @@ test('save fails when minimum is less than zero', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.minimum input').val('-1');
-  this.$('.minimum input').trigger('change');
+  this.$('.minimum input').trigger('input');
   this.$('.maximum input').val('50');
-  this.$('.maximum input').trigger('change');
+  this.$('.maximum input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -111,9 +111,9 @@ test('save fails when minimum is empty', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.minimum input').val('');
-  this.$('.minimum input').trigger('change');
+  this.$('.minimum input').trigger('input');
   this.$('.maximum input').val('50');
-  this.$('.maximum input').trigger('change');
+  this.$('.maximum input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -131,9 +131,9 @@ test('save fails when maximum is empty', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.minimum input').val('0');
-  this.$('.minimum input').trigger('change');
+  this.$('.minimum input').trigger('input');
   this.$('.maximum input').val('');
-  this.$('.maximum input').trigger('change');
+  this.$('.maximum input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');

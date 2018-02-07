@@ -63,7 +63,7 @@ test('save', function(assert) {
   interactor = openDatepicker(this.$('.end-date input'));
   interactor.selectDate(newEndDate.toDate());
   this.$('.duration input').val(newDuration);
-  this.$('.duration input').trigger('change');
+  this.$('.duration input').trigger('input');
   this.$('.buttons .done').click();
 });
 
@@ -86,7 +86,7 @@ test('save with date range and a zero duration', function(assert) {
   interactor = openDatepicker(this.$('.end-date input'));
   interactor.selectDate(newEndDate.toDate());
   this.$('.duration input').val(newDuration);
-  this.$('.duration input').trigger('change');
+  this.$('.duration input').trigger('input');
   this.$('.buttons .done').click();
 });
 
@@ -104,7 +104,7 @@ test('save with non-zero duration and no date range', function(assert) {
   this.set('saveAction', saveAction);
   this.render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`);
   this.$('.duration input').val(newDuration);
-  this.$('.duration input').trigger('change');
+  this.$('.duration input').trigger('input');
   this.$('.buttons .done').click();
 });
 
@@ -162,7 +162,7 @@ test('save fails on missing duration', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.duration input').val('');
-  this.$('.duration input').trigger('change');
+  this.$('.duration input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
@@ -184,7 +184,7 @@ test('save fails on invalid duration', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`);
   assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
   this.$('.duration input').val('-10');
-  this.$('.duration input').trigger('change');
+  this.$('.duration input').trigger('input');
   this.$('.buttons .done').click();
   return wait().then(() => {
     assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
