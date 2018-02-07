@@ -301,7 +301,7 @@ test('can search for user #2506', async function(assert) {
   await wait();
 
   assert.equal(this.$(userSearch).length, 1);
-  this.$(input).val('abcd').change();
+  this.$(input).val('abcd').trigger('input');
 
   return wait().then(()=>{
     this.$(firstResult).click();

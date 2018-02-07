@@ -21,7 +21,7 @@ test('clicking search calls search', function(assert) {
   this.render(hbs`{{search-box search=(action 'search')}}`);
   const searchBoxIcon = '.search-icon';
   this.$(searchBoxIcon).click();
-  
+
   return wait();
 });
 
@@ -32,8 +32,8 @@ test('typing calls search', function(assert) {
   this.render(hbs`{{search-box search=(action 'search')}}`);
   run(() => {
     this.$('input').val('typed it');
-    this.$('input').trigger('change');
-    this.$('input').trigger('keypress', {which: 50});
+    this.$('input').trigger('input');
+    this.$('input').trigger('keyup', {which: 50});
   });
   //wait for debounce timer in component
   return wait();
