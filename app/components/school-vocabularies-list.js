@@ -64,6 +64,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }).drop(),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('saveNew').perform(this.get('newVocabularyTitle'));
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.send('toggleShowNewVocabularyForm');
+    }
+  },
+
   actions: {
     toggleShowNewVocabularyForm(){
       this.set('newVocabularyTitle', null);

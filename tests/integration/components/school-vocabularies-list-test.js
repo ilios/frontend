@@ -92,7 +92,7 @@ test('can create new vocabulary', function(assert) {
   this.set('school', school);
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   this.$('.expand-button').click();
-  this.$('input').val('new vocab').trigger('change');
+  this.$('input').val('new vocab').trigger('input');
   return wait().then(() => {
     this.$('.done').click();
     return wait().then(() => {
