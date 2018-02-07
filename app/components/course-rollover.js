@@ -56,6 +56,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   title: null,
   isSaving: false,
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('save').perform();
+    }
+  },
+
   save: task(function * (){
     this.set('isSaving', true);
     yield timeout(10);

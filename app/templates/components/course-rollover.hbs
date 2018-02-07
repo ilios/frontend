@@ -8,15 +8,14 @@
 
   <div class='item title'>
     <label>{{t 'general.title'}}:</label>
-    {{one-way-input
-      value=title
-      update=(pipe (action 'changeTitle') (action 'addErrorDisplayFor' 'title'))
-      onenter=(perform save)
-      disabled=isSaving
-      focusOut=(action 'addErrorDisplayFor' 'title')
-      keyDown=(action 'addErrorDisplayFor' 'title')
-      placeholder=(t 'general.courseTitlePlaceholder')
-    }}
+    <input
+      type="text"
+      value={{title}}
+      oninput={{pipe (action 'changeTitle' value="target.value") (action 'addErrorDisplayFor' 'title')}}
+      disabled={{isSaving}}
+      onkeyup={{action 'addErrorDisplayFor' 'title'}}
+      placeholder={{t 'general.courseTitlePlaceholder'}}
+    >
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
