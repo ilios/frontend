@@ -2,13 +2,12 @@
   <div class='item'>
     <label>{{t 'general.title'}}:</label>
     {{#if canEditTitle}}
-      {{one-way-input
-        value=title
-        update=(action (mut title))
-        onenter=(perform saveSessionType)
-        onescape=(action close)
-        focusOut=(action 'addErrorDisplayFor' 'title')
-      }}
+      <input
+        type="text"
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+        onkeyup={{action 'addErrorDisplayFor' 'title'}}
+      >
       {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
         <span class="message error">{{v-get this 'title' 'message'}}</span>
       {{/if}}
