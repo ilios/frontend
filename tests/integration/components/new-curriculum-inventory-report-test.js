@@ -104,7 +104,7 @@ test('save', function(assert) {
   });
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
-  this.$('.name input').val('new report').change();
+  this.$('.name input').val('new report').trigger('input');
   this.$('.description textarea').val('lorem ipsum').trigger('input');
   this.$('.academic-year option:eq(0)').prop('selected', true).change();
   this.$('button.done').click();
@@ -131,7 +131,7 @@ test('pressing enter in name input field fires save action', function(assert){
   });
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
-  this.$('.name input').val('new report').change();
+  this.$('.name input').val('new report').trigger('input');
   // https://github.com/DockYard/ember-one-way-controls/blob/master/tests/integration/components/one-way-input-test.js
   this.$('.name input').trigger($.Event('keyup', { keyCode: 13 }));
 });
@@ -155,7 +155,7 @@ test('validation errors show up when saving with a too long report name', functi
   assert.expect(1);
   this.set('program', EmberObject.create());
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
-  this.$('.name input').val('0123456789'.repeat(7)).change();
+  this.$('.name input').val('0123456789'.repeat(7)).trigger('input');
   this.$('button.done').click();
   assert.equal(this.$('.validation-error-message').length, 1);
 });
