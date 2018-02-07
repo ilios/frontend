@@ -15,6 +15,24 @@ export default Component.extend({
     const value = this.get('value');
     yield this.get('search')(value);
   }).restartable(),
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('search' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('searchTask').perform();
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.sendAction('clear');
+    }
+  },
   actions: {
     update(value){
       const liveSearch = this.get('liveSearch');
