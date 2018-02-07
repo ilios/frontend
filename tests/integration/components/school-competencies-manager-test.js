@@ -126,7 +126,7 @@ test('add fires add', function(assert) {
   const domain1Add = `${domains} button:eq(0)`;
 
 
-  this.$(domain1Input).val('new c').change();
+  this.$(domain1Input).val('new c').trigger('input');
   this.$(domain1Add).click();
 
   return wait();
