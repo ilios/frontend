@@ -181,17 +181,17 @@
                 value=hours
                 save=(action 'changeIlmHours')
                 close=(action 'revertIlmHoursChanges')
-                as |isSaving save close|
+                saveOnEnter=true
+                closeOnEscape=true
+                as |isSaving|
               }}
-                {{one-way-input
-                  value=hours
-                  update=(action (mut hours))
-                  onenter=save
-                  onescape=close
-                  disabled=isSaving
-                  focusOut=(action 'addErrorDisplayFor' 'hours')
-                  keyDown=(action 'addErrorDisplayFor' 'hours')
-                }}
+                <input
+                  type="text"
+                  value={{hours}}
+                  oninput={{action (mut hours) value="target.value"}}
+                  disabled={{isSaving}}
+                  onkeyup={{action 'addErrorDisplayFor' 'hours'}}
+                >
                 {{#if (and (v-get this 'hours' 'isInvalid') (is-in showErrorsFor 'hours'))}}
                   <span class="validation-error-message">{{v-get this 'hours' 'message'}}</span>
                 {{/if}}
