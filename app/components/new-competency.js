@@ -27,5 +27,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     yield this.get('add')(title);
     this.send('clearErrorDisplay');
     this.set('title', null);
-  })
+  }),
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('save').perform();
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.send('removeErrorDisplayFor', 'title');
+      this.set('title', '');
+    }
+  }
 });

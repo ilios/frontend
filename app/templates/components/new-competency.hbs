@@ -1,12 +1,10 @@
-{{one-way-input
-  value=title
-  update=(action (mut title))
-  onenter=(perform save)
-  onescape=(pipe (action 'removeErrorDisplayFor' 'title') (action (mut title) ''))
-  focusOut=(action 'addErrorDisplayFor' 'title')
-  keyDown=(action 'addErrorDisplayFor' 'title')
-  placeholder=(t 'general.title')
-}}
+<input
+  type="text"
+  value={{title}}
+  oninput={{action (mut title) value="target.value"}}
+  onkeyup={{action 'addErrorDisplayFor' 'title'}}
+  placeholder={{t 'general.title'}}
+>
 <button class='save text' {{action (perform save)}}>
   {{#if save.isRunning}}
     {{fa-icon 'spinner' spin=true}}

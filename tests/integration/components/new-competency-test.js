@@ -19,7 +19,7 @@ test('save', function(assert) {
     assert.equal(value, 'new co');
   });
   this.render(hbs`{{new-competency add=(action add)}}`);
-  this.$('input').val('new co').change();
+  this.$('input').val('new co').trigger('input');
   this.$('button').click();
 
   return wait();
