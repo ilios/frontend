@@ -2,15 +2,14 @@
 <div class="new-myreport-content" data-test-new-report>
   <label>{{t 'general.reportTitle'}}:</label>
   <div>
-    {{one-way-input
-      value=title
-      update=(action (mut title))
-      onescape=(action close)
-      disabled=save.isRunning
-      focusOut=(action 'addErrorDisplayFor' 'title')
-      keyDown=(action 'addErrorDisplayFor' 'title')
+    <input
+      type="text"
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      disabled={{save.isRunning}}
+      onkeyup={{action 'addErrorDisplayFor' 'title'}}
       data-test-report-title=true
-    }}
+    >
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
