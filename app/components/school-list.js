@@ -43,6 +43,24 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   sortSchoolsBy: null,
   sortedSchools: sort('schools', 'sortSchoolsBy'),
   showNewSchoolForm: false,
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('createNewSchool');
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.send('hideNewSchoolForm');
+    }
+  },
   actions: {
     toggleNewSchoolForm(){
       this.set('showNewSchoolForm', !this.get('showNewSchoolForm'));

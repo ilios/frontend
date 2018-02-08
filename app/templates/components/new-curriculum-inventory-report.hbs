@@ -5,16 +5,14 @@
       <div class="form-col form-col-12 name">
         <label class="form-label">{{t 'general.name'}}:</label>
         <div class="form-data form-data-text form-input-row">
-          {{one-way-input
-            value=name
-            update=(action (mut name))
-            onenter=(action 'save')
-            onescape=(action 'cancel')
-            disabled=isSaving
-            focusOut=(action 'addErrorDisplayFor' 'name')
-            keyDown=(action 'addErrorDisplayFor' 'name')
-            placeholder=(t 'general.reportNamePlaceholder')
-          }}
+          <input
+            type="text"
+            value={{name}}
+            oninput={{action (mut name) value="target.value"}}
+            disabled={{isSaving}}
+            onkeyup={{action 'addErrorDisplayFor' 'name'}}
+            placeholder={{t 'general.reportNamePlaceholder'}}
+          >
           {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
             <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
           {{/if}}

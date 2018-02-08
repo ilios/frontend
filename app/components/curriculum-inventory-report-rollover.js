@@ -93,6 +93,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return this.get('visit')(newReport);
   }).drop(),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.get('save').perform();
+    }
+  },
+
   actions: {
     changeName(newName){
       this.set('name', newName);

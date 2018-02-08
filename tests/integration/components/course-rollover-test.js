@@ -167,7 +167,7 @@ test('rollover course with new title', async function(assert) {
   const title = '.title';
   const input = `${title} input`;
   this.$(input).val(newTitle);
-  this.$(input).trigger('change');
+  this.$(input).trigger('input');
   await wait();
   await this.$('.done').click();
   await wait();
@@ -545,7 +545,7 @@ test('errors show up', function(assert) {
   const title = '.title';
   const input = `${title} input`;
   this.$(input).val('');
-  this.$(input).trigger('change');
+  this.$(input).trigger('input');
   assert.ok(this.$(title).text().search(/blank/) > -1);
 
   return wait();
@@ -579,7 +579,7 @@ test('changing the title looks for new matching courses', function(assert) {
 
   run.later(()=>{
     this.$(title).val('to be rolled again');
-    this.$(title).trigger('change');
+    this.$(title).trigger('input');
   }, 500);
 
   return wait();

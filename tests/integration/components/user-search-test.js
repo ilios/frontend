@@ -20,7 +20,7 @@ test('it renders', function(assert) {
 test('less than 3 charecters triggers warning', function(assert) {
   this.render(hbs`{{user-search}}`);
 
-  this.$('input').val('ab').trigger('change');
+  this.$('input').val('ab').trigger('input');
   return wait().then(()=>{
     assert.equal(this.$('ul').text().trim(), 'keep typing...');
   });
@@ -39,7 +39,7 @@ test('input triggers search', function(assert) {
   this.register('service:store', storeMock);
   this.render(hbs`{{user-search}}`);
 
-  this.$('input').val('search words').trigger('change');
+  this.$('input').val('search words').trigger('input');
 
   return wait().then(()=>{
     assert.equal(this.$('li:eq(0)').text().trim(), '1 Results');
@@ -60,7 +60,7 @@ test('no results displayes messages', function(assert) {
   this.register('service:store', storeMock);
   this.render(hbs`{{user-search}}`);
 
-  this.$('input').val('search words').trigger('change');
+  this.$('input').val('search words').trigger('input');
 
 
   return wait().then(()=>{
@@ -84,7 +84,7 @@ test('search for groups', function(assert) {
   this.set('availableInstructorGroups', [group1, group2]);
   this.render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
 
-  this.$('input').val('test').trigger('change');
+  this.$('input').val('test').trigger('input');
 
   return wait().then(()=>{
     assert.equal(this.$('li:eq(0)').text().trim(), '2 Results');
@@ -110,7 +110,7 @@ test('click user fires add user', function(assert) {
   });
   this.render(hbs`{{user-search addUser=(action 'action')}}`);
 
-  this.$('input').val('test').trigger('change');
+  this.$('input').val('test').trigger('input');
 
   return wait().then(()=>{
     assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
@@ -135,7 +135,7 @@ test('click group fires add group', function(assert) {
   this.set('availableInstructorGroups', [group1]);
   this.render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups addInstructorGroup=(action 'action')}}`);
 
-  this.$('input').val('test').trigger('change');
+  this.$('input').val('test').trigger('input');
 
   return wait().then(()=>{
     assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
@@ -169,7 +169,7 @@ test('sorting is natural', async function(assert) {
 
   this.render(hbs`{{user-search}}`);
 
-  this.$('input').val('person').trigger('change');
+  this.$('input').val('person').trigger('input');
 
   await wait();
   const items = '.results li';

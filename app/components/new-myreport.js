@@ -331,6 +331,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }).restartable(),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.sendAction('close');
+    }
+  },
+
   actions: {
     changeSubject(subject){
       this.set('currentSubject', subject);

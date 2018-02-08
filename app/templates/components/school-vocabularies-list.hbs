@@ -10,13 +10,12 @@
         <div class="form-col-6 multi-row">
           <label class="form-label">{{t 'general.title'}}:</label>
           <div class="form-data">
-            {{one-way-input
-              value=newVocabularyTitle
-              update=(action (mut newVocabularyTitle))
-              onenter=(action (perform saveNew) newVocabularyTitle)
-              onescape=(action 'toggleShowNewVocabularyForm')
-              focusOut=(action 'addErrorDisplayFor' 'newVocabularyTitle')
-            }}
+            <input
+              type="text"
+              value={{newVocabularyTitle}}
+              oninput={{action (mut newVocabularyTitle) value="target.value"}}
+              onkeyup={{action 'addErrorDisplayFor' 'newVocabularyTitle'}}
+            >
             {{#if (and (v-get this 'newVocabularyTitle' 'isInvalid') (is-in showErrorsFor 'newVocabularyTitle'))}}
               <span class="validation-error-message">{{v-get this 'newVocabularyTitle' 'message'}}</span>
             {{/if}}

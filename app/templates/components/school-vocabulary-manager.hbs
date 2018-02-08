@@ -31,13 +31,12 @@
 
 <div class='selectable-list'>
   <div class='selectable-list-form'>
-    {{one-way-input
-      value=newTermTitle
-      update=(action (mut newTermTitle))
-      onenter=(action 'createTerm')
-      focusOut=(action 'addErrorDisplayFor' 'newTermTitle')
-      keyPress=(action 'addErrorDisplayFor' 'newTermTitle')
-    }}
+    <input
+      type="text"
+      value={{newTermTitle}}
+      oninput={{action (mut newTermTitle) value="target.value"}}
+      onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
+    >
     <button class='save text' {{action 'createTerm'}}>
       {{#if isSavingNewTerm}}
         {{fa-icon 'spinner' spin=true}}

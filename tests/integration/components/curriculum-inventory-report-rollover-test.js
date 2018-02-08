@@ -175,7 +175,7 @@ test('rollover report with new name, description and year', async function(asser
   const textarea = `.description textarea`;
   const lastOption = `.years option:last`;
   this.$(input).val(newName);
-  this.$(input).trigger('change');
+  this.$(input).trigger('input');
   this.$(textarea).val(newDescription);
   this.$(textarea).trigger('input');
   this.$(lastOption).prop('selected', true);
@@ -221,7 +221,7 @@ test('input validation fails on blank reort name', function(assert) {
   const name = '.name';
   const input = `${name} input`;
   this.$(input).val('');
-  this.$(input).trigger('change');
+  this.$(input).trigger('input');
   assert.ok(this.$(name).text().search(/blank/) > -1);
 
   return wait();

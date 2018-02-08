@@ -65,6 +65,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
     });
   }),
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('createTerm');
+    }
+  },
   actions: {
     changeVocabularyTitle(){
       const vocabulary = this.get('vocabulary');

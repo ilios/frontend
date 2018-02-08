@@ -92,6 +92,34 @@ export default Component.extend(NewUser, Validations, {
     }
   }).restartable(),
 
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' === target.type) {
+      if (13 === keyCode) {
+        this.get('save').perform();
+        return;
+      }
+
+      if(27 === keyCode) {
+        this.sendAction('close');
+      }
+      return;
+    }
+
+    if ('search' === target.type) {
+      if (13 === keyCode) {
+        this.get('findUsersInDirectory').perform(this.get('searchTerms'));
+        return;
+      }
+
+      if (27 === keyCode) {
+        this.sendAction('searchTerms', '');
+      }
+    }
+  },
+
   actions: {
     pickUser(user){
       this.set('selectedUser', true);
