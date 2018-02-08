@@ -126,7 +126,7 @@
     <input
       type="search"
       value={{searchTerms}}
-      oninput={{setSearchTerms}}
+      oninput={{action setSearchTerms value="target.value"}}
     >
     <button type='search' {{action (perform findUsersInDirectory) searchTerms}}>{{t 'general.searchDirectory'}}</button>
   </div>

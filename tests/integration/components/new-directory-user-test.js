@@ -67,7 +67,7 @@ test('input into the search field fires action', function(assert) {
   this.set('setSearchTerms', (val)=>{
     assert.equal(val, searchTerm, 'changes to search get sent as action');
   });
-  this.render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action setSearchTerms value="target.value") searchTerms=startingSearchTerms}}`);
+  this.render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action setSearchTerms) searchTerms=startingSearchTerms}}`);
   const searchBox = '.new-directory-user-search-tools';
   const searchInput = `${searchBox} input`;
   this.$(searchInput).val(searchTerm).trigger('input');
