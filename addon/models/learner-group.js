@@ -250,6 +250,27 @@ export default Model.extend({
   }),
 
   /**
+   * Returns the number of users in this group
+   * @property usersCount
+   * @type {Ember.computed}
+   * @public
+   */
+  usersCount: computed('users.[]', function() {
+    const userIds = this.hasMany('users').ids();
+    return userIds.length;
+  }),
+  /**
+   * Returns the number of children in this group
+   * @property childrenCount
+   * @type {Ember.computed}
+   * @public
+   */
+  childrenCount: computed('children.[]', function() {
+    const childrenIds = this.hasMany('children').ids();
+    return childrenIds.length;
+  }),
+
+  /**
    * Takes a user out of  a group and then traverses child groups recursively
    * to remove the user from them as well.  Will only modify groups where the
    * user currently exists.
