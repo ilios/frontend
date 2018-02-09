@@ -3710,9 +3710,9 @@ ember-font-awesome@^3.0.5:
     ember-cli-htmlbars "^2.0.2"
     font-awesome "^4.7.0"
 
-ember-froala-editor@2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.7.1.tgz#38c7f21865ce1e0c297a9f55c78d56bca4fbcd36"
+ember-froala-editor@2.7.5:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.7.5.tgz#7430bd157ae65cdbfd4120ebee9dba0accef9b32"
   dependencies:
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^2.0.0"
