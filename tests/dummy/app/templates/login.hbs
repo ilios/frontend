@@ -1,8 +1,9 @@
 <label>Token: </label>
-{{one-way-input
-  value=jwt
-  update=(action (mut jwt))
-}}
+<input
+  type="text"
+  value={{jwt}}
+  oninput={{action (mut jwt) value="target.value"}}
+>
 <button {{action 'login'}}>Login</button>
 
 <p>{{error}}</p>
