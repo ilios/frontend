@@ -16,10 +16,10 @@ export default create({
     validUploadedUsers: collection({
       itemScope: '[data-test-upload-data-valid-users] tbody tr',
       item: {
-        firstName: text('td', { at: 0 }),
-        lastName: text('td', { at: 1 }),
-        campusId: text('td', { at: 2 }),
-        smallGroupName: text('td', { at: 3 }),
+        firstName: text('td', { at: 1 }),
+        lastName: text('td', { at: 2 }),
+        campusId: text('td', { at: 3 }),
+        smallGroupName: text('td', { at: 4 }),
       }
     }),
     invalidUploadedUsers: collection({
@@ -36,11 +36,11 @@ export default create({
     confirmUploadedUsers: clickable('[data-test-upload-data-confirm]'),
 
     groupsToMatch: collection({
-      itemScope: '[data-test-match-groups-unmatched] li',
+      itemScope: '[data-test-match-groups-unmatched] tbody tr',
       item: {
-        name: text('label'),
-        chooseGroup: selectable('select'),
-        createNewGroup: clickable('i'),
+        name: text('[data-test-group-name]', {scope: 'td:eq(0)'}),
+        createNewGroup: clickable('[data-test-create-group]', {scope: 'td:eq(0)'}),
+        chooseGroup: selectable('td:eq(1) select'),
       }
     }),
 

@@ -14,4 +14,33 @@
       }
     }
   }
+
+  .group-matcher {
+    border: 1px solid $dark-grey;
+
+    th:nth-child(1),
+    td:nth-child(1) {
+      width: 60%;
+
+      span {
+        padding-right: 2em;
+      }
+    }
+
+    .learnergroup-bulk-group-matcher {
+      border: 1px solid $dark-grey;
+
+      select {
+        width: 100%;
+      }
+
+      &.matched {
+        background-color: lighten($ilios-green, 15%);
+      }
+
+      &.not-matched {
+        background-color: lighten($ilios-yellow, 15%);
+      }
+    }
+  }
 }

@@ -3,10 +3,12 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   'data-test-learnergroup-bulk-group-matcher': true,
-  tagName: 'li',
+  tagName: 'tr',
   matches: null,
   groups: null,
   groupName: null,
+  classNames: ['learnergroup-bulk-group-matcher'],
+  classNameBindings: ['matchedGroupId:matched:not-matched'],
   matchedGroupId: computed('matches.[]', 'groupName', function () {
     const matches = this.get('matches');
     const groupName = this.get('groupName');

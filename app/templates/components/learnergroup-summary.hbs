@@ -4,7 +4,7 @@
     {{#if (or isEditing isBulkAssigning)}}
       <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t 'general.close'}}</button>
     {{else}}
-      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.bulkAssign'}}</button>
+      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.uploadGroupAssignments'}}</button>
       <button {{action setIsEditing true}}>{{t 'general.manage'}}</button>
     {{/if}}
   </div>

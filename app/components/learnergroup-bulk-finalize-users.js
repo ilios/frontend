@@ -1,9 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { filter, map } from 'rsvp';
+import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
 export default Component.extend({
+  flashMessages: service(),
   users: null,
   matchedGroups: null,
   learnerGroup: null,
@@ -37,7 +40,10 @@ export default Component.extend({
   }),
 
   save: task(function* () {
+    yield timeout(10);
     const finalData = this.get('finalData');
+    const done = this.get('done');
+    const flashMessages = this.get('flashMessages');
     const treeGroups = yield map(finalData, async ({ learnerGroup, user }) => {
       return learnerGroup.addUserToGroupAndAllParents(user);
     });
@@ -46,6 +52,9 @@ export default Component.extend({
       return flattened.pushObjects(arr);
     }, []);
 
-    yield flat.uniq().invoke('save');
+    const groupsToSave = flat.uniq();
+    yield all(groupsToSave.invoke('save'));
+    flashMessages.success('general.savedSuccessfully');
+    done();
   }),
 });

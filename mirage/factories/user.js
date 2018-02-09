@@ -7,4 +7,5 @@ export default Factory.extend({
   email: 'user@example.edu',
   middleName: 'M,',
   enabled: true,
+  campusId: i => `${i}abc`,
 });

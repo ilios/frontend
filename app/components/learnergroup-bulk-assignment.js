@@ -85,5 +85,9 @@ export default Component.extend({
 
       this.set('matchedGroups', matchedGroups);
     },
+    clear() {
+      this.set('validUsers', null);
+      this.set('matchedGroups', null);
+    }
   },
 });

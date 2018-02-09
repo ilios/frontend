@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { Promise as RSVPPromise, map } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 
 export default Component.extend({
@@ -23,7 +23,7 @@ export default Component.extend({
     return encoded;
   }),
 
-  validUsers: computed('data', function () {
+  validUsers: computed('data.[]', function () {
     const data = this.get('data');
     if (!data) {
       return [];
@@ -31,12 +31,31 @@ export default Component.extend({
     return data.filterBy('isValid');
   }),
 
-  invalidUsers: computed('data', function () {
+  invalidUsers: computed('data.[]', function () {
     const data = this.get('data');
     if (!data) {
       return [];
     }
     return data.filter(obj => !obj.isValid);
+  }),
+
+  matchedGroups: computed('data.[]', async function () {
+    const data = this.get('data');
+    const learnerGroup = this.get('learnerGroup');
+    if (!data) {
+      return [];
+    }
+    const uploadedSubGroups = data.mapBy('subGroupName').uniq().filter(str => isPresent(str));
+    const groups = await learnerGroup.get('allDescendants');
+    const matchObjects = uploadedSubGroups.map(groupName => {
+      const group = groups.findBy('title', groupName);
+      return EmberObject.create({
+        name: groupName,
+        group,
+      });
+    });
+    return matchObjects.filter(obj => isPresent(obj.get('group')));
+
   }),
 
   init(){
@@ -54,7 +73,7 @@ export default Component.extend({
       } else {
         throw new Error('This browser is not supported');
       }
-    },
+    }
   },
 
   parseFile: task(function* (file) {
@@ -148,4 +167,13 @@ export default Component.extend({
       });
     });
   },
+  continue: task(function* () {
+    yield timeout(10);
+    const validUsers = this.get('validUsers');
+    const matchedGroups = yield this.get('matchedGroups');
+    const sendValidUsers = this.get('sendValidUsers');
+    const sendMatchedGroups = this.get('sendMatchedGroups');
+    sendValidUsers(validUsers);
+    sendMatchedGroups(matchedGroups);
+  }),
 });

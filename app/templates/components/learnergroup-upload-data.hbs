@@ -5,41 +5,17 @@
   </label>
   <input id='user-file' type='file' onchange={{action 'updateSelectedFile' value="target.files"}} data-test-user-upload>
 {{else}}
-  <p><button {{action (mut data) null}}>{{t 'general.clearUploadedUsers'}}</button></p>
+  <p><button {{action (mut data) null}}>{{t 'general.startOver'}}</button></p>
 {{/unless}}
 
 {{#if parseFile.isRunning}}
   <div class='loading-file'>{{fa-icon 'spinner' spin=true}}</div>
 {{/if}}
 
-{{#if validUsers}}
-  <table class='valid-users' data-test-upload-data-valid-users>
-    <caption>{{t 'general.validUsers'}}</caption>
-    <thead>
-      <tr>
-        <th>{{t 'general.firstName'}}</th>
-        <th>{{t 'general.lastName'}}</th>
-        <th>{{t 'general.campusId'}}</th>
-        <th>{{t 'general.subgroupName'}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each validUsers as |user|}}
-        <tr class={{unless user.isValid 'invalid'}}>
-          <td>{{user.firstName}}</td>
-          <td>{{user.lastName}}</td>
-          <td>{{user.campusId}}</td>
-          <td>{{user.subGroupName}}</td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{/if}}
-
 {{#if invalidUsers}}
   <p class='error'>{{t 'general.canNotContinueWithInvalidRecords'}}</p>
   <table class='invalid-users' data-test-upload-data-invalid-users>
-    <caption>{{t 'general.invalidUsers'}}</caption>
+    <caption>{{t 'general.invalidUsers'}} ({{invalidUsers.length}})</caption>
     <thead>
       <tr>
         <th>{{t 'general.firstName'}}</th>
@@ -56,12 +32,12 @@
           <td>{{user.lastName}}</td>
           <td>{{user.campusId}}</td>
           <td>{{user.subGroupName}}</td>
-          <td>
+          <td class='error'>
             {{#each user.errors as |error|}}
-              {{error}}
+              {{error}} <br>
             {{/each}}
             {{#each user.warnings as |warning|}}
-              {{warning}}
+              {{warning}} <br>
             {{/each}}
           </td>
         </tr>
@@ -70,6 +46,38 @@
   </table>
 {{/if}}
 
+{{#if validUsers}}
+  <table class='valid-users' data-test-upload-data-valid-users>
+    <caption>{{t 'general.validUsers'}} ({{validUsers.length}})</caption>
+    <thead>
+      <tr>
+        <th colspan=1></th>
+        <th colspan=3>{{t 'general.firstName'}}</th>
+        <th colspan=3>{{t 'general.lastName'}}</th>
+        <th colspan=3>{{t 'general.campusId'}}</th>
+        <th colspan=3>{{t 'general.subgroupName'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each validUsers as |user|}}
+        <tr class={{unless user.isValid 'invalid'}}>
+          <td colspan=1>{{fa-icon 'check' class='yes'}}</td>
+          <td colspan=3>{{user.firstName}}</td>
+          <td colspan=3>{{user.lastName}}</td>
+          <td colspan=3>{{user.campusId}}</td>
+          <td colspan=3>{{user.subGroupName}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
 {{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
-  <button {{action sendValidUsers validUsers}} data-test-upload-data-confirm>{{t 'general.continueWithTheseRecords'}}</button>
+  <button {{action (perform continue)}} disabled={{continue.isRunning}} data-test-upload-data-confirm>
+    {{#if continue.isRunning}}
+      {{fa-icon 'spinner' spin=true}}
+    {{else}}
+      {{t 'general.continue'}}
+    {{/if}}
+  </button>
 {{/if}}
