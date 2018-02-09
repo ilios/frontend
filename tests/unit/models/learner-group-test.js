@@ -525,3 +525,31 @@ test('school', async function(assert) {
     assert.equal(owningSchool, school);
   });
 });
+
+test('usersCount', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  assert.equal(learnerGroup.get('usersCount'), 0);
+  const store = this.store();
+  await run( async () => {
+    const user1 = store.createRecord('user');
+    const user2 = store.createRecord('user');
+
+    learnerGroup.get('users').pushObjects([user1, user2 ]);
+    assert.equal(learnerGroup.get('usersCount'), 2);
+  });
+});
+
+test('childrenCount', async function(assert) {
+  assert.expect(2);
+  const learnerGroup = this.subject();
+  assert.equal(learnerGroup.get('childrenCount'), 0);
+  const store = this.store();
+  await run( async () => {
+    const group1 = store.createRecord('learner-group',);
+    const group2 = store.createRecord('learner-group');
+
+    learnerGroup.get('children').pushObjects([group1, group2 ]);
+    assert.equal(learnerGroup.get('childrenCount'), 2);
+  });
+});
