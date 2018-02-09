@@ -19,7 +19,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "elemental-calendar": "^0.0.9",
+    "elemental-calendar": "^0.1.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-clipboard": "^0.8.0",
     "ember-cli-htmlbars": "^2.0.3",
