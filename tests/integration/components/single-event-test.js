@@ -91,7 +91,7 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
 });
 
 test('it renders', async function(assert) {
-  assert.expect(12);
+  assert.expect(11);
   this.set('event', ourEvent);
   this.render(hbs`{{single-event event=event}}`);
   await wait();
@@ -109,5 +109,4 @@ test('it renders', async function(assert) {
   $sessionLm = this.$('.single-event-learningmaterial-list:eq(0) .single-event-learningmaterial-item:eq(1)');
   assert.equal(this.$('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');
   assert.ok(this.$('.single-event-learningmaterial-item-title', $sessionLm).text().includes(sessionLearningMaterials[0].get('title')));
-  assert.ok(this.$('.single-event-learningmaterial-item-timing-info', $sessionLm).text().includes('Available before 03/01/2013 1:10 AM'), 'Timed release info is visible');
 });
