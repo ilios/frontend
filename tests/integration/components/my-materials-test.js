@@ -80,7 +80,7 @@ test('it renders empty', function(assert) {
 });
 
 test('it renders with materials', function(assert) {
-  assert.expect(43);
+  assert.expect(42);
   this.set('materials', createMaterials());
   this.set('nothing', parseInt);
   this.render(hbs`{{my-materials
@@ -129,7 +129,6 @@ test('it renders with materials', function(assert) {
 
   const fifthLmTitle = `${materials}:eq(4) td:eq(2)`;
   const fifthLmTypeIcon = `${fifthLmTitle} i.fa-clock-o`;
-  const fifthLmTimedReleaseInfo = `${fifthLmTitle} .timed-release-info`;
   const fifthLmCourseTitle = `${materials}:eq(4) td:eq(1)`;
   const fifthLmSessionTitle = `${materials}:eq(4) td:eq(0)`;
   const fifthLmInstructor = `${materials}:eq(4) td:eq(3)`;
@@ -178,7 +177,6 @@ test('it renders with materials', function(assert) {
   assert.equal(this.$(fourthLmFirstOffering).text().trim(), '02/02/2030');
 
   assert.ok(this.$(fifthLmTitle).text().includes('title5'));
-  assert.ok(this.$(fifthLmTimedReleaseInfo).text().includes('Available before 01/03/2013 1:10'));
   assert.equal(this.$(fifthLmTypeIcon).length, 1, 'LM type icon is present.');
   assert.equal(this.$(fifthLmSessionTitle).text().trim(), 'session5title');
   assert.equal(this.$(fifthLmCourseTitle).text().trim(), 'course5title');
