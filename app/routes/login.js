@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import jwtDecode from '../utils/jwt-decode';
 
-const { Route, inject } = Ember;
-const { service } = inject;
 import fetch from 'fetch';
 
 export default Route.extend({
