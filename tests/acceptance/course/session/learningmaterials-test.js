@@ -542,7 +542,7 @@ test('add timed release start date', async function (assert) {
   assert.ok(find(statusIcon).length, 'the clock icon is visible');
 
   await click(manageFirstLm);
-  assert.equal(getElementText(find(releaseSummary)), getText('Available after ' + newDate.format('L LT')));
+  assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newDate.format('L LT') + ')'));
 });
 
 test('add timed release start and end date', async function (assert) {
@@ -595,7 +595,7 @@ test('add timed release start and end date', async function (assert) {
   assert.ok(find(statusIcon).length, 'the clock icon is visible');
 
   await click(manageFirstLm);
-  assert.equal(getElementText(find(releaseSummary)), getText('Available from ' + newStartDate.format('L LT') + ' until ' + newEndDate.format('L LT')));
+  assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'));
 });
 
 test('add timed release end date', async function (assert) {
@@ -631,7 +631,7 @@ test('add timed release end date', async function (assert) {
   assert.ok(find(statusIcon).length, 'the clock icon is visible');
 
   await click(manageFirstLm);
-  assert.equal(getElementText(find(releaseSummary)), getText('Available before ' + newDate.format('L LT')));
+  assert.equal(getElementText(find(releaseSummary)), getText('(Available until ' + newDate.format('L LT') + ')'));
 });
 
 test('end date is after start date', async function (assert) {
@@ -685,6 +685,6 @@ test('end date is after start date', async function (assert) {
   assert.equal(find(errorMessage).length, 0, 'ne error displays initially');
   await click(done);
   assert.equal(find(manager).length, 1, 'the manager is still showing since there was an error');
-  assert.equal(getElementText(find(releaseSummary)), getText('Available from ' + newStartDate.format('L LT') + ' until ' + newEndDate.format('L LT')), 'Check summary text');
+  assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'), 'Check summary text');
   assert.equal(find(errorMessage).length, 1, 'the error message shows up');
 });
