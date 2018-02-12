@@ -7,7 +7,7 @@
 <span class="actions">
   {{#if isSelected}}
     {{fa-icon 'remove'}}
-  {{else}}
+  {{else if term.active}}
     {{fa-icon 'plus' class='add'}}
   {{/if}}
 </span>
