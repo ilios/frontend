@@ -59,6 +59,9 @@
     </div>
   </div>
 {{/if}}
+
+<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
+
 {{#each newTerms as |term|}}
   <div class='saved-result'>
     <span class='clickable link' {{action manageTerm term.id}}>
@@ -67,7 +70,7 @@
     {{t 'general.savedSuccessfully'}}
   </div>
 {{/each}}
-<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
+
 <div class='selectable-list'>
   <div class='selectable-list-form'>
     <input

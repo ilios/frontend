@@ -3,15 +3,6 @@
   <span>{{vocabulary.title}}</span>
 </div><br>
 
-{{#each newTerms as |term|}}
-  <div class='saved-result'>
-    <span class='clickable link' {{action manageTerm term.id}}>
-      {{fa-icon 'external-link-square'}} {{term.title}}
-    </span>
-    {{t 'general.savedSuccessfully'}}
-  </div>
-{{/each}}
-
 <div class='form'>
   <div class='item'>
     <label>{{t 'general.title'}}: </label>
@@ -40,6 +31,17 @@
     }}
   </div>
 </div>
+
+<h5 class='selectable-list-header'>{{t 'general.terms'}}:</h5>
+
+{{#each newTerms as |term|}}
+  <div class='saved-result'>
+    <span class='clickable link' {{action manageTerm term.id}}>
+      {{fa-icon 'external-link-square'}} {{term.title}}
+    </span>
+    {{t 'general.savedSuccessfully'}}
+  </div>
+{{/each}}
 
 <div class='selectable-list'>
   <div class='selectable-list-form'>
