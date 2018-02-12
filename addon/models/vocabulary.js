@@ -3,9 +3,9 @@ import DS from 'ember-data';
 import Inflector from 'ember-inflector';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 
-Inflector.inflector.irregular('vocabulary', 'vocabularies');
-
 const { attr, belongsTo, Model } = DS;
+
+Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
 export default Model.extend(CategorizableModel, {
   title: attr('string'),
