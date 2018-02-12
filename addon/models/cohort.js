@@ -10,7 +10,6 @@ export default Model.extend({
   courses: hasMany('course', {async: true}),
   learnerGroups: hasMany('learner-group', {async: true}),
   users: hasMany('user', {async: true}),
-  active: attr('boolean'),
 
   competencies: computed('programYear.competencies.[]', async function() {
     const programYear = await this.get('programYear');
