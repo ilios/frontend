@@ -1,6 +1,6 @@
 {{#if selectedTerms}}
   <div class='selected-terms'>
-    {{#each (await filteredVocabularies) as |vocab| }}
+    {{#each (await nonEmptyVocabularies) as |vocab| }}
       {{detail-terms-list
         vocabulary=vocab
         terms=selectedTerms
@@ -10,14 +10,14 @@
     {{/each}}
   </div>
 {{/if}}
-{{#if (get (await filteredVocabularies) 'length')}}
+{{#if (get (await assignableVocabularies) 'length')}}
   <div class='vocabulary-picker'>
     <label class="inline-label">
       <strong>{{t 'general.selectVocabulary'}}</strong>
     </label>
     <div id="vocabulary-selection" class="inline-data">
       <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
-        {{#each (await filteredVocabularies) as |vocab|}}
+        {{#each (await assignableVocabularies) as |vocab|}}
           <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
         {{/each}}
       </select>
