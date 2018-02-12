@@ -98,7 +98,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('isActive', term.get('active'));
   }).drop(),
 
->>>>>>> added active control to edit term form.
   actions: {
     changeTermTitle(){
       const term = this.get('term');
