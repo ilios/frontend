@@ -34,14 +34,14 @@
 
 <h5 class='selectable-list-header'>{{t 'general.terms'}}:</h5>
 
-{{#each newTerms as |term|}}
+{{#if newTerm}}
   <div class='saved-result'>
-    <span class='clickable link' {{action manageTerm term.id}}>
-      {{fa-icon 'external-link-square'}} {{term.title}}
+    <span class='clickable link' {{action manageTerm newTerm.id}}>
+      {{fa-icon 'external-link-square'}} {{newTerm.title}}
     </span>
     {{t 'general.savedSuccessfully'}}
   </div>
-{{/each}}
+{{/if}}
 
 <div class='selectable-list'>
   <div class='selectable-list-form'>
