@@ -17,6 +17,7 @@ export default Model.extend({
   associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
+  active: attr('boolean'),
 
   isTopLevel: computed('parent', function() {
     return isEmpty(this.belongsTo('parent').id());
