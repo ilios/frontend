@@ -93,7 +93,6 @@ export default Component.extend({
         });
         bufferedCompetencies.filterBy('isNew').forEach(competency => {
           competency.set('school', school);
-          competency.set('active', true);
         });
         promises.pushObjects(bufferedCompetencies.filterBy('hasDirtyAttributes').invoke('save'));
         schoolCompetencies.clear();
