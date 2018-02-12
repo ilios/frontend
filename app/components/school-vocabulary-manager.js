@@ -43,18 +43,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isActive: null,
   newTermTitle: null,
   isSavingNewTerm: false,
-  newTerms: null,
+  newTerm: null,
   classNames: ['school-vocabulary-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('newTerms', []);
     const vocabulary = this.get('vocabulary');
     if (vocabulary) {
       this.set('title', vocabulary.get('title'));
       this.set('isActive', vocabulary.get('active'));
     }
   },
-  sortedTerms: computed('vocabulary.terms.[]', function(){
+  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', function(){
     return new Promise(resolve => {
       const vocabulary = this.get('vocabulary');
       if (isPresent(vocabulary)) {
@@ -112,7 +111,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           let term = store.createRecord('term', {title, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);
-            this.get('newTerms').pushObject(newTerm);
+            this.set('newTerm', newTerm);
           });
         }
       }).finally(() => {
