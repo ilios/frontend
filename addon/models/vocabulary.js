@@ -6,7 +6,6 @@ import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
 const { attr, belongsTo, Model } = DS;
-const { computed } =  Ember;
 
 export default Model.extend(CategorizableModel, {
   title: attr('string'),
