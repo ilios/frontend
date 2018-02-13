@@ -11,6 +11,9 @@
   {{/each}}
   {{term.title}}
 {{/if}}
+{{#unless term.active}}
+  <span class="inactive">({{t 'general.inactive'}})</span>
+{{/unless}}
 {{#if canEdit}}
   {{fa-icon 'remove'}}
 {{/if}}
