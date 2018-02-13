@@ -3,7 +3,6 @@
   .form {
     @include ilios-form;
     @include fill-parent;
-    display: block;
 
     .item {
       @include ilios-form-item;
@@ -16,12 +15,11 @@
         display: block;
       }
 
-      &.is-active {
-        height: 5em;
-      }
-
       &.term-description {
-        height: 6em;
+        height: 10em;
+        textarea {
+          min-height: 6em;
+        }
       }
     }
   }
