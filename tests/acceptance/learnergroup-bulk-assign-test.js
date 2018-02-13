@@ -302,3 +302,26 @@ test('create a new group when requested', async function (assert) {
   assert.equal( server.db.learnerGroups[3].title, '123Test');
   assert.deepEqual( server.db.learnerGroups[3].userIds, ['2']);
 });
+
+test('small group matches are trimmed', async function (assert) {
+  await page.visit({ learnerGroupId: 1 });
+  await page.activateBulkAssign();
+  const input = await find('[data-test-user-upload]');
+  const users = server.createList('user', 4, {
+    cohortIds: [1],
+  });
+  const data = users.map(obj => {
+    return [
+      obj.firstName,
+      obj.lastName,
+      obj.campusId
+    ];
+  });
+  data[0].pushObject('group 1 child 0');
+  data[1].pushObject('group 1 child 1');
+  data[2].pushObject('group 1 child 1 ');
+  data[3].pushObject(' group 1 child 1');
+  await triggerUpload(data, input);
+  await page.bulkAssign.confirmUploadedUsers();
+  assert.equal(page.bulkAssign.groupsToMatch().count, 2);
+});

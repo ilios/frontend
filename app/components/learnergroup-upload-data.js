@@ -122,7 +122,11 @@ export default Component.extend({
       }
 
       return {
-        firstName, lastName, campusId, subGroupName, userRecord,
+        firstName,
+        lastName,
+        campusId,
+        subGroupName: typeof(subGroupName) === 'string'?subGroupName.trim():subGroupName,
+        userRecord,
         errors,
         isValid: errors.length === 0
       };
