@@ -15,8 +15,8 @@
             {{learnerGroup.title}}
           {{/link-to}}
         </td>
-        <td class='text-center hide-from-small-screen'>{{has-many-length learnerGroup 'users'}}</td>
-        <td class='text-center hide-from-small-screen'>{{has-many-length learnerGroup 'children'}}</td>
+        <td class='text-center hide-from-small-screen'>{{learnerGroup.usersCount}}</td>
+        <td class='text-center hide-from-small-screen'>{{learnerGroup.childrenCount}}</td>
         <td class='text-right'>
           {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
             {{#if (await learnerGroup.hasLearnersInGroupOrSubgroups)}}

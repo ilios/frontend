@@ -58,11 +58,13 @@ test('renders with data', function(assert) {
   this.set('learnerGroup', learnerGroup);
 
   this.render(hbs`{{learnergroup-summary
-    toggleEditMode=(action nothing)
+    setIsEditing=(action nothing)
     setSortUsersBy=(action nothing)
+    setIsBulkAssigning=(action nothing)
     sortUsersBy='firstName'
     learnerGroup=learnerGroup
     isEditing=false
+    isBulkAssigning=false
   }}`);
 
   const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';
@@ -111,10 +113,12 @@ test('Update location', function(assert) {
   this.set('learnerGroup', learnerGroup);
 
   this.render(hbs`{{learnergroup-summary
-    toggleEditMode=(action nothing)
+    setIsEditing=(action nothing)
     setSortUsersBy=(action nothing)
+    setIsBulkAssigning=(action nothing)
     learnerGroup=learnerGroup
     isEditing=false
+    isBulkAssigning=false
   }}`);
 
   const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';

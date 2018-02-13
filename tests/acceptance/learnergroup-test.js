@@ -358,7 +358,7 @@ test('learner group calendar with subgroup events', async function(assert) {
 
 test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
   const members = '.learnergroup-overview-content table:eq(1) tbody tr';
-  const manage = '.learnergroup-overview-actions button';
+  const manage = '.learnergroup-overview-actions button:eq(1)';
   const manager = '.learnergroup-user-manager-content';
   const membersOfGroup = `${manager} table:eq(1) tr`;
   const membersOfTree = `${manager} table:eq(2) tr`;

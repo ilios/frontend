@@ -1,7 +1,9 @@
 {{learnergroup-summary
-  toggleEditMode=(toggle-action 'isEditing' this)
+  setIsEditing=(action (mut isEditing))
+  setIsBulkAssigning=(action (mut isBulkAssigning))
   sortUsersBy=sortUsersBy
   setSortUsersBy=(action (mut sortUsersBy))
   learnerGroup=model
   isEditing=isEditing
+  isBulkAssigning=isBulkAssigning
 }}

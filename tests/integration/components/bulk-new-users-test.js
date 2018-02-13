@@ -113,7 +113,7 @@ test('it renders', async function(assert) {
   await wait();
 
   let content = this.$().text().trim();
-  assert.notEqual(content.search(/File with new user data/), -1);
+  assert.notEqual(content.search(/File with user data/), -1);
   assert.notEqual(content.search(/Primary School/), -1);
 
   const schools = 'select:eq(0) option';
@@ -145,7 +145,7 @@ test('select student mode display cohort', async function(assert) {
     this.$('.click-choice-buttons .second-button').click();
     await wait();
     let content = this.$().text().trim();
-    assert.notEqual(content.search(/File with new user data/), -1);
+    assert.notEqual(content.search(/File with user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
     assert.notEqual(content.search(/Primary Cohort/), -1);
 

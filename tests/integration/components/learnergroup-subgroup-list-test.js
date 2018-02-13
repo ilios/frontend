@@ -12,25 +12,19 @@ moduleForComponent('learnergroup-subgroup-list', 'Integration | Component | lear
 });
 
 test('it renders', function (assert) {
-  const hasMany = function (what) {
-    const self = this;
-    return {
-      ids() {
-        return self[what];
-      }
-    };
-  };
   let subGroup1 = {
     title: 'first',
     users: [1,2],
     children: [],
-    hasMany,
+    usersCount: 2,
+    childrenCount: 0,
   };
   let subGroup2 = {
     title: 'second',
     users: [],
     children: [1,2],
-    hasMany,
+    usersCount: 0,
+    childrenCount: 2,
   };
   let parentGroup = {
     children: resolve([subGroup1, subGroup2])

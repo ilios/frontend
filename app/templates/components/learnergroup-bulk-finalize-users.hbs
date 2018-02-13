@@ -1,0 +1,51 @@
+{{#if (is-fulfilled invalidUsers)}}
+  {{#if (await invalidUsers)}}
+    <table data-test-final-error-data>
+      <thead>
+        <tr>
+          <th>{{t 'general.name'}}</th>
+          <th>{{t 'general.campusId'}}</th>
+          <th>{{t 'general.error'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each finalData as |obj|}}
+          <tr>
+            <td>{{obj.user.fullName}}</td>
+            <td>{{obj.user.campusId}}</td>
+            <td>{{t 'general.alreadyInLearnerGroup' learnerGroupTitle=learnerGroup.title}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+  {{else}}
+    <h3>{{t 'general.finalResults'}}</h3>
+    <table data-test-final-data>
+      <thead>
+        <tr>
+          <th>{{t 'general.name'}}</th>
+          <th>{{t 'general.campusId'}}</th>
+          <th>{{t 'general.learnerGroups'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each finalData as |obj|}}
+          <tr>
+            <td>{{obj.user.fullName}}</td>
+            <td>{{obj.user.campusId}}</td>
+            <td>{{obj.learnerGroup.title}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <button {{action (perform save)}} disabled={{save.isRunning}} data-test-finalize-users-submit>
+      {{#if save.isRunning}}
+        {{fa-icon 'spinner' spin=true}}
+      {{else}}
+        {{t 'general.save'}}
+      {{/if}}
+    </button>
+  {{/if}}
+{{/if}}
