@@ -101,7 +101,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     yield all(groupsToSave.uniq().invoke('save'));
   }).enqueue(),
-  usersToPassToManager: computed('isEditing', 'learnerGroup.{topLevelGroup,users.[]}', 'treeGroups.[]', async function () {
+  usersToPassToManager: computed('isEditing', 'learnerGroup.topLevelGroup.allDescendantUsers.[]', 'treeGroups.[]', async function () {
     const isEditing = this.get('isEditing');
     const learnerGroup = this.get('learnerGroup');
     if (isEditing) {
