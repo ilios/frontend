@@ -3623,9 +3623,9 @@ ember-d3@^0.3.4:
     ember-cli-babel "^5.1.6"
     recast "^0.11.13"
 
-ember-data@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.0.0.tgz#0401f02ab34e0183f77278b108c6c0564ec3e28d"
+ember-data@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.0.1.tgz#555bddde064c72ff9dde4ae4c8c635afe8158b8b"
   dependencies:
     amd-name-resolver "0.0.7"
     babel-plugin-ember-modules-api-polyfill "^1.4.2"
