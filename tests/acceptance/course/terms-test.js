@@ -16,15 +16,18 @@ module('Acceptance: Course - Terms', {
     server.create('school');
     server.create('vocabulary', {
       schoolId: 1,
+      active: true,
     });
     server.create('academicYear', {id: 2013});
 
     fixtures.terms = [];
     fixtures.terms.pushObject(server.create('term', {
-      vocabularyId: 1
+      vocabularyId: 1,
+      active: true
     }));
     fixtures.terms.pushObject(server.create('term', {
-      vocabularyId: 1
+      vocabularyId: 1,
+      active: true
     }));
 
     fixtures.course = server.create('course', {
