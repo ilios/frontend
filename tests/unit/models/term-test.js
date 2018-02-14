@@ -88,3 +88,64 @@ test('titleWithParentTitles', async function(assert) {
     assert.equal(title, 'ein > bier > bitte');
   });
 });
+
+
+test('isActiveInTree - top level term', async function(assert) {
+  assert.expect(2);
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', false);
+    const isActive = await model.get('isActiveInTree');
+    assert.notOk(isActive);
+  });
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', true);
+    const isActive = await model.get('isActiveInTree');
+    assert.ok(isActive);
+  });
+});
+
+test('isActiveInTree - nested term', async function(assert) {
+  assert.expect(4);
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', true);
+    const store = model.store;
+    const parent = store.createRecord('term', { children: [ model ], active: true });
+    store.createRecord('term', { children: [ parent ], active: true });
+    const isActive = await model.get('isActiveInTree');
+    assert.ok(isActive);
+  });
+
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', false);
+    const store = model.store;
+    const parent = store.createRecord('term', { children: [ model ], active: true });
+    store.createRecord('term', { children: [ parent ], active: true });
+    const isActive = await model.get('isActiveInTree');
+    assert.notOk(isActive);
+  });
+
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', true);
+    const store = model.store;
+    const parent = store.createRecord('term', { children: [ model ], active: false });
+    store.createRecord('term', { children: [ parent ], active: true });
+    const isActive = await model.get('isActiveInTree');
+    assert.notOk(isActive);
+  });
+
+  await run( async () => {
+    const model = this.subject();
+    model.set('active', true);
+    const store = model.store;
+    const parent = store.createRecord('term', { children: [ model ], active: true });
+    store.createRecord('term', { children: [ parent ], active: false });
+    const isActive = await model.get('isActiveInTree');
+    assert.notOk(isActive);
+  });
+
+});

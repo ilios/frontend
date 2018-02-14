@@ -95,4 +95,26 @@ export default Model.extend({
     }
     return parentTitles.join(' > ') + ' > ' + this.get('title');
   }),
+
+  /**
+   * TRUE if this term and all of its ancestors, if existent, are active. FALSE otherwise.
+   *
+   * @property isActiveInTree
+   * @type {Ember.computed}
+   * @public
+   */
+  isActiveInTree: computed('active', 'parent.isActiveInTree', async function() {
+    const parent = await this.get('parent');
+    const active = this.get('active');
+
+    if (! active) {
+      return false;
+    }
+
+    if (! parent) {
+      return true;
+    }
+
+    return parent.get('isActiveInTree');
+  })
 });
