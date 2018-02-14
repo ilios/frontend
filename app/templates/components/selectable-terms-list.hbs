@@ -1,5 +1,5 @@
 {{#each (sort-by 'title' terms) as |term|}}
-  {{#if (or term.active (is-in selectedTerms term))}}
+  {{#if (await term.isActiveInTree)}}
     <li class="{{if term.isTopLevel 'top-level'}}">
       {{selectable-terms-list-item selectedTerms=selectedTerms term=term add='add' remove='remove'}}
       {{#if term.hasChildren}}
