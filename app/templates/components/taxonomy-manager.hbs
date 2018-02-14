@@ -1,6 +1,6 @@
 {{#if selectedTerms}}
   <div class='selected-terms'>
-    {{#each (await nonEmptyVocabularies) as |vocab| }}
+    {{#each (await listableVocabularies) as |vocab| }}
       {{detail-terms-list
         vocabulary=vocab
         terms=selectedTerms

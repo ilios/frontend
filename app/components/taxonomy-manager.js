@@ -75,6 +75,31 @@ export default Component.extend({
   }),
 
   /**
+   * All non-empty vocabularies that are active, and all inactive vocabularies that have at least one selected term.
+   * In other words, this excludes all inactive vocabularies that have no selected terms.
+   *
+   * @property listableVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  listableVocabularies: computed('nonEmptyVocabularies.[]', 'selectedTerms.[]', async function() {
+    const vocabularies = await this.get('nonEmptyVocabularies');
+    return vocabularies.toArray().filter(vocab => {
+      if (vocab.get('active')) {
+        return true;
+      }
+      const terms = this.get('selectedTerms');
+      terms.forEach((term) => {
+        if (term.get('vocabulary.id') === vocab.get('id')) {
+          return true;
+        }
+      });
+
+      return false;
+    });
+  }),
+
+  /**
    * The currently selected vocabulary,
    * defaults to the first assignable vocabulary with terms if no user selection was made.
    * @property selectedVocabulary
