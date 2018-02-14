@@ -89,13 +89,15 @@ export default Component.extend({
         return true;
       }
       const terms = this.get('selectedTerms');
-      terms.forEach((term) => {
-        if (term.get('vocabulary.id') === vocab.get('id')) {
-          return true;
+      const vocabId = vocab.get('id');
+      let hasTerms = false;
+      terms.forEach(term => {
+        if (term.belongsTo('vocabulary').id() === vocabId) {
+          hasTerms = true;
         }
       });
 
-      return false;
+      return hasTerms;
     });
   }),
 
