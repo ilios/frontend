@@ -1,6 +1,9 @@
 {{#if (is-fulfilled sortedTerms)}}
   <div>
     <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
+    {{#unless vocabulary.active}}
+      <span class="inactive">({{t 'general.inactive'}})</span>
+    {{/unless}}
   </div>
   <ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
     {{#each (await sortedTerms) as |term|}}
