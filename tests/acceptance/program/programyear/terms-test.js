@@ -15,6 +15,7 @@ module('Acceptance: Program Year - Terms', {
     server.create('school');
     server.create('vocabulary', {
       schoolId: 1,
+      active: true
     });
     server.create('program', {
       schoolId: 1
@@ -25,10 +26,12 @@ module('Acceptance: Program Year - Terms', {
     server.create('cohort', { programYearId: 1});
     server.create('term', {
       programYearIds: [1],
-      vocabularyId: 1
+      vocabularyId: 1,
+      active: true
     });
     server.create('term', {
-      vocabularyId: 1
+      vocabularyId: 1,
+      active: true
     });
   },
 
