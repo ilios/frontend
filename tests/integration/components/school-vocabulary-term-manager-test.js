@@ -44,8 +44,8 @@ test('it renders', function(assert) {
   const secondParent = '.breadcrumbs span:eq(2)';
   const termCrumb = '.breadcrumbs span:eq(4)';
 
-  const termTitle = '.term-title';
-  const termDescription = '.term-description';
+  const termTitle = '.term-title .editinplace';
+  const termDescription = '.term-description .editinplace';
   assert.equal(this.$(all).text().trim(), 'All Vocabularies');
   assert.equal(this.$(vocab).text().trim(), vocabulary.title);
   assert.equal(this.$(firstParent).text().trim(), 'first');
