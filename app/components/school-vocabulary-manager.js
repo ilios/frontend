@@ -81,12 +81,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   },
 
+  /*
+    Commented out per SBC's request.
+    Todo: Find a better place for this task.
+    [ST 2018/02/15]
+
   changeIsActive: task(function * (isActive){
     const vocabulary = this.get('vocabulary');
     vocabulary.set('active', isActive);
     yield vocabulary.save();
     this.set('isActive', vocabulary.get('active'));
   }).drop(),
+  */
 
   actions: {
     changeVocabularyTitle(){
