@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -39,22 +40,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   flashMessages: service(),
   term: null,
+  newTerm: null,
   vocabulary: null,
   newTermTitle: null,
   isSavingNewTerm: false,
-  newTerms: null,
   description: null,
   title: null,
+  isActive: null,
+  classNames: ['school-vocabulary-term-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('newTerms', []);
     const term = this.get('term');
     if (term) {
       this.set('description', term.get('description'));
       this.set('title', term.get('title'));
+      this.set('isActive', term.get('active'));
     }
   },
-  sortedTerms: computed('term.children.[]', function(){
+  sortedTerms: computed('term.children.[]', 'newTerm', function(){
     return new Promise(resolve => {
       const term = this.get('term');
       if (isPresent(term)) {
@@ -86,6 +89,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
+
+  changeIsActive: task(function * (isActive){
+    const term = this.get('term');
+    term.set('active', isActive);
+    yield term.save();
+    this.set('isActive', term.get('active'));
+  }).drop(),
+
   actions: {
     changeTermTitle(){
       const term = this.get('term');
@@ -117,10 +128,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           const parent = this.get('term');
           const vocabulary = this.get('vocabulary');
           const store = this.get('store');
-          let term = store.createRecord('term', {title, parent, vocabulary});
+          let term = store.createRecord('term', {title, parent, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);
-            this.get('newTerms').pushObject(newTerm);
+            this.set('newTerm', newTerm);
           });
         }
       }).finally(() => {

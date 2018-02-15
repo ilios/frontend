@@ -10,52 +10,67 @@
 {{/if}}
 
 {{#if term}}
-  <p class='term-title'>
-    {{#editable-field
-      value=(if title title (t 'general.clickToEdit'))
-      save=(action 'changeTermTitle')
-      close=(action 'revertTermTitleChanges')
-      saveOnEnter=true
-      closeOnEscape=true
+  <div class="form">
+    <div class='item term-title'>
+      <label>{{t 'general.title'}}:</label>
+      {{#editable-field
+        value=(if title title (t 'general.clickToEdit'))
+        save=(action 'changeTermTitle')
+        close=(action 'revertTermTitleChanges')
+        saveOnEnter=true
+        closeOnEscape=true
       as |isSaving|
-    }}
-      <input
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
-        disabled={{isSaving}}
-      >
-    {{/editable-field}}
-    {{#unless (or term.hasChildren term.hasAssociations)}}
-      {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
-    {{/unless}}
-  </p>
-  <p class='term-description'>
-    {{#editable-field
-      value=(if description description (t 'general.clickToAddTermDescription'))
-      save=(action 'changeTermDescription')
-      close=(action 'revertTermDescriptionChanges')
-      closeOnEscape=true
+      }}
+        <input
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+        >
+      {{/editable-field}}
+      {{#unless (or term.hasChildren term.hasAssociations)}}
+        {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
+      {{/unless}}
+    </div>
+    <div class='item is-active'>
+      <label>{{t 'general.active'}}:</label>
+      {{toggle-yesno
+        yes=isActive
+        disabled=(if changeIsActive.isRunning true false)
+        toggle=(action (perform changeIsActive))
+      }}
+    </div>
+    <div class='item term-description'>
+      <label>{{t 'general.description'}}:</label>
+      {{#editable-field
+        value=(if description description (t 'general.clickToAddTermDescription'))
+        save=(action 'changeTermDescription')
+        close=(action 'revertTermDescriptionChanges')
+        closeOnEscape=true
       as |isSaving|
-    }}
-      <textarea
-        value={{description}}
-        oninput={{action (mut description) value="target.value"}}
-        disabled={{isSaving}}
-      >
-        {{description}}
-      </textarea>
-    {{/editable-field}}
-  </p>
+      }}
+        <textarea
+          value={{description}}
+          oninput={{action (mut description) value="target.value"}}
+          disabled={{isSaving}}
+        >
+          {{description}}
+        </textarea>
+      {{/editable-field}}
+    </div>
+  </div>
 {{/if}}
-{{#each newTerms as |term|}}
+
+<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
+
+{{#if newTerm}}
   <div class='saved-result'>
-    <span class='clickable link' {{action manageTerm term.id}}>
-      {{fa-icon 'external-link-square'}} {{term.title}}
+    <span class='clickable link' {{action manageTerm newTerm.id}}>
+      {{fa-icon 'external-link-square'}} {{newTerm.title}}
     </span>
     {{t 'general.savedSuccessfully'}}
   </div>
-{{/each}}
-<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
+{{/if}}
+
 <div class='selectable-list'>
   <div class='selectable-list-form'>
     <input

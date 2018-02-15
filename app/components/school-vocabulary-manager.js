@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+//import { task } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -39,18 +40,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   vocabulary: null,
   title: null,
+  isActive: null,
   newTermTitle: null,
   isSavingNewTerm: false,
-  newTerms: null,
+  newTerm: null,
+  classNames: ['school-vocabulary-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('newTerms', []);
     const vocabulary = this.get('vocabulary');
     if (vocabulary) {
       this.set('title', vocabulary.get('title'));
+      this.set('isActive', vocabulary.get('active'));
     }
   },
-  sortedTerms: computed('vocabulary.terms.[]', function(){
+  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', function(){
     return new Promise(resolve => {
       const vocabulary = this.get('vocabulary');
       if (isPresent(vocabulary)) {
@@ -77,6 +80,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
+
+  /*
+    Commented out per SBC's request.
+    Todo: Find a better place for this task.
+    [ST 2018/02/15]
+
+  changeIsActive: task(function * (isActive){
+    const vocabulary = this.get('vocabulary');
+    vocabulary.set('active', isActive);
+    yield vocabulary.save();
+    this.set('isActive', vocabulary.get('active'));
+  }).drop(),
+  */
+
   actions: {
     changeVocabularyTitle(){
       const vocabulary = this.get('vocabulary');
@@ -97,10 +114,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           let title = this.get('newTermTitle');
           const vocabulary = this.get('vocabulary');
           const store = this.get('store');
-          let term = store.createRecord('term', {title, vocabulary});
+          let term = store.createRecord('term', {title, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);
-            this.get('newTerms').pushObject(newTerm);
+            this.set('newTerm', newTerm);
           });
         }
       }).finally(() => {

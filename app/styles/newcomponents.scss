@@ -44,6 +44,7 @@
 @import 'newcomponents/detail-steward-manager';
 @import 'newcomponents/detail-stewards';
 @import 'newcomponents/detail-taxonomies';
+@import 'newcomponents/detail-terms-list';
 @import 'newcomponents/ilios-header';
 @import 'newcomponents/ilios-users';
 @import 'newcomponents/instructorgroup-details';
@@ -66,6 +67,16 @@
 @import 'newcomponents/learningmaterial-manager';
 @import 'newcomponents/loading-bar';
 @import 'newcomponents/manage-users-summary';
+@import 'newcomponents/new-myreport';
+@import 'newcomponents/new-learningmaterial';
+@import 'newcomponents/school-manager';
+@import 'newcomponents/school-competencies-collapsed';
+@import 'newcomponents/school-competencies-expanded';
+@import 'newcomponents/school-vocabularies-collapsed';
+@import 'newcomponents/school-vocabularies-expanded';
+@import 'newcomponents/school-vocabulary-manager';
+@import 'newcomponents/school-vocabulary-term-manager';
+@import 'newcomponents/school-leadership-expanded';
 @import 'newcomponents/my-materials';
 @import 'newcomponents/my-profile';
 @import 'newcomponents/new-curriculum-inventory-sequence-block';

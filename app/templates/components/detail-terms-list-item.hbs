@@ -11,6 +11,9 @@
   {{/each}}
   {{term.title}}
 {{/if}}
+{{#if (and canEdit (not (await term.isActiveInTree)))}}
+  <span class="inactive">({{t 'general.inactive'}})</span>
+{{/if}}
 {{#if canEdit}}
   {{fa-icon 'remove'}}
 {{/if}}

@@ -10,7 +10,7 @@ const { all, Promise } = RSVP;
  */
 export default Component.extend({
 
-  classNames: ['detail-terms'],
+  classNames: ['detail-terms-list'],
 
   /**
    * Flag indicating whether terms can be removed from the list or not.
