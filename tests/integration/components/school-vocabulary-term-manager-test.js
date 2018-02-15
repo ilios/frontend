@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { resolve } = RSVP;
 
@@ -10,6 +11,7 @@ moduleForComponent('school-vocabulary-term-manager', 'Integration | Component | 
 });
 
 test('it renders', function(assert) {
+  assert.expect(7);
   let allParents = resolve([
     {id: 1, title: 'first'},
     {id: 2, title: 'second'},
@@ -53,4 +55,78 @@ test('it renders', function(assert) {
   assert.equal(this.$(termCrumb).text().trim(), title);
   assert.equal(this.$(termTitle).text().trim(), title);
   assert.equal(this.$(termDescription).text().trim(), description);
+});
+
+test('activate inactive term', async function(assert) {
+  assert.expect(3);
+  let vocabulary = EmberObject.create({
+    title: 'fake vocab'
+  });
+  let title = 'fake term';
+  let description = 'fake tescription';
+  let term = EmberObject.create({
+    children: resolve([]),
+    vocabulary: resolve(vocabulary),
+    title,
+    description,
+    active: false,
+    save() {
+      return resolve(this);
+    }
+  });
+  this.set('term', term);
+  this.set('vocabulary', vocabulary);
+  this.on('nothing', parseInt);
+  this.render(hbs`{{
+    school-vocabulary-term-manager
+    term=term
+    vocabulary=vocabulary
+    manageTerm=(action 'nothing')
+    manageVocabulary=(action 'nothing')
+  }}`);
+
+  const toggle = `.is-active .switch`;
+  const toggleValue = `${toggle} input`;
+  assert.notOk(this.$(toggleValue).is(':checked'));
+  this.$(toggle).click();
+  await wait();
+  assert.ok(term.get('active'));
+  assert.ok(this.$(toggleValue).is(':checked'));
+});
+
+test('inactive active term', async function(assert) {
+  assert.expect(3);
+  let vocabulary = EmberObject.create({
+    title: 'fake vocab'
+  });
+  let title = 'fake term';
+  let description = 'fake tescription';
+  let term = EmberObject.create({
+    children: resolve([]),
+    vocabulary: resolve(vocabulary),
+    title,
+    description,
+    active: true,
+    save() {
+      return resolve(this);
+    }
+  });
+  this.set('term', term);
+  this.set('vocabulary', vocabulary);
+  this.on('nothing', parseInt);
+  this.render(hbs`{{
+    school-vocabulary-term-manager
+    term=term
+    vocabulary=vocabulary
+    manageTerm=(action 'nothing')
+    manageVocabulary=(action 'nothing')
+  }}`);
+
+  const toggle = `.is-active .switch`;
+  const toggleValue = `${toggle} input`;
+  assert.ok(this.$(toggleValue).is(':checked'));
+  this.$(toggle).click();
+  await wait();
+  assert.notOk(term.get('active'));
+  assert.notOk(this.$(toggleValue).is(':checked'));
 });
