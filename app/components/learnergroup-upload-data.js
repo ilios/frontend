@@ -9,6 +9,7 @@ import PapaParse from 'papaparse';
 export default Component.extend({
   store: service(),
   iliosConfig: service(),
+  i18n: service(),
   classNames: ['learnergroup-upload-data'],
   file: null,
   data: null,
@@ -78,19 +79,20 @@ export default Component.extend({
 
   parseFile: task(function* (file) {
     const store = this.get('store');
+    const i18n = this.get('i18n');
     const learnerGroup = this.get('learnerGroup');
     const cohort = yield learnerGroup.get('cohort');
     const proposedUsers = yield this.getFileContents(file);
     const data = yield map(proposedUsers, async ({firstName, lastName, campusId, subGroupName }) => {
       const errors = [];
       if (isEmpty(firstName)) {
-        errors.push('First Name is required');
+        errors.push(i18n.t('errors.required', {description: i18n.t('general.firstName')}));
       }
       if (isEmpty(lastName)) {
-        errors.push('Last Name is required');
+        errors.push(i18n.t('errors.required', {description: i18n.t('general.lastName')}));
       }
       if (isEmpty(campusId)) {
-        errors.push('Campus ID is required');
+        errors.push(i18n.t('errors.required', {description: i18n.t('general.campusId')}));
       }
       let userRecord = null;
       if (errors.length === 0) {
@@ -101,21 +103,21 @@ export default Component.extend({
           }
         });
         if (users.get('length') === 0) {
-          errors.push(`Could not find a user with the campusId ${campusId}`);
+          errors.push(i18n.t('general.couldNotFindUserCampusId', {campusId}));
         } else if (users.get('length') > 1) {
-          errors.push(`Multiple users found with the campusId ${campusId}`);
+          errors.push(i18n.t('general.multipleUsersFoundWithCampusId', {campusId}));
         } else {
           const user = users.get('firstObject');
           const cohorts = await user.get('cohorts');
           const cohortIds = cohorts.mapBy('id');
           if (!cohortIds.includes(cohort.get('id'))) {
-            errors.push(`User is not in this group's cohort: ` + cohort.get('title'));
+            errors.push(i18n.t('general.userNotInGroupCohort', {cohortTitle: cohort.get('title')}));
           }
           if (user.get('firstName') != firstName) {
-            errors.push(`First Name does not match user record: ` + user.get('firstName'));
+            errors.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.firstName'), record: user.get('firstName')}));
           }
           if (user.get('lastName') != lastName) {
-            errors.push(`Last Name does not match user record: ` + user.get('lastName'));
+            errors.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.lastName'), record: user.get('lastName')}));
           }
           userRecord = user;
         }
