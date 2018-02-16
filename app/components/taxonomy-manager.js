@@ -49,15 +49,55 @@ export default Component.extend({
   sortedTerms: sort('selectedTerms', 'termsSorting'),
 
   /**
-   * All assignable vocabularies, excluding those without any terms.
-   * @property filteredVocabularies
+   * All vocabularies, excluding those without any terms.
+   * @property nonEmptyVocabularies
    * @type {Ember.computed}
    * @public
    */
-  filteredVocabularies: computed('subject.assignableVocabularies.[]', async function(){
+  nonEmptyVocabularies: computed('subject.assignableVocabularies.[]', async function(){
     const vocabularies = await this.get('subject.assignableVocabularies');
     return vocabularies.toArray().filter(vocab => {
       return (vocab.get('termCount') > 0);
+    });
+  }),
+
+  /**
+   * All non-empty vocabularies, excluding those that are inactive.
+   * @property assignableVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  assignableVocabularies: computed('nonEmptyVocabularies.[]', async function(){
+    const vocabularies = await this.get('nonEmptyVocabularies');
+    return vocabularies.toArray().filter(vocab => {
+      return vocab.get('active');
+    });
+  }),
+
+  /**
+   * All non-empty vocabularies that are active, and all inactive vocabularies that have at least one selected term.
+   * In other words, this excludes all inactive vocabularies that have no selected terms.
+   *
+   * @property listableVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  listableVocabularies: computed('nonEmptyVocabularies.[]', 'selectedTerms.[]', async function() {
+    const vocabularies = await this.get('nonEmptyVocabularies');
+    return vocabularies.toArray().filter(vocab => {
+      if (vocab.get('active')) {
+        return true;
+      }
+      const terms = this.get('selectedTerms');
+      const vocabId = vocab.get('id');
+      let hasTerms = false;
+      terms.forEach(term => {
+        if (term.belongsTo('vocabulary').id() === vocabId) {
+          hasTerms = true;
+        }
+      });
+
+      return hasTerms;
     });
   }),
 
@@ -68,8 +108,8 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedVocabulary: computed('filteredVocabularies.[]', 'vocabId', async function(){
-    const vocabs = await this.get('filteredVocabularies');
+  selectedVocabulary: computed('assignableVocabularies.[]', 'vocabId', async function(){
+    const vocabs = await this.get('assignableVocabularies');
     if(isPresent(this.get('vocabId'))){
       let vocab = vocabs.find(v => {
         return v.get('id') === this.get('vocabId');

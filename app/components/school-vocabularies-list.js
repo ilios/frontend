@@ -42,7 +42,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
       const school = this.get('school');
-      const vocabulary = this.get('store').createRecord('vocabulary', {title, school});
+      const vocabulary = this.get('store').createRecord('vocabulary', {title, school, active: true});
       const savedVocabulary = yield vocabulary.save();
       const vocabularies = yield school.get('vocabularies');
       vocabularies.pushObject(savedVocabulary);
