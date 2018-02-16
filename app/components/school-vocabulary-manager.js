@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-//import { task } from 'ember-concurrency';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
@@ -80,19 +79,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
-
-  /*
-    Commented out per SBC's request.
-    Todo: Find a better place for this task.
-    [ST 2018/02/15]
-
-  changeIsActive: task(function * (isActive){
-    const vocabulary = this.get('vocabulary');
-    vocabulary.set('active', isActive);
-    yield vocabulary.save();
-    this.set('isActive', vocabulary.get('active'));
-  }).drop(),
-  */
 
   actions: {
     changeVocabularyTitle(){
