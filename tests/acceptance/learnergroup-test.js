@@ -298,8 +298,8 @@ test('learner group calendar', async function(assert) {
   const session = server.create('session', { course });
   server.create('offering', {
     session,
-    startDate: moment().toDate(),
-    endDate: moment().add(1, 'hour').toDate(),
+    startDate: moment().hour(8).toDate(),
+    endDate: moment().hour(8).add(1, 'hour').toDate(),
     learnerGroups: [learnerGroup],
   });
 
@@ -330,14 +330,14 @@ test('learner group calendar with subgroup events', async function(assert) {
   });
   server.create('offering', {
     session,
-    startDate: moment().toDate(),
-    endDate: moment().add(1, 'hour').toDate(),
+    startDate: moment().hour(8).toDate(),
+    endDate: moment().hour(8).add(1, 'hour').toDate(),
     learnerGroups: [learnerGroup],
   });
   server.create('offering', {
     session,
-    startDate: moment().toDate(),
-    endDate: moment().add(1, 'hour').toDate(),
+    startDate: moment().hour(8).toDate(),
+    endDate: moment().hour(8).add(1, 'hour').toDate(),
     learnerGroups: [subgroup],
   });
 
