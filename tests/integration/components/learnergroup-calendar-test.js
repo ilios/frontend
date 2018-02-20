@@ -9,11 +9,9 @@ moduleForComponent('learnergroup-calendar', 'Integration | Component | learnergr
   integration: true,
 });
 
-
-
 test('shows events', async function(assert) {
   assert.expect(1);
-  const today = moment();
+  const today = moment().hour(8);
   const course = EmberObject.create({
     title: 'course title'
   });
@@ -56,7 +54,7 @@ test('shows events', async function(assert) {
 
 test('shows subgroup events', async function(assert) {
   assert.expect(1);
-  const today = moment();
+  const today = moment().hour(8);
   const course = EmberObject.create({
     title: 'course title'
   });
