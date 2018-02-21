@@ -3,7 +3,7 @@
 </div>
 
 <div class='collapsed-learnergroups-content'>
-  {{#if loadCohortSummaries.lastSuccessful.value}}
+  {{#if (is-fulfilled cohortSummaries)}}
     <table>
       <thead>
         <tr>
@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by 'title' loadCohortSummaries.lastSuccessful.value) as |obj|}}
+        {{#each (sort-by 'title' (await cohortSummaries)) as |obj|}}
           <tr>
             <td colspan=4>
               {{obj.title}}
