@@ -4206,11 +4206,11 @@ ember-rfc176-data@^0.3.0, ember-rfc176-data@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.1.tgz#6a5a4b8b82ec3af34f3010965fa96b936ca94519"
 
-ember-rl-dropdown@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/ember-rl-dropdown/-/ember-rl-dropdown-0.10.1.tgz#ca072bb44181632b8ce8bdb4721e6bcccbf93ec1"
+ember-rl-dropdown@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/ember-rl-dropdown/-/ember-rl-dropdown-0.10.2.tgz#18976f0b3a7d20dc54bedfc0be228be36eba3c5a"
   dependencies:
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.6.0"
 
 ember-router-generator@^1.0.0, ember-router-generator@^1.2.3:
   version "1.2.3"
