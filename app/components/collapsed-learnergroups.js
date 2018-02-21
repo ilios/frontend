@@ -1,61 +1,46 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
-
-const { Promise, map } = RSVP;
+import { Promise, map } from 'rsvp';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  init(){
-    this._super(...arguments);
-    this.set('cohortSummariesLoaded', []);
-    this.get('loadCohortSummaries').perform();
-  },
-  didUpdateAttrs(){
-    this._super(...arguments);
-    this.get('loadCohortSummaries').perform();
-  },
   subject: null,
   tagName: 'section',
   classNames: ['collapsed-learnergroups'],
-  cohortSummariesLoaded: null,
-  loadCohortSummaries: task(function * (){
+  cohortSummaries: computed('subject.learnerGroups.[]', async function () {
     const subject = this.get('subject');
-    if (subject){
-      let learnerGroups = yield subject.get('learnerGroups');
-      let cohorts = yield map(learnerGroups.toArray(), (group => group.get('cohort')));
-      let summaryBlocks =  cohorts.reduce((set, cohort) => {
-        let key = 'cohort' + cohort.get('id');
-        if (!Object.keys(set).includes(key)) {
-          set[key] = {
-            cohort,
-            count: 0
-          };
-        }
+    if (!subject) {
+      return [];
+    }
+    let learnerGroups = await subject.get('learnerGroups');
+    let cohorts = await map(learnerGroups.toArray(), (group => group.get('cohort')));
+    let summaryBlocks =  cohorts.reduce((set, cohort) => {
+      let key = 'cohort' + cohort.get('id');
+      if (!Object.keys(set).includes(key)) {
+        set[key] = {
+          cohort,
+          count: 0
+        };
+      }
 
-        set[key].count++;
+      set[key].count++;
 
-        return set;
-      }, {});
+      return set;
+    }, {});
 
-      return yield map(Object.keys(summaryBlocks), key => {
-        let cohort = summaryBlocks[key].cohort;
-        let count = summaryBlocks[key].count;
-        return new Promise(resolve => {
-          cohort.get('programYear').then(programYear => {
-            programYear.get('program').then(program => {
-              let title = [program.get('title'), cohort.get('title')].join(' ');
-              resolve({
-                title,
-                count
-              });
+    return await map(Object.keys(summaryBlocks), key => {
+      let cohort = summaryBlocks[key].cohort;
+      let count = summaryBlocks[key].count;
+      return new Promise(resolve => {
+        cohort.get('programYear').then(programYear => {
+          programYear.get('program').then(program => {
+            let title = [program.get('title'), cohort.get('title')].join(' ');
+            resolve({
+              title,
+              count
             });
           });
         });
       });
-    } else {
-      yield timeout(1000);
-      this.get('loadCohortSummaries').perform();
-    }
-  }).restartable(),
+    });
+  }),
 });
