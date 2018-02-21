@@ -73,7 +73,6 @@
     "ember-load": "0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-metrics": "0.12.1",
-    "ember-normalize": "1.0.0",
     "ember-noscript": "^2.0.0",
     "ember-pad": "1.2.2",
     "ember-papaparse": "1.0.0",
