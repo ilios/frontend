@@ -253,7 +253,7 @@ test('finalized/read-only mode', function(assert){
   });
 });
 
-test('delete', function(assert){
+test('delete', async function(assert){
   assert.expect(4);
 
   let school = EmberObject.create({ id() { return 1; }});
@@ -293,17 +293,15 @@ test('delete', function(assert){
     report.set('toLevelSequenceBlocks', resolve([ block1 ])); // fake deletion.
   });
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report remove='removeSequenceBlock'}}`);
-  return wait().then(() => {
-    this.$('tbody tr:eq(0) td:eq(6) .remove').click();
-    assert.equal(this.$('tbody tr:eq(1) .confirm-message').text().trim().indexOf('Are you sure you want to delete'), 0,
-      'Confirmation message is visible.');
-    assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .remove').length, 1,'Delete button is visible.');
-    assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .done').length, 1,'Cancel button is visible.');
-    this.$('tbody tr:eq(1) .confirm-buttons .remove').click();
-  });
+  await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
+  assert.equal(this.$('tbody tr:eq(1) .confirm-message').text().trim().indexOf('Are you sure you want to delete'), 0,
+    'Confirmation message is visible.');
+  assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .remove').length, 1,'Delete button is visible.');
+  assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .done').length, 1,'Cancel button is visible.');
+  await this.$('tbody tr:eq(1) .confirm-buttons .remove').click();
 });
 
-test('cancel delete', function(assert){
+test('cancel delete', async function(assert){
   assert.expect(2);
 
   let school = EmberObject.create({ id() { return 1; }});
@@ -339,12 +337,10 @@ test('cancel delete', function(assert){
 
   this.set('report', report);
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report}}`);
-  return wait().then(() => {
-    this.$('tbody tr:eq(0) td:eq(6) .remove').click();
-    assert.equal(this.$('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
-    this.$('tbody tr:eq(1) .confirm-buttons .done').click();
-    assert.equal(this.$('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
-  });
+  await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
+  assert.equal(this.$('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
+  await this.$('tbody tr:eq(1) .confirm-buttons .done').click();
+  assert.equal(this.$('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
 });
 
 

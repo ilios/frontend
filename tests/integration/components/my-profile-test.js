@@ -128,7 +128,7 @@ test('generates token when asked with good expiration date', function(assert) {
   });
 });
 
-test('clear and reset from new token screen', function(assert) {
+test('clear and reset from new token screen', async function(assert) {
   assert.expect(4);
   const cancel = '.bigcancel:eq(0)';
   const go = '.bigadd:eq(0)';
@@ -149,15 +149,13 @@ test('clear and reset from new token screen', function(assert) {
   });
   this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
   this.$(go).click();
+  await wait();
 
-  return wait().then(()=> {
-    assert.equal(this.$(newToken).val().trim(), 'new token');
-    assert.equal(this.$(newTokenForm).length, 0);
-    this.$(cancel).click();
-    this.$(newTokenButton).click();
-    assert.equal(this.$(newTokenForm).length, 1);
-
-  });
+  assert.equal(this.$(newToken).val().trim(), 'new token');
+  assert.equal(this.$(newTokenForm).length, 0);
+  await this.$(cancel).click();
+  await this.$(newTokenButton).click();
+  assert.equal(this.$(newTokenForm).length, 1);
 });
 
 test('clicking button fires show token event', function(assert) {

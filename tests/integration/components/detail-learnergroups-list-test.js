@@ -1,14 +1,14 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-const { resolve } = RSVP;
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('detail-learnergroups-list', 'Integration | Component | detail learnergroups list', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   const set1 = 'fieldset:eq(0)';
   const set1Legend = set1 + ' legend';
   const set1Group1 = set1 + ' li:eq(0)';
@@ -92,6 +92,7 @@ test('it renders', function(assert) {
   this.set('nothing', parseInt);
 
   this.render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups remove=(action nothing)}}`);
+  await wait();
 
   assert.equal(this.$(set1Legend).text().trim(), 'tlg1 ( )');
   assert.equal(this.$(set1Group1).text().trim(), 'tlg1 (2)');

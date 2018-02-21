@@ -133,7 +133,7 @@ test('check all checks all', function(assert) {
 
 });
 
-test('check some sets indeterminate state', function(assert) {
+test('check some sets indeterminate state', async function(assert) {
   let school = EmberObject.create({
     id: 1,
     cohorts: resolve([])
@@ -176,17 +176,17 @@ test('check some sets indeterminate state', function(assert) {
   const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
   const secondStudent = 'tbody tr:eq(1) td:eq(0) input';
 
-  return wait().then(() => {
-    assert.notOk(this.$(checkAll).prop('checked'), 'check all is not initially checked');
-    assert.notOk(this.$(checkAll).prop('indeterminate'), 'check all is not initially indeterminate');
-    assert.notOk(this.$(firstStudent).prop('checked'), 'first student is not initiall checked');
-    assert.notOk(this.$(secondStudent).prop('checked'), 'second student is not initiall checked');
+  await wait();
 
-    this.$(firstStudent).click();
-    assert.ok(this.$(checkAll).prop('indeterminate'), 'check all is indeterminate with one student checked');
-    this.$(secondStudent).click();
-    assert.ok(this.$(checkAll).prop('checked'), 'check all is checked with both students checked');
-  });
+  assert.notOk(this.$(checkAll).prop('checked'), 'check all is not initially checked');
+  assert.notOk(this.$(checkAll).prop('indeterminate'), 'check all is not initially indeterminate');
+  assert.notOk(this.$(firstStudent).prop('checked'), 'first student is not initiall checked');
+  assert.notOk(this.$(secondStudent).prop('checked'), 'second student is not initiall checked');
+
+  await this.$(firstStudent).click();
+  assert.ok(this.$(checkAll).prop('indeterminate'), 'check all is indeterminate with one student checked');
+  await this.$(secondStudent).click();
+  assert.ok(this.$(checkAll).prop('checked'), 'check all is checked with both students checked');
 });
 
 test('when some are selected check all checks all', function(assert) {

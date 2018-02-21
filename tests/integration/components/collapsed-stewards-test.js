@@ -1,16 +1,14 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-
-const { resolve } = RSVP;
 
 moduleForComponent('collapsed-stewards', 'Integration | Component | collapsed stewards', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   assert.expect(5);
   let school1 = EmberObject.create({
     id: 1,
@@ -62,10 +60,10 @@ test('it renders', function(assert) {
 
 
   this.set('programYear', programYear);
-  this.on('click', parseInt);
+  this.on('nothing', () => {});
   this.render(hbs`{{collapsed-stewards
     programYear=programYear
-    expand=(action 'click')
+    expand=(action 'nothing')
   }}`);
 
   const title = '.title';
@@ -77,13 +75,12 @@ test('it renders', function(assert) {
   const school1Departments = `${school1Row} td:eq(1)`;
   const school2Departments = `${school2Row} td:eq(1)`;
 
-  return wait().then(()=>{
-    assert.equal(this.$(title).text().trim(), 'Stewarding Schools and Departments (3)');
-    assert.equal(this.$(school1Title).text().trim(), 'school1');
-    assert.equal(this.$(school2Title).text().trim(), 'school2');
-    assert.equal(this.$(school1Departments).text().trim(), '2');
-    assert.equal(this.$(school2Departments).text().trim(), '1');
-  });
+  await wait();
+  assert.equal(this.$(title).text().trim(), 'Stewarding Schools and Departments (3)');
+  assert.equal(this.$(school1Title).text().trim(), 'school1');
+  assert.equal(this.$(school2Title).text().trim(), 'school2');
+  assert.equal(this.$(school1Departments).text().trim(), '2');
+  assert.equal(this.$(school2Departments).text().trim(), '1');
 });
 
 test('clicking the header expands the list', function(assert) {
