@@ -47,7 +47,7 @@ const PrepositionObject = EmberObject.extend({
   }),
   active: computed('model', 'type', function() {
     const type = this.get('type');
-    if (['session type', 'term'].contains(type)) {
+    if (['session type', 'term'].includes(type)) {
       return this.get('model').get('active');
     }
     return true;
