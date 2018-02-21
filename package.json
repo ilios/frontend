@@ -72,6 +72,7 @@
     "ember-light-table": "^1.11.0",
     "ember-load": "0.0.12",
     "ember-load-initializers": "^1.0.0",
+    "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.12.1",
     "ember-noscript": "^2.0.0",
     "ember-pad": "1.2.2",
