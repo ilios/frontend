@@ -454,6 +454,7 @@ export default {
     'secondaryCohorts': "Cohortes Secondaires",
     'select': "Sélectionnez",
     'selectAcademicYear': "Choisissez l’année scolaire",
+    'selectCohortsToAttach': "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau",
     'selectCourse': 'Choisi cours',
     'selected': "Sélectionné",
     'selectedLearnerGroups': "Groupes d’Étudiants Selectionées",
