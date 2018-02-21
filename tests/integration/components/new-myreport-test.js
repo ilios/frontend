@@ -279,8 +279,7 @@ test('can search for user #2506', async function(assert) {
   });
   this.register('service:store', storeMock);
 
-  this.on('close', parseInt);
-  this.render(hbs`{{new-myreport close=(action 'close')}}`);
+
 
   const schoolSelect = 'select:eq(0)';
   const subjects = `select:eq(1) option`;
@@ -293,18 +292,20 @@ test('can search for user #2506', async function(assert) {
   const firstResult = `${results}:eq(1)`;
   const selectedUser = `.removable-list`;
 
+  this.on('close', parseInt);
+  this.render(hbs`{{new-myreport close=(action 'close')}}`);
   await wait();
   this.$(schoolSelect).val(null).change();
   await wait();
   assert.equal(this.$(targetSubject).val(), 'course');
   this.$(objectSelect).val(targetObject).change();
-  await wait();
 
   assert.equal(this.$(userSearch).length, 1);
   this.$(input).val('abcd').trigger('input');
+  await wait();
 
-  return wait().then(()=>{
-    this.$(firstResult).click();
-    assert.equal(this.$(selectedUser).text().trim(), 'Test Person');
-  });
+  await this.$(firstResult).click();
+  assert.equal(this.$(selectedUser).text().trim(), 'Test Person');
+
+  await wait();
 });

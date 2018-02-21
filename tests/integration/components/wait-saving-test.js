@@ -14,7 +14,7 @@ moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
 test('it renders', function(assert) {
   assert.expect(1);
   let modalDialogService = getOwner(this).lookup('service:modal-dialog');
-  modalDialogService.destinationElementId = 'modal-testing-div';
+  modalDialogService.set('destinationElementId', 'modal-testing-div');
   this.render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
 
   assert.equal(this.$().text().trim(), 'saving... one moment...');

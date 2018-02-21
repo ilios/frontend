@@ -1,8 +1,8 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-const { resolve } = RSVP;
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('collapsed-learnergroups', 'Integration | Component | collapsed learnergroups', {
   integration: true
@@ -10,7 +10,7 @@ moduleForComponent('collapsed-learnergroups', 'Integration | Component | collaps
 
 
 
-test('displays summary data', function(assert) {
+test('displays summary data', async function(assert) {
   assert.expect(6);
   let cohort1 = EmberObject.create({
     id: '1',
@@ -56,6 +56,7 @@ test('displays summary data', function(assert) {
   this.set('subject', subject);
   this.set('nothing', parseInt);
   this.render(hbs`{{collapsed-learnergroups subject=subject expand=(action nothing)}}`);
+  await wait();
   assert.equal(this.$('.title').text().trim(), 'Learner Groups (4)');
   assert.equal(this.$('table tr').length, 3);
   assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'program 1 cohort 1');

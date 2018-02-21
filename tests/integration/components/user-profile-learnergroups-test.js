@@ -68,23 +68,22 @@ let learnerGroup2 = EmberObject.create({
   cohort: resolve(cohort2),
 });
 
-let userlearnergroups = [learnerGroup1, learnerGroup2];
+let userLearnerGroups = [learnerGroup1, learnerGroup2];
 
 let user = EmberObject.create({
-  learnerGroups: resolve(userlearnergroups),
+  learnerGroups: resolve(userLearnerGroups),
 });
 
 
-test('it renders', function(assert) {
+test('it renders', async function(assert) {
   this.set('user', user);
   this.render(hbs`{{user-profile-learnergroups user=user}}`);
   const learnerGroups = 'ul:eq(0) li';
   const firstLearnerGroup = `${learnerGroups}:eq(0)`;
   const secondLearnerGroup = `${learnerGroups}:eq(1)`;
 
-  return wait().then(()=>{
-    assert.equal(this.$(learnerGroups).length, 2, 'correct number of learner groups');
-    assert.equal(this.$(firstLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOD:Program2Cohort2—LearnerGroup2', 'cohort first learner group');
-    assert.equal(this.$(secondLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOM:Program1Cohort1—LearnerGroup1', 'cohort second learner group');
-  });
+  await wait();
+  assert.equal(this.$(learnerGroups).length, 2, 'correct number of learner groups');
+  assert.equal(this.$(firstLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOD:Program2Cohort2—LearnerGroup2', 'cohort first learner group');
+  assert.equal(this.$(secondLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOM:Program1Cohort1—LearnerGroup1', 'cohort second learner group');
 });

@@ -63,7 +63,7 @@ test('it renders', function(assert) {
   });
 });
 
-test('finalize report', function(assert) {
+test('finalize report', async function(assert) {
   assert.expect(8);
 
   let school = EmberObject.create({ id() { return 1; }});
@@ -109,28 +109,26 @@ test('finalize report', function(assert) {
 
   this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
 
-  return wait().then(() => {
-    assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
-    this.$('.curriculum-inventory-report-header .finalize').click();
-    assert.equal(this.$('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
-    assert.ok(
-      this.$('.confirm-finalize .confirm-message').text().trim().indexOf('By finalizing this report') === 0,
-      'Finalize confirmation message is visible'
-    );
-    this.$('.confirm-finalize .confirm-buttons .finalize').click();
-    return wait().then(() => {
-      assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-finalization.');
-      assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 1,
-        'Lock icon is visible next to title post-finalization.'
-      );
-      assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 0,
-        'Finalize button is not visible post-finalization.'
-      );
-    });
-  });
+  await wait();
+  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
+  await this.$('.curriculum-inventory-report-header .finalize').click();
+  assert.equal(this.$('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
+  assert.ok(
+    this.$('.confirm-finalize .confirm-message').text().trim().indexOf('By finalizing this report') === 0,
+    'Finalize confirmation message is visible'
+  );
+  await this.$('.confirm-finalize .confirm-buttons .finalize').click();
+  await wait();
+  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-finalization.');
+  assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 1,
+    'Lock icon is visible next to title post-finalization.'
+  );
+  assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 0,
+    'Finalize button is not visible post-finalization.'
+  );
 });
 
-test('start finalizing report, then cancel', function(assert){
+test('start finalizing report, then cancel', async function(assert){
   assert.expect(3);
   let school = EmberObject.create({ id() { return 1; }});
 
@@ -162,17 +160,13 @@ test('start finalizing report, then cancel', function(assert){
 
   this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
 
-  return wait().then(() => {
-    this.$('.curriculum-inventory-report-header .finalize').click();
-    this.$('.confirm-finalize .confirm-buttons .done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
-      assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 0,
-        'Lock icon is not visible post-cancellation.'
-      );
-      assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 1,
-        'Finalize button is visible post-cancellation.'
-      );
-    });
-  });
+  await this.$('.curriculum-inventory-report-header .finalize').click();
+  await this.$('.confirm-finalize .confirm-buttons .done').click();
+  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
+  assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 0,
+    'Lock icon is not visible post-cancellation.'
+  );
+  assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 1,
+    'Finalize button is visible post-cancellation.'
+  );
 });

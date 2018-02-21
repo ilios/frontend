@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -14,10 +13,6 @@ const nothing = ()=>{};
 
 moduleForComponent('offering-form', 'Integration | Component | offering form', {
   integration: true,
-  beforeEach(){
-    let modalDialogService = getOwner(this).lookup('service:modal-dialog');
-    modalDialogService.destinationElementId = 'ember-testing';
-  }
 });
 
 test('room input does not show by default', function(assert) {

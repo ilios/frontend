@@ -116,7 +116,7 @@ test('click user fires add user', function(assert) {
   });
 });
 
-test('can not add users twice', function(assert) {
+test('can not add users twice', async function(assert) {
   assert.expect(6);
   let user1 = EmberObject.create({
     id: 1,
@@ -145,15 +145,14 @@ test('can not add users twice', function(assert) {
   const firstResult = `${results}:eq(1)`;
   const secondResult = `${results}:eq(2)`;
 
-  this.$(search).val('test').trigger('keyup');
+  await this.$(search).val('test').trigger('keyup');
+  await wait();
 
-  return wait().then(()=>{
-    assert.equal(this.$(resultsCount).text().trim(), '2 results');
-    assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
-    assert.notOk(this.$(firstResult).hasClass('clickable'));
-    assert.equal(this.$(secondResult).text().replace(/[\t\n\s]+/g, ""), 'testperson2testemail2');
-    assert.ok(this.$(secondResult).hasClass('clickable'));
-    this.$(firstResult).click();
-    this.$(secondResult).click();
-  });
+  assert.equal(this.$(resultsCount).text().trim(), '2 results');
+  assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+  assert.notOk(this.$(firstResult).hasClass('clickable'));
+  assert.equal(this.$(secondResult).text().replace(/[\t\n\s]+/g, ""), 'testperson2testemail2');
+  assert.ok(this.$(secondResult).hasClass('clickable'));
+  await this.$(firstResult).click();
+  await this.$(secondResult).click();
 });
