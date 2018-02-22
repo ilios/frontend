@@ -8,26 +8,26 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 var application;
 
-module('Acceptance: FourOhFour', {
-  beforeEach: function() {
+module('Acceptance: FourOhFour', function(hooks) {
+  hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-  },
+  });
 
-  afterEach: function() {
+  hooks.afterEach(function() {
     destroyApp(application);
-  }
-});
+  });
 
-test('visiting /four-oh-four', async function(assert) {
-  await visit('/four-oh-four');
+  test('visiting /four-oh-four', async function(assert) {
+    await visit('/four-oh-four');
 
-  assert.equal(currentPath(), 'fourOhFour');
-  assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
-});
+    assert.equal(currentPath(), 'fourOhFour');
+    assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
+  });
 
-test('visiting /nothing', async function(assert) {
-  await visit('/nothing');
+  test('visiting /nothing', async function(assert) {
+    await visit('/nothing');
 
-  assert.equal(currentPath(), 'fourOhFour');
+    assert.equal(currentPath(), 'fourOhFour');
+  });
 });

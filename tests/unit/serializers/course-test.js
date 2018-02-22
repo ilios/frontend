@@ -1,28 +1,16 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForModel('course', 'Unit | Serializer | Course ', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'serializer:course',
-    'service:i18n',
-    'model:school',
-    'model:user',
-    'model:course',
-    'model:course-clerkship-type',
-    'model:session',
-    'model:offering',
-    'model:term',
-    'model:objective',
-    'model:cohort',
-    'model:mesh-descriptor',
-    'model:course-learning-material'
-  ]
-});
+import { run } from '@ember/runloop';
 
-test('it serializes records', function(assert) {
-  var record = this.subject();
+module('Unit | Serializer | Course ', function(hooks) {
+  setupTest(hooks);
 
-  var serializedRecord = record.serialize();
+  test('it serializes records', function(assert) {
+    var record = run(() => this.owner.lookup('service:store').createRecord('course'));
 
-  assert.ok(serializedRecord);
+    var serializedRecord = record.serialize();
+
+    assert.ok(serializedRecord);
+  });
 });

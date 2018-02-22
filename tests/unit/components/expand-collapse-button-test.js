@@ -1,16 +1,17 @@
 import { run } from '@ember/runloop';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForComponent('expand-collapse-button', 'Unit | Component | expand collapse button ', {
-  unit: true
-});
+module('Unit | Component | expand collapse button ', function(hooks) {
+  setupTest(hooks);
 
-test('has default false value', function(assert) {
-  assert.expect(1);
+  test('has default false value', function(assert) {
+    assert.expect(1);
 
-  run(this, () => {
-    const component = this.subject();
+    run(this, () => {
+      const component = this.owner.factoryFor('component:expand-collapse-button').create();
 
-    assert.equal(component.get('value'), false, 'value is false by default');
+      assert.equal(component.get('value'), false, 'value is false by default');
+    });
   });
 });

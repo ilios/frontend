@@ -1,5 +1,5 @@
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
-import wait from 'ember-test-helpers/wait';
+import { settled } from '@ember/test-helpers';
 
 export default function selectable(selector, options = {}) {
   return {
@@ -16,10 +16,10 @@ export default function selectable(selector, options = {}) {
           el.selectedIndex = option.index;
           triggerEvent(selectOptions, 'change');
         }
-        await wait();
-        await wait();
-        await wait();
-        return wait();
+        await settled();
+        await settled();
+        await settled();
+        return settled();
       };
     }
   };

@@ -1,15 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:pending-user-updates', 'Unit | Controller | pending user updates', {
-  needs: [
-    'service:flashMessages',
-    'service:iliosMetrics',
-    'service:headData',
-  ],
-});
+module('Unit | Controller | pending user updates', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let controller = this.subject();
-  assert.ok(controller);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let controller = this.owner.lookup('controller:pending-user-updates');
+    assert.ok(controller);
+  });
 });

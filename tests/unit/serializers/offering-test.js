@@ -1,20 +1,16 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForModel('offering', 'Unit | Serializer | offering', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'serializer:offering',
-    'model:session',
-    'model:learner-group',
-    'model:instructor-group',
-    'model:user',
-  ]
-});
+import { run } from '@ember/runloop';
 
-test('it removes all non postable fields', function(assert) {
-  var record = this.subject();
+module('Unit | Serializer | offering', function(hooks) {
+  setupTest(hooks);
 
-  var serializedRecord = record.serialize();
-  
-  assert.ok(!("updatedAt" in serializedRecord));
+  test('it removes all non postable fields', function(assert) {
+    var record = run(() => this.owner.lookup('service:store').createRecord('offering'));
+
+    var serializedRecord = record.serialize();
+    
+    assert.ok(!("updatedAt" in serializedRecord));
+  });
 });

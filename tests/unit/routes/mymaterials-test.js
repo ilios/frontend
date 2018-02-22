@@ -1,10 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:mymaterials', 'Unit | Route | mymaterials', {
-  needs: ['service:commonAjax', 'service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:iliosConfig', 'service:session'],
-});
+module('Unit | Route | mymaterials', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:mymaterials');
+    assert.ok(route);
+  });
 });

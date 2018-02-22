@@ -6,8 +6,8 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 let application;
 let url = '/users/4136';
 
-module('Acceptance: User', {
-  beforeEach() {
+module('Acceptance: User', function(hooks) {
+  hooks.beforeEach(function() {
     application = startApp();
     let userObject = {
       id: 4136,
@@ -28,30 +28,30 @@ module('Acceptance: User', {
     server.create('cohort', { programYearId: 3 });
     server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
     setupAuthentication(application, userObject);
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function() {
     run(application, 'destroy');
-  }
-});
+  });
 
-test('can search for users', async function(assert) {
-  server.createList('user', 20, { email: 'user@example.edu' });
-  server.createList('authentication', 20);
+  test('can search for users', async function(assert) {
+    server.createList('user', 20, { email: 'user@example.edu' });
+    server.createList('authentication', 20);
 
-  const userSearch = '.user-search input';
-  const secondResult = '.user-search .results li:eq(2)';
-  const secondResultUsername = `${secondResult} .name`;
-  const secondResultEmail = `${secondResult} .email`;
-  const name = '.user-display-name';
+    const userSearch = '.user-search input';
+    const secondResult = '.user-search .results li:eq(2)';
+    const secondResultUsername = `${secondResult} .name`;
+    const secondResultEmail = `${secondResult} .email`;
+    const name = '.user-display-name';
 
-  await visit(url);
-  await fillIn(userSearch, 'son');
-  await triggerEvent(userSearch, 'keyup');
-  assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
-  assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
+    await visit(url);
+    await fillIn(userSearch, 'son');
+    await triggerEvent(userSearch, 'keyup');
+    assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
+    assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
 
-  await click(secondResultUsername);
-  assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-  assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
+    await click(secondResultUsername);
+    assert.equal(currentURL(), '/users/2', 'new user profile is shown');
+    assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
+  });
 });
