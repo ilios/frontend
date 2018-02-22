@@ -78,6 +78,40 @@ module.exports = function (environment) {
         defaultBreakpoints: ['mobile', 'laptop']
       }
     },
+    fontawesome: {
+      enableExperimentalBuildTimeTransform: false,
+      defaultPrefix: 'fas',
+      icons: {
+        'free-solid-svg-icons': 'all',
+        // //icons which are used dynamically and cannot be detected at build time
+        // 'free-solid-svg-icons': [
+        //   'ban',
+        //   'check',
+        //   'clock',
+        //   'cloud',
+        //   'download',
+        //   'ellipsis-h',
+        //   'exclamation-circle',
+        //   'external-link-square-alt',
+        //   'file-audio',
+        //   'file-pdf',
+        //   'file-powerpoint',
+        //   'file-video',
+        //   'file',
+        //   'info-circle',
+        //   'link',
+        //   'paragraph',
+        //   'sort-alpha-down',
+        //   'sort-alpha-up',
+        //   'sort-numeric-down',
+        //   'sort-numeric-up',
+        //   'sort',
+        //   'spinner',
+        //   'star',
+        //   'star-half-alt'
+        // ],
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

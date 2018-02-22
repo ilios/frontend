@@ -13,7 +13,7 @@ test('it renders with no timed release', function (assert) {
   });
   this.set('row', row);
   this.set('value', 'Final');
-  const icon = 'i.fa-clock-o';
+  const icon = '.fa-clock';
   this.render(hbs`{{learning-material-table-status value=value row=row}}`);
   assert.equal(this.$(icon).length, 0);
   assert.equal(this.$().text().trim(), 'Final');
@@ -26,7 +26,7 @@ test('it renders with start date', function (assert) {
   });
   this.set('row', row);
   this.set('value', 'Final');
-  const icon = 'i.fa-clock-o';
+  const icon = '.fa-clock';
   this.render(hbs`{{learning-material-table-status value=value row=row}}`);
   assert.equal(this.$(icon).length, 1);
   assert.equal(this.$().text().trim(), 'Final');
@@ -39,7 +39,7 @@ test('it renders with end date', function (assert) {
   });
   this.set('row', row);
   this.set('value', 'Final');
-  const icon = 'i.fa-clock-o';
+  const icon = '.fa-clock';
   this.render(hbs`{{learning-material-table-status value=value row=row}}`);
   assert.equal(this.$(icon).length, 1);
   assert.equal(this.$().text().trim(), 'Final');
@@ -52,7 +52,7 @@ test('it renders with both start and end date', function (assert) {
   });
   this.set('row', row);
   this.set('value', 'Final');
-  const icon = 'i.fa-clock-o';
+  const icon = '.fa-clock';
   this.render(hbs`{{learning-material-table-status value=value row=row}}`);
   assert.equal(this.$(icon).length, 1);
   assert.equal(this.$().text().trim(), 'Final');

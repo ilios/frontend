@@ -93,9 +93,9 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
     const schoolPicker = '[data-test-school]';
     const assignableCohorts = '[data-test-assignable-cohorts] li';
-    const promoteFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) i.add`;
-    const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) i.remove`;
-    const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) i.add`;
+    const promoteFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .add`;
+    const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .remove`;
+    const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) .add`;
 
     assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
     assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');

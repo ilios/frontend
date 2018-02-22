@@ -23,7 +23,7 @@ export default Mixin.create({
   }),
   menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     if(this.get('publishTarget.publishedAsTbd')){
-      return 'clock-o';
+      return 'clock';
     }
     if(this.get('publishTarget.isPublished')){
       return 'star';

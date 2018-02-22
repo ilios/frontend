@@ -3,7 +3,7 @@
   <ul data-test-instructor-groups>
     {{#each (sort-by "title" (await instructorGroups)) as |instructorGroup|}}
       <li {{action "removeInstructorGroup" instructorGroup}}>
-        {{fa-icon "group"}} {{instructorGroup.title}} {{fa-icon "times" class="remove"}}
+        {{fa-icon "users"}} {{instructorGroup.title}} {{fa-icon "times" class="remove"}}
       </li>
     {{/each}}
   </ul>

@@ -69,10 +69,10 @@ test('displays summary data', async function(assert) {
   assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), '1 has a parent');
   assert.equal(this.$('tr:eq(3) td:eq(0)').text().trim(), '1 has MeSH');
 
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-circle'), 'correct icon for parent objectives');
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('maybe'), 'correct class for parent objectives');
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-circle'), 'correct icon for mesh links');
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('maybe'), 'correct class for mesh links');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('fa-circle'), 'correct icon for parent objectives');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('maybe'), 'correct class for parent objectives');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('fa-circle'), 'correct icon for mesh links');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('maybe'), 'correct class for mesh links');
 });
 
 test('clicking expand icon opens full view', async function(assert) {
@@ -107,8 +107,8 @@ test('icons all parents correctly', async function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
 
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-circle'), 'has the correct icon');
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('yes'), 'icon has the right class');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('fa-circle'), 'has the correct icon');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('yes'), 'icon has the right class');
 });
 
 test('icons no parents correctly', async function(assert) {
@@ -125,8 +125,8 @@ test('icons no parents correctly', async function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
 
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('fa-ban'), 'has the correct icon');
-  assert.ok(this.$('tr:eq(1) td:eq(1) i').hasClass('no'), 'icon has the right class');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('fa-ban'), 'has the correct icon');
+  assert.ok(this.$('tr:eq(1) td:eq(1) svg').hasClass('no'), 'icon has the right class');
 });
 
 test('icons all mesh correctly', async function(assert) {
@@ -143,8 +143,8 @@ test('icons all mesh correctly', async function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
 
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-circle'), 'has the correct icon');
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('yes'), 'icon has the right class');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('fa-circle'), 'has the correct icon');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('yes'), 'icon has the right class');
 });
 
 test('icons no mesh correctly', async function(assert) {
@@ -161,6 +161,6 @@ test('icons no mesh correctly', async function(assert) {
   assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
   assert.equal(this.$('table tr').length, 4);
 
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('fa-ban'), 'has the correct icon');
-  assert.ok(this.$('tr:eq(1) td:eq(2) i').hasClass('no'), 'icon has the right class');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('fa-ban'), 'has the correct icon');
+  assert.ok(this.$('tr:eq(1) td:eq(2) svg').hasClass('no'), 'icon has the right class');
 });

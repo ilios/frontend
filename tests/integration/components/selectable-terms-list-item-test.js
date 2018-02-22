@@ -22,8 +22,8 @@ test('selected term', async function(assert) {
   this.render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove='remove'}}`);
 
   assert.equal(this.$('.selected').length, 1);
-  assert.equal(this.$('.actions .fa-remove').length, 1);
-  this.$('.fa-remove').click();
+  assert.equal(this.$('.actions .fa-times').length, 1);
+  this.$('.fa-times').click();
 });
 
 test('unselected term', async function(assert) {

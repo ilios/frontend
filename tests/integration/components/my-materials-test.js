@@ -95,7 +95,7 @@ test('it renders with materials', function(assert) {
 
   const firstLmTitle = `${materials}:eq(0) td:eq(2)`;
   const firstLmLink = `${firstLmTitle} a:eq(0)`;
-  const firstLmTypeIcon = `${firstLmTitle} i.fa-file-pdf-o`;
+  const firstLmTypeIcon = `${firstLmTitle} .fa-file-pdf`;
   const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
   const firstLmSessionTitle = `${materials}:eq(0) td:eq(0)`;
   const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
@@ -104,7 +104,7 @@ test('it renders with materials', function(assert) {
 
   const secondLmTitle = `${materials}:eq(1) td:eq(2)`;
   const secondLmLink = `${secondLmTitle} a`;
-  const secondLmTypeIcon = `${secondLmTitle} i.fa-link`;
+  const secondLmTypeIcon = `${secondLmTitle} .fa-link`;
 
   const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
   const secondLmSessionTitle = `${materials}:eq(1) td:eq(0)`;
@@ -113,7 +113,7 @@ test('it renders with materials', function(assert) {
 
   const thirdLmTitle = `${materials}:eq(2) td:eq(2)`;
   const thirdLmLink = `${thirdLmTitle} a`;
-  const thirdLmTypeIcon = `${thirdLmTitle} i.fa-paragraph`;
+  const thirdLmTypeIcon = `${thirdLmTitle} .fa-paragraph`;
   const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
   const thirdLmSessionTitle = `${materials}:eq(2) td:eq(0)`;
   const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
@@ -121,14 +121,14 @@ test('it renders with materials', function(assert) {
 
   const fourthLmTitle = `${materials}:eq(3) td:eq(2)`;
   const fourthLmLink = `${fourthLmTitle} a`;
-  const fourthLmTypeIcon = `${fourthLmTitle} i.fa-file`;
+  const fourthLmTypeIcon = `${fourthLmTitle} .fa-file`;
   const fourthLmCourseTitle = `${materials}:eq(3) td:eq(1)`;
   const fourthLmSessionTitle = `${materials}:eq(3) td:eq(0)`;
   const fourthLmInstructor = `${materials}:eq(3) td:eq(3)`;
   const fourthLmFirstOffering = `${materials}:eq(3) td:eq(4)`;
 
   const fifthLmTitle = `${materials}:eq(4) td:eq(2)`;
-  const fifthLmTypeIcon = `${fifthLmTitle} i.fa-clock-o`;
+  const fifthLmTypeIcon = `${fifthLmTitle} .fa-clock`;
   const fifthLmCourseTitle = `${materials}:eq(4) td:eq(1)`;
   const fifthLmSessionTitle = `${materials}:eq(4) td:eq(0)`;
   const fifthLmInstructor = `${materials}:eq(4) td:eq(3)`;

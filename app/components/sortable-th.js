@@ -17,9 +17,9 @@ export default Component.extend({
 
     if(sortedBy){
       if(sortedAscending){
-        return sortType === 'numeric'?'sort-numeric-asc':'sort-alpha-asc';
+        return sortType === 'numeric'?'sort-numeric-up':'sort-alpha-up';
       } else {
-        return sortType === 'numeric'?'sort-numeric-desc':'sort-alpha-desc';
+        return sortType === 'numeric'?'sort-numeric-down':'sort-alpha-down';
       }
     } else {
       return 'sort';

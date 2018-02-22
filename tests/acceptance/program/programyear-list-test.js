@@ -133,9 +133,9 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     this.server.create('cohort', { programYearId: 1});
     await visit(url);
     for(let i =2; i< 6; i++){
-      let icon = find(`.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(${i+1}) i`);
+      let icon = find(`.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(${i+1}) svg`);
       assert.ok(icon);
-      assert.ok(icon.classList.contains('fa-warning'));
+      assert.ok(icon.classList.contains('fa-exclamation-triangle'));
     }
   });
 
@@ -220,10 +220,10 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     assert.equal(getTableDataText(0, 0).textContent.trim(), academicYear, 'academic year shown');
     const classOfYear = `Class of ${(thisYear + 4).toString()}`;
     assert.equal(getTableDataText(0, 1).textContent.trim(), classOfYear, 'cohort class year shown');
-    assert.ok(getTableDataText(0, 2, 'i').classList.contains('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 3, 'i').classList.contains('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 4, 'i').classList.contains('fa-warning'), 'warning label shown');
-    assert.ok(getTableDataText(0, 5, 'i').classList.contains('fa-warning'), 'warning label shown');
+    assert.ok(getTableDataText(0, 2, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
+    assert.ok(getTableDataText(0, 3, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
+    assert.ok(getTableDataText(0, 4, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
+    assert.ok(getTableDataText(0, 5, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
     assert.equal(getTableDataText(0, 6, 'span').textContent.trim(), 'Not Published', 'unpublished shown');
   });
 
@@ -301,8 +301,8 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     assert.expect(6);
     const firstProgramYearRow = '.list tbody tr:nth-of-type(1)';
     const secondProgramYearRow = '.list tbody tr:nth-of-type(2)';
-    const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(7) i:nth-of-type(1)`;
-    const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) i:nth-of-type(1)`;
+    const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
+    const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
     const program = this.server.create('program',  {
       school: this.school
     });

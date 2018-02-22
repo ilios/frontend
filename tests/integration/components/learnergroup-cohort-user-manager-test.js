@@ -16,7 +16,7 @@ test('it renders', function(assert) {
   const user1LastName = 'tbody tr:eq(0) td:eq(2)';
   const user1CampusId = 'tbody tr:eq(0) td:eq(3)';
   const user1Email = 'tbody tr:eq(0) td:eq(4)';
-  const user2Disabled = 'tbody tr:eq(1) td:eq(0) i';
+  const user2Disabled = 'tbody tr:eq(1) td:eq(0) svg';
   const user2FirstName = 'tbody tr:eq(1) td:eq(1)';
   const user2LastName = 'tbody tr:eq(1) td:eq(2)';
   const user2CampusId = 'tbody tr:eq(1) td:eq(3)';

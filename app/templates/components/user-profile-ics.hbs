@@ -7,7 +7,7 @@
       class="refresh-key" {{action (perform refreshKey)}}
     >
       {{fa-icon
-        (if refreshKey.isRunning "spinner" "refresh")
+        (if refreshKey.isRunning "spinner" "sync")
         spin=(if refreshKey.isRunning true false)
       }}
     </button>

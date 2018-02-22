@@ -11,7 +11,7 @@
   <ul>
     {{#each (sort-by "lastName" directors) as |user|}}
       <li {{action "removeDirector" user}}>
-        {{user.fullName}} {{fa-icon "remove" class="remove"}}
+        {{user.fullName}} {{fa-icon "times" class="remove"}}
       </li>
     {{/each}}
   </ul>

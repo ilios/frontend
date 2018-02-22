@@ -12,7 +12,7 @@ export default {
     scope: '[data-test-directors] ul',
     itemScope: 'li',
     item: {
-      remove: clickable('i'),
+      remove: clickable('.remove'),
     }
   }),
   directorSearch: {
@@ -45,7 +45,7 @@ export default {
     scope: '[data-test-administrators] ul',
     itemScope: 'li',
     item: {
-      remove: clickable('i'),
+      remove: clickable('.remove'),
     }
   }),
 };

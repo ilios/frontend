@@ -32,7 +32,7 @@ test('it renders', function(assert) {
   assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
   assert.equal(this.$('td:eq(1) button').text().trim(), 'Add New');
   assert.equal(this.$('td:eq(2) button').text().trim(), 'Add New');
-  assert.equal(this.$('td:eq(3) i').length, 1);
+  assert.equal(this.$('td:eq(3) svg').length, 1);
 });
 
 test('renders removable', function(assert) {
@@ -138,7 +138,7 @@ test('can trigger removal', function(assert) {
     manageDescriptors=(action 'nothing')
   }}`);
 
-  this.$('td:eq(3) i').click();
+  this.$('td:eq(3) svg').click();
 
 });
 

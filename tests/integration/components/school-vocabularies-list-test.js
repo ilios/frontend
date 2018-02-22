@@ -159,9 +159,9 @@ test('cannot delete vocabularies with terms', async function(assert) {
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canDelete=true}}`);
 
   await wait();
-  assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
-  assert.equal(this.$('tr:eq(2) td:eq(2) i').length, 1);
-  assert.equal(this.$('tr:eq(3) td:eq(2) i').length, 2);
+  assert.equal(this.$('tr:eq(1) td:eq(2) svg').length, 1);
+  assert.equal(this.$('tr:eq(2) td:eq(2) svg').length, 1);
+  assert.equal(this.$('tr:eq(3) td:eq(2) svg').length, 2);
 
 });
 
@@ -227,7 +227,7 @@ test('clicking edit fires the action to manage the vocab', function(assert) {
   });
   this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
   return wait().then(() => {
-    this.$('tr:eq(1) i').click();
+    this.$('tr:eq(1) svg').click();
   });
 
 });

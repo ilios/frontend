@@ -9,5 +9,5 @@ test('it renders', function(assert) {
   this.render(hbs`{{loading-spinner}}`);
 
   assert.equal(this.$().text().trim(), '');
-  assert.ok(this.$('i').hasClass('fa-spinner'));
+  assert.ok(this.$('svg').hasClass('fa-spinner'));
 });

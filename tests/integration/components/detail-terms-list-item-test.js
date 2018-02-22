@@ -49,8 +49,8 @@ test('remove', function(assert) {
     assert.equal(term, val);
   });
   this.render(hbs`{{detail-terms-list-item term=term canEdit=true remove=(action 'remove')}}`);
-  assert.equal(this.$('.fa-remove').length, 1);
-  this.$('.fa-remove').click();
+  assert.equal(this.$('.fa-times').length, 1);
+  this.$('.fa-times').click();
 });
 
 test('inactive', function(assert) {
@@ -64,7 +64,7 @@ test('inactive', function(assert) {
   this.set('term', term);
   this.render(hbs`{{detail-terms-list-item term=term canEdit=true}}`);
   assert.equal(this.$('.inactive').text().trim(), '(inactive)');
-  assert.equal(this.$('.fa-remove').length, 1);
+  assert.equal(this.$('.fa-times').length, 1);
 });
 
 test('read-only mode', function(assert) {
@@ -78,5 +78,5 @@ test('read-only mode', function(assert) {
   this.set('term', term);
   this.render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
   assert.equal(this.$('.inactive').length, 0);
-  assert.equal(this.$('.fa-remove').length, 0);
+  assert.equal(this.$('.fa-times').length, 0);
 });

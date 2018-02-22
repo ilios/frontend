@@ -11,8 +11,8 @@ export default {
   scope: '[data-test-sessions-grid]',
   sessions: collection('[data-test-session]', {
     expandCollapse: clickable('span:nth-of-type(1) .link'),
-    canExpand: hasClass('link', '[data-test-expand-collapse-control] .fa'),
-    expandTitle: attribute('title', '[data-test-expand-collapse-control] .fa'),
+    canExpand: hasClass('link', '[data-test-expand-collapse-control] svg'),
+    expandTitle: attribute('title', '[data-test-expand-collapse-control] svg'),
     title: text('span', { at: 1 }),
     visit: clickable('span:nth-of-type(2) a'),
     type: text('span', { at: 2 }),

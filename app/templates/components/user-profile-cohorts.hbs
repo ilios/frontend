@@ -29,7 +29,7 @@
       }}
         {{#if isManaging}}
           {{fa-icon
-            "level-down"
+            "level-down-alt"
             class="clickable remove"
             title=(t "general.removePrimaryCohort")
             click=(action (mut primaryCohort) null)
@@ -54,7 +54,7 @@
             {{#if (and (is-fulfilled cohort.school) (is-fulfilled cohort.program))}}
               {{#if isManaging}}
                 {{fa-icon
-                  "level-up"
+                  "level-up-alt"
                   class="clickable add"
                   title=(t "general.promoteToPrimaryCohort")
                   click=(action (mut primaryCohort) cohort)

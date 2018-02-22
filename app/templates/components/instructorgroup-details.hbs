@@ -15,7 +15,7 @@
           as |user|
         }}
           {{#if canUpdate}}
-            <li class="clickable" {{action "removeUser" user}}>{{user.fullName}}{{fa-icon "remove" class="remove"}}</li>
+            <li class="clickable" {{action "removeUser" user}}>{{user.fullName}}{{fa-icon "times" class="remove"}}</li>
           {{else}}
             <li>{{user.fullName}}</li>
           {{/if}}
@@ -38,7 +38,7 @@
     {{#if (is-fulfilled instructorGroup.courses)}}
       <ul>
         {{#each (sort-by "title" (await instructorGroup.courses)) as |course|}}
-          <li>{{#link-to "course" course}}{{fa-icon "external-link-square"}} {{course.title}}{{/link-to}}</li>
+          <li>{{#link-to "course" course}}{{fa-icon "external-link-square-alt"}} {{course.title}}{{/link-to}}</li>
         {{else}}
           {{t "general.none"}}
         {{/each}}

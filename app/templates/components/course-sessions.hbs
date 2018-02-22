@@ -29,7 +29,7 @@
 {{#if saveSession.lastSuccessful.value}}
   <div class="save-result" data-test-new-saved-session>
     {{#link-to "session.index" course saveSession.lastSuccessful.value}}
-      {{fa-icon "external-link-square"}} {{get saveSession.lastSuccessful.value "title"}}
+      {{fa-icon "external-link-square-alt"}} {{get saveSession.lastSuccessful.value "title"}}
     {{/link-to}}
     {{t "general.savedSuccessfully"}}
   </div>
