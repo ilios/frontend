@@ -1,4 +1,4 @@
-table {
+@mixin ilios-table () {
   border-collapse: collapse;
   font-size: $base-font-size * .9;
   margin: ($base-line-height * .5em) 0;

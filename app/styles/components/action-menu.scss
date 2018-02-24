@@ -1,9 +1,10 @@
-$dropdown-background: $base-background-color;
-$dropdown-background-hover: darken($dropdown-background, 3);
-$dropdown-padding: 1em;
-$dropdown-distance-from-menu: $dropdown-padding * 2;
-
 .action-menu {
+
+  $dropdown-background: $base-background-color;
+  $dropdown-background-hover: darken($dropdown-background, 3);
+  $dropdown-padding: 1em;
+  $dropdown-distance-from-menu: $dropdown-padding * 2;
+
   display: inline-block;
   position: relative;
 
