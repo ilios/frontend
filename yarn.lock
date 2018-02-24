@@ -1222,6 +1222,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
+bourbon@^5.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/bourbon/-/bourbon-5.0.0.tgz#030ba01893889cd77d964101e735d446fd50426a"
+
 bower-config@^1.3.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/bower-config/-/bower-config-1.4.1.tgz#85fd9df367c2b8dbbd0caa4c5f2bad40cd84c2cc"
@@ -3139,6 +3143,14 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     clone "^2.0.0"
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
+
+ember-cli-bourbon@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-bourbon/-/ember-cli-bourbon-2.0.0.tgz#dbfc653ced3f0f5391a1bc23c4da9e7baf648e83"
+  dependencies:
+    bourbon "^5.0"
+    broccoli-funnel "^2.0.1"
+    ember-cli-babel "^6.6.0"
 
 ember-cli-broccoli-sane-watcher@^2.0.4:
   version "2.1.1"

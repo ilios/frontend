@@ -84,7 +84,7 @@
 
 
 .selectable-list {
-  @include position(relative);
+  @include position(relative, null);
   @include clearfix;
   background-color: $white;
   border: 1px solid $base-link-color;
