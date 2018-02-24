@@ -26,7 +26,7 @@ $active-list-tr-background: rgba(239, 251, 255, .8);
 
   .resultslist-list {
     @include span-columns(12 of 12);
-    @include pad();
+    padding: 0;
 
     //fix for the action menus breakign at the bottom of a list
     table {

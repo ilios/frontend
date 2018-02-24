@@ -1,7 +1,5 @@
 //In order to enforce table-like alignment using divs, from
 .form-container {
-  @include outer-container;
-
   //set the styling for the 100% width column by specifying '12' columns in the class
   .form-col-12 {
     @include span-columns(10 of 10);

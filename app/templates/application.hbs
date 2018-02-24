@@ -10,18 +10,10 @@
 {{#if session.isAuthenticated}}
   {{ilios-navigation}}
 {{/if}}
-<div id='site-container'>
-  <div class='flash-messages'>
-    {{#each flashMessages.arrangedQueue as |f|}}
-      {{#flash-message flash=f as |component flash|}}
-        {{t flash.message}}
-      {{/flash-message}}
-    {{/each}}
-  </div>
-
+<main>
   {{#if showErrorDisplay}}
     {{error-display errors=errors clearErrors=(action 'clearErrors')}}
   {{else}}
     {{outlet}}
   {{/if}}
-</div>
+</main>

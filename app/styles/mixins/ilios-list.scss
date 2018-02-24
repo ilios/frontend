@@ -26,7 +26,7 @@
 
       .text {
         @include span-columns(2 of 3);
-        @include pad();
+        padding: 0;
 
         .main-text {
           @include fill-parent;

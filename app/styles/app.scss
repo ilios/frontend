@@ -1,8 +1,8 @@
 @import 'ilios-common/styles';
 @import 'bourbon';
-@import 'neat';
 @import 'ember-modal-dialog/ember-modal-structure';
 @import 'ember-modal-dialog/ember-modal-appearance';
+@import 'mixins';
 @import 'components/reset';
 @import 'components/global';
 @import 'components/action-menu';
@@ -37,6 +37,5 @@
 @import 'components/breadcrumbs';
 @import 'components/assign-students';
 @import 'components/pre-fill';
-@import 'mixins';
 @import 'newcomponents';
 @import 'layout/layout';

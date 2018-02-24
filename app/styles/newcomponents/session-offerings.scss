@@ -19,7 +19,7 @@
 
     div {
       @include span-columns (12 / 5);
-      @include pad(10px default default default);
+      padding: 10px 0 0;
 
       label {
         font-weight: bold;

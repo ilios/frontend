@@ -1,18 +1,8 @@
 body {
   margin: 0;
   margin-bottom: 40px;
-}
 
-// sass-lint:disable no-ids
-#site-container {
-  @include outer-container;
-  padding-left: 48px;
-
-  .fullwidth {
-    @include span-columns(12);
-  }
-
-  .halfwidth {
-    @include span-columns(5);
+  main {
+    padding-left: 48px;
   }
 }
