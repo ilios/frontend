@@ -1,21 +1,24 @@
 import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-moduleForComponent('new-programyear', 'Integration | Component | new programyear', {
-  integration: true,
-  beforeEach: function() {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
-});
+module('Integration | Component | new programyear', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(1);
-  this.set('nothing', parseInt);
+  hooks.beforeEach(function() {
+    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.register('helper:t', tHelper);
+  });
 
-  this.render(hbs`{{new-programyear save=(action nothing) cancel=(action nothing)}}`);
+  test('it renders', async function(assert) {
+    assert.expect(1);
+    this.set('nothing', parseInt);
 
-  assert.ok(this.$('.new-result-title').text().search(/New Program Year/) === 0);
+    await render(hbs`{{new-programyear save=(action nothing) cancel=(action nothing)}}`);
+
+    assert.ok(this.$('.new-result-title').text().search(/New Program Year/) === 0);
+  });
 });

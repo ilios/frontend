@@ -1,14 +1,16 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('session-table-title', 'Integration | Component | session table title', {
-  integration: true
-});
+module('Integration | Component | session table title', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders with a link', function(assert) {
-  const i = 'i';
-  this.render(hbs`{{session-table-title value='test'}}`);
+  test('it renders with a link', async function(assert) {
+    const i = 'i';
+    await render(hbs`{{session-table-title value='test'}}`);
 
-  assert.equal(this.$().text().trim(), 'test');
-  assert.ok(this.$(i).hasClass('fa-external-link-square'));
+    assert.equal(this.$().text().trim(), 'test');
+    assert.ok(this.$(i).hasClass('fa-external-link-square'));
+  });
 });

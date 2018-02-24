@@ -6,19 +6,20 @@ import destroyApp from '../../helpers/destroy-app';
 
 import RSVP from 'rsvp';
 
-module('Unit | Initializer | replace promise', {
-  beforeEach() {
+module('Unit | Initializer | replace promise', function(hooks) {
+  hooks.beforeEach(function() {
     run(() => {
       this.application = Application.create();
       this.application.deferReadiness();
     });
-  },
-  afterEach() {
-    destroyApp(this.application);
-  }
-});
+  });
 
-test('Global promise replaced', function(assert) {
-  initialize(this.application);
-  assert.ok(window.Promise === RSVP.Promise);
+  hooks.afterEach(function() {
+    destroyApp(this.application);
+  });
+
+  test('Global promise replaced', function(assert) {
+    initialize(this.application);
+    assert.ok(window.Promise === RSVP.Promise);
+  });
 });

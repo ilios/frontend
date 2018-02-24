@@ -1,9 +1,10 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 
 const { resolve } = RSVP;
 let storeMock;
@@ -17,9 +18,10 @@ const summative = EmberObject.create({
 });
 const assessmentOptions = [formative, summative];
 
-moduleForComponent('school-session-type-manager', 'Integration | Component | school session type manager', {
-  integration: true,
-  beforeEach(){
+module('Integration | Component | school session type manager', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
     storeMock = Service.extend({
       findAll(what){
         if (what === 'assessment-option') {
@@ -27,62 +29,62 @@ moduleForComponent('school-session-type-manager', 'Integration | Component | sch
         }
       }
     });
-    this.register('service:store', storeMock);
-  }
-});
-
-test('it renders', async function(assert) {
-  const sessionType = EmberObject.create({
-    title: 'one',
-    calendarColor: '#ffffff',
-    assessment: true,
-    assessmentOption: resolve(summative),
-    sessionCount: 0
+    this.owner.register('service:store', storeMock);
   });
-  this.set('sessionType', sessionType);
-  this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-type-manager
-    sessionType=sessionType
-    close=(action nothing)
-  }}`);
 
-  await wait();
+  test('it renders', async function(assert) {
+    const sessionType = EmberObject.create({
+      title: 'one',
+      calendarColor: '#ffffff',
+      assessment: true,
+      assessmentOption: resolve(summative),
+      sessionCount: 0
+    });
+    this.set('sessionType', sessionType);
+    this.set('nothing', parseInt);
+    await render(hbs`{{school-session-type-manager
+      sessionType=sessionType
+      close=(action nothing)
+    }}`);
 
-  const title = '.item:eq(0)';
-  const titleInput = `${title} input`;
-  const color = '.item:eq(2)';
-  const colorInput = `${color} input`;
-  const assessment = '.item:eq(3)';
-  const assessmentInput = `${assessment} input`;
-  const assessmentOption = '.item:eq(4)';
-  const assessmentOptionSelect = `${assessmentOption} select`;
+    await settled();
 
-  assert.equal(this.$(titleInput).val().trim(), 'one');
-  assert.equal(this.$(colorInput).val().trim(), '#ffffff');
-  assert.ok(this.$(assessmentInput).is(':checked'));
-  assert.equal(this.$(assessmentOptionSelect).val(), '2');
-});
+    const title = '.item:eq(0)';
+    const titleInput = `${title} input`;
+    const color = '.item:eq(2)';
+    const colorInput = `${color} input`;
+    const assessment = '.item:eq(3)';
+    const assessmentInput = `${assessment} input`;
+    const assessmentOption = '.item:eq(4)';
+    const assessmentOptionSelect = `${assessmentOption} select`;
 
-test('close fires action', async function(assert) {
-  assert.expect(1);
-  const sessionType = EmberObject.create({
-    title: 'one',
-    calendarColor: '#ffffff',
-    assessment: true,
-    assessmentOption: resolve(summative),
+    assert.equal(this.$(titleInput).val().trim(), 'one');
+    assert.equal(this.$(colorInput).val().trim(), '#ffffff');
+    assert.ok(this.$(assessmentInput).is(':checked'));
+    assert.equal(this.$(assessmentOptionSelect).val(), '2');
   });
-  this.set('sessionType', sessionType);
-  this.set('close', ()=>{
-    assert.ok(true, 'action was fired');
+
+  test('close fires action', async function(assert) {
+    assert.expect(1);
+    const sessionType = EmberObject.create({
+      title: 'one',
+      calendarColor: '#ffffff',
+      assessment: true,
+      assessmentOption: resolve(summative),
+    });
+    this.set('sessionType', sessionType);
+    this.set('close', ()=>{
+      assert.ok(true, 'action was fired');
+    });
+    await render(hbs`{{school-session-type-manager
+      sessionType=sessionType
+      close=(action close)
+    }}`);
+
+    const button = '.cancel';
+
+    await settled();
+
+    this.$(button).click();
   });
-  this.render(hbs`{{school-session-type-manager
-    sessionType=sessionType
-    close=(action close)
-  }}`);
-
-  const button = '.cancel';
-
-  await wait();
-
-  this.$(button).click();
 });

@@ -1,38 +1,46 @@
 import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-moduleForComponent('toggle-onoff', 'Integration | Component | toggle onoff', {
-  integration: true,
-  beforeEach() {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
-});
+module('Integration | Component | toggle onoff', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('toggle on/off works as intended on click events', function(assert) {
-  assert.expect(7);
-
-  this.set('value', true);
-  this.render(hbs`{{toggle-onoff on=value label='general.location' action='clicked'}}`);
-
-  assert.equal(this.$().text().trim(), 'Location:');
-  assert.ok(this.$('input').prop('checked'));
-
-  this.set('value', false);
-  assert.ok(!this.$('input').prop('checked'));
-
-  let value = false;
-  this.on('clicked', () => {
-    assert.ok(true, 'click was triggered and sends primary action');
-
-    value = !value;
-    this.set('value', value);
+  hooks.beforeEach(function() {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
-  this.$('label').click();
-  assert.ok(this.$('input').prop('checked'));
 
-  this.$('label').click();
-  assert.ok(!this.$('input').prop('checked'));
+  hooks.beforeEach(function() {
+    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.register('helper:t', tHelper);
+  });
+
+  test('toggle on/off works as intended on click events', async function(assert) {
+    assert.expect(7);
+
+    this.set('value', true);
+    await render(hbs`{{toggle-onoff on=value label='general.location' action='clicked'}}`);
+
+    assert.equal(this.$().text().trim(), 'Location:');
+    assert.ok(this.$('input').prop('checked'));
+
+    this.set('value', false);
+    assert.ok(!this.$('input').prop('checked'));
+
+    let value = false;
+    this.actions.clicked = () => {
+      assert.ok(true, 'click was triggered and sends primary action');
+
+      value = !value;
+      this.set('value', value);
+    };
+    this.$('label').click();
+    assert.ok(this.$('input').prop('checked'));
+
+    this.$('label').click();
+    assert.ok(!this.$('input').prop('checked'));
+  });
 });
