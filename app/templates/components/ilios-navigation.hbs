@@ -1,28 +1,17 @@
-<div class="sliding-navigation">
-  <a href='#' {{action 'toggleMenuVisibility'}} class="sliding-menu-button {{if isMenuVisible 'is-menu-visible'}}">
-    {{fa-icon 'bars'}} {{t 'general.menu'}}
-  </a>
-  <nav {{action 'toggleMenuVisibility'}} class="sliding-menu-content {{if isMenuVisible 'is-menu-visible'}}">
-    {{#if (is-fulfilled permissions)}}
-      <ul>
-        <li id='slidingnavmenu-dashboard'>{{#link-to 'dashboard'}}{{fa-icon 'home'}} {{t 'general.dashboard'}}{{/link-to}}</li>
-        {{#if (get (await permissions) 'isFaculty')}}
-          <li id='slidingnavmenu-courses'>{{#link-to 'courses'}}{{fa-icon 'book'}} {{t 'general.coursesAndSessions'}}{{/link-to}}</li>
-          <li id='slidingnavmenu-learnergroups'>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} {{t 'general.learnerGroups'}}{{/link-to}}</li>
-          <li id='slidingnavmenu-instructorgroups'>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} {{t 'general.instructorGroups'}}{{/link-to}}</li>
-          <li id='slidingnavmenu-schools'>{{#link-to 'schools'}}{{fa-icon 'university'}} {{t 'general.schools'}}{{/link-to}}</li>
-          <li id='slidingnavmenu-programs'>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} {{t 'general.programs'}}{{/link-to}}</li>
-        {{/if}}
-        {{#if (get (await permissions) 'isAdmin')}}
-          <li id='slidingnavmenu-admindashboard'>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} {{t 'general.admin'}}{{/link-to}}</li>
-          <li id='slidingnavmenu-curriculuminventory'>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart'}} {{t 'general.curriculumInventory'}}{{/link-to}}</li>
-        {{/if}}
-      </ul>
-    {{else}}
-      <div class='loading-indicator'>
-        {{fa-icon 'spinner' spin=true}}
-      </div>
-    {{/if}}
-  </nav>
-  <div {{action 'toggleMenuVisibility'}} class="menu-screen {{if isMenuVisible 'is-menu-visible'}}"></div>
-</div>
+<ul class='expand-navigation link clickable' onclick={{action (toggle 'expanded' this)}}>
+  <li>{{fa-icon 'bars'}}</li>
+</ul>
+<ul class='navigation-links'>
+  <li>{{#link-to 'dashboard'}}{{fa-icon 'home'}} <span class='text'>{{t 'general.dashboard'}}</span>{{/link-to}}</li>
+  {{#if (get (await permissions) 'isFaculty')}}
+    <li>{{#link-to 'courses'}}{{fa-icon 'book'}}<span class='text'> {{t 'general.coursesAndSessions'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} <span class='text'>{{t 'general.learnerGroups'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} <span class='text'>{{t 'general.instructorGroups'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'schools'}}{{fa-icon 'university'}} <span class='text'>{{t 'general.schools'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} <span class='text'>{{t 'general.programs'}}</span>{{/link-to}}</li>
+  {{/if}}
+  {{#if (get (await permissions) 'isAdmin')}}
+    <li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} <span class='text'>{{t 'general.admin'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart'}} <span class='text'>{{t 'general.curriculumInventory'}}</span>{{/link-to}}</li>
+  {{/if}}
+</ul>

@@ -1,0 +1,67 @@
+.ilios-navigation {
+  background-color: $background-grey;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 2em auto;
+
+  ul {
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 0 .5em;
+
+    li {
+      margin: 0 .25em;
+      text-align: center;
+      @media (min-width: $large-screen) {
+        padding: .25em 0;
+        text-align: left;
+      }
+
+    }
+
+    .text {
+      display: none;
+    }
+  }
+
+  &.expanded {
+    ul {
+      flex-wrap: wrap;
+
+      li {
+        padding: .5em;
+      }
+    }
+
+    .text {
+      clear: left;
+      display: block;
+    }
+  }
+
+  @media (min-width: $large-screen) {
+    border-right: 1px solid $header-grey;
+    box-shadow: 2px 1px 3px rgba($black, .19), inset 1px 0 2px rgba($black, .34);
+    display: block;
+    padding-left: 10px;
+
+    ul {
+      display: inline;
+
+      .text {
+        display: inline;
+      }
+    }
+
+    .expand-navigation {
+      display: none;
+    }
+  }
+
+  a {
+    color: $ilios-orange;
+  }
+}

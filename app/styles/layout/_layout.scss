@@ -1,9 +1,42 @@
-body {
-  margin: 0;
-  margin-bottom: 40px;
+// temporarily attach this to the child of body until ember gets rid of the top level
+// div.  Expected to be done in Ember 3.1.0
+body > .ember-view {
+  display: grid;
+  grid-template-areas:
+  'header'
+  'nav'
+  'main'
+  'footer';
 
-  main {
-    padding-left: 48px;
+  @media (min-width: $large-screen) {
+    grid-template-areas:
+    'header  header'
+    'nav main'
+    'nav footer';
+    grid-template-columns: 200px auto;
+  }
+  @media (min-width: $giant-screen) {
+    grid-template-areas:
+    'header header  header'
+    'nav    main main'
+    'nav footer  footer';
+    grid-template-columns: 200px 4fr 4fr;
   }
 
+  header {
+    grid-area: header;
+  }
+
+  nav {
+    grid-area: nav;
+  }
+
+  main {
+    grid-area: main;
+    @media (min-width: $large-screen) {
+      margin-left: 20px;
+    }
+  }
 }
+
+
