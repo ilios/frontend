@@ -12,7 +12,7 @@
     }
 
     .toggle-mycourses {
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(2 of 12);
         padding-bottom: 0;
       }

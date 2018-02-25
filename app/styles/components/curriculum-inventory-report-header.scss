@@ -4,7 +4,7 @@
   background-color: $header-grey;
   padding: .8em;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 

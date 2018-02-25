@@ -31,7 +31,7 @@
     font-size: $base-font-size * .75;
     margin-top: 2em;
 
-    @include media($medium-screen) {
+    @include for-tablet-and-up {
       font-size: $base-font-size * 1.5;
       margin: .5em;
     }
@@ -82,7 +82,7 @@
         span {
           display: none;
 
-          @include media($medium-screen) {
+          @include for-tablet-and-up {
             display: inline;
           }
         }

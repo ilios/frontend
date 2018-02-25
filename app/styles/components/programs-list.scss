@@ -10,7 +10,7 @@
     }
 
     .titlefilter {
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include shift(6);
       }
     }

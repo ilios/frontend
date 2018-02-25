@@ -10,7 +10,7 @@
   .course-filter {
     @include fill-parent;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(6);
     }
   }
@@ -19,7 +19,7 @@
     @include fill-parent;
     text-align: right;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include shift(2);
       @include span-columns(4);
       @include omega;

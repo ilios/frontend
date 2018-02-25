@@ -12,7 +12,7 @@
     @include fill-parent;
 
     &.session-material-title {
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(8);
       }
     }
@@ -21,7 +21,7 @@
   .filter-session-lms {
     @include fill-parent;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(2);
       @include omega;
     }

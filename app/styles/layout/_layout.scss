@@ -8,19 +8,19 @@ body > .ember-view {
   'main'
   'footer';
 
-  @media (min-width: $large-screen) {
+  @include for-laptop-and-up {
     grid-template-areas:
     'header  header'
     'nav main'
     'nav footer';
     grid-template-columns: 200px auto;
   }
-  @media (min-width: $giant-screen) {
+  @include for-desktop-and-up {
     grid-template-areas:
     'header header  header'
     'nav    main main'
     'nav footer  footer';
-    grid-template-columns: 200px 4fr 4fr;
+    grid-template-columns: 240px 1fr 1fr;
   }
 
   header {
@@ -33,8 +33,8 @@ body > .ember-view {
 
   main {
     grid-area: main;
-    @media (min-width: $large-screen) {
-      margin-left: 20px;
+    @include for-laptop-and-up {
+      margin-left: 10px;
     }
   }
 }

@@ -4,14 +4,14 @@
     background-color: $header-grey;
     padding: .8em;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(12);
     }
 
     .title {
       @include fill-parent;
 
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(8 of 12);
       }
 
@@ -24,7 +24,7 @@
       @include fill-parent;
       text-align: right;
 
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(3 of 12);
         @include shift(1);
         @include omega;

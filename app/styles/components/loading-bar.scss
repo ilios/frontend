@@ -4,9 +4,13 @@
   text-align: left;
   width: 100%;
 
-  @include media($giant-screen) {
-    // get out of the way of the navigation block on huge screens
-    padding-left: 180px;
+  // get out of the way of the navigation block when it is present
+  @include for-desktop-and-up {
+    padding-left: 200px;
+  }
+
+  @include for-laptop-and-up {
+    padding-left: 240px;
   }
 
   .bar {

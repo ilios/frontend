@@ -3,7 +3,7 @@
     @include fill-parent;
     vertical-align: middle;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(2 of 12);
       @include omega();
       @include shift(10);

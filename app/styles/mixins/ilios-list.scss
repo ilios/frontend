@@ -15,7 +15,7 @@
     overflow: hidden;
     vertical-align: middle;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(3);
       @include omega(4n);
     }

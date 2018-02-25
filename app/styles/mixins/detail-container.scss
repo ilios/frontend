@@ -7,7 +7,7 @@
   min-height: 2em;
   padding: 1em 0;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 }
@@ -18,7 +18,7 @@
   font-weight: bold;
   text-align: center;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     text-align: left;
   }
 
@@ -40,7 +40,7 @@
   @include fill-parent;
   @include detail-container-title-style;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(8 of 12);
   }
 }
@@ -50,7 +50,7 @@
   text-align: center;
   vertical-align: middle;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include shift(1 of 12);
     @include span-columns(3 of 12);
     @include omega();

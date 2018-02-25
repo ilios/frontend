@@ -17,7 +17,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       font-size: $base-font-size;
     }
 
@@ -65,7 +65,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     white-space: nowrap;
     z-index: 100;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       left: auto;
       right: 0;
     }

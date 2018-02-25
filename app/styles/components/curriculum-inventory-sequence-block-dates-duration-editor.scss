@@ -16,7 +16,7 @@
   }
 
   .duration {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(3);
     }
   }

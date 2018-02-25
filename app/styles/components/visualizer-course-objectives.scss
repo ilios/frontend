@@ -29,19 +29,19 @@
       margin-top: .5em;
     }
 
-    @include media($small-screen) {
+    @media phone {
       .meh-o {
         font-size: 15rem;
       }
     }
 
-    @include media($medium-screen) {
+    @include for-tablet-and-up {
       .meh-o {
         font-size: 25rem;
       }
     }
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       .meh-o {
         font-size: 30rem;
       }
@@ -53,7 +53,7 @@
 
     .simple-chart {
       height: 25em;
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(5);
       }
     }
@@ -70,7 +70,7 @@
     .zero-hours,
     .with-hours {
       @include fill-parent;
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(6);
       }
     }

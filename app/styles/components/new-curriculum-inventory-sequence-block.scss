@@ -15,7 +15,7 @@
   }
 
   .course {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(8);
     }
 
@@ -27,7 +27,7 @@
   .description {
     min-height: 10em;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(8);
     }
 
@@ -35,7 +35,7 @@
 
   .duration,
   .order-in-sequence {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(3);
     }
   }
@@ -46,7 +46,7 @@
   }
 
   .title {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(8);
     }
   }

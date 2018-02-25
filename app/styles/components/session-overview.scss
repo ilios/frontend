@@ -34,7 +34,7 @@
     @include fill-parent;
     height: 2em;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(5);
     }
 
@@ -46,7 +46,7 @@
 
   .independentlearningcontrol {
     clear: both;
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(4);
 
       label {
@@ -56,14 +56,14 @@
   }
 
   .independentlearningcontrol-value {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(1);
     }
   }
 
   .sessionilmhours,
   .sessionilmduedate {
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(4);
 
       label {
@@ -114,14 +114,14 @@
   background-color: $header-grey;
   padding: .8em;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 
   .title {
     @include fill-parent;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(8 of 12);
     }
 
@@ -133,7 +133,7 @@
   .session-publication {
     @include fill-parent;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(3 of 12);
       @include shift(1);
       @include omega;

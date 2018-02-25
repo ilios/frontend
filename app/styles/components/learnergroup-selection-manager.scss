@@ -3,7 +3,7 @@
   h4 {
     @include ilios-heading-h4;
     @include fill-parent;
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(6);
     }
   }
@@ -34,7 +34,7 @@
 
     .search-box {
       @include fill-parent;
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(6);
         @include omega();
         clear: left;
@@ -47,7 +47,7 @@
       border: 1px solid $ilios-blue;
       padding: 1em;
 
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include span-columns(6);
         @include omega(2n);
       }

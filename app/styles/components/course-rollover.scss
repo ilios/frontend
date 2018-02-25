@@ -25,7 +25,7 @@
     font-weight: 400;
     margin: 0 1em 2em;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       padding: .5em 6em 0 4em;
     }
   }

@@ -15,7 +15,7 @@
     li {
       margin: 0 .25em;
       text-align: center;
-      @media (min-width: $large-screen) {
+      @include for-laptop-and-up {
         padding: .25em 0;
         text-align: left;
       }
@@ -42,7 +42,7 @@
     }
   }
 
-  @media (min-width: $large-screen) {
+  @include for-laptop-and-up {
     border-right: 1px solid $header-grey;
     box-shadow: 2px 1px 3px rgba($black, .19), inset 1px 0 2px rgba($black, .34);
     display: block;

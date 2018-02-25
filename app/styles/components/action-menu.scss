@@ -18,7 +18,7 @@
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       font-size: $base-font-size;
     }
 

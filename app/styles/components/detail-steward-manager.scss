@@ -8,7 +8,7 @@
     overflow: scroll;
     padding: $base-font-size;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(5);
     }
   }

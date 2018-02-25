@@ -7,7 +7,7 @@
 
     .item {
       @include ilios-form-item;
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include fill-parent;
       }
       height: 4em;

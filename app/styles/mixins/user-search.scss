@@ -46,7 +46,7 @@
       display: block;
       width: 100%;
 
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         display: inline;
       }
     }

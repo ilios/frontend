@@ -2,7 +2,7 @@
   @include fill-parent;
   padding: 0 1em;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 }
@@ -11,7 +11,7 @@
   @include fill-parent;
   margin: 1em 0;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 
@@ -22,7 +22,7 @@
   padding-bottom: 1em;
   white-space: nowrap;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(3 of 12);
     @include omega(4n);
     padding-bottom: 0;
@@ -31,7 +31,7 @@
   select {
     width: 190px;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       width: 90%;
     }
   }
@@ -39,7 +39,7 @@
   input {
     width: 200px;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       width: 100%;
     }
   }
@@ -52,7 +52,7 @@
 
   border: 2px solid $header-grey;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
   }
 }
@@ -63,14 +63,14 @@
   padding: .5em 0;
   text-align: center;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(12);
     text-align: left;
   }
 }
 
 @mixin main-list-box-header-title ($span: 6) {
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns($span);
     font-size: $base-font-size;
     font-weight: bold;
@@ -79,7 +79,7 @@
 }
 
 @mixin main-list-box-header-actions ($span: 2, $shift: 4) {
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns($span);
     @include shift($shift);
     @include omega;
@@ -103,7 +103,7 @@
   .hide-from-small-screen {
     display: none;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       display: table-cell;
     }
   }

@@ -7,7 +7,7 @@
     font-size: $base-font-size;
     font-weight: bold;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(3 of 12);
     }
   }
@@ -16,7 +16,7 @@
     @include fill-parent;
     vertical-align: middle;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(2 of 12);
       @include omega();
       @include shift(7);
@@ -26,7 +26,7 @@
 
   &.display-search-box {
     .detail-learningmaterials-actions {
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         @include shift(0);
       }
     }
@@ -36,7 +36,7 @@
     @include fill-parent;
     overflow: hidden;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       @include span-columns(7 of 12);
     }
 

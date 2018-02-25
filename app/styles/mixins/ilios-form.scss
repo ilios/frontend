@@ -11,7 +11,7 @@
   @include fill-parent;
   height: 6em;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(4);
   }
 
@@ -20,7 +20,7 @@
 @mixin ilios-form-last-item () {
   @include fill-parent;
 
-  @include media($large-screen) {
+  @include for-laptop-and-up {
     @include span-columns(8);
   }
 }

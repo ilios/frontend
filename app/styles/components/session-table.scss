@@ -7,13 +7,13 @@
     vertical-align: middle;
     width: 100%;
 
-    @include media($large-screen) {
+    @include for-laptop-and-up {
       text-align: right;
     }
 
     input {
       width: 90%;
-      @include media($large-screen) {
+      @include for-laptop-and-up {
         width: 300px;
       }
     }
