@@ -11,7 +11,7 @@
 
     .titlefilter {
       @include for-laptop-and-up {
-        @include shift(6);
+        width: 400px;
       }
     }
   }
