@@ -36,16 +36,12 @@
 
   select {
     @include ilios-select;
-    width: 190px;
+    width: 90%;
   }
 
   input {
     @include ilios-input;
-    width: 200px;
-
-    @include for-laptop-and-up {
-      width: 98%;
-    }
+    width: 99%;
   }
 
 }
@@ -53,7 +49,7 @@
 @mixin main-list-box () {
   border: 2px solid $header-grey;
   display: block;
-  width: 100%;
+  width: 99%;
 }
 
 @mixin main-list-box-header () {

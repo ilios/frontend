@@ -3,23 +3,21 @@
     {{fa-icon 'spinner' spin=true}}
   </h3>
 {{else}}
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.numberOfGroups'}}:</div>
-    <div class="form-data form-data-text form-input-row">
-      <input
-        type="text"
-        value={{numSubGroups}}
-        oninput={{action (mut numSubGroups) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'numSubGroups'}}
-        placeholder={{t 'general.numberOfGroupsToGenerate'}}
-      >
-      {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
-        <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>
-      {{/if}}
-    </div>
-  </label>
-  <div class="form-col-6 form-data-submit">
+  <div class="item">
+    <label>{{t 'general.numberOfGroups'}}:</label>
+    <input
+      type="text"
+      value={{numSubGroups}}
+      oninput={{action (mut numSubGroups) value="target.value"}}
+      disabled={{isSaving}}
+      onkeyup={{action 'addErrorDisplayFor' 'numSubGroups'}}
+      placeholder={{t 'general.numberOfGroupsToGenerate'}}
+    >
+    {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
+      <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>
+    {{/if}}
+  </div>
+  <div class="buttons">
     <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
     <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
   </div>

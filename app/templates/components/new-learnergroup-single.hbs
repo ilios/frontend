@@ -1,31 +1,30 @@
-<div class="form-col form-col-12">
-  <div class="form-label">{{t 'general.title'}}:</div>
-  <div class="form-data form-data-text form-input-row">
-    <input
-      type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'title'}}
-      placeholder={{t 'general.learnerGroupTitlePlaceholder'}}
-    >
-    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-    {{/if}}
-  </div>
+<div class="item">
+  <label>{{t 'general.title'}}:</label>
+  <input
+    type="text"
+    value={{title}}
+    oninput={{action (mut title) value="target.value"}}
+    disabled={{isSaving}}
+    onkeyup={{action 'addErrorDisplayFor' 'title'}}
+    placeholder={{t 'general.learnerGroupTitlePlaceholder'}}
+  >
+  {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+    <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+  {{/if}}
 </div>
+
 {{#if fillModeSupported}}
-  <div class="form-col form-col-radiogroup">
-    <div class="form-label">{{t 'general.populateGroup'}}:</div>
-    <div class="form-data form-data-text form-input-row clickable" onclick={{toggle 'fillWithCohort' this}}>
+  <div class='item'>
+    <label>{{t 'general.populateGroup'}}:</label>
+    <div class="clickable" onclick={{toggle 'fillWithCohort' this}}>
       <input checked={{fillWithCohort}} type='radio'> {{t 'general.yesPopulateGroup'}}
     </div>
-    <div class="form-data form-data-text form-input-row clickable" onclick={{toggle 'fillWithCohort' this}}>
+    <div class="clickable" onclick={{toggle 'fillWithCohort' this}}>
       <input checked={{not fillWithCohort}} type='radio'> {{t 'general.noPopulateGroup'}}
     </div>
   </div>
 {{/if}}
-<div class="form-col-6 form-data-submit">
+<div class="buttons">
   <button class='done text' {{action 'save'}}>
     {{#if isSaving}}
       {{fa-icon 'spinner' spin=true}}

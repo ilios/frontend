@@ -7,7 +7,7 @@
     width: 99%;
   }
 
-  input {
+  #{$form-input-text-types} {
     @include ilios-input;
   }
 
@@ -15,7 +15,7 @@
     @include ilios-select;
   }
 
-  input,
+  #{$form-input-text-types},
   select {
     display: block;
     width: 90%;

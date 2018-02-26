@@ -11,6 +11,12 @@
       @include main-list-filter;
     }
 
+    @include for-desktop-and-up {
+      .titlefilter input {
+        width: 300px;
+      }
+    }
+
   }
 
   .learnergroups {
