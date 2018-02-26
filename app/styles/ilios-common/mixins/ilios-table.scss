@@ -43,7 +43,7 @@
   .hide-from-small-screen {
     display: none;
 
-    @media (min-width: $large-screen) {
+    @include for-laptop-and-up {
       display: table-cell;
     }
   }
