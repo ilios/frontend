@@ -1,7 +1,11 @@
 <p>{{instructions}}</p>
 <p>
-  <input value={{url}}>
-  {{#copy-button clipboardText=url}}
-    {{fa-icon 'copy'}}
-  {{/copy-button}}
+  <span>
+    {{#copy-button clipboardText=url success=(perform textCopied)}}
+      {{fa-icon 'copy'}} {{t 'general.copyIcsFeedUrl'}}
+    {{/copy-button}}
+    {{#if showCopySuccessMessage}}
+      <span class='yes'>{{t 'general.copiedSuccessfully'}}</span>
+    {{/if}}
+  </span>
 </p>

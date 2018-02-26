@@ -128,18 +128,21 @@
     margin: auto;
     margin-bottom: 1em;
     padding: 2em;
+    text-align: center;
     width: 90%;
 
-    input {
-      padding: .25em;
-      width: 80%;
+    span {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+
+      &.yes {
+        color: $ilios-green;
+      }
     }
 
     button {
-      background-color: $white;
-      color: $ilios-accent-color;
-      margin-left: .5em;
-      padding: 0;
+      @include ilios-button;
     }
 
   }
