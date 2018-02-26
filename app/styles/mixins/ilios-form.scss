@@ -1,15 +1,35 @@
 @mixin ilios-form () {
+  padding: .5em;
+
   label {
-    @include fill-parent;
     @include ilios-label;
+    display: block;
+    width: 99%;
   }
 
-  @include ilios-input;
+  input {
+    @include ilios-input;
+  }
+
+  select {
+    @include ilios-select;
+  }
+
+  input,
+  select {
+    display: block;
+    width: 90%;
+    @include for-tablet-and-up {
+      min-width: 33%;
+      width: auto;
+    }
+  }
 }
 
 @mixin ilios-form-item () {
-  @include fill-parent;
-  height: 6em;
+  display: block;
+  height: 4em;
+  width: 99%;
 
   @include for-laptop-and-up {
     @include span-columns(4);
@@ -18,7 +38,8 @@
 }
 
 @mixin ilios-form-last-item () {
-  @include fill-parent;
+  display: block;
+  width: 99%;
 
   @include for-laptop-and-up {
     @include span-columns(8);
@@ -26,10 +47,11 @@
 }
 
 @mixin ilios-form-buttons () {
-  @include fill-parent;
   clear: both;
+  display: block;
   margin-top: 2em;
   padding: 1em 0;
+  width: 99%;
 
   button {
     margin-right: 1em;
@@ -40,26 +62,4 @@
 @mixin ilios-label () {
   font-weight: bold;
   margin-top: 1em;
-}
-
-@mixin ilios-input () {
-  input {
-    @include fill-parent;
-    background: $white;
-    border: 1px solid $input-box-grey;
-    border-radius: $base-border-radius;
-  }
-
-  input[type='text'],
-  input[type='password'],
-  select {
-    background-position: right 4px bottom .75em;
-    height: 2.5em;
-  }
-
-  input[type='checkbox'],
-  input[type='radio'] {
-    display: inline;
-    width: 2.5em;
-  }
 }

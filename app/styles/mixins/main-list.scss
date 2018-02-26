@@ -1,110 +1,98 @@
 @mixin main-list () {
-  @include fill-parent;
+  display: block;
+  margin: 0 .25em;
   padding: 0 1em;
-
-  @include for-laptop-and-up {
-    @include span-columns(12);
-  }
 }
 
 @mixin main-list-filters () {
-  @include fill-parent;
+  display: flex;
+  flex-direction: column;
   margin: 1em 0;
 
   @include for-laptop-and-up {
-    @include span-columns(12);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
+  @include for-desktop-and-up {
+    justify-content: flex-start;
+  }
 }
 
 @mixin main-list-filter () {
-  @include fill-parent;
   padding-bottom: 1em;
   white-space: nowrap;
 
   @include for-laptop-and-up {
-    @include span-columns(3 of 12);
-    @include omega(4n);
     padding-bottom: 0;
+    width: 25%;
+  }
+
+  @include for-desktop-and-up {
+    margin-right: 2em;
+    width: auto;
   }
 
   select {
+    @include ilios-select;
     width: 190px;
-
-    @include for-laptop-and-up {
-      width: 90%;
-    }
   }
 
   input {
+    @include ilios-input;
     width: 200px;
 
     @include for-laptop-and-up {
-      width: 100%;
+      width: 98%;
     }
   }
 
 }
 
 @mixin main-list-box () {
-  @include fill-parent;
-  @include row;
-
   border: 2px solid $header-grey;
-
-  @include for-laptop-and-up {
-    @include span-columns(12);
-  }
+  display: block;
+  width: 100%;
 }
 
 @mixin main-list-box-header () {
-  @include fill-parent;
   background-color: $header-grey;
+  display: flex;
+  flex-direction: column;
   padding: .5em 0;
   text-align: center;
 
   @include for-laptop-and-up {
-    @include span-columns(12);
-    text-align: left;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
-@mixin main-list-box-header-title ($span: 6) {
+@mixin main-list-box-header-title {
+  @include ilios-heading-h5;
   @include for-laptop-and-up {
-    @include span-columns($span);
-    font-size: $base-font-size;
-    font-weight: bold;
     padding-left: 1em;
   }
 }
 
-@mixin main-list-box-header-actions ($span: 2, $shift: 4) {
+@mixin main-list-box-header-actions {
   @include for-laptop-and-up {
-    @include span-columns($span);
-    @include shift($shift);
-    @include omega;
-
     padding-right: 1em;
     text-align: right;
   }
 }
 
 @mixin main-list-box-table () {
-  @include fill-parent;
-  @include row;
   clear: both;
-
+  display: block;
   padding: 1em;
 
-  thead {
-    background-color: $header-grey;
-  }
+  table {
+    @include ilios-table;
 
-  .hide-from-small-screen {
-    display: none;
-
-    @include for-laptop-and-up {
-      display: table-cell;
+    thead {
+      background-color: $header-grey;
     }
   }
 }

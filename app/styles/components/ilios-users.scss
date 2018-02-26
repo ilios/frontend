@@ -20,11 +20,11 @@
       }
 
       .title {
-        @include main-list-box-header-title(4);
+        @include main-list-box-header-title;
       }
 
       .actions {
-        @include main-list-box-header-actions(8, 0);
+        @include main-list-box-header-actions;
       }
     }
   }

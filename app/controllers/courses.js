@@ -152,13 +152,6 @@ export default Controller.extend({
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },
-    //called by the 'toggle-mycourses' component
-    toggleMyCourses() {
-      //get the current userCoursesOnly status and flip it
-      let newStatus = (! this.get('userCoursesOnly'));
-      //then set it to the new status
-      this.set('userCoursesOnly', newStatus);
-    },
     toggleNewCourseForm() {
       this.set('showNewCourseForm', !this.get('showNewCourseForm'));
     },

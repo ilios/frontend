@@ -10,13 +10,6 @@
     .titlefilter {
       @include main-list-filter;
     }
-
-    .toggle-mycourses {
-      @include for-laptop-and-up {
-        @include span-columns(2 of 12);
-        padding-bottom: 0;
-      }
-    }
   }
 
   .courses {
