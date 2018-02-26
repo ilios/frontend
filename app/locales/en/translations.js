@@ -454,6 +454,7 @@ export default {
     'secondaryCohorts': 'Secondary Cohorts',
     'select': 'Select',
     'selectAcademicYear': 'Select Academic Year',
+    'selectCohortsToAttach': 'Select the cohort of students you wish to attach to the new course',
     'selectCourse': 'Select a Course',
     'selected': 'Selected',
     'selectedLearnerGroups': 'Selected Learner Groups',

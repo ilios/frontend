@@ -28,6 +28,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   flashMessages: service(),
   iliosConfig: service(),
+  init() {
+    this._super(...arguments);
+    this.set('selectedCohorts', []);
+  },
   didReceiveAttrs(){
     this._super(...arguments);
     let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
@@ -55,6 +59,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   skipOfferings: false,
   title: null,
   isSaving: false,
+  selectedCohorts: null,
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -84,6 +89,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const expandAdvancedOptions = this.get('expandAdvancedOptions');
     const year = this.get('selectedYear');
     const newCourseTitle = this.get('title');
+    const selectedCohortIds = this.get('selectedCohorts').mapBy('id');
     let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
     let skipOfferings = this.get('skipOfferings');
 
@@ -96,6 +102,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     if (expandAdvancedOptions && skipOfferings) {
       data.skipOfferings = true;
+    }
+    if (selectedCohortIds) {
+      data.newCohorts = selectedCohortIds;
     }
     const host = this.get('host') ? this.get('host') : '';
     const namespace = this.get('namespace');
@@ -161,6 +170,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     changeTitle(newTitle){
       this.set('title', newTitle);
       this.get('loadUnavailableYears').perform();
-    }
+    },
+    addCohort(cohort) {
+      let selectedCohorts = this.get('selectedCohorts');
+      selectedCohorts.pushObject(cohort);
+      this.set('selectedCohorts', selectedCohorts);
+    },
+    removeCohort(cohort){
+      let selectedCohorts = this.get('selectedCohorts');
+      selectedCohorts.removeObject(cohort);
+      this.set('selectedCohorts', selectedCohorts);
+    },
   }
 });

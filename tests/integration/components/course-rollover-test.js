@@ -586,3 +586,74 @@ test('changing the title looks for new matching courses', function(assert) {
 
 
 });
+
+test('rollover course with cohorts', async function(assert) {
+  assert.expect(2);
+  let som = EmberObject.create({
+    id: '1',
+    title: 'SOM'
+  });
+  let program1 = EmberObject.create({
+    title: 'Program1',
+    school: resolve(som)
+  });
+  let programYear1 = EmberObject.create({
+    program: resolve(program1),
+    published: true,
+    archived: false,
+  });
+  const cohort = EmberObject.create({
+    id: 1,
+    title: 'cohort 0',
+    programYear: resolve(programYear1),
+    program: resolve(program1),
+    school: resolve(som)
+  });
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old course'
+  });
+  let ajaxMock = Service.extend({
+    request(url, { data }) {
+      assert.ok('newCohorts' in data);
+      assert.deepEqual(data.newCohorts, [1]);
+
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
+
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query() { return []; }
+  });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  const mockCurrentUser = EmberObject.create({});
+
+  const currentUserMock = Service.extend({
+    model: resolve(mockCurrentUser),
+    cohortsInAllAssociatedSchools: resolve([cohort])
+  });
+  this.register('service:currentUser', currentUserMock);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const firstCohort = `${advancedOptions} .selectable-list li:eq(0)`;
+
+  await wait();
+  this.$(title).click();
+  await wait();
+  this.$(firstCohort).click();
+  this.$('.done').click();
+  await wait();
+});

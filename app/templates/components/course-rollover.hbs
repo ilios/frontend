@@ -72,6 +72,15 @@
           <span>{{t 'general.offerings'}}</span>
         </div>
       </div>
+
+      <div class='cohorts'>
+        <span class='title'>{{t 'general.selectCohortsToAttach'}}:</span>
+        {{detail-cohort-manager
+          selectedCohorts=selectedCohorts
+          add='addCohort'
+          remove='removeCohort'
+        }}
+      </div>
     {{/liquid-if}}
   </div>
 

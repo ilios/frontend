@@ -454,6 +454,7 @@
     'secondaryCohorts': 'Clases de la Graduación Secondarias',
     'select': 'Selecciona',
     'selectAcademicYear': 'Selecciona Año Academico',
+    'selectCohortsToAttach': 'Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso',
     'selectCourse': 'Seleccionar un curso',
     'selected': 'Escogido',
     'selectedLearnerGroups': 'Grupos de Aprendizaje Seleccionados',
