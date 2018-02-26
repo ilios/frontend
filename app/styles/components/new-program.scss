@@ -1,0 +1,21 @@
+.new-program {
+  @include ilios-form;
+  border: 1px solid $header-grey;
+  margin: .5em;
+
+  h4 {
+    margin-bottom: 1em;
+  }
+
+  .item {
+    @include ilios-form-item;
+  }
+
+  .buttons {
+    @include ilios-form-buttons;
+  }
+
+  .newprogram-title input {
+    min-width: 400px;
+  }
+}

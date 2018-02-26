@@ -22,16 +22,16 @@
       >
     </div>
   </div>
-  <section class='programs resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='programs'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.programs'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
       </div>
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewProgramForm class="vertical"}}
         {{new-program save=(action 'saveNewProgram') cancel=(action 'cancel')}}
       {{/liquid-if}}
