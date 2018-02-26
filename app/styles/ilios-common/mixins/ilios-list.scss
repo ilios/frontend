@@ -74,3 +74,45 @@
     margin: 0;
   }
 }
+
+@mixin ilios-selectable-list {
+  padding: .5em 1em .5em .5em;
+
+  ul {
+    background-color: transparent;
+    border: 0;
+    height: auto;
+    margin-left: 2em;
+    overflow-y: visible;
+    padding: 0;
+    width: auto;
+  }
+
+  li {
+    color: $base-link-color;
+    cursor: pointer;
+
+    &.static {
+      color: $base-font-color;
+      cursor: arrow;
+    }
+
+    &.disabled {
+      color: lighten($base-font-color, 40);
+      cursor: arrow;
+    }
+  }
+}
+
+@mixin ilios-removable-list {
+  @include ilios-tag-list;
+
+  li {
+    cursor: pointer;
+    display: flex;
+
+    .remove {
+      margin-left: .5em;
+    }
+  }
+}
