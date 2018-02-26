@@ -4,4 +4,8 @@
   @media print {
     display: none;
   }
+
+  .visually-hidden {
+    @include visually-hidden;
+  }
 }
