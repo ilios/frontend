@@ -8,9 +8,15 @@
 
   ul {
     @include ilios-list-reset;
+    display: flex;
+    justify-content: space-around;
 
-    li {
-      display: inline;
+    @include for-tablet-and-up {
+      justify-content: flex-start;
+
+      li {
+        margin-right: 3em;
+      }
     }
   }
 
