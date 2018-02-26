@@ -43,9 +43,7 @@
   & > main {
     background-color: $white;
     grid-area: main;
-    @include for-laptop-and-up {
-      margin-left: 10px;
-    }
+    margin: 0 5px;
   }
 
   & > footer {
