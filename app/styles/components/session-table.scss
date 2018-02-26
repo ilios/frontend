@@ -20,6 +20,7 @@
   }
 
   table {
+    @include ilios-table;
     tr {
       padding: .25em .5em;
 

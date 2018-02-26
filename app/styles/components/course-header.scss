@@ -1,18 +1,20 @@
 .course-header {
-  @include fill-parent;
-
   background-color: $header-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: .8em;
 
-  @include for-laptop-and-up {
-    @include span-columns(12);
+  @include for-tablet-and-up {
+    flex-direction: row;
   }
 
   .title {
-    @include fill-parent;
+    display: flex;
+    flex-direction: column;
 
-    @include for-laptop-and-up {
-      @include span-columns(8 of 12);
+    @include for-tablet-and-up {
+      flex-direction: row;
     }
 
     .editable,
@@ -25,18 +27,15 @@
       }
     }
 
-    h4 {
-      @include ilios-heading;
+    @include for-tablet-and-up {
+      h4 {
+        margin-left: 1em;
+      }
     }
   }
 
   .course-publication {
-    @include fill-parent;
-
     @include for-laptop-and-up {
-      @include span-columns(3 of 12);
-      @include shift(1);
-      @include omega;
       text-align: right;
     }
   }

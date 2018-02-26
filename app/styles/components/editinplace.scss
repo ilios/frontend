@@ -1,10 +1,4 @@
 .editinplace {
-  display: inline;
-
-  .content {
-    display: inline;
-  }
-
   .editable {
     color: $ilios-blue;
     cursor: pointer;
@@ -15,12 +9,10 @@
   }
 
   .editor {
-    input[type='text'],
-    input[type='url'],
-    input[type='tel'],
-    input[type='number'],
-    input[type='color'],
-    input[type='email'] {
+    align-items: center;
+    display: flex;
+
+    #{$form-input-text-types} {
       background: $white;
       border: 1px solid $header-grey;
       border-radius: $base-border-radius;
@@ -29,16 +21,37 @@
       display: inline;
       outline: none;
       overflow: show;
-      padding: 4px;
       z-index: 100;
     }
 
     .actions {
-      display: inline;
+      display: flex;
+      justify-content: flex-start;
 
       button {
+        background: transparent;
         margin: 0;
         padding: 0 .2em;
+
+        &:enabled:hover {
+          color: $white;
+        }
+
+        &.done {
+          color: $ilios-green;
+
+          &:enabled:hover {
+            background-color: $ilios-green;
+          }
+        }
+
+        &.cancel {
+          color: $ilios-red;
+
+          &:enabled:hover {
+            background-color: $ilios-red;
+          }
+        }
       }
     }
   }

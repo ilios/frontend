@@ -1,20 +1,16 @@
 .course-overview {
   @include ilios-overview($ilios-orange);
-  @include fill-parent;
-  display: block;
-
 
   .title {
     @include ilios-overview-title;
-    @include span-columns(5 of 12);
+  }
+
+  .course-overview-header {
+    @include ilios-overview-header;
   }
 
   .course-overview-actions {
     @include ilios-overview-actions;
-    @include span-columns(6 of 12);
-    @include shift(1);
-    @include omega;
-    text-align: right;
 
     a {
       color: $header-blue;
@@ -39,8 +35,12 @@
   }
 
   .coursedirectors {
-    @include span-columns(10);
+    grid-column: 1 / -1;
     margin-bottom: 2em;
+
+    .tag-list {
+      @include ilios-tag-list;
+    }
   }
 
   .universallocator {

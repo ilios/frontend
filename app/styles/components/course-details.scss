@@ -1,14 +1,12 @@
-$collapse-control-shadow-grey: #e2e2e2;
-$collapse-control-shadow-black: rgba(0, 0, 0, .34);
-
 .course-details {
+  $collapse-control-shadow-grey: #e2e2e2;
+  $collapse-control-shadow-black: rgba(0, 0, 0, .34);
+
   background-color: $background-grey;
   border-color: $header-grey;
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
-  font-size: $base-font-size;
-  padding: .8em;
 
   .detail-collapsed-control {
     margin-bottom: $base-font-size;
@@ -27,5 +25,9 @@ $collapse-control-shadow-black: rgba(0, 0, 0, .34);
         padding-left: 1em;
       }
     }
+  }
+
+  .back-to-courses-list {
+    margin: .5em 0;
   }
 }
