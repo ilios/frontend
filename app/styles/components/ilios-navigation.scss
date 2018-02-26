@@ -10,7 +10,8 @@
     display: flex;
     justify-content: space-around;
     list-style-type: none;
-    padding: 0 .5em;
+    margin: 0;
+    padding: .25em .5em;
 
     li {
       margin: 0 .25em;
@@ -24,6 +25,7 @@
 
     .text {
       display: none;
+      font-size: .8 * $base-font-size;
     }
   }
 
@@ -52,7 +54,9 @@
       display: inline;
 
       .text {
+        clear: none;
         display: inline;
+        margin-left: .25em;
       }
     }
 

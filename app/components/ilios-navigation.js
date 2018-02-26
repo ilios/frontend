@@ -9,7 +9,6 @@ export default Component.extend({
   i18n: service(),
   currentUser: service(),
   tagName: 'nav',
-  ariaRole: 'navigation',
   classNameBindings: [':ilios-navigation', 'expanded'],
   expanded: false,
   permissions: computed('currentUser.model.roles.[]', function(){

@@ -1,17 +1,17 @@
 <ul class='expand-navigation link clickable' onclick={{action (toggle 'expanded' this)}}>
   <li>{{fa-icon 'bars'}}</li>
 </ul>
-<ul class='navigation-links'>
-  <li>{{#link-to 'dashboard'}}{{fa-icon 'home'}} <span class='text'>{{t 'general.dashboard'}}</span>{{/link-to}}</li>
+<ul class='navigation-links' role='navigation'>
+  <li>{{#link-to 'dashboard'}}{{fa-icon 'home' fixedWidth=true}}<span class='text'>{{t 'general.dashboard'}}</span>{{/link-to}}</li>
   {{#if (get (await permissions) 'isFaculty')}}
-    <li>{{#link-to 'courses'}}{{fa-icon 'book'}}<span class='text'> {{t 'general.coursesAndSessions'}}</span>{{/link-to}}</li>
-    <li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board'}} <span class='text'>{{t 'general.learnerGroups'}}</span>{{/link-to}}</li>
-    <li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md'}} <span class='text'>{{t 'general.instructorGroups'}}</span>{{/link-to}}</li>
-    <li>{{#link-to 'schools'}}{{fa-icon 'university'}} <span class='text'>{{t 'general.schools'}}</span>{{/link-to}}</li>
-    <li>{{#link-to 'programs'}}{{fa-icon 'list-alt'}} <span class='text'>{{t 'general.programs'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'courses'}}{{fa-icon 'book' fixedWidth=true}}<span class='text'>{{t 'general.coursesAndSessions'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board' fixedWidth=true}}<span class='text'>{{t 'general.learnerGroups'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md' fixedWidth=true}}<span class='text'>{{t 'general.instructorGroups'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'schools'}}{{fa-icon 'university' fixedWidth=true}}<span class='text'>{{t 'general.schools'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'programs'}}{{fa-icon 'list-alt' fixedWidth=true}}<span class='text'>{{t 'general.programs'}}</span>{{/link-to}}</li>
   {{/if}}
   {{#if (get (await permissions) 'isAdmin')}}
-    <li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs'}} <span class='text'>{{t 'general.admin'}}</span>{{/link-to}}</li>
-    <li>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart'}} <span class='text'>{{t 'general.curriculumInventory'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs' fixedWidth=true}}<span class='text'>{{t 'general.admin'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart' fixedWidth=true}}<span class='text'>{{t 'general.curriculumInventory'}}</span>{{/link-to}}</li>
   {{/if}}
 </ul>

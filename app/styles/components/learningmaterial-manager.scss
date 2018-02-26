@@ -28,7 +28,7 @@
 
   h2 {
     @include ilios-heading;
-    color: $default-text-color;
+    color: $text-grey;
     font-size: $base-font-size;
     font-weight: bold;
   }

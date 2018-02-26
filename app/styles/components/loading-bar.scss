@@ -1,17 +1,8 @@
 .loading-bar {
-  height: .5em;
+  height: 10px;
   margin-bottom: .25em;
   text-align: left;
   width: 100%;
-
-  // get out of the way of the navigation block when it is present
-  @include for-desktop-and-up {
-    padding-left: 200px;
-  }
-
-  @include for-laptop-and-up {
-    padding-left: 240px;
-  }
 
   .bar {
     background-color: $ilios-blue;

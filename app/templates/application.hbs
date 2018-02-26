@@ -1,19 +1,22 @@
-{{head-layout}}
-{{ember-load-remover}}
-{{api-version-check}}
 {{connection-status}}
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
-{{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
-{{loading-bar isLoading=currentlyLoading}}
-{{#if session.isAuthenticated}}
-  {{ilios-navigation}}
-{{/if}}
-<main>
-  {{#if showErrorDisplay}}
-    {{error-display errors=errors clearErrors=(action 'clearErrors')}}
-  {{else}}
-    {{outlet}}
+{{head-layout}}
+{{ember-load-remover}}
+{{api-version-check}}
+<div class='application-wrapper'>
+  {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
+  {{loading-bar isLoading=currentlyLoading}}
+  {{#if session.isAuthenticated}}
+    {{ilios-navigation}}
   {{/if}}
-</main>
+  <main>
+    {{#if showErrorDisplay}}
+      {{error-display errors=errors clearErrors=(action 'clearErrors')}}
+    {{else}}
+      {{outlet}}
+    {{/if}}
+  </main>
+  <footer class='ilios-footer'></footer>
+</div>

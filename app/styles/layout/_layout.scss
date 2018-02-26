@@ -1,41 +1,57 @@
 // temporarily attach this to the child of body until ember gets rid of the top level
 // div.  Expected to be done in Ember 3.1.0
-body > .ember-view {
+.application-wrapper {
   display: grid;
   grid-template-areas:
   'header'
+  'loading'
   'nav'
   'main'
   'footer';
+  grid-template-rows: 60px 10px auto 1fr 20px;
+  height: 100vh;
+  width: 100vw;
 
   @include for-laptop-and-up {
     grid-template-areas:
     'header  header'
+    'nav  loading'
     'nav main'
-    'nav footer';
+    'footer footer';
     grid-template-columns: 200px auto;
+    grid-template-rows: minmax(60px, auto) 10px 1fr auto;
   }
   @include for-desktop-and-up {
     grid-template-areas:
     'header header  header'
+    'nav loading  loading'
     'nav    main main'
-    'nav footer  footer';
+    'footer footer  footer';
     grid-template-columns: 240px 1fr 1fr;
   }
 
-  header {
+  & > header {
     grid-area: header;
   }
 
-  nav {
+  & > .loading-bar {
+    grid-area: loading;
+  }
+
+  & > nav {
     grid-area: nav;
   }
 
-  main {
+  & > main {
+    background-color: $white;
     grid-area: main;
     @include for-laptop-and-up {
       margin-left: 10px;
     }
+  }
+
+  & > footer {
+    grid-area: footer;
   }
 }
 
