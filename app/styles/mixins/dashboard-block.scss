@@ -1,7 +1,11 @@
 @mixin dashboard-block () {
-  @include span-columns(6 of 12);
   border: 1px solid $ilios-blue;
   margin-top: 1em;
+  width: 100%;
+
+  @include for-laptop-and-up {
+    width: 48%;
+  }
 
   .dashboard-block-actions {
     float: right;

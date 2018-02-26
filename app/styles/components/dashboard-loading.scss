@@ -24,7 +24,11 @@
   .courses-box {
     height: 10em;
     margin-top: 1em;
-    width: 49%;
+    width: 100%;
+
+    @include for-laptop-and-up {
+      width: 49%;
+    }
   }
 
   .report-box {
