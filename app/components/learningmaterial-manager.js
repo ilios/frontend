@@ -28,6 +28,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   layout: layout,
   classNames: ['learningmaterial-manager'],
+  tagName: 'form',
 
   statusId: null,
   notes: null,

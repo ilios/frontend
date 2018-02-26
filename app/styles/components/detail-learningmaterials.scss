@@ -1,56 +1,39 @@
 .detail-learningmaterials {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include fill-parent;
-    color: $text-blue;
-    font-size: $base-font-size;
-    font-weight: bold;
+  .detail-learningmaterials-header {
+    @include detail-container-header;
+  }
 
-    @include for-laptop-and-up {
-      @include span-columns(3 of 12);
-    }
+  .title {
+    @include detail-container-title;
   }
 
   .detail-learningmaterials-actions {
-    @include fill-parent;
-    vertical-align: middle;
-
-    @include for-laptop-and-up {
-      @include span-columns(2 of 12);
-      @include omega();
-      @include shift(7);
-      text-align: right;
-    }
-  }
-
-  &.display-search-box {
-    .detail-learningmaterials-actions {
-      @include for-laptop-and-up {
-        @include shift(0);
-      }
-    }
+    @include detail-container-actions;
   }
 
   .learningmaterial-search {
-    @include fill-parent;
-    overflow: hidden;
+    flex-grow: 2;
+    margin: 0 .5em;
 
-    @include for-laptop-and-up {
-      @include span-columns(7 of 12);
+    input {
+      width: 100%;
     }
 
-
-    input[type='search'] {
-      @include span-columns(7 of 7);
-    }
-
-    .selectable-list {
-      @include span-columns(7 of 7);
+    .search-box {
+      margin-bottom: 0;
     }
 
     .lm-search-results {
-      @include span-columns(7 of 7);
+      @include ilios-selectable-list;
+      background-color: $white;
+      border: 1px solid $base-link-color;
+      margin: 0;
+      max-height: 15em;
+      overflow-y: scroll;
+      position: absolute;
+      z-index: 10;
 
       li {
         border-bottom: 1px solid $header-grey;
@@ -85,24 +68,34 @@
         right: 5px;
         top: 0;
       }
-    }
 
-    .learning-material-properties {
+      .learning-material-properties {
 
-      li {
-        border: 0;
-        color: $darker-grey;
-        cursor: inherit;
-        display: list-item;
-        font-size: .75em;
-        margin: 0;
-        min-height: 0;
-        padding: 0 0 0 .75em;
+        li {
+          border: 0;
+          color: $darker-grey;
+          cursor: inherit;
+          display: list-item;
+          font-size: .75em;
+          margin: 0;
+          min-height: 0;
+          padding: 0 0 0 .75em;
+        }
       }
     }
   }
 
   .detail-learningmaterials-content {
     @include detail-container-content;
+
+    table {
+      @include ilios-table;
+
+      td {
+        ul {
+          @include ilios-list-reset;
+        }
+      }
+    }
   }
 }

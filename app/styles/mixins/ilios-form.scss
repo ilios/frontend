@@ -59,7 +59,32 @@
   width: 99%;
 
   button {
+    background-color: $white;
+    border-style: solid;
+    border-width: 1px;
     margin-right: 1em;
+
+    &:enabled:hover {
+      color: $white;
+    }
+
+    &.done {
+      border-color: $ilios-green;
+      color: $ilios-green;
+
+      &:enabled:hover {
+        background-color: $ilios-green;
+      }
+    }
+
+    &.cancel {
+      border-color: $ilios-red;
+      color: $ilios-red;
+
+      &:enabled:hover {
+        background-color: $ilios-red;
+      }
+    }
   }
 
 }
