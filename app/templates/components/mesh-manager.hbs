@@ -1,7 +1,7 @@
 {{#if targetItemTitle}}
   <h2>{{t 'general.selectMeshFor' title=targetItemTitle}}</h2>
 {{/if}}
-<ul class='removable-list tag-list details-list'>
+<ul class='selected-terms'>
   {{#each sortedTerms as |term|}}
     <li {{action 'remove' term}}>
       <div class="content">
@@ -19,7 +19,7 @@
 
         </span>
       </div>
-      {{fa-icon 'remove'}}
+      {{fa-icon 'remove' class='remove'}}
     </li>
   {{/each}}
 </ul>
@@ -31,34 +31,32 @@
   </ul>
 {{else}}
   {{#if searchResults.length}}
-    <div class='selectable-list'>
-      <ul class='mesh-search-results' data-test-search-results>
-        {{#each searchResults as |term|}}
-          <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
-            <span class="descriptor-name" data-test-name>{{term.name}}</span>
-            <span class="descriptor-id">
-              {{term.id}}
-              {{#if term.trees }}
-                - {{term.trees.lastObject.treeNumber}}
+    <ul class='mesh-search-results' data-test-search-results>
+      {{#each searchResults as |term|}}
+        <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
+          <span class="descriptor-name" data-test-name>{{term.name}}</span>
+          <span class="descriptor-id">
+            {{term.id}}
+            {{#if term.trees }}
+              - {{term.trees.lastObject.treeNumber}}
+            {{/if}}
+          </span>
+          <ul class="mesh-concepts">
+            {{#each term.concepts as |concept| }}
+              {{#if concept.scopeNote }}
+                <li class="{{unless term.isActive 'disabled'}} {{if concept.hasTruncatedScopeNote 'truncated'}}">{{concept.truncatedScopeNote}}</li>
               {{/if}}
-            </span>
-            <ul class="mesh-concepts">
-              {{#each term.concepts as |concept| }}
-                {{#if concept.scopeNote }}
-                  <li class="{{unless term.isActive 'disabled'}} {{if concept.hasTruncatedScopeNote 'truncated'}}">{{concept.truncatedScopeNote}}</li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          </li>
-        {{/each}}
-      </ul>
-      {{#if hasMoreSearchResults}}
-        <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
-          {{fa-icon (if searchMore.isRunning 'spinner') spin=(if searchMore.isRunning true false)}}
-          {{t 'general.showMore' }}
-        </button>
-      {{/if}}
-    </div>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+    {{#if hasMoreSearchResults}}
+      <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
+        {{fa-icon (if searchMore.isRunning 'spinner') spin=(if searchMore.isRunning true false)}}
+        {{t 'general.showMore' }}
+      </button>
+    {{/if}}
   {{else}}
     {{#if searchReturned}}
       <ul class='results'>

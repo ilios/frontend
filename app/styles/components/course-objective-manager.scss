@@ -11,4 +11,8 @@
       font-weight: bold;
     }
   }
+
+  .parent-picker ul {
+    @include ilios-list-reset;
+  }
 }

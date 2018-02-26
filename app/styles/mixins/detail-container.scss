@@ -1,15 +1,8 @@
 @mixin detail-container ($bottom-border-color) {
-  @include fill-parent;
-  @include row;
   border-bottom: 1px dotted $bottom-border-color;
-  display: block;
   margin: 0;
   min-height: 2em;
   padding: 1em 0;
-
-  @include for-laptop-and-up {
-    @include span-columns(12);
-  }
 }
 
 @mixin detail-container-title-style () {
@@ -36,32 +29,40 @@
   }
 }
 
-@mixin detail-container-title () {
-  @include fill-parent;
-  @include detail-container-title-style;
+@mixin detail-container-header () {
+  display: flex;
+  justify-content: space-between;
 
-  @include for-laptop-and-up {
-    @include span-columns(8 of 12);
+  @include for-phone-only {
+    flex-wrap: wrap;
   }
 }
 
-@mixin detail-container-actions () {
-  @include fill-parent;
-  text-align: center;
-  vertical-align: middle;
+@mixin detail-container-title () {
+  @include detail-container-title-style;
+}
 
-  @include for-laptop-and-up {
-    @include shift(1 of 12);
-    @include span-columns(3 of 12);
-    @include omega();
-    padding-right: 1em;
-    text-align: right;
+@mixin detail-container-actions () {
+  display: flex;
+  justify-content: space-around;
+
+  & > * {
+    margin-right: .5em;
+  }
+
+  .bigadd {
+    background-color: $ilios-green;
+    color: $white;
+  }
+
+  .bigcancel {
+    background-color: $ilios-red;
+    color: $white;
   }
 }
 
 @mixin detail-container-content () {
-  @include fill-parent;
-  @include row;
   clear: both;
-  padding-top: 2em;
+  margin-top: 2em;
+  padding: .5em;
 }

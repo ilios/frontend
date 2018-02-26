@@ -4,7 +4,21 @@
     font-weight: bolder;
   }
 
+  .results,
   .mesh-search-results {
+    @include ilios-list-reset;
+  }
+
+  .mesh-search-results {
+    @include ilios-selectable-list;
+
+    background-color: $white;
+    border: 1px solid $base-link-color;
+    height: 10em;
+    margin-bottom: $base-font-size;
+    overflow-y: scroll;
+    width: 80%;
+
     .descriptor-name {
       display: block;
       font-weight: bold;
@@ -23,5 +37,11 @@
         content: ' \2026';
       }
     }
+  }
+
+  .selected-terms {
+    @include ilios-removable-list;
+
+    margin-bottom: 2em;
   }
 }
