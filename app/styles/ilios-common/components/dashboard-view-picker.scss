@@ -3,13 +3,15 @@
   border-bottom: 1px solid $ilios-blue;
 
   margin: 0;
-  padding: .5em;
+  padding: .5em 0;
   width: 100%;
 
   ul {
-    @include ilios-list-reset;
     display: flex;
     justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 
     @include for-tablet-and-up {
       justify-content: flex-start;
