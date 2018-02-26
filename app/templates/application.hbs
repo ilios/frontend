@@ -2,12 +2,8 @@
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
-{{head-layout}}
-{{ember-load-remover}}
-{{api-version-check}}
 <div class='application-wrapper'>
   {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
-  {{loading-bar isLoading=currentlyLoading}}
   {{#if session.isAuthenticated}}
     {{ilios-navigation}}
   {{/if}}
@@ -19,5 +15,9 @@
     {{/if}}
   </main>
   <footer class='ilios-footer'></footer>
+  {{loading-bar isLoading=currentlyLoading}}
 </div>
 {{flash-messages}}
+{{head-layout}}
+{{ember-load-remover}}
+{{api-version-check}}

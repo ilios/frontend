@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
@@ -6,20 +5,23 @@ import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
   classNameBindings: [':loading-bar'],
+  attributeBindings: ['ariaHidden:aria-hidden'],
+  ariaHidden: 'true',
   progress: 0,
 
   isLoading: false,
-
-  didReceiveAttrs() {
-    const incrementProgress = this.get('incrementProgress');
-    incrementProgress.perform();
-  },
 
   barWidth: computed('progress', function () {
     const progress = parseInt(this.get('progress'), 10);
 
     return htmlSafe(`width: ${progress}%;`);
   }),
+
+  didReceiveAttrs() {
+    const incrementProgress = this.get('incrementProgress');
+    incrementProgress.perform();
+  },
+
 
   incrementProgress: task(function * () {
     const removeProgress = this.get('removeProgress');
