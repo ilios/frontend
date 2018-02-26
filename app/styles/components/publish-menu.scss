@@ -35,13 +35,13 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
   }
 
   &.published .rl-dropdown-toggle {
-    border: 1px solid $published-green;
-    color: $published-green;
+    border: 1px solid $ilios-green;
+    color: $ilios-green;
   }
 
   &.notpublished .rl-dropdown-toggle {
-    border: 1px solid $notpublished-amber;
-    color: $notpublished-amber;
+    border: 1px solid $ilios-yellow;
+    color: $ilios-yellow;
   }
 
   &.scheduled .rl-dropdown-toggle {

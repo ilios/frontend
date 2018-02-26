@@ -1,7 +1,7 @@
 .breadcrumbs {
   $breadcrumb-border-color: $switch-blue;
   $breadcrumb-border: 1px solid $breadcrumb-border-color;
-  $breadcrumb-height: $base-spacing * 1.5;
+  $breadcrumb-height: $base-font-size * 2;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
   $breadcrumb-background: $base-background-color;
   $breadcrumb-inactive-hover-color: $breadcrumb-background;
@@ -10,7 +10,7 @@
   $breadcrumb-color-active: $breadcrumb-color;
 
   display: inline-block;
-  margin: $base-spacing / 2;
+  margin: $base-font-size * .75;
   text-align: left;
 
   span {

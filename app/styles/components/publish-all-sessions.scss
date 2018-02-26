@@ -28,7 +28,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $published-green;
+    border: 1px solid $ilios-green;
     clear: both;
     font-size: 1.5 * $base-font-size;
     margin: 1em;
@@ -36,14 +36,14 @@
     text-align: center;
 
     p {
-      color: $published-green;
+      color: $ilios-green;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1em;
     }
 
     button {
-      background: $publish-button-color;
+      background: $ilios-green;
       color: $white;
     }
 

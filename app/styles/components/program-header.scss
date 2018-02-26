@@ -17,8 +17,8 @@
 
     .editable,
     h5 {
+      @include ilios-heading-h5;
       display: block;
-      font-size: $h5-font-size;
 
       @include for-laptop-and-up {
         display: inline;

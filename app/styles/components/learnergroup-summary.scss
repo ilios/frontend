@@ -24,7 +24,7 @@
   .cohortmembers {
     .cohortmembers-loading {
       display: block;
-      font-size: $h1-font-size;
+      font-size: $base-font-size * 2.25;
       margin: auto;
       text-align: center;
     }
