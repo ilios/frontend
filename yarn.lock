@@ -4090,7 +4090,13 @@ ember-pikaday@2.2.4:
     fastboot-transform "^0.1.1"
     pikaday "^1.5.1"
 
-ember-promise-helpers@1.0.3, ember-promise-helpers@^1.0.3:
+ember-promise-helpers@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/ember-promise-helpers/-/ember-promise-helpers-1.0.5.tgz#18bad4081b0e50b0f495d1025d6763766b57aa14"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
+ember-promise-helpers@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/ember-promise-helpers/-/ember-promise-helpers-1.0.3.tgz#eb1a987aec4f4e9ad8b51519540c92299d1a5d71"
   dependencies:
