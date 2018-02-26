@@ -1,0 +1,25 @@
+$form-input-text-types: 'input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"]';
+
+@mixin ilios-input {
+  @include ilios-select;
+  background: $white;
+  border: 1px solid $input-box-grey;
+  border-radius: $base-border-radius;
+  color: $base-font-color;
+  cursor: pointer;
+  font-style: italic;
+  min-width: 220px;
+  overflow: show;
+  z-index: 100;
+
+  #{$form-input-text-types} {
+    background-position: right 4px bottom .75em;
+    height: 2.5em;
+  }
+
+  &[type='checkbox'],
+  &[type='radio'] {
+    display: inline;
+    width: 2.5em;
+  }
+}

@@ -9,3 +9,78 @@ body {
     font-size: $base-font-size * 1.25;
   }
 }
+
+a,
+.link {
+  @include ilios-link;
+}
+
+button {
+  @include ilios-button;
+}
+
+h1 {
+  @include ilios-heading-h1;
+}
+
+h2 {
+  @include ilios-heading-h2;
+}
+
+h3 {
+  @include ilios-heading-h3;
+}
+
+h4 {
+  @include ilios-heading-h4;
+}
+
+h5 {
+  @include ilios-heading-h5;
+}
+
+h6 {
+  @include ilios-heading-h6;
+}
+
+.add,
+.yes {
+  color: $ilios-green;
+}
+
+.remove,
+.no {
+  color: $ilios-remove-color;
+}
+
+.error,
+.is-error {
+  color: $alert-color;
+}
+
+.warning,
+.is-warning {
+  color: $warning-color;
+}
+
+.clickable,
+.is-clickable {
+  cursor: pointer;
+}
+
+.editable,
+.is-editable {
+  color: $ilios-blue;
+}
+
+.published {
+  color: $ilios-green;
+}
+
+.notpublished {
+  color: $ilios-yellow;
+}
+
+.scheduled {
+  color: $scheduled-brown;
+}
