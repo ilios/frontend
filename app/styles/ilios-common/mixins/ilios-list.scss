@@ -29,6 +29,22 @@
   }
 }
 
+@mixin ilios-tag-list() {
+  @include ilios-list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  li {
+    background-color: $header-grey;
+    border-radius: 4px;
+    margin-right: .3em;
+    margin-top: 10px;
+    padding: .2em .4em .2em .6em;
+    vertical-align: middle;
+  }
+}
+
 @mixin ilios-browser-defaults {
   ul {
     list-style-position: inside;
