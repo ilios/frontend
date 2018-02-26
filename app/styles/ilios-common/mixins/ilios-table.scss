@@ -24,15 +24,18 @@
 
   th,
   td {
-    &.text-left {
+    &.text-left,
+    &.align-left {
       text-align: left;
     }
 
-    &.text-center {
+    &.text-center,
+    &.align-center {
       text-align: center;
     }
 
-    &.text-right {
+    &.text-right,
+    &.align-right {
       text-align: right;
     }
 
