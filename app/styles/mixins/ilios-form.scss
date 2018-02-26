@@ -15,7 +15,12 @@
     @include ilios-select;
   }
 
+  textarea {
+    @include ilios-textarea;
+  }
+
   #{$form-input-text-types},
+  textarea,
   select {
     display: block;
     width: 90%;
@@ -28,7 +33,7 @@
 
 @mixin ilios-form-item () {
   display: block;
-  height: 4em;
+  min-height: 4em;
   width: 99%;
 
   @include for-laptop-and-up {

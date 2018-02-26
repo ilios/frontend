@@ -10,11 +10,27 @@
     }
   }
 
-  .report-actions {
-    text-align: left;
+  .reports {
+    @include main-list-box;
 
-    i {
-      margin-left: .25em;
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
     }
+  }
+
+  .list {
+    @include main-list-box-table;
   }
 }

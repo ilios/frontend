@@ -9,7 +9,7 @@
       }}
         {{t 'general.reportName'}}
       {{/sortable-th}}
-      <th class='text-center' colspan=2>{{t 'general.program'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.program'}}</th>
       {{#sortable-th
         colspan=2
         click=(action 'sortBy' 'year')
@@ -17,11 +17,12 @@
         sortedAscending=sortedAscending
         sortType='numeric'
         align='center'
+        hideFromSmallScreen=true
       }}
         {{t 'general.academicYear'}}
       {{/sortable-th}}
-      <th class='text-center' colspan=2>{{t 'general.startDate'}}</th>
-      <th class='text-center' colspan=2>{{t 'general.endDate'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.startDate'}}</th>
+      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.endDate'}}</th>
       <th class='text-center' colspan=2>{{t 'general.status'}}</th>
       <th class='text-left' colspan=2>{{t 'general.actions'}}</th>
     </tr>
@@ -34,10 +35,10 @@
             {{report.name}}
           {{/link-to}}
         </td>
-        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report}}>{{report.yearLabel}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'L'}}</td>
-        <td class='text-center' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'L'}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' report}}>{{report.program.title}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' report}}>{{report.yearLabel}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' report}}>{{moment-format report.startDate 'L'}}</td>
+        <td class='text-center hide-from-small-screen' colspan=2 {{action 'edit' report}}>{{moment-format report.endDate 'L'}}</td>
         <td class='text-center' colspan=2 {{action 'edit' report}}>
           {{#if report.isFinalized}}{{fa-icon 'lock'}}{{/if}}
           {{publication-status
