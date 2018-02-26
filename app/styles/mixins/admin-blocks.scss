@@ -1,11 +1,10 @@
 @mixin admin-blocks () {
-  @include for-laptop-and-up {
-    @include span-columns(12);
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   .small-component,
   .large-component {
-    @include fill-parent;
     background-color: $grey;
     border: 1px solid $black;
     border-radius: 5px;
@@ -26,33 +25,17 @@
     }
 
     p {
-      @include fill-parent;
       clear: both;
       margin-top: 1em;
+      width: 100%;
     }
 
     button {
       font-size: $base-font-size;
     }
 
-    .title {
-      @include fill-parent;
-      text-align: center;
-
-      @include for-laptop-and-up {
-        text-align: left;
-      }
-    }
-
-    .actions {
-      margin: 1em 0;
-      text-align: center;
-
-      @include for-laptop-and-up {
-        @include omega();
-        margin: 0;
-        text-align: right;
-      }
+    .inline-data {
+      display: inline;
     }
   }
 
@@ -60,50 +43,22 @@
     font-size: .75 * $base-font-size;
 
     @include for-laptop-and-up {
-      @include span-columns(6 of 12);
-    }
-
-    &.last {
-      @include omega();
-    }
-
-    .title {
-      @include for-laptop-and-up {
-        @include span-columns(3 of 6);
-      }
-    }
-
-    .actions {
-      @include for-laptop-and-up {
-        @include span-columns(3 of 6);
-        @include omega();
-      }
+      width: 49%;
     }
   }
 
   .large-component {
-    @include omega;
-    clear: both;
+    width: 99%;
 
-    .title {
-      @include fill-parent;
+    .header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
       text-align: center;
 
       @include for-laptop-and-up {
-        @include span-columns(6 of 12);
-        text-align: left;
-      }
-    }
-
-    .actions {
-      margin: 1em 0;
-      text-align: center;
-
-      @include for-laptop-and-up {
-        @include span-columns(6 of 12);
-        @include omega();
-        margin: 0;
-        text-align: right;
+        flex-direction: row;
+        justify-content: space-between;
       }
     }
   }
