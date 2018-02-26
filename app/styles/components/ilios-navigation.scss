@@ -3,6 +3,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2em auto;
+  padding-bottom: .5em;
 
   ul {
     align-content: center;
