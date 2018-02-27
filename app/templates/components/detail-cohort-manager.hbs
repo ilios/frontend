@@ -1,24 +1,22 @@
-<ul class='removable-list tag-list'>
+<ul class='selected-cohorts'>
   {{#each sortedCohorts as |cohort|}}
     <li {{action 'remove' cohort}}>
       {{cohort.programYear.program.school.title}} |
       {{cohort.programYear.program.title}} |
-      {{cohort.title}} | {{fa-icon 'remove'}}
+      {{cohort.title}} | {{fa-icon 'remove' class='remove'}}
     </li>
   {{/each}}
 </ul>
-<div class='selectable-list'>
-  <ul>
-    {{#if (is-fulfilled sortedAvailableCohorts)}}
-      {{#each (await sortedAvailableCohorts) as |cohort|}}
-        <li {{action 'add' cohort}}>
-          {{cohort.programYear.program.school.title}} |
-          {{cohort.programYear.program.title}} |
-          {{cohort.title}}
-        </li>
-      {{/each}}
-    {{else}}
-      <li>{{fa-icon 'spinner' spin=true}}</li>
-    {{/if}}
-  </ul>
-</div>
+<ul class='selectable-cohorts'>
+  {{#if (is-fulfilled sortedAvailableCohorts)}}
+    {{#each (await sortedAvailableCohorts) as |cohort|}}
+      <li {{action 'add' cohort}}>
+        {{cohort.programYear.program.school.title}} |
+        {{cohort.programYear.program.title}} |
+        {{cohort.title}}
+      </li>
+    {{/each}}
+  {{else}}
+    <li>{{fa-icon 'spinner' spin=true}}</li>
+  {{/if}}
+</ul>

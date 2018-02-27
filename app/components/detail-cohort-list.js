@@ -8,6 +8,7 @@ const { map } = RSVP;
 
 export default Component.extend({
   i18n: service(),
+  classNames: ['detail-cohort-list'],
   cohorts: null,
   /**
    * A list of cohorts, sorted by school and display title.

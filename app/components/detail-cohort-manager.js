@@ -17,7 +17,7 @@ export default Component.extend({
     this.set('sortBy', ['title']);
   },
   tagName: 'section',
-  classNames: ['detail-block'],
+  classNames: ['detail-cohort-manager'],
   placeholder: t('general.filterPlaceholder'),
   filter: '',
   selectedCohorts: null,

@@ -4,7 +4,7 @@
   label {
     @include ilios-label;
     display: block;
-    width: 99%;
+    width: 100%;
   }
 
   #{$form-input-text-types} {
@@ -34,7 +34,7 @@
 @mixin ilios-form-item () {
   display: block;
   min-height: 4em;
-  width: 99%;
+  width: 100%;
 
   @include for-laptop-and-up {
     @include span-columns(4);
@@ -44,7 +44,7 @@
 
 @mixin ilios-form-last-item () {
   display: block;
-  width: 99%;
+  width: 100%;
 
   @include for-laptop-and-up {
     @include span-columns(8);
@@ -56,7 +56,7 @@
   display: block;
   margin-top: 2em;
   padding: 1em 0;
-  width: 99%;
+  width: 100%;
 
   button {
     background-color: $white;
