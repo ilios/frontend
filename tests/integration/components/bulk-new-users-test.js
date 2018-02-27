@@ -141,7 +141,7 @@ test('select student mode display cohort', async function(assert) {
   });
 
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
-  run( async () => {
+  await run( async () => {
     this.$('.click-choice-buttons .second-button').click();
     await wait();
     let content = this.$().text().trim();
@@ -585,7 +585,7 @@ test('duplicate username errors on save', async function(assert) {
         });
         break;
       default:
-        assert.ok(false, 'Extra createRecord called when it shoul not have been');
+        assert.ok(false, 'Extra createRecord called when it should not have been');
       }
 
       called++;
