@@ -31,17 +31,24 @@
   }
 
   &.expanded {
-    ul {
-      flex-wrap: wrap;
+    @include for-tablet-and-down {
+      ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
 
-      li {
-        padding: .5em;
+        @include for-tablet-and-up {
+          grid-row-gap: .5em;
+        }
+
+        li {
+          padding: .5em;
+        }
       }
-    }
 
-    .text {
-      clear: left;
-      display: block;
+      .text {
+        clear: left;
+        display: block;
+      }
     }
   }
 
