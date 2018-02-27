@@ -3,6 +3,10 @@
 
   background-color: $active-background-color;
 
+  .course-sessions-header {
+    @include detail-container-header;
+  }
+
   .title {
     @include detail-container-title;
   }

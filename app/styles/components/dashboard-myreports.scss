@@ -1,10 +1,6 @@
 .dashboard-myreports {
   @include dashboard-block;
 
-  h3 {
-    margin: 0;
-  }
-
   table {
     width: auto;
   }
