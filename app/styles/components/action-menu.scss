@@ -2,7 +2,7 @@
 
   $dropdown-background: $base-background-color;
   $dropdown-background-hover: darken($dropdown-background, 3);
-  $dropdown-padding: 1em;
+  $dropdown-padding: 1rem;
   $dropdown-distance-from-menu: $dropdown-padding * 2;
 
   display: inline-block;
@@ -14,7 +14,7 @@
     color: $base-font-color;
     cursor: pointer;
     font-size: .7rem;
-    line-height: 1.1em;
+    line-height: 1.1rem;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 
@@ -41,7 +41,7 @@
     border-radius: $base-border-radius;
     color: $white;
     font-size: .85rem;
-    padding: .5em 2em .5em 1em;
+    padding: .5rem 2rem .5rem 1rem;
     vertical-align: middle;
 
     &:hover {

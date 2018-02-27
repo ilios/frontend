@@ -1,15 +1,15 @@
 .new-learningmaterial {
   @include fill-parent;
 
-  margin-left: 2em;
+  margin-left: 2rem;
   min-height: 25vh;
 
   .item {
-    margin-bottom: .5em;
+    margin-bottom: .5rem;
 
     label {
       @include ilios-label;
-      margin-right: .5em;
+      margin-right: .5rem;
     }
   }
 

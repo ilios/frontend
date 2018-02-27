@@ -9,9 +9,9 @@
     border: 1px solid $black;
     border-radius: 5px;
     box-sizing: border-box;
-    margin-bottom: 1em;
-    min-height: 5em;
-    padding: .25em 2em .75em;
+    margin-bottom: 1rem;
+    min-height: 5rem;
+    padding: .25rem 2rem .75rem;
 
     &.alert {
       background-color: $white;
@@ -21,12 +21,12 @@
     h2 {
       @include ilios-heading;
       font-size: 1.25rem;
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
     }
 
     p {
       clear: both;
-      margin-top: 1em;
+      margin-top: 1rem;
       width: 100%;
     }
 
@@ -53,7 +53,7 @@
     .header {
       display: flex;
       flex-direction: column;
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
       text-align: center;
 
       @include for-laptop-and-up {

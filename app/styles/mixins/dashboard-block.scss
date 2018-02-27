@@ -1,6 +1,6 @@
 @mixin dashboard-block () {
   border: 1px solid $ilios-blue;
-  margin-top: 1em;
+  margin-top: 1rem;
   width: 100%;
 
   @include for-laptop-and-up {
@@ -22,7 +22,7 @@
   }
 
   .dashboard-block-body {
-    height: 30em;
+    height: 30rem;
     overflow-y: scroll;
   }
 }

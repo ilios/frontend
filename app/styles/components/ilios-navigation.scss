@@ -2,8 +2,8 @@
   background-color: $background-grey;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 2em auto;
-  padding-bottom: .5em;
+  grid-template-columns: 2rem auto;
+  padding-bottom: .5rem;
 
   ul {
     align-content: center;
@@ -12,13 +12,13 @@
     justify-content: space-around;
     list-style-type: none;
     margin: 0;
-    padding: .25em .5em;
+    padding: .25rem .5rem;
 
     li {
-      margin: 0 .25em;
+      margin: 0 .25rem;
       text-align: center;
       @include for-laptop-and-up {
-        padding: .25em 0;
+        padding: .25rem 0;
         text-align: left;
       }
 
@@ -37,11 +37,11 @@
         grid-template-columns: repeat(3, 1fr);
 
         @include for-tablet-and-up {
-          grid-row-gap: .5em;
+          grid-row-gap: .5rem;
         }
 
         li {
-          padding: .5em;
+          padding: .5rem;
         }
       }
 
@@ -64,7 +64,7 @@
       .text {
         clear: none;
         display: inline;
-        margin-left: .25em;
+        margin-left: .25rem;
       }
     }
 

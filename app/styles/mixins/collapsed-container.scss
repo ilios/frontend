@@ -3,7 +3,7 @@
   display: grid;
 
   @include for-tablet-and-up {
-    grid-row-gap: .5em;
+    grid-row-gap: .5rem;
     grid-template-columns: 1fr 4fr;
   }
 }
@@ -28,7 +28,7 @@
 
 @mixin collapsed-container-table () {
   @include ilios-table;
-  font-size: .8em;
+  font-size: .8rem;
 
   table,
   tr,
@@ -40,7 +40,7 @@
 
   td,
   th {
-    padding: 0 0 .5em .5em;
+    padding: 0 0 .5rem .5rem;
     vertical-align: top;
   }
 

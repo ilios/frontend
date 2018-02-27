@@ -4,14 +4,14 @@
 }
 
 @mixin ilios-list-badges() {
-  $badges-font-size: .8em;
+  $badges-font-size: .8rem;
 
   li {
     @include fill-parent;
     background-color: $header-grey;
     border-radius: 4px;
     height: $badges-font-size * 3.5;
-    margin-top: .5em;
+    margin-top: .5rem;
     overflow: hidden;
     vertical-align: middle;
 
@@ -37,7 +37,7 @@
 
       .action {
         @include span-columns(1 of 3);
-        font-size: 1em;
+        font-size: 1rem;
         padding-bottom: $badges-font-size;
         padding-top: $badges-font-size;
         text-align: center;
@@ -49,7 +49,7 @@
 
 @mixin ilios-list-tree() {
   background-color: $white;
-  height: 15em;
+  height: 15rem;
   overflow-y: scroll;
 
   li {
@@ -81,17 +81,17 @@
 @mixin ilios-list-hierarchical() {
   background-color: $grey;
   border: 1px solid $black;
-  margin: 1em;
-  padding: 1em;
+  margin: 1rem;
+  padding: 1rem;
 
 
   h4 {
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     width: 100%;
   }
 
   ul {
-    margin-left: 2em;
+    margin-left: 2rem;
   }
 }

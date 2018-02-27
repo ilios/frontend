@@ -6,19 +6,19 @@
   .main-box {
     .controls {
       border-bottom: 1px dotted $dark-grey;
-      height: 2em;
-      padding: .25em;
+      height: 2rem;
+      padding: .25rem;
     }
 
     .content {
-      height: 10em;
+      height: 10rem;
     }
   }
 
   .report-box,
   .courses-box {
-    height: 10em;
-    margin-top: 1em;
+    height: 10rem;
+    margin-top: 1rem;
 
     @include for-laptop-and-up {
       width: 49%;

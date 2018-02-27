@@ -10,7 +10,7 @@
       @include for-laptop-and-up {
         @include fill-parent;
       }
-      height: 4em;
+      height: 4rem;
 
       label {
         @include fill-parent;
@@ -20,14 +20,14 @@
 
     .calendar-color {
       input {
-        width: 3em;
+        width: 3rem;
       }
 
       .box {
         border: 1px solid $black;
         display: inline-block;
-        height: 1.5em;
-        width: 1.5em;
+        height: 1.5rem;
+        width: 1.5rem;
       }
 
     }
@@ -36,7 +36,7 @@
 
     .buttons {
       @include ilios-form-buttons;
-      padding-top: 2em;
+      padding-top: 2rem;
     }
   }
 }

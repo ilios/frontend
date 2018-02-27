@@ -2,7 +2,7 @@
   .header-bar {
     @include fill-parent;
     background-color: $header-grey;
-    padding: .8em;
+    padding: .8rem;
 
     @include for-laptop-and-up {
       @include span-columns(12);

@@ -30,7 +30,7 @@
 
   .available-learner-groups {
     @include span-columns(12);
-    margin-top: 1em;
+    margin-top: 1rem;
 
     .search-box {
       @include fill-parent;
@@ -45,7 +45,7 @@
       @include span-columns(12);
 
       border: 1px solid $ilios-blue;
-      padding: 1em;
+      padding: 1rem;
 
       @include for-laptop-and-up {
         @include span-columns(6);
@@ -71,7 +71,7 @@
     fieldset {
       border: 1px solid $ilios-blue;
       border-radius: 10px;
-      margin-top: 1em;
+      margin-top: 1rem;
 
       legend {
         font-weight: bold;

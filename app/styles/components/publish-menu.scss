@@ -1,6 +1,6 @@
 $dropdown-background: $base-background-color;
 $dropdown-background-hover: darken($dropdown-background, 3);
-$dropdown-padding: 1em;
+$dropdown-padding: 1rem;
 $dropdown-distance-from-menu: $dropdown-padding * 2;
 
 .publish-menu {
@@ -13,7 +13,7 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     color: $base-font-color;
     cursor: pointer;
     font-size: .7rem;
-    line-height: 1.1em;
+    line-height: 1.1rem;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 

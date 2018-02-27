@@ -12,14 +12,14 @@
     left: 0;
     min-width: 191px;
     overflow: visible;
-    top: 2em;
+    top: 2rem;
     transition: all .2s ease-in-out;
     z-index: 100;
 
     li {
       border-bottom: 1px solid $base-border-color;
       padding: .6rem;
-      padding-left: 1em;
+      padding-left: 1rem;
 
       &.active:hover {
         background-color: $background-grey;
@@ -41,6 +41,6 @@
   .livesearch-user-email {
     color: $medium-grey;
     font-style: italic;
-    padding-right: .2em;
+    padding-right: .2rem;
   }
 }

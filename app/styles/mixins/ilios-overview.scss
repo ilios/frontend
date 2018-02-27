@@ -1,25 +1,25 @@
 @mixin ilios-overview ($bottom-border-color) {
   border-bottom: 1px dotted $bottom-border-color;
   display: block;
-  padding: .8em;
+  padding: .8rem;
 
   label {
     @include ilios-label;
-    margin: 0 .5em 0 0;
+    margin: 0 .5rem 0 0;
   }
 }
 
 @mixin ilios-overview-block () {
   align-items: flex-end;
   display: flex;
-  min-height: 1.5em;
+  min-height: 1.5rem;
 }
 
 @mixin ilios-overview-header () {
   align-items: baseline;
   display: flex;
   justify-content: space-between;
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 @mixin ilios-overview-title () {
@@ -32,7 +32,7 @@
   align-items: baseline;
   display: flex;
   justify-content: space-around;
-  margin-right: .5em;
+  margin-right: .5rem;
   text-align: right;
   vertical-align: middle;
 }
@@ -41,9 +41,9 @@
   align-items: center;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  padding-top: 1em;
+  padding-top: 1rem;
 
   @include for-tablet-and-up {
-    grid-row-gap: .5em;
+    grid-row-gap: .5rem;
   }
 }

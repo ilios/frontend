@@ -1,5 +1,5 @@
 .new-offering {
-  margin-top: 2em;
+  margin-top: 2rem;
 
   .new-offering-title {
     @include fill-parent;
@@ -10,7 +10,7 @@
   .choose-offering-type {
     @include fill-parent;
     @include clearfix;
-    margin: 1em 0;
+    margin: 1rem 0;
     text-align: center;
 
     label {

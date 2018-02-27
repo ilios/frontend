@@ -5,7 +5,7 @@
     @include clearfix;
     clear: both;
     display: block;
-    margin-top: 2em;
+    margin-top: 2rem;
 
     .item {
       @include ilios-form-item;
@@ -13,21 +13,21 @@
 
     .start-time {
       select {
-        width: 4em;
+        width: 4rem;
       }
     }
 
     .offering-duration {
 
       input {
-        min-width: 3em;
-        width: 3em;
+        min-width: 3rem;
+        width: 3rem;
       }
 
       .hours,
       .minutes {
         display: inline-block;
-        padding-right: 1em;
+        padding-right: 1rem;
       }
     }
 
@@ -52,7 +52,7 @@
         label {
           float: left;
           margin: 0;
-          width: 2em;
+          width: 2rem;
         }
 
         label {
@@ -63,18 +63,18 @@
       .make-recurring-input-container {
         @include fill-parent;
         clear: left;
-        padding-top: .5em;
+        padding-top: .5rem;
 
         input {
           float: left;
-          min-width: 3em;
-          width: 3em;
+          min-width: 3rem;
+          width: 3rem;
         }
 
         label {
           display: inline-block;
-          margin: .5em 0 0 .5em;
-          width: 5em;
+          margin: .5rem 0 0 .5rem;
+          width: 5rem;
         }
       }
     }
@@ -83,13 +83,13 @@
       @include fill-parent;
       @include clearfix;
       clear: both;
-      padding-top: 1em;
+      padding-top: 1rem;
     }
 
     .instructors {
       @include fill-parent;
       clear: both;
-      padding-top: 1em;
+      padding-top: 1rem;
     }
 
     .buttons {
@@ -99,7 +99,7 @@
 
   .toggle-offering-calendar {
     @include fill-parent;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     overflow: auto;
 
     .toggle-buttons {
@@ -110,6 +110,6 @@
   .timezone {
     color: $darker-grey;
     font-size: .8rem;
-    margin-left: 1em;
+    margin-left: 1rem;
   }
 }

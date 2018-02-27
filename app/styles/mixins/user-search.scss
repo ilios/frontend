@@ -5,7 +5,7 @@
   border-radius: $base-border-radius;
   box-shadow: 0 2px 2px transparentize($black, .8);
   color: $base-font-color;
-  max-height: 23em;
+  max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
   transition: all .2s ease-in-out;
@@ -18,7 +18,7 @@
 
   li {
     border-bottom: 1px solid $base-border-color;
-    padding-left: 1em;
+    padding-left: 1rem;
 
     &.inactive {
       color: darken($header-grey, 20);

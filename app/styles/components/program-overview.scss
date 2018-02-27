@@ -2,7 +2,7 @@
   @include ilios-overview($header-grey);
   background: $background-grey;
   border: 1px dotted $header-grey;
-  padding: 0 2em 1em;
+  padding: 0 2rem 1rem;
 
   h2 {
     @include ilios-overview-title;

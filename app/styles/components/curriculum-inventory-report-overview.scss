@@ -19,7 +19,7 @@
     a {
       color: $header-blue;
       font-size: 1.2rem;
-      margin-right: .5em;
+      margin-right: .5rem;
     }
   }
 
@@ -33,6 +33,6 @@
 
   .description {
     @include span-columns(10);
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 }

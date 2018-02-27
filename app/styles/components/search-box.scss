@@ -2,7 +2,7 @@
   @include clearfix;
   @include position(relative, null);
   display: block;
-  height: 1.6em;
+  height: 1.6rem;
   margin-bottom: 10px;
 
   input {
@@ -14,7 +14,7 @@
     color: $base-font-color;
     cursor: pointer;
     font-style: italic;
-    height: 1.6em;
+    height: 1.6rem;
     min-width: 220px;
     overflow: show;
     width: auto;

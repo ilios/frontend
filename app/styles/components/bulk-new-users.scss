@@ -8,15 +8,15 @@
       @include fill-parent;
       @include clearfix;
       display: block;
-      margin-bottom: .5em;
-      min-height: 1em;
+      margin-bottom: .5rem;
+      min-height: 1rem;
     }
 
     .upload-users {
-      margin: 1em 0;
+      margin: 1rem 0;
 
       input {
-        width: 15em;
+        width: 15rem;
       }
     }
 
@@ -29,7 +29,7 @@
     }
 
     .proposed-new-users {
-      max-height: 25em;
+      max-height: 25rem;
       overflow-y: scroll;
 
       .error {
@@ -51,8 +51,8 @@
   .saving-authentication-errors {
     border: 1px solid $alert-color;
     border-top: 10px solid $alert-color;
-    margin: 1em 4em;
-    padding: 0 1em 1em;
+    margin: 1rem 4rem;
+    padding: 0 1rem 1rem;
 
     p {
       color: $alert-color;
@@ -60,7 +60,7 @@
 
     li {
       list-style-type: disc;
-      margin-left: 2em;
+      margin-left: 2rem;
     }
 
   }

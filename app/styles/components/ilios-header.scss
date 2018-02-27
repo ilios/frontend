@@ -16,7 +16,7 @@
 
   .logo {
     max-height: $header-height;
-    padding-left: 1em;
+    padding-left: 1rem;
 
     .image {
       background-image: url('images/ilios-logo.svg');
@@ -40,15 +40,15 @@
   .tools {
     background: transparent;
     display: flex;
-    padding-left: .5em;
-    padding-right: 1em;
+    padding-left: .5rem;
+    padding-right: 1rem;
 
     .user,
     .locales {
       color: $ilios-orange;
       font-size: .8rem;
       font-weight: 800;
-      padding: .4em .5em;
+      padding: .4rem .5rem;
 
       .button {
         background-color: transparent;
@@ -56,7 +56,7 @@
         border-radius: $base-border-radius;
         color: $white;
         font-weight: normal;
-        padding: .5em 2em .5em 1em;
+        padding: .5rem 2rem .5rem 1rem;
         vertical-align: middle;
 
         span {

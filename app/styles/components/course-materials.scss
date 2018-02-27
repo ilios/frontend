@@ -1,8 +1,8 @@
 .course-materials {
   .material-list {
     border-bottom: 1px dotted $ilios-orange;
-    margin-bottom: 2em;
-    padding-bottom: 1em;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
 
     table {
       @include ilios-table;

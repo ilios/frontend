@@ -1,8 +1,8 @@
 @mixin detail-container ($bottom-border-color) {
   border-bottom: 1px dotted $bottom-border-color;
   margin: 0;
-  min-height: 2em;
-  padding: 1em 0;
+  min-height: 2rem;
+  padding: 1rem 0;
 }
 
 @mixin detail-container-title-style () {
@@ -47,7 +47,7 @@
   justify-content: space-around;
 
   & > * {
-    margin-right: .5em;
+    margin-right: .5rem;
   }
 
   .bigadd {
@@ -63,6 +63,6 @@
 
 @mixin detail-container-content () {
   clear: both;
-  margin-top: 2em;
-  padding: .5em;
+  margin-top: 2rem;
+  padding: .5rem;
 }

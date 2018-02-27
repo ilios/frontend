@@ -18,7 +18,7 @@
     a {
       color: $header-blue;
       font-size: 1.2 * $base-font-size;
-      margin-right: .5em;
+      margin-right: .5rem;
     }
   }
 
@@ -32,7 +32,7 @@
 
   .switch-block {
     @include fill-parent;
-    height: 2em;
+    height: 2rem;
 
     @include for-laptop-and-up {
       @include span-columns(5);
@@ -68,7 +68,7 @@
 
       label {
         @include span-columns(2 of 4);
-        margin: 0 1em 0 0;
+        margin: 0 1rem 0 0;
         text-align: right;
       }
     }
@@ -78,7 +78,7 @@
     @include fill-parent;
     background: 0;
     height: 0;
-    margin: 1em;
+    margin: 1rem;
   }
 
   .sessionilmduedate {
@@ -88,7 +88,7 @@
   .sessiontype {
     @include fill-parent;
     display: block;
-    height: 2em;
+    height: 2rem;
   }
 
   .session-overview-options {
@@ -112,7 +112,7 @@
   @include fill-parent;
 
   background-color: $header-grey;
-  padding: .8em;
+  padding: .8rem;
 
   @include for-laptop-and-up {
     @include span-columns(12);

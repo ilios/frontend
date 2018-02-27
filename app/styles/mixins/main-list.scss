@@ -1,13 +1,13 @@
 @mixin main-list () {
   display: block;
-  margin: 0 .25em;
-  padding: 0 1em;
+  margin: 0 .25rem;
+  padding: 0 1rem;
 }
 
 @mixin main-list-filters () {
   display: flex;
   flex-direction: column;
-  margin: 1em 0;
+  margin: 1rem 0;
 
   @include for-laptop-and-up {
     flex-direction: row;
@@ -21,7 +21,7 @@
 }
 
 @mixin main-list-filter () {
-  padding-bottom: 1em;
+  padding-bottom: 1rem;
   white-space: nowrap;
 
   @include for-laptop-and-up {
@@ -30,7 +30,7 @@
   }
 
   @include for-desktop-and-up {
-    margin-right: 2em;
+    margin-right: 2rem;
     width: auto;
   }
 
@@ -56,7 +56,7 @@
   background-color: $header-grey;
   display: flex;
   flex-direction: column;
-  padding: .5em 0;
+  padding: .5rem 0;
   text-align: center;
 
   @include for-laptop-and-up {
@@ -68,13 +68,13 @@
 @mixin main-list-box-header-title {
   @include ilios-heading-h5;
   @include for-laptop-and-up {
-    padding-left: 1em;
+    padding-left: 1rem;
   }
 }
 
 @mixin main-list-box-header-actions {
   @include for-laptop-and-up {
-    padding-right: 1em;
+    padding-right: 1rem;
     text-align: right;
   }
 }
@@ -82,7 +82,7 @@
 @mixin main-list-box-table () {
   clear: both;
   display: block;
-  padding: 1em;
+  padding: 1rem;
 
   table {
     @include ilios-table;

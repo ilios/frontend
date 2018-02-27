@@ -4,14 +4,14 @@
 
   @include clearfix;
   border-radius: $base-border-radius;
-  padding: 1em 0 1em .5em;
+  padding: 1rem 0 1rem .5rem;
 
 
   .filter {
     font-size: $filter-font-size;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    min-height: 2.25em;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    min-height: 2.25rem;
     vertical-align: middle;
 
     @include for-laptop-and-up {
@@ -29,7 +29,7 @@
 
     .inline-label {
       font-weight: bold;
-      margin-right: .5em;
+      margin-right: .5rem;
     }
   }
 }

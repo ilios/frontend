@@ -1,6 +1,6 @@
 .offering-block {
   @include span-columns(12 of 12);
-  font-size: .9em;
+  font-size: .9rem;
 
   .offering-block-date {
     @include span-columns(12 of 12);
@@ -22,8 +22,8 @@
   .offering-block-time {
     @include span-columns(12 of 12);
     @include fill-parent();
-    margin-bottom: 2em;
-    margin-top: 1em;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
 
     .offering-block-time-time {
       @include span-columns(2 of 12);
@@ -55,7 +55,7 @@
       .offering-detail-box {
         @include span-columns(2 of 8);
         @include omega(4n);
-        padding: .8em;
+        padding: .8rem;
       }
     }
 
@@ -66,15 +66,15 @@
       .confirm-message {
         color: $ilios-remove-color;
         font-weight: bold;
-        padding-left: 8em;
-        padding-right: 8em;
+        padding-left: 8rem;
+        padding-right: 8rem;
         text-align: center;
         width: 100%;
       }
 
       .confirm-buttons {
-        padding-bottom: 1.5em;
-        padding-top: 1.1em;
+        padding-bottom: 1.5rem;
+        padding-top: 1.1rem;
       }
 
 

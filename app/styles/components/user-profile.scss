@@ -2,7 +2,7 @@
   @include fill-parent;
   @include admin-blocks;
 
-  padding: 1em;
+  padding: 1rem;
 
   h1 {
     @include ilios-heading-h1;
@@ -65,9 +65,9 @@
     }
 
     button {
-      height: 2.5em;
-      margin-bottom: .25em;
-      margin-left: .5em;
+      height: 2.5rem;
+      margin-bottom: .25rem;
+      margin-left: .5rem;
     }
   }
 
@@ -81,8 +81,8 @@
     background: none;
     background-color: $white;
     border: .5px solid $text-grey;
-    height: .75em;
-    margin: .25em 0;
+    height: .75rem;
+    margin: .25rem 0;
     width: 60%;
   }
 
@@ -109,9 +109,9 @@
 
   .password-strength {
     display: inline-block;
-    font-size: 1em;
+    font-size: 1rem;
     font-variant: small-caps;
-    line-height: .75em;
+    line-height: .75rem;
     text-align: right;
     width: 10%;
 
@@ -148,7 +148,7 @@
 
 .user-profile-cohorts {
   p {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 
   h4 {
@@ -162,7 +162,7 @@
   }
 
   i {
-    margin-right: .3em;
+    margin-right: .3rem;
   }
 
   .select-available-cohort {
@@ -172,19 +172,19 @@
 
     ul {
       clear: both;
-      padding-top: .75em;
+      padding-top: .75rem;
     }
 
     .schoolsfilter {
       float: left;
-      margin-left: 3em;
+      margin-left: 3rem;
     }
   }
 }
 
 .user-profile-learnergroups {
   p {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 
   h4 {
@@ -200,7 +200,7 @@
 
 .user-profile-ics {
   p {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 
   .refresh-key {

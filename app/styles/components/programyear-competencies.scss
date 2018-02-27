@@ -18,14 +18,14 @@
     @include ilios-list-tree;
     border: 1px solid $input-box-grey;
     border-radius: 3px;
-    margin: 2em;
+    margin: 2rem;
 
     li {
       font-weight: bold;
     }
 
     ul {
-      margin-left: 1em;
+      margin-left: 1rem;
 
       li {
         font-weight: normal;

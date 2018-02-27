@@ -5,7 +5,7 @@
   display: block;
 
   .academic-level {
-    padding-top: .5em;
+    padding-top: .5rem;
   }
 
   .block {
@@ -18,7 +18,7 @@
     .details {
       display: block;
       font-size: smaller;
-      padding-bottom: 1em;
+      padding-bottom: 1rem;
     }
   }
 
@@ -28,7 +28,7 @@
 
   .description {
     @include span-columns(10);
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
   }
 
   .duration {
@@ -38,17 +38,17 @@
   .selective {
     @include span-columns(10);
     font-style: italic;
-    padding-top: .5em;
+    padding-top: .5rem;
 
   }
 
   .sessions {
     @include fill-parent;
-    padding-top: 1em;
+    padding-top: 1rem;
 
     .actions {
       float: right;
-      padding-right: 1em;
+      padding-right: 1rem;
     }
   }
 

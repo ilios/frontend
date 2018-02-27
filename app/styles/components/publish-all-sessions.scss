@@ -1,7 +1,7 @@
 .publish-all-sessions {
   background-color: $background-grey;
   border: 1px solid $header-grey;
-  padding-left: 1em;
+  padding-left: 1rem;
 
   section {
     @include detail-container($ilios-orange);
@@ -24,22 +24,22 @@
   }
 
   .publish-all-sessions-overridable {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 
   .publish-all-sessions-review {
     border: 1px solid $ilios-green;
     clear: both;
     font-size: 1.5rem;
-    margin: 1em;
-    padding: 1em;
+    margin: 1rem;
+    padding: 1rem;
     text-align: center;
 
     p {
       color: $ilios-green;
       font-weight: bold;
       margin: 0;
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
     }
 
     button {

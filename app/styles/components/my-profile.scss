@@ -7,8 +7,8 @@
 
     border-top: 1px dotted $ilios-orange;
     font-size: .8rem;
-    margin-top: 1em;
-    padding: 1em;
+    margin-top: 1rem;
+    padding: 1rem;
 
     h3 {
       margin: 0;
@@ -22,19 +22,19 @@
     .new-token-form {
       input {
         min-width: 0;
-        width: 7em;
+        width: 7rem;
       }
     }
 
     .new-token-result {
       h3 {
         display: inline;
-        margin-right: .5em;
+        margin-right: .5rem;
       }
 
       input {
-        height: 2em;
-        width: 15em;
+        height: 2rem;
+        width: 15rem;
       }
     }
   }

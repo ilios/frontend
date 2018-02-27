@@ -14,7 +14,7 @@
 
     background-color: $white;
     border: 1px solid $base-link-color;
-    height: 10em;
+    height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
     width: 80%;
@@ -42,6 +42,6 @@
   .selected-terms {
     @include ilios-removable-list;
 
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 }

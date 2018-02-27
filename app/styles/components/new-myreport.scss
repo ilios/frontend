@@ -1,8 +1,8 @@
 .new-myreport {
   background-color: $background-grey;
   border: 1px solid $header-grey;
-  margin: .5em;
-  padding: 1em 1em 3em;
+  margin: .5rem;
+  padding: 1rem 1rem 3rem;
 
   label {
     @include ilios-label;

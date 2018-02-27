@@ -1,12 +1,12 @@
 .visualizer-course-objectives {
   display: inline-block;
-  height: 1em;
-  margin: .2em 0;
-  width: 1em;
+  height: 1rem;
+  margin: .2rem 0;
+  width: 1rem;
 
   .zero-hours {
     p {
-      margin-top: .5em;
+      margin-top: .5rem;
     }
 
     h4 {
@@ -15,8 +15,8 @@
 
     li {
       list-style-type: disc;
-      margin-left: 1em;
-      padding-bottom: .5em;
+      margin-left: 1rem;
+      padding-bottom: .5rem;
 
       p {
         margin: 0;
@@ -26,7 +26,7 @@
 
   .with-hours {
     p {
-      margin-top: .5em;
+      margin-top: .5rem;
     }
 
     @media phone {
@@ -52,7 +52,7 @@
     @include fill-parent;
 
     .simple-chart {
-      height: 25em;
+      height: 25rem;
       @include for-laptop-and-up {
         @include span-columns(5);
       }
