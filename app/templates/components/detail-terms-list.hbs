@@ -5,7 +5,7 @@
       <span class="inactive">({{t 'general.inactive'}})</span>
     {{/if}}
   </div>
-  <ul class="{{if canEdit 'removable-list' null}} tag-list selected-taxonomy-terms">
+  <ul class="{{if canEdit 'removable-list' null}} selected-taxonomy-terms">
     {{#each (await sortedTerms) as |term|}}
       {{#if canEdit}}
         {{detail-terms-list-item canEdit=true remove=remove term=term}}

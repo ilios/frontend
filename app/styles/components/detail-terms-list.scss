@@ -1,6 +1,16 @@
 .detail-terms-list {
+  margin-bottom: 1em;
+
   .inactive {
     color: $ilios-red;
     font-weight: bolder;
+  }
+
+  .selected-taxonomy-terms {
+    @include ilios-tag-list;
+
+    &.removable-list {
+      @include ilios-removable-list;
+    }
   }
 }

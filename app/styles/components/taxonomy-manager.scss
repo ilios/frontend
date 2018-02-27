@@ -11,5 +11,9 @@
   .terms-picker {
     max-height: 300px;
     overflow-x: scroll;
+
+    & > ul {
+      @include ilios-tag-tree-list;
+    }
   }
 }
