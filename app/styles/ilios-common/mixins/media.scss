@@ -10,6 +10,12 @@
   }
 }
 
+@mixin for-tablet-and-down {
+  @media screen and (max-width: 769px) {
+    @content;
+  }
+}
+
 @mixin for-laptop-and-up {
   @media screen and (min-width: 1200px) {
     @content;
