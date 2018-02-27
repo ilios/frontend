@@ -6,9 +6,8 @@ import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import moment from 'moment';
 
-const { Promise } = RSVP;
 const { oneWay } = computed;
-
+const { all } = RSVP;
 
 export default Mixin.create(ValidationErrorDisplay, {
   store: service(),
@@ -36,54 +35,41 @@ export default Mixin.create(ValidationErrorDisplay, {
   nonStudentMode: true,
 
   schools: computed('currentUser.model.schools.[]', {
-    get(){
-      return new Promise(resolve => {
-        this.get('currentUser.model').then(user => {
-          resolve(user.get('schools'));
-        });
-      });
+    async get(){
+      const user = await this.get('currentUser.model');
+      return user.get('schools');
     }
   }).readOnly(),
 
   bestSelectedSchool: computed('schools.[]', 'schoolId', {
-    get(){
-      return new Promise(resolve => {
-        const schoolId = this.get('schoolId');
-        this.get('schools').then(schools => {
-          if (schoolId) {
-            let currentSchool = schools.find(school => {
-              return school.get('id') === schoolId;
-            });
-            if (currentSchool) {
-              resolve(currentSchool);
-              return;
-            }
-          }
-          this.get('currentUser.model').then(user => {
-            resolve(user.get('school'));
-          });
+    async get(){
+      const schoolId = this.get('schoolId');
+      if (schoolId) {
+        const schools = await this.get('schools');
+        let currentSchool = schools.find(school => {
+          return school.get('id') === schoolId;
         });
-      });
+        if (currentSchool) {
+          return currentSchool;
+        }
+      }
+      const user = await this.get('currentUser.model');
+      return user.get('school');
     }
   }).readOnly(),
 
   bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', {
-    get(){
-      return new Promise(resolve => {
-        const primaryCohortId = this.get('primaryCohortId');
-        this.get('bestSelectedSchool').then(school => {
-          school.get('cohorts').then(cohorts => {
-            if (primaryCohortId) {
-              let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
-              if (currentCohort) {
-                resolve(currentCohort);
-                return;
-              }
-            }
-            resolve(cohorts.get('lastObject'));
-          });
-        });
-      });
+    async get(){
+      const primaryCohortId = this.get('primaryCohortId');
+      const school = await this.get('bestSelectedSchool');
+      const cohorts = await school.get('cohorts');
+      if (primaryCohortId) {
+        let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
+        if (currentCohort) {
+          return currentCohort;
+        }
+      }
+      return cohorts.get('lastObject');
     }
   }).readOnly(),
 
@@ -97,11 +83,11 @@ export default Mixin.create(ValidationErrorDisplay, {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    let programYears = yield RSVP.all(cohorts.getEach('programYear'));
-    yield RSVP.all(programYears.getEach('program'));
+    let programYears = yield all(cohorts.getEach('programYear'));
+    yield all(programYears.getEach('program'));
 
     cohorts = cohorts.toArray();
-    let all = [];
+    let arr = [];
 
     for(let i = 0; i < cohorts.length; i++){
       let cohort = cohorts[i];
@@ -114,11 +100,11 @@ export default Mixin.create(ValidationErrorDisplay, {
       obj.startYear = programYear.get('startYear');
       obj.duration = program.get('duration');
 
-      all.pushObject(obj);
+      arr.pushObject(obj);
     }
 
     let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return all.filter(obj=> {
+    return arr.filter(obj=> {
       let finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });

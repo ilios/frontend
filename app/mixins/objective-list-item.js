@@ -1,9 +1,6 @@
 import Mixin from '@ember/object/mixin';
-import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -30,25 +27,21 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
   showRemoveConfirmation: false,
 
   actions: {
-    saveTitleChanges() {
+    async saveTitleChanges() {
       this.send('addErrorDisplayFor', 'title');
       const title = this.get('title');
       const objective = this.get('objective');
 
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            objective.set('title', title);
-            objective.save().then(()=> {
-              this.send('removeErrorDisplayFor', 'title');
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+      if (validations.get('isInvalid')) {
+        return;
+      }
+
+      objective.set('title', title);
+      await objective.save();
+      this.send('removeErrorDisplayFor', 'title');
     },
+
     revertTitleChanges() {
       const objective = this.get('objective');
       this.set('title', objective.get('title'));

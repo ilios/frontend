@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { alias } = computed;
-const { all, Promise } = RSVP;
+const { all } = RSVP;
 
 export default Mixin.create(SortableByPosition, {
   subject: null,
@@ -15,26 +15,22 @@ export default Mixin.create(SortableByPosition, {
 
   objectives: alias('subject.sortedObjectives'),
 
-  hasMoreThanOneObjective: computed('objectives.[]', function(){
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.length > 1);
-      });
-    });
+  hasMoreThanOneObjective: computed('objectives.[]', async function(){
+    const objectives = await this.get('objectives');
+    return (objectives.length > 1);
   }),
 
-  saveSomeObjectives(arr){
+  async saveSomeObjectives(arr){
     let chunk = arr.splice(0, 5);
-    return all(chunk.invoke('save')).then(() => {
-      if (arr.length){
-        this.set('currentObjectivesSaved', this.get('currentObjectivesSaved') + chunk.length);
-        return this.saveSomeObjectives(arr);
-      }
-    });
+    await all(chunk.invoke('save'));
+    if (arr.length) {
+      this.set('currentObjectivesSaved', this.get('currentObjectivesSaved') + chunk.length);
+      return this.saveSomeObjectives(arr);
+    }
   },
 
   actions: {
-    saveSortOrder(objectives){
+    async saveSortOrder(objectives){
       this.set('isSaving', true);
       for (let i = 0, n = objectives.length; i < n; i++) {
         let lm = objectives[i];
@@ -43,10 +39,9 @@ export default Mixin.create(SortableByPosition, {
       this.set('totalObjectivesToSave', objectives.length);
       this.set('currentObjectivesSaved', 0);
 
-      this.saveSomeObjectives(objectives).then(() => {
-        this.set('isSaving', false);
-        this.set('isSorting', false);
-      });
+      await this.saveSomeObjectives(objectives);
+      this.set('isSaving', false);
+      this.set('isSorting', false);
     },
 
     cancelSorting() {
