@@ -5,6 +5,7 @@
 
   ul,
   ol {
+    list-style-type: none;
     margin-left: 1em;
   }
 }
@@ -113,6 +114,34 @@
 
     .remove {
       margin-left: .5em;
+    }
+  }
+}
+
+@mixin ilios-tag-tree-list {
+  @include ilios-list-reset;
+  margin-bottom: $base-font-size;
+
+  li {
+    div {
+      background-color: $white;
+      border: 1px $header-grey solid;
+      border-radius: 4px;
+      margin-top: 5px;
+      padding: .2em .4em .2em .6em;
+      vertical-align: middle;
+
+      &.selected {
+        background-color: $header-grey;
+      }
+    }
+
+    .actions {
+      float: right;
+    }
+
+    &.top-level {
+      margin-left: 0;
     }
   }
 }
