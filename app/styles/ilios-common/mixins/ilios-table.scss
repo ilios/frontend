@@ -1,6 +1,6 @@
 @mixin ilios-table () {
   border-collapse: collapse;
-  font-size: $base-font-size * .9;
+  font-size: .9rem;
   margin: ($base-line-height * .5em) 0;
   table-layout: fixed;
 

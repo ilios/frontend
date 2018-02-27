@@ -114,7 +114,7 @@
 
 @mixin ilios-tag-tree-list {
   @include ilios-list-reset;
-  margin-bottom: $base-font-size;
+  margin-bottom: 1rem;
 
   li {
     div {
