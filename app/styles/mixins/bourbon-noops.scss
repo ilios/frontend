@@ -13,9 +13,6 @@
 @mixin omega($var: 0) {}
 @mixin row() {}
 
-@mixin fill-parent() {
-  box-sizing: border-box;
-  width: 100%;
-}
+@mixin fill-parent() {}
 
 

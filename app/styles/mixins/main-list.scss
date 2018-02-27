@@ -41,7 +41,7 @@
 
   input {
     @include ilios-input;
-    width: 99%;
+    width: 100%;
   }
 
 }
@@ -49,7 +49,7 @@
 @mixin main-list-box () {
   border: 2px solid $header-grey;
   display: block;
-  width: 99%;
+  width: 100%;
 }
 
 @mixin main-list-box-header () {
