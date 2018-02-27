@@ -4,16 +4,12 @@
 
   .filter {
     display: block;
-    vertical-align: middle;
+    text-align: right;
     width: 100%;
-
-    @include for-laptop-and-up {
-      text-align: right;
-    }
 
     input {
       width: 90%;
-      @include for-laptop-and-up {
+      @include for-tablet-and-up {
         width: 300px;
       }
     }
