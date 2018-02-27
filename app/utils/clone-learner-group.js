@@ -12,7 +12,7 @@ const { map } = RSVP;
  * @param {Object} group
  * @param {Object} cohort
  * @param {Boolean} withLearners
- * @param {Object} | null parent
+ * @param {Object|null} parent
  * @return {Promise.<Array>}
  */
 export default async function cloneLearnerGroup(store, group, cohort, withLearners, parent = null) {
