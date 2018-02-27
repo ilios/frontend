@@ -77,16 +77,10 @@
 }
 
 @mixin ilios-selectable-list {
-  padding: .5em 1em .5em .5em;
+  @include ilios-list-reset;
 
   ul {
-    background-color: transparent;
-    border: 0;
-    height: auto;
     margin-left: 2em;
-    overflow-y: visible;
-    padding: 0;
-    width: auto;
   }
 
   li {
