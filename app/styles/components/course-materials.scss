@@ -1,29 +1,29 @@
 .course-materials {
-  @include fill-parent;
-
   .material-list {
     border-bottom: 1px dotted $ilios-orange;
     margin-bottom: 2em;
     padding-bottom: 1em;
-  }
 
-  h2 {
-    @include ilios-heading-h4;
-    @include fill-parent;
-
-    &.session-material-title {
-      @include for-laptop-and-up {
-        @include span-columns(8);
-      }
+    table {
+      @include ilios-table;
     }
   }
 
-  .filter-session-lms {
-    @include fill-parent;
+  h3 {
+    @include ilios-heading-h4;
+    display: inline;
+  }
 
-    @include for-laptop-and-up {
-      @include span-columns(2);
-      @include omega;
+  .filter-session-lms {
+    text-align: right;
+
+    @include for-phone-only {
+      display: block;
+      width: 100%;
+    }
+
+    input {
+      width: 300px;
     }
   }
 }

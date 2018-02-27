@@ -1,33 +1,31 @@
 .course-summary-header {
   @include ilios-overview($ilios-orange);
-  @include fill-parent;
 
-  h2 {
-    @include ilios-heading-h3;
-    @include span-columns(7 of 12);
+  .course-summary-header-top {
+    @include ilios-overview-header;
 
-    margin-bottom: 1em;
+    h2 {
+      @include ilios-overview-title;
+      @include ilios-heading-h3;
+    }
 
-  }
+    .course-summary-actions {
+      @include ilios-overview-actions;
+      margin-top: 0;
+      text-align: right;
 
-  .course-summary-actions {
-    @include ilios-overview-actions;
-    @include span-columns(4 of 12);
-    @include shift(1);
-    @include omega;
-    margin-top: 0;
-    text-align: right;
-
-    a {
-      color: $header-blue;
-      font-size: 1.2 * $base-font-size;
-      margin-right: .5em;
+      a {
+        color: $header-blue;
+        font-size: 1.2 * $base-font-size;
+        margin-right: .5em;
+      }
     }
   }
 
-  .course-summary-content {
-    @include fill-parent;
 
+
+  .course-summary-content {
+    @include ilios-overview-content;
     .block {
       @include ilios-overview-block;
     }
