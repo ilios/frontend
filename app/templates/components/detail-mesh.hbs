@@ -1,20 +1,22 @@
-<div class='title'>
-  {{#if isManaging}}
-    <span class='detail-specific-title'>
-      {{t 'general.meshManageTitle'}}
-    </span>
-  {{else}}
-    {{t 'general.mesh'}} ({{terms.length}})
-  {{/if}}
-</div>
+<div class='detail-mesh-header'>
+  <div class='title'>
+    {{#if isManaging}}
+      <span class='detail-specific-title'>
+        {{t 'general.meshManageTitle'}}
+      </span>
+    {{else}}
+      {{t 'general.mesh'}} ({{terms.length}})
+    {{/if}}
+  </div>
 
-<div class='actions'>
-  {{#if isManaging}}
-    <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else if editable}}
-    <button {{action 'manage'}}>{{t 'general.meshManageTitle'}}</button>
-  {{/if}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else if editable}}
+      <button {{action 'manage'}}>{{t 'general.meshManageTitle'}}</button>
+    {{/if}}
+  </div>
 </div>
 <div class='content'>
   {{#if isManaging}}
@@ -24,7 +26,7 @@
       remove='removeTermFromBuffer'
     }}
   {{else}}
-    <ul class='columnar-list'>
+    <ul class='selected-mesh-terms'>
       {{#each sortedTerms as |term|}}
         <li>{{term.name}}</li>
       {{/each}}

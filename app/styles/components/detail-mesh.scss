@@ -1,6 +1,10 @@
 .detail-mesh {
   @include detail-container($ilios-orange);
 
+  .detail-mesh-header {
+    @include detail-container-header;
+  }
+
   .title {
     @include detail-container-title;
   }
@@ -11,5 +15,9 @@
 
   .content {
     @include detail-container-content;
+
+    .selected-mesh-terms {
+      @include ilios-tag-list;
+    }
   }
 }
