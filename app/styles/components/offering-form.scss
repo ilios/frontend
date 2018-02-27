@@ -33,7 +33,7 @@
 
     .end-date-time .text {
       color: $darker-grey;
-      font-size: 1.2 * $base-font-size;
+      font-size: 1.2rem;
       font-style: italic;
       font-weight: bold;
     }
@@ -109,7 +109,7 @@
 
   .timezone {
     color: $darker-grey;
-    font-size: .8 * $base-font-size;
+    font-size: .8rem;
     margin-left: 1em;
   }
 }

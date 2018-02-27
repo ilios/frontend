@@ -13,13 +13,13 @@
     border: 1px solid $header-grey;
     color: $base-font-color;
     cursor: pointer;
-    font-size: $base-font-size * .7;
+    font-size: .7rem;
     line-height: 1.1em;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 
     @include for-laptop-and-up {
-      font-size: $base-font-size;
+      font-size: 1rem;
     }
 
     &:hover {
@@ -40,7 +40,7 @@
     background-color: $base-link-color;
     border-radius: $base-border-radius;
     color: $white;
-    font-size: $base-font-size * .85;
+    font-size: .85rem;
     padding: .5em 2em .5em 1em;
     vertical-align: middle;
 

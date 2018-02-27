@@ -1,5 +1,5 @@
 .connection-status {
-  $height: $base-font-size * 2.5;
+  $height: 2.5rem;
   @include critical-notice($warning-color, $text-grey, $height);
 
   display: none;
@@ -9,7 +9,7 @@
   }
 
   span {
-    margin-right: $base-font-size * 2;
+    margin-right: 2rem;
   }
 
   .buttons {

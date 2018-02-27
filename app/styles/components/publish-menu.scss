@@ -12,13 +12,13 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
     border: 1px solid transparent;
     color: $base-font-color;
     cursor: pointer;
-    font-size: $base-font-size * .7;
+    font-size: .7rem;
     line-height: 1.1em;
     padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
     position: relative;
 
     @include for-laptop-and-up {
-      font-size: $base-font-size;
+      font-size: 1rem;
     }
 
     &:hover {

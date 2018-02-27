@@ -7,7 +7,7 @@
     color: $white;
     display: block;
     opacity: .75;
-    padding: $base-font-size / 2;
+    padding: .5rem;
     text-align: center;
     transition: all 2s linear;
 
@@ -48,7 +48,7 @@
 
   .alert:last-of-type {
     @include border-bottom-radius(5px);
-    margin-bottom: $base-font-size / 2;
+    margin-bottom: .5rem;
   }
 
   .hidden {

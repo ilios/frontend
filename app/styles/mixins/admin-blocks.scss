@@ -20,7 +20,7 @@
 
     h2 {
       @include ilios-heading;
-      font-size: 1.25 * $base-font-size;
+      font-size: 1.25rem;
       margin-bottom: 1em;
     }
 
@@ -31,7 +31,7 @@
     }
 
     button {
-      font-size: $base-font-size;
+      font-size: 1rem;
     }
 
     .inline-data {
@@ -40,7 +40,7 @@
   }
 
   .small-component {
-    font-size: .75 * $base-font-size;
+    font-size: .75rem;
 
     @include for-laptop-and-up {
       width: 49%;

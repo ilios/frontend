@@ -29,10 +29,10 @@
 
   h1 {
     color: $white;
-    font-size: .7 * $base-font-size;
+    font-size: .7rem;
 
     @include for-tablet-and-up {
-      font-size: $base-font-size * 1.5;
+      font-size: 1.5rem;
     }
   }
 
@@ -46,7 +46,7 @@
     .user,
     .locales {
       color: $ilios-orange;
-      font-size: $base-font-size * .8;
+      font-size: .8rem;
       font-weight: 800;
       padding: .4em .5em;
 

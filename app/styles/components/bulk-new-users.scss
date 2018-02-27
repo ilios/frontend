@@ -42,7 +42,7 @@
   .file-is-loading {
     @include fill-parent;
     display: block;
-    font-size: 3 * $base-font-size;
+    font-size: 3rem;
     font-weight: bold;
     text-align: center;
   }
