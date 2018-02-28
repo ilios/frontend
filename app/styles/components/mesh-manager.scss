@@ -43,5 +43,13 @@
     @include ilios-removable-list;
 
     margin-bottom: 2rem;
+
+    .term-title {
+      font-weight: bold;
+    }
+
+    .term-details {
+      font-style: italic;
+    }
   }
 }

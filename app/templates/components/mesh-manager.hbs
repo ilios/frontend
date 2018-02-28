@@ -4,21 +4,17 @@
 <ul class='selected-terms'>
   {{#each sortedTerms as |term|}}
     <li {{action 'remove' term}}>
-      <div class="content">
-        <span class="title">{{term.name}}</span>
-        <span class="details">
-          {{term.id}}
-          {{#if term.deleted}}
-            - <span class="deprecated">({{t 'general.deprecatedAbbreviation'}})</span>
-          {{else}}
-            {{#if term.trees}}
-              - {{term.trees.lastObject.treeNumber}}
-            {{/if}}
+      <span class="term-title">{{term.name}}</span>
+      <span class="term-details">
+        {{term.id}}
+        {{#if term.deleted}}
+          - <span class="deprecated">({{t 'general.deprecatedAbbreviation'}})</span>
+        {{else}}
+          {{#if term.trees}}
+            - {{term.trees.lastObject.treeNumber}}
           {{/if}}
-
-
-        </span>
-      </div>
+        {{/if}}
+      </span>
       {{fa-icon 'remove' class='remove'}}
     </li>
   {{/each}}

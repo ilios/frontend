@@ -18,6 +18,14 @@
 
     .selected-mesh-terms {
       @include ilios-tag-list;
+
+      .term-title {
+        font-weight: bold;
+      }
+
+      .term-details {
+        font-style: italic;
+      }
     }
   }
 }

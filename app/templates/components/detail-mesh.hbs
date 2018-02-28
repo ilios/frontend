@@ -28,7 +28,19 @@
   {{else}}
     <ul class='selected-mesh-terms'>
       {{#each sortedTerms as |term|}}
-        <li>{{term.name}}</li>
+        <li>
+          <span class="term-title">{{term.name}}</span>
+          <span class="term-details">
+            {{term.id}}
+            {{#if term.deleted}}
+              - <span class="deprecated">({{t 'general.deprecatedAbbreviation'}})</span>
+            {{else}}
+              {{#if term.trees}}
+                - {{term.trees.lastObject.treeNumber}}
+              {{/if}}
+            {{/if}}
+          </span>
+        </li>
       {{/each}}
     </ul>
   {{/if}}
