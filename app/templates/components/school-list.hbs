@@ -13,36 +13,34 @@
     {{#if showNewSchoolForm class='vertical'}}
       <div class="new-result-title">{{t 'general.newSchool'}}</div>
 
-      <div class="detail-content form-container">
-        <div class="form-col-6 multi-row">
-          <label class="form-label">{{t 'general.title'}}:</label>
-          <div class="form-data">
-            <input
-              type="text"
-              value={{title}}
-              oninput={{action (mut title) value="target.value"}}
-              onkeyup={{action 'addErrorDisplayFor' 'title'}}
-              class={{if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error'}}
-            >
-            {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-              <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-            {{/if}}
-          </div>
-          <label class="form-label">{{t 'general.administratorEmail'}}:</label>
-          <div class="form-data">
-            <input
-              type="text"
-              value={{iliosAdministratorEmail}}
-              oninput={{action (mut iliosAdministratorEmail) value="target.value"}}
-              onkeyup={{action 'addErrorDisplayFor' 'iliosAdministratorEmail'}}
-              class={{if (and (v-get this 'iliosAdministratorEmail' 'isInvalid') (is-in showErrorsFor 'iliosAdministratorEmail')) 'has-error'}}
-            >
-            {{#if (and (v-get this 'iliosAdministratorEmail' 'isInvalid') (is-in showErrorsFor 'iliosAdministratorEmail'))}}
-              <span class="validation-error-message">{{v-get this 'iliosAdministratorEmail' 'message'}}</span>
-            {{/if}}
-          </div>
+      <form>
+        <div class="item">
+          <label>{{t 'general.title'}}:</label>
+          <input
+            type="text"
+            value={{title}}
+            oninput={{action (mut title) value="target.value"}}
+            onkeyup={{action 'addErrorDisplayFor' 'title'}}
+            class={{if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title')) 'has-error'}}
+          >
+          {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+            <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+          {{/if}}
         </div>
-        <div class="form-col-6 form-data-submit">
+        <div class="item">
+          <label>{{t 'general.administratorEmail'}}:</label>
+          <input
+            type="text"
+            value={{iliosAdministratorEmail}}
+            oninput={{action (mut iliosAdministratorEmail) value="target.value"}}
+            onkeyup={{action 'addErrorDisplayFor' 'iliosAdministratorEmail'}}
+            class={{if (and (v-get this 'iliosAdministratorEmail' 'isInvalid') (is-in showErrorsFor 'iliosAdministratorEmail')) 'has-error'}}
+          >
+          {{#if (and (v-get this 'iliosAdministratorEmail' 'isInvalid') (is-in showErrorsFor 'iliosAdministratorEmail'))}}
+            <span class="validation-error-message">{{v-get this 'iliosAdministratorEmail' 'message'}}</span>
+          {{/if}}
+        </div>
+        <div class="buttons">
           <button class='done text' {{action 'createNewSchool'}}>
             {{#liquid-if isSavingNewSchool 'crossFade'}}
               {{fa-icon 'spinner' spin=true}}
@@ -52,8 +50,7 @@
           </button>
           <button class='cancel text' {{action 'hideNewSchoolForm'}}>{{t 'general.cancel'}}</button>
         </div>
-      </div>
-
+      </form>
     {{/if}}
 
     {{#each newSchools as |school|}}

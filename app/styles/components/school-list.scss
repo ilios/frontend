@@ -21,6 +21,25 @@
     }
   }
 
+  .new {
+
+    .new-result-title {
+      @include ilios-heading-h4;
+    }
+
+    form {
+      @include ilios-form;
+
+      .item {
+        @include ilios-form-item;
+      }
+
+      .buttons {
+        @include ilios-form-buttons;
+      }
+    }
+  }
+
   .list {
     @include main-list-box-table;
   }
