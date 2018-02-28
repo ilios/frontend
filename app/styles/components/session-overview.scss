@@ -1,26 +1,27 @@
 .session-overview {
   @include ilios-overview($text-blue);
-  @include fill-parent;
   border-bottom: 1px dotted $text-blue;
 
-  .title {
-    @include ilios-overview-title;
-    @include span-columns(6 of 12);
-  }
+  .session-overview-header {
+    @include ilios-overview-header;
 
-  .session-overview-actions {
-    @include ilios-overview-actions;
-    @include span-columns(2 of 12);
-    @include shift(4);
-    @include omega;
-    text-align: right;
-
-    a {
-      color: $header-blue;
-      font-size: 1.2 * $base-font-size;
-      margin-right: .5rem;
+    .title {
+      @include ilios-overview-title;
+  
+    }
+  
+    .session-overview-actions {
+      @include ilios-overview-actions;
+  
+      a {
+        color: $header-blue;
+        font-size: 1.2rem;
+        margin-right: .5rem;
+      }
     }
   }
+
+  
 
   .session-overview-content {
     @include ilios-overview-content;
@@ -30,114 +31,56 @@
     @include ilios-overview-block;
   }
 
-  .switch-block {
-    @include fill-parent;
-    height: 2rem;
+  .sessiontype {
+    grid-column: 1 / -1;
 
-    @include for-laptop-and-up {
-      @include span-columns(5);
-    }
-
-    label {
-      @include span-columns(4 of 5);
-      margin: 0;
+    select {
+      max-width: 80%;
+      @include for-phone-only {
+        max-width: 125px;
+      }
     }
   }
 
   .independentlearningcontrol {
-    clear: both;
-    @include for-laptop-and-up {
-      @include span-columns(4);
-
-      label {
-        @include span-columns(3 of 4);
-      }
-    }
-  }
-
-  .independentlearningcontrol-value {
-    @include for-laptop-and-up {
-      @include span-columns(1);
-    }
-  }
-
-  .sessionilmhours,
-  .sessionilmduedate {
-    @include for-laptop-and-up {
-      @include span-columns(4);
-
-      label {
-        @include span-columns(2 of 4);
-        margin: 0 1rem 0 0;
-        text-align: right;
-      }
-    }
+    grid-column: 1 / -1;
   }
 
   hr {
-    @include fill-parent;
     background: 0;
+    grid-column: 1 / -1;
     height: 0;
     margin: 1rem;
   }
 
-  .sessionilmduedate {
-    @include omega;
-  }
-
-  .sessiontype {
-    @include fill-parent;
-    display: block;
-    height: 2rem;
-  }
-
-  .session-overview-options {
-    @include fill-parent;
-    @include row;
-  }
-
   .sessiondescription {
-    @include fill-parent;
-    @include row;
     @include ilios-browser-defaults;
+    grid-column: 1 / -1;
+    margin-top: 1em;
   }
 
   .sessionassociatedgroups {
-    @include fill-parent;
-    @include row;
+    grid-column: 1 / -1;
   }
 }
 
 .session-header {
-  @include fill-parent;
 
   background-color: $header-grey;
-  padding: .8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: .8em;
 
-  @include for-laptop-and-up {
-    @include span-columns(12);
+  @include for-tablet-and-up {
+    flex-direction: row;
   }
 
   .title {
-    @include fill-parent;
-
-    @include for-laptop-and-up {
-      @include span-columns(8 of 12);
-    }
+    @include ilios-heading-h5;
 
     input {
-      width: 75%;
-    }
-  }
-
-  .session-publication {
-    @include fill-parent;
-
-    @include for-laptop-and-up {
-      @include span-columns(3 of 12);
-      @include shift(1);
-      @include omega;
-      text-align: right;
+      width: 90%;
     }
   }
 }
