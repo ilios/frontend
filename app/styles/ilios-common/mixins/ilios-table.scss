@@ -1,17 +1,10 @@
-@mixin ilios-table () {
+@mixin ilios-table-structure () {
   border-collapse: collapse;
-  font-size: .9rem;
   margin: ($base-line-height * .5em) 0;
   table-layout: fixed;
-
-  thead {
-    background-color: $background-grey;
-  }
-
+  width: 100%;
 
   th {
-    border-bottom: 1px solid darken($base-border-color, 15);
-    font-weight: bold;
     padding: ($base-line-height * .5em / 2) 0;
     text-align: left;
   }
@@ -76,7 +69,20 @@
       display: table-cell;
     }
   }
+}
 
+
+@mixin ilios-table-colors () {
+  thead {
+    background-color: $background-grey;
+  }
+
+  th {
+    border-bottom: 1px solid darken($base-border-color, 15);
+  }
+}
+
+@mixin ilios-removable-table () {
   tbody {
     .confirm-removal {
       background-color: $remove-background-color;

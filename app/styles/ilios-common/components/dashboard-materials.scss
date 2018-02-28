@@ -12,7 +12,8 @@
   }
 
   table {
-    @include ilios-table;
+    @include ilios-table-structure;
+    @include ilios-table-colors;
   }
 
   .lm-type-icon {
