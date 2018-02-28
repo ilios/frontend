@@ -1,13 +1,19 @@
 .session-offerings {
   @include detail-container($text-blue);
 
-  .title {
-    @include detail-container-title;
+  .offering-section-top {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
-  .actions {
-    @include detail-container-actions;
-  }
+  
 
   .session-offerings-content {
     @include detail-container-content;

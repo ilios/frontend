@@ -1,5 +1,7 @@
 .time-picker {
+  display: flex;
+
   select {
-    min-width: 5rem;
+    width: auto;
   }
 }
