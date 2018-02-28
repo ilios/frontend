@@ -33,7 +33,6 @@
     width: 90%;
     @include for-tablet-and-up {
       min-width: 33%;
-      width: auto;
     }
   }
 }

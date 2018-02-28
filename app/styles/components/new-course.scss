@@ -1,10 +1,13 @@
 .new-course {
-  @include ilios-form;
   border: 1px solid $header-grey;
   margin: .5rem;
 
   h4 {
     margin-bottom: 1rem;
+  }
+
+  & > div {
+    @include ilios-form;  
   }
 
   .item {
