@@ -17,6 +17,7 @@
 
   .parent-picker {
     ul {
+      @include ilios-list-reset;
       height: auto;
       line-height: 1.3rem;
     }
