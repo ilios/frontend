@@ -6,7 +6,8 @@
   ul,
   ol {
     list-style-type: none;
-    margin-left: 1em;
+    margin: 0 0 0 1em;
+    padding: 0;
   }
 }
 @mixin ilios-static-list() {
