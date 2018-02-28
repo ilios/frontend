@@ -1,12 +1,16 @@
 .detail-instructors {
   @include detail-container($text-blue);
 
-  .title {
-    @include detail-container-title;
-  }
+  .detail-instructors-header {
+    @include detail-container-header;
 
-  .actions {
-    @include detail-container-actions;
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .detail-instructors-content {

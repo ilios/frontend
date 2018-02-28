@@ -1,18 +1,16 @@
 .detail-learnergroups {
   @include detail-container($text-blue);
 
-  h4 {
-    @include ilios-heading-h3;
-    @include fill-parent;
-    font-weight: bold;
-  }
+  .detail-learnergroups-header {
+    @include detail-container-header;
 
-  .title {
-    @include detail-container-title;
-  }
+    .title {
+      @include detail-container-title;
+    }
 
-  .actions {
-    @include detail-container-actions;
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .detail-learnergroups-content {
