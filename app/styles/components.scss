@@ -41,6 +41,7 @@
 @import 'components/detail-cohorts';
 @import 'components/detail-competencies';
 @import 'components/detail-instructors';
+@import 'components/detail-instructors-list';
 @import 'components/detail-learnergroups';
 @import 'components/detail-learningmaterials';
 @import 'components/detail-mesh';
@@ -60,6 +61,7 @@
 @import 'components/instructorgroup-details';
 @import 'components/instructorgroup-header';
 @import 'components/instructorgroups-list';
+@import 'components/instructor-selection-manager';
 @import 'components/leadership-collapsed';
 @import 'components/leadership-manager';
 @import 'components/leadership-search';
@@ -75,7 +77,6 @@
 @import 'components/learning-material-table';
 @import 'components/learning-materials-sort-manager';
 @import 'components/learningmaterial-manager';
-@import 'components/live-search';
 @import 'components/loading-bar';
 @import 'components/login-form';
 @import 'components/manage-users-summary';
@@ -147,4 +148,5 @@
 @import 'components/update-notification';
 @import 'components/user-profile-calendar';
 @import 'components/user-profile';
+@import 'components/user-search';
 @import 'components/visualizer-course-objectives';

@@ -1,32 +1,21 @@
 .search-box {
-  @include clearfix;
-  @include position(relative, null);
   display: block;
-  height: 1.6rem;
-  margin-bottom: 10px;
+  position: relative;
 
-  input {
-    @include margin(0);
-    @include padding(0 0 0 28px);
-    background: $white;
-    border: 1px solid $input-box-grey;
-    border-radius: $base-border-radius;
-    color: $base-font-color;
-    cursor: pointer;
-    font-style: italic;
-    height: 1.6rem;
-    min-width: 220px;
-    overflow: show;
-    width: auto;
-    z-index: 200;
+  input[type='search'] {
+    @include ilios-input;
+    &.search-input {
+      padding-left: 1.5rem;
+    }
   }
 
   .search-icon {
-    @include position(absolute, 0);
     color: $base-link-color;
     display: inline-block;
+    left: 0;
     margin-right: 2px;
     padding-left: 6px;
-    width: 20px;
+    position: absolute;
+    top: .2rem;
   }
 }

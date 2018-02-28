@@ -1,18 +1,20 @@
 {{#if (get (await instructorGroups) 'length')}}
-  <ul class='removable-list tag-list'>
+  <h4>{{t 'general.instructorGroups'}}</h4>
+  <ul>
     {{#each (sort-by 'title' (await instructorGroups)) as |instructorGroup|}}
       <li {{action 'removeInstructorGroup' instructorGroup}}>
-        {{fa-icon 'group'}} {{instructorGroup.title}} {{fa-icon 'times'}}
+        {{fa-icon 'group'}} {{instructorGroup.title}} {{fa-icon 'times' class='remove'}}
       </li>
     {{/each}}
   </ul>
 {{/if}}
 
 {{#if (get (await instructors) 'length')}}
-  <ul class='removable-list tag-list'>
+  <h4>{{t 'general.instructors'}}</h4>
+  <ul>
     {{#each (sort-by 'fullName' (await instructors)) as |user|}}
       <li {{action 'removeInstructor' user}}>
-        {{user.fullName}} {{fa-icon 'times'}}
+        {{user.fullName}} {{fa-icon 'times' class='remove'}}
       </li>
     {{/each}}
   </ul>
