@@ -15,9 +15,5 @@
 
   .detail-cohorts-content {
     @include detail-container-content;
-
-    .detail-cohort-list table {
-      @include ilios-table;
-    }
   }
 }

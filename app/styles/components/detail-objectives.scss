@@ -15,10 +15,6 @@
 
   .detail-objectives-content {
     @include detail-container-content;
-
-    table {
-      @include ilios-table;
-    }
   }
 
   .new-objective-title {

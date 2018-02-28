@@ -30,4 +30,8 @@
   .back-to-courses-list {
     margin: .5rem 0;
   }
+
+  table {
+    @include ilios-table-colors;
+  }
 }

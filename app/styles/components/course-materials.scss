@@ -5,7 +5,8 @@
     padding-bottom: 1rem;
 
     table {
-      @include ilios-table;
+      @include ilios-table-structure;
+      @include ilios-table-colors;
     }
   }
 

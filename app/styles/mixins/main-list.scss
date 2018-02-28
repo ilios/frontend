@@ -85,7 +85,9 @@
   padding: 1rem;
 
   table {
-    @include ilios-table;
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+    @include ilios-removable-table;
 
     thead {
       background-color: $header-grey;

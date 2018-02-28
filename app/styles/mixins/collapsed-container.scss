@@ -27,7 +27,8 @@
 }
 
 @mixin collapsed-container-table () {
-  @include ilios-table;
+  @include ilios-table-structure;
+  @include ilios-table-colors;
   font-size: .8rem;
 
   table,

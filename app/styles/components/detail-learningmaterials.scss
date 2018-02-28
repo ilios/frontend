@@ -89,8 +89,6 @@
     @include detail-container-content;
 
     table {
-      @include ilios-table;
-
       td {
         ul {
           @include ilios-list-reset;

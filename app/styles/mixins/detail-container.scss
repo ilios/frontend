@@ -65,4 +65,9 @@
   clear: both;
   margin-top: 2rem;
   padding: .5rem;
+
+  table {
+    @include ilios-table-structure;
+    @include ilios-removable-table;
+  }
 }
