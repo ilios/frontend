@@ -2672,9 +2672,9 @@ ember-composable-helpers@^2.0.1:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency@0.8.15:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.15.tgz#4911a35b20cd36ea4fd4a02a70484abce6a46ec9"
+ember-concurrency@0.8.16:
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.16.tgz#979fab6fb7e3105e695defb39e7a4b641237944d"
   dependencies:
     babel-core "^6.24.1"
     ember-cli-babel "^6.8.2"
