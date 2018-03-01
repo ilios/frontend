@@ -1,5 +1,4 @@
 .new-instructorgroup {
-  @include ilios-form;
   border: 1px solid $header-grey;
   margin: .5rem;
 
@@ -7,15 +6,19 @@
     margin-bottom: 1rem;
   }
 
-  .item {
-    @include ilios-form-item;
-  }
+  form {
+    @include ilios-form;
 
-  .buttons {
-    @include ilios-form-buttons;
-  }
+    .item {
+      @include ilios-form-item;
+    }
 
-  .newinstructorgroup-title input {
-    min-width: 400px;
+    .buttons {
+      @include ilios-form-buttons;
+    }
+
+    .newinstructorgroup-title input {
+      min-width: 400px;
+    }
   }
 }

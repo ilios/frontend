@@ -79,6 +79,12 @@
   }
 }
 
+@mixin main-list-saved-new () {
+  border: 1px solid $ilios-green;
+  margin: 1rem;
+  padding: 1rem;
+}
+
 @mixin main-list-box-table () {
   clear: both;
   display: block;

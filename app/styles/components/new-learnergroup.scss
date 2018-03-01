@@ -1,5 +1,4 @@
 .new-learnergroup {
-  @include ilios-form;
   border: 1px solid $header-grey;
   margin: .5rem;
 
@@ -7,11 +6,15 @@
     margin-bottom: 1rem;
   }
 
-  .item {
-    @include ilios-form-item;
-  }
+  form {
+    @include ilios-form;
 
-  .buttons {
-    @include ilios-form-buttons;
+    .item {
+      @include ilios-form-item;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
   }
 }

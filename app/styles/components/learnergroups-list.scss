@@ -19,6 +19,10 @@
 
   }
 
+  .new .saved-result {
+    @include main-list-saved-new;
+  }
+
   .learnergroups {
     @include main-list-box;
 
