@@ -1,34 +1,39 @@
 .learnergroup-header {
   .header-bar {
-    @include fill-parent;
     background-color: $header-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: .8rem;
 
-    @include for-laptop-and-up {
-      @include span-columns(12);
+    @include for-tablet-and-up {
+      flex-direction: row;
     }
 
     .title {
-      @include fill-parent;
+      display: flex;
+      flex-direction: column;
 
-      @include for-laptop-and-up {
-        @include span-columns(8 of 12);
+      @include for-tablet-and-up {
+        flex-direction: row;
       }
 
-      h2 {
-        @include ilios-heading-h4;
+      .editable,
+      h4 {
+        display: block;
+        font-size: 1.5rem;
+
+        @include for-laptop-and-up {
+          display: inline;
+        }
       }
-    }
 
-    .info {
-      @include fill-parent;
-      text-align: right;
-
-      @include for-laptop-and-up {
-        @include span-columns(3 of 12);
-        @include shift(1);
-        @include omega;
+      @include for-tablet-and-up {
+        h4 {
+          margin-left: 1rem;
+        }
       }
     }
   }
+
 }

@@ -1,12 +1,10 @@
 .learnergroup-summary {
   .learnergroup-overview {
     @include ilios-overview($ilios-orange);
-    @include fill-parent;
     border-bottom: 1px dotted $ilios-orange;
     display: block;
 
     .learnergroup-overview-actions {
-      @include fill-parent;
       text-align: right;
     }
 
@@ -14,10 +12,6 @@
       @include fill-parent;
       display: block;
       min-height: 2rem;
-    }
-
-    .learnergroup-overview-content {
-      @include ilios-overview-content;
     }
   }
 

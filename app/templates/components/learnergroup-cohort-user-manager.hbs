@@ -1,12 +1,14 @@
-<div class='title'>
-  {{t 'general.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
-</div>
-<div class="actions">
-  <input
-    value={{filter}}
-    oninput={{action (mut filter) value="target.value"}}
-    placeholder={{t 'general.filterByNameOrEmail'}}
-  >
+<div class='learnergroup-cohort-user-manager-header'>
+  <div class='title'>
+    {{t 'general.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
+  </div>
+  <div class="actions">
+    <input
+      value={{filter}}
+      oninput={{action (mut filter) value="target.value"}}
+      placeholder={{t 'general.filterByNameOrEmail'}}
+    >
+  </div>
 </div>
 <div class='learnergroup-cohort-user-manager-content'>
   <div class='list'>

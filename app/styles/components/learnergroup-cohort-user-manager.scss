@@ -1,17 +1,29 @@
 .learnergroup-cohort-user-manager {
   @include detail-container($text-blue);
 
-  .title {
-    @include detail-container-title-style;
-  }
+  .learnergroup-cohort-user-manager-header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-  .actions {
-    @include fill-parent;
-    @include ilios-input;
-    text-align: right;
+    @include for-laptop-and-up {
+      align-items: flex-start;
+      flex-direction: row;
+      justify-content: space-around;
+    }
 
-    input {
-      width: 15rem;
+    .title {
+      @include detail-container-title-style;
+    }
+
+    .actions {
+      text-align: right;
+
+      input {
+        @include ilios-input;
+        width: 15rem;
+      }
     }
   }
 

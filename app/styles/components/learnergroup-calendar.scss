@@ -1,6 +1,4 @@
 .learnergroup-calendar {
-  @include fill-parent;
-  @include omega;
   border: 1px solid $black;
   border-radius: 5px;
   box-sizing: border-box;
@@ -16,6 +14,15 @@
     margin-bottom: 1rem;
     text-align: center;
     width: 100%;
+  }
+
+  .learnergroup-calendar-time-picker {
+    @include ilios-list-reset;
+
+    li {
+      display: inline;
+      margin-right: 2em;
+    }
   }
 
   .loding-indicator {
