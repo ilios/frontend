@@ -1,12 +1,14 @@
 {{#each domains as |obj|}}
-  <div class='hierarchical-list'>
-    {{competency-title-editor competency=obj.domain}}
-    {{#if (eq obj.competencies.length 0)}}
-      {{fa-icon 'trash' class='remove clickable' click=(action remove obj.domain)}}
-    {{/if}}
+  <div class='domain'>
+    <div class='block'>
+      {{competency-title-editor competency=obj.domain}}
+      {{#if (eq obj.competencies.length 0)}}
+        {{fa-icon 'trash' class='remove clickable' click=(action remove obj.domain)}}
+      {{/if}}
+    </div>
     <ul>
       {{#each obj.competencies as |competency|}}
-        <li>
+        <li class='block'>
           {{competency-title-editor competency=competency}}
           {{#if (eq competency.objectives.length 0)}}
             {{fa-icon 'trash' class='remove clickable' click=(action remove competency)}}

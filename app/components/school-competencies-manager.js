@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
+  classNames: ['school-competencies-manager'],
   competencies: null,
   domains: computed('competencies.[]', function(){
     let competencies = this.get('competencies');

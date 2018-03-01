@@ -1,19 +1,27 @@
 .school-competencies-expanded {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include detail-container-title;
-  }
+  .school-competencies-expanded-header {
+    @include detail-container-header;
 
-  .actions {
-    @include detail-container-actions;
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .school-competencies-expanded-content {
     @include detail-container-content;
 
-    .hierarchical-list {
-      @include ilios-list-hierarchical;
+    ul {
+      @include ilios-list-reset;
+
+      ul {
+        margin-left: 1rem;
+      }
     }
   }
 }

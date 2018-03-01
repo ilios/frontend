@@ -1,0 +1,26 @@
+.school-competencies-manager {
+  .domain {
+    background-color: $grey;
+    border: 1px solid $black;
+    margin: 1rem;
+    padding: 1rem;
+
+    h4 {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      @include ilios-list-reset;
+      margin-left: 2rem;
+    }
+
+    .block {
+      display: flex;
+
+      .remove {
+        margin-left: .5rem;
+      }
+    }
+  }
+}
