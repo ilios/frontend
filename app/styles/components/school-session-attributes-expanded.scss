@@ -1,15 +1,24 @@
 .school-session-attributes-expanded {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include detail-container-title;
-  }
+  .school-session-attributes-expanded-header {
+    @include detail-container-header;
 
-  .actions {
-    @include detail-container-actions;
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .school-session-attributes-expanded-content {
     @include detail-container-content;
+
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
   }
 }
