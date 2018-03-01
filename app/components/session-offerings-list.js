@@ -10,6 +10,7 @@ const { oneWay, sort } = computed;
 
 export default Component.extend({
   store: service(),
+  classNames: ['session-offerings-list'],
   session: null,
   offerings: oneWay('session.offerings'),
   editable: true,
@@ -19,7 +20,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,instructorGroups}', async function() {
+  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', async function() {
     let offerings = await this.get('offerings');
     if (isEmpty(offerings)) {
       return [];

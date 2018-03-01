@@ -13,7 +13,7 @@
     }
   }
 
-  
+
 
   .session-offerings-content {
     @include detail-container-content;
@@ -21,15 +21,9 @@
 
   .session-offerings-header {
     background-color: $header-grey;
-    height: 42px;
-
-    div {
-      @include span-columns (12 / 5);
-      padding: 10px 0 0;
-
-      label {
-        font-weight: bold;
-      }
-    }
+    display: grid;
+    font-weight: bold;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 42px;
   }
 }

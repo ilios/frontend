@@ -27,21 +27,11 @@
 <div class='session-offerings-content'>
   {{#if offerings.length}}
     <div class='session-offerings-header'>
-      <div>
-        <label>{{ t 'general.dateTime' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.groupName' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.location' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.instructors' }}</label>
-      </div>
-      <div>
-        <label>{{ t 'general.actions' }}</label>
-      </div>
+      <div>{{t 'general.dateTime'}}</div>
+      <div>{{t 'general.groupName'}}</div>
+      <div>{{t 'general.location'}}</div>
+      <div>{{t 'general.instructors'}}</div>
+      <div>{{t 'general.actions'}}</div>
     </div>
     {{session-offerings-list session=session editable=editable}}
   {{else}}
