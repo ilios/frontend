@@ -1,15 +1,17 @@
-<div class='title {{if isCollapsible "collapsible clickable"}}' {{action collapse}}>
-  {{t 'general.schoolLeadership'}}
-</div>
-<div class='actions'>
-  {{#if isManaging}}
-    <button class='bigadd' onclick={{perform save}}>
-      {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if isSaving true false)}}
-    </button>
-    <button class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
-  {{else}}
-    <button {{action setIsManaging true}}>{{t 'general.manageLeadership'}}</button>
-  {{/if}}
+<div class='school-leadership-expanded-header'>
+  <div class='title {{if isCollapsible "collapsible clickable"}}' {{action collapse}}>
+    {{t 'general.schoolLeadership'}}
+  </div>
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' onclick={{perform save}}>
+        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if isSaving true false)}}
+      </button>
+      <button class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button {{action setIsManaging true}}>{{t 'general.manageLeadership'}}</button>
+    {{/if}}
+  </div>
 </div>
 <div class='school-leadership-expanded-content'>
   {{#if (and (is-array directors) (is-array administrators))}}

@@ -1,0 +1,10 @@
+.leadership-list {
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+
+    ul {
+      @include ilios-list-reset;
+    }
+  }
+}

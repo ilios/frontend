@@ -1,12 +1,16 @@
 .school-leadership-expanded {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include detail-container-title;
-  }
+  .school-leadership-expanded-header {
+    @include detail-container-header;
 
-  .actions {
-    @include detail-container-actions;
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .school-leadership-expanded-content {
