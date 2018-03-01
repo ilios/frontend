@@ -1,0 +1,35 @@
+.school-vocabularies-list {
+  .school-vocabularies-list-header {
+    background-color: $header-grey;
+    display: flex;
+    justify-content: flex-end;
+    padding: .5rem 1rem;
+  }
+
+  .school-vocabularies-list-new {
+    form {
+      @include ilios-form;
+
+      .item {
+        @include ilios-form-item;
+      }
+
+      .buttons {
+        @include ilios-form-buttons;
+      }
+    }
+
+    .savedvocabulary {
+      border: 1px solid $ilios-green;
+      margin: 1rem;
+      padding: 1rem;
+    }
+  }
+
+  .school-vocabularies-list-list {
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
+  }
+}

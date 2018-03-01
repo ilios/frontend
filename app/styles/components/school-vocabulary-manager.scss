@@ -1,24 +1,51 @@
 .school-vocabulary-manager {
 
-  .form {
-    @include ilios-form;
-    @include fill-parent;
-    display: block;
+  .school-vocabulary-manager-title {
+    align-items: baseline;
+    display: flex;
+    margin-bottom: 1rem;
 
-    .item {
-      @include ilios-form-item;
-      @include for-laptop-and-up {
-        @include fill-parent;
-      }
-
-      label {
-        @include fill-parent;
-        display: block;
-      }
-
-      &.is-active {
-        height: 5rem;
-      }
+    .editinplace {
+      @include ilios-heading-h4;
+      margin-left: .5rem;
     }
   }
+
+  .terms {
+    background-color: $white;
+    border: 1px solid $base-link-color;
+    height: 10rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    padding: .5rem;
+    width: 80%;
+
+    .saved-result {
+      border: 1px solid $ilios-green;
+      margin: 1rem;
+      padding: 1rem;
+
+      @include for-laptop-and-up {
+        width: 40%;
+      }
+    }
+
+    .form {
+      display: flex;
+      margin-bottom: .5rem;
+
+      .item {
+        @include ilios-form-item;
+      }
+
+      button {
+        margin-left: .5rem;
+      }
+    }
+
+    ul {
+      @include ilios-selectable-list;
+    }
+  }
+
 }

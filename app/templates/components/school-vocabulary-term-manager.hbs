@@ -10,9 +10,9 @@
 {{/if}}
 
 {{#if term}}
-  <div class="form">
-    <div class='item term-title'>
-      <label>{{t 'general.title'}}:</label>
+  <div class='school-vocabulary-term-manager-properties'>
+    <div class='block term-title'>
+      <h4>{{t 'general.title'}}:</h4>
       {{#editable-field
         value=(if title title (t 'general.clickToEdit'))
         save=(action 'changeTermTitle')
@@ -31,7 +31,7 @@
         {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
       {{/unless}}
     </div>
-    <div class='item is-active'>
+    <div class='block is-active'>
       <label>{{t 'general.active'}}:</label>
       {{toggle-yesno
         yes=isActive
@@ -39,7 +39,7 @@
         toggle=(action (perform changeIsActive))
       }}
     </div>
-    <div class='item term-description'>
+    <div class='block term-description'>
       <label>{{t 'general.description'}}:</label>
       {{#editable-field
         value=(if description description (t 'general.clickToAddTermDescription'))
@@ -60,19 +60,18 @@
   </div>
 {{/if}}
 
-<h5 class='selectable-list-header'>{{t 'general.subTerms'}}:</h5>
+<h5>{{t 'general.subTerms'}}:</h5>
 
-{{#if newTerm}}
-  <div class='saved-result'>
-    <span class='clickable link' {{action manageTerm newTerm.id}}>
-      {{fa-icon 'external-link-square'}} {{newTerm.title}}
-    </span>
-    {{t 'general.savedSuccessfully'}}
-  </div>
-{{/if}}
-
-<div class='selectable-list'>
-  <div class='selectable-list-form'>
+<div class='terms'>
+  {{#if newTerm}}
+    <div class='saved-result'>
+      <span class='clickable link' {{action manageTerm newTerm.id}}>
+        {{fa-icon 'external-link-square'}} {{newTerm.title}}
+      </span>
+      {{t 'general.savedSuccessfully'}}
+    </div>
+  {{/if}}
+  <div>
     <input
       type="text"
       value={{newTermTitle}}

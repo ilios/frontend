@@ -3,39 +3,37 @@
   <span>{{vocabulary.title}}</span>
 </div><br>
 
-<div class='form'>
-  <div class='item'>
-    <label>{{t 'general.title'}}: </label>
-    {{#editable-field
-      value=(if title title (t 'general.clickToEdit'))
-      save=(action 'changeVocabularyTitle')
-      close=(action 'revertVocabularyTitleChanges')
-      saveOnEnter=true
-      closeOnEscape=true
-    as |isSaving|
-    }}
-      <input
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
-        disabled={{isSaving}}
-      >
-    {{/editable-field}}
-  </div>
+<div class='school-vocabulary-manager-title'>
+  <h4>{{t 'general.title'}}: </h4>
+  {{#editable-field
+    value=(if title title (t 'general.clickToEdit'))
+    save=(action 'changeVocabularyTitle')
+    close=(action 'revertVocabularyTitleChanges')
+    saveOnEnter=true
+    closeOnEscape=true
+  as |isSaving|
+  }}
+    <input
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      disabled={{isSaving}}
+    >
+  {{/editable-field}}
 </div>
 
-<h5 class='selectable-list-header'>{{t 'general.terms'}}:</h5>
+<h5>{{t 'general.terms'}}:</h5>
 
-{{#if newTerm}}
-  <div class='saved-result'>
-    <span class='clickable link' {{action manageTerm newTerm.id}}>
-      {{fa-icon 'external-link-square'}} {{newTerm.title}}
-    </span>
-    {{t 'general.savedSuccessfully'}}
-  </div>
-{{/if}}
 
-<div class='selectable-list'>
-  <div class='selectable-list-form'>
+<div class='terms'>
+  {{#if newTerm}}
+    <div class='saved-result'>
+      <span class='clickable link' {{action manageTerm newTerm.id}}>
+        {{fa-icon 'external-link-square'}} {{newTerm.title}}
+      </span>
+      {{t 'general.savedSuccessfully'}}
+    </div>
+  {{/if}}
+  <div class='form'>
     <input
       type="text"
       value={{newTermTitle}}
