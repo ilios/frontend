@@ -75,5 +75,9 @@
 
   a {
     color: $ilios-orange;
+
+    &.active {
+      font-weight: bold;
+    }
   }
 }
