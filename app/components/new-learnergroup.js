@@ -5,7 +5,6 @@ export default Component.extend({
   fillModeSupported: false,
   singleMode: true,
   classNames: ['new-learnergroup'],
-  tagName: 'form',
 
   actions: {
     generateNewLearnerGroups(num){

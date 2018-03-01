@@ -11,7 +11,7 @@
     {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
   {{/if}}
 
-  <form class='form'>
+  <div class='form'>
     <div class='item start-date'>
       <label>{{t 'general.startDate'}}:</label>
       {{pikaday-input value=startDate onSelection=(action 'updateStartDate') format='M/D/YYYY'}}
@@ -169,7 +169,7 @@
       </button>
       <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
     </div>
-  </form>
+  </div>
 {{/if}}
 
 {{#if saveOffering.isRunning}}

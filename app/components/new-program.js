@@ -19,7 +19,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   title: null,
   isSaving: false,
-  tagName: 'form',
   classNames: ['new-program'],
   keyUp(event) {
     const keyCode = event.keyCode;

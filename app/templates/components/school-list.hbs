@@ -13,7 +13,7 @@
     {{#if showNewSchoolForm class='vertical'}}
       <div class="new-result-title">{{t 'general.newSchool'}}</div>
 
-      <form>
+      <div class='form'>
         <div class="item">
           <label>{{t 'general.title'}}:</label>
           <input
@@ -50,7 +50,7 @@
           </button>
           <button class='cancel text' {{action 'hideNewSchoolForm'}}>{{t 'general.cancel'}}</button>
         </div>
-      </form>
+      </div>
     {{/if}}
 
     {{#each newSchools as |school|}}

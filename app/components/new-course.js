@@ -45,7 +45,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('selectedYear', thisYear);
     }
   },
-  tagName: 'form',
   classNames: ['new-course', 'new-result', 'form-container'],
 
   i18n: service(),

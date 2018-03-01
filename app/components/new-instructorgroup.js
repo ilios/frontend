@@ -20,7 +20,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   title: null,
   currentSchool: null,
   isSaving: false,
-  tagName: 'form',
   keyUp(event) {
     const keyCode = event.keyCode;
     const target = event.target;

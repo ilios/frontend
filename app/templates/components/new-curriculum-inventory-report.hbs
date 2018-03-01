@@ -1,6 +1,6 @@
 {{#unless loadAttr.isRunning}}
   <h4>{{t 'general.newCurriculumInventoryReport'}}</h4>
-  <form>
+  <div class='form'>
     <div class="item">
       <label>{{t 'general.name'}}:</label>
       <input
@@ -51,5 +51,5 @@
       </button>
       <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
     </div>
-  </form>
+  </div>
 {{/unless}}

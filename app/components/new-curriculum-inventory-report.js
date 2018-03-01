@@ -22,7 +22,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
   selectedYear: null,
   years: null,
-  tagName: 'form',
   classNames: ['new-curriculum-inventory-report'],
 
   didReceiveAttrs(){
