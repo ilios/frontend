@@ -1,19 +1,14 @@
 .school-session-type-form {
   .form {
     @include ilios-form;
-    @include fill-parent;
     display: block;
     width: 80%;
 
     .item {
       @include ilios-form-item;
-      @include for-laptop-and-up {
-        @include fill-parent;
-      }
       height: 4rem;
 
       label {
-        @include fill-parent;
         display: block;
       }
     }
