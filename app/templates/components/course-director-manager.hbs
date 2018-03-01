@@ -8,7 +8,7 @@
   <ul class='removable-list tag-list'>
     {{#each (sort-by 'lastName' directors) as |user|}}
       <li {{action 'removeDirector' user}}>
-        {{user.fullName}} {{fa-icon 'remove'}}
+        {{user.fullName}} {{fa-icon 'remove' class='remove'}}
       </li>
     {{/each}}
   </ul>

@@ -1,4 +1,9 @@
 .instructorgroup-details {
+
+  .backtolink {
+    margin: .5rem;
+  }
+
   .instructorgroup-overview {
     @include ilios-overview($header-grey);
     background: $background-grey;
@@ -9,8 +14,10 @@
       @include ilios-overview-title;
     }
 
-    .instructorgroup-overview-content {
-      @include ilios-overview-content;
+    .instructorgroup-users {
+      @include ilios-removable-list;
+
+      margin-bottom: .5rem;
     }
   }
 
