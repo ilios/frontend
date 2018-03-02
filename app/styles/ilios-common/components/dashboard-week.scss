@@ -4,8 +4,12 @@
   padding: 0 1em 1em;
 
   .weeklylink {
-    clear: both;
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+
+    @include for-tablet-and-up {
+      float: right;
+    }
 
     a {
       @include ilios-link;
