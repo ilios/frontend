@@ -1,17 +1,12 @@
 @mixin ilios-form () {
   align-items: start;
   display: grid;
+  grid-gap: .5rem 1rem;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   padding: .5rem;
 
-  @include for-tablet-and-up {
-    grid-row-gap: .5rem;
-  }
-
   label {
     @include ilios-label;
-    display: block;
-    width: 100%;
   }
 
   #{$form-input-text-types} {
@@ -30,7 +25,7 @@
   textarea,
   select {
     display: block;
-    width: 90%;
+    width: 100%;
     @include for-tablet-and-up {
       min-width: 33%;
     }
@@ -38,8 +33,9 @@
 }
 
 @mixin ilios-form-item () {
+  display: flex;
+  flex-direction: column;
   min-height: 4rem;
-  width: 100%;
 }
 
 @mixin ilios-form-last-item () {
@@ -85,5 +81,4 @@
 
 @mixin ilios-label () {
   font-weight: bold;
-  margin-top: 1rem;
 }

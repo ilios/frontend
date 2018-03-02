@@ -67,7 +67,9 @@
 
 @mixin main-list-box-header-title {
   @include ilios-heading-h5;
+  margin-bottom: .5rem;
   @include for-laptop-and-up {
+    margin-bottom: 0;
     padding-left: 1rem;
   }
 }
