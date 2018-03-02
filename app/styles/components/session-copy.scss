@@ -6,7 +6,6 @@
 
   .rollover-form {
     @include ilios-form;
-    @include fill-parent;
     border: 1px solid $ilios-blue;
     display: block;
     margin-top: 1rem;
@@ -33,7 +32,6 @@
   .included {
 
     .title {
-      @include fill-parent;
       display: block;
       font-weight: bold;
       margin-bottom: .5rem;

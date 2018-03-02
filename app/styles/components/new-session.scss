@@ -9,8 +9,6 @@
 
   .new-session-content {
     @include ilios-form;
-    @include fill-parent;
-    display: block;
 
     .item {
       @include ilios-form-item;

@@ -1,7 +1,6 @@
 .visualizer-course-objectives {
   display: inline-block;
   height: 1rem;
-  margin: .2rem 0;
   width: 1rem;
 
   .zero-hours {
@@ -49,13 +48,13 @@
   }
 
   &.not-icon {
-    @include fill-parent;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: auto;
+    width: auto;
 
     .simple-chart {
-      height: 25rem;
-      @include for-laptop-and-up {
-        @include span-columns(5);
-      }
+      height: 80vh;
     }
 
     .simple-chart-tooltip {
@@ -64,14 +63,6 @@
           margin: 0;
           padding: 0;
         }
-      }
-    }
-
-    .zero-hours,
-    .with-hours {
-      @include fill-parent;
-      @include for-laptop-and-up {
-        @include span-columns(6);
       }
     }
   }

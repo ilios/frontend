@@ -2,10 +2,6 @@
   background-color: $header-grey;
   padding: .8rem;
 
-  @include for-laptop-and-up {
-    @include span-columns(12);
-  }
-
   .title {
     .editable,
     h4 {

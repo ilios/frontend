@@ -9,9 +9,7 @@
     }
 
     .block {
-      @include fill-parent;
-      display: block;
-      min-height: 2rem;
+      @include ilios-overview-block;
     }
   }
 

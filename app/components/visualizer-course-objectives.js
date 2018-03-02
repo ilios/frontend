@@ -12,7 +12,7 @@ export default Component.extend({
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],
-  tagName: 'span',
+  tagName: 'div',
   tooltipContent: null,
   tooltipTitle: null,
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){

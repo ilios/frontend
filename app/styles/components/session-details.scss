@@ -1,9 +1,6 @@
 $session-background-color: $active-background-color;
 
 .session-details {
-  @include fill-parent;
-  @include clearfix;
-
   background-color: $session-background-color;
   border-color: $header-grey;
   border-style: solid;

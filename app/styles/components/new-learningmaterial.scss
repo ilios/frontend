@@ -1,16 +1,14 @@
 .new-learningmaterial {
-  @include fill-parent;
-
+  @include ilios-form;
   margin-left: 2rem;
   min-height: 25vh;
 
   .item {
-    margin-bottom: .5rem;
+    @include ilios-form-item;
+  }
 
-    label {
-      @include ilios-label;
-      margin-right: .5rem;
-    }
+  .buttons {
+    @include ilios-form-buttons;
   }
 
   .notes,

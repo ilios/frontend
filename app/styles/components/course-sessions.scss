@@ -16,10 +16,8 @@
   }
 
   .save-result {
-    @include fill-parent;
     border: 1px solid $ilios-green;
-    clear: both;
-    margin-top: 1rem;
+    margin: 1rem;
     padding: .75rem;
   }
 

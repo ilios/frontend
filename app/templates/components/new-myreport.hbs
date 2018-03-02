@@ -1,7 +1,7 @@
 <div class="title">{{t 'general.newReport'}}</div>
 <div class="new-myreport-content" data-test-new-report>
-  <label>{{t 'general.reportTitle'}}:</label>
-  <div>
+  <p>
+    <label>{{t 'general.reportTitle'}}:</label>
     <input
       type="text"
       value={{title}}
@@ -13,9 +13,9 @@
     {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
       <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
     {{/if}}
-  </div>
+  </p>
   <p>
-    {{t 'general.for'}}
+    <label>{{t 'general.for'}}</label>
     {{#if (is-fulfilled currentSchool)}}
       <select onchange={{perform changeSchool value="target.value"}} data-test-report-school>
         <option value=null selected={{is-equal null (await currentSchool)}}>
@@ -30,7 +30,7 @@
     {{/if}}
   </p>
   <p>
-    {{t 'general.all'}}
+    <label>{{t 'general.all'}}</label>
     <select onchange={{action "changeSubject" value="target.value"}} data-test-report-subject>
       {{#each subjectList as |option|}}
         <option value={{option.value}} selected={{is-equal option.value currentSubject}}>
@@ -40,7 +40,7 @@
     </select>
   </p>
   <p>
-    {{t 'general.associatedWith'}}
+    <label>{{t 'general.associatedWith'}}</label>
     <select onchange={{action "changePrepositionalObject" value="target.value"}} data-test-report-object-type>
       <option value='' selected={{is-equal null currentPrepositionalObject}}>
         {{t 'general.anything'}}
@@ -52,7 +52,7 @@
       {{/each}}
     </select>
   </p>
-  {{#liquid-if currentPrepositionalObject class='crossFade'}}
+  {{#if currentPrepositionalObject class='crossFade'}}
     {{#if (contains currentPrepositionalObject (w 'course session'))}}
       <select onchange={{action 'changeSelectedYear' value="target.value"}} data-test-report-year-filter>
         <option value='' selected={{is-empty selectedYear}}>{{t 'general.allAcademicYears'}}</option>
@@ -64,7 +64,7 @@
       </select>
     {{/if}}
     <p>
-      {{t 'general.whichIs'}}
+      <label>{{t 'general.whichIs'}}</label>
       {{#if (is-equal currentPrepositionalObject 'instructor')}}
         {{#if selectedUser}}
           <ul class='removable-list tag-list'>
@@ -97,7 +97,7 @@
           }}
         {{/if}}
       {{else}}
-        {{#liquid-if (is-fulfilled filteredPrepositionalObjectIdList) class='crossFade'}}
+        {{#if (is-fulfilled filteredPrepositionalObjectIdList) class='crossFade'}}
           <select onchange={{action "changePrepositionalObjectId" value="target.value"}} data-test-report-object>
             {{#each (sort-by 'active:desc' 'label' (await filteredPrepositionalObjectIdList)) as |option|}}
               <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
@@ -110,10 +110,10 @@
           </select>
         {{else}}
           {{fa-icon 'spinner' spin=true}}
-        {{/liquid-if}}
+        {{/if}}
       {{/if}}
     </p>
-  {{/liquid-if}}
+  {{/if}}
   <div class="input-buttons">
     <button class='done text' onclick={{perform save}} data-test-report-save>
       {{#if save.isRunning}}

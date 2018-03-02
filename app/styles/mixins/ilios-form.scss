@@ -2,8 +2,16 @@
   align-items: start;
   display: grid;
   grid-gap: .5rem 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  padding: .5rem;
+  grid-template-columns: 1fr;
+  padding: .5rem 1rem .5rem .5rem;
+
+  @include for-laptop-and-up {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include for-desktop-and-up {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   label {
     @include ilios-label;

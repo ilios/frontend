@@ -13,12 +13,6 @@
     }
   }
 
-  .duration {
-    @include for-laptop-and-up {
-      @include span-columns(3);
-    }
-  }
-
   .buttons {
     @include ilios-form-buttons;
   }

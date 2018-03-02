@@ -1,28 +1,13 @@
 .my-materials {
-  @include fill-parent;
 
   .material-list {
     border-bottom: 1px dotted $ilios-orange;
+    display: grid;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-  }
 
-  .course-filter {
-    @include fill-parent;
-
-    @include for-laptop-and-up {
-      @include span-columns(6);
-    }
-  }
-
-  .filter {
-    @include fill-parent;
-    text-align: right;
-
-    @include for-laptop-and-up {
-      @include shift(2);
-      @include span-columns(4);
-      @include omega;
+    @include for-tablet-and-up {
+      grid-template-columns: 1fr 1fr;
     }
   }
 
@@ -32,6 +17,10 @@
     margin-top: 1rem;
   }
 
+  .filter input {
+    width: 100%;
+  }
+
   .lm-type-icon {
     color: $dark-grey;
   }
@@ -39,5 +28,12 @@
   .timed-release-info {
     color: $ilios-red;
     font-size: smaller;
+  }
+
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+
+    grid-column: 1 / -1;
   }
 }

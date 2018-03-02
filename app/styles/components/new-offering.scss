@@ -2,20 +2,16 @@
   margin-top: 2rem;
 
   .new-offering-title {
-    @include fill-parent;
     @include ilios-heading-h5;
     text-align: center;
   }
 
   .choose-offering-type {
-    @include fill-parent;
-    @include clearfix;
     margin: 1rem 0;
     text-align: center;
 
     label {
       @include ilios-label;
-      @include row;
     }
 
     .click-choice-buttons {

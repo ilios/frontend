@@ -8,12 +8,6 @@
     .titlefilter {
       @include main-list-filter;
     }
-
-    .titlefilter {
-      @include for-laptop-and-up {
-        @include shift(6);
-      }
-    }
   }
 
   .new .saved-result {
