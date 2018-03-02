@@ -31,7 +31,7 @@
   }
 
   &.expanded {
-    @include for-tablet-and-down {
+    @include for-smaller-than-laptop {
       ul {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
