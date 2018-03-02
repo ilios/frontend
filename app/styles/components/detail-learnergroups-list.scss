@@ -1,7 +1,8 @@
 .detail-learnergroups-list {
   .trees {
+
     display: grid;
-    
+
     @include for-laptop-and-up {
       grid-template-columns: repeat(2, 1fr);
     }

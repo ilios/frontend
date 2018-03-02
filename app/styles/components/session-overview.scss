@@ -7,12 +7,13 @@
 
     .title {
       @include ilios-overview-title;
-  
+
     }
-  
+
     .session-overview-actions {
+
       @include ilios-overview-actions;
-  
+
       a {
         color: $header-blue;
         font-size: 1.2rem;
@@ -20,8 +21,6 @@
       }
     }
   }
-
-  
 
   .session-overview-content {
     @include ilios-overview-content;

@@ -26,6 +26,7 @@
 
   .course-summary-content {
     @include ilios-overview-content;
+
     .block {
       @include ilios-overview-block;
     }
