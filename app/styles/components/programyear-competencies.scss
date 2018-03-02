@@ -1,12 +1,16 @@
 .programyear-competencies {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include detail-container-title;
-  }
+  .programyear-competencies-header {
+    @include detail-container-header;
 
-  .programyear-competencies-actions {
-    @include detail-container-actions;
+    .title {
+      @include detail-container-title;
+    }
+
+    .programyear-competencies-actions {
+      @include detail-container-actions;
+    }
   }
 
   .programyear-competencies-content {

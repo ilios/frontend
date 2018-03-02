@@ -1,5 +1,9 @@
 .collapsed-stewards {
   @include collapsed-container($ilios-orange);
+  @include for-tablet-and-up {
+    grid-row-gap: .5rem;
+    grid-template-columns: 1fr 2fr;
+  }
 
   .title {
     @include collapsed-container-title;

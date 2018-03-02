@@ -1,9 +1,5 @@
 .programyear-list {
   @include main-list;
-  //@todo [JRJ 8/2016] this is a fix for mismatching padding between program overview
-  // and the program year list, it should be removed when the overview is
-  // fixed to use a new component style.
-  padding: 0;
 
   .programyears {
     @include main-list-box;

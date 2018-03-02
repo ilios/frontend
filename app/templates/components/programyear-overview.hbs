@@ -1,27 +1,25 @@
 <h5>{{t 'general.overview'}}</h5>
 <div class='programyear-overview-content'>
   <label>{{t 'general.directors'}}:</label>
-  <span>
+  <div>
     {{#if editable}}
-      <ul class='removable-list tag-list'>
+      <ul class='removable-directors'>
         {{#each sortedDirectors as |user|}}
-          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' class='removex'}}</li>
+          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
         {{/each}}
       </ul>
     {{else}}
-      <ul class='tag-list'>
+      <ul class='directors'>
         {{#each sortedDirectors as |user|}}
           <li>{{user.fullName}}</li>
         {{/each}}
       </ul>
     {{/if}}
-  </span>
+  </div>
   {{#if editable}}
     {{user-search
       addUser='addDirector'
       currentlyActiveUsers=(await programYear.directors)
     }}
-    <br>
-    <br>
   {{/if}}
 </div>

@@ -1,43 +1,36 @@
 .program-header {
-  @include fill-parent;
-
   background-color: $header-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: .8rem;
 
-  @include for-laptop-and-up {
-    @include span-columns(12);
+  @include for-tablet-and-up {
+    flex-direction: row;
   }
 
   .title {
-    @include fill-parent;
+    display: flex;
+    flex-direction: column;
 
-    @include for-laptop-and-up {
-      @include span-columns(8 of 12);
+    @include for-tablet-and-up {
+      flex-direction: row;
     }
 
     .editable,
-    h5 {
-      @include ilios-heading-h5;
+    h4 {
       display: block;
+      font-size: 1.5rem;
 
       @include for-laptop-and-up {
         display: inline;
       }
     }
 
-    h5 {
-      @include ilios-heading;
-    }
-  }
-
-  .program-publication {
-    @include fill-parent;
-
-    @include for-laptop-and-up {
-      @include span-columns(3 of 12);
-      @include shift(1);
-      @include omega;
-      text-align: right;
+    @include for-tablet-and-up {
+      h4 {
+        margin-left: 1rem;
+      }
     }
   }
 }

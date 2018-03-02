@@ -1,46 +1,50 @@
 .programyear-header {
-  @include fill-parent;
-
-  background-color: $header-grey;
-  padding: .8rem;
-
-  @include for-laptop-and-up {
-    @include span-columns(12);
+  .backtolink {
+    margin: .5rem;
   }
 
-  .title {
-    @include fill-parent;
+  header {
+    background-color: $header-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .8rem;
 
-    @include for-laptop-and-up {
-      @include span-columns(8 of 12);
+    @include for-tablet-and-up {
+      flex-direction: row;
     }
 
-    h4,
-    h5 {
-      display: block;
 
-      @include for-laptop-and-up {
-        display: inline;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+
+      @include for-tablet-and-up {
+        flex-direction: row;
+      }
+
+      .editable,
+      h5 {
+        display: block;
+        font-size: 1.5rem;
+
+        @include for-laptop-and-up {
+          display: inline;
+        }
+      }
+
+      @include for-tablet-and-up {
+        h5 {
+          margin-left: 1rem;
+        }
       }
     }
 
-    h4 {
-      @include ilios-heading-h4;
-    }
-
-    h5 {
-      @include ilios-heading-h5;
-    }
-  }
-
-  .programyear-publication {
-    @include fill-parent;
-
-    @include for-laptop-and-up {
-      @include span-columns(3 of 12);
-      @include shift(1);
-      @include omega;
-      text-align: right;
+    .programyear-publication {
+      @include for-laptop-and-up {
+        text-align: right;
+      }
     }
   }
 }

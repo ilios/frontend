@@ -1,16 +1,17 @@
 .detail-steward-manager {
+  display: grid;
+
+  @include for-tablet-and-up {
+    grid-gap: .5rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
   .remove-list,
   .add-list {
-    @include fill-parent;
-
     border: 1px solid $base-link-color;
     height: 380px;
     overflow: scroll;
     padding: 1rem;
-
-    @include for-laptop-and-up {
-      @include span-columns(5);
-    }
   }
 
   .remove-list {
@@ -21,19 +22,25 @@
     background-color: $white;
   }
 
-  li {
-    color: $base-link-color;
-    cursor: pointer;
-    font-weight: 500;
+  ul {
+    @include ilios-list-reset;
 
-    ul {
-      margin-left: 2rem;
+    li {
+      color: $base-link-color;
+      cursor: pointer;
+      font-weight: 500;
 
-      li {
-        font-weight: 300;
+      ul {
+        margin-left: 2rem;
+
+        li {
+          font-weight: 300;
+        }
       }
     }
   }
+
+
 
   .loading {
     font-size: 2rem;
