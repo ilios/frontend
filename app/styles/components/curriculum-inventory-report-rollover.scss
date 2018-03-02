@@ -6,7 +6,6 @@
 
   .rollover-form {
     @include ilios-form;
-    @include fill-parent;
     border: 1px solid $ilios-blue;
     display: block;
     margin-top: 1rem;
@@ -21,7 +20,7 @@
     }
 
     .description {
-      @include fill-parent;
+      grid-column: 1 / -1;
       margin-bottom: 4rem;
     }
 

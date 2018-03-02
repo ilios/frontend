@@ -1,11 +1,11 @@
 {{#unless loadAttr.isRunning}}
-  <div class='detail-actions'>
+  <div class='actions'>
     <button class='bigadd' {{action (perform saveChanges)}}>
       {{fa-icon (if saveChanges.isRunning 'spinner' 'check') spin=(if saveChanges.isRunning true false)}}
     </button>
     <button class='bigcancel' {{action 'close'}}>{{fa-icon 'undo'}}</button>
   </div>
-  <div class='resultslist-list'>
+  <div class='list'>
     <table>
       <thead>
         <tr>

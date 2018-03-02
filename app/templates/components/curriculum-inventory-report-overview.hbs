@@ -1,11 +1,13 @@
-<div class='title'>{{t 'general.overview'}}</div>
 {{#unless loadAttr.isRunning}}
-  <div class='report-overview-actions'>
-    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-      {{#link-to 'curriculumInventoryReport.rollover' report class='rollover'}}
-        {{fa-icon 'random' title=(t 'general.curriculumInventoryReportRollover') fixedWidth=true}}
-      {{/link-to}}
-    {{/if}}
+  <div class='report-overview-header'>
+    <div class='title'>{{t 'general.overview'}}</div>
+    <div class='report-overview-actions'>
+      {{#if (and (is-fulfilled showRollover) (await showRollover))}}
+        {{#link-to 'curriculumInventoryReport.rollover' report class='rollover'}}
+          {{fa-icon 'random' title=(t 'general.curriculumInventoryReportRollover') fixedWidth=true}}
+        {{/link-to}}
+      {{/if}}
+    </div>
   </div>
   <div class='curriculum-inventory-report-overview-content'>
     <div class="block start-date">

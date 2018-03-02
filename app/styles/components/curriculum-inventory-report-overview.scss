@@ -4,24 +4,30 @@
   border-bottom: 1px dotted $ilios-orange;
   display: block;
 
-  .title {
-    @include ilios-overview-title;
-    @include span-columns(5 of 12);
-  }
+  .report-overview-header {
+    @include ilios-overview-header;
 
-  .report-overview-actions {
-    @include ilios-overview-actions;
-    @include span-columns(6 of 12);
-    @include shift(1);
-    @include omega;
-    text-align: right;
+    .title {
+      @include ilios-overview-title;
+      @include span-columns(5 of 12);
+    }
 
-    a {
-      color: $header-blue;
-      font-size: 1.2rem;
-      margin-right: .5rem;
+    .report-overview-actions {
+      @include ilios-overview-actions;
+      @include span-columns(6 of 12);
+      @include shift(1);
+      @include omega;
+      text-align: right;
+
+      a {
+        color: $header-blue;
+        font-size: 1.2rem;
+        margin-right: .5rem;
+      }
     }
   }
+
+
 
   .block {
     @include ilios-overview-block;
@@ -32,7 +38,11 @@
   }
 
   .description {
-    @include span-columns(10);
+    grid-column: 1 / -1;
     margin-bottom: 2rem;
+
+    textarea {
+      width: 80%;
+    }
   }
 }

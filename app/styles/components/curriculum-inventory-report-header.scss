@@ -1,23 +1,29 @@
 .curriculum-inventory-report-header {
-  @include fill-parent;
-
   background-color: $header-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: .8rem;
 
-  @include for-laptop-and-up {
-    @include span-columns(12);
+  @include for-tablet-and-up {
+    flex-direction: row;
   }
 
   .title {
-    @include detail-container-title;
+    display: flex;
+    flex-direction: column;
 
-    .editable,
-    h4 {
-      @include ilios-heading-h4;
+    @include for-tablet-and-up {
+      flex-direction: row;
     }
-  }
 
-  .actions {
-    @include detail-container-actions;
+    .editable {
+      display: block;
+      font-size: 1.5rem;
+
+      @include for-laptop-and-up {
+        display: inline;
+      }
+    }
   }
 }

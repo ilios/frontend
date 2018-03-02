@@ -1,6 +1,12 @@
 .curriculum-inventory-sequence-block-session-manager {
-  .detail-actions {
-    float: right;
-    padding-right: 1.5rem;
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .list {
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
   }
 }

@@ -6,7 +6,6 @@
   }
 
   .confirm-finalize {
-    @include fill-parent;
     background-color: $remove-background-color;
 
     .confirm-message {

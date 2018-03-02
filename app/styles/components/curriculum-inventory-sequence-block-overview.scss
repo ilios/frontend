@@ -1,8 +1,5 @@
 .curriculum-inventory-sequence-block-overview {
   @include ilios-overview($ilios-orange);
-  @include fill-parent;
-  border-bottom: 1px dotted $ilios-orange;
-  display: block;
 
   .academic-level {
     padding-top: .5rem;
@@ -13,7 +10,7 @@
   }
 
   .course {
-    @include span-columns(10);
+    grid-column: 1 / -1;
 
     .details {
       display: block;
@@ -27,33 +24,34 @@
   }
 
   .description {
-    @include span-columns(10);
+    grid-column: 1 / -1;
     margin-bottom: 1rem;
   }
 
   .duration {
-    @include span-columns(10);
+    grid-column: 1 / -1;
   }
 
   .selective {
-    @include span-columns(10);
     font-style: italic;
+    grid-column: 1 / -1;
     padding-top: .5rem;
 
   }
 
-  .sessions {
-    @include fill-parent;
+  .sessions-list {
+    grid-column: 1 / -1;
     padding-top: 1rem;
 
-    .actions {
-      float: right;
-      padding-right: 1rem;
+    .sessions {
+      display: flex;
+      justify-content: space-between;
     }
-  }
 
-  .sessions-list {
-    @include fill-parent;
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
   }
 
   .title {
