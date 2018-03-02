@@ -1,7 +1,7 @@
-<div class="new-objective-title">{{t 'general.newObjective'}}</div>
+<h4>{{t 'general.newObjective'}}</h4>
 
 <div class="new-objective-form">
-  <div class="form-col form-col-12">
+  <div class="item">
     <label class="form-label">{{t 'general.description'}}:</label>
 
     <div class="form-data form-data-text form-input-row">
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="form-col-6 form-data-submit">
+  <div class="buttons">
     <button disabled={{or isSaving (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}} class='done text' {{action 'save'}}>
       {{#if isSaving}}
         {{fa-icon 'spinner' spin=true}}

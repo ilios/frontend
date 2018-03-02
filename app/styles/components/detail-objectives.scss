@@ -17,9 +17,15 @@
     @include detail-container-content;
   }
 
-  .new-objective-title {
-    font-weight: bold;
-    margin-left: 3rem;
-    text-align: left;
+  .new-objective-form {
+    @include ilios-form;
+
+    .items {
+      @include ilios-form-item;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
   }
 }
