@@ -1,19 +1,19 @@
 {{#if (or (get (await permissions) 'isFaculty') (get (await permissions) 'isAdmin'))}}
   <ul class='expand-navigation link clickable' onclick={{action (toggle 'expanded' this)}}>
-    <li>{{fa-icon 'bars'}}</li>
+    <li title={{t 'general.menu'}}>{{fa-icon 'bars'}}</li>
   </ul>
   <ul class='navigation-links' role='navigation'>
-    <li>{{#link-to 'dashboard'}}{{fa-icon 'home' fixedWidth=true}}<span class='text'>{{t 'general.dashboard'}}</span>{{/link-to}}</li>
+    <li>{{#link-to 'dashboard'}}{{fa-icon 'home' fixedWidth=true title=(t 'general.dashboard')}}<span class='text'>{{t 'general.dashboard'}}</span>{{/link-to}}</li>
     {{#if (get (await permissions) 'isFaculty')}}
-      <li>{{#link-to 'courses'}}{{fa-icon 'book' fixedWidth=true}}<span class='text'>{{t 'general.coursesAndSessions'}}</span>{{/link-to}}</li>
-      <li>{{#link-to 'learnerGroups'}}{{fa-icon 'mortar-board' fixedWidth=true}}<span class='text'>{{t 'general.learnerGroups'}}</span>{{/link-to}}</li>
-      <li>{{#link-to 'instructorGroups'}}{{fa-icon 'user-md' fixedWidth=true}}<span class='text'>{{t 'general.instructorGroups'}}</span>{{/link-to}}</li>
-      <li>{{#link-to 'schools'}}{{fa-icon 'university' fixedWidth=true}}<span class='text'>{{t 'general.schools'}}</span>{{/link-to}}</li>
-      <li>{{#link-to 'programs'}}{{fa-icon 'list-alt' fixedWidth=true}}<span class='text'>{{t 'general.programs'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'courses' title=(t 'general.coursesAndSessions')}}{{fa-icon 'book' fixedWidth=true}}<span class='text'>{{t 'general.coursesAndSessions'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'learnerGroups' title=(t 'general.learnerGroups')}}{{fa-icon 'mortar-board' fixedWidth=true}}<span class='text'>{{t 'general.learnerGroups'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'instructorGroups' title=(t 'general.instructorGroups')}}{{fa-icon 'user-md' fixedWidth=true}}<span class='text'>{{t 'general.instructorGroups'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'schools' title=(t 'general.schools')}}{{fa-icon 'university' fixedWidth=true}}<span class='text'>{{t 'general.schools'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'programs' title=(t 'general.programs')}}{{fa-icon 'list-alt' fixedWidth=true}}<span class='text'>{{t 'general.programs'}}</span>{{/link-to}}</li>
     {{/if}}
     {{#if (get (await permissions) 'isAdmin')}}
-      <li>{{#link-to 'admin-dashboard'}}{{fa-icon 'cogs' fixedWidth=true}}<span class='text'>{{t 'general.admin'}}</span>{{/link-to}}</li>
-      <li>{{#link-to 'curriculumInventoryReports'}}{{fa-icon 'bar-chart' fixedWidth=true}}<span class='text'>{{t 'general.curriculumInventory'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'admin-dashboard' title=(t 'general.admin')}}{{fa-icon 'cogs' fixedWidth=true}}<span class='text'>{{t 'general.admin'}}</span>{{/link-to}}</li>
+      <li>{{#link-to 'curriculumInventoryReports' title=(t 'general.curriculumInventory')}}{{fa-icon 'bar-chart' fixedWidth=true}}<span class='text'>{{t 'general.curriculumInventory'}}</span>{{/link-to}}</li>
     {{/if}}
   </ul>
 {{/if}}
