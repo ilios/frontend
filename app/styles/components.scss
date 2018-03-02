@@ -108,7 +108,6 @@
 @import 'components/offering-form';
 @import 'components/offering-manager';
 @import 'components/pagedlist-controls';
-@import 'components/pending-single-user-updates';
 @import 'components/pre-fill';
 @import 'components/print-course';
 @import 'components/program-header';
@@ -147,6 +146,8 @@
 @import 'components/session-offerings';
 @import 'components/session-offerings-list';
 @import 'components/session-overview';
+@import 'components/pending-single-user-updates';
+@import 'components/pending-user-updates';
 @import 'components/program-details';
 @import 'components/session-publicationcheck';
 @import 'components/session-table';
@@ -156,5 +157,9 @@
 @import 'components/update-notification';
 @import 'components/user-profile-calendar';
 @import 'components/user-profile';
+@import 'components/user-profile-bio';
+@import 'components/user-profile-cohorts';
+@import 'components/user-profile-roles';
+@import 'components/user-profile-schools';
 @import 'components/user-search';
 @import 'components/visualizer-course-objectives';

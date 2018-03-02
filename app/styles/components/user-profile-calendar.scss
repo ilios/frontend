@@ -1,6 +1,4 @@
 .user-profile-calendar {
-  @include fill-parent;
-  @include omega;
   border: 1px solid $black;
   border-radius: 5px;
   box-sizing: border-box;
@@ -14,6 +12,17 @@
     @include ilios-heading;
     font-size: 1.25rem;
     margin-bottom: 1rem;
+  }
+
+  .calendar-time-picker {
+    @include ilios-list-reset;
+
+    margin-bottom: .5rem;
+
+    li {
+      display: inline;
+      margin-right: 2em;
+    }
   }
 
   .loding-indicator {

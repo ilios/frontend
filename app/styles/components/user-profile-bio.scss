@@ -1,0 +1,108 @@
+// sass-lint:disable no-vendor-prefixes
+.user-profile-bio {
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .error {
+    text-align: center;
+  }
+
+  .form {
+    @include ilios-form;
+    grid-template-columns: 1fr;
+
+    .item {
+      min-height: auto;
+
+      &.synced-from-directory input {
+        background-color: lighten($ilios-green, 40%);
+      }
+    }
+
+  }
+
+  .directory-sync-complete {
+    background-color: transparent;
+    border: 1px solid $ilios-green;
+    color: $ilios-green;
+    outline: 1px solid $ilios-green;
+  }
+
+  .campus-id-controls {
+    display: flex;
+
+    button {
+      background-color: $ilios-blue;
+      height: 2rem;
+      margin-bottom: .25rem;
+      margin-left: .5rem;
+    }
+  }
+
+  .cancel-password-field {
+    display: inline-block;
+    text-align: left;
+    width: 20%;
+  }
+
+  meter {
+    background: none;
+    background-color: $white;
+    border: .5px solid $text-grey;
+    height: .75rem;
+    margin: .25rem 0;
+    width: 60%;
+  }
+
+  meter[value='0'] {
+    width: 40%;
+  }
+
+  meter::-webkit-meter-bar {
+    background: none;
+    background-color: $white;
+  }
+
+  meter[value='0']::-webkit-meter-optimum-value { background: $ilios-red; }
+  meter[value='1']::-webkit-meter-optimum-value { background: $ilios-red; }
+  meter[value='2']::-webkit-meter-optimum-value { background: $ilios-orange; }
+  meter[value='3']::-webkit-meter-optimum-value { background: $ilios-yellow; }
+  meter[value='4']::-webkit-meter-optimum-value { background: $ilios-green; }
+
+  meter[value='0']:-moz-meter-bar { background: $ilios-red; }
+  meter[value='1']:-moz-meter-bar { background: $ilios-red; }
+  meter[value='2']:-moz-meter-bar { background: $ilios-orange; }
+  meter[value='3']:-moz-meter-bar { background: $ilios-yellow; }
+  meter[value='4']:-moz-meter-bar { background: $ilios-green; }
+
+  .password-strength {
+    display: inline-block;
+    font-size: 1rem;
+    font-variant: small-caps;
+    line-height: .75rem;
+    text-align: right;
+    width: 10%;
+
+    &.strength-0 {
+      color: $ilios-red;
+      width: 20%;
+    }
+
+    &.strength-1 {
+      color: $ilios-red;
+    }
+
+    &.strength-2 {
+      color: $ilios-orange;
+    }
+
+    &.strength-3 {
+      color: $ilios-yellow;
+    }
+
+    &.strength-4 {
+      color: $ilios-green;
+    }
+  }
+}

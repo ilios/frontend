@@ -1,9 +1,9 @@
-<h2>
+<h3>
   {{#if (gt (get (await updates) 'length') 1)}}
     {{fa-icon 'warning'  class='no'}}
   {{/if}}
   {{t 'general.pendingUpdatesSummaryTitle'}}
-</h2>
+</h3>
 {{#if schools.isFulfilled}}
   <div id='schoolsfilter' class="filter">
     <label class="inline-label">

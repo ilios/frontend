@@ -1,27 +1,25 @@
 {{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
-<section class='fullwidth main-border assign-students'>
-  <div class="filter-tools">
-    <div id='schoolsfilter' class="filter">
-      <label class="inline-label">
-        {{fa-icon 'university'}}
-      </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-            {{#each (sort-by 'title' model.schools) as |school|}}
-              <option value={{school.id}} selected={{is-equal school selectedSchool}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{selectedSchool.title}}
-        {{/if}}
-      </div>
+
+<section class='assign-students'>
+  <div class="filters">
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each (sort-by 'title' model.schools) as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
 
-    <div id='titlefilter' class="filter">
+    <div class="titlefilter">
       <input
+        type='text'
         value={{filter}}
         oninput={{action (mut filter) value="target.value"}}
         placeholder={{t 'general.pendingUserUpdates.filterBy'}}

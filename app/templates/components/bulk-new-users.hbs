@@ -24,7 +24,7 @@
   </div>
 {{/if}}
 
-<div class="new-result-title">{{t 'general.newUser'}}</div>
+<h3>{{t 'general.newUser'}}</h3>
 
 <div class='new-user-form'>
   <div class='choose-form-type'>
@@ -90,7 +90,7 @@
       </table>
     </div>
   {{/if}}
-  <div class='item'>
+  <div class='item last'>
     <label>{{t 'general.primarySchool'}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>

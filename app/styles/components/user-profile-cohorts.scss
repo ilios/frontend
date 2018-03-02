@@ -1,0 +1,53 @@
+.user-profile-cohorts {
+
+  .user-profile-cohorts-header {
+    @include detail-container-header;
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+
+    .item {
+      min-height: auto;
+    }
+
+  }
+
+  p {
+    margin-bottom: 2rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  ul {
+    @include ilios-list-reset;
+  }
+
+  i {
+    margin-right: .3rem;
+  }
+
+  .select-available-cohort {
+    h4 {
+      float: left;
+    }
+
+    ul {
+      clear: both;
+      padding-top: .75rem;
+    }
+
+    .schoolsfilter {
+      float: left;
+      margin-left: 3rem;
+    }
+  }
+
+}

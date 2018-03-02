@@ -1,15 +1,16 @@
 .new-user {
   .new-user-form {
     @include ilios-form;
-    @include fill-parent;
-    display: block;
 
-    .click-choice-buttons {
-      @include fill-parent;
-      @include clearfix;
-      display: block;
-      margin-bottom: .5rem;
-      min-height: 1rem;
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: .5rem;
+      }
     }
 
     .item {

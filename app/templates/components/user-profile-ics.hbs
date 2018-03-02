@@ -1,4 +1,4 @@
-<h2 class='title'>{{t 'general.icsFeed'}}</h2>
+<h3 class='title'>{{t 'general.icsFeed'}}</h3>
 <div class='actions'>
   {{#if isManaging}}
     <button disabled={{refreshKey.isRunning}} title={{t 'general.refreshIcsFeedKey'}} class='refresh-key' {{action (perform refreshKey)}}>{{fa-icon (if refreshKey.isRunning 'spinner' 'refresh') spin=(if refreshKey.isRunning true false)}}</button>

@@ -1,15 +1,21 @@
 .bulk-new-users {
+
+  h3 {
+    margin: .5rem;
+  }
+
   .new-user-form {
     @include ilios-form;
-    @include fill-parent;
-    display: block;
 
-    .click-choice-buttons {
-      @include fill-parent;
-      @include clearfix;
-      display: block;
-      margin-bottom: .5rem;
-      min-height: 1rem;
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: .5rem;
+      }
     }
 
     .upload-users {
@@ -22,6 +28,14 @@
 
     .item {
       @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+
+        select {
+          width: auto;
+        }
+      }
     }
 
     .buttons {
@@ -29,6 +43,7 @@
     }
 
     .proposed-new-users {
+      grid-column: 1 / -1;
       max-height: 25rem;
       overflow-y: scroll;
 
@@ -36,15 +51,19 @@
         border: 1px solid $alert-color;
         color: $alert-color;
       }
+
+      table {
+        @include ilios-table-structure;
+        @include ilios-table-colors;
+      }
     }
   }
 
   .file-is-loading {
-    @include fill-parent;
-    display: block;
+    display: flex;
     font-size: 3rem;
     font-weight: bold;
-    text-align: center;
+    justify-content: center;
   }
 
   .saving-user-errors,

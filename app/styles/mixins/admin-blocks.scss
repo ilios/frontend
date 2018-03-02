@@ -1,7 +1,10 @@
 @mixin admin-blocks () {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-gap: .5rem;
+
+  @include for-laptop-and-up {
+    grid-template-columns: 1fr 1fr;
+  }
 
   .small-component,
   .large-component {
@@ -19,15 +22,12 @@
     }
 
     h2 {
-      @include ilios-heading;
-      font-size: 1.25rem;
       margin-bottom: 1rem;
     }
 
     p {
       clear: both;
       margin-top: 1rem;
-      width: 100%;
     }
 
     button {
@@ -39,16 +39,8 @@
     }
   }
 
-  .small-component {
-    font-size: .75rem;
-
-    @include for-laptop-and-up {
-      width: 49%;
-    }
-  }
-
   .large-component {
-    width: 100%;
+    grid-column: 1 / -1;
 
     .header {
       display: flex;

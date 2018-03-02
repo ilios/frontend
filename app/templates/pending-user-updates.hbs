@@ -1,42 +1,34 @@
 {{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
-<section class='fullwidth main-border'>
-  <div class="filter-tools">
-    <div id='schoolsfilter' class="filter">
-      <label class="inline-label">
-        {{fa-icon 'university'}}
-      </label>
-      <div id="school-selection" class="inline-data">
-        {{#if hasMoreThanOneSchool}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-            {{#each sortedSchools as |school|}}
-              <option value={{school.id}} selected={{is-equal school selectedSchool}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{selectedSchool.title}}
-        {{/if}}
-      </div>
+<section class='pending-user-updates'>
+  <div class="filters">
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
+        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          {{#each sortedSchools as |school|}}
+            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{selectedSchool.title}}
+      {{/if}}
     </div>
 
-    <div id='titlefilter' class="filter">
-      <input type='text' value={{filter}} placeholder={{t 'general.pendingUserUpdates.filterBy'}} oninput={{action (mut filter) value="target.value"}}>
+    <div class="titlefilter">
+      <input
+        type='text'
+        value={{filter}}
+        oninput={{action (mut filter) value="target.value"}}
+        placeholder={{t 'general.pendingUserUpdates.filterBy'}}
+      >
     </div>
   </div>
 
-  <section class='resultslist'>
-
+  <div class='updates'>
     {{#liquid-if (is-fulfilled allUpdates)}}
-      <div class='resultslist-list'>
-
-        {{pagedlist-controls
-          offset=offset
-          limit=limit
-          total=(get (await allUpdates) 'length')
-          setOffset=(action (mut offset))
-          setLimit=(action (mut limit))
-        }}
+      <div class='list'>
         <table>
           <thead>
             <tr>
@@ -83,17 +75,9 @@
             {{/each}}
           </tbody>
         </table>
-
-        {{pagedlist-controls
-          offset=offset
-          limit=limit
-          total=(get (await allUpdates) 'length')
-          setOffset=(action (mut offset))
-          setLimit=(action (mut limit))
-        }}
       </div>
     {{else}}
       {{wave-loader}}
     {{/liquid-if}}
-  </section>
+  </div>
 </section>

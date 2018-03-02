@@ -1,0 +1,20 @@
+.pending-user-updates {
+  @include main-list;
+
+  .filters {
+    @include main-list-filters;
+
+    .schoolsfilter,
+    .titlefilter {
+      @include main-list-filter;
+    }
+  }
+
+  .updates {
+    @include main-list-box;
+  }
+
+  .list {
+    @include main-list-box-table;
+  }
+}

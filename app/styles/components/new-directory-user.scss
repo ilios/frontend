@@ -3,8 +3,40 @@
   margin: 1rem 0;
   padding-bottom: 1rem;
 
+  h3 {
+    margin-bottom: .5rem;
+  }
+
+  .form {
+    @include ilios-form;
+
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: .5rem;
+      }
+    }
+
+    .item {
+      @include ilios-form-item;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+
   .new-directory-user-search-results {
     max-height: 25rem;
     overflow: scroll;
+
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
   }
 }
