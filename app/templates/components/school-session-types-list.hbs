@@ -2,11 +2,11 @@
   <thead>
     <tr>
       <th colspan=3>{{t 'general.title'}}</th>
-      <th>{{t 'general.sessions'}}</th>
+      <th class='hide-from-small-screen'>{{t 'general.sessions'}}</th>
       <th>{{t 'general.assessment'}}</th>
-      <th colspan=2>{{t 'general.assessmentOption'}}</th>
-      <th colspan=2>{{t 'general.aamcMethod'}}</th>
-      <th>{{t 'general.color'}}</th>
+      <th class='hide-from-small-screen' colspan=2>{{t 'general.assessmentOption'}}</th>
+      <th class='hide-from-small-screen' colspan=2>{{t 'general.aamcMethod'}}</th>
+      <th class='hide-from-small-screen'>{{t 'general.color'}}</th>
       <th>{{t 'general.actions'}}</th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
             <em>({{t 'general.inactive'}})</em>
           {{/unless}}
         </td>
-        <td>{{sessionType.sessionCount}}</td>
+        <td class='hide-from-small-screen'>{{sessionType.sessionCount}}</td>
         <td>
           {{#if sessionType.assessment}}
             {{fa-icon 'check' class='yes'}}
@@ -29,9 +29,9 @@
             {{fa-icon 'ban' class='no'}}
           {{/if}}
         </td>
-        <td colspan=2>{{get (await sessionType.assessmentOption) 'name'}}</td>
-        <td colspan=2>{{get (await sessionType.firstAamcMethod) 'description'}}</td>
-        <td class='calendar-color'>
+        <td class='hide-from-small-screen' colspan=2>{{get (await sessionType.assessmentOption) 'name'}}</td>
+        <td class='hide-from-small-screen' colspan=2>{{get (await sessionType.firstAamcMethod) 'description'}}</td>
+        <td class='calendar-color hide-from-small-screen'>
           <span class='box' style={{{concat 'background-color: ' sessionType.safeCalendarColor}}}></span>
         </td>
         <td>
