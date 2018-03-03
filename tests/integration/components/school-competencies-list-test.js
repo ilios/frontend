@@ -21,7 +21,7 @@ test('it renders', async function(assert) {
 
   this.set('domains', domainsList);
   this.render(hbs`{{school-competencies-list domains=domains}}`);
-  const domains = '.static-list > li';
+  const domains = '[data-test-domains] > li';
   const domainTitle = `${domains}:eq(0)`;
 
   await wait();

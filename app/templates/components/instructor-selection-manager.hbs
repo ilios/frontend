@@ -1,6 +1,6 @@
 {{#if (get (await instructorGroups) 'length')}}
   <h4>{{t 'general.instructorGroups'}}</h4>
-  <ul>
+  <ul data-test-instructor-groups>
     {{#each (sort-by 'title' (await instructorGroups)) as |instructorGroup|}}
       <li {{action 'removeInstructorGroup' instructorGroup}}>
         {{fa-icon 'group'}} {{instructorGroup.title}} {{fa-icon 'times' class='remove'}}
@@ -11,7 +11,7 @@
 
 {{#if (get (await instructors) 'length')}}
   <h4>{{t 'general.instructors'}}</h4>
-  <ul>
+  <ul data-test-instructors>
     {{#each (sort-by 'fullName' (await instructors)) as |user|}}
       <li {{action 'removeInstructor' user}}>
         {{user.fullName}} {{fa-icon 'times' class='remove'}}

@@ -76,10 +76,10 @@ test('manage terms', async function(assert) {
   assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
   let meshManager = find('.mesh-manager', detailObjectives).eq(0);
   let objective = fixtures.sessionObjectives[1];
-  let removableItems = find('.removable-list li', meshManager);
+  let removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, objective.meshDescriptors.length);
   for (let i = 0; i < objective.meshDescriptors.length; i++){
-    let meshDescriptorName = find('.content .title', removableItems[i]).eq(0);
+    let meshDescriptorName = find('.term-title', removableItems[i]).eq(0);
     assert.equal(getElementText(meshDescriptorName), getText(fixtures.meshDescriptors[objective.meshDescriptorIds[i] - 1].name));
   }
 
@@ -105,7 +105,7 @@ test('manage terms', async function(assert) {
       assert.ok(!find(searchResults[i]).hasClass('disabled'));
     }
   }
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   assert.ok(!find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
   await click(searchResults[3]);
   assert.ok(find('.mesh-search-results li:eq(3)', meshManager).hasClass('disabled'));
@@ -114,10 +114,10 @@ test('manage terms', async function(assert) {
     fixtures.meshDescriptors[1],
     fixtures.meshDescriptors[3]
   ];
-  removableItems = find('.removable-list li', meshManager);
+  removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, 2);
   for (let i = 0; i < 2; i++){
-    let meshDescriptorName = find('.title', removableItems[i]).eq(0);
+    let meshDescriptorName = find('.term-title', removableItems[i]).eq(0);
     assert.equal(getElementText(meshDescriptorName), getText(newExpectedMesh[i].name));
   }
 });
@@ -132,7 +132,7 @@ test('save terms', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('.search-box span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[2]);
   await click('button.bigadd', detailObjectives);
   let expectedMesh = fixtures.meshDescriptors[2].name;
@@ -150,7 +150,7 @@ test('cancel changes', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('.search-box span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[1]);
   await click(searchResults[2]);
   await click(searchResults[3]);

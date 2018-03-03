@@ -1,7 +1,7 @@
 {{#unless loadAttr.isRunning}}
   <h4>{{t 'general.newCurriculumInventoryReport'}}</h4>
   <div class='form'>
-    <div class="item">
+    <div class="item" data-test-name>
       <label>{{t 'general.name'}}:</label>
       <input
         type="text"
@@ -16,7 +16,7 @@
       {{/if}}
     </div>
 
-    <div class="item">
+    <div class="item" data-test-description>
       <label>{{t 'general.description'}}:</label>
       <textarea
         value={{description}}
@@ -26,12 +26,12 @@
       ></textarea>
     </div>
 
-    <div class="item">
+    <div class="item" data-test-program-title>
       <label>{{t 'general.program'}}:</label>
-      {{currentProgram.title}}
+      <span>{{currentProgram.title}}</span>
     </div>
 
-    <div class="item">
+    <div class="item" data-test-academic-year>
       <label>{{t 'general.academicYear'}}:</label>
       {{one-way-select
         value=selectedYear

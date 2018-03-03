@@ -246,13 +246,13 @@ test('create new user', function(assert) {
   const secondIcon = `${secondResultValues}:eq(0) i`;
   const thirdIcon = `${thirdResultValues}:eq(0) i`;
 
-  const firstName = '.form-data:eq(1)';
-  const lastName = '.form-data:eq(2)';
-  const campusId = '.form-data:eq(3)';
-  const email = '.form-data:eq(4)';
-  const phone = '.form-data:eq(5)';
-  const otherId = '.form-data:eq(6)';
-  const username = '.form-data:eq(7)';
+  const firstName = '.item:eq(0) span';
+  const lastName = '.item:eq(1) span';
+  const campusId = '.item:eq(2) span';
+  const email = '.item:eq(3) span';
+  const phone = '.item:eq(4) span';
+  const otherId = '.item:eq(5) span';
+  const username = '.item:eq(6) span';
 
   const save = '.done';
 

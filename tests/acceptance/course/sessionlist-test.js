@@ -237,8 +237,8 @@ test('first offering is updated when offering is updated #1276', async function(
   const firstOffering = `${rows}:eq(0) td:eq(4)`;
   const currentStartDate = server.db.offerings[0].startDate;
   const newStartDate = moment(currentStartDate).year(2010).day(4).month(6).toDate();
-  const offeringBlocks = '.offering-block-time-offering';
-  const editOffering = `${offeringBlocks}:eq(0) .offering-block-time-offering-actions .edit`;
+  const offeringBlocks = '.offering-manager';
+  const editOffering = `${offeringBlocks}:eq(0) .offering-manager-actions .edit`;
   const offeringManager = '.offering-manager';
   const startDateInput = `${offeringManager} .start-date input`;
   const doneButton = `${offeringManager} .done`;

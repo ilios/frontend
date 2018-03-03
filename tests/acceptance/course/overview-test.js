@@ -343,7 +343,7 @@ test('manage directors', async function(assert) {
   let searchBoxInput = find('input', searchBox);
   await fillIn(searchBoxInput, 'guy');
   await click('span.search-icon', searchBox);
-  let searchResults = find('.live-search li', directors);
+  let searchResults = find('.results li', directors);
   assert.equal(searchResults.length, 4);
   assert.equal(getElementText(searchResults.eq(0)), getText('3 Results'));
   assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));
@@ -354,7 +354,7 @@ test('manage directors', async function(assert) {
   assert.ok(find(searchResults.eq(3)).hasClass('inactive'));
 
   await click('li:eq(0)', directors);
-  assert.ok(!find('.live-search li:eq(2)', directors).hasClass('inactive'));
+  assert.ok(!find('.results li:eq(2)', directors).hasClass('inactive'));
   await click(searchResults.eq(1));
   await click('.coursedirectors .bigadd');
   assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
@@ -385,7 +385,7 @@ test('search twice and list should be correct', async function(assert) {
   let searchBoxInput = find('input', searchBox);
   await fillIn(searchBoxInput, 'guy');
   await click('span.search-icon', searchBox);
-  let searchResults = find('.live-search li', directors);
+  let searchResults = find('.results li', directors);
   assert.equal(searchResults.length, 3);
   assert.equal(getElementText(searchResults.eq(0)), getText('2 Results'));
   assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));
@@ -394,7 +394,7 @@ test('search twice and list should be correct', async function(assert) {
   searchBoxInput = find('input', searchBox);
   await fillIn(searchBoxInput, 'guy');
   await click('span.search-icon', searchBox);
-  searchResults = find('.live-search li', directors);
+  searchResults = find('.results li', directors);
   assert.equal(searchResults.length, 3);
   assert.equal(getElementText(searchResults.eq(0)), getText('2 Results'));
   assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));

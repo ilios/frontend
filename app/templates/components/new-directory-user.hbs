@@ -11,27 +11,29 @@
     </div>
     <div class="item">
       <label>{{t 'general.firstName'}}:</label>
-      {{firstName}}
+      <span>{{firstName}}</span>
     </div>
     <div class="item">
       <label>{{t 'general.lastName'}}:</label>
-      {{lastName}}
+      <span>{{lastName}}</span>
     </div>
     <div class="item">
       <label>{{t 'general.campusId'}}:</label>
-      {{campusId}}
+      <span>{{campusId}}</span>
     </div>
     <div class="item">
       <label>{{t 'general.email'}}:</label>
-      {{email}}
+      <span>{{email}}</span>
     </div>
     <div class="item">
       <label>{{t 'general.phone'}}:</label>
-      {{#if phone.length}}
-        {{phone}}
-      {{else}}
-        &nbsp;
-      {{/if}}
+      <span>
+        {{#if phone.length}}
+          {{phone}}
+        {{else}}
+          &nbsp;
+        {{/if}}
+      </span>
     </div>
     <div class="item">
       <label>{{t 'general.otherId'}}:</label>
@@ -58,7 +60,7 @@
           <span class="validation-error-message">{{v-get this 'username' 'message'}}</span>
         {{/if}}
       {{else}}
-        {{username}}
+        <span>{{username}}</span>
       {{/if}}
     </div>
 

@@ -147,7 +147,7 @@ test('changing assessment changes available aamcMethods', async function(assert)
   const firstAamcMethodOption = `${aamcMethodOptions}:eq(0)`;
   const secondAamcMethodOption = `${aamcMethodOptions}:eq(1)`;
   const assessment = '.item:eq(3)';
-  const assessmentInput = `${assessment} .switch`;
+  const assessmentInput = `${assessment} .toggle-yesno`;
 
   await wait();
 
@@ -274,7 +274,7 @@ test('save fires save', async function(assert) {
   const assessmentOptionSelect = `${assessmentOption} select`;
   const isActive = '.item:eq(5)';
   const isActiveInput = `${isActive} input`;
-  const isActiveControl = `${isActive} .switch`;
+  const isActiveControl = `${isActive} .toggle-yesno`;
   const button = '.done';
 
   await wait();

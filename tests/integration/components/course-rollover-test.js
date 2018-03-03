@@ -648,7 +648,7 @@ test('rollover course with cohorts', async function(assert) {
   this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
   const advancedOptions = '.advanced-options';
   const title = `.advanced-options-title`;
-  const firstCohort = `${advancedOptions} .selectable-list li:eq(0)`;
+  const firstCohort = `${advancedOptions} .selectable-cohorts li:eq(0)`;
 
   await wait();
   this.$(title).click();

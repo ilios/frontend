@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | flash-messages', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('Integration | Component | flash-messages', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    await render(hbs`{{flash-messages}}`);
-    assert.equal(this.element.textContent.trim(), '');
-  });
+test('it renders', function(assert) {
+  this.render(hbs`{{flash-messages}}`);
+
+  assert.equal(this.$().text().trim(), '');
+
 });

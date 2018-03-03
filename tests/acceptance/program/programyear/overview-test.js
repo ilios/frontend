@@ -36,7 +36,7 @@ test('list directors', async function(assert) {
 
   assert.equal(currentPath(), 'program.programYear.index');
   var container = find('.programyear-overview').eq(0);
-  var items = find('.removable-list li', container);
+  var items = find('.removable-directors li', container);
   assert.equal(items.length, 3);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -72,7 +72,7 @@ test('add director', async function(assert) {
 
   assert.equal(currentPath(), 'program.programYear.index');
   let container = find('.programyear-overview').eq(0);
-  let items = find('.removable-list li', container);
+  let items = find('.removable-directors li', container);
   assert.equal(items.length, 3);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -80,7 +80,7 @@ test('add director', async function(assert) {
 
   await fillIn(find('.search-box input', container), 'guy');
   await click('.results li:eq(6)', container);
-  items = find('.removable-list li', container);
+  items = find('.removable-directors li', container);
   assert.equal(items.length, 4);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -93,8 +93,8 @@ test('remove director', async function(assert) {
 
   assert.equal(currentPath(), 'program.programYear.index');
   var container = find('.programyear-overview').eq(0);
-  await click('.removable-list li:eq(0)', container);
-  var items = find('.removable-list li', container);
+  await click('.removable-directors li:eq(0)', container);
+  var items = find('.removable-directors li', container);
   assert.equal(items.length, 2);
   assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
   assert.equal(getElementText(items.eq(1)), getText('3 guy M. Mc3son'));
@@ -110,8 +110,8 @@ test('first director added is disabled #2770', async function(assert) {
     programYearId: 2
   });
   const overview = '.programyear-overview';
-  const directors = `${overview} .removable-list li`;
-  const search = `${overview} .live-search`;
+  const directors = `${overview} .removable-directors li`;
+  const search = `${overview} [data-test-user-search]`;
   const input = `${search} input`;
   const results = `${search} .results li`;
   const firstResult = `${results}:eq(1)`;

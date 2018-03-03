@@ -41,7 +41,7 @@ test('it renders', async function(assert) {
   this.render(hbs`{{school-competencies-expanded school=school expand=(action 'expand') collapse=(action 'expand')}}`);
 
   const title = '.title';
-  const domains = '.static-list > li';
+  const domains = '[data-test-domains] > li';
   const domainTitle = `${domains}:eq(0)`;
 
   await wait();

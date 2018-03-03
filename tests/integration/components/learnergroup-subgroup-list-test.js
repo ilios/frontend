@@ -210,6 +210,7 @@ test('add multiple new groups', async function(assert) {
   this.$(multiGroupCount).val(1).trigger('input');
   await this.$(done).click();
   await wait();
+  await wait();
 
   assert.equal(this.$(secondGroupTitle).text().trim(), 'group 2');
 

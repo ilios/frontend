@@ -28,50 +28,50 @@ test('it renders', function(assert) {
   const lastYear = currentYear + 5;
   const lastYearLabel = `${lastYear} - ${lastYear + 1}`;
 
-  assert.equal(this.$('.program label').text().trim(), 'Program:', 'program title is labeled correctly.');
-  assert.equal(this.$('.program .form-data').text().trim(), program.title, 'Program title is displayed.');
+  assert.equal(this.$('[data-test-program-title] label').text().trim(), 'Program:', 'program title is labeled correctly.');
+  assert.equal(this.$('[data-test-program-title] span').text().trim(), program.title, 'Program title is displayed.');
   assert.equal(
-    this.$('.academic-year label').text().trim(),
+    this.$('[data-test-academic-year] label').text().trim(),
     'Academic Year:',
     'Academic year input is labeled correctly.'
   );
-  assert.equal(this.$('.academic-year option').length, 11, 'Academic year dropdown has eleven options.');
+  assert.equal(this.$('[data-test-academic-year] option').length, 11, 'Academic year dropdown has eleven options.');
   assert.equal(
-    this.$('.academic-year option').filter(":selected").val(),
+    this.$('[data-test-academic-year] option').filter(":selected").val(),
     currentYear,
     'Current year is selected by default.'
   );
   assert.equal(
-    this.$('.academic-year option').filter(":selected").text().trim(),
+    this.$('[data-test-academic-year] option').filter(":selected").text().trim(),
     currentYearLabel,
     'Current year label is correct.'
   );
   assert.equal(
-    this.$('.academic-year option:eq(0)').val(),
+    this.$('[data-test-academic-year] option:eq(0)').val(),
     firstYear,
     'First year in dropdown is five years prior to current year.'
   );
   assert.equal(
-    this.$('.academic-year option:eq(0)').text().trim(),
+    this.$('[data-test-academic-year] option:eq(0)').text().trim(),
     firstYearLabel,
     'First year label is correct.'
   );
   assert.equal(
-    this.$('.academic-year option:eq(10)').val(),
+    this.$('[data-test-academic-year] option:eq(10)').val(),
     lastYear,
     'Last year in dropdown is five years ahead of current year.'
   );
   assert.equal(
-    this.$('.academic-year option:eq(10)').text().trim(),
+    this.$('[data-test-academic-year] option:eq(10)').text().trim(),
     lastYearLabel,
     'Last year label is correct.'
   );
-  assert.equal(this.$('.description textarea').length, 1, 'Description input is present.');
-  assert.equal(this.$('.description textarea').val(), '', 'Description input is initially empty.');
-  assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description input is labeled correctly.');
-  assert.equal(this.$('.name input').length, 1, 'Name input is present.');
-  assert.equal(this.$('.name input').val(), '', 'Name input is initially empty.');
-  assert.equal(this.$('.name label').text().trim(), 'Name:', 'Name input is labeled correctly.');
+  assert.equal(this.$('[data-test-description] textarea').length, 1, 'Description input is present.');
+  assert.equal(this.$('[data-test-description] textarea').val(), '', 'Description input is initially empty.');
+  assert.equal(this.$('[data-test-description] label').text().trim(), 'Description:', 'Description input is labeled correctly.');
+  assert.equal(this.$('[data-test-name] input').length, 1, 'Name input is present.');
+  assert.equal(this.$('[data-test-name] input').val(), '', 'Name input is initially empty.');
+  assert.equal(this.$('[data-test-name] label').text().trim(), 'Name:', 'Name input is labeled correctly.');
   assert.equal(this.$('button.done').length, 1, 'Done button is present.');
   assert.equal(this.$('button.done').text().trim(), 'Done', 'Done button is labeled correctly.');
   assert.equal(this.$('button.cancel').length, 1, 'Cancel button is present.');
@@ -104,9 +104,9 @@ test('save', function(assert) {
   });
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
-  this.$('.name input').val('new report').trigger('input');
-  this.$('.description textarea').val('lorem ipsum').trigger('input');
-  this.$('.academic-year option:eq(0)').prop('selected', true).change();
+  this.$('[data-test-name] input').val('new report').trigger('input');
+  this.$('[data-test-description] textarea').val('lorem ipsum').trigger('input');
+  this.$('[data-test-academic-year] option:eq(0)').prop('selected', true).change();
   this.$('button.done').click();
 });
 
@@ -131,9 +131,9 @@ test('pressing enter in name input field fires save action', function(assert){
   });
 
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
-  this.$('.name input').val('new report').trigger('input');
+  this.$('[data-test-name] input').val('new report').trigger('input');
   // https://github.com/DockYard/ember-one-way-controls/blob/master/tests/integration/components/one-way-input-test.js
-  this.$('.name input').trigger($.Event('keyup', { keyCode: 13 }));
+  this.$('[data-test-name] input').trigger($.Event('keyup', { keyCode: 13 }));
 });
 
 test('validation errors do not show up initially', function(assert) {
@@ -155,7 +155,7 @@ test('validation errors show up when saving with a too long report name', functi
   assert.expect(1);
   this.set('program', EmberObject.create());
   this.render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
-  this.$('.name input').val('0123456789'.repeat(7)).trigger('input');
+  this.$('[data-test-name] input').val('0123456789'.repeat(7)).trigger('input');
   this.$('button.done').click();
   assert.equal(this.$('.validation-error-message').length, 1);
 });

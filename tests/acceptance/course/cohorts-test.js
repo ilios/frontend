@@ -65,8 +65,8 @@ test('manage cohorts', async function(assert) {
   await visit(url);
   let container = find('.detail-cohorts');
   await click(find('.actions button', container));
-  assert.equal(find('.removable-list li', container).length, 1);
-  assert.equal(getElementText(find('.selectable-list ul li', container)), getText('school 0 | program 0 | cohort 1'));
+  assert.equal(find('.selected-cohorts li', container).length, 1);
+  assert.equal(getElementText(find('.selectable-cohorts li', container)), getText('school 0 | program 0 | cohort 1'));
 });
 
 test('save cohort chages', async function(assert) {
@@ -74,8 +74,8 @@ test('save cohort chages', async function(assert) {
   await visit(url);
   var container = find('.detail-cohorts');
   await click(find('.actions button', container));
-  await click(find('.removable-list li:eq(0)', container));
-  await click(find('.selectable-list ul li:eq(0)', container));
+  await click(find('.selected-cohorts li:eq(0)', container));
+  await click(find('.selectable-cohorts li:eq(0)', container));
   await click('button.bigadd', container);
 
   assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
@@ -88,8 +88,8 @@ test('cancel cohort changes', async function(assert) {
   await visit(url);
   var container = find('.detail-cohorts');
   await click(find('.actions button', container));
-  await click(find('.removable-list li:eq(0)', container));
-  await click(find('.selectable-list ul li:eq(0)', container));
+  await click(find('.selected-cohorts li:eq(0)', container));
+  await click(find('.selectable-cohorts li:eq(0)', container));
   await click('button.bigcancel', container);
   assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('school 0'));
   assert.equal(getElementText(find('tbody tr:eq(0) td:eq(1)', container)), getText('program 0'));
@@ -102,7 +102,7 @@ test('removing a cohort remove course objectives parents linked to that cohort',
   let parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
   assert.equal(parents.length, 2);
   await click('.detail-cohorts .actions button');
-  await click('.detail-cohorts .removable-list li:eq(0)');
+  await click('.detail-cohorts .selected-cohorts li:eq(0)');
   await click('.detail-cohorts button.bigadd');
   parents = find('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
   assert.equal(parents.length, 1);

@@ -35,6 +35,7 @@ export default Component.extend({
   store: service(),
   i18n: service(),
   classNames: ['user-search'],
+  'data-test-user-search': true,
   showMoreInputPrompt: false,
   searchReturned: false,
   currentlyActiveUsers: null,

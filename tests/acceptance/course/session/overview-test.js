@@ -71,7 +71,7 @@ test('check remove ilm', async function(assert) {
   var dueDate = moment(ilmSession.dueDate).format('L');
   assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
   assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
-  await click(find('.independentlearningcontrol .switch-handle', container));
+  await click(find('.independentlearningcontrol .toggle-yesno', container));
   assert.equal(find('.sessionilmhours', container).length, 0);
   assert.equal(find('.sessionilmduedate', container).length, 0);
 });
@@ -90,7 +90,7 @@ test('check add ilm', async function(assert) {
 
   assert.equal(currentPath(), 'course.session.index');
   var container = find('.session-overview');
-  await click(find('.independentlearningcontrol .switch-handle', container));
+  await click(find('.independentlearningcontrol .toggle-yesno', container));
   assert.equal(find('.sessionilmhours', container).length, 1);
   assert.equal(find('.sessionilmduedate', container).length, 1);
   assert.equal(find('.sessionassociatedgroups', container).length, 0);
@@ -218,10 +218,10 @@ test('session attributes are shown by school config', async assert => {
     configurationIds: [1, 2, 3, 4]
   });
   const sessionOverview = '.session-overview';
-  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
-  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
-  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
-  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
   await visit(url);
   assert.equal(find(supplementalToggle).length, 1, 'control hidden');
@@ -263,10 +263,10 @@ test('session attributes are hidden by school config', async assert => {
     configurationIds: [1, 2, 3, 4]
   });
   const sessionOverview = '.session-overview';
-  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
-  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
-  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
-  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
   await visit(url);
   assert.equal(find(supplementalToggle).length, 0, 'control hidden');
@@ -286,10 +286,10 @@ test('session attributes are hidden when there is no school config', async asser
   });
 
   const sessionOverview = '.session-overview';
-  const supplementalToggle = `${sessionOverview} .sessionsupplemental .switch`;
-  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .switch`;
-  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .switch`;
-  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .switch`;
+  const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
+  const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
+  const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
+  const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
   await visit(url);
   assert.equal(find(supplementalToggle).length, 0, 'control hidden');
@@ -316,7 +316,7 @@ let testAttributeToggle = async function(assert, schoolVariableName, domclass){
     configurationIds: [1]
   });
   const sessionOverview = '.session-overview';
-  const toggle = `${sessionOverview} .${domclass} .switch`;
+  const toggle = `${sessionOverview} .${domclass} .toggle-yesno`;
   const toggleValue = `${toggle} input`;
 
   await visit(url);

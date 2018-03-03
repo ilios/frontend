@@ -18,7 +18,7 @@ module('Acceptance | assign students', {
 test('visiting /admin/assignstudents', async function(assert) {
   await visit('/admin/assignstudents');
 
-  assert.equal(getElementText('#school-selection'), getText('school 0'));
+  assert.equal(getElementText('.schoolsfilter'), getText('school 0'));
 
   assert.equal(currentURL(), '/admin/assignstudents');
 });

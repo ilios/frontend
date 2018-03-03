@@ -1,5 +1,5 @@
 {{#if domains.length}}
-  <ul>
+  <ul data-test-domains>
     {{#each (sort-by 'title' domains) as |domain|}}
       <li>
         {{domain.title}}
