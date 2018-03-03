@@ -41,6 +41,7 @@
 }
 
 @mixin ilios-form-item () {
+  @include ilios-form-error;
   display: flex;
   flex-direction: column;
   min-height: 4rem;
@@ -89,4 +90,17 @@
 
 @mixin ilios-label () {
   font-weight: bold;
+}
+
+@mixin ilios-form-error {
+  .validation-error-message {
+    color: $ilios-red;
+    font-size: .8rem;
+  }
+
+  input {
+    &.has-error {
+      border-color: $ilios-red;
+    }
+  }
 }

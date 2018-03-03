@@ -9,6 +9,7 @@
   }
 
   .editor {
+    @include ilios-form-error;
     align-items: center;
     display: flex;
 
