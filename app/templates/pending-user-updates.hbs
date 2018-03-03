@@ -53,7 +53,7 @@
                 <td></td>
                 <td class='text-left' colspan="2">
                   {{#if (is-in updatesBeingSaved update)}}
-                    {{fa-icon 'spinner' spin=true}}
+                    {{loading-spinner}}
                   {{else}}
                     {{#if (eq update.type 'emailMismatch')}}
                       <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>

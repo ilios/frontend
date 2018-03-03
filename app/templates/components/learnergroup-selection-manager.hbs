@@ -11,7 +11,7 @@
 <div class='available-learner-groups'>
   <h4>
     {{t 'general.availableLearnerGroups'}}
-    {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{fa-icon 'spinner' spin=true}}{{/unless}}
+    {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{loading-spinner}}{{/unless}}
   </h4>
   {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
   {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
@@ -24,7 +24,7 @@
           {{/each}}
         </ul>
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </div>
   {{/each}}

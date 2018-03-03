@@ -15,7 +15,7 @@
 <div class='detail-learnergroups-content'>
   {{#if isManaging}}
     {{#liquid-if loadLearnerGroups.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       {{learnergroup-selection-manager
         learnerGroups=learnerGroups

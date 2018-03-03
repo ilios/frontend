@@ -51,7 +51,7 @@
 {{else}}
   {{! template-lint-disable unused-block-params }}
   {{#each (repeat session.objectives.length) as |empty|}}
-    <div>{{fa-icon 'spinner' spin = true}}</div>
+    <div>{{loading-spinner}}</div>
   {{/each}}
 {{/if}}
 

@@ -15,7 +15,7 @@
       </ul>
     </div>
   {{else}}
-    <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
+    {{loading-spinner class='instructorgroup-loading'}}
   {{/if}}
 
   {{user-search
@@ -34,7 +34,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
+      {{loading-spinner class='instructorgroup-loading'}}
     {{/if}}
   </div>
 </div>

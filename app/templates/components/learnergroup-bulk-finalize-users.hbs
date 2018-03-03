@@ -42,7 +42,7 @@
 
     <button {{action (perform save)}} disabled={{save.isRunning}} data-test-finalize-users-submit>
       {{#if save.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.save'}}
       {{/if}}

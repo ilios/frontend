@@ -162,7 +162,7 @@
     <div class='buttons'>
       <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
         {{#if isSaving}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{else}}
           {{t 'general.done'}}
         {{/if}}

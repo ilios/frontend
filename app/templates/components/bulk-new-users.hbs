@@ -46,7 +46,7 @@
     <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}}>
   </div>
   {{#if parseFile.isRunning}}
-    <div class='file-is-loading'>{{fa-icon 'spinner' spin=true}}</div>
+    <div class='file-is-loading'>{{loading-spinner}}</div>
   {{else if (gte proposedUsers.length 1)}}
     <div  class='proposed-new-users'>
       <table>
@@ -101,7 +101,7 @@
         {{/each}}
       </select>
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{/if}}
   </div>
   {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
@@ -116,7 +116,7 @@
           {{/each}}
         </select>
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </div>
   {{/if}}
@@ -124,7 +124,7 @@
   <div class='buttons'>
     <button class='done text' {{action (perform save)}} disabled={{or (lt selectedUsers.length 1) isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
       {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

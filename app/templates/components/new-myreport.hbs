@@ -109,7 +109,7 @@
             {{/each}}
           </select>
         {{else}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{/if}}
       {{/if}}
     </p>
@@ -117,7 +117,7 @@
   <div class="input-buttons">
     <button class='done text' onclick={{perform save}} data-test-report-save>
       {{#if save.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.save'}}
       {{/if}}

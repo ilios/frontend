@@ -73,7 +73,7 @@
         <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'L'}}</td>
         <td class='text-left' colspan=3>
           {{#if course.isSaving}}
-            {{fa-icon 'spinner' spin=true}}
+            {{loading-spinner}}
           {{else}}
             {{publication-status item=course showIcon=false}}
             {{#if course.locked}}

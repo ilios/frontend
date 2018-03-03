@@ -24,7 +24,7 @@
   <div class='item year-select'>
     <label>{{t 'general.year'}}:</label>
     {{#if loadUnavailableYears.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
         {{#each years as |year|}}
@@ -87,7 +87,7 @@
   <div class='buttons'>
     <button disabled={{if (or isSaving (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class='done text' {{action (perform save)}}>
       {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

@@ -89,7 +89,7 @@
           {{/each}}
         </select>
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </div>
 
@@ -105,7 +105,7 @@
             {{/each}}
           </select>
         {{else}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{/if}}
       </div>
     {{/if}}
@@ -113,7 +113,7 @@
     <div class="buttons">
       <button class='done text' {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
         {{#if save.isRunning}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{else}}
           {{t 'general.done'}}
         {{/if}}
@@ -132,7 +132,7 @@
     <button type='search' {{action (perform findUsersInDirectory) searchTerms}}>{{t 'general.searchDirectory'}}</button>
   </div>
   {{#if isSearching}}
-    {{fa-icon 'spinner' spin=true}} {{t 'general.currentlySearchingPrompt'}}
+    {{loading-spinner}} {{t 'general.currentlySearchingPrompt'}}
   {{else if searchResultsReturned}}
     {{#if searchResults.length}}
       <section class='new-directory-user-search-results'>

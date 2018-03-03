@@ -240,7 +240,7 @@
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}
-      <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
+      <div class="block sessions">{{loading-spinner}}</div>
     {{else}}
       {{#if (get (await linkableSessions) 'length')}}
         {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
@@ -271,6 +271,6 @@
       {{/if}}
     {{/unless}}
   {{else}}
-    <div class="block">{{fa-icon 'spinner' spin=true}}</div>
+    <div class="block">{{loading-spinner}}</div>
   {{/unless}}
 </div>

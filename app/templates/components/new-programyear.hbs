@@ -15,7 +15,7 @@
   <div class='buttons'>
     <button class='done text' {{action (perform saveNewYear)}}>
       {{#if saveNewYear.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

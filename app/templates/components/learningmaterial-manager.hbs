@@ -1,5 +1,5 @@
 {{#if setup.isRunning}}
-  <span class='loading'>{{fa-icon 'spinner' spin=true}}</span>
+  {{loading-spinner class='loading'}}
 {{else}}
   <div class="item">
     <label>{{t 'general.displayName'}}:</label>
@@ -180,7 +180,7 @@
   <div class='buttons'>
     <button class='done' {{action (perform save)}} disabled={{save.isRunning}}>
       {{#if save.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

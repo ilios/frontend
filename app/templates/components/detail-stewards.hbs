@@ -18,7 +18,7 @@
       <button class='manage' onclick={{perform manage}}>
         {{t 'general.stewardsManageTitle'}}
         {{#if manage.isRunning}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{/if}}
       </button>
     {{/if}}
@@ -50,7 +50,7 @@
           <li>{{t 'general.none'}}</li>
         {{/each}}
       {{else}}
-        <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+        {{loading-spinner tagName='div' class='loading'}}
       {{/if}}
     </ul>
   {{/if}}

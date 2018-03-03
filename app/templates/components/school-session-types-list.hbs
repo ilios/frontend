@@ -38,7 +38,7 @@
           {{fa-icon 'edit' class='edit clickable' click=(action manageSessionType sessionType.id)}}
           {{#if (eq sessionType.sessionCount 0)}}
             {{#if (contains sessionType.id deletedSessionTypes)}}
-              {{fa-icon 'spinner' spin=true}}
+              {{loading-spinner}}
             {{else}}
               {{fa-icon 'trash' class=(if deleteSessionType.isRunning 'inactive' 'remove clickable') click=(perform deleteSessionType sessionType)}}
             {{/if}}

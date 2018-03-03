@@ -8,7 +8,7 @@
           {{#if finishedBuildingReport}}
             {{fa-icon 'check'}}
           {{else if downloadReport.isRunning}}
-            {{fa-icon 'spinner' spin=true}}
+            {{loading-spinner}}
           {{else}}
             {{fa-icon 'download'}}
           {{/if}}
@@ -62,7 +62,7 @@
           {{t 'general.none'}}
         {{/if}}
       {{else}}
-        <h1>{{fa-icon 'spinner' spin=true}}</h1>
+        {{loading-spinner tagName='h1'}}
       {{/if}}
     </div>
   {{else}}
@@ -88,7 +88,7 @@
           {{t 'general.none'}}
         {{/if}}
       {{else}}
-        <h1>{{fa-icon 'spinner' spin=true}}</h1>
+        {{loading-spinner tagName='h1'}}
       {{/if}}
     </div>
   {{/liquid-if}}

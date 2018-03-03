@@ -2,7 +2,7 @@
   {{t 'general.competencies'}} ({{get (await domains) 'length'}}/{{get (await childCompetencies) 'length'}})
 </div>
 {{#if competencies.isPending}}
-  <h3>{{fa-icon 'spinner' spin=true}}</h3>
+  {{loading-spinner tagName='h3'}}
 {{/if}}
 {{#unless (is-pending school.competencies)}}
   <div class='content'>

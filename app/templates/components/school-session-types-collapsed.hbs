@@ -2,7 +2,7 @@
   {{t 'general.sessionTypes'}}
 </div>
 {{#if (is-pending sessionTyepes)}}
-  <h3>{{fa-icon 'spinner' spin=true}}</h3>
+  {{loading-spinner tagName='h3'}}
 {{else}}
   <div class='content'>
     <table class='condensed'>

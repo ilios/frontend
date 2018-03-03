@@ -162,7 +162,7 @@
     <div class='buttons'>
       <button class='done text' {{action (perform validateThenSaveOffering)}} disabled={{or saveOffering.isRunning}}>
         {{#if saveOffering.isRunning}}
-          {{fa-icon 'spinner' spin=true}}
+          {{loading-spinner}}
         {{else}}
           {{t 'general.done'}}
         {{/if}}

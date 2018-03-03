@@ -18,7 +18,7 @@
   <div class="buttons">
     <button disabled={{or isSaving (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}} class='done text' {{action 'save'}}>
       {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

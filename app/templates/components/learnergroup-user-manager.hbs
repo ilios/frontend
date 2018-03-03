@@ -93,7 +93,7 @@
                 </td>
                 <td>
                   {{#if (contains user.content usersBeingMoved)}}
-                    {{fa-icon 'spinner' spin=true}}
+                    {{loading-spinner}}
                   {{else if user.enabled}}
                     {{#if (eq selectedUsers.length 0)}}
                       {{fa-icon
@@ -150,7 +150,7 @@
                   </td>
                   <td>
                     {{#if (contains user.content usersBeingMoved)}}
-                      {{fa-icon 'spinner' spin=true}}
+                      {{loading-spinner}}
                     {{else if user.enabled}}
                       {{#if (eq selectedUsers.length 0)}}
                         {{fa-icon
