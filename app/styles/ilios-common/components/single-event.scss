@@ -1,5 +1,10 @@
 .single-event {
+  display: grid;
   margin-left: 1em;
+
+  @include for-laptop-and-up {
+    grid-template-columns: 1fr 1fr;
+  }
 
   h2 {
     @include ilios-heading-h4;
@@ -9,8 +14,6 @@
   fieldset {
     border: 0;
     border-left: 3px solid $grey;
-    float: left;
-    width: 45%;
 
     caption {
       color: $ilios-blue;
@@ -19,6 +22,8 @@
   }
 
   .single-event-summary {
+    grid-column: 1 / -1;
+
     h1 {
       font-weight: normal;
 
