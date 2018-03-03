@@ -2,7 +2,7 @@
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
-<div class='application-wrapper'>
+<div class='application-wrapper {{if (await hasElevatedRole) "show-navigation"}}'>
   {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
   {{#if session.isAuthenticated}}
     {{ilios-navigation}}

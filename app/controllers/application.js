@@ -44,6 +44,17 @@ export default Controller.extend({
 
   }),
 
+  hasElevatedRole: computed('currentUser.model.roles.[]', async function () {
+    const currentUser = this.get('currentUser');
+    const user = await currentUser.get('model');
+    if(!user) {
+      return false;
+    }
+    const roles = await user.get('roles');
+    const ids = roles.mapBy('id');
+    return ids.includes('1') || ids.includes('2') || ids.includes('3');
+  }),
+
   showErrorDisplay: null,
   errors: null,
 

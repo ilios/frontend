@@ -1,8 +1,8 @@
 .loading-bar {
-  height: 10px;
-  margin-bottom: .25rem;
+  background-color: $ilios-orange;
+  border-bottom: 1px solid darken($ilios-orange, 10);
+  height: 100%;
   text-align: left;
-  width: 100%;
 
   .bar {
     background-color: $ilios-blue;
@@ -13,7 +13,7 @@
 
     display: block;
     height: 100%;
-    opacity: .75;
+    opacity: 1;
     transition: width .25s linear;
 
     &[value='0'] {

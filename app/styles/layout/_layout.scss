@@ -3,29 +3,48 @@
   grid-template-areas:
   'header'
   'loading'
-  'nav'
   'main'
   'footer';
-  grid-template-rows: 60px 10px auto 1fr 20px;
+  grid-template-rows: 60px 10px 1fr 20px;
   height: 100vh;
   width: 100vw;
 
-  @include for-laptop-and-up {
+  &.show-navigation {
     grid-template-areas:
-    'header  header'
-    'nav  loading'
-    'nav main'
-    'footer footer';
-    grid-template-columns: 200px auto;
-    grid-template-rows: minmax(60px, auto) 10px 1fr auto;
-  }
-  @include for-desktop-and-up {
-    grid-template-areas:
-    'header header  header'
-    'nav loading  loading'
-    'nav    main main'
-    'footer footer  footer';
-    grid-template-columns: 240px 1fr 1fr;
+    'header'
+    'loading'
+    'nav'
+    'main'
+    'footer';
+    grid-template-rows: 60px 10px auto 1fr 20px;
+
+    @include for-laptop-and-up {
+      grid-template-areas:
+      'header  header'
+      'loading  loading'
+      'nav main'
+      'footer footer';
+      grid-template-columns: 200px auto;
+      grid-template-rows: minmax(60px, auto) 10px 1fr auto;
+    }
+
+    @include for-desktop-and-up {
+      grid-template-areas:
+      'header header  header'
+      'nav loading  loading'
+      'nav    main main'
+      'footer footer  footer';
+      grid-template-columns: 240px 1fr 1fr;
+    }
+
+    & > nav {
+      grid-area: nav;
+    }
+
+    & > main {
+      margin: 0 5px;
+    }
+
   }
 
   & > header {
@@ -36,14 +55,10 @@
     grid-area: loading;
   }
 
-  & > nav {
-    grid-area: nav;
-  }
-
   & > main {
     background-color: $white;
     grid-area: main;
-    margin: 0 5px;
+    margin: 5px;
   }
 
   & > footer {
