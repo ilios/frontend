@@ -28,7 +28,10 @@
 
   .clear-dates {
     grid-column: 1 / -1;
-    height: 4rem;
+
+    button {
+      max-width: 20rem;
+    }
   }
 
   .buttons {
