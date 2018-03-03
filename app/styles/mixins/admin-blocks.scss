@@ -41,18 +41,6 @@
 
   .large-component {
     grid-column: 1 / -1;
-
-    .header {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1rem;
-      text-align: center;
-
-      @include for-laptop-and-up {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
   }
 
   .has-saved {

@@ -79,6 +79,12 @@
     padding-right: 1rem;
     text-align: right;
   }
+
+  @include for-phone-only {
+    & > * {
+      margin-top: .25em;
+    }
+  }
 }
 
 @mixin main-list-saved-new () {

@@ -43,6 +43,10 @@
 
   & > * {
     margin-right: .5rem;
+
+    @include for-phone-only {
+      margin-top: .25em;
+    }
   }
 
   .bigadd {

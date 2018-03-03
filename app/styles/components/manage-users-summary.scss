@@ -2,9 +2,31 @@
   margin-bottom: 3rem;
   min-height: 6rem;
 
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    @include for-laptop-and-up {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .actions {
+      button {
+        margin-top: .5rem;
+        @include for-laptop-and-up {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
   .user-search {
-    clear: both;
     margin: auto;
+    margin-top: .5rem;
     position: relative;
     width: 90%;
 
