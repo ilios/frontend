@@ -1,4 +1,7 @@
 .new-curriculum-inventory-sequence-block {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
 
   .form {
     @include ilios-form;

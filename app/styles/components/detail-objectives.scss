@@ -17,15 +17,21 @@
     @include detail-container-content;
   }
 
-  .new-objective-form {
-    @include ilios-form;
+  .new-objective {
+    border: 1px solid $header-grey;
+    margin: .5rem;
+    padding: 1rem;
 
-    .items {
-      @include ilios-form-item;
-    }
+    .new-objective-form {
+      @include ilios-form;
 
-    .buttons {
-      @include ilios-form-buttons;
+      .items {
+        @include ilios-form-item;
+      }
+
+      .buttons {
+        @include ilios-form-buttons;
+      }
     }
   }
 }

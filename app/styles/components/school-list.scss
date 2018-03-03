@@ -22,6 +22,9 @@
   }
 
   .new {
+    border: 1px solid $header-grey;
+    margin: .5rem;
+    padding: 1rem;
 
     .new-result-title {
       @include ilios-heading-h4;

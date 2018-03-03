@@ -1,4 +1,8 @@
 .new-user {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
   .new-user-form {
     @include ilios-form;
 

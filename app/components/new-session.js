@@ -23,7 +23,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  classNames: ['new-session', 'resultslist-new', 'form-container'],
+  classNames: ['new-session'],
 
   sessionTypes: null,
 

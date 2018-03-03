@@ -1,9 +1,22 @@
 .new-learnergroup {
   border: 1px solid $header-grey;
   margin: .5rem;
+  padding: 1rem;
 
   h4 {
     margin-bottom: 1rem;
+  }
+
+  .multi-mode-chooser {
+    align-items: baseline;
+    display: flex;
+    margin-left: .5rem;
+
+
+    label {
+      @include ilios-label;
+      margin-right: .5rem;
+    }
   }
 
   .form {

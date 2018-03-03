@@ -1,7 +1,7 @@
 .new-session {
-  @include detail-container($ilios-orange);
-  margin: auto;
-  width: 80%;
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
 
   .title {
     @include detail-container-title;
