@@ -10,12 +10,17 @@
   }
 
   .course {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
     grid-column: 1 / -1;
 
+    span {
+      display: flex;
+    }
+
     .details {
-      display: block;
       font-size: smaller;
-      padding-bottom: 1rem;
     }
   }
 
