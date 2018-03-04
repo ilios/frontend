@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['detail-block'],
+  classNames: ['course-director-manager'],
   course: null,
   directors: null,
   saveChanges: task(function * () {

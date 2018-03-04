@@ -162,7 +162,7 @@
         }}
       {{else}}
         {{#if (get (await course.directors) 'length')}}
-          <ul class="tag-list">
+          <ul class="directors">
             {{#each (sort-by 'lastName' (await course.directors)) as |director|}}
               <li>{{director.fullName}}</li>
             {{/each}}
