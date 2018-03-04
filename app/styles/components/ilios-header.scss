@@ -1,21 +1,34 @@
 .ilios-header {
-  $header-height: 60px;
-
   align-items: baseline;
   background-color: $ilios-orange;
-  display: flex;
-  height: $header-height;
-  justify-content: space-between;
-  width: 100%;
-  z-index: 100;
+  display: grid;
+  grid-template-areas:
+  'tools tools'
+  'logo heading';
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1.5rem 60px;
+
+  @include for-laptop-and-up {
+    grid-template-areas:
+    'logo heading tools';
+    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-rows: 60px;
+  }
+
+  @include for-laptop-and-up {
+    grid-template-columns: 200px 4fr 2fr;
+  }
+
+  @include for-desktop-and-up {
+    grid-template-columns: 240px 4fr 2fr;
+  }
 
   @media print {
     display: none;
   }
 
   .logo {
-    max-height: $header-height;
-    padding-left: 1rem;
+    grid-area: logo;
 
     .image {
       background-image: url('images/ilios-logo.svg');
@@ -28,25 +41,30 @@
 
   h1 {
     color: $white;
-    font-size: .7rem;
-
-    @include for-tablet-and-up {
-      font-size: 1.5rem;
-    }
+    font-size: 2.5vmax;
+    font-weight: normal;
+    grid-area: heading;
   }
 
   // Elements on the far right
   .tools {
     background: transparent;
     display: flex;
-    padding-left: .5rem;
-    padding-right: 1rem;
+    grid-area: tools;
+    justify-self: end;
 
     .user,
     .locales {
       color: $ilios-orange;
       font-weight: 800;
-      padding: .4rem .5rem;
+
+      span {
+        display: none;
+
+        @include for-tablet-and-up {
+          display: inline;
+        }
+      }
 
       .button {
         background-color: transparent;
@@ -54,24 +72,16 @@
         border-radius: $base-border-radius;
         color: $white;
         font-weight: normal;
-        padding: .5rem 2rem .5rem 1rem;
-        vertical-align: middle;
-
-        span {
-          display: none;
-
-          @include for-tablet-and-up {
-            display: inline;
-          }
-        }
 
         &:hover {
           background-color: $white;
           color: $ilios-orange;
         }
-
-
       }
+    }
+
+    .user {
+      margin-left: 1rem;
     }
   }
 

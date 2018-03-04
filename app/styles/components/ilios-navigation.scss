@@ -1,5 +1,6 @@
 .ilios-navigation {
   background-color: $background-grey;
+  border-bottom: 1px solid $grey;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -31,7 +32,10 @@
 
     .text {
       display: none;
-      font-size: .8rem;
+
+      @include for-laptop-and-up {
+        font-size: .9rem;
+      }
     }
 
     &.expand-navigation li {

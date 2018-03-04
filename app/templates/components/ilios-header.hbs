@@ -1,8 +1,8 @@
-{{#link-to "dashboard" classNames='logo'}}
+{{#link-to "dashboard" classNames='logo' title=(t 'general.dashboard')}}
+  <h1 class='visually-hidden'>
+    {{t 'general.ilios'}}
+  </h1>
   <span class='image'></span>
-  <span class='visually-hidden'>
-    {{t 'general.dashboard'}}
-  </span>
 {{/link-to}}
 <h1>{{title}}</h1>
 <div class="tools">
@@ -16,9 +16,9 @@
   {{#if session.isAuthenticated}}
     <div class='user'>
       {{#action-menu title=(get (await currentUser.model) 'fullName') icon='user' class='right-edge'}}
-        {{#link-to 'myprofile'}}<li>{{t 'general.myProfile'}}</li>{{/link-to}}
-        {{#link-to 'mymaterials'}}<li>{{t 'general.myMaterials'}}</li>{{/link-to}}
-        {{#link-to 'logout'}}<li>{{t 'general.logout'}}</li>{{/link-to}}
+        {{#link-to 'myprofile' title=(t 'general.myProfile')}}<li>{{t 'general.myProfile'}}</li>{{/link-to}}
+        {{#link-to 'mymaterials' title=(t 'general.myProfile')}}<li>{{t 'general.myMaterials'}}</li>{{/link-to}}
+        {{#link-to 'logout' title=(t 'general.logout')}}<li>{{t 'general.logout'}}</li>{{/link-to}}
       {{/action-menu}}
     </div>
   {{/if}}

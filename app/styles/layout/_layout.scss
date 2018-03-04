@@ -5,27 +5,31 @@
   'loading'
   'main'
   'footer';
-  grid-template-rows: 60px 10px 1fr 20px;
+  grid-template-rows: auto 10px 1fr 20px;
   height: 100vh;
   width: 100vw;
 
   &.show-navigation {
     grid-template-areas:
     'header'
-    'loading'
     'nav'
+    'loading'
     'main'
     'footer';
-    grid-template-rows: 60px 10px auto 1fr 20px;
+    grid-template-rows: auto auto 10px 1fr 20px;
+
+    @include for-tablet-and-up {
+      grid-template-rows: auto auto 10px 1fr 20px;
+    }
 
     @include for-laptop-and-up {
       grid-template-areas:
       'header  header'
-      'loading  loading'
+      'nav  loading'
       'nav main'
       'footer footer';
-      grid-template-columns: 200px auto;
-      grid-template-rows: minmax(60px, auto) 10px 1fr auto;
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 10px 1fr 20px;
     }
 
     @include for-desktop-and-up {
@@ -34,11 +38,15 @@
       'nav loading  loading'
       'nav    main main'
       'footer footer  footer';
-      grid-template-columns: 240px 1fr 1fr;
+      grid-template-columns: 260px 1fr 1fr;
     }
 
     & > nav {
       grid-area: nav;
+      @include for-laptop-and-up {
+        padding-top: 10px;
+        z-index: 5;
+      }
     }
 
     & > main {
