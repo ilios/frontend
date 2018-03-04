@@ -7,7 +7,6 @@ import { task } from 'ember-concurrency';
 const { oneWay } = computed;
 
 export default Component.extend({
-  classNames: ['detail-block'],
   learnerGroup: null,
   init(){
     this._super(...arguments);
