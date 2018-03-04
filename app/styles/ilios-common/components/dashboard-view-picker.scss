@@ -1,10 +1,15 @@
 .dashboard-view-picker {
   background-color: $header-grey;
   border-bottom: 1px solid $ilios-blue;
+  font-size: 3vw;
 
   margin: 0;
   padding: .5em 0;
   width: 100%;
+
+  @include for-tablet-and-up {
+    font-size: 1rem;
+  }
 
   ul {
     display: flex;
@@ -24,6 +29,7 @@
 
   button {
     @include ilios-button;
+    padding: .25rem .5rem;
 
     &.active {
       background-color: $ilios-green;
