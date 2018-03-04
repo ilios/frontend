@@ -1,8 +1,9 @@
 @mixin ilios-form () {
   align-items: start;
   display: grid;
-  grid-gap: .5rem 1rem;
+  grid-gap: .25rem 1rem;
   grid-template-columns: 1fr;
+  margin-bottom: 1rem;
   padding: .5rem 1rem .5rem .5rem;
 
   @include for-laptop-and-up {
@@ -54,8 +55,8 @@
 
 @mixin ilios-form-buttons () {
   grid-column: 1 / -1;
-  margin-top: 2rem;
-  padding: 1rem 0;
+  margin-top: .5rem;
+  padding: 0;
 
   button {
     background-color: $white;
