@@ -1,9 +1,12 @@
 .course-loading {
-  width: 95%;
-
   .box {
     @include loading-box;
     animation-duration: 4s;
     height: 25rem;
+
+    div {
+      border-bottom: 1px solid $header-grey;
+      height: 3rem;
+    }
   }
 }
