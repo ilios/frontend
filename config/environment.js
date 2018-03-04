@@ -28,8 +28,8 @@ module.exports = function (environment) {
       'manifest-src': ["'self'"],
     },
     flashMessageDefaults: {
-      timeout: 2000,
-      extendedTimeout: 3000,
+      timeout: 3000,
+      extendedTimeout: 1000,
       types: [ 'success', 'warning', 'info', 'alert' ]
     },
     'ember-simple-auth': {

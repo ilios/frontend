@@ -1,12 +1,17 @@
 .flash-messages {
-  @include position(fixed, 0 0 null 0);
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 500;
 
   @mixin flash($color) {
     background-color: $color;
     color: $white;
     display: block;
-    opacity: .75;
+    opacity: 1;
     padding: .5rem;
     text-align: center;
     transition: all 2s linear;
@@ -42,16 +47,7 @@
     @include flash($alert-color);
   }
 
-  .alert:first-of-type {
-    margin-top: 60px;
-  }
-
   .alert:last-of-type {
     @include border-bottom-radius(5px);
-    margin-bottom: .5rem;
-  }
-
-  .hidden {
-    display: none;
   }
 }
