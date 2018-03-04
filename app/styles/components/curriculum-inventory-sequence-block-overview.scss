@@ -29,8 +29,13 @@
   }
 
   .description {
+    align-items: flex-start;
     grid-column: 1 / -1;
     margin-bottom: 1rem;
+
+    textarea {
+      @include ilios-textarea;
+    }
   }
 
   .duration {
