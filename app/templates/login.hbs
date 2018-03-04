@@ -6,27 +6,19 @@
     {{else}}
       <div class='error'>{{error.message}}</div>
     {{/each}}
-    <form id='user-login-form' {{action 'authenticate' on='submit'}}>
-      <div class='form-container'>
-        <div class="detail-content">
-          <label class="form-col form-col-6 multi-row">
-            <div class="form-label">{{t 'general.username'}}:</div>
-            <div class="form-data">
-              {{input value=identification elementId='user-login-username' autocorrect="off" autocapitalize="off"}}
-            </div>
-          </label>
-          <br>
-          <label class="form-col form-col-6 multi-row">
-            <div class="form-label">{{t 'general.password'}}:</div>
-            <div class="form-data">
-              {{input type='password' value=password elementId='user-login-password'}}
-            </div>
-          </label>
+    <form {{action 'authenticate' on='submit'}}>
+      <div class="item">
+        <label>{{t 'general.username'}}:</label>
+        {{input value=identification elementId='user-login-username' autocorrect="off" autocapitalize="off"}}
+      </div>
 
-          <div class="form-col-6 form-data-submit">
-            <button id='user-login-submit' type='submit' class='done text'>{{t 'general.login'}}</button>
-          </div>
-        </div>
+      <div class="item">
+        <label>{{t 'general.password'}}:</label>
+        {{input type='password' value=password elementId='user-login-password'}}
+      </div>
+
+      <div class="buttons">
+        <button type='submit' class='done text'>{{t 'general.login'}}</button>
       </div>
     </form>
   {{else}}

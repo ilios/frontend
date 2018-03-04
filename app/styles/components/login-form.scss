@@ -1,3 +1,32 @@
 .login-form {
-  margin-top: 60px;
+  margin: .5rem;
+  padding: 1rem;
+  width: 90%;
+
+  @include for-tablet-and-up {
+    width: 60%;
+  }
+
+  @include for-laptop-and-up {
+    width: 40%;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  form {
+    @include ilios-form;
+
+    .item {
+      @include ilios-form-item;
+      flex-direction: column;
+      grid-column: 1 / -1;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+
 }
