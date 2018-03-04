@@ -24,6 +24,18 @@
     display: grid;
     font-weight: bold;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 42px;
+
+    div {
+      background-color: $text-blue;
+      border-right: 1px solid $white;
+      color: $white;
+      overflow: hidden;
+      padding: .5rem .25rem;
+      white-space: nowrap;
+
+      @include for-tablet-and-up {
+        padding: .5rem;
+      }
+    }
   }
 }
