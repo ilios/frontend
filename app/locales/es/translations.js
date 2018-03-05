@@ -595,6 +595,7 @@
     'notANumber': '{{description}} no es un número',
     'notAnInteger': '{{description}} debe ser un numero entero',
     'odd': '{{description}} debe ser número impar',
+    'onOrAfter': '{{description}} debe estar en o después de {{onOrAfter}}',
     'onOrBefore': '{{description}} debe estar en o antes de {{onOrBefore}}',
     'otherThan': '{{description}} Debe ser otra cosa que {{value}}',
     'phone': '{{description}} debe ser un número de teléfono válido',
