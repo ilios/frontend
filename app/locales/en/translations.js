@@ -595,6 +595,7 @@ export default {
     'notANumber': '{{description}} must be a number',
     'notAnInteger': '{{description}} must be an integer',
     'odd': '{{description}} must be odd',
+    'onOrAfter': '{{description}} must be on or after {{onOrAfter}}',
     'onOrBefore': '{{description}} must be on or before {{onOrBefore}}',
     'otherThan': '{{description}} must be other than {{value}}',
     'phone': '{{description}} must be a valid phone number',
