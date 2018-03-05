@@ -1,7 +1,8 @@
 .school-manager {
+  margin-left: 1rem;
 
   .backtolink {
-    margin: .5rem;
+    margin: .5rem 0;
   }
 
   .school-overview {
@@ -10,9 +11,9 @@
     h2 {
       @include ilios-heading-h2;
     }
+  }
 
-    .school-overview-content {
-      @include ilios-overview-content;
-    }
+  .school-manager-content {
+    margin-left: .5rem;
   }
 }

@@ -6,8 +6,7 @@
 }
 
 @mixin detail-container-title-style () {
-  @include ilios-heading-h4;
-  font-weight: bold;
+  @include ilios-heading-h5;
 
   &.collapsible {
     &::after {
