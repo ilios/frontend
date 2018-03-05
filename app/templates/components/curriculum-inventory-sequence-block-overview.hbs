@@ -5,7 +5,7 @@
       <span>
         <label>{{t 'general.course'}}:</label>
         {{#if isFinalized}}
-          <span>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
+          <span data-test-course-title>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
         {{else}}
           {{#editable-field
             value=course.title
@@ -25,7 +25,7 @@
         {{/if}}
       </span>
       {{#if course}}
-        <span class="details">
+        <span class="details" data-test-course-details>
           {{t 'general.level'}}: {{course.level}},
           {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
           {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}

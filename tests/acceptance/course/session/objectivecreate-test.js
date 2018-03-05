@@ -37,9 +37,9 @@ test('save new objective', async function(assert) {
   let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
   assert.equal(objectiveRows.length, fixtures.session.objectives.length, 'correct number ob initial objectives');
   await click('.detail-objectives .detail-objectives-actions button');
-  find('.detail-objectives .newobjective .fr-box').froalaEditor('html.set', newObjectiveTitle);
-  find('.detail-objectives .newobjective .fr-box').froalaEditor('events.trigger', 'contentChanged');
-  await click('.detail-objectives .newobjective button.done');
+  find('.detail-objectives .new-objective .fr-box').froalaEditor('html.set', newObjectiveTitle);
+  find('.detail-objectives .new-objective .fr-box').froalaEditor('events.trigger', 'contentChanged');
+  await click('.detail-objectives .new-objective button.done');
   objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
   assert.equal(objectiveRows.length, fixtures.session.objectives.length + 1);
   let tds = find('td', objectiveRows.eq(0));
@@ -60,7 +60,7 @@ test('cancel new objective', async function(assert) {
   let objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
   assert.equal(objectiveRows.length, fixtures.session.objectives.length);
   await click('.detail-objectives .detail-objectives-actions button');
-  await click('.detail-objectives .newobjective button.cancel');
+  await click('.detail-objectives .new-objective button.cancel');
   objectiveRows = find('.detail-objectives .session-objective-list tbody tr');
   assert.equal(objectiveRows.length, fixtures.session.objectives.length);
   let tds = find('td', objectiveRows.eq(0));
@@ -73,7 +73,7 @@ test('empty objective title can not be created', async function(assert) {
   assert.expect(3);
   const container = '.detail-objectives:eq(0)';
   const expandNewObjective = `${container} .detail-objectives-actions button`;
-  const newObjective = `${container} .newobjective`;
+  const newObjective = `${container} .new-objective`;
   const editor = `${newObjective} .fr-box`;
   const save = `${newObjective} .done`;
   const errorMessage = `${newObjective} .validation-error-message`;
