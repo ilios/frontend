@@ -9,8 +9,8 @@
       </div>
     {{/if}}
   </div>
-  <section class='new'>
-    {{#if showNewSchoolForm class='vertical'}}
+  {{#if showNewSchoolForm class='vertical'}}
+    <section class='new'>
       <div class="new-result-title">{{t 'general.newSchool'}}</div>
 
       <div class='form'>
@@ -51,17 +51,16 @@
           <button class='cancel text' {{action 'hideNewSchoolForm'}}>{{t 'general.cancel'}}</button>
         </div>
       </div>
-    {{/if}}
-
-    {{#each newSchools as |school|}}
-      <div class='savedschool'>
-        {{#link-to 'school' school}}
-          {{fa-icon 'external-link-square'}} {{school.title}}
-        {{/link-to}}
-        {{t 'general.savedSuccessfully'}}
-      </div>
-    {{/each}}
-  </section>
+    </section>
+  {{/if}}
+  {{#each newSchools as |school|}}
+    <div class='savedschool'>
+      {{#link-to 'school' school}}
+        {{fa-icon 'external-link-square'}} {{school.title}}
+      {{/link-to}}
+      {{t 'general.savedSuccessfully'}}
+    </div>
+  {{/each}}
   <div class='list'>
     <table>
       <thead>
