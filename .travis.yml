@@ -25,7 +25,7 @@ install:
 
 script:
   - yarn lint:js
-  - yarn test --filter=$FILTER
+  - yarn test
 
 jobs:
   include:
@@ -35,9 +35,7 @@ jobs:
         - greenkeeper-lockfile-update
         - greenkeeper-lockfile-upload
     - stage: test
-      env: FILTER='!acceptance' SW_DISABLED=true
-    - stage: test
-      env: FILTER='acceptance' SW_DISABLED=true
+      env: SW_DISABLED=true
     - stage: deploy staging
       if: branch = master AND NOT type = pull_request AND NOT type = cron
       script: node_modules/.bin/ember deploy staging --activate
