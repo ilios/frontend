@@ -14,12 +14,14 @@
     padding: 0;
 
     li {
+      font-size: 4vmin;
       height: 100%;
       padding: .25rem;
       text-align: center;
       width: 100%;
 
       @include for-laptop-and-up {
+        font-size: .9rem;
         height: auto;
         text-align: left;
       }
@@ -32,10 +34,6 @@
 
     .text {
       display: none;
-
-      @include for-laptop-and-up {
-        font-size: .9rem;
-      }
     }
 
     &.expand-navigation li {
