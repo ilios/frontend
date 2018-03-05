@@ -35,7 +35,7 @@ module('Acceptance: Course - Cohorts', {
     const course = server.create('course', {
       year: 2013,
       school,
-      cohorts: [cohort1],
+      cohorts: [programYear1.cohort], //instead of just cohort1 otherwise the relationship gets munged
     });
 
     server.create('objective', {
