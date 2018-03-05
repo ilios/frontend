@@ -3,7 +3,6 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import startMirage from '../../helpers/start-mirage';
 import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -12,7 +11,6 @@ const { resolve } = RSVP;
 moduleForComponent('school-session-types-collapsed', 'Integration | Component | school session types collapsed', {
   integration: true,
   setup(){
-    startMirage(this.container);
     initializer.initialize(getOwner(this));
   },
 });
