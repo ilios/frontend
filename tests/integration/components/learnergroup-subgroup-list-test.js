@@ -205,9 +205,10 @@ test('add multiple new groups', async function(assert) {
   this.$(expandButton).click();
   await wait();
   this.$(multiGroupButton).click();
+  await wait();
 
   this.$(multiGroupCount).val(1).trigger('input');
-  this.$(done).click();
+  await this.$(done).click();
   await wait();
 
   assert.equal(this.$(secondGroupTitle).text().trim(), 'group 2');
@@ -269,11 +270,13 @@ test('truncates multiple group with long name', async function(assert) {
   this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
   this.$(expandButton).click();
   await wait();
-  this.$(multiGroupButton).click();
+  await this.$(multiGroupButton).click();
+  await wait();
 
 
   this.$(multiGroupCount).val(1).trigger('input');
-  this.$(done).click();
+  await this.$(done).click();
+  await wait();
   await wait();
 
   assert.equal(this.$(firstGroupTitle).text().trim(), expectedGroupTitle);

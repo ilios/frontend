@@ -148,13 +148,14 @@ test('clear and reset from new token screen', async function(assert) {
     assert.ok(true);
   });
   this.render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
-  this.$(go).click();
+  await this.$(go).click();
   await wait();
 
   assert.equal(this.$(newToken).val().trim(), 'new token');
   assert.equal(this.$(newTokenForm).length, 0);
   await this.$(cancel).click();
   await this.$(newTokenButton).click();
+  await wait();
   assert.equal(this.$(newTokenForm).length, 1);
 });
 

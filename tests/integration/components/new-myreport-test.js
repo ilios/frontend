@@ -299,12 +299,14 @@ test('can search for user #2506', async function(assert) {
   await wait();
   assert.equal(this.$(targetSubject).val(), 'course');
   this.$(objectSelect).val(targetObject).change();
+  await wait();
 
   assert.equal(this.$(userSearch).length, 1);
   this.$(input).val('abcd').trigger('input');
   await wait();
 
   await this.$(firstResult).click();
+  await wait();
   assert.equal(this.$(selectedUser).text().trim(), 'Test Person');
 
   await wait();

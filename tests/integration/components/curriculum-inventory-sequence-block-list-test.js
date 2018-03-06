@@ -338,8 +338,10 @@ test('cancel delete', async function(assert){
   this.set('report', report);
   this.render(hbs`{{curriculum-inventory-sequence-block-list report=report}}`);
   await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
+  await wait();
   assert.equal(this.$('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
   await this.$('tbody tr:eq(1) .confirm-buttons .done').click();
+  await wait();
   assert.equal(this.$('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
 });
 
