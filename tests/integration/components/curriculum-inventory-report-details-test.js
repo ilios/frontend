@@ -112,6 +112,7 @@ test('finalize report', async function(assert) {
   await wait();
   assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
   await this.$('.curriculum-inventory-report-header .finalize').click();
+  await wait();
   assert.equal(this.$('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
   assert.ok(
     this.$('.confirm-finalize .confirm-message').text().trim().indexOf('By finalizing this report') === 0,
@@ -161,7 +162,9 @@ test('start finalizing report, then cancel', async function(assert){
   this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
 
   await this.$('.curriculum-inventory-report-header .finalize').click();
+  await wait();
   await this.$('.confirm-finalize .confirm-buttons .done').click();
+  await wait();
   assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
   assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 0,
     'Lock icon is not visible post-cancellation.'

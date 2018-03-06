@@ -289,7 +289,8 @@ test('save fires save', async function(assert) {
   this.$(assessmentOptionSelect).val('1').change();
 
   assert.ok(this.$(isActiveInput).is(':checked'), 'active is selected');
-  this.$(isActiveControl).click();
+  await this.$(isActiveControl).click();
+  await wait();
   assert.notOk(this.$(isActiveInput).is(':checked'), 'active is not selected');
 
   this.$(button).click();

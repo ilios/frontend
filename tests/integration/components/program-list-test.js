@@ -129,7 +129,8 @@ test('remove and cancel', async function(assert){
   await wait();
   assert.equal(this.$('tbody tr').length, 2);
   assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-  this.$('tbody tr:eq(1) .done').click();
+  await this.$('tbody tr:eq(1) .done').click();
+  await wait();
   assert.equal(this.$('tbody tr').length, 1);
 });
 

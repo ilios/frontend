@@ -184,8 +184,10 @@ test('check some sets indeterminate state', async function(assert) {
   assert.notOk(this.$(secondStudent).prop('checked'), 'second student is not initiall checked');
 
   await this.$(firstStudent).click();
+  await wait();
   assert.ok(this.$(checkAll).prop('indeterminate'), 'check all is indeterminate with one student checked');
   await this.$(secondStudent).click();
+  await wait();
   assert.ok(this.$(checkAll).prop('checked'), 'check all is checked with both students checked');
 });
 

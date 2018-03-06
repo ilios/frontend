@@ -80,7 +80,7 @@ let createFile = function(users){
 
 let triggerUpload = async function(users, inputElement){
   let file = createFile(users);
-  inputElement.triggerHandler({
+  await inputElement.triggerHandler({
     type: 'change',
     target: {
       files: {
@@ -90,7 +90,7 @@ let triggerUpload = async function(users, inputElement){
       }
     }
   });
-  await wait();
+  return wait();
 };
 
 test('it renders', async function(assert) {
@@ -599,7 +599,8 @@ test('duplicate username errors on save', async function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
   await triggerUpload(users, this.$('input[type=file]'));
-  this.$('.done').click();
+  await this.$('.done').click();
+  await wait();
   assert.ok(this.$('.saving-authentication-errors').length, 1);
   assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
 });
@@ -651,7 +652,8 @@ test('error saving user', async function(assert) {
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
   await triggerUpload(users, this.$('input[type=file]'));
-  this.$('.done').click();
+  await this.$('.done').click();
+  await wait();
   assert.ok(this.$('.saving-user-errors').length, 1);
   assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
 });
