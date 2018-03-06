@@ -8,14 +8,14 @@
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 1.5rem 60px;
 
-  @include for-laptop-and-up {
+  @include for-tablet-and-up {
     grid-template-areas:
     'logo heading tools';
     grid-template-columns: 1fr 4fr 2fr;
     grid-template-rows: 60px;
   }
 
-  @include for-laptop-and-up {
+  @include for-tablet-and-up {
     grid-template-columns: 200px 4fr 2fr;
   }
 
@@ -61,7 +61,7 @@
       span {
         display: none;
 
-        @include for-tablet-and-up {
+        @include for-laptop-and-up {
           display: inline;
         }
       }
