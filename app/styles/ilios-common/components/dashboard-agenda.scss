@@ -8,7 +8,8 @@
   }
 
   table {
-    @include ilios-table;
+    @include ilios-table-structure;
+    @include ilios-table-colors;
     margin: 0;
     padding: 0;
 

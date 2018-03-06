@@ -2,30 +2,28 @@
   show=show
   change=setShow
 }}
-{{#liquid-spacer}}
-  {{#if (eq show 'calendar')}}
-    {{dashboard-calendar
-      selectedDate=selectedDate
-      selectedView=selectedView
-      mySchedule=mySchedule
-      showFilters=showFilters
-      changeDate=changeDate
-      changeView=changeView
-      selectEvent=selectEvent
-      toggleMySchedule=toggleMySchedule
-      toggleShowFilters=toggleShowFilters
-      selectedAcademicYear=selectedAcademicYear
-      selectedSchool=selectedSchool
-      changeAcademicYear=changeAcademicYear
-      changeSchool=changeSchool
-      courseFilters=courseFilters
-      toggleCourseFilters=toggleCourseFilters
-    }}
-  {{else if (eq show 'materials')}}
-    {{dashboard-materials}}
-  {{else if (eq show 'agenda')}}
-    {{dashboard-agenda}}
-  {{else if (eq show 'week')}}
-    {{dashboard-week}}
-  {{/if}}
-{{/liquid-spacer}}
+{{#if (eq show 'calendar')}}
+  {{dashboard-calendar
+    selectedDate=selectedDate
+    selectedView=selectedView
+    mySchedule=mySchedule
+    showFilters=showFilters
+    changeDate=changeDate
+    changeView=changeView
+    selectEvent=selectEvent
+    toggleMySchedule=toggleMySchedule
+    toggleShowFilters=toggleShowFilters
+    selectedAcademicYear=selectedAcademicYear
+    selectedSchool=selectedSchool
+    changeAcademicYear=changeAcademicYear
+    changeSchool=changeSchool
+    courseFilters=courseFilters
+    toggleCourseFilters=toggleCourseFilters
+  }}
+{{else if (eq show 'materials')}}
+  {{dashboard-materials}}
+{{else if (eq show 'agenda')}}
+  {{dashboard-agenda}}
+{{else if (eq show 'week')}}
+  {{dashboard-week}}
+{{/if}}

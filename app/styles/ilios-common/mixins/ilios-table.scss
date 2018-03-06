@@ -1,18 +1,10 @@
-@mixin ilios-table () {
+@mixin ilios-table-structure () {
   border-collapse: collapse;
-  font-size: $base-font-size * .9;
   margin: ($base-line-height * .5em) 0;
   table-layout: fixed;
   width: 100%;
 
-  thead {
-    background-color: $background-grey;
-  }
-
-
   th {
-    border-bottom: 1px solid darken($base-border-color, 15);
-    font-weight: bold;
     padding: ($base-line-height * .5em / 2) 0;
     text-align: left;
   }
@@ -20,6 +12,36 @@
   td {
     border: 0;
     padding: ($base-line-height * .5em / 2) 0;
+  }
+
+  th,
+  td {
+    &.text-left,
+    &.align-left {
+      text-align: left;
+    }
+
+    &.text-center,
+    &.align-center {
+      text-align: center;
+    }
+
+    &.text-right,
+    &.align-right {
+      text-align: right;
+    }
+
+    &.text-top {
+      vertical-align: top;
+    }
+
+    &.text-middle {
+      vertical-align: middle;
+    }
+
+    &.text-bottom {
+      vertical-align: bottom;
+    }
   }
 
   tr,
@@ -43,8 +65,56 @@
   .hide-from-small-screen {
     display: none;
 
-    @media (min-width: $large-screen) {
+    @include for-laptop-and-up {
       display: table-cell;
+    }
+  }
+}
+
+
+@mixin ilios-table-colors () {
+  thead {
+    background-color: $background-grey;
+  }
+
+  th {
+    border-bottom: 1px solid darken($base-border-color, 15);
+  }
+}
+
+@mixin ilios-removable-table () {
+  tbody {
+    .confirm-removal {
+      background-color: $remove-background-color;
+
+      .confirm-message {
+        color: $ilios-remove-color;
+        font-weight: bold;
+        padding-left: 8em;
+        padding-right: 8em;
+        text-align: center;
+        width: 100%;
+      }
+
+      .confirm-buttons {
+        padding-bottom: 1.5em;
+        padding-top: 1.1em;
+      }
+
+
+      &:hover {
+        background-color: $remove-background-color;
+      }
+
+      .remove {
+        background-color: $white;
+        color: $ilios-remove-color;
+
+        &:hover {
+          background-color: $ilios-remove-color;
+          color: $white;
+        }
+      }
     }
   }
 }

@@ -1,16 +1,16 @@
 @mixin ilios-link () {
-  color: $ilios-blue;
+  color: $base-link-color;
   cursor: pointer;
   text-decoration: none;
 
   &:visited {
-    color: $ilios-blue;
+    color: $base-link-color;
   }
 
   &:hover,
   &:active,
   &:focus {
-    color: darken($ilios-blue, 15);
+    color: darken($base-link-color, 15);
     outline: none;
   }
 }

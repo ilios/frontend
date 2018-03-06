@@ -5,7 +5,9 @@
 
   ul,
   ol {
-    margin-left: 1em;
+    list-style-type: none;
+    margin: 0 0 0 1em;
+    padding: 0;
   }
 }
 @mixin ilios-static-list() {
@@ -26,6 +28,22 @@
     li {
       font-weight: normal;
     }
+  }
+}
+
+@mixin ilios-tag-list() {
+  @include ilios-list-reset;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  li {
+    background-color: $header-grey;
+    border-radius: 4px;
+    margin-right: .3em;
+    margin-top: 10px;
+    padding: .2em .4em .2em .6em;
+    vertical-align: middle;
   }
 }
 
@@ -56,5 +74,69 @@
 
   p {
     margin: 0;
+  }
+}
+
+@mixin ilios-selectable-list {
+  @include ilios-list-reset;
+
+  ul {
+    margin-left: 2em;
+  }
+
+  li {
+    color: $base-link-color;
+    cursor: pointer;
+
+    &.static {
+      color: $base-font-color;
+      cursor: arrow;
+    }
+
+    &.disabled {
+      color: lighten($base-font-color, 40);
+      cursor: arrow;
+    }
+  }
+}
+
+@mixin ilios-removable-list {
+  @include ilios-tag-list;
+
+  li {
+    cursor: pointer;
+    display: flex;
+
+    .remove {
+      margin-left: .5em;
+    }
+  }
+}
+
+@mixin ilios-tag-tree-list {
+  @include ilios-list-reset;
+  margin-bottom: 1rem;
+
+  li {
+    div {
+      background-color: $white;
+      border: 1px $header-grey solid;
+      border-radius: 4px;
+      margin-top: 5px;
+      padding: .2em .4em .2em .6em;
+      vertical-align: middle;
+
+      &.selected {
+        background-color: $header-grey;
+      }
+    }
+
+    .actions {
+      float: right;
+    }
+
+    &.top-level {
+      margin-left: 0;
+    }
   }
 }
