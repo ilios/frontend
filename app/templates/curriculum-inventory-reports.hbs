@@ -1,10 +1,8 @@
 <section id='curriculumInventoryReports' class='curriculum-inventory-reports'>
   <div class="filter-tools">
-    <div id='schoolsfilter' class="schoolsfilter">
-      <label class="inline-label">
-        {{fa-icon 'university'}}
-      </label>
-      {{#if (await hasMoreThanOneSchool)}}
+    <div class="schoolsfilter">
+      {{fa-icon 'university' fixedWidth=true}}
+      {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
             <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
@@ -20,10 +18,9 @@
         {{/if}}
       {{/if}}
     </div>
-    <div id='programsfilter' class="programsfilter">
-      <label class="inline-label">
-        {{fa-icon 'list-alt'}}
-      </label>
+
+    <div class="programsfilter">
+      {{fa-icon 'list-alt' fixedWidth=true}}
       {{#if (gt (get (await programs) 'length') 1)}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
           {{#each (sort-by 'title' (await programs)) as |program|}}
@@ -43,14 +40,13 @@
       {{/if}}
     </div>
   </div>
-
-  <section class='resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='reports'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.curriculumInventoryReports'}}</h2>
       </div>
       {{#if (await selectedProgram)}}
-        <div class='resultslist-actions'>
+        <div class='actions'>
           {{expand-collapse-button
             value=showNewCurriculumInventoryReportForm
             action="toggleNewCurriculumInventoryReportForm"
@@ -58,7 +54,7 @@
         </div>
       {{/if}}
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewCurriculumInventoryReportForm class='vertical'}}
         {{new-curriculum-inventory-report
           currentProgram=(await selectedProgram)
@@ -75,7 +71,7 @@
         </div>
       {{/if}}
     </section>
-    <div class='resultslist-list'>
+    <div class='list'>
       {{#if (is-fulfilled reports)}}
         {{curriculum-inventory-report-list
           edit='editCurriculumInventoryReport'

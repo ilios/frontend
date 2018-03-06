@@ -1,19 +1,21 @@
-{{#if isManaging}}
-  <div class='title'>{{t 'general.sessionAttributes'}}</div>
-{{else}}
-  <div class='title clickable collapsible' onclick={{action collapse}}>
-    {{t 'general.sessionAttributes'}}
-  </div>
-{{/if}}
-<div class='actions'>
+<div class='school-session-attributes-expanded-header'>
   {{#if isManaging}}
-    <button class='bigadd' onclick={{perform save}}>
-      {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
-    </button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    <div class='title'>{{t 'general.sessionAttributes'}}</div>
   {{else}}
-    <button {{action manage true}}>{{t 'general.manageSessionAttributes'}}</button>
+    <div class='title clickable collapsible' onclick={{action collapse}}>
+      {{t 'general.sessionAttributes'}}
+    </div>
   {{/if}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' onclick={{perform save}}>
+        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
+      </button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else}}
+      <button {{action manage true}}>{{t 'general.manageSessionAttributes'}}</button>
+    {{/if}}
+  </div>
 </div>
 <div class='school-session-attributes-expanded-content'>
   {{#liquid-if isManaging class="horizontal"}}

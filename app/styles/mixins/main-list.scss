@@ -1,110 +1,110 @@
 @mixin main-list () {
-  @include fill-parent;
-  padding: 0 1em;
-
-  @include media($large-screen) {
-    @include span-columns(12);
-  }
+  display: block;
+  margin: 0 .25rem;
+  padding: 0 1rem;
 }
 
 @mixin main-list-filters () {
-  @include fill-parent;
-  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
 
-  @include media($large-screen) {
-    @include span-columns(12);
+  @include for-laptop-and-up {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
+  @include for-desktop-and-up {
+    justify-content: flex-start;
+  }
 }
 
 @mixin main-list-filter () {
-  @include fill-parent;
-  padding-bottom: 1em;
+  padding-bottom: 1rem;
   white-space: nowrap;
 
-  @include media($large-screen) {
-    @include span-columns(3 of 12);
-    @include omega(4n);
+  @include for-laptop-and-up {
     padding-bottom: 0;
+    width: 25%;
+  }
+
+  @include for-desktop-and-up {
+    margin-right: 2rem;
+    width: auto;
   }
 
   select {
-    width: 190px;
-
-    @include media($large-screen) {
-      width: 90%;
-    }
+    @include ilios-select;
+    width: 90%;
   }
 
   input {
-    width: 200px;
-
-    @include media($large-screen) {
-      width: 100%;
-    }
+    @include ilios-input;
+    width: 100%;
   }
 
 }
 
 @mixin main-list-box () {
-  @include fill-parent;
-  @include row;
-
   border: 2px solid $header-grey;
-
-  @include media($large-screen) {
-    @include span-columns(12);
-  }
+  display: block;
+  width: 100%;
 }
 
 @mixin main-list-box-header () {
-  @include fill-parent;
   background-color: $header-grey;
-  padding: .5em 0;
+  display: flex;
+  flex-direction: column;
+  padding: .5rem 0;
   text-align: center;
 
-  @include media($large-screen) {
-    @include span-columns(12);
-    text-align: left;
+  @include for-laptop-and-up {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
-@mixin main-list-box-header-title ($span: 6) {
-  @include media($large-screen) {
-    @include span-columns($span);
-    font-size: $base-font-size;
-    font-weight: bold;
-    padding-left: 1em;
+@mixin main-list-box-header-title {
+  @include ilios-heading-h5;
+  margin-bottom: .5rem;
+  @include for-laptop-and-up {
+    margin-bottom: 0;
+    padding-left: 1rem;
   }
 }
 
-@mixin main-list-box-header-actions ($span: 2, $shift: 4) {
-  @include media($large-screen) {
-    @include span-columns($span);
-    @include shift($shift);
-    @include omega;
-
-    padding-right: 1em;
+@mixin main-list-box-header-actions {
+  @include for-laptop-and-up {
+    padding-right: 1rem;
     text-align: right;
   }
+
+  @include for-phone-only {
+    & > * {
+      margin-top: .25em;
+    }
+  }
+}
+
+@mixin main-list-saved-new () {
+  border: 1px solid $ilios-green;
+  margin: 1rem;
+  padding: 1rem;
 }
 
 @mixin main-list-box-table () {
-  @include fill-parent;
-  @include row;
   clear: both;
+  display: block;
+  padding: 1rem;
 
-  padding: 1em;
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+    @include ilios-removable-table;
 
-  thead {
-    background-color: $header-grey;
-  }
-
-  .hide-from-small-screen {
-    display: none;
-
-    @include media($large-screen) {
-      display: table-cell;
+    thead {
+      background-color: $header-grey;
     }
   }
 }

@@ -1,0 +1,27 @@
+.programyear-list {
+  @include main-list;
+
+  .programyears {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
+    }
+  }
+
+  .list {
+    @include main-list-box-table;
+  }
+}

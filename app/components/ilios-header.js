@@ -10,6 +10,7 @@ export default Component.extend({
   moment: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
+  ariaRole: 'banner',
   title: null,
   locales: computed('i18n.locales', 'i18n.locale', function() {
     return this.get('i18n.locales').uniq().map(locale => {

@@ -1,21 +1,23 @@
-{{#if isManaging}}
-  <div class='title'>
-    <span class='detail-specific-title'>{{t 'general.termsManageTitle'}}</span>
-  </div>
-{{else}}
-  <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
-    {{t 'general.terms'}} ({{subject.terms.length}})
-  </div>
-{{/if}}
-<div class='actions'>
+<div class='detail-taxonomies-header'>
   {{#if isManaging}}
-    <button class='bigadd' {{action 'save'}}>
-      {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
-    </button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else if editable}}
-    <button {{action 'manage'}}>{{t 'general.termsManageTitle'}}</button>
+    <div class='title'>
+      <span class='detail-specific-title'>{{t 'general.termsManageTitle'}}</span>
+    </div>
+  {{else}}
+    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
+      {{t 'general.terms'}} ({{subject.terms.length}})
+    </div>
   {{/if}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' {{action 'save'}}>
+        {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+      </button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else if editable}}
+      <button {{action 'manage'}}>{{t 'general.termsManageTitle'}}</button>
+    {{/if}}
+  </div>
 </div>
 <div class='content'>
   {{#if isManaging}}

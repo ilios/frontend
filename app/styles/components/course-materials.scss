@@ -1,0 +1,30 @@
+.course-materials {
+  .material-list {
+    border-bottom: 1px dotted $ilios-orange;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
+  }
+
+  h3 {
+    @include ilios-heading-h4;
+    display: inline;
+  }
+
+  .filter-session-lms {
+    text-align: right;
+
+    @include for-phone-only {
+      display: block;
+      width: 100%;
+    }
+
+    input {
+      width: 300px;
+    }
+  }
+}

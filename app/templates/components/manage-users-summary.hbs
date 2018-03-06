@@ -1,15 +1,17 @@
-<h2 class='title'>
-  {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users' (query-params showBulkNewUserForm=false showNewUserForm=false)}}{{t 'general.viewAll'}}{{/link-to}})
-</h2>
-<div class='actions'>
-  {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
-    <button>{{t 'general.create'}}</button>
-  {{/link-to}}
-  {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-    {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
-      <button>{{t 'general.createBulk'}}</button>
+<div class='header'>
+  <h2 class='title'>
+    {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users' (query-params showBulkNewUserForm=false showNewUserForm=false)}}{{t 'general.viewAll'}}{{/link-to}})
+  </h2>
+  <div class='actions'>
+    {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
+      <button>{{t 'general.create'}}</button>
     {{/link-to}}
-  {{/if}}
+    {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
+      {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
+        <button>{{t 'general.createBulk'}}</button>
+      {{/link-to}}
+    {{/if}}
+  </div>
 </div>
 <div class='user-search'>
   <input

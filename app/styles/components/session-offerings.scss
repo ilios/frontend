@@ -1,0 +1,41 @@
+.session-offerings {
+  @include detail-container($text-blue);
+
+  .offering-section-top {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+
+
+  .session-offerings-content {
+    @include detail-container-content;
+  }
+
+  .session-offerings-header {
+    background-color: $header-grey;
+    display: grid;
+    font-weight: bold;
+    grid-template-columns: repeat(5, 1fr);
+
+    div {
+      background-color: $text-blue;
+      border-right: 1px solid $white;
+      color: $white;
+      overflow: hidden;
+      padding: .5rem .25rem;
+      white-space: nowrap;
+
+      @include for-tablet-and-up {
+        padding: .5rem;
+      }
+    }
+  }
+}

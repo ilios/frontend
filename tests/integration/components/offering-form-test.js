@@ -84,7 +84,7 @@ test('recurring options has all the days of the week', function(assert) {
   const thursday = '.make-recurring-days label:eq(4)';
   const friday = '.make-recurring-days label:eq(5)';
   const saturday = '.make-recurring-days label:eq(6)';
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
 
   this.$(toggle).click();
   assert.equal(this.$(sunday).text().trim(), 'Sunday');
@@ -103,7 +103,7 @@ test('recurring numberOfWeeks validation errors do not show up initially', funct
 
   const item = '.make-recurring-input-container';
   const error = `${item} .validation-error-message`;
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
 
   this.$(toggle).click();
 
@@ -119,7 +119,7 @@ test('recurring numberOfWeeks validation errors show up when saving', function(a
   const item = '.make-recurring-input-container';
   const error = `${item} .validation-error-message`;
   const input = `${item} input`;
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
 
   this.$(toggle).click();
   const save = '.buttons .done';
@@ -138,7 +138,7 @@ test('recurring default day is disabled and checked', function(assert) {
 
   const inputs = '.make-recurring-days input';
   const dayToday = moment().day();
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
 
   this.$(toggle).click();
   let checkbox = this.$(inputs).eq(dayToday);
@@ -287,7 +287,7 @@ test('save recurring one week with days selected before initial date', function(
   const wednesday = moment().add(1, 'week').day(3);
   const thursday = wednesday.clone().add(1, 'day').day();
   const tuesday = wednesday.clone().subtract(1, 'day').day();
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
   const startDateInput = '.start-date input';
   const newStartDate = wednesday.toDate();
 
@@ -334,7 +334,7 @@ test('save recurring 3 weeks should get lots of days', function(assert) {
   const thursday = wednesday.clone().add(1, 'day').day();
   const tuesday = wednesday.clone().subtract(1, 'day').day();
   const weeks = '.make-recurring-input-container input';
-  const toggle = '.make-recurring .toggle-onoff';
+  const toggle = '.make-recurring .toggle-yesno';
   const startDateInput = '.start-date input';
   const newStartDate = wednesday.toDate();
 

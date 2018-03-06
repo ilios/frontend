@@ -1,0 +1,27 @@
+.school-competencies-expanded {
+  @include detail-container($ilios-orange);
+
+  .school-competencies-expanded-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .school-competencies-expanded-content {
+    @include detail-container-content;
+
+    ul {
+      @include ilios-list-reset;
+
+      ul {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

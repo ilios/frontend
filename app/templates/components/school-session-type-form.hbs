@@ -35,7 +35,7 @@
         <span class='value'>{{get (await selectedAamcMethod) 'description'}}</span>
       {{/if}}
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{/if}}
   </div>
 
@@ -99,7 +99,7 @@
   <div class='buttons'>
     <button class='done text' {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
       {{#if saveSessionType.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

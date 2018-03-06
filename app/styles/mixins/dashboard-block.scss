@@ -1,21 +1,28 @@
 @mixin dashboard-block () {
-  @include span-columns(6 of 12);
   border: 1px solid $ilios-blue;
-  margin-top: 1em;
+  margin-top: 1rem;
+  width: 100%;
 
-  .dashboard-block-actions {
-    float: right;
+  @include for-laptop-and-up {
+    width: 49%;
   }
 
   .dashboard-block-header {
+    align-items: center;
     background-color: $grey;
-    color: $ilios-orange;
-    font-weight: bold;
-    padding: .5em;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
+    h3 {
+      @include ilios-heading-h3;
+      color: $ilios-orange;
+    }
   }
 
   .dashboard-block-body {
-    height: 30em;
+    height: 30rem;
     overflow-y: scroll;
   }
 }

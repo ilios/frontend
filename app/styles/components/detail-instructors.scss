@@ -1,0 +1,19 @@
+.detail-instructors {
+  @include detail-container($text-blue);
+
+  .detail-instructors-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .detail-instructors-content {
+    @include detail-container-content;
+  }
+}

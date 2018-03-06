@@ -1,0 +1,24 @@
+.learnergroup-summary {
+  .learnergroup-overview {
+    @include ilios-overview($ilios-orange);
+    border-bottom: 1px dotted $ilios-orange;
+    display: block;
+
+    .learnergroup-overview-actions {
+      text-align: right;
+    }
+
+    .block {
+      @include ilios-overview-block;
+    }
+  }
+
+  .cohortmembers {
+    .cohortmembers-loading {
+      display: block;
+      font-size: 2.25rem;
+      margin: auto;
+      text-align: center;
+    }
+  }
+}

@@ -62,19 +62,19 @@
       >
     </div>
   </div>
-  <section class='learnergroups resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='learnergroups'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.learnerGroups'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{#if (await selectedProgramYear)}}
           {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
         {{/if}}
       </div>
     </div>
 
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewLearnerGroupForm class='vertical'}}
         {{new-learnergroup save=(action 'saveNewLearnerGroup') cancel=(action 'cancel') fillModeSupported=true}}
       {{/liquid-if}}

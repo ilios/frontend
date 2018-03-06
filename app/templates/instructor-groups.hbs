@@ -22,16 +22,16 @@
       >
     </div>
   </div>
-  <section class='resultslist instructorgroups'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
+  <section class='instructorgroups'>
+    <div class="header">
+      <div class="title">
         <h2>{{t 'general.instructorGroups'}}</h2>
       </div>
-      <div class='resultslist-actions'>
+      <div class='actions'>
         {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
       </div>
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if showNewInstructorGroupForm class='vertical'}}
         {{new-instructorgroup
           currentSchool=selectedSchool

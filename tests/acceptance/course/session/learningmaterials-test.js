@@ -401,10 +401,10 @@ test('manage terms', async function(assert) {
   await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
 
   let meshManager = find('.mesh-manager', container).eq(0);
-  let removableItems = find('.removable-list li', meshManager);
+  let removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, 2);
-  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 1'));
-  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
+  assert.equal(getElementText(find('.term-title', removableItems[0]).eq(0)), getText('descriptor 1'));
+  assert.equal(getElementText(find('.term-title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   let searchBox = find('.search-box', meshManager);
   assert.equal(searchBox.length, 1);
@@ -428,15 +428,15 @@ test('manage terms', async function(assert) {
   assert.notOk(find(searchResults[4]).hasClass('disabled'));
   assert.notOk(find(searchResults[5]).hasClass('disabled'));
 
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
   await click(searchResults[0]);
   assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
 
-  removableItems = find('.removable-list li', meshManager);
+  removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, 2);
-  assert.equal(getElementText(find('.content .title', removableItems[0]).eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(find('.content .title', removableItems[1]).eq(0)), getText('descriptor 2'));
+  assert.equal(getElementText(find('.term-title', removableItems[0]).eq(0)), getText('descriptor 0'));
+  assert.equal(getElementText(find('.term-title', removableItems[1]).eq(0)), getText('descriptor 2'));
 
   await wait();
 });
@@ -451,7 +451,7 @@ test('save terms', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('.search-box span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[0]);
   await click('.buttons .done', container);
   let expectedMesh = 'descriptor 0' + 'descriptor 2';
@@ -469,7 +469,7 @@ test('cancel term changes', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('.search-box span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[2]);
   await click(searchResults[3]);
   await click(searchResults[4]);

@@ -1,0 +1,16 @@
+.curriculum-inventory-sequence-block-session-manager {
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .list {
+    table {
+      .count-as-one-header input {
+        margin-right: .5rem;
+      }
+
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
+  }
+}

@@ -4,53 +4,20 @@
 }
 
 @mixin ilios-list-badges() {
-  $badges-font-size: .8em;
+  @include ilios-removable-list;
 
   li {
-    @include fill-parent;
     background-color: $header-grey;
     border-radius: 4px;
-    height: $badges-font-size * 3.5;
-    margin-top: .5em;
-    overflow: hidden;
-    vertical-align: middle;
-
-    @include media($large-screen) {
-      @include span-columns(3);
-      @include omega(4n);
-    }
-
-    .badge {
-      @include fill-parent;
-      @include row();
-
-      .text {
-        @include span-columns(2 of 3);
-        @include pad();
-
-        .main-text {
-          @include fill-parent;
-          font-size: $badges-font-size;
-          font-weight: bold;
-        }
-      }
-
-      .action {
-        @include span-columns(1 of 3);
-        font-size: 1em;
-        padding-bottom: $badges-font-size;
-        padding-top: $badges-font-size;
-        text-align: center;
-      }
-    }
+    font-weight: bold;
+    margin-top: .5rem;
+    padding: 1rem;
   }
 
 }
 
 @mixin ilios-list-tree() {
-  background-color: $white;
-  height: 15em;
-  overflow-y: scroll;
+  @include ilios-list-reset;
 
   li {
     color: $base-font-color;
@@ -75,23 +42,5 @@
     &.disabled {
       color: $dark-grey;
     }
-  }
-}
-
-@mixin ilios-list-hierarchical() {
-  background-color: $grey;
-  border: 1px solid $black;
-  margin: 1em;
-  padding: 1em;
-
-
-  h4 {
-    font-weight: bold;
-    margin-bottom: 1em;
-    width: 100%;
-  }
-
-  ul {
-    margin-left: 2em;
   }
 }

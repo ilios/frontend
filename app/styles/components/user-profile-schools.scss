@@ -1,0 +1,26 @@
+.user-profile-schools {
+
+  .user-profile-schools-header {
+    @include detail-container-header;
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+  }
+
+  .primary-school {
+    font-size: 1.25rem;
+  }
+
+  .more-permissions-notice {
+    color: $text-grey;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+  }
+}

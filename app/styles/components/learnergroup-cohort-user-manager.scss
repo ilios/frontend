@@ -1,0 +1,39 @@
+.learnergroup-cohort-user-manager {
+  @include detail-container($text-blue);
+
+  .learnergroup-cohort-user-manager-header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include for-laptop-and-up {
+      align-items: flex-start;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .title {
+      @include detail-container-title-style;
+    }
+
+    .actions {
+      text-align: right;
+
+      input {
+        @include ilios-input;
+        width: 15rem;
+      }
+    }
+  }
+
+  .learnergroup-cohort-user-manager-content {
+    @include detail-container-content;
+
+    .list {
+      @include main-list-box-table;
+      max-height: 360px;
+      overflow: auto;
+    }
+  }
+}

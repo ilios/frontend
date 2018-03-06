@@ -1,88 +1,63 @@
-<section class='resultslist'>
-  <div class="resultslist-header">
-    <div class="resultslist-title">
-      <h2>{{t 'general.unassignedStudentsSummaryTitle'}}</h2>
-    </div>
-  </div>
-  <section class='resultslist-save'>
-    <div class='form-container'>
-      <div class='form-col-12'>
-        <label class='form-label'>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
-        {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))}}
-          <div class="form-data">
-            <select onchange={{action (mut primaryCohortId) value="target.value"}}>
-              {{#each (sort-by 'title' cohorts) as |cohort|}}
-                <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
-                  {{cohort.title}}
-                </option>
-              {{/each}}
-            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedCohort) (lt cohorts.length 1) (eq selectedUserIds.length 0)}}>
-              {{#if isSaving}}
-                {{fa-icon 'spinner' spin=true}}
-              {{else}}
-                {{t 'general.save'}}
-              {{/if}}
-            </button>
-          </div>
-        {{else}}
-          {{fa-icon 'spinner' spin=true}}
-        {{/if}}
-      </div>
+<div class="header">
+  <h2>{{t 'general.unassignedStudentsSummaryTitle'}}</h2>
+</div>
 
-    </div>
-  </section>
-  <div class='resultslist-list'>
+<div class='form'>
+  <label>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
+  {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))}}
+    <select onchange={{action (mut primaryCohortId) value="target.value"}}>
+      {{#each (sort-by 'title' cohorts) as |cohort|}}
+        <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+          {{cohort.title}}
+        </option>
+      {{/each}}
+    </select>
+    <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedCohort) (lt cohorts.length 1) (eq selectedUserIds.length 0)}}>
+      {{#if isSaving}}
+        {{loading-spinner}}
+      {{else}}
+        {{t 'general.save'}}
+      {{/if}}
+    </button>
+  {{else}}
+    {{loading-spinner}}
+  {{/if}}
+</div>
 
-    {{pagedlist-controls
-      offset=offset
-      limit=limit
-      total=totalUnassignedStudents
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}
-    <table>
-      <thead>
-        <tr>
-          <th class='text-left clickable' colspan="1" onclick={{action 'toggleCheck'}}>
-            <input
-             type='checkbox'
-             checked={{eq selectedUserIds.length filteredStudents.length}}
-             indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}}>
-            {{t 'general.all'}}
-          </th>
-          <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
-          <th class='text-left' colspan="4">{{t 'general.email'}}</th>
-          <th class='text-left' colspan="2">{{t 'general.campusId'}}</th>
+<div class='list'>
+  <table>
+    <thead>
+      <tr>
+        <th class='text-left clickable' colspan="1" onclick={{action 'toggleCheck'}}>
+          <input
+            type='checkbox'
+            checked={{eq selectedUserIds.length filteredStudents.length}}
+            indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}}>
+          {{t 'general.all'}}
+        </th>
+        <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
+        <th class='text-left' colspan="4">{{t 'general.email'}}</th>
+        <th class='text-left' colspan="2">{{t 'general.campusId'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each filteredStudents as |user|}}
+        <tr class='{{if (is-in selectedUserIds user.id) "highlighted"}}'>
+          <td class='text-left clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
+            {{#if (is-in selectedUserIds user.id)}}
+              <input type='checkbox' checked>
+            {{else}}
+              <input type='checkbox'>
+            {{/if}}
+          </td>
+          <td class='text-left' colspan="4">{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>
+          <td class='text-left' colspan="4">{{user.email}}</td>
+          <td class='text-left' colspan="2">{{user.campusId}}</td>
         </tr>
-      </thead>
-      <tbody>
-        {{#each filteredStudents as |user|}}
-          <tr class='{{if (is-in selectedUserIds user.id) "highlighted"}}'>
-            <td class='text-left clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
-              {{#if (is-in selectedUserIds user.id)}}
-                <input type='checkbox' checked>
-              {{else}}
-                <input type='checkbox'>
-              {{/if}}
-            </td>
-            <td class='text-left' colspan="4">{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>
-            <td class='text-left' colspan="4">{{user.email}}</td>
-            <td class='text-left' colspan="2">{{user.campusId}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
-    {{pagedlist-controls
-      offset=offset
-      limit=limit
-      total=totalUnassignedStudents
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}
-  </div>
-</section>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
 {{#liquid-if isSaving class='crossFade'}}
   {{wait-saving
     showProgress=true

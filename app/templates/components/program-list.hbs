@@ -43,7 +43,7 @@
                   <button {{action 'cancelRemove' program}} class='done text'>{{t 'general.cancel'}}</button>
                 </div>
               {{else}}
-                <div>{{fa-icon 'spinner' spin=true}}</div>
+                {{loading-spinner tagName='div'}}
               {{/if}}
             </div>
           </td>

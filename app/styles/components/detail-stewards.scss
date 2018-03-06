@@ -1,0 +1,27 @@
+.detail-stewards {
+  @include detail-container($ilios-orange);
+
+  .detail-stewards-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+
+      .manage i {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .detail-stewards-content {
+    @include detail-container-content;
+
+    .static-list {
+      @include ilios-static-list;
+    }
+  }
+}

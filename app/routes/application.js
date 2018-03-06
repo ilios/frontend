@@ -7,7 +7,6 @@ import config from 'ilios/config/environment';
 
 
 export default Route.extend(ApplicationRouteMixin, {
-  flashMessages: service(),
   commonAjax: service(),
   i18n: service(),
   moment: service(),

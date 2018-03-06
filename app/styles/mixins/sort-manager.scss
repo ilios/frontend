@@ -1,34 +1,43 @@
 @mixin sort-manager () {
   .actions {
-    @include fill-parent;
-    vertical-align: middle;
+    display: flex;
+    justify-content: flex-end;
 
-    @include media($large-screen) {
-      @include span-columns(2 of 12);
-      @include omega();
-      @include shift(10);
-      text-align: right;
+    button {
+      margin-left: .5rem;
+    }
+
+    .bigadd {
+      background-color: $ilios-green;
+      color: $white;
+    }
+
+    .bigcancel {
+      background-color: $ilios-red;
+      color: $white;
     }
   }
 
   .content {
-    clear: both;
-    padding-top: .5em;
+    padding-top: .5rem;
   }
 
   .draggable-object {
-    @include fill-parent;
     background-color: $header-grey;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: .3em;
+    margin-right: .3rem;
     margin-top: 10px;
-    padding: .2em .4em .2em .6em;
+    padding: .2rem .4rem .2rem .6rem;
     vertical-align: middle;
 
     .fa {
       vertical-align: top;
     }
+  }
+
+  .sortable-objects {
+    padding: 1rem;
   }
 
   .draggable-object-content {
@@ -39,7 +48,6 @@
     }
 
     .title {
-      @include fill-parent;
       display: inline-block;
     }
   }

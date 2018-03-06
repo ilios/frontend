@@ -1,18 +1,20 @@
-<h2>{{course.title}}</h2>
-<div class='course-summary-actions'>
-  {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
-    {{#link-to 'course-materials' course class='materials'}}
-      {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
+<div class='course-summary-header-top'>
+  <h2>{{course.title}}</h2>
+  <div class='course-summary-actions'>
+    {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
+      {{#link-to 'course-materials' course class='materials'}}
+        {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
+      {{/link-to}}
+    {{/if}}
+    {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
+      {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
     {{/link-to}}
-  {{/if}}
-  {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
-    {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
-  {{/link-to}}
-  {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-    {{#link-to 'course.rollover' course class='rollover'}}
-      {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
-    {{/link-to}}
-  {{/if}}
+    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
+      {{#link-to 'course.rollover' course class='rollover'}}
+        {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
+      {{/link-to}}
+    {{/if}}
+  </div>
 </div>
 <div class='course-summary-content'>
   <div class="block">

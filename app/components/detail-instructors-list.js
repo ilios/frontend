@@ -9,6 +9,7 @@ export default Component.extend({
     this.set('sortInstructorsBy', ['title']);
     this.set('sortGroupsBy', ['title']);
   },
+  classNames: ['detail-instructors-list'],
   instructors: null,
   sortInstructorsBy: null,
   sortedInstructors: sort('instructors', 'sortInstructorsBy'),

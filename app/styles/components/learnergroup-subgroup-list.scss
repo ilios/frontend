@@ -1,0 +1,31 @@
+.learnergroup-subgroup-list {
+  @include detail-container($text-blue);
+
+  .learnergroup-subgroup-list-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .learnergroup-subgroup-list-actions {
+      @include detail-container-actions;
+    }
+  }
+
+
+
+  .learnergroup-subgroup-list-content {
+    @include detail-container-content;
+
+    .saved-result {
+      border: 1px solid $ilios-green;
+      margin: 1rem;
+      padding: .5rem;
+    }
+
+    .learnergroup-subgroup-list-list {
+      @include main-list-box-table;
+    }
+  }
+}

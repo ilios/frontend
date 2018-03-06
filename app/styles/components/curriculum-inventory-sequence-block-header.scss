@@ -1,0 +1,11 @@
+.curriculum-inventory-sequence-block-header {
+  background-color: $header-grey;
+  padding: .8rem;
+
+  .title {
+    .editable,
+    h4 {
+      @include ilios-heading-h4;
+    }
+  }
+}

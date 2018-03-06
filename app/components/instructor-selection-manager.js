@@ -7,7 +7,7 @@ export default Component.extend({
   i18n: service(),
   instructors: null,
   availableInstructorGroups: null,
-  classNames: ['detail-block'],
+  classNames: ['instructor-selection-manager'],
   tagName: 'section',
   instructorGroups: null,
   userSearchPlaceholder: t('general.findInstructorOrGroup'),

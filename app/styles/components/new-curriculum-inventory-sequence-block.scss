@@ -1,0 +1,49 @@
+.new-curriculum-inventory-sequence-block {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
+  .form {
+    @include ilios-form;
+  }
+
+  .item {
+    @include ilios-form-item;
+
+    &.last {
+      @include ilios-form-last-item;
+    }
+  }
+
+  .course {
+    .details {
+      font-size: smaller;
+    }
+  }
+
+  .description {
+    grid-column: 1 / -1;
+    min-height: 10rem;
+  }
+
+  .clear-dates {
+    grid-column: 1 / -1;
+
+    button {
+      max-width: 20rem;
+    }
+  }
+
+  .buttons {
+    @include ilios-form-buttons;
+  }
+
+  .selective {
+    grid-column: 1 / -1;
+    height: 2rem;
+
+    label {
+      font-style: italic;
+    };
+  }
+}

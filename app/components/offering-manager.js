@@ -8,7 +8,7 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   currentUser: service(),
-  classNames: ['offering-manager'],
+  classNameBindings: [':offering-manager', 'showRemoveConfirmation'],
   offering: null,
   editable: true,
 

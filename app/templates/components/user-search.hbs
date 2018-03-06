@@ -1,52 +1,50 @@
-<div class="live-search">
-  {{search-box
-    placeholder=placeholder
-    search=(perform search)
-    clear=(perform search)
-  }}
-  {{#if search.isRunning}}
-    <ul class='results'>
-      <li>{{t 'general.currentlySearchingPrompt'}}</li>
-    </ul>
-  {{/if}}
-  {{#if (and search.isIdle showMoreInputPrompt)}}
-    <ul class='results'>
-      <li>{{t 'general.moreInputRequiredPrompt'}}</li>
-    </ul>
-  {{/if}}
-  {{#if (and search.isIdle (gt search.lastSuccessful.value.length 0))}}
-    <ul class='results'>
-      <li class='results-count'>{{search.lastSuccessful.value.length}} {{t 'general.results'}}</li>
-      {{#each search.lastSuccessful.value as |proxy|}}
-        {{#if proxy.isUser}}
-          {{#if proxy.isActive}}
-            <li {{action 'addUser' proxy.content}} class="active">
-              <div class='livesearch-user-name'>{{proxy.fullName}}</div>
-              <div class='livesearch-user-email'>{{proxy.email}}</div>
-            </li>
-          {{else}}
-            <li class="inactive">
-              <div class='livesearch-user-name'>{{proxy.fullName}}</div>
-              <div class='livesearch-user-email'>{{proxy.email}}</div>
-            </li>
-          {{/if}}
+{{search-box
+  placeholder=placeholder
+  search=(perform search)
+  clear=(perform search)
+}}
+{{#if search.isRunning}}
+  <ul class='results'>
+    <li>{{t 'general.currentlySearchingPrompt'}}</li>
+  </ul>
+{{/if}}
+{{#if (and search.isIdle showMoreInputPrompt)}}
+  <ul class='results'>
+    <li>{{t 'general.moreInputRequiredPrompt'}}</li>
+  </ul>
+{{/if}}
+{{#if (and search.isIdle (gt search.lastSuccessful.value.length 0))}}
+  <ul class='results'>
+    <li class='results-count'>{{search.lastSuccessful.value.length}} {{t 'general.results'}}</li>
+    {{#each search.lastSuccessful.value as |proxy|}}
+      {{#if proxy.isUser}}
+        {{#if proxy.isActive}}
+          <li {{action 'addUser' proxy.content}} class="active">
+            <div class='name'>{{proxy.fullName}}</div>
+            <div class='email'>{{proxy.email}}</div>
+          </li>
+        {{else}}
+          <li class="inactive">
+            <div class='name'>{{proxy.fullName}}</div>
+            <div class='email'>{{proxy.email}}</div>
+          </li>
         {{/if}}
-        {{#if proxy.isInstructorGroup}}
-          {{#if proxy.isActive}}
-            <li {{action 'addInstructorGroup' proxy.content}} class="active">
-              {{proxy.title}}
-            </li>
-          {{else}}
-            <li class="inactive">
-              {{proxy.title}}
-            </li>
-          {{/if}}
+      {{/if}}
+      {{#if proxy.isInstructorGroup}}
+        {{#if proxy.isActive}}
+          <li {{action 'addInstructorGroup' proxy.content}} class="active">
+            {{proxy.title}}
+          </li>
+        {{else}}
+          <li class="inactive">
+            {{proxy.title}}
+          </li>
         {{/if}}
-      {{/each}}
-    </ul>
-  {{else if searchReturned}}
-    <ul class='results'>
-      <li>{{t 'general.noSearchResultsPrompt'}}</li>
-    </ul>
-  {{/if}}
-</div>
+      {{/if}}
+    {{/each}}
+  </ul>
+{{else if searchReturned}}
+  <ul class='results'>
+    <li>{{t 'general.noSearchResultsPrompt'}}</li>
+  </ul>
+{{/if}}

@@ -8,7 +8,7 @@
         {{learnergroup-tree learnerGroup=child selectedGroups=selectedGroups filter=filter add=(action add)}}
       {{/each}}
     {{else}}
-      <li>{{fa-icon 'spinner' spin=true}}</li>
+      <li>{{loading-spinner}}</li>
     {{/if}}
   </ul>
 {{/if}}

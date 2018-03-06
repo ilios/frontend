@@ -1,65 +1,55 @@
 {{#unless loadAttr.isRunning}}
-  <section class='new-result form-container'>
-    <div class="new-result-title">{{t 'general.newCurriculumInventoryReport'}}</div>
-    <div class="detail-content">
-      <div class="form-col form-col-12 name">
-        <label class="form-label">{{t 'general.name'}}:</label>
-        <div class="form-data form-data-text form-input-row">
-          <input
-            type="text"
-            value={{name}}
-            oninput={{action (mut name) value="target.value"}}
-            disabled={{isSaving}}
-            onkeyup={{action 'addErrorDisplayFor' 'name'}}
-            placeholder={{t 'general.reportNamePlaceholder'}}
-          >
-          {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
-            <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="form-col form-col-12 description">
-        <label class="form-label">{{t 'general.description'}}:</label>
-        <div class="form-data form-data-text form-input-row">
-          <textarea
-            value={{description}}
-            oninput={{action (mut description) value="target.value"}}
-            disabled={{isSaving}}
-            placeholder={{t 'general.reportDescriptionPlaceholder'}}
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="form-col form-col-12 program">
-        <label class="form-label">{{t 'general.program'}}:</label>
-        <div class="form-data form-data-text form-input-row">
-          {{currentProgram.title}}
-        </div>
-      </div>
-
-      <div class="form-col form-col-12 academic-year">
-        <label class="form-label">{{t 'general.academicYear'}}:</label>
-        <div class="form-data form-data-text form-input-row">
-          {{one-way-select
-            value=selectedYear
-            options=years
-            optionValuePath="id"
-            optionLabelPath="title"
-            update=(action (mut selectedYear))}}
-        </div>
-      </div>
-
-      <div class="form-col-6 form-data-submit">
-        <button class='done text' {{action 'save'}}>
-          {{#if isSaving}}
-            {{fa-icon 'spinner' spin=true}}
-          {{else}}
-            {{t 'general.done'}}
-          {{/if}}
-        </button>
-        <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
-      </div>
+  <h4>{{t 'general.newCurriculumInventoryReport'}}</h4>
+  <div class='form'>
+    <div class="item" data-test-name>
+      <label>{{t 'general.name'}}:</label>
+      <input
+        type="text"
+        value={{name}}
+        oninput={{action (mut name) value="target.value"}}
+        disabled={{isSaving}}
+        onkeyup={{action 'addErrorDisplayFor' 'name'}}
+        placeholder={{t 'general.reportNamePlaceholder'}}
+      >
+      {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
+        <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
+      {{/if}}
     </div>
-  </section>
+
+    <div class="item" data-test-description>
+      <label>{{t 'general.description'}}:</label>
+      <textarea
+        value={{description}}
+        oninput={{action (mut description) value="target.value"}}
+        disabled={{isSaving}}
+        placeholder={{t 'general.reportDescriptionPlaceholder'}}
+      ></textarea>
+    </div>
+
+    <div class="item" data-test-program-title>
+      <label>{{t 'general.program'}}:</label>
+      <span>{{currentProgram.title}}</span>
+    </div>
+
+    <div class="item" data-test-academic-year>
+      <label>{{t 'general.academicYear'}}:</label>
+      {{one-way-select
+        value=selectedYear
+        options=years
+        optionValuePath="id"
+        optionLabelPath="title"
+        update=(action (mut selectedYear))}}
+    </div>
+
+    <div class="buttons">
+      <button class='done text' {{action 'save'}}>
+        {{#if isSaving}}
+          {{loading-spinner}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    </div>
+  </div>
 {{/unless}}

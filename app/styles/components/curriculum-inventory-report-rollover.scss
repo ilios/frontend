@@ -1,0 +1,42 @@
+.curriculum-inventory-report-rollover {
+  h3 {
+    @include ilios-heading-h3;
+    margin-bottom: 1rem;
+  }
+
+  .rollover-form {
+    @include ilios-form;
+    border: 1px solid $ilios-blue;
+    display: block;
+    margin-top: 1rem;
+    padding: 1rem;
+
+    .item {
+      @include ilios-form-item;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+
+    .description {
+      grid-column: 1 / -1;
+      margin-bottom: 4rem;
+    }
+
+    .years {
+      select {
+        display: block;
+      }
+    }
+  }
+
+  .rollover-summary {
+    font-weight: 400;
+    margin: 0 1rem 2rem;
+
+    @include for-laptop-and-up {
+      padding: .5rem 6rem 0 4rem;
+    }
+  }
+}

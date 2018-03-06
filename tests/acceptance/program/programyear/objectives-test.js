@@ -91,10 +91,10 @@ test('manage terms', async function(assert) {
   assert.equal(getElementText(find('.specific-title', detailObjectives)), 'SelectMeSHDescriptorsforObjective');
 
   let meshManager = find('.mesh-manager', detailObjectives).eq(0);
-  let removableItems = find('.removable-list li', meshManager);
+  let removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, 2);
-  assert.equal(getElementText(find('.content .title', removableItems.eq(0)).eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(find('.content .title', removableItems.eq(1)).eq(0)), getText('descriptor 1'));
+  assert.equal(getElementText(find('.term-title', removableItems.eq(0)).eq(0)), getText('descriptor 0'));
+  assert.equal(getElementText(find('.term-title', removableItems.eq(1)).eq(0)), getText('descriptor 1'));
 
   let searchBox = find('.search-box', meshManager);
   assert.equal(searchBox.length, 1);
@@ -114,20 +114,20 @@ test('manage terms', async function(assert) {
   assert.ok(find(searchResults[1]).hasClass('disabled'));
   assert.ok(!find(searchResults[2]).hasClass('disabled'));
   assert.ok(!find(searchResults[3]).hasClass('disabled'));
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   assert.ok(!find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
   await click(searchResults[2]);
   assert.ok(find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
   assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
 
-  removableItems = find('.removable-list li', meshManager);
+  removableItems = find('.selected-terms li', meshManager);
   assert.equal(removableItems.length, 2);
   assert.equal(
-    getElementText(find('.content .title', removableItems.eq(0)).eq(0)),
+    getElementText(find('.term-title', removableItems.eq(0)).eq(0)),
     getText('descriptor 1')
   );
   assert.equal(
-    getElementText(find('.content .title', removableItems.eq(1)).eq(0)),
+    getElementText(find('.term-title', removableItems.eq(1)).eq(0)),
     getText('descriptor 2')
   );
 });
@@ -142,7 +142,7 @@ test('save terms', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[2]);
   await click('button.bigadd', detailObjectives);
   let tds = find('.programyear-objective-list tbody tr:eq(0) td');
@@ -159,7 +159,7 @@ test('cancel term changes', async function(assert) {
   await fillIn(searchBoxInput, 'descriptor');
   await click('span.search-icon', meshManager);
   let searchResults = find('.mesh-search-results li', meshManager);
-  await click('.removable-list li:eq(0)', meshManager);
+  await click('.selected-terms li:eq(0)', meshManager);
   await click(searchResults[2]);
   await click(searchResults[3]);
   await click('button.bigcancel', detailObjectives);

@@ -1,0 +1,49 @@
+.course-overview {
+  @include ilios-overview($ilios-orange);
+
+  .title {
+    @include ilios-overview-title;
+  }
+
+  .course-overview-header {
+    @include ilios-overview-header;
+  }
+
+  .course-overview-actions {
+    @include ilios-overview-actions;
+
+    a {
+      color: $header-blue;
+      font-size: 1.2rem;
+      margin-right: .5rem;
+    }
+  }
+
+  .block {
+    @include ilios-overview-block;
+  }
+
+  .course-overview-content {
+    @include ilios-overview-content;
+  }
+
+  .courseexternalid {
+    input {
+      max-width: initial;
+      min-width: initial;
+    }
+  }
+
+  .coursedirectors {
+    grid-column: 1 / -1;
+    margin-bottom: 2rem;
+
+    .directors {
+      @include ilios-tag-list;
+    }
+  }
+
+  .universallocator {
+    color: $dark-grey;
+  }
+}

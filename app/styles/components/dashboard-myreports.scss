@@ -1,0 +1,46 @@
+.dashboard-myreports {
+  @include dashboard-block;
+
+  table {
+    width: auto;
+  }
+
+  .form-title {
+    color: $ilios-orange;
+    font-weight: bold;
+    margin-bottom: .5rem;
+  }
+
+  .form-label {
+    font-size: .9rem;
+    font-weight: bold;
+    text-align: left;
+
+    &.sub-label {
+      font-size: .8rem;
+      font-style: italic;
+      font-weight: normal;
+    }
+  }
+
+  .input-buttons {
+    float: right;
+  }
+
+  .form-data input {
+    width: 100%;
+  }
+
+  .form-container {
+    border: $header-grey 2px solid;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .years-filter {
+    margin: .5rem 0 1rem;
+    padding-right: .5rem;
+    text-align: right;
+    width: 100%;
+  }
+}

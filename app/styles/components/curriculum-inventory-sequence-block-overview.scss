@@ -1,0 +1,66 @@
+.curriculum-inventory-sequence-block-overview {
+  @include ilios-overview($ilios-orange);
+
+  .academic-level {
+    padding-top: .5rem;
+  }
+
+  .block {
+    @include ilios-overview-block;
+  }
+
+  .course {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / -1;
+
+    span {
+      display: flex;
+    }
+
+    .details {
+      font-size: smaller;
+    }
+  }
+
+  .curriculum-inventory-sequence-block-overview-content {
+    @include ilios-overview-content;
+  }
+
+  .description {
+    align-items: flex-start;
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+
+    textarea {
+      @include ilios-textarea;
+    }
+  }
+
+  .selective {
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding-top: .5rem;
+
+  }
+
+  .sessions-list {
+    grid-column: 1 / -1;
+    padding-top: 1rem;
+
+    .sessions {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+    }
+  }
+
+  .title {
+    @include ilios-overview-title;
+  }
+}

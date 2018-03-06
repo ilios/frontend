@@ -1,0 +1,81 @@
+.breadcrumbs {
+  $breadcrumb-border-color: $switch-blue;
+  $breadcrumb-border: 1px solid $breadcrumb-border-color;
+  $breadcrumb-height: 2rem;
+  $breadcrumb-arrow-color: $breadcrumb-border-color;
+  $breadcrumb-background: $base-background-color;
+  $breadcrumb-inactive-hover-color: $breadcrumb-background;
+  $breadcrumb-color: $text-blue;
+  $breadcrumb-color-hover: $ilios-orange;
+  $breadcrumb-color-active: $breadcrumb-color;
+
+  display: inline-block;
+  margin: .75rem;
+  text-align: left;
+
+  span {
+    background-color: $breadcrumb-background;
+    border: $breadcrumb-border;
+    border-left: 0;
+    color: $breadcrumb-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: .8rem;
+    line-height: $breadcrumb-height;
+    margin-bottom: 2px;
+    margin-right: -5px;
+    padding: 0 ($breadcrumb-height / 4) 0 ($breadcrumb-height / 2);
+    position: relative;
+    text-decoration: none;
+
+    &:first-child {
+      border-bottom-left-radius: $base-border-radius;
+      border-left: $breadcrumb-border;
+      border-top-left-radius: $base-border-radius;
+      padding-left: $breadcrumb-height / 2;
+    }
+
+    &:last-child,
+    &:last-child:hover {
+      background-color: $breadcrumb-background;
+      border-bottom-right-radius: $base-border-radius;
+      border-top-right-radius: $base-border-radius;
+      color: $breadcrumb-color-active;
+      cursor: default;
+      padding-right: $breadcrumb-height / 2;
+    }
+
+    &:focus,
+    &:hover {
+      background-color: $breadcrumb-inactive-hover-color;
+      color: $breadcrumb-color-hover;
+    }
+
+    &::after,
+    &::before {
+      @include position(absolute, 0 auto 0 100%);
+      border-bottom: $breadcrumb-height / 2 solid transparent;
+      border-left: $breadcrumb-height / 4 solid transparent;
+      border-top: $breadcrumb-height / 2 solid transparent;
+      content: '';
+      display: block;
+      margin: auto;
+      z-index: 2;
+    }
+
+    &:last-child::after,
+    &:last-child::before {
+      border: 0;
+    }
+
+    &::before {
+      border-left-color: $breadcrumb-arrow-color;
+      margin-left: 1px;
+      z-index: 1;
+    }
+
+    &::after {
+      border-left-color: $breadcrumb-background;
+    }
+  }
+}

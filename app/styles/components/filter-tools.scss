@@ -1,0 +1,34 @@
+.filter-tools {
+  $filter-tools-border-color: $base-border-color;
+  $filter-font-size: 1rem;
+
+  @include clearfix;
+  border-radius: $base-border-radius;
+  padding: 1rem 0 1rem .5rem;
+
+
+  .filter {
+    font-size: $filter-font-size;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    min-height: 2.25rem;
+    vertical-align: middle;
+
+    @include for-laptop-and-up {
+      margin-bottom: 0;
+
+      select {
+        max-width: 200px;
+      }
+    }
+
+    .menu {
+      width: 100%;
+    }
+
+    .inline-label {
+      font-weight: bold;
+      margin-right: .5rem;
+    }
+  }
+}

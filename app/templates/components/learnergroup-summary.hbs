@@ -28,7 +28,7 @@
       }}
     </div>
   {{else}}
-    <h1 class='text-center'>{{fa-icon 'spinner' spin=true}}</h1>
+    <h1 class='text-center'>{{loading-spinner}}</h1>
   {{/if}}
 
   <div class="block defaultlocation">
@@ -75,7 +75,7 @@
           </span>
         {{/liquid-if}}
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </div>
   </div>
@@ -89,7 +89,7 @@
           {{t 'general.none'}}
         {{/if}}
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </div>
   </div>
@@ -122,7 +122,7 @@
       addUsersToGroup=(perform addUsersToGroup)
     }}
   {{else}}
-    <span class='cohortmembers-loading'>{{fa-icon 'spinner' spin=true}}</span>
+    {{loading-spinner class='cohortmembers-loading'}}
   {{/if}}
 </section>
 

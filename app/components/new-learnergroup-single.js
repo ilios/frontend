@@ -14,6 +14,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+  classNames: ['form'],
   title: null,
   fillModeSupported: false,
   fillWithCohort: false,

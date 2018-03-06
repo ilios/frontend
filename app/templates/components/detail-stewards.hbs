@@ -1,28 +1,30 @@
-{{#if isManaging}}
-  <div class='title'>
-    <span class='detail-specific-title'>{{t 'general.stewardingSchoolsAndDepartments'}}</span>
-  </div>
-{{else}}
-  <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
-    {{t 'general.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
-  </div>
-{{/if}}
-<div class='actions'>
+<div class='detail-stewards-header'>
   {{#if isManaging}}
-    <button class='bigadd' onclick={{perform save}}>
-      {{fa-icon (if save.isRunning 'spinner' 'check') spin=save.isRunning}}
-    </button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-  {{else if editable}}
-    <button class='manage' onclick={{perform manage}}>
-      {{t 'general.stewardsManageTitle'}}
-      {{#if manage.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
-      {{/if}}
-    </button>
+    <div class='title'>
+      <span class='detail-specific-title'>{{t 'general.stewardingSchoolsAndDepartments'}}</span>
+    </div>
+  {{else}}
+    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
+      {{t 'general.stewardingSchoolsAndDepartments'}} ({{programYear.stewards.length}})
+    </div>
   {{/if}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' onclick={{perform save}}>
+        {{fa-icon (if save.isRunning 'spinner' 'check') spin=save.isRunning}}
+      </button>
+      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    {{else if editable}}
+      <button class='manage' onclick={{perform manage}}>
+        {{t 'general.stewardsManageTitle'}}
+        {{#if manage.isRunning}}
+          {{loading-spinner}}
+        {{/if}}
+      </button>
+    {{/if}}
+  </div>
 </div>
-<div class='content'>
+<div class='detail-stewards-content'>
   {{#if isManaging}}
     {{detail-steward-manager
       stewards=bufferStewards
@@ -48,7 +50,7 @@
           <li>{{t 'general.none'}}</li>
         {{/each}}
       {{else}}
-        <div class='loading'>{{fa-icon 'spinner' spin=true}}</div>
+        {{loading-spinner tagName='div' class='loading'}}
       {{/if}}
     </ul>
   {{/if}}

@@ -5,12 +5,14 @@
     currentProgress=currentGroupsSaved
   }}
 {{/liquid-if}}
-<div class='title'>
-  {{t 'general.subgroups'}} ({{get (await parentGroup.children) 'length'}})
-</div>
+<div class='learnergroup-subgroup-list-header'>
+  <div class='title'>
+    {{t 'general.subgroups'}} ({{get (await parentGroup.children) 'length'}})
+  </div>
 
-<div class='learnergroup-subgroup-list-actions'>
-  {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+  <div class='learnergroup-subgroup-list-actions'>
+    {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+  </div>
 </div>
 
 <div class='learnergroup-subgroup-list-content'>
@@ -44,7 +46,7 @@
         }}
       {{/if}}
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{/if}}
   </div>
 </div>

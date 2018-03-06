@@ -1,0 +1,59 @@
+.editinplace {
+  .editable {
+    color: $ilios-blue;
+    cursor: pointer;
+
+    &.prompt {
+      font-style: italic;
+    }
+  }
+
+  .editor {
+    @include ilios-form-error;
+    align-items: center;
+    display: flex;
+
+    #{$form-input-text-types} {
+      background: $white;
+      border: 1px solid $header-grey;
+      border-radius: $base-border-radius;
+      color: $base-font-color;
+      cursor: pointer;
+      display: inline;
+      outline: none;
+      overflow: show;
+      z-index: 100;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-start;
+
+      button {
+        background: transparent;
+        margin: 0;
+        padding: 0 .2rem;
+
+        &:enabled:hover {
+          color: $white;
+        }
+
+        &.done {
+          color: $ilios-green;
+
+          &:enabled:hover {
+            background-color: $ilios-green;
+          }
+        }
+
+        &.cancel {
+          color: $ilios-red;
+
+          &:enabled:hover {
+            background-color: $ilios-red;
+          }
+        }
+      }
+    }
+  }
+}

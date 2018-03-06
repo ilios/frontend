@@ -1,4 +1,4 @@
-<div data-test-dashboard>
+<div class='ilios-dashboard' data-test-dashboard>
   {{common-dashboard
     show=show
     setShow=(action (mut show))
@@ -18,6 +18,8 @@
     courseFilters=courseFilters
     toggleCourseFilters=(action (toggle 'courseFilters' this))
   }}
-  {{dashboard-myreports data-test-myreports}}
-  {{dashboard-mycourses}}
+  <div class='dashboard-blocks'>
+    {{dashboard-myreports data-test-myreports}}
+    {{dashboard-mycourses}}
+  </div>
 </div>

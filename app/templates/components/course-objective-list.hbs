@@ -52,7 +52,7 @@
 {{else}}
   {{! template-lint-disable unused-block-params }}
   {{#each (repeat course.objectives.length) as |empty|}}
-    <div>{{fa-icon 'spinner' spin = true}}</div>
+    <div>{{loading-spinner}}</div>
   {{/each}}
 {{/if}}
 

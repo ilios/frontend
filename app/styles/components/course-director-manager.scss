@@ -1,0 +1,27 @@
+.course-director-manager {
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .bigadd {
+      background-color: $ilios-green;
+      color: $white;
+      margin-right: .25rem;
+    }
+
+    .bigcancel {
+      background-color: $ilios-red;
+      color: $white;
+    }
+  }
+
+  .selected-directors {
+    padding-bottom: .5rem;
+
+    ul {
+      @include ilios-removable-list;
+    }
+  }
+
+
+}

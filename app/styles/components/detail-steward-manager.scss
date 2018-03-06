@@ -1,0 +1,51 @@
+.detail-steward-manager {
+  display: grid;
+
+  @include for-tablet-and-up {
+    grid-gap: .5rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .remove-list,
+  .add-list {
+    border: 1px solid $base-link-color;
+    height: 380px;
+    overflow: scroll;
+    padding: 1rem;
+  }
+
+  .remove-list {
+    background-color: $header-grey;
+  }
+
+  .add-list {
+    background-color: $white;
+  }
+
+  ul {
+    @include ilios-list-reset;
+
+    li {
+      color: $base-link-color;
+      cursor: pointer;
+      font-weight: 500;
+
+      ul {
+        margin-left: 2rem;
+
+        li {
+          font-weight: 300;
+        }
+      }
+    }
+  }
+
+
+
+  .loading {
+    font-size: 2rem;
+    margin-top: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+}

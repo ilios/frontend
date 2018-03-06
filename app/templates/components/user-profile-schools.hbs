@@ -1,12 +1,14 @@
-<h2 class='title'>{{t 'general.permissions'}}</h2>
+<div class='user-profile-schools-header'>
+  <h3 class='title'>{{t 'general.permissions'}}</h3>
 
-<div class='actions'>
-  {{#if isManaging}}
-    <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
-    <button disabled={{save.isRunning}} class='bigcancel' {{action (perform cancel)}}>{{fa-icon 'undo'}}</button>
-  {{else if isManagable}}
-    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
-  {{/if}}
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+      <button disabled={{save.isRunning}} class='bigcancel' {{action (perform cancel)}}>{{fa-icon 'undo'}}</button>
+    {{else if isManagable}}
+      <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+    {{/if}}
+  </div>
 </div>
 <p class='primary-school'><strong>{{t 'general.primarySchool'}}:</strong> {{get (await user.school) 'title'}}</p>
 

@@ -1,15 +1,15 @@
 {{#unless loadAttr.isRunning}}
-  <div class='detail-actions'>
+  <div class='actions'>
     <button class='bigadd' {{action (perform saveChanges)}}>
       {{fa-icon (if saveChanges.isRunning 'spinner' 'check') spin=(if saveChanges.isRunning true false)}}
     </button>
     <button class='bigcancel' {{action 'close'}}>{{fa-icon 'undo'}}</button>
   </div>
-  <div class='resultslist-list'>
+  <div class='list'>
     <table>
       <thead>
         <tr>
-          <th class='text-center' colspan=2>
+          <th class='text-center count-as-one-header' colspan=2>
             <input
             type="checkbox"
             checked={{allSelected}}
@@ -60,13 +60,13 @@
             <td class='text-center' colspan=1>
               {{#if (is-in linkedSessionsBuffer session)}}
                 {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
-                  {{fa-icon 'spinner' spin=true}}
+                  {{loading-spinner}}
                 {{else}}
                   {{await session.maxSingleOfferingDuration}}
                 {{/unless}}
               {{else}}
                 {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
-                  {{fa-icon 'spinner' spin=true}}
+                  {{loading-spinner}}
                 {{else}}
                   {{await session.totalSumOfferingsDuration}}
                 {{/unless}}

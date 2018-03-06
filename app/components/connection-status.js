@@ -2,8 +2,10 @@
 import Component from '@ember/component';
 import DomMixin from 'ember-lifeline/mixins/dom';
 import { task, timeout } from 'ember-concurrency';
+import { computed } from '@ember/object';
 
 export default Component.extend(DomMixin, {
+  attributeBindings: ['ariaHidden:aria-hidden'],
   classNameBindings: [':connection-status', 'isOnline::offline'],
   isOnline: true,
   timer: 5,
@@ -22,6 +24,14 @@ export default Component.extend(DomMixin, {
       this.get('changeConnectionState').perform(false);
     });
   },
+  ariaHidden: computed('isOnline', function () {
+    const isOnline = this.get('isOnline');
+    return isOnline?'true':false;
+  }),
+  ariaRole: computed('isOnline', function () {
+    const isOnline = this.get('isOnline');
+    return isOnline?false:'alert';
+  }),
   changeConnectionState: task(function * (isOnline) {
     this.set('timer', 5);
     this.set('multiplier', 1);

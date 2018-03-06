@@ -1,0 +1,99 @@
+.detail-learningmaterials {
+  @include detail-container($ilios-orange);
+
+  .detail-learningmaterials-header {
+    @include detail-container-header;
+  }
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .detail-learningmaterials-actions {
+    @include detail-container-actions;
+  }
+
+  .learningmaterial-search {
+    flex-grow: 2;
+    margin: 0 .5rem;
+
+    input {
+      width: 100%;
+    }
+
+    .search-box {
+      margin-bottom: 0;
+    }
+
+    .lm-search-results {
+      @include ilios-selectable-list;
+      background-color: $white;
+      border: 1px solid $base-link-color;
+      margin: 0;
+      max-height: 15rem;
+      overflow-y: scroll;
+      position: absolute;
+      z-index: 10;
+
+      li {
+        border-bottom: 1px solid $header-grey;
+        min-height: 3.25rem;
+        position: relative;
+
+        &.disabled {
+          cursor: default;
+        }
+
+        &:hover {
+          background: $super-light-grey;
+        }
+      }
+
+      .learning-material-title {
+        color: inherit;
+        display: block;
+        margin: 0;
+      }
+
+      .learning-material-description {
+        color: $dark-grey;
+        display: block;
+        font-size: .75rem;
+      }
+
+      .learning-material-status {
+        color: $ilios-red;
+        font-size: .75rem;
+        position: absolute;
+        right: 5px;
+        top: 0;
+      }
+
+      .learning-material-properties {
+
+        li {
+          border: 0;
+          color: $darker-grey;
+          cursor: inherit;
+          display: list-item;
+          font-size: .75rem;
+          margin: 0;
+          min-height: 0;
+          padding: 0 0 0 .75rem;
+        }
+      }
+    }
+  }
+
+  .detail-learningmaterials-content {
+    @include detail-container-content;
+
+    table {
+      td {
+        ul {
+          @include ilios-list-reset;
+        }
+      }
+    }
+  }
+}

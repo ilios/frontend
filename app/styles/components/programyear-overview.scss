@@ -1,0 +1,28 @@
+.programyear-overview {
+  @include ilios-overview($ilios-orange);
+  background: $background-grey;
+  border: 1px dotted $header-grey;
+  border-bottom: 1px dotted $ilios-orange;
+  padding: 0 2rem 1rem;
+
+  h5 {
+    @include ilios-overview-title;
+    margin-top: .5rem;
+  }
+
+  .programyear-overview-content {
+    padding-top: 1rem;
+
+    .removable-directors {
+      @include ilios-removable-list;
+
+      margin-bottom: .5rem;
+    }
+
+    .directors {
+      @include ilios-tag-list;
+
+      margin-bottom: .5rem;
+    }
+  }
+}

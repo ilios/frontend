@@ -1,0 +1,42 @@
+.curriculum-inventory-report-overview {
+  @include ilios-overview($ilios-orange);
+  border-bottom: 1px dotted $ilios-orange;
+  display: block;
+
+  .report-overview-header {
+    @include ilios-overview-header;
+
+    .title {
+      @include ilios-overview-title;
+    }
+
+    .report-overview-actions {
+      @include ilios-overview-actions;
+
+      a {
+        color: $header-blue;
+        font-size: 1.2rem;
+        margin-right: .5rem;
+      }
+    }
+  }
+
+
+
+  .block {
+    @include ilios-overview-block;
+  }
+
+  .curriculum-inventory-report-overview-content {
+    @include ilios-overview-content;
+  }
+
+  .description {
+    grid-column: 1 / -1;
+    margin-bottom: 2rem;
+
+    textarea {
+      @include ilios-textarea;
+    }
+  }
+}

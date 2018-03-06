@@ -1,0 +1,28 @@
+.detail-learnergroups-list {
+  .trees {
+
+    display: grid;
+
+    @include for-laptop-and-up {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  fieldset {
+    @include ilios-fieldset;
+
+    ul {
+      @include ilios-list-badges();
+
+      .top-level-group {
+        background-color: $ilios-yellow;
+        color: $black;
+      }
+    }
+
+    .remove-all-subgroups {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

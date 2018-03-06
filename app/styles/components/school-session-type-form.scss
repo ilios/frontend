@@ -1,0 +1,37 @@
+.school-session-type-form {
+  .form {
+    @include ilios-form;
+    display: block;
+    width: 80%;
+
+    .item {
+      @include ilios-form-item;
+      height: 4rem;
+
+      label {
+        display: block;
+      }
+    }
+
+    .calendar-color {
+      input {
+        width: 3rem;
+      }
+
+      .box {
+        border: 1px solid $black;
+        display: inline-block;
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
+    }
+
+
+
+    .buttons {
+      @include ilios-form-buttons;
+      padding-top: 2rem;
+    }
+  }
+}

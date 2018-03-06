@@ -138,7 +138,7 @@
         url=uploadPath
       }}
       {{#if showUploadStatus}}
-        {{fa-icon 'spinner' spin=true}} {{fileUploadPercentage}}%
+        {{loading-spinner}} {{fileUploadPercentage}}%
       {{else if fileHash}}
         {{fa-icon 'check' class='add'}}
       {{/if}}
@@ -149,10 +149,10 @@
   </div>
 {{/if}}
 
-<div class="item buttons">
+<div class="buttons">
   <button class='done text' {{action (perform prepareSave)}}>
     {{#if prepareSave.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       {{t 'general.done'}}
     {{/if}}

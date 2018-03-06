@@ -21,7 +21,7 @@
           {{#if (is-fulfilled instructorGroup.courses)}}
             {{get (await instructorGroup.courses) 'length'}}
           {{else}}
-            {{fa-icon 'spinner' spin=true}}
+            {{loading-spinner}}
           {{/if}}
         </td>
         <td class='text-right'>

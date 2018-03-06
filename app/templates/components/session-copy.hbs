@@ -9,7 +9,7 @@
   <div class='item year-select'>
     <label>{{t 'general.year'}}:</label>
     {{#if loadYears.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       <select onchange={{action 'changeSelectedYear' value="target.value"}}>
         {{#each loadYears.lastSuccessful.value as |year|}}
@@ -30,7 +30,7 @@
   <div class='item course-select'>
     <label>{{t 'general.targetCourse'}}:</label>
     {{#if loadCourses.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       <select onchange={{action 'changeSelectedCourse' value="target.value"}}>
         {{#each (sort-by 'title' loadCourses.lastSuccessful.value) as |course|}}
@@ -48,7 +48,7 @@
   <div class='buttons'>
     <button class='done text' disabled={{if (or save.isRunning (not selectedYear) (not selectedCourse)) true}} {{action (perform save)}}>
       {{#if save.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

@@ -1,0 +1,39 @@
+.learnergroup-header {
+  .header-bar {
+    background-color: $header-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .8rem;
+
+    @include for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+
+      @include for-tablet-and-up {
+        flex-direction: row;
+      }
+
+      .editable,
+      h4 {
+        display: block;
+        font-size: 1.5rem;
+
+        @include for-laptop-and-up {
+          display: inline;
+        }
+      }
+
+      @include for-tablet-and-up {
+        h4 {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+
+}

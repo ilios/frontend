@@ -1,0 +1,5 @@
+.detail-instructors-list {
+  ul {
+    @include ilios-tag-list;
+  }
+}

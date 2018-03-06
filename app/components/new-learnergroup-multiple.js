@@ -16,6 +16,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+  classNames: ['form'],
   numSubGroups: null,
   isSaving: false,
 

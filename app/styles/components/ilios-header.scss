@@ -1,0 +1,91 @@
+.ilios-header {
+  align-items: baseline;
+  background-color: $ilios-orange;
+  display: grid;
+  grid-template-areas:
+  'tools tools'
+  'logo heading';
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1.5rem 60px;
+
+  @include for-tablet-and-up {
+    grid-template-areas:
+    'logo heading tools';
+    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-rows: 60px;
+  }
+
+  @include for-tablet-and-up {
+    grid-template-columns: 200px 4fr 2fr;
+  }
+
+  @include for-desktop-and-up {
+    grid-template-columns: 240px 4fr 2fr;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  .logo {
+    grid-area: logo;
+
+    .image {
+      background-image: url('images/ilios-logo.svg');
+      background-repeat: no-repeat;
+      display: block;
+      height: 42px;
+      width: 84px;
+    }
+  }
+
+  h1 {
+    color: $white;
+    font-size: 2.3vmax;
+    grid-area: heading;
+  }
+
+  // Elements on the far right
+  .tools {
+    background: transparent;
+    display: flex;
+    grid-area: tools;
+    justify-self: end;
+    margin-right: 1rem;
+
+    .user,
+    .locales {
+      color: $ilios-orange;
+      font-weight: 800;
+
+      span {
+        display: none;
+
+        @include for-laptop-and-up {
+          display: inline;
+        }
+      }
+
+      .button {
+        background-color: transparent;
+        border: 0;
+        border-radius: $base-border-radius;
+        color: $white;
+        font-weight: normal;
+
+        &:hover {
+          background-color: $white;
+          color: $ilios-orange;
+        }
+      }
+    }
+
+    .user {
+      margin-left: 1rem;
+    }
+  }
+
+  .visually-hidden {
+    @include visually-hidden;
+  }
+}

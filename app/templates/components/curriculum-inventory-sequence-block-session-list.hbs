@@ -1,5 +1,5 @@
 {{#unless loadAttr.isRunning}}
-  <div class='resultslist-list'>
+  <div class='sessions-list'>
     <table>
       <thead>
         <tr>
@@ -43,13 +43,13 @@
             <td class='text-center' colspan=1>
               {{#if (is-in linkedSessions session)}}
                 {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
-                  {{fa-icon 'spinner' spin=true}}
+                  {{loading-spinner}}
                 {{else}}
                   {{await session.maxSingleOfferingDuration}}
                 {{/unless}}
               {{else}}
                 {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
-                  {{fa-icon 'spinner' spin=true}}
+                  {{loading-spinner}}
                 {{else}}
                   {{await session.totalSumOfferingsDuration}}
                 {{/unless}}

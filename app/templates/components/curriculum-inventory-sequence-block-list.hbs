@@ -108,12 +108,12 @@
       </div>
     {{else}}
       {{#if parent}}
-        <span class="default-message">{{t 'general.noSubSequenceBlocks'}}</span>
+        <div class="default-message">{{t 'general.noSubSequenceBlocks'}}</div>
       {{else}}
-        <span class="default-message">{{t 'general.noSequenceBlocks'}}</span>
+        <div class="default-message">{{t 'general.noSequenceBlocks'}}</div>
       {{/if}}
     {{/if}}
   {{else}}
-    <div>{{fa-icon 'spinner' spin=true}}</div>
+    {{loading-spinner tagName='div'}}
   {{/if}}
 {{/unless}}

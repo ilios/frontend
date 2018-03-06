@@ -25,7 +25,7 @@
               <span class='clickable remove' {{action 'confirmRemove' learnerGroup}}>{{fa-icon 'trash'}}</span>
             {{/if}}
           {{else}}
-            {{fa-icon 'spinner' spin=true}}
+            {{loading-spinner}}
           {{/if}}
           {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup) title=(t 'general.copy')}}
         </td>

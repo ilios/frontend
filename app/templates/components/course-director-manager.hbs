@@ -1,20 +1,20 @@
-<div class='detail-actions'>
+<div class='actions'>
   <button class='bigadd' {{action (perform saveChanges)}}>
     {{fa-icon (if saveChanges.isRunning 'spinner' 'check') spin=(if saveChanges.isRunning true false)}}
   </button>
   <button class='bigcancel' {{action close}}>{{fa-icon 'undo'}}</button>
 </div>
-<div class='detail-content'>
-  <ul class='removable-list tag-list'>
+<div class='selected-directors'>
+  <ul>
     {{#each (sort-by 'lastName' directors) as |user|}}
       <li {{action 'removeDirector' user}}>
-        {{user.fullName}} {{fa-icon 'remove'}}
+        {{user.fullName}} {{fa-icon 'remove' class='remove'}}
       </li>
     {{/each}}
   </ul>
-  {{user-search
-    addUser='addDirector'
-    roles='1'
-    currentlyActiveUsers=directors
-  }}
 </div>
+{{user-search
+  addUser='addDirector'
+  roles='1'
+  currentlyActiveUsers=directors
+}}

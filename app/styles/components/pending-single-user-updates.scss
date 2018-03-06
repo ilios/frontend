@@ -1,0 +1,29 @@
+.pending-single-user-updates {
+  margin: auto;
+
+  .update {
+    border: 1px solid $ilios-orange;
+    border-radius: 1rem;
+    display: block;
+    margin: 1rem auto;
+    padding: 0 1rem .75rem;
+    width: 75%;
+
+    .explanation {
+      text-align: left;
+
+      h2 {
+        display: inline;
+      }
+    }
+
+    .actions {
+      margin-top: 1rem;
+
+      span {
+        margin-right: 1rem;
+      }
+    }
+
+  }
+}

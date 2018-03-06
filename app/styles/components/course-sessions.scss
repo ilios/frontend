@@ -1,0 +1,27 @@
+.course-sessions {
+  @include detail-container($ilios-orange);
+
+  background-color: $active-background-color;
+
+  .course-sessions-header {
+    @include detail-container-header;
+  }
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .save-result {
+    border: 1px solid $ilios-green;
+    margin: 1rem;
+    padding: .75rem;
+  }
+
+  .course-sessions-content {
+    @include detail-container-content;
+  }
+}

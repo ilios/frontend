@@ -28,7 +28,7 @@ export default Component.extend({
   },
   'data-test-mesh-manager': true,
   layout: layout,
-  classNames: ['detail-block', 'mesh-manager'],
+  classNames: ['mesh-manager'],
   terms: null,
   query: '',
   searchResults: null,

@@ -1,0 +1,29 @@
+.new-myreport {
+  background-color: $background-grey;
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem 1rem 3rem;
+
+  .title {
+    @include ilios-heading-h5;
+    color: $ilios-orange;
+    margin-bottom: .5rem;
+  }
+
+  .new-myreport-content {
+    p {
+      display: grid;
+      grid-gap: .5rem;
+      grid-template-columns: 1fr 4fr;
+
+      label {
+        @include ilios-label;
+        text-align: right;
+      }
+    }
+  }
+
+
+
+
+}

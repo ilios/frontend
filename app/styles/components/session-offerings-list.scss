@@ -1,0 +1,51 @@
+.session-offerings-list {
+  display: grid;
+
+  .offering-block {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    .offering-form {
+      grid-column: 1 / -1;
+    }
+
+    .offering-block-date {
+      grid-column: 1 / -1;
+
+      .offering-block-date-dayofweek {
+        color: $ilios-orange;
+        display: block;
+        font-size: 1.2rem;
+        font-weight: bold;
+        width: 100%;
+      }
+
+      .offering-block-date-dayofmonth {
+        color: $medium-grey;
+        }
+      }
+
+    .offering-block-time {
+      grid-column: 1 / -1;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+
+      .offering-block-time-time-starttime,
+      .offering-block-time-time-endtime {
+        color: $medium-grey;
+        display: block;
+        font-weight: bold;
+      }
+
+      .offering-block-time-time-starttime-label,
+      .offering-block-time-time-endtime-label {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .multiday-offering-block-time-time {
+    margin-bottom: .5rem;
+  }
+
+}

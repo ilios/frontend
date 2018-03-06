@@ -143,7 +143,7 @@ test('learner groups', async function(assert) {
   let container = find('.session-offerings');
   let dateBlocks = find('.offering-block', container);
   for(let i = 0; i < fixtures.offerings.length; i++){
-    let learnerGroups = find('.offering-block-time-offering-learner_groups li', dateBlocks.eq(i));
+    let learnerGroups = find('.offering-manager-learner-groups li', dateBlocks.eq(i));
     let offeringLearnerGroups = fixtures.offerings[i].learnerGroupIds;
     assert.equal(learnerGroups.length, offeringLearnerGroups.length);
     for(let i = 0; i < offeringLearnerGroups.length; i++){
@@ -170,7 +170,7 @@ test('instructors', async function(assert) {
     return arr.uniq().sort();
   };
   for(let i = 0; i < fixtures.offerings.length; i++){
-    let instructors = find('.offering-block-time-offering-instructors li', dateBlocks.eq(i));
+    let instructors = find('.offering-manager-instructors li', dateBlocks.eq(i));
     let offeringInstructors = extractInstructorsFromOffering(i);
     assert.equal(instructors.length, offeringInstructors.length);
     for (let i = 0; i < offeringInstructors.length; i++){
@@ -186,9 +186,9 @@ test('instructors', async function(assert) {
 test('confirm removal message', async function(assert) {
   assert.expect(2);
   await visit(url);
-  let offering = find('.offering-block-time-offering:eq(0)');
-  await click('.offering-block-time-offering-actions .remove', offering);
-  assert.ok(offering.hasClass('offering-confirm-removal'));
+  let offering = find('.offering-manager:eq(0)');
+  await click('.offering-manager-actions .remove', offering);
+  assert.ok(offering.hasClass('show-remove-confirmation'));
   assert.equal(getElementText(find('.confirm-message', offering)), getText('Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'));
 });
 
@@ -196,23 +196,23 @@ test('remove offering', async function(assert) {
   assert.expect(2);
   await visit(url);
 
-  let offerings = find('.offering-block-time-offering');
+  let offerings = find('.offering-manager');
   assert.equal(offerings.length, 3);
-  let offering = find('.offering-block-time-offering').eq(0);
-  await click('.offering-block-time-offering-actions .remove', offering);
+  let offering = find('.offering-manager').eq(0);
+  await click('.offering-manager-actions .remove', offering);
   await click('.confirm-message .remove', offering);
-  assert.equal(find('.offering-block-time-offering').length, 2);
+  assert.equal(find('.offering-manager').length, 2);
 });
 
 test('cancel remove offering', async function(assert) {
   assert.expect(2);
   await visit(url);
-  let offerings = find('.offering-block-time-offering');
+  let offerings = find('.offering-manager');
   assert.equal(offerings.length, 3);
-  let offering = find('.offering-block-time-offering').eq(0);
-  await click('.offering-block-time-offering-actions .remove', offering);
+  let offering = find('.offering-manager').eq(0);
+  await click('.offering-manager-actions .remove', offering);
   await click('.cancel', offering);
-  assert.equal(find('.offering-block-time-offering').length, 3);
+  assert.equal(find('.offering-manager').length, 3);
 });
 
 test('users can create a new offering single day', async function(assert) {
@@ -233,17 +233,17 @@ test('users can create a new offering single day', async function(assert) {
   const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
 
   const searchBox = '.instructors input';
-  const searchBoxOption = '.livesearch-user-name:first';
+  const searchBoxOption = '[data-test-user-search] .results li:eq(1)';
   const createButton = '.done';
 
   const dayOfWeek = '.offering-block-date-dayofweek:first';
   const dayOfMonth = '.offering-block-date-dayofmonth:first';
   const startTime = '.offering-block-time-time-starttime:first';
   const endTime = '.offering-block-time-time-endtime:first';
-  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
-  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
-  const room = '.offering-block-time-offering-location:first';
-  const instructor = '.offering-block-time-offering-instructors ul li:eq(0)';
+  const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
+  const room = '.offering-manager-location:first';
+  const instructor = '.offering-manager-instructors ul li:eq(0)';
 
   await visit(url);
   await click(expandButton);
@@ -292,13 +292,13 @@ test('users can create a new offering multi-day', async function(assert) {
   const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
 
   const searchBox = `${form} .instructors input`;
-  const searchBoxOption = `${form} .livesearch-user-name:first`;
+  const searchBoxOption = `${form} [data-test-user-search] .results li:eq(1)`;
   const createButton = `${form} .done`;
 
-  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
-  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
-  const room = '.offering-block-time-offering-location:first';
-  const instructor = '.offering-block-time-offering-instructors ul li:eq(0)';
+  const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
+  const room = '.offering-manager-location:first';
+  const instructor = '.offering-manager-instructors ul li:eq(0)';
 
   const multiDayDesc = '.multiday-offering-block-time-time-description:first';
   const multiDayStarts = '.multiday-offering-block-time-time-starts:first';
@@ -352,12 +352,12 @@ test('users can create a new small group offering', async function(assert) {
   const dayOfMonth = '.offering-block-date-dayofmonth:first';
   const startTime = '.offering-block-time-time-starttime:first';
   const endTime = '.offering-block-time-time-endtime:first';
-  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
-  const learnerGroup2 = '.offering-block-time-offering-learner_groups ul li:eq(1)';
-  const location1 = '.offering-block-time-offering-location:eq(0)';
-  const location2 = '.offering-block-time-offering-location:eq(1)';
-  const instructors1 = '.offering-block-time-offering-instructors:eq(0) li';
-  const instructors2 = '.offering-block-time-offering-instructors:eq(1) li';
+  const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
+  const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
+  const location1 = '.offering-manager-location:eq(0)';
+  const location2 = '.offering-manager-location:eq(1)';
+  const instructors1 = '.offering-manager-instructors:eq(0) li';
+  const instructors2 = '.offering-manager-instructors:eq(1) li';
 
   await visit(url);
   await click(expandButton);
@@ -389,7 +389,7 @@ test('users can create a new small group offering', async function(assert) {
 test('users can edit existing offerings', async function(assert) {
   assert.expect(8);
 
-  const editButton = '.offering-detail-box i:first';
+  const editButton = '.offering-manager-actions .edit:eq(1)';
   const form = '.offering-form';
 
   const startDateInput = `${form} .start-date input`;
@@ -399,19 +399,19 @@ test('users can edit existing offerings', async function(assert) {
   const offeringLocation = `${form} .room input`;
 
   const removeLearnerGroupOne = `${form} .selected-learner-groups .remove-all-subgroups:eq(0)`;
-  const removeFirstInstructor = `${form} .instructors .removable-list:eq(1) li:first i`;
-  const removeFirstInstructorGroup = `${form} .instructors .removable-list:eq(0) li:first i`;
+  const removeFirstInstructor = `${form} .instructors ul:eq(1) li:first`;
+  const removeFirstInstructorGroup = `${form} .instructors ul:eq(0) li:first`;
   const createButton = `${form} .done`;
 
   const dayOfWeek = '.offering-block-date-dayofweek:first';
   const dayOfMonth = '.offering-block-date-dayofmonth:first';
   const startTime = '.offering-block-time-time-starttime:first';
   const endTime = '.offering-block-time-time-endtime:first';
-  const learnerGroup1 = '.offering-block-time-offering-learner_groups ul li:eq(0)';
-  const room = '.offering-block-time-offering-location:first';
-  // const instructor1 = '.offering-block-time-offering-instructors ul li:eq(0)';
-  // const instructor2 = '.offering-block-time-offering-instructors ul li:eq(1)';
-  // const instructor3 = '.offering-block-time-offering-instructors ul li:eq(2)';
+  const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
+  const room = '.offering-manager-location:first';
+  // const instructor1 = '.offering-manager-instructors ul li:eq(0)';
+  // const instructor2 = '.offering-manager-instructors ul li:eq(1)';
+  // const instructor3 = '.offering-manager-instructors ul li:eq(2)';
 
   await visit(url);
   await click(editButton);
@@ -465,9 +465,9 @@ test('users can create recurring small groups', async function(assert) {
   const daysOfMonth = '.offering-block-date-dayofmonth';
   const startsTime = '.offering-block-time-time-starttime';
   const endsTime = '.offering-block-time-time-endtime';
-  const learnerGroups = '.offering-block-time-offering-learner_groups ul li';
-  const locations = '.offering-block-time-offering-location';
-  const instructors = '.offering-block-time-offering-instructors';
+  const learnerGroups = '.offering-manager-learner-groups ul li';
+  const locations = '.offering-manager-location';
+  const instructors = '.offering-manager-instructors';
 
   await visit(url);
   await click(expandButton);
@@ -560,7 +560,7 @@ test('users can create recurring single offerings', async function(assert) {
   const daysOfMonth = '.offering-block-date-dayofmonth';
   const startsTime = '.offering-block-time-time-starttime';
   const endsTime = '.offering-block-time-time-endtime';
-  const learnerGroups = '.offering-block-time-offering-learner_groups ul li';
+  const learnerGroups = '.offering-manager-learner-groups ul li';
 
   await visit(url);
   await click(expandButton);
@@ -630,10 +630,10 @@ test('edit offerings twice #2850', async assert => {
   });
   server.db.cohorts.update(1, {learnerGroupIds: [3, 4, 5, 6]});
 
-  const editButton = '.offering-detail-box i:first';
+  const editButton = '.offering-manager-actions .edit:eq(1)';
   const form = '.offering-form';
   const save = `${form} .done`;
-  const room = '.offering-block-time-offering-location:first';
+  const room = '.offering-manager-location:first';
 
   await visit(url);
   await click(editButton);

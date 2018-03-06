@@ -1,14 +1,14 @@
-<section class='programyears resultslist'>
-  <div class="resultslist-header">
-    <div class='resultslist-title'>{{t 'general.programYears'}}</div>
-    <div class='resultslist-actions'>
+<section class='programyears'>
+  <div class="header">
+    <div class='title'>{{t 'general.programYears'}}</div>
+    <div class='actions'>
       {{expand-collapse-button value=editorOn action="toggleEditor"}}
     </div>
   </div>
-  <section class='resultslist-new'>
-    {{#liquid-if editorOn class="vertical"}}
+  <section class='new'>
+    {{#if editorOn}}
       {{new-programyear availableAcademicYears=availableAcademicYears save=(perform save) cancel=(action 'cancel')}}
-    {{/liquid-if}}
+    {{/if}}
 
     {{#if saved}}
       <div class='saved-result'>
@@ -25,11 +25,11 @@
         <thead>
           <tr>
             <th class='text-left'>{{t 'general.matriculationYear'}}</th>
-            <th class='text-left'>{{t 'general.cohort'}}</th>
-            <th class='text-left'>{{t 'general.competencies'}}</th>
-            <th class='text-left'>{{t 'general.objectives'}}</th>
-            <th class='text-left'>{{t 'general.directors'}}</th>
-            <th class='text-left'>{{t 'general.terms'}}</th>
+            <th class='text-left hide-from-small-screen'>{{t 'general.cohort'}}</th>
+            <th class='text-left hide-from-small-screen'>{{t 'general.competencies'}}</th>
+            <th class='text-left hide-from-small-screen'>{{t 'general.objectives'}}</th>
+            <th class='text-left hide-from-small-screen'>{{t 'general.directors'}}</th>
+            <th class='text-left hide-from-small-screen'>{{t 'general.terms'}}</th>
             <th class='text-center' colspan=2>{{t 'general.status'}}</th>
           </tr>
         </thead>
@@ -42,7 +42,7 @@
                     {{fa-icon 'external-link-square'}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
-                <td class='text-left'>
+                <td class='text-left hide-from-small-screen'>
                   {{#if (get (await programYearProxy.cohort) 'title')}}
                     {{get (await programYearProxy.cohort) 'title'}}
                   {{else}}
@@ -50,28 +50,28 @@
                   {{/if}}
                 </td>
 
-                <td class='text-left'>
+                <td class='text-left hide-from-small-screen'>
                   {{#if programYearProxy.competencies.length}}
                     {{programYearProxy.competencies.length}}
                   {{else}}
                     {{fa-icon 'warning' class='warning'}}
                   {{/if}}
                 </td>
-                <td class='text-left'>
+                <td class='text-left hide-from-small-screen'>
                   {{#if programYearProxy.objectives.length}}
                     {{programYearProxy.objectives.length}}
                   {{else}}
                     {{fa-icon 'warning' class='warning'}}
                   {{/if}}
                 </td>
-                <td class='text-left'>
+                <td class='text-left hide-from-small-screen'>
                   {{#if programYearProxy.directors.length}}
                     {{programYearProxy.directors.length}}
                   {{else}}
                     {{fa-icon 'warning' class='warning'}}
                   {{/if}}
                 </td>
-                <td class='text-left'>
+                <td class='text-left hide-from-small-screen'>
                   {{#if programYearProxy.terms.length}}
                     {{programYearProxy.terms.length}}
                   {{else}}
@@ -81,7 +81,7 @@
 
                 <td class='text-center' colspan=2>
                   {{#if programYearProxy.isSaving}}
-                    {{fa-icon 'spinner' spin=true}}
+                    {{loading-spinner}}
                   {{else}}
                     {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}

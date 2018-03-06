@@ -1,0 +1,29 @@
+.learnergroup-user-manager {
+  @include detail-container($text-blue);
+  border-bottom: 0;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+
+  .title {
+    @include detail-container-title-style;
+  }
+
+  .actions {
+    input {
+      @include ilios-input;
+      width: 15rem;
+    }
+  }
+
+  .learnergroup-user-manager-content {
+    @include detail-container-content;
+    grid-column: 1 / -1;
+
+    .list {
+      @include main-list-box-table;
+      grid-column: 1 / -1;
+      max-height: 540px;
+      overflow: auto;
+    }
+  }
+}

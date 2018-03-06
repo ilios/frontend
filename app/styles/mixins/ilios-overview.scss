@@ -1,44 +1,49 @@
 @mixin ilios-overview ($bottom-border-color) {
-  @include row();
-
   border-bottom: 1px dotted $bottom-border-color;
-  padding: .8em;
+  display: block;
+  padding: .8rem;
 
   label {
     @include ilios-label;
-    margin-right: .5em;
+    margin: 0 .5rem 0 0;
   }
 }
 
 @mixin ilios-overview-block () {
-  @include fill-parent;
-  display: block;
-  min-height: 2em;
+  align-items: flex-end;
+  display: flex;
+  min-height: 1.5rem;
+}
 
-  @include media($large-screen) {
-    @include span-columns(5);
-  }
-
+@mixin ilios-overview-header () {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 
 @mixin ilios-overview-title () {
-  @include span-columns(8 of 12);
   color: $text-blue;
-  font-size: $base-font-size;
+  font-size: 1rem;
   font-weight: bold;
-  margin-top: 1em;
 }
 
 @mixin ilios-overview-actions () {
-  @include span-columns(3 of 12);
-  margin-top: 1em;
-  padding-right: .3em;
+  align-items: baseline;
+  display: flex;
+  justify-content: space-around;
+  margin-right: .5rem;
   text-align: right;
   vertical-align: middle;
 }
 
 @mixin ilios-overview-content () {
-  @include fill-parent;
-  clear: both;
-  padding-top: 1em;
+  align-items: center;
+  display: grid;
+  padding-top: 1rem;
+
+  @include for-tablet-and-up {
+    grid-row-gap: .5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }

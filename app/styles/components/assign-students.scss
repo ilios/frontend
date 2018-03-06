@@ -1,0 +1,48 @@
+.assign-students {
+  @include main-list;
+
+  .filters {
+    @include main-list-filters;
+
+    .schoolsfilter,
+    .titlefilter {
+      @include main-list-filter;
+    }
+  }
+
+  .students {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+    }
+
+    .form {
+      align-items: baseline;
+      display: flex;
+      flex-direction: column;
+      padding: .5rem;
+
+      @include for-laptop-and-up {
+        flex-direction: row;
+      }
+
+      label {
+        @include ilios-label;
+        margin-right: .5rem;
+      }
+    }
+  }
+
+  .list {
+    @include main-list-box-table;
+  }
+}

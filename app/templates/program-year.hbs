@@ -1,10 +1,3 @@
-<div class="backtolink">
-  {{#if (is-fulfilled model.program)}}
-    {{#link-to 'program' (await model.program)}}
-      {{t 'general.backToProgramYears'}}
-    {{/link-to}}
-  {{/if}}
-</div>
 {{programyear-header programYear=model}}
 {{programyear-overview programYear=model}}
 {{outlet}}

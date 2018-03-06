@@ -1,6 +1,6 @@
 {{#liquid-if updates.isFulfilled class='crossFade'}}
   {{#if isSaving}}
-    <h2>{{fa-icon 'spinner' spin=true}}</h2>
+    {{loading-spinner tagName='h2'}}
   {{else}}
     {{#each updates as |update|}}
       <div class='update'>

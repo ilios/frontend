@@ -1,39 +1,33 @@
 @mixin collapsed-container ($border-color) {
   @include detail-container($border-color);
+  display: grid;
+
+  @include for-tablet-and-up {
+    grid-row-gap: .5rem;
+    grid-template-columns: 1fr 3fr;
+  }
 }
 
 @mixin collapsed-container-title () {
-  @include fill-parent;
-  color: $text-blue;
+  @include ilios-heading-h5;
   cursor: pointer;
-  font-size: $base-font-size;
-  font-weight: bold;
 
   &::after {
     content: '\25BA';
   }
-
-  @include media($large-screen) {
-    @include span-columns(3 of 12);
-  }
 }
 
 @mixin collapsed-container-content () {
-  @include fill-parent;
-  padding-top: 2em;
-
-  @include media($large-screen) {
-    @include span-columns(9 of 12);
-    @include omega;
-
+  @include for-laptop-and-up {
     margin: 0;
     padding-top: 0;
   }
 }
 
 @mixin collapsed-container-table () {
-  @include fill-parent;
-  font-size: .8em;
+  @include ilios-table-structure;
+  @include ilios-table-colors;
+  font-size: .8rem;
 
   table,
   tr,
@@ -45,7 +39,7 @@
 
   td,
   th {
-    padding: 0 0 .5em .5em;
+    padding: 0 0 .5rem .5rem;
     vertical-align: top;
   }
 
@@ -62,5 +56,9 @@
   td:first-of-type {
     color: $ilios-orange;
     font-weight: bold;
+  }
+
+  .maybe {
+    color: $warning-color;
   }
 }

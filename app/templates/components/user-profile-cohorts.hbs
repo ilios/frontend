@@ -1,14 +1,15 @@
-<h2 class='title'>{{t 'general.cohorts'}}</h2>
 {{#if finishedSetup}}
-  <div class='actions'>
-    {{#if isManaging}}
-      <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
-      <button disabled={{save.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
-    {{else if isManagable}}
-      <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
-    {{/if}}
+  <div class='user-profile-cohorts-header'>
+    <h3 class='title'>{{t 'general.cohorts'}}</h3>
+    <div class='actions'>
+      {{#if isManaging}}
+        <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+        <button disabled={{save.isRunning}} class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+      {{else if isManagable}}
+        <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+      {{/if}}
+    </div>
   </div>
-
   <p>
     <h4>{{t 'general.primaryCohort'}}: </h4>
     {{#if primaryCohort}}
@@ -75,10 +76,10 @@
           <p>{{t 'general.none'}}</p>
         {{/if}}
       {{else}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{/if}}
     </p>
   {{/if}}
 {{else}}
-  <p>{{fa-icon 'spinner' spin=true}}</p>
+  <p>{{loading-spinner}}</p>
 {{/if}}

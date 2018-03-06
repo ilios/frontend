@@ -1,27 +1,12 @@
 @mixin detail-container ($bottom-border-color) {
-  @include fill-parent;
-  @include row;
   border-bottom: 1px dotted $bottom-border-color;
-  display: block;
   margin: 0;
-  min-height: 2em;
-  padding: 1em 0;
-
-  @include media($large-screen) {
-    @include span-columns(12);
-  }
+  min-height: 2rem;
+  padding: 1rem 0;
 }
 
 @mixin detail-container-title-style () {
-  color: $text-blue;
-  font-size: $base-font-size;
-  font-weight: bold;
-  text-align: center;
-
-  @include media($large-screen) {
-    text-align: left;
-  }
-
+  @include ilios-heading-h5;
 
   &.collapsible {
     &::after {
@@ -36,32 +21,51 @@
   }
 }
 
-@mixin detail-container-title () {
-  @include fill-parent;
-  @include detail-container-title-style;
+@mixin detail-container-header () {
+  display: flex;
+  justify-content: space-between;
 
-  @include media($large-screen) {
-    @include span-columns(8 of 12);
+  @include for-phone-only {
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
   }
 }
 
-@mixin detail-container-actions () {
-  @include fill-parent;
-  text-align: center;
-  vertical-align: middle;
+@mixin detail-container-title () {
+  @include detail-container-title-style;
+}
 
-  @include media($large-screen) {
-    @include shift(1 of 12);
-    @include span-columns(3 of 12);
-    @include omega();
-    padding-right: 1em;
-    text-align: right;
+@mixin detail-container-actions () {
+  display: flex;
+  justify-content: flex-end;
+
+  & > * {
+    margin-right: .5rem;
+
+    @include for-phone-only {
+      margin-top: .25em;
+    }
+  }
+
+  .bigadd {
+    background-color: $ilios-green;
+    color: $white;
+  }
+
+  .bigcancel {
+    background-color: $ilios-red;
+    color: $white;
   }
 }
 
 @mixin detail-container-content () {
-  @include fill-parent;
-  @include row;
   clear: both;
-  padding-top: 2em;
+  margin-top: 2rem;
+  padding: .5rem;
+
+  table {
+    @include ilios-table-structure;
+    @include ilios-removable-table;
+  }
 }

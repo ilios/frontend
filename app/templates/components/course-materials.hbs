@@ -1,5 +1,5 @@
 <div class='material-list'>
-  <h2>{{t 'general.courseLearningMaterials'}} ({{get (await course.learningMaterials) 'length'}})</h2>
+  <h3>{{t 'general.courseLearningMaterials'}} ({{get (await course.learningMaterials) 'length'}})</h3>
   {{#if (gt (get (await course.learningMaterials) 'length') 0)}}
     <table>
       <thead>
@@ -30,7 +30,7 @@
 </div>
 
 <div class='material-list'>
-  <h2 class='session-material-title'>{{t 'general.sessionLearningMaterials'}} ({{get (await sessionLearningMaterials) 'length'}})</h2>
+  <h3 class='session-material-title'>{{t 'general.sessionLearningMaterials'}} ({{get (await sessionLearningMaterials) 'length'}})</h3>
   {{#if (gt (get (await sessionLearningMaterials) 'length') 0)}}
     <span class="filter-session-lms">
       <input

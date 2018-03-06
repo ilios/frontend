@@ -1,27 +1,23 @@
-{{head-layout}}
-{{ember-load-remover}}
-{{api-version-check}}
 {{connection-status}}
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
-{{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
-{{loading-bar isLoading=currentlyLoading}}
-{{#if session.isAuthenticated}}
-  {{ilios-navigation}}
-{{/if}}
-<div id='site-container'>
-  <div class='flash-messages'>
-    {{#each flashMessages.arrangedQueue as |f|}}
-      {{#flash-message flash=f as |component flash|}}
-        {{t flash.message}}
-      {{/flash-message}}
-    {{/each}}
-  </div>
-
-  {{#if showErrorDisplay}}
-    {{error-display errors=errors clearErrors=(action 'clearErrors')}}
-  {{else}}
-    {{outlet}}
+<div class='application-wrapper {{if (await hasElevatedRole) "show-navigation"}}'>
+  {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
+  {{#if session.isAuthenticated}}
+    {{ilios-navigation}}
   {{/if}}
+  <main>
+    {{#if showErrorDisplay}}
+      {{error-display errors=errors clearErrors=(action 'clearErrors')}}
+    {{else}}
+      {{outlet}}
+    {{/if}}
+  </main>
+  <footer class='ilios-footer'></footer>
+  {{loading-bar isLoading=currentlyLoading}}
 </div>
+{{flash-messages}}
+{{head-layout}}
+{{ember-load-remover}}
+{{api-version-check}}

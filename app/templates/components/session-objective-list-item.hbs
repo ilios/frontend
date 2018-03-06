@@ -43,7 +43,7 @@
 </td>
 <td class='text-left text-top' colspan=2>
   {{#if objective.meshDescriptors.length}}
-    <ul>
+    <ul class='mesh-descriptor-list'>
       {{#each objective.meshDescriptors as |descriptor|}}
         {{#if editable}}
           <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>

@@ -22,6 +22,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
   selectedYear: null,
   years: null,
+  classNames: ['new-curriculum-inventory-report'],
 
   didReceiveAttrs(){
     this._super(...arguments);

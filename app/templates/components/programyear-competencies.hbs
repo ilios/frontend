@@ -1,25 +1,27 @@
-{{#if isManaging}}
-  <div class='title'>
-    <span class='specific-title'>
-      {{t 'general.competenciesManageTitle'}}
-    </span>
-  </div>
-{{else}}
-  <div class='title {{if programYear.competencies.length "clickable collapsible"}}' {{action 'collapse'}}>
-    {{t 'general.competencies'}} ({{get (await programYear.competencies) 'length'}})
-  </div>
-{{/if}}
-<div class='programyear-competencies-actions'>
-  {{#if editable}}
-    {{#if isManaging}}
-      <button class='bigadd' onclick={{perform save}}>
-        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
-      </button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
-    {{else}}
-      <button {{action setIsManaging true}}>{{t 'general.competenciesManageTitle'}}</button>
-    {{/if}}
+<div class='programyear-competencies-header'>
+  {{#if isManaging}}
+    <div class='title'>
+      <span class='specific-title'>
+        {{t 'general.competenciesManageTitle'}}
+      </span>
+    </div>
+  {{else}}
+    <div class='title {{if programYear.competencies.length "clickable collapsible"}}' {{action 'collapse'}}>
+      {{t 'general.competencies'}} ({{get (await programYear.competencies) 'length'}})
+    </div>
   {{/if}}
+  <div class='programyear-competencies-actions'>
+    {{#if editable}}
+      {{#if isManaging}}
+        <button class='bigadd' onclick={{perform save}}>
+          {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}
+        </button>
+        <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+      {{else}}
+        <button {{action setIsManaging true}}>{{t 'general.competenciesManageTitle'}}</button>
+      {{/if}}
+    {{/if}}
+  </div>
 </div>
 <div class='programyear-competencies-content'>
   {{#if (and (is-fulfilled programYear.competencies) (is-fulfilled competencies) (not loadSelectedCompetencies.isRunning))}}
@@ -83,6 +85,6 @@
       {{/if}}
     {{/if}}
   {{else}}
-    {{fa-icon 'spinner' spin=true}}
+    {{loading-spinner}}
   {{/if}}
 </div>

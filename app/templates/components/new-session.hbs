@@ -1,4 +1,4 @@
-<div class="title">{{t 'general.newSession'}}</div>
+<h4>{{t 'general.newSession'}}</h4>
 
 <div class="new-session-content">
   <div class="item">
@@ -26,14 +26,14 @@
         {{/each}}
       </select>
     {{else}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{/if}}
   </div>
 
   <div class="buttons">
     <button class='done text' {{action (perform saveNewSession)}}>
       {{#if saveNewSession.isRunning}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.save'}}
       {{/if}}

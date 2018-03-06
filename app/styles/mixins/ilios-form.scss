@@ -1,65 +1,107 @@
 @mixin ilios-form () {
+  align-items: start;
+  display: grid;
+  grid-gap: .25rem 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
+  padding: .5rem 1rem .5rem .5rem;
+
+  @include for-laptop-and-up {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include for-desktop-and-up {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   label {
-    @include fill-parent;
     @include ilios-label;
   }
 
-  @include ilios-input;
+  #{$form-input-text-types} {
+    @include ilios-input;
+  }
+
+  select {
+    @include ilios-select;
+  }
+
+  textarea {
+    @include ilios-textarea;
+  }
+
+  #{$form-input-text-types},
+  textarea,
+  select {
+    display: block;
+    width: 100%;
+    @include for-tablet-and-up {
+      min-width: 33%;
+    }
+  }
 }
 
 @mixin ilios-form-item () {
-  @include fill-parent;
-  height: 6em;
-
-  @include media($large-screen) {
-    @include span-columns(4);
-  }
-
+  @include ilios-form-error;
+  display: flex;
+  flex-direction: column;
+  min-height: 4rem;
 }
 
 @mixin ilios-form-last-item () {
-  @include fill-parent;
-
-  @include media($large-screen) {
-    @include span-columns(8);
-  }
+  display: block;
+  grid-column: 1 / -1;
 }
 
 @mixin ilios-form-buttons () {
-  @include fill-parent;
-  clear: both;
-  margin-top: 2em;
-  padding: 1em 0;
+  grid-column: 1 / -1;
+  margin-top: .5rem;
+  padding: 0;
 
   button {
-    margin-right: 1em;
+    background-color: $white;
+    border-style: solid;
+    border-width: 1px;
+    margin-right: 1rem;
+
+    &:enabled:hover {
+      color: $white;
+    }
+
+    &.done {
+      border-color: $ilios-green;
+      color: $ilios-green;
+
+      &:enabled:hover {
+        background-color: $ilios-green;
+      }
+    }
+
+    &.cancel {
+      border-color: $ilios-red;
+      color: $ilios-red;
+
+      &:enabled:hover {
+        background-color: $ilios-red;
+      }
+    }
   }
 
 }
 
 @mixin ilios-label () {
   font-weight: bold;
-  margin-top: 1em;
 }
 
-@mixin ilios-input () {
+@mixin ilios-form-error {
+  .validation-error-message {
+    color: $ilios-red;
+    font-size: .8rem;
+  }
+
   input {
-    @include fill-parent;
-    background: $white;
-    border: 1px solid $input-box-grey;
-    border-radius: $base-border-radius;
-  }
-
-  input[type='text'],
-  input[type='password'],
-  select {
-    background-position: right 4px bottom .75em;
-    height: 2.5em;
-  }
-
-  input[type='checkbox'],
-  input[type='radio'] {
-    display: inline;
-    width: 2.5em;
+    &.has-error {
+      border-color: $ilios-red;
+    }
   }
 }

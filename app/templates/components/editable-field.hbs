@@ -15,10 +15,10 @@
     <span class='editor'>
       {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
       <span class='actions'>
-        <button disabled={{isSaveDisabled}} class='done icon' title='{{t 'general.save'}}' {{action (perform saveData)}}>
+        <button disabled={{isSaveDisabled}} class='done' title='{{t 'general.save'}}' {{action (perform saveData)}}>
           {{fa-icon (if saveData.isRunning 'spinner' 'check') spin=saveData.isRunning}}
         </button>
-        <button class='cancel icon' title='{{t 'general.cancel'}}' {{action (perform closeEditor)}}>{{fa-icon 'times'}}</button>
+        <button class='cancel' title='{{t 'general.cancel'}}' {{action (perform closeEditor)}}>{{fa-icon 'times'}}</button>
       </span>
     </span>
   {{/unless}}

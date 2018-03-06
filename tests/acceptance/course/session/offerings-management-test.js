@@ -42,7 +42,7 @@ test('search for instructor who is a course director #2838', async function(asse
   });
 
 
-  const editButton = '.offering-detail-box .edit';
+  const editButton = '.offering-manager .edit';
   const form = '.offering-form';
   const search = `${form} .search-box`;
   const searchBox = `${search} input`;
@@ -78,14 +78,14 @@ test('searching for course directors as instructors does not remove existing ins
   });
 
 
-  const editButton = '.offering-detail-box .edit';
+  const editButton = '.offering-manager .edit';
   const form = '.offering-form';
   const instructors = `${form} .instructors`;
-  const search = `${instructors} .search-box`;
-  const searchBox = `${search} input`;
-  const results = `${instructors} .results li`;
+  const search = `${instructors} [data-test-user-search]`;
+  const searchBox = `${search} [data-test-search-box] input`;
+  const results = `${search} .results li`;
   const firstResult = `${results}:eq(1)`;
-  const selectedInstructors = `${instructors} .tag-list li`;
+  const selectedInstructors = `${instructors} [data-test-instructors] li`;
   const firstSelectedInstructor = `${selectedInstructors}:eq(0)`;
   const secondSelectedInstructor = `${selectedInstructors}:eq(1)`;
 

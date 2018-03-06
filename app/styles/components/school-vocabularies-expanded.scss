@@ -1,0 +1,29 @@
+.school-vocabularies-expanded {
+  @include detail-container($ilios-orange);
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .school-vocabularies-expanded-content {
+    @include detail-container-content;
+
+    .hierarchical-list {
+      background-color: $grey;
+      border: 1px solid $black;
+      margin: 1rem;
+      padding: 1rem;
+
+      h4 {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+      ul {
+        @include ilios-list-reset;
+        margin-left: 2rem;
+      }
+    }
+  }
+}

@@ -61,7 +61,7 @@ test('check fields', async function(assert) {
   assert.equal(getElementText(find('.info')), getText('Members:2'));
   assert.equal(getElementText(find('.instructorgroup-overview h2')), getText('instructor group 0 Members (2)'));
 
-  let items = find('.instructorgroup-overview-content .removable-list li');
+  let items = find('.instructorgroup-overview .instructorgroup-users li');
   assert.equal(items.length, 2);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -84,7 +84,7 @@ test('change title', async function(assert) {
 
 test('search instructors', async function(assert) {
   await visit(url);
-  const container = '.instructorgroup-overview-content';
+  const container = '.instructorgroup-overview';
   const search = `${container} .search-box input`;
   const results = `${container} .results li`;
 
@@ -108,14 +108,14 @@ test('add instructor', async function(assert) {
   await visit(url);
 
   let container = find('.instructorgroup-overview').eq(0);
-  let items = find('.removable-list li', container);
+  let items = find('.instructorgroup-users li', container);
   assert.equal(items.length, 2);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
 
   await fillIn(find('.search-box input', container), 'guy');
   await click('.results li:eq(4)', container);
-  items = find('.removable-list li', container);
+  items = find('.instructorgroup-users li', container);
   assert.equal(items.length, 3);
   assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
   assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
@@ -126,8 +126,8 @@ test('remove default instructor', async function(assert) {
   await visit(url);
 
   let container = find('.instructorgroup-overview').eq(0);
-  await click('.removable-list li:eq(0)', container);
-  let items = find('.removable-list li', container);
+  await click('.instructorgroup-users li:eq(0)', container);
+  let items = find('.instructorgroup-users li', container);
   assert.equal(items.length, 1);
   assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
 });

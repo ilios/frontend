@@ -1,0 +1,21 @@
+.new-course {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  & > div {
+    @include ilios-form;
+  }
+
+  .item {
+    @include ilios-form-item;
+  }
+
+  .buttons {
+    @include ilios-form-buttons;
+  }
+}

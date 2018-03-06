@@ -5,4 +5,5 @@ import ObjectiveListItem from 'ilios/mixins/objective-list-item';
 export default Component.extend(ObjectiveListItem, {
   course: null,
   editable: true,
+  classNames: ['course-objective-list-item', 'objective-list-item'],
 });

@@ -2,28 +2,30 @@
 <div class='curriculum-inventory-sequence-block-overview-content'>
   {{#unless loadAttr.isRunning}}
     <div class="block course">
-      <label>{{t 'general.course'}}:</label>
-      {{#if isFinalized}}
-        <span>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
-      {{else}}
-        {{#editable-field
-          value=course.title
-          save=(action 'changeCourse')
-          close=(action 'revertCourseChanges')
-          clickPrompt=(t 'general.selectCourse')
-        }}
-          {{one-way-select
-            course
-            options=(sort-by 'title' (await linkableCourses))
-            optionValuePath="id"
-            optionLabelPath="title"
-            disabled=saveCourseChange.isRunning
-            update=(action (mut course))
+      <span>
+        <label>{{t 'general.course'}}:</label>
+        {{#if isFinalized}}
+          <span data-test-course-title>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
+        {{else}}
+          {{#editable-field
+            value=course.title
+            save=(action 'changeCourse')
+            close=(action 'revertCourseChanges')
+            clickPrompt=(t 'general.selectCourse')
           }}
-        {{/editable-field}}
-      {{/if}}
+            {{one-way-select
+              course
+              options=(sort-by 'title' (await linkableCourses))
+              optionValuePath="id"
+              optionLabelPath="title"
+              disabled=saveCourseChange.isRunning
+              update=(action (mut course))
+            }}
+          {{/editable-field}}
+        {{/if}}
+      </span>
       {{#if course}}
-        <span class="details">
+        <span class="details" data-test-course-details>
           {{t 'general.level'}}: {{course.level}},
           {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
           {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
@@ -240,7 +242,7 @@
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}
-      <div class="block sessions">{{fa-icon 'spinner' spin=true}}</div>
+      <div class="block sessions">{{loading-spinner}}</div>
     {{else}}
       {{#if (get (await linkableSessions) 'length')}}
         {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
@@ -271,6 +273,6 @@
       {{/if}}
     {{/unless}}
   {{else}}
-    <div class="block">{{fa-icon 'spinner' spin=true}}</div>
+    <div class="block">{{loading-spinner}}</div>
   {{/unless}}
 </div>

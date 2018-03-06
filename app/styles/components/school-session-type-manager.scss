@@ -1,0 +1,9 @@
+.school-session-type-manager {
+  .session-type-title {
+    @include ilios-heading-h4;
+  }
+
+  .school-session-type-form {
+    margin-left: 6rem;
+  }
+}

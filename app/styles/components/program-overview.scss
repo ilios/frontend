@@ -1,0 +1,16 @@
+.program-overview {
+  @include ilios-overview($header-grey);
+  background: $background-grey;
+  border: 1px dotted $header-grey;
+  padding: 0 2rem 1rem;
+
+  h2 {
+    @include ilios-overview-title;
+    margin-top: .5rem;
+  }
+
+  .program-overview-content {
+    @include ilios-overview-content;
+    padding-top: .5rem;
+  }
+}

@@ -1,0 +1,5 @@
+{{#each flashMessages.arrangedQueue as |f|}}
+  {{#flash-message flash=f as |component flash|}}
+    {{t flash.message}}
+  {{/flash-message}}
+{{/each}}

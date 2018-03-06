@@ -15,7 +15,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   tagName: 'section',
-  classNames: ['newobjective', 'new-result', 'form-container'],
+  classNames: ['new-objective'],
 
   title: null,
   isSaving: false,

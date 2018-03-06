@@ -13,6 +13,7 @@ const { Promise } = RSVP;
 export default Component.extend({
   store: service(),
   flashMessages: service(),
+  classNames: ['students'],
 
   init(){
     this._super(...arguments);

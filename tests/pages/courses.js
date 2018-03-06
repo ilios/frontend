@@ -17,7 +17,7 @@ export default create({
   visit: visitable('/courses'),
   filterByTitle: fillable('[data-test-title-filter]'),
   filterByYear: selectable('[data-test-year-filter]'),
-  toggleMyCourses: clickable('[data-test-my-courses-filter] label'),
+  filterByMyCourses: clickable('[data-test-my-courses-filter] label:eq(0)'),
   yearFilters: collection({
     itemScope: '[data-test-year-filter] option',
     item: {

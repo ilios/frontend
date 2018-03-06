@@ -1,6 +1,13 @@
 <section class='courses-list' data-test-courses>
   <div class="filters">
-    {{toggle-mycourses data-test-my-courses-filter isChecked=userCoursesOnly toggleMyCourses='toggleMyCourses'}}
+    <div class='toggle-mycourses' data-test-my-courses-filter>
+      {{toggle-buttons
+        firstOptionSelected=userCoursesOnly
+        firstLabel=(t 'general.myCourses')
+        secondLabel=(t 'general.allCourses')
+        toggle=(toggle 'userCoursesOnly' this)
+      }}
+    </div>
     <div class="schoolsfilter" data-test-school-filter>
       {{fa-icon 'university' fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
@@ -35,16 +42,14 @@
       >
     </div>
   </div>
-  <section class='courses resultslist'>
-    <div class="resultslist-header">
-      <div class="resultslist-title">
-        <h2>{{t 'general.courses'}}</h2>
-      </div>
-      <div class='resultslist-actions'>
+  <section class='courses'>
+    <div class="header">
+      <h2 class="title">{{t 'general.courses'}}</h2>
+      <div class='actions'>
         {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
       </div>
     </div>
-    <section class='resultslist-new'>
+    <section class='new'>
       {{#liquid-if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
         {{new-course
           currentSchool=selectedSchool

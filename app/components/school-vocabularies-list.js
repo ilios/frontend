@@ -20,6 +20,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  classNames: ['school-vocabularies-list'],
   school: null,
   newVocabulary: null,
 

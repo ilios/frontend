@@ -1,0 +1,22 @@
+.new-curriculum-inventory-report {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  .form {
+    @include ilios-form;
+    grid-template-columns: repeat(2, 1fr);
+
+    .item {
+      @include ilios-form-item;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+}

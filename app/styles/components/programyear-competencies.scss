@@ -1,0 +1,35 @@
+.programyear-competencies {
+  @include detail-container($ilios-orange);
+
+  .programyear-competencies-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .programyear-competencies-actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .programyear-competencies-content {
+    @include detail-container-content;
+  }
+
+  .competency-list,
+  .managed-competency-list {
+    @include ilios-list-tree;
+    border: 1px solid $input-box-grey;
+    border-radius: 3px;
+    margin: 2rem;
+
+    li {
+      font-weight: bold;
+    }
+
+    ul {
+      margin-left: 1rem;
+    }
+  }
+}

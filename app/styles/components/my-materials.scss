@@ -1,0 +1,39 @@
+.my-materials {
+
+  .material-list {
+    border-bottom: 1px dotted $ilios-orange;
+    display: grid;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+
+    @include for-tablet-and-up {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .course-filter,
+  .filter {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .filter input {
+    width: 100%;
+  }
+
+  .lm-type-icon {
+    color: $dark-grey;
+  }
+
+  .timed-release-info {
+    color: $ilios-red;
+    font-size: smaller;
+  }
+
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+
+    grid-column: 1 / -1;
+  }
+}

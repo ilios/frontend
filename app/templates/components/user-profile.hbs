@@ -1,4 +1,6 @@
-{{manage-users-summary}}
+<div class='blocks'>
+  {{manage-users-summary}}
+</div>
 
 <h1 class="user-display-name">
   {{#unless user.enabled}}
@@ -13,41 +15,43 @@
 </div>
 {{pending-single-user-update user=user}}
 
-{{user-profile-bio
-  user=user
-  isManagable=(await currentUser.userIsDeveloper)
-  isManaging=isManagingBio
-  setIsManaging=setIsManagingBio
-}}
+<div class='blocks'>
+  {{user-profile-bio
+    user=user
+    isManagable=(await currentUser.userIsDeveloper)
+    isManaging=isManagingBio
+    setIsManaging=setIsManagingBio
+  }}
 
-{{user-profile-roles
-  user=user
-  isManagable=(await currentUser.userIsDeveloper)
-  isManaging=isManagingRoles
-  setIsManaging=setIsManagingRoles
-}}
+  {{user-profile-roles
+    user=user
+    isManagable=(await currentUser.userIsDeveloper)
+    isManaging=isManagingRoles
+    setIsManaging=setIsManagingRoles
+  }}
 
-{{user-profile-cohorts
-  user=user
-  isManagable=(await currentUser.userIsDeveloper)
-  isManaging=isManagingCohorts
-  setIsManaging=setIsManagingCohorts
-}}
+  {{user-profile-cohorts
+    user=user
+    isManagable=(await currentUser.userIsDeveloper)
+    isManaging=isManagingCohorts
+    setIsManaging=setIsManagingCohorts
+  }}
 
-{{user-profile-ics
-  user=user
-  isManagable=(eq (get (await currentUser.model) 'id') user.id)
-  isManaging=isManagingIcs
-  setIsManaging=setIsManagingIcs
-}}
+  {{user-profile-ics
+    user=user
+    isManagable=(eq (get (await currentUser.model) 'id') user.id)
+    isManaging=isManagingIcs
+    setIsManaging=setIsManagingIcs
+  }}
 
-{{user-profile-schools
-  user=user
-  isManagable=(await currentUser.userIsDeveloper)
-  isManaging=isManagingSchools
-  setIsManaging=setIsManagingSchools
-}}
+  {{user-profile-schools
+    user=user
+    isManagable=(await currentUser.userIsDeveloper)
+    isManaging=isManagingSchools
+    setIsManaging=setIsManagingSchools
+  }}
 
-{{user-profile-calendar user=user}}
+  {{user-profile-calendar user=user}}
 
-{{user-profile-learnergroups user=user}}
+  {{user-profile-learnergroups user=user}}
+</div>

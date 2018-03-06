@@ -1,0 +1,39 @@
+.user-profile-calendar {
+  border: 1px solid $black;
+  border-radius: 5px;
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+  min-height: 5rem;
+  overflow-x: scroll;
+  padding: .25rem;
+  position: relative;
+
+  h2 {
+    @include ilios-heading;
+    margin-bottom: 1rem;
+  }
+
+  .calendar-time-picker {
+    @include ilios-list-reset;
+
+    margin-bottom: .5rem;
+
+    li {
+      display: inline;
+      margin-right: 2em;
+    }
+  }
+
+  .loding-indicator {
+    @include ilios-heading-h1;
+    left: 4rem;
+    opacity: 75;
+    position: absolute;
+    top: 5rem;
+    transition: all .5s ease-in-out;
+
+    &.loaded {
+      opacity: 0;
+    }
+  }
+}

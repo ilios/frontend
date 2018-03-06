@@ -1,0 +1,53 @@
+.school-list {
+  @include main-list;
+
+  .schools {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
+    }
+  }
+
+  .new {
+    border: 1px solid $header-grey;
+    margin: .5rem;
+    padding: 1rem;
+
+    .new-result-title {
+      @include ilios-heading-h4;
+    }
+
+    .form {
+      @include ilios-form;
+
+      .item {
+        @include ilios-form-item;
+      }
+
+      .buttons {
+        @include ilios-form-buttons;
+      }
+    }
+  }
+
+  .savedschool {
+    @include main-list-saved-new;
+  }
+
+  .list {
+    @include main-list-box-table;
+  }
+}

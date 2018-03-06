@@ -1,18 +1,75 @@
-body {
-  margin: 0;
-  margin-bottom: 40px;
-}
+.application-wrapper {
+  display: grid;
+  grid-template-areas:
+  'header'
+  'loading'
+  'main'
+  'footer';
+  grid-template-rows: auto 10px 1fr 20px;
+  height: 100vh;
+  width: 100vw;
 
-// sass-lint:disable no-ids
-#site-container {
-  @include outer-container;
-  padding-left: 48px;
+  &.show-navigation {
+    grid-template-areas:
+    'header'
+    'nav'
+    'loading'
+    'main'
+    'footer';
+    grid-template-rows: auto auto 10px 1fr 20px;
 
-  .fullwidth {
-    @include span-columns(12);
+    @include for-tablet-and-up {
+      grid-template-rows: auto auto 10px 1fr 20px;
+    }
+
+    @include for-laptop-and-up {
+      grid-template-areas:
+      'header  header'
+      'nav  loading'
+      'nav main'
+      'footer footer';
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 10px 1fr 20px;
+    }
+
+    @include for-desktop-and-up {
+      grid-template-areas:
+      'header header  header'
+      'nav loading  loading'
+      'nav    main main'
+      'footer footer  footer';
+      grid-template-columns: 260px 1fr 1fr;
+    }
+
+    & > nav {
+      grid-area: nav;
+      @include for-laptop-and-up {
+        padding-top: 10px;
+        z-index: 5;
+      }
+    }
+
+    & > main {
+      margin: 0 5px;
+    }
+
   }
 
-  .halfwidth {
-    @include span-columns(5);
+  & > header {
+    grid-area: header;
+  }
+
+  & > .loading-bar {
+    grid-area: loading;
+  }
+
+  & > main {
+    background-color: $white;
+    grid-area: main;
+    margin: 5px;
+  }
+
+  & > footer {
+    grid-area: footer;
   }
 }

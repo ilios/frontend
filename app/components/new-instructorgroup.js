@@ -16,6 +16,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
+  classNames: ['new-instructorgroup'],
   title: null,
   currentSchool: null,
   isSaving: false,

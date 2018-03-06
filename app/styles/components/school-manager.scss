@@ -1,0 +1,19 @@
+.school-manager {
+  margin-left: 1rem;
+
+  .backtolink {
+    margin: .5rem 0;
+  }
+
+  .school-overview {
+    border-bottom: 1px dotted $header-grey;
+
+    h2 {
+      @include ilios-heading-h2;
+    }
+  }
+
+  .school-manager-content {
+    margin-left: .5rem;
+  }
+}

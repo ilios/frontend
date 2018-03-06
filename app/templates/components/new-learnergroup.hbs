@@ -1,25 +1,21 @@
-<section class='new-result form-container'>
-  <div class="detail-content">
-    {{#if multiModeSupported}}
-      <div class="form-col-12">
-        <label class="form-label">{{t 'general.createNew'}}:</label>
-        <div class="form-data">
-          {{click-choice-buttons
-          buttonContent1=(t 'general.singleGroup')
-          buttonContent2=(t 'general.multipleGroups')
-          firstChoicePicked=singleMode
-          toggle=(action (mut singleMode))
-          }}
-        </div>
-      </div>
-    {{else}}
-      <div class="new-result-title">{{t 'general.newLearnerGroup'}}</div>
-    {{/if}}
+<div class="detail-content">
+  {{#if multiModeSupported}}
+    <div class="multi-mode-chooser">
+      <label>{{t 'general.createNew'}}:</label>
+      {{click-choice-buttons
+        buttonContent1=(t 'general.singleGroup')
+        buttonContent2=(t 'general.multipleGroups')
+        firstChoicePicked=singleMode
+        toggle=(action (mut singleMode))
+      }}
+    </div>
+  {{else}}
+    <h4>{{t 'general.newLearnerGroup'}}</h4>
+  {{/if}}
 
-    {{#if singleMode}}
-      {{new-learnergroup-single save=save cancel=cancel fillModeSupported=fillModeSupported}}
-    {{else}}
-      {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel=cancel}}
-    {{/if}}
-  </div>
-</section>
+  {{#if singleMode}}
+    {{new-learnergroup-single save=save cancel=cancel fillModeSupported=fillModeSupported}}
+  {{else}}
+    {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel=cancel}}
+  {{/if}}
+</div>

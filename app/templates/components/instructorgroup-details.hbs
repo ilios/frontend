@@ -5,24 +5,23 @@
   <h2>
     {{instructorGroup.title}} {{t 'general.members'}} ({{instructorGroup.users.length}})
   </h2>
-  <div class='instructorgroup-overview-content'>
-    {{#if (is-fulfilled instructorGroup.users)}}
-      <label>{{t 'general.instructors'}}:</label>
-      <span>
-        <ul class='removable-list tag-list'>
-          {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
-            <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='removex'}}</li>
-          {{/each}}
-        </ul>
-      </span>
-    {{else}}
-      <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
-    {{/if}}
-    {{user-search
-      addUser='addUser'
-      currentlyActiveUsers=(await instructorGroup.users)
-    }}
-  </div>
+  {{#if (is-fulfilled instructorGroup.users)}}
+    <label>{{t 'general.instructors'}}:</label>
+    <div>
+      <ul class='instructorgroup-users'>
+        {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
+          <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{else}}
+    {{loading-spinner class='instructorgroup-loading'}}
+  {{/if}}
+
+  {{user-search
+    addUser='addUser'
+    currentlyActiveUsers=(await instructorGroup.users)
+  }}
 
   <div class="instructorgroupcourses">
     <label>{{t 'general.associatedCourses'}}:</label>
@@ -35,7 +34,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <span class='instructorgroup-loading'>{{fa-icon 'spinner' spin=true}}</span>
+      {{loading-spinner class='instructorgroup-loading'}}
     {{/if}}
   </div>
 </div>

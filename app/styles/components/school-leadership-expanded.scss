@@ -1,0 +1,19 @@
+.school-leadership-expanded {
+  @include detail-container($ilios-orange);
+
+  .school-leadership-expanded-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .school-leadership-expanded-content {
+    @include detail-container-content;
+  }
+}

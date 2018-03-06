@@ -1,0 +1,29 @@
+.connection-status {
+  $height: 2.5rem;
+  @include critical-notice($warning-color, $text-grey, $height);
+
+  display: none;
+
+  &.offline {
+    display: block;
+  }
+
+  span {
+    margin-right: 2rem;
+  }
+
+  .buttons {
+    display: inline-block;
+    height: $height;
+
+    button {
+      background-color: $text-grey;
+      border: 0;
+      color: $white;
+      display: inline-block;
+      height: 100%;
+    }
+  }
+
+
+}

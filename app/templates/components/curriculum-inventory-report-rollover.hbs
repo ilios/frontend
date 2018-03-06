@@ -43,7 +43,7 @@
   <div class='buttons'>
     <button class='done text' disabled={{if isSaving true}} {{action (perform save)}}>
       {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

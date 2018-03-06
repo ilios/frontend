@@ -1,42 +1,39 @@
-<div class="new-result-title">{{t 'general.newCourse'}}</div>
+<h4>{{t 'general.newCourse'}}</h4>
 
-<div class="detail-content" data-test-new-course>
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.title'}}:</div>
+<div data-test-new-course>
 
-    <div class="form-data form-data-text form-input-row">
-      <input
-        type="text"
-        data-test-title
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'title'}}
-        placeholder={{t 'general.courseTitlePlaceholder'}}
-      >
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-      {{/if}}
-    </div>
-  </label>
+  <div class="item">
+    <label> {{t 'general.title'}}:</label>
+    <input
+      class='course-title'
+      type="text"
+      data-test-title
+      value={{title}}
+      oninput={{action (mut title) value="target.value"}}
+      disabled={{isSaving}}
+      onkeyup={{action 'addErrorDisplayFor' 'title'}}
+      placeholder={{t 'general.courseTitlePlaceholder'}}
+    >
+    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{/if}}
+  </div>
 
-  <label class="form-col form-col-12">
-    <div class="form-label">{{t 'general.academicYear'}}:</div>
-    <div class="form-data form-data-select form-input-row new-course-year">
-      <select onchange={{action "setYear" value="target.value"}} data-test-year>
-        {{#each years as |year|}}
-          <option value={{year}} selected={{is-equal year selectedYear}}>
-            {{year}} - {{inc year}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
-  </label>
+  <div class="item">
+    <label>{{t 'general.academicYear'}}:</label>
+    <select onchange={{action "setYear" value="target.value"}} data-test-year>
+      {{#each years as |year|}}
+        <option value={{year}} selected={{is-equal year selectedYear}}>
+          {{year}} - {{inc year}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
 
-  <div class="form-col-6 form-data-submit">
+  <div class="buttons">
     <button class='done text' {{action 'save'}}>
       {{#if isSaving}}
-        {{fa-icon 'spinner' spin=true}}
+        {{loading-spinner}}
       {{else}}
         {{t 'general.done'}}
       {{/if}}

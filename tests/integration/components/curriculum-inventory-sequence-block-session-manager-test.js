@@ -74,8 +74,8 @@ test('it renders', function(assert) {
   this.set('setSortBy', function(){});
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
 
-  assert.equal(this.$('.detail-actions .bigadd').length, 1, 'Save button is visible.');
-  assert.equal(this.$('.detail-actions .bigcancel').length, 1, 'Cancel button is visible.');
+  assert.equal(this.$('.actions .bigadd').length, 1, 'Save button is visible.');
+  assert.equal(this.$('.actions .bigcancel').length, 1, 'Cancel button is visible.');
 
   assert.equal(this.$('thead th:eq(0)').text().trim(), 'Count as one offering', 'Column header is labeled correctly.');
   assert.equal(this.$('thead th:eq(1)').text().trim(), 'Session Title', 'Column header is labeled correctly.');
@@ -304,7 +304,7 @@ test('save', function(assert) {
   });
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action 'save')}}`);
   this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
-  this.$('.detail-actions .bigadd').click();
+  this.$('.actions .bigadd').click();
 });
 
 test('cancel', function(assert) {
@@ -331,5 +331,5 @@ test('cancel', function(assert) {
     assert.ok(true, 'Cancel action fired.');
   });
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action 'cancel')}}`);
-  this.$('.detail-actions .bigcancel').click();
+  this.$('.actions .bigcancel').click();
 });

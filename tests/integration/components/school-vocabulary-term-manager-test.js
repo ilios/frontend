@@ -85,7 +85,7 @@ test('activate inactive term', async function(assert) {
     manageVocabulary=(action 'nothing')
   }}`);
 
-  const toggle = `.is-active .switch`;
+  const toggle = `.is-active .toggle-yesno`;
   const toggleValue = `${toggle} input`;
   assert.notOk(this.$(toggleValue).is(':checked'));
   this.$(toggle).click();
@@ -122,7 +122,7 @@ test('inactive active term', async function(assert) {
     manageVocabulary=(action 'nothing')
   }}`);
 
-  const toggle = `.is-active .switch`;
+  const toggle = `.is-active .toggle-yesno`;
   const toggleValue = `${toggle} input`;
   assert.ok(this.$(toggleValue).is(':checked'));
   this.$(toggle).click();

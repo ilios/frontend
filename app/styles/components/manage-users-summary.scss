@@ -1,0 +1,45 @@
+.manage-users-summary {
+  margin-bottom: 3rem;
+  min-height: 6rem;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    @include for-laptop-and-up {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .actions {
+      button {
+        margin-top: .5rem;
+        @include for-laptop-and-up {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .user-search {
+    margin: auto;
+    margin-top: .5rem;
+    position: relative;
+    width: 90%;
+
+    input[type='search'] {
+      background-color: $white;
+      border: 1px solid $text-blue;
+      border-radius: 3px;
+      height: 2rem;
+      width: 100%;
+    }
+
+    .results {
+      @include user-search-results;
+    }
+  }
+}

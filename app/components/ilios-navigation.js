@@ -1,19 +1,16 @@
-/* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import config from 'ilios/config/environment';
 
 const { Promise } = RSVP;
 
 export default Component.extend({
   i18n: service(),
   currentUser: service(),
-  isMenuVisible: false,
-  ciEnabled: config.IliosFeatures.curriculumInventory,
-  //untranslated temporary string
-  beta: 'beta',
+  tagName: 'nav',
+  classNameBindings: [':ilios-navigation', 'expanded'],
+  expanded: false,
   permissions: computed('currentUser.model.roles.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser.model').then(user => {
@@ -28,9 +25,4 @@ export default Component.extend({
       });
     });
   }),
-  actions: {
-    toggleMenuVisibility() {
-      this.toggleProperty('isMenuVisible');
-    }
-  }
 });

@@ -9,7 +9,7 @@
 {{/unless}}
 
 {{#if parseFile.isRunning}}
-  <div class='loading-file'>{{fa-icon 'spinner' spin=true}}</div>
+  {{loading-spinner tagName='div' class='loading-file'}}
 {{/if}}
 
 {{#if invalidUsers}}
@@ -75,7 +75,7 @@
 {{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
   <button {{action (perform continue)}} disabled={{continue.isRunning}} data-test-upload-data-confirm>
     {{#if continue.isRunning}}
-      {{fa-icon 'spinner' spin=true}}
+      {{loading-spinner}}
     {{else}}
       {{t 'general.continue'}}
     {{/if}}

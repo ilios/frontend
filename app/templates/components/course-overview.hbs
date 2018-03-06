@@ -1,21 +1,23 @@
-<div class='title'>
-  {{t 'general.overview'}}
-</div>
-<div class='course-overview-actions'>
-  {{#link-to 'course-materials' course class='materials'}}
-    {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
-  {{/link-to}}
-  {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
-    {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
-  {{/link-to}}
-  {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-    {{#link-to 'course.rollover' course class='rollover'}}
-      {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
+<div class='course-overview-header'>
+  <div class='title'>
+    {{t 'general.overview'}}
+  </div>
+  <div class='course-overview-actions'>
+    {{#link-to 'course-materials' course class='materials'}}
+      {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
     {{/link-to}}
-  {{/if}}
-  {{#link-to 'course-visualize-objectives' course}}
-    {{visualizer-course-objectives course=course isIcon=true}}
-  {{/link-to}}
+    {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
+      {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
+    {{/link-to}}
+    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
+      {{#link-to 'course.rollover' course class='rollover'}}
+        {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
+      {{/link-to}}
+    {{/if}}
+    {{#link-to 'course-visualize-objectives' course}}
+      {{visualizer-course-objectives course=course isIcon=true}}
+    {{/link-to}}
+  </div>
 </div>
 <div class='course-overview-content'>
   <div class="block courseexternalid">
@@ -160,7 +162,7 @@
         }}
       {{else}}
         {{#if (get (await course.directors) 'length')}}
-          <ul class="tag-list">
+          <ul class="directors">
             {{#each (sort-by 'lastName' (await course.directors)) as |director|}}
               <li>{{director.fullName}}</li>
             {{/each}}
@@ -170,7 +172,7 @@
         {{/if}}
       {{/if}}
     {{else}}
-      <span>{{fa-icon 'spinner' spin=true}}</span>
+      {{loading-spinner}}
     {{/unless}}
   </div>
 

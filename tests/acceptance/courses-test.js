@@ -189,7 +189,7 @@ test('filters by mycourses', async function(assert) {
   assert.equal(page.courses(0).title, firstCourse.title);
   assert.equal(page.courses(1).title, secondCourse.title);
 
-  await page.toggleMyCourses();
+  await page.filterByMyCourses();
   assert.equal(page.courses().count, 1);
   assert.equal(page.courses(0).title, secondCourse.title);
 });

@@ -1,0 +1,32 @@
+.new-user {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
+  .new-user-form {
+    @include ilios-form;
+
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: .5rem;
+      }
+    }
+
+    .item {
+      @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+      }
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+}

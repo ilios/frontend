@@ -1,0 +1,87 @@
+.bulk-new-users {
+  padding: 1rem;
+
+  h3 {
+    margin: .5rem;
+  }
+
+  .new-user-form {
+    @include ilios-form;
+
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: .5rem;
+      }
+    }
+
+    .upload-users {
+      margin: 1rem 0;
+
+      input {
+        width: 15rem;
+      }
+    }
+
+    .item {
+      @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+
+        select {
+          width: auto;
+        }
+      }
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+
+    .proposed-new-users {
+      grid-column: 1 / -1;
+      max-height: 25rem;
+      overflow-y: scroll;
+
+      .error {
+        border: 1px solid $alert-color;
+        color: $alert-color;
+      }
+
+      table {
+        @include ilios-table-structure;
+        @include ilios-table-colors;
+      }
+    }
+  }
+
+  .file-is-loading {
+    display: flex;
+    font-size: 3rem;
+    font-weight: bold;
+    justify-content: center;
+  }
+
+  .saving-user-errors,
+  .saving-authentication-errors {
+    border: 1px solid $alert-color;
+    border-top: 10px solid $alert-color;
+    margin: 1rem 4rem;
+    padding: 0 1rem 1rem;
+
+    p {
+      color: $alert-color;
+    }
+
+    li {
+      list-style-type: disc;
+      margin-left: 2rem;
+    }
+
+  }
+}

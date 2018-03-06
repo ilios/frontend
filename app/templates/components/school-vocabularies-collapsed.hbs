@@ -2,7 +2,7 @@
   {{t 'general.vocabularies'}} ({{get (await school.vocabularies) 'length'}})
 </div>
 {{#if (is-pending school.vocabularies)}}
-  <h3>{{fa-icon 'spinner' spin=true}}</h3>
+  {{loading-spinner tagName='h3'}}
 {{/if}}
 {{#unless (is-pending school.vocabularies)}}
   <div class='content'>
