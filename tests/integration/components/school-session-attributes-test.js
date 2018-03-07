@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';

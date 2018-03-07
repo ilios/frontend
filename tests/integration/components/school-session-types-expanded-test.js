@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import Service from '@ember/service';

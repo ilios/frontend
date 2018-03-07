@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
-import { getOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
