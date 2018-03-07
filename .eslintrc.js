@@ -67,8 +67,6 @@ module.exports = {
         "getElementText": true,
         "getText": true,
         "pickOption": true,
-        "select": true,
-        "server": true
       },
     }
   ]
