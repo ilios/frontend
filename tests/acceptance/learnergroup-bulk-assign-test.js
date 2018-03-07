@@ -8,7 +8,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(function() {
-    const school = server.create('school', {
+    const school = this.server.create('school', {
       title: 'school 0'
     });
     setupAuthentication(this.application, {
@@ -16,27 +16,27 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       schoolId: 1
     });
 
-    const program = server.create('program', {
+    const program = this.server.create('program', {
       title: 'program 0',
       school,
     });
-    const programYear = server.create('program-year', {
+    const programYear = this.server.create('program-year', {
       program,
     });
     const cohort =server.create('cohort', {
       title: 'class of this year',
       programYear,
     });
-    const group1 = server.create('learner-group', {
+    const group1 = this.server.create('learner-group', {
       title: 'group 1',
       cohort,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       title: 'group 1 child 0',
       cohort,
       parent: group1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       title: 'group 1 child 1',
       cohort,
       parent: group1,
@@ -78,13 +78,13 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
     const input = await find('[data-test-user-upload]');
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -112,19 +112,19 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
     const input = await find('[data-test-user-upload]');
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
       cohortIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'mrs',
       lastName: 'maisel',
       campusId: '123456',
@@ -153,13 +153,13 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
     const input = await find('[data-test-user-upload]');
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -178,13 +178,13 @@ module('Acceptance | learner group bulk assign', function(hooks) {
 
   test('finalize and save', async function (assert) {
     assert.expect(16);
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -212,26 +212,26 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     assert.equal(page.bulkAssign.finalData(1).campusId, '12345');
     assert.equal(page.bulkAssign.finalData(1).groupName, 'group 1 child 1');
     assert.ok(page.bulkAssign.canSubmitFinalData);
-    assert.equal( server.db.learnerGroups[0].userIds, null);
-    assert.equal( server.db.learnerGroups[1].userIds, null);
-    assert.equal( server.db.learnerGroups[2].userIds, null);
+    assert.equal( this.server.db.learnerGroups[0].userIds, null);
+    assert.equal( this.server.db.learnerGroups[1].userIds, null);
+    assert.equal( this.server.db.learnerGroups[2].userIds, null);
 
     await page.bulkAssign.submitFinalData();
-    assert.deepEqual( server.db.learnerGroups[0].userIds, ['2', '3']);
-    assert.deepEqual( server.db.learnerGroups[1].userIds, null);
-    assert.deepEqual( server.db.learnerGroups[2].userIds, ['3']);
+    assert.deepEqual( this.server.db.learnerGroups[0].userIds, ['2', '3']);
+    assert.deepEqual( this.server.db.learnerGroups[1].userIds, null);
+    assert.deepEqual( this.server.db.learnerGroups[2].userIds, ['3']);
   });
 
   test('catch user already in group and do not save', async function (assert) {
     assert.expect(11);
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
       learnerGroupIds: [1],
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -268,7 +268,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
 
   test('create a new group when requested', async function (assert) {
     assert.expect(14);
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -285,11 +285,11 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     assert.equal(page.bulkAssign.validUploadedUsers().count, 1);
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
-    assert.equal( server.db.learnerGroups.length, 3);
+    assert.equal( this.server.db.learnerGroups.length, 3);
     assert.equal(server.db.learnerGroups[0].userIds, null);
     await page.bulkAssign.groupsToMatch(0).createNewGroup();
-    assert.equal( server.db.learnerGroups.length, 4);
-    assert.equal( server.db.learnerGroups[3].userIds, null);
+    assert.equal( this.server.db.learnerGroups.length, 4);
+    assert.equal( this.server.db.learnerGroups[3].userIds, null);
 
     assert.equal(page.bulkAssign.finalData().count, 1);
     assert.equal(page.bulkAssign.finalData(0).groupName, '123Test');
@@ -297,18 +297,18 @@ module('Acceptance | learner group bulk assign', function(hooks) {
 
 
     await page.bulkAssign.submitFinalData();
-    assert.deepEqual( server.db.learnerGroups[0].userIds, ['2']);
-    assert.equal( server.db.learnerGroups[1].userIds, null);
-    assert.equal( server.db.learnerGroups[2].userIds, null);
-    assert.equal( server.db.learnerGroups[3].title, '123Test');
-    assert.deepEqual( server.db.learnerGroups[3].userIds, ['2']);
+    assert.deepEqual( this.server.db.learnerGroups[0].userIds, ['2']);
+    assert.equal( this.server.db.learnerGroups[1].userIds, null);
+    assert.equal( this.server.db.learnerGroups[2].userIds, null);
+    assert.equal( this.server.db.learnerGroups[3].title, '123Test');
+    assert.deepEqual( this.server.db.learnerGroups[3].userIds, ['2']);
   });
 
   test('small group matches are trimmed', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
     const input = await find('[data-test-user-upload]');
-    const users = server.createList('user', 4, {
+    const users = this.server.createList('user', 4, {
       cohortIds: [1],
     });
     const data = users.map(obj => {

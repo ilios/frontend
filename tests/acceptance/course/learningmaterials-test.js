@@ -22,14 +22,14 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('academicYear');
-    server.create('learningMaterialStatus', {
+    this.server.create('academicYear');
+    this.server.create('learningMaterialStatus', {
       learningMaterialIds: [1]
     });
-    server.createList('learningMaterialStatus', 5);
-    server.createList('learningMaterialUserRole', 3);
-    server.createList('meshDescriptor', 6);
-    server.create('learningMaterial',{
+    this.server.createList('learningMaterialStatus', 5);
+    this.server.createList('learningMaterialUserRole', 3);
+    this.server.createList('meshDescriptor', 6);
+    this.server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
       owningUserId: 4136,
       statusId: 1,
@@ -39,7 +39,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
       uploadDate: moment('2015-02-12').toDate(),
     });
-    server.create('learningMaterial',{
+    this.server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
       owningUserId: 4136,
       statusId: 1,
@@ -50,7 +50,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       absoluteFileUri: 'http://example.com/file',
       uploadDate: moment('2011-03-14').toDate(),
     });
-    server.create('learningMaterial',{
+    this.server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       statusId: 1,
@@ -58,7 +58,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       userRoleId: 1,
       uploadDate: today.toDate(),
     });
-    server.create('learningMaterial',{
+    this.server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       statusId: 1,
@@ -66,7 +66,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       owningUserId: 4136,
       uploadDate: moment('2016-12-12').toDate(),
     });
-    server.create('learningMaterial',{
+    this.server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
       originalAuthor: 'Marty McFly',
       owningUserId: 4136,
@@ -77,33 +77,33 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt'
     });
-    server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial',{
       learningMaterialId: 1,
       courseId: 1,
       required: false,
       meshDescriptorIds: [2,3],
       position: 0,
     });
-    server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial',{
       learningMaterialId: 2,
       courseId: 1,
       required: false,
       position: 1,
     });
-    server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial',{
       learningMaterialId: 3,
       courseId: 1,
       publicNotes: false,
       position: 2,
     });
-    server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial',{
       learningMaterialId: 4,
       courseId: 1,
       position: 3,
       notes: 'test notes',
     });
 
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });

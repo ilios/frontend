@@ -14,20 +14,20 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('sessionType');
-    server.createList('meshDescriptor', 2);
-    server.create('meshDescriptor', {
+    this.server.create('school');
+    this.server.create('sessionType');
+    this.server.createList('meshDescriptor', 2);
+    this.server.create('meshDescriptor', {
       deleted: true
     });
-    server.createList('meshDescriptor', 3, {
+    this.server.createList('meshDescriptor', 3, {
     });
 
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1
     });
 
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       meshDescriptorIds: [1,2,3]
     });

@@ -10,11 +10,11 @@ let url = '/users';
 module('Acceptance: Users', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, { id: 4136, schoolId: 1, campusId: '123' });
 
-    server.createList('user', 90, { schoolId: 1, campusId: '555' });
-    server.createList('authentication', 90);
+    this.server.createList('user', 90, { schoolId: 1, campusId: '555' });
+    this.server.createList('authentication', 90);
   });
 
   hooks.afterEach(function() {
@@ -58,7 +58,7 @@ module('Acceptance: Users', function(hooks) {
   });
 
   test('can search for a user and transition to user route', async function(assert) {
-    server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
+    this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
 
     const userSearch = '.user-search input';
     const firstStudent = 'tbody tr:eq(0) td:eq(1) a';

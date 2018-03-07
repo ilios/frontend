@@ -14,15 +14,15 @@ module('Acceptance: Course - Publication Check', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('vocabulary');
-    server.create('cohort');
-    server.create('objective');
-    server.create('term', {
+    this.server.create('school');
+    this.server.create('vocabulary');
+    this.server.create('cohort');
+    this.server.create('objective');
+    this.server.create('term', {
       vocabularyId: 1,
     });
-    server.create('meshDescriptor');
-    fixtures.fullCourse = server.create('course', {
+    this.server.create('meshDescriptor');
+    fixtures.fullCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -30,7 +30,7 @@ module('Acceptance: Course - Publication Check', function(hooks) {
       termIds: [1],
       meshDescriptorIds: [1],
     });
-    fixtures.emptyCourse = server.create('course', {
+    fixtures.emptyCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1
     });

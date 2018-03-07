@@ -14,7 +14,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
+    this.server.create('school');
   });
 
   hooks.afterEach(function() {
@@ -22,7 +22,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('check fields', async function(assert) {
-    var program = server.create('program', {
+    var program = this.server.create('program', {
       schoolId: 1,
     });
     await visit(url);
@@ -33,7 +33,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('change title', async function(assert) {
-    server.create('program', {
+    this.server.create('program', {
       schoolId: 1,
     });
     const container = '.program-details';
@@ -54,7 +54,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('change short title', async function(assert) {
-    let program = server.create('program', {
+    let program = this.server.create('program', {
       schoolId: 1,
     });
     const container = '.program-details';
@@ -75,7 +75,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('change duration', async function(assert) {
-    let program = server.create('program', {
+    let program = this.server.create('program', {
       schoolId: 1,
     });
     const container = '.program-details';
@@ -102,7 +102,7 @@ module('Acceptance: Program - Overview', function(hooks) {
 
 
   test('leave duration at 1', async function(assert) {
-    let program = server.create('program', {
+    let program = this.server.create('program', {
       schoolId: 1,
       duration: 1,
     });

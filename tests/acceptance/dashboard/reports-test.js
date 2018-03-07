@@ -13,34 +13,34 @@ var application;
 module('Acceptance: Dashboard Reports', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    const school = server.create('school');
+    const school = this.server.create('school');
     const user = setupAuthentication(application, { id: 4136, schoolId: 1 });
-    const vocabulary = server.create('vocabulary');
-    const term = server.create('term', { vocabulary });
-    server.create('academic-year', {
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', { vocabulary });
+    this.server.create('academic-year', {
       id: 2015
     });
-    server.create('academic-year', {
+    this.server.create('academic-year', {
       id: 2016
     });
-    const firstCourse = server.create('course', {
+    const firstCourse = this.server.create('course', {
       school,
       year: 2015,
       externalId: 'Theoretical Phys Ed',
     });
-    server.create('session', {
+    this.server.create('session', {
       course: firstCourse,
       terms: [term],
     });
-    const secondCourse = server.create('course', {
+    const secondCourse = this.server.create('course', {
       school,
       year: 2016,
     });
-    server.create('session', {
+    this.server.create('session', {
       course: secondCourse,
       terms: [term],
     });
-    server.create('report', {
+    this.server.create('report', {
       title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
@@ -48,7 +48,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
       user,
       school,
     });
-    server.create('report', {
+    this.server.create('report', {
       title: null,
       subject: 'session',
       prepositionalObject: 'term',
@@ -177,7 +177,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
-    server.create('mesh-descriptor', {
+    this.server.create('mesh-descriptor', {
       id: 'D1234',
       courseIds: [1, 2]
     });
@@ -205,7 +205,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
   });
 
   test('Prepositional object resets when a new type is selected', async function (assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: '2016',
       schoolId: 1
     });
@@ -226,7 +226,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
   });
 
   test('Report Selector with Academic Year not selecting correct predicate #3427', async function (assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: '2016',
       schoolId: 1
     });

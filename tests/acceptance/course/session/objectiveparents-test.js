@@ -15,8 +15,8 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('sessionType');
+    this.server.create('school');
+    this.server.create('sessionType');
     fixtures.parentObjectives = [];
     fixtures.parentObjectives.pushObject(server.createList('objective', 3));
     fixtures.sessionObjectives = [];
@@ -27,12 +27,12 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
       parentIds: [1]
     }));
     fixtures.sessionObjectives.pushObject(server.create('objective'));
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [1, 2, 3],
     });
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       courseId: 1,
       objectiveIds: [4, 5, 6]
     });

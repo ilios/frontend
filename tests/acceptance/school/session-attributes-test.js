@@ -22,13 +22,13 @@ module('Acceptance: School - Session Attributes', function(hooks) {
 
   test('check fields collapsed', async function(assert) {
     assert.expect(12);
-    server.create('school');
-    server.create('schoolConfig', {
+    this.server.create('school');
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: true
@@ -64,13 +64,13 @@ module('Acceptance: School - Session Attributes', function(hooks) {
 
   test('check fields expanded', async function(assert) {
     assert.expect(12);
-    server.create('school');
-    server.create('schoolConfig', {
+    this.server.create('school');
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: true
@@ -106,13 +106,13 @@ module('Acceptance: School - Session Attributes', function(hooks) {
 
   test('manage session attributes', async function(assert) {
     assert.expect(23);
-    server.create('school');
-    server.create('schoolConfig', {
+    this.server.create('school');
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: true

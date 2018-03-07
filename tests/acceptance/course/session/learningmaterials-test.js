@@ -22,13 +22,13 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     fixtures.user = setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear');
-    server.create('course');
-    server.create('sessionType');
+    this.server.create('school');
+    this.server.create('academicYear');
+    this.server.create('course');
+    this.server.create('sessionType');
     fixtures.statuses = [];
     fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 6));
-    fixtures.roles = server.createList('learningMaterialUserRole', 3);
+    fixtures.roles = this.server.createList('learningMaterialUserRole', 3);
     fixtures.meshDescriptors = [];
     fixtures.meshDescriptors.pushObject(server.createList('meshDescriptor', 6));
     fixtures.learningMaterials = [];
@@ -82,7 +82,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt'
     }));
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       schoolId: 1,
       courseId: 1,
     });

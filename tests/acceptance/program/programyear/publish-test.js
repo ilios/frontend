@@ -14,25 +14,25 @@ module('Acceptance: Program Year - Publish', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('program', {
       schoolId: 1
     });
-    fixtures.published = server.create('programYear', {
+    fixtures.published = this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', { programYearId: 1 });
-    fixtures.scheduled = server.create('programYear', {
+    this.server.create('cohort', { programYearId: 1 });
+    fixtures.scheduled = this.server.create('programYear', {
       programId: 1,
       publishedAsTbd: true
     });
-    server.create('cohort', { programYearId: 2 });
-    fixtures.draft = server.create('programYear', {
+    this.server.create('cohort', { programYearId: 2 });
+    fixtures.draft = this.server.create('programYear', {
       programId: 1,
       published: false,
       publishedAsTbd: false
     });
-    server.create('cohort', { programYearId: 3 });
+    this.server.create('cohort', { programYearId: 3 });
   });
 
   hooks.afterEach(function() {

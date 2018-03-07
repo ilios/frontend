@@ -17,9 +17,9 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('course');
-    server.create('sessionType');
+    this.server.create('school');
+    this.server.create('course');
+    this.server.create('sessionType');
 
     fixtures.meshDescriptors = [];
     fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 7));
@@ -32,17 +32,17 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
       meshDescriptorIds: [1,2]
     }));
     fixtures.sessionObjectives.pushObjects(server.createList('objective', 11));
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1
     });
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       courseId: 1,
       objectiveIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     });
 
     //create some extra descriptors that shouldn't be found in search
-    server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
+    this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
   });
 
   hooks.afterEach(function() {

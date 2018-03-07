@@ -15,39 +15,39 @@ module('Acceptance: Session - Publish', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('course');
-    server.create('sessionType');
-    server.create('ilmSession', {
+    this.server.create('school');
+    this.server.create('course');
+    this.server.create('sessionType');
+    this.server.create('ilmSession', {
       dueDate: moment().format()
     });
-    fixtures.publishedSession = server.create('session', {
+    fixtures.publishedSession = this.server.create('session', {
       published: true,
       courseId: 1,
     });
-    fixtures.scheduledSession = server.create('session', {
+    fixtures.scheduledSession = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: true,
     });
-    fixtures.draftSession = server.create('session', {
+    fixtures.draftSession = this.server.create('session', {
       courseId: 1,
     });
-    fixtures.ilmSession = server.create('session', {
+    fixtures.ilmSession = this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format()
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 2,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format()
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 3,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format()

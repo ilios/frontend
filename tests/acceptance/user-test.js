@@ -21,13 +21,13 @@ module('Acceptance: User', function(hooks) {
       schoolId: 1
     };
 
-    server.create('school');
-    server.create('program');
-    server.createList('programYear', 3, { programId: 1});
-    server.create('cohort', { title: 'Medicine', programYearId: 1 });
-    server.create('cohort', { programYearId: 2 });
-    server.create('cohort', { programYearId: 3 });
-    server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
+    this.server.create('school');
+    this.server.create('program');
+    this.server.createList('programYear', 3, { programId: 1});
+    this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
+    this.server.create('cohort', { programYearId: 2 });
+    this.server.create('cohort', { programYearId: 3 });
+    this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
     setupAuthentication(application, userObject);
   });
 
@@ -36,8 +36,8 @@ module('Acceptance: User', function(hooks) {
   });
 
   test('can search for users', async function(assert) {
-    server.createList('user', 20, { email: 'user@example.edu' });
-    server.createList('authentication', 20);
+    this.server.createList('user', 20, { email: 'user@example.edu' });
+    this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:eq(2)';

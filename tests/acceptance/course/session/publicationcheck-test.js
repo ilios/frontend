@@ -16,19 +16,19 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('course');
-    server.create('vocabulary', {
+    this.server.create('course');
+    this.server.create('vocabulary', {
       schoolId: 1,
     });
-    server.createList('sessionType', 2, {
+    this.server.createList('sessionType', 2, {
       schoolId: 1
     });
-    server.create('sessionDescription');
-    server.create('objective');
-    server.create('term', {
+    this.server.create('sessionDescription');
+    this.server.create('objective');
+    this.server.create('term', {
       vocabularyId: 1,
     });
-    server.create('meshDescriptor');
+    this.server.create('meshDescriptor');
   });
 
   hooks.afterEach(function() {
@@ -36,7 +36,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('full session count', async function (assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       objectiveIds: [1],
       termIds: [1],
@@ -44,7 +44,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
       sessionTypeId: 1,
       sessionDescriptionId: 1
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1
     });
     await visit(url);
@@ -59,10 +59,10 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   test('empty session count', async function(assert) {
     //create 2 because the second one is empty
-    server.createList('session', 2, {
+    this.server.createList('session', 2, {
       courseId: 1
     });
-    server.db.courses.update(1, {sessionIds: [1, 2]});
+    this.server.db.courses.update(1, {sessionIds: [1, 2]});
     await visit('/courses/1/sessions/2/publicationcheck');
     assert.equal(currentPath(), 'course.session.publicationCheck');
     let items = find('.session-publicationcheck table tbody td');
@@ -75,7 +75,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   //also test all the session overview fields (Issue #496)
   test('check fields', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       sessionDescriptionId: 1,
@@ -90,8 +90,8 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('check remove ilm', async function(assert) {
-    let ilmSession = server.create('ilmSession');
-    server.create('session', {
+    let ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -110,7 +110,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('check add ilm', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       description: 'some text',
@@ -126,8 +126,8 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('change ilm hours', async function(assert) {
-    let ilmSession = server.create('ilmSession');
-    server.create('session', {
+    let ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -146,8 +146,8 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('change ilm due date', async function(assert) {
-    let ilmSession = server.create('ilmSession');
-    server.create('session', {
+    let ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -167,7 +167,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('change title', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -183,7 +183,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('change type', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
@@ -204,34 +204,34 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   test('session attributes are shown by school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialAttireRequired',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialEquipmentRequired',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: true
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1, 2, 3, 4]
     });
     const sessionOverview = '.session-overview';
@@ -249,34 +249,34 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   test('session attributes are hidden by school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialAttireRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialEquipmentRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1, 2, 3, 4]
     });
     const sessionOverview = '.session-overview';
@@ -294,10 +294,10 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   test('session attributes are hidden when there is no school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
@@ -317,19 +317,19 @@ module('Acceptance: Session - Publication Check', function(hooks) {
 
   let testAttributeToggle = async function(assert, schoolVariableName, domclass){
     assert.expect(3);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: schoolVariableName,
       value: true
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1]
     });
     const sessionOverview = '.session-overview';
@@ -360,7 +360,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('change description', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       sessionDescriptionId: 1
@@ -384,7 +384,7 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   });
 
   test('add description', async function(assert) {
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });

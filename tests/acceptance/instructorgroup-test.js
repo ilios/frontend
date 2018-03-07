@@ -13,37 +13,37 @@ let url = '/instructorgroups/1';
 module('Acceptance: Instructor Group Details', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, {id: 4136, schoolId: 1});
-    server.createList('user', 4);
-    server.createList('course', 2, {
+    this.server.createList('user', 4);
+    this.server.createList('course', 2, {
       schoolId: 1
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 2,
     });
-    server.create('instructorGroup', {
+    this.server.create('instructorGroup', {
       schoolId: 1,
       userIds: [2,3],
     });
-    server.create('instructorGroup', {
+    this.server.create('instructorGroup', {
       schoolId: 1,
     });
-    server.create('instructorGroup', {
+    this.server.create('instructorGroup', {
       schoolId: 1
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1,
       instructorGroupIds: [1]
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 2,
       instructorGroupIds: [2]
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 2,
       instructorGroupIds: [1]
     });

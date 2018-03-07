@@ -16,11 +16,11 @@ module('Acceptance: Session - Objective Create', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('course');
-    server.create('sessionType');
-    fixtures.objective = server.create('objective');
-    fixtures.session = server.create('session', {
+    this.server.create('school');
+    this.server.create('course');
+    this.server.create('sessionType');
+    fixtures.objective = this.server.create('objective');
+    fixtures.session = this.server.create('session', {
       courseId: 1,
       objectiveIds: [1]
     });

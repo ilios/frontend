@@ -14,24 +14,24 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('vocabulary', {
+    this.server.create('school');
+    this.server.create('vocabulary', {
       schoolId: 1,
       active: true
     });
-    server.create('program', {
+    this.server.create('program', {
       schoolId: 1
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', { programYearId: 1});
-    server.create('term', {
+    this.server.create('cohort', { programYearId: 1});
+    this.server.create('term', {
       programYearIds: [1],
       vocabularyId: 1,
       active: true
     });
-    server.create('term', {
+    this.server.create('term', {
       vocabularyId: 1,
       active: true
     });

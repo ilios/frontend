@@ -14,16 +14,16 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.createList('user', 5);
-    server.create('program', {
+    this.server.create('school');
+    this.server.createList('user', 5);
+    this.server.create('program', {
       schoolId: 1
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
       directorIds: [2, 3, 4]
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1
     });
   });
@@ -103,11 +103,11 @@ module('Acceptance: Program Year - Overview', function(hooks) {
 
   test('first director added is disabled #2770', async function(assert) {
     assert.expect(5);
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
       directorIds: []
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 2
     });
     const overview = '.programyear-overview';

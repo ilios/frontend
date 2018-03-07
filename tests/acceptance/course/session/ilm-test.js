@@ -14,14 +14,14 @@ var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Independent Learning', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    fixtures.school = server.create('school');
+    fixtures.school = this.server.create('school');
     setupAuthentication(application, {
       id: 4136,
       schoolId: 1
     });
-    server.createList('user', 6);
-    server.create('academicYear');
-    fixtures.course = server.create('course', {
+    this.server.createList('user', 6);
+    this.server.create('academicYear');
+    fixtures.course = this.server.create('course', {
       schoolId: 1
     });
 
@@ -29,13 +29,13 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 5,{
       schoolId: 1
     }));
-    fixtures.sessionType = server.create('sessionType');
-    fixtures.sessionDescription = server.create('sessionDescription');
-    fixtures.ilmSession = server.create('ilmSession', {
+    fixtures.sessionType = this.server.create('sessionType');
+    fixtures.sessionDescription = this.server.create('sessionDescription');
+    fixtures.ilmSession = this.server.create('ilmSession', {
       instructorGroupIds: [1,2,3],
       instructorIds: [2,3,4]
     });
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });

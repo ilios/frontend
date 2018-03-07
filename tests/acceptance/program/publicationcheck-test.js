@@ -14,12 +14,12 @@ module('Acceptance: Program - Publication Check', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('objective');
-    server.create('term');
-    server.create('competency');
-    server.create('program');
-    fixtures.fullProgramYear = server.create('programYear', {
+    this.server.create('school');
+    this.server.create('objective');
+    this.server.create('term');
+    this.server.create('competency');
+    this.server.create('program');
+    fixtures.fullProgramYear = this.server.create('programYear', {
       startYear: 2013,
       schoolId: 1,
       programId: 1,
@@ -28,12 +28,12 @@ module('Acceptance: Program - Publication Check', function(hooks) {
       termIds: [1],
       competencyIds: [1],
     });
-    fixtures.emptyProgramYear = server.create('programYear', {
+    fixtures.emptyProgramYear = this.server.create('programYear', {
       startYear: 2013,
       schoolId: 1,
       programId: 1
     });
-    server.createList('cohort', 2);
+    this.server.createList('cohort', 2);
   });
 
   hooks.afterEach(function() {

@@ -14,25 +14,25 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear');
-    server.createList('meshTree', 3);
-    server.createList('meshConcept', 3);
+    this.server.create('school');
+    this.server.create('academicYear');
+    this.server.createList('meshTree', 3);
+    this.server.createList('meshConcept', 3);
 
-    server.create('meshConcept', {
+    this.server.create('meshConcept', {
       scopeNote: '1234567890'.repeat(30)
     });
 
-    server.create('meshDescriptor', {
+    this.server.create('meshDescriptor', {
       conceptIds: [1, 2, 3, 4],
       treeIds: [1, 2, 3]
     });
-    server.create('meshDescriptor', {
+    this.server.create('meshDescriptor', {
       deleted: true
     });
-    server.createList('meshDescriptor', 4);
+    this.server.createList('meshDescriptor', 4);
 
-    server.create('course', {
+    this.server.create('course', {
       year: 2014,
       schoolId: 1,
       meshDescriptorIds: [1, 2, 3]

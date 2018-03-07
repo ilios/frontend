@@ -15,13 +15,13 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    // server.create('academicYear', {id: 2013});
-    fixtures.program = server.create('program');
-    fixtures.programYear = server.create('programYear', {
+    this.server.create('school');
+    // this.server.create('academicYear', {id: 2013});
+    fixtures.program = this.server.create('program');
+    fixtures.programYear = this.server.create('programYear', {
       programId: 1,
     });
-    fixtures.cohort = server.create('cohort', {
+    fixtures.cohort = this.server.create('cohort', {
       programYearId: 1
     });
     fixtures.competencies = [];
@@ -51,7 +51,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
       parentIds: [1]
     }));
     fixtures.courseObjectives.pushObject(server.create('objective'));
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [4,5],

@@ -13,8 +13,8 @@ module('Acceptance: Course - Publish', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('cohort');
+    this.server.create('school');
+    this.server.create('cohort');
   });
 
   hooks.afterEach(function() {
@@ -22,20 +22,20 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check published course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
       cohortIds: [1],
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
       publishedAsTbd: true,
       cohortIds: [1],
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -58,7 +58,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check scheduled course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
@@ -83,7 +83,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check draft course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -106,7 +106,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check publish draft course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -125,7 +125,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check schedule draft course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -142,7 +142,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check publish scheduled course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
@@ -161,7 +161,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check unpublish scheduled course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
@@ -180,7 +180,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check schedule published course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
@@ -198,7 +198,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check unpublish published course', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,

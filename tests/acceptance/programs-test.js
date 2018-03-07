@@ -20,29 +20,29 @@ module('Acceptance: Programs', function(hooks) {
   });
 
   test('visiting /programs', async function(assert) {
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
     await visit('/programs');
     assert.equal(currentPath(), 'programs');
   });
 
   test('filters by title', async function(assert) {
     assert.expect(19);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    let firstProgram = server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    let firstProgram = this.server.create('program', {
       title: 'specialfirstprogram',
       schoolId: 1,
     });
-    let secondProgram = server.create('program', {
+    let secondProgram = this.server.create('program', {
       title: 'specialsecondprogram',
       schoolId: 1
     });
-    let regularProgram = server.create('program', {
+    let regularProgram = this.server.create('program', {
       title: 'regularprogram',
       schoolId: 1
     });
-    let regexProgram = server.create('program', {
+    let regexProgram = this.server.create('program', {
       title: '\\yoo hoo',
       schoolId: 1
     });
@@ -78,12 +78,12 @@ module('Acceptance: Programs', function(hooks) {
 
   test('filters options', async function(assert) {
     assert.expect(4);
-    server.createList('school', 2);
-    server.create('permission', {
+    this.server.createList('school', 2);
+    this.server.create('permission', {
       tableName: 'school',
       tableRowId: 1,
     });
-    server.create('user', {id: 4136, permissionIds: [1], schoolId: 2});
+    this.server.create('user', {id: 4136, permissionIds: [1], schoolId: 2});
 
     const schoolSelect = '.schoolsfilter select';
     const schools = `${schoolSelect} option`;
@@ -99,8 +99,8 @@ module('Acceptance: Programs', function(hooks) {
   test('add new program', async function(assert) {
     assert.expect(3);
 
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
 
     const url = '/programs';
     const expandButton = '.expand-button';
@@ -123,9 +123,9 @@ module('Acceptance: Programs', function(hooks) {
 
   test('remove program', async function(assert) {
     assert.expect(4);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('program', {
       schoolId: 1,
     });
     await visit('/programs');
@@ -139,9 +139,9 @@ module('Acceptance: Programs', function(hooks) {
 
   test('cancel remove program', async function(assert) {
     assert.expect(4);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('program', {
       schoolId: 1,
     });
     await visit('/programs');
@@ -155,9 +155,9 @@ module('Acceptance: Programs', function(hooks) {
 
   test('click edit takes you to program route', async function(assert) {
     assert.expect(1);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('program', {
       schoolId: 1,
     });
     await visit('/programs');
@@ -168,9 +168,9 @@ module('Acceptance: Programs', function(hooks) {
 
   test('click title takes you to program route', async function(assert) {
     assert.expect(1);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('program', {
       schoolId: 1,
     });
     await visit('/programs');
@@ -180,9 +180,9 @@ module('Acceptance: Programs', function(hooks) {
 
   test('title filter escapes regex', async function(assert) {
     assert.expect(4);
-    server.create('school');
-    server.create('user', {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('user', {id: 4136, schoolId: 1});
+    this.server.create('program', {
       title: 'yes\\no',
       schoolId: 1,
     });

@@ -15,11 +15,11 @@ module('Acceptance: Course - Objective Mesh Descriptors', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear', {id: 2013});
-    server.createList('program', 2);
-    server.createList('programYear', 2);
-    server.createList('cohort', 2);
+    this.server.create('school');
+    this.server.create('academicYear', {id: 2013});
+    this.server.createList('program', 2);
+    this.server.createList('programYear', 2);
+    this.server.createList('cohort', 2);
 
     fixtures.meshDescriptors = [];
     fixtures.meshDescriptors.pushObjects(server.createList('meshDescriptor', 6));
@@ -32,12 +32,12 @@ module('Acceptance: Course - Objective Mesh Descriptors', function(hooks) {
     }));
     fixtures.courseObjectives.pushObject(server.create('objective'));
     //create some other objectives not in this course
-    server.createList('objective', 2);
+    this.server.createList('objective', 2);
 
     //create some extra descriptors that shouldn't be found in search
-    server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
+    this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
 
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [1,2,3]

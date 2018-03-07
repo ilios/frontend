@@ -15,49 +15,49 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1
     });
-    server.create('competency', {
+    this.server.create('competency', {
       schoolId: 1,
     });
-    server.create('competency', {
+    this.server.create('competency', {
       parentId: 1,
       schoolId: 1,
       programYearIds: [1],
     });
-    server.create('competency', {
+    this.server.create('competency', {
       parentId: 1,
       schoolId: 1,
       programYearIds: [1],
     });
-    server.create('competency', {
+    this.server.create('competency', {
       schoolId: 1,
       programYearIds: [1],
     });
-    server.create('competency', {
+    this.server.create('competency', {
       schoolId: 1,
       programYearIds: [1],
     });
-    server.createList('meshDescriptor', 4);
+    this.server.createList('meshDescriptor', 4);
 
-    server.create('objective', {
+    this.server.create('objective', {
       programYearIds: [1],
       competencyId: 2,
       meshDescriptorIds: [1, 2]
     });
-    server.create('objective', {
+    this.server.create('objective', {
       programYearIds: [1],
       competencyId: 4
     });
-    server.create('objective', {
+    this.server.create('objective', {
       programYearIds: [1]
     });
   });

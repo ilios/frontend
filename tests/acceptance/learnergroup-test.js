@@ -10,7 +10,7 @@ let application;
 module('Acceptance: Learnergroup', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, {id: 4136, schoolId: 1});
   });
 
@@ -20,22 +20,22 @@ module('Acceptance: Learnergroup', function(hooks) {
 
 
   test('generate new subgroups', async function(assert) {
-    server.create('programYear');
-    server.create('cohort', { programYearId: 1 });
-    server.createList('user', 2);
-    server.create('learnerGroup', {
+    this.server.create('programYear');
+    this.server.create('cohort', { programYearId: 1 });
+    this.server.createList('user', 2);
+    this.server.create('learnerGroup', {
       cohortId: 1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 1,
       userIds: [2,3]
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 1
     });
-    server.createList('learnerGroup', 2, {
+    this.server.createList('learnerGroup', 2, {
       cohortId: 1,
       parentId: 2
     });
@@ -79,28 +79,28 @@ module('Acceptance: Learnergroup', function(hooks) {
 
   test('copy learnergroup without learners', async function(assert) {
     assert.expect(20);
-    server.create('school');
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
     });
-    server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
-    });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
+      cohortId: 1,
+      parentId: 1,
+    });
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 2,
     });
@@ -161,31 +161,31 @@ module('Acceptance: Learnergroup', function(hooks) {
 
   test('copy learnergroup with learners', async function(assert) {
     assert.expect(20);
-    server.createList('user', 10);
-    server.create('program', {
+    this.server.createList('user', 10);
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       userIds: [2, 3, 4, 5, 6, 7, 8]
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 1,
       userIds: [8]
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 1,
       userIds: [5, 6, 7]
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 2,
       userIds: [8]
@@ -254,24 +254,24 @@ module('Acceptance: Learnergroup', function(hooks) {
     const members = '.learnergroup-overview-content table:eq(1) tbody tr';
     const cohortMembers = `.cohortmembers tbody tr`;
     assert.expect(5);
-    server.create('school');
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    const cohort = server.create('cohort', {
+    const cohort = this.server.create('cohort', {
       programYearId: 1,
     });
-    const learnerGroup = server.create('learnerGroup', {
+    const learnerGroup = this.server.create('learnerGroup', {
       cohort
     });
-    server.createList('user', 5, {
+    this.server.createList('user', 5, {
       cohorts: [cohort],
       primaryCohort: cohort
     });
-    server.createList('user', 5, {
+    this.server.createList('user', 5, {
       cohorts: [cohort],
       primaryCohort: cohort,
       learnerGroups: [learnerGroup]
@@ -288,22 +288,22 @@ module('Acceptance: Learnergroup', function(hooks) {
 
   test('learner group calendar', async function(assert) {
     assert.expect(2);
-    const program = server.create('program', {
+    const program = this.server.create('program', {
       schoolId: 1,
     });
-    const programYear = server.create('programYear', { program });
-    const cohort = server.create('cohort', { programYear });
-    const learnerGroup = server.create('learnerGroup', { cohort });
-    const course = server.create('course', { cohorts: [cohort] });
-    const session = server.create('session', { course });
-    server.create('offering', {
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learnerGroup', { cohort });
+    const course = this.server.create('course', { cohorts: [cohort] });
+    const session = this.server.create('session', { course });
+    this.server.create('offering', {
       session,
       startDate: moment().hour(8).toDate(),
       endDate: moment().hour(8).add(1, 'hour').toDate(),
       learnerGroups: [learnerGroup],
     });
 
-    server.create('offering');
+    this.server.create('offering');
 
     const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
     const event = '.event';
@@ -316,32 +316,32 @@ module('Acceptance: Learnergroup', function(hooks) {
 
   test('learner group calendar with subgroup events', async function(assert) {
     assert.expect(3);
-    const program = server.create('program', {
+    const program = this.server.create('program', {
       schoolId: 1,
     });
-    const programYear = server.create('programYear', { program });
-    const cohort = server.create('cohort', { programYear });
-    const learnerGroup = server.create('learnerGroup', { cohort });
-    const course = server.create('course', { cohorts: [cohort] });
-    const session = server.create('session', { course });
-    const subgroup = server.create('learnerGroup', {
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learnerGroup', { cohort });
+    const course = this.server.create('course', { cohorts: [cohort] });
+    const session = this.server.create('session', { course });
+    const subgroup = this.server.create('learnerGroup', {
       cohort,
       parent: learnerGroup
     });
-    server.create('offering', {
+    this.server.create('offering', {
       session,
       startDate: moment().hour(8).toDate(),
       endDate: moment().hour(8).add(1, 'hour').toDate(),
       learnerGroups: [learnerGroup],
     });
-    server.create('offering', {
+    this.server.create('offering', {
       session,
       startDate: moment().hour(8).toDate(),
       endDate: moment().hour(8).add(1, 'hour').toDate(),
       learnerGroups: [subgroup],
     });
 
-    server.create('offering');
+    this.server.create('offering');
 
     const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
     const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] input:eq(0)';
@@ -363,28 +363,28 @@ module('Acceptance: Learnergroup', function(hooks) {
     const membersOfGroup = `${manager} table:eq(1) tr`;
     const membersOfTree = `${manager} table:eq(2) tr`;
     assert.expect(4);
-    server.create('school');
-    server.create('program', {
+    this.server.create('school');
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    const cohort = server.create('cohort', {
+    const cohort = this.server.create('cohort', {
       programYearId: 1,
     });
-    const learnerGroup = server.create('learnerGroup', {
+    const learnerGroup = this.server.create('learnerGroup', {
       cohort
     });
-    const subGroup = server.create('learnerGroup', {
+    const subGroup = this.server.create('learnerGroup', {
       cohort,
       parent: learnerGroup
     });
-    server.createList('user', 2, {
+    this.server.createList('user', 2, {
       cohorts: [cohort],
       learnerGroups: [learnerGroup]
     });
-    server.create('user', {
+    this.server.create('user', {
       cohorts: [cohort],
       learnerGroups: [subGroup]
     });

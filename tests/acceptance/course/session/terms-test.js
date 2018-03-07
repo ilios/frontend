@@ -15,17 +15,17 @@ module('Acceptance: Session - Terms', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('vocabulary', {
+    this.server.create('school');
+    this.server.create('vocabulary', {
       schoolId: 1,
       active: true
     });
 
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1,
     });
 
-    server.create('sessionType');
+    this.server.create('sessionType');
 
     fixtures.terms = [];
     fixtures.terms.pushObject(server.create('term', {
@@ -36,7 +36,7 @@ module('Acceptance: Session - Terms', function(hooks) {
       vocabularyId: 1,
       active: true
     }));
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       courseId: 1,
       termIds: [1],
     });

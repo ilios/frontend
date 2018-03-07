@@ -13,38 +13,38 @@ module('Acceptance: Course - Print Course', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear');
-    server.create('cohort');
-    server.create('learning-material-user-role');
-    server.create('learning-material-status');
-    server.create('course', {
+    this.server.create('school');
+    this.server.create('academicYear');
+    this.server.create('cohort');
+    this.server.create('learning-material-user-role');
+    this.server.create('learning-material-status');
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
       title: 'Back to the Future',
       cohortIds: [1],
     });
-    server.create('vocabulary', {
+    this.server.create('vocabulary', {
       title: 'Topics',
       schoolId: 1,
     });
-    server.create('term', {
+    this.server.create('term', {
       title: 'Time Travel',
       courseIds: [1],
       vocabularyId: 1,
     });
-    server.create('objective', {
+    this.server.create('objective', {
       schoolId: 1,
       courseIds: [1],
       title: 'Gigawatt Conversion'
     });
-    server.create('user', {
+    this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
       id: 1
     });
-    server.create('learningMaterial',{
+    this.server.create('learningMaterial',{
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
@@ -55,12 +55,12 @@ module('Acceptance: Course - Print Course', function(hooks) {
       citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       description: 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.'
     });
-    server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial',{
       learningMaterialId: 1,
       courseId: 1,
       required: false,
     });
-    server.create('meshDescriptor', {
+    this.server.create('meshDescriptor', {
       courseIds: [1],
       objectiveIds: [1],
       name: "Flux Capacitor"

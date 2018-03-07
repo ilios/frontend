@@ -13,8 +13,8 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('cohort');
+    this.server.create('school');
+    this.server.create('cohort');
   });
 
   hooks.afterEach(function() {
@@ -22,19 +22,19 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
-    server.create('objective');
-    server.create('objective');
-    server.create('objective');
-    server.create('meshDescriptor');
-    server.create('term');
+    this.server.create('objective');
+    this.server.create('objective');
+    this.server.create('objective');
+    this.server.create('meshDescriptor');
+    this.server.create('term');
 
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
       cohortIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
@@ -42,8 +42,8 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
       meshDescriptorIds: [1],
       termIds: [1],
     });
-    server.create('offering', {sessionId: 1});
-    server.create('session', {
+    this.server.create('offering', {sessionId: 1});
+    this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
@@ -51,9 +51,9 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
       meshDescriptorIds: [1],
       termIds: [1],
     });
-    server.create('offering', {sessionId: 2});
-    server.create('ilmSession', { sessionId: 2});
-    server.create('session', {
+    this.server.create('offering', {sessionId: 2});
+    this.server.create('ilmSession', { sessionId: 2});
+    this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: true,
@@ -61,7 +61,7 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
       meshDescriptorIds: [1],
       termIds: [1],
     });
-    server.create('offering', {sessionId: 3});
+    this.server.create('offering', {sessionId: 3});
     await visit('/courses/1/publishall');
 
     let publishable = find('.publish-all-sessions-publishable');

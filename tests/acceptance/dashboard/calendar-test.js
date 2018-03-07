@@ -14,66 +14,66 @@ var application;
 module('Acceptance: Dashboard Calendar', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, {id: 4136, schoolId: 1});
-    server.create('program', {
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
       startYear: 2015,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
       startYear: 2015,
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1,
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 2,
     });
-    server.create('sessionType', {
+    this.server.create('sessionType', {
       schoolId: 1,
     });
-    server.create('sessionType', {
+    this.server.create('sessionType', {
       schoolId: 1,
     });
-    server.create('sessionType', {
+    this.server.create('sessionType', {
       schoolId: 1,
     });
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1,
       year: 2015,
       cohortIds: [1],
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2015,
       schoolId: 1,
       cohortIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2,
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 2,
     });
-    server.create('academicYear', {
+    this.server.create('academicYear', {
       id: 2015,
       title: 2015
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 2
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 3
     });
   });
@@ -86,13 +86,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     let today = moment().hour(8);
     let startOfMonth = today.clone().startOf('month');
     let endOfMonth = today.clone().endOf('month').hour(22).minute(59);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'start of month',
       startDate: startOfMonth.format(),
       endDate: startOfMonth.clone().add(1, 'hour').format()
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'end of month',
       startDate: endOfMonth.format(),
@@ -112,13 +112,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     let today = moment().hour(8);
     let startOfWeek = today.clone().startOf('week');
     let endOfWeek = today.clone().endOf('week').hour(22).minute(59);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'start of week',
       startDate: startOfWeek.format(),
       endDate: startOfWeek.clone().add(1, 'hour').format()
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'end of week',
       startDate: endOfWeek.format(),
@@ -138,19 +138,19 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     let today = moment().hour(8);
     let tomorow = today.clone().add(1, 'day');
     let yesterday = today.clone().subtract(1, 'day');
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'tomorow',
       startDate: tomorow.format(),
       endDate: tomorow.clone().add(1, 'hour').format()
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'yesterday',
       startDate: yesterday.format(),
@@ -167,7 +167,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click month day number and go to day', async function(assert) {
     let aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'start of month',
       startDate: aDayInTheMonth.format(),
@@ -184,7 +184,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click week day title and go to day', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -198,7 +198,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click forward on a day goes to next day', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -211,7 +211,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click forward on a week goes to next week', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -224,7 +224,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click forward on a month goes to next month', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -237,7 +237,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click back on a day goes to previous day', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -250,7 +250,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click back on a week goes to previous week', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -263,7 +263,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('click back on a month goes to previous month', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       name: 'today',
       startDate: today.format(),
@@ -276,13 +276,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('show user events', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -298,13 +298,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   };
   test('show school events', async function(assert) {
     let today = moment().hour(8);
-    server.create('schoolevent', {
+    this.server.create('schoolevent', {
       school: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('schoolevent', {
+    this.server.create('schoolevent', {
       school: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -327,13 +327,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test session type filter', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -368,13 +368,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test course level filter', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -401,13 +401,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test cohort filter', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -443,19 +443,19 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test course filter', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 3
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -476,19 +476,19 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test course and session type filter together', async function(assert) {
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 3
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -511,21 +511,21 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('agenda show next seven days of events', async function(assert) {
     let today = moment().hour(0).minute(2);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     let endOfTheWeek = moment().add(6, 'days');
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
       offering: 2
     });
     let yesterday = moment().subtract(25, 'hours');
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: yesterday.format(),
       endDate: yesterday.clone().add(1, 'hour').format(),
@@ -539,18 +539,18 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   test('academic year filters cohort', async function(assert) {
-    server.create('academicYear', {
+    this.server.create('academicYear', {
       id: 2014,
       title: 2014
     });
-    server.create('program', {
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       startYear: 2014,
       programId: 2,
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 3
     });
     await visit('/dashboard?show=calendar');
@@ -565,11 +565,11 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   test('academic year filters courses', async function(assert) {
-    server.create('academicYear', {
+    this.server.create('academicYear', {
       id: 2014,
       title: 2014
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2014,
       schoolId: 1
     });
@@ -586,10 +586,10 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
 
   test('clear all filters', async function (assert) {
-    const vocabulary = server.create('vocabulary', {
+    const vocabulary = this.server.create('vocabulary', {
       schoolId: 1
     });
-    server.createList('term', 2, {
+    this.server.createList('term', 2, {
       vocabulary
     });
 
@@ -716,7 +716,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('week summary displays the whole week', async function(assert) {
     const startOfTheWeek = moment().day(0).hour(0).minute(2);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: startOfTheWeek.format(),
       endDate: startOfTheWeek.clone().add(1, 'hour').format(),
@@ -724,7 +724,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       isPublished: true,
     });
     const endOfTheWeek = moment().day(6).hour(22).minute(5);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
@@ -748,24 +748,24 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   };
 
   test('test term filter', async function(assert) {
-    const vocabulary = server.create('vocabulary', {
+    const vocabulary = this.server.create('vocabulary', {
       schoolId: 1
     });
-    server.create('term', {
+    this.server.create('term', {
       vocabulary,
       sessionIds: [1, 2]
     });
-    server.create('term', {
+    this.server.create('term', {
       vocabulary
     });
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
@@ -786,21 +786,21 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   test('clear vocab filter #3450', async function(assert) {
-    const vocabulary = server.create('vocabulary', {
+    const vocabulary = this.server.create('vocabulary', {
       schoolId: 1
     });
-    server.create('term', {
+    this.server.create('term', {
       vocabulary,
       sessionIds: [1]
     });
     let today = moment().hour(8);
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
-    server.create('userevent', {
+    this.server.create('userevent', {
       user: 4136,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),

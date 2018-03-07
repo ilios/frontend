@@ -14,40 +14,40 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.createList('school', 2);
-    server.create('program', {
+    this.server.createList('school', 2);
+    this.server.create('program', {
       schoolId: 1,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', { programId: 1});
-    server.create('department', {
+    this.server.create('cohort', { programId: 1});
+    this.server.create('department', {
       schoolId: 1,
     });
-    server.create('department', {
+    this.server.create('department', {
       schoolId: 1
     });
-    server.create('department', {
+    this.server.create('department', {
       schoolId: 2,
     });
-    server.create('department', {
+    this.server.create('department', {
       schoolId: 3
     });
-    server.createList('department', 5, {
+    this.server.createList('department', 5, {
       schoolId: 1
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
       schoolId: 1,
       departmentId: 1
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
       schoolId: 2,
       departmentId: 3
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
       schoolId: 3
     });

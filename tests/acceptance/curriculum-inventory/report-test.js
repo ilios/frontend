@@ -11,7 +11,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
+    this.server.create('school');
   });
 
   hooks.afterEach(function() {
@@ -19,13 +19,13 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   });
 
   test('create new sequence block Issue #2108', async function(assert) {
-    const developer = server.create('userRole', {
+    const developer = this.server.create('userRole', {
       title: 'developer'
     });
-    server.db.users.update(4136, {roles: [developer]});
-    const program = server.create('program', {schoolId: 1});
-    const report = server.create('curriculumInventoryReport', {program});
-    server.create('curriculumInventorySequence', {report});
+    this.server.db.users.update(4136, {roles: [developer]});
+    const program = this.server.create('program', {schoolId: 1});
+    const report = this.server.create('curriculumInventoryReport', {program});
+    this.server.create('curriculumInventorySequence', {report});
 
     const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
     const addSequenceBlock = `${sequenceBlockList} .expand-button`;
@@ -44,15 +44,15 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
 
 
   test('rollover hidden from instructors', async function(assert) {
-    server.create('program', {
+    this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
     });
-    const instructor = server.create('userRole', {
+    const instructor = this.server.create('userRole', {
       title: 'instructor'
     });
-    server.db.users.update(4136, {roles: [instructor]});
-    server.create('curriculumInventoryReport', {
+    this.server.db.users.update(4136, {roles: [instructor]});
+    this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -67,15 +67,15 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   });
 
   test('rollover visible to developers', async function (assert) {
-    const developer = server.create('userRole', {
+    const developer = this.server.create('userRole', {
       title: 'developer'
     });
-    server.db.users.update(4136, {roles: [developer]});
-    server.create('program', {
+    this.server.db.users.update(4136, {roles: [developer]});
+    this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
     });
-    server.create('curriculumInventoryReport', {
+    this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -90,15 +90,15 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   });
 
   test('rollover not visible to course directors', async function(assert) {
-    const director = server.create('userRole', {
+    const director = this.server.create('userRole', {
       title: 'course director'
     });
-    server.db.users.update(4136, {roles: [director]});
-    server.create('program', {
+    this.server.db.users.update(4136, {roles: [director]});
+    this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
     });
-    server.create('curriculumInventoryReport', {
+    this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -113,15 +113,15 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   });
 
   test('rollover hidden on rollover route', async function(assert) {
-    const director = server.create('userRole', {
+    const director = this.server.create('userRole', {
       title: 'course director'
     });
-    server.db.users.update(4136, {roles: [director]});
-    server.create('program', {
+    this.server.db.users.update(4136, {roles: [director]});
+    this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
     });
-    server.create('curriculumInventoryReport', {
+    this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',

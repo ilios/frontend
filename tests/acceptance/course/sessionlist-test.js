@@ -17,9 +17,9 @@ module('Acceptance: Course - Session List', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application, {id: 4136});
-    server.create('school');
+    this.server.create('school');
     fixtures.sessionTypes = [server.create('sessionType', {schoolId: 1})];
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1,
       directorIds: [4136]
     });
@@ -236,7 +236,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     const manageSessionLink = `${title} a`;
     const offeringCount = `${rows}:eq(0) td:eq(5)`;
     const firstOffering = `${rows}:eq(0) td:eq(4)`;
-    const currentStartDate = server.db.offerings[0].startDate;
+    const currentStartDate = this.server.db.offerings[0].startDate;
     const newStartDate = moment(currentStartDate).year(2010).day(4).month(6).toDate();
     const offeringBlocks = '.offering-manager';
     const editOffering = `${offeringBlocks}:eq(0) .offering-manager-actions .edit`;

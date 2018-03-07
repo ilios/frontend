@@ -9,7 +9,7 @@ let application;
 module('Acceptance | assign students', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.createList('school', 2);
+    this.server.createList('school', 2);
     setupAuthentication(application, { id: 4136, schoolId: 1});
   });
 

@@ -16,8 +16,8 @@ module('Acceptance: Course - Overview', function(hooks) {
   hooks.beforeEach(function () {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.createList('courseClerkshipType', 2);
+    this.server.create('school');
+    this.server.createList('courseClerkshipType', 2);
   });
 
   hooks.afterEach(function() {
@@ -25,19 +25,19 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('check fields', async function (assert) {
-    let director = server.create('userRole', {
+    let director = this.server.create('userRole', {
       title: 'course director'
     });
-    server.db.users.update(4136, {roles: [director]});
-    let clerkshipType = server.create('courseClerkshipType');
-    let course = server.create('course', {
+    this.server.db.users.update(4136, {roles: [director]});
+    let clerkshipType = this.server.create('courseClerkshipType');
+    let course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       clerkshipTypeId: 3,
       externalId: 123,
       level: 3,
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'A',
       lastName: 'Director',
       roles: [director],
@@ -61,8 +61,8 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('check detail fields', async function(assert) {
-    let clerkshipType = server.create('courseClerkshipType');
-    let course = server.create('course', {
+    let clerkshipType = this.server.create('courseClerkshipType');
+    let course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       clerkshipTypeId: 3,
@@ -83,7 +83,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('pick clerkship type', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
@@ -106,8 +106,8 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('remove clerkship type', async function(assert) {
-    server.create('courseClerkshipType');
-    server.create('course', {
+    this.server.create('courseClerkshipType');
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       clerkshipTypeId: 3,
@@ -122,7 +122,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('open and close details', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1
     });
@@ -140,7 +140,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change title', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
@@ -158,7 +158,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change start date', async function(assert) {
-    let course = server.create('course', {
+    let course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2015-05-22'),
@@ -183,7 +183,7 @@ module('Acceptance: Course - Overview', function(hooks) {
 
   test('start date validation', async function(assert) {
     assert.expect(2);
-    const course = server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2013-05-22'),
@@ -201,7 +201,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change end date', async function(assert) {
-    let course = server.create('course', {
+    let course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       startDate: new Date('2013-04-23'),
@@ -226,7 +226,7 @@ module('Acceptance: Course - Overview', function(hooks) {
 
   test('end date validation', async function(assert) {
     assert.expect(2);
-    const course = server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2013-05-22'),
@@ -244,7 +244,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change externalId', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       externalId: 'abc123'
@@ -263,7 +263,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change level', async function(assert) {
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       level: 3
@@ -284,11 +284,11 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('remove director', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'A',
       lastName: 'Director'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       externalId: 123,
@@ -304,30 +304,30 @@ module('Acceptance: Course - Overview', function(hooks) {
 
 
   test('manage directors', async function(assert) {
-    let directorRole = server.create('userRole', {
+    let directorRole = this.server.create('userRole', {
       title: 'Course Director'
     });
-    let addedGuy = server.create('user', {
+    let addedGuy = this.server.create('user', {
       firstName: 'Added',
       lastName: 'Guy',
       roles: [directorRole]
     });
-    server.create('user', {
+    this.server.create('user', {
       firstName: 'Disabled',
       lastName: 'Guy',
       enabled: false,
       roles: [directorRole]
     });
-    server.db.users.update(4136, {roles: [directorRole]});
+    this.server.db.users.update(4136, {roles: [directorRole]});
 
-    let secondRole = server.create('userRole');
-    server.create('user', {
+    let secondRole = this.server.create('userRole');
+    this.server.create('user', {
       firstName: 'Not a director',
       lastName: 'Guy',
       roles: [secondRole]
     });
 
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       externalId: 123,
@@ -363,20 +363,20 @@ module('Acceptance: Course - Overview', function(hooks) {
 
   //test for a bug where the search results were not cleared between searches
   test('search twice and list should be correct', async function(assert) {
-    const directorRole = server.create('userRole');
-    let user = server.create('user', {
+    const directorRole = this.server.create('userRole');
+    let user = this.server.create('user', {
       firstName: 'Added',
       lastName: 'Guy',
       roles: [directorRole]
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
       externalId: 123,
       level: 3,
       directors: [user]
     });
-    server.db.users.update(4136, {roles: [directorRole]});
+    this.server.db.users.update(4136, {roles: [directorRole]});
     await visit(url);
     await click('.coursedirectors .clickable');
     let directors = find('.coursedirectors');
@@ -403,14 +403,14 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('click rollover', async function(assert) {
-    const directorRole = server.create('userRole', {
+    const directorRole = this.server.create('userRole', {
       title: 'course director'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    server.db.users.update(4136, {roles: [directorRole]});
+    this.server.db.users.update(4136, {roles: [directorRole]});
     const rollover = '.course-overview a.rollover';
     await visit(url);
     await click(rollover);
@@ -419,14 +419,14 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('rollover hidden from instructors', async function(assert) {
-    const role = server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'instructor'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    server.db.users.update(4136, {roles: [role]});
+    this.server.db.users.update(4136, {roles: [role]});
     await visit(url);
     const container = '.course-overview';
     const rollover = `${container} a.rollover`;
@@ -436,14 +436,14 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('rollover visible to developers', async function(assert) {
-    const role = server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'developer'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    server.db.users.update(4136, {roles: [role]});
+    this.server.db.users.update(4136, {roles: [role]});
     await visit(url);
     const container = '.course-overview';
     const rollover = `${container} a.rollover`;
@@ -453,14 +453,14 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('rollover visible to course directors', async function(assert) {
-    const role = server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    server.db.users.update(4136, {roles: [role]});
+    this.server.db.users.update(4136, {roles: [role]});
     await visit(url);
     const container = '.course-overview';
     const rollover = `${container} a.rollover`;
@@ -470,14 +470,14 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('rollover hidden on rollover route', async function(assert) {
-    const role = server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    server.create('course', {
+    this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    server.db.users.update(4136, {roles: [role]});
+    this.server.db.users.update(4136, {roles: [role]});
     await visit(`${url}/rollover`);
     const container = '.course-overview';
     const rollover = `${container} a.rollover`;

@@ -15,12 +15,12 @@ module('Acceptance: Course - Terms', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('vocabulary', {
+    this.server.create('school');
+    this.server.create('vocabulary', {
       schoolId: 1,
       active: true,
     });
-    server.create('academicYear', {id: 2013});
+    this.server.create('academicYear', {id: 2013});
 
     fixtures.terms = [];
     fixtures.terms.pushObject(server.create('term', {
@@ -32,7 +32,7 @@ module('Acceptance: Course - Terms', function(hooks) {
       active: true
     }));
 
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       termIds: [1]

@@ -17,15 +17,15 @@ module('Acceptance: Session - Overview', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application, false);
-    server.create('school');
-    server.create('academicYear');
-    server.create('course', {
+    this.server.create('school');
+    this.server.create('academicYear');
+    this.server.create('course', {
       schoolId: 1
     });
-    fixtures.sessionTypes = server.createList('sessionType', 2, {
+    fixtures.sessionTypes = this.server.createList('sessionType', 2, {
       schoolId: 1
     });
-    fixtures.sessionDescription = server.create('sessionDescription');
+    fixtures.sessionDescription = this.server.create('sessionDescription');
   });
 
   hooks.afterEach(function() {
@@ -33,14 +33,14 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('check fields', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
     });
-    server.create('userRole', {
+    this.server.create('userRole', {
       userIds: [4136],
       title: 'course director'
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       sessionDescriptionId: 1,
@@ -55,11 +55,11 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('check remove ilm', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    var ilmSession = server.create('ilmSession');
-    server.create('session', {
+    var ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -78,11 +78,11 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('check add ilm', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
 
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       description: 'some text',
@@ -99,11 +99,11 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('change ilm hours', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    var ilmSession = server.create('ilmSession');
-    server.create('session', {
+    var ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -122,11 +122,11 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('change ilm due date', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    var ilmSession = server.create('ilmSession');
-    server.create('session', {
+    var ilmSession = this.server.create('ilmSession');
+    this.server.create('session', {
       courseId: 1,
       ilmSessionId: 1
     });
@@ -146,10 +146,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('change title', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -165,10 +165,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('change type', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -188,34 +188,34 @@ module('Acceptance: Session - Overview', function(hooks) {
 
   test('session attributes are shown by school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialAttireRequired',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialEquipmentRequired',
       value: true
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: true
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1, 2, 3, 4]
     });
     const sessionOverview = '.session-overview';
@@ -233,34 +233,34 @@ module('Acceptance: Session - Overview', function(hooks) {
 
   test('session attributes are hidden by school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialAttireRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSpecialEquipmentRequired',
       value: false
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1, 2, 3, 4]
     });
     const sessionOverview = '.session-overview';
@@ -278,10 +278,10 @@ module('Acceptance: Session - Overview', function(hooks) {
 
   test('session attributes are hidden when there is no school config', async assert => {
     assert.expect(4);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
@@ -301,19 +301,19 @@ module('Acceptance: Session - Overview', function(hooks) {
 
   let testAttributeToggle = async function(assert, schoolVariableName, domclass){
     assert.expect(3);
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 2
     });
-    server.create('schoolConfig', {
+    this.server.create('schoolConfig', {
       schoolId: 1,
       name: schoolVariableName,
       value: true
     });
-    server.db.schools.update(1, {
+    this.server.db.schools.update(1, {
       configurationIds: [1]
     });
     const sessionOverview = '.session-overview';
@@ -344,10 +344,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('change description', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       sessionDescriptionId: 1
@@ -367,10 +367,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('add description', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -388,10 +388,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('empty description removes description', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -413,10 +413,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('remove description', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       sessionDescriptionId: 1
@@ -440,10 +440,10 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('cancel editing empty description #3210', async function(assert) {
-    server.create('user', {
+    this.server.create('user', {
       id: 4136
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -462,14 +462,14 @@ module('Acceptance: Session - Overview', function(hooks) {
 
 
   test('click copy', async function(assert) {
-    server.create('userRole', {
+    this.server.create('userRole', {
       title: 'course director'
     });
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
       roleIds: [1]
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -482,14 +482,14 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('copy hidden from instructors', async function(assert) {
-    server.create('userRole', {
+    this.server.create('userRole', {
       title: 'instructor'
     });
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
       roleIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -502,15 +502,15 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('copy visible to developers', async function(assert) {
-    server.create('userRole', {
+    this.server.create('userRole', {
       userIds: [4136],
       title: 'developer'
     });
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
       roleIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -523,15 +523,15 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('copy visible to course directors', async function(assert) {
-    server.create('userRole', {
+    this.server.create('userRole', {
       userIds: [4136],
       title: 'course director'
     });
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
       roleIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
@@ -544,15 +544,15 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('copy hidden on copy route', async function(assert) {
-    server.create('userRole', {
+    this.server.create('userRole', {
       userIds: [4136],
       title: 'course director'
     });
-    server.create('user', {
+    this.server.create('user', {
       id: 4136,
       roleIds: [1],
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });

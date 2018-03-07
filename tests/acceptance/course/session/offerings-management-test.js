@@ -22,23 +22,23 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   test('search for instructor who is a course director #2838', async function(assert) {
     assert.expect(1);
 
-    const school = server.create('school');
-    const permission1 = server.create('permission', {
+    const school = this.server.create('school');
+    const permission1 = this.server.create('permission', {
       tableRowId: '1',
       tableName: 'school'
     });
-    const users = server.createList('user', 3, {
+    const users = this.server.createList('user', 3, {
       school,
       permissions: [permission1],
     });
-    const course = server.create('course', {
+    const course = this.server.create('course', {
       school,
       directors: [users[0], users[1], users[2]],
     });
-    const session = server.create('session', {
+    const session = this.server.create('session', {
       course,
     });
-    server.create('offering', {
+    this.server.create('offering', {
       session,
     });
 
@@ -58,23 +58,23 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
     assert.expect(7);
 
-    const school = server.create('school');
-    const permission1 = server.create('permission', {
+    const school = this.server.create('school');
+    const permission1 = this.server.create('permission', {
       tableRowId: '1',
       tableName: 'school'
     });
-    const users = server.createList('user', 3, {
+    const users = this.server.createList('user', 3, {
       school,
       permissions: [permission1],
     });
-    const course = server.create('course', {
+    const course = this.server.create('course', {
       school,
       directors: [users[0], users[1]],
     });
-    const session = server.create('session', {
+    const session = this.server.create('session', {
       course,
     });
-    server.create('offering', {
+    this.server.create('offering', {
       session
     });
 

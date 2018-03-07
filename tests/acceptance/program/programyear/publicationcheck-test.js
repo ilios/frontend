@@ -14,17 +14,17 @@ module('Acceptance: Program Year - Publication Check', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    fixtures.fullProgram = server.create('program', {
+    this.server.create('school');
+    fixtures.fullProgram = this.server.create('program', {
       startYear: 2013,
       schoolId: 1,
     });
-    fixtures.emptyProgram = server.create('program', {
+    fixtures.emptyProgram = this.server.create('program', {
       startYear: 2013,
       schoolId: 1
     });
-    server.create('programYear', { programId: 1});
-    server.create('cohort', { programYearId: 1});
+    this.server.create('programYear', { programId: 1});
+    this.server.create('cohort', { programYearId: 1});
   });
 
   hooks.afterEach(function() {

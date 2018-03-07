@@ -15,13 +15,13 @@ module('Acceptance: Course - Objective Create', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear', {id: 2013});
-    server.createList('program', 2);
-    server.createList('programYear', 2);
-    server.createList('cohort', 2);
-    fixtures.objective = server.create('objective');
-    fixtures.course = server.create('course', {
+    this.server.create('school');
+    this.server.create('academicYear', {id: 2013});
+    this.server.createList('program', 2);
+    this.server.createList('programYear', 2);
+    this.server.createList('cohort', 2);
+    fixtures.objective = this.server.create('objective');
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [1]

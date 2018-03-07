@@ -15,7 +15,7 @@ let url = '/';
 module('Acceptance: API Version Check', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, { id: 4136,  schoolId: 1});
   });
 
@@ -25,7 +25,7 @@ module('Acceptance: API Version Check', function(hooks) {
 
   test('No warning shows up when api versions match', async function(assert) {
     assert.expect(2);
-    server.get('application/config', function() {
+    this.server.get('application/config', function() {
       assert.ok(true, 'our config override was called');
       return { config: {
         type: 'form',
@@ -40,7 +40,7 @@ module('Acceptance: API Version Check', function(hooks) {
 
   test('Warning shows up when api versions do not match', async function(assert) {
     assert.expect(2);
-    server.get('application/config', function() {
+    this.server.get('application/config', function() {
       assert.ok(true, 'our config override was called');
       return { config: {
         type: 'form',

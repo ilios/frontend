@@ -19,18 +19,18 @@ module('Acceptance: Session - Offerings', function(hooks) {
     fixtures.users =  [];
 
     fixtures.users.pushObject(setupAuthentication(application, {id: 1}));
-    server.create('school');
-    server.create('program');
-    server.create('programYear', { programId: 1});
-    server.create('cohort', {
+    this.server.create('school');
+    this.server.create('program');
+    this.server.create('programYear', { programId: 1});
+    this.server.create('cohort', {
       programYearId: 1
     });
-    server.create('course', {
+    this.server.create('course', {
       cohortIds: [1],
       schoolId: 1,
       directorIds: [1]
     });
-    server.create('sessionType', {
+    this.server.create('sessionType', {
       schoolId: 1
     });
 
@@ -58,7 +58,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
       location: 'default 2',
       instructorGroupIds: [1],
     }));
-    fixtures.session = server.create('session', {
+    fixtures.session = this.server.create('session', {
       courseId: 1,
     });
     fixtures.offerings = [];
@@ -175,7 +175,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
       assert.equal(instructors.length, offeringInstructors.length);
       for (let i = 0; i < offeringInstructors.length; i++){
         const userId = offeringInstructors[i];
-        const instructor = server.db.users.find(userId);
+        const instructor = this.server.db.users.find(userId);
         const middleInitial = instructor.middleName.charAt(0).toUpperCase();
         const instructorTitle = `${instructor.firstName} ${middleInitial}. ${instructor.lastName}`;
         assert.equal(getElementText(instructors.eq(i)), getText(instructorTitle));
@@ -613,22 +613,22 @@ module('Acceptance: Session - Offerings', function(hooks) {
 
   test('edit offerings twice #2850', async assert => {
     assert.expect(2);
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 3,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 4,
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 5,
     });
-    server.db.cohorts.update(1, {learnerGroupIds: [3, 4, 5, 6]});
+    this.server.db.cohorts.update(1, {learnerGroupIds: [3, 4, 5, 6]});
 
     const editButton = '.offering-manager-actions .edit:eq(1)';
     const form = '.offering-form';

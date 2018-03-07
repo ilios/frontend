@@ -14,7 +14,7 @@ var url = '/courses/1/sessions/1?sessionLearnergroupDetails=true';
 module('Acceptance: Session - Learner Groups', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, {
       id: 4136,
       schoolId: 1
@@ -26,39 +26,39 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
   });
 
   let setupModels = function(){
-    server.create('program', {
+    this.server.create('program', {
       schoolId: 1
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1
     });
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1,
       cohortIds: [1],
     });
-    server.create('sessionType');
-    server.createList('learnerGroup', 5, {
+    this.server.create('sessionType');
+    this.server.createList('learnerGroup', 5, {
       cohortId: 1
     });
-    server.createList('learnerGroup', 2, {
+    this.server.createList('learnerGroup', 2, {
       cohortId: 1,
       parentId: 4
     });
-    server.create('learnerGroup', {
+    this.server.create('learnerGroup', {
       cohortId: 1,
       parentId: 5
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
     });
   };
 
   test('initial selected learner groups', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -87,7 +87,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('learner group manager display', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -119,7 +119,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('learner group manager display with no selected groups', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: []
     });
@@ -133,7 +133,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('filter learner groups by top group should include all subgroups', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -146,7 +146,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('filter learner groups by subgroup should include top group', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -165,7 +165,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('add learner group', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -187,7 +187,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('add learner sub group', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -209,7 +209,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('add learner group with children', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -238,7 +238,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('add learner group with children and remove one child', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -272,7 +272,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('undo learner group change', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -307,7 +307,7 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('save learner group change', async function(assert) {
     setupModels();
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4]
     });
@@ -342,16 +342,16 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   test('collapsed learner groups', async function(assert) {
     setupModels();
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 2
     });
-    server.createList('learnerGroup', 2, {
+    this.server.createList('learnerGroup', 2, {
       cohortId: 2
     });
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
       learnerGroupIds: [1, 2, 4, 9, 10]
     });
@@ -371,27 +371,27 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
   });
 
   test('initial state with save works as expected #1773', async function(assert) {
-    server.create('sessionType');
-    server.create('program', {
+    this.server.create('sessionType');
+    this.server.create('program', {
       schoolId: 1
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1
     });
-    server.create('cohort', {
+    this.server.create('cohort', {
       programYearId: 1
     });
-    server.create('course', {
+    this.server.create('course', {
       schoolId: 1,
       cohortIds: [1],
     });
-    server.createList('learnerGroup', 2, {
+    this.server.createList('learnerGroup', 2, {
       cohortId: 1
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
     });
-    server.create('ilmSession', {
+    this.server.create('ilmSession', {
       sessionId: 1,
     });
     const container = '.detail-learnergroups ';

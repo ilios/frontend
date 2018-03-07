@@ -10,7 +10,7 @@ let url = '/admin';
 module('Acceptance: Admin', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
-    server.create('school');
+    this.server.create('school');
     setupAuthentication(application, {id: 4136, schoolId: 1});
   });
 
@@ -27,8 +27,8 @@ module('Acceptance: Admin', function(hooks) {
   });
 
   test('can search for users', async function(assert) {
-    server.createList('user', 20, {schoolId: 1});
-    server.createList('authentication', 20);
+    this.server.createList('user', 20, {schoolId: 1});
+    this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:eq(2)';

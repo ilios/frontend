@@ -14,8 +14,8 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    fixtures.program = server.create('program');
+    this.server.create('school');
+    fixtures.program = this.server.create('program');
     fixtures.programYears = [];
     fixtures.programYears.pushObject(server.create('programYear', {
       programId: 1,
@@ -69,7 +69,7 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
       parentIds: [1,4]
     }));
     fixtures.courseObjectives.pushObject(server.create('objective'));
-    fixtures.course = server.create('course', {
+    fixtures.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [7,8],

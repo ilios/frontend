@@ -14,17 +14,17 @@ module('Acceptance: Program - Publish', function(hooks) {
   hooks.beforeEach(function() {
     application = startApp();
     setupAuthentication(application);
-    server.create('school');
-    fixtures.published = server.create('program', {
+    this.server.create('school');
+    fixtures.published = this.server.create('program', {
       startYear: 2013,
       schoolId: 1,
     });
-    fixtures.scheduled = server.create('program', {
+    fixtures.scheduled = this.server.create('program', {
       startYear: 2013,
       schoolId: 1,
       publishedAsTbd: true
     });
-    fixtures.draft = server.create('program', {
+    fixtures.draft = this.server.create('program', {
       startYear: 2013,
       schoolId: 1,
       published: false,
