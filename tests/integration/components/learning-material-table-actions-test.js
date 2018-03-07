@@ -1,44 +1,46 @@
 import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('learning-material-table-actions', 'Integration | Component | learning material table actions', {
-  integration: true
-});
+module('Integration | Component | learning material table actions', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  const row = EmberObject.create({
-    confirmDelete: false
+  test('it renders', async function(assert) {
+    const row = EmberObject.create({
+      confirmDelete: false
+    });
+    const deleteIcon = 'i.fa-trash';
+
+    this.set('row', row);
+    await render(hbs`{{learning-material-table-actions row=row}}`);
+    assert.equal(this.$(deleteIcon).length, 1);
   });
-  const deleteIcon = 'i.fa-trash';
 
-  this.set('row', row);
-  this.render(hbs`{{learning-material-table-actions row=row}}`);
-  assert.equal(this.$(deleteIcon).length, 1);
-});
+  test('it does not display an icon when it should not', async function(assert) {
+    const row = EmberObject.create({
+      confirmDelete: true
+    });
+    const deleteIcon = 'i.fa-trash';
 
-test('it does not display an icon when it should not', function(assert) {
-  const row = EmberObject.create({
-    confirmDelete: true
+    this.set('row', row);
+    await render(hbs`{{learning-material-table-actions row=row}}`);
+    assert.equal(this.$(deleteIcon).length, 0);
   });
-  const deleteIcon = 'i.fa-trash';
 
-  this.set('row', row);
-  this.render(hbs`{{learning-material-table-actions row=row}}`);
-  assert.equal(this.$(deleteIcon).length, 0);
-});
+  test('clicking delete changes the row property', async function(assert) {
+    const row = EmberObject.create({
+      confirmDelete: false,
+      expanded: false
+    });
+    const deleteIcon = 'i.fa-trash';
 
-test('clicking delete changes the row property', function(assert) {
-  const row = EmberObject.create({
-    confirmDelete: false,
-    expanded: false
+    this.set('row', row);
+    await render(hbs`{{learning-material-table-actions row=row}}`);
+    assert.equal(this.$(deleteIcon).length, 1);
+    this.$(deleteIcon).click();
+    assert.ok(row.get('confirmDelete'));
+    assert.ok(row.get('expanded'));
   });
-  const deleteIcon = 'i.fa-trash';
-
-  this.set('row', row);
-  this.render(hbs`{{learning-material-table-actions row=row}}`);
-  assert.equal(this.$(deleteIcon).length, 1);
-  this.$(deleteIcon).click();
-  assert.ok(row.get('confirmDelete'));
-  assert.ok(row.get('expanded'));
 });

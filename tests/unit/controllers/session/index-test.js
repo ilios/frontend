@@ -1,14 +1,12 @@
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:session/index', 'Unit | Controller | Session / Index ', {
-  needs: ['controller:course', 'controller:session', 'service:iliosMetrics', 'service:headData']
-});
+module('Unit | Controller | Session / Index ', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  var controller = this.subject();
-  assert.ok(controller);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    var controller = this.owner.lookup('controller:session/index');
+    assert.ok(controller);
+  });
 });

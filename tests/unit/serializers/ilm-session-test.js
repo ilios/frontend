@@ -1,21 +1,17 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForModel('ilm-session', 'Unit | Serializer | ilm session', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'model:session',
-    'model:learner-group',
-    'model:instructor-group',
-    'model:user',
-    'serializer:ilm-session'
-  ]
-});
+import { run } from '@ember/runloop';
 
-// Replace this with your real tests.
-test('it serializes records', function(assert) {
-  let record = this.subject();
+module('Unit | Serializer | ilm session', function(hooks) {
+  setupTest(hooks);
 
-  let serializedRecord = record.serialize();
+  // Replace this with your real tests.
+  test('it serializes records', function(assert) {
+    let record = run(() => this.owner.lookup('service:store').createRecord('ilm-session'));
 
-  assert.ok(serializedRecord);
+    let serializedRecord = record.serialize();
+
+    assert.ok(serializedRecord);
+  });
 });

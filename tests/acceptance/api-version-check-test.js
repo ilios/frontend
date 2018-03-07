@@ -11,44 +11,44 @@ const { apiVersion } = ENV.APP;
 let application;
 let url = '/';
 
-module('Acceptance: API Version Check', {
-  beforeEach() {
+module('Acceptance: API Version Check', function(hooks) {
+  hooks.beforeEach(function() {
     application = startApp();
     server.create('school');
     setupAuthentication(application, { id: 4136,  schoolId: 1});
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function() {
     destroyApp(application);
-  }
-});
-
-test('No warning shows up when api versions match', async function(assert) {
-  assert.expect(2);
-  server.get('application/config', function() {
-    assert.ok(true, 'our config override was called');
-    return { config: {
-      type: 'form',
-      apiVersion
-    }};
   });
-  const warningOverlay = '.api-version-check-warning';
 
-  await visit(url);
-  assert.equal($(warningOverlay).length, 0);
-});
+  test('No warning shows up when api versions match', async function(assert) {
+    assert.expect(2);
+    server.get('application/config', function() {
+      assert.ok(true, 'our config override was called');
+      return { config: {
+        type: 'form',
+        apiVersion
+      }};
+    });
+    const warningOverlay = '.api-version-check-warning';
 
-test('Warning shows up when api versions do not match', async function(assert) {
-  assert.expect(2);
-  server.get('application/config', function() {
-    assert.ok(true, 'our config override was called');
-    return { config: {
-      type: 'form',
-      apiVersion: 'v0.bad'
-    }};
+    await visit(url);
+    assert.equal($(warningOverlay).length, 0);
   });
-  const warningOverlay = '.api-version-check-warning';
 
-  await visit(url);
-  assert.equal($(warningOverlay).length, 1);
+  test('Warning shows up when api versions do not match', async function(assert) {
+    assert.expect(2);
+    server.get('application/config', function() {
+      assert.ok(true, 'our config override was called');
+      return { config: {
+        type: 'form',
+        apiVersion: 'v0.bad'
+      }};
+    });
+    const warningOverlay = '.api-version-check-warning';
+
+    await visit(url);
+    assert.equal($(warningOverlay).length, 1);
+  });
 });

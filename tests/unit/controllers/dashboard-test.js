@@ -1,15 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:dashboard', 'Unit | Controller | Dashboad ', {
-  needs: [
-    'service:currentUser',
-    'service:iliosMetrics',
-    'service:headData',
-  ],
-});
+module('Unit | Controller | Dashboad ', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  var controller = this.subject();
-  assert.ok(controller);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    var controller = this.owner.lookup('controller:dashboard');
+    assert.ok(controller);
+  });
 });

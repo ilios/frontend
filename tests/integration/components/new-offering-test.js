@@ -1,26 +1,31 @@
 import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
-moduleForComponent('new-offering', 'Integration | Component | new offering', {
-  integration: true,
-  setup(){
-    initializer.initialize(getOwner(this));
-  }
-});
+module('Integration | Component | new offering', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  this.set('nothing', parseInt);
-  this.set('today', new Date());
-  this.set('cohorts', []);
-  this.render(hbs`{{new-offering
-    session=session
-    cohorts=cohorts
-    courseStartDate=today
-    courseEndDate=today
-    close=(action nothing)
-  }}`);
+  hooks.beforeEach(function() {
+    this.setup = function() {
+      initializer.initialize(this.owner);
+    };
+  });
 
-  assert.equal(this.$('.new-offering-title:eq(0)').text().trim(), 'New Offering');
+  test('it renders', async function(assert) {
+    this.set('nothing', parseInt);
+    this.set('today', new Date());
+    this.set('cohorts', []);
+    await render(hbs`{{new-offering
+      session=session
+      cohorts=cohorts
+      courseStartDate=today
+      courseEndDate=today
+      close=(action nothing)
+    }}`);
+
+    assert.equal(this.$('.new-offering-title:eq(0)').text().trim(), 'New Offering');
+  });
 });

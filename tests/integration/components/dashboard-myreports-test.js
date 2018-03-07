@@ -2,9 +2,10 @@ import { getOwner } from '@ember/application';
 import EmberObject, { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
 const { resolve } = RSVP;
@@ -36,44 +37,47 @@ let reportingMockNoReports = Service.extend({
   })
 });
 
-moduleForComponent('dashboard-myreports', 'Integration | Component | dashboard myreports', {
-  integration: true,
-  setup(){
-    initializer.initialize(getOwner(this));
-  }
-});
+module('Integration | Component | dashboard myreports', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('list reports', function(assert) {
-  assert.expect(4);
-  let currentUserMock = Service.extend({
-    model: resolve(EmberObject.create({
-      reports: resolve(mockReports)
-    }))
+  hooks.beforeEach(function() {
+    this.setup = function() {
+      initializer.initialize(this.owner);
+    };
   });
-  this.register('service:reporting', reportingMock);
-  this.register('service:currentUser', currentUserMock);
-  this.render(hbs`{{dashboard-myreports}}`);
 
-  assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
-  return wait().then(()=> {
-    for (let i = 0; i < 2; i++) {
-      let tds = this.$(`table tr:eq(${i}) td`);
-      assert.equal(tds.eq(0).text().trim(), mockReports[i].get('title'));
-    }
-    assert.equal(this.$(`table tr`).length, 2);
-  });
-});
+  test('list reports', async function(assert) {
+    assert.expect(4);
+    let currentUserMock = Service.extend({
+      model: resolve(EmberObject.create({
+        reports: resolve(mockReports)
+      }))
+    });
+    this.owner.register('service:reporting', reportingMock);
+    this.owner.register('service:currentUser', currentUserMock);
+    await render(hbs`{{dashboard-myreports}}`);
 
-test('display none when no reports', function(assert) {
-  assert.expect(2);
-  let currentUserMock = Service.extend({
-    model: resolve(EmberObject.create({
-      reports: resolve([])
-    }))
+    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
+    return settled().then(()=> {
+      for (let i = 0; i < 2; i++) {
+        let tds = this.$(`table tr:eq(${i}) td`);
+        assert.equal(tds.eq(0).text().trim(), mockReports[i].get('title'));
+      }
+      assert.equal(this.$(`table tr`).length, 2);
+    });
   });
-  this.register('service:reporting', reportingMockNoReports);
-  this.register('service:currentUser', currentUserMock);
-  this.render(hbs`{{dashboard-myreports}}`);
-  assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
-  assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
+
+  test('display none when no reports', async function(assert) {
+    assert.expect(2);
+    let currentUserMock = Service.extend({
+      model: resolve(EmberObject.create({
+        reports: resolve([])
+      }))
+    });
+    this.owner.register('service:reporting', reportingMockNoReports);
+    this.owner.register('service:currentUser', currentUserMock);
+    await render(hbs`{{dashboard-myreports}}`);
+    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
+    assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
+  });
 });
