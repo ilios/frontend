@@ -1,3 +1,24 @@
+.session-header {
+
+  background-color: $header-grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: .8em;
+
+  @include for-tablet-and-up {
+    flex-direction: row;
+  }
+
+  .title {
+    @include ilios-heading-h5;
+
+    input {
+      width: 90%;
+    }
+  }
+}
+
 .session-overview {
   @include ilios-overview($text-blue);
   border-bottom: 1px dotted $text-blue;
@@ -60,26 +81,5 @@
 
   .sessionassociatedgroups {
     grid-column: 1 / -1;
-  }
-}
-
-.session-header {
-
-  background-color: $header-grey;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: .8em;
-
-  @include for-tablet-and-up {
-    flex-direction: row;
-  }
-
-  .title {
-    @include ilios-heading-h5;
-
-    input {
-      width: 90%;
-    }
   }
 }
