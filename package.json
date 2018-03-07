@@ -12,6 +12,7 @@
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js app config lib server tests",
+    "lint:style": "stylelint app/styles",
     "start": "ember serve",
     "test": "ember test"
   },
@@ -98,7 +99,8 @@
     "ilios-common": "11.0.0",
     "loader.js": "^4.2.3",
     "normalize.css": "^8.0.0",
-    "stylelint-config-standard": "^18.2.0",
+    "stylelint-config-recommended-scss": "^3.1.0",
+    "stylelint-scss": "^2.5.0",
     "validator": "^9.0.0"
   },
   "engines": {
