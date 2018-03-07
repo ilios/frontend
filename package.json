@@ -12,6 +12,7 @@
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js app config lib server tests",
+    "lint:style": "stylelint app/styles",
     "start": "ember serve",
     "test": "ember test"
   },
@@ -51,11 +52,11 @@
     "ember-cli-password-strength": "2.0.0",
     "ember-cli-qunit": "^4.1.1",
     "ember-cli-sass": "7.2.0",
-    "ember-cli-sass-lint": "^1.0.3",
     "ember-cli-server-variables": "2.1.0",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-string-helpers": "^1.5.0",
+    "ember-cli-stylelint": "^1.3.0",
     "ember-cli-template-lint": "0.7.4",
     "ember-cli-uglify": "^2.0.0",
     "ember-composable-helpers": "^2.0.2",
@@ -98,6 +99,8 @@
     "ilios-common": "11.0.0",
     "loader.js": "^4.2.3",
     "normalize.css": "^8.0.0",
+    "stylelint-config-recommended-scss": "^3.1.0",
+    "stylelint-scss": "^2.5.0",
     "validator": "^9.0.0"
   },
   "engines": {

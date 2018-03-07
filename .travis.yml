@@ -26,6 +26,7 @@ install:
   - yarn install --non-interactive
 
 script:
+  - yarn lint:style
   - yarn lint:js
   - yarn test
 
