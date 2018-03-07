@@ -14,6 +14,7 @@ export default Component.extend({
   isSaving: false,
   editable: true,
   bufferedCohorts: null,
+  'data-test-detail-cohorts': true,
   actions: {
     manage(){
       this.get('course.cohorts').then(cohorts => {

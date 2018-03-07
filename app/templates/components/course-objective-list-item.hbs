@@ -34,7 +34,7 @@
         <br>
       {{/if}}
       {{#if editable}}
-        <span class='clickable link' {{action manageParents objective}}>
+        <span class='clickable link' {{action manageParents objective}} data-test-parent>
           {{parent.textTitle}}
         </span>
       {{else}}
