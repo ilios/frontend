@@ -1,3 +1,4 @@
+import { click, findAll, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -66,8 +67,8 @@ module('Acceptance: Program Year - Competencies', function(hooks) {
     assert.ok(!checkboxes.eq(4).prop('checked'));
     assert.ok(!checkboxes.eq(5).prop('checked'));
 
-    await click('input[type=checkbox]:eq(1)', container);
-    await click('input[type=checkbox]:eq(4)', container);
+    await click(findAll('input[type=checkbox]')[1], container);
+    await click(findAll('input[type=checkbox]')[4], container);
     await click('.bigadd', container);
 
     let competencies = 'competency 0 competency 2 competency 3 competency 4';

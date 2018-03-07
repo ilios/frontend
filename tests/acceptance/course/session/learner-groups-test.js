@@ -1,4 +1,5 @@
 
+import { click, fillIn, findAll, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -399,10 +400,10 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
     const save = container +  '.bigadd';
 
     await visit('/courses/1/sessions/1');
-    assert.equal(find(manageButton).length, 1, 'We are not in a collapsed state');
+    assert.equal(findAll(manageButton).length, 1, 'We are not in a collapsed state');
     await click(manageButton);
     await click(lg1);
     await click(save);
-    assert.equal(find(manageButton).length, 1, 'We are not in a collapsed state');
+    assert.equal(findAll(manageButton).length, 1, 'We are not in a collapsed state');
   });
 });

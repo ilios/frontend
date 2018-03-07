@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -87,17 +88,17 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
     assert.equal(getElementText(find('.descriptor-name', searchResults.eq(3)).eq(0)), getText('descriptor 3'));
     assert.equal(getElementText(find('.descriptor-name', searchResults.eq(4)).eq(0)), getText('descriptor 4'));
     assert.equal(getElementText(find('.descriptor-name', searchResults.eq(5)).eq(0)), getText('descriptor 5'));
-    assert.ok(find(searchResults[0]).hasClass('disabled'));
-    assert.ok(find(searchResults[1]).hasClass('disabled'));
-    assert.ok(find(searchResults[2]).hasClass('disabled'));
-    assert.ok(!find(searchResults[3]).hasClass('disabled'));
-    assert.ok(!find(searchResults[4]).hasClass('disabled'));
-    assert.ok(!find(searchResults[5]).hasClass('disabled'));
+    assert.ok(find(searchResults[0]).classList.contains('disabled'));
+    assert.ok(find(searchResults[1]).classList.contains('disabled'));
+    assert.ok(find(searchResults[2]).classList.contains('disabled'));
+    assert.ok(!find(searchResults[3]).classList.contains('disabled'));
+    assert.ok(!find(searchResults[4]).classList.contains('disabled'));
+    assert.ok(!find(searchResults[5]).classList.contains('disabled'));
 
-    await click('.selected-terms li:eq(1)', meshManager);
-    assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
+    await click(findAll('.selected-terms li')[1], meshManager);
+    assert.ok(!find(findAll('.mesh-search-results li')[1], meshManager).classList.contains('disabled'));
     await click(searchResults[3]);
-    assert.ok(find('.mesh-search-results li:eq(3)', meshManager).hasClass('disabled'));
+    assert.ok(find(findAll('.mesh-search-results li')[3], meshManager).classList.contains('disabled'));
     removableItems = find('.selected-terms li', meshManager);
     assert.equal(
       getElementText(find('.term-title', removableItems.eq(0)).eq(0)),
@@ -121,8 +122,8 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
     let meshManager = find('.mesh-manager', container);
     await fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
     await click('.search-box span.search-icon', meshManager);
-    await click('.selected-terms li:eq(1)', meshManager);
-    await click('.mesh-search-results li:eq(3)', meshManager);
+    await click(findAll('.selected-terms li')[1], meshManager);
+    await click(findAll('.mesh-search-results li')[3], meshManager);
     await click('button.bigadd', container);
     var items = find('ul.selected-mesh-terms li .term-title', container);
     assert.equal(items.length, 3);
@@ -141,8 +142,8 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
     let meshManager = find('.mesh-manager', container);
     await fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
     await click('.search-box span.search-icon', meshManager);
-    await click('.selected-terms li:eq(1)', meshManager);
-    await click('.mesh-search-results li:eq(3)', meshManager);
+    await click(findAll('.selected-terms li')[1], meshManager);
+    await click(findAll('.mesh-search-results li')[3], meshManager);
     await click('button.bigcancel', container);
 
     var items = find('ul.selected-mesh-terms li .term-title', container);

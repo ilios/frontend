@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -18,8 +18,8 @@ module('Integration | Component | curriculum inventory report header', function(
     });
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-report-header report=report}}`);
-    assert.equal(this.$('.title').text().trim(), report.name, 'Report name shows.');
-    assert.equal(this.$('.editable').length, 1, 'Report name is editable.');
+    assert.equal(find('.title').textContent.trim(), report.name, 'Report name shows.');
+    assert.equal(findAll('.editable').length, 1, 'Report name is editable.');
     assert.equal(this.$(`.actions .finalize`).length, 1, 'Finalize button shows.');
     assert.equal(this.$(`.actions .download`).length, 1, 'Download button shows.');
   });
@@ -32,9 +32,9 @@ module('Integration | Component | curriculum inventory report header', function(
     });
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-report-header report=report}}`);
-    assert.equal(this.$('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
-    assert.equal(this.$('.editable').length, 0, 'Report name is not editable.');
-    assert.equal(this.$('.actions .download').length, 1, 'Download button shows.');
+    assert.equal(findAll('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
+    assert.equal(findAll('.editable').length, 0, 'Report name is not editable.');
+    assert.equal(findAll('.actions .download').length, 1, 'Download button shows.');
     assert.equal(this.$(`.actions .finalize`).length, 0, 'Finalize button is not showing.');
   });
 
@@ -52,13 +52,13 @@ module('Integration | Component | curriculum inventory report header', function(
     });
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-report-header report=report}}`);
-    assert.equal(this.$('.editinplace').text().trim(), report.name);
-    this.$('.editable').click();
-    this.$('.editinplace input').val(newName);
-    this.$('.editinplace input').trigger('input');
-    this.$('.editinplace .done').click();
+    assert.equal(find('.editinplace').textContent.trim(), report.name);
+    await click('.editable');
+    await fillIn('.editinplace input', newName);
+    await triggerEvent('.editinplace input', 'input');
+    await click('.editinplace .done');
     return settled().then(() => {
-      assert.equal(this.$('.editinplace').text().trim(), newName);
+      assert.equal(find('.editinplace').textContent.trim(), newName);
     });
   });
 
@@ -74,13 +74,13 @@ module('Integration | Component | curriculum inventory report header', function(
     });
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-report-header report=report}}`);
-    this.$('.editable').click();
-    assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
-    this.$('.editinplace input').val('');
-    this.$('.editinplace input').trigger('input');
-    this.$('.editinplace .done').click();
+    await click('.editable');
+    assert.equal(findAll('.validation-error-message').length, 0, 'No validation error shown initially.');
+    await fillIn('.editinplace input', '');
+    await triggerEvent('.editinplace input', 'input');
+    await click('.editinplace .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -97,8 +97,8 @@ module('Integration | Component | curriculum inventory report header', function(
     this.set('report', report);
     this.set('finalizeAction', finalizeAction);
     await render(hbs`{{curriculum-inventory-report-header report=report finalize=(action finalizeAction)}}`);
-    return settled().then(()=>{
-      this.$('button.finalize').click();
+    return settled().then(async () => {
+      await click('button.finalize');
     });
   });
 });

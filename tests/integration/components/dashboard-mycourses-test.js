@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -75,7 +75,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     const header = '.dashboard-block-header';
 
     await settled();
-    assert.equal(this.$(header).text().trim(), 'My Courses');
+    assert.equal(find(header).textContent.trim(), 'My Courses');
     for(let i = 0; i < 2; i++){
       let a = this.$(`table a:eq(${i})`);
       assert.equal(a.length, 1);
@@ -83,7 +83,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
       assert.equal(links.eq(0).text().trim(), mockCourses[i].academicYear);
       assert.ok(links.eq(1).text().trim().startsWith(mockCourses[i].title));
     }
-    assert.ok(this.$('table tr:eq(0) td:eq(1)').text().trim().endsWith('(' + mockCourses[0].externalId + ')'));
+    assert.ok(find(findAll('table tr:eq(0) td')[1]).textContent.trim().endsWith('(' + mockCourses[0].externalId + ')'));
     assert.equal(this.$(`table tr`).length, 3);
 
   });
@@ -93,7 +93,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.expect(11);
     this.owner.register('service:currentUser', currentUserMockUnprivileged);
     await render(hbs`{{dashboard-mycourses}}`);
-    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
+    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Courses');
 
     run.later(()=> {
       for(let i = 0; i < 3; i++){
@@ -113,9 +113,9 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.expect(2);
     this.owner.register('service:currentUser', currentUserMockNoCourses);
     await render(hbs`{{dashboard-mycourses}}`);
-    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
+    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Courses');
 
-    assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
+    assert.equal(find('.dashboard-block-body').textContent.trim(), 'None');
 
   });
 });

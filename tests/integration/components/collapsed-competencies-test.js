@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 import { startMirage } from 'ilios/initializers/ember-cli-mirage';
@@ -42,7 +42,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     this.actions.click = parseInt;
     await render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
     return settled().then(() => {
-      let content = this.$().text().trim();
+      let content = find('*').textContent.trim();
       assert.equal(content.search(/Competencies \(2\)/), 0);
       assert.notEqual(content.search(/School(\s+)Competencies/), -1);
       assert.notEqual(content.search(/Medicine(\s+)1/), -1);
@@ -69,9 +69,9 @@ module('Integration | Component | collapsed competencies', function(hooks) {
       assert.ok(true, 'Action was fired');
     };
     await render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
-    return settled().then(() => {
-      assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
-      this.$('.title').click();
+    return settled().then(async () => {
+      assert.equal(find('*').textContent.trim().search(/Competencies \(2\)/), 0);
+      await click('.title');
     });
   });
 });

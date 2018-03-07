@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -53,7 +53,7 @@ module('Integration | Component | new directory user', function(hooks) {
     await render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing)}}`);
 
     return settled().then(() => {
-      let content = this.$().text().trim();
+      let content = find('*').textContent.trim();
       assert.notEqual(content.search(/Search directory for new users/), -1);
     });
   });
@@ -282,7 +282,7 @@ module('Integration | Component | new directory user', function(hooks) {
 
       this.$(firstIcon).click();
 
-      return settled().then(()=>{
+      return settled().then(async () => {
         assert.equal(this.$(firstName).text().trim(), user1.get('firstName'), 'firstName is correct in form');
         assert.equal(this.$(lastName).text().trim(), user1.get('lastName'), 'lastName is correct in form');
         assert.equal(this.$(campusId).text().trim(), user1.get('campusId'), 'campusId is correct in form');
@@ -291,7 +291,7 @@ module('Integration | Component | new directory user', function(hooks) {
         assert.equal(this.$(otherId).text().trim(), '', 'otherId is blank in form');
         assert.equal(this.$(username).text().trim(), user1.get('username'), 'username is correct in form');
 
-        this.$(save).click();
+        await click(save);
 
         return settled();
       });

@@ -1,3 +1,4 @@
+import { click, fillIn, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -47,7 +48,7 @@ module('Acceptance: Program - Overview', function(hooks) {
     await click(edit);
     let field = await find(input);
     assert.equal(getText(field.val()), getText('program 0'));
-    fillIn(field, 'test new title');
+    await fillIn(field, 'test new title');
     await click(done);
     assert.equal(getElementText(title), getText('test new title'));
   });
@@ -68,7 +69,7 @@ module('Acceptance: Program - Overview', function(hooks) {
     await click(edit);
     let field = await find(input);
     assert.equal(getText(field.val()), getText(program.shortTitle));
-    fillIn(field, 'test title');
+    await fillIn(field, 'test title');
     await click(done);
     assert.equal(getElementText(shortTitle), getText('test title'));
   });

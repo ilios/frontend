@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -87,9 +87,9 @@ module('Integration | Component | assign students', function(hooks) {
       assert.equal(cohortOptions.length, 1);
       assert.equal(cohortOptions.text().trim(), 'program title test cohort');
 
-      assert.equal(this.$('tbody tr').length, 2);
-      assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'test person');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'second person');
+      assert.equal(findAll('tbody tr').length, 2);
+      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 'test person');
+      assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 'second person');
     });
   });
 
@@ -311,10 +311,10 @@ module('Integration | Component | assign students', function(hooks) {
       setLimit=(action 'setLimit')
     }}`);
 
-    return settled().then(() => {
-      this.$('thead th:eq(0)').click();
-      return settled().then(() => {
-        this.$('button.done').click();
+    return settled().then(async () => {
+      await click(find('thead th'));
+      return settled().then(async () => {
+        await click('button.done');
       });
     });
   });

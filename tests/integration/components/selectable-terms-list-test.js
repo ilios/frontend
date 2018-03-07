@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -66,16 +66,16 @@ module('Integration | Component | selectable terms list', function(hooks) {
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );
 
-    assert.equal(this.$('li').length, 5);
-    assert.equal(this.$('li:eq(0) > div').text().trim(), 'First');
-    assert.equal(this.$('li:eq(1) > div').text().trim(), 'Alpha');
-    assert.equal(this.$('li:eq(2) > div').text().trim(), 'Beta');
-    assert.equal(this.$('li:eq(3) > div').text().trim(), 'Second');
-    assert.equal(this.$('li:eq(4) > div').text().trim(), 'Gamma');
+    assert.equal(findAll('li').length, 5);
+    assert.equal(find('li:eq(0) > div').textContent.trim(), 'First');
+    assert.equal(find('li:eq(1) > div').textContent.trim(), 'Alpha');
+    assert.equal(find('li:eq(2) > div').textContent.trim(), 'Beta');
+    assert.equal(find('li:eq(3) > div').textContent.trim(), 'Second');
+    assert.equal(find('li:eq(4) > div').textContent.trim(), 'Gamma');
 
-    assert.equal(this.$('li.top-level').length, 2);
-    assert.equal(this.$('li.top-level:eq(0) > div').text().trim(), 'First');
-    assert.equal(this.$('li.top-level:eq(1) > div').text().trim(), 'Second');
+    assert.equal(findAll('li.top-level').length, 2);
+    assert.equal(find('li.top-level:eq(0) > div').textContent.trim(), 'First');
+    assert.equal(find('li.top-level:eq(1) > div').textContent.trim(), 'Second');
   });
 
   test('inactive terms are not rendered', async function(assert) {
@@ -131,11 +131,11 @@ module('Integration | Component | selectable terms list', function(hooks) {
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );
 
-    assert.equal(this.$('li').length, 2);
-    assert.equal(this.$('li:eq(0) > div').text().trim(), 'First');
-    assert.equal(this.$('li:eq(1) > div').text().trim(), 'Alpha');
+    assert.equal(findAll('li').length, 2);
+    assert.equal(find('li:eq(0) > div').textContent.trim(), 'First');
+    assert.equal(find('li:eq(1) > div').textContent.trim(), 'Alpha');
 
-    assert.equal(this.$('li.top-level').length, 1);
-    assert.equal(this.$('li.top-level:eq(0) > div').text().trim(), 'First');
+    assert.equal(findAll('li.top-level').length, 1);
+    assert.equal(find('li.top-level:eq(0) > div').textContent.trim(), 'First');
   });
 });

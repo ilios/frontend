@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | editable field', function(hooks) {
@@ -14,13 +14,13 @@ module('Integration | Component | editable field', function(hooks) {
   test('it renders value', async function(assert) {
     await render(hbs`{{editable-field value='woot!'}}`);
 
-    assert.equal(this.$().text().trim(), 'woot!');
+    assert.equal(find('*').textContent.trim(), 'woot!');
   });
 
   test('it renders clickPrompt', async function(assert) {
     await render(hbs`{{editable-field clickPrompt='click me!'}}`);
 
-    assert.equal(this.$().text().trim(), 'click me!');
+    assert.equal(find('*').textContent.trim(), 'click me!');
   });
 
   test('it renders content', async function(assert) {
@@ -30,9 +30,9 @@ module('Integration | Component | editable field', function(hooks) {
        {{/editable-field}}
    `);
 
-    assert.equal(this.$().text().trim(), 'text');
-    this.$('.editable').click();
-    assert.equal(this.$().text().trim(), 'template block text');
+    assert.equal(find('*').textContent.trim(), 'text');
+    await click('.editable');
+    assert.equal(find('*').textContent.trim(), 'template block text');
 
 
   });
@@ -42,8 +42,8 @@ module('Integration | Component | editable field', function(hooks) {
     this.set('value', '<p>&nbsp;</p>');
     await render(hbs`{{editable-field value=value}}`);
 
-    assert.equal(this.$().text().trim(), '');
-    assert.equal(this.$(icon).length, 1);
+    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(findAll(icon).length, 1);
   });
 
   test('save on enter', async function(assert) {
@@ -55,7 +55,7 @@ module('Integration | Component | editable field', function(hooks) {
     await render(
       hbs`{{#editable-field save=(action 'save') saveOnEnter=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`
     );
-    this.$('.editable').click();
+    await click('.editable');
     const e = $.Event("keyup");
     e.which = 13;
     e.keyCode = 13;
@@ -71,7 +71,7 @@ module('Integration | Component | editable field', function(hooks) {
     await render(
       hbs`{{#editable-field close=(action 'revert') closeOnEscape=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`
     );
-    this.$('.editable').click();
+    await click('.editable');
     const e = $.Event("keyup");
     e.which = 27;
     e.keyCode = 27;

@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -53,7 +53,7 @@ module('Integration | Component | new user', function(hooks) {
     await render(hbs`{{new-user close=(action close)}}`);
 
     return settled().then(() => {
-      let content = this.$().text().trim();
+      let content = find('*').textContent.trim();
       assert.notEqual(content.search(/New User/), -1);
       assert.notEqual(content.search(/First Name/), -1);
       assert.notEqual(content.search(/Last Name/), -1);
@@ -92,7 +92,7 @@ module('Integration | Component | new user', function(hooks) {
     await render(hbs`{{new-user close=(action close)}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.messagee').length, 0);
+      assert.equal(findAll('.messagee').length, 0);
 
     });
   });
@@ -112,8 +112,8 @@ module('Integration | Component | new user', function(hooks) {
     });
     await render(hbs`{{new-user close=(action close)}}`);
 
-    return settled().then(() => {
-      this.$('.done').click();
+    return settled().then(async () => {
+      await click('.done');
       return settled().then(() => {
         let boxes = this.$('.item');
         assert.ok(boxes.eq(0).text().search(/blank/) > -1);
@@ -216,7 +216,7 @@ module('Integration | Component | new user', function(hooks) {
     const username = '.item:eq(7) input';
     const password = '.item:eq(8) input';
 
-    return settled().then(() => {
+    return settled().then(async () => {
       this.$(firstName).val('first').trigger('input');
       this.$(middleName).val('middle').trigger('input');
       this.$(lastName).val('last').trigger('input');
@@ -227,7 +227,7 @@ module('Integration | Component | new user', function(hooks) {
       this.$(username).val('user123').trigger('input');
       this.$(password).val('password123').trigger('input');
 
-      this.$('.done').click();
+      await click('.done');
       return settled();
 
     });

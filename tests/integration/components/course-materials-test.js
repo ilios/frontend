@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -208,8 +208,8 @@ module('Integration | Component | course materials', function(hooks) {
     const filter = '.filter-session-lms input';
 
     assert.equal(this.$(sessionMaterials).length, 3);
-    this.$(filter).val('title1');
-    this.$(filter).trigger('input');
+    await fillIn(filter, 'title1');
+    await triggerEvent(filter, 'input');
     assert.equal(this.$(sessionMaterials).length, 1);
     assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title1');
 
@@ -233,8 +233,8 @@ module('Integration | Component | course materials', function(hooks) {
     const filter = '.filter-session-lms input';
 
     assert.equal(this.$(sessionMaterials).length, 3);
-    this.$(filter).val('file');
-    this.$(filter).trigger('input');
+    await fillIn(filter, 'file');
+    await triggerEvent(filter, 'input');
     assert.equal(this.$(sessionMaterials).length, 1);
     assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
 
@@ -258,8 +258,8 @@ module('Integration | Component | course materials', function(hooks) {
     const filter = '.filter-session-lms input';
 
     assert.equal(this.$(sessionMaterials).length, 3);
-    this.$(filter).val('author2');
-    this.$(filter).trigger('input');
+    await fillIn(filter, 'author2');
+    await triggerEvent(filter, 'input');
     assert.equal(this.$(sessionMaterials).length, 1);
     assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
 
@@ -283,8 +283,8 @@ module('Integration | Component | course materials', function(hooks) {
     const filter = '.filter-session-lms input';
 
     assert.equal(this.$(sessionMaterials).length, 3);
-    this.$(filter).val('citationtext');
-    this.$(filter).trigger('input');
+    await fillIn(filter, 'citationtext');
+    await triggerEvent(filter, 'input');
     assert.equal(this.$(sessionMaterials).length, 1);
     assert.equal(this.$(firstSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
 

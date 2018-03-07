@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | expand collapse button', function(hooks) {
@@ -20,13 +20,13 @@ module('Integration | Component | expand collapse button', function(hooks) {
       this.set('value', !this.get('value'));
     };
     await render(hbs`{{expand-collapse-button value=value action='click'}}`);
-    assert.ok(this.$('i').hasClass('fa-plus'));
+    assert.ok(find('i').classList.contains('fa-plus'));
     
-    this.$('i').click();
-    assert.ok(this.$('i').hasClass('fa-minus'));
+    await click('i');
+    assert.ok(find('i').classList.contains('fa-minus'));
 
-    this.$('i').click();
-    assert.ok(this.$('i').hasClass('fa-plus'));
+    await click('i');
+    assert.ok(find('i').classList.contains('fa-plus'));
     
   });
 });

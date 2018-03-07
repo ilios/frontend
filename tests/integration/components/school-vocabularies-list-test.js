@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 const { resolve } = RSVP;
@@ -63,10 +63,10 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
 
     await settled();
-    assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'Vocabulary 1');
-    assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'Vocabulary 2');
-    assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), '2');
-    assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), '1');
+    assert.equal(find('tr:eq(1) td').textContent.trim(), 'Vocabulary 1');
+    assert.equal(find('tr:eq(2) td').textContent.trim(), 'Vocabulary 2');
+    assert.equal(find(findAll('tr:eq(1) td')[1]).textContent.trim(), '2');
+    assert.equal(find(findAll('tr:eq(2) td')[1]).textContent.trim(), '1');
 
   });
 
@@ -97,12 +97,12 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.actions.edit = parseInt;
     this.set('school', school);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-    this.$('.expand-button').click();
-    this.$('input').val('new vocab').trigger('input');
-    return settled().then(() => {
-      this.$('.done').click();
+    await click('.expand-button');
+    await fillIn('input', 'new vocab');
+    return settled().then(async () => {
+      await click('.done');
       return settled().then(() => {
-        assert.equal(this.$('.savedvocabulary').text().trim().search(/new vocab/), 0);
+        assert.equal(find('.savedvocabulary').textContent.trim().search(/new vocab/), 0);
       });
     });
 
@@ -165,9 +165,9 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
 
     await settled();
-    assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
-    assert.equal(this.$('tr:eq(2) td:eq(2) i').length, 1);
-    assert.equal(this.$('tr:eq(3) td:eq(2) i').length, 2);
+    assert.equal(findAll('tr:eq(1) td:eq(2) i').length, 1);
+    assert.equal(findAll('tr:eq(2) td:eq(2) i').length, 1);
+    assert.equal(findAll('tr:eq(3) td:eq(2) i').length, 2);
 
   });
 
@@ -191,15 +191,15 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.actions.edit = parseInt;
     this.set('school', school);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-    return settled().then(() => {
-      assert.notOk(this.$('tr:eq(1)').hasClass('confirm-removal'));
-      assert.equal(this.$('tr:eq(1) td:eq(2) .remove').length, 1);
-      this.$('tr:eq(1) td:eq(2) .remove').click();
+    return settled().then(async () => {
+      assert.notOk(find(findAll('tr')[1]).classList.contains('confirm-removal'));
+      assert.equal(findAll('tr:eq(1) td:eq(2) .remove').length, 1);
+      await click('tr:eq(1) td:eq(2) .remove');
 
-      return settled().then(() => {
-        assert.equal(this.$('tr:eq(2)').text().trim().search(/Are you sure you want to delete this vocabulary/), 0);
-        assert.ok(this.$('tr:eq(1)').hasClass('confirm-removal'));
-        this.$('tr:eq(2) .remove').click();
+      return settled().then(async () => {
+        assert.equal(find(findAll('tr')[2]).textContent.trim().search(/Are you sure you want to delete this vocabulary/), 0);
+        assert.ok(find(findAll('tr')[1]).classList.contains('confirm-removal'));
+        await click('tr:eq(2) .remove');
       });
     });
 
@@ -232,8 +232,8 @@ module('Integration | Component | school vocabularies list', function(hooks) {
       assert.equal(id, vocabulary1.id);
     };
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-    return settled().then(() => {
-      this.$('tr:eq(1) i').click();
+    return settled().then(async () => {
+      await click('tr:eq(1) i');
     });
 
   });

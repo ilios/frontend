@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -42,15 +42,15 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     await render(hbs`{{unassigned-students-summary}}`);
 
     return settled().then(() => {
-      assert.equal(this.$().text().trim().search(/Students Requiring Cohort Assignment/), 0);
-      assert.notEqual(this.$().text().trim().search(/There are 5 students needing assignment to a cohort/), -1);
+      assert.equal(find('*').textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
+      assert.notEqual(find('*').textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
 
       let options = this.$('option');
       assert.equal(options.length, 2);
       assert.equal(options.eq(0).text().trim(), 'school 0');
       assert.equal(options.eq(1).text().trim(), 'school 1');
 
-      assert.equal(this.$('button').length, 1);
+      assert.equal(findAll('button').length, 1);
 
       assert.ok(this.$('div').eq(0).hasClass('alert'));
     });
@@ -81,11 +81,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     await render(hbs`{{unassigned-students-summary}}`);
 
     return settled().then(() => {
-      assert.equal(this.$().text().trim().search(/Students Requiring Cohort Assignment/), 0);
-      assert.notEqual(this.$().text().trim().search(/There are 0 students needing assignment to a cohort/), -1);
+      assert.equal(find('*').textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
+      assert.notEqual(find('*').textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
 
       assert.notOk(this.$('div').eq(0).hasClass('alert'));
-      assert.equal(this.$('button').length, 0);
+      assert.equal(findAll('button').length, 0);
     });
   });
 });

@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -14,12 +14,12 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     });
     this.set('sequenceBlock', block);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=sequenceBlock}}`);
-    assert.equal(this.$('.minimum label').text().trim(), 'Minimum:', 'Minimum is labeled correctly.');
-    assert.equal(this.$('.minimum input').val(), block.minimum, 'Minimum input has correct value.');
-    assert.equal(this.$('.maximum label').text().trim(), 'Maximum:', 'Maximum input is labeled correctly.');
-    assert.equal(this.$('.maximum input').val(), block.maximum, 'Maximum input has correct value.');
-    assert.equal(this.$('.buttons .done').length, 1, 'Done button is present.');
-    assert.equal(this.$('.buttons .cancel').length, 1, 'Cancel button is present.');
+    assert.equal(find('.minimum label').textContent.trim(), 'Minimum:', 'Minimum is labeled correctly.');
+    assert.equal(find('.minimum input').value, block.minimum, 'Minimum input has correct value.');
+    assert.equal(find('.maximum label').textContent.trim(), 'Maximum:', 'Maximum input is labeled correctly.');
+    assert.equal(find('.maximum input').value, block.maximum, 'Maximum input has correct value.');
+    assert.equal(findAll('.buttons .done').length, 1, 'Done button is present.');
+    assert.equal(findAll('.buttons .cancel').length, 1, 'Cancel button is present.');
   });
 
   test('save', async function(assert) {
@@ -37,11 +37,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    this.$('.minimum input').val(newMinimum);
-    this.$('.minimum input').trigger('input');
-    this.$('.maximum input').val(newMaximum);
-    this.$('.maximum input').trigger('input');
-    this.$('.buttons .done').click();
+    await fillIn('.minimum input', newMinimum);
+    await triggerEvent('.minimum input', 'input');
+    await fillIn('.maximum input', newMaximum);
+    await triggerEvent('.maximum input', 'input');
+    await click('.buttons .done');
   });
 
   test('cancel', async function(assert) {
@@ -56,7 +56,7 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('cancelAction', cancelAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block cancel=cancelAction}}`);
-    this.$('.buttons .cancel').click();
+    await click('.buttons .cancel');
   });
 
   test('save fails when minimum is larger than maximum', async function(assert) {
@@ -68,14 +68,14 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.minimum input').val('100');
-    this.$('.minimum input').trigger('input');
-    this.$('.maximum input').val('50');
-    this.$('.maximum input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.minimum input', '100');
+    await triggerEvent('.minimum input', 'input');
+    await fillIn('.maximum input', '50');
+    await triggerEvent('.maximum input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -88,14 +88,14 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.minimum input').val('-1');
-    this.$('.minimum input').trigger('input');
-    this.$('.maximum input').val('50');
-    this.$('.maximum input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.minimum input', '-1');
+    await triggerEvent('.minimum input', 'input');
+    await fillIn('.maximum input', '50');
+    await triggerEvent('.maximum input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -108,14 +108,14 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.minimum input').val('');
-    this.$('.minimum input').trigger('input');
-    this.$('.maximum input').val('50');
-    this.$('.maximum input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.minimum input', '');
+    await triggerEvent('.minimum input', 'input');
+    await fillIn('.maximum input', '50');
+    await triggerEvent('.maximum input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -128,14 +128,14 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.minimum input').val('0');
-    this.$('.minimum input').trigger('input');
-    this.$('.maximum input').val('');
-    this.$('.maximum input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.minimum input', '0');
+    await triggerEvent('.minimum input', 'input');
+    await fillIn('.maximum input', '');
+    await triggerEvent('.maximum input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 });

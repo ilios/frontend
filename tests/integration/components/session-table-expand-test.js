@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | session table expand', function(hooks) {
@@ -16,7 +16,7 @@ module('Integration | Component | session table expand', function(hooks) {
     const target = '.clickable';
 
     assert.notOk(row.get('expanded'));
-    this.$(target).click();
+    await click(target);
     assert.ok(row.get('expanded'));
   });
 });

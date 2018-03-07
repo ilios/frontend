@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -14,7 +14,7 @@ module('Integration | Component | ilios users', function(hooks) {
   test('it renders', async function(assert) {
     const title = '.users .title';
     await render(hbs`{{ilios-users}}`);
-    assert.equal(this.$(title).text().trim(), 'Users');
+    assert.equal(find(title).textContent.trim(), 'Users');
   });
 
   test('param passing', async function(assert) {
@@ -40,8 +40,8 @@ module('Integration | Component | ilios users', function(hooks) {
     );
     await settled();
 
-    assert.equal(this.$(query).val().trim(), 'nothing');
-    this.$(query).val('test').trigger('input');
+    assert.equal(find(query).value.trim(), 'nothing');
+    await fillIn(query, 'test');
     assert.equal(this.get('value'), 'test');
 
   });
@@ -82,9 +82,9 @@ module('Integration | Component | ilios users', function(hooks) {
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';
     await settled();
-    assert.equal(this.$(form).length, 1, 'the user search form is present');
+    assert.equal(findAll(form).length, 1, 'the user search form is present');
     assert.ok(this.$(blocks).length > 4, 'there are many form fields for adding a new user');
-    assert.equal(this.$(directorySearchBox).length, 0, 'the directory form search form is not present');
+    assert.equal(findAll(directorySearchBox).length, 0, 'the directory form search form is not present');
   });
 
   test('directory search renders when configured to', async function(assert) {
@@ -123,8 +123,8 @@ module('Integration | Component | ilios users', function(hooks) {
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';
     await settled();
-    assert.equal(this.$(form).length, 0, 'the user search form is not present');
+    assert.equal(findAll(form).length, 0, 'the user search form is not present');
     assert.equal(this.$(blocks).length, 0, 'there are no form fields for adding a new user');
-    assert.equal(this.$(directorySearchBox).length, 1, 'the directory form search form is present');
+    assert.equal(findAll(directorySearchBox).length, 1, 'the directory form search form is present');
   });
 });

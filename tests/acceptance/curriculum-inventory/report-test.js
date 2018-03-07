@@ -1,3 +1,4 @@
+import { click, findAll, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
@@ -33,11 +34,11 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
 
     await visit(url);
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(newBlockForm).length, 0);
-    assert.equal(find(newFormTitle).length, 0);
+    assert.equal(findAll(newBlockForm).length, 0);
+    assert.equal(findAll(newFormTitle).length, 0);
     await click(addSequenceBlock);
-    assert.equal(find(newBlockForm).length, 1);
-    assert.equal(find(newFormTitle).length, 1);
+    assert.equal(findAll(newBlockForm).length, 1);
+    assert.equal(findAll(newFormTitle).length, 1);
     assert.equal(getElementText(newFormTitle), getText('New Sequence Block'));
   });
 
@@ -62,7 +63,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0);
+    assert.equal(findAll(rollover).length, 0);
   });
 
   test('rollover visible to developers', async function (assert) {
@@ -85,7 +86,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 1);
+    assert.equal(findAll(rollover).length, 1);
   });
 
   test('rollover not visible to course directors', async function(assert) {
@@ -108,7 +109,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'curriculumInventoryReport.index');
-    assert.equal(find(rollover).length, 0);
+    assert.equal(findAll(rollover).length, 0);
   });
 
   test('rollover hidden on rollover route', async function(assert) {
@@ -131,6 +132,6 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
-    assert.equal(find(rollover).length, 0);
+    assert.equal(findAll(rollover).length, 0);
   });
 });

@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -48,7 +48,7 @@ module('Integration | Component | school session types collapsed', function(hook
     const instructionalTitle = `${instructionalMethodRow} td:eq(0)`;
     const instructionalCount = `${instructionalMethodRow} td:eq(1)`;
 
-    assert.equal(this.$(title).text().trim(), 'Session Types');
+    assert.equal(find(title).textContent.trim(), 'Session Types');
     assert.equal(this.$(assessmentTitle).text().trim(), 'Assessment Methods');
     assert.equal(this.$(assessmentCount).text().trim(), '1');
     assert.equal(this.$(instructionalTitle).text().trim(), 'Instructional Methods');

@@ -1,3 +1,4 @@
+import { click, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -87,7 +88,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
     let items = find('li', ul);
     assert.equal(items.length, 1);
     assert.equal(getElementText(items.eq(0)), getText('objective 0'));
-    assert.ok(find(items.eq(0)).hasClass('selected'));
+    assert.ok(find(items.eq(0)).classList.contains('selected'));
 
     //second competency
     assert.equal(getElementText(competencyTitles.eq(1)), getText('competency 1'));
@@ -95,9 +96,9 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
     items = find('li', ul);
     assert.equal(items.length, 2);
     assert.equal(getElementText(items.eq(0)), getText('objective 1'));
-    assert.notOk(find(items.eq(0)).hasClass('selected'));
+    assert.notOk(find(items.eq(0)).classList.contains('selected'));
     assert.equal(getElementText(items.eq(1)), getText('objective 2'));
-    assert.notOk(find(items.eq(1)).hasClass('selected'));
+    assert.notOk(find(items.eq(1)).classList.contains('selected'));
   });
 
   test('change course objective parent', async function(assert) {
@@ -107,20 +108,20 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
     await click('.link', tds.eq(1));
     let objectiveManager = find('.objective-manager').eq(0);
     let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-    await click('li:eq(1)', parentPicker);
-    assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
-    assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+    await click(findAll('li')[1], parentPicker);
+    assert.ok(find(findAll('h5')[1], parentPicker).classList.contains('selected'));
+    assert.ok(!find(find('h5'), parentPicker).classList.contains('selected'));
+    assert.ok(find(findAll('li')[1], parentPicker).classList.contains('selected'));
+    assert.ok(!find(find('li'), parentPicker).classList.contains('selected'));
   });
 
   test('save changes', async function(assert) {
     assert.expect(1);
     await visit(url);
     await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await click('.detail-objectives:eq(0) button.bigadd');
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    let td = find(findAll('.course-objective-list tbody tr:eq(0) td')[1]);
     assert.equal(getElementText(td), getText(
       fixtures.parentObjectives[1].title +
       '(' + fixtures.competencies[fixtures.parentObjectives[1].competency.id - 1].title + ')'
@@ -131,9 +132,9 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await click('.detail-objectives:eq(0) button.bigcancel');
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    let td = find(findAll('.course-objective-list tbody tr:eq(0) td')[1]);
     assert.equal(getElementText(td), getText(
       fixtures.parentObjectives[0].title +
       '(' + fixtures.competencies[fixtures.parentObjectives[0].competency.id - 1].title + ')'

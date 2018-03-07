@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -131,7 +131,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     });
     await render(hbs`{{user-profile-cohorts user=user isManagable=true setIsManaging=(action click)}}`);
     const manage = 'button.manage';
-    this.$(manage).click();
+    await click(manage);
   });
 
   test('can edit user cohorts', async function(assert) {
@@ -174,11 +174,11 @@ module('Integration | Component | user profile cohorts', function(hooks) {
 
         this.$(promoteFirstSecondaryCohort).click();
 
-        return settled().then(()=>{
+        return settled().then(async () => {
           this.$(removeFirstSecondaryCohort).click();
           this.$(addFirstAssignableCohort).click();
 
-          this.$('.bigadd').click();
+          await click('.bigadd');
 
           return settled();
         });

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, fillIn, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -18,7 +18,7 @@ module('Integration | Component | leadership search', function(hooks) {
 
     const search = 'input[type="search"]';
 
-    assert.equal(this.$(search).length, 1);
+    assert.equal(findAll(search).length, 1);
   });
 
 
@@ -29,9 +29,9 @@ module('Integration | Component | leadership search', function(hooks) {
     const search = 'input[type="search"]';
     const results = 'ul';
 
-    this.$(search).val('ab').trigger('keyup');
+    await fillIn(search, 'ab');
     return settled().then(()=>{
-      assert.equal(this.$(results).text().trim(), 'keep typing...');
+      assert.equal(find(results).textContent.trim(), 'keep typing...');
     });
   });
 
@@ -54,7 +54,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const resultsCount = `${results}:eq(0)`;
     const firstResult = `${results}:eq(1)`;
 
-    this.$(search).val('search words').trigger('keyup');
+    await fillIn(search, 'search words');
 
     return settled().then(()=>{
       assert.equal(this.$(resultsCount).text().trim(), '1 result');
@@ -80,7 +80,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const results = 'ul li';
     const resultsCount = `${results}:eq(0)`;
 
-    this.$(search).val('search words').trigger('keyup');
+    await fillIn(search, 'search words');
 
 
     return settled().then(()=>{
@@ -108,7 +108,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const results = 'ul li';
     const firstResult = `${results}:eq(1)`;
 
-    this.$(search).val('test').trigger('keyup');
+    await fillIn(search, 'test');
 
     return settled().then(()=>{
       assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
@@ -116,7 +116,7 @@ module('Integration | Component | leadership search', function(hooks) {
     });
   });
 
-  test('can not add users twice', async function(assert) {
+  test('can not add users twice', async function (assert) {
     assert.expect(6);
     let user1 = EmberObject.create({
       id: 1,
@@ -145,7 +145,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const firstResult = `${results}:eq(1)`;
     const secondResult = `${results}:eq(2)`;
 
-    await this.$(search).val('test').trigger('keyup');
+    await await fillIn(search, 'test');
     await settled();
 
     assert.equal(this.$(resultsCount).text().trim(), '2 results');

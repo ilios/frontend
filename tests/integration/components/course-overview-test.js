@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 let storeMock;
@@ -32,8 +32,8 @@ module('Integration | Component | course overview', function(hooks) {
     this.set('course', course);
     await render(hbs`{{course-overview course=course}}`);
 
-    assert.notEqual(this.$('.courseexternalid').text().search(/Course ID:/), -1);
-    assert.notEqual(this.$('.courseexternalid').text().search(/Click to edit/), -1);
+    assert.notEqual(find('.courseexternalid').textContent.search(/Course ID:/), -1);
+    assert.notEqual(find('.courseexternalid').textContent.search(/Click to edit/), -1);
 
   });
 

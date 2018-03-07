@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -14,7 +14,7 @@ module('Integration | Component | recently updated display', function(hooks) {
     await render(hbs`{{recently-updated-display lastModified=lastModified}}`);
 
     return settled().then(()=>{
-      assert.equal(this.$('.fa-exclamation-circle').length, 1, 'it renders');
+      assert.equal(findAll('.fa-exclamation-circle').length, 1, 'it renders');
     });
   });
 
@@ -25,7 +25,7 @@ module('Integration | Component | recently updated display', function(hooks) {
     await render(hbs`{{recently-updated-display}}`);
 
     return settled().then(()=>{
-      assert.equal(this.$('.fa-exclamation-circle').length, 0, 'it does not renders');
+      assert.equal(findAll('.fa-exclamation-circle').length, 0, 'it does not renders');
     });
   });
 });

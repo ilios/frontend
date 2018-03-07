@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -68,7 +68,7 @@ module('Integration | Component | school session types expanded', function(hooks
     const table = 'table';
     const sessionTypes = `${table} tbody tr`;
 
-    assert.equal(this.$(title).text().trim(), 'Session Types');
+    assert.equal(find(title).textContent.trim(), 'Session Types');
     assert.equal(this.$(sessionTypes).length, 1);
   });
 
@@ -89,8 +89,8 @@ module('Integration | Component | school session types expanded', function(hooks
     const form = '.form';
     const items = `${form} .item`;
 
-    assert.equal(this.$(title).text().trim(), 'Session Types');
-    assert.equal(this.$(sessionTypeTitle).text().trim(), 'one');
+    assert.equal(find(title).textContent.trim(), 'Session Types');
+    assert.equal(find(sessionTypeTitle).textContent.trim(), 'one');
     assert.equal(this.$(items).length, 6);
   });
 
@@ -179,6 +179,6 @@ module('Integration | Component | school session types expanded', function(hooks
 
     const title = '.title';
 
-    this.$(title).click();
+    await click(title);
   });
 });

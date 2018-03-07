@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search box', function(hooks) {
@@ -15,7 +15,7 @@ module('Integration | Component | search box', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{search-box}}`);
 
-    assert.equal(this.$('input[type=search]').length, 1);
+    assert.equal(findAll('input[type=search]').length, 1);
   });
 
   test('clicking search calls search', async function(assert) {
@@ -24,7 +24,7 @@ module('Integration | Component | search box', function(hooks) {
     };
     await render(hbs`{{search-box search=(action 'search')}}`);
     const searchBoxIcon = '.search-icon';
-    this.$(searchBoxIcon).click();
+    await click(searchBoxIcon);
 
     return settled();
   });
@@ -34,9 +34,9 @@ module('Integration | Component | search box', function(hooks) {
       assert.equal(value, 'typed it');
     };
     await render(hbs`{{search-box search=(action 'search')}}`);
-    run(() => {
-      this.$('input').val('typed it');
-      this.$('input').trigger('input');
+    run(async () => {
+      await fillIn('input', 'typed it');
+      await triggerEvent('input', 'input');
       this.$('input').trigger('keyup', {which: 50});
     });
     //wait for debounce timer in component
@@ -49,9 +49,9 @@ module('Integration | Component | search box', function(hooks) {
     };
     this.actions.search = parseInt;
     await render(hbs`{{search-box search=(action 'search') clear=(action 'clear')}}`);
-    run(() => {
-      this.$('input').val('typed it');
-      this.$('input').trigger('change');
+    run(async () => {
+      await fillIn('input', 'typed it');
+      await triggerEvent('input', 'change');
       this.$('input').trigger($.Event('keyup', { keyCode: 27 }));
     });
   });

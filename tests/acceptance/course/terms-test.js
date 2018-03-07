@@ -1,3 +1,4 @@
+import { click, find, findAll, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -48,13 +49,13 @@ module('Acceptance: Course - Terms', function(hooks) {
     var container = find('.collapsed-taxonomies');
     var title = find('.title', container);
     assert.equal(title.text().trim(), 'Terms (' + fixtures.course.terms.length + ')');
-    assert.equal(find('tr:eq(0) th:eq(0)', container).text().trim(), 'Vocabulary');
-    assert.equal(find('tr:eq(0) th:eq(1)', container).text().trim(), 'School');
-    assert.equal(find('tr:eq(0) th:eq(2)', container).text().trim(), 'Assigned Terms');
+    assert.equal(find(find('tr:eq(0) th'), container).textContent.trim(), 'Vocabulary');
+    assert.equal(find(findAll('tr:eq(0) th')[1], container).textContent.trim(), 'School');
+    assert.equal(find(findAll('tr:eq(0) th')[2], container).textContent.trim(), 'Assigned Terms');
 
-    assert.equal(find('tr:eq(1) td:eq(0)', container).text().trim(), 'Vocabulary 1');
-    assert.equal(find('tr:eq(1) td:eq(1)', container).text().trim(), 'school 0');
-    assert.equal(find('tr:eq(1) td:eq(2)', container).text().trim(), fixtures.course.terms.length);
+    assert.equal(find(find('tr:eq(1) td'), container).textContent.trim(), 'Vocabulary 1');
+    assert.equal(find(findAll('tr:eq(1) td')[1], container).textContent.trim(), 'school 0');
+    assert.equal(find(findAll('tr:eq(1) td')[2], container).textContent.trim(), fixtures.course.terms.length);
   });
 
   test('list terms', async function(assert) {
@@ -71,9 +72,9 @@ module('Acceptance: Course - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
-    assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
-    assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
+    assert.equal(getElementText(find(find('.removable-list li'), container)), getText('term 0'));
+    assert.equal(getElementText(find(find('.selectable-terms-list li'), container)), getText('term 0'));
+    assert.equal(getElementText(find(findAll('.selectable-terms-list li')[1], container)), getText('term 1'));
   });
 
   test('save term changes', async function(assert) {
@@ -81,7 +82,7 @@ module('Acceptance: Course - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    await click(find('.removable-list li:eq(0)', container));
+    await click(find(find('.removable-list li'), container));
     await click(find('.selectable-terms-list li:eq(1) > div', container));
     await click('button.bigadd', container);
     assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
@@ -92,7 +93,7 @@ module('Acceptance: Course - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    await click(find('.removable-list li:eq(0)', container));
+    await click(find(find('.removable-list li'), container));
     await click(find('.selectable-terms-list li:eq(1) > div', container));
     await click('button.bigcancel', container);
     assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));

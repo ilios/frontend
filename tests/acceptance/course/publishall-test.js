@@ -1,3 +1,4 @@
+import { click, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -65,8 +66,8 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
 
     let publishable = find('.publish-all-sessions-publishable');
     await click(find('.title', publishable));
-    assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)')), getText('session 0'));
-    assert.equal(getElementText(find('tbody tr:eq(1) td:eq(0)')), getText('session 1'));
-    assert.equal(getElementText(find('tbody tr:eq(2) td:eq(0)')), getText('session 2'));
+    assert.equal(getElementText(find(find('tbody tr:eq(0) td'))), getText('session 0'));
+    assert.equal(getElementText(find(find('tbody tr:eq(1) td'))), getText('session 1'));
+    assert.equal(getElementText(find(find('tbody tr:eq(2) td'))), getText('session 2'));
   });
 });

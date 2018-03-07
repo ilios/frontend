@@ -1,3 +1,4 @@
+import { click, findAll, find, currentURL, currentPath, visit } from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
 import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
@@ -175,7 +176,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=calendar&view=month');
     let dayOfMonth = aDayInTheMonth.date();
     let link = find('.day .clickable').filter(function(){
-      return parseInt(find(this).text(), 10) === dayOfMonth;
+      return parseInt(find(this).textContent, 10) === dayOfMonth;
     }).eq(0);
     await click(link);
     assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
@@ -204,7 +205,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=day');
-    await click('.calendar-time-picker li:eq(2)');
+    await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
@@ -217,7 +218,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=week');
-    await click('.calendar-time-picker li:eq(2)');
+    await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
   });
 
@@ -230,7 +231,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=month');
-    await click('.calendar-time-picker li:eq(2)');
+    await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
   });
 
@@ -243,7 +244,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=day');
-    await click('.calendar-time-picker li:eq(0)');
+    await click(find('.calendar-time-picker li'));
     assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
@@ -256,7 +257,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=week');
-    await click('.calendar-time-picker li:eq(0)');
+    await click(find('.calendar-time-picker li'));
     assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
   });
 
@@ -269,7 +270,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=month');
-    await click('.calendar-time-picker li:eq(0)');
+    await click(find('.calendar-time-picker li'));
     assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
   });
 
@@ -293,7 +294,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   let chooseSchoolEvents = async function(){
-    return await click(find('.togglemyschedule label:eq(1)'));
+    return await click(find(findAll('.togglemyschedule label')[1]));
   };
   test('show school events', async function(assert) {
     let today = moment().hour(8);
@@ -316,7 +317,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   let showFilters = async function(){
-    return click(find('.showfilters label:eq(1)'));
+    return await click(find(findAll('.showfilters label')[1]));
   };
 
   let pickSessionType = async function(i) {
@@ -428,7 +429,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   let chooseDetailFilter = async function(){
-    return await click(find('.togglecoursefilters label:eq(1)'));
+    return await click(find(findAll('.togglecoursefilters label')[1]));
   };
 
   let pickCourse = async function(i) {
@@ -605,16 +606,16 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await click(course);
     await click(term);
 
-    assert.equal(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
-    assert.ok(find(course).prop('checked'), 'filter is checked');
-    assert.ok(find(term).prop('checked'), 'filter is checked');
+    assert.equal(find(clearFilter).textContent, 'Clear Filters', 'clear filter button is active');
+    assert.ok(find(sessiontype).checked, 'filter is checked');
+    assert.ok(find(course).checked, 'filter is checked');
+    assert.ok(find(term).checked, 'filter is checked');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(course).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(term).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
+    assert.ok(!find(course).checked, 'filter is unchecked');
+    assert.ok(!find(term).checked, 'filter is unchecked');
   });
 
   test('clear all detail filters', async function(assert) {
@@ -632,16 +633,16 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await click(courselevel);
     await click(cohort);
 
-    assert.equal(find(clearFilter).text(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(sessiontype).prop('checked'), 'filter is checked');
-    assert.ok(find(courselevel).prop('checked'), 'filter is checked');
-    assert.ok(find(cohort).prop('checked'), 'filter is checked');
+    assert.equal(find(clearFilter).textContent, 'Clear Filters', 'clear filter button is active');
+    assert.ok(find(sessiontype).checked, 'filter is checked');
+    assert.ok(find(courselevel).checked, 'filter is checked');
+    assert.ok(find(cohort).checked, 'filter is checked');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
+    assert.ok(!find(courselevel).checked, 'filter is unchecked');
+    assert.ok(!find(cohort).checked, 'filter is unchecked');
   });
 
   test('filter tags work properly', async function(assert) {
@@ -653,11 +654,11 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     const clearFilter = '.filters-clear-filters';
 
     function getTagText(n) {
-      return find(`.filter-tag:eq(${n})`).text().trim();
+      return find(`.filter-tag:eq(${n})`).textContent.trim();
     }
 
-    function clickTag(n) {
-      return click(`.filter-tag:eq(${n})`);
+    async function clickTag(n) {
+      return await click(`.filter-tag:eq(${n})`);
     }
 
     await visit('/dashboard?show=calendar');
@@ -673,7 +674,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
 
     await clickTag(1);
-    assert.ok(!find(courselevel).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(courselevel).checked, 'filter is unchecked');
     assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
     assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
 
@@ -682,8 +683,8 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-    assert.ok(!find(sessiontype).prop('checked'), 'filter is unchecked');
-    assert.ok(!find(cohort).prop('checked'), 'filter is unchecked');
+    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
+    assert.ok(!find(cohort).checked, 'filter is unchecked');
   });
 
   test('query params work', async function(assert) {
@@ -810,13 +811,13 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
     await visit('/dashboard?show=calendar');
     await showFilters();
-    assert.equal(find('div.event').length, 2);
+    assert.equal(findAll('div.event').length, 2);
     await pickTerm(0);
-    assert.equal(find('div.event').length, 1);
+    assert.equal(findAll('div.event').length, 1);
 
-    assert.equal(find(filters).length, 1);
+    assert.equal(findAll(filters).length, 1);
     await click(filter);
-    assert.equal(find(filters).length, 0);
-    assert.equal(find('div.event').length, 2);
+    assert.equal(findAll(filters).length, 0);
+    assert.equal(findAll('div.event').length, 2);
   });
 });

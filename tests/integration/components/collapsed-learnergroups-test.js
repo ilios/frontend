@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | collapsed learnergroups', function(hooks) {
@@ -62,12 +62,12 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{collapsed-learnergroups subject=subject expand=(action nothing)}}`);
     await settled();
-    assert.equal(this.$('.title').text().trim(), 'Learner Groups (4)');
-    assert.equal(this.$('table tr').length, 3);
-    assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'program 1 cohort 1');
-    assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'program 2 cohort 2');
-    assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), '3');
-    assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), '1');
+    assert.equal(find('.title').textContent.trim(), 'Learner Groups (4)');
+    assert.equal(findAll('table tr').length, 3);
+    assert.equal(find('tr:eq(1) td').textContent.trim(), 'program 1 cohort 1');
+    assert.equal(find('tr:eq(2) td').textContent.trim(), 'program 2 cohort 2');
+    assert.equal(find(findAll('tr:eq(1) td')[1]).textContent.trim(), '3');
+    assert.equal(find(findAll('tr:eq(2) td')[1]).textContent.trim(), '1');
 
 
   });
@@ -86,7 +86,7 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
 
     await render(hbs`{{collapsed-learnergroups subject=subject expand=(action 'click')}}`);
 
-    assert.equal(this.$('.title').text().trim(), 'Learner Groups (0)');
-    this.$('.title').click();
+    assert.equal(find('.title').textContent.trim(), 'Learner Groups (0)');
+    await click('.title');
   });
 });

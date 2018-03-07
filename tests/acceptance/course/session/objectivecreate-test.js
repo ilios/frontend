@@ -6,7 +6,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { settled } from '@ember/test-helpers';
+import { settled, click, visit } from '@ember/test-helpers';
 
 var application;
 var fixtures = {};

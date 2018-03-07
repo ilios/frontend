@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -73,8 +73,8 @@ module('Integration | Component | user profile schools', function(hooks) {
     const secondRowCanWrite = `${secondRowPermissions} i:eq(1)`;
 
     return settled().then(()=>{
-      assert.equal(this.$(permissionRows).length, 2, 'there are only two permission rows');
-      assert.equal(this.$(primarySchool).text().trim(), 'Primary School: SOM', 'primary school is correct');
+      assert.equal(findAll(permissionRows).length, 2, 'there are only two permission rows');
+      assert.equal(find(primarySchool).textContent.trim(), 'Primary School: SOM', 'primary school is correct');
       assert.ok(this.$(firstRowCanRead).hasClass('fa-check'), 'sod can read');
       assert.ok(this.$(firstRowCanWrite).hasClass('fa-check'), 'sod can write');
       assert.ok(this.$(secondRowCanRead).hasClass('fa-ban'), 'sop can not read');
@@ -96,7 +96,7 @@ module('Integration | Component | user profile schools', function(hooks) {
     });
     await render(hbs`{{user-profile-schools user=user isManagable=true setIsManaging=(action click)}}`);
     const manage = 'button.manage';
-    this.$(manage).click();
+    await click(manage);
   });
 
   test('can edit user school permissions', async function(assert) {
@@ -141,8 +141,8 @@ module('Integration | Component | user profile schools', function(hooks) {
     const secondRowCanRead = `${secondRowPermissions} input:eq(0)`;
     const secondRowCanWrite = `${secondRowPermissions} input:eq(1)`;
 
-    return settled().then(()=>{
-      assert.equal(this.$(permissionRows).length, 2, 'correct number of rows');
+    return settled().then(async () => {
+      assert.equal(findAll(permissionRows).length, 2, 'correct number of rows');
       assert.ok(this.$(firstRowCanRead).is(':checked'), 'sod can read');
       assert.ok(this.$(firstRowCanWrite).is(':checked'), 'sod can write');
       assert.ok(this.$(firstRowCanRead).is(':disabled'), 'sod read is disabled');
@@ -152,7 +152,7 @@ module('Integration | Component | user profile schools', function(hooks) {
       this.$(firstRowCanWrite).click().change();
       this.$(secondRowCanRead).click().change();
 
-      this.$('.bigadd').click();
+      await click('.bigadd');
 
       return settled();
     });
@@ -218,8 +218,8 @@ module('Integration | Component | user profile schools', function(hooks) {
     const secondRowCanWrite = `${secondRowPermissions} i:eq(1)`;
 
     await settled();
-    assert.equal(this.$(permissionRows).length, 2, 'there are only two permission rows');
-    assert.equal(this.$(primarySchool).text().trim(), 'Primary School: SOM', 'primary school is correct');
+    assert.equal(findAll(permissionRows).length, 2, 'there are only two permission rows');
+    assert.equal(find(primarySchool).textContent.trim(), 'Primary School: SOM', 'primary school is correct');
     assert.equal(this.$(firstRowSchoolName).text().trim(), 'SOD', 'correct first school');
     assert.ok(this.$(firstRowCanRead).hasClass('fa-check'), 'sod can read');
     assert.ok(this.$(firstRowCanWrite).hasClass('fa-check'), 'sod can write');
@@ -230,8 +230,8 @@ module('Integration | Component | user profile schools', function(hooks) {
     this.set('user', user2);
 
     await settled();
-    assert.equal(this.$(permissionRows).length, 2, 'there are only two permission rows');
-    assert.equal(this.$(primarySchool).text().trim(), 'Primary School: SOD', 'primary school is correct');
+    assert.equal(findAll(permissionRows).length, 2, 'there are only two permission rows');
+    assert.equal(find(primarySchool).textContent.trim(), 'Primary School: SOD', 'primary school is correct');
     assert.equal(this.$(firstRowSchoolName).text().trim(), 'SOM', 'correct first school');
     assert.ok(this.$(firstRowCanRead).hasClass('fa-ban'), 'sod can read');
     assert.ok(this.$(firstRowCanWrite).hasClass('fa-ban'), 'sod can write');

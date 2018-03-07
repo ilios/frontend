@@ -1,3 +1,4 @@
+import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
@@ -21,7 +22,7 @@ module('Acceptance: Users', function(hooks) {
   });
 
   function getCellContent(i) {
-    return find(`tbody tr td:eq(${i})`).text().trim();
+    return find(`tbody tr td:eq(${i})`).textContent.trim();
   }
 
   test('can see list of users and transition to user route', async function(assert) {

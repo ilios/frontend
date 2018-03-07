@@ -25,10 +25,6 @@ module.exports = {
     indent: [2, 2], /* two-space indentation */
     semi: 2, /* require semi-colons */
     camelcase: 2, /* require camelCase variables */
-    'no-shadow': [2, {
-      builtinGlobals: true,
-      allow: ['event', 'i', 'name', 'parent', 'resolve', 'self', 'select', 'scrollTo', 'status', '$', 'Promise']
-    },], /* Prevent shadowing globals like Object*/
     'ember/new-module-imports': 2,
     'ember/no-old-shims': 2,
     'ember/closure-actions': 0,
@@ -72,20 +68,7 @@ module.exports = {
         "getText": true,
         "pickOption": true,
         "select": true,
-        "server": true,
-        // embertest ENV globals manually added since we're not supporting andThen anymore
-        "click": true,
-        "currentPath": true,
-        "currentRouteName": true,
-        "currentURL": true,
-        "fillIn": true,
-        "find": true,
-        "findWithAssert": true,
-        "keyEvent": true,
-        "pauseTest": true,
-        "resumeTest": true,
-        "triggerEvent": true,
-        "visit": true
+        "server": true
       },
     }
   ]

@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, fillIn, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -34,17 +34,17 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
 
-    assert.equal(this.$('th:eq(0)').text().trim(), 'Learner Group Title');
-    assert.equal(this.$('th:eq(1)').text().trim(), 'Members');
-    assert.equal(this.$('th:eq(2)').text().trim(), 'Subgroups');
-    assert.equal(this.$('th:eq(3)').text().trim(), 'Actions');
+    assert.equal(find('th').textContent.trim(), 'Learner Group Title');
+    assert.equal(find(findAll('th')[1]).textContent.trim(), 'Members');
+    assert.equal(find(findAll('th')[2]).textContent.trim(), 'Subgroups');
+    assert.equal(find(findAll('th')[3]).textContent.trim(), 'Actions');
 
-    assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 2);
-    assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 0);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'second');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 0);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 2);
+    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'first');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 2);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 0);
+    assert.equal(find('tbody tr:eq(1) td').textContent.trim(), 'second');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 0);
+    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 2);
 
   });
 
@@ -65,8 +65,8 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
 
-    this.$('tbody td:eq(3) .remove').click();
-    this.$('tbody tr:eq(1) .remove').click();
+    await click('tbody td:eq(3) .remove');
+    await click('tbody tr:eq(1) .remove');
   });
 
   test('removal confirmation', async function(assert) {
@@ -83,10 +83,10 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
 
-    this.$('tbody td:eq(3) .remove').click();
+    await click('tbody td:eq(3) .remove');
 
-    assert.ok(this.$('tbody tr:eq(0)').hasClass('confirm-removal'));
-    assert.equal(this.$('tbody tr:eq(1)').text().trim().search(/Are you sure/), 0);
+    assert.ok(find('tbody tr').classList.contains('confirm-removal'));
+    assert.equal(find(findAll('tbody tr')[1]).textContent.trim().search(/Are you sure/), 0);
 
   });
 
@@ -126,17 +126,17 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     this.set('parentGroup', EmberObject.create(parentGroup));
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
-    assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
+    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'first');
 
-    this.$('.expand-button').click();
+    await click('.expand-button');
 
     let newTitle = 'new group';
-    return settled().then(()=>{
-      this.$('input').val(newTitle);
-      this.$('input').trigger('input');
-      this.$('.done').click();
+    return settled().then(async () => {
+      await fillIn('input', newTitle);
+      await triggerEvent('input', 'input');
+      await click('.done');
       return settled().then(() => {
-        assert.equal(this.$('.saved-result').text().trim().replace(/[\t\n\s]+/g, ''),
+        assert.equal(find('.saved-result').textContent.trim().replace(/[\t\n\s]+/g, ''),
           (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
         );
       });
@@ -202,13 +202,13 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
     assert.equal(this.$(firstGroupTitle).text().trim(), 'group 1');
-    this.$(expandButton).click();
+    await click(expandButton);
     await settled();
     this.$(multiGroupButton).click();
     await settled();
 
-    this.$(multiGroupCount).val(1).trigger('input');
-    await this.$(done).click();
+    await fillIn(multiGroupCount, 1);
+    await await click(done);
     await settled();
     await settled();
 
@@ -269,14 +269,14 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const done = '.done';
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
-    this.$(expandButton).click();
+    await click(expandButton);
     await settled();
     await this.$(multiGroupButton).click();
     await settled();
 
 
-    this.$(multiGroupCount).val(1).trigger('input');
-    await this.$(done).click();
+    await fillIn(multiGroupCount, 1);
+    await await click(done);
     await settled();
     await settled();
 

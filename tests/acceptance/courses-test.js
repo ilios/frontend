@@ -1,3 +1,4 @@
+import { currentPath } from '@ember/test-helpers';
 import destroyApp from '../helpers/destroy-app';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';

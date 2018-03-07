@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn, blur } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -217,7 +217,7 @@ module('Integration | Component | session copy', function(hooks) {
     await render(hbs`{{session-copy session=session visit=(action visit)}}`);
 
     await settled();
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
   });
 
@@ -255,7 +255,7 @@ module('Integration | Component | session copy', function(hooks) {
     const save = '.done';
 
     return settled().then(() => {
-      assert.equal(this.$('.messagee').length, 0);
+      assert.equal(findAll('.messagee').length, 0);
       assert.ok(this.$(save).is(':disabled'));
     });
   });
@@ -317,7 +317,8 @@ module('Integration | Component | session copy', function(hooks) {
     const yearSelect = '.year-select select';
 
     await settled();
-    this.$(yearSelect).val(nextYear).change();
+    await fillIn(yearSelect, nextYear);
+    await blur(yearSelect);
     await settled();
   });
 
@@ -423,10 +424,11 @@ module('Integration | Component | session copy', function(hooks) {
     const courseSelect = '.course-select select';
 
     await settled();
-    this.$(yearSelect).val(nextYear).change();
+    await fillIn(yearSelect, nextYear);
+    await blur(yearSelect);
     await settled();
-    assert.equal(this.$(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
-    this.$('.done').click();
+    assert.equal(find(courseSelect).value, targetCourse.get('id'), 'first course is selected');
+    await click('.done');
     await settled();
   });
 });

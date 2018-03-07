@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | not found', function(hooks) {
@@ -12,6 +12,6 @@ module('Integration | Component | not found', function(hooks) {
 
     await render(hbs`{{not-found}}`);
 
-    assert.equal(this.$().text().trim(), "Rats! I couldn't find that. Please check your page address, and try again.\n  Back to Dashboard");
+    assert.equal(find('*').textContent.trim(), "Rats! I couldn't find that. Please check your page address, and try again.\n  Back to Dashboard");
   });
 });

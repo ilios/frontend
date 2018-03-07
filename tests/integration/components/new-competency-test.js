@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, fillIn, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | new competency', function(hooks) {
@@ -9,8 +9,8 @@ module('Integration | Component | new competency', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{new-competency}}`);
 
-    assert.equal(this.$('input').length, 1);
-    assert.equal(this.$('button').text().trim(), 'Add');
+    assert.equal(findAll('input').length, 1);
+    assert.equal(find('button').textContent.trim(), 'Add');
   });
 
   test('save', async function(assert) {
@@ -19,8 +19,8 @@ module('Integration | Component | new competency', function(hooks) {
       assert.equal(value, 'new co');
     });
     await render(hbs`{{new-competency add=(action add)}}`);
-    this.$('input').val('new co').trigger('input');
-    this.$('button').click();
+    await fillIn('input', 'new co');
+    await click('button');
 
     return settled();
   });
@@ -29,15 +29,15 @@ module('Integration | Component | new competency', function(hooks) {
     assert.expect(1);
 
     await render(hbs`{{new-competency}}`);
-    assert.equal(this.$('.validation-error-message').length, 0);
+    assert.equal(findAll('.validation-error-message').length, 0);
   });
 
   test('validation errors show up when saving', async function(assert) {
     assert.expect(1);
 
     await render(hbs`{{new-competency}}`);
-    this.$('button.save').click();
-    assert.equal(this.$('.validation-error-message').length, 1);
+    await click('button.save');
+    assert.equal(findAll('.validation-error-message').length, 1);
     return settled();
   });
 });

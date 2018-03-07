@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -38,7 +38,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.sort-materials-btn').length, 1);
+      assert.equal(findAll('.sort-materials-btn').length, 1);
     });
   });
 
@@ -64,7 +64,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=false }}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.sort-materials-btn').length, 0);
+      assert.equal(findAll('.sort-materials-btn').length, 0);
     });
   });
 
@@ -81,7 +81,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.sort-materials-btn').length, 0);
+      assert.equal(findAll('.sort-materials-btn').length, 0);
     });
   });
 
@@ -105,7 +105,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.sort-materials-btn').length, 0);
+      assert.equal(findAll('.sort-materials-btn').length, 0);
     });
   });
 
@@ -136,18 +136,18 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
-    return settled().then(() => {
-      assert.equal(this.$('.sort-materials-btn').length, 1, 'Sort materials button is visible');
-      assert.equal(this.$('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible');
+    return settled().then(async () => {
+      assert.equal(findAll('.sort-materials-btn').length, 1, 'Sort materials button is visible');
+      assert.equal(findAll('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible');
 
-      this.$('.sort-materials-btn').click();
-      return settled().then(() => {
-        assert.equal(this.$('.sort-materials-btn').length, 0, 'Sort materials button is not visible');
-        assert.equal(this.$('.learning-materials-sort-manager').length, 1, 'LM sort manager is visible');
-        this.$('.learning-materials-sort-manager .bigcancel').click();
+      await click('.sort-materials-btn');
+      return settled().then(async () => {
+        assert.equal(findAll('.sort-materials-btn').length, 0, 'Sort materials button is not visible');
+        assert.equal(findAll('.learning-materials-sort-manager').length, 1, 'LM sort manager is visible');
+        await click('.learning-materials-sort-manager .bigcancel');
         return settled().then(() => {
-          assert.equal(this.$('.sort-materials-btn').length, 1, 'Sort materials button is visible again');
-          assert.equal(this.$('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible again');
+          assert.equal(findAll('.sort-materials-btn').length, 1, 'Sort materials button is visible again');
+          assert.equal(findAll('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible again');
         });
       });
     });
@@ -188,10 +188,10 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
-    return settled().then(() => {
-      this.$('.sort-materials-btn').click();
-      return settled().then(() => {
-        this.$('.learning-materials-sort-manager .bigadd').click();
+    return settled().then(async () => {
+      await click('.sort-materials-btn');
+      return settled().then(async () => {
+        await click('.learning-materials-sort-manager .bigadd');
       });
     });
   });

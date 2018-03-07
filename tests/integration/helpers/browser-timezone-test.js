@@ -1,7 +1,7 @@
 
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -13,7 +13,7 @@ module('helper:browser-timezone', function(hooks) {
 
     await render(hbs`{{browser-timezone}}`);
 
-    assert.equal(this.$().text().trim(), moment.tz.guess());
+    assert.equal(find('*').textContent.trim(), moment.tz.guess());
   });
 });
 

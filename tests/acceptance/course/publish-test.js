@@ -1,3 +1,4 @@
+import { click, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,

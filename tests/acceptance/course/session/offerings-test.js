@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -185,7 +186,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   test('confirm removal message', async function(assert) {
     assert.expect(2);
     await visit(url);
-    let offering = find('.offering-manager:eq(0)');
+    let offering = find(find('.offering-manager'));
     await click('.offering-manager-actions .remove', offering);
     assert.ok(offering.hasClass('show-remove-confirmation'));
     assert.equal(getElementText(find('.confirm-message', offering)), getText('Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'));
@@ -200,7 +201,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
     let offering = find('.offering-manager').eq(0);
     await click('.offering-manager-actions .remove', offering);
     await click('.confirm-message .remove', offering);
-    assert.equal(find('.offering-manager').length, 2);
+    assert.equal(findAll('.offering-manager').length, 2);
   });
 
   test('cancel remove offering', async function(assert) {
@@ -211,7 +212,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
     let offering = find('.offering-manager').eq(0);
     await click('.offering-manager-actions .remove', offering);
     await click('.cancel', offering);
-    assert.equal(find('.offering-manager').length, 3);
+    assert.equal(findAll('.offering-manager').length, 3);
   });
 
   test('users can create a new offering single day', async function(assert) {
@@ -262,14 +263,14 @@ module('Acceptance: Session - Offerings', function(hooks) {
     await fillIn(searchBox, 'guy');
     await click(searchBoxOption);
     await click(createButton);
-    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
-    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
-    assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
+    assert.equal(find(dayOfWeek).textContent, 'Sunday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).textContent, 'September 11th', 'day of month is correct');
+    assert.equal(find(startTime).textContent.trim(), 'Starts: 2:15 AM', 'start time is correct');
+    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:30 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
+    assert.equal(find(instructor).textContent, '0 guy M. Mc0son', 'instructor is correct');
   });
 
 
@@ -321,13 +322,13 @@ module('Acceptance: Session - Offerings', function(hooks) {
     await fillIn(searchBox, 'guy');
     await click(searchBoxOption);
     await click(createButton);
-    assert.equal(find(multiDayDesc).text().trim(), 'Multiday', 'multi-day statement is correct');
-    assert.equal(find(multiDayStarts).text().trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
-    assert.equal(find(multiDayEnds).text().trim(), 'Ends Monday September 12th @ 5:30 PM', 'multi-day statement is correct');
-    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor).text(), '0 guy M. Mc0son', 'instructor is correct');
+    assert.equal(find(multiDayDesc).textContent.trim(), 'Multiday', 'multi-day statement is correct');
+    assert.equal(find(multiDayStarts).textContent.trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
+    assert.equal(find(multiDayEnds).textContent.trim(), 'Ends Monday September 12th @ 5:30 PM', 'multi-day statement is correct');
+    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
+    assert.equal(find(instructor).textContent, '0 guy M. Mc0son', 'instructor is correct');
   });
 
   test('users can create a new small group offering', async function(assert) {
@@ -372,14 +373,14 @@ module('Acceptance: Session - Offerings', function(hooks) {
     await click(learnerGroupOne);
     await click(learnerGroupTwo);
     await click(createButton);
-    assert.equal(find(dayOfWeek).text(), 'Sunday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).text(), 'September 11th', 'day of month is correct');
-    assert.equal(find(startTime).text().trim(), 'Starts: 2:15 AM', 'start time is correct');
-    assert.equal(find(endTime).text().trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).text().trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).text().trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(location1).text(), 'default 1', 'correct default location is added');
-    assert.equal(find(location2).text(), 'default 2', 'correct default location is added');
+    assert.equal(find(dayOfWeek).textContent, 'Sunday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).textContent, 'September 11th', 'day of month is correct');
+    assert.equal(find(startTime).textContent.trim(), 'Starts: 2:15 AM', 'start time is correct');
+    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:30 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
+    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(location1).textContent, 'default 1', 'correct default location is added');
+    assert.equal(find(location2).textContent, 'default 2', 'correct default location is added');
     assert.equal(getElementText(instructors1), '0guyM.Mc0son', 'correct default instructors are added');
     assert.equal(getElementText(instructors2), '1guyM.Mc1son2guyM.Mc2son5guyM.Mc5son6guyM.Mc6son', 'correct default instructors are added');
   });
@@ -428,16 +429,16 @@ module('Acceptance: Session - Offerings', function(hooks) {
     await click(removeFirstInstructor);
     await click(removeFirstInstructorGroup);
     await click(createButton);
-    assert.equal(find(dayOfWeek).text(), 'Wednesday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).text(), 'October 5th', 'day of month is correct');
-    assert.equal(find(startTime).text().trim(), 'Starts: 11:45 AM', 'start time is correct');
-    assert.equal(find(endTime).text().trim(), 'Ends: 5:55 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).text().trim(), 'learner group 1', 'correct learner group is picked');
+    assert.equal(find(dayOfWeek).textContent, 'Wednesday', 'day of the week is correct');
+    assert.equal(find(dayOfMonth).textContent, 'October 5th', 'day of month is correct');
+    assert.equal(find(startTime).textContent.trim(), 'Starts: 11:45 AM', 'start time is correct');
+    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:55 PM', 'end time is correct');
+    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 1', 'correct learner group is picked');
     //@todo: skipping these, works in real life, but doesn't reload the list in tests
     // assert.equal(find(instructor1).text(), '6 guy M. Mc6son', 'instructor is correct');
     // assert.equal(find(instructor2).text(), '8 guy M. Mc5son', 'instructor is correct');
     // assert.equal(find(instructor3).text(), '9 guy M. Mc5son', 'instructor is correct');
-    assert.equal(find(room).text(), 'Rm. 111', 'location/room is correct');
+    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
   });
 
   test('users can create recurring small groups', async function(assert) {
@@ -638,10 +639,10 @@ module('Acceptance: Session - Offerings', function(hooks) {
     await click(editButton);
 
     await click(save);
-    assert.equal(find(room).text(), 'room 0', 'location/room is correct');
+    assert.equal(find(room).textContent, 'room 0', 'location/room is correct');
 
     await click(editButton);
     await click(save);
-    assert.equal(find(room).text(), 'room 0', 'location/room is correct');
+    assert.equal(find(room).textContent, 'room 0', 'location/room is correct');
   });
 });

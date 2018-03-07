@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -55,7 +55,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     const username = `${fields}:eq(7) span`;
 
     return settled().then(()=>{
-      assert.equal(this.$(fields).length, 8);
+      assert.equal(findAll(fields).length, 8);
       assert.equal(this.$(firstName).text().trim(), 'Test Person', 'first name is displayed');
       assert.equal(this.$(middleName).text().trim(), 'Name', 'middle name is displayed');
       assert.equal(this.$(lastName).text().trim(), 'Thing', 'last name is displayed');
@@ -87,7 +87,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     const password = `${fields}:eq(8) span`;
 
     return settled().then(()=>{
-      assert.equal(this.$(fields).length, 9);
+      assert.equal(findAll(fields).length, 9);
       assert.equal(this.$(firstName).text().trim(), 'Test Person', 'first name is displayed');
       assert.equal(this.$(middleName).text().trim(), 'Name', 'middle name is displayed');
       assert.equal(this.$(lastName).text().trim(), 'Thing', 'last name is displayed');
@@ -111,9 +111,9 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(hbs`{{user-profile-bio user=user isManagable=true setIsManaging=(action click)}}`);
-    return settled().then(()=>{
+    return settled().then(async () => {
       const manage = 'button.manage';
-      this.$(manage).click();
+      await click(manage);
     });
   });
 
@@ -154,8 +154,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const phone = `${inputs}:eq(6)`;
     const username = `${inputs}:eq(7)`;
 
-    return settled().then(()=>{
-      assert.equal(this.$(inputs).length, 8, 'correct number of inputs');
+    return settled().then(async () => {
+      assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
       assert.equal(this.$(firstName).val().trim(), 'Test Person', 'firstname is set');
       assert.equal(this.$(middleName).val().trim(), 'Name', 'middlename is set');
       assert.equal(this.$(lastName).val().trim(), 'Thing', 'lastname is set');
@@ -173,7 +173,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       this.$(email).val('e@e.com').trigger('input');
       this.$(phone).val('12345x').trigger('input');
 
-      this.$('.bigadd').click();
+      await click('.bigadd');
 
       return settled();
     });
@@ -216,8 +216,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const username = `${inputs}:eq(7)`;
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      assert.equal(this.$(inputs).length, 8, 'correct number of inputs');
+    return settled().then(async () => {
+      assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
       assert.equal(this.$(firstName).val().trim(), 'Test Person', 'firstname is set');
       assert.equal(this.$(middleName).val().trim(), 'Name', 'middlename is set');
       assert.equal(this.$(lastName).val().trim(), 'Thing', 'lastname is set');
@@ -226,7 +226,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(this.$(email).val().trim(), 'test@test.com', 'email is set');
       assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
       assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
-      assert.equal(this.$(activatePasswordField).text().trim(), 'Click here to reset password.');
+      assert.equal(find(activatePasswordField).textContent.trim(), 'Click here to reset password.');
       this.$(firstName).val('new first').trigger('input');
       this.$(middleName).val('new middle').trigger('input');
       this.$(lastName).val('new last').trigger('input');
@@ -235,7 +235,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       this.$(email).val('e@e.com').trigger('input');
       this.$(phone).val('12345x').trigger('input');
       this.$(username).val('new-test-user').trigger('input');
-      this.$('.bigadd').click();
+      await click('.bigadd');
 
       return settled();
     });
@@ -279,8 +279,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const password = `${inputs}:eq(8)`;
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      assert.equal(this.$(inputs).length, 8, 'correct number of inputs');
+    return settled().then(async () => {
+      assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
       assert.equal(this.$(firstName).val().trim(), 'Test Person', 'firstname is set');
       assert.equal(this.$(middleName).val().trim(), 'Name', 'middlename is set');
       assert.equal(this.$(lastName).val().trim(), 'Thing', 'lastname is set');
@@ -289,10 +289,10 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(this.$(email).val().trim(), 'test@test.com', 'email is set');
       assert.equal(this.$(phone).val().trim(), 'x1234', 'phone is set');
       assert.equal(this.$(username).val().trim(), 'test-username', 'username is set');
-      this.$(activatePasswordField).click();
+      await click(activatePasswordField);
 
-      return settled().then(()=>{
-        assert.equal(this.$(inputs).length, 9, 'password input has been added');
+      return settled().then(async () => {
+        assert.equal(findAll(inputs).length, 9, 'password input has been added');
         assert.equal(this.$(password).val().trim(), '', 'password is set');
         this.$(firstName).val('new first').trigger('input');
         this.$(middleName).val('new middle').trigger('input');
@@ -303,7 +303,7 @@ module('Integration | Component | user profile bio', function(hooks) {
         this.$(phone).val('12345x').trigger('input');
         this.$(username).val('new-test-user').trigger('input');
         this.$(password).val('new-password').trigger('input');
-        this.$('.bigadd').click();
+        await click('.bigadd');
 
         return settled();
       });
@@ -329,18 +329,18 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     const cancelPasswordField = '.cancel-password-field';
 
-    return settled().then(()=>{
-      assert.equal(this.$(inputs).length, 8, 'correct number of inputs');
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
+      await click(activatePasswordField);
 
       return settled().then(()=>{
-        assert.equal(this.$(inputs).length, 9, 'password input has been added');
+        assert.equal(findAll(inputs).length, 9, 'password input has been added');
         assert.equal(this.$(password).val().trim(), '', 'password is blank');
         this.$(password).val('new-password').trigger('input');
-        return settled().then(()=>{
-          this.$(cancelPasswordField).click();
-          return settled().then(()=>{
-            this.$(activatePasswordField).click();
+        return settled().then(async () => {
+          await click(cancelPasswordField);
+          return settled().then(async () => {
+            await click(activatePasswordField);
             return settled().then(()=>{
               assert.equal(this.$(password).val().trim(), '', 'password is blank again');
             });
@@ -363,8 +363,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const passwordInput = '.password input:eq(0)';
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      await click(activatePasswordField);
       return settled().then(()=>{
         this.$(passwordInput).val('12345').trigger('input');
         return settled().then(()=>{
@@ -388,8 +388,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const passwordInput = '.password input:eq(0)';
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      await click(activatePasswordField);
       return settled().then(()=>{
         this.$(passwordInput).val('12345ab').trigger('input');
         return settled().then(()=>{
@@ -413,8 +413,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const passwordInput = '.password input:eq(0)';
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      await click(activatePasswordField);
       return settled().then(()=>{
         this.$(passwordInput).val('12345ab13&').trigger('input');
         return settled().then(()=>{
@@ -438,8 +438,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const passwordInput = '.password input:eq(0)';
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      await click(activatePasswordField);
       return settled().then(()=>{
         this.$(passwordInput).val('12345ab13&!!').trigger('input');
         return settled().then(()=>{
@@ -463,8 +463,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const passwordInput = '.password input:eq(0)';
     const activatePasswordField = '.activate-password-field';
 
-    return settled().then(()=>{
-      this.$(activatePasswordField).click();
+    return settled().then(async () => {
+      await click(activatePasswordField);
       return settled().then(()=>{
         this.$(passwordInput).val('12345ab14&HHtB').trigger('input');
         return settled().then(()=>{
@@ -522,8 +522,8 @@ module('Integration | Component | user profile bio', function(hooks) {
 
     const syncBUtton = 'button.directory-sync';
 
-    return settled().then(()=>{
-      assert.equal(this.$(items).length, 8, 'correct number of inputs');
+    return settled().then(async () => {
+      assert.equal(findAll(items).length, 8, 'correct number of inputs');
       assert.equal(this.$(firstNameInput).val().trim(), 'Test Person', 'firstname is set');
       assert.equal(this.$(middleNameInput).val().trim(), 'Name', 'middlename is set');
       assert.equal(this.$(lastNameInput).val().trim(), 'Thing', 'lastname is set');
@@ -532,7 +532,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(this.$(emailInput).val().trim(), 'test@test.com', 'email is set');
       assert.equal(this.$(phoneInput).val().trim(), 'x1234', 'phone is set');
       assert.equal(this.$(usernameInput).val().trim(), 'test-username', 'username is set');
-      this.$(syncBUtton).click();
+      await click(syncBUtton);
 
       return settled().then(()=>{
         assert.equal(this.$(firstNameInput).val().trim(), 'new-first-name', 'firstname is updated');

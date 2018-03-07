@@ -1,3 +1,4 @@
+import { click, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -45,20 +46,20 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
 
     assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).hasClass('no'));
-    assert.ok(find(attendanceEnabled).hasClass('fa-ban'));
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).hasClass('yes'));
-    assert.ok(find(supplementalEnabled).hasClass('fa-check'));
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
     assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).hasClass('no'));
-    assert.ok(find(specialAttireEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('no'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
   });
 
   test('check fields expanded', async function(assert) {
@@ -87,20 +88,20 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
 
     assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).hasClass('no'));
-    assert.ok(find(attendanceEnabled).hasClass('fa-ban'));
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).hasClass('yes'));
-    assert.ok(find(supplementalEnabled).hasClass('fa-check'));
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
     assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).hasClass('no'));
-    assert.ok(find(specialAttireEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('no'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
   });
 
   test('manage session attributes', async function(assert) {
@@ -157,20 +158,20 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     await click(save);
 
     assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).hasClass('yes'));
-    assert.ok(find(attendanceEnabled).hasClass('fa-check'));
+    assert.ok(find(attendanceEnabled).classList.contains('yes'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-check'));
 
     assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).hasClass('no'));
-    assert.ok(find(supplementalEnabled).hasClass('fa-ban'));
+    assert.ok(find(supplementalEnabled).classList.contains('no'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).hasClass('no'));
-    assert.ok(find(specialAttireEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
     assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('yes'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('fa-check'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('yes'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-check'));
 
 
   });

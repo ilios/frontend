@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learnergroup user manager', function(hooks) {
@@ -53,8 +53,8 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    assert.equal(this.$('.title').text().trim(), 'Members (2)');
-    assert.equal(this.$(userList).length, 2);
+    assert.equal(find('.title').textContent.trim(), 'Members (2)');
+    assert.equal(findAll(userList).length, 2);
     assert.equal(this.$(user1FirstName).text().trim(), 'Jasper');
     assert.equal(this.$(user1LastName).text().trim(), 'Dog');
     assert.equal(this.$(user1CampusId).text().trim(), '1234');
@@ -119,9 +119,9 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    assert.notEqual(this.$('.title').text().search(/Members of current group \(2\)/), -1);
-    assert.notEqual(this.$('.title').text().search(/All other members of top group \(0\)/), -1);
-    assert.equal(this.$(userList).length, 2);
+    assert.notEqual(find('.title').textContent.search(/Members of current group \(2\)/), -1);
+    assert.notEqual(find('.title').textContent.search(/All other members of top group \(0\)/), -1);
+    assert.equal(findAll(userList).length, 2);
     assert.equal(this.$(user1CheckBox).length, 1);
     assert.notOk(this.$(user1CheckBox).prop('checked'));
     assert.equal(this.$(user1FirstName).text().trim(), 'Jasper');
@@ -173,7 +173,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     }}`);
 
 
-    assert.equal(this.$(userList).length, 2);
+    assert.equal(findAll(userList).length, 2);
     assert.equal(this.$(user1FirstName).text().trim(), 'Jackson');
     assert.equal(this.$(user2FirstName).text().trim(), 'Jasper');
   });
@@ -211,13 +211,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    assert.equal(this.$(button).length, 0);
+    assert.equal(findAll(button).length, 0);
     this.$(user1CheckBox).click();
     assert.ok(this.$(user1CheckBox).prop('checked'));
-    assert.equal(this.$(button).text().trim(), 'Move learner to this group');
-    this.$(button).click();
+    assert.equal(find(button).textContent.trim(), 'Move learner to this group');
+    await click(button);
     await settled();
-    assert.equal(this.$(button).length, 0);
+    assert.equal(findAll(button).length, 0);
 
   });
 
@@ -254,13 +254,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action removeMany)
     }}`);
 
-    assert.equal(this.$(button).length, 0);
+    assert.equal(findAll(button).length, 0);
     this.$(user1CheckBox).click();
     assert.ok(this.$(user1CheckBox).prop('checked'));
-    assert.equal(this.$(button).text().trim(), 'Remove learner to this cohort');
-    this.$(button).click();
+    assert.equal(find(button).textContent.trim(), 'Remove learner to this cohort');
+    await click(button);
     await settled();
-    assert.equal(this.$(button).length, 0);
+    assert.equal(findAll(button).length, 0);
   });
 
   test('remove single user', async function(assert) {
@@ -424,8 +424,8 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.$(checkAllBox).click();
     assert.ok(this.$(user1CheckBox).prop('checked'));
     assert.ok(this.$(user2CheckBox).prop('checked'));
-    assert.equal(this.$(button).text().trim(), 'Move 2 learners to this group');
-    return settled(this.$(button).click());
+    assert.equal(find(button).textContent.trim(), 'Move 2 learners to this group');
+    return settled(await click(button));
 
   });
 

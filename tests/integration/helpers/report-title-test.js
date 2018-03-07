@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve, reject } = RSVP;
@@ -19,7 +19,7 @@ module('helper:report-title', function(hooks) {
     this.set('report', report);
     await render(hbs`{{report-title report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), report.get('title'));
+      assert.equal(find('*').textContent.trim(), report.get('title'));
     });
   });
 
@@ -36,7 +36,7 @@ module('helper:report-title', function(hooks) {
     this.set('report', report);
     await render(hbs`{{report-title report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies in All Schools');
+      assert.equal(find('*').textContent.trim(), 'All Competencies in All Schools');
     });
   });
 
@@ -56,7 +56,7 @@ module('helper:report-title', function(hooks) {
     this.set('report', report);
     await render(hbs`{{report-title report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies in ' + school.get('title'));
+      assert.equal(find('*').textContent.trim(), 'All Competencies in ' + school.get('title'));
     });
   });
 
@@ -93,7 +93,7 @@ module('helper:report-title', function(hooks) {
     this.set('report', report);
     await render(hbs`{{report-title report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
+      assert.equal(find('*').textContent.trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
     });
   });
 
@@ -123,7 +123,7 @@ module('helper:report-title', function(hooks) {
     this.set('report', report);
     await render(hbs`{{report-title report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), '');
+      assert.equal(find('*').textContent.trim(), '');
     });
   });
 });

@@ -6,7 +6,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { settled } from '@ember/test-helpers';
+import { settled, click, find, visit } from '@ember/test-helpers';
 
 var application;
 var url = '/courses/1?details=true&courseObjectiveDetails=true';
@@ -102,9 +102,9 @@ module('Acceptance: Course - Objective List', function(hooks) {
     await visit(url);
     let objectiveRows = find('.course-objective-list tbody tr');
     assert.equal(objectiveRows.length, 1);
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(0)');
+    let td = find(find('.course-objective-list tbody tr:eq(0) td'));
     assert.equal(getElementText(td), getText(longTitle.substring(0,200)));
-    await click('i:eq(0)', td);
+    await click(find('i'), td);
     assert.equal(getElementText(find('.fr-element', td)), getText(longTitle));
   });
 
@@ -119,7 +119,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
     });
     await visit(url);
     var container = find('.course-objective-list');
-    let td = find('tbody tr:eq(0) td:eq(0)', container);
+    let td = find(find('tbody tr:eq(0) td'), container);
     assert.equal(getElementText(td), getText(objective.title));
     await click('.editable span', td);
     let editor = find('.fr-box', td);
@@ -129,7 +129,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
     editor.froalaEditor('html.set', 'new title');
     editor.froalaEditor('events.trigger', 'contentChanged');
     await click(find('.actions .done', td));
-    assert.equal(getElementText(find('tbody tr:eq(0) td:eq(0)', container)), getText('new title'));
+    assert.equal(getElementText(find(find('tbody tr:eq(0) td'), container)), getText('new title'));
   });
 
   test('empty objective title can not be saved', async function(assert) {

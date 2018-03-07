@@ -1,3 +1,4 @@
+import { click, fillIn, find, findAll, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -48,7 +49,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
 
     assert.equal(currentPath(), 'program.programYear.index');
     var container = find('.programyear-overview').eq(0);
-    fillIn(find('.search-box input', container), 'guy').then(function(){
+    await fillIn(find('.search-box input', container), 'guy').then(function(){
       var searchResults = find('.results li', container);
       assert.equal(searchResults.length, 7);
       assert.equal(getElementText(searchResults.eq(0)), getText('6 Results'));
@@ -79,7 +80,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     assert.equal(getElementText(items.eq(2)), getText('3 guy M. Mc3son'));
 
     await fillIn(find('.search-box input', container), 'guy');
-    await click('.results li:eq(6)', container);
+    await click(findAll('.results li')[6], container);
     items = find('.removable-directors li', container);
     assert.equal(items.length, 4);
     assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
@@ -93,7 +94,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
 
     assert.equal(currentPath(), 'program.programYear.index');
     var container = find('.programyear-overview').eq(0);
-    await click('.removable-directors li:eq(0)', container);
+    await click(find('.removable-directors li'), container);
     var items = find('.removable-directors li', container);
     assert.equal(items.length, 2);
     assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));
@@ -119,12 +120,12 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     await visit('/programs/1/programyears/2');
 
     assert.equal(currentPath(), 'program.programYear.index');
-    assert.equal(find(directors).length, 0, 'no directors initially');
+    assert.equal(findAll(directors).length, 0, 'no directors initially');
     await fillIn(input, 'guy');
-    assert.notOk(find(firstResult).hasClass('inactive'), 'the first user is active now');
+    assert.notOk(find(firstResult).classList.contains('inactive'), 'the first user is active now');
     await click(firstResult);
-    assert.equal(find(directors).length, 1, 'director is selected');
-    assert.ok(find(firstResult).hasClass('inactive'), 'the first user is now marked as inactive');
+    assert.equal(findAll(directors).length, 1, 'director is selected');
+    assert.ok(find(firstResult).classList.contains('inactive'), 'the first user is now marked as inactive');
 
   });
 });

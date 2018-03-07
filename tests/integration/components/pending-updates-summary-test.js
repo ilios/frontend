@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -50,8 +50,8 @@ module('Integration | Component | pending updates summary', function(hooks) {
 
     await settled();
 
-    assert.equal(this.$().text().trim().search(/Updates from the Campus Directory/), 0);
-    assert.notEqual(this.$().text().trim().search(/There are 5 users needing attention/), -1);
-    assert.ok(this.$(container).hasClass('alert'));
+    assert.equal(find('*').textContent.trim().search(/Updates from the Campus Directory/), 0);
+    assert.notEqual(find('*').textContent.trim().search(/There are 5 users needing attention/), -1);
+    assert.ok(find(container).classList.contains('alert'));
   });
 });

@@ -1,3 +1,4 @@
+import { visit } from '@ember/test-helpers';
 /* eslint ember/no-global-jquery: 0 */
 import $ from 'jquery';
 import { module, test } from 'qunit';

@@ -1,3 +1,4 @@
+import { click, find, findAll, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -59,9 +60,9 @@ module('Acceptance: Session - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
-    assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
-    assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
+    assert.equal(getElementText(find(find('.removable-list li'), container)), getText('term 0'));
+    assert.equal(getElementText(find(find('.selectable-terms-list li'), container)), getText('term 0'));
+    assert.equal(getElementText(find(findAll('.selectable-terms-list li')[1], container)), getText('term 1'));
     /**
      * SHAMEFUL KLUDGE!
      * Turns out, the test errors out in 'afterEach()' with the following message:
@@ -83,7 +84,7 @@ module('Acceptance: Session - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    await click(find('.removable-list li:eq(0)', container));
+    await click(find(find('.removable-list li'), container));
     await click(find('.selectable-terms-list li:eq(1) > div', container));
     await click('button.bigadd', container);
     assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
@@ -94,7 +95,7 @@ module('Acceptance: Session - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    await click(find('.removable-list li:eq(0)', container));
+    await click(find(find('.removable-list li'), container));
     await click(find('.selectable-terms-list li:eq(1) > div', container));
     await click('button.bigcancel', container);
     assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));

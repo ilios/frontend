@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, click, fillIn, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -19,15 +19,15 @@ module('Integration | Component | user search', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{user-search}}`);
 
-    assert.equal(this.$('input').length, 1);
+    assert.equal(findAll('input').length, 1);
   });
 
   test('less than 3 charecters triggers warning', async function(assert) {
     await render(hbs`{{user-search}}`);
 
-    this.$('input').val('ab').trigger('input');
+    await fillIn('input', 'ab');
     return settled().then(()=>{
-      assert.equal(this.$('ul').text().trim(), 'keep typing...');
+      assert.equal(find('ul').textContent.trim(), 'keep typing...');
     });
   });
 
@@ -44,11 +44,11 @@ module('Integration | Component | user search', function(hooks) {
     this.owner.register('service:store', storeMock);
     await render(hbs`{{user-search}}`);
 
-    this.$('input').val('search words').trigger('input');
+    await fillIn('input', 'search words');
 
     return settled().then(()=>{
-      assert.equal(this.$('li:eq(0)').text().trim(), '1 Results');
-      assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+      assert.equal(find('li').textContent.trim(), '1 Results');
+      assert.equal(find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
     });
   });
 
@@ -65,11 +65,11 @@ module('Integration | Component | user search', function(hooks) {
     this.owner.register('service:store', storeMock);
     await render(hbs`{{user-search}}`);
 
-    this.$('input').val('search words').trigger('input');
+    await fillIn('input', 'search words');
 
 
     return settled().then(()=>{
-      assert.equal(this.$('li:eq(0)').text().trim(), 'no results');
+      assert.equal(find('li').textContent.trim(), 'no results');
     });
   });
 
@@ -89,12 +89,12 @@ module('Integration | Component | user search', function(hooks) {
     this.set('availableInstructorGroups', [group1, group2]);
     await render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
 
-    this.$('input').val('test').trigger('input');
+    await fillIn('input', 'test');
 
     return settled().then(()=>{
-      assert.equal(this.$('li:eq(0)').text().trim(), '2 Results');
-      assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
-      assert.equal(this.$('li:eq(2)').text().trim(), 'test2');
+      assert.equal(find('li').textContent.trim(), '2 Results');
+      assert.equal(find(findAll('li')[1]).textContent.trim(), 'test1');
+      assert.equal(find(findAll('li')[2]).textContent.trim(), 'test2');
     });
   });
 
@@ -115,11 +115,11 @@ module('Integration | Component | user search', function(hooks) {
     };
     await render(hbs`{{user-search addUser=(action 'action')}}`);
 
-    this.$('input').val('test').trigger('input');
+    await fillIn('input', 'test');
 
-    return settled().then(()=>{
-      assert.equal(this.$('li:eq(1)').text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
-      this.$('li:eq(1)').click();
+    return settled().then(async () => {
+      assert.equal(find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+      await click(findAll('li')[1]);
     });
   });
 
@@ -142,11 +142,11 @@ module('Integration | Component | user search', function(hooks) {
       hbs`{{user-search availableInstructorGroups=availableInstructorGroups addInstructorGroup=(action 'action')}}`
     );
 
-    this.$('input').val('test').trigger('input');
+    await fillIn('input', 'test');
 
-    return settled().then(()=>{
-      assert.equal(this.$('li:eq(1)').text().trim(), 'test1');
-      this.$('li:eq(1)').click();
+    return settled().then(async () => {
+      assert.equal(find(findAll('li')[1]).textContent.trim(), 'test1');
+      await click(findAll('li')[1]);
     });
   });
 
@@ -176,7 +176,7 @@ module('Integration | Component | user search', function(hooks) {
 
     await render(hbs`{{user-search}}`);
 
-    this.$('input').val('person').trigger('input');
+    await fillIn('input', 'person');
 
     await settled();
     const items = '.results li';

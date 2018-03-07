@@ -1,3 +1,4 @@
+import { click, fillIn, find, findAll, currentURL, currentPath, visit } from '@ember/test-helpers';
 import { isPresent, isEmpty } from '@ember/utils';
 import destroyApp from '../helpers/destroy-app';
 import {
@@ -81,12 +82,12 @@ module('Acceptance: Learner Groups', function(hooks) {
       programYearId: 2,
     });
     await visit('/learnergroups');
-    assert.equal(find(schoolsFilter).length, 2);
+    assert.equal(findAll(schoolsFilter).length, 2);
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
-    assert.equal(find(schoolSelect).val(), '1', 'default school is selected');
-    assert.equal(find(programsFilter).length, 2);
+    assert.equal(find(schoolSelect).value, '1', 'default school is selected');
+    assert.equal(findAll(programsFilter).length, 2);
     assert.equal(getElementText(find(programsFilter)), getText('program 0 program 1'));
-    assert.equal(find(programyearsfilter).length, 2);
+    assert.equal(findAll(programyearsfilter).length, 2);
     assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
   });
 
@@ -135,11 +136,11 @@ module('Acceptance: Learner Groups', function(hooks) {
       programYearId: 2,
     });
     await visit('/learnergroups');
-    assert.equal(find(schoolsFilter).length, 2);
+    assert.equal(findAll(schoolsFilter).length, 2);
     assert.equal(getElementText(find(schoolsFilter)), getText('school 0 school 1'));
-    assert.equal(find(programsFilter).length, 2);
+    assert.equal(findAll(programsFilter).length, 2);
     assert.equal(getElementText(find(programsFilter)), getText('program 0 program 1'));
-    assert.equal(find(programyearsfilter).length, 2);
+    assert.equal(findAll(programyearsfilter).length, 2);
     assert.equal(getElementText(find(programyearsfilter)), getText('cohort 1 cohort 0'));
   });
 
@@ -263,16 +264,16 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     await visit('/learnergroups');
-    assert.equal(2, find('.list tbody tr').length);
+    assert.equal(2, findAll('.list tbody tr').length);
     var rows = find('.list tbody tr');
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstLearnergroup.title));
+    assert.equal(getElementText(find(find('td'), rows.eq(0))),getText(firstLearnergroup.title));
     // Assertion below needs to be fixed (issue #1157)
     // assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 11);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
+    assert.equal(getElementText(find(findAll('td')[2], rows.eq(0))), 2);
 
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondLearnergroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
+    assert.equal(getElementText(find(find('td'), rows.eq(1))),getText(secondLearnergroup.title));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(1))), 0);
+    assert.equal(getElementText(find(findAll('td')[2], rows.eq(1))), 0);
   });
 
   test('filters by title', async function(assert) {
@@ -301,33 +302,33 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
     assert.expect(15);
     await visit('/learnergroups');
-    assert.equal(find('.list tbody tr').length, 3);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
+    assert.equal(findAll('.list tbody tr').length, 3);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regularLearnergroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(firstLearnergroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(secondLearnergroup.title));
 
     await fillIn('.titlefilter input', 'first');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(firstLearnergroup.title));
 
     await fillIn('.titlefilter input', 'second');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondLearnergroup.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(secondLearnergroup.title));
 
     await fillIn('.titlefilter input', 'special');
-    assert.equal(2, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondLearnergroup.title));
+    assert.equal(2, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(firstLearnergroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(secondLearnergroup.title));
 
     await fillIn('.titlefilter input', '');
-    assert.equal(3, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regularLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(firstLearnergroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(secondLearnergroup.title));
+    assert.equal(3, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regularLearnergroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(firstLearnergroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(secondLearnergroup.title));
   });
 
   function getCellData(row, cell) {
-    return find(`.list tbody tr:eq(${row}) td:eq(${cell})`).text().trim();
+    return find(`.list tbody tr:eq(${row}) td:eq(${cell})`).textContent.trim();
   }
 
   test('add new learnergroup', async function(assert) {
@@ -416,11 +417,11 @@ module('Acceptance: Learner Groups', function(hooks) {
       cohortId: 1
     });
     await visit('/learnergroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('learnergroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.list tbody tr:eq(1) .remove');
-    assert.equal(0, find('.list tbody tr').length);
+    assert.equal(0, findAll('.list tbody tr').length);
   });
 
   test('cancel remove learnergroup', async function(assert) {
@@ -440,12 +441,12 @@ module('Acceptance: Learner Groups', function(hooks) {
       cohortId: 1
     });
     await visit('/learnergroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('learnergroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.list tbody tr:eq(1) .done');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('learnergroup 0'));
   });
 
   test('confirmation of remove message', async function(assert) {
@@ -470,12 +471,12 @@ module('Acceptance: Learner Groups', function(hooks) {
     server.createList('offering', 2, { learnerGroupIds: [1] });
     assert.expect(5);
     await visit('/learnergroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('learnergroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('learnergroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
-    assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
-    assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-    assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
+    assert.ok(find('.list tbody tr').classList.contains('confirm-removal'));
+    assert.ok(find(findAll('.list tbody tr')[1]).classList.contains('confirm-removal'));
+    assert.equal(getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
   });
 
   test('populated learner groups are not deletable', async function(assert) {
@@ -499,9 +500,9 @@ module('Acceptance: Learner Groups', function(hooks) {
 
     assert.expect(3);
     await visit('/learnergroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText('learnergroup 0'));
-    assert.notOk(find('.list tbody tr:eq(0) td:eq(3) .remove').length, 'No delete action is available');
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))), getText('learnergroup 0'));
+    assert.notOk(findAll('.list tbody tr:eq(0) td:eq(3) .remove').length, 'No delete action is available');
   });
 
   test('click title takes you to learnergroup route', async function(assert) {
@@ -564,7 +565,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     const expandNewButton = '.actions .expand-button';
 
     assert.equal(currentPath(), 'learnerGroups');
-    assert.equal(find(expandNewButton).length, 0);
+    assert.equal(findAll(expandNewButton).length, 0);
   });
 
   test('title filter escapes regex', async function(assert) {
@@ -590,12 +591,12 @@ module('Acceptance: Learner Groups', function(hooks) {
     const filter = '.titlefilter input';
     await visit('/learnergroups');
 
-    assert.equal(find(groups).length, 1);
+    assert.equal(findAll(groups).length, 1);
     assert.equal(getElementText(firstGroupTitle), 'yes\\no');
     await fillIn(filter, '\\');
-    assert.equal(find(groups).length, 1);
+    assert.equal(findAll(groups).length, 1);
     assert.equal(getElementText(firstGroupTitle), 'yes\\no');
-    assert.equal(find(filter).val(), '\\');
+    assert.equal(find(filter).value, '\\');
   });
 
   test('copy learnergroup without learners', async function(assert) {
@@ -652,13 +653,13 @@ module('Acceptance: Learner Groups', function(hooks) {
 
 
     await visit('/learnergroups');
-    assert.equal(1, find(groups).length);
+    assert.equal(1, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('0'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyNoLearners);
-    assert.equal(2, find(groups).length);
+    assert.equal(2, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('0'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
@@ -671,7 +672,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
 
-    assert.equal(2, find(subGroupList).length);
+    assert.equal(2, findAll(subGroupList).length);
 
     assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
     assert.equal(getElementText(find(firstSubgroupMembers)), getText('0'));
@@ -741,13 +742,13 @@ module('Acceptance: Learner Groups', function(hooks) {
     const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
 
     await visit('/learnergroups');
-    assert.equal(1, find(groups).length);
+    assert.equal(1, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('7'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyWithLearners);
-    assert.equal(2, find(groups).length);
+    assert.equal(2, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('7'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
@@ -760,7 +761,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
 
-    assert.equal(2, find(subGroupList).length);
+    assert.equal(2, findAll(subGroupList).length);
 
     assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
     assert.equal(getElementText(find(firstSubgroupMembers)), getText('1'));

@@ -4,7 +4,7 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn, blur, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -44,8 +44,8 @@ module('Integration | Component | course rollover', function(hooks) {
       for (let i=0; i<6; i++){
         assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + 1 + i}`);
       }
-      assert.equal(this.$(title).length, 1);
-      assert.equal(this.$(title).val().trim(), course.get('title'));
+      assert.equal(findAll(title).length, 1);
+      assert.equal(find(title).value.trim(), course.get('title'));
     });
 
   });
@@ -113,7 +113,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
 
     await settled();
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
   });
 
@@ -170,7 +170,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.$(input).val(newTitle);
     this.$(input).trigger('input');
     await settled();
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
   });
 
@@ -269,7 +269,7 @@ module('Integration | Component | course rollover', function(hooks) {
 
     return settled().then(()=>{
       this.$(title).click();
-      return settled().then(()=>{
+      return settled().then(async () => {
         let interactor = openDatepicker(this.$(startDate));
         assert.equal(
           interactor.selectedYear(),
@@ -302,7 +302,7 @@ module('Integration | Component | course rollover', function(hooks) {
           rolloverDate.date(),
           'Selected day changed to rollover date day.'
         );
-        this.$('.done').click();
+        await click('.done');
         return settled().then(() =>{
           // do nothing.
         });
@@ -363,9 +363,10 @@ module('Integration | Component | course rollover', function(hooks) {
 
     return settled().then(() => {
       this.$(title).click();
-      return settled().then(()=>{
-        this.$(yearSelect).val(courseStartDate.format('YYYY')).change();
-        return settled().then(()=>{
+      return settled().then(async () => {
+        await fillIn(yearSelect, courseStartDate.format('YYYY'));
+        await blur(yearSelect);
+        return settled().then(async () => {
           let interactor = openDatepicker(this.$(startDate));
           assert.equal(
             interactor.selectedYear(),
@@ -383,7 +384,7 @@ module('Integration | Component | course rollover', function(hooks) {
             'Selected day initialized to course start date day.'
           );
           interactor.selectDate(rolloverDate.toDate());
-          this.$('.done').click();
+          await click('.done');
           return settled().then(()=>{
             // sit back.
           });
@@ -430,8 +431,9 @@ module('Integration | Component | course rollover', function(hooks) {
     return new Promise(resolve => {
       run(()=>{
         this.$(title).click();
-        settled().then(()=>{
-          this.$(yearSelect).val(rolloverDate.format('YYYY')).change();
+        settled().then(async () => {
+          await fillIn(yearSelect, rolloverDate.format('YYYY'));
+          await blur(yearSelect);
           settled().then(()=>{
             let interactor = openDatepicker(this.$(startDate));
             assert.equal(
@@ -498,12 +500,12 @@ module('Integration | Component | course rollover', function(hooks) {
     return new Promise(resolve => {
       run(()=>{
         this.$(title).click();
-        settled().then(()=>{
+        settled().then(async () => {
           assert.ok(this.$(offerings).is(':checked'));
           this.$(offerings).click();
           this.$(offerings).trigger('update');
 
-          this.$('.done').click();
+          await click('.done');
           settled().then(()=>{
             resolve();
           });
@@ -526,7 +528,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await render(hbs`{{course-rollover course=course}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.messagee').length, 0);
+      assert.equal(findAll('.messagee').length, 0);
     });
   });
 
@@ -547,7 +549,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const input = `${title} input`;
     this.$(input).val('');
     this.$(input).trigger('input');
-    assert.ok(this.$(title).text().search(/blank/) > -1);
+    assert.ok(find(title).textContent.search(/blank/) > -1);
 
     return settled();
   });
@@ -578,9 +580,9 @@ module('Integration | Component | course rollover', function(hooks) {
     await render(hbs`{{course-rollover course=course}}`);
     const title = '.title input';
 
-    run.later(()=>{
-      this.$(title).val('to be rolled again');
-      this.$(title).trigger('input');
+    run.later(async () => {
+      await fillIn(title, 'to be rolled again');
+      await triggerEvent(title, 'input');
     }, 500);
 
     return settled();
@@ -655,7 +657,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.$(title).click();
     await settled();
     this.$(firstCohort).click();
-    this.$('.done').click();
+    await click('.done');
     await settled();
   });
 });

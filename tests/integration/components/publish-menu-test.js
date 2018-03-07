@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | publish menu', function(hooks) {
@@ -38,11 +38,11 @@ module('Integration | Component | publish menu', function(hooks) {
     const unpublish = `${dropDownItems}:eq(4)`;
 
 
-    assert.equal(this.$(toggle).text().trim(), 'title');
+    assert.equal(find(toggle).textContent.trim(), 'title');
     assert.ok(this.$(icon).hasClass('fa-cloud'));
 
-    this.$(toggle).click();
-    assert.equal(this.$(dropDownItems).length, 5);
+    await click(toggle);
+    assert.equal(findAll(dropDownItems).length, 5);
     assert.equal(this.$(asIs).text().trim(), 'Publish As-is');
     assert.equal(this.$(publish).text().trim(), 'Publish Course');
     assert.equal(this.$(review).text().trim(), 'Review 3 Missing Items');
@@ -66,7 +66,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:eq(0)`;
 
-    this.$(toggle).click();
+    await click(toggle);
     assert.equal(this.$(item).text().trim(), 'Publish As-is');
     this.$(item).click();
   });
@@ -88,7 +88,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:eq(0)`;
 
-    this.$(toggle).click();
+    await click(toggle);
     assert.equal(this.$(item).text().trim(), 'Publish Course');
     this.$(item).click();
   });
@@ -109,7 +109,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:eq(0)`;
 
-    this.$(toggle).click();
+    await click(toggle);
     assert.equal(this.$(item).text().trim(), 'Mark as Scheduled');
     this.$(item).click();
   });
@@ -131,7 +131,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:eq(0)`;
 
-    this.$(toggle).click();
+    await click(toggle);
     assert.equal(this.$(item).text().trim(), 'UnPublish Course');
     this.$(item).click();
   });
@@ -172,11 +172,11 @@ module('Integration | Component | publish menu', function(hooks) {
     const unpublish = `${dropDownItems}:eq(4)`;
 
 
-    assert.equal(this.$(toggle).text().trim(), 'title');
+    assert.equal(find(toggle).textContent.trim(), 'title');
     assert.ok(this.$(icon).hasClass('fa-cloud'));
 
-    this.$(toggle).click();
-    assert.equal(this.$(dropDownItems).length, 5);
+    await click(toggle);
+    assert.equal(findAll(dropDownItems).length, 5);
     assert.equal(this.$(asIs).text().trim(), 'Publish As-is');
     assert.equal(this.$(publish).text().trim(), 'Publish Course');
     assert.equal(this.$(review).text().trim(), 'Review 3 Missing Items');

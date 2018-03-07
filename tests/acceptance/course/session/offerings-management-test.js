@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -51,7 +52,7 @@ module('Acceptance: Session - Offering Management', function(hooks) {
     await visit('/courses/1/sessions/1');
     await click(editButton);
     await fillIn(searchBox, 'guy 3');
-    assert.equal(find(results).length, 2);
+    assert.equal(findAll(results).length, 2);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
@@ -92,15 +93,15 @@ module('Acceptance: Session - Offering Management', function(hooks) {
     await visit('/courses/1/sessions/1');
     await click(editButton);
     await fillIn(searchBox, 'guy 2');
-    assert.equal(find(results).length, 2);
+    assert.equal(findAll(results).length, 2);
     await click(firstResult);
-    assert.equal(find(selectedInstructors).length, 1);
-    assert.equal(find(firstSelectedInstructor).text().trim(), '2 guy M. Mc2son');
+    assert.equal(findAll(selectedInstructors).length, 1);
+    assert.equal(find(firstSelectedInstructor).textContent.trim(), '2 guy M. Mc2son');
     await fillIn(searchBox, 'guy 3');
-    assert.equal(find(selectedInstructors).length, 1);
-    assert.equal(find(firstSelectedInstructor).text().trim(), '2 guy M. Mc2son');
+    assert.equal(findAll(selectedInstructors).length, 1);
+    assert.equal(find(firstSelectedInstructor).textContent.trim(), '2 guy M. Mc2son');
     await click(firstResult);
-    assert.equal(find(selectedInstructors).length, 2);
-    assert.equal(find(secondSelectedInstructor).text().trim(), '3 guy M. Mc3son');
+    assert.equal(findAll(selectedInstructors).length, 2);
+    assert.equal(find(secondSelectedInstructor).textContent.trim(), '3 guy M. Mc3son');
   });
 });

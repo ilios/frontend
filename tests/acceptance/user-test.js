@@ -1,3 +1,4 @@
+import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
@@ -47,11 +48,11 @@ module('Acceptance: User', function(hooks) {
     await visit(url);
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
-    assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
-    assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
+    assert.equal(find(secondResultUsername).textContent.trim(), '1 guy M. Mc1son', 'user name is correct');
+    assert.equal(find(secondResultEmail).textContent.trim(), 'user@example.edu', 'user email is correct');
 
     await click(secondResultUsername);
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-    assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
+    assert.equal(find(name).textContent.trim(), '1 guy M. Mc1son', 'user name is shown');
   });
 });

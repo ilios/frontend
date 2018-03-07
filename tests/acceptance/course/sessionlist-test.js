@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, currentPath, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -80,7 +81,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     const fourthType = `${rows}:eq(3) td:eq(2)`;
     const fourthOfferingCount = `${rows}:eq(3) td:eq(5)`;
 
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
     assert.equal(getElementText(firstTitle), getText('session0'));
     assert.equal(getElementText(firstType), getText('sessiontype0'));
     assert.equal(getElementText(firstOfferingCount), getText('3'));
@@ -114,7 +115,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     const thirdBlockDateAndTime = `${dateBlocks}:eq(2) .multiday-offering-block-time-time`;
 
     await click(expandFirstSession);
-    assert.equal(find(dateBlocks).length, 3);
+    assert.equal(findAll(dateBlocks).length, 3);
     const offering1StartDate = moment(server.db.offerings[0].startDate);
     const offering1EndDate = moment(server.db.offerings[0].endDate);
     const offering2StartDate = moment(server.db.offerings[1].startDate);
@@ -159,11 +160,11 @@ module('Acceptance: Course - Session List', function(hooks) {
     const rows = `${table} tbody tr`;
     const expandSecondSession = `${rows}:eq(1) td:eq(0) .clickable`;
 
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
     await click(expandSecondSession);
-    assert.equal(find(rows).length, 5);
+    assert.equal(findAll(rows).length, 5);
     await click(expandSecondSession);
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
   });
 
   test('new session', async function(assert) {
@@ -181,9 +182,9 @@ module('Acceptance: Course - Session List', function(hooks) {
     await fillIn(input, 'session 5');
     await click(saveButton);
 
-    assert.equal(find(savedLink).text().trim(), 'session 5', 'link is visible');
-    assert.equal(find(newSessionTitle).text().trim(), 'session 5', 'session is correct');
-    assert.equal(find(newSessionOfferingCount).text().trim(), '0', 'number of groups is correct');
+    assert.equal(find(savedLink).textContent.trim(), 'session 5', 'link is visible');
+    assert.equal(find(newSessionTitle).textContent.trim(), 'session 5', 'session is correct');
+    assert.equal(find(newSessionOfferingCount).textContent.trim(), '0', 'number of groups is correct');
   });
 
   test('cancel session', async function(assert) {
@@ -196,13 +197,13 @@ module('Acceptance: Course - Session List', function(hooks) {
     const rows = `${table} tbody tr`;
 
     await visit(url);
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
     await click(expandButton);
-    assert.equal(find(input).length, 1);
+    assert.equal(findAll(input).length, 1);
     await fillIn(input, 'test');
     await click(cancelButton);
-    assert.equal(find(rows).length, 4, 'no new sessions were added.');
-    assert.equal(find(input).length, 0, 'new session input is not visible.');
+    assert.equal(findAll(rows).length, 4, 'no new sessions were added.');
+    assert.equal(findAll(input).length, 0, 'new session input is not visible.');
   });
 
 
@@ -220,12 +221,12 @@ module('Acceptance: Course - Session List', function(hooks) {
     await fillIn(input, newTitle);
     await click(saveButton);
 
-    assert.equal(find(savedLink).text().trim(), newTitle, 'link is visible');
+    assert.equal(find(savedLink).textContent.trim(), newTitle, 'link is visible');
     await click(savedLink);
     assert.equal(currentPath(), 'course.session.index');
     await click(backtosessionlink);
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(savedLink).length, 0);
+    assert.equal(findAll(savedLink).length, 0);
   });
 
   test('first offering is updated when offering is updated #1276', async function(assert) {
@@ -246,14 +247,14 @@ module('Acceptance: Course - Session List', function(hooks) {
 
     await visit(url);
 
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
     assert.equal(getElementText(title), getText('session0'));
     assert.equal(getElementText(offeringCount), getText('3'));
-    assert.equal(find(firstOffering).text().trim(), moment(currentStartDate).format('L LT'));
+    assert.equal(find(firstOffering).textContent.trim(), moment(currentStartDate).format('L LT'));
 
     await click(manageSessionLink);
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(offeringBlocks).length, 3);
+    assert.equal(findAll(offeringBlocks).length, 3);
     await click(editOffering);
 
     let startDateInteractor = openDatepicker(find(startDateInput));
@@ -261,7 +262,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     await click(doneButton);
     await click(backtosessionlink);
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(firstOffering).text().trim(), moment(newStartDate).format('L LT'));
+    assert.equal(find(firstOffering).textContent.trim(), moment(newStartDate).format('L LT'));
   });
 
   test('title filter escapes regex', async function(assert) {
@@ -271,10 +272,10 @@ module('Acceptance: Course - Session List', function(hooks) {
     const firstSessionTitle = `${sessions}:eq(0) td:eq(1)`;
     const titleFilter = `${block} .filter input`;
     await visit(url);
-    assert.equal(find(sessions).length, 4);
+    assert.equal(findAll(sessions).length, 4);
     assert.equal(getElementText(firstSessionTitle), getText('session 0'));
     await fillIn(titleFilter, '\\');
-    assert.equal(find(sessions).length, 1);
+    assert.equal(findAll(sessions).length, 1);
     assert.equal(getElementText(firstSessionTitle), getText('session3\\'));
 
   });
@@ -288,13 +289,13 @@ module('Acceptance: Course - Session List', function(hooks) {
     const deleteAction = `${rows}:eq(0) td:eq(7) i.fa-trash`;
     const confirmDelete = `.confirm-removal button.remove`;
 
-    assert.equal(find(rows).length, 4);
+    assert.equal(findAll(rows).length, 4);
     assert.equal(getElementText(firstTitle), getText('session0'));
     assert.equal(getElementText(secondTitle), getText('session1'));
     await click(deleteAction);
     await click(confirmDelete);
 
-    assert.equal(find(rows).length, 3);
+    assert.equal(findAll(rows).length, 3);
     assert.equal(getElementText(firstTitle), getText('session1'));
   });
 });

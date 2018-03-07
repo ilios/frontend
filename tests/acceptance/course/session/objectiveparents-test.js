@@ -1,3 +1,4 @@
+import { click, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -61,13 +62,13 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
     assert.equal(items.length, fixtures.course.objectives.length);
 
     assert.equal(getElementText(items.eq(0)), getText('objective 0'));
-    assert.ok(find(items.eq(0)).hasClass('selected'));
+    assert.ok(find(items.eq(0)).classList.contains('selected'));
 
     assert.equal(getElementText(items.eq(1)), getText('objective 1'));
-    assert.ok(find(items.eq(1)).hasClass('selected'));
+    assert.ok(find(items.eq(1)).classList.contains('selected'));
 
     assert.equal(getElementText(items.eq(2)), getText('objective 2'));
-    assert.notOk(find(items.eq(2)).hasClass('selected'));
+    assert.notOk(find(items.eq(2)).classList.contains('selected'));
   });
 
   test('change session objective parent', async function(assert) {
@@ -76,11 +77,11 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
     await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manager').eq(0);
     let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-    await click('li:eq(0)', parentPicker);
-    await click('li:eq(2)', parentPicker);
-    assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(find('li:eq(2)', parentPicker).hasClass('selected'));
-    assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
+    await click(find('li'), parentPicker);
+    await click(findAll('li')[2], parentPicker);
+    assert.ok(find(findAll('li')[1], parentPicker).classList.contains('selected'));
+    assert.ok(find(findAll('li')[2], parentPicker).classList.contains('selected'));
+    assert.ok(!find(find('li'), parentPicker).classList.contains('selected'));
   });
 
   test('deselect all parents for session objective', async function(assert) {
@@ -89,8 +90,8 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
     await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manager').eq(0);
     let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-    await click('li:eq(1)', parentPicker);
-    await click('li:eq(0)', parentPicker);
+    await click(findAll('li')[1], parentPicker);
+    await click(find('li'), parentPicker);
     for(let i = 0; i < 3; i++){
       let item = find('li', parentPicker).eq(i);
       assert.ok(!item.hasClass('selected'));
@@ -103,20 +104,20 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
     await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
     let objectiveManager = find('.objective-manager').eq(0);
     let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-    await click('li:eq(1)', parentPicker);
-    assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
-    assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+    await click(findAll('li')[1], parentPicker);
+    assert.ok(find(find('li'), parentPicker).classList.contains('selected'));
+    assert.ok(find(findAll('li')[1], parentPicker).classList.contains('selected'));
+    assert.ok(!find(findAll('li')[2], parentPicker).classList.contains('selected'));
   });
 
   test('save changes', async function(assert) {
     assert.expect(1);
     await visit(url);
     await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(find('.objective-manager:eq(0) .parent-picker:eq(0) li'));
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await click('.detail-objectives:eq(0) button.bigadd');
-    let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+    let td = find(findAll('.session-objective-list tbody tr:eq(1) td')[1]);
     assert.equal(getElementText(td), getText('objective 1'));
   });
 
@@ -124,10 +125,10 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
+    await click(find('.objective-manager:eq(0) .parent-picker:eq(0) li'));
     await click('.detail-objectives:eq(0) button.bigcancel');
-    let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
+    let td = find(findAll('.session-objective-list tbody tr:eq(1) td')[1]);
     assert.equal(getElementText(td), getText('objective 0'));
   });
 });

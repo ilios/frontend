@@ -1,5 +1,5 @@
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
-import { settled } from '@ember/test-helpers';
+import { settled, triggerEvent } from '@ember/test-helpers';
 
 export default function selectable(selector, options = {}) {
   return {

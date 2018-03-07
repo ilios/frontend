@@ -1,3 +1,4 @@
+import { click, fillIn, currentURL, currentPath, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../helpers/destroy-app';
 import {
   module,
@@ -114,7 +115,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
     assert.equal(getElementText(items.eq(1)), getText('2 guy M. Mc2son'));
 
     await fillIn(find('.search-box input', container), 'guy');
-    await click('.results li:eq(4)', container);
+    await click(findAll('.results li')[4], container);
     items = find('.instructorgroup-users li', container);
     assert.equal(items.length, 3);
     assert.equal(getElementText(items.eq(0)), getText('1 guy M. Mc1son'));
@@ -126,7 +127,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
     await visit(url);
 
     let container = find('.instructorgroup-overview').eq(0);
-    await click('.instructorgroup-users li:eq(0)', container);
+    await click(find('.instructorgroup-users li'), container);
     let items = find('.instructorgroup-users li', container);
     assert.equal(items.length, 1);
     assert.equal(getElementText(items.eq(0)), getText('2 guy M. Mc2son'));

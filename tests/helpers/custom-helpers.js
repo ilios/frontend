@@ -2,6 +2,7 @@ import {
   registerAsyncHelper,
   registerHelper
 } from '@ember/test';
+import { triggerEvent } from '@ember/test-helpers';
 
 var customHelpers = function() {
   registerAsyncHelper('pickOption', function(app, selector, optionText, assert){
@@ -16,8 +17,8 @@ var customHelpers = function() {
       select.selectedIndex = option.index;
       triggerEvent(options, 'change');
     }
-    
-    
+
+
     return app.testHelpers.wait();
   });
   registerHelper('getElementText', function(app, element){

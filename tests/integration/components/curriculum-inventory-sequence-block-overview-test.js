@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -179,14 +179,14 @@ module('Integration | Component | curriculum inventory sequence block overview',
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
     return settled().then(() => {
-      assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
+      assert.equal(find('.description label').textContent.trim(), 'Description:', 'Description label is correct.');
       assert.equal(
-        this.$('.description .editinplace').text().trim(), block.get('description'),
+        find('.description .editinplace').textContent.trim(), block.get('description'),
         'Block description is visible.'
       );
-      assert.equal(this.$('.course label').text().trim(), 'Course:', 'Course label is correct.');
-      assert.equal(this.$('.course .editinplace').text().trim(), linkedCourse.get('title'), 'Course title is visible.');
-      let details = this.$('[data-test-course-details]').text().trim();
+      assert.equal(find('.course label').textContent.trim(), 'Course:', 'Course label is correct.');
+      assert.equal(find('.course .editinplace').textContent.trim(), linkedCourse.get('title'), 'Course title is visible.');
+      let details = find('[data-test-course-details]').textContent.trim();
       assert.ok(details.indexOf('Level: ' + linkedCourse.get('level')) === 0, 'Level of linked course is visible.');
       assert.ok(
         details.indexOf('Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
@@ -200,59 +200,63 @@ module('Integration | Component | curriculum inventory sequence block overview',
         details.indexOf('Clerkship (' + linkedCourse.get('clerkshipType').get('title') + ')') > 0,
         'Clerkship-type of linked course is visible.'
       );
-      assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
-      assert.equal(this.$('.description .editinplace').text().trim(), block.get('description'), 'Description is visible.');
-      assert.equal(this.$('.required label').text().trim(), 'Required:', 'Required label is correct.');
-      assert.equal(this.$('.required .editinplace').text().trim(), 'Optional (elective)', 'Required is visible.');
-      assert.equal(this.$('.track label').text().trim(), 'Is Track:', 'Track label is correct.');
-      assert.ok(this.$('.track input').prop('checked'), 'Track toggle is set to "yes"');
-      assert.equal(this.$('.start-date label').text().trim(), 'Start:', 'Start date label is correct.');
+      assert.equal(find('.description label').textContent.trim(), 'Description:', 'Description label is correct.');
+      assert.equal(find('.description .editinplace').textContent.trim(), block.get('description'), 'Description is visible.');
+      assert.equal(find('.required label').textContent.trim(), 'Required:', 'Required label is correct.');
+      assert.equal(find('.required .editinplace').textContent.trim(), 'Optional (elective)', 'Required is visible.');
+      assert.equal(find('.track label').textContent.trim(), 'Is Track:', 'Track label is correct.');
+      assert.ok(find('.track input').checked, 'Track toggle is set to "yes"');
+      assert.equal(find('.start-date label').textContent.trim(), 'Start:', 'Start date label is correct.');
       assert.equal(
-        this.$('.start-date .editinplace').text().trim(), moment(block.get('startDate')).format('L'),
+        find('.start-date .editinplace').textContent.trim(), moment(block.get('startDate')).format('L'),
         'Start date is visible.'
       );
-      assert.equal(this.$('.end-date label').text().trim(), 'End:', 'End date label is correct.');
+      assert.equal(find('.end-date label').textContent.trim(), 'End:', 'End date label is correct.');
       assert.equal(
-        this.$('.end-date .editinplace').text().trim(), moment(block.get('endDate')).format('L'),
+        find('.end-date .editinplace').textContent.trim(), moment(block.get('endDate')).format('L'),
         'End date is visible.'
       );
-      assert.equal(this.$('.duration label').text().trim(), 'Duration (in Days):', 'Duration label is correct.');
-      assert.equal(this.$('.duration .editinplace').text().trim(), block.get('duration'), 'Duration is visible.');
+      assert.equal(find('.duration label').textContent.trim(), 'Duration (in Days):', 'Duration label is correct.');
+      assert.equal(find('.duration .editinplace').textContent.trim(), block.get('duration'), 'Duration is visible.');
       assert.equal(
-        this.$('.child-sequence-order label').text().trim(), 'Child Sequence Order:',
+        find('.child-sequence-order label').textContent.trim(), 'Child Sequence Order:',
         'Child sequence order label is correct.'
       );
       assert.equal(
-        this.$('.child-sequence-order .editinplace').text().trim(), 'Ordered',
+        find('.child-sequence-order .editinplace').textContent.trim(), 'Ordered',
         'Child sequence order is visible.'
       );
       assert.equal(
-        this.$('.order-in-sequence label').text().trim(), 'Order in Sequence:',
+        find('.order-in-sequence label').textContent.trim(), 'Order in Sequence:',
         'Order in sequence label is visible.'
       );
       assert.equal(
-        this.$('.order-in-sequence .editinplace').text().trim(), block.get('orderInSequence'), 'Order in sequence is visible.'
+        find('.order-in-sequence .editinplace').textContent.trim(), block.get('orderInSequence'), 'Order in sequence is visible.'
       );
-      assert.equal(this.$('.selective label').text().trim(), 'Is Selective?', 'Is Selective label correct.');
-      assert.equal(this.$('.minimum label').text().trim(), 'Minimum:', 'Minimum label is correct.');
-      assert.equal(this.$('.minimum .editinplace').text().trim(), block.get('minimum'), 'Minimum is visible.');
-      assert.equal(this.$('.maximum label').text().trim(), 'Maximum:', 'Maximum label is correct.');
-      assert.equal(this.$('.maximum .editinplace').text().trim(), block.get('maximum'), 'Maximum is visible.');
-      assert.equal(this.$('.academic-level label').text().trim(), 'Academic Level:', 'Academic level label is correct.');
-      assert.equal(this.$('.academic-level .editinplace').text().trim(), academicLevel.get('name'), 'Academic level is visible.');
-      assert.equal(this.$('.sessions label').text().trim(), 'Sessions (2)', 'List is labeled with number of linkable sessions');
-      assert.equal(this.$('.sessions .actions button').text().trim(), 'Manage', 'Manage button for sessions is visible.');
+      assert.equal(find('.selective label').textContent.trim(), 'Is Selective?', 'Is Selective label correct.');
+      assert.equal(find('.minimum label').textContent.trim(), 'Minimum:', 'Minimum label is correct.');
+      assert.equal(find('.minimum .editinplace').textContent.trim(), block.get('minimum'), 'Minimum is visible.');
+      assert.equal(find('.maximum label').textContent.trim(), 'Maximum:', 'Maximum label is correct.');
+      assert.equal(find('.maximum .editinplace').textContent.trim(), block.get('maximum'), 'Maximum is visible.');
+      assert.equal(find('.academic-level label').textContent.trim(), 'Academic Level:', 'Academic level label is correct.');
+      assert.equal(find('.academic-level .editinplace').textContent.trim(), academicLevel.get('name'), 'Academic level is visible.');
+      assert.equal(find('.sessions label').textContent.trim(), 'Sessions (2)', 'List is labeled with number of linkable sessions');
+      assert.equal(find('.sessions .actions button').textContent.trim(), 'Manage', 'Manage button for sessions is visible.');
       // we're just going to peak at the list items here,
       // any other tests are performed in the respective integration test for the list component.
-      assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
+      assert.equal(findAll('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
         'All linkable sessions are visible'
       );
       assert.equal(
-        this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim(), 'Session B',
+        find(
+          findAll('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td')[1]
+        ).textContent.trim(), 'Session B',
         'Sessions are sorted by title.'
       );
       assert.equal(
-        this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session C',
+        find(
+          findAll('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td')[1]
+        ).textContent.trim(), 'Session C',
         'Sessions are sorted by title.'
       );
     });
@@ -310,7 +314,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
         setSortBy=setSortBy}}
     `);
     return settled().then(() => {
-      assert.equal(this.$('.order-in-sequence > span').text().trim(), 'n/a');
+      assert.equal(find('.order-in-sequence > span').textContent.trim(), 'n/a');
     });
   });
 
@@ -370,7 +374,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
     return settled().then(() => {
-      assert.equal(this.$('.order-in-sequence > span').text().trim(), 'n/a');
+      assert.equal(find('.order-in-sequence > span').textContent.trim(), 'n/a');
     });
   });
 
@@ -463,21 +467,21 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
-      this.$('.course .editinplace .clickable').click();
+    return settled().then(async () => {
+      await click('.course .editinplace .clickable');
       return settled().then(() => {
-        assert.equal(this.$('.course option').length, 3, 'Linkable courses dropdown contains three options.');
-        assert.equal(this.$('.course option:eq(0)').text().trim(), 'Course A', 'Options are sorted by course title');
-        assert.equal(this.$('.course option:eq(1)').text().trim(), 'Course B', 'Options are sorted by course title');
-        assert.equal(this.$('.course option:eq(2)').text().trim(), 'Course C', 'Options are sorted by course title');
+        assert.equal(findAll('.course option').length, 3, 'Linkable courses dropdown contains three options.');
+        assert.equal(find('.course option').textContent.trim(), 'Course A', 'Options are sorted by course title');
+        assert.equal(find(findAll('.course option')[1]).textContent.trim(), 'Course B', 'Options are sorted by course title');
+        assert.equal(find(findAll('.course option')[2]).textContent.trim(), 'Course C', 'Options are sorted by course title');
         assert.equal(
-          this.$('.course option:selected').text().trim(),
+          find('.course option:checked').textContent.trim(),
           linkedCourse.get('title'),
           'The linked course is selected.'
         );
         this.$('.course option:eq(2)').prop('selected', true).change();
-        return settled().then(() => {
-          let details = this.$('[data-test-course-details]').text().trim();
+        return settled().then(async () => {
+          let details = find('[data-test-course-details]').textContent.trim();
           assert.ok(details.indexOf('Level: ' + linkableCourse1.get('level')) === 0,
             'Linked course details: level has been updated.'
           );
@@ -493,9 +497,9 @@ module('Integration | Component | curriculum inventory sequence block overview',
             details.indexOf('Clerkship (' + linkableCourse1.get('clerkshipType').get('title') + ')') > 0,
             'Linked course details: clerkship title has been updated.'
           );
-          this.$('.course .actions .done').click();
+          await click('.course .actions .done');
           return settled().then(() => {
-            assert.equal(this.$('.course .editinplace').text().trim(), linkableCourse1.get('title'),
+            assert.equal(find('.course .editinplace').textContent.trim(), linkableCourse1.get('title'),
               'Course title has been updated.');
           });
         });
@@ -553,16 +557,16 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
+    return settled().then(async () => {
 
-      assert.equal(this.$('.description .editinplace').text().trim(), 'Click to add a description.');
-      this.$('.description .editinplace .clickable').click();
-      return settled().then(() => {
+      assert.equal(find('.description .editinplace').textContent.trim(), 'Click to add a description.');
+      await click('.description .editinplace .clickable');
+      return settled().then(async () => {
         const newDescription = 'Lorem Ipsum';
-        this.$('.description textarea').val(newDescription).trigger('input');
-        this.$('.description .actions .done').click();
+        await fillIn('.description textarea', newDescription);
+        await click('.description .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.description .editinplace').text().trim(), newDescription);
+          assert.equal(find('.description .editinplace').textContent.trim(), newDescription);
           assert.equal(block.get('description'), newDescription);
         });
       });
@@ -619,16 +623,16 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
+    return settled().then(async () => {
 
-      assert.equal(this.$('.required .editinplace').text().trim(), 'Optional (elective)');
-      this.$('.required .editinplace .clickable').click();
-      return settled().then(() => {
+      assert.equal(find('.required .editinplace').textContent.trim(), 'Optional (elective)');
+      await click('.required .editinplace .clickable');
+      return settled().then(async () => {
         const newVal = 1;
-        this.$('.required select').val(newVal).trigger('change');
-        this.$('.required .actions .done').click();
+        await fillIn('.required select', newVal);
+        await click('.required .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.required .editinplace').text().trim(), 'Required');
+          assert.equal(find('.required .editinplace').textContent.trim(), 'Required');
           assert.equal(block.get('required'), newVal);
         });
       });
@@ -685,11 +689,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
-      assert.ok(this.$('.track input').prop('checked'), 'Track toggle is initially set to "yes"');
-      this.$('.track .switch-label').click();
+    return settled().then(async () => {
+      assert.ok(find('.track input').checked, 'Track toggle is initially set to "yes"');
+      await click('.track .switch-label');
       return settled().then(() => {
-        assert.notOk(this.$('.track input').prop('checked'), 'Track toggle is now set to "no"');
+        assert.notOk(find('.track input').checked, 'Track toggle is now set to "no"');
       });
     });
   });
@@ -745,15 +749,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
-      assert.equal(this.$('.child-sequence-order .editinplace').text().trim(), 'Ordered');
-      this.$('.child-sequence-order .editinplace .clickable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      assert.equal(find('.child-sequence-order .editinplace').textContent.trim(), 'Ordered');
+      await click('.child-sequence-order .editinplace .clickable');
+      return settled().then(async () => {
         const newVal = 2;
-        this.$('.child-sequence-order select').val(newVal).trigger('change');
-        this.$('.child-sequence-order .actions .done').click();
+        await fillIn('.child-sequence-order select', newVal);
+        await click('.child-sequence-order .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.child-sequence-order .editinplace').text().trim(), 'Unordered');
+          assert.equal(find('.child-sequence-order .editinplace').textContent.trim(), 'Unordered');
           assert.equal(block.get('childSequenceOrder'), newVal);
         });
       });
@@ -836,20 +840,20 @@ module('Integration | Component | curriculum inventory sequence block overview',
 
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
-      assert.equal(this.$('.order-in-sequence .editinplace').text().trim(), block.get('orderInSequence'));
-      this.$('.order-in-sequence .editinplace .clickable').click();
-      return settled().then(() => {
-        assert.equal(this.$('.order-in-sequence option').length, 2, 'There should be two options');
-        assert.equal(this.$('.order-in-sequence option:eq(0)').val(), '1', 'First option has the correct value.');
-        assert.equal(this.$('.order-in-sequence option:eq(1)').val(), '2', 'Second option has the correct value.');
-        assert.equal(this.$('.order-in-sequence option:selected').val(), block.get('orderInSequence'),
+    return settled().then(async () => {
+      assert.equal(find('.order-in-sequence .editinplace').textContent.trim(), block.get('orderInSequence'));
+      await click('.order-in-sequence .editinplace .clickable');
+      return settled().then(async () => {
+        assert.equal(findAll('.order-in-sequence option').length, 2, 'There should be two options');
+        assert.equal(find('.order-in-sequence option').value, '1', 'First option has the correct value.');
+        assert.equal(find(findAll('.order-in-sequence option')[1]).value, '2', 'Second option has the correct value.');
+        assert.equal(find('.order-in-sequence option:checked').value, block.get('orderInSequence'),
           'Correct option is selected.');
         const newVal = 2;
-        this.$('.order-in-sequence select').val(newVal).trigger('change');
-        this.$('.order-in-sequence .actions .done').click();
+        await fillIn('.order-in-sequence select', newVal);
+        await click('.order-in-sequence .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.order-in-sequence .editinplace').text().trim(), newVal);
+          assert.equal(find('.order-in-sequence .editinplace').textContent.trim(), newVal);
           assert.equal(block.get('orderInSequence'), newVal);
         });
       });
@@ -911,16 +915,16 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('setSortBy', null);
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
+    return settled().then(async () => {
 
-      assert.equal(this.$('.academic-level .editinplace').text().trim(), academicLevels[0].get('name'));
-      this.$('.academic-level .editinplace .clickable').click();
-      return settled().then(() => {
+      assert.equal(find('.academic-level .editinplace').textContent.trim(), academicLevels[0].get('name'));
+      await click('.academic-level .editinplace .clickable');
+      return settled().then(async () => {
         const newVal = 9;
-        this.$('.academic-level select').val(newVal).trigger('change');
-        this.$('.academic-level .actions .done').click();
+        await fillIn('.academic-level select', newVal);
+        await click('.academic-level .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.academic-level .editinplace').text().trim(), `Year ${newVal + 1}`);
+          assert.equal(find('.academic-level .editinplace').textContent.trim(), `Year ${newVal + 1}`);
           assert.equal(block.get('academicLevel'), academicLevels[9]);
         });
       });
@@ -1047,19 +1051,19 @@ module('Integration | Component | curriculum inventory sequence block overview',
 
     await render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    return settled().then(() => {
-      assert.equal(this.$('.curriculum-inventory-sequence-block-session-manager').length, 0,
+    return settled().then(async () => {
+      assert.equal(findAll('.curriculum-inventory-sequence-block-session-manager').length, 0,
         'Sessions-manager is initially not visible.'
       );
-      assert.equal(this.$('.sessions').length, 1, 'Sessions-list is initially visible.');
+      assert.equal(findAll('.sessions').length, 1, 'Sessions-list is initially visible.');
 
-      this.$('.sessions .actions button').click();
+      await click('.sessions .actions button');
       return settled().then(() => {
-        assert.equal(this.$('.curriculum-inventory-sequence-block-session-manager').length, 1,
+        assert.equal(findAll('.curriculum-inventory-sequence-block-session-manager').length, 1,
           'Sessions-manager is visible.'
         );
-        assert.equal(this.$('.sessions').length, 0, 'Sessions-list is not visible.');
-        assert.equal(this.$('.sessions .actions button').length, 0, 'Manage button is not visible.');
+        assert.equal(findAll('.sessions').length, 0, 'Sessions-list is not visible.');
+        assert.equal(findAll('.sessions .actions button').length, 0, 'Manage button is not visible.');
       });
     });
   });
@@ -1218,11 +1222,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
       report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
     return settled().then(() => {
       assert.equal(
-        this.$('.description > span:eq(0)').text().trim(), block.get('description'),
+        find('.description > span').textContent.trim(), block.get('description'),
         'Block description is visible.'
       );
-      assert.equal(this.$('[data-test-course-title]').text().trim(), linkedCourse.get('title'), 'Course title is visible.');
-      let details = this.$('[data-test-course-details]').text().trim();
+      assert.equal(find('[data-test-course-title]').textContent.trim(), linkedCourse.get('title'), 'Course title is visible.');
+      let details = find('[data-test-course-details]').textContent.trim();
       assert.ok(details.indexOf('Level: ' + linkedCourse.get('level')) === 0, 'Level of linked course is visible.');
       assert.ok(
         details.indexOf('Start Date: ' + moment(linkedCourse.get('startDate')).format('YYYY-MM-DD')) > 0,
@@ -1236,33 +1240,37 @@ module('Integration | Component | curriculum inventory sequence block overview',
         details.indexOf('Clerkship (' + linkedCourse.get('clerkshipType').get('title') + ')') > 0,
         'Clerkship-type of linked course is visible.'
       );
-      assert.equal(this.$('.description > span:eq(0)').text().trim(), block.get('description'), 'Description is visible.');
-      assert.equal(this.$('.required > span:eq(0)').text().trim(), 'Optional (elective)', 'Required is visible.');
-      assert.ok(this.$('.track > span:eq(0)').text().trim(), 'Is Track is visible.');
+      assert.equal(find('.description > span').textContent.trim(), block.get('description'), 'Description is visible.');
+      assert.equal(find('.required > span').textContent.trim(), 'Optional (elective)', 'Required is visible.');
+      assert.ok(find('.track > span').textContent.trim(), 'Is Track is visible.');
       assert.equal(
-        this.$('.start-date > span:eq(0)').text().trim(), moment(block.get('startDate')).format('L'),
+        find('.start-date > span').textContent.trim(), moment(block.get('startDate')).format('L'),
         'Start date is visible.'
       );
       assert.equal(
-        this.$('.end-date > span:eq(0)').text().trim(), moment(block.get('endDate')).format('L'),
+        find('.end-date > span').textContent.trim(), moment(block.get('endDate')).format('L'),
         'End date is visible.'
       );
-      assert.equal(this.$('.duration > span:eq(0)').text().trim(), block.get('duration'), 'Duration is visible.');
-      assert.equal(this.$('.child-sequence-order > span:eq(0)').text().trim(), 'Ordered', 'Child sequence order is visible.');
-      assert.equal(this.$('.order-in-sequence > span:eq(0)').text().trim(), block.get('orderInSequence'), 'Order in sequence is visible.');
-      assert.equal(this.$('.minimum > span:eq(0)').text().trim(), block.get('minimum'), 'Minimum is visible.');
-      assert.equal(this.$('.maximum > span:eq(0)').text().trim(), block.get('maximum'), 'Maximum is visible.');
-      assert.equal(this.$('.academic-level > span:eq(0)').text().trim(), academicLevel.get('name'), 'Academic level is visible.');
-      assert.notOk(this.$('.sessions .actions button').length, 'Manage button for sessions is visible.');
-      assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
+      assert.equal(find('.duration > span').textContent.trim(), block.get('duration'), 'Duration is visible.');
+      assert.equal(find('.child-sequence-order > span').textContent.trim(), 'Ordered', 'Child sequence order is visible.');
+      assert.equal(find('.order-in-sequence > span').textContent.trim(), block.get('orderInSequence'), 'Order in sequence is visible.');
+      assert.equal(find('.minimum > span').textContent.trim(), block.get('minimum'), 'Minimum is visible.');
+      assert.equal(find('.maximum > span').textContent.trim(), block.get('maximum'), 'Maximum is visible.');
+      assert.equal(find('.academic-level > span').textContent.trim(), academicLevel.get('name'), 'Academic level is visible.');
+      assert.notOk(findAll('.sessions .actions button').length, 'Manage button for sessions is visible.');
+      assert.equal(findAll('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
         'All linkable sessions are visible'
       );
       assert.equal(
-        this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim(), 'Session B',
+        find(
+          findAll('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td')[1]
+        ).textContent.trim(), 'Session B',
         'Sessions are sorted by title.'
       );
       assert.equal(
-        this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session C',
+        find(
+          findAll('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td')[1]
+        ).textContent.trim(), 'Session C',
         'Sessions are sorted by title.'
       );
     });

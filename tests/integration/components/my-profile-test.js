@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -51,19 +51,19 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(this.$('.name').text().trim(), 'test name');
-    assert.equal(this.$('.is-student').text().trim(), 'Student');
-    assert.ok(this.$('.permissions-row:eq(0) i').hasClass('fa-check'));
-    assert.ok(this.$('.permissions-row:eq(1) i').hasClass('fa-check'));
-    assert.ok(this.$('.permissions-row:eq(2) i').hasClass('fa-check'));
-    assert.ok(this.$('.permissions-row:eq(3) i').hasClass('fa-check'));
+    assert.equal(find('.name').textContent.trim(), 'test name');
+    assert.equal(find('.is-student').textContent.trim(), 'Student');
+    assert.ok(find('.permissions-row:eq(0) i').classList.contains('fa-check'));
+    assert.ok(find('.permissions-row:eq(1) i').classList.contains('fa-check'));
+    assert.ok(find('.permissions-row:eq(2) i').classList.contains('fa-check'));
+    assert.ok(find('.permissions-row:eq(3) i').classList.contains('fa-check'));
 
-    assert.equal(this.$('.info .row:eq(0) .content').text().trim(), 'test school');
-    assert.equal(this.$('.info .row:eq(1) .content').text().trim(), 'test cohort');
-    assert.equal(this.$('.info .row:eq(2) .content li:eq(0)').text().trim(), 'a third cohort');
-    assert.equal(this.$('.info .row:eq(2) .content li:eq(1)').text().trim(), 'second cohort');
-    assert.equal(this.$('.info .row:eq(3) .content li:eq(0)').text().trim(), 'a second group (test cohort test program)');
-    assert.equal(this.$('.info .row:eq(3) .content li:eq(1)').text().trim(), 'first group (test cohort test program)');
+    assert.equal(find('.info .row:eq(0) .content').textContent.trim(), 'test school');
+    assert.equal(find('.info .row:eq(1) .content').textContent.trim(), 'test cohort');
+    assert.equal(find('.info .row:eq(2) .content li').textContent.trim(), 'a third cohort');
+    assert.equal(find(findAll('.info .row:eq(2) .content li')[1]).textContent.trim(), 'second cohort');
+    assert.equal(find('.info .row:eq(3) .content li').textContent.trim(), 'a second group (test cohort test program)');
+    assert.equal(find(findAll('.info .row:eq(3) .content li')[1]).textContent.trim(), 'first group (test cohort test program)');
 
   });
 
@@ -86,17 +86,17 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(this.$('.name').text().trim(), 'test name');
-    assert.equal(this.$('.is-student').text().trim(), '');
-    assert.ok(this.$('.permissions-row:eq(0) i').hasClass('fa-ban'));
-    assert.ok(this.$('.permissions-row:eq(1) i').hasClass('fa-ban'));
-    assert.ok(this.$('.permissions-row:eq(2) i').hasClass('fa-ban'));
-    assert.ok(this.$('.permissions-row:eq(3) i').hasClass('fa-ban'));
+    assert.equal(find('.name').textContent.trim(), 'test name');
+    assert.equal(find('.is-student').textContent.trim(), '');
+    assert.ok(find('.permissions-row:eq(0) i').classList.contains('fa-ban'));
+    assert.ok(find('.permissions-row:eq(1) i').classList.contains('fa-ban'));
+    assert.ok(find('.permissions-row:eq(2) i').classList.contains('fa-ban'));
+    assert.ok(find('.permissions-row:eq(3) i').classList.contains('fa-ban'));
 
-    assert.equal(this.$('.info .row:eq(0) .content').text().trim(), 'Unassigned');
-    assert.equal(this.$('.info .row:eq(1) .content').text().trim(), 'Unassigned');
-    assert.equal(this.$('.info .row:eq(2) .content li').length, 0);
-    assert.equal(this.$('.info .row:eq(3) .content li').length, 0);
+    assert.equal(find('.info .row:eq(0) .content').textContent.trim(), 'Unassigned');
+    assert.equal(find('.info .row:eq(1) .content').textContent.trim(), 'Unassigned');
+    assert.equal(findAll('.info .row:eq(2) .content li').length, 0);
+    assert.equal(findAll('.info .row:eq(3) .content li').length, 0);
 
   });
 
@@ -130,7 +130,7 @@ module('Integration | Component | my profile', function(hooks) {
     this.$(go).click();
 
     return settled().then(()=> {
-      assert.equal(this.$(newToken).val().trim(), 'new token');
+      assert.equal(find(newToken).value.trim(), 'new token');
     });
   });
 
@@ -157,12 +157,12 @@ module('Integration | Component | my profile', function(hooks) {
     await this.$(go).click();
     await settled();
 
-    assert.equal(this.$(newToken).val().trim(), 'new token');
-    assert.equal(this.$(newTokenForm).length, 0);
+    assert.equal(find(newToken).value.trim(), 'new token');
+    assert.equal(findAll(newTokenForm).length, 0);
     await this.$(cancel).click();
-    await this.$(newTokenButton).click();
+    await await click(newTokenButton);
     await settled();
-    assert.equal(this.$(newTokenForm).length, 1);
+    assert.equal(findAll(newTokenForm).length, 1);
   });
 
   test('clicking button fires show token event', async function(assert) {
@@ -177,7 +177,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action toggle) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    this.$(newTokenButton).click();
+    await click(newTokenButton);
   });
 
   test('Setting date changes request length', async function(assert) {
@@ -225,7 +225,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action toggle)}}`
     );
 
-    this.$(invalidateTokensButton).click();
+    await click(invalidateTokensButton);
   });
 
   test('invalidate tokens when asked', async function(assert) {

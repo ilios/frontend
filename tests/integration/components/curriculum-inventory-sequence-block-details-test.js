@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -89,15 +89,15 @@ module('Integration | Component | curriculum inventory sequence block details', 
     `
     );
     return settled().then(() => {
-      assert.equal(this.$('.curriculum-inventory-sequence-block-header .title').text().trim(),
+      assert.equal(find('.curriculum-inventory-sequence-block-header .title').textContent.trim(),
         block.get('title'), 'Block header is visible.');
-      assert.equal(this.$('.curriculum-inventory-sequence-block-overview .description .editinplace').text().trim(),
+      assert.equal(find('.curriculum-inventory-sequence-block-overview .description .editinplace').textContent.trim(),
         block.get('description'), 'Block overview is visible.');
-      assert.equal(this.$('.breadcrumbs span').length, 4, 'Breadcrumb has the right number of elements');
-      assert.equal(this.$('.breadcrumbs span:eq(0)').text().trim(), 'Curriculum Inventory Report');
-      assert.equal(this.$('.breadcrumbs span:eq(1)').text().trim(), grandParentBlock.get('title'));
-      assert.equal(this.$('.breadcrumbs span:eq(2)').text().trim(), parentBlock.get('title'));
-      assert.equal(this.$('.breadcrumbs span:eq(3)').text().trim(), block.get('title'));
+      assert.equal(findAll('.breadcrumbs span').length, 4, 'Breadcrumb has the right number of elements');
+      assert.equal(find('.breadcrumbs span').textContent.trim(), 'Curriculum Inventory Report');
+      assert.equal(find(findAll('.breadcrumbs span')[1]).textContent.trim(), grandParentBlock.get('title'));
+      assert.equal(find(findAll('.breadcrumbs span')[2]).textContent.trim(), parentBlock.get('title'));
+      assert.equal(find(findAll('.breadcrumbs span')[3]).textContent.trim(), block.get('title'));
     });
   });
 });

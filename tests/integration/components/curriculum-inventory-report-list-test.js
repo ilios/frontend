@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 const { resolve } = RSVP;
@@ -44,15 +44,15 @@ module('Integration | Component | curriculum inventory report list', function(ho
 
     this.set('program', program);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
-    assert.equal(this.$('th').length, 7, 'Table header has seven columns.');
-    assert.equal(this.$('th:eq(0)').text().trim(), 'Report Name', 'First column table header is labeled correctly');
-    assert.equal(this.$('th:eq(1)').text().trim(), 'Program', 'Second column table header is labeled correctly');
-    assert.equal(this.$('th:eq(2)').text().trim(), 'Academic Year', 'Third column table header is labeled correctly');
-    assert.equal(this.$('th:eq(3)').text().trim(), 'Start Date', 'Fourth column table header is labeled correctly');
-    assert.equal(this.$('th:eq(4)').text().trim(), 'End Date', 'Fifth column table header is labeled correctly');
-    assert.equal(this.$('th:eq(5)').text().trim(), 'Status', 'Sixth column table header is labeled correctly');
-    assert.equal(this.$('th:eq(6)').text().trim(), 'Actions', 'Seventh column table header is labeled correctly');
-    assert.equal(this.$('tbody tr').length, reports.length, 'All reports are shown in list.');
+    assert.equal(findAll('th').length, 7, 'Table header has seven columns.');
+    assert.equal(find('th').textContent.trim(), 'Report Name', 'First column table header is labeled correctly');
+    assert.equal(find(findAll('th')[1]).textContent.trim(), 'Program', 'Second column table header is labeled correctly');
+    assert.equal(find(findAll('th')[2]).textContent.trim(), 'Academic Year', 'Third column table header is labeled correctly');
+    assert.equal(find(findAll('th')[3]).textContent.trim(), 'Start Date', 'Fourth column table header is labeled correctly');
+    assert.equal(find(findAll('th')[4]).textContent.trim(), 'End Date', 'Fifth column table header is labeled correctly');
+    assert.equal(find(findAll('th')[5]).textContent.trim(), 'Status', 'Sixth column table header is labeled correctly');
+    assert.equal(find(findAll('th')[6]).textContent.trim(), 'Actions', 'Seventh column table header is labeled correctly');
+    assert.equal(findAll('tbody tr').length, reports.length, 'All reports are shown in list.');
     for (let i = 0, n = reports.length; i < n; i++) {
       let report = reports[i];
       assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), report.get('name'), 'Report name shows.');
@@ -103,9 +103,9 @@ module('Integration | Component | curriculum inventory report list', function(ho
 
     this.set('program', program);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
-    assert.equal(this.$('thead tr').length, 1, 'Table header shows.');
-    assert.equal(this.$('tbody').length, 1, 'Table body shows.');
-    assert.equal(this.$('tbody tr').length, 0, 'Table body is empty.');
+    assert.equal(findAll('thead tr').length, 1, 'Table header shows.');
+    assert.equal(findAll('tbody').length, 1, 'Table body shows.');
+    assert.equal(findAll('tbody tr').length, 0, 'Table body is empty.');
   });
 
   test('delete and confirm', async function(assert) {
@@ -121,9 +121,9 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.set('program', program);
     this.set('removeAction', removeAction);
     await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
-    assert.equal(this.$('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
+    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
     this.$(`tbody tr:eq(0) .remove`).click();
-    assert.equal(this.$('.confirm-removal').length, 2, 'Confirm dialog shows.');
+    assert.equal(findAll('.confirm-removal').length, 2, 'Confirm dialog shows.');
     this.$(`.confirm-removal .remove`).click();
   });
 
@@ -140,11 +140,11 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.set('program', program);
     this.set('removeAction', removeAction);
     await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
-    assert.equal(this.$('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
+    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
     this.$(`tbody tr:eq(0) .remove`).click();
-    assert.equal(this.$('.confirm-removal').length, 2, 'Confirm dialog shows.');
+    assert.equal(findAll('.confirm-removal').length, 2, 'Confirm dialog shows.');
     this.$(`.confirm-removal .done`).click();
-    assert.equal(this.$('.confirm-removal').length, 0, 'Confirm dialog is invisible again.');
+    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is invisible again.');
   });
 
   test('sorting', async function(assert) {

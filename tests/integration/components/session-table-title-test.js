@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | session table title', function(hooks) {
@@ -10,7 +10,7 @@ module('Integration | Component | session table title', function(hooks) {
     const i = 'i';
     await render(hbs`{{session-table-title value='test'}}`);
 
-    assert.equal(this.$().text().trim(), 'test');
-    assert.ok(this.$(i).hasClass('fa-external-link-square'));
+    assert.equal(find('*').textContent.trim(), 'test');
+    assert.ok(find(i).classList.contains('fa-external-link-square'));
   });
 });

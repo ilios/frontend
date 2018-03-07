@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve, reject } = RSVP;
@@ -26,10 +26,10 @@ module('Integration | Component | myreports list item', function(hooks) {
       assert.equal(param, report);
     };
     await render(hbs`{{myreports-list-item report=report selectReport='selectReport'}}`);
-    return settled().then(()=>{
-      assert.equal(this.$().text().trim(), report.get('title'));
-      assert.equal(this.$('.clickable').length, 1);
-      this.$('.clickable').click();
+    return settled().then(async () => {
+      assert.equal(find('*').textContent.trim(), report.get('title'));
+      assert.equal(findAll('.clickable').length, 1);
+      await click('.clickable');
     });
   });
 
@@ -48,10 +48,10 @@ module('Integration | Component | myreports list item', function(hooks) {
       assert.equal(param, report);
     };
     await render(hbs`{{myreports-list-item report=report selectReport='selectReport'}}`);
-    return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies in All Schools');
-      assert.equal(this.$('.clickable').length, 1);
-      this.$('.clickable').click();
+    return settled().then(async () => {
+      assert.equal(find('*').textContent.trim(), 'All Competencies in All Schools');
+      assert.equal(findAll('.clickable').length, 1);
+      await click('.clickable');
     });
   });
 
@@ -71,8 +71,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     this.set('report', report);
     await render(hbs`{{myreports-list-item report=report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies in ' + school.get('title'));
-      assert.equal(this.$('.clickable').length, 1);
+      assert.equal(find('*').textContent.trim(), 'All Competencies in ' + school.get('title'));
+      assert.equal(findAll('.clickable').length, 1);
     });
   });
 
@@ -109,8 +109,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     this.set('report', report);
     await render(hbs`{{myreports-list-item report=report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
-      assert.equal(this.$('.clickable').length, 1);
+      assert.equal(find('*').textContent.trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
+      assert.equal(findAll('.clickable').length, 1);
     });
   });
 
@@ -140,8 +140,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     this.set('report', report);
     await render(hbs`{{myreports-list-item report=report}}`);
     return settled().then(()=>{
-      assert.equal(this.$().text().trim(), 'This report is no longer available.');
-      assert.equal(this.$('.clickable').length, 0);
+      assert.equal(find('*').textContent.trim(), 'This report is no longer available.');
+      assert.equal(findAll('.clickable').length, 0);
     });
   });
 });

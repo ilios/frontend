@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -79,7 +79,7 @@ module('Integration | Component | my materials', function(hooks) {
       setFilter=(action nothing)
     }}`);
 
-    assert.equal(this.$().text().trim(), 'None');
+    assert.equal(find('*').textContent.trim(), 'None');
   });
 
   test('it renders with materials', async function(assert) {
@@ -186,7 +186,7 @@ module('Integration | Component | my materials', function(hooks) {
     assert.equal(this.$(fifthLmInstructor).text().trim(), '');
     assert.equal(this.$(fifthLmFirstOffering).text().trim(), '02/02/2040');
 
-    assert.equal(this.$(courseListOptions).length, 6);
+    assert.equal(findAll(courseListOptions).length, 6);
     assert.equal(this.$(allCourses).text().trim(), 'All Courses');
     assert.equal(this.$(firstCourse).text().trim(), 'course1title');
     assert.equal(this.$(secondCourse).text().trim(), 'course2title');

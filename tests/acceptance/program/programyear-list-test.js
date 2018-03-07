@@ -1,3 +1,4 @@
+import { click, find, currentPath, findAll, visit } from '@ember/test-helpers';
 import { isPresent, isEmpty } from '@ember/utils';
 import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
@@ -52,12 +53,12 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     var container = find('.programyear-list');
     var rows = find('tbody tr', container);
     assert.equal(rows.length, 3);
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))), getText('2010 - 2011'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), getText('cohort1'));
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))), getText('2011 - 2012'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), getText('cohort2'));
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(2))), getText('2012 - 2013'));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(2))), getText('cohort0'));
+    assert.equal(getElementText(find(find('td'), rows.eq(0))), getText('2010 - 2011'));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(0))), getText('cohort1'));
+    assert.equal(getElementText(find(find('td'), rows.eq(1))), getText('2011 - 2012'));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(1))), getText('cohort2'));
+    assert.equal(getElementText(find(find('td'), rows.eq(2))), getText('2012 - 2013'));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(2))), getText('cohort0'));
   });
 
   test('check competencies', async function (assert) {
@@ -72,7 +73,7 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     });
     server.create('cohort', { programYearId: 1});
     await visit(url);
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(2)')), 5);
+    assert.equal(getElementText(find(findAll('.programyear-list tbody tr:eq(0) td')[2])), 5);
   });
 
   test('check objectives', async function(assert) {
@@ -87,7 +88,7 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     });
     server.create('cohort', { programYearId: 1});
     await visit(url);
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(3)')), 5);
+    assert.equal(getElementText(find(findAll('.programyear-list tbody tr:eq(0) td')[3])), 5);
   });
 
   test('check directors', async function(assert) {
@@ -102,7 +103,7 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     });
     server.create('cohort', { programYearId: 1});
     await visit(url);
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(4)')), 5);
+    assert.equal(getElementText(find(findAll('.programyear-list tbody tr:eq(0) td')[4])), 5);
   });
 
   test('check terms', async function(assert) {
@@ -124,7 +125,7 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     });
     server.create('cohort', { programYearId: 1});
     await visit(url);
-    assert.equal(getElementText(find('.programyear-list tbody tr:eq(0) td:eq(5)')), 5);
+    assert.equal(getElementText(find(findAll('.programyear-list tbody tr:eq(0) td')[5])), 5);
   });
 
   test('check warnings', async function(assert) {
@@ -332,14 +333,14 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     server.db.users.update(4136, {roleIds: [1]});
 
     await visit(url);
-    assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-lock'), 'first program year is locked');
-    assert.ok(find(firstProgramYearLockedIcon).hasClass('clickable'), 'first program year is clickable');
-    assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-unlock'), 'second program year is unlocked');
-    assert.ok(find(secondProgramYearLockedIcon).hasClass('clickable'), 'second program year is clickable');
+    assert.ok(find(firstProgramYearLockedIcon).classList.contains('fa-lock'), 'first program year is locked');
+    assert.ok(find(firstProgramYearLockedIcon).classList.contains('clickable'), 'first program year is clickable');
+    assert.ok(find(secondProgramYearLockedIcon).classList.contains('fa-unlock'), 'second program year is unlocked');
+    assert.ok(find(secondProgramYearLockedIcon).classList.contains('clickable'), 'second program year is clickable');
     await click(firstProgramYearLockedIcon);
     await click(secondProgramYearLockedIcon);
-    assert.ok(find(firstProgramYearLockedIcon).hasClass('fa-unlock'), 'first program year is now unlocked');
-    assert.ok(find(secondProgramYearLockedIcon).hasClass('fa-lock'), 'second program year is now locked');
+    assert.ok(find(firstProgramYearLockedIcon).classList.contains('fa-unlock'), 'first program year is now unlocked');
+    assert.ok(find(secondProgramYearLockedIcon).classList.contains('fa-lock'), 'second program year is now locked');
   });
 
   test('delete-button is not visible for program years with populated cohorts', async function(assert) {

@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -25,7 +25,7 @@ module('Integration | Component | school competencies list', function(hooks) {
     const domainTitle = `${domains}:eq(0)`;
 
     await settled();
-    assert.equal(this.$(domains).length, 1);
+    assert.equal(findAll(domains).length, 1);
     assert.ok(this.$(domainTitle).text().includes('domain 0'));
     assert.ok(this.$(domainTitle).text().includes('competency 0'));
     assert.ok(this.$(domainTitle).text().includes('competency 1'));

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -40,10 +40,10 @@ module('Integration | Component | curriculum inventory report rollover', functio
       for (let i = 0; i < 5; i++){
         assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
       }
-      assert.equal(this.$(name).length, 1);
-      assert.equal(this.$(name).val().trim(), report.get('name'));
-      assert.equal(this.$(description).length, 1);
-      assert.equal(this.$(description).val().trim(), report.get('description'));
+      assert.equal(findAll(name).length, 1);
+      assert.equal(find(name).value.trim(), report.get('name'));
+      assert.equal(findAll(description).length, 1);
+      assert.equal(find(description).value.trim(), report.get('description'));
     });
   });
 
@@ -110,7 +110,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     await render(hbs`{{curriculum-inventory-report-rollover report=report visit=(action visit)}}`);
 
     await settled();
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
   });
 
@@ -180,7 +180,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     this.$(textarea).trigger('input');
     this.$(lastOption).prop('selected', true);
     this.$(lastOption).trigger('change');
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
   });
 
@@ -199,7 +199,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.message').length, 0);
+      assert.equal(findAll('.message').length, 0);
     });
   });
 
@@ -222,7 +222,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const input = `${name} input`;
     this.$(input).val('');
     this.$(input).trigger('input');
-    assert.ok(this.$(name).text().search(/blank/) > -1);
+    assert.ok(find(name).textContent.search(/blank/) > -1);
 
     return settled();
   });

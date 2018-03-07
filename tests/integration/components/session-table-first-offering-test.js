@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import commonInitializer from "ilios/instance-initializers/load-common-translations";
 import moment from 'moment';
@@ -20,7 +20,7 @@ module('Integration | Component | session table first offering', function(hooks)
     });
     await render(hbs`{{session-table-first-offering row=row}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(find('*').textContent.trim(), '');
   });
 
   test('it renders offering', async function(assert) {
@@ -31,7 +31,7 @@ module('Integration | Component | session table first offering', function(hooks)
     });
     await render(hbs`{{session-table-first-offering row=row}}`);
 
-    assert.equal(this.$().text().trim(), today.format('L LT'));
+    assert.equal(find('*').textContent.trim(), today.format('L LT'));
   });
 
   test('it renders ilm', async function(assert) {
@@ -42,6 +42,6 @@ module('Integration | Component | session table first offering', function(hooks)
     });
     await render(hbs`{{session-table-first-offering row=row}}`);
 
-    assert.equal(this.$().text().trim(), 'ILM: Due By ' + today.format('L'));
+    assert.equal(find('*').textContent.trim(), 'ILM: Due By ' + today.format('L'));
   });
 });

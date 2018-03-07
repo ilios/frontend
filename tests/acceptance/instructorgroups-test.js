@@ -1,3 +1,4 @@
+import { click, fillIn, find, findAll, currentURL, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../helpers/destroy-app';
 import {
   module,
@@ -54,15 +55,15 @@ module('Acceptance: Instructor Groups', function(hooks) {
 
     assert.expect(7);
     await visit('/instructorgroups');
-    assert.equal(2, find('.list tbody tr').length);
+    assert.equal(2, findAll('.list tbody tr').length);
     var rows = find('.list tbody tr');
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(0))),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(0))), 5);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(0))), 2);
+    assert.equal(getElementText(find(find('td'), rows.eq(0))),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(0))), 5);
+    assert.equal(getElementText(find(findAll('td')[2], rows.eq(0))), 2);
 
-    assert.equal(getElementText(find('td:eq(0)', rows.eq(1))),getText(secondInstructorgroup.title));
-    assert.equal(getElementText(find('td:eq(1)', rows.eq(1))), 0);
-    assert.equal(getElementText(find('td:eq(2)', rows.eq(1))), 0);
+    assert.equal(getElementText(find(find('td'), rows.eq(1))),getText(secondInstructorgroup.title));
+    assert.equal(getElementText(find(findAll('td')[1], rows.eq(1))), 0);
+    assert.equal(getElementText(find(findAll('td')[2], rows.eq(1))), 0);
   });
 
   test('filters by title', async function(assert) {
@@ -87,35 +88,35 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
     assert.expect(19);
     await visit('/instructorgroups');
-    assert.equal(4, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondInstructorgroup.title));
+    assert.equal(4, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(regularInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(3) td'))),getText(secondInstructorgroup.title));
 
     await fillIn('.titlefilter input', 'first');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(firstInstructorgroup.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))), getText(firstInstructorgroup.title));
 
     await fillIn('.titlefilter input', 'second');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')), getText(secondInstructorgroup.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))), getText(secondInstructorgroup.title));
 
     await fillIn('.titlefilter input', 'special');
-    assert.equal(2, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondInstructorgroup.title));
+    assert.equal(2, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(secondInstructorgroup.title));
 
     await fillIn('.titlefilter input', '\\');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexInstructorgroup.title));
 
     await fillIn('.titlefilter input', '');
-    assert.equal(4, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstInstructorgroup.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondInstructorgroup.title));
+    assert.equal(4, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(regularInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(firstInstructorgroup.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(3) td'))),getText(secondInstructorgroup.title));
   });
 
   test('filters options', async function(assert) {
@@ -136,7 +137,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
     assert.equal(schoolOptions.length, 2);
     assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
     assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
-    assert.equal(find(schoolSelect).val(), '2');
+    assert.equal(find(schoolSelect).value, '2');
   });
 
   test('add new instructorgroup', async function(assert) {
@@ -159,14 +160,14 @@ module('Acceptance: Instructor Groups', function(hooks) {
       schoolId: 1,
     });
     await visit('/instructorgroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
     await click('.actions button');
-    assert.equal(find('.new-instructorgroup').length, 1);
+    assert.equal(findAll('.new-instructorgroup').length, 1);
     await click('.new-instructorgroup .cancel');
-    assert.equal(find('.new-instructorgroup').length, 0);
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(findAll('.new-instructorgroup').length, 0);
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
   });
 
   test('remove instructorgroup', async function(assert) {
@@ -177,11 +178,11 @@ module('Acceptance: Instructor Groups', function(hooks) {
       schoolId: 1,
     });
     await visit('/instructorgroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.confirm-buttons .remove');
-    assert.equal(0, find('.list tbody tr').length);
+    assert.equal(0, findAll('.list tbody tr').length);
   });
 
   test('cancel remove instructorgroup', async function(assert) {
@@ -192,12 +193,12 @@ module('Acceptance: Instructor Groups', function(hooks) {
       schoolId: 1,
     });
     await visit('/instructorgroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.confirm-buttons .done');
-    assert.equal(find('.list tbody tr').length, 1);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(findAll('.list tbody tr').length, 1);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
   });
 
   test('confirmation of remove message', async function(assert) {
@@ -228,12 +229,12 @@ module('Acceptance: Instructor Groups', function(hooks) {
 
     assert.expect(5);
     await visit('/instructorgroups');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('instructorgroup 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('instructorgroup 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
-    assert.ok(find('.list tbody tr:eq(0)').hasClass('confirm-removal'));
-    assert.ok(find('.list tbody tr:eq(1)').hasClass('confirm-removal'));
-    assert.equal(getElementText(find('.list tbody tr:eq(1)')), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
+    assert.ok(find('.list tbody tr').classList.contains('confirm-removal'));
+    assert.ok(find(findAll('.list tbody tr')[1]).classList.contains('confirm-removal'));
+    assert.equal(getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
   });
 
   test('click edit takes you to instructorgroup route', async function(assert) {
@@ -275,10 +276,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
     const filter = '.titlefilter input';
     await visit('/instructorgroups');
 
-    assert.equal(find(groups).length, 1);
+    assert.equal(findAll(groups).length, 1);
     assert.equal(getElementText(firstGroupTitle), 'yes\\no');
     await fillIn(filter, '\\');
-    assert.equal(find(groups).length, 1);
+    assert.equal(findAll(groups).length, 1);
     assert.equal(getElementText(firstGroupTitle), 'yes\\no');
   });
 });

@@ -7,7 +7,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { isEmpty } from '@ember/utils';
 
-import { settled } from '@ember/test-helpers';
+import { settled, click, fillIn, find, findAll, visit } from '@ember/test-helpers';
 
 var application;
 var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
@@ -101,15 +101,15 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
 
     for (let i = 0; i < fixtures.meshDescriptors.length; i++){
       if(objective.meshDescriptorIds.indexOf(fixtures.meshDescriptors[i].id) !== -1){
-        assert.ok(find(searchResults[i]).hasClass('disabled'));
+        assert.ok(find(searchResults[i]).classList.contains('disabled'));
       } else {
-        assert.ok(!find(searchResults[i]).hasClass('disabled'));
+        assert.ok(!find(searchResults[i]).classList.contains('disabled'));
       }
     }
-    await click('.selected-terms li:eq(0)', meshManager);
-    assert.ok(!find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
+    await click(find('.selected-terms li'), meshManager);
+    assert.ok(!find(find('.mesh-search-results li'), meshManager).classList.contains('disabled'));
     await click(searchResults[3]);
-    assert.ok(find('.mesh-search-results li:eq(3)', meshManager).hasClass('disabled'));
+    assert.ok(find(findAll('.mesh-search-results li')[3], meshManager).classList.contains('disabled'));
 
     let newExpectedMesh = [
       fixtures.meshDescriptors[1],
@@ -133,7 +133,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('.search-box span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[2]);
     await click('button.bigadd', detailObjectives);
     let expectedMesh = fixtures.meshDescriptors[2].name;
@@ -151,7 +151,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('.search-box span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[1]);
     await click(searchResults[2]);
     await click(searchResults[3]);

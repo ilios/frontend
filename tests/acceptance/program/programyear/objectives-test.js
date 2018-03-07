@@ -6,7 +6,7 @@ import {
 } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { settled } from '@ember/test-helpers';
+import { settled, click, fillIn, find, findAll, visit } from '@ember/test-helpers';
 
 var application;
 var url = '/programs/1/programyears/1?pyObjectiveDetails=true';
@@ -70,17 +70,17 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     let objectiveRows = find('.programyear-objective-list tbody tr');
     assert.equal(objectiveRows.length, 3);
-    assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(0))), getText('objective 0'));
-    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(0))), getText('competency 1 (competency 0)'));
-    assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(0))), getText('descriptor 0 descriptor 1'));
+    assert.equal(getElementText(find(find('td'), objectiveRows.eq(0))), getText('objective 0'));
+    assert.equal(getElementText(find(findAll('td')[1], objectiveRows.eq(0))), getText('competency 1 (competency 0)'));
+    assert.equal(getElementText(find(findAll('td')[2], objectiveRows.eq(0))), getText('descriptor 0 descriptor 1'));
 
-    assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(1))), getText('objective 1'));
-    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(1))), getText('competency 3'));
-    assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(1))), getText('Add New'));
+    assert.equal(getElementText(find(find('td'), objectiveRows.eq(1))), getText('objective 1'));
+    assert.equal(getElementText(find(findAll('td')[1], objectiveRows.eq(1))), getText('competency 3'));
+    assert.equal(getElementText(find(findAll('td')[2], objectiveRows.eq(1))), getText('Add New'));
 
-    assert.equal(getElementText(find('td:eq(0)', objectiveRows.eq(2))), getText('objective 2'));
-    assert.equal(getElementText(find('td:eq(1)', objectiveRows.eq(2))), getText('Add New'));
-    assert.equal(getElementText(find('td:eq(2)', objectiveRows.eq(2))), getText('Add New'));
+    assert.equal(getElementText(find(find('td'), objectiveRows.eq(2))), getText('objective 2'));
+    assert.equal(getElementText(find(findAll('td')[1], objectiveRows.eq(2))), getText('Add New'));
+    assert.equal(getElementText(find(findAll('td')[2], objectiveRows.eq(2))), getText('Add New'));
   });
 
   test('manage terms', async function(assert) {
@@ -110,15 +110,15 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     assert.equal(getElementText(find('.descriptor-name', searchResults[1]).eq(0)), getText('descriptor 1'));
     assert.equal(getElementText(find('.descriptor-name', searchResults[2]).eq(0)), getText('descriptor 2'));
     assert.equal(getElementText(find('.descriptor-name', searchResults[3]).eq(0)), getText('descriptor 3'));
-    assert.ok(find(searchResults[0]).hasClass('disabled'));
-    assert.ok(find(searchResults[1]).hasClass('disabled'));
-    assert.ok(!find(searchResults[2]).hasClass('disabled'));
-    assert.ok(!find(searchResults[3]).hasClass('disabled'));
-    await click('.selected-terms li:eq(0)', meshManager);
-    assert.ok(!find('.mesh-search-results li:eq(0)', meshManager).hasClass('disabled'));
+    assert.ok(find(searchResults[0]).classList.contains('disabled'));
+    assert.ok(find(searchResults[1]).classList.contains('disabled'));
+    assert.ok(!find(searchResults[2]).classList.contains('disabled'));
+    assert.ok(!find(searchResults[3]).classList.contains('disabled'));
+    await click(find('.selected-terms li'), meshManager);
+    assert.ok(!find(find('.mesh-search-results li'), meshManager).classList.contains('disabled'));
     await click(searchResults[2]);
-    assert.ok(find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
-    assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
+    assert.ok(find(findAll('.mesh-search-results li')[1], meshManager).classList.contains('disabled'));
+    assert.ok(find(findAll('.mesh-search-results li')[2], meshManager).classList.contains('disabled'));
 
     removableItems = find('.selected-terms li', meshManager);
     assert.equal(removableItems.length, 2);
@@ -142,7 +142,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[2]);
     await click('button.bigadd', detailObjectives);
     let tds = find('.programyear-objective-list tbody tr:eq(0) td');
@@ -159,7 +159,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[2]);
     await click(searchResults[3]);
     await click('button.bigcancel', detailObjectives);
@@ -179,18 +179,18 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     assert.equal(getElementText(find('.parent-picker', objectiveManager)), getText('competency0 competency1 competency2 competency3 competency4'));
     let items = find('.parent-picker .clickable');
     assert.equal(items.length, 4);
-    assert.ok(find('.parent-picker h5:eq(0)').hasClass('selected'));
-    assert.ok(find(items[0]).hasClass('selected'));
-    assert.ok(!find(items[1]).hasClass('selected'));
-    assert.ok(!find('.parent-picker h5:eq(1)').hasClass('selected'));
-    assert.ok(!find('.parent-picker h5:eq(2)').hasClass('selected'));
+    assert.ok(find('.parent-picker h5').classList.contains('selected'));
+    assert.ok(find(items[0]).classList.contains('selected'));
+    assert.ok(!find(items[1]).classList.contains('selected'));
+    assert.ok(!find(findAll('.parent-picker h5')[1]).classList.contains('selected'));
+    assert.ok(!find(findAll('.parent-picker h5')[2]).classList.contains('selected'));
 
-    await click('.parent-picker .clickable:eq(2)', objectiveManager);
+    await click(findAll('.parent-picker .clickable')[2], objectiveManager);
     items = find('.parent-picker .clickable');
-    assert.ok(!find(items[0]).hasClass('selected'));
-    assert.ok(!find(items[1]).hasClass('selected'));
-    assert.ok(find(items[2]).hasClass('selected'));
-    assert.ok(!find(items[3]).hasClass('selected'));
+    assert.ok(!find(items[0]).classList.contains('selected'));
+    assert.ok(!find(items[1]).classList.contains('selected'));
+    assert.ok(find(items[2]).classList.contains('selected'));
+    assert.ok(!find(items[3]).classList.contains('selected'));
   });
 
   test('save competency', async function(assert) {
@@ -198,9 +198,9 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     await click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manage-competency').eq(0);
-    await click('.parent-picker .clickable:eq(1)', objectiveManager);
+    await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 2 (competency 0)'));
+    assert.equal(getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 2 (competency 0)'));
   });
 
   test('save no competency', async function(assert) {
@@ -208,9 +208,9 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     await click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manage-competency').eq(0);
-    await click('.parent-picker .clickable:eq(0)', objectiveManager);
+    await click(find('.parent-picker .clickable'), objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('Add New'));
+    assert.equal(getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('Add New'));
   });
 
   test('cancel competency change', async function(assert) {
@@ -218,9 +218,9 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     await click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manage-competency').eq(0);
-    await click('.parent-picker li:eq(1)', objectiveManager);
+    await click(findAll('.parent-picker li')[1], objectiveManager);
     await click('.detail-objectives button.bigcancel');
-    assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
+    assert.equal(getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 1 (competency 0)'));
   });
 
   test('cancel remove competency change', async function(assert) {
@@ -228,9 +228,9 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     await click('.programyear-objective-list tbody tr:eq(0) td:eq(1) .link');
     let objectiveManager = find('.objective-manage-competency').eq(0);
-    await click('.parent-picker li:eq(0)', objectiveManager);
+    await click(find('.parent-picker li'), objectiveManager);
     await click('.detail-objectives button.bigcancel');
-    assert.equal(getElementText(find('.programyear-objective-list tbody tr td:eq(1)')), getText('competency 1 (competency 0)'));
+    assert.equal(getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 1 (competency 0)'));
   });
 
   test('add competency', async function(assert) {
@@ -238,9 +238,9 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     await click('.programyear-objective-list tbody tr:eq(2) td:eq(1) button');
     let objectiveManager = find('.objective-manage-competency').eq(0);
-    await click('.parent-picker .clickable:eq(1)', objectiveManager);
+    await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(getElementText(find('.programyear-objective-list tbody tr:eq(2) td:eq(1)')), getText('competency 2 (competency 0)'));
+    assert.equal(getElementText(find(findAll('.programyear-objective-list tbody tr:eq(2) td')[1])), getText('competency 2 (competency 0)'));
   });
 
   test('empty objective title can not be saved', async function(assert) {

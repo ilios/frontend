@@ -1,3 +1,4 @@
+import { click, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -107,9 +108,9 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
     assert.equal(getElementText(items.eq(0)), getText('objective 0'));
     assert.equal(getElementText(items.eq(1)), getText('objective 1'));
     assert.equal(getElementText(items.eq(2)), getText('objective 2'));
-    assert.ok(find(items.eq(0)).hasClass('selected'));
-    assert.ok(!find(items.eq(1)).hasClass('selected'));
-    assert.ok(!find(items.eq(2)).hasClass('selected'));
+    assert.ok(find(items.eq(0)).classList.contains('selected'));
+    assert.ok(!find(items.eq(1)).classList.contains('selected'));
+    assert.ok(!find(items.eq(2)).classList.contains('selected'));
 
     await pickOption(find('.group-picker select', objectiveManager), 'program 0 cohort 1', assert);
     parentPicker = find('.parent-picker', objectiveManager).eq(0);
@@ -125,9 +126,9 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
     assert.equal(getElementText(items.eq(0)), getText('objective 3'));
     assert.equal(getElementText(items.eq(1)), getText('objective 4'));
     assert.equal(getElementText(items.eq(2)), getText('objective 5'));
-    assert.ok(find(items.eq(0)).hasClass('selected'));
-    assert.ok(!find(items.eq(1)).hasClass('selected'));
-    assert.ok(!find(items.eq(2)).hasClass('selected'));
+    assert.ok(find(items.eq(0)).classList.contains('selected'));
+    assert.ok(!find(items.eq(1)).classList.contains('selected'));
+    assert.ok(!find(items.eq(2)).classList.contains('selected'));
   });
 
   test('change course objective parent', async function(assert) {
@@ -137,29 +138,29 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
     await click('.link', tds.eq(1));
     let objectiveManager = find('.objective-manager').eq(0);
     let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-    await click('li:eq(1)', parentPicker);
-    assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-    assert.notOk(find('h5:eq(0)', parentPicker).hasClass('selected'));
-    assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-    assert.notOk(find('li:eq(0)', parentPicker).hasClass('selected'));
+    await click(findAll('li')[1], parentPicker);
+    assert.ok(find(findAll('h5')[1], parentPicker).classList.contains('selected'));
+    assert.notOk(find(find('h5'), parentPicker).classList.contains('selected'));
+    assert.ok(find(findAll('li')[1], parentPicker).classList.contains('selected'));
+    assert.notOk(find(find('li'), parentPicker).classList.contains('selected'));
     await pickOption(find('.group-picker select', objectiveManager), 'program 0 cohort 1', assert);
-    await click('li:eq(1)', parentPicker);
-    assert.ok(find('h5:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(!find('h5:eq(0)', parentPicker).hasClass('selected'));
-    assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-    assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-    assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
+    await click(findAll('li')[1], parentPicker);
+    assert.ok(find(findAll('h5')[1], parentPicker).classList.contains('selected'));
+    assert.ok(!find(find('h5'), parentPicker).classList.contains('selected'));
+    assert.ok(find(findAll('li')[1], parentPicker).classList.contains('selected'));
+    assert.ok(!find(find('li'), parentPicker).classList.contains('selected'));
+    assert.ok(!find(findAll('li')[2], parentPicker).classList.contains('selected'));
   });
 
   test('save changes', async function(assert) {
     assert.expect(2);
     await visit(url);
     await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await pickOption('.objective-manager:eq(0) .group-picker select', 'program 0 cohort 1', assert);
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await click('.detail-objectives:eq(0) button.bigadd');
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    let td = find(findAll('.course-objective-list tbody tr:eq(0) td')[1]);
     assert.equal(getElementText(td), getText(
       'program0cohort0' +
       fixtures.parentObjectives[1].title +
@@ -174,11 +175,11 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
     assert.expect(2);
     await visit(url);
     await click('.course-objective-list tbody tr:eq(0) td:eq(1) .link');
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await pickOption('.objective-manager:eq(0) .group-picker select', 'program 0 cohort 1', assert);
-    await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
+    await click(findAll('.objective-manager:eq(0) .parent-picker:eq(0) li')[1]);
     await click('.detail-objectives:eq(0) button.bigcancel');
-    let td = find('.course-objective-list tbody tr:eq(0) td:eq(1)');
+    let td = find(findAll('.course-objective-list tbody tr:eq(0) td')[1]);
     assert.equal(getElementText(td), getText(
       'program0cohort0' +
       fixtures.parentObjectives[0].title +

@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -77,9 +77,9 @@ module('Integration | Component | school competencies manager', function(hooks) 
     const comp2Delete = `${domains}:eq(0) li:eq(1) i`;
 
 
-    assert.equal(this.$(title).text().trim(), 'New Domain');
-    assert.equal(this.$(input).length, 2);
-    assert.equal(this.$(input).attr('placeholder'), 'Title');
+    assert.equal(find(title).textContent.trim(), 'New Domain');
+    assert.equal(findAll(input).length, 2);
+    assert.equal(find(input).getAttribute('placeholder'), 'Title');
     assert.equal(this.$(domain1Title).text().trim(), 'domain1');
     assert.equal(this.$(comp1Title).text().replace(/[\t\n\s]+/g, ""), 'competency1(3)');
     assert.equal(this.$(comp2Title).text().replace(/[\t\n\s]+/g, ""), 'competency2');

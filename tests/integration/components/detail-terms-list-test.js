@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -63,10 +63,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
     await settled();
-    assert.equal(this.$('div > div').text().trim(), 'Topics (Medicine)');
-    assert.equal(this.$('li').length, 2);
-    assert.equal(this.$('li:eq(0)').text().trim(), 'bar');
-    assert.equal(this.$('li:eq(1)').text().trim(), 'foo');
+    assert.equal(find('div > div').textContent.trim(), 'Topics (Medicine)');
+    assert.equal(findAll('li').length, 2);
+    assert.equal(find('li').textContent.trim(), 'bar');
+    assert.equal(find(findAll('li')[1]).textContent.trim(), 'foo');
   });
 
   test('empty list', async function(assert) {
@@ -119,8 +119,8 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
     await settled();
-    assert.equal(this.$('div > div').text().trim(), 'Topics (Medicine)');
-    assert.equal(this.$('li').length, 0);
+    assert.equal(find('div > div').textContent.trim(), 'Topics (Medicine)');
+    assert.equal(findAll('li').length, 0);
   });
 
   test('remove term', async function(assert) {
@@ -152,8 +152,8 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action 'remove') canEdit=true}}`);
     await settled();
-    assert.equal(this.$('li:eq(0) .fa-remove').length, 1);
-    this.$('li:eq(0)').click();
+    assert.equal(findAll('li:eq(0) .fa-remove').length, 1);
+    await click(find('li'));
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function(assert) {
@@ -173,6 +173,6 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', []);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=true}}`);
     await settled();
-    assert.equal(this.$('div > div .inactive').text().trim(), '(inactive)');
+    assert.equal(find('div > div .inactive').textContent.trim(), '(inactive)');
   });
 });

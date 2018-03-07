@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -64,7 +64,7 @@ module('Integration | Component | new myreport', function(hooks) {
     const eleventhSubject = `${subjects}:eq(10)`;
 
     await settled();
-    assert.equal(this.$(title).text(), 'New Report');
+    assert.equal(find(title).textContent, 'New Report');
     assert.notEqual(this.$(allSchools).text().search(/All Schools/), -1);
     assert.equal(this.$(allSchools).val(), "null");
     assert.ok(this.$(allSchools).not(':selected'), 'all schools is not selected');
@@ -305,7 +305,7 @@ module('Integration | Component | new myreport', function(hooks) {
     this.$(objectSelect).val(targetObject).change();
     await settled();
 
-    assert.equal(this.$(userSearch).length, 1);
+    assert.equal(findAll(userSearch).length, 1);
     this.$(input).val('abcd').trigger('input');
     await settled();
 

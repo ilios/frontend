@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learnergroup tree', function(hooks) {
@@ -16,6 +16,6 @@ module('Integration | Component | learnergroup tree', function(hooks) {
 
     await render(hbs`{{learnergroup-tree learnerGroup=learnerGroup add=(action nothing)}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(find('*').textContent.trim(), '');
   });
 });

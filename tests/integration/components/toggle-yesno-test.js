@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
@@ -19,10 +19,10 @@ module('Integration | Component | toggle yesno', function(hooks) {
     this.set('value', true);
     await render(hbs`{{toggle-yesno yes=value action='clicked'}}`);
 
-    assert.ok(this.$(state).prop('checked'));
+    assert.ok(find(state).checked);
 
     this.set('value', false);
-    assert.notOk(this.$(state).prop('checked'));
+    assert.notOk(find(state).checked);
 
   });
 
@@ -37,11 +37,11 @@ module('Integration | Component | toggle yesno', function(hooks) {
       this.set('value', val);
     });
     await render(hbs`{{toggle-yesno yes=value toggle=(action toggle)}}`);
-    assert.ok(this.$(state).prop('checked'));
+    assert.ok(find(state).checked);
     this.$(element).click();
 
-    assert.notOk(this.$(state).prop('checked'));
+    assert.notOk(find(state).checked);
     this.$(element).click();
-    assert.ok(this.$(state).prop('checked'));
+    assert.ok(find(state).checked);
   });
 });

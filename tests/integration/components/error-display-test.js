@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | error display', function(hooks) {
@@ -17,14 +17,14 @@ module('Integration | Component | error display', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{error-display errors=errors clearErrors=(action nothing)}}`);
 
-    assert.equal(this.$('.error-detail-action').text().trim(), 'Hide Details');
+    assert.equal(find('.error-detail-action').textContent.trim(), 'Hide Details');
 
     let iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-](\d{2}):(\d{2})/);
-    assert.ok(this.$('.timestamp').text().trim().match(iso8601), 'Current datetime is visible');
+    assert.ok(find('.timestamp').textContent.trim().match(iso8601), 'Current datetime is visible');
 
-    this.$('.error-detail-action').click();
+    await click('.error-detail-action');
 
-    assert.equal(this.$('.error-detail-action').text().trim(), 'Show Details');
+    assert.equal(find('.error-detail-action').textContent.trim(), 'Show Details');
   });
 
   test('clicking clear button fires action', async function(assert) {
@@ -39,6 +39,6 @@ module('Integration | Component | error display', function(hooks) {
       assert.ok(true, 'action was fired');
     });
     await render(hbs`{{error-display errors=errors clearErrors=(action clearErrors)}}`);
-    this.$('.clear-errors button').click();
+    await click('.clear-errors button');
   });
 });

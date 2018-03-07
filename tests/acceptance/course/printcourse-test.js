@@ -1,3 +1,4 @@
+import { find, findAll, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import {
   module,
@@ -74,13 +75,13 @@ module('Acceptance: Course - Print Course', function(hooks) {
   test('test print course learning materials', async function (assert) {
     await visit('/course/1/print');
 
-    assert.equal(find('.header h2:eq(0)').text(), 'Back to the Future');
-    assert.equal(find('.content ul li:eq(0)').text().trim(), 'Time Travel');
-    assert.equal(find('.content ul li:eq(1)').text(), 'Gigawatt Conversion');
-    assert.equal(find('.block .content tbody tr td:eq(0)').text().trim(), 'Save the Clock Tower');
-    assert.equal(find('.block .content tbody tr td:eq(1)').text(), 'file');
-    assert.equal(find('.block .content tbody tr td:eq(2)').text().trim(), 'No');
-    assert.equal(find('.block .content tbody tr td:eq(4)').text().trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
-    assert.equal(find('.content ul li:eq(2)').text(), 'Flux Capacitor');
+    assert.equal(find('.header h2').textContent, 'Back to the Future');
+    assert.equal(find('.content ul li').textContent.trim(), 'Time Travel');
+    assert.equal(find(findAll('.content ul li')[1]).textContent, 'Gigawatt Conversion');
+    assert.equal(find('.block .content tbody tr td').textContent.trim(), 'Save the Clock Tower');
+    assert.equal(find(findAll('.block .content tbody tr td')[1]).textContent, 'file');
+    assert.equal(find(findAll('.block .content tbody tr td')[2]).textContent.trim(), 'No');
+    assert.equal(find(findAll('.block .content tbody tr td')[4]).textContent.trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
+    assert.equal(find(findAll('.content ul li')[2]).textContent, 'Flux Capacitor');
   });
 });

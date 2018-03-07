@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | program list', function(hooks) {
@@ -45,22 +45,22 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', [ program1, program2 ]);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
-    assert.equal(this.$('thead tr:eq(0) th:eq(0)').text(), 'Program Title');
-    assert.equal(this.$('thead tr:eq(0) th:eq(1)').text(), 'School');
-    assert.equal(this.$('thead tr:eq(0) th:eq(2)').text(), 'Status');
-    assert.equal(this.$('thead tr:eq(0) th:eq(3)').text(), 'Actions');
+    assert.equal(find('thead tr:eq(0) th').textContent, 'Program Title');
+    assert.equal(find(findAll('thead tr:eq(0) th')[1]).textContent, 'School');
+    assert.equal(find(findAll('thead tr:eq(0) th')[2]).textContent, 'Status');
+    assert.equal(find(findAll('thead tr:eq(0) th')[3]).textContent, 'Actions');
 
-    assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'Aardvark');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'Medicine');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'Scheduled');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(3) a .fa-edit').length, 1);
-    assert.equal(this.$('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
+    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'Aardvark');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 'Medicine');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 'Scheduled');
+    assert.equal(findAll('tbody tr:eq(0) td:eq(3) a .fa-edit').length, 1);
+    assert.equal(findAll('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
 
-    assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'Zeppelin');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Dentistry');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'Published');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(3) a .fa-edit').length, 1);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(3) .remove .fa-trash').length, 1);
+    assert.equal(find('tbody tr:eq(1) td').textContent.trim(), 'Zeppelin');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 'Dentistry');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 'Published');
+    assert.equal(findAll('tbody tr:eq(1) td:eq(3) a .fa-edit').length, 1);
+    assert.equal(findAll('tbody tr:eq(1) td:eq(3) .remove .fa-trash').length, 1);
   });
 
   test('empty list', async function(assert){
@@ -68,8 +68,8 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', []);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
-    assert.equal(this.$('tbody').length, 1);
-    assert.equal(this.$('tbody tr').length, 0);
+    assert.equal(findAll('tbody').length, 1);
+    assert.equal(findAll('tbody tr').length, 0);
   });
 
   test('edit', async function(assert){
@@ -97,7 +97,7 @@ module('Integration | Component | program list', function(hooks) {
 
     await render(hbs`{{program-list programs=programs edit=editAction}}`);
     await settled();
-    this.$('tbody tr:eq(0) td:eq(1)').click();
+    await click(findAll('tbody tr:eq(0) td')[1]);
   });
 
   test('remove and cancel', async function(assert){
@@ -124,14 +124,14 @@ module('Integration | Component | program list', function(hooks) {
     });
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
-    assert.equal(this.$('tbody tr').length, 1);
-    this.$('tbody tr:eq(0) td:eq(3) .remove').click();
+    assert.equal(findAll('tbody tr').length, 1);
+    await click('tbody tr:eq(0) td:eq(3) .remove');
     await settled();
-    assert.equal(this.$('tbody tr').length, 2);
-    assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-    await this.$('tbody tr:eq(1) .done').click();
+    assert.equal(findAll('tbody tr').length, 2);
+    assert.ok(find('tbody tr:eq(1) td').textContent.includes('Are you sure you want to delete this program?'));
+    await await click('tbody tr:eq(1) .done');
     await settled();
-    assert.equal(this.$('tbody tr').length, 1);
+    assert.equal(findAll('tbody tr').length, 1);
   });
 
   test('remove and confirm', async function(assert){
@@ -158,11 +158,11 @@ module('Integration | Component | program list', function(hooks) {
     });
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
-    assert.equal(this.$('tbody tr').length, 1);
-    this.$('tbody tr:eq(0) td:eq(3) .remove').click();
+    assert.equal(findAll('tbody tr').length, 1);
+    await click('tbody tr:eq(0) td:eq(3) .remove');
     await settled();
-    assert.equal(this.$('tbody tr').length, 2);
-    assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-    this.$('tbody tr:eq(1) .remove').click();
+    assert.equal(findAll('tbody tr').length, 2);
+    assert.ok(find('tbody tr:eq(1) td').textContent.includes('Are you sure you want to delete this program?'));
+    await click('tbody tr:eq(1) .remove');
   });
 });

@@ -10,7 +10,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-import { settled } from '@ember/test-helpers';
+import { settled, click, fillIn, findAll, find, currentPath, triggerEvent, visit } from '@ember/test-helpers';
 
 const { later } = run;
 
@@ -158,7 +158,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const fourthMesh = `${sessionLearningMaterials}:eq(3) ${mesh}`;
     const fourthStatus = `${sessionLearningMaterials}:eq(3) ${status}`;
 
-    assert.equal(find(sessionLearningMaterials).length, 4);
+    assert.equal(findAll(sessionLearningMaterials).length, 4);
     assert.equal(getElementText(firstTitle), getText('learning material 0'));
     assert.equal(getElementText(firstOwner), getText('0 guy M. Mc0son'));
     assert.equal(getElementText(firstRequired), getText('No'));
@@ -203,7 +203,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(rows.length, 4);
     await click('.detail-learningmaterials-actions .button', container);
     //pick the link type
-    await click('.detail-learningmaterials-actions ul li:eq(1)');
+    await click(findAll('.detail-learningmaterials-actions ul li')[1]);
     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learningmaterials .new-learningmaterial label');
@@ -225,7 +225,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     rows = find('.learning-material-table tbody tr', container);
     assert.equal(rows.length, 5);
     let row = rows.eq(4);
-    assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
+    assert.equal(getElementText(find(find('td'), row)), getText(testTitle));
   });
 
   test('create new citation learning material', async function(assert) {
@@ -243,7 +243,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(rows.length, 4);
     await click('.detail-learningmaterials-actions .button', container);
     //pick the citation type
-    await click('.detail-learningmaterials-actions ul li:eq(2)');
+    await click(findAll('.detail-learningmaterials-actions ul li')[2]);
     assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
     //check that we got the right form
     let labels = find('.detail-learningmaterials .new-learningmaterial label');
@@ -265,7 +265,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     rows = find('.learning-material-table tbody tr', container);
     assert.equal(rows.length, 5);
     let row = rows.eq(4);
-    assert.equal(getElementText(find('td:eq(0)', row)), getText(testTitle));
+    assert.equal(getElementText(find(find('td'), row)), getText(testTitle));
   });
 
   test('can only add one learning-material at a time', async function(assert) {
@@ -293,7 +293,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     let rows = find('.learning-material-table tbody tr', container);
     assert.equal(rows.length, 4);
     await click('.detail-learningmaterials-actions .button', container);
-    await click('.detail-learningmaterials-actions ul li:eq(0)');
+    await click(find('.detail-learningmaterials-actions ul li'));
     await click('.detail-learningmaterials .new-learningmaterial .cancel');
     rows = find('.detail-learningmaterials .learning-material-table tbody tr');
     assert.equal(rows.length, 4);
@@ -309,7 +309,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
     assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
     assert.equal(getElementText(find('.copyrightpermission', container)), getText('Yes'));
-    assert.equal(find('.copyrightrationale', container).length, 0);
+    assert.equal(findAll('.copyrightrationale', container).length, 0);
   });
 
   test('view rationale file learning material details', async function(assert) {
@@ -320,8 +320,8 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
     assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
     assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
-    assert.equal(find('.citation', container).length, 0);
-    assert.equal(find('.link', container).length, 0);
+    assert.equal(findAll('.citation', container).length, 0);
+    assert.equal(findAll('.link', container).length, 0);
   });
 
   test('view link learning material details', async function(assert) {
@@ -334,9 +334,9 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(getElementText(find('.upload-date', container)),
       moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
     assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
-    assert.equal(find('.copyrightpermission', container).length, 1);
-    assert.equal(find('.copyrightrationale', container).length, 0);
-    assert.equal(find('.citation', container).length, 0);
+    assert.equal(findAll('.copyrightpermission', container).length, 1);
+    assert.equal(findAll('.copyrightrationale', container).length, 0);
+    assert.equal(findAll('.citation', container).length, 0);
   });
 
   test('view citation learning material details', async function(assert) {
@@ -349,9 +349,9 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     assert.equal(getElementText(find('.upload-date', container)),
       moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
     assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
-    assert.equal(find('.copyrightpermission', container).length, 1);
-    assert.equal(find('.copyrightrationale', container).length, 0);
-    assert.equal(find('.file', container).length, 0);
+    assert.equal(findAll('.copyrightpermission', container).length, 1);
+    assert.equal(findAll('.copyrightrationale', container).length, 0);
+    assert.equal(findAll('.file', container).length, 0);
   });
 
   test('edit learning material', async function(assert) {
@@ -369,10 +369,10 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     find('.notes .fr-box', container).froalaEditor('html.set', newNote);
     find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
     await click('.buttons .done', container);
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('Yes'));
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('Yes'), 'there is content in notes');
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[2])), getText('Yes'));
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[3])), getText('Yes'), 'there is content in notes');
     assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is false and `eye` icon is not visible');
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText('status 2'));
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[5])), getText('status 2'));
 
     await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
     container = find('.learningmaterial-manager');
@@ -389,10 +389,10 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await click(find('.publicnotes .switch-handle', container));
     await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
     await click('.buttons .cancel', container);
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(2)')), getText('No'));
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3)')), getText('No'), 'no content is available under notes');
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[2])), getText('No'));
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[3])), getText('No'), 'no content is available under notes');
     assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
-    assert.equal(getElementText(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(5)')), getText(fixtures.statuses[0].title));
+    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[5])), getText(fixtures.statuses[0].title));
   });
 
   test('manage terms', async function(assert) {
@@ -422,17 +422,17 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(getElementText(meshDescriptorName), getText(`descriptor ${i}`));
     }
 
-    assert.notOk(find(searchResults[0]).hasClass('disabled'));
-    assert.ok(find(searchResults[1]).hasClass('disabled'));
-    assert.ok(find(searchResults[2]).hasClass('disabled'));
-    assert.notOk(find(searchResults[3]).hasClass('disabled'));
-    assert.notOk(find(searchResults[4]).hasClass('disabled'));
-    assert.notOk(find(searchResults[5]).hasClass('disabled'));
+    assert.notOk(find(searchResults[0]).classList.contains('disabled'));
+    assert.ok(find(searchResults[1]).classList.contains('disabled'));
+    assert.ok(find(searchResults[2]).classList.contains('disabled'));
+    assert.notOk(find(searchResults[3]).classList.contains('disabled'));
+    assert.notOk(find(searchResults[4]).classList.contains('disabled'));
+    assert.notOk(find(searchResults[5]).classList.contains('disabled'));
 
-    await click('.selected-terms li:eq(0)', meshManager);
-    assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
+    await click(find('.selected-terms li'), meshManager);
+    assert.ok(!find(findAll('.mesh-search-results li')[1], meshManager).classList.contains('disabled'));
     await click(searchResults[0]);
-    assert.ok(find('.mesh-search-results li:eq(2)', meshManager).hasClass('disabled'));
+    assert.ok(find(findAll('.mesh-search-results li')[2], meshManager).classList.contains('disabled'));
 
     removableItems = find('.selected-terms li', meshManager);
     assert.equal(removableItems.length, 2);
@@ -452,7 +452,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('.search-box span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[0]);
     await click('.buttons .done', container);
     let expectedMesh = 'descriptor 0' + 'descriptor 2';
@@ -470,7 +470,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await fillIn(searchBoxInput, 'descriptor');
     await click('.search-box span.search-icon', meshManager);
     let searchResults = find('.mesh-search-results li', meshManager);
-    await click('.selected-terms li:eq(0)', meshManager);
+    await click(find('.selected-terms li'), meshManager);
     await click(searchResults[2]);
     await click(searchResults[3]);
     await click(searchResults[4]);
@@ -494,7 +494,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       let searchResults = find('.lm-search-results > li', container);
       assert.equal(searchResults.length, 1);
       assert.equal(getElementText('.lm-search-results > li:eq(0) h4'), getText('Letter to Doc Brown'));
-      assert.equal(find('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
+      assert.equal(findAll('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
       let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
       assert.equal(addlProps.length, 3);
       assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)'),
@@ -525,7 +525,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const done = `${manager} .buttons .done`;
 
     await visit(url);
-    assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
     await click(manageFirstLm);
 
     await click(addStartDate);
@@ -540,7 +540,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await pickOption(startBoxes[2], 'AM', assert);
 
     await click(done);
-    assert.ok(find(statusIcon).length, 'the clock icon is visible');
+    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
 
     await click(manageFirstLm);
     assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newDate.format('L LT') + ')'));
@@ -566,7 +566,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const done = `${manager} .buttons .done`;
 
     await visit(url);
-    assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
     await click(manageFirstLm);
 
     await click(addStartDate);
@@ -593,7 +593,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await pickOption(endBoxes[2], 'AM', assert);
 
     await click(done);
-    assert.ok(find(statusIcon).length, 'the clock icon is visible');
+    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
 
     await click(manageFirstLm);
     assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'));
@@ -614,7 +614,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const done = `${manager} .buttons .done`;
 
     await visit(url);
-    assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
+    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
     await click(manageFirstLm);
 
     await click(addEndDate);
@@ -629,7 +629,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await pickOption(endBoxes[2], 'AM', assert);
 
     await click(done);
-    assert.ok(find(statusIcon).length, 'the clock icon is visible');
+    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
 
     await click(manageFirstLm);
     assert.equal(getElementText(find(releaseSummary)), getText('(Available until ' + newDate.format('L LT') + ')'));
@@ -656,8 +656,8 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const errorMessage = `${manager} .validation-error-message`;
 
     await visit(url);
-    assert.notOk(find(statusIcon).length, 'the clock icon is not visible');
-    assert.equal(find(manager).length, 0, 'manager is not initially displayed');
+    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
+    assert.equal(findAll(manager).length, 0, 'manager is not initially displayed');
     await click(manageFirstLm);
 
     await click(addStartDate);
@@ -683,10 +683,10 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     await pickOption(endBoxes[1], '10', assert);
     await pickOption(endBoxes[2], 'AM', assert);
 
-    assert.equal(find(errorMessage).length, 0, 'ne error displays initially');
+    assert.equal(findAll(errorMessage).length, 0, 'ne error displays initially');
     await click(done);
-    assert.equal(find(manager).length, 1, 'the manager is still showing since there was an error');
+    assert.equal(findAll(manager).length, 1, 'the manager is still showing since there was an error');
     assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'), 'Check summary text');
-    assert.equal(find(errorMessage).length, 1, 'the error message shows up');
+    assert.equal(findAll(errorMessage).length, 1, 'the error message shows up');
   });
 });

@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -50,7 +51,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
-    assert.equal(find('.sessionilmhours', container).length, 0);
+    assert.equal(findAll('.sessionilmhours', container).length, 0);
   });
 
   test('check remove ilm', async function(assert) {
@@ -66,14 +67,14 @@ module('Acceptance: Session - Overview', function(hooks) {
 
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
-    assert.equal(find('.sessionilmhours', container).length, 1);
-    assert.equal(find('.sessionilmduedate', container).length, 1);
+    assert.equal(findAll('.sessionilmhours', container).length, 1);
+    assert.equal(findAll('.sessionilmduedate', container).length, 1);
     var dueDate = moment(ilmSession.dueDate).format('L');
     assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
     assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
     await click(find('.independentlearningcontrol .toggle-yesno', container));
-    assert.equal(find('.sessionilmhours', container).length, 0);
-    assert.equal(find('.sessionilmduedate', container).length, 0);
+    assert.equal(findAll('.sessionilmhours', container).length, 0);
+    assert.equal(findAll('.sessionilmduedate', container).length, 0);
   });
 
   test('check add ilm', async function(assert) {
@@ -91,9 +92,9 @@ module('Acceptance: Session - Overview', function(hooks) {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     await click(find('.independentlearningcontrol .toggle-yesno', container));
-    assert.equal(find('.sessionilmhours', container).length, 1);
-    assert.equal(find('.sessionilmduedate', container).length, 1);
-    assert.equal(find('.sessionassociatedgroups', container).length, 0);
+    assert.equal(findAll('.sessionilmhours', container).length, 1);
+    assert.equal(findAll('.sessionilmduedate', container).length, 1);
+    assert.equal(findAll('.sessionassociatedgroups', container).length, 0);
     assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
   });
 
@@ -109,7 +110,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find('.sessionilmhours', container).length, 1);
+    assert.equal(findAll('.sessionilmhours', container).length, 1);
     var container = find('.sessionilmhours');
     assert.equal(getElementText(find('.content', container)), ilmSession.hours);
     await click(find('.editable', container));
@@ -224,10 +225,10 @@ module('Acceptance: Session - Overview', function(hooks) {
     const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
     await visit(url);
-    assert.equal(find(supplementalToggle).length, 1, 'control hidden');
-    assert.equal(find(specialAttireToggle).length, 1, 'control hidden');
-    assert.equal(find(specialEquiptmentToggle).length, 1, 'control hidden');
-    assert.equal(find(attendanceRequiredToggle).length, 1, 'control hidden');
+    assert.equal(findAll(supplementalToggle).length, 1, 'control hidden');
+    assert.equal(findAll(specialAttireToggle).length, 1, 'control hidden');
+    assert.equal(findAll(specialEquiptmentToggle).length, 1, 'control hidden');
+    assert.equal(findAll(attendanceRequiredToggle).length, 1, 'control hidden');
   });
 
   test('session attributes are hidden by school config', async assert => {
@@ -269,10 +270,10 @@ module('Acceptance: Session - Overview', function(hooks) {
     const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
     await visit(url);
-    assert.equal(find(supplementalToggle).length, 0, 'control hidden');
-    assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
-    assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
-    assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
+    assert.equal(findAll(supplementalToggle).length, 0, 'control hidden');
+    assert.equal(findAll(specialAttireToggle).length, 0, 'control hidden');
+    assert.equal(findAll(specialEquiptmentToggle).length, 0, 'control hidden');
+    assert.equal(findAll(attendanceRequiredToggle).length, 0, 'control hidden');
   });
 
   test('session attributes are hidden when there is no school config', async assert => {
@@ -292,10 +293,10 @@ module('Acceptance: Session - Overview', function(hooks) {
     const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
 
     await visit(url);
-    assert.equal(find(supplementalToggle).length, 0, 'control hidden');
-    assert.equal(find(specialAttireToggle).length, 0, 'control hidden');
-    assert.equal(find(specialEquiptmentToggle).length, 0, 'control hidden');
-    assert.equal(find(attendanceRequiredToggle).length, 0, 'control hidden');
+    assert.equal(findAll(supplementalToggle).length, 0, 'control hidden');
+    assert.equal(findAll(specialAttireToggle).length, 0, 'control hidden');
+    assert.equal(findAll(specialEquiptmentToggle).length, 0, 'control hidden');
+    assert.equal(findAll(attendanceRequiredToggle).length, 0, 'control hidden');
   });
 
   let testAttributeToggle = async function(assert, schoolVariableName, domclass){
@@ -320,7 +321,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     const toggleValue = `${toggle} input`;
 
     await visit(url);
-    assert.equal(find(toggleValue).length, 1, 'control exists');
+    assert.equal(findAll(toggleValue).length, 1, 'control exists');
     assert.ok(find(toggleValue).not(':checked'), 'initiall not checked');
     await click(toggle);
     assert.ok(find(toggleValue).is(':checked'), 'clicking changed state');
@@ -497,7 +498,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     const copy = `${container} a.copy`;
 
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 0);
+    assert.equal(findAll(copy).length, 0);
   });
 
   test('copy visible to developers', async function(assert) {
@@ -518,7 +519,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     const copy = `${container} a.copy`;
 
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1);
+    assert.equal(findAll(copy).length, 1);
   });
 
   test('copy visible to course directors', async function(assert) {
@@ -539,7 +540,7 @@ module('Acceptance: Session - Overview', function(hooks) {
     const copy = `${container} a.copy`;
 
     assert.equal(currentPath(), 'course.session.index');
-    assert.equal(find(copy).length, 1);
+    assert.equal(findAll(copy).length, 1);
   });
 
   test('copy hidden on copy route', async function(assert) {
@@ -560,6 +561,6 @@ module('Acceptance: Session - Overview', function(hooks) {
     const copy = `${container} a.copy`;
 
     assert.equal(currentPath(), 'course.session.copy');
-    assert.equal(find(copy).length, 0);
+    assert.equal(findAll(copy).length, 0);
   });
 });

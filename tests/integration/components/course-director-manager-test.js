@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | course director manager', function(hooks) {
@@ -20,8 +20,8 @@ module('Integration | Component | course director manager', function(hooks) {
       close=(action nothing)
     }}`);
 
-    assert.equal(this.$('li:eq(0)').text().trim(), 'test person 1');
-    assert.equal(this.$('li:eq(1)').text().trim(), 'test person 2');
+    assert.equal(find('li').textContent.trim(), 'test person 1');
+    assert.equal(find(findAll('li')[1]).textContent.trim(), 'test person 2');
   });
 
   test('can remove users', async function(assert) {
@@ -51,7 +51,7 @@ module('Integration | Component | course director manager', function(hooks) {
 
     this.$(user1).click();
 
-    return settled(this.$(saveButton).click());
+    return settled(await click(saveButton));
   });
 
   test('it closes', async function(assert) {
@@ -66,6 +66,6 @@ module('Integration | Component | course director manager', function(hooks) {
       close=(action close)
     }}`);
 
-    this.$('.bigcancel').click();
+    await click('.bigcancel');
   });
 });

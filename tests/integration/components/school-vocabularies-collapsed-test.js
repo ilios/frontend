@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -47,7 +47,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     const vocabulary2Terms = `${vocabularies}:eq(1) td:eq(1)`;
 
     await settled();
-    assert.equal(this.$(title).text().trim(), 'Vocabularies (2)');
+    assert.equal(find(title).textContent.trim(), 'Vocabularies (2)');
     assert.equal(this.$(vocabulary1Title).text().trim(), 'Vocabulary 1');
     assert.equal(this.$(vocabulary1Terms).text().trim(), 'There are 2 terms');
     assert.equal(this.$(vocabulary2Title).text().trim(), 'Vocabulary 2');
@@ -69,7 +69,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     await render(hbs`{{school-vocabularies-collapsed school=school expand=(action 'click')}}`);
 
     await settled();
-    assert.equal(this.$(title).text().trim(), 'Vocabularies (1)');
-    this.$(title).click();
+    assert.equal(find(title).textContent.trim(), 'Vocabularies (1)');
+    await click(title);
   });
 });

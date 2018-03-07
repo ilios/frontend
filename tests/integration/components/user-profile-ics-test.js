@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import {
   triggerSuccess
@@ -37,9 +37,9 @@ module('Integration | Component | user profile ics', function(hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(hbs`{{user-profile-ics user=user isManagable=true setIsManaging=(action click)}}`);
-    return settled().then(()=>{
+    return settled().then(async () => {
       const manage = 'button.manage';
-      this.$(manage).click();
+      await click(manage);
     });
   });
 
@@ -58,8 +58,8 @@ module('Integration | Component | user profile ics', function(hooks) {
 
     await render(hbs`{{user-profile-ics isManaging=true user=user setIsManaging=(action nothing)}}`);
 
-    return settled().then(()=>{
-      this.$('.refresh-key').click();
+    return settled().then(async () => {
+      await click('.refresh-key');
 
       return settled();
     });
@@ -77,11 +77,11 @@ module('Integration | Component | user profile ics', function(hooks) {
     const successMessage = '.yes';
 
     await settled();
-    assert.equal(this.$(successMessage).length, 0);
-    assert.equal(this.$(button).length, 1);
+    assert.equal(findAll(successMessage).length, 0);
+    assert.equal(findAll(button).length, 1);
     triggerSuccess(this, '.copy-btn');
-    assert.equal(this.$(successMessage).length, 1);
-    assert.equal(this.$(successMessage).text().trim(), 'Copied Successfully');
+    assert.equal(findAll(successMessage).length, 1);
+    assert.equal(find(successMessage).textContent.trim(), 'Copied Successfully');
 
   });
 });

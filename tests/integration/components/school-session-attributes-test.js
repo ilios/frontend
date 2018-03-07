@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
@@ -140,7 +140,7 @@ module('Integration | Component | school session attributes', function(hooks) {
     await settled();
 
     const title = '.title';
-    await this.$(title).click();
+    await await click(title);
   });
 
   test('clicking collapse fires action', async function(assert) {
@@ -166,6 +166,6 @@ module('Integration | Component | school session attributes', function(hooks) {
     await settled();
 
     const title = '.title';
-    await this.$(title).click();
+    await await click(title);
   });
 });

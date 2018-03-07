@@ -1,3 +1,4 @@
+import { click, fillIn, currentPath, findAll, find, visit } from '@ember/test-helpers';
 import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
@@ -133,7 +134,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     let input = find('.search-box input', container);
     await fillIn(input, 'group');
     await click('span.search-icon', container);
-    await click('[data-test-user-search] .results li:eq(4)');
+    await click(findAll('[data-test-user-search] .results li')[4]);
     let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
     assert.equal(selectedGroups.length, 4);
     assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
@@ -159,7 +160,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     let input = find('.search-box input', container);
     await fillIn(input, 'guy');
     await click('span.search-icon', container);
-    await click('[data-test-user-search] .results li:eq(5)');
+    await click(findAll('[data-test-user-search] .results li')[5]);
     var selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
     assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
     assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
@@ -182,7 +183,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
     await click('.actions button', container);
-    await click('.instructor-selection-manager ul:eq(0) li:eq(0)', container);
+    await click(find('.instructor-selection-manager ul:eq(0) li'), container);
     let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
     assert.equal(selectedGroups.length, 2);
     assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
@@ -205,7 +206,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
     await click('.actions button', container);
-    await click('.instructor-selection-manager ul:eq(1) li:eq(0)', container);
+    await click(find('.instructor-selection-manager ul:eq(1) li'), container);
     let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
     assert.equal(selectedGroups.length, 3);
     assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
@@ -228,8 +229,8 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     assert.equal(currentPath(), 'course.session.index');
     var container = find('.detail-instructors');
     await click('.actions button', container);
-    await click('.instructor-selection-manager ul:eq(0) li:eq(0)', container);
-    await click('.instructor-selection-manager ul:eq(1) li:eq(0)', container);
+    await click(find('.instructor-selection-manager ul:eq(0) li'), container);
+    await click(find('.instructor-selection-manager ul:eq(1) li'), container);
     let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
     assert.equal(selectedGroups.length, 2);
     assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));

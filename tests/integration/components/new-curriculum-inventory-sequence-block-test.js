@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -63,15 +63,15 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     return settled().then(() => {
-      assert.equal(this.$('h2.title').text().trim(), 'New Sequence Block', 'Component title shows.');
-      assert.equal(this.$('.title label').text().trim(), 'Title:', 'Title label is correct.');
-      assert.equal(this.$('.title input').val(), '', 'Title input is initially empty.');
-      assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
-      assert.equal(this.$('.description textarea').val(), '', 'Description input is initially empty.');
-      assert.equal(this.$('.course label').text().trim(), 'Course:', 'Course label is correct.');
-      assert.equal(this.$('.course option').length, 3, 'Course dropdown has correct number of options');
-      assert.equal(this.$('.course option:eq(0)').val(), '', 'First course option has no value.');
-      assert.equal(this.$('.course option:eq(0)').text().trim(), 'Select a Course', 'First course option is labeled correctly');
+      assert.equal(find('h2.title').textContent.trim(), 'New Sequence Block', 'Component title shows.');
+      assert.equal(find('.title label').textContent.trim(), 'Title:', 'Title label is correct.');
+      assert.equal(find('.title input').value, '', 'Title input is initially empty.');
+      assert.equal(find('.description label').textContent.trim(), 'Description:', 'Description label is correct.');
+      assert.equal(find('.description textarea').value, '', 'Description input is initially empty.');
+      assert.equal(find('.course label').textContent.trim(), 'Course:', 'Course label is correct.');
+      assert.equal(findAll('.course option').length, 3, 'Course dropdown has correct number of options');
+      assert.equal(find('.course option').value, '', 'First course option has no value.');
+      assert.equal(find('.course option').textContent.trim(), 'Select a Course', 'First course option is labeled correctly');
       assert.equal(this.$(`.course option:eq(1)`).val(), course3.get('id'), 'Second course option has correct value');
       assert.equal(this.$(`.course option:eq(1)`).text().trim(), course3.get('title'), 'Second course option is labeled correctly');
       assert.equal(this.$(`.course option:eq(2)`).val(), course1.get('id'), 'Third course option has correct value');
@@ -113,10 +113,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
       assert.equal(this.$(`.child-sequence-order option:eq(2)`).val(), '3', 'Child sequence order option value is correct.');
       assert.equal(this.$(`.child-sequence-order option:eq(2)`).text().trim(), 'Parallel', 'Child sequence order option label is correct.');
       assert.equal(this.$(`.order-in-sequence`).length, 0, 'Order-in-sequence input is not visible for top-level block creation');
-      assert.equal(this.$('button.done').length, 1, 'Done button is present.');
-      assert.equal(this.$('button.done').text().trim(), 'Done', 'Done button is labeled correctly.');
-      assert.equal(this.$('button.cancel').length, 1, 'Cancel button is present.');
-      assert.equal(this.$('button.cancel').text().trim(), 'Cancel', 'Cancel button is labeled correctly.');
+      assert.equal(findAll('button.done').length, 1, 'Done button is present.');
+      assert.equal(find('button.done').textContent.trim(), 'Done', 'Done button is labeled correctly.');
+      assert.equal(findAll('button.cancel').length, 1, 'Cancel button is present.');
+      assert.equal(find('button.cancel').textContent.trim(), 'Cancel', 'Cancel button is labeled correctly.');
     });
   });
 
@@ -198,13 +198,13 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
+    return settled().then(async () => {
       let courseOption = this.$('.course option:eq(1)');
-      this.$('.course select').val('1').trigger('change');
+      await fillIn('.course select', '1');
       courseOption.prop('selected', true);
       courseOption.trigger('input');
       return settled().then(() => {
-        let details = this.$('.course .details').text().trim();
+        let details = find('.course .details').textContent.trim();
         assert.ok(details.indexOf('Level: ' + course.get('level')) === 0);
         assert.ok(details.indexOf('Start Date: ' + moment(course.get('startDate')).format('YYYY-MM-DD')) > 0);
         assert.ok(details.indexOf('End Date: ' + moment(course.get('endDate')).format('YYYY-MM-DD')) > 0);
@@ -276,13 +276,13 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
 
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-    this.$('.title input').val(newTitle).trigger('input');
-    this.$('.description textarea').val(newDescription).trigger('input');
+    await fillIn('.title input', newTitle);
+    await fillIn('.description textarea', newDescription);
     let interactor = openDatepicker(this.$('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(this.$('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
-    this.$('button.done').click();
+    await click('button.done');
   });
 
   test('save with non-defaults', async function(assert) {
@@ -337,18 +337,18 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
 
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-    return settled().then(() => {
-      this.$('.title input').val('foo bar').trigger('input');
-      this.$('.description textarea').val('lorem ipsum').trigger('input');
-      this.$('.duration input').val(duration).trigger('input');
-      this.$('.minimum input').val(minimum).trigger('input');
-      this.$('.maximum input').val(maximum).trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'foo bar');
+      await fillIn('.description textarea', 'lorem ipsum');
+      await fillIn('.duration input', duration);
+      await fillIn('.minimum input', minimum);
+      await fillIn('.maximum input', maximum);
       this.$('.course option:eq(1)').prop('selected', true).change();
       this.$('.child-sequence-order option:eq(1)').prop('selected', true).change();
       this.$('.required option:eq(2)').prop('selected', true).change();
       this.$('.academic-level option:eq(1)').prop('selected', true).change();
-      this.$('.track .toggle-yesno').click();
-      this.$('button.done').click();
+      await click('.track .toggle-yesno');
+      await click('button.done');
     });
   });
 
@@ -398,11 +398,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(
       hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`
     );
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
     this.$('.order-in-sequence option:eq(1)').prop('selected', true).change();
-    this.$('.duration input').val('19').trigger('input');
-    this.$('button.done').click();
+    await fillIn('.duration input', '19');
+    await click('button.done');
   });
 
   test('cancel', async function(assert) {
@@ -434,8 +434,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('report', report);
     this.set('cancelAction', cancelAction);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report cancel=(action cancelAction)}}`);
-    return settled().then(() => {
-      this.$('.buttons .cancel').click();
+    return settled().then(async () => {
+      await click('.buttons .cancel');
     });
   });
 
@@ -464,7 +464,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
+    return settled().then(async () => {
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
@@ -473,7 +473,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       interactor.selectDate(newEndDate.toDate());
       assert.equal(newStartDate.format('M/D/YYYY'), startDateInput.val(), 'Start date is set');
       assert.equal(newEndDate.format('M/D/YYYY'), endDateInput.val(), 'End date is set');
-      this.$('.clear-dates button').click();
+      await click('.clear-dates button');
       return settled().then(() => {
         assert.equal(startDateInput.val(), '', 'Start date input has been cleared.');
         assert.equal(endDateInput.val(), '', 'End date input has been cleared.');
@@ -504,21 +504,21 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.maximum input').val('5').trigger('input');
-      this.$('.minimum input').val('10').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.maximum input', '5');
+      await fillIn('.minimum input', '10');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -546,20 +546,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.minimum input').val('-1').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.minimum input', '-1');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -587,20 +587,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.minimum input').val('').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.minimum input', '');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -628,20 +628,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.maximum input').val('-1').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.maximum input', '-1');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -676,17 +676,17 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      this.$('.duration input').val('0').trigger('input');
-      this.$('button.done').click();
+      await fillIn('.duration input', '0');
+      await click('button.done');
     });
   });
 
@@ -722,11 +722,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-      this.$('.duration input').val(duration).trigger('input');
-      this.$('button.done').click();
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
+      await fillIn('.duration input', duration);
+      await click('button.done');
     });
   });
 
@@ -753,20 +753,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
       interactor.selectDate(moment('2011-12-30').toDate());
-      this.$('button.done').click();
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -794,20 +794,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.duration input').val('').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.duration input', '');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -835,20 +835,20 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let endDateInput = this.$('.end-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
       interactor = openDatepicker(endDateInput);
       interactor.selectDate(moment('2016-12-30').toDate());
-      assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-      this.$('.duration input').val('WRONG').trigger('input');
-      this.$('button.done').click();
+      assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+      await fillIn('.duration input', 'WRONG');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
       });
     });
   });
@@ -876,13 +876,13 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-      this.$('.duration text').val('Lorem Ipsum').trigger('input');
-      this.$('button.done').click();
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
+      await fillIn('.duration text', 'Lorem Ipsum');
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 2, 'Validation errors show.');
+        assert.equal(findAll('.validation-error-message').length, 2, 'Validation errors show.');
       });
     });
   });
@@ -910,16 +910,16 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
     this.set('report', report);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    return settled().then(() => {
-      this.$('.title input').val('Foo Bar').trigger('input');
-      this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-      this.$('.duration text').val('Lorem Ipsum').trigger('input');
+    return settled().then(async () => {
+      await fillIn('.title input', 'Foo Bar');
+      await fillIn('.description textarea', 'Lorem Ipsum');
+      await fillIn('.duration text', 'Lorem Ipsum');
       let startDateInput = this.$('.start-date input');
       let interactor = openDatepicker(startDateInput);
       interactor.selectDate(moment('2016-11-12').toDate());
-      this.$('button.done').click();
+      await click('button.done');
       return settled().then(() => {
-        assert.equal(this.$('.validation-error-message').length, 1, 'Validation errors show.');
+        assert.equal(findAll('.validation-error-message').length, 1, 'Validation errors show.');
       });
     });});
 });

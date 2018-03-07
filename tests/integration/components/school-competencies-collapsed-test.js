@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
 
@@ -42,7 +42,7 @@ module('Integration | Component | school competencies collapsed', function(hooks
     const children = `${domains}:eq(0) td:eq(1)`;
 
     await settled();
-    assert.equal(this.$(title).text().trim(), 'Competencies (1/1)');
+    assert.equal(find(title).textContent.trim(), 'Competencies (1/1)');
     assert.equal(this.$(domainTitle).text().trim(), 'domain 0');
     assert.equal(this.$(children).text().trim(), 'There is 1 competency');
   });

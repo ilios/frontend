@@ -4,7 +4,7 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -112,7 +112,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     await settled();
 
-    let content = this.$().text().trim();
+    let content = find('*').textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
 
@@ -142,9 +142,9 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     await render(hbs`{{bulk-new-users close=(action nothing)}}`);
     run( async () => {
-      this.$('.click-choice-buttons .second-button').click();
+      await click('.click-choice-buttons .second-button');
       await settled();
-      let content = this.$().text().trim();
+      let content = find('*').textContent.trim();
       assert.notEqual(content.search(/File with user data/), -1);
       assert.notEqual(content.search(/Primary School/), -1);
       assert.notEqual(content.search(/Primary Cohort/), -1);
@@ -176,27 +176,27 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     let userRows = this.$('table tbody tr');
     assert.equal(userRows.length, 2);
-    assert.ok(this.$('tr:eq(1) td:eq(0) input').prop('checked'));
-    assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), 'jasper');
-    assert.equal(this.$('tr:eq(1) td:eq(2)').text().trim(), 'johnson');
-    assert.equal(this.$('tr:eq(1) td:eq(3)').text().trim(), '');
-    assert.equal(this.$('tr:eq(1) td:eq(4)').text().trim(), '1234567890');
-    assert.equal(this.$('tr:eq(1) td:eq(5)').text().trim(), 'jasper.johnson@example.com');
-    assert.equal(this.$('tr:eq(1) td:eq(6)').text().trim(), '123Campus');
-    assert.equal(this.$('tr:eq(1) td:eq(7)').text().trim(), '123Other');
-    assert.equal(this.$('tr:eq(1) td:eq(8)').text().trim(), 'jasper');
-    assert.equal(this.$('tr:eq(1) td:eq(9)').text().trim(), '123Test');
+    assert.ok(find('tr:eq(1) td:eq(0) input').checked);
+    assert.equal(find(findAll('tr:eq(1) td')[1]).textContent.trim(), 'jasper');
+    assert.equal(find(findAll('tr:eq(1) td')[2]).textContent.trim(), 'johnson');
+    assert.equal(find(findAll('tr:eq(1) td')[3]).textContent.trim(), '');
+    assert.equal(find(findAll('tr:eq(1) td')[4]).textContent.trim(), '1234567890');
+    assert.equal(find(findAll('tr:eq(1) td')[5]).textContent.trim(), 'jasper.johnson@example.com');
+    assert.equal(find(findAll('tr:eq(1) td')[6]).textContent.trim(), '123Campus');
+    assert.equal(find(findAll('tr:eq(1) td')[7]).textContent.trim(), '123Other');
+    assert.equal(find(findAll('tr:eq(1) td')[8]).textContent.trim(), 'jasper');
+    assert.equal(find(findAll('tr:eq(1) td')[9]).textContent.trim(), '123Test');
 
-    assert.ok(this.$('tr:eq(2) td:eq(0) input').prop('checked'));
-    assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), 'jackson');
-    assert.equal(this.$('tr:eq(2) td:eq(2)').text().trim(), 'johnson');
-    assert.equal(this.$('tr:eq(2) td:eq(3)').text().trim(), 'middle');
-    assert.equal(this.$('tr:eq(2) td:eq(4)').text().trim(), '12345');
-    assert.equal(this.$('tr:eq(2) td:eq(5)').text().trim(), 'jj@example.com');
-    assert.equal(this.$('tr:eq(2) td:eq(6)').text().trim(), '1234Campus');
-    assert.equal(this.$('tr:eq(2) td:eq(7)').text().trim(), '1234Other');
-    assert.equal(this.$('tr:eq(2) td:eq(8)').text().trim(), 'jck');
-    assert.equal(this.$('tr:eq(2) td:eq(9)').text().trim(), '1234Test');
+    assert.ok(find('tr:eq(2) td:eq(0) input').checked);
+    assert.equal(find(findAll('tr:eq(2) td')[1]).textContent.trim(), 'jackson');
+    assert.equal(find(findAll('tr:eq(2) td')[2]).textContent.trim(), 'johnson');
+    assert.equal(find(findAll('tr:eq(2) td')[3]).textContent.trim(), 'middle');
+    assert.equal(find(findAll('tr:eq(2) td')[4]).textContent.trim(), '12345');
+    assert.equal(find(findAll('tr:eq(2) td')[5]).textContent.trim(), 'jj@example.com');
+    assert.equal(find(findAll('tr:eq(2) td')[6]).textContent.trim(), '1234Campus');
+    assert.equal(find(findAll('tr:eq(2) td')[7]).textContent.trim(), '1234Other');
+    assert.equal(find(findAll('tr:eq(2) td')[8]).textContent.trim(), 'jck');
+    assert.equal(find(findAll('tr:eq(2) td')[9]).textContent.trim(), '1234Test');
   });
 
   test('saves valid faculty users', async function(assert) {
@@ -293,7 +293,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['invaliduser'],
     ];
     await triggerUpload(users, this.$('input[type=file]'));
-    this.$('.done').click();
+    await click('.done');
   });
 
   test('saves valid student users', async function(assert) {
@@ -386,8 +386,8 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
-    run(()=> {
-      this.$('.click-choice-buttons .second-button').click();
+    run(async () => {
+      await click('.click-choice-buttons .second-button');
     });
 
     let users = [
@@ -396,7 +396,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['invaliduser'],
     ];
     await triggerUpload(users, this.$('input[type=file]'));
-    this.$('.done').click();
+    await click('.done');
   });
 
 
@@ -406,7 +406,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       assert.ok(true);
     });
     await render(hbs`{{bulk-new-users close=(action close)}}`);
-    this.$('.cancel').click();
+    await click('.cancel');
   });
 
   test('validate firstName', async function(assert) {
@@ -599,10 +599,10 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
     ];
     await triggerUpload(users, this.$('input[type=file]'));
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
-    assert.ok(this.$('.saving-authentication-errors').length, 1);
-    assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
+    assert.ok(findAll('.saving-authentication-errors').length, 1);
+    assert.equal(find('.saving-authentication-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');
   });
 
   test('error saving user', async function(assert) {
@@ -652,10 +652,10 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
     ];
     await triggerUpload(users, this.$('input[type=file]'));
-    await this.$('.done').click();
+    await await click('.done');
     await settled();
-    assert.ok(this.$('.saving-user-errors').length, 1);
-    assert.equal(this.$('.saving-user-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
+    assert.ok(findAll('.saving-user-errors').length, 1);
+    assert.equal(find('.saving-user-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');
   });
 
   test('username not required', async function(assert) {
@@ -724,7 +724,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
     ];
     await triggerUpload(users, this.$('input[type=file]'));
-    this.$('.done').click();
+    await click('.done');
   });
 
   test('ignore header row', async function(assert) {
@@ -738,6 +738,6 @@ module('Integration | Component | bulk new users', function(hooks) {
     await triggerUpload(users, this.$('input[type=file]'));
 
     const rows = 'tbody tr';
-    assert.equal(this.$(rows).length, 1);
+    assert.equal(findAll(rows).length, 1);
   });
 });

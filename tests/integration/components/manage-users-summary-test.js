@@ -1,6 +1,6 @@
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | manage users summary', function(hooks) {
@@ -9,9 +9,9 @@ module('Integration | Component | manage users summary', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{manage-users-summary}}`);
 
-    assert.equal(this.$('h2').text().trim(), 'Ilios Users (View All)');
-    assert.equal(this.$('a:eq(0)').text().trim(), 'View All');
-    assert.equal(this.$('a:eq(2)').text().trim(), 'Upload Multiple Users');
+    assert.equal(find('h2').textContent.trim(), 'Ilios Users (View All)');
+    assert.equal(find('a').textContent.trim(), 'View All');
+    assert.equal(find(findAll('a')[2]).textContent.trim(), 'Upload Multiple Users');
   });
 
   /**
@@ -22,9 +22,9 @@ module('Integration | Component | manage users summary', function(hooks) {
   skip('it renders URLs', function(assert) {
     this.render(hbs`{{manage-users-summary}}`);
 
-    assert.notEqual(this.$('a:eq(0)').prop('href').search(/\/users$/), -1, `${this.$('a:eq(0)').prop('href')} links to /users`);
-    assert.notEqual(this.$('a:eq(1)').prop('href').search(/\/users\?addUser=true$/), -1, `${this.$('a:eq(1)').prop('href')} links to /users?addUser=true`);
-    assert.notEqual(this.$('a:eq(2)').prop('href').search(/\/users\?addUsers=true$/), -1, `${this.$('a:eq(2)').prop('href')} links to /users?addUsers=true`);
+    assert.notEqual(find('a').href.search(/\/users$/), -1, `${find('a').href} links to /users`);
+    assert.notEqual(find(findAll('a')[1]).href.search(/\/users\?addUser=true$/), -1, `${find(findAll('a')[1]).href} links to /users?addUser=true`);
+    assert.notEqual(find(findAll('a')[2]).href.search(/\/users\?addUsers=true$/), -1, `${find(findAll('a')[2]).href} links to /users?addUsers=true`);
   });
 
   test('show more input prompt', async function(assert) {
@@ -33,12 +33,12 @@ module('Integration | Component | manage users summary', function(hooks) {
     const userSearch = '.user-search input';
     const results = '.user-search .results li';
 
-    this.$(userSearch).val('12');
-    this.$(userSearch).trigger('keyup');
+    await fillIn(userSearch, '12');
+    await triggerEvent(userSearch, 'keyup');
 
     return settled().then(()=>{
-      assert.equal(this.$(results).length, 1);
-      assert.equal(this.$(results).text().trim(), 'keep typing...');
+      assert.equal(findAll(results).length, 1);
+      assert.equal(find(results).textContent.trim(), 'keep typing...');
     });
   });
 });

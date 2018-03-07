@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, currentURL, find, visit } from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import startApp from 'ilios/tests/helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
@@ -57,9 +58,9 @@ module('Acceptance: Learnergroup', function(hooks) {
     await fillIn(input, '5');
     await click(done);
     function getCellData(row, cell) {
-      return find(`${table} tr:eq(${row}) td:eq(${cell})`).text().trim();
+      return find(`${table} tr:eq(${row}) td:eq(${cell})`).textContent.trim();
     }
-    assert.equal(find(`${table} tr`).length, 7, 'all subgroups are displayed.');
+    assert.equal(findAll(`${table} tr`).length, 7, 'all subgroups are displayed.');
     for (let i = 0; i < 5; i++) {
       assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
     }
@@ -71,7 +72,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await click(multiGroupsButton);
     await fillIn(input, '2');
     await click(done);
-    assert.equal(find(`${table} tr`).length, 9, 'all subgroups are still displayed.');
+    assert.equal(findAll(`${table} tr`).length, 9, 'all subgroups are still displayed.');
     assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
     assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
   });
@@ -129,13 +130,13 @@ module('Acceptance: Learnergroup', function(hooks) {
 
 
     await visit('/learnergroups');
-    assert.equal(1, find(groups).length);
+    assert.equal(1, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('0'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyNoLearners);
-    assert.equal(2, find(groups).length);
+    assert.equal(2, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('0'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
@@ -148,7 +149,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
 
-    assert.equal(2, find(subGroupList).length);
+    assert.equal(2, findAll(subGroupList).length);
 
     assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
     assert.equal(getElementText(find(firstSubgroupMembers)), getText('0'));
@@ -215,13 +216,13 @@ module('Acceptance: Learnergroup', function(hooks) {
     const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
 
     await visit('/learnergroups');
-    assert.equal(1, find(groups).length);
+    assert.equal(1, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('7'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyWithLearners);
-    assert.equal(2, find(groups).length);
+    assert.equal(2, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     assert.equal(getElementText(find(firstMembers)), getText('7'));
     assert.equal(getElementText(find(firstSubgroups)), getText('2'));
@@ -234,7 +235,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
 
-    assert.equal(2, find(subGroupList).length);
+    assert.equal(2, findAll(subGroupList).length);
 
     assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
     assert.equal(getElementText(find(firstSubgroupMembers)), getText('1'));
@@ -277,12 +278,12 @@ module('Acceptance: Learnergroup', function(hooks) {
     });
 
     await visit('/learnergroups');
-    assert.equal(1, find(groups).length);
+    assert.equal(1, findAll(groups).length);
     assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
     await click(firstLink);
     assert.equal(currentURL(), '/learnergroups/1');
-    assert.equal(find(members).length, 5, 'lists members');
-    assert.equal(find(cohortMembers).length, 5, 'lists cohort non members');
+    assert.equal(findAll(members).length, 5, 'lists members');
+    assert.equal(findAll(cohortMembers).length, 5, 'lists cohort non members');
   });
 
   test('learner group calendar', async function(assert) {
@@ -308,9 +309,9 @@ module('Acceptance: Learnergroup', function(hooks) {
     const event = '.event';
 
     await visit('/learnergroups/1');
-    assert.equal(find(event).length, 0);
+    assert.equal(findAll(event).length, 0);
     await click(calendarToggle);
-    assert.equal(find(event).length, 1);
+    assert.equal(findAll(event).length, 1);
   });
 
   test('learner group calendar with subgroup events', async function(assert) {
@@ -347,11 +348,11 @@ module('Acceptance: Learnergroup', function(hooks) {
     const event = '.event';
 
     await visit('/learnergroups/1');
-    assert.equal(find(event).length, 0);
+    assert.equal(findAll(event).length, 0);
     await click(calendarToggle);
-    assert.equal(find(event).length, 1);
+    assert.equal(findAll(event).length, 1);
     await click(subgroupEventsToggle);
-    assert.equal(find(event).length, 2);
+    assert.equal(findAll(event).length, 2);
   });
 
 
@@ -390,9 +391,9 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     await visit('/learnergroups/2');
     assert.equal(currentURL(), '/learnergroups/2');
-    assert.equal(find(members).length, 1, 'lists members');
+    assert.equal(findAll(members).length, 1, 'lists members');
     await click(manage);
-    assert.equal(find(membersOfGroup).length, 1, 'displays all group members');
-    assert.equal(find(membersOfTree).length, 2, 'lists all tree members');
+    assert.equal(findAll(membersOfGroup).length, 1, 'displays all group members');
+    assert.equal(findAll(membersOfTree).length, 2, 'lists all tree members');
   });
 });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | leadership collapsed', function(hooks) {
@@ -31,7 +31,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     const directors = `${directorsRow} td:eq(1)`;
     const administrators = `${administratorsRow} td:eq(1)`;
 
-    assert.equal(this.$(title).text().trim(), 'Test Title');
+    assert.equal(find(title).textContent.trim(), 'Test Title');
     assert.equal(this.$(directors).text().trim(), 'There are 3 directors');
     assert.equal(this.$(administrators).text().trim(), 'There is 1 administrator');
   });
@@ -49,6 +49,6 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     }}`);
     const title = '.title';
 
-    this.$(title).click();
+    await click(title);
   });
 });

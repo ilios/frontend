@@ -1,3 +1,4 @@
+import { click, fillIn, find, findAll, currentURL, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../helpers/destroy-app';
 import {
   module,
@@ -46,32 +47,32 @@ module('Acceptance: Programs', function(hooks) {
       schoolId: 1
     });
     await visit('/programs');
-    assert.equal(4, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondProgram.title));
+    assert.equal(4, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(regularProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(firstProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(3) td'))),getText(secondProgram.title));
 
     await fillIn('.titlefilter input', 'first');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(firstProgram.title));
     await fillIn('.titlefilter input', 'second');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(secondProgram.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(secondProgram.title));
     await fillIn('.titlefilter input', 'special');
-    assert.equal(2, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(firstProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(secondProgram.title));
+    assert.equal(2, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(firstProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(secondProgram.title));
     await fillIn('.titlefilter input', '\\');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexProgram.title));
 
     await fillIn('.titlefilter input', '');
-    assert.equal(4, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText(regexProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(1) td:eq(0)')),getText(regularProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(2) td:eq(0)')),getText(firstProgram.title));
-    assert.equal(getElementText(find('.list tbody tr:eq(3) td:eq(0)')),getText(secondProgram.title));
+    assert.equal(4, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText(regexProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(1) td'))),getText(regularProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(2) td'))),getText(firstProgram.title));
+    assert.equal(getElementText(find(find('.list tbody tr:eq(3) td'))),getText(secondProgram.title));
 
   });
 
@@ -92,7 +93,7 @@ module('Acceptance: Programs', function(hooks) {
     assert.equal(schoolOptions.length, 2);
     assert.equal(getElementText(schoolOptions.eq(0)), 'school0');
     assert.equal(getElementText(schoolOptions.eq(1)), 'school1');
-    assert.equal(find(schoolSelect).val(), '2');
+    assert.equal(find(schoolSelect).value, '2');
   });
 
   test('add new program', async function(assert) {
@@ -112,10 +113,10 @@ module('Acceptance: Programs', function(hooks) {
     await fillIn(input, 'Test Title');
     await click(saveButton);
     function getContent(i) {
-      return find(`tbody tr td:eq(${i})`).text().trim();
+      return find(`tbody tr td:eq(${i})`).textContent.trim();
     }
 
-    assert.equal(find(savedLink).text().trim(), 'Test Title', 'link is visisble');
+    assert.equal(find(savedLink).textContent.trim(), 'Test Title', 'link is visisble');
     assert.equal(getContent(0), 'Test Title', 'program is correct');
     assert.equal(getContent(1), 'school 0', 'school is correct');
   });
@@ -128,12 +129,12 @@ module('Acceptance: Programs', function(hooks) {
       schoolId: 1,
     });
     await visit('/programs');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('program 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.confirm-buttons .remove');
-    assert.equal(find('.flash-messages').length, 1);
-    assert.equal(0, find('.list tbody tr').length);
+    assert.equal(findAll('.flash-messages').length, 1);
+    assert.equal(0, findAll('.list tbody tr').length);
   });
 
   test('cancel remove program', async function(assert) {
@@ -144,12 +145,12 @@ module('Acceptance: Programs', function(hooks) {
       schoolId: 1,
     });
     await visit('/programs');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('program 0'));
     await click('.list tbody tr:eq(0) td:eq(3) .remove');
     await click('.confirm-buttons .done');
-    assert.equal(1, find('.list tbody tr').length);
-    assert.equal(getElementText(find('.list tbody tr:eq(0) td:eq(0)')),getText('program 0'));
+    assert.equal(1, findAll('.list tbody tr').length);
+    assert.equal(getElementText(find(find('.list tbody tr:eq(0) td'))),getText('program 0'));
   });
 
   test('click edit takes you to program route', async function(assert) {
@@ -191,10 +192,10 @@ module('Acceptance: Programs', function(hooks) {
     const filter = '.titlefilter input';
     await visit('/programs');
 
-    assert.equal(find(programs).length, 1);
+    assert.equal(findAll(programs).length, 1);
     assert.equal(getElementText(firstProgramTitle), 'yes\\no');
     await fillIn(filter, '\\');
-    assert.equal(find(programs).length, 1);
+    assert.equal(findAll(programs).length, 1);
     assert.equal(getElementText(firstProgramTitle), 'yes\\no');
   });
 });

@@ -1,3 +1,4 @@
+import { click, fillIn, findAll, find, currentURL, currentPath, visit } from '@ember/test-helpers';
 import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
@@ -56,7 +57,7 @@ module('Acceptance: Course - Overview', function(hooks) {
     assert.equal(getElementText(find('.universallocator', container)), 'ILIOS' + course.id);
     assert.equal(getElementText(find('.clerkshiptype', container)), getText('Clerkship Type:' + clerkshipType.title));
     assert.equal(getElementText(find('.coursedirectors', container)), getText('Directors: A M. Director'));
-    assert.ok(find('a.rollover', container).prop('href').search(/courses\/1\/rollover/) > -1);
+    assert.ok(find('a.rollover', container).href.search(/courses\/1\/rollover/) > -1);
   });
 
   test('check detail fields', async function(assert) {
@@ -128,13 +129,13 @@ module('Acceptance: Course - Overview', function(hooks) {
 
     await visit(url);
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find('.course-details .title').length, 2);
+    assert.equal(findAll('.course-details .title').length, 2);
     await click('.detail-collapsed-control');
-    assert.ok(find('.title').length > 2);
+    assert.ok(findAll('.title').length > 2);
     assert.equal(currentURL(), '/courses/1?details=true');
-    assert.ok(find('.course-details .title').length > 2);
+    assert.ok(findAll('.course-details .title').length > 2);
     await click('.detail-collapsed-control');
-    assert.equal(find('.course-details .title').length, 2);
+    assert.equal(findAll('.course-details .title').length, 2);
     assert.equal(currentURL(), '/courses/1');
   });
 
@@ -191,12 +192,12 @@ module('Acceptance: Course - Overview', function(hooks) {
     await visit(url + '?details=true');
     const container = find('.course-overview');
     await click(find('.coursestartdate .editable', container));
-    assert.notOk(find('.coursestartdate .validation-error-message', container).length, 'no validation error shown.');
+    assert.notOk(findAll('.coursestartdate .validation-error-message', container).length, 'no validation error shown.');
     const interactor = openDatepicker(find('.coursestartdate input', container));
     const newDate = moment(course.startDate).add(1, 'year');
     interactor.selectDate(newDate.toDate());
     await click(find('.coursestartdate .editinplace .actions .done', container));
-    assert.ok(find('.coursestartdate .validation-error-message', container).length, 'validation error shows.');
+    assert.ok(findAll('.coursestartdate .validation-error-message', container).length, 'validation error shows.');
   });
 
   test('change end date', async function(assert) {
@@ -234,12 +235,12 @@ module('Acceptance: Course - Overview', function(hooks) {
     await visit(url + '?details=true');
     const container = find('.course-overview');
     await click(find('.courseenddate .editable', container));
-    assert.notOk(find('.courseenddate .validation-error-message', container).length, 'no validation error shown.');
+    assert.notOk(findAll('.courseenddate .validation-error-message', container).length, 'no validation error shown.');
     const interactor = openDatepicker(find('.courseenddate input', container));
     const newDate = moment(course.endDate).subtract(1, 'year');
     interactor.selectDate(newDate.toDate());
     await click(find('.courseenddate .editinplace .actions .done', container));
-    assert.ok(find('.courseenddate .validation-error-message', container).length, 'validation error shows.');
+    assert.ok(findAll('.courseenddate .validation-error-message', container).length, 'validation error shows.');
   });
 
   test('change externalId', async function(assert) {
@@ -294,9 +295,9 @@ module('Acceptance: Course - Overview', function(hooks) {
       level: 3,
       directorIds: [2]
     });
-    visit(url);
+    await visit(url);
     await click('.coursedirectors .clickable');
-    await click('.coursedirectors li:eq(0)');
+    await click(find('.coursedirectors li'));
     await click('.coursedirectors .bigadd');
     assert.equal(getElementText(find('.coursedirectors')), getText('Directors: None'));
   });
@@ -347,14 +348,14 @@ module('Acceptance: Course - Overview', function(hooks) {
     assert.equal(searchResults.length, 4);
     assert.equal(getElementText(searchResults.eq(0)), getText('3 Results'));
     assert.equal(getElementText(searchResults.eq(1)), getText('0 guy M. Mc0son user@example.edu'));
-    assert.notOk(find(searchResults.eq(1)).hasClass('inactive'));
+    assert.notOk(find(searchResults.eq(1)).classList.contains('inactive'));
     assert.equal(getElementText(searchResults.eq(2)), getText('Added M. Guy user@example.edu'));
-    assert.ok(find(searchResults.eq(2)).hasClass('inactive'));
+    assert.ok(find(searchResults.eq(2)).classList.contains('inactive'));
     assert.equal(getElementText(searchResults.eq(3)), getText('Disabled M. Guy user@example.edu'));
-    assert.ok(find(searchResults.eq(3)).hasClass('inactive'));
+    assert.ok(find(searchResults.eq(3)).classList.contains('inactive'));
 
-    await click('li:eq(0)', directors);
-    assert.ok(!find('.results li:eq(2)', directors).hasClass('inactive'));
+    await click(find('li'), directors);
+    assert.ok(!find(findAll('.results li')[2], directors).classList.contains('inactive'));
     await click(searchResults.eq(1));
     await click('.coursedirectors .bigadd');
     assert.equal(getElementText(find('.coursedirectors')), getText('Directors: 0 guy M. Mc0son'));
@@ -431,7 +432,7 @@ module('Acceptance: Course - Overview', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 0);
+    assert.equal(findAll(rollover).length, 0);
   });
 
   test('rollover visible to developers', async function(assert) {
@@ -448,7 +449,7 @@ module('Acceptance: Course - Overview', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1);
+    assert.equal(findAll(rollover).length, 1);
   });
 
   test('rollover visible to course directors', async function(assert) {
@@ -465,7 +466,7 @@ module('Acceptance: Course - Overview', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'course.index');
-    assert.equal(find(rollover).length, 1);
+    assert.equal(findAll(rollover).length, 1);
   });
 
   test('rollover hidden on rollover route', async function(assert) {
@@ -482,6 +483,6 @@ module('Acceptance: Course - Overview', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentPath(), 'course.rollover');
-    assert.equal(find(rollover).length, 0);
+    assert.equal(findAll(rollover).length, 0);
   });
 });

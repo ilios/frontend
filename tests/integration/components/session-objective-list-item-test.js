@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -29,10 +29,10 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'nothing')
     }}`);
 
-    assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
-    assert.equal(this.$('td:eq(1) button').text().trim(), 'Add New');
-    assert.equal(this.$('td:eq(2) button').text().trim(), 'Add New');
-    assert.equal(this.$('td:eq(3) i').length, 1);
+    assert.equal(find('td').textContent.trim(), 'fake title');
+    assert.equal(find('td:eq(1) button').textContent.trim(), 'Add New');
+    assert.equal(find('td:eq(2) button').textContent.trim(), 'Add New');
+    assert.equal(findAll('td:eq(3) i').length, 1);
   });
 
   test('renders removable', async function(assert) {
@@ -50,7 +50,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'nothing')
     }}`);
 
-    assert.ok(this.$('tr').hasClass('confirm-removal'));
+    assert.ok(find('tr').classList.contains('confirm-removal'));
   });
 
   test('can change title', async function(assert) {
@@ -71,10 +71,10 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'nothing')
     }}`);
 
-    this.$('td:eq(0) .editable').click();
+    await click('td:eq(0) .editable');
     this.$('td:eq(0) .fr-box').froalaEditor('html.set', 'new title');
     this.$('td:eq(0) .fr-box').froalaEditor('events.trigger', 'contentChanged');
-    this.$('td:eq(0) .done').click();
+    await click('td:eq(0) .done');
 
     await settled();
   });
@@ -96,7 +96,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'nothing')
     }}`);
 
-    this.$('td:eq(1) button').click();
+    await click('td:eq(1) button');
 
   });
 
@@ -117,7 +117,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'something')
     }}`);
 
-    this.$('td:eq(2) button').click();
+    await click('td:eq(2) button');
 
   });
 
@@ -138,7 +138,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action 'nothing')
     }}`);
 
-    this.$('td:eq(3) i').click();
+    await click('td:eq(3) i');
 
   });
 });

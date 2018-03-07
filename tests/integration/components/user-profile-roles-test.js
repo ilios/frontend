@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -77,7 +77,7 @@ module('Integration | Component | user profile roles', function(hooks) {
     });
     await render(hbs`{{user-profile-roles user=user isManagable=true setIsManaging=(action click)}}`);
     const manage = 'button.manage';
-    this.$(manage).click();
+    await click(manage);
   });
 
   test('can edit user roles', async function(assert) {
@@ -114,7 +114,7 @@ module('Integration | Component | user profile roles', function(hooks) {
     const enabled = 'input:eq(4)';
     const syncIgnored = 'input:eq(5)';
 
-    return settled().then(()=>{
+    return settled().then(async () => {
       assert.equal(inputs.length, 6);
       assert.ok(this.$(courseDirector).is(':checked'));
       assert.ok(this.$(instructor).not(':checked'));
@@ -130,7 +130,7 @@ module('Integration | Component | user profile roles', function(hooks) {
       this.$(enabled).click().change();
       this.$(syncIgnored).click().change();
 
-      this.$('.bigadd').click();
+      await click('.bigadd');
 
       return settled();
     });

@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -41,7 +41,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const status = `${blocks}:eq(4) span:eq(0)`;
 
 
-    assert.equal(this.$(title).text().trim(), 'title');
+    assert.equal(find(title).textContent.trim(), 'title');
     assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
     assert.ok(this.$(printIcon).hasClass('fa-print'));
     assert.ok(this.$(rolloverIcon).hasClass('fa-random'));
@@ -72,7 +72,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const printIcon = `${actions}:eq(0)`;
     const rolloverIcon = `${actions}:eq(1)`;
 
-    assert.ok(this.$(actions).length, 2);
+    assert.ok(findAll(actions).length, 2);
     assert.ok(this.$(printIcon).hasClass('fa-print'));
     assert.ok(this.$(rolloverIcon).hasClass('fa-random'));
   });
@@ -95,7 +95,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const materialsIcon = `${actions}:eq(0)`;
     const printIcon = `${actions}:eq(1)`;
 
-    assert.ok(this.$(actions).length, 2);
+    assert.ok(findAll(actions).length, 2);
     assert.ok(this.$(printIcon).hasClass('fa-print'));
     assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
   });

@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -17,22 +17,22 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     });
     this.set('sequenceBlock', block);
     await render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=sequenceBlock}}`);
-    assert.equal(this.$('.start-date label').text().trim(), 'Start:', 'Start date is labeled correctly.');
+    assert.equal(find('.start-date label').textContent.trim(), 'Start:', 'Start date is labeled correctly.');
     assert.equal(
-      this.$('.start-date input').val(),
+      find('.start-date input').value,
       moment(block.startDate).format('M/D/YYYY'),
       'Start date input has correct value.'
     );
-    assert.equal(this.$('.end-date label').text().trim(), 'End:', 'End date input is labeled correctly.');
+    assert.equal(find('.end-date label').textContent.trim(), 'End:', 'End date input is labeled correctly.');
     assert.equal(
-      this.$('.end-date input').val(),
+      find('.end-date input').value,
       moment(block.endDate).format('M/D/YYYY'),
       'End date input has correct value.'
     );
-    assert.equal(this.$('.duration label').text().trim(), 'Duration (in Days):', 'Duration input is labeled correctly.');
-    assert.equal(this.$('.duration input').val(), block.duration, 'Duration input has correct value.');
-    assert.equal(this.$('.buttons .done').length, 1, 'Done button is present.');
-    assert.equal(this.$('.buttons .cancel').length, 1, 'Cancel button is present.');
+    assert.equal(find('.duration label').textContent.trim(), 'Duration (in Days):', 'Duration input is labeled correctly.');
+    assert.equal(find('.duration input').value, block.duration, 'Duration input has correct value.');
+    assert.equal(findAll('.buttons .done').length, 1, 'Done button is present.');
+    assert.equal(findAll('.buttons .cancel').length, 1, 'Cancel button is present.');
   });
 
   test('save', async function(assert) {
@@ -59,9 +59,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(this.$('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
-    this.$('.duration input').val(newDuration);
-    this.$('.duration input').trigger('input');
-    this.$('.buttons .done').click();
+    await fillIn('.duration input', newDuration);
+    await triggerEvent('.duration input', 'input');
+    await click('.buttons .done');
   });
 
   test('save with date range and a zero duration', async function(assert) {
@@ -84,9 +84,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(this.$('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
-    this.$('.duration input').val(newDuration);
-    this.$('.duration input').trigger('input');
-    this.$('.buttons .done').click();
+    await fillIn('.duration input', newDuration);
+    await triggerEvent('.duration input', 'input');
+    await click('.buttons .done');
   });
 
   test('save with non-zero duration and no date range', async function(assert) {
@@ -104,9 +104,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    this.$('.duration input').val(newDuration);
-    this.$('.duration input').trigger('input');
-    this.$('.buttons .done').click();
+    await fillIn('.duration input', newDuration);
+    await triggerEvent('.duration input', 'input');
+    await click('.buttons .done');
   });
 
   test('cancel', async function(assert) {
@@ -122,7 +122,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     this.set('block', block);
     this.set('cancel', cancelAction);
     await render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block cancel=cancel}}`);
-    this.$('.buttons .cancel').click();
+    await click('.buttons .cancel');
   });
 
 
@@ -139,14 +139,14 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
     let interactor = openDatepicker(this.$('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(this.$('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
-    this.$('.buttons .done').click();
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -165,12 +165,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.duration input').val('');
-    this.$('.duration input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.duration input', '');
+    await triggerEvent('.duration input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -189,12 +189,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.duration input').val('-10');
-    this.$('.duration input').trigger('input');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await fillIn('.duration input', '-10');
+    await triggerEvent('.duration input', 'input');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -209,10 +209,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
-    this.$('.buttons .done').click();
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 
@@ -227,12 +227,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(this.$('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
     let interactor = openDatepicker(this.$('.start-date input'));
     interactor.selectDate(new Date());
-    this.$('.buttons .done').click();
+    await click('.buttons .done');
     return settled().then(() => {
-      assert.ok(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
     });
   });
 });
