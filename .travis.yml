@@ -14,6 +14,8 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
+    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - COVERAGE=true
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -36,6 +38,12 @@ jobs:
         - greenkeeper-lockfile-upload
     - stage: test
       env: SW_DISABLED=true
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - stage: deploy staging
       if: branch = master AND NOT type = pull_request AND NOT type = cron
       script: node_modules/.bin/ember deploy staging --activate
