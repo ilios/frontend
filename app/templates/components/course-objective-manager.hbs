@@ -25,12 +25,12 @@
             {{#each (await competency.objectives) as |objective|}}
               {{#if objective.selected}}
                 <li class='selected clickable' {{action 'removeParent' objective}}>
-                  <input type='radio' checked="checked">
+                  <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}} checked="checked">
                   {{objective.textTitle}}
                 </li>
               {{else}}
-                <li class='clickable' {{action 'addParent' objective}}>
-                  <input type='radio'>
+                <li class='clickable' {{action (perform addParent objective)}}>
+                  <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}}>
                   {{objective.textTitle}}
                 </li>
               {{/if}}
