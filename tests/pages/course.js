@@ -9,6 +9,7 @@ import {
   hasClass,
   isVisible,
   notHasClass,
+  property,
   text,
   value,
   visitable
@@ -118,12 +119,28 @@ export default create({
 
   objectives: {
     scope: '[data-test-detail-objectives]',
+    createNew: clickable('.detail-objectives-actions button'),
+    newObjective: {
+      description: fillInFroalaEditor('.fr-box'),
+      save: clickable('.done'),
+      cancel: clickable('.cancel'),
+      canSave: property('disabled', '.done'),
+      validationError: text('.validation-error-message'),
+      hasValidationError: isVisible('.validation-error-message'),
+    },
     current: collection({
       scope: 'table',
       itemScope: 'tbody tr',
       item: {
-        title: text('td', { at: 0 }),
+        description: text('td', { at: 0 }),
         parents: collection({
+          scope: 'td',
+          itemScope: '[data-test-parent]',
+          item: {
+            title: text(),
+          },
+        }, { at: 1 }),
+        meshTerms: collection({
           scope: 'td',
           itemScope: '[data-test-parent]',
           item: {
