@@ -79,7 +79,12 @@ const cohortProxy = EmberObject.extend({
       });
     });
 
-  })
+  }),
+  allowMultipleParents: computed('cohort.school', async function () {
+    const cohort = this.get('cohort');
+    const school = await cohort.get('school');
+    return await school.getConfigValue('allowMultipleCourseObjectiveParents');
+  }),
 });
 
 export default Component.extend({
@@ -166,30 +171,38 @@ export default Component.extend({
     });
   }),
 
+  addParent: task(function* (parentProxy) {
+    const courseObjective = this.get('courseObjective');
+    const newParent = parentProxy.get('content');
+
+    const programYears = yield newParent.get('programYears');
+    const newProgramYear = programYears.get('firstObject');
+    const program = yield newProgramYear.get('program');
+    const school = yield program.get('school');
+    const allowMultipleCourseObjectiveParents = yield school.getConfigValue('allowMultipleCourseObjectiveParents');
+
+    let parents = yield courseObjective.get('parents');
+    parents.addObject(newParent);
+    let children = yield newParent.get('children');
+    children.addObject(courseObjective);
+
+    if (!allowMultipleCourseObjectiveParents) {
+      const oldParents = yield newProgramYear.get('objectives');
+      //remove any other parents in the same cohort
+      oldParents.forEach(oldParent => {
+        if(oldParent.get('id') !== newParent.get('id')){
+          courseObjective.get('parents').removeObject(oldParent);
+          oldParent.get('children').removeObject(courseObjective);
+        }
+      });
+    }
+  }),
+
   actions: {
     setSelectedCohort(cohortId){
       this.get('cohorts').then(cohorts => {
         let selectedCohort = cohorts.findBy('id', cohortId);
         this.set('selectedCohort', selectedCohort);
-      });
-    },
-    addParent(parentProxy){
-      let courseObjective = this.get('courseObjective');
-      let newParent = parentProxy.get('content');
-
-      //remove any other parents in the same cohort
-      newParent.get('programYears').then(programYears => {
-        let newProgramYear = programYears.get('firstObject');
-        newProgramYear.get('objectives').then(oldParents => {
-          oldParents.forEach(oldParent => {
-            if(oldParent.get('id') !== newParent.get('id')){
-              courseObjective.get('parents').removeObject(oldParent);
-              oldParent.get('children').removeObject(courseObjective);
-            }
-          });
-          courseObjective.get('parents').addObject(newParent);
-          newParent.get('children').addObject(courseObjective);
-        });
       });
     },
     removeParent(parentProxy){
