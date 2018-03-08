@@ -98,8 +98,8 @@ module('Acceptance: Course - Cohorts', function(hooks) {
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
     assert.equal(page.objectives.current(0).parents().count, 2);
-    assert.equal(page.objectives.current(0).parents(0).title, 'objective 0');
-    assert.equal(page.objectives.current(0).parents(1).title, 'objective 1');
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
 
     await page.cohorts.manage();
     await page.cohorts.selected(0).remove();
@@ -107,6 +107,6 @@ module('Acceptance: Course - Cohorts', function(hooks) {
 
     assert.equal(page.objectives.current().count, 1);
     assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).title, 'objective 1');
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 1');
   });
 });

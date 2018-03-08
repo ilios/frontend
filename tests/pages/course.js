@@ -132,17 +132,25 @@ export default create({
       scope: 'table',
       itemScope: 'tbody tr',
       item: {
-        description: text('td', { at: 0 }),
+        description: {
+          scope: 'td:eq(0)',
+          openEditor: clickable('.editable'),
+          editorContents: froalaEditorValue('.fr-box'),
+          edit: fillInFroalaEditor('.fr-box'),
+          save: clickable('.done'),
+          validationError: text('.validation-error-message'),
+          hasValidationError: isVisible('.validation-error-message'),
+        },
         parents: collection({
-          scope: 'td',
+          scope: 'td:eq(1)',
           itemScope: '[data-test-parent]',
           item: {
-            title: text(),
+            description: text(),
           },
         }, { at: 1 }),
         meshTerms: collection({
-          scope: 'td',
-          itemScope: '[data-test-parent]',
+          scope: 'td:eq(2)',
+          itemScope: 'li',
           item: {
             title: text(),
           },
