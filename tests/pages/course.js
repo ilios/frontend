@@ -120,6 +120,8 @@ export default create({
   objectives: {
     scope: '[data-test-detail-objectives]',
     createNew: clickable('.detail-objectives-actions button'),
+    save: clickable('.detail-objectives-actions button.bigadd'),
+    cancel: clickable('.detail-objectives-actions button.bigcancel'),
     newObjective: {
       description: fillInFroalaEditor('.fr-box'),
       save: clickable('.done'),
@@ -155,8 +157,10 @@ export default create({
             title: text(),
           },
         }, { at: 1 }),
+        manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
       },
     }),
+    meshManager,
   },
 
   learningMaterials: {

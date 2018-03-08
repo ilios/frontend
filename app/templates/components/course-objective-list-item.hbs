@@ -54,23 +54,23 @@
   {{/if}}
 </td>
 <td class='text-left text-top' colspan=2>
-  {{#if objective.meshDescriptors.length}}
-    <ul class='mesh-descriptor-list'>
-      {{#each objective.meshDescriptors as |descriptor|}}
-        {{#if editable}}
-          <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
-        {{else}}
-          <li>{{descriptor.name}}</li>
-        {{/if}}
-      {{/each}}
-    </ul>
-  {{else}}
-    {{#if editable}}
-      <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+  <ul class='mesh-descriptor-list'>
+    {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
+      {{#if editable}}
+        <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
+      {{else}}
+        <li>{{descriptor.name}}</li>
+      {{/if}}
     {{else}}
-      {{t 'general.none'}}
-    {{/if}}
-  {{/if}}
+      <li>
+        {{#if editable}}
+          <button {{action manageDescriptors objective}}>{{t 'general.addNew'}}</button>
+        {{else}}
+          {{t 'general.none'}}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
 </td>
 <td class='text-left text-top' colspan=1>
   {{#if editable}}
