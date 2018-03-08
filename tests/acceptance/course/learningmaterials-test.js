@@ -143,7 +143,6 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     assert.ok(page.learningMaterials.current(3).isNotePublic);
     assert.equal(page.learningMaterials.current(3).mesh, 'None');
     assert.equal(page.learningMaterials.current(3).status, 'status 0');
-
   });
 
   test('create new link learning material', async function(assert) {
@@ -360,31 +359,31 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.learningMaterials.current().count, 4);
     await page.learningMaterials.current(0).details();
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms().count, 2);
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(0).title, 'descriptor 1');
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(1).title, 'descriptor 2');
-    await page.learningMaterials.manager.mesh.search('descriptor');
-    await page.learningMaterials.manager.mesh.runSearch();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 1');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
 
-    assert.equal(page.learningMaterials.manager.mesh.searchResults().count, 6);
+    assert.equal(page.learningMaterials.manager.meshManager.searchResults().count, 6);
     for (let i = 0; i < 6; i++){
-      assert.equal(page.learningMaterials.manager.mesh.searchResults(i).title, `descriptor ${i}`);
+      assert.equal(page.learningMaterials.manager.meshManager.searchResults(i).title, `descriptor ${i}`);
     }
-    assert.notOk(page.learningMaterials.manager.mesh.searchResults(0).isDisabled);
-    assert.ok(page.learningMaterials.manager.mesh.searchResults(1).isDisabled);
-    assert.ok(page.learningMaterials.manager.mesh.searchResults(2).isDisabled);
-    assert.notOk(page.learningMaterials.manager.mesh.searchResults(3).isDisabled);
-    assert.notOk(page.learningMaterials.manager.mesh.searchResults(4).isDisabled);
-    assert.notOk(page.learningMaterials.manager.mesh.searchResults(5).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(0).isDisabled);
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(1).isDisabled);
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(2).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(3).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(4).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(5).isDisabled);
 
-    await page.learningMaterials.manager.mesh.selectedTerms(0).remove();
-    await page.learningMaterials.manager.mesh.searchResults(0).add();
-    assert.ok(page.learningMaterials.manager.mesh.searchResults(0).isDisabled);
-    assert.notOk(page.learningMaterials.manager.mesh.searchResults(1).isDisabled);
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms().count, 2);
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(0).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(1).isDisabled);
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
 
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(0).title, 'descriptor 0');
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
   });
 
   test('save terms', async function (assert) {
@@ -392,15 +391,15 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.learningMaterials.current().count, 4);
     await page.learningMaterials.current(0).details();
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms().count, 2);
-    await page.learningMaterials.manager.mesh.search('descriptor');
-    await page.learningMaterials.manager.mesh.runSearch();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
 
-    await page.learningMaterials.manager.mesh.selectedTerms(0).remove();
-    await page.learningMaterials.manager.mesh.searchResults(0).add();
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
 
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(0).title, 'descriptor 0');
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
 
     await page.learningMaterials.manager.save();
     assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 0 descriptor 2');
@@ -411,15 +410,15 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.learningMaterials.current().count, 4);
     await page.learningMaterials.current(0).details();
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms().count, 2);
-    await page.learningMaterials.manager.mesh.search('descriptor');
-    await page.learningMaterials.manager.mesh.runSearch();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
 
-    await page.learningMaterials.manager.mesh.selectedTerms(0).remove();
-    await page.learningMaterials.manager.mesh.searchResults(0).add();
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
 
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(0).title, 'descriptor 0');
-    assert.equal(page.learningMaterials.manager.mesh.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
 
     await page.learningMaterials.manager.cancel();
     assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 1 descriptor 2');

@@ -5,7 +5,6 @@ import {
   create,
   collection,
   fillable,
-  hasClass,
   isVisible,
   text,
   value,
@@ -13,6 +12,7 @@ import {
 } from 'ember-cli-page-object';
 import { fillInFroalaEditor, froalaEditorValue } from 'ilios/tests/helpers/froala-editor';
 import { datePicker } from 'ilios/tests/helpers/date-picker';
+import meshManager from 'ilios/tests/pages/components/mesh-manager';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -119,28 +119,7 @@ export default create({
       timedReleaseSummary: text('.timed-release-schedule'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
-      mesh: {
-        scope: '.mesh-manager',
-        selectedTerms: collection({
-          scope: '.selected-terms',
-          itemScope: 'li',
-          item: {
-            title: text('.term-title'),
-            remove: clickable(),
-          },
-        }),
-        search: fillable('[data-test-search-box] input'),
-        runSearch: clickable('[data-test-search-box] .search-icon'),
-        searchResults: collection({
-          scope: '.mesh-search-results',
-          itemScope: 'li',
-          item: {
-            title: text('.descriptor-name'),
-            isDisabled: hasClass('disabled'),
-            add: clickable(),
-          },
-        }),
-      },
+      meshManager,
       startDate: datePicker('.start-date input'),
       startTime: {
         scope: '.start-time',
@@ -157,6 +136,21 @@ export default create({
       },
       hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]')
     }
+  },
+
+  meshTerms: {
+    scope: '[data-test-detail-mesh]',
+    manage: clickable('.actions button'),
+    save: clickable('.actions button.bigadd'),
+    cancel: clickable('.actions button.bigcancel'),
+    current: collection({
+      scope: '.selected-mesh-terms',
+      itemScope: 'li',
+      item: {
+        title: text('.term-title'),
+      },
+    }),
+    meshManager,
   },
 
   cohorts: {

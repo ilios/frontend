@@ -25,6 +25,7 @@ export default Component.extend({
   isManaging: false,
   editable: true,
   bufferTerms: null,
+  'data-test-detail-mesh': true,
   actions: {
     manage() {
       var self = this;
