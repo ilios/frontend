@@ -1,19 +1,18 @@
-import { currentPath, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
+import { currentRouteName, visit, findAll } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
-var application;
-var fixtures = {};
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Acceptance: Course - Publication Check', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
     this.server.create('school');
     this.server.create('vocabulary');
     this.server.create('cohort');
@@ -22,7 +21,7 @@ module('Acceptance: Course - Publication Check', function(hooks) {
       vocabularyId: 1,
     });
     this.server.create('meshDescriptor');
-    fixtures.fullCourse = this.server.create('course', {
+    this.fullCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       cohortIds: [1],
@@ -30,35 +29,31 @@ module('Acceptance: Course - Publication Check', function(hooks) {
       termIds: [1],
       meshDescriptorIds: [1],
     });
-    fixtures.emptyCourse = this.server.create('course', {
+    this.emptyCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1
     });
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('full course count', async function(assert) {
-    await visit('/courses/' + fixtures.fullCourse.id + '/publicationcheck');
-    assert.equal(currentPath(), 'course.publicationCheck');
-    var items = find('.course-publicationcheck table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('course 0'));
-    assert.equal(getElementText(items.eq(1)), getText('Yes (1)'));
-    assert.equal(getElementText(items.eq(2)), getText('Yes (1)'));
-    assert.equal(getElementText(items.eq(3)), getText('Yes (1)'));
-    assert.equal(getElementText(items.eq(4)), getText('Yes (1)'));
+    await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'course.publicationCheck');
+    var items = findAll('.course-publicationcheck table tbody td');
+    assert.equal(await getElementText(items[0]), getText('course 0'));
+    assert.equal(await getElementText(items[1]), getText('Yes (1)'));
+    assert.equal(await getElementText(items[2]), getText('Yes (1)'));
+    assert.equal(await getElementText(items[3]), getText('Yes (1)'));
+    assert.equal(await getElementText(items[4]), getText('Yes (1)'));
   });
 
   test('empty course count', async function(assert) {
-    await visit('/courses/' + fixtures.emptyCourse.id + '/publicationcheck');
-    assert.equal(currentPath(), 'course.publicationCheck');
-    var items = find('.course-publicationcheck table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('course 1'));
-    assert.equal(getElementText(items.eq(1)), getText('No'));
-    assert.equal(getElementText(items.eq(2)), getText('No'));
-    assert.equal(getElementText(items.eq(3)), getText('No'));
-    assert.equal(getElementText(items.eq(4)), getText('No'));
+    await visit('/courses/' + this.emptyCourse.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'course.publicationCheck');
+    var items = findAll('.course-publicationcheck table tbody td');
+    assert.equal(await getElementText(items[0]), getText('course 1'));
+    assert.equal(await getElementText(items[1]), getText('No'));
+    assert.equal(await getElementText(items[2]), getText('No'));
+    assert.equal(await getElementText(items[3]), getText('No'));
+    assert.equal(await getElementText(items[4]), getText('No'));
   });
 });
