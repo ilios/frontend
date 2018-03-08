@@ -2,10 +2,13 @@ import {
   attribute,
   clickable,
   clickOnText,
+  count,
   create,
   collection,
   fillable,
+  hasClass,
   isVisible,
+  notHasClass,
   text,
   value,
   visitable
@@ -17,6 +20,101 @@ import meshManager from 'ilios/tests/pages/components/mesh-manager';
 export default create({
   scope: '[data-test-ilios-course-details]',
   visit: visitable('/courses/:courseId'),
+  collapseControl: clickable('.detail-collapsed-control'),
+  titles: count('.title'),
+
+  header: {
+    scope: '[data-test-course-header]',
+    title: text('.editable'),
+    edit: clickable('.clickable'),
+    set: fillable('input'),
+    save: clickable('.done')
+  },
+
+  overview: {
+    scope: '[data-test-course-overview]',
+    rollover: {
+      scope: 'a.rollover',
+      visit: clickable(),
+      link: attribute('href'),
+      visible: isVisible(),
+    },
+    externalId: {
+      scope: '.courseexternalid',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: fillable('input'),
+      save: clickable('.done'),
+      hasError: isVisible('.validation-error-message')
+    },
+    startDate: {
+      scope: '.coursestartdate',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: datePicker('input'),
+      save: clickable('.done'),
+      hasError: isVisible('.validation-error-message')
+    },
+    endDate: {
+      scope: '.courseenddate',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: datePicker('input'),
+      save: clickable('.done'),
+      hasError: isVisible('.validation-error-message')
+    },
+    level: {
+      scope: '.courselevel',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: fillable('select'),
+      save: clickable('.done'),
+      hasError: isVisible('.validation-error-message')
+    },
+    universalLocator: text('.universallocator'),
+    clerkshipType: {
+      scope: '.clerkshiptype',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: fillable('select'),
+      save: clickable('.done')
+    },
+    courseDirectors: {
+      scope: '.coursedirectors',
+      selected: collection({
+        scope: '.directors',
+        itemScope: 'li',
+        item: {
+          name: text(),
+        },
+      }),
+      manager: {
+        scope: '[data-test-course-director-manager]',
+        selected: collection({
+          scope: '.selected-directors',
+          itemScope: 'li',
+          item: {
+            name: text(),
+            remove: clickable(),
+          },
+        }),
+        search: fillable('[data-test-search-box] input'),
+        searchResults: collection({
+          scope: '.results',
+          itemScope: '[data-test-result]',
+          item: {
+            name: text(),
+            add: clickable(),
+            isActive: notHasClass('inactive'),
+            inactive: hasClass('inactive'),
+          },
+        }),
+        save: clickable('.bigadd'),
+      },
+      manage: clickable('.clickable'),
+    },
+
+  },
 
   objectives: {
     scope: '[data-test-detail-objectives]',

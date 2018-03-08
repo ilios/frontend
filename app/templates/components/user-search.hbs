@@ -19,12 +19,12 @@
     {{#each search.lastSuccessful.value as |proxy|}}
       {{#if proxy.isUser}}
         {{#if proxy.isActive}}
-          <li {{action 'addUser' proxy.content}} class="active">
+          <li {{action 'addUser' proxy.content}} class="active" data-test-result>
             <div class='name'>{{proxy.fullName}}</div>
             <div class='email'>{{proxy.email}}</div>
           </li>
         {{else}}
-          <li class="inactive">
+          <li class="inactive" data-test-result>
             <div class='name'>{{proxy.fullName}}</div>
             <div class='email'>{{proxy.email}}</div>
           </li>
@@ -32,11 +32,11 @@
       {{/if}}
       {{#if proxy.isInstructorGroup}}
         {{#if proxy.isActive}}
-          <li {{action 'addInstructorGroup' proxy.content}} class="active">
+          <li {{action 'addInstructorGroup' proxy.content}} class="active" data-test-result>
             {{proxy.title}}
           </li>
         {{else}}
-          <li class="inactive">
+          <li class="inactive" data-test-result>
             {{proxy.title}}
           </li>
         {{/if}}

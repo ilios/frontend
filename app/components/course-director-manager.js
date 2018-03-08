@@ -6,6 +6,7 @@ export default Component.extend({
   classNames: ['course-director-manager'],
   course: null,
   directors: null,
+  'data-test-course-director-manager': true,
   saveChanges: task(function * () {
     yield timeout(10);  //small timeout so spinner has time to load
     const directors = this.get('directors');
