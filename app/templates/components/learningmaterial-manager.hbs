@@ -147,7 +147,7 @@
       </div>
       <button class='remove-date' {{action (mut startDate null)}}>{{t 'general.timedReleaseClearStartDate'}}</button>
     {{else}}
-      <p><button class='add-date' {{action 'addDate' 'startDate'}}>{{t 'general.timedReleaseAddStartDate'}}</button></p>
+      <p><button class='add-date' {{action 'addDate' 'startDate'}} data-test-add-start-date>{{t 'general.timedReleaseAddStartDate'}}</button></p>
     {{/if}}
 
     {{#if endDate}}
@@ -162,11 +162,11 @@
       </div>
 
       {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
-        <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+        <span class="validation-error-message" data-test-end-date-validation-error-message>{{v-get this 'endDate' 'message'}}</span>
       {{/if}}
       <button class='remove-date' {{action (mut endDate null)}}>{{t 'general.timedReleaseClearEndDate'}}</button>
     {{else}}
-      <p><button class='add-date' {{action 'addDate' 'endDate'}}>{{t 'general.timedReleaseAddEndDate'}}</button></p>
+      <p><button class='add-date' {{action 'addDate' 'endDate'}} data-test-add-end-date>{{t 'general.timedReleaseAddEndDate'}}</button></p>
     {{/if}}
   </div>
 
