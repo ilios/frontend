@@ -14,6 +14,7 @@ export default Component.extend({
   isManaging: false,
   isSaving: false,
   editable: true,
+  'data-test-detail-taxonomies': true,
 
   init(){
     this._super(...arguments);

@@ -18,7 +18,7 @@ module('Acceptance: Course - Session List', function(hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.server.create('school');
-    server.create('sessionType', {schoolId: 1})
+    server.create('sessionType', { schoolId: 1 });
     this.server.create('course', {
       schoolId: 1,
       directorIds: [this.user.id]

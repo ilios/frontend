@@ -251,6 +251,69 @@ export default create({
     meshManager,
   },
 
+  taxonomies: {
+    scope: '[data-test-detail-taxonomies]',
+    title: text('.title'),
+    manage: clickable('.actions button'),
+    save: clickable('.actions .bigadd'),
+    cancel: clickable('.actions .bigcancel'),
+    vocabularies: collection({
+      scope: '.content',
+      itemScope: '.detail-terms-list',
+      item: {
+        name: text('strong', { at: 0 }),
+        terms: collection({
+          scope: '.selected-taxonomy-terms',
+          itemScope: 'li',
+          item: {
+            name: text(),
+          },
+        }),
+      },
+    }),
+    manager: {
+      selectedTerms: collection({
+        scope: '.removable-list',
+        itemScope: 'li',
+        item: {
+          name: text(),
+          remove: clickable(),
+        },
+      }),
+      availableTerms: collection({
+        scope: '.selectable-terms-list',
+        itemScope: 'li',
+        item: {
+          name: text(),
+          notSelected: notHasClass('selected', 'div'),
+          isSelected: hasClass('selected', 'div'),
+          add: clickable('div'),
+        },
+      }),
+    }
+  },
+
+  collapsedTaxonomies: {
+    scope: '[data-test-collapsed-taxonomies]',
+    title: text('.title'),
+    headers: collection({
+      scope: 'thead',
+      itemScope: 'th',
+      item: {
+        title: text(),
+      },
+    }),
+    vocabularies: collection({
+      scope: 'tbody',
+      itemScope: 'tr',
+      item: {
+        name: text('td', { at: 0}),
+        school: text('td', { at: 1}),
+        terms: text('td', { at: 2}),
+      },
+    }),
+  },
+
   cohorts: {
     scope: '[data-test-detail-cohorts]',
     manage: clickable('.actions button'),
