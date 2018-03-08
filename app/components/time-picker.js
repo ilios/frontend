@@ -23,12 +23,9 @@ export default Component.extend({
   ampms: null,
 
   actions: {
-    changeHour() {
-      const select = this.$('select')[0];
-      const selectedIndex = select.selectedIndex;
-      const hours = this.get('hours');
+    changeHour(string) {
+      let hour = parseInt(string, 10);
       const ampm = this.get('ampm');
-      let hour = parseInt(hours[selectedIndex], 10);
 
       if (ampm === 'pm') {
         hour += 12;
@@ -37,26 +34,21 @@ export default Component.extend({
       this.sendAction('action', hour, 'hour');
     },
 
-    changeMinute() {
-      const select = this.$('select')[1];
-      const selectedIndex = select.selectedIndex;
-      const minutes = this.get('minutes');
-      const minute = parseInt(minutes[selectedIndex], 10);
-
+    changeMinute(string) {
+      const minute = parseInt(string, 10);
       this.sendAction('action', minute, 'minute');
     },
 
-    changeAmPm() {
-      const select = this.$('select')[2];
-      const selectedIndex = select.selectedIndex;
-      const ampms = this.get('ampms');
-      const value = ampms[selectedIndex];
+    changeAmPm(value) {
+      const currentValue = this.get('ampm');
       const hour = moment(this.get('date')).hours();
 
-      if (value === 'am') {
-        this.sendAction('action', hour - 12, 'hour');
-      } else {
-        this.sendAction('action', hour + 12, 'hour');
+      if (value != currentValue) {
+        if (value === 'am') {
+          this.sendAction('action', hour - 12, 'hour');
+        } else {
+          this.sendAction('action', hour + 12, 'hour');
+        }
       }
     }
   }
