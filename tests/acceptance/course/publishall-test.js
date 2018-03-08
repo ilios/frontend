@@ -1,24 +1,21 @@
-import { click, find, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
+import { click, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Acceptance: Course - Publish All Sessions', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
     this.server.create('school');
     this.server.create('cohort');
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
@@ -64,10 +61,9 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
     this.server.create('offering', {sessionId: 3});
     await visit('/courses/1/publishall');
 
-    let publishable = find('.publish-all-sessions-publishable');
-    await click(find('.title', publishable));
-    assert.equal(getElementText(find(find('tbody tr:eq(0) td'))), getText('session 0'));
-    assert.equal(getElementText(find(find('tbody tr:eq(1) td'))), getText('session 1'));
-    assert.equal(getElementText(find(find('tbody tr:eq(2) td'))), getText('session 2'));
+    await click('.publish-all-sessions-publishable .title');
+    assert.equal(await getElementText('tbody tr:nth-of-type(1) td'), getText('session 0'));
+    assert.equal(await getElementText('tbody tr:nth-of-type(2) td'), getText('session 1'));
+    assert.equal(await getElementText('tbody tr:nth-of-type(3) td'), getText('session 2'));
   });
 });
