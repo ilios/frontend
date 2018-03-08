@@ -1,18 +1,18 @@
 import { find, findAll, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Acceptance: Course - Print Course', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
     this.server.create('school');
     this.server.create('academicYear');
     this.server.create('cohort');
@@ -65,11 +65,6 @@ module('Acceptance: Course - Print Course', function(hooks) {
       objectiveIds: [1],
       name: "Flux Capacitor"
     });
-
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
   });
 
   test('test print course learning materials', async function (assert) {
