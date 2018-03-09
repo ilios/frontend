@@ -150,6 +150,7 @@ export default create({
             description: text(),
           },
         }, { at: 1 }),
+        manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
         meshTerms: collection({
           scope: 'td:eq(2)',
           itemScope: 'li',
@@ -161,6 +162,30 @@ export default create({
       },
     }),
     meshManager,
+    parentManager: {
+      scope: '[data-test-course-objective-manager]',
+      title: text('.objectivetitle'),
+      groupTitle: text('.group-picker'),
+      competencies: collection({
+        scope: '.parent-picker',
+        itemScope: '[data-test-competency]',
+        item: {
+          title: text('.competency-title'),
+          selected: hasClass('selected', '.competency-title'),
+          notSelected: notHasClass('selected', '.competency-title'),
+          objectives: collection({
+            scope: 'ul',
+            itemScope: 'li',
+            item: {
+              title: text(),
+              selected: hasClass('selected'),
+              notSelected: notHasClass('selected'),
+              add: clickable()
+            }
+          }),
+        }
+      }),
+    }
   },
 
   learningMaterials: {

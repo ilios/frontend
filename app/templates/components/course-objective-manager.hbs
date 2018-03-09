@@ -15,30 +15,32 @@
         {{get (await currentCohort) 'title'}}
       {{/if}}
     </label>
-    <div class='parent-picker'>
+    <ul class='parent-picker'>
       {{#liquid-if (await currentCohort) class='vertical'}}
         {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
-          <h5 class="competency-title {{if competency.selected 'selected'}}">
-            {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
-          </h5>
-          <ul>
-            {{#each (await competency.objectives) as |objective|}}
-              {{#if objective.selected}}
-                <li class='selected clickable' {{action 'removeParent' objective}}>
-                  <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}} checked="checked">
-                  {{objective.textTitle}}
-                </li>
-              {{else}}
-                <li class='clickable' {{action (perform addParent objective)}}>
-                  <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}}>
-                  {{objective.textTitle}}
-                </li>
-              {{/if}}
-            {{/each}}
-          </ul>
+          <li data-test-competency>
+            <h5 class="competency-title {{if competency.selected 'selected'}}">
+              {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
+            </h5>
+            <ul>
+              {{#each (await competency.objectives) as |objective|}}
+                {{#if objective.selected}}
+                  <li class='selected clickable' {{action 'removeParent' objective}}>
+                    <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}} checked="checked">
+                    {{objective.textTitle}}
+                  </li>
+                {{else}}
+                  <li class='clickable' {{action (perform addParent objective)}}>
+                    <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}}>
+                    {{objective.textTitle}}
+                  </li>
+                {{/if}}
+              {{/each}}
+            </ul>
+          </li>
         {{/each}}
       {{/liquid-if}}
-    </div>
+    </ul>
   {{else}}
     <div class='no-group'>
       <p>

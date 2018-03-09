@@ -92,6 +92,7 @@ export default Component.extend({
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,
+  'data-test-course-objective-manager': true,
 
   didReceiveAttrs(){
     this.get('loadAttr').perform();
