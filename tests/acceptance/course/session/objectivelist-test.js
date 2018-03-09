@@ -1,72 +1,72 @@
-import { run } from '@ember/runloop';
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { settled, click, find, visit } from '@ember/test-helpers';
 
-var application;
-var fixtures = {};
-var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
 module('Acceptance: Session - Objective List', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.user = await setupAuthentication();
     this.server.create('school');
-    this.server.create('course');
-    this.server.create('sessionType');
-  });
+    this.server.create('academicYear', {id: 2013});
+    this.server.createList('program', 2);
+    this.server.createList('programYear', 2);
+    this.server.createList('cohort', 2);
 
-  hooks.afterEach(function() {
-    destroyApp(application);
   });
 
   test('list objectives', async function(assert) {
-    assert.expect(40);
-    this.server.createList('objective', 2);
-    this.server.createList('meshDescriptor', 6);
-    let sessionObjectives = [];
-    sessionObjectives.pushObject(server.create('objective', {
+    assert.expect(45);
+    this.server.createList('competency', 2);
+    this.server.create('objective', {
+      competencyId: 1
+    });
+    this.server.create('objective');
+    this.server.createList('meshDescriptor', 3);
+    this.server.create('objective', {
       parentIds: [1],
       meshDescriptorIds: [1]
-    }));
-    sessionObjectives.pushObject(server.create('objective', {
-      parentIds: [1, 2],
-      meshDescriptorIds: [1, 2]
-    }));
-    sessionObjectives.pushObjects(server.createList('objective', 11));
+    });
+    this.server.create('objective', {
+      parentIds: [2],
+      meshDescriptorIds: [1,2]
+    });
+    this.server.createList('objective', 11);
+    const course = this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+    });
     this.server.create('session', {
-      courseId: 1,
+      course,
       objectiveIds: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     });
-    await visit(url);
-    let objectiveRows = find('.session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, sessionObjectives.length);
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 13);
 
-    for (let i = 0; i < sessionObjectives.length; i++) {
-      let tds = find('td', objectiveRows.eq(i));
-      let objective = sessionObjectives[i];
 
-      let parentTitle = '';
-      if (objective.parents.length) {
-        parentTitle = objective.parents.models.mapBy('title').join('');
-      } else {
-        parentTitle = 'Add New';
-      }
-      let meshTitle;
-      if (objective.meshDescriptors.length) {
-        meshTitle = objective.meshDescriptors.models.mapBy('name').join('');
-      } else {
-        meshTitle = 'Add New';
-      }
+    assert.equal(page.objectives.current(0).description.text, 'objective 2');
+    assert.equal(page.objectives.current(0).parents().count, 1);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).meshTerms().count, 1);
+    assert.equal(page.objectives.current(0).meshTerms(0).title, 'descriptor 0');
 
-      assert.equal(getElementText(tds.eq(0)), getText(objective.title));
-      assert.equal(getElementText(tds.eq(1)), getText(parentTitle));
-      assert.equal(getElementText(tds.eq(2)), getText(meshTitle));
+    assert.equal(page.objectives.current(1).description.text, 'objective 3');
+    assert.equal(page.objectives.current(1).parents().count, 1);
+    assert.equal(page.objectives.current(1).parents(0).description, 'objective 1');
+    assert.equal(page.objectives.current(1).meshTerms().count, 2);
+    assert.equal(page.objectives.current(1).meshTerms(0).title, 'descriptor 0');
+    assert.equal(page.objectives.current(1).meshTerms(1).title, 'descriptor 1');
+
+    for (let i=4; i <= 14; i++) {
+      assert.equal(page.objectives.current(i-2).description.text, `objective ${i}`);
+      assert.equal(page.objectives.current(i-2).parents().count, 0);
+      assert.equal(page.objectives.current(i-2).meshTerms().count, 0);
     }
   });
 
@@ -77,74 +77,63 @@ module('Acceptance: Session - Objective List', function(hooks) {
       title: longTitle
     });
 
-    fixtures.session = this.server.create('session', {
-      courseId: 1,
+    const course = this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+    });
+    this.server.create('session', {
+      course,
       objectiveIds: [1]
     });
-    await visit(url);
-    let objectiveRows = find('.session-objective-list tbody tr');
-    assert.equal(objectiveRows.length, 1);
-    let td = find(find('.session-objective-list tbody tr:eq(0) td'));
-    assert.equal(getElementText(td), getText(longTitle.substring(0,200)));
-    await click(find('i'), td);
-    assert.equal(getElementText(find('.fr-element', td)), getText(longTitle));
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, longTitle.substring(0, 200));
+    await page.objectives.current(0).description.openEditor();
+    assert.equal(page.objectives.current(0).description.editorContents, `<p>${longTitle}</p>`);
   });
 
   test('edit objective title', async function(assert) {
-    assert.expect(3);
-    var objective = this.server.create('objective', {
-      courseIds: [1],
-    });
+    assert.expect(4);
+    const newDescription = 'test new title';
+    this.server.create('objective');
 
-    fixtures.session = this.server.create('session', {
-      courseId: 1,
+    const course = this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+    });
+    this.server.create('session', {
+      course,
       objectiveIds: [1]
     });
-    await visit(url);
-    var container = find('.session-objective-list');
-    let td = find(find('tbody tr:eq(0) td'), container);
-    assert.equal(getElementText(td), getText(objective.title));
-    await click('.editable span', td);
-
-    let editor = find('.fr-box', td);
-    let editorContents = editor.data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), getText(objective.title));
-
-    editor.froalaEditor('html.set', 'new title');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(find('.actions .done', td));
-    assert.equal(getElementText(find(find('tbody tr:eq(0) td'), container)), getText('new title'));
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    await page.objectives.current(0).description.openEditor();
+    await page.objectives.current(0).description.edit(newDescription);
+    await page.objectives.current(0).description.save();
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, newDescription);
   });
 
   test('empty objective title can not be saved', async function(assert) {
     assert.expect(4);
     this.server.create('objective');
 
+    const course = this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+    });
     this.server.create('session', {
-      courseId: 1,
+      course,
       objectiveIds: [1]
     });
-    await visit(url);
-    const container = '.session-objective-list';
-    const title = `${container} tbody tr:eq(0) td:eq(0)`;
-    const edit = `${title} .editable span`;
-    const editor = `${title} .fr-box`;
-    const initialObjectiveTitle = 'objective 0';
-    const save = `${title} .done`;
-    const errorMessage = `${title} .validation-error-message`;
-
-    assert.equal(getElementText(title), getText(initialObjectiveTitle));
-    await click(edit);
-    let editorContents = find(editor).data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), getText(initialObjectiveTitle));
-
-    find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
-    find(editor).froalaEditor('events.trigger', 'contentChanged');
-    run.later(()=>{
-      assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
-      assert.ok(find(save).is(':disabled'));
-    }, 100);
-
-    await settled();
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.notOk(page.objectives.current(0).description.hasValidationError);
+    await page.objectives.current(0).description.openEditor();
+    await page.objectives.current(0).description.edit('<p>&nbsp</p><div></div><span>  </span>');
+    await page.objectives.current(0).description.save();
+    assert.ok(page.objectives.current(0).description.hasValidationError);
+    assert.equal(page.objectives.current(0).description.validationError, 'This field can not be blank');
   });
 });

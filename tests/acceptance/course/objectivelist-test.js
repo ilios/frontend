@@ -23,34 +23,29 @@ module('Acceptance: Course - Objective List', function(hooks) {
 
   test('list objectives', async function(assert) {
     assert.expect(45);
-    let competencies = [];
-    competencies.pushObjects(server.createList('competency', 2));
-
-    let parentObjectives = [];
-    parentObjectives.pushObject(server.create('objective', {
+    assert.expect(45);
+    this.server.createList('competency', 2);
+    this.server.create('objective', {
       competencyId: 1
-    }));
-    parentObjectives.pushObject(server.create('objective'));
-
-    let meshDescriptors = [];
-    meshDescriptors.pushObject(server.createList('meshDescriptor', 3));
-    let courseObjectives = [];
-    courseObjectives.pushObject(server.create('objective', {
+    });
+    this.server.create('objective');
+    this.server.createList('meshDescriptor', 3);
+    this.server.create('objective', {
       parentIds: [1],
       meshDescriptorIds: [1]
-    }));
-    courseObjectives.pushObject(server.create('objective', {
+    });
+    this.server.create('objective', {
       parentIds: [2],
       meshDescriptorIds: [1,2]
-    }));
-    courseObjectives.pushObjects(server.createList('objective', 11));
+    });
+    this.server.createList('objective', 11);
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [3,4,5,6,7,8,9,10,11,12,13,14,15]
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current().count, courseObjectives.length);
+    assert.equal(page.objectives.current().count, 13);
 
     assert.equal(page.objectives.current(0).description.text, 'objective 2');
     assert.equal(page.objectives.current(0).parents().count, 1);

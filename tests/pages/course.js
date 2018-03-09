@@ -9,6 +9,7 @@ import {
   isVisible,
   notHasClass,
   text,
+  value,
   visitable
 } from 'ember-cli-page-object';
 
@@ -123,6 +124,40 @@ export default create({
   meshTerms,
   taxonomies,
   collapsedTaxonomies,
+
+  objectiveParentManager: {
+    scope: '[data-test-course-objective-manager]',
+    title: text('.objectivetitle'),
+    groupTitle: text('.group-picker'),
+    selectGroup: fillable('.group-picker select'),
+    groups: collection({
+      scope: '.group-picker select',
+      itemScope: 'option',
+      item: {
+        title: text(),
+        value: value(),
+      },
+    }),
+    competencies: collection({
+      scope: '.parent-picker',
+      itemScope: '[data-test-competency]',
+      item: {
+        title: text('.competency-title'),
+        selected: hasClass('selected', '.competency-title'),
+        notSelected: notHasClass('selected', '.competency-title'),
+        objectives: collection({
+          scope: 'ul',
+          itemScope: 'li',
+          item: {
+            title: text(),
+            selected: hasClass('selected'),
+            notSelected: notHasClass('selected'),
+            add: clickable()
+          }
+        }),
+      }
+    }),
+  },
 
   cohorts: {
     scope: '[data-test-detail-cohorts]',

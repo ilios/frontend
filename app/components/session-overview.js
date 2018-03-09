@@ -81,6 +81,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
+  'data-test-session-overview': true,
 
   filteredSessionTypes: computed('sessionTypes.[]', function() {
     const selectedSessionType = this.get('sessionType');

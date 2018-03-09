@@ -15,6 +15,7 @@ const objectiveProxy = ObjectProxy.extend({
 export default Component.extend({
   classNames: ['objective-manager'],
   sessionObjective: null,
+  'data-test-session-objective-manager': true,
   course: computed('sessionObjective.courses.[]', function(){
     return new Promise(resolve => {
       let sessionObjective = this.get('sessionObjective');

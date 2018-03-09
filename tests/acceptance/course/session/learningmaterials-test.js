@@ -1,191 +1,150 @@
-import { isPresent, isEmpty } from '@ember/utils';
-import { run } from '@ember/runloop';
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import moment from 'moment';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import { currentRouteName } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
-import { settled, click, fillIn, findAll, find, currentPath, triggerEvent, visit } from '@ember/test-helpers';
-
-const { later } = run;
-
-var application;
-var fixtures = {};
-var url = '/courses/1/sessions/1';
+const today = moment();
 
 module('Acceptance: Session - Learning Materials', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    fixtures.user = setupAuthentication(application);
-    this.server.create('school');
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function() {
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school });
     this.server.create('academicYear');
-    this.server.create('course');
-    this.server.create('sessionType');
-    fixtures.statuses = [];
-    fixtures.statuses.pushObjects(server.createList('learningMaterialStatus', 6));
-    fixtures.roles = this.server.createList('learningMaterialUserRole', 3);
-    fixtures.meshDescriptors = [];
-    fixtures.meshDescriptors.pushObject(server.createList('meshDescriptor', 6));
-    fixtures.learningMaterials = [];
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+    this.server.create('learningMaterialStatus', {
+      learningMaterialIds: [1]
+    });
+    this.server.createList('learningMaterialStatus', 5);
+    this.server.createList('learningMaterialUserRole', 3);
+    this.server.createList('meshDescriptor', 6);
+    this.server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUserId: 4136,
+      owningUserId: this.user.id,
       statusId: 1,
       userRoleId: 1,
       copyrightPermission: true,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-      uploadDate: new Date(),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      uploadDate: moment('2015-02-12').toDate(),
+    });
+    this.server.create('learningMaterial',{
       originalAuthor: 'Jennifer Johnson',
-      owningUserId: 4136,
+      owningUserId: this.user.id,
       statusId: 1,
       userRoleId: 1,
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
-      uploadDate: new Date(),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      uploadDate: moment('2011-03-14').toDate(),
+    });
+    this.server.create('learningMaterial',{
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       statusId: 1,
-      owningUserId: 4136,
+      owningUserId: this.user.id,
       userRoleId: 1,
-      copyrightPermission: true,
-      uploadDate: new Date(),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      uploadDate: today.toDate(),
+    });
+    this.server.create('learningMaterial',{
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       statusId: 1,
-      owningUserId: 4136,
       userRoleId: 1,
-      copyrightPermission: true,
-      uploadDate: new Date(),
-    }));
-    fixtures.learningMaterials.pushObject(server.create('learningMaterial',{
+      owningUserId: this.user.id,
+      uploadDate: moment('2016-12-12').toDate(),
+    });
+    this.server.create('learningMaterial',{
       title: 'Letter to Doc Brown',
       originalAuthor: 'Marty McFly',
-      owningUserId: 4136,
+      owningUserId: this.user.id,
       statusId: 1,
       userRoleId: 1,
       copyrightPermission: true,
       uploadDate: moment('2016-03-03').toDate(),
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt'
-    }));
-    fixtures.session = this.server.create('session', {
-      schoolId: 1,
-      courseId: 1,
     });
-    fixtures.sessionLearningMaterials = [];
-    fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
+    const course = this.server.create('course', {
+      year: 2013,
+      school,
+    });
+    const session = this.server.create('session', {
+      course,
+    });
+    this.server.create('sessionLearningMaterial',{
       learningMaterialId: 1,
-      sessionId: 1,
+      session,
       required: false,
       meshDescriptorIds: [2,3],
       position: 0,
-    }));
-    fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
+    });
+    this.server.create('sessionLearningMaterial',{
       learningMaterialId: 2,
-      sessionId: 1,
+      session,
       required: false,
       position: 1,
-    }));
-    fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
+    });
+    this.server.create('sessionLearningMaterial',{
       learningMaterialId: 3,
-      sessionId: 1,
+      session,
       publicNotes: false,
       position: 2,
-    }));
-    fixtures.sessionLearningMaterials.pushObject(server.create('sessionLearningMaterial',{
+    });
+    this.server.create('sessionLearningMaterial',{
       learningMaterialId: 4,
-      sessionId: 1,
+      session,
       position: 3,
-      notes: 'somethings tested this way comes',
-      startDate: new Date(),
-    }));
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+      notes: 'test notes',
+    });
   });
 
   test('list learning materials', async function (assert) {
-    await visit(url);
-    assert.equal(currentPath(), 'course.session.index');
-    const sessionLearningMaterials = '.detail-learningmaterials .detail-learningmaterials-content tbody tr';
-    const title = 'td:eq(0)';
-    const owner = 'td:eq(1)';
-    const required = 'td:eq(2)';
-    const notes = 'td:eq(3)';
-    const mesh = 'td:eq(4)';
-    const status = 'td:eq(5)';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
 
-    const firstTitle = `${sessionLearningMaterials}:eq(0) ${title}`;
-    const firstOwner = `${sessionLearningMaterials}:eq(0) ${owner}`;
-    const firstRequired = `${sessionLearningMaterials}:eq(0) ${required}`;
-    const firstNotes = `${sessionLearningMaterials}:eq(0) ${notes}`;
-    const firstMesh = `${sessionLearningMaterials}:eq(0) ${mesh}`;
-    const firstStatus = `${sessionLearningMaterials}:eq(0) ${status}`;
+    assert.equal(page.learningMaterials.current().count, 4);
 
-    const secondTitle = `${sessionLearningMaterials}:eq(1) ${title}`;
-    const secondOwner = `${sessionLearningMaterials}:eq(1) ${owner}`;
-    const secondRequired = `${sessionLearningMaterials}:eq(1) ${required}`;
-    const secondNotes = `${sessionLearningMaterials}:eq(1) ${notes}`;
-    const secondMesh = `${sessionLearningMaterials}:eq(1) ${mesh}`;
-    const secondStatus = `${sessionLearningMaterials}:eq(1) ${status}`;
+    assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+    assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(0).required, 'No');
+    assert.equal(page.learningMaterials.current(0).notes, 'No');
+    assert.notOk(page.learningMaterials.current(0).isNotePublic);
+    assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 1 descriptor 2');
+    assert.equal(page.learningMaterials.current(0).status, 'status 0');
 
-    const thirdTitle = `${sessionLearningMaterials}:eq(2) ${title}`;
-    const thirdOwner = `${sessionLearningMaterials}:eq(2) ${owner}`;
-    const thirdRequired = `${sessionLearningMaterials}:eq(2) ${required}`;
-    const thirdNotes = `${sessionLearningMaterials}:eq(2) ${notes}`;
-    const thirdMesh = `${sessionLearningMaterials}:eq(2) ${mesh}`;
-    const thirdStatus = `${sessionLearningMaterials}:eq(2) ${status}`;
+    assert.equal(page.learningMaterials.current(1).title, 'learning material 1');
+    assert.equal(page.learningMaterials.current(1).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(1).required, 'No');
+    assert.equal(page.learningMaterials.current(1).notes, 'No');
+    assert.notOk(page.learningMaterials.current(1).isNotePublic);
+    assert.equal(page.learningMaterials.current(1).mesh, 'None');
+    assert.equal(page.learningMaterials.current(1).status, 'status 0');
+    assert.equal(page.learningMaterials.current(1).status, 'status 0');
 
-    const fourthTitle = `${sessionLearningMaterials}:eq(3) ${title}`;
-    const fourthOwner = `${sessionLearningMaterials}:eq(3) ${owner}`;
-    const fourthRequired = `${sessionLearningMaterials}:eq(3) ${required}`;
-    const fourthNotes = `${sessionLearningMaterials}:eq(3) ${notes}`;
-    const fourthMesh = `${sessionLearningMaterials}:eq(3) ${mesh}`;
-    const fourthStatus = `${sessionLearningMaterials}:eq(3) ${status}`;
+    assert.equal(page.learningMaterials.current(2).title, 'learning material 2');
+    assert.equal(page.learningMaterials.current(2).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(2).required, 'Yes');
+    assert.equal(page.learningMaterials.current(2).notes, 'No');
+    assert.notOk(page.learningMaterials.current(2).isNotePublic);
+    assert.equal(page.learningMaterials.current(2).mesh, 'None');
+    assert.equal(page.learningMaterials.current(2).status, 'status 0');
+    assert.equal(page.learningMaterials.current(2).status, 'status 0');
 
-    assert.equal(findAll(sessionLearningMaterials).length, 4);
-    assert.equal(getElementText(firstTitle), getText('learning material 0'));
-    assert.equal(getElementText(firstOwner), getText('0 guy M. Mc0son'));
-    assert.equal(getElementText(firstRequired), getText('No'));
-    assert.equal(getElementText(firstNotes), getText('No'));
-    assert.equal(getElementText(firstMesh), getText('descriptor 1 descriptor 2'));
-    assert.equal(getElementText(firstStatus), getText('status 0'));
-
-    assert.equal(getElementText(secondTitle), getText('learning material 1'));
-    assert.equal(getElementText(secondOwner), getText('0 guy M. Mc0son'));
-    assert.equal(getElementText(secondRequired), getText('No'));
-    assert.equal(getElementText(secondNotes), getText('No'));
-    assert.equal(getElementText(secondMesh), getText('None'));
-    assert.equal(getElementText(secondStatus), getText('status 0'));
-
-    assert.equal(getElementText(thirdTitle), getText('learning material 2'));
-    assert.equal(getElementText(thirdOwner), getText('0 guy M. Mc0son'));
-    assert.equal(getElementText(thirdRequired), getText('Yes'));
-    assert.equal(getElementText(thirdNotes), getText('No'));
-    assert.equal(getElementText(thirdMesh), getText('None'));
-    assert.equal(getElementText(thirdStatus), getText('status 0'));
-
-    assert.equal(getElementText(fourthTitle), getText('learning material 3'));
-    assert.equal(getElementText(fourthOwner), getText('0 guy M. Mc0son'));
-    assert.equal(getElementText(fourthRequired), getText('Yes'));
-    assert.equal(getElementText(fourthNotes), getText('Yes'));
-    assert.equal(getElementText(fourthMesh), getText('None'));
-    assert.equal(getElementText(fourthStatus), getText('status 0'));
+    assert.equal(page.learningMaterials.current(3).title, 'learning material 3');
+    assert.equal(page.learningMaterials.current(3).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(3).required, 'Yes');
+    assert.equal(page.learningMaterials.current(3).notes, 'Yes');
+    assert.ok(page.learningMaterials.current(3).isNotePublic);
+    assert.equal(page.learningMaterials.current(3).mesh, 'None');
+    assert.equal(page.learningMaterials.current(3).status, 'status 0');
   });
 
   test('create new link learning material', async function(assert) {
@@ -193,39 +152,25 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
     const testUrl = 'http://www.ucsf.edu/';
-    const searchBox = '.search-box';
 
-    await visit(url);
-    let container = find('.detail-learningmaterials');
-    let rows = find('.learning-material-table tbody tr', container);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    assert.ok(page.learningMaterials.canSearch);
+    await page.learningMaterials.createNew();
+    await page.learningMaterials.pickNew('Web Link');
+    assert.notOk(page.learningMaterials.canSearch, 'search box is hidden while new group are being added');
 
-    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
-    assert.equal(rows.length, 4);
-    await click('.detail-learningmaterials-actions .button', container);
-    //pick the link type
-    await click(findAll('.detail-learningmaterials-actions ul li')[1]);
-    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
-    //check that we got the right form
-    let labels = find('.detail-learningmaterials .new-learningmaterial label');
-    assert.equal(labels.length, 7);
-    const userName = `0 guy M. Mc0son`;
-    assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
-    let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
-    let inputs = find('input', newLmContainer);
-    let selectBoxes = find('select', newLmContainer);
-    await fillIn(inputs.eq(0), testTitle);
-    await fillIn(inputs.eq(1), testAuthor);
-    await fillIn(inputs.eq(2), testUrl);
-    await pickOption(selectBoxes[0], 'status 2', assert);
-    await pickOption(selectBoxes[1], 'Role 2', assert);
-    find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
-    find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-    await click('.detail-learningmaterials .new-learningmaterial .done');
-    container = find('.detail-learningmaterials');
-    rows = find('.learning-material-table tbody tr', container);
-    assert.equal(rows.length, 5);
-    let row = rows.eq(4);
-    assert.equal(getElementText(find(find('td'), row)), getText(testTitle));
+    await page.learningMaterials.newLearningMaterial.name(testTitle);
+    assert.equal(page.learningMaterials.newLearningMaterial.userName, '0 guy M. Mc0son');
+    await page.learningMaterials.newLearningMaterial.author(testAuthor);
+    await page.learningMaterials.newLearningMaterial.url(testUrl);
+    await page.learningMaterials.newLearningMaterial.status('2');
+    await page.learningMaterials.newLearningMaterial.role('2');
+    await page.learningMaterials.newLearningMaterial.description(testDescription);
+    await page.learningMaterials.newLearningMaterial.save();
+
+    assert.equal(page.learningMaterials.current().count, 5);
+    assert.equal(page.learningMaterials.current(4).title, testTitle);
   });
 
   test('create new citation learning material', async function(assert) {
@@ -233,460 +178,355 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
     const testCitation = 'testsome citation';
-    const searchBox = '.search-box';
 
-    await visit(url);
-    let container = find('.detail-learningmaterials');
-    let rows = find('.learning-material-table tbody tr', container);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    assert.ok(page.learningMaterials.canSearch);
+    await page.learningMaterials.createNew();
+    await page.learningMaterials.pickNew('Citation');
+    assert.notOk(page.learningMaterials.canSearch, 'search box is hidden while new group are being added');
 
-    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
-    assert.equal(rows.length, 4);
-    await click('.detail-learningmaterials-actions .button', container);
-    //pick the citation type
-    await click(findAll('.detail-learningmaterials-actions ul li')[2]);
-    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while new group are being added');
-    //check that we got the right form
-    let labels = find('.detail-learningmaterials .new-learningmaterial label');
-    assert.equal(labels.length, 7);
-    const userName = `0 guy M. Mc0son`;
-    assert.equal(getElementText(find('.detail-learningmaterials .new-learningmaterial .owninguser')), getText(userName));
-    let newLmContainer = find('.detail-learningmaterials .new-learningmaterial');
-    let inputs = find('input', newLmContainer);
-    let selectBoxes = find('select', newLmContainer);
-    await fillIn(inputs.eq(0), testTitle);
-    await fillIn(inputs.eq(1), testAuthor);
-    await fillIn(find('textarea', newLmContainer).eq(0), testCitation);
-    await pickOption(selectBoxes[0], 'status 2', assert);
-    await pickOption(selectBoxes[1], 'Role 2', assert);
-    find('.fr-box', newLmContainer).froalaEditor('html.set', testDescription);
-    find('.fr-box', newLmContainer).froalaEditor('events.trigger', 'contentChanged');
-    await click('.detail-learningmaterials .new-learningmaterial .done');
-    container = find('.detail-learningmaterials');
-    rows = find('.learning-material-table tbody tr', container);
-    assert.equal(rows.length, 5);
-    let row = rows.eq(4);
-    assert.equal(getElementText(find(find('td'), row)), getText(testTitle));
+    await page.learningMaterials.newLearningMaterial.name(testTitle);
+    assert.equal(page.learningMaterials.newLearningMaterial.userName, '0 guy M. Mc0son');
+    await page.learningMaterials.newLearningMaterial.author(testAuthor);
+    await page.learningMaterials.newLearningMaterial.citation(testCitation);
+    await page.learningMaterials.newLearningMaterial.status('2');
+    await page.learningMaterials.newLearningMaterial.role('2');
+    await page.learningMaterials.newLearningMaterial.description(testDescription);
+    await page.learningMaterials.newLearningMaterial.save();
+
+    assert.equal(page.learningMaterials.current().count, 5);
+    assert.equal(page.learningMaterials.current(4).title, testTitle);
   });
 
   test('can only add one learning-material at a time', async function(assert) {
-    const addButton = '.detail-learningmaterials-actions .button';
-    const fileButton = '.detail-learningmaterials-actions ul li:eq(0)';
-    const collapseButton = '.collapse-button';
-    const component = '.new-learningmaterial';
-
-    await visit(url);
-    await click(addButton);
-    await click(fileButton);
-    assert.ok(isEmpty(find(addButton)), 'add button is not visible');
-    assert.ok(find(collapseButton).is(':visible'), 'new-add collapse button is visible');
-    assert.ok(find(component).is(':visible'), 'new-add learning-material component is visible');
-
-    await click(collapseButton);
-    assert.ok(find(addButton).is(':visible'), 'add button is visible');
-    assert.ok(isEmpty(find(collapseButton)), 'new-add collapse button is not visible');
-    assert.ok(isEmpty(find(component)), 'new-add learning-material component is not visible');
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    assert.ok(page.learningMaterials.canCreateNew);
+    assert.notOk(page.learningMaterials.canCollapse);
+    await page.learningMaterials.createNew();
+    await page.learningMaterials.pickNew('File');
+    assert.notOk(page.learningMaterials.canCreateNew);
+    assert.ok(page.learningMaterials.canCollapse);
   });
 
-  test('cancel new learning material', async function(assert) {
-    await visit(url);
-    let container = find('.detail-learningmaterials');
-    let rows = find('.learning-material-table tbody tr', container);
-    assert.equal(rows.length, 4);
-    await click('.detail-learningmaterials-actions .button', container);
-    await click(find('.detail-learningmaterials-actions ul li'));
-    await click('.detail-learningmaterials .new-learningmaterial .cancel');
-    rows = find('.detail-learningmaterials .learning-material-table tbody tr');
-    assert.equal(rows.length, 4);
+  test('cancel new learning material', async function (assert) {
 
-    await settled();
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    assert.ok(page.learningMaterials.canSearch);
+    await page.learningMaterials.createNew();
+    await page.learningMaterials.pickNew('Citation');
+    await page.learningMaterials.newLearningMaterial.cancel();
+
+    assert.equal(page.learningMaterials.current().count, 4);
   });
 
-  test('view copyright file learning material details', async function(assert) {
-    await visit(url);
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-    var container = find('.learningmaterial-manager');
-    assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[0].title));
-    assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[0].originalAuthor));
-    assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[0].description));
-    assert.equal(getElementText(find('.copyrightpermission', container)), getText('Yes'));
-    assert.equal(findAll('.copyrightrationale', container).length, 0);
+  test('view copyright file learning material details', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+
+    assert.equal(page.learningMaterials.manager.name, 'learning material 0');
+    assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
+    assert.equal(page.learningMaterials.manager.description, '0 lm description');
+    assert.ok(page.learningMaterials.manager.hasFile);
+    assert.ok(page.learningMaterials.manager.hasCopyrightPermission);
+    assert.equal(page.learningMaterials.manager.copyrightPermission, 'Yes');
+    assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
+    assert.notOk(page.learningMaterials.manager.hasLink);
+    assert.notOk(page.learningMaterials.manager.hasCitation);
   });
 
   test('view rationale file learning material details', async function(assert) {
-    await visit(url);
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(1) td:eq(0) .link');
-    var container = find('.learningmaterial-manager');
-    assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[1].title));
-    assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[1].originalAuthor));
-    assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[1].description));
-    assert.equal(getElementText(find('.copyrightrationale', container)), getText(fixtures.learningMaterials[1].copyrightRationale));
-    assert.equal(findAll('.citation', container).length, 0);
-    assert.equal(findAll('.link', container).length, 0);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(1).details();
+
+    assert.equal(page.learningMaterials.manager.name, 'learning material 1');
+    assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
+    assert.equal(page.learningMaterials.manager.description, '1 lm description');
+    assert.ok(page.learningMaterials.manager.hasFile);
+    assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
+    assert.ok(page.learningMaterials.manager.hasCopyrightRationale);
+    assert.equal(page.learningMaterials.manager.copyrightRationale, 'reason is thus');
+    assert.notOk(page.learningMaterials.manager.hasLink);
+    assert.notOk(page.learningMaterials.manager.hasCitation);
   });
 
-  test('view link learning material details', async function(assert) {
-    await visit(url);
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(2) td:eq(0) .link');
-    var container = find('.learningmaterial-manager');
-    assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[2].title));
-    assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[2].originalAuthor));
-    assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[2].description));
-    assert.equal(getElementText(find('.upload-date', container)),
-      moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
-    assert.equal(getElementText(find('.link', container)), getText(fixtures.learningMaterials[2].link));
-    assert.equal(findAll('.copyrightpermission', container).length, 1);
-    assert.equal(findAll('.copyrightrationale', container).length, 0);
-    assert.equal(findAll('.citation', container).length, 0);
+  test('view url file learning material details', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(1).details();
+
+    assert.equal(page.learningMaterials.manager.name, 'learning material 1');
+    assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
+    assert.equal(page.learningMaterials.manager.description, '1 lm description');
+    assert.equal(page.learningMaterials.manager.uploadDate, moment('2011-03-14').format('M-D-YYYY'));
+    assert.ok(page.learningMaterials.manager.hasFile);
+    assert.equal(page.learningMaterials.manager.downloadText, 'filename');
+    assert.equal(page.learningMaterials.manager.downloadUrl, 'http://example.com/file');
+    assert.notOk(page.learningMaterials.manager.hasLink);
+    assert.notOk(page.learningMaterials.manager.hasCitation);
   });
 
-  test('view citation learning material details', async function(assert) {
-    await visit(url);
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(3) td:eq(0) .link');
-    var container = find('.learningmaterial-manager');
-    assert.equal(getElementText(find('.displayname', container)), getText(fixtures.learningMaterials[3].title));
-    assert.equal(getElementText(find('.originalauthor', container)), getText(fixtures.learningMaterials[3].originalAuthor));
-    assert.equal(getElementText(find('.description', container)), getText(fixtures.learningMaterials[3].description));
-    assert.equal(getElementText(find('.upload-date', container)),
-      moment(fixtures.learningMaterials[2].uploadDate).format('M-D-YYYY'));
-    assert.equal(getElementText(find('.citation', container)), getText(fixtures.learningMaterials[3].citation));
-    assert.equal(findAll('.copyrightpermission', container).length, 1);
-    assert.equal(findAll('.copyrightrationale', container).length, 0);
-    assert.equal(findAll('.file', container).length, 0);
+  test('view link learning material details', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(2).details();
+
+    assert.equal(page.learningMaterials.manager.name, 'learning material 2');
+    assert.equal(page.learningMaterials.manager.author, 'Hunter Pence');
+    assert.equal(page.learningMaterials.manager.description, '2 lm description');
+    assert.equal(page.learningMaterials.manager.uploadDate, today.format('M-D-YYYY'));
+    assert.ok(page.learningMaterials.manager.hasLink);
+    assert.equal(page.learningMaterials.manager.link, 'www.example.com');
+
+    assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
+    assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
+    assert.notOk(page.learningMaterials.manager.hasFile);
+    assert.notOk(page.learningMaterials.manager.hasCitation);
   });
 
-  test('edit learning material', async function(assert) {
-    const searchBox = '.learningmaterial-search .search-box';
+  test('view citation learning material details', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(3).details();
 
-    await visit(url);
-    assert.ok(isPresent(find(searchBox)), 'learner-group search box is visible');
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-    let container = find('.learningmaterial-manager');
-    assert.ok(isEmpty(find(searchBox)), 'learner-group search box is hidden while in edit mode');
-    await click(find('.required .switch-handle', container));
-    await click(find('.publicnotes .switch-handle', container));
-    await pickOption(find('.status select', container), 'status 2', assert);
-    let newNote = 'text text.  Woo hoo!';
-    find('.notes .fr-box', container).froalaEditor('html.set', newNote);
-    find('.notes .fr-box', container).froalaEditor('events.trigger', 'contentChanged');
-    await click('.buttons .done', container);
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[2])), getText('Yes'));
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[3])), getText('Yes'), 'there is content in notes');
-    assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is false and `eye` icon is not visible');
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[5])), getText('status 2'));
+    assert.equal(page.learningMaterials.manager.name, 'learning material 3');
+    assert.equal(page.learningMaterials.manager.author, 'Willie Mays');
+    assert.equal(page.learningMaterials.manager.description, '3 lm description');
+    assert.equal(page.learningMaterials.manager.uploadDate, moment('2016-12-12').format('M-D-YYYY'));
+    assert.ok(page.learningMaterials.manager.hasCitation);
+    assert.equal(page.learningMaterials.manager.citation, 'a citation');
 
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-    container = find('.learningmaterial-manager');
-    assert.equal(getElementText(find('.notes .fr-box', container).froalaEditor('html.get')), getText(`${newNote}`));
-    assert.equal(getElementText(find('.status option:selected', container)), getText('status 2'));
-    await settled();
+    assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
+    assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
+    assert.notOk(page.learningMaterials.manager.hasFile);
+    assert.notOk(page.learningMaterials.manager.hasLink);
   });
 
-  test('cancel editing learning material', async function(assert) {
-    await visit(url);
-    await click('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(0) .link');
-    var container = find('.learningmaterial-manager');
-    await click(find('.required .switch-handle', container));
-    await click(find('.publicnotes .switch-handle', container));
-    await pickOption(find('.status select', container), fixtures.statuses[2].title, assert);
-    await click('.buttons .cancel', container);
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[2])), getText('No'));
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[3])), getText('No'), 'no content is available under notes');
-    assert.ok(isEmpty(find('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td:eq(3) i')), 'publicNotes is true but notes are blank so `eye` icon is not visible');
-    assert.equal(getElementText(find(findAll('.detail-learningmaterials .learning-material-table tbody tr:eq(0) td')[5])), getText(fixtures.statuses[0].title));
+  test('edit learning material', async function (assert) {
+    let newNote = 'text text. Woo hoo!';
+
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+    await page.learningMaterials.manager.required();
+    await page.learningMaterials.manager.publicNotes();
+    await page.learningMaterials.manager.status(3);
+    await page.learningMaterials.manager.notes(newNote);
+
+    await page.learningMaterials.manager.save();
+
+    assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+    assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(0).required, 'Yes');
+    assert.notOk(page.learningMaterials.current(0).isNotePublic);
+    assert.equal(page.learningMaterials.current(0).notes, 'Yes');
+    assert.equal(page.learningMaterials.current(0).status, 'status 2');
+
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.notesValue, `<p>${newNote}</p>`);
+    assert.equal(page.learningMaterials.manager.statusValue, 3);
   });
 
-  test('manage terms', async function(assert) {
-    assert.expect(23);
-    await visit(url);
-    let container = find('.detail-learningmaterials').eq(0);
-    await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
+  test('cancel editing learning material', async function (assert) {
+    let newNote = 'text text. Woo hoo!';
 
-    let meshManager = find('.mesh-manager', container).eq(0);
-    let removableItems = find('.selected-terms li', meshManager);
-    assert.equal(removableItems.length, 2);
-    assert.equal(getElementText(find('.term-title', removableItems[0]).eq(0)), getText('descriptor 1'));
-    assert.equal(getElementText(find('.term-title', removableItems[1]).eq(0)), getText('descriptor 2'));
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+    await page.learningMaterials.manager.required();
+    await page.learningMaterials.manager.publicNotes();
+    await page.learningMaterials.manager.status(3);
+    await page.learningMaterials.manager.notes(newNote);
 
-    let searchBox = find('.search-box', meshManager);
-    assert.equal(searchBox.length, 1);
-    searchBox = searchBox.eq(0);
-    let searchBoxInput = find('input', searchBox);
-    assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
-    await fillIn(searchBoxInput, 'descriptor');
-    await click('span.search-icon', searchBox);
-    let searchResults = find('.mesh-search-results li', meshManager);
-    assert.equal(searchResults.length, 6);
+    await page.learningMaterials.manager.cancel();
 
-    for(let i = 0; i < 6; i++){
-      let meshDescriptorName = find('.descriptor-name', searchResults[i]).eq(0);
-      assert.equal(getElementText(meshDescriptorName), getText(`descriptor ${i}`));
+    assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+    assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.current(0).required, 'No');
+    assert.equal(page.learningMaterials.current(0).notes, 'No');
+    assert.notOk(page.learningMaterials.current(0).isNotePublic);
+    assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 1 descriptor 2');
+    assert.equal(page.learningMaterials.current(0).status, 'status 0');
+
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.notesValue, '');
+    assert.equal(page.learningMaterials.manager.statusValue, 1);
+  });
+
+  test('manage terms', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 1');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
+
+    assert.equal(page.learningMaterials.manager.meshManager.searchResults().count, 6);
+    for (let i = 0; i < 6; i++){
+      assert.equal(page.learningMaterials.manager.meshManager.searchResults(i).title, `descriptor ${i}`);
     }
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(0).isDisabled);
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(1).isDisabled);
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(2).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(3).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(4).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(5).isDisabled);
 
-    assert.notOk(find(searchResults[0]).classList.contains('disabled'));
-    assert.ok(find(searchResults[1]).classList.contains('disabled'));
-    assert.ok(find(searchResults[2]).classList.contains('disabled'));
-    assert.notOk(find(searchResults[3]).classList.contains('disabled'));
-    assert.notOk(find(searchResults[4]).classList.contains('disabled'));
-    assert.notOk(find(searchResults[5]).classList.contains('disabled'));
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
+    assert.ok(page.learningMaterials.manager.meshManager.searchResults(0).isDisabled);
+    assert.notOk(page.learningMaterials.manager.meshManager.searchResults(1).isDisabled);
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
 
-    await click(find('.selected-terms li'), meshManager);
-    assert.ok(!find(findAll('.mesh-search-results li')[1], meshManager).classList.contains('disabled'));
-    await click(searchResults[0]);
-    assert.ok(find(findAll('.mesh-search-results li')[2], meshManager).classList.contains('disabled'));
-
-    removableItems = find('.selected-terms li', meshManager);
-    assert.equal(removableItems.length, 2);
-    assert.equal(getElementText(find('.term-title', removableItems[0]).eq(0)), getText('descriptor 0'));
-    assert.equal(getElementText(find('.term-title', removableItems[1]).eq(0)), getText('descriptor 2'));
-
-    await settled();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
   });
 
-  test('save terms', async function(assert) {
-    assert.expect(1);
-    await visit(url);
-    let container = find('.detail-learningmaterials').eq(0);
-    await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
-    let meshManager = find('.mesh-manager', container).eq(0);
-    let searchBoxInput = find('.search-box input', meshManager);
-    await fillIn(searchBoxInput, 'descriptor');
-    await click('.search-box span.search-icon', meshManager);
-    let searchResults = find('.mesh-search-results li', meshManager);
-    await click(find('.selected-terms li'), meshManager);
-    await click(searchResults[0]);
-    await click('.buttons .done', container);
-    let expectedMesh = 'descriptor 0' + 'descriptor 2';
-    let tds = find('.learning-material-table tbody tr:eq(0) td');
-    assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
+  test('save terms', async function (assert) {
+    assert.expect(5);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
+
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
+
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
+
+    await page.learningMaterials.manager.save();
+    assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 0 descriptor 2');
   });
 
   test('cancel term changes', async function(assert) {
-    assert.expect(1);
-    await visit(url);
-    let container = find('.detail-learningmaterials').eq(0);
-    await click('.learning-material-table tbody tr:eq(0) td:eq(0) .link', container);
-    let meshManager = find('.mesh-manager', container).eq(0);
-    let searchBoxInput = find('.search-box input', meshManager);
-    await fillIn(searchBoxInput, 'descriptor');
-    await click('.search-box span.search-icon', meshManager);
-    let searchResults = find('.mesh-search-results li', meshManager);
-    await click(find('.selected-terms li'), meshManager);
-    await click(searchResults[2]);
-    await click(searchResults[3]);
-    await click(searchResults[4]);
-    await click('.buttons .cancel', container);
-    let tds = find('.learning-material-table tbody tr:eq(0) td');
-    let expectedMesh = 'descriptor 1' + 'descriptor 2';
-    assert.equal(getElementText(tds.eq(4)), getText(expectedMesh));
+    assert.expect(5);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms().count, 2);
+    await page.learningMaterials.manager.meshManager.search('descriptor');
+    await page.learningMaterials.manager.meshManager.runSearch();
+
+    await page.learningMaterials.manager.meshManager.selectedTerms(0).remove();
+    await page.learningMaterials.manager.meshManager.searchResults(0).add();
+
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.learningMaterials.manager.meshManager.selectedTerms(1).title, 'descriptor 2');
+
+    await page.learningMaterials.manager.cancel();
+    assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 1 descriptor 2');
   });
 
-  test('find and add learning material', async function(assert) {
-    await visit(url);
-    assert.equal(currentPath(), 'course.session.index');
-    let container = find('.detail-learningmaterials');
-    let rows = find('.learning-material-table tbody tr', container);
-    assert.equal(rows.length, 4);
+  test('find and add learning material', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.learningMaterials.current().count, 4);
+    await page.learningMaterials.search('doc');
+    assert.equal(page.learningMaterials.searchResults().count, 1);
 
-    let searchBoxInput = find('input', container);
-    await fillIn(searchBoxInput, 'doc');
-    await triggerEvent(searchBoxInput, 'keyup');
-    later(async () =>{
-      let searchResults = find('.lm-search-results > li', container);
-      assert.equal(searchResults.length, 1);
-      assert.equal(getElementText('.lm-search-results > li:eq(0) h4'), getText('Letter to Doc Brown'));
-      assert.equal(findAll('.lm-search-results > li:eq(0) h4 .lm-type-icon .fa-file').length, 1, 'Shows LM type icon.');
-      let addlProps = find('.lm-search-results > li:eq(0) .learning-material-properties li', container);
-      assert.equal(addlProps.length, 3);
-      assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(0)'),
-        getText('Owner: 0 guy M. Mc0son'));
-      assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(1)'),
-        getText('Content Author: ' + 'Marty Mc Fly'));
-      assert.equal(getElementText('.lm-search-results > li:eq(0) .learning-material-properties li:eq(2)'),
-        getText('Upload date: ' + moment('2016-03-03').format('M-D-YYYY')));
-      await click(searchResults[0]);
-      rows = find('.learning-material-table tbody tr', container);
-      assert.equal(rows.length, 5);
-    }, 1000);
-    await settled();
+    assert.equal(page.learningMaterials.searchResults(0).title, 'Letter to Doc Brown');
+    assert.ok(page.learningMaterials.searchResults(0).hasFileIcon);
+    assert.equal(page.learningMaterials.searchResults(0).properties().count, 3);
+    assert.equal(page.learningMaterials.searchResults(0).properties(0).value, 'Owner: 0 guy M. Mc0son');
+    assert.equal(page.learningMaterials.searchResults(0).properties(1).value, 'Content Author: ' + 'Marty McFly');
+    assert.equal(page.learningMaterials.searchResults(0).properties(2).value, 'Upload date: ' + moment('2016-03-03').format('M-D-YYYY'));
+    await page.learningMaterials.searchResults(0).add();
+    assert.equal(page.learningMaterials.current().count, 5);
   });
 
   test('add timed release start date', async function (assert) {
-    const container = '.detail-learningmaterials';
-    const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
-    const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
-    const manageFirstLm = `${firstLm} td:eq(0) .link`;
-    const manager = `${container} .learningmaterial-manager`;
-    const addStartDate = `${manager} .add-date:eq(0)`;
-    const startDate = `${manager} .start-date`;
-    const startTime = `${manager} .start-time`;
-    const startDatePicker = `${startDate} input`;
-    const startTimePicker = `${startTime} select`;
-    const releaseSummary = `${manager} .timed-release-schedule`;
-    const done = `${manager} .buttons .done`;
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    await page.learningMaterials.manager.addStartDate();
 
-    await visit(url);
-    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
-    await click(manageFirstLm);
-
-    await click(addStartDate);
-
-    const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
-    const interactor = openDatepicker(find(startDatePicker));
-    interactor.selectDate(newDate.toDate());
-
-    let startBoxes = find(startTimePicker);
-    await pickOption(startBoxes[0], '10', assert);
-    await pickOption(startBoxes[1], '10', assert);
-    await pickOption(startBoxes[2], 'AM', assert);
-
-    await click(done);
-    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
-
-    await click(manageFirstLm);
-    assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newDate.format('L LT') + ')'));
+    const newDate = moment().hour(10).minute(10).add(1, 'day').add(1, 'month');
+    await page.learningMaterials.manager.startDate(newDate.toDate());
+    await page.learningMaterials.manager.startTime.hour(10);
+    await page.learningMaterials.manager.startTime.minute(10);
+    await page.learningMaterials.manager.startTime.ampm('am');
+    await page.learningMaterials.manager.save();
+    assert.ok(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available: ' + newDate.format('L LT') + ')');
   });
 
   test('add timed release start and end date', async function (assert) {
-    const container = '.detail-learningmaterials';
-    const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
-    const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
-    const manageFirstLm = `${firstLm} td:eq(0) .link`;
-    const manager = `${container} .learningmaterial-manager`;
-    const addStartDate = `${manager} .add-date:eq(0)`;
-    const startDate = `${manager} .start-date`;
-    const startTime = `${manager} .start-time`;
-    const startDatePicker = `${startDate} input`;
-    const startTimePicker = `${startTime} select`;
-    const addEndDate = `${manager} .add-date:eq(0)`;
-    const endDate = `${manager} .end-date`;
-    const endTime = `${manager} .end-time`;
-    const endDatePicker = `${endDate} input`;
-    const endTimePicker = `${endTime} select`;
-    const releaseSummary = `${manager} .timed-release-schedule`;
-    const done = `${manager} .buttons .done`;
-
-    await visit(url);
-    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
-    await click(manageFirstLm);
-
-    await click(addStartDate);
-
-    const startDateInteractor = openDatepicker(find(startDatePicker));
-
     const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
-    startDateInteractor.selectDate(newStartDate.toDate());
-
-    let startBoxes = find(startTimePicker);
-    await pickOption(startBoxes[0], '10', assert);
-    await pickOption(startBoxes[1], '10', assert);
-    await pickOption(startBoxes[2], 'AM', assert);
-
-    await click(addEndDate);
-
     const newEndDate = newStartDate.clone().add(1, 'minute');
-    const endDateInteractor = openDatepicker(find(endDatePicker));
-    endDateInteractor.selectDate(newEndDate.toDate());
 
-    let endBoxes = find(endTimePicker);
-    await pickOption(endBoxes[0], '10', assert);
-    await pickOption(endBoxes[1], '11', assert);
-    await pickOption(endBoxes[2], 'AM', assert);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    await page.learningMaterials.manager.addStartDate();
 
-    await click(done);
-    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
+    await page.learningMaterials.manager.startDate(newStartDate.toDate());
+    await page.learningMaterials.manager.startTime.hour(10);
+    await page.learningMaterials.manager.startTime.minute(10);
+    await page.learningMaterials.manager.startTime.ampm('am');
 
-    await click(manageFirstLm);
-    assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'));
+    await page.learningMaterials.manager.addEndDate();
+    await page.learningMaterials.manager.endDate(newEndDate.toDate());
+    await page.learningMaterials.manager.endTime.hour(10);
+    await page.learningMaterials.manager.endTime.minute(11);
+    await page.learningMaterials.manager.endTime.ampm('am');
+
+    await page.learningMaterials.manager.save();
+    assert.ok(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    const formatedStartDate = newStartDate.locale('en').format('L LT');
+    const formatedEndDate = newEndDate.locale('en').format('L LT');
+    assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available: ' + formatedStartDate + ' and available until ' + formatedEndDate + ')');
   });
 
   test('add timed release end date', async function (assert) {
-    const container = '.detail-learningmaterials';
-    const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
-    const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
-    const manageFirstLm = `${firstLm} td:eq(0) .link`;
-    const manager = `${container} .learningmaterial-manager`;
-    const addEndDate = `${manager} .add-date:eq(1)`;
-    const endDate = `${manager} .end-date`;
-    const endTime = `${manager} .end-time`;
-    const endDatePicker = `${endDate} input`;
-    const endTimePicker = `${endTime} select`;
-    const releaseSummary = `${manager} .timed-release-schedule`;
-    const done = `${manager} .buttons .done`;
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    await page.learningMaterials.manager.addEndDate();
 
-    await visit(url);
-    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
-    await click(manageFirstLm);
-
-    await click(addEndDate);
-
-    const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
-    const interactor = openDatepicker(find(endDatePicker));
-    interactor.selectDate(newDate.toDate());
-
-    let endBoxes = find(endTimePicker);
-    await pickOption(endBoxes[0], '10', assert);
-    await pickOption(endBoxes[1], '10', assert);
-    await pickOption(endBoxes[2], 'AM', assert);
-
-    await click(done);
-    assert.ok(findAll(statusIcon).length, 'the clock icon is visible');
-
-    await click(manageFirstLm);
-    assert.equal(getElementText(find(releaseSummary)), getText('(Available until ' + newDate.format('L LT') + ')'));
+    const newDate = moment().hour(10).minute(10).add(1, 'day').add(1, 'month');
+    await page.learningMaterials.manager.endDate(newDate.toDate());
+    await page.learningMaterials.manager.endTime.hour(10);
+    await page.learningMaterials.manager.endTime.minute(10);
+    await page.learningMaterials.manager.endTime.ampm('am');
+    await page.learningMaterials.manager.save();
+    assert.ok(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available until ' + newDate.format('L LT') + ')');
   });
 
   test('end date is after start date', async function (assert) {
-    const container = '.detail-learningmaterials';
-    const firstLm = `${container} .learning-material-table tbody tr:eq(0)`;
-    const statusIcon = `${firstLm} td:eq(5) i.fa-clock-o`;
-    const manageFirstLm = `${firstLm} td:eq(0) .link`;
-    const manager = `${container} .learningmaterial-manager`;
-    const addStartDate = `${manager} .add-date:eq(0)`;
-    const startDate = `${manager} .start-date`;
-    const startTime = `${manager} .start-time`;
-    const startDatePicker = `${startDate} input`;
-    const startTimePicker = `${startTime} select`;
-    const addEndDate = `${manager} .add-date:eq(0)`;
-    const endDate = `${manager} .end-date`;
-    const endTime = `${manager} .end-time`;
-    const endDatePicker = `${endDate} input`;
-    const endTimePicker = `${endTime} select`;
-    const releaseSummary = `${manager} .timed-release-schedule`;
-    const done = `${manager} .buttons .done`;
-    const errorMessage = `${manager} .validation-error-message`;
+    const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
 
-    await visit(url);
-    assert.notOk(findAll(statusIcon).length, 'the clock icon is not visible');
-    assert.equal(findAll(manager).length, 0, 'manager is not initially displayed');
-    await click(manageFirstLm);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+    await page.learningMaterials.current(0).details();
+    assert.notOk(page.learningMaterials.manager.hasEndDateValidationError);
+    await page.learningMaterials.manager.addStartDate();
 
-    await click(addStartDate);
+    await page.learningMaterials.manager.startDate(newDate.toDate());
+    await page.learningMaterials.manager.startTime.hour(10);
+    await page.learningMaterials.manager.startTime.minute(10);
+    await page.learningMaterials.manager.startTime.ampm('am');
 
-    const startDateInteractor = openDatepicker(find(startDatePicker));
+    await page.learningMaterials.manager.addEndDate();
+    await page.learningMaterials.manager.endDate(newDate.toDate());
+    await page.learningMaterials.manager.endTime.hour(10);
+    await page.learningMaterials.manager.endTime.minute(10);
+    await page.learningMaterials.manager.endTime.ampm('am');
+    await page.learningMaterials.manager.save();
 
-    const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
-    startDateInteractor.selectDate(newStartDate.toDate());
-
-    let startBoxes = find(startTimePicker);
-    await pickOption(startBoxes[0], '10', assert);
-    await pickOption(startBoxes[1], '10', assert);
-    await pickOption(startBoxes[2], 'AM', assert);
-
-    await click(addEndDate);
-
-    const newEndDate = newStartDate.clone();
-    const endDateInteractor = openDatepicker(find(endDatePicker));
-    endDateInteractor.selectDate(newEndDate.toDate());
-
-    let endBoxes = find(endTimePicker);
-    await pickOption(endBoxes[0], '10', assert);
-    await pickOption(endBoxes[1], '10', assert);
-    await pickOption(endBoxes[2], 'AM', assert);
-
-    assert.equal(findAll(errorMessage).length, 0, 'ne error displays initially');
-    await click(done);
-    assert.equal(findAll(manager).length, 1, 'the manager is still showing since there was an error');
-    assert.equal(getElementText(find(releaseSummary)), getText('(Available: ' + newStartDate.format('L LT') + ' and available until ' + newEndDate.format('L LT') + ')'), 'Check summary text');
-    assert.equal(findAll(errorMessage).length, 1, 'the error message shows up');
+    assert.ok(page.learningMaterials.manager.hasEndDateValidationError);
+    const formatedDate = newDate.locale('en').format('L LT');
+    assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available: ${formatedDate} and available until ${formatedDate})`);
   });
 });

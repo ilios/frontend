@@ -1,13 +1,9 @@
 import {
   clickable,
   collection,
-  fillable,
-  hasClass,
   isVisible,
-  notHasClass,
   property,
   text,
-  value
 } from 'ember-cli-page-object';
 import { fillInFroalaEditor, froalaEditorValue } from 'ilios/tests/helpers/froala-editor';
 import meshManager from './mesh-manager';
@@ -58,37 +54,4 @@ export default {
     },
   }),
   meshManager,
-  parentManager: {
-    scope: '[data-test-course-objective-manager]',
-    title: text('.objectivetitle'),
-    groupTitle: text('.group-picker'),
-    selectGroup: fillable('.group-picker select'),
-    groups: collection({
-      scope: '.group-picker select',
-      itemScope: 'option',
-      item: {
-        title: text(),
-        value: value(),
-      },
-    }),
-    competencies: collection({
-      scope: '.parent-picker',
-      itemScope: '[data-test-competency]',
-      item: {
-        title: text('.competency-title'),
-        selected: hasClass('selected', '.competency-title'),
-        notSelected: notHasClass('selected', '.competency-title'),
-        objectives: collection({
-          scope: 'ul',
-          itemScope: 'li',
-          item: {
-            title: text(),
-            selected: hasClass('selected'),
-            notSelected: notHasClass('selected'),
-            add: clickable()
-          }
-        }),
-      }
-    }),
-  }
 };

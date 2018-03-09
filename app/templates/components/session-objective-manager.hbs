@@ -1,6 +1,6 @@
 <div class='objectivetitle'>{{{sessionObjective.title}}}</div>
 
-{{#liquid-if (await showObjectiveList) class='vertical'}}
+{{#if (await showObjectiveList) class='vertical'}}
   <div class='parent-picker'>
     <h5>{{get (await course) 'title'}}</h5>
     <ul>
@@ -25,4 +25,4 @@
       {{t 'general.missingCourseObjectivesMessage'}}
     </p>
   </div>
-{{/liquid-if}}
+{{/if}}
