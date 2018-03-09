@@ -44,6 +44,7 @@ jobs:
         - chmod +x ./cc-test-reporter
         - ./cc-test-reporter before-build
       after_script:
+        - ./cc-test-reporter format-coverage --input-type=lcov coverage/lcov.info
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - stage: deploy staging
       if: branch = master AND NOT type = pull_request AND NOT type = cron
