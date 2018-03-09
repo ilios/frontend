@@ -1,7 +1,6 @@
 import {
   attribute,
   clickable,
-  clickOnText,
   count,
   create,
   collection,
@@ -9,14 +8,16 @@ import {
   hasClass,
   isVisible,
   notHasClass,
-  property,
   text,
-  value,
   visitable
 } from 'ember-cli-page-object';
-import { fillInFroalaEditor, froalaEditorValue } from 'ilios/tests/helpers/froala-editor';
+
 import { datePicker } from 'ilios/tests/helpers/date-picker';
-import meshManager from 'ilios/tests/pages/components/mesh-manager';
+import objectives from 'ilios/tests/pages/components/objectives';
+import learningMaterials from 'ilios/tests/pages/components/learning-materials';
+import meshTerms from 'ilios/tests/pages/components/mesh-terms';
+import taxonomies from 'ilios/tests/pages/components/taxonomies';
+import collapsedTaxonomies from 'ilios/tests/pages/components/collapsed-taxonomies';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -117,265 +118,11 @@ export default create({
 
   },
 
-  objectives: {
-    scope: '[data-test-detail-objectives]',
-    createNew: clickable('.detail-objectives-actions button'),
-    save: clickable('.detail-objectives-actions button.bigadd'),
-    cancel: clickable('.detail-objectives-actions button.bigcancel'),
-    newObjective: {
-      description: fillInFroalaEditor('.fr-box'),
-      save: clickable('.done'),
-      cancel: clickable('.cancel'),
-      canSave: property('disabled', '.done'),
-      validationError: text('.validation-error-message'),
-      hasValidationError: isVisible('.validation-error-message'),
-    },
-    current: collection({
-      scope: 'table',
-      itemScope: 'tbody tr',
-      item: {
-        description: {
-          scope: 'td:eq(0)',
-          openEditor: clickable('.editable'),
-          editorContents: froalaEditorValue('.fr-box'),
-          edit: fillInFroalaEditor('.fr-box'),
-          save: clickable('.done'),
-          validationError: text('.validation-error-message'),
-          hasValidationError: isVisible('.validation-error-message'),
-        },
-        parents: collection({
-          scope: 'td:eq(1)',
-          itemScope: '[data-test-parent]',
-          item: {
-            description: text(),
-          },
-        }, { at: 1 }),
-        manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
-        meshTerms: collection({
-          scope: 'td:eq(2)',
-          itemScope: 'li',
-          item: {
-            title: text(),
-          },
-        }, { at: 1 }),
-        manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
-      },
-    }),
-    meshManager,
-    parentManager: {
-      scope: '[data-test-course-objective-manager]',
-      title: text('.objectivetitle'),
-      groupTitle: text('.group-picker'),
-      selectGroup: fillable('.group-picker select'),
-      groups: collection({
-        scope: '.group-picker select',
-        itemScope: 'option',
-        item: {
-          title: text(),
-          value: value(),
-        },
-      }),
-      competencies: collection({
-        scope: '.parent-picker',
-        itemScope: '[data-test-competency]',
-        item: {
-          title: text('.competency-title'),
-          selected: hasClass('selected', '.competency-title'),
-          notSelected: notHasClass('selected', '.competency-title'),
-          objectives: collection({
-            scope: 'ul',
-            itemScope: 'li',
-            item: {
-              title: text(),
-              selected: hasClass('selected'),
-              notSelected: notHasClass('selected'),
-              add: clickable()
-            }
-          }),
-        }
-      }),
-    }
-  },
-
-  learningMaterials: {
-    scope: '[data-test-detail-learning-materials]',
-    createNew: clickable('.detail-learningmaterials-actions button'),
-    pickNew: clickOnText('.detail-learningmaterials-actions ul li'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    canSearch: isVisible('[data-test-search-box]'),
-    canCreateNew: isVisible('.detail-learningmaterials-actions .action-menu'),
-    canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
-    search: fillable('[data-test-search-box] input'),
-    current: collection({
-      scope: '.detail-learningmaterials-content table',
-      itemScope: 'tbody tr',
-      item: {
-        title: text('td', { at: 0 }),
-        owner: text('td', { at: 1 }),
-        required: text('td', { at: 2 }),
-        notes: text('td', { at: 3 }),
-        mesh: text('td', { at: 4 }),
-        status: text('td', { at: 5 }),
-        isNotePublic: isVisible('i.fa-eye'),
-        isTimedRelease: isVisible('.fa-clock-o'),
-        details: clickable('.link', { at: 0 }),
-      },
-    }),
-    searchResults: collection({
-      scope: '.lm-search-results',
-      itemScope: '> li',
-      item: {
-        title: text('h4'),
-        description: text('learning-material-description'),
-        hasFileIcon: isVisible('.fa-file'),
-        properties: collection({
-          scope: '.learning-material-properties',
-          itemScope: 'li',
-          item: {
-            value: text(),
-          },
-        }),
-        add: clickable(),
-      },
-    }),
-    newLearningMaterial: {
-      scope: '.new-learningmaterial',
-      name: fillable('input', { at: 0}),
-      author: fillable('input', { at: 1}),
-      url: fillable('input', { at: 2}),
-      citation: fillable('textarea'),
-      userName: text('.owninguser'),
-      status: fillable('select', { at: 0}),
-      role: fillable('select', { at: 1 }),
-      description: fillInFroalaEditor('.fr-box'),
-      save: clickable('.done'),
-      cancel: clickable('.cancel'),
-    },
-    manager: {
-      scope: '.learningmaterial-manager',
-      name: text('.displayname'),
-      author: text('.originalauthor'),
-      description: text('.description'),
-      copyrightPermission: text('.copyrightpermission'),
-      copyrightRationale: text('.copyrightrationale'),
-      uploadDate: text('.upload-date'),
-      downloadText: text('.downloadurl'),
-      downloadUrl: attribute('href', '.downloadurl a'),
-      link: text('.link'),
-      citation: text('.citation'),
-      hasCopyrightPermission: isVisible('.copyrightpermission'),
-      hasCopyrightRationale: isVisible('.copyrightrationale'),
-      hasLink: isVisible('.link'),
-      hasCitation: isVisible('.citation'),
-      hasFile: isVisible('.downloadurl'),
-      required: clickable('.required .switch-handle'),
-      publicNotes: clickable('.publicnotes .switch-handle'),
-      status: fillable('select', { at: 0}),
-      statusValue: value('select', { at: 0}),
-      notes: fillInFroalaEditor('.fr-box'),
-      notesValue: froalaEditorValue('.fr-box'),
-      addStartDate: clickable('[data-test-add-start-date]'),
-      addEndDate: clickable('[data-test-add-end-date]'),
-      timedReleaseSummary: text('.timed-release-schedule'),
-      save: clickable('.done'),
-      cancel: clickable('.cancel'),
-      meshManager,
-      startDate: datePicker('.start-date input'),
-      startTime: {
-        scope: '.start-time',
-        hour: fillable('select', {at: 0}),
-        minute: fillable('select', {at: 1}),
-        ampm: fillable('select', {at: 2}),
-      },
-      endDate: datePicker('.end-date input'),
-      endTime: {
-        scope: '.end-time',
-        hour: fillable('select', {at: 0}),
-        minute: fillable('select', {at: 1}),
-        ampm: fillable('select', {at: 2}),
-      },
-      hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]')
-    }
-  },
-
-  meshTerms: {
-    scope: '[data-test-detail-mesh]',
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    current: collection({
-      scope: '.selected-mesh-terms',
-      itemScope: 'li',
-      item: {
-        title: text('.term-title'),
-      },
-    }),
-    meshManager,
-  },
-
-  taxonomies: {
-    scope: '[data-test-detail-taxonomies]',
-    title: text('.title'),
-    manage: clickable('.actions button'),
-    save: clickable('.actions .bigadd'),
-    cancel: clickable('.actions .bigcancel'),
-    vocabularies: collection({
-      scope: '.content',
-      itemScope: '.detail-terms-list',
-      item: {
-        name: text('strong', { at: 0 }),
-        terms: collection({
-          scope: '.selected-taxonomy-terms',
-          itemScope: 'li',
-          item: {
-            name: text(),
-          },
-        }),
-      },
-    }),
-    manager: {
-      selectedTerms: collection({
-        scope: '.removable-list',
-        itemScope: 'li',
-        item: {
-          name: text(),
-          remove: clickable(),
-        },
-      }),
-      availableTerms: collection({
-        scope: '.selectable-terms-list',
-        itemScope: 'li',
-        item: {
-          name: text(),
-          notSelected: notHasClass('selected', 'div'),
-          isSelected: hasClass('selected', 'div'),
-          add: clickable('div'),
-        },
-      }),
-    }
-  },
-
-  collapsedTaxonomies: {
-    scope: '[data-test-collapsed-taxonomies]',
-    title: text('.title'),
-    headers: collection({
-      scope: 'thead',
-      itemScope: 'th',
-      item: {
-        title: text(),
-      },
-    }),
-    vocabularies: collection({
-      scope: 'tbody',
-      itemScope: 'tr',
-      item: {
-        name: text('td', { at: 0}),
-        school: text('td', { at: 1}),
-        terms: text('td', { at: 2}),
-      },
-    }),
-  },
+  objectives,
+  learningMaterials,
+  meshTerms,
+  taxonomies,
+  collapsedTaxonomies,
 
   cohorts: {
     scope: '[data-test-detail-cohorts]',

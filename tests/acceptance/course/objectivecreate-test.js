@@ -32,16 +32,16 @@ module('Acceptance: Course - Objective Create', function(hooks) {
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
-    assert.equal(page.objectives.current(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
     assert.equal(page.objectives.current().count, 2);
-    assert.equal(page.objectives.current(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
     assert.equal(page.objectives.current(0).parents().count, 0);
     assert.equal(page.objectives.current(0).meshTerms().count, 0);
-    assert.equal(page.objectives.current(1).description, newObjectiveDescription);
+    assert.equal(page.objectives.current(1).description.text, newObjectiveDescription);
     assert.equal(page.objectives.current(0).parents().count, 0);
     assert.equal(page.objectives.current(0).meshTerms().count, 0);
   });
@@ -50,13 +50,13 @@ module('Acceptance: Course - Objective Create', function(hooks) {
     assert.expect(6);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
-    assert.equal(page.objectives.current(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description('junk');
     await page.objectives.newObjective.cancel();
 
     assert.equal(page.objectives.current().count, 1);
-    assert.equal(page.objectives.current(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
     assert.equal(page.objectives.current(0).parents().count, 0);
     assert.equal(page.objectives.current(0).meshTerms().count, 0);
   });
@@ -65,7 +65,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
-    assert.equal(page.objectives.current(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');

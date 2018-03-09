@@ -57,9 +57,9 @@
   <ul class='mesh-descriptor-list'>
     {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
       {{#if editable}}
-        <li class='clickable link' {{action manageDescriptors objective}}>{{descriptor.name}}</li>
+        <li class='clickable link' {{action manageDescriptors objective}} data-test-term>{{descriptor.name}}</li>
       {{else}}
-        <li>{{descriptor.name}}</li>
+        <li data-test-term>{{descriptor.name}}</li>
       {{/if}}
     {{else}}
       <li>
