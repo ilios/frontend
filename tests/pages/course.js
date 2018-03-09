@@ -166,6 +166,15 @@ export default create({
       scope: '[data-test-course-objective-manager]',
       title: text('.objectivetitle'),
       groupTitle: text('.group-picker'),
+      selectGroup: fillable('.group-picker select'),
+      groups: collection({
+        scope: '.group-picker select',
+        itemScope: 'option',
+        item: {
+          title: text(),
+          value: value(),
+        },
+      }),
       competencies: collection({
         scope: '.parent-picker',
         itemScope: '[data-test-competency]',
