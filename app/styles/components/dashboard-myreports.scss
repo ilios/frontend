@@ -1,8 +1,18 @@
 .dashboard-myreports {
   @include dashboard-block;
 
-  table {
-    width: auto;
+  .saved-reports {
+    @include ilios-list-reset;
+    margin: .5rem;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+
+      .myreports-list-item {
+        margin-right: .5rem;
+      }
+    }
   }
 
   .form-title {

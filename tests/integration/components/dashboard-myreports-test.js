@@ -57,10 +57,10 @@ test('list reports', function(assert) {
   assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
   return wait().then(()=> {
     for (let i = 0; i < 2; i++) {
-      let tds = this.$(`table tr:eq(${i}) td`);
+      let tds = this.$(`[data-test-saved-reports] li:eq(${i})`);
       assert.equal(tds.eq(0).text().trim(), mockReports[i].get('title'));
     }
-    assert.equal(this.$(`table tr`).length, 2);
+    assert.equal(this.$(`[data-test-saved-reports] li`).length, 2);
   });
 });
 
