@@ -1,566 +1,487 @@
-import { click, fillIn, findAll, currentPath, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
+import { currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-var application;
-var fixtures = {};
-var url = '/courses/1/sessions/1';
+import { setupApplicationTest } from 'ember-qunit';
+
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
 module('Acceptance: Session - Overview', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application, false);
-    this.server.create('school');
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.school = this.server.create('school');
     this.server.create('academicYear');
-    this.server.create('course', {
-      schoolId: 1
+    this.course = this.server.create('course', {
+      school: this.school
     });
-    fixtures.sessionTypes = this.server.createList('sessionType', 2, {
-      schoolId: 1
+    this.sessionTypes = this.server.createList('sessionType', 2, {
+      school: this.school
     });
-    fixtures.sessionDescription = this.server.create('sessionDescription');
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+    this.sessionDescription = this.server.create('sessionDescription');
   });
 
   test('check fields', async function(assert) {
-    this.server.create('user', {
-      id: 4136,
-    });
-    this.server.create('userRole', {
-      userIds: [4136],
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1,
-      sessionDescriptionId: 1,
+    await setupAuthentication({
+      roles: [role]
     });
-    await visit(url);
-
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
-    assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
-    assert.equal(findAll('.sessionilmhours', container).length, 0);
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      sessionDescription: this.sessionDescription,
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.overview.sessionType.value, 'session type 0');
+    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    assert.notOk(page.overview.ilmHours.isVisible);
   });
 
   test('check remove ilm', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
-    var ilmSession = this.server.create('ilmSession');
+    await setupAuthentication();
+    const ilmSession = this.server.create('ilmSession');
     this.server.create('session', {
-      courseId: 1,
-      ilmSessionId: 1
+      course: this.course,
+      ilmSession
     });
-    await visit(url);
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    assert.equal(findAll('.sessionilmhours', container).length, 1);
-    assert.equal(findAll('.sessionilmduedate', container).length, 1);
-    var dueDate = moment(ilmSession.dueDate).format('L');
-    assert.equal(getElementText(find('.sessionilmhours .content', container)), ilmSession.hours);
-    assert.equal(getElementText(find('.sessionilmduedate .editable', container)), dueDate);
-    await click(find('.independentlearningcontrol .toggle-yesno', container));
-    assert.equal(findAll('.sessionilmhours', container).length, 0);
-    assert.equal(findAll('.sessionilmduedate', container).length, 0);
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.ilmHours.isVisible);
+    assert.ok(page.overview.ilmDueDate.isVisible);
+    assert.equal(page.overview.ilmHours.value, ilmSession.hours);
+    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('L'));
+
+    await page.overview.toggleIlm();
+
+    assert.notOk(page.overview.ilmHours.isVisible);
+    assert.notOk(page.overview.ilmDueDate.isVisible);
   });
 
-  test('check add ilm', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
-
+  test('check add ilm', async function (assert) {
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1,
-      description: 'some text',
+      course: this.course,
     });
-    await visit(url);
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.equal(currentPath(), 'course.session.index');
-    var container = find('.session-overview');
-    await click(find('.independentlearningcontrol .toggle-yesno', container));
-    assert.equal(findAll('.sessionilmhours', container).length, 1);
-    assert.equal(findAll('.sessionilmduedate', container).length, 1);
-    assert.equal(findAll('.sessionassociatedgroups', container).length, 0);
-    assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
+    assert.equal(currentRouteName(), 'session.index');
+    assert.notOk(page.overview.ilmHours.isVisible);
+    assert.notOk(page.overview.ilmDueDate.isVisible);
+
+    await page.overview.toggleIlm();
+
+    assert.ok(page.overview.ilmHours.isVisible);
+    assert.ok(page.overview.ilmDueDate.isVisible);
+    assert.equal(page.overview.ilmHours.value, 1);
+    assert.equal(page.overview.ilmDueDate.value, moment().add(6, 'weeks').format('L'));
   });
 
-  test('change ilm hours', async function(assert) {
-    this.server.create('user', {
-      id: 4136
+  test('change ilm hours', async function (assert) {
+    await setupAuthentication();
+    const ilmSession = this.server.create('ilmSession', {
+      hours: 3
     });
-    var ilmSession = this.server.create('ilmSession');
     this.server.create('session', {
-      courseId: 1,
-      ilmSessionId: 1
+      course: this.course,
+      ilmSession
     });
-    await visit(url);
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(findAll('.sessionilmhours', container).length, 1);
-    var container = find('.sessionilmhours');
-    assert.equal(getElementText(find('.content', container)), ilmSession.hours);
-    await click(find('.editable', container));
-    var input = find('.editinplace input', container);
-    assert.equal(getText(input.val()), ilmSession.hours);
-    await fillIn(input, 23);
-    await click(find('.editinplace .actions .done', container));
-    assert.equal(getElementText(find('.content', container)), 23);
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.ilmHours.value, 3);
+    await page.overview.ilmHours.edit();
+    await page.overview.ilmHours.set(23);
+    await page.overview.ilmHours.save();
+    assert.equal(page.overview.ilmHours.value, 23);
   });
 
   test('change ilm due date', async function(assert) {
-    this.server.create('user', {
-      id: 4136
+    await setupAuthentication();
+    const ilmSession = this.server.create('ilmSession', {
+      hours: 3
     });
-    var ilmSession = this.server.create('ilmSession');
     this.server.create('session', {
-      courseId: 1,
-      ilmSessionId: 1
+      course: this.course,
+      ilmSession
     });
-    await visit(url);
-    var container = find('.sessionilmduedate');
-    var dueDate = moment(ilmSession.dueDate).format('L');
-    assert.equal(getElementText(find('.editable', container)), dueDate);
-    await click(find('.editable', container));
-    var input = find('.editinplace input', container);
-    assert.equal(getText(input.val()), getText(dueDate));
-    var interactor = openDatepicker(find('input', container));
-    assert.equal(interactor.selectedYear(), moment(ilmSession.dueDate).format('YYYY'));
-    var newDate = moment(ilmSession.dueDate).add(1, 'year').add(1, 'month');
-    interactor.selectDate(newDate.toDate());
-    await click(find('.editinplace .actions .done', container));
-    assert.equal(getElementText(find('.editable', container)), newDate.format('L'));
+    const newDate = moment(ilmSession.dueDate).add(3, 'weeks');
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('L'));
+    await page.overview.ilmDueDate.edit();
+    await page.overview.ilmDueDate.set(newDate.toDate());
+    await page.overview.ilmDueDate.save();
+    assert.equal(page.overview.ilmDueDate.value, newDate.locale('en').format('L'));
   });
 
   test('change title', async function(assert) {
-    this.server.create('user', {
-      id: 4136
+    await setupAuthentication();
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
-    });
-    await visit(url);
-    var container = find('.session-header .title');
-    assert.equal(getElementText(container), getText('session 0'));
-    await click(find('.editable', container));
-    var input = find('.editinplace input', container);
-    assert.equal(getText(input.val()), getText('session 0'));
-    await fillIn(input, 'test new title');
-    await click(find('.editinplace .actions .done', container));
-    assert.equal(getElementText(container), getText('test new title'));
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.title.value, session.title);
+    await page.overview.title.edit();
+    await page.overview.title.set('Rad Session Dude');
+    await page.overview.title.save();
+    assert.equal(page.overview.title.value, 'Rad Session Dude');
   });
 
-  test('change type', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+  test('change type', async function (assert) {
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    await visit(url);
-    var container = find('.session-overview');
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 0'));
-    await click(find('.sessiontype .editable', container));
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    let options = find('.sessiontype select option', container);
-    assert.equal(options.length, 2);
-    assert.equal(getElementText(options.eq(0)), getText('session type 0'));
-    assert.equal(getElementText(options.eq(1)), getText('session type 1'));
-    await pickOption(find('.sessiontype select', container), 'session type 1', assert);
-    await click(find('.sessiontype .actions .done', container));
-    assert.equal(getElementText(find('.sessiontype .editable', container)), getText('session type 1'));
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionType.value, 'session type 0');
+    await page.overview.sessionType.edit();
+    await page.overview.sessionType.set(2);
+    await page.overview.sessionType.save();
+    assert.equal(page.overview.sessionType.value, 'session type 1');
   });
 
-  test('session attributes are shown by school config', async assert => {
-    assert.expect(4);
-    this.server.create('user', {
-      id: 4136
+  test('session attributes are shown by school config', async function(assert) {
+    assert.expect(5);
+    await setupAuthentication();
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 2
+      course: this.course,
+      sessionType: this.sessionTypes[1]
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSupplemental',
       value: true
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSpecialAttireRequired',
       value: true
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
       value: true
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionAttendanceRequired',
       value: true
     });
-    this.server.db.schools.update(1, {
-      configurationIds: [1, 2, 3, 4]
-    });
-    const sessionOverview = '.session-overview';
-    const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
-    const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
-    const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
-    const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
-
-    await visit(url);
-    assert.equal(findAll(supplementalToggle).length, 1, 'control hidden');
-    assert.equal(findAll(specialAttireToggle).length, 1, 'control hidden');
-    assert.equal(findAll(specialEquiptmentToggle).length, 1, 'control hidden');
-    assert.equal(findAll(attendanceRequiredToggle).length, 1, 'control hidden');
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.supplemental.isVisible);
+    assert.ok(page.overview.specialAttire.isVisible);
+    assert.ok(page.overview.specialEquipment.isVisible);
+    assert.ok(page.overview.attendanceRequired.isVisible);
   });
 
-  test('session attributes are hidden by school config', async assert => {
-    assert.expect(4);
-    this.server.create('user', {
-      id: 4136
-    });
+  test('session attributes are hidden by school config', async function(assert) {
+    assert.expect(5);
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 2
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSupplemental',
       value: false
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSpecialAttireRequired',
       value: false
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
       value: false
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false
     });
-    this.server.db.schools.update(1, {
-      configurationIds: [1, 2, 3, 4]
-    });
-    const sessionOverview = '.session-overview';
-    const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
-    const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
-    const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
-    const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
-
-    await visit(url);
-    assert.equal(findAll(supplementalToggle).length, 0, 'control hidden');
-    assert.equal(findAll(specialAttireToggle).length, 0, 'control hidden');
-    assert.equal(findAll(specialEquiptmentToggle).length, 0, 'control hidden');
-    assert.equal(findAll(attendanceRequiredToggle).length, 0, 'control hidden');
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.notOk(page.overview.supplemental.isVisible);
+    assert.notOk(page.overview.specialAttire.isVisible);
+    assert.notOk(page.overview.specialEquipment.isVisible);
+    assert.notOk(page.overview.attendanceRequired.isVisible);
   });
 
-  test('session attributes are hidden when there is no school config', async assert => {
-    assert.expect(4);
-    this.server.create('user', {
-      id: 4136
-    });
+  test('session attributes are hidden when there is no school config', async function(assert) {
+    assert.expect(5);
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 2
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-
-    const sessionOverview = '.session-overview';
-    const supplementalToggle = `${sessionOverview} .sessionsupplemental .toggle-yesno`;
-    const specialAttireToggle = `${sessionOverview} .sessionspecialattire .toggle-yesno`;
-    const specialEquiptmentToggle = `${sessionOverview} .sessionspecialequipment .toggle-yesno`;
-    const attendanceRequiredToggle = `${sessionOverview} .sessionattendancerequired .toggle-yesno`;
-
-    await visit(url);
-    assert.equal(findAll(supplementalToggle).length, 0, 'control hidden');
-    assert.equal(findAll(specialAttireToggle).length, 0, 'control hidden');
-    assert.equal(findAll(specialEquiptmentToggle).length, 0, 'control hidden');
-    assert.equal(findAll(attendanceRequiredToggle).length, 0, 'control hidden');
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.notOk(page.overview.supplemental.isVisible);
+    assert.notOk(page.overview.specialAttire.isVisible);
+    assert.notOk(page.overview.specialEquipment.isVisible);
+    assert.notOk(page.overview.attendanceRequired.isVisible);
   });
 
-  let testAttributeToggle = async function(assert, schoolVariableName, domclass){
-    assert.expect(3);
-    this.server.create('user', {
-      id: 4136
-    });
+  test('change supplemental', async function (assert) {
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 2
+      course: this.course,
+      sessionType: this.sessionTypes[1]
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
-      name: schoolVariableName,
+      school: this.school,
+      name: 'showSessionSupplemental',
       value: true
     });
-    this.server.db.schools.update(1, {
-      configurationIds: [1]
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.supplemental.isVisible);
+    assert.notOk(page.overview.supplemental.isActive);
+    await page.overview.supplemental.click();
+    assert.ok(page.overview.supplemental.isActive);
+  });
+
+  test('change special attire', async function (assert) {
+    await setupAuthentication();
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1]
     });
-    const sessionOverview = '.session-overview';
-    const toggle = `${sessionOverview} .${domclass} .toggle-yesno`;
-    const toggleValue = `${toggle} input`;
-
-    await visit(url);
-    assert.equal(findAll(toggleValue).length, 1, 'control exists');
-    assert.ok(find(toggleValue).not(':checked'), 'initiall not checked');
-    await click(toggle);
-    assert.ok(find(toggleValue).is(':checked'), 'clicking changed state');
-  };
-
-  test('change suplimental', async assert => {
-    await testAttributeToggle(assert, 'showSessionSupplemental', 'sessionsupplemental');
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialAttireRequired',
+      value: true
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.specialAttire.isVisible);
+    assert.notOk(page.overview.specialAttire.isActive);
+    await page.overview.specialAttire.click();
+    assert.ok(page.overview.specialAttire.isActive);
   });
 
-  test('change special attire', async assert => {
-    await testAttributeToggle(assert, 'showSessionSpecialAttireRequired', 'sessionspecialattire');
+  test('change special equipment', async function (assert) {
+    await setupAuthentication();
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1]
+    });
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialEquipmentRequired',
+      value: true
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.specialEquipment.isVisible);
+    assert.notOk(page.overview.specialEquipment.isActive);
+    await page.overview.specialEquipment.click();
+    assert.ok(page.overview.specialEquipment.isActive);
   });
 
-  test('change special equipment', async assert => {
-    await testAttributeToggle(assert, 'showSessionSpecialEquipmentRequired', 'sessionspecialequipment');
-  });
-
-  test('change attendance required', async assert => {
-    await testAttributeToggle(assert, 'showSessionAttendanceRequired', 'sessionattendancerequired');
+  test('change attendance rquired', async function (assert) {
+    await setupAuthentication();
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1]
+    });
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionAttendanceRequired',
+      value: true
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.attendanceRequired.isVisible);
+    assert.notOk(page.overview.attendanceRequired.isActive);
+    await page.overview.attendanceRequired.click();
+    assert.ok(page.overview.attendanceRequired.isActive);
   });
 
   test('change description', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1,
-      sessionDescriptionId: 1
+      course: this.course,
+      sessionDescription: this.sessionDescription
     });
-    await visit(url);
-    var description = getText(fixtures.sessionDescription.description);
-    var container = find('.sessiondescription');
-    assert.equal(getElementText(find('.content', container)), description);
-    await click(find('.editable', container));
-    let editor = find('.sessiondescription .fr-box');
-    let editorContents = editor.data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), description);
-    editor.froalaEditor('html.set', 'test new description');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(find('.editinplace .actions .done', container));
-    assert.equal(getElementText(find('.content', container)), getText('test new description'));
+    const newDescription = 'some new thing';
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    await page.overview.sessionDescription.edit();
+    await page.overview.sessionDescription.set(newDescription);
+    await page.overview.sessionDescription.save();
+    assert.equal(page.overview.sessionDescription.value, newDescription);
   });
 
   test('add description', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
     });
-    await visit(url);
-    var container = find('.sessiondescription');
-    assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
-    await click(find('.editable', container));
-    let editor = find('.sessiondescription .fr-box');
-    let editorContents = editor.data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), '');
-    editor.froalaEditor('html.set', 'test new description');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(find('.editinplace .actions .done', container));
-    assert.equal(getElementText(find('.content', container)), getText('test new description'));
+    const newDescription = 'some new thing';
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
+    await page.overview.sessionDescription.edit();
+    await page.overview.sessionDescription.set(newDescription);
+    await page.overview.sessionDescription.save();
+    assert.equal(page.overview.sessionDescription.value, newDescription);
   });
 
-  test('empty description removes description', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+  test('empty description removes description', async function (assert) {
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
     });
-    const container = '.sessiondescription';
-    const description = `${container} .content`;
-    const editorElement = `${container} .fr-box`;
-    const edit = `${container} .editable`;
-    const save = `${container} .done`;
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    await visit(url);
-    assert.equal(getElementText(description), getText('Click to edit'));
-    await click(edit);
-    let editor = find(editorElement);
-    assert.equal(editor.data('froala.editor').$el.text(), '');
-    editor.froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(save);
-    assert.equal(getElementText(description), getText('Click to edit'));
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
+    await page.overview.sessionDescription.edit();
+    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.sessionDescription.save();
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
   test('remove description', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1,
-      sessionDescriptionId: 1
+      course: this.course,
+      sessionDescription: this.sessionDescription
     });
-    const container = '.sessiondescription';
-    const description = `${container} .content`;
-    const editorElement = `${container} .fr-box`;
-    const edit = `${container} .editable`;
-    const save = `${container} .done`;
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    await visit(url);
-    assert.equal(getElementText(description), 'sessiondescription0');
-    await click(edit);
-    let editor = find(editorElement);
-    let editorContents = editor.data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), 'sessiondescription0');
-    editor.froalaEditor('html.set', '');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(save);
-    assert.equal(getElementText(description), getText('Click to edit'));
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    await page.overview.sessionDescription.edit();
+    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.sessionDescription.save();
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
   test('cancel editing empty description #3210', async function(assert) {
-    this.server.create('user', {
-      id: 4136
-    });
+    await setupAuthentication();
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
     });
-    await visit(url);
-    const container = find('.sessiondescription');
-    assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
-    await click(find('.editable', container));
-    let editor = find('.sessiondescription .fr-box');
-    let editorContents = editor.data('froala.editor').$el.text();
-    assert.equal(getText(editorContents), '');
-    editor.froalaEditor('html.set', 'test new description');
-    editor.froalaEditor('events.trigger', 'contentChanged');
-    await click(find('.editinplace .actions .cancel', container));
-    assert.equal(getElementText(find('.content', container)), getText('Click to edit'));
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
+    await page.overview.sessionDescription.edit();
+    await page.overview.sessionDescription.set('something useless this way types');
+    await page.overview.sessionDescription.cancel();
+    assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
 
   test('click copy', async function(assert) {
-    this.server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.create('user', {
-      id: 4136,
-      roleIds: [1]
+    await setupAuthentication({
+      roles: [role]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
 
-    const copy = '.session-overview a.copy';
-    await visit(url);
-    await click(copy);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.overview.copy.visit();
 
-    assert.equal(currentPath(), 'course.session.copy');
+    assert.equal(currentRouteName(), 'session.copy');
   });
 
   test('copy hidden from instructors', async function(assert) {
-    this.server.create('userRole', {
+    const role = this.server.create('userRole', {
       title: 'instructor'
     });
-    this.server.create('user', {
-      id: 4136,
-      roleIds: [1],
+    await setupAuthentication({
+      roles: [role]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    await visit(url);
-    const container = '.session-overview';
-    const copy = `${container} a.copy`;
-
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(findAll(copy).length, 0);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.notOk(page.overview.copy.isVisible);
   });
 
   test('copy visible to developers', async function(assert) {
-    this.server.create('userRole', {
-      userIds: [4136],
+    const role = this.server.create('userRole', {
       title: 'developer'
     });
-    this.server.create('user', {
-      id: 4136,
-      roleIds: [1],
+    await setupAuthentication({
+      roles: [role]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    await visit(url);
-    const container = '.session-overview';
-    const copy = `${container} a.copy`;
-
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(findAll(copy).length, 1);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.copy.isVisible);
   });
 
   test('copy visible to course directors', async function(assert) {
-    this.server.create('userRole', {
-      userIds: [4136],
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.create('user', {
-      id: 4136,
-      roleIds: [1],
+    await setupAuthentication({
+      roles: [role]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    await visit(url);
-    const container = '.session-overview';
-    const copy = `${container} a.copy`;
-
-    assert.equal(currentPath(), 'course.session.index');
-    assert.equal(findAll(copy).length, 1);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.copy.isVisible);
   });
 
   test('copy hidden on copy route', async function(assert) {
-    this.server.create('userRole', {
-      userIds: [4136],
+    const role = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.create('user', {
-      id: 4136,
-      roleIds: [1],
+    await setupAuthentication({
+      roles: [role]
     });
     this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1
+      course: this.course,
+      sessionType: this.sessionTypes[0]
     });
-    await visit(`${url}/copy`);
-    const container = '.session-overview';
-    const copy = `${container} a.copy`;
-
-    assert.equal(currentPath(), 'course.session.copy');
-    assert.equal(findAll(copy).length, 0);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.overview.copy.isVisible);
+    await page.overview.copy.visit();
+    assert.equal(currentRouteName(), 'session.copy');
+    assert.notOk(page.overview.copy.isVisible);
   });
 });
