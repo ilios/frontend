@@ -14,7 +14,7 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
-    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - CC_TEST_REPORTER_ID=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
     - COVERAGE=true
 
 before_install:
