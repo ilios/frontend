@@ -11,6 +11,7 @@ const { Model, attr, belongsTo, hasMany } = DS;
 Inflector.inflector.uncountable('aamc-pcrs');
 
 export default Model.extend({
+  active: attr('boolean'),
   title: attr('string'),
   school: belongsTo('school', {async: true}),
   objectives: hasMany('objective', {async: true}),
