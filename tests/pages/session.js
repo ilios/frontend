@@ -116,4 +116,97 @@ export default create({
     }),
   },
 
+  learnerGroups: {
+    scope: '[data-test-detail-learner-groups]',
+    manage: clickable('.actions button'),
+    save: clickable('.actions button.bigadd'),
+    cancel: clickable('.actions button.bigcancel'),
+    current: collection({
+      scope: '.trees',
+      itemScope: 'fieldset',
+      item: {
+        title: text('legend'),
+        groups: collection({
+          scope: 'ul',
+          itemScope: 'li',
+          item: {
+            title: text(),
+            isTopLevelGroup: hasClass('top-level-group')
+          }
+        })
+      },
+    }),
+    manager: {
+      scope: '[data-test-learnergroup-selection-manager]',
+      search: fillable('.search-box input'),
+      selectedLearnerGroups: collection({
+        scope: '.trees',
+        itemScope: 'fieldset',
+        item: {
+          title: text('legend'),
+          groups: collection({
+            scope: 'ul',
+            itemScope: 'li',
+            item: {
+              title: text(),
+              isTopLevelGroup: hasClass('top-level-group'),
+              remove: clickable()
+            }
+          })
+        },
+      }),
+      availableLearnerGroups: {
+        scope: '.available-learner-groups',
+        title: text('h4'),
+        cohorts: collection({
+          scope: '[data-test-cohorts]',
+          itemScope: '[data-test-cohort]',
+          item: {
+            title: text('h5'),
+            topLevelGroups: collection({
+              scope: '.tree-groups-list',
+              itemScope: '> [data-test-learnergroup-tree]',
+              item: {
+                title: text('> span'),
+                enabled: notHasClass('disabled'),
+                disabled: hasClass('disabled'),
+                add: clickable('.clickable'),
+                //this is recursive, but I can't figure out how to do that, so two levels will have to be enough
+                groups: collection({
+                  scope: 'ul',
+                  itemScope: '> [data-test-learnergroup-tree]',
+                  item: {
+                    title: text('> span'),
+                    enabled: notHasClass('disabled'),
+                    disabled: hasClass('disabled'),
+                    add: clickable('.clickable'),
+                  }
+                })
+              }
+            }),
+          }
+        }),
+      }
+    }
+  },
+
+  collapseLearnerGroups: {
+    scope: '[data-test-collapsed-learnergroups]',
+    title: text('.title'),
+    headers: collection({
+      scope: 'thead',
+      itemScope: 'th',
+      item: {
+        title: text(),
+      },
+    }),
+    cohorts: collection({
+      scope: 'tbody',
+      itemScope: 'tr',
+      item: {
+        name: text('td', { at: 0 }),
+        learnerGroups: text('td', { at: 1 }),
+      },
+    }),
+  },
 });

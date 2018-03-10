@@ -21,6 +21,7 @@ export default Component.extend({
   isVisible: false,
   hasChildren: gt('learnerGroup.children.length', 0),
   selectable: false,
+  'data-test-learnergroup-tree': true,
   /**
    * Recursivly search a group tree to see if there are any children
    * which have not been selected

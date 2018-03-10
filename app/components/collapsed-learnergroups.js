@@ -6,6 +6,7 @@ export default Component.extend({
   subject: null,
   tagName: 'section',
   classNames: ['collapsed-learnergroups'],
+  'data-test-collapsed-learnergroups': true,
   cohortSummaries: computed('subject.learnerGroups.[]', async function () {
     const subject = this.get('subject');
     if (!subject) {
