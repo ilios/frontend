@@ -14,6 +14,7 @@ export default Component.extend({
 
   isEditing: false,
   showRemoveConfirmation: false,
+  'data-test-offering-manager': true,
 
   userCanDelete: computed('offering.session.course', 'offering.allInstructors.[]', 'currentUser.model.directedCourses.[]', function(){
     const offering = this.get('offering');

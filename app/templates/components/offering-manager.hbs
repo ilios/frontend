@@ -32,7 +32,7 @@
   <div class='offering-manager-instructors'>
     <ul>
       {{#each (await offering.allInstructors) as |instructor|}}
-        <li>{{instructor.fullName}}</li>
+        <li data-test-instructor>{{instructor.fullName}}</li>
       {{else}}
         <li>{{fa-icon 'user-plus'}}</li>
       {{/each}}

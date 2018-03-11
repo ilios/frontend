@@ -5,7 +5,7 @@
         <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
         {{#if (is-fulfilled tree.groups)}}
           {{#if isManaging}}
-            <div class='remove-all-subgroups'><span class='clickable remove' onclick={{action remove tree.topLevelGroup}}>{{t 'general.removeAll'}} ({{fa-icon 'times'}})</span></div>
+            <div class='remove-all-subgroups'><span class='clickable remove' onclick={{action remove tree.topLevelGroup}} data-test-remove-all>{{t 'general.removeAll'}} ({{fa-icon 'times'}})</span></div>
           {{/if}}
           <ul>
             <li class='top-level-group'>

@@ -1,25 +1,19 @@
-import { click, fillIn, findAll, find, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
 import moment from 'moment';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
-
-var application;
-var fixtures = {};
-var url = '/courses/1/sessions/1';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
 module('Acceptance: Session - Offerings', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    fixtures.users =  [];
-
-    fixtures.users.pushObject(setupAuthentication(application, {id: 1}));
-    this.server.create('school');
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const user = await setupAuthentication();
+    const school = this.server.create('school');
     this.server.create('program');
     this.server.create('programYear', { programId: 1});
     this.server.create('cohort', {
@@ -27,591 +21,441 @@ module('Acceptance: Session - Offerings', function(hooks) {
     });
     this.server.create('course', {
       cohortIds: [1],
-      schoolId: 1,
-      directorIds: [1]
+      school,
+      directors: [user]
     });
     this.server.create('sessionType', {
-      schoolId: 1
+      school
     });
-
-    fixtures.users.pushObjects(server.createList('user', 8));
-
-    fixtures.instructorGroups = [];
-    fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
-      userIds: [2,3,6,7],
-      schoolId: 1,
-    }));
-    fixtures.instructorGroups.pushObject(server.create('instructorGroup', {
-      userIds: [4,5],
-      schoolId: 1
-    }));
-    fixtures.learnerGroups = [];
-    fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
-      userIds: [2,3],
+    this.server.createList('user', 8);
+    this.server.create('instructorGroup', {
+      userIds: [2, 3, 6, 7],
+      school,
+    });
+    this.server.create('instructorGroup', {
+      userIds: [4, 5],
+      school
+    });
+    this.server.create('learnerGroup', {
+      userIds: [2, 3],
       cohortId: 1,
       location: 'default 1',
-      instructorIds: [1],
-    }));
-    fixtures.learnerGroups.pushObject(server.create('learnerGroup', {
-      userIds: [4,5],
+      instructors: [user],
+    });
+    this.server.create('learnerGroup', {
+      userIds: [4, 5],
       cohortId: 1,
       location: 'default 2',
       instructorGroupIds: [1],
-    }));
-    fixtures.session = this.server.create('session', {
+    });
+    this.server.create('session', {
       courseId: 1,
     });
-    fixtures.offerings = [];
-    let today = moment().hour(9);
-    fixtures.today = today;
-    fixtures.offerings.pushObject(server.create('offering', {
+
+    this.today = moment().hour(9);
+    this.offering1 = this.server.create('offering', {
       sessionId: 1,
-      instructorIds: [6,7,8,9],
+      instructorIds: [6, 7, 8, 9],
       instructorGroupIds: [1, 2],
       learnerGroupIds: [1, 2],
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
-    }));
-    fixtures.offerings.pushObject(server.create('offering', {
+      startDate: this.today.format(),
+      endDate: this.today.clone().add(1, 'hour').format(),
+    });
+
+    this.offering2 = this.server.create('offering', {
       sessionId: 1,
-      instructorIds: [8,9],
+      instructorIds: [8, 9],
       instructorGroupIds: [2],
       learnerGroupIds: [2],
-      startDate:today.clone().add(1, 'day').format(),
-      endDate: today.clone().add(1, 'day').add(1, 'hour').format(),
-    }));
-    fixtures.offerings.pushObject(server.create('offering', {
+      startDate: this.today.clone().add(1, 'day').format(),
+      endDate: this.today.clone().add(1, 'day').add(1, 'hour').format(),
+    });
+    this.offering3 = this.server.create('offering', {
       sessionId: 1,
       instructorGroupIds: [2],
       learnerGroupIds: [2],
       instructorIds: [],
-      startDate: today.clone().add(2, 'days').format(),
-      endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
-    }));
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+      startDate: this.today.clone().add(2, 'days').format(),
+      endDate: this.today.clone().add(3, 'days').add(1, 'hour').format(),
+    });
   });
 
   test('basics', async function(assert) {
     assert.expect(2);
-    await visit(url);
-    let container = find('.session-offerings');
-    let offeringTitle = 'Offerings (' + fixtures.offerings.length + ')';
-    assert.equal(getElementText(find('.title', container)), getText(offeringTitle));
-    let dateBlocks = find('.offering-block', container);
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.equal(dateBlocks.length, fixtures.offerings.length, 'Date blocks count equals offerings fixtures count');
+    assert.equal(page.offerings.header.title, 'Offerings (3)');
+    assert.equal(page.offerings.dateBlocks().count, 3);
   });
 
-  test('single day offering dates', async function(assert) {
-    assert.expect(8);
-    await visit(url);
-    let dateBlocks = find('.session-offerings .offering-block');
+  test('offering dates', async function(assert) {
+    assert.expect(23);
+    await page.visit({ courseId: 1, sessionId: 1 });
 
-    //the first two offerings are single date offerings
-    for(let i = 0; i < 2; i++){
-      let block = dateBlocks.eq(i);
-      let offering = fixtures.offerings[i];
-      assert.equal(getElementText(find('.offering-block-date-dayofweek', block)), getText(moment(offering.startDate).format('dddd')));
-      assert.equal(getElementText(find('.offering-block-date-dayofmonth', block)), getText(moment(offering.startDate).format('MMMM Do')));
-      assert.equal(getElementText(find('.offering-block-time-time-starttime', block)), getText('Starts:' + moment(offering.startDate).format('LT')));
-      assert.equal(getElementText(find('.offering-block-time-time-endtime', block)), getText('Ends:' + moment(offering.endDate).format('LT')));
-    }
+    const blocks = page.offerings.dateBlocks;
+    assert.ok(blocks(0).hasStartTime);
+    assert.ok(blocks(0).hasEndTime);
+    assert.notOk(blocks(0).hasMultiDay);
+    assert.equal(blocks(0).dayOfWeek, moment(this.offering1.startDate).format('dddd'));
+    assert.equal(blocks(0).dayOfMonth, moment(this.offering1.startDate).format('MMMM Do'));
+    assert.equal(blocks(0).startTime, 'Starts: ' + moment(this.offering1.startDate).format('LT'));
+    assert.equal(blocks(0).endTime, 'Ends: ' + moment(this.offering1.endDate).format('LT'));
+    assert.equal(blocks(0).offerings().count, 1);
+
+    assert.ok(blocks(1).hasStartTime);
+    assert.ok(blocks(1).hasEndTime);
+    assert.notOk(blocks(1).hasMultiDay);
+    assert.equal(blocks(1).dayOfWeek, moment(this.offering2.startDate).format('dddd'));
+    assert.equal(blocks(1).dayOfMonth, moment(this.offering2.startDate).format('MMMM Do'));
+    assert.equal(blocks(1).startTime, 'Starts: ' + moment(this.offering2.startDate).format('LT'));
+    assert.equal(blocks(1).endTime, 'Ends: ' + moment(this.offering2.endDate).format('LT'));
+    assert.equal(blocks(1).offerings().count, 1);
+
+    assert.notOk(blocks(2).hasStartTime);
+    assert.notOk(blocks(2).hasEndTime);
+    assert.ok(blocks(2).hasMultiDay);
+    assert.equal(blocks(2).dayOfWeek, moment(this.offering3.startDate).format('dddd'));
+    assert.equal(blocks(2).dayOfMonth, moment(this.offering3.startDate).format('MMMM Do'));
+    let expectedText = 'Multiday ' +
+        'Starts ' + moment(this.offering3.startDate).format('dddd MMMM Do [@] LT') +
+      ' Ends ' + moment(this.offering3.endDate).format('dddd MMMM Do [@] LT');
+    assert.equal(blocks(2).offerings().count, 1);
+
+    assert.equal(blocks(2).multiDay, expectedText);
   });
 
-  test('multiday offering dates', async function(assert) {
-    assert.expect(1);
-    await visit(url);
-    let dateBlocks = find('.session-offerings .offering-block');
+  test('offering details', async function(assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    const blocks = page.offerings.dateBlocks;
+    assert.equal(blocks(0).offerings(0).learnerGroups().count, 2);
+    assert.equal(blocks(0).offerings(0).learnerGroups(0).title, 'learner group 0');
+    assert.equal(blocks(0).offerings(0).learnerGroups(1).title, 'learner group 1');
+    assert.equal(blocks(0).offerings(0).location, this.offering1.room);
+    assert.equal(blocks(0).offerings(0).instructors().count, 8);
+    assert.equal(blocks(0).offerings(0).instructors(0).title, '1 guy M. Mc1son');
+    assert.equal(blocks(0).offerings(0).instructors(1).title, '2 guy M. Mc2son');
+    assert.equal(blocks(0).offerings(0).instructors(2).title, '3 guy M. Mc3son');
+    assert.equal(blocks(0).offerings(0).instructors(3).title, '4 guy M. Mc4son');
+    assert.equal(blocks(0).offerings(0).instructors(4).title, '5 guy M. Mc5son');
+    assert.equal(blocks(0).offerings(0).instructors(5).title, '6 guy M. Mc6son');
+    assert.equal(blocks(0).offerings(0).instructors(6).title, '7 guy M. Mc7son');
+    assert.equal(blocks(0).offerings(0).instructors(7).title, '8 guy M. Mc8son');
 
-    //the third offering is multiday
-    for(let i = 2; i < 3; i++){
-      let block = dateBlocks.eq(i);
-      let offering = fixtures.offerings[i];
-      let expectedText = 'Multiday' +
-        'Starts' + moment(offering.startDate).format('dddd MMMM Do [@] LT') +
-        'Ends' + moment(offering.endDate).format('dddd MMMM Do [@] LT');
-      assert.equal(getElementText(find('.multiday-offering-block-time-time', block)), getText(expectedText));
-    }
-  });
+    assert.equal(blocks(1).offerings(0).learnerGroups().count, 1);
+    assert.equal(blocks(1).offerings(0).learnerGroups(0).title, 'learner group 1');
+    assert.equal(blocks(1).offerings(0).location, this.offering2.room);
+    assert.equal(blocks(1).offerings(0).instructors().count, 4);
+    assert.equal(blocks(1).offerings(0).instructors(0).title, '3 guy M. Mc3son');
+    assert.equal(blocks(1).offerings(0).instructors(1).title, '4 guy M. Mc4son');
+    assert.equal(blocks(1).offerings(0).instructors(2).title, '7 guy M. Mc7son');
+    assert.equal(blocks(1).offerings(0).instructors(3).title, '8 guy M. Mc8son');
 
-  test('learner groups', async function(assert) {
-    assert.expect(7);
-    await visit(url);
-    let container = find('.session-offerings');
-    let dateBlocks = find('.offering-block', container);
-    for(let i = 0; i < fixtures.offerings.length; i++){
-      let learnerGroups = find('.offering-manager-learner-groups li', dateBlocks.eq(i));
-      let offeringLearnerGroups = fixtures.offerings[i].learnerGroupIds;
-      assert.equal(learnerGroups.length, offeringLearnerGroups.length);
-      for(let i = 0; i < offeringLearnerGroups.length; i++){
-        let learnerGroup = fixtures.learnerGroups[offeringLearnerGroups[i] - 1];
-        assert.equal(getElementText(learnerGroups.eq(i)), getText(learnerGroup.title));
-      }
-    }
-  });
-
-  test('instructors', async function(assert) {
-    assert.expect(17);
-    await visit(url);
-    let container = find('.session-offerings');
-    let dateBlocks = find('.offering-block', container);
-    let extractInstructorsFromOffering = function(offeringId){
-      let offering = fixtures.offerings[offeringId];
-      let arr = [];
-      arr.pushObjects(offering.instructorIds);
-      offering.instructorGroupIds.forEach(function(groupId){
-        let instructorGroup = fixtures.instructorGroups[groupId - 1];
-        arr.pushObjects(instructorGroup.userIds);
-      });
-
-      return arr.uniq().sort();
-    };
-    for(let i = 0; i < fixtures.offerings.length; i++){
-      let instructors = find('.offering-manager-instructors li', dateBlocks.eq(i));
-      let offeringInstructors = extractInstructorsFromOffering(i);
-      assert.equal(instructors.length, offeringInstructors.length);
-      for (let i = 0; i < offeringInstructors.length; i++){
-        const userId = offeringInstructors[i];
-        const instructor = this.server.db.users.find(userId);
-        const middleInitial = instructor.middleName.charAt(0).toUpperCase();
-        const instructorTitle = `${instructor.firstName} ${middleInitial}. ${instructor.lastName}`;
-        assert.equal(getElementText(instructors.eq(i)), getText(instructorTitle));
-      }
-    }
+    assert.equal(blocks(2).offerings(0).learnerGroups().count, 1);
+    assert.equal(blocks(2).offerings(0).learnerGroups(0).title, 'learner group 1');
+    assert.equal(blocks(2).offerings(0).location, this.offering3.room);
+    assert.equal(blocks(2).offerings(0).instructors().count, 2);
+    assert.equal(blocks(2).offerings(0).instructors(0).title, '3 guy M. Mc3son');
+    assert.equal(blocks(2).offerings(0).instructors(1).title, '4 guy M. Mc4son');
   });
 
   test('confirm removal message', async function(assert) {
-    assert.expect(2);
-    await visit(url);
-    let offering = find(find('.offering-manager'));
-    await click('.offering-manager-actions .remove', offering);
-    assert.ok(offering.hasClass('show-remove-confirmation'));
-    assert.equal(getElementText(find('.confirm-message', offering)), getText('Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'));
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).remove();
+    assert.ok(page.offerings.dateBlocks(0).offerings(0).hasRemoveConfirm);
+    assert.equal(page.offerings.dateBlocks(0).offerings(0).removeConfirmMessage, 'Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel');
   });
 
   test('remove offering', async function(assert) {
     assert.expect(2);
-    await visit(url);
-
-    let offerings = find('.offering-manager');
-    assert.equal(offerings.length, 3);
-    let offering = find('.offering-manager').eq(0);
-    await click('.offering-manager-actions .remove', offering);
-    await click('.confirm-message .remove', offering);
-    assert.equal(findAll('.offering-manager').length, 2);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).remove();
+    await page.offerings.dateBlocks(0).offerings(0).confirmRemoval();
+    assert.equal(page.offerings.header.title, 'Offerings (2)');
+    assert.equal(page.offerings.dateBlocks().count, 2);
   });
 
   test('cancel remove offering', async function(assert) {
     assert.expect(2);
-    await visit(url);
-    let offerings = find('.offering-manager');
-    assert.equal(offerings.length, 3);
-    let offering = find('.offering-manager').eq(0);
-    await click('.offering-manager-actions .remove', offering);
-    await click('.cancel', offering);
-    assert.equal(findAll('.offering-manager').length, 3);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).remove();
+    await page.offerings.dateBlocks(0).offerings(0).cancelRemoval();
+    assert.equal(page.offerings.header.title, 'Offerings (3)');
+    assert.equal(page.offerings.dateBlocks().count, 3);
   });
 
   test('users can create a new offering single day', async function(assert) {
-    assert.expect(10);
+    assert.expect(14);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.header.createNew();
+    const { offeringForm: form } = page.offerings;
+    await page.offerings.singleOffering();
+    await form.startDate(new Date(2011, 8, 11));
+    await form.startTime.hour(2);
+    await form.startTime.minutes(15);
+    await form.startTime.ampm('am');
+    await form.hours(15);
+    await form.minutes(15);
+    await form.location('Rm. 111');
 
-    const form = '.offering-form';
-    const expandButton = '.session-offerings .expand-button';
-    const offeringButton = '.session-offerings .click-choice-buttons button:eq(1)';
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(0).add();
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(1).add();
+    await form.instructorSelectionManager.search('guy');
+    await form.instructorSelectionManager.searchResults(0).add();
+    await form.save();
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = '.start-time select';
-    const durationHours = '.offering-duration .hours input';
-    const durationMinutes = '.offering-duration .minutes input';
-    const offeringLocation = '.room input';
+    const block = page.offerings.dateBlocks(0);
 
-    const availableLearnerGroups = '.available-learner-groups .tree-groups-list';
-    const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
-    const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+    assert.ok(block.hasStartTime);
+    assert.ok(block.hasEndTime);
+    assert.notOk(block.hasMultiDay);
+    assert.equal(block.dayOfWeek, 'Sunday');
+    assert.equal(block.dayOfMonth, 'September 11th');
+    assert.equal(block.startTime, 'Starts: 2:15 AM');
+    assert.equal(block.endTime, 'Ends: 5:30 PM');
+    assert.equal(block.offerings().count, 1);
 
-    const searchBox = '.instructors input';
-    const searchBoxOption = '[data-test-user-search] .results li:eq(1)';
-    const createButton = '.done';
-
-    const dayOfWeek = '.offering-block-date-dayofweek:first';
-    const dayOfMonth = '.offering-block-date-dayofmonth:first';
-    const startTime = '.offering-block-time-time-starttime:first';
-    const endTime = '.offering-block-time-time-endtime:first';
-    const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
-    const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
-    const room = '.offering-manager-location:first';
-    const instructor = '.offering-manager-instructors ul li:eq(0)';
-
-    await visit(url);
-    await click(expandButton);
-    await click(offeringButton);
-    let startDateInteractor = openDatepicker(find(startDateInput));
-    startDateInteractor.selectDate(new Date(2011, 8, 11));
-
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '2', assert);
-    await pickOption(startBoxes[1], '15', assert);
-
-    await fillIn(durationHours, 15);
-    await fillIn(durationMinutes, 15);
-    await fillIn(offeringLocation, 'Rm. 111');
-    await click(learnerGroupOne);
-    await click(learnerGroupTwo);
-    await fillIn(searchBox, 'guy');
-    await click(searchBoxOption);
-    await click(createButton);
-    assert.equal(find(dayOfWeek).textContent, 'Sunday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).textContent, 'September 11th', 'day of month is correct');
-    assert.equal(find(startTime).textContent.trim(), 'Starts: 2:15 AM', 'start time is correct');
-    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor).textContent, '0 guy M. Mc0son', 'instructor is correct');
+    assert.equal(block.offerings(0).learnerGroups().count, 2);
+    assert.equal(block.offerings(0).learnerGroups(0).title, 'learner group 0');
+    assert.equal(block.offerings(0).learnerGroups(1).title, 'learner group 1');
+    assert.equal(block.offerings(0).location, 'Rm. 111');
+    assert.equal(block.offerings(0).instructors().count, 1);
+    assert.equal(block.offerings(0).instructors(0).title, '0 guy M. Mc0son');
   });
 
 
   test('users can create a new offering multi-day', async function(assert) {
-    assert.expect(9);
+    assert.expect(13);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.header.createNew();
+    const { offeringForm: form } = page.offerings;
+    await page.offerings.singleOffering();
+    await form.startDate(new Date(2011, 8, 11));
+    await form.startTime.hour(2);
+    await form.startTime.minutes(15);
+    await form.startTime.ampm('am');
+    await form.hours(39);
+    await form.minutes(15);
+    await form.location('Rm. 111');
 
-    const form = '.offering-form';
-    const expandButton = '.session-offerings .expand-button';
-    const offeringButton = '.session-offerings .click-choice-buttons button:eq(1)';
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(0).add();
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(1).add();
+    await form.instructorSelectionManager.search('guy');
+    await form.instructorSelectionManager.searchResults(0).add();
+    await form.save();
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = `${form} .start-time select`;
-    const durationHours = `${form} .offering-duration .hours input`;
-    const durationMinutes = `${form} .offering-duration .minutes input`;
-    const offeringLocation = `${form} .room input`;
+    const block = page.offerings.dateBlocks(0);
 
-    const availableLearnerGroups = `${form} .available-learner-groups .tree-groups-list`;
-    const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
-    const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+    assert.notOk(block.hasStartTime);
+    assert.notOk(block.hasEndTime);
+    assert.ok(block.hasMultiDay);
+    assert.equal(block.dayOfWeek, 'Sunday');
+    assert.equal(block.dayOfMonth, 'September 11th');
+    let expectedText = 'Multiday ' +
+        'Starts Sunday September 11th @ 2:15 AM' +
+      ' Ends Monday September 12th @ 5:30 PM';
+    assert.equal(block.multiDay, expectedText);
+    assert.equal(block.offerings().count, 1);
 
-    const searchBox = `${form} .instructors input`;
-    const searchBoxOption = `${form} [data-test-user-search] .results li:eq(1)`;
-    const createButton = `${form} .done`;
-
-    const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
-    const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
-    const room = '.offering-manager-location:first';
-    const instructor = '.offering-manager-instructors ul li:eq(0)';
-
-    const multiDayDesc = '.multiday-offering-block-time-time-description:first';
-    const multiDayStarts = '.multiday-offering-block-time-time-starts:first';
-    const multiDayEnds = '.multiday-offering-block-time-time-ends:first';
-
-    await visit(url);
-    await click(expandButton);
-    await click(offeringButton);
-    let startDateInteractor = openDatepicker(find(startDateInput));
-    startDateInteractor.selectDate(new Date(2011, 8, 11));
-
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '2', assert);
-    await pickOption(startBoxes[1], '15', assert);
-
-    await fillIn(durationHours, 39);
-    await fillIn(durationMinutes, 15);
-    await fillIn(offeringLocation, 'Rm. 111');
-    await click(learnerGroupOne);
-    await click(learnerGroupTwo);
-    await fillIn(searchBox, 'guy');
-    await click(searchBoxOption);
-    await click(createButton);
-    assert.equal(find(multiDayDesc).textContent.trim(), 'Multiday', 'multi-day statement is correct');
-    assert.equal(find(multiDayStarts).textContent.trim(), 'Starts Sunday September 11th @ 2:15 AM', 'multi-day statement is correct');
-    assert.equal(find(multiDayEnds).textContent.trim(), 'Ends Monday September 12th @ 5:30 PM', 'multi-day statement is correct');
-    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
-    assert.equal(find(instructor).textContent, '0 guy M. Mc0son', 'instructor is correct');
+    assert.equal(block.offerings(0).learnerGroups().count, 2);
+    assert.equal(block.offerings(0).learnerGroups(0).title, 'learner group 0');
+    assert.equal(block.offerings(0).learnerGroups(1).title, 'learner group 1');
+    assert.equal(block.offerings(0).location, 'Rm. 111');
+    assert.equal(block.offerings(0).instructors().count, 1);
+    assert.equal(block.offerings(0).instructors(0).title, '0 guy M. Mc0son');
   });
 
   test('users can create a new small group offering', async function(assert) {
-    assert.expect(12);
+    assert.expect(19);
 
-    const form = '.offering-form';
-    const expandButton = '.session-offerings .expand-button';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.header.createNew();
+    const { offeringForm: form } = page.offerings;
+    await page.offerings.smallGroup();
+    await form.startDate(new Date(2011, 8, 11));
+    await form.startTime.hour(2);
+    await form.startTime.minutes(15);
+    await form.startTime.ampm('am');
+    await form.hours(15);
+    await form.minutes(15);
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = `${form} .start-time select`;
-    const durationHours = `${form} .offering-duration .hours input`;
-    const durationMinutes = `${form} .offering-duration .minutes input`;
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(0).add();
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(1).add();
+    await form.save();
 
-    const availableLearnerGroups = `${form} .available-learner-groups .tree-groups-list`;
-    const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
-    const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+    const block = page.offerings.dateBlocks(0);
 
-    const createButton = '.done';
+    assert.ok(block.hasStartTime);
+    assert.ok(block.hasEndTime);
+    assert.notOk(block.hasMultiDay);
+    assert.equal(block.dayOfWeek, 'Sunday');
+    assert.equal(block.dayOfMonth, 'September 11th');
+    assert.equal(block.startTime, 'Starts: 2:15 AM');
+    assert.equal(block.endTime, 'Ends: 5:30 PM');
+    assert.equal(block.offerings().count, 2);
 
-    const dayOfWeek = '.offering-block-date-dayofweek:first';
-    const dayOfMonth = '.offering-block-date-dayofmonth:first';
-    const startTime = '.offering-block-time-time-starttime:first';
-    const endTime = '.offering-block-time-time-endtime:first';
-    const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
-    const learnerGroup2 = '.offering-manager-learner-groups ul li:eq(1)';
-    const location1 = '.offering-manager-location:eq(0)';
-    const location2 = '.offering-manager-location:eq(1)';
-    const instructors1 = '.offering-manager-instructors:eq(0) li';
-    const instructors2 = '.offering-manager-instructors:eq(1) li';
+    assert.equal(block.offerings(0).learnerGroups().count, 1);
+    assert.equal(block.offerings(0).learnerGroups(0).title, 'learner group 0');
+    assert.equal(block.offerings(0).instructors().count, 1);
+    assert.equal(block.offerings(0).instructors(0).title, '0 guy M. Mc0son');
 
-    await visit(url);
-    await click(expandButton);
-    let startDateInteractor = openDatepicker(find(startDateInput));
-    startDateInteractor.selectDate(new Date(2011, 8, 11));
-
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '2', assert);
-    await pickOption(startBoxes[1], '15', assert);
-
-    await fillIn(durationHours, 15);
-    await fillIn(durationMinutes, 15);
-    await click(learnerGroupOne);
-    await click(learnerGroupTwo);
-    await click(createButton);
-    assert.equal(find(dayOfWeek).textContent, 'Sunday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).textContent, 'September 11th', 'day of month is correct');
-    assert.equal(find(startTime).textContent.trim(), 'Starts: 2:15 AM', 'start time is correct');
-    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:30 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 0', 'correct learner group is picked');
-    assert.equal(find(learnerGroup2).textContent.trim(), 'learner group 1', 'correct learner group is picked');
-    assert.equal(find(location1).textContent, 'default 1', 'correct default location is added');
-    assert.equal(find(location2).textContent, 'default 2', 'correct default location is added');
-    assert.equal(getElementText(instructors1), '0guyM.Mc0son', 'correct default instructors are added');
-    assert.equal(getElementText(instructors2), '1guyM.Mc1son2guyM.Mc2son5guyM.Mc5son6guyM.Mc6son', 'correct default instructors are added');
+    assert.equal(block.offerings(1).learnerGroups().count, 1);
+    assert.equal(block.offerings(1).learnerGroups(0).title, 'learner group 1');
+    assert.equal(block.offerings(1).instructors().count, 4);
+    assert.equal(block.offerings(1).instructors(0).title, '1 guy M. Mc1son');
+    assert.equal(block.offerings(1).instructors(1).title, '2 guy M. Mc2son');
+    assert.equal(block.offerings(1).instructors(2).title, '5 guy M. Mc5son');
+    assert.equal(block.offerings(1).instructors(3).title, '6 guy M. Mc6son');
   });
 
 
   test('users can edit existing offerings', async function(assert) {
-    assert.expect(8);
+    assert.expect(17);
 
-    const editButton = '.offering-manager-actions .edit:eq(1)';
-    const form = '.offering-form';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).edit();
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = `${form} .start-time select`;
-    const durationHours = `${form} .offering-duration .hours input`;
-    const durationMinutes = `${form} .offering-duration .minutes input`;
-    const offeringLocation = `${form} .room input`;
+    const { offeringForm: form } = page.offerings.dateBlocks(0).offerings(0);
 
-    const removeLearnerGroupOne = `${form} .selected-learner-groups .remove-all-subgroups:eq(0)`;
-    const removeFirstInstructor = `${form} .instructors ul:eq(1) li:first`;
-    const removeFirstInstructorGroup = `${form} .instructors ul:eq(0) li:first`;
-    const createButton = `${form} .done`;
+    await form.startDate(new Date(2011, 9, 5));
+    await form.startTime.hour(11);
+    await form.startTime.minutes(45);
+    await form.startTime.ampm('am');
+    await form.hours(6);
+    await form.minutes(10);
+    await form.location('Rm. 111');
 
-    const dayOfWeek = '.offering-block-date-dayofweek:first';
-    const dayOfMonth = '.offering-block-date-dayofmonth:first';
-    const startTime = '.offering-block-time-time-starttime:first';
-    const endTime = '.offering-block-time-time-endtime:first';
-    const learnerGroup1 = '.offering-manager-learner-groups ul li:eq(0)';
-    const room = '.offering-manager-location:first';
-    // const instructor1 = '.offering-manager-instructors ul li:eq(0)';
-    // const instructor2 = '.offering-manager-instructors ul li:eq(1)';
-    // const instructor3 = '.offering-manager-instructors ul li:eq(2)';
+    await form.learnerGroupManager.selectedLearnerGroups(0).removeAll();
+    await form.instructorSelectionManager.instructors(0).remove();
+    await form.instructorSelectionManager.instructorGroups(0).remove();
 
-    await visit(url);
-    await click(editButton);
-    let interactor = openDatepicker(find(startDateInput));
-    interactor.selectDate(new Date(2011, 9, 5));
+    await form.save();
 
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '11', assert);
-    await pickOption(startBoxes[1], '45', assert);
+    const block = page.offerings.dateBlocks(0);
 
-    await fillIn(durationHours, 6);
-    await fillIn(durationMinutes, 10);
-    await fillIn(offeringLocation, 'Rm. 111');
-    await click(removeLearnerGroupOne);
-    await click(removeFirstInstructor);
-    await click(removeFirstInstructorGroup);
-    await click(createButton);
-    assert.equal(find(dayOfWeek).textContent, 'Wednesday', 'day of the week is correct');
-    assert.equal(find(dayOfMonth).textContent, 'October 5th', 'day of month is correct');
-    assert.equal(find(startTime).textContent.trim(), 'Starts: 11:45 AM', 'start time is correct');
-    assert.equal(find(endTime).textContent.trim(), 'Ends: 5:55 PM', 'end time is correct');
-    assert.equal(find(learnerGroup1).textContent.trim(), 'learner group 1', 'correct learner group is picked');
-    //@todo: skipping these, works in real life, but doesn't reload the list in tests
-    // assert.equal(find(instructor1).text(), '6 guy M. Mc6son', 'instructor is correct');
-    // assert.equal(find(instructor2).text(), '8 guy M. Mc5son', 'instructor is correct');
-    // assert.equal(find(instructor3).text(), '9 guy M. Mc5son', 'instructor is correct');
-    assert.equal(find(room).textContent, 'Rm. 111', 'location/room is correct');
+    assert.ok(block.hasStartTime);
+    assert.ok(block.hasEndTime);
+    assert.notOk(block.hasMultiDay);
+    assert.equal(block.dayOfWeek, 'Wednesday');
+    assert.equal(block.dayOfMonth, 'October 5th');
+    assert.equal(block.startTime, 'Starts: 11:45 AM');
+    assert.equal(block.endTime, 'Ends: 5:55 PM');
+    assert.equal(block.offerings().count, 1);
+
+    const offering = block.offerings(0);
+
+    assert.equal(offering.learnerGroups().count, 1);
+    assert.equal(offering.learnerGroups(0).title, 'learner group 1');
+    assert.equal(offering.instructors().count, 5);
+    assert.equal(offering.instructors(0).title, '3 guy M. Mc3son');
+    assert.equal(offering.instructors(1).title, '4 guy M. Mc4son');
+    assert.equal(offering.instructors(2).title, '6 guy M. Mc6son');
+    assert.equal(offering.instructors(3).title, '7 guy M. Mc7son');
+    assert.equal(offering.instructors(4).title, '8 guy M. Mc8son');
+    assert.equal(offering.location, 'Rm. 111');
   });
 
   test('users can create recurring small groups', async function(assert) {
-    assert.expect(42);
+    assert.expect(77);
 
-    const form = '.offering-form';
-    const expandButton = '.session-offerings .expand-button';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.header.createNew();
+    const { offeringForm: form } = page.offerings;
+    await page.offerings.smallGroup();
+    await form.startDate(new Date(2015, 4, 22));
+    await form.startTime.hour(2);
+    await form.startTime.minutes(15);
+    await form.startTime.ampm('am');
+    await form.hours(13);
+    await form.minutes(8);
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = `${form} .start-time select`;
-    const durationHours = `${form} .offering-duration .hours input`;
-    const durationMinutes = `${form} .offering-duration .minutes input`;
 
-    const availableLearnerGroups = `${form} .available-learner-groups .tree-groups-list`;
-    const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
-    const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+    await form.toggleRecurring();
+    await form.recurringWeeks(4);
 
-    const createButton = `${form} .done`;
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(0).add();
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(1).add();
 
-    const makeRecurringButton = '.make-recurring .switch-label';
-    const makeRecurringInput = '.make-recurring-input-container input';
+    await form.save();
 
-    const daysOfWeek = '.offering-block-date-dayofweek';
-    const daysOfMonth = '.offering-block-date-dayofmonth';
-    const startsTime = '.offering-block-time-time-starttime';
-    const endsTime = '.offering-block-time-time-endtime';
-    const learnerGroups = '.offering-manager-learner-groups ul li';
-    const locations = '.offering-manager-location';
-    const instructors = '.offering-manager-instructors';
+    assert.equal(page.offerings.dateBlocks().count, 7);
+    assert.equal(page.offerings.dateBlocks(0).dayOfMonth, 'May 22nd');
+    assert.equal(page.offerings.dateBlocks(1).dayOfMonth, 'May 29th');
+    assert.equal(page.offerings.dateBlocks(2).dayOfMonth, 'June 5th');
+    assert.equal(page.offerings.dateBlocks(3).dayOfMonth, 'June 12th');
 
-    await visit(url);
-    await click(expandButton);
-    let startDateInteractor = openDatepicker(find(startDateInput));
-    startDateInteractor.selectDate(new Date(2015, 4, 22));
+    for (let i = 0; i < 4; i++) {
+      const block = page.offerings.dateBlocks(i);
+      assert.ok(block.hasStartTime);
+      assert.ok(block.hasEndTime);
+      assert.notOk(block.hasMultiDay);
+      assert.equal(block.dayOfWeek, 'Friday');
+      assert.equal(block.startTime, 'Starts: 2:15 AM');
+      assert.equal(block.endTime, 'Ends: 3:23 PM');
+      assert.equal(block.offerings().count, 2);
+      assert.equal(block.offerings(0).learnerGroups().count, 1);
+      assert.equal(block.offerings(0).learnerGroups(0).title, 'learner group 0');
 
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '2', assert);
-    await pickOption(startBoxes[1], '15', assert);
+      assert.equal(block.offerings(0).instructors().count, 1);
+      assert.equal(block.offerings(0).instructors(0).title, '0 guy M. Mc0son');
 
-    await fillIn(durationHours, 13);
-    await fillIn(durationMinutes, 8);
-    await click(makeRecurringButton);
-    await fillIn(makeRecurringInput, '4');
-    await click(learnerGroupOne);
-    await click(learnerGroupTwo);
-
-    await click(createButton);
-    assert.equal(find(daysOfWeek).eq(0).text(), 'Friday', 'first day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(1).text(), 'Friday', 'second day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(2).text(), 'Friday', 'third day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(3).text(), 'Friday', 'fourth day of the week is correct');
-
-    assert.equal(find(daysOfMonth).eq(0).text(), 'May 22nd', 'first day of month is correct');
-    assert.equal(find(daysOfMonth).eq(1).text(), 'May 29th', 'second day of month is correct');
-    assert.equal(find(daysOfMonth).eq(2).text(), 'June 5th', 'third day of month is correct');
-    assert.equal(find(daysOfMonth).eq(3).text(), 'June 12th', 'fourth day of month is correct');
-
-    assert.equal(find(startsTime).eq(0).text().trim(), 'Starts: 2:15 AM', 'first start time is correct');
-    assert.equal(find(startsTime).eq(1).text().trim(), 'Starts: 2:15 AM', 'second start time is correct');
-    assert.equal(find(startsTime).eq(2).text().trim(), 'Starts: 2:15 AM', 'third start time is correct');
-    assert.equal(find(startsTime).eq(3).text().trim(), 'Starts: 2:15 AM', 'fourth start time is correct');
-
-    assert.equal(find(endsTime).eq(0).text().trim(), 'Ends: 3:23 PM', 'first end time is correct');
-    assert.equal(find(endsTime).eq(1).text().trim(), 'Ends: 3:23 PM', 'second end time is correct');
-    assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
-    assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
-
-    assert.equal(find(learnerGroups).eq(0).text().trim(), 'learner group 0', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(1).text().trim(), 'learner group 1', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(2).text().trim(), 'learner group 0', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(3).text().trim(), 'learner group 1', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(4).text().trim(), 'learner group 0', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(5).text().trim(), 'learner group 1', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(6).text().trim(), 'learner group 0', 'fourth correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(7).text().trim(), 'learner group 1', 'fourth correct learner group is picked');
-
-    assert.equal(find(locations).eq(0).text(), 'default 1', 'first correct default location is picked');
-    assert.equal(find(locations).eq(1).text(), 'default 2', 'first correct default location is picked');
-    assert.equal(find(locations).eq(2).text(), 'default 1', 'second correct default location is picked');
-    assert.equal(find(locations).eq(3).text(), 'default 2', 'second correct default location is picked');
-    assert.equal(find(locations).eq(4).text(), 'default 1', 'third correct default location is picked');
-    assert.equal(find(locations).eq(5).text(), 'default 2', 'third correct default location is picked');
-    assert.equal(find(locations).eq(6).text(), 'default 1', 'fourth correct default location is picked');
-    assert.equal(find(locations).eq(7).text(), 'default 2', 'fourth correct default location is picked');
-
-    assert.equal(getElementText(find(instructors).eq(0)), getText('0 guy M. Mc0son'), 'first correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(1)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'first correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(2)), getText('0 guy M. Mc0son'), 'second correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(3)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'second correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(4)), getText('0 guy M. Mc0son'), 'third correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(5)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'third correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(6)), getText('0 guy M. Mc0son'), 'fourth correct default instructor is picked');
-    assert.equal(getElementText(find(instructors).eq(7)), getText('1 guy M. Mc1son 2 guy M. Mc2son 5 guy M. Mc5son 6 guy M. Mc6son'), 'fourth correct default instructor is picked');
+      assert.equal(block.offerings(1).learnerGroups().count, 1);
+      assert.equal(block.offerings(1).learnerGroups(0).title, 'learner group 1');
+      assert.equal(block.offerings(1).instructors().count, 4);
+      assert.equal(block.offerings(1).instructors(0).title, '1 guy M. Mc1son');
+      assert.equal(block.offerings(1).instructors(1).title, '2 guy M. Mc2son');
+      assert.equal(block.offerings(1).instructors(2).title, '5 guy M. Mc5son');
+      assert.equal(block.offerings(1).instructors(3).title, '6 guy M. Mc6son');
+    }
   });
 
-  test('users can create recurring single offerings', async function(assert) {
-    assert.expect(26);
+  test('users can create recurring single offerings', async function (assert) {
+    assert.expect(53);
 
-    const form = '.offering-form';
-    const expandButton = '.session-offerings .expand-button';
-    const offeringButton = '.session-offerings .click-choice-buttons button:eq(1)';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.header.createNew();
+    const { offeringForm: form } = page.offerings;
+    await page.offerings.singleOffering();
+    await form.startDate(new Date(2015, 4, 22));
+    await form.startTime.hour(2);
+    await form.startTime.minutes(15);
+    await form.startTime.ampm('am');
+    await form.hours(13);
+    await form.minutes(8);
+    await form.location('Scottsdale Stadium');
 
-    const startDateInput = `${form} .start-date input`;
-    const startTimes = `${form} .start-time select`;
-    const durationHours = `${form} .offering-duration .hours input`;
-    const durationMinutes = `${form} .offering-duration .minutes input`;
+    await form.toggleRecurring();
+    await form.recurringWeeks(4);
 
-    const availableLearnerGroups = `${form} .available-learner-groups .tree-groups-list`;
-    const learnerGroupOne = `${availableLearnerGroups} li:eq(0) .clickable`;
-    const learnerGroupTwo = `${availableLearnerGroups} li:eq(1) .clickable`;
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(0).add();
+    await form.learnerGroupManager.availableLearnerGroups.cohorts(0).topLevelGroups(1).add();
 
-    const createButton = `${form} .done`;
+    await form.save();
 
-    const makeRecurringButton = '.make-recurring .switch-label';
-    const makeRecurringInput = '.make-recurring-input-container input';
+    assert.equal(page.offerings.dateBlocks().count, 7);
+    assert.equal(page.offerings.dateBlocks(0).dayOfMonth, 'May 22nd');
+    assert.equal(page.offerings.dateBlocks(1).dayOfMonth, 'May 29th');
+    assert.equal(page.offerings.dateBlocks(2).dayOfMonth, 'June 5th');
+    assert.equal(page.offerings.dateBlocks(3).dayOfMonth, 'June 12th');
 
+    for (let i = 0; i < 4; i++) {
+      const block = page.offerings.dateBlocks(i);
+      assert.ok(block.hasStartTime);
+      assert.ok(block.hasEndTime);
+      assert.notOk(block.hasMultiDay);
+      assert.equal(block.dayOfWeek, 'Friday');
+      assert.equal(block.startTime, 'Starts: 2:15 AM');
+      assert.equal(block.endTime, 'Ends: 3:23 PM');
+      assert.equal(block.offerings().count, 1);
+      assert.equal(block.offerings(0).learnerGroups().count, 2);
+      assert.equal(block.offerings(0).location, 'Scottsdale Stadium');
+      assert.equal(block.offerings(0).learnerGroups(0).title, 'learner group 0');
+      assert.equal(block.offerings(0).learnerGroups(1).title, 'learner group 1');
 
-    const daysOfWeek = '.offering-block-date-dayofweek';
-    const daysOfMonth = '.offering-block-date-dayofmonth';
-    const startsTime = '.offering-block-time-time-starttime';
-    const endsTime = '.offering-block-time-time-endtime';
-    const learnerGroups = '.offering-manager-learner-groups ul li';
-
-    await visit(url);
-    await click(expandButton);
-    await click(offeringButton);
-    let startDateInteractor = openDatepicker(find(startDateInput));
-    startDateInteractor.selectDate(new Date(2015, 4, 22));
-
-    let startBoxes = find(startTimes);
-    await pickOption(startBoxes[0], '2', assert);
-    await pickOption(startBoxes[1], '15', assert);
-
-    await fillIn(durationHours, 13);
-    await fillIn(durationMinutes, 8);
-
-    await click(makeRecurringButton);
-    await fillIn(makeRecurringInput, '4');
-    await click(learnerGroupOne);
-    await click(learnerGroupTwo);
-
-    await click(createButton);
-    assert.equal(find(daysOfWeek).eq(0).text(), 'Friday', 'first day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(1).text(), 'Friday', 'second day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(2).text(), 'Friday', 'third day of the week is correct');
-    assert.equal(find(daysOfWeek).eq(3).text(), 'Friday', 'fourth day of the week is correct');
-
-    assert.equal(find(daysOfMonth).eq(0).text(), 'May 22nd', 'first day of month is correct');
-    assert.equal(find(daysOfMonth).eq(1).text(), 'May 29th', 'second day of month is correct');
-    assert.equal(find(daysOfMonth).eq(2).text(), 'June 5th', 'third day of month is correct');
-    assert.equal(find(daysOfMonth).eq(3).text(), 'June 12th', 'fourth day of month is correct');
-
-    assert.equal(find(startsTime).eq(0).text().trim(), 'Starts: 2:15 AM', 'first start time is correct');
-    assert.equal(find(startsTime).eq(1).text().trim(), 'Starts: 2:15 AM', 'second start time is correct');
-    assert.equal(find(startsTime).eq(2).text().trim(), 'Starts: 2:15 AM', 'third start time is correct');
-    assert.equal(find(startsTime).eq(3).text().trim(), 'Starts: 2:15 AM', 'fourth start time is correct');
-
-    assert.equal(find(endsTime).eq(0).text().trim(), 'Ends: 3:23 PM', 'first end time is correct');
-    assert.equal(find(endsTime).eq(1).text().trim(), 'Ends: 3:23 PM', 'second end time is correct');
-    assert.equal(find(endsTime).eq(2).text().trim(), 'Ends: 3:23 PM', 'third end time is correct');
-    assert.equal(find(endsTime).eq(3).text().trim(), 'Ends: 3:23 PM', 'fourth end time is correct');
-
-    assert.equal(find(learnerGroups).eq(0).text().trim(), 'learner group 0', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(1).text().trim(), 'learner group 1', 'first correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(2).text().trim(), 'learner group 0', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(3).text().trim(), 'learner group 1', 'second correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(4).text().trim(), 'learner group 0', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(5).text().trim(), 'learner group 1', 'third correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(6).text().trim(), 'learner group 0', 'fourth correct learner group is picked');
-    assert.equal(find(learnerGroups).eq(7).text().trim(), 'learner group 1', 'fourth correct learner group is picked');
+      assert.equal(block.offerings(0).instructors().count, 0);
+    }
   });
 
-  test('edit offerings twice #2850', async assert => {
+  test('edit offerings twice #2850', async function(assert) {
     assert.expect(2);
     this.server.create('learnerGroup', {
       cohortId: 1,
@@ -628,21 +472,16 @@ module('Acceptance: Session - Offerings', function(hooks) {
       cohortId: 1,
       parentId: 5,
     });
-    this.server.db.cohorts.update(1, {learnerGroupIds: [3, 4, 5, 6]});
+    this.server.db.cohorts.update(1, { learnerGroupIds: [3, 4, 5, 6] });
 
-    const editButton = '.offering-manager-actions .edit:eq(1)';
-    const form = '.offering-form';
-    const save = `${form} .done`;
-    const room = '.offering-manager-location:first';
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).edit();
+    await page.offerings.dateBlocks(0).offerings(0).offeringForm.save();
+    assert.equal(page.offerings.dateBlocks(0).offerings(0).location, 'room 0');
 
-    await visit(url);
-    await click(editButton);
 
-    await click(save);
-    assert.equal(find(room).textContent, 'room 0', 'location/room is correct');
-
-    await click(editButton);
-    await click(save);
-    assert.equal(find(room).textContent, 'room 0', 'location/room is correct');
+    await page.offerings.dateBlocks(0).offerings(0).edit();
+    await page.offerings.dateBlocks(0).offerings(0).offeringForm.save();
+    assert.equal(page.offerings.dateBlocks(0).offerings(0).location, 'room 0');
   });
 });
