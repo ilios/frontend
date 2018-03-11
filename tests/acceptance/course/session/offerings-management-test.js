@@ -1,22 +1,17 @@
-import { click, fillIn, findAll, find, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
-let application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
 module('Acceptance: Session - Offering Management', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
   });
 
   test('search for instructor who is a course director #2838', async function(assert) {
@@ -42,21 +37,16 @@ module('Acceptance: Session - Offering Management', function(hooks) {
       session,
     });
 
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).edit();
 
-    const editButton = '.offering-manager .edit';
-    const form = '.offering-form';
-    const search = `${form} .search-box`;
-    const searchBox = `${search} input`;
-    const results = `${form} .results li`;
-
-    await visit('/courses/1/sessions/1');
-    await click(editButton);
-    await fillIn(searchBox, 'guy 3');
-    assert.equal(findAll(results).length, 2);
+    const { offeringForm: form } = page.offerings;
+    await form.instructorSelectionManager.search('guy 3');
+    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
-    assert.expect(7);
+    assert.expect(10);
 
     const school = this.server.create('school');
     const permission1 = this.server.create('permission', {
@@ -78,30 +68,24 @@ module('Acceptance: Session - Offering Management', function(hooks) {
       session
     });
 
+    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.offerings.dateBlocks(0).offerings(0).edit();
 
-    const editButton = '.offering-manager .edit';
-    const form = '.offering-form';
-    const instructors = `${form} .instructors`;
-    const search = `${instructors} [data-test-user-search]`;
-    const searchBox = `${search} [data-test-search-box] input`;
-    const results = `${search} .results li`;
-    const firstResult = `${results}:eq(1)`;
-    const selectedInstructors = `${instructors} [data-test-instructors] li`;
-    const firstSelectedInstructor = `${selectedInstructors}:eq(0)`;
-    const secondSelectedInstructor = `${selectedInstructors}:eq(1)`;
+    const { offeringForm: form } = page.offerings;
+    assert.equal(form.instructorSelectionManager.instructors().count, 0);
+    await form.instructorSelectionManager.search('guy 2');
+    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
+    await form.instructorSelectionManager.searchResults(0).add();
+    assert.equal(form.instructorSelectionManager.instructors().count, 1);
+    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
 
-    await visit('/courses/1/sessions/1');
-    await click(editButton);
-    await fillIn(searchBox, 'guy 2');
-    assert.equal(findAll(results).length, 2);
-    await click(firstResult);
-    assert.equal(findAll(selectedInstructors).length, 1);
-    assert.equal(find(firstSelectedInstructor).textContent.trim(), '2 guy M. Mc2son');
-    await fillIn(searchBox, 'guy 3');
-    assert.equal(findAll(selectedInstructors).length, 1);
-    assert.equal(find(firstSelectedInstructor).textContent.trim(), '2 guy M. Mc2son');
-    await click(firstResult);
-    assert.equal(findAll(selectedInstructors).length, 2);
-    assert.equal(find(secondSelectedInstructor).textContent.trim(), '3 guy M. Mc3son');
+    await form.instructorSelectionManager.search('guy 3');
+    assert.equal(form.instructorSelectionManager.instructors().count, 1);
+    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
+    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
+    await form.instructorSelectionManager.searchResults(0).add();
+    assert.equal(form.instructorSelectionManager.instructors().count, 2);
+    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
+    assert.equal(form.instructorSelectionManager.instructors(1).text, '3 guy M. Mc3son');
   });
 });
