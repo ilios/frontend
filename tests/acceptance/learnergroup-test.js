@@ -1,21 +1,19 @@
 import { click, fillIn, findAll, currentURL, find, visit } from '@ember/test-helpers';
 import { test, module } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import moment from 'moment';
 
-let application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
 module('Acceptance: Learnergroup', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.create('school');
-    setupAuthentication(application, {id: 4136, schoolId: 1});
-  });
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
 
-  hooks.afterEach(function() {
-    destroyApp(application);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication( { school} );
   });
 
 
@@ -58,7 +56,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await fillIn(input, '5');
     await click(done);
     function getCellData(row, cell) {
-      return find(`${table} tr:eq(${row}) td:eq(${cell})`).textContent.trim();
+      return find(`${table} tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
     }
     assert.equal(findAll(`${table} tr`).length, 7, 'all subgroups are displayed.');
     for (let i = 0; i < 5; i++) {
@@ -105,44 +103,44 @@ module('Acceptance: Learnergroup', function(hooks) {
       parentId: 2,
     });
     const groups = '.list tbody tr';
-    const firstGroup = `${groups}:eq(0)`;
-    const firstTitle = `${firstGroup} td:eq(0)`;
+    const firstGroup = `${groups}:nth-of-type(1)`;
+    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
     const firstLink = `${firstTitle} a`;
-    const firstMembers = `${firstGroup} td:eq(1)`;
-    const firstSubgroups = `${firstGroup} td:eq(2)`;
-    const firstGroupCopy = `${firstGroup} td:eq(3) .fa-copy`;
-    const firstGroupCopyNoLearners = '.list tbody tr:eq(1) .done:eq(1)';
-    const secondGroup = `${groups}:eq(1)`;
-    const secondTitle = `${secondGroup} td:eq(0)`;
+    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
+    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopyNoLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(2)';
+    const secondGroup = `${groups}:nth-of-type(2)`;
+    const secondTitle = `${secondGroup} td:nth-of-type(1)`;
     const secondLink = `${secondTitle} a`;
-    const secondMembers = `${secondGroup} td:eq(1)`;
-    const secondSubgroups = `${secondGroup} td:eq(2)`;
+    const secondMembers = `${secondGroup} td:nth-of-type(2)`;
+    const secondSubgroups = `${secondGroup} td:nth-of-type(3)`;
 
     const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
-    const firstSubgroup = `${subGroupList}:eq(0)`;
-    const firstSubgroupTitle = `${firstSubgroup} td:eq(0)`;
-    const firstSubgroupMembers = `${firstSubgroup} td:eq(1)`;
-    const firstSubgroupSubgroups = `${firstSubgroup} td:eq(2)`;
-    const secondSubgroup = `${subGroupList}:eq(1)`;
-    const secondSubgroupTitle = `${secondSubgroup} td:eq(0)`;
-    const secondSubgroupMembers = `${secondSubgroup} td:eq(1)`;
-    const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
+    const firstSubgroup = `${subGroupList}:nth-of-type(1)`;
+    const firstSubgroupTitle = `${firstSubgroup} td:nth-of-type(1)`;
+    const firstSubgroupMembers = `${firstSubgroup} td:nth-of-type(2)`;
+    const firstSubgroupSubgroups = `${firstSubgroup} td:nth-of-type(3)`;
+    const secondSubgroup = `${subGroupList}:nth-of-type(2)`;
+    const secondSubgroupTitle = `${secondSubgroup} td:nth-of-type(1)`;
+    const secondSubgroupMembers = `${secondSubgroup} td:nth-of-type(2)`;
+    const secondSubgroupSubgroups = `${secondSubgroup} td:nth-of-type(3)`;
 
 
     await visit('/learnergroups');
     assert.equal(1, findAll(groups).length);
-    assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(firstMembers)), getText('0'));
-    assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstMembers)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyNoLearners);
     assert.equal(2, findAll(groups).length);
-    assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(firstMembers)), getText('0'));
-    assert.equal(getElementText(find(firstSubgroups)), getText('2'));
-    assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
-    assert.equal(getElementText(find(secondMembers)), getText('0'));
-    assert.equal(getElementText(find(secondSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstMembers)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
+    assert.equal(await getElementText(find(secondMembers)), getText('0'));
+    assert.equal(await getElementText(find(secondSubgroups)), getText('2'));
     await click(firstLink);
     assert.equal(currentURL(), '/learnergroups/1');
     await visit('/learnergroups');
@@ -151,12 +149,12 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     assert.equal(2, findAll(subGroupList).length);
 
-    assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
-    assert.equal(getElementText(find(firstSubgroupMembers)), getText('0'));
-    assert.equal(getElementText(find(firstSubgroupSubgroups)), getText('1'));
-    assert.equal(getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
-    assert.equal(getElementText(find(secondSubgroupMembers)), getText('0'));
-    assert.equal(getElementText(find(secondSubgroupSubgroups)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
+    assert.equal(await getElementText(find(firstSubgroupMembers)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroupSubgroups)), getText('1'));
+    assert.equal(await getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
+    assert.equal(await getElementText(find(secondSubgroupMembers)), getText('0'));
+    assert.equal(await getElementText(find(secondSubgroupSubgroups)), getText('0'));
   });
 
   test('copy learnergroup with learners', async function(assert) {
@@ -192,43 +190,43 @@ module('Acceptance: Learnergroup', function(hooks) {
     });
 
     const groups = '.list tbody tr';
-    const firstGroup = `${groups}:eq(0)`;
-    const firstTitle = `${firstGroup} td:eq(0)`;
+    const firstGroup = `${groups}:nth-of-type(1)`;
+    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
     const firstLink = `${firstTitle} a`;
-    const firstMembers = `${firstGroup} td:eq(1)`;
-    const firstSubgroups = `${firstGroup} td:eq(2)`;
-    const firstGroupCopy = `${firstGroup} td:eq(3) .fa-copy`;
-    const firstGroupCopyWithLearners = '.list tbody tr:eq(1) .done:eq(0)';
-    const secondGroup = `${groups}:eq(1)`;
-    const secondTitle = `${secondGroup} td:eq(0)`;
+    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
+    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopyWithLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(1)';
+    const secondGroup = `${groups}:nth-of-type(2)`;
+    const secondTitle = `${secondGroup} td:nth-of-type(1)`;
     const secondLink = `${secondTitle} a`;
-    const secondMembers = `${secondGroup} td:eq(1)`;
-    const secondSubgroups = `${secondGroup} td:eq(2)`;
+    const secondMembers = `${secondGroup} td:nth-of-type(2)`;
+    const secondSubgroups = `${secondGroup} td:nth-of-type(3)`;
 
     const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
-    const firstSubgroup = `${subGroupList}:eq(0)`;
-    const firstSubgroupTitle = `${firstSubgroup} td:eq(0)`;
-    const firstSubgroupMembers = `${firstSubgroup} td:eq(1)`;
-    const firstSubgroupSubgroups = `${firstSubgroup} td:eq(2)`;
-    const secondSubgroup = `${subGroupList}:eq(1)`;
-    const secondSubgroupTitle = `${secondSubgroup} td:eq(0)`;
-    const secondSubgroupMembers = `${secondSubgroup} td:eq(1)`;
-    const secondSubgroupSubgroups = `${secondSubgroup} td:eq(2)`;
+    const firstSubgroup = `${subGroupList}:nth-of-type(1)`;
+    const firstSubgroupTitle = `${firstSubgroup} td:nth-of-type(1)`;
+    const firstSubgroupMembers = `${firstSubgroup} td:nth-of-type(2)`;
+    const firstSubgroupSubgroups = `${firstSubgroup} td:nth-of-type(3)`;
+    const secondSubgroup = `${subGroupList}:nth-of-type(2)`;
+    const secondSubgroupTitle = `${secondSubgroup} td:nth-of-type(1)`;
+    const secondSubgroupMembers = `${secondSubgroup} td:nth-of-type(2)`;
+    const secondSubgroupSubgroups = `${secondSubgroup} td:nth-of-type(3)`;
 
     await visit('/learnergroups');
     assert.equal(1, findAll(groups).length);
-    assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(firstMembers)), getText('7'));
-    assert.equal(getElementText(find(firstSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstMembers)), getText('7'));
+    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
     await click(firstGroupCopyWithLearners);
     assert.equal(2, findAll(groups).length);
-    assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(getElementText(find(firstMembers)), getText('7'));
-    assert.equal(getElementText(find(firstSubgroups)), getText('2'));
-    assert.equal(getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
-    assert.equal(getElementText(find(secondMembers)), getText('7'));
-    assert.equal(getElementText(find(secondSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstMembers)), getText('7'));
+    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
+    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
+    assert.equal(await getElementText(find(secondMembers)), getText('7'));
+    assert.equal(await getElementText(find(secondSubgroups)), getText('2'));
     await click(firstLink);
     assert.equal(currentURL(), '/learnergroups/1');
     await visit('/learnergroups');
@@ -237,21 +235,21 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     assert.equal(2, findAll(subGroupList).length);
 
-    assert.equal(getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
-    assert.equal(getElementText(find(firstSubgroupMembers)), getText('1'));
-    assert.equal(getElementText(find(firstSubgroupSubgroups)), getText('1'));
-    assert.equal(getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
-    assert.equal(getElementText(find(secondSubgroupMembers)), getText('3'));
-    assert.equal(getElementText(find(secondSubgroupSubgroups)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
+    assert.equal(await getElementText(find(firstSubgroupMembers)), getText('1'));
+    assert.equal(await getElementText(find(firstSubgroupSubgroups)), getText('1'));
+    assert.equal(await getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
+    assert.equal(await getElementText(find(secondSubgroupMembers)), getText('3'));
+    assert.equal(await getElementText(find(secondSubgroupSubgroups)), getText('0'));
   });
 
 
   test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
     const groups = '.list tbody tr';
-    const firstGroup = `${groups}:eq(0)`;
-    const firstTitle = `${firstGroup} td:eq(0)`;
+    const firstGroup = `${groups}:nth-of-type(1)`;
+    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
     const firstLink = `${firstTitle} a`;
-    const members = '.learnergroup-overview-content table:eq(1) tbody tr';
+    const members = '.learnergroup-overview-content table:nth-of-type(2) tbody tr';
     const cohortMembers = `.cohortmembers tbody tr`;
     assert.expect(5);
     this.server.create('school');
@@ -279,7 +277,7 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     await visit('/learnergroups');
     assert.equal(1, findAll(groups).length);
-    assert.equal(getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
     await click(firstLink);
     assert.equal(currentURL(), '/learnergroups/1');
     assert.equal(findAll(members).length, 5, 'lists members');
@@ -305,7 +303,7 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     this.server.create('offering');
 
-    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
+    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
     const event = '.event';
 
     await visit('/learnergroups/1');
@@ -343,8 +341,8 @@ module('Acceptance: Learnergroup', function(hooks) {
 
     this.server.create('offering');
 
-    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:eq(1)';
-    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] input:eq(0)';
+    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
+    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] input:nth-of-type(1)';
     const event = '.event';
 
     await visit('/learnergroups/1');
@@ -357,11 +355,11 @@ module('Acceptance: Learnergroup', function(hooks) {
 
 
   test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
-    const members = '.learnergroup-overview-content table:eq(1) tbody tr';
-    const manage = '.learnergroup-overview-actions button:eq(1)';
+    const members = '.learnergroup-overview-content table:nth-of-type(2) tbody tr';
+    const manage = '.learnergroup-overview-actions button:nth-of-type(2)';
     const manager = '.learnergroup-user-manager-content';
-    const membersOfGroup = `${manager} table:eq(1) tr`;
-    const membersOfTree = `${manager} table:eq(2) tr`;
+    const membersOfGroup = `${manager} table:nth-of-type(2) tr`;
+    const membersOfTree = `${manager} table:nth-of-type(3) tr`;
     assert.expect(4);
     this.server.create('school');
     this.server.create('program', {
