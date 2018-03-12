@@ -1,26 +1,24 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-module('Acceptance | assign students', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.createList('school', 2);
-    setupAuthentication(application, { id: 4136, schoolId: 1});
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+module('Acceptance: assign students', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('school');
   });
 
   test('visiting /admin/assignstudents', async function(assert) {
     await visit('/admin/assignstudents');
 
-    assert.equal(getElementText('.schoolsfilter'), getText('school 0'));
+    assert.equal(await getElementText('.schoolsfilter'), getText('school 0'));
 
     assert.equal(currentURL(), '/admin/assignstudents');
   });

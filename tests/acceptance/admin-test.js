@@ -1,25 +1,22 @@
 import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
 let url = '/admin';
 
-module('Acceptance: Admin', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.create('school');
-    setupAuthentication(application, {id: 4136, schoolId: 1});
-  });
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-  hooks.afterEach(function() {
-    destroyApp(application);
+module('Acceptance: Admin', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
   });
 
   test('can transition to `users` route', async function(assert) {
-    const button = '.manage-users-summary a:eq(0)';
+    const button = '.manage-users-summary a:nth-of-type(1)';
 
     await visit(url);
     await click(button);
@@ -31,7 +28,7 @@ module('Acceptance: Admin', function(hooks) {
     this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
-    const secondResult = '.user-search .results li:eq(2)';
+    const secondResult = '.user-search .results li:nth-of-type(3)';
     const secondResultUsername = `${secondResult} .name`;
     const secondResultEmail = `${secondResult} .email`;
     const name = '.user-display-name';

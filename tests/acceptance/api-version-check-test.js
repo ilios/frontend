@@ -2,25 +2,22 @@ import { visit } from '@ember/test-helpers';
 /* eslint ember/no-global-jquery: 0 */
 import $ from 'jquery';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import ENV from 'ilios/config/environment';
 const { apiVersion } = ENV.APP;
 
-let application;
 let url = '/';
 
-module('Acceptance: API Version Check', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.create('school');
-    setupAuthentication(application, { id: 4136,  schoolId: 1});
-  });
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-  hooks.afterEach(function() {
-    destroyApp(application);
+module('Acceptance: API Version Check', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
   });
 
   test('No warning shows up when api versions match', async function(assert) {
