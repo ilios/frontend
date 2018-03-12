@@ -1,17 +1,16 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import moment from 'moment';
 
-module('Unit | Component | recently updated display', function(hooks) {
-  setupTest(hooks);
+moduleForComponent('recently-updated-display', 'Unit | Component | recently updated display', {
+  unit: true
+});
 
-  test('`recentlyUpdated` computed property works', function(assert) {
-    const lastModified = moment().subtract(5, 'day');
-    const component = this.owner.factoryFor('component:recently-updated-display').create({ lastModified });
+test('`recentlyUpdated` computed property works', function(assert) {
+  const lastModified = moment().subtract(5, 'day');
+  const component = this.subject({ lastModified });
 
-    assert.ok(component.get('recentlyUpdated'), 'last modified within 5 days');
+  assert.ok(component.get('recentlyUpdated'), 'last modified within 5 days');
 
-    component.set('lastModified', moment().subtract(7, 'day'));
-    assert.notOk(component.get('recentlyUpdated'), 'last modified more than 5 days');
-  });
+  component.set('lastModified', moment().subtract(7, 'day'));
+  assert.notOk(component.get('recentlyUpdated'), 'last modified more than 5 days');
 });

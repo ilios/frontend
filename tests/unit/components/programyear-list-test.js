@@ -1,61 +1,61 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 
-module('Unit | Component | programyear list', function(hooks) {
-  setupTest(hooks);
+moduleForComponent('programyear-list', 'Unit | Component | programyear list', {
+  needs: ['service:currentUser'],
+  unit: true
+});
 
-  test('properties have default values', function(assert) {
-    assert.expect(1);
+test('properties have default values', function(assert) {
+  assert.expect(1);
 
-    const expected = {
-      program:      null,
-      programYears: [],
-      editorOn:     false,
-      selection:    null
-    };
+  const expected = {
+    program:      null,
+    programYears: [],
+    editorOn:     false,
+    selection:    null
+  };
 
-    const component = this.owner.factoryFor('component:programyear-list').create();
+  const component = this.subject();
 
-    const actual = {
-      program:      component.get('program'),
-      programYears: component.get('programYears'),
-      editorOn:     component.get('editorOn'),
-      selection:    component.get('selection'),
-    };
+  const actual = {
+    program:      component.get('program'),
+    programYears: component.get('programYears'),
+    editorOn:     component.get('editorOn'),
+    selection:    component.get('selection'),
+  };
 
-    assert.deepEqual(actual.program, expected.program, 'default values are correct');
-  });
+  assert.deepEqual(actual.program, expected.program, 'default values are correct');
+});
 
-  test('`availableAcademicYears` computed property works properly', function(assert) {
-    assert.expect(1);
+test('`availableAcademicYears` computed property works properly', function(assert) {
+  assert.expect(1);
 
-    const currentYear = new Date().getFullYear();
-    const nextYear = currentYear + 1;
-    const twoYearsFromNow = nextYear + 1;
-    const threeYearsFromNow = twoYearsFromNow + 1;
+  const currentYear = new Date().getFullYear();
+  const nextYear = currentYear + 1;
+  const twoYearsFromNow = nextYear + 1;
+  const threeYearsFromNow = twoYearsFromNow + 1;
 
-    const programYears = [{
-      academicYears: `${nextYear} - ${twoYearsFromNow}`, startYear: `${nextYear}`
-    }, {
-      academicYears: `${twoYearsFromNow} - ${threeYearsFromNow}`, startYear: `${twoYearsFromNow}`
-    }];
+  const programYears = [{
+    academicYears: `${nextYear} - ${twoYearsFromNow}`, startYear: `${nextYear}`
+  }, {
+    academicYears: `${twoYearsFromNow} - ${threeYearsFromNow}`, startYear: `${twoYearsFromNow}`
+  }];
 
-    for (let i = 0; i < 10; i++) {
-      if (i !== 5) {
-        let start = (currentYear - 5 + i).toString();
-        let end = (currentYear - 4 + i).toString();
+  for (let i = 0; i < 10; i++) {
+    if (i !== 5) {
+      let start = (currentYear - 5 + i).toString();
+      let end = (currentYear - 4 + i).toString();
 
-        programYears.pushObject({ academicYears: `${start} - ${end}`, startYear: start });
-      }
+      programYears.pushObject({ academicYears: `${start} - ${end}`, startYear: start });
     }
+  }
 
-    const startYear = currentYear.toString();
-    const endYear = (currentYear + 1).toString();
+  const startYear = currentYear.toString();
+  const endYear = (currentYear + 1).toString();
 
-    const expected = [{ value: currentYear, label: `${startYear} - ${endYear}` }];
-    const component = this.owner.factoryFor('component:programyear-list').create({ programYears });
-    const actual = component.get('availableAcademicYears');
+  const expected = [{ value: currentYear, label: `${startYear} - ${endYear}` }];
+  const component = this.subject({ programYears });
+  const actual = component.get('availableAcademicYears');
 
-    assert.deepEqual(actual, expected, 'computed property works');
-  });
+  assert.deepEqual(actual, expected, 'computed property works');
 });

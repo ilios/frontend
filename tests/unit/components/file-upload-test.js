@@ -1,18 +1,18 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 
-module('Unit | Component | file upload ', function(hooks) {
-  setupTest(hooks);
+moduleForComponent('file-upload', 'Unit | Component | file upload ', {
+  needs: ['service:session', 'service:iliosConfig', 'service:i18n'],
+  unit: true
+});
 
-  test('it renders', function(assert) {
-    assert.expect(2);
+test('it renders', function(assert) {
+  assert.expect(2);
 
-    // Creates the component instance
-    var component = this.owner.factoryFor('component:file-upload').create();
-    assert.equal(component._state, 'preRender');
+  // Creates the component instance
+  var component = this.subject();
+  assert.equal(component._state, 'preRender');
 
-    // Renders the component to the page
-    this.render();
-    assert.equal(component._state, 'inDOM');
-  });
+  // Renders the component to the page
+  this.render();
+  assert.equal(component._state, 'inDOM');
 });
