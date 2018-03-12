@@ -1,6 +1,5 @@
 import {
   clickable,
-  collection,
   fillable
 } from 'ember-cli-page-object';
 

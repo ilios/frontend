@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-const { resolve, reject } = RSVP;
+const { resolve } = RSVP;
 
 module('helper:report-title', function(hooks) {
   setupRenderingTest(hooks);

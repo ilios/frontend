@@ -1,4 +1,4 @@
-import { click, fillIn, currentRouteName, findAll, find, visit } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import {
   module,
   test
