@@ -1,17 +1,15 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { Column } from 'ember-light-table';
 
-module('Integration | Component | Columns | translatable-table-column', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('light-table/columns/translatable-table-column', 'Integration | Component | Columns | translatable-table-column', {
+  integration: true
+});
 
-  test('it renders label', async function(assert) {
-    this.set('column', new Column({ labelKey: 'general.thursday' }));
+test('it renders label', function(assert) {
+  this.set('column', new Column({ labelKey: 'general.thursday' }));
 
-    await render(hbs`{{light-table/columns/translatable-table-column column}}`);
+  this.render(hbs`{{light-table/columns/translatable-table-column column}}`);
 
-    assert.equal(find('*').textContent.trim(), 'Thursday');
-  });
+  assert.equal(this.$().text().trim(), 'Thursday');
 });

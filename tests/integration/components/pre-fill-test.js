@@ -1,17 +1,15 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | pre fill', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('pre-fill', 'Integration | Component | pre fill', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.on('myAction', function(val) { ... });
+test('it renders', function(assert) {
+  // Set any properties with this.set('myProperty', 'value');
+  // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{pre-fill}}`);
+  this.render(hbs`{{pre-fill}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
-  });
+  assert.equal(this.$().text().trim(), '');
 });

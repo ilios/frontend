@@ -1,48 +1,46 @@
 import EmberObject from '@ember/object';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | session table status', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('session-table-status', 'Integration | Component | session table status', {
+  integration: true
+});
 
-  test('it renders published', async function(assert) {
-    const i = 'i';
-    const row = EmberObject.create({
-      isPublished: true,
-      publishedAsTbd: false,
-    });
-    this.set('row', row);
-    await render(hbs`{{session-table-status row=row}}`);
-
-    assert.equal(find('*').textContent.trim(), '');
-    assert.ok(find(i).classList.contains('fa-star'));
+test('it renders published', function(assert) {
+  const i = 'i';
+  const row = EmberObject.create({
+    isPublished: true,
+    publishedAsTbd: false,
   });
+  this.set('row', row);
+  this.render(hbs`{{session-table-status row=row}}`);
 
-  test('it renders scheduled', async function(assert) {
-    const i = 'i';
-    const row = EmberObject.create({
-      isPublished: true,
-      publishedAsTbd: true,
-    });
-    this.set('row', row);
-    await render(hbs`{{session-table-status row=row}}`);
+  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$(i).hasClass('fa-star'));
+});
 
-    assert.equal(find('*').textContent.trim(), '');
-    assert.ok(find(i).classList.contains('fa-clock-o'));
+test('it renders scheduled', async function(assert) {
+  const i = 'i';
+  const row = EmberObject.create({
+    isPublished: true,
+    publishedAsTbd: true,
   });
+  this.set('row', row);
+  this.render(hbs`{{session-table-status row=row}}`);
 
-  test('it renders draft', async function(assert) {
-    const i = 'i';
-    const row = EmberObject.create({
-      isPublished: false,
-      publishedAsTbd: false,
-    });
-    this.set('row', row);
-    await render(hbs`{{session-table-status row=row}}`);
+  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$(i).hasClass('fa-clock-o'));
+});
 
-    assert.equal(find('*').textContent.trim(), '');
-    assert.ok(find(i).classList.contains('fa-star-half-full'));
+test('it renders draft', async function(assert) {
+  const i = 'i';
+  const row = EmberObject.create({
+    isPublished: false,
+    publishedAsTbd: false,
   });
+  this.set('row', row);
+  this.render(hbs`{{session-table-status row=row}}`);
+
+  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$(i).hasClass('fa-star-half-full'));
 });

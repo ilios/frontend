@@ -1,20 +1,18 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | yesno table cell', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('yesno-table-cell', 'Integration | Component | yesno table cell', {
+  integration: true
+});
 
-  test('it renders yes', async function(assert) {
-    await render(hbs`{{yesno-table-cell value=true}}`);
-    assert.equal(find('*').textContent.trim(), 'Yes');
-    assert.ok(find('div').classList.contains('yes'));
-  });
+test('it renders yes', function (assert) {
+  this.render(hbs`{{yesno-table-cell value=true}}`);
+  assert.equal(this.$().text().trim(), 'Yes');
+  assert.ok(this.$('div').hasClass('yes'));
+});
 
-  test('it renders no', async function(assert) {
-    await render(hbs`{{yesno-table-cell value=false}}`);
-    assert.equal(find('*').textContent.trim(), 'No');
-    assert.ok(find('div').classList.contains('no'));
-  });
+test('it renders no', function (assert) {
+  this.render(hbs`{{yesno-table-cell value=false}}`);
+  assert.equal(this.$().text().trim(), 'No');
+  assert.ok(this.$('div').hasClass('no'));
 });

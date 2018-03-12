@@ -1,44 +1,43 @@
-import { module, skip, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
+import { moduleForComponent, test, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
-module('Integration | Component | manage users summary', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('manage-users-summary', 'Integration | Component | manage users summary', {
+  integration: true,
+});
 
-  test('it renders', async function(assert) {
-    await render(hbs`{{manage-users-summary}}`);
+test('it renders', function(assert) {
+  this.render(hbs`{{manage-users-summary}}`);
 
-    assert.equal(find('h2').textContent.trim(), 'Ilios Users (View All)');
-    assert.equal(find('a').textContent.trim(), 'View All');
-    assert.equal(find(findAll('a')[2]).textContent.trim(), 'Upload Multiple Users');
-  });
+  assert.equal(this.$('h2').text().trim(), 'Ilios Users (View All)');
+  assert.equal(this.$('a:eq(0)').text().trim(), 'View All');
+  assert.equal(this.$('a:eq(2)').text().trim(), 'Upload Multiple Users');
+});
 
-  /**
-   * @todo Move the URL tests to an acceptance test so we don't
-   * have to inject a working router which blows up ember-simple-auth
-   * [JJ 3/2017]
-   */
-  skip('it renders URLs', function(assert) {
-    this.render(hbs`{{manage-users-summary}}`);
+/**
+ * @todo Move the URL tests to an acceptance test so we don't
+ * have to inject a working router which blows up ember-simple-auth
+ * [JJ 3/2017]
+ */
+skip('it renders URLs', function(assert) {
+  this.render(hbs`{{manage-users-summary}}`);
 
-    assert.notEqual(find('a').href.search(/\/users$/), -1, `${find('a').href} links to /users`);
-    assert.notEqual(find(findAll('a')[1]).href.search(/\/users\?addUser=true$/), -1, `${find(findAll('a')[1]).href} links to /users?addUser=true`);
-    assert.notEqual(find(findAll('a')[2]).href.search(/\/users\?addUsers=true$/), -1, `${find(findAll('a')[2]).href} links to /users?addUsers=true`);
-  });
+  assert.notEqual(this.$('a:eq(0)').prop('href').search(/\/users$/), -1, `${this.$('a:eq(0)').prop('href')} links to /users`);
+  assert.notEqual(this.$('a:eq(1)').prop('href').search(/\/users\?addUser=true$/), -1, `${this.$('a:eq(1)').prop('href')} links to /users?addUser=true`);
+  assert.notEqual(this.$('a:eq(2)').prop('href').search(/\/users\?addUsers=true$/), -1, `${this.$('a:eq(2)').prop('href')} links to /users?addUsers=true`);
+});
 
-  test('show more input prompt', async function(assert) {
-    await render(hbs`{{manage-users-summary}}`);
+test('show more input prompt', function(assert) {
+  this.render(hbs`{{manage-users-summary}}`);
 
-    const userSearch = '.user-search input';
-    const results = '.user-search .results li';
+  const userSearch = '.user-search input';
+  const results = '.user-search .results li';
 
-    await fillIn(userSearch, '12');
-    await triggerEvent(userSearch, 'keyup');
+  this.$(userSearch).val('12');
+  this.$(userSearch).trigger('keyup');
 
-    return settled().then(()=>{
-      assert.equal(findAll(results).length, 1);
-      assert.equal(find(results).textContent.trim(), 'keep typing...');
-    });
+  return wait().then(()=>{
+    assert.equal(this.$(results).length, 1);
+    assert.equal(this.$(results).text().trim(), 'keep typing...');
   });
 });

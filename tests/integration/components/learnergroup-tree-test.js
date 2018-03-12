@@ -1,21 +1,19 @@
 import EmberObject from '@ember/object';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | learnergroup tree', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('learnergroup-tree', 'Integration | Component | learnergroup tree', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    let learnerGroup = EmberObject.create({
-      children: []
-    });
-    this.set('learnerGroup', learnerGroup);
-    this.set('nothing', parseInt);
-
-    await render(hbs`{{learnergroup-tree learnerGroup=learnerGroup add=(action nothing)}}`);
-
-    assert.equal(find('*').textContent.trim(), '');
+test('it renders', function(assert) {
+  let learnerGroup = EmberObject.create({
+    children: []
   });
+  this.set('learnerGroup', learnerGroup);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-tree learnerGroup=learnerGroup add=(action nothing)}}`);
+
+  assert.equal(this.$().text().trim(), '');
 });

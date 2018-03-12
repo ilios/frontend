@@ -1,15 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | html editor', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('html-editor', 'Integration | Component | html editor', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    await render(hbs`{{html-editor}}`);
+test('it renders', function(assert) {
+  this.render(hbs`{{html-editor}}`);
 
-    assert.equal(find('*').textContent.trim(), 'BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');
+  assert.equal(this.$().text().trim(), 'BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');
 
-  });
 });

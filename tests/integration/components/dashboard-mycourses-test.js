@@ -1,11 +1,11 @@
+import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import RSVP from 'rsvp';
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 import initializer from "ilios/instance-initializers/load-common-translations";
 
 const { resolve } = RSVP;
@@ -59,63 +59,60 @@ let currentUserMockUnprivileged = Service.extend({
   userIsDeveloper: resolve(false),
 });
 
-module('Integration | Component | dashboard mycourses', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses', {
+  integration: true,
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
+});
 
-  hooks.beforeEach(function() {
-    this.setup = function() {
-      initializer.initialize(this.owner);
-    };
-  });
+test('list courses for privileged users', async function(assert) {
+  assert.expect(9);
+  this.register('service:currentUser', currentUserMock);
+  this.render(hbs`{{dashboard-mycourses}}`);
+  const header = '.dashboard-block-header';
 
-  test('list courses for privileged users', async function(assert) {
-    assert.expect(9);
-    this.owner.register('service:currentUser', currentUserMock);
-    await render(hbs`{{dashboard-mycourses}}`);
-    const header = '.dashboard-block-header';
+  await wait();
+  assert.equal(this.$(header).text().trim(), 'My Courses');
+  for(let i = 0; i < 2; i++){
+    let a = this.$(`table a:eq(${i})`);
+    assert.equal(a.length, 1);
+    let links = this.$(`table tr:eq(${i}) td`);
+    assert.equal(links.eq(0).text().trim(), mockCourses[i].academicYear);
+    assert.ok(links.eq(1).text().trim().startsWith(mockCourses[i].title));
+  }
+  assert.ok(this.$('table tr:eq(0) td:eq(1)').text().trim().endsWith('(' + mockCourses[0].externalId + ')'));
+  assert.equal(this.$(`table tr`).length, 3);
 
-    await settled();
-    assert.equal(find(header).textContent.trim(), 'My Courses');
-    for(let i = 0; i < 2; i++){
+});
+
+
+test('list courses for un-privileged users', function(assert) {
+  assert.expect(11);
+  this.register('service:currentUser', currentUserMockUnprivileged);
+  this.render(hbs`{{dashboard-mycourses}}`);
+  assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
+
+  run.later(()=> {
+    for(let i = 0; i < 3; i++){
       let a = this.$(`table a:eq(${i})`);
-      assert.equal(a.length, 1);
-      let links = this.$(`table tr:eq(${i}) td`);
-      assert.equal(links.eq(0).text().trim(), mockCourses[i].academicYear);
-      assert.ok(links.eq(1).text().trim().startsWith(mockCourses[i].title));
+      assert.equal(a.length, 0);
+      let tds = this.$(`table tr:eq(${i}) td`);
+      assert.equal(tds.eq(0).text().trim(), mockCourses[i].academicYear);
+      assert.equal(tds.eq(1).text().trim(), mockCourses[i].title);
     }
-    assert.ok(find(findAll('table tr:eq(0) td')[1]).textContent.trim().endsWith('(' + mockCourses[0].externalId + ')'));
+
     assert.equal(this.$(`table tr`).length, 3);
-
   });
 
+});
 
-  test('list courses for un-privileged users', async function(assert) {
-    assert.expect(11);
-    this.owner.register('service:currentUser', currentUserMockUnprivileged);
-    await render(hbs`{{dashboard-mycourses}}`);
-    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Courses');
+test('display none when no courses', function(assert) {
+  assert.expect(2);
+  this.register('service:currentUser', currentUserMockNoCourses);
+  this.render(hbs`{{dashboard-mycourses}}`);
+  assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Courses');
 
-    run.later(()=> {
-      for(let i = 0; i < 3; i++){
-        let a = this.$(`table a:eq(${i})`);
-        assert.equal(a.length, 0);
-        let tds = this.$(`table tr:eq(${i}) td`);
-        assert.equal(tds.eq(0).text().trim(), mockCourses[i].academicYear);
-        assert.equal(tds.eq(1).text().trim(), mockCourses[i].title);
-      }
+  assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
 
-      assert.equal(this.$(`table tr`).length, 3);
-    });
-
-  });
-
-  test('display none when no courses', async function(assert) {
-    assert.expect(2);
-    this.owner.register('service:currentUser', currentUserMockNoCourses);
-    await render(hbs`{{dashboard-mycourses}}`);
-    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Courses');
-
-    assert.equal(find('.dashboard-block-body').textContent.trim(), 'None');
-
-  });
 });

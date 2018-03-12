@@ -1,44 +1,42 @@
 import EmberObject from '@ember/object';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | session table actions', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('session-table-actions', 'Integration | Component | session table actions', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    const row = EmberObject.create({
-      confirmDelete: false
-    });
-    const deleteIcon = 'i.fa-trash';
-
-    this.set('row', row);
-    await render(hbs`{{session-table-actions row=row}}`);
-    assert.equal(findAll(deleteIcon).length, 1);
+test('it renders', function(assert) {
+  const row = EmberObject.create({
+    confirmDelete: false
   });
+  const deleteIcon = 'i.fa-trash';
 
-  test('it does not display an icon when it should not', async function(assert) {
-    const row = EmberObject.create({
-      confirmDelete: true
-    });
-    const deleteIcon = 'i.fa-trash';
+  this.set('row', row);
+  this.render(hbs`{{session-table-actions row=row}}`);
+  assert.equal(this.$(deleteIcon).length, 1);
+});
 
-    this.set('row', row);
-    await render(hbs`{{session-table-actions row=row}}`);
-    assert.equal(findAll(deleteIcon).length, 0);
+test('it does not display an icon when it should not', function(assert) {
+  const row = EmberObject.create({
+    confirmDelete: true
   });
+  const deleteIcon = 'i.fa-trash';
 
-  test('clicking delete changes the row property', async function(assert) {
-    const row = EmberObject.create({
-      confirmDelete: false
-    });
-    const deleteIcon = 'i.fa-trash';
+  this.set('row', row);
+  this.render(hbs`{{session-table-actions row=row}}`);
+  assert.equal(this.$(deleteIcon).length, 0);
+});
 
-    this.set('row', row);
-    await render(hbs`{{session-table-actions row=row}}`);
-    assert.equal(findAll(deleteIcon).length, 1);
-    await click(deleteIcon);
-    assert.ok(row.get('confirmDelete'));
+test('clicking delete changes the row property', function(assert) {
+  const row = EmberObject.create({
+    confirmDelete: false
   });
+  const deleteIcon = 'i.fa-trash';
+
+  this.set('row', row);
+  this.render(hbs`{{session-table-actions row=row}}`);
+  assert.equal(this.$(deleteIcon).length, 1);
+  this.$(deleteIcon).click();
+  assert.ok(row.get('confirmDelete'));
 });

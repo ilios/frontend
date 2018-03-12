@@ -1,21 +1,19 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { getOwner } from '@ember/application';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-module('Integration | Component | learningmaterial search', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('learningmaterial-search', 'Integration | Component | learningmaterial search', {
+  integration: true,
+  beforeEach: function() {
+    getOwner(this).lookup('service:i18n').set('locale', 'en');
+    this.register('helper:t', tHelper);
+  }
+});
 
-  hooks.beforeEach(function() {
-    this.owner.lookup('service:i18n').set('locale', 'en');
-    this.owner.register('helper:t', tHelper);
-  });
+test('it renders', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{learningmaterial-search}}`);
 
-  test('it renders', async function(assert) {
-    assert.expect(1);
-    await render(hbs`{{learningmaterial-search}}`);
-
-    assert.equal(find('*').textContent.trim(), '');
-  });
+  assert.equal(this.$().text().trim(), '');
 });

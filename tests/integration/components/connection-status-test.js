@@ -1,13 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | connection status', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('connection-status', 'Integration | Component | connection status', {
+  integration: true
+});
 
-  test('it renders offline and therefor hidden', async function(assert) {
-    await render(hbs`{{connection-status}}`);
-    assert.notOk(find('*').classList.contains('offline'));
-  });
+test('it renders offline and therefor hidden', function(assert) {
+  this.render(hbs`{{connection-status}}`);
+  assert.notOk(this.$().hasClass('offline'));
 });

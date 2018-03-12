@@ -1,47 +1,43 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { getOwner } from '@ember/application';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import commonInitializer from "ilios/instance-initializers/load-common-translations";
 import moment from 'moment';
 
-module('Integration | Component | session table first offering', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('session-table-first-offering', 'Integration | Component | session table first offering', {
+  integration: true,
+  setup(){
+    commonInitializer.initialize(getOwner(this));
+  }
+});
 
-  hooks.beforeEach(function() {
-    this.setup = function() {
-      commonInitializer.initialize(this.owner);
-    };
+test('it renders empty', function(assert) {
+  this.set('row', {
+    firstOfferingDate: null
   });
+  this.render(hbs`{{session-table-first-offering row=row}}`);
 
-  test('it renders empty', async function(assert) {
-    this.set('row', {
-      firstOfferingDate: null
-    });
-    await render(hbs`{{session-table-first-offering row=row}}`);
+  assert.equal(this.$().text().trim(), '');
+});
 
-    assert.equal(find('*').textContent.trim(), '');
+test('it renders offering', function(assert) {
+  const today = moment();
+  this.set('row', {
+    isIlm: false,
+    firstOfferingDate: today.toDate()
   });
+  this.render(hbs`{{session-table-first-offering row=row}}`);
 
-  test('it renders offering', async function(assert) {
-    const today = moment();
-    this.set('row', {
-      isIlm: false,
-      firstOfferingDate: today.toDate()
-    });
-    await render(hbs`{{session-table-first-offering row=row}}`);
+  assert.equal(this.$().text().trim(), today.format('L LT'));
+});
 
-    assert.equal(find('*').textContent.trim(), today.format('L LT'));
+test('it renders ilm', function(assert) {
+  const today = moment();
+  this.set('row', {
+    isIlm: true,
+    firstOfferingDate: today.toDate()
   });
+  this.render(hbs`{{session-table-first-offering row=row}}`);
 
-  test('it renders ilm', async function(assert) {
-    const today = moment();
-    this.set('row', {
-      isIlm: true,
-      firstOfferingDate: today.toDate()
-    });
-    await render(hbs`{{session-table-first-offering row=row}}`);
-
-    assert.equal(find('*').textContent.trim(), 'ILM: Due By ' + today.format('L'));
-  });
+  assert.equal(this.$().text().trim(), 'ILM: Due By ' + today.format('L'));
 });

@@ -1,26 +1,24 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | learnergroup editor', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('learnergroup-editor', 'Integration | Component | learnergroup editor', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.on('myAction', function(val) { ... });
+test('it renders', function(assert) {
+  // Set any properties with this.set('myProperty', 'value');
+  // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{learnergroup-editor}}`);
+  this.render(hbs`{{learnergroup-editor}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+  assert.equal(this.$().text().trim(), '');
 
-    // Template block usage:
-    await render(hbs`
-      {{#learnergroup-editor}}
-        template block text
-      {{/learnergroup-editor}}
-    `);
+  // Template block usage:
+  this.render(hbs`
+    {{#learnergroup-editor}}
+      template block text
+    {{/learnergroup-editor}}
+  `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
-  });
+  assert.equal(this.$().text().trim(), 'template block text');
 });

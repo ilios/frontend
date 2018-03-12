@@ -1,96 +1,95 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 const { resolve } = RSVP;
 
-module('Integration | Component | learnergroup header', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('learnergroup-header', 'Integration | Component | learnergroup header', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    let learnerGroup = EmberObject.create({
-      title: 'our group',
-      allParents: resolve([{title: 'parent group'}])
-    });
-
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
-
-    assert.equal(find('h2').textContent.trim(), 'our group');
-    assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
+test('it renders', function(assert) {
+  let learnerGroup = EmberObject.create({
+    title: 'our group',
+    allParents: resolve([{title: 'parent group'}])
   });
 
-  test('can change title', async function(assert) {
-    let learnerGroup = EmberObject.create({
-      title: 'our group',
-      save(){
-        assert.equal(this.get('title'), 'new title');
-      }
-    });
+  this.set('learnerGroup', learnerGroup);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+  assert.equal(this.$('h2').text().trim(), 'our group');
+  assert.equal(this.$('.breadcrumbs').text().replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
+});
 
-    assert.equal(find('h2').textContent.trim(), 'our group');
-    await click('h2 .editable');
-    await fillIn('h2 input', 'new title');
-    await triggerEvent('h2 input', 'input');
-    await click('h2 .done');
-    await settled();
+test('can change title', async function(assert) {
+  let learnerGroup = EmberObject.create({
+    title: 'our group',
+    save(){
+      assert.equal(this.get('title'), 'new title');
+    }
   });
 
-  test('counts members correctly', async function(assert) {
-    let cohort = EmberObject.create({
-      title: 'test group',
-      users: [1, 2]
-    });
-    let subGroup = EmberObject.create({
-      title: 'test sub-group',
-      users: [],
-      children: [],
-    });
-    let learnerGroup = EmberObject.create({
-      title: 'test group',
-      usersOnlyAtThisLevel: [1],
-      cohort,
-      children: resolve([subGroup])
-    });
+  this.set('learnerGroup', learnerGroup);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+  assert.equal(this.$('h2').text().trim(), 'our group');
+  this.$('h2 .editable').click();
+  this.$('h2 input').val('new title');
+  this.$('h2 input').trigger('input');
+  this.$('h2 .done').click();
+  await wait();
+});
 
-    assert.equal(find('header .info').textContent.trim(), 'Members:  1 / 2');
+test('counts members correctly', function(assert) {
+  let cohort = EmberObject.create({
+    title: 'test group',
+    users: [1, 2]
+  });
+  let subGroup = EmberObject.create({
+    title: 'test sub-group',
+    users: [],
+    children: [],
+  });
+  let learnerGroup = EmberObject.create({
+    title: 'test group',
+    usersOnlyAtThisLevel: [1],
+    cohort,
+    children: resolve([subGroup])
   });
 
-  test('validate title length', async function(assert) {
-    assert.expect(4);
-    const title = 'h2';
-    const edit = `${title} .editable`;
-    const input = `${title} input`;
-    const done = `${title} .done`;
-    const errors = `${title} .validation-error-message`;
+  this.set('learnerGroup', learnerGroup);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    let learnerGroup = EmberObject.create({
-      title: 'our group',
-      save(){
-        assert.ok(false, 'should not be called');
-      }
-    });
+  assert.equal(this.$('header .info').text().trim(), 'Members:  1 / 2');
+});
 
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+test('validate title length', async function(assert) {
+  assert.expect(4);
+  const title = 'h2';
+  const edit = `${title} .editable`;
+  const input = `${title} input`;
+  const done = `${title} .done`;
+  const errors = `${title} .validation-error-message`;
 
-    assert.equal(find(title).textContent.trim(), 'our group', 'title is correct');
-    assert.equal(this.$(errors).length, 0, 'there are no errors');
-    this.$(edit).click();
-    const longTitle = 'x'.repeat(61);
-    this.$(input).val(longTitle).trigger('input');
-    this.$(done).click();
-    await settled();
-    assert.equal(this.$(errors).length, 1, 'there is now an error');
-    assert.ok(this.$(errors).text().search(/too long/) > -1, 'it is the correct error');
+  let learnerGroup = EmberObject.create({
+    title: 'our group',
+    save(){
+      assert.ok(false, 'should not be called');
+    }
   });
+
+  this.set('learnerGroup', learnerGroup);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+
+  assert.equal(this.$(title).text().trim(), 'our group', 'title is correct');
+  assert.equal(this.$(errors).length, 0, 'there are no errors');
+  this.$(edit).click();
+  const longTitle = 'x'.repeat(61);
+  this.$(input).val(longTitle).trigger('input');
+  this.$(done).click();
+  await wait();
+  assert.equal(this.$(errors).length, 1, 'there is now an error');
+  assert.ok(this.$(errors).text().search(/too long/) > -1, 'it is the correct error');
 });

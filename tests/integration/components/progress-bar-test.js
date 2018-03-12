@@ -1,39 +1,37 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | progress bar', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('progress-bar', 'Integration | Component | progress bar', {
+  integration: true
+});
 
-  test('it renders at default 0%', async function(assert) {
-    await render(hbs`{{progress-bar}}`);
+test('it renders at default 0%', function(assert) {
+  this.render(hbs`{{progress-bar}}`);
 
-    assert.equal(find('*').textContent.trim(), '0%');
-  });
+  assert.equal(this.$().text().trim(), '0%');
+});
 
-  test('changing percentage changes width', async function(assert) {
-    
-    this.set('passedValue', 42);
-    
-    await render(hbs`{{progress-bar percentage=passedValue}}`);
+test('changing percentage changes width', function(assert) {
+  
+  this.set('passedValue', 42);
+  
+  this.render(hbs`{{progress-bar percentage=passedValue}}`);
 
-    assert.equal(find('.meter').getAttribute('style').trim(), 'width: 42%');
-    
-    this.set('passedValue', 12);
-    assert.equal(find('.meter').getAttribute('style').trim(), 'width: 12%');
-  });
+  assert.equal(this.$('.meter').attr('style').trim(), 'width: 42%');
+  
+  this.set('passedValue', 12);
+  assert.equal(this.$('.meter').attr('style').trim(), 'width: 12%');
+});
 
-  test('changing percentage changes the displayvalue', async function(assert) {
-    
-    this.set('passedValue', 42);
-    
-    await render(hbs`{{progress-bar percentage=passedValue}}`);
+test('changing percentage changes the displayvalue', function(assert) {
+  
+  this.set('passedValue', 42);
+  
+  this.render(hbs`{{progress-bar percentage=passedValue}}`);
 
-    assert.equal(find('*').textContent.trim(), '42%');
-    
-    this.set('passedValue', 11);
-    assert.equal(find('*').textContent.trim(), '11%');
-    
-  });
+  assert.equal(this.$().text().trim(), '42%');
+  
+  this.set('passedValue', 11);
+  assert.equal(this.$().text().trim(), '11%');
+  
 });

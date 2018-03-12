@@ -1,32 +1,25 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | expand collapse button', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('expand-collapse-button', 'Integration | Component | expand collapse button', {
+  integration: true
+});
 
-  hooks.beforeEach(function() {
-    this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+test('clicking changes the icon and sends the action', function(assert) {
+  assert.expect(5);
+  
+  this.set('value', false);
+  this.on('click', () => {
+    assert.ok(true, 'button was clicked');
+    this.set('value', !this.get('value'));
   });
+  this.render(hbs`{{expand-collapse-button value=value action='click'}}`);
+  assert.ok(this.$('i').hasClass('fa-plus'));
+  
+  this.$('i').click();
+  assert.ok(this.$('i').hasClass('fa-minus'));
 
-  test('clicking changes the icon and sends the action', async function(assert) {
-    assert.expect(5);
-    
-    this.set('value', false);
-    this.actions.click = () => {
-      assert.ok(true, 'button was clicked');
-      this.set('value', !this.get('value'));
-    };
-    await render(hbs`{{expand-collapse-button value=value action='click'}}`);
-    assert.ok(find('i').classList.contains('fa-plus'));
-    
-    await click('i');
-    assert.ok(find('i').classList.contains('fa-minus'));
-
-    await click('i');
-    assert.ok(find('i').classList.contains('fa-plus'));
-    
-  });
+  this.$('i').click();
+  assert.ok(this.$('i').hasClass('fa-plus'));
+  
 });

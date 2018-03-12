@@ -1,15 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | loading-spinner', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('Integration | Component | loading-spinner', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    await render(hbs`{{loading-spinner}}`);
+test('it renders', function(assert) {
+  this.render(hbs`{{loading-spinner}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
-    assert.ok(find('i').classList.contains('fa-spinner'));
-  });
+  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$('i').hasClass('fa-spinner'));
 });

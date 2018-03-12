@@ -1,8 +1,6 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -43,64 +41,64 @@ school.set('competencies', resolve([domain1, competency1, competency2]));
 programYear.set('competencies', resolve([competency1, competency2]));
 
 
-module('Integration | Component | programyear competencies', function(hooks) {
-  setupRenderingTest(hooks);
+moduleForComponent('programyear-competencies', 'Integration | Component | programyear competencies', {
+  integration: true
+});
 
-  test('it renders', async function(assert) {
-    this.set('programYear', programYear);
-    this.set('nothing', parseInt);
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      isManaging=false
-      collapse=(action nothing)
-      expand=(action nothing)
-      setIsManaging=(action nothing)
-    }}`);
-    const title = '.title';
-    const button = '.programyear-competencies-actions button';
-    const list = '.programyear-competencies-content';
+test('it renders', function(assert) {
+  this.set('programYear', programYear);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{programyear-competencies
+    programYear=programYear
+    isManaging=false
+    collapse=(action nothing)
+    expand=(action nothing)
+    setIsManaging=(action nothing)
+  }}`);
+  const title = '.title';
+  const button = '.programyear-competencies-actions button';
+  const list = '.programyear-competencies-content';
 
-    assert.equal(find(title).textContent.trim(), 'Competencies (2)');
-    assert.equal(find(button).textContent.trim(), 'Manage Competencies');
-    assert.equal(find(list).textContent.replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
+  assert.equal(this.$(title).text().trim(), 'Competencies (2)');
+  assert.equal(this.$(button).text().trim(), 'Manage Competencies');
+  assert.equal(this.$(list).text().replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
 
-  });
+});
 
-  test('clicking manage fires action', async function(assert) {
-    assert.expect(1);
-    this.set('programYear', programYear);
-    this.set('nothing', parseInt);
-    this.set('setIsManaging', (b => {
-      assert.ok(b === true);
-    }));
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      isManaging=false
-      collapse=(action nothing)
-      expand=(action nothing)
-      setIsManaging=(action setIsManaging)
-    }}`);
-    const button = '.programyear-competencies-actions button';
+test('clicking manage fires action', function(assert) {
+  assert.expect(1);
+  this.set('programYear', programYear);
+  this.set('nothing', parseInt);
+  this.set('setIsManaging', (b => {
+    assert.ok(b === true);
+  }));
+  this.render(hbs`{{programyear-competencies
+    programYear=programYear
+    isManaging=false
+    collapse=(action nothing)
+    expand=(action nothing)
+    setIsManaging=(action setIsManaging)
+  }}`);
+  const button = '.programyear-competencies-actions button';
 
-    await click(button);
-  });
+  this.$(button).click();
+});
 
-  test('clicking collapse fires action', async function(assert) {
-    assert.expect(1);
-    this.set('programYear', programYear);
-    this.set('nothing', parseInt);
-    this.set('collapse', (() => {
-      assert.ok(true);
-    }));
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      isManaging=false
-      collapse=(action collapse)
-      expand=(action nothing)
-      setIsManaging=(action nothing)
-    }}`);
-    const title = '.title';
+test('clicking collapse fires action', function(assert) {
+  assert.expect(1);
+  this.set('programYear', programYear);
+  this.set('nothing', parseInt);
+  this.set('collapse', (() => {
+    assert.ok(true);
+  }));
+  this.render(hbs`{{programyear-competencies
+    programYear=programYear
+    isManaging=false
+    collapse=(action collapse)
+    expand=(action nothing)
+    setIsManaging=(action nothing)
+  }}`);
+  const title = '.title';
 
-    await click(title);
-  });
+  this.$(title).click();
 });

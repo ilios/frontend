@@ -2,274 +2,369 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, blur, triggerEvent } from '@ember/test-helpers';
+import { getOwner } from '@ember/application';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import wait from 'ember-test-helpers/wait';
 
 const { Promise, resolve } = RSVP;
 
 let storeMock;
-
-module('Integration | Component | course rollover', function(hooks) {
-  setupRenderingTest(hooks);
-
-  hooks.beforeEach(function() {
+moduleForComponent('course-rollover', 'Integration | Component | course rollover', {
+  integration: true,
+  beforeEach(){
     storeMock = Service.extend({});
-    this.owner.register('service:store', storeMock);
-  });
+    this.register('service:store', storeMock);
+  }
+});
 
-  test('it renders', async function(assert) {
-    storeMock.reopen({
-      query(){
-        return [];
-      }
-    });
-
-    let course = EmberObject.create({
-      id: 1,
-      title: 'old course'
-    });
-    this.set('course', course);
-
-    await render(hbs`{{course-rollover course=course}}`);
-
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    const yearSelect = '.year-select select';
-    const title = '.title input';
-
-    return settled().then(()=>{
-      for (let i=0; i<6; i++){
-        assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + 1 + i}`);
-      }
-      assert.equal(findAll(title).length, 1);
-      assert.equal(find(title).value.trim(), course.get('title'));
-    });
-
-  });
-
-  test('rollover course', async function(assert) {
-    assert.expect(14);
-    let course = EmberObject.create({
-      id: 1,
-      title: 'old title',
-      startDate: moment().hour(0).minute(0).second(0).toDate()
-    });
-
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-        assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.ok('year' in data);
-        assert.equal(data.year, lastYear);
-        assert.equal(data.newCourseTitle, course.get('title'));
-        assert.notOk('newStartDate' in data);
-        assert.notOk('skipOfferings' in data);
-
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
-
-    storeMock.reopen({
-      pushPayload(obj){
-        assert.ok('courses' in obj);
-        assert.ok(obj.courses.length, 1);
-        assert.equal(obj.courses[0].id, 14);
-      },
-      peekRecord(what, id){
-        assert.equal(what, 'course');
-        assert.equal(id, 14);
-
-        return EmberObject.create({
-          id: 14
-        });
-      },
-      query(){
-        return [];
-      }
-    });
-    let flashmessagesMock = Service.extend({
-      success(message){
-        assert.equal(message, 'general.courseRolloverSuccess');
-      }
-    });
-    this.owner.register('service:flashMessages', flashmessagesMock);
-
-
-    this.set('course', course);
-    this.set('visit', (newCourse) => {
-      assert.equal(newCourse.id, 14);
-    });
-    await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
-
-    await settled();
-    await await click('.done');
-    await settled();
-  });
-
-  test('rollover course with new title', async function(assert) {
-    assert.expect(5);
-    let course = EmberObject.create({
-      id: 1,
-      title: 'old title',
-      startDate: moment().hour(0).minute(0).second(0).toDate()
-    });
-
-    const newTitle = course.get('title') + '2';
-
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
-
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(what, id){
-        assert.equal(what, 'course');
-        assert.equal(id, 14);
-        return EmberObject.create({
-          id: 14
-        });
-      },
-      query(){
-        return [];
-      }
-    });
-    let flashmessagesMock = Service.extend({
-      success(){}
-    });
-    this.owner.register('service:flashMessages', flashmessagesMock);
-
-    this.set('course', course);
-    this.set('visit', () => {});
-
-    await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
-    const title = '.title';
-    const input = `${title} input`;
-    this.$(input).val(newTitle);
-    this.$(input).trigger('input');
-    await settled();
-    await await click('.done');
-    await settled();
-  });
-
-
-  test('disable years when title already exists', async function(assert) {
-    assert.expect(8);
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-
-    storeMock.reopen({
-      query(what, {filters}){
-        assert.equal(what, 'course');
-        assert.ok('title' in filters);
-        assert.equal(filters.title, 'to be rolled');
-
-        return [
-          {
-            id: 2,
-            year: lastYear
-          },
-          {
-            id: 3,
-            year: lastYear+2
-          },
-        ];
-      }
-    });
-
-    let course = EmberObject.create({
-      id: 1,
-      title: 'to be rolled',
-    });
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-
-    return settled().then(()=>{
-      let options = this.$('select:eq(0) option');
-      assert.ok(options.eq(0).prop('disabled'));
-      assert.notOk(options.eq(1).prop('disabled'));
-      assert.ok(options.eq(2).prop('disabled'));
-      assert.notOk(options.eq(3).prop('disabled'));
-      assert.notOk(options.eq(4).prop('disabled'));
-    });
-  });
-
-  test('rollover course with new start date', async function(assert) {
-    assert.expect(8);
-    // ensure that rollover date and course start date fall on the same day of the week.
-    let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
-    // Also, make sure that we're not crossing year boundaries here.
-    // Otherwise, ilios will propel us into the current year which we do not want right here.
-    if (courseStartDate.year() !== moment().year()) {
-      courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+test('it renders', function(assert) {
+  storeMock.reopen({
+    query(){
+      return [];
     }
+  });
 
-    const rolloverDate = moment(courseStartDate).add(1, 'week');
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old course'
+  });
+  this.set('course', course);
 
-    let course = EmberObject.create({
-      id: 1,
-      startDate: courseStartDate.toDate(),
-      title: 'old course'
+  this.render(hbs`{{course-rollover course=course}}`);
+
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+  const yearSelect = '.year-select select';
+  const title = '.title input';
+
+  return wait().then(()=>{
+    for (let i=0; i<6; i++){
+      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + 1 + i}`);
+    }
+    assert.equal(this.$(title).length, 1);
+    assert.equal(this.$(title).val().trim(), course.get('title'));
+  });
+
+});
+
+test('rollover course', async function(assert) {
+  assert.expect(14);
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old title',
+    startDate: moment().hour(0).minute(0).second(0).toDate()
+  });
+
+  let ajaxMock = Service.extend({
+    request(url, {method, data}){
+      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+      assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
+      assert.equal(method, 'POST');
+      assert.ok('year' in data);
+      assert.equal(data.year, lastYear);
+      assert.equal(data.newCourseTitle, course.get('title'));
+      assert.notOk('newStartDate' in data);
+      assert.notOk('skipOfferings' in data);
+
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
+
+  storeMock.reopen({
+    pushPayload(obj){
+      assert.ok('courses' in obj);
+      assert.ok(obj.courses.length, 1);
+      assert.equal(obj.courses[0].id, 14);
+    },
+    peekRecord(what, id){
+      assert.equal(what, 'course');
+      assert.equal(id, 14);
+
+      return EmberObject.create({
+        id: 14
+      });
+    },
+    query(){
+      return [];
+    }
+  });
+  let flashmessagesMock = Service.extend({
+    success(message){
+      assert.equal(message, 'general.courseRolloverSuccess');
+    }
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+
+  this.set('course', course);
+  this.set('visit', (newCourse) => {
+    assert.equal(newCourse.id, 14);
+  });
+  this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
+
+  await wait();
+  await this.$('.done').click();
+  await wait();
+});
+
+test('rollover course with new title', async function(assert) {
+  assert.expect(5);
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old title',
+    startDate: moment().hour(0).minute(0).second(0).toDate()
+  });
+
+  const newTitle = course.get('title') + '2';
+
+  let ajaxMock = Service.extend({
+    request(url, {method, data}){
+      assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
+      assert.equal(method, 'POST');
+      assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
+
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(what, id){
+      assert.equal(what, 'course');
+      assert.equal(id, 14);
+      return EmberObject.create({
+        id: 14
+      });
+    },
+    query(){
+      return [];
+    }
+  });
+  let flashmessagesMock = Service.extend({
+    success(){}
+  });
+  this.register('service:flashMessages', flashmessagesMock);
+
+  this.set('course', course);
+  this.set('visit', () => {});
+
+  this.render(hbs`{{course-rollover course=course visit=(action visit)}}`);
+  const title = '.title';
+  const input = `${title} input`;
+  this.$(input).val(newTitle);
+  this.$(input).trigger('input');
+  await wait();
+  await this.$('.done').click();
+  await wait();
+});
+
+
+test('disable years when title already exists', function(assert) {
+  assert.expect(8);
+  const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+
+  storeMock.reopen({
+    query(what, {filters}){
+      assert.equal(what, 'course');
+      assert.ok('title' in filters);
+      assert.equal(filters.title, 'to be rolled');
+
+      return [
+        {
+          id: 2,
+          year: lastYear
+        },
+        {
+          id: 3,
+          year: lastYear+2
+        },
+      ];
+    }
+  });
+
+  let course = EmberObject.create({
+    id: 1,
+    title: 'to be rolled',
+  });
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+
+  return wait().then(()=>{
+    let options = this.$('select:eq(0) option');
+    assert.ok(options.eq(0).prop('disabled'));
+    assert.notOk(options.eq(1).prop('disabled'));
+    assert.ok(options.eq(2).prop('disabled'));
+    assert.notOk(options.eq(3).prop('disabled'));
+    assert.notOk(options.eq(4).prop('disabled'));
+  });
+});
+
+test('rollover course with new start date', function(assert) {
+  assert.expect(8);
+  // ensure that rollover date and course start date fall on the same day of the week.
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Also, make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
+
+  const rolloverDate = moment(courseStartDate).add(1, 'week');
+
+  let course = EmberObject.create({
+    id: 1,
+    startDate: courseStartDate.toDate(),
+    title: 'old course'
+  });
+  let ajaxMock = Service.extend({
+    request(url, {data}){
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        rolloverDate.format('YYYY-MM-DD'),
+        'New start date is rollover date.'
+      );
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
+
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return wait().then(()=>{
+    this.$(title).click();
+    return wait().then(()=>{
+      let interactor = openDatepicker(this.$(startDate));
+      assert.equal(
+        interactor.selectedYear(),
+        courseStartDate.year(),
+        'Selected year initialized to course start date year.'
+      );
+      assert.equal(
+        interactor.selectedMonth(),
+        courseStartDate.month(),
+        'Selected month initialized to course start date month.'
+      );
+      assert.equal(
+        interactor.selectedDay(),
+        courseStartDate.date(),
+        'Selected day initialized to course start date day.'
+      );
+      interactor.selectDate(rolloverDate.toDate());
+      assert.equal(
+        interactor.selectedYear(),
+        rolloverDate.year(),
+        'Selected year changed to rollover date year.'
+      );
+      assert.equal(
+        interactor.selectedMonth(),
+        rolloverDate.month(),
+        'Selected month changed to rollover date month.'
+      );
+      assert.equal(
+        interactor.selectedDay(),
+        rolloverDate.date(),
+        'Selected day changed to rollover date day.'
+      );
+      this.$('.done').click();
+      return wait().then(() =>{
+        // do nothing.
+      });
     });
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        let newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          rolloverDate.format('YYYY-MM-DD'),
-          'New start date is rollover date.'
-        );
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
+  });
+});
 
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(){},
-      query(){return [];}
-    });
-    this.owner.lookup('service:flash-messages').registerTypes(['success']);
+test('rollover course prohibit non-matching day-of-week date selection', function(assert) {
+  assert.expect(5);
+  // rollover date and course start date don't fall on the same day of the week.
+  let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
+  // Make sure that we're not crossing year boundaries here.
+  // Otherwise, ilios will propel us into the current year which we do not want right here.
+  if (courseStartDate.year() !== moment().year()) {
+    courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
+  }
+  const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-    const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
-    const startDate = `${advancedOptions} input:eq(0)`;
+  let course = EmberObject.create({
+    id: 1,
+    title: 'test title',
+    startDate: courseStartDate.toDate()
+  });
+  let ajaxMock = Service.extend({
+    request(url, {data}){
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        courseStartDate.format('YYYY-MM-DD'),
+        'New start date is course start date.'
+      );
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
 
-    return settled().then(()=>{
-      this.$(title).click();
-      return settled().then(async () => {
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const yearSelect = '.year-select select';
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return wait().then(() => {
+    this.$(title).click();
+    return wait().then(()=>{
+      this.$(yearSelect).val(courseStartDate.format('YYYY')).change();
+      return wait().then(()=>{
         let interactor = openDatepicker(this.$(startDate));
         assert.equal(
           interactor.selectedYear(),
@@ -287,377 +382,278 @@ module('Integration | Component | course rollover', function(hooks) {
           'Selected day initialized to course start date day.'
         );
         interactor.selectDate(rolloverDate.toDate());
-        assert.equal(
-          interactor.selectedYear(),
-          rolloverDate.year(),
-          'Selected year changed to rollover date year.'
-        );
-        assert.equal(
-          interactor.selectedMonth(),
-          rolloverDate.month(),
-          'Selected month changed to rollover date month.'
-        );
-        assert.equal(
-          interactor.selectedDay(),
-          rolloverDate.date(),
-          'Selected day changed to rollover date day.'
-        );
-        await click('.done');
-        return settled().then(() =>{
-          // do nothing.
+        this.$('.done').click();
+        return wait().then(()=>{
+          // sit back.
         });
       });
     });
   });
+});
 
-  test('rollover course prohibit non-matching day-of-week date selection', async function(assert) {
-    assert.expect(5);
-    // rollover date and course start date don't fall on the same day of the week.
-    let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
-    // Make sure that we're not crossing year boundaries here.
-    // Otherwise, ilios will propel us into the current year which we do not want right here.
-    if (courseStartDate.year() !== moment().year()) {
-      courseStartDate = moment().hour(0).minute(0).add(1, 'week').day(1);
-    }
-    const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
+/**
+ * This tests wonky business logic where the targeted rollover start date gets adjusted to a date in the current year
+ * if the given course has a start date in a former year.
+ */
+test('rollover start date adjustment with former year course start date', function(assert) {
+  assert.expect(3);
 
-    let course = EmberObject.create({
-      id: 1,
-      title: 'test title',
-      startDate: courseStartDate.toDate()
-    });
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        let newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          courseStartDate.format('YYYY-MM-DD'),
-          'New start date is course start date.'
-        );
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
+  const courseStartDate = moment().hour(0).minute(0).subtract(2, 'year').day(1);
+  const rolloverDate = moment()
+    .hour(0)
+    .minute(0)
+    .isoWeek(courseStartDate.isoWeek())
+    .isoWeekday(courseStartDate.isoWeekday());
 
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(){},
-      query(){return [];}
-    });
-    this.owner.lookup('service:flash-messages').registerTypes(['success']);
+  let course = EmberObject.create({
+    id: 1,
+    startDate: courseStartDate.toDate(),
+    title: 'old course'
+  });
 
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-    const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
-    const yearSelect = '.year-select select';
-    const startDate = `${advancedOptions} input:eq(0)`;
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
+  });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
-    return settled().then(() => {
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const yearSelect = '.year-select select';
+  const startDate = `${advancedOptions} input:eq(0)`;
+
+  return new Promise(resolve => {
+    run(()=>{
       this.$(title).click();
-      return settled().then(async () => {
-        await fillIn(yearSelect, courseStartDate.format('YYYY'));
-        await blur(yearSelect);
-        return settled().then(async () => {
+      wait().then(()=>{
+        this.$(yearSelect).val(rolloverDate.format('YYYY')).change();
+        wait().then(()=>{
           let interactor = openDatepicker(this.$(startDate));
           assert.equal(
             interactor.selectedYear(),
-            courseStartDate.year(),
-            'Selected year initialized to course start date year.'
+            rolloverDate.year(),
+            'Selected year initialized to this year.'
           );
           assert.equal(
             interactor.selectedMonth(),
-            courseStartDate.month(),
-            'Selected month initialized to course start date month.'
+            rolloverDate.month(),
+            "Selected month initialized to this year's equivalent of course's start month."
           );
           assert.equal(
             interactor.selectedDay(),
-            courseStartDate.date(),
-            'Selected day initialized to course start date day.'
+            rolloverDate.date(),
+            "Selected month initialized to this year's equivalent of course's start day."
           );
-          interactor.selectDate(rolloverDate.toDate());
-          await click('.done');
-          return settled().then(()=>{
-            // sit back.
-          });
-        });
-      });
-    });
-  });
 
-  /**
-   * This tests wonky business logic where the targeted rollover start date gets adjusted to a date in the current year
-   * if the given course has a start date in a former year.
-   */
-  test('rollover start date adjustment with former year course start date', async function(assert) {
-    assert.expect(3);
-
-    const courseStartDate = moment().hour(0).minute(0).subtract(2, 'year').day(1);
-    const rolloverDate = moment()
-      .hour(0)
-      .minute(0)
-      .isoWeek(courseStartDate.isoWeek())
-      .isoWeekday(courseStartDate.isoWeekday());
-
-    let course = EmberObject.create({
-      id: 1,
-      startDate: courseStartDate.toDate(),
-      title: 'old course'
-    });
-
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(){},
-      query(){return [];}
-    });
-    this.owner.lookup('service:flash-messages').registerTypes(['success']);
-
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-    const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
-    const yearSelect = '.year-select select';
-    const startDate = `${advancedOptions} input:eq(0)`;
-
-    return new Promise(resolve => {
-      run(()=>{
-        this.$(title).click();
-        settled().then(async () => {
-          await fillIn(yearSelect, rolloverDate.format('YYYY'));
-          await blur(yearSelect);
-          settled().then(()=>{
-            let interactor = openDatepicker(this.$(startDate));
-            assert.equal(
-              interactor.selectedYear(),
-              rolloverDate.year(),
-              'Selected year initialized to this year.'
-            );
-            assert.equal(
-              interactor.selectedMonth(),
-              rolloverDate.month(),
-              "Selected month initialized to this year's equivalent of course's start month."
-            );
-            assert.equal(
-              interactor.selectedDay(),
-              rolloverDate.date(),
-              "Selected month initialized to this year's equivalent of course's start day."
-            );
-
-            settled().then(()=>{
-              resolve();
-            });
-          });
-        });
-      });
-    });
-  });
-
-  test('rollover course with no offerings', async function(assert) {
-    assert.expect(3);
-    let course = EmberObject.create({
-      id: 1,
-      title: 'old course'
-    });
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('skipOfferings' in data);
-        assert.equal(data.skipOfferings, true);
-
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
-
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(){},
-      query(){return [];}
-    });
-    this.owner.lookup('service:flash-messages').registerTypes(['success']);
-
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-    const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
-    const offerings = `${advancedOptions} input:eq(1)`;
-
-    return new Promise(resolve => {
-      run(()=>{
-        this.$(title).click();
-        settled().then(async () => {
-          assert.ok(this.$(offerings).is(':checked'));
-          this.$(offerings).click();
-          this.$(offerings).trigger('update');
-
-          await click('.done');
-          settled().then(()=>{
+          wait().then(()=>{
             resolve();
           });
         });
       });
     });
   });
+});
 
-  test('errors do not show up initially', async function(assert) {
-    storeMock.reopen({
-      query(){
-        return [];
-      }
-    });
-    let course = EmberObject.create({
-      id: 1
-    });
-    this.set('course', course);
-
-    await render(hbs`{{course-rollover course=course}}`);
-
-    return settled().then(() => {
-      assert.equal(findAll('.messagee').length, 0);
-    });
+test('rollover course with no offerings', function(assert) {
+  assert.expect(3);
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old course'
   });
+  let ajaxMock = Service.extend({
+    request(url, {data}){
+      assert.ok('skipOfferings' in data);
+      assert.equal(data.skipOfferings, true);
 
-  test('errors show up', async function(assert) {
-    storeMock.reopen({
-      query(){
-        return [];
-      }
-    });
-    let course = EmberObject.create({
-      id: 1
-    });
-    this.set('course', course);
-
-    await render(hbs`{{course-rollover course=course}}`);
-
-    const title = '.title';
-    const input = `${title} input`;
-    this.$(input).val('');
-    this.$(input).trigger('input');
-    assert.ok(find(title).textContent.search(/blank/) > -1);
-
-    return settled();
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
   });
+  this.register('service:commonAjax', ajaxMock);
 
-  test('changing the title looks for new matching courses', async function(assert) {
-    assert.expect(6);
-    let count = 0;
-    storeMock.reopen({
-      query(what, {filters}){
-        assert.equal(what, 'course');
-        assert.ok('title' in filters);
-        if (count === 0){
-          assert.equal(filters.title, 'to be rolled');
-        } else {
-          assert.equal(filters.title, 'to be rolled again');
-        }
-        count++;
-
-        return [];
-      }
-    });
-
-    let course = EmberObject.create({
-      id: 1,
-      title: 'to be rolled',
-    });
-    this.set('course', course);
-    await render(hbs`{{course-rollover course=course}}`);
-    const title = '.title input';
-
-    run.later(async () => {
-      await fillIn(title, 'to be rolled again');
-      await triggerEvent(title, 'input');
-    }, 500);
-
-    return settled();
-
-
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query(){return [];}
   });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
-  test('rollover course with cohorts', async function(assert) {
-    assert.expect(2);
-    let som = EmberObject.create({
-      id: '1',
-      title: 'SOM'
-    });
-    let program1 = EmberObject.create({
-      title: 'Program1',
-      school: resolve(som)
-    });
-    let programYear1 = EmberObject.create({
-      program: resolve(program1),
-      published: true,
-      archived: false,
-    });
-    const cohort = EmberObject.create({
-      id: 1,
-      title: 'cohort 0',
-      programYear: resolve(programYear1),
-      program: resolve(program1),
-      school: resolve(som)
-    });
-    let course = EmberObject.create({
-      id: 1,
-      title: 'old course'
-    });
-    let ajaxMock = Service.extend({
-      request(url, { data }) {
-        assert.ok('newCohorts' in data);
-        assert.deepEqual(data.newCohorts, [1]);
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const offerings = `${advancedOptions} input:eq(1)`;
 
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
+  return new Promise(resolve => {
+    run(()=>{
+      this.$(title).click();
+      wait().then(()=>{
+        assert.ok(this.$(offerings).is(':checked'));
+        this.$(offerings).click();
+        this.$(offerings).trigger('update');
+
+        this.$('.done').click();
+        wait().then(()=>{
+          resolve();
         });
-      }
+      });
     });
-    this.owner.register('service:commonAjax', ajaxMock);
-
-    storeMock.reopen({
-      pushPayload(){},
-      peekRecord(){},
-      query() { return []; }
-    });
-    this.owner.lookup('service:flash-messages').registerTypes(['success']);
-    const mockCurrentUser = EmberObject.create({});
-
-    const currentUserMock = Service.extend({
-      model: resolve(mockCurrentUser),
-      cohortsInAllAssociatedSchools: resolve([cohort])
-    });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    this.set('course', course);
-    this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
-    const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
-    const firstCohort = `${advancedOptions} .selectable-cohorts li:eq(0)`;
-
-    await settled();
-    this.$(title).click();
-    await settled();
-    this.$(firstCohort).click();
-    await click('.done');
-    await settled();
   });
+});
+
+test('errors do not show up initially', function(assert) {
+  storeMock.reopen({
+    query(){
+      return [];
+    }
+  });
+  let course = EmberObject.create({
+    id: 1
+  });
+  this.set('course', course);
+
+  this.render(hbs`{{course-rollover course=course}}`);
+
+  return wait().then(() => {
+    assert.equal(this.$('.messagee').length, 0);
+  });
+});
+
+test('errors show up', function(assert) {
+  storeMock.reopen({
+    query(){
+      return [];
+    }
+  });
+  let course = EmberObject.create({
+    id: 1
+  });
+  this.set('course', course);
+
+  this.render(hbs`{{course-rollover course=course}}`);
+
+  const title = '.title';
+  const input = `${title} input`;
+  this.$(input).val('');
+  this.$(input).trigger('input');
+  assert.ok(this.$(title).text().search(/blank/) > -1);
+
+  return wait();
+});
+
+test('changing the title looks for new matching courses', function(assert) {
+  assert.expect(6);
+  let count = 0;
+  storeMock.reopen({
+    query(what, {filters}){
+      assert.equal(what, 'course');
+      assert.ok('title' in filters);
+      if (count === 0){
+        assert.equal(filters.title, 'to be rolled');
+      } else {
+        assert.equal(filters.title, 'to be rolled again');
+      }
+      count++;
+
+      return [];
+    }
+  });
+
+  let course = EmberObject.create({
+    id: 1,
+    title: 'to be rolled',
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-rollover course=course}}`);
+  const title = '.title input';
+
+  run.later(()=>{
+    this.$(title).val('to be rolled again');
+    this.$(title).trigger('input');
+  }, 500);
+
+  return wait();
+
+
+});
+
+test('rollover course with cohorts', async function(assert) {
+  assert.expect(2);
+  let som = EmberObject.create({
+    id: '1',
+    title: 'SOM'
+  });
+  let program1 = EmberObject.create({
+    title: 'Program1',
+    school: resolve(som)
+  });
+  let programYear1 = EmberObject.create({
+    program: resolve(program1),
+    published: true,
+    archived: false,
+  });
+  const cohort = EmberObject.create({
+    id: 1,
+    title: 'cohort 0',
+    programYear: resolve(programYear1),
+    program: resolve(program1),
+    school: resolve(som)
+  });
+  let course = EmberObject.create({
+    id: 1,
+    title: 'old course'
+  });
+  let ajaxMock = Service.extend({
+    request(url, { data }) {
+      assert.ok('newCohorts' in data);
+      assert.deepEqual(data.newCohorts, [1]);
+
+      return resolve({
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      });
+    }
+  });
+  this.register('service:commonAjax', ajaxMock);
+
+  storeMock.reopen({
+    pushPayload(){},
+    peekRecord(){},
+    query() { return []; }
+  });
+  getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  const mockCurrentUser = EmberObject.create({});
+
+  const currentUserMock = Service.extend({
+    model: resolve(mockCurrentUser),
+    cohortsInAllAssociatedSchools: resolve([cohort])
+  });
+  this.register('service:currentUser', currentUserMock);
+
+  this.set('course', course);
+  this.set('nothing', parseInt);
+  this.render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+  const advancedOptions = '.advanced-options';
+  const title = `.advanced-options-title`;
+  const firstCohort = `${advancedOptions} .selectable-cohorts li:eq(0)`;
+
+  await wait();
+  this.$(title).click();
+  await wait();
+  this.$(firstCohort).click();
+  this.$('.done').click();
+  await wait();
 });
