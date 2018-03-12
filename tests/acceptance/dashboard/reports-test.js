@@ -1,20 +1,21 @@
-import { currentPath } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
+import { currentRouteName } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import page from 'ilios/tests/pages/dashboard';
 
-var application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Acceptance: Dashboard Reports', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    const user = setupAuthentication(application, { id: 4136, schoolId: 1 });
+    const user = await setupAuthentication( { school } );
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', { vocabulary });
     this.server.create('academic-year', {
@@ -58,13 +59,9 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     });
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('visiting /dashboard', async function(assert) {
     await page.visit();
-    assert.equal(currentPath(), 'dashboard');
+    assert.equal(currentRouteName(), 'dashboard');
   });
 
   test('shows reports', async function(assert) {
@@ -108,7 +105,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.selectedReport.title, 'All Sessions for term 0 in school 0');
     assert.ok(page.myReports.selectedReport.yearsFilterExists);
     assert.equal(page.myReports.selectedReport.results().count, 2);
-    await page.myReports.selectedReport.chooseYear('2016 - 2017');
+    await page.myReports.selectedReport.chooseYear('2016');
     assert.equal(page.myReports.selectedReport.results().count, 1);
     assert.equal(page.myReports.selectedReport.results(0).text, '2016 - 2017 course 1 session 1');
   });
@@ -118,10 +115,10 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
     await page.myReports.newReport.setTitle('New Report');
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Sessions');
-    await page.myReports.newReport.chooseObjectType('Course');
-    await page.myReports.newReport.chooseObject('course 0');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('session');
+    await page.myReports.newReport.chooseObjectType('course');
+    await page.myReports.newReport.chooseObject('1');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
@@ -137,13 +134,13 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
 
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Sessions');
-    await page.myReports.newReport.chooseObjectType('Course');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('session');
+    await page.myReports.newReport.chooseObjectType('course');
     assert.equal(page.myReports.newReport.objectCount, 2);
-    await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+    await page.myReports.newReport.chooseAcademicYear('2016');
     assert.equal(page.myReports.newReport.objectCount, 1);
-    await page.myReports.newReport.chooseObject('course 1');
+    await page.myReports.newReport.chooseObject('2');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
@@ -159,13 +156,13 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
 
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Terms');
-    await page.myReports.newReport.chooseObjectType('Session');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('term');
+    await page.myReports.newReport.chooseObjectType('session');
     assert.equal(page.myReports.newReport.objectCount, 2);
-    await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+    await page.myReports.newReport.chooseAcademicYear('2016');
     assert.equal(page.myReports.newReport.objectCount, 1);
-    await page.myReports.newReport.chooseObject('session 1');
+    await page.myReports.newReport.chooseObject('2');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
@@ -185,9 +182,9 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
 
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Courses');
-    await page.myReports.newReport.chooseObjectType('MeSH Term');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('course');
+    await page.myReports.newReport.chooseObjectType('mesh term');
     await page.myReports.newReport.fillMeshSearch('0');
     await page.myReports.newReport.runMeshSearch();
     assert.equal(page.myReports.newReport.meshSearchResults().count, 1);
@@ -213,11 +210,11 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
 
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Terms');
-    await page.myReports.newReport.chooseObjectType('Session');
-    await page.myReports.newReport.chooseObject('session 1');
-    await page.myReports.newReport.chooseObjectType('Course');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('term');
+    await page.myReports.newReport.chooseObjectType('session');
+    await page.myReports.newReport.chooseObject('2');
+    await page.myReports.newReport.chooseObjectType('course');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
@@ -234,10 +231,10 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
 
-    await page.myReports.newReport.chooseSchool('school 0');
-    await page.myReports.newReport.chooseSubject('Terms');
-    await page.myReports.newReport.chooseObjectType('Course');
-    await page.myReports.newReport.chooseAcademicYear('2016 - 2017');
+    await page.myReports.newReport.chooseSchool('1');
+    await page.myReports.newReport.chooseSubject('term');
+    await page.myReports.newReport.chooseObjectType('course');
+    await page.myReports.newReport.chooseAcademicYear('2016');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
@@ -250,7 +247,7 @@ module('Acceptance: Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.reports().count, 2);
     await page.myReports.addNewReport();
     await page.myReports.newReport.chooseSchool('All Schools');
-    await page.myReports.newReport.chooseSubject('Course');
+    await page.myReports.newReport.chooseSubject('course');
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports().count, 3);
