@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { find, settled, triggerEvent } from '@ember/test-helpers';
+import { settled, triggerEvent } from '@ember/test-helpers';
 import setupAuthentication from '../helpers/setup-authentication';
 import page from '../pages/learner-group';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
