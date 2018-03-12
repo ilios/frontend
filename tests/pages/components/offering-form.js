@@ -6,6 +6,7 @@ import {
 
 import { datePicker } from 'ilios/tests/helpers/date-picker';
 import learnerGroupManager from './learner-group-manager';
+import instructorSelectionManager from './instructor-selection-manager';
 
 
 export default {
@@ -23,30 +24,6 @@ export default {
   toggleRecurring: clickable('.make-recurring .toggle-yesno'),
   recurringWeeks: fillable('.make-recurring-input'),
   learnerGroupManager,
-  instructorSelectionManager: {
-    scope: '[data-test-instructor-selection-manager]',
-    search: fillable('.search-box input'),
-    searchResults: collection({
-      scope: '.results',
-      itemScope: '[data-test-result]',
-      item: {
-        add: clickable(),
-      },
-    }),
-    instructors: collection({
-      scope: '[data-test-instructors]',
-      itemScope: 'li',
-      item: {
-        remove: clickable()
-      }
-    }),
-    instructorGroups: collection({
-      scope: '[data-test-instructor-groups]',
-      itemScope: 'li',
-      item: {
-        remove: clickable()
-      }
-    }),
-  },
+  instructorSelectionManager,
   save: clickable('.done'),
 };

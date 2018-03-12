@@ -17,6 +17,7 @@ import meshTerms from 'ilios/tests/pages/components/mesh-terms';
 import taxonomies from 'ilios/tests/pages/components/taxonomies';
 import collapsedTaxonomies from 'ilios/tests/pages/components/collapsed-taxonomies';
 import learnerGroupManager from 'ilios/tests/pages/components/learner-group-manager';
+import instructorSelectionManager from 'ilios/tests/pages/components/instructor-selection-manager';
 import offeringForm from 'ilios/tests/pages/components/offering-form';
 import { datePicker } from 'ilios/tests/helpers/date-picker';
 import { fillInFroalaEditor } from 'ilios/tests/helpers/froala-editor';
@@ -139,6 +140,29 @@ export default create({
       },
     }),
     manager: learnerGroupManager,
+  },
+
+  instructors: {
+    scope: '[data-test-detail-instructors]',
+    manage: clickable('.actions button'),
+    save: clickable('.actions button.bigadd'),
+    cancel: clickable('.actions button.bigcancel'),
+    title: text('.detail-instructors-header .title'),
+    currentGroups: collection({
+      scope: '[data-test-instructor-groups]',
+      itemScope: 'li',
+      item: {
+        title: text(),
+      },
+    }),
+    currentInstructors: collection({
+      scope: '[data-test-instructors]',
+      itemScope: 'li',
+      item: {
+        title: text(),
+      },
+    }),
+    manager: instructorSelectionManager,
   },
 
   collapseLearnerGroups: {

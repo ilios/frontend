@@ -18,6 +18,7 @@ export default Component.extend({
   isManaging: false,
   instructorGroupBuffer: null,
   instructorBuffer: null,
+  'data-test-detail-instructors': true,
 
   titleCount: computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
     return this.get('ilmSession.instructorGroups.length') +

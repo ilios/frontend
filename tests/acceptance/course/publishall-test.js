@@ -62,8 +62,8 @@ module('Acceptance: Course - Publish All Sessions', function(hooks) {
     await visit('/courses/1/publishall');
 
     await click('.publish-all-sessions-publishable .title');
-    assert.equal(await getElementText('tbody tr:nth-of-type(1) td'), getText('session 0'));
-    assert.equal(await getElementText('tbody tr:nth-of-type(2) td'), getText('session 1'));
-    assert.equal(await getElementText('tbody tr:nth-of-type(3) td'), getText('session 2'));
+    assert.equal(await getElementText('tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('session 0'));
+    assert.equal(await getElementText('tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('session 1'));
+    assert.equal(await getElementText('tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('session 2'));
   });
 });
