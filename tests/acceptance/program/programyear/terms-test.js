@@ -1,26 +1,28 @@
 import { click, find, findAll, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/programs/1/programyears/1?pyTaxonomyDetails=true';
+
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+const url = '/programs/1/programyears/1?pyTaxonomyDetails=true';
 
 module('Acceptance: Program Year - Terms', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-    this.server.create('school');
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
     this.server.create('vocabulary', {
-      schoolId: 1,
+      school,
       active: true
     });
     this.server.create('program', {
-      schoolId: 1
+      school
     });
     this.server.create('programYear', {
       programId: 1,
@@ -37,17 +39,13 @@ module('Acceptance: Program Year - Terms', function(hooks) {
     });
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('list terms', async function(assert) {
     assert.expect(2);
     await visit(url);
     var container = find('.detail-taxonomies');
-    var items = find('ul.selected-taxonomy-terms li', container);
+    var items = findAll('ul.selected-taxonomy-terms li', container);
     assert.equal(items.length, 1);
-    assert.equal(getElementText(items.eq(0)), getText('term 0'));
+    assert.equal(await getElementText(items[0]), getText('term 0'));
   });
 
   test('manage terms', async function(assert) {
@@ -55,9 +53,9 @@ module('Acceptance: Program Year - Terms', function(hooks) {
     await visit(url);
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
-    assert.equal(getElementText(find(find('.removable-list li'), container)), getText('term 0'));
-    assert.equal(getElementText(find(find('.selectable-terms-list li'), container)), getText('term 0'));
-    assert.equal(getElementText(find(findAll('.selectable-terms-list li')[1], container)), getText('term 1'));
+    assert.equal(await getElementText(find(find('.removable-list li'), container)), getText('term 0'));
+    assert.equal(await getElementText(find(find('.selectable-terms-list li'), container)), getText('term 0'));
+    assert.equal(await getElementText(find(findAll('.selectable-terms-list li')[1], container)), getText('term 1'));
   });
 
   test('save term changes', async function(assert) {
@@ -66,9 +64,9 @@ module('Acceptance: Program Year - Terms', function(hooks) {
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
     await click(find(find('.removable-list li'), container));
-    await click(find('.selectable-terms-list li:eq(1) > div', container));
+    await click(find('.selectable-terms-list li:nth-of-type(2) > div', container));
     await click('button.bigadd', container);
-    assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
+    assert.equal(await getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
   });
 
   test('cancel term changes', async function(assert) {
@@ -77,8 +75,8 @@ module('Acceptance: Program Year - Terms', function(hooks) {
     var container = find('.taxonomy-manager');
     await click(find('.actions button', container));
     await click(find(find('.removable-list li'), container));
-    await click(find('.selectable-terms-list li:eq(1) > div', container));
+    await click(find('.selectable-terms-list li:nth-of-type(2) > div', container));
     await click('button.bigcancel', container);
-    assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
+    assert.equal(await getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
   });
 });

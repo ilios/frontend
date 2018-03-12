@@ -1,25 +1,25 @@
-import { currentPath, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
+import { currentRouteName, findAll, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var fixtures = {};
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
 module('Acceptance: Program Year - Publication Check', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-    this.server.create('school');
-    fixtures.fullProgram = this.server.create('program', {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.fullProgram = this.server.create('program', {
       startYear: 2013,
       schoolId: 1,
     });
-    fixtures.emptyProgram = this.server.create('program', {
+    this.emptyProgram = this.server.create('program', {
       startYear: 2013,
       schoolId: 1
     });
@@ -27,27 +27,23 @@ module('Acceptance: Program Year - Publication Check', function(hooks) {
     this.server.create('cohort', { programYearId: 1});
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('full program count', async function(assert) {
-    await visit('/programs/' + fixtures.fullProgram.id + '/publicationcheck');
-    assert.equal(currentPath(), 'program.publicationCheck');
-    var items = find('.program-publication-check .detail-content table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('program 0'));
-    assert.equal(getElementText(items.eq(1)), getText('short_0'));
-    assert.equal(getElementText(items.eq(2)), 4);
-    assert.equal(getElementText(items.eq(3)), getText('Yes (1)'));
+    await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'program.publicationCheck');
+    var items = findAll('.program-publication-check .detail-content table tbody td');
+    assert.equal(await getElementText(items[0]), getText('program 0'));
+    assert.equal(await getElementText(items[1]), getText('short_0'));
+    assert.equal(await getElementText(items[2]), 4);
+    assert.equal(await getElementText(items[3]), getText('Yes (1)'));
   });
 
   test('empty program count', async function(assert) {
-    await visit('/programs/' + fixtures.emptyProgram.id + '/publicationcheck');
-    assert.equal(currentPath(), 'program.publicationCheck');
-    var items = find('.program-publication-check .detail-content table tbody td');
-    assert.equal(getElementText(items.eq(0)), getText('program 1'));
-    assert.equal(getElementText(items.eq(1)), getText('short_1'));
-    assert.equal(getElementText(items.eq(2)), 4);
-    assert.equal(getElementText(items.eq(3)), getText('No'));
+    await visit('/programs/' + this.emptyProgram.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'program.publicationCheck');
+    var items = findAll('.program-publication-check .detail-content table tbody td');
+    assert.equal(await getElementText(items[0]), getText('program 1'));
+    assert.equal(await getElementText(items[1]), getText('short_1'));
+    assert.equal(await getElementText(items[2]), 4);
+    assert.equal(await getElementText(items[3]), getText('No'));
   });
 });

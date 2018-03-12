@@ -1,24 +1,20 @@
-import { click, fillIn, currentPath, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
+import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-var application;
-var url = '/programs/1';
-
+const url = '/programs/1';
 module('Acceptance: Program - Overview', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-    this.server.create('school');
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
   });
 
   test('check fields', async function(assert) {
@@ -26,10 +22,9 @@ module('Acceptance: Program - Overview', function(hooks) {
       schoolId: 1,
     });
     await visit(url);
-    assert.equal(currentPath(), 'program.index');
-    var container = find('.program-overview');
-    assert.equal(getElementText(find('.programtitleshort .editable', container)), getText(program.shortTitle));
-    assert.equal(getElementText(find('.programduration .editable', container)), program.duration);
+    assert.equal(currentRouteName(), 'program.index');
+    assert.equal(await getElementText('.program-overview .programtitleshort .editable'), getText(program.shortTitle));
+    assert.equal(await getElementText('.program-overview .programduration .editable'), program.duration);
   });
 
   test('change title', async function(assert) {
@@ -44,13 +39,13 @@ module('Acceptance: Program - Overview', function(hooks) {
     const done = `${title} .done`;
 
     await visit(url);
-    assert.equal(getElementText(title), getText('program 0'));
+    assert.equal(await getElementText(title), getText('program 0'));
     await click(edit);
     let field = await find(input);
-    assert.equal(getText(field.val()), getText('program 0'));
+    assert.equal(getText(field.value), getText('program 0'));
     await fillIn(field, 'test new title');
     await click(done);
-    assert.equal(getElementText(title), getText('test new title'));
+    assert.equal(await getElementText(title), getText('test new title'));
   });
 
   test('change short title', async function(assert) {
@@ -59,19 +54,19 @@ module('Acceptance: Program - Overview', function(hooks) {
     });
     const container = '.program-details';
     const overview = `${container} .program-overview`;
-    const shortTitle = `${overview} .programtitleshort span:eq(0)`;
+    const shortTitle = `${overview} .programtitleshort > span`;
     const edit = `${shortTitle} .editable`;
     const input = `${shortTitle} input`;
     const done = `${shortTitle} .done`;
 
     await visit(url);
-    assert.equal(getElementText(shortTitle), getText(program.shortTitle));
+    assert.equal(await getElementText(shortTitle), getText(program.shortTitle));
     await click(edit);
     let field = await find(input);
-    assert.equal(getText(field.val()), getText(program.shortTitle));
+    assert.equal(getText(field.value), getText(program.shortTitle));
     await fillIn(field, 'test title');
     await click(done);
-    assert.equal(getElementText(shortTitle), getText('test title'));
+    assert.equal(await getElementText(shortTitle), getText('test title'));
   });
 
   test('change duration', async function(assert) {
@@ -80,24 +75,24 @@ module('Acceptance: Program - Overview', function(hooks) {
     });
     const container = '.program-details';
     const overview = `${container} .program-overview`;
-    const duration = `${overview} .programduration span:eq(0)`;
+    const duration = `${overview} .programduration > span`;
     const edit = `${duration} .editable`;
     const select = `${duration} select`;
     const options = `${select} option`;
     const done = `${duration} .done`;
 
     await visit(url);
-    assert.equal(getElementText(duration), program.duration);
+    assert.equal(await getElementText(duration), program.duration);
     await click(edit);
 
-    let durations = find(options);
+    let durations = findAll(options);
     assert.equal(durations.length, 10);
     for(let i = 0; i < 10; i++){
-      assert.equal(getElementText(durations.eq(i)), i+1);
+      assert.equal(await getElementText(durations[i]), i+1);
     }
-    await pickOption(select, '9', assert);
+    await fillIn(select, '9');
     await click(done);
-    assert.equal(getElementText(duration), '9');
+    assert.equal(await getElementText(duration), '9');
   });
 
 
@@ -108,14 +103,14 @@ module('Acceptance: Program - Overview', function(hooks) {
     });
     const container = '.program-details';
     const overview = `${container} .program-overview`;
-    const duration = `${overview} .programduration span:eq(0)`;
+    const duration = `${overview} .programduration > span`;
     const edit = `${duration} .editable`;
     const done = `${duration} .done`;
 
     await visit(url);
-    assert.equal(getElementText(duration), program.duration);
+    assert.equal(await getElementText(duration), program.duration);
     await click(edit);
     await click(done);
-    assert.equal(getElementText(duration), '1');
+    assert.equal(await getElementText(duration), '1');
   });
 });

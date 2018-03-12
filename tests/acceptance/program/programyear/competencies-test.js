@@ -1,22 +1,23 @@
-import { click, findAll, visit } from '@ember/test-helpers';
-import destroyApp from '../../../helpers/destroy-app';
+import { click, find, findAll, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
-let url = '/programs/1/programyears/1?pyCompetencyDetails=true';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+const url = '/programs/1/programyears/1?pyCompetencyDetails=true';
 
 module('Acceptance: Program Year - Competencies', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-    this.server.create('school');
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
     this.server.create('program', {
-      schoolId: 1,
+      school,
     });
     this.server.create('programYear', {
       programId: 1,
@@ -25,53 +26,47 @@ module('Acceptance: Program Year - Competencies', function(hooks) {
       programYearId: 1
     });
     this.server.create('competency', {
-      schoolId: 1,
+      school,
     });
     this.server.createList('competency', 2, {
       parentId: 1,
-      schoolId: 1,
+      school,
       programYearIds: [1]
     });
     this.server.create('competency', {
-      schoolId: 1,
+      school,
     });
     this.server.createList('competency', 2, {
-      schoolId: 1,
+      school,
       parentId: 4
     });
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('list', async function(assert) {
     await visit(url);
-    let container = find('.programyear-competencies');
-    assert.equal(getElementText(find('.title', container)), getText('Competencies (2)'));
+    assert.equal(await getElementText(find('.programyear-competencies .title')), getText('Competencies (2)'));
     let competencies = 'competency 0 competency 1 competency 2';
-    assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
+    assert.equal(await getElementText(find('.programyear-competencies .programyear-competencies-content')), getText(competencies));
   });
 
   test('manager', async function(assert) {
     await visit(url);
-    let container = find('.programyear-competencies');
-    await click('.programyear-competencies-actions button', container);
-    let checkboxes = find('input[type=checkbox]', container);
+    await click('.programyear-competencies .programyear-competencies-actions button');
+    let checkboxes = findAll('.programyear-competencies input[type=checkbox]');
     assert.equal(checkboxes.length, 6);
-    assert.ok(checkboxes.eq(0).prop('indeterminate'));
-    assert.ok(!checkboxes.eq(0).prop('checked'));
-    assert.ok(checkboxes.eq(1).prop('checked'));
-    assert.ok(checkboxes.eq(2).prop('checked'));
-    assert.ok(!checkboxes.eq(3).prop('checked'));
-    assert.ok(!checkboxes.eq(4).prop('checked'));
-    assert.ok(!checkboxes.eq(5).prop('checked'));
+    assert.ok(checkboxes[0].indeterminate);
+    assert.ok(!checkboxes[0].checked);
+    assert.ok(checkboxes[1].checked);
+    assert.ok(checkboxes[2].checked);
+    assert.ok(!checkboxes[3].checked);
+    assert.ok(!checkboxes[4].checked);
+    assert.ok(!checkboxes[5].checked);
 
-    await click(findAll('input[type=checkbox]')[1], container);
-    await click(findAll('input[type=checkbox]')[4], container);
-    await click('.bigadd', container);
+    await click(findAll('.programyear-competencies input[type=checkbox]')[1]);
+    await click(findAll('.programyear-competencies input[type=checkbox]')[4]);
+    await click('.programyear-competencies .bigadd');
 
     let competencies = 'competency 0 competency 2 competency 3 competency 4';
-    assert.equal(getElementText(find('.programyear-competencies-content', container)), getText(competencies));
+    assert.equal(await getElementText('.programyear-competencies .programyear-competencies-content'), getText(competencies));
   });
 });
