@@ -1,21 +1,23 @@
-import { click, findAll, find, currentURL, currentPath, visit } from '@ember/test-helpers';
+import { click, fillIn, findAll, find, currentURL, currentRouteName, visit } from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
-import destroyApp from '../../helpers/destroy-app';
 import moment from 'moment';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
-var application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { map } from 'rsvp';
 
 module('Acceptance: Dashboard Calendar', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.create('school');
-    setupAuthentication(application, {id: 4136, schoolId: 1});
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    this.user = await setupAuthentication( { school } );
     this.server.create('program', {
       schoolId: 1,
     });
@@ -78,34 +80,30 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
   });
 
-  hooks.afterEach(function() {
-    destroyApp(application);
-  });
-
   test('load month calendar', async function(assert) {
     let today = moment().hour(8);
     let startOfMonth = today.clone().startOf('month');
     let endOfMonth = today.clone().endOf('month').hour(22).minute(59);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'start of month',
       startDate: startOfMonth.format(),
       endDate: startOfMonth.clone().add(1, 'hour').format()
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'end of month',
       startDate: endOfMonth.format(),
       endDate: endOfMonth.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=month');
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
+    assert.equal(currentRouteName(), 'dashboard');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
     let eventInfo = '';
     eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
     eventInfo += endOfMonth.format('h:mma') + '-' + endOfMonth.clone().add(1, 'hour').format('h:mma') + ': end of month';
-    assert.equal(getElementText(events), getText(eventInfo));
+    assert.equal(await getElementText(events), getText(eventInfo));
   });
 
   test('load week calendar', async function(assert) {
@@ -113,25 +111,25 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     let startOfWeek = today.clone().startOf('week');
     let endOfWeek = today.clone().endOf('week').hour(22).minute(59);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'start of week',
       startDate: startOfWeek.format(),
       endDate: startOfWeek.clone().add(1, 'hour').format()
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'end of week',
       startDate: endOfWeek.format(),
       endDate: endOfWeek.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar');
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
+    assert.equal(currentRouteName(), 'dashboard');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
     let eventInfo = '';
     eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
     eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
-    assert.equal(getElementText(events), getText(eventInfo));
+    assert.equal(await getElementText(events), getText(eventInfo));
   });
 
   test('load day calendar', async function(assert) {
@@ -139,45 +137,43 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     let tomorow = today.clone().add(1, 'day');
     let yesterday = today.clone().subtract(1, 'day');
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'tomorow',
       startDate: tomorow.format(),
       endDate: tomorow.clone().add(1, 'hour').format()
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'yesterday',
       startDate: yesterday.format(),
       endDate: yesterday.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=day');
-    assert.equal(currentPath(), 'dashboard');
-    let events = find('div.event');
+    assert.equal(currentRouteName(), 'dashboard');
+    let events = findAll('div.event');
     assert.equal(events.length, 1);
     let eventInfo = '';
     eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ' today';
-    assert.equal(getElementText(events), getText(eventInfo));
+    assert.equal(await getElementText(events), getText(eventInfo));
   });
 
   test('click month day number and go to day', async function(assert) {
     let aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'start of month',
       startDate: aDayInTheMonth.format(),
       endDate: aDayInTheMonth.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=month');
     let dayOfMonth = aDayInTheMonth.date();
-    let link = find('.day .clickable').filter(function(){
-      return parseInt(find(this).textContent, 10) === dayOfMonth;
-    }).eq(0);
+    let link = findAll('.day .clickable').find(e => parseInt(find(e).textContent, 10) === dayOfMonth);
     await click(link);
     assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
@@ -185,21 +181,21 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click week day title and go to day', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
     });
     await visit('/dashboard?show=calendar&view=week');
     let dayOfWeek = today.day();
-    await click(find('.week-titles .clickable').eq(dayOfWeek));
+    await click(findAll('.week-titles .clickable')[dayOfWeek]);
     assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
   test('click forward on a day goes to next day', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -212,7 +208,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click forward on a week goes to next week', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -225,7 +221,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click forward on a month goes to next month', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -238,7 +234,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click back on a day goes to previous day', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -251,7 +247,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click back on a week goes to previous week', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -264,7 +260,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('click back on a month goes to previous month', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
@@ -277,19 +273,19 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   test('show user events', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
     });
     await visit('/dashboard?show=calendar');
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
   });
 
@@ -312,70 +308,68 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar');
     await chooseSchoolEvents();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
   });
 
   let showFilters = async function(){
-    return await click(find(findAll('.showfilters label')[1]));
+    return await click('.showfilters label:nth-of-type(2)');
   };
 
   let pickSessionType = async function(i) {
-    let types = find('.sessiontypefilter');
-    return await click(find('li>span', types).eq(i));
+    return await click(find(`.sessiontypefilter li:nth-of-type(${i})>span`));
   };
 
   test('test session type filter', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
-    await pickSessionType(0);
-    events = find('div.event');
-    assert.equal(events.length, 1);
     await pickSessionType(1);
-    events = find('div.event');
+    events = findAll('div.event');
+    assert.equal(events.length, 1);
+    await pickSessionType(2);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
 
-    await pickSessionType(0);
     await pickSessionType(1);
     await pickSessionType(2);
-    events = find('div.event');
+    await pickSessionType(3);
+    events = findAll('div.event');
     assert.equal(events.length, 0);
   });
 
   let pickCourseLevel = async function(i) {
-    let levels = find('.courselevelfilter');
-    return await click(find('li>span', levels).eq(i));
+    return await click(find(`.courselevelfilter li:nth-of-type(${i})>span`));
   };
-  let clearCourseLevels = async function() {
-    let levels = find('.courselevelfilter');
-    return await click(find('.checkbox:first', levels));
+  let clearCourseLevels = async function () {
+    const selected = findAll('.courselevelfilter .checkbox:checked');
+    await map(selected, e => click(e));
   };
 
   test('test course level filter', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
@@ -383,32 +377,31 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=calendar');
     await showFilters();
     await chooseDetailFilter();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
-    await pickCourseLevel(0);
-    events = find('div.event');
+    await pickCourseLevel(1);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
     await clearCourseLevels();
-    await pickCourseLevel(2);
-    events = find('div.event');
+    await pickCourseLevel(3);
+    events = findAll('div.event');
     assert.equal(events.length, 0);
   });
 
   let pickCohort = async function(i) {
-    let cohorts = find('.cohortfilter');
-    return await click(find('li>span', cohorts).eq(i));
+    return await click(find(`.cohortfilter li:nth-of-type(${i})>span`));
   };
 
   test('test cohort filter', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
@@ -416,15 +409,15 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=calendar');
     await showFilters();
     await chooseDetailFilter();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
-    await pickCohort(0);
-    events = find('div.event');
+    await pickCohort(1);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
 
-    await pickCohort(0);
     await pickCohort(1);
-    events = find('div.event');
+    await pickCohort(2);
+    events = findAll('div.event');
     assert.equal(events.length, 0);
   });
 
@@ -433,63 +426,62 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   };
 
   let pickCourse = async function(i) {
-    let courses = find('.coursefilter');
-    return await click(find('li>span', courses).eq(i));
+    return await click(find(`.coursefilter li:nth-of-type(${i})>span`));
   };
-  let clearCourses = async function() {
-    let courses = find('.coursefilter');
-    return await click(find('.checkbox:first', courses));
+  let clearCourses = async function () {
+    const selected = findAll('.coursefilter .checkbox:checked');
+    await map(selected, e => click(e));
   };
 
   test('test course filter', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 3
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 3);
-    await pickCourse(0);
-    events = find('div.event');
+    await pickCourse(1);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
     await clearCourses();
-    await pickCourse(1);
-    events = find('div.event');
+    await pickCourse(2);
+    events = findAll('div.event');
     assert.equal(events.length, 1);
   });
 
   test('test course and session type filter together', async function(assert) {
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 3
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
@@ -497,45 +489,45 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=calendar');
     await showFilters();
 
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 3);
-    await pickCourse(0);
-    events = find('div.event');
+    await pickCourse(1);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
     await clearCourses();
-    await pickCourse(0);
-    await pickSessionType(0);
-    events = find('div.event');
+    await pickCourse(1);
+    await pickSessionType(1);
+    events = findAll('div.event');
     assert.equal(events.length, 1);
   });
 
   test('agenda show next seven days of events', async function(assert) {
     let today = moment().hour(0).minute(2);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     let endOfTheWeek = moment().add(6, 'days');
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
       offering: 2
     });
     let yesterday = moment().subtract(25, 'hours');
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: yesterday.format(),
       endDate: yesterday.clone().add(1, 'hour').format(),
       offering: 3
     });
     await visit('/dashboard?show=agenda');
-    let events = find('tr');
+    let events = findAll('tr');
     assert.equal(events.length, 2);
-    assert.equal(getElementText(events.eq(0)), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
-    assert.equal(getElementText(events.eq(1)), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
+    assert.equal(await getElementText(events[0]), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
+    assert.equal(await getElementText(events[1]), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
   });
 
   test('academic year filters cohort', async function(assert) {
@@ -556,11 +548,11 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=calendar');
     await showFilters();
     await chooseDetailFilter();
-    await pickOption('.calendar-year-picker select', '2015 - 2016', assert);
-    let cohortFilter = find('.cohortfilter li');
+    await fillIn('.calendar-year-picker select', '2015');
+    let cohortFilter = findAll('.cohortfilter li');
     assert.equal(cohortFilter.length, 3);
-    await pickOption('.calendar-year-picker select', '2014 - 2015', assert);
-    cohortFilter = find('.cohortfilter li');
+    await fillIn('.calendar-year-picker select', '2014');
+    cohortFilter = findAll('.cohortfilter li');
     assert.equal(cohortFilter.length, 1);
   });
 
@@ -575,11 +567,11 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
-    await pickOption('.calendar-year-picker select', '2015 - 2016', assert);
-    let courseFilters = find('.coursefilter li');
+    await fillIn('.calendar-year-picker select', '2015');
+    let courseFilters = findAll('.coursefilter li');
     assert.equal(courseFilters.length, 2);
-    await pickOption('.calendar-year-picker select', '2014 - 2015', assert);
-    courseFilters = find('.coursefilter li');
+    await fillIn('.calendar-year-picker select', '2014');
+    courseFilters = findAll('.coursefilter li');
     assert.equal(courseFilters.length, 1);
   });
 
@@ -594,9 +586,9 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
 
     const clearFilter = '.filters-clear-filters';
-    const sessiontype = '.sessiontypefilter li:first input';
-    const course = '.coursefilter li:first input';
-    const term = '.vocabularyfilter li:first input';
+    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
+    const course = '.coursefilter li:nth-of-type(1) input';
+    const term = '.vocabularyfilter li:nth-of-type(1) input';
 
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -620,9 +612,9 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('clear all detail filters', async function(assert) {
     const clearFilter = '.filters-clear-filters';
-    const sessiontype = '.sessiontypefilter li:first input';
-    const courselevel = '.courselevelfilter li:first input';
-    const cohort = '.cohortfilter li:first input';
+    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
+    const courselevel = '.courselevelfilter li:nth-of-type(1) input';
+    const cohort = '.cohortfilter li:nth-of-type(1) input';
 
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -646,19 +638,19 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   test('filter tags work properly', async function(assert) {
-    const sessiontype = '.sessiontypefilter li:first input';
-    const courselevel = '.courselevelfilter li:first input';
-    const cohort = '.cohortfilter li:first input';
+    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
+    const courselevel = '.courselevelfilter li:nth-of-type(1) input';
+    const cohort = '.cohortfilter li:nth-of-type(1) input';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
 
     function getTagText(n) {
-      return find(`.filter-tag:eq(${n})`).textContent.trim();
+      return find(`.filter-tag:nth-of-type(${n + 1})`).textContent.trim();
     }
 
     async function clickTag(n) {
-      return await click(`.filter-tag:eq(${n})`);
+      return await click(`.filter-tag:nth-of-type(${n + 1})`);
     }
 
     await visit('/dashboard?show=calendar');
@@ -688,36 +680,36 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   });
 
   test('query params work', async function(assert) {
-    const calendarPicker = '.dashboard-view-picker button:eq(3)';
-    const schoolEvents = '.togglemyschedule label:eq(1)';
-    const showFiltersButton = '.showfilters label:eq(1)';
-    const hideFiltersButton = '.showfilters label:eq(0)';
+    const calendarPicker = '.dashboard-view-picker li:nth-of-type(4) button';
+    const schoolEvents = '.togglemyschedule label:nth-of-type(2)';
+    const showFiltersButton = '.showfilters label:nth-of-type(2)';
+    const hideFiltersButton = '.showfilters label:nth-of-type(1)';
     const academicYearDropdown = '.calendar-year-picker select';
 
     await visit('/dashboard');
     await click(calendarPicker);
     assert.equal(currentURL(), '/dashboard?show=calendar');
 
-    await click(schoolEvents);
+    await click(find(schoolEvents));
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
-    await click(showFiltersButton);
+    await click(find(showFiltersButton));
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await chooseDetailFilter();
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await pickOption(academicYearDropdown, '2015 - 2016', assert);
+    await fillIn(academicYearDropdown, '2015');
     assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click(hideFiltersButton);
+    await click(find(hideFiltersButton));
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
   });
 
   test('week summary displays the whole week', async function(assert) {
     const startOfTheWeek = moment().day(0).hour(0).minute(2);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: startOfTheWeek.format(),
       endDate: startOfTheWeek.clone().add(1, 'hour').format(),
       offering: 1,
@@ -725,7 +717,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     const endOfTheWeek = moment().day(6).hour(22).minute(5);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
       offering: 2,
@@ -736,15 +728,14 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
     await visit('/dashboard?show=week');
 
-    let eventBLocks = find(events);
+    let eventBLocks = findAll(events);
     assert.equal(eventBLocks.length, 2);
-    assert.equal(getElementText(eventBLocks.eq(0)), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
-    assert.equal(getElementText(eventBLocks.eq(1)), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
+    assert.equal(await getElementText(eventBLocks[0]), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
+    assert.equal(await getElementText(eventBLocks[1]), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
   });
 
   let pickTerm = async function(i) {
-    let terms = find('.vocabularyfilter');
-    return await click(find('li>span', terms).eq(i));
+    return await click(find(`.vocabularyfilter li:nth-of-type(${i})>span`));
   };
 
   test('test term filter', async function(assert) {
@@ -760,28 +751,28 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
-    let events = find('div.event');
+    let events = findAll('div.event');
     assert.equal(events.length, 2);
-    await pickTerm(0);
-    events = find('div.event');
+    await pickTerm(1);
+    events = findAll('div.event');
     assert.equal(events.length, 2);
 
-    await pickTerm(0);
     await pickTerm(1);
-    events = find('div.event');
+    await pickTerm(2);
+    events = findAll('div.event');
     assert.equal(events.length, 0);
   });
 
@@ -795,24 +786,24 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     let today = moment().hour(8);
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1
     });
     this.server.create('userevent', {
-      user: 4136,
+      user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2
     });
     const filters = '.filter-tags .filter-tag';
-    const filter = `${filters}:eq(0)`;
+    const filter = `${filters}:nth-of-type(1)`;
 
     await visit('/dashboard?show=calendar');
     await showFilters();
     assert.equal(findAll('div.event').length, 2);
-    await pickTerm(0);
+    await pickTerm(1);
     assert.equal(findAll('div.event').length, 1);
 
     assert.equal(findAll(filters).length, 1);

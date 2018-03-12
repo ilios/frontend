@@ -3,7 +3,11 @@ import { findAll } from '@ember/test-helpers';
 export async function getElementText(element) {
   let elements;
   if (typeof element !== 'string') {
-    elements = [element];
+    if (Array.isArray(element)) {
+      elements = element;
+    } else {
+      elements = [element];
+    }
   } else {
     elements = await findAll(element);
   }
