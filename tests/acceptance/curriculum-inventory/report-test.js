@@ -1,28 +1,27 @@
-import { click, findAll, currentPath, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
+import { click, findAll, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/curriculum-inventory-reports/1';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+
+const url = '/curriculum-inventory-reports/1';
 
 module('Acceptance: Curriculum Inventory: Report', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-    this.server.create('school');
-  });
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
 
-  hooks.afterEach(function() {
-    destroyApp(application);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    this.user = await setupAuthentication( { school } );
   });
 
   test('create new sequence block Issue #2108', async function(assert) {
     const developer = this.server.create('userRole', {
       title: 'developer'
     });
-    this.server.db.users.update(4136, {roles: [developer]});
+    this.server.db.users.update(this.user.id, {roles: [developer]});
     const program = this.server.create('program', {schoolId: 1});
     const report = this.server.create('curriculumInventoryReport', {program});
     this.server.create('curriculumInventorySequence', {report});
@@ -33,13 +32,13 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const newFormTitle = `${newBlockForm} h2.title`;
 
     await visit(url);
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.equal(findAll(newBlockForm).length, 0);
     assert.equal(findAll(newFormTitle).length, 0);
     await click(addSequenceBlock);
     assert.equal(findAll(newBlockForm).length, 1);
     assert.equal(findAll(newFormTitle).length, 1);
-    assert.equal(getElementText(newFormTitle), getText('New Sequence Block'));
+    assert.equal(await getElementText(newFormTitle), getText('New Sequence Block'));
   });
 
 
@@ -51,7 +50,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const instructor = this.server.create('userRole', {
       title: 'instructor'
     });
-    this.server.db.users.update(4136, {roles: [instructor]});
+    this.server.db.users.update(this.user.id, {roles: [instructor]});
     this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
@@ -62,7 +61,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const container = '.curriculum-inventory-report-overview';
     const rollover = `${container} a.rollover`;
 
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.equal(findAll(rollover).length, 0);
   });
 
@@ -70,7 +69,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const developer = this.server.create('userRole', {
       title: 'developer'
     });
-    this.server.db.users.update(4136, {roles: [developer]});
+    this.server.db.users.update(this.user.id, {roles: [developer]});
     this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
@@ -85,7 +84,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const container = '.curriculum-inventory-report-overview';
     const rollover = `${container} a.rollover`;
 
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.equal(findAll(rollover).length, 1);
   });
 
@@ -93,7 +92,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const director = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.db.users.update(4136, {roles: [director]});
+    this.server.db.users.update(this.user.id, {roles: [director]});
     this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
@@ -108,7 +107,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const container = '.curriculum-inventory-report-overview';
     const rollover = `${container} a.rollover`;
 
-    assert.equal(currentPath(), 'curriculumInventoryReport.index');
+    assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.equal(findAll(rollover).length, 0);
   });
 
@@ -116,7 +115,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const director = this.server.create('userRole', {
       title: 'course director'
     });
-    this.server.db.users.update(4136, {roles: [director]});
+    this.server.db.users.update(this.user.id, {roles: [director]});
     this.server.create('program', {
       id: 1,
       'title': 'Doctor of Medicine',
@@ -131,7 +130,7 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     const container = '.curriculum-inventory-report-overview';
     const rollover = `${container} a.rollover`;
 
-    assert.equal(currentPath(), 'curriculumInventoryReport.rollover');
+    assert.equal(currentRouteName(), 'curriculumInventoryReport.rollover');
     assert.equal(findAll(rollover).length, 0);
   });
 });
