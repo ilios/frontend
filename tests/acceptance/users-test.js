@@ -1,32 +1,29 @@
 import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
 let url = '/users';
 
-module('Acceptance: Users', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    this.server.create('school');
-    setupAuthentication(application, { id: 4136, schoolId: 1, campusId: '123' });
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
+module('Acceptance: Users', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    this.user = await setupAuthentication( { school, campusId: '123' } );
     this.server.createList('user', 90, { schoolId: 1, campusId: '555' });
     this.server.createList('authentication', 90);
   });
 
-  hooks.afterEach(function() {
-    run(application, 'destroy');
-  });
-
   function getCellContent(i) {
-    return find(`tbody tr td:eq(${i})`).textContent.trim();
+    return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
   }
 
   test('can see list of users and transition to user route', async function(assert) {
-    const firstStudent = 'tbody tr td:eq(1) a';
+    const firstStudent = 'tbody tr td:nth-of-type(2) a';
 
     await visit(url);
     assert.equal(getCellContent(0), '', 'user is a student');
@@ -36,7 +33,7 @@ module('Acceptance: Users', function(hooks) {
     assert.equal(getCellContent(4), 'school 0', 'primary school is shown');
 
     await click(firstStudent);
-    assert.equal(currentURL(), '/users/4136', 'tranistioned to `user` route');
+    assert.equal(currentURL(), `/users/${this.user.id}`, 'tranistioned to `user` route');
   });
 
   test('can page through list of users', async function(assert) {
@@ -61,7 +58,7 @@ module('Acceptance: Users', function(hooks) {
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
 
     const userSearch = '.user-search input';
-    const firstStudent = 'tbody tr:eq(0) td:eq(1) a';
+    const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(2) a';
 
     await visit(url);
     await fillIn(userSearch, 'Test Name');
@@ -71,7 +68,7 @@ module('Acceptance: Users', function(hooks) {
     assert.equal(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
 
     await click(firstStudent);
-    assert.equal(currentURL(), '/users/92', 'tranistioned to `user` route');
+    assert.equal(currentURL(), `/users/${this.user.id}`, 'tranistioned to `user` route');
 
   });
 });
