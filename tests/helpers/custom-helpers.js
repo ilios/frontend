@@ -1,10 +1,14 @@
-import { find } from '@ember/test-helpers';
+import { findAll } from '@ember/test-helpers';
 
 export async function getElementText(element) {
-  if (typeof element === 'string'){
-    element = await find(element);
+  let elements;
+  if (typeof element !== 'string') {
+    elements = [element];
+  } else {
+    elements = await findAll(element);
   }
-  return element.textContent.replace(/[\t\n\s]+/g, "");
+  const strings = elements.map(e => e.textContent.replace(/[\t\n\s]+/g, ""));
+  return strings.join('');
 }
 
 export function getText(string) {
