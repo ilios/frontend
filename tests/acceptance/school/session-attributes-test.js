@@ -1,23 +1,20 @@
 import { click, find, visit } from '@ember/test-helpers';
-import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-var application;
-var url = '/schools/1';
-
+const url = '/schools/1';
 module('Acceptance: School - Session Attributes', function(hooks) {
-  hooks.beforeEach(function() {
-    application = startApp();
-    setupAuthentication(application);
-  });
-
-  hooks.afterEach(function() {
-    destroyApp(application);
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
   });
 
   test('check fields collapsed', async function(assert) {
@@ -36,28 +33,28 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     await visit(url);
 
     const rows = '.school-session-attributes-collapsed table tbody tr';
-    const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-    const attendanceEnabled = `${rows}:eq(0) td:eq(1) i`;
-    const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-    const supplementalEnabled = `${rows}:eq(1) td:eq(1) i`;
-    const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-    const specialAttireEnabled = `${rows}:eq(2) td:eq(1) i`;
-    const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-    const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
 
-    assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.ok(find(attendanceEnabled).classList.contains('no'));
     assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.ok(find(supplementalEnabled).classList.contains('yes'));
     assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
-    assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
     assert.ok(find(specialAttireEnabled).classList.contains('no'));
     assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
   });
@@ -78,28 +75,28 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     await visit(`${url}?schoolSessionAttributesDetails=true`);
 
     const rows = '.school-session-attributes-expanded table tbody tr';
-    const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-    const attendanceEnabled = `${rows}:eq(0) td:eq(1) i`;
-    const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-    const supplementalEnabled = `${rows}:eq(1) td:eq(1) i`;
-    const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-    const specialAttireEnabled = `${rows}:eq(2) td:eq(1) i`;
-    const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-    const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
 
-    assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.ok(find(attendanceEnabled).classList.contains('no'));
     assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.ok(find(supplementalEnabled).classList.contains('yes'));
     assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
-    assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
     assert.ok(find(specialAttireEnabled).classList.contains('no'));
     assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
   });
@@ -120,56 +117,56 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     await visit(`${url}?schoolSessionAttributesDetails=true&schoolManageSessionAttributes=true`);
 
     const rows = '.school-session-attributes-expanded table tbody tr';
-    const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-    const attendanceCheckbox = `${rows}:eq(0) td:eq(1) input`;
-    const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-    const supplementalCheckbox = `${rows}:eq(1) td:eq(1) input`;
-    const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-    const specialAttireCheckbox = `${rows}:eq(2) td:eq(1) input`;
-    const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-    const specialEquipmentCheckbox = `${rows}:eq(3) td:eq(1) input`;
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceCheckbox = `${rows}:nth-of-type(1) td:nth-of-type(2) input`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalCheckbox = `${rows}:nth-of-type(2) td:nth-of-type(2) input`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireCheckbox = `${rows}:nth-of-type(3) td:nth-of-type(2) input`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
     const save = `.school-session-attributes-expanded .bigadd`;
-    const attendanceEnabled = `${rows}:eq(0) td:eq(1) i`;
-    const supplementalEnabled = `${rows}:eq(1) td:eq(1) i`;
-    const specialAttireEnabled = `${rows}:eq(2) td:eq(1) i`;
-    const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
 
 
-    assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceCheckbox).not(':checked'));
+    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.notOk(find(attendanceCheckbox).checked);
 
-    assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalCheckbox).is(':checked'));
+    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.ok(find(supplementalCheckbox).checked);
 
-    assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireCheckbox).not(':checked'));
+    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.notOk(find(specialAttireCheckbox).checked);
 
-    assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentCheckbox).not(':checked'));
+    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.notOk(find(specialEquipmentCheckbox).checked);
 
     await click(attendanceCheckbox);
     await click(supplementalCheckbox);
     await click(specialEquipmentCheckbox);
 
-    assert.ok(find(attendanceCheckbox).is(':checked'));
-    assert.ok(find(supplementalCheckbox).not(':checked'));
-    assert.ok(find(specialEquipmentCheckbox).is(':checked'));
+    assert.ok(find(attendanceCheckbox).checked);
+    assert.notOk(find(supplementalCheckbox).checked);
+    assert.ok(find(specialEquipmentCheckbox).checked);
 
     await click(save);
 
-    assert.equal(getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.ok(find(attendanceEnabled).classList.contains('yes'));
     assert.ok(find(attendanceEnabled).classList.contains('fa-check'));
 
-    assert.equal(getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.ok(find(supplementalEnabled).classList.contains('no'));
     assert.ok(find(supplementalEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
     assert.ok(find(specialAttireEnabled).classList.contains('no'));
     assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
-    assert.equal(getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('yes'));
     assert.ok(find(specialEquipmentEnabled).classList.contains('fa-check'));
 
