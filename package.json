@@ -99,6 +99,7 @@
     "ilios-common": "11.1.0",
     "loader.js": "^4.2.3",
     "normalize.css": "^8.0.0",
+    "pre-commit": "^1.2.2",
     "stylelint-config-recommended-scss": "^3.1.0",
     "stylelint-scss": "^2.5.0",
     "validator": "^9.0.0"
@@ -119,5 +120,9 @@
       "ember-tether"
     ]
   },
+  "pre-commit": [
+    "lint:js",
+    "lint:style"
+  ],
   "private": true
 }
