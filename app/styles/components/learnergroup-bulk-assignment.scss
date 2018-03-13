@@ -10,7 +10,11 @@
       width: 100%;
 
       i {
-        @include ilios-heading-h1;
+        color: $header-blue;
+        font-size: 2.25rem;
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
       }
     }
   }
