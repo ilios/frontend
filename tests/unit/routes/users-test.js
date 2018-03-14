@@ -1,10 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:users', 'Unit | Route | users ', {
-  needs: ['service:currentUser', 'service:iliosMetrics', 'service:headData', 'service:session'],
-});
+module('Unit | Route | users ', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  var route = this.subject();
-  assert.ok(route);
+  test('it exists', function(assert) {
+    var route = this.owner.lookup('route:users');
+    assert.ok(route);
+  });
 });

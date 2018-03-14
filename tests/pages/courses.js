@@ -10,13 +10,11 @@ import {
   visitable
 } from 'ember-cli-page-object';
 
-import selectable from '../helpers/selectable';
-
 export default create({
   scope: '[data-test-courses]',
   visit: visitable('/courses'),
   filterByTitle: fillable('[data-test-title-filter]'),
-  filterByYear: selectable('[data-test-year-filter]'),
+  filterByYear: fillable('[data-test-year-filter]'),
   filterByMyCourses: clickable('[data-test-my-courses-filter] label:eq(0)'),
   yearFilters: collection({
     itemScope: '[data-test-year-filter] option',
@@ -36,7 +34,7 @@ export default create({
   newCourseForm: {
     scope: '[data-test-new-course]',
     title: fillable('[data-test-title]'),
-    chooseYear: selectable('[data-test-year]'),
+    chooseYear: fillable('[data-test-year]'),
     save: clickable('.done'),
     years: collection({
       itemScope: '[data-test-year] option',

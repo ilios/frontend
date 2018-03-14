@@ -38,6 +38,7 @@ export default Component.extend({
   initialStateForManageCompetencyObjective: null,
   newObjectiveEditorOn: false,
   newObjectiveTitle: null,
+  'data-test-detail-objectives': true,
 
   showCollapsible: computed('isManaging', 'objectives', function(){
     const isManaging = this.get('isManaging');

@@ -1,132 +1,133 @@
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/courses/1/sessions/1?sessionObjectiveDetails=true';
-var fixtures = {};
-module('Acceptance: Session - Objective Parents', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.create('school');
-    server.create('sessionType');
-    fixtures.parentObjectives = [];
-    fixtures.parentObjectives.pushObject(server.createList('objective', 3));
-    fixtures.sessionObjectives = [];
-    fixtures.sessionObjectives.pushObject(server.create('objective', {
-      parentIds: [1,2]
-    }));
-    fixtures.sessionObjectives.pushObject(server.create('objective', {
-      parentIds: [1]
-    }));
-    fixtures.sessionObjectives.pushObject(server.create('objective'));
-    fixtures.course = server.create('course', {
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
+
+module('Acceptance: Session - Objective Parents', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.user = await setupAuthentication();
+    const school = this.server.create('school');
+    const objectives = this.server.createList('objective', 3);
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
-      objectiveIds: [1, 2, 3],
+      school,
+      objectives,
     });
-    fixtures.session = server.create('session', {
-      courseId: 1,
-      objectiveIds: [4, 5, 6]
+    const objective1 = this.server.create('objective', {
+      parents: [objectives[0], objectives[1]]
     });
-  },
+    const objective2 = this.server.create('objective');
+    this.server.create('session', {
+      course,
+      objectives: [objective1, objective2],
+    });
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('list parent objectives', async function(assert) {
+    assert.expect(14);
 
-test('list session objectives', async function(assert) {
-  assert.expect(11);
-  await visit(url);
-  let tds = find('.session-objective-list tbody tr:eq(0) td');
-  assert.equal(tds.length, 4);
-  await click('.link', tds.eq(1));
-  assert.equal(getElementText(find('.specific-title')), 'SelectParentObjectives');
-  let objectiveManager = find('.objective-manager').eq(0);
-  let objective = fixtures.sessionObjectives[0];
-  assert.equal(getElementText(find('.objectivetitle', objectiveManager)), getText(objective.title));
-  let expectedCourseTitle = fixtures.course.title;
-  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-  assert.equal(getElementText(find('h5', parentPicker)), getText(expectedCourseTitle));
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 2);
 
-  //every course objective in the list
-  let ul = find('ul', parentPicker).eq(0);
-  let items = find('li', ul);
-  assert.equal(items.length, fixtures.course.objectives.length);
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
 
-  assert.equal(getElementText(items.eq(0)), getText('objective 0'));
-  assert.ok(find(items.eq(0)).hasClass('selected'));
+    await page.objectives.current(0).manageParents();
 
-  assert.equal(getElementText(items.eq(1)), getText('objective 1'));
-  assert.ok(find(items.eq(1)).hasClass('selected'));
+    assert.equal(page.objectiveParentManager.title, 'objective 3');
+    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
+    assert.equal(page.objectiveParentManager.objectives().count, 3);
+    assert.equal(page.objectiveParentManager.objectives(0).title, 'objective 0');
+    assert.ok(page.objectiveParentManager.objectives(0).selected);
+    assert.equal(page.objectiveParentManager.objectives(1).title, 'objective 1');
+    assert.ok(page.objectiveParentManager.objectives(1).selected);
+    assert.equal(page.objectiveParentManager.objectives(2).title, 'objective 2');
+    assert.ok(page.objectiveParentManager.objectives(2).notSelected);
+  });
 
-  assert.equal(getElementText(items.eq(2)), getText('objective 2'));
-  assert.notOk(find(items.eq(2)).hasClass('selected'));
-});
+  test('save changes', async function(assert) {
+    assert.expect(13);
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
-test('change session objective parent', async function(assert) {
-  assert.expect(3);
-  await visit(url);
-  await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
-  let objectiveManager = find('.objective-manager').eq(0);
-  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-  await click('li:eq(0)', parentPicker);
-  await click('li:eq(2)', parentPicker);
-  assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-  assert.ok(find('li:eq(2)', parentPicker).hasClass('selected'));
-  assert.ok(!find('li:eq(0)', parentPicker).hasClass('selected'));
-});
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
 
-test('deselect all parents for session objective', async function(assert) {
-  assert.expect(3);
-  await visit(url);
-  await click('.session-objective-list tbody tr:eq(0) td:eq(1) .link');
-  let objectiveManager = find('.objective-manager').eq(0);
-  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-  await click('li:eq(1)', parentPicker);
-  await click('li:eq(0)', parentPicker);
-  for(let i = 0; i < 3; i++){
-    let item = find('li', parentPicker).eq(i);
-    assert.ok(!item.hasClass('selected'));
-  }
-});
+    await page.objectives.current(0).manageParents();
 
-test('multiple parents for session objective', async function(assert) {
-  assert.expect(3);
-  await visit(url);
-  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-  let objectiveManager = find('.objective-manager').eq(0);
-  let parentPicker = find('.parent-picker', objectiveManager).eq(0);
-  await click('li:eq(1)', parentPicker);
-  assert.ok(find('li:eq(0)', parentPicker).hasClass('selected'));
-  assert.ok(find('li:eq(1)', parentPicker).hasClass('selected'));
-  assert.ok(!find('li:eq(2)', parentPicker).hasClass('selected'));
-});
+    assert.equal(page.objectiveParentManager.title, 'objective 3');
+    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
+    await page.objectiveParentManager.objectives(0).click();
+    await page.objectiveParentManager.objectives(2).click();
+    assert.ok(page.objectiveParentManager.objectives(0).notSelected);
+    assert.ok(page.objectiveParentManager.objectives(1).selected);
+    assert.ok(page.objectiveParentManager.objectives(2).selected);
+    await page.objectives.save();
 
-test('save changes', async function(assert) {
-  assert.expect(1);
-  await visit(url);
-  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
-  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-  await click('.detail-objectives:eq(0) button.bigadd');
-  let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-  assert.equal(getElementText(td), getText('objective 1'));
-});
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 1');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 2');
 
-test('cancel changes', async function(assert) {
-  assert.expect(1);
-  await visit(url);
-  await click('.session-objective-list tbody tr:eq(1) td:eq(1) .link');
-  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(1)');
-  await click('.objective-manager:eq(0) .parent-picker:eq(0) li:eq(0)');
-  await click('.detail-objectives:eq(0) button.bigcancel');
-  let td = find('.session-objective-list tbody tr:eq(1) td:eq(1)');
-  assert.equal(getElementText(td), getText('objective 0'));
+  });
+
+  test('cancel changes', async function(assert) {
+    assert.expect(13);
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
+
+    await page.objectives.current(0).manageParents();
+
+    assert.equal(page.objectiveParentManager.title, 'objective 3');
+    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
+    await page.objectiveParentManager.objectives(0).click();
+    await page.objectiveParentManager.objectives(2).click();
+    assert.ok(page.objectiveParentManager.objectives(0).notSelected);
+    assert.ok(page.objectiveParentManager.objectives(1).selected);
+    assert.ok(page.objectiveParentManager.objectives(2).selected);
+    await page.objectives.cancel();
+
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
+  });
+
+  test('deselect all parents for session objective', async function(assert) {
+    assert.expect(11);
+    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 2);
+    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current(0).parents(1).description, 'objective 1');
+
+    await page.objectives.current(0).manageParents();
+
+    assert.equal(page.objectiveParentManager.title, 'objective 3');
+    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
+    await page.objectiveParentManager.objectives(0).click();
+    await page.objectiveParentManager.objectives(1).click();
+    assert.ok(page.objectiveParentManager.objectives(0).notSelected);
+    assert.ok(page.objectiveParentManager.objectives(1).notSelected);
+    assert.ok(page.objectiveParentManager.objectives(2).notSelected);
+    await page.objectives.save();
+
+    assert.equal(page.objectives.current(0).description.text, 'objective 3');
+    assert.equal(page.objectives.current(0).parents().count, 0);
+  });
 });

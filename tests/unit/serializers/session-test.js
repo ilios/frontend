@@ -1,27 +1,16 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForModel('session', 'Unit | Serializer | Session ', {
-  // Specify the other units that are required for this test.
-  needs: [
-    'serializer:session',
-    'service:i18n',
-    'model:session-type',
-    'model:course',
-    'model:ilm-session',
-    'model:term',
-    'model:objective',
-    'model:mesh-descriptor',
-    'model:session-description',
-    'model:session-learning-material',
-    'model:offering',
-    'model:user',
-  ]
-});
+import { run } from '@ember/runloop';
 
-test('it removes all non postable fields', function(assert) {
-  var record = this.subject();
+module('Unit | Serializer | Session ', function(hooks) {
+  setupTest(hooks);
 
-  var serializedRecord = record.serialize();
+  test('it removes all non postable fields', function(assert) {
+    var record = run(() => this.owner.lookup('service:store').createRecord('session'));
 
-  assert.ok(!("updatedAt" in serializedRecord));
+    var serializedRecord = record.serialize();
+
+    assert.ok(!("updatedAt" in serializedRecord));
+  });
 });

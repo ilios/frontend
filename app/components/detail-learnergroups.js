@@ -20,6 +20,7 @@ export default Component.extend({
   editable: true,
   isManaging: false,
   learnerGroups: null,
+  'data-test-detail-learner-groups': true,
   loadLearnerGroups: task(function * (){
     const subject = this.get('subject');
     if (subject){

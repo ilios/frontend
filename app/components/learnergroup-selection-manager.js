@@ -8,4 +8,5 @@ export default Component.extend({
   filter: '',
   cohorts: null,
   learnerGroups: null,
+  'data-test-learnergroup-selection-manager': true,
 });

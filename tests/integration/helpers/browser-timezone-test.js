@@ -1,17 +1,19 @@
 
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-moduleForComponent('browser-timezone', 'helper:browser-timezone', {
-  integration: true
-});
+module('helper:browser-timezone', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders current timezone as guessed by moment', function(assert) {
-  this.set('inputValue', '1234');
+  test('it renders current timezone as guessed by moment', async function(assert) {
+    this.set('inputValue', '1234');
 
-  this.render(hbs`{{browser-timezone}}`);
+    await render(hbs`{{browser-timezone}}`);
 
-  assert.equal(this.$().text().trim(), moment.tz.guess());
+    assert.equal(this.element.textContent.trim(), moment.tz.guess());
+  });
 });
 

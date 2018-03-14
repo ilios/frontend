@@ -9,8 +9,6 @@ import {
   visitable
 } from 'ember-cli-page-object';
 
-import selectable from '../helpers/selectable';
-
 export default create({
   scope: '[data-test-dashboard]',
   visit: visitable('/dashboard'),
@@ -28,7 +26,7 @@ export default create({
       scope: '[data-test-selected-report]',
       title: text('[data-test-report-title]'),
       yearsFilterExists: isPresent('[data-test-year-filter]'),
-      chooseYear: selectable('[data-test-year-filter]'),
+      chooseYear: fillable('[data-test-year-filter]'),
       results: collection({
         itemScope: '[data-test-results] li',
         item: {
@@ -39,12 +37,12 @@ export default create({
     newReport: {
       scope: '[data-test-new-report]',
       setTitle: fillable('[data-test-report-title]'),
-      chooseSchool: selectable('[data-test-report-school]'),
-      chooseSubject: selectable('[data-test-report-subject]'),
-      chooseObjectType: selectable('[data-test-report-object-type]'),
-      chooseObject: selectable('[data-test-report-object]'),
+      chooseSchool: fillable('[data-test-report-school]'),
+      chooseSubject: fillable('[data-test-report-subject]'),
+      chooseObjectType: fillable('[data-test-report-object-type]'),
+      chooseObject: fillable('[data-test-report-object]'),
       objectCount: count('[data-test-report-object] option'),
-      chooseAcademicYear: selectable('[data-test-report-year-filter]'),
+      chooseAcademicYear: fillable('[data-test-report-year-filter]'),
       fillMeshSearch: fillable('[data-test-mesh-manager] [data-test-search-box] input'),
       runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
       meshSearchResults: collection({

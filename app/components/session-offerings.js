@@ -20,4 +20,5 @@ export default Component.extend({
   newButtonTitle: t('general.add'),
   offeringEditorOn: false,
   cohorts: alias('session.course.cohorts'),
+  'data-test-session-offerings': true,
 });

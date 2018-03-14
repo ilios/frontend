@@ -10,6 +10,7 @@ export default Component.extend({
   courseObjectiveDetails: null,
   courseTaxonomyDetails: null,
   courseCompetencyDetails: null,
+  'data-test-ilios-course-details': true,
   actions: {
     collapse() {
       this.get('setShowDetails')(false);

@@ -6,7 +6,6 @@ import { isEmpty } from '@ember/utils';
 const { all, Promise, filter, map } = RSVP;
 
 export default Component.extend({
-  tagName: 'ul',
   classNames: ['detail-learnergroups-list'],
   learnerGroups: null,
   isManaging: false,

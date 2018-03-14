@@ -65,11 +65,11 @@ export default Component.extend({
   },
 
   actions: {
-    updateSelectedFile(files){
+    async updateSelectedFile(files){
       // Check for the various File API support.
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         if (files.length > 0) {
-          this.get('parseFile').perform(files[0]);
+          await this.get('parseFile').perform(files[0]);
         }
       } else {
         throw new Error('This browser is not supported');

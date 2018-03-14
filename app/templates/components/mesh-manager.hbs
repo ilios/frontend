@@ -29,7 +29,7 @@
   {{#if searchResults.length}}
     <ul class='mesh-search-results' data-test-search-results>
       {{#each searchResults as |term|}}
-        <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}}>
+        <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}} data-test-search-result>
           <span class="descriptor-name" data-test-name>{{term.name}}</span>
           <span class="descriptor-id">
             {{term.id}}

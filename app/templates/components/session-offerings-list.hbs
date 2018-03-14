@@ -5,20 +5,8 @@
       <span class='offering-block-date-dayofmonth'>{{block.dayOfMonth}}</span>
     </div>
     {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
-      {{#unless offeringTimeBlock.isMultiDay}}
-        <div class= 'offering-block-time'>
-          <div class= 'offering-block-time-time'>
-            <span class='offering-block-time-time-starttime'><label class='offering-block-time-time-starttime-label'>{{t 'general.starts'}}:</label> {{offeringTimeBlock.startTime}}</span>
-            <span class='offering-block-time-time-endtime'><label class='offering-block-time-time-endtime-label'>{{t 'general.ends'}}:</label> {{offeringTimeBlock.endTime}}</span>
-          </div>
-          <div class='offering-block-time-offerings'>
-            {{#each offeringTimeBlock.sortedOfferings as |offering|}}
-              {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
-            {{/each}}
-          </div>
-        </div>
-      {{else}}
-        <div class= 'offering-block-time'>
+      <div class= 'offering-block-time'>
+        {{#if offeringTimeBlock.isMultiDay}}
           <div class= 'multiday-offering-block-time-time'>
             <span class='multiday-offering-block-time-time-description'>
               {{t 'general.multiday'}}
@@ -30,13 +18,18 @@
               {{t 'general.ends'}} {{offeringTimeBlock.longEndText}}
             </span>
           </div>
-          <div class='multiday-offering-block-time-offerings'>
-            {{#each offeringTimeBlock.offerings as |offering|}}
-              {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
-            {{/each}}
+        {{else}}
+          <div class= 'offering-block-time-time'>
+            <span class='offering-block-time-time-starttime'><label class='offering-block-time-time-starttime-label'>{{t 'general.starts'}}:</label> {{offeringTimeBlock.startTime}}</span>
+            <span class='offering-block-time-time-endtime'><label class='offering-block-time-time-endtime-label'>{{t 'general.ends'}}:</label> {{offeringTimeBlock.endTime}}</span>
           </div>
+        {{/if}}
+        <div class='offering-block-time-offerings' data-test-offerings>
+          {{#each offeringTimeBlock.sortedOfferings as |offering|}}
+            {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
+          {{/each}}
         </div>
-      {{/unless}}
+      </div>
     {{/each}}
   </div>
 {{/each}}

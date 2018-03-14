@@ -1,153 +1,136 @@
-import destroyApp from '../../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var url = '/courses/1/sessions/1';
-module('Acceptance: Session - Mesh Terms', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.create('school');
-    server.create('sessionType');
-    server.createList('meshDescriptor', 2);
-    server.create('meshDescriptor', {
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
+
+module('Acceptance: Session - Mesh Terms', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.user = await setupAuthentication();
+    this.server.create('school');
+    this.server.create('academicYear');
+    this.server.createList('meshTree', 3);
+    this.server.createList('meshConcept', 3);
+
+    this.server.create('meshConcept', {
+      scopeNote: '1234567890'.repeat(30)
+    });
+
+    this.server.create('meshDescriptor', {
+      conceptIds: [1, 2, 3, 4],
+      treeIds: [1, 2, 3]
+    });
+    this.server.create('meshDescriptor', {
       deleted: true
     });
-    server.createList('meshDescriptor', 3, {
+    this.server.createList('meshDescriptor', 4);
+
+    const course = this.server.create('course', {
+      year: 2014,
+      schoolId: 1,
     });
-
-    server.create('course', {
-      schoolId: 1
+    this.server.create('session', {
+      course,
+      meshDescriptorIds: [1, 2, 3]
     });
+  });
 
-    server.create('session', {
-      courseId: 1,
-      meshDescriptorIds: [1,2,3]
-    });
-  },
+  test('list mesh', async function(assert) {
+    assert.expect(4);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.meshTerms.current().count, 3);
+    assert.equal(page.meshTerms.current(0).title, 'descriptor 0');
+    assert.equal(page.meshTerms.current(1).title, 'descriptor 1');
+    assert.equal(page.meshTerms.current(2).title, 'descriptor 2');
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('manage terms', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.meshTerms.current().count, 3);
+    await page.meshTerms.manage();
+    assert.equal(page.meshTerms.meshManager.selectedTerms().count, 3);
+    assert.equal(page.meshTerms.meshManager.selectedTerms(0).title, 'descriptor 0');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(1).title, 'descriptor 1');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(2).title, 'descriptor 2');
+    await page.meshTerms.meshManager.search('descriptor');
+    await page.meshTerms.meshManager.runSearch();
 
-test('list mesh', async function(assert) {
-  assert.expect(4);
-  await visit(url);
-  var container = find('.detail-mesh');
-  var items = find('ul.selected-mesh-terms li .term-title', container);
-  assert.equal(items.length, 3);
-  assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(items.eq(1)), getText('descriptor 1'));
-  assert.equal(getElementText(items.eq(2)), getText('descriptor 2'));
-});
+    assert.equal(page.meshTerms.meshManager.searchResults().count, 6);
+    for (let i = 0; i < 6; i++) {
+      assert.equal(page.meshTerms.meshManager.searchResults(i).title, `descriptor ${i}`);
+    }
+    assert.ok(page.meshTerms.meshManager.searchResults(0).isDisabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(1).isDisabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(2).isDisabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(3).isEnabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(4).isEnabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(5).isEnabled);
 
-test('manage mesh', async function(assert) {
-  assert.expect(25);
-  await visit(url);
-  var container = find('.detail-mesh');
-  await click(find('.actions button', container));
-  let meshManager = find('.mesh-manager', container);
-  let removableItems = find('.selected-terms li', meshManager);
-  assert.equal(removableItems.length, 3);
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(0)).eq(0)),
-    getText('descriptor 0')
-  );
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(1)).eq(0)),
-    getText('descriptor 1')
-  );
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(2)).eq(0)),
-    getText('descriptor 2')
-  );
-  assert.equal(
-    getElementText(find('.term-details', removableItems.eq(2)).eq(0)),
-    getText('3 - (depr.)')
-  );
+    await page.meshTerms.meshManager.selectedTerms(0).remove();
+    await page.meshTerms.meshManager.searchResults(3).add();
+    assert.ok(page.meshTerms.meshManager.searchResults(3).isDisabled);
+    assert.ok(page.meshTerms.meshManager.searchResults(0).isEnabled);
+    assert.equal(page.meshTerms.meshManager.selectedTerms().count, 3);
 
-  let searchBox = find('.search-box', meshManager);
-  assert.equal(searchBox.length, 1);
-  searchBox = searchBox.eq(0);
-  let searchBoxInput = find('input', searchBox);
-  assert.equal(searchBoxInput.attr('placeholder'), 'Search MeSH');
-  await fillIn(searchBoxInput, 'descriptor');
-  await click('span.search-icon', searchBox);
-  let searchResults = find('.mesh-search-results li', meshManager);
-  assert.equal(searchResults.length, 6);
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(0)).eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(1)).eq(0)), getText('descriptor 1'));
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(2)).eq(0)), getText('descriptor 2'));
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(3)).eq(0)), getText('descriptor 3'));
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(4)).eq(0)), getText('descriptor 4'));
-  assert.equal(getElementText(find('.descriptor-name', searchResults.eq(5)).eq(0)), getText('descriptor 5'));
-  assert.ok(find(searchResults[0]).hasClass('disabled'));
-  assert.ok(find(searchResults[1]).hasClass('disabled'));
-  assert.ok(find(searchResults[2]).hasClass('disabled'));
-  assert.ok(!find(searchResults[3]).hasClass('disabled'));
-  assert.ok(!find(searchResults[4]).hasClass('disabled'));
-  assert.ok(!find(searchResults[5]).hasClass('disabled'));
+    assert.equal(page.meshTerms.meshManager.selectedTerms(0).title, 'descriptor 1');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(2).title, 'descriptor 3');
+  });
 
-  await click('.selected-terms li:eq(1)', meshManager);
-  assert.ok(!find('.mesh-search-results li:eq(1)', meshManager).hasClass('disabled'));
-  await click(searchResults[3]);
-  assert.ok(find('.mesh-search-results li:eq(3)', meshManager).hasClass('disabled'));
-  removableItems = find('.selected-terms li', meshManager);
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(0)).eq(0)),
-    getText('descriptor 0')
-  );
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(1)).eq(0)),
-    getText('descriptor 2')
-  );
-  assert.equal(
-    getElementText(find('.term-title', removableItems.eq(2)).eq(0)),
-    getText('descriptor 3')
-  );
-});
+  test('save terms', async function (assert) {
+    assert.expect(9);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.meshTerms.current().count, 3);
+    await page.meshTerms.manage();
 
-test('save mesh changes', async function(assert) {
-  assert.expect(4);
-  await visit(url);
-  var container = find('.detail-mesh');
-  await click(find('.actions button', container));
-  let meshManager = find('.mesh-manager', container);
-  await fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
-  await click('.search-box span.search-icon', meshManager);
-  await click('.selected-terms li:eq(1)', meshManager);
-  await click('.mesh-search-results li:eq(3)', meshManager);
-  await click('button.bigadd', container);
-  var items = find('ul.selected-mesh-terms li .term-title', container);
-  assert.equal(items.length, 3);
-  assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(items.eq(1)), getText('descriptor 2'));
-  assert.equal(getElementText(items.eq(2)), getText('descriptor 3'));
-});
+    assert.equal(page.meshTerms.meshManager.selectedTerms().count, 3);
+    await page.meshTerms.meshManager.search('descriptor');
+    await page.meshTerms.meshManager.runSearch();
 
+    await page.meshTerms.meshManager.selectedTerms(0).remove();
+    await page.meshTerms.meshManager.searchResults(3).add();
 
+    assert.equal(page.meshTerms.meshManager.selectedTerms(0).title, 'descriptor 1');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(2).title, 'descriptor 3');
 
-test('cancel mesh changes', async function(assert) {
-  assert.expect(4);
-  await visit(url);
-  var container = find('.detail-mesh');
-  await click(find('.actions button', container));
-  let meshManager = find('.mesh-manager', container);
-  await fillIn(find('.search-box input', meshManager).eq(0), 'descriptor');
-  await click('.search-box span.search-icon', meshManager);
-  await click('.selected-terms li:eq(1)', meshManager);
-  await click('.mesh-search-results li:eq(3)', meshManager);
-  await click('button.bigcancel', container);
+    await page.meshTerms.save();
+    assert.equal(page.meshTerms.current().count, 3);
+    assert.equal(page.meshTerms.current(0).title, 'descriptor 1');
+    assert.equal(page.meshTerms.current(1).title, 'descriptor 2');
+    assert.equal(page.meshTerms.current(2).title, 'descriptor 3');
+  });
 
-  var items = find('ul.selected-mesh-terms li .term-title', container);
-  assert.equal(items.length, 3);
-  assert.equal(getElementText(items.eq(0)), getText('descriptor 0'));
-  assert.equal(getElementText(items.eq(1)), getText('descriptor 1'));
-  assert.equal(getElementText(items.eq(2)), getText('descriptor 2'));
+  test('cancel term changes', async function(assert) {
+    assert.expect(11);
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.meshTerms.current().count, 3);
+    assert.equal(page.meshTerms.current(0).title, 'descriptor 0');
+    assert.equal(page.meshTerms.current(1).title, 'descriptor 1');
+    assert.equal(page.meshTerms.current(2).title, 'descriptor 2');
+
+    await page.meshTerms.manage();
+    assert.equal(page.meshTerms.meshManager.selectedTerms().count, 3);
+
+    await page.meshTerms.meshManager.search('descriptor');
+    await page.meshTerms.meshManager.runSearch();
+
+    await page.meshTerms.meshManager.selectedTerms(0).remove();
+    await page.meshTerms.meshManager.searchResults(3).add();
+
+    assert.equal(page.meshTerms.meshManager.selectedTerms(0).title, 'descriptor 1');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(1).title, 'descriptor 2');
+    assert.equal(page.meshTerms.meshManager.selectedTerms(2).title, 'descriptor 3');
+
+    await page.meshTerms.cancel();
+    assert.equal(page.meshTerms.current(0).title, 'descriptor 0');
+    assert.equal(page.meshTerms.current(1).title, 'descriptor 1');
+    assert.equal(page.meshTerms.current(2).title, 'descriptor 2');
+  });
 });

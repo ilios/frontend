@@ -1,95 +1,76 @@
-import { run } from '@ember/runloop';
-import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import wait from 'ember-test-helpers/wait';
-var application;
-var fixtures = {};
-var url = '/courses/1?details=true&courseObjectiveDetails=true';
-module('Acceptance: Course - Objective Create', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.create('school');
-    server.create('academicYear', {id: 2013});
-    server.createList('program', 2);
-    server.createList('programYear', 2);
-    server.createList('cohort', 2);
-    fixtures.objective = server.create('objective');
-    fixtures.course = server.create('course', {
+
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/course';
+
+module('Acceptance: Course - Objective Create', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.user = await setupAuthentication();
+    this.server.create('school');
+    this.server.create('academicYear', {id: 2013});
+    this.server.createList('program', 2);
+    this.server.createList('programYear', 2);
+    this.server.createList('cohort', 2);
+    this.objective = this.server.create('objective');
+    this.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       objectiveIds: [1]
     });
-  },
-
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
-
-test('save new objective', async function(assert) {
-  assert.expect(8);
-  await visit(url);
-  var newObjectiveTitle = 'Test junk 123';
-  let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
-  assert.equal(objectiveRows.length, fixtures.course.objectives.length);
-  await click('.detail-objectives .detail-objectives-actions button');
-  find('.detail-objectives .new-objective .fr-box').froalaEditor('html.set', newObjectiveTitle);
-  find('.detail-objectives .new-objective .fr-box').froalaEditor('events.trigger', 'contentChanged');
-  await click('.detail-objectives .new-objective button.done');
-  objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
-  assert.equal(objectiveRows.length, fixtures.course.objectives.length + 1);
-  let tds = find('td', objectiveRows.eq(0));
-  assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
-  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-  tds = find('td', objectiveRows.eq(1));
-  assert.equal(getElementText(tds.eq(0)), getText(newObjectiveTitle));
-  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-
-  await wait();
-});
-
-test('cancel new objective', async function(assert) {
-  assert.expect(5);
-  await visit(url);
-  let objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
-  assert.equal(objectiveRows.length, fixtures.course.objectives.length);
-  await click('.detail-objectives .detail-objectives-actions button');
-  await click('.detail-objectives .new-objective button.cancel');
-  objectiveRows = find('.detail-objectives .course-objective-list tbody tr');
-  assert.equal(objectiveRows.length, fixtures.course.objectives.length);
-  let tds = find('td', objectiveRows.eq(0));
-  assert.equal(getElementText(tds.eq(0)), getText(fixtures.objective.title));
-  assert.equal(getElementText(tds.eq(1)), getText('Add New'));
-  assert.equal(getElementText(tds.eq(2)), getText('Add New'));
-});
-
-test('empty objective title can not be created', async function(assert) {
-  assert.expect(3);
-  const container = '.detail-objectives:eq(0)';
-  const expandNewObjective = `${container} .detail-objectives-actions button`;
-  const newObjective = `${container} .new-objective`;
-  const editor = `${newObjective} .fr-box`;
-  const save = `${newObjective} .done`;
-  const errorMessage = `${newObjective} .validation-error-message`;
-  await visit(url);
-  await click(expandNewObjective);
-
-  let editorContents = find(editor).data('froala.editor').$el.text();
-  assert.equal(getText(editorContents), '');
-  find(editor).froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
-  find(editor).froalaEditor('events.trigger', 'contentChanged');
-  run.later(() => {
-    assert.equal(getElementText(errorMessage), getText('This field cannot be blank'));
-    assert.ok(find(save).is(':disabled'));
   });
 
-  await wait();
+  test('save new objective', async function(assert) {
+    assert.expect(9);
+    const newObjectiveDescription = 'Test junk 123';
+
+    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    await page.objectives.createNew();
+    await page.objectives.newObjective.description(newObjectiveDescription);
+    await page.objectives.newObjective.save();
+
+    assert.equal(page.objectives.current().count, 2);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    assert.equal(page.objectives.current(0).parents().count, 0);
+    assert.equal(page.objectives.current(0).meshTerms().count, 0);
+    assert.equal(page.objectives.current(1).description.text, newObjectiveDescription);
+    assert.equal(page.objectives.current(0).parents().count, 0);
+    assert.equal(page.objectives.current(0).meshTerms().count, 0);
+  });
+
+  test('cancel new objective', async function(assert) {
+    assert.expect(6);
+    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    await page.objectives.createNew();
+    await page.objectives.newObjective.description('junk');
+    await page.objectives.newObjective.cancel();
+
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    assert.equal(page.objectives.current(0).parents().count, 0);
+    assert.equal(page.objectives.current(0).meshTerms().count, 0);
+  });
+
+  test('empty objective title can not be created', async function(assert) {
+    assert.expect(5);
+    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    assert.equal(page.objectives.current().count, 1);
+    assert.equal(page.objectives.current(0).description.text, 'objective 0');
+    await page.objectives.createNew();
+    assert.notOk(page.objectives.newObjective.hasValidationError);
+    await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
+    await page.objectives.newObjective.save();
+    assert.ok(page.objectives.newObjective.hasValidationError);
+    assert.equal(page.objectives.newObjective.validationError, 'This field can not be blank');
+  });
 });

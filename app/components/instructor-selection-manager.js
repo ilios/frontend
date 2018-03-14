@@ -11,6 +11,7 @@ export default Component.extend({
   tagName: 'section',
   instructorGroups: null,
   userSearchPlaceholder: t('general.findInstructorOrGroup'),
+  'data-test-instructor-selection-manager': true,
 
   actions: {
     addInstructor(user){

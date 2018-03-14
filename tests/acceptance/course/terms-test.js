@@ -1,99 +1,108 @@
-import destroyApp from '../../helpers/destroy-app';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var fixtures = {};
-var url = '/courses/1?details=true&courseTaxonomyDetails=true';
-module('Acceptance: Course - Terms', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.create('school');
-    server.create('vocabulary', {
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/course';
+
+module('Acceptance: Course - Terms', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    this.user = await setupAuthentication();
+    this.server.create('school');
+    this.server.create('vocabulary', {
       schoolId: 1,
       active: true,
     });
-    server.create('academicYear', {id: 2013});
+    this.server.create('academicYear', {id: 2013});
 
-    fixtures.terms = [];
-    fixtures.terms.pushObject(server.create('term', {
+    server.create('term', {
       vocabularyId: 1,
       active: true
-    }));
-    fixtures.terms.pushObject(server.create('term', {
+    });
+    server.create('term', {
       vocabularyId: 1,
       active: true
-    }));
+    });
 
-    fixtures.course = server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       termIds: [1]
     });
-  },
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('taxonomy summary', async function(assert) {
+    assert.expect(9);
+    await page.visit({ courseId: 1, details: true });
+    assert.equal(page.collapsedTaxonomies.title, 'Terms (' + this.course.terms.length + ')');
+    assert.equal(page.collapsedTaxonomies.headers().count, 3);
+    assert.equal(page.collapsedTaxonomies.headers(0).title, 'Vocabulary');
+    assert.equal(page.collapsedTaxonomies.headers(1).title, 'School');
+    assert.equal(page.collapsedTaxonomies.headers(2).title, 'Assigned Terms');
 
-test('taxonomy summary', async function(assert) {
-  assert.expect(7);
-  await visit('/courses/1?details=true');
-  var container = find('.collapsed-taxonomies');
-  var title = find('.title', container);
-  assert.equal(title.text().trim(), 'Terms (' + fixtures.course.terms.length + ')');
-  assert.equal(find('tr:eq(0) th:eq(0)', container).text().trim(), 'Vocabulary');
-  assert.equal(find('tr:eq(0) th:eq(1)', container).text().trim(), 'School');
-  assert.equal(find('tr:eq(0) th:eq(2)', container).text().trim(), 'Assigned Terms');
+    assert.equal(page.collapsedTaxonomies.vocabularies().count, 1);
+    assert.equal(page.collapsedTaxonomies.vocabularies(0).name, 'Vocabulary 1');
+    assert.equal(page.collapsedTaxonomies.vocabularies(0).school, 'school 0');
+    assert.equal(page.collapsedTaxonomies.vocabularies(0).terms, this.course.terms.length);
+  });
 
-  assert.equal(find('tr:eq(1) td:eq(0)', container).text().trim(), 'Vocabulary 1');
-  assert.equal(find('tr:eq(1) td:eq(1)', container).text().trim(), 'school 0');
-  assert.equal(find('tr:eq(1) td:eq(2)', container).text().trim(), fixtures.course.terms.length);
-});
+  test('list terms', async function(assert) {
+    assert.expect(4);
+    await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).name, 'Vocabulary 1');
+    assert.equal(page.taxonomies.vocabularies(0).terms().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).terms(0).name, 'term 0');
+  });
 
-test('list terms', async function(assert) {
-  assert.expect(2);
-  await visit(url);
-  var container = find('.detail-taxonomies');
-  var items = find('ul.selected-taxonomy-terms li', container);
-  assert.equal(items.length, fixtures.course.terms.length);
-  assert.equal(getElementText(items.eq(0)), getText('term 0'));
-});
+  test('manage terms', async function(assert) {
+    assert.expect(8);
+    await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    await page.taxonomies.manage();
 
-test('manage terms', async function(assert) {
-  assert.expect(3);
-  await visit(url);
-  var container = find('.taxonomy-manager');
-  await click(find('.actions button', container));
-  assert.equal(getElementText(find('.removable-list li:eq(0)', container)), getText('term 0'));
-  assert.equal(getElementText(find('.selectable-terms-list li:eq(0)', container)), getText('term 0'));
-  assert.equal(getElementText(find('.selectable-terms-list li:eq(1)', container)), getText('term 1'));
-});
+    assert.equal(page.taxonomies.manager.selectedTerms().count, 1);
+    assert.equal(page.taxonomies.manager.selectedTerms(0).name, 'term 0');
+    assert.equal(page.taxonomies.manager.availableTerms().count, 2);
+    assert.equal(page.taxonomies.manager.availableTerms(0).name, 'term 0');
+    assert.ok(page.taxonomies.manager.availableTerms(0).isSelected);
+    assert.equal(page.taxonomies.manager.availableTerms(1).name, 'term 1');
+    assert.ok(page.taxonomies.manager.availableTerms(1).notSelected);
+  });
 
-test('save term changes', async function(assert) {
-  assert.expect(1);
-  await visit(url);
-  var container = find('.taxonomy-manager');
-  await click(find('.actions button', container));
-  await click(find('.removable-list li:eq(0)', container));
-  await click(find('.selectable-terms-list li:eq(1) > div', container));
-  await click('button.bigadd', container);
-  assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
-});
+  test('save term changes', async function(assert) {
+    assert.expect(5);
+    await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    await page.taxonomies.manage();
+    await page.taxonomies.manager.selectedTerms(0).remove();
+    await page.taxonomies.manager.availableTerms(1).add();
+    await page.taxonomies.save();
 
-test('cancel term changes', async function(assert) {
-  assert.expect(1);
-  await visit(url);
-  var container = find('.taxonomy-manager');
-  await click(find('.actions button', container));
-  await click(find('.removable-list li:eq(0)', container));
-  await click(find('.selectable-terms-list li:eq(1) > div', container));
-  await click('button.bigcancel', container);
-  assert.equal(getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
+
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).name, 'Vocabulary 1');
+    assert.equal(page.taxonomies.vocabularies(0).terms().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).terms(0).name, 'term 1');
+  });
+
+  test('cancel term changes', async function(assert) {
+    assert.expect(5);
+    await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    await page.taxonomies.manage();
+    await page.taxonomies.manager.selectedTerms(0).remove();
+    await page.taxonomies.manager.availableTerms(1).add();
+    await page.taxonomies.cancel();
+
+    assert.equal(page.taxonomies.vocabularies().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).name, 'Vocabulary 1');
+    assert.equal(page.taxonomies.vocabularies(0).terms().count, 1);
+    assert.equal(page.taxonomies.vocabularies(0).terms(0).name, 'term 0');
+  });
 });

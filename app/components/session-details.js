@@ -13,6 +13,7 @@ export default Component.extend({
   editable: not('course.locked'),
   sessionObjectiveDetails: null,
   sessionTaxonomyDetails: null,
+  'data-test-session-details': true,
 
   didInsertElement() {
     const id = this.$().attr('id');

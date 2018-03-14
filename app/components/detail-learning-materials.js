@@ -26,6 +26,7 @@ export default Component.extend({
 
   displayAddNewForm: false,
   type: null,
+  'data-test-detail-learning-materials': true,
 
   displaySearchBox: computed('isManaging', 'displayAddNewForm', 'isSorting', function(){
     const isManaging = this.get('isManaging');

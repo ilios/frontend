@@ -1,11 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:myprofile', 'Unit | Controller | myprofile', {
-  needs: ['service:iliosMetrics', 'service:headData'],
-});
+module('Unit | Controller | myprofile', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let controller = this.subject();
-  assert.ok(controller);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let controller = this.owner.lookup('controller:myprofile');
+    assert.ok(controller);
+  });
 });

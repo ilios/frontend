@@ -1,248 +1,258 @@
-import destroyApp from '../../../helpers/destroy-app';
+import { currentRouteName } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
-var fixtures = {};
-var url = '/courses/1/sessions/1';
-module('Acceptance: Session - Independent Learning', {
-  beforeEach: function() {
-    application = startApp();
-    fixtures.school = server.create('school');
-    setupAuthentication(application, {
-      id: 4136,
-      schoolId: 1
-    });
-    server.createList('user', 6);
-    server.create('academicYear');
-    fixtures.course = server.create('course', {
-      schoolId: 1
-    });
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/session';
 
-    fixtures.instructorGroups = [];
-    fixtures.instructorGroups.pushObjects(server.createList('instructorGroup', 5,{
-      schoolId: 1
-    }));
-    fixtures.sessionType = server.create('sessionType');
-    fixtures.sessionDescription = server.create('sessionDescription');
-    fixtures.ilmSession = server.create('ilmSession', {
+module('Acceptance: Session - Independent Learning', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.createList('user', 6);
+    this.server.create('academicYear');
+    const course = this.server.create('course', { school });
+    server.createList('instructorGroup', 5, { school });
+    this.server.create('sessionType', { school });
+    this.server.create('sessionDescription');
+    const ilmSession = this.server.create('ilmSession', {
       instructorGroupIds: [1,2,3],
       instructorIds: [2,3,4]
     });
-    fixtures.session = server.create('session', {
-      courseId: 1,
-      ilmSessionId: 1
+    this.server.create('session', {
+      course,
+      ilmSession
     });
-  },
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('initial selected instructors', async function(assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.instructors.title, 'Instructors (6)');
 
-test('initial selected instructors', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  assert.equal(getElementText(find('.title', container)), getText('Instructors(6)'));
-  var selectedGroups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
-  for(let i = 0; i < fixtures.ilmSession.instructorGroups.length; i++){
-    let expectedTitle = getText(fixtures.instructorGroups[fixtures.ilmSession.instructorGroupIds[i] - 1].title);
-    let title = getElementText(selectedGroups.eq(i));
-    assert.equal(title, expectedTitle);
-  }
+    assert.equal(page.instructors.currentGroups().count, 3);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(2).title, 'instructor group 2');
 
-  var selectedUsers = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-});
+    assert.equal(page.instructors.currentInstructors().count, 3);
+    assert.equal(page.instructors.currentInstructors(0).title, '1 guy M. Mc1son');
+    assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
+  });
 
-test('manage instructors lists', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  var selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+  test('manage instructors lists', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-  var selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-});
+    assert.equal(manager.instructorGroups().count, 3);
+    assert.equal(manager.instructorGroups(0).text, 'instructor group 0');
+    assert.equal(manager.instructorGroups(1).text, 'instructor group 1');
+    assert.equal(manager.instructorGroups(2).text, 'instructor group 2');
 
-test('manage instructors search users', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  let searchBox = find('.search-box', container);
-  assert.equal(searchBox.length, 1);
-  searchBox = searchBox.eq(0);
-  let searchBoxInput = find('input', searchBox);
-  assert.equal(searchBoxInput.attr('placeholder'), 'Find Instructor or Group');
-  await fillIn(searchBoxInput, 'guy');
-  await click('span.search-icon', searchBox);
-  let searchResults = find('[data-test-user-search] .results li', container);
-  assert.equal(searchResults.length, 8);
-  let expectedResults = '7 Results 0 guy M. Mc0son user@example.edu 1 guy M. Mc1son user@example.edu 2 guy M. Mc2son user@example.edu 3 guy M. Mc3son user@example.edu 4 guy M. Mc4son user@example.edu 5 guy M. Mc5son user@example.edu 6 guy M. Mc6son user@example.edu';
-  assert.equal(getElementText(searchResults), getText(expectedResults));
+    assert.equal(manager.instructors().count, 3);
+    assert.equal(manager.instructors(0).text, '1 guy M. Mc1son');
+    assert.equal(manager.instructors(1).text, '2 guy M. Mc2son');
+    assert.equal(manager.instructors(2).text, '3 guy M. Mc3son');
+  });
 
-  let activeResults = find('[data-test-user-search] .results li.active', container);
-  assert.equal(getElementText(activeResults), getText('0 guy M. Mc0son user@example.edu 4 guy M. Mc4son user@example.edu 5 guy M. Mc5son user@example.edu 6 guy M. Mc6son user@example.edu'));
+  test('manage instructors search users', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-  let inActiveResults = find('[data-test-user-search] .results li.inactive', container);
-  assert.equal(getElementText(inActiveResults), getText('1 guy M. Mc1son user@example.edu 2 guy M. Mc2son user@example.edu 3 guy M. Mc3son user@example.edu'));
-});
+    await manager.search('guy');
+    assert.equal(manager.searchResults().count, 7);
+    assert.equal(manager.searchResults(0).text, '0 guy M. Mc0son user@example.edu');
+    assert.ok(manager.searchResults(0).active);
+    assert.equal(manager.searchResults(1).text, '1 guy M. Mc1son user@example.edu');
+    assert.ok(manager.searchResults(1).inactive);
+    assert.equal(manager.searchResults(2).text, '2 guy M. Mc2son user@example.edu');
+    assert.ok(manager.searchResults(2).inactive);
+    assert.equal(manager.searchResults(3).text, '3 guy M. Mc3son user@example.edu');
+    assert.ok(manager.searchResults(3).inactive);
+    assert.equal(manager.searchResults(4).text, '4 guy M. Mc4son user@example.edu');
+    assert.ok(manager.searchResults(4).active);
+    assert.equal(manager.searchResults(5).text, '5 guy M. Mc5son user@example.edu');
+    assert.ok(manager.searchResults(5).active);
+    assert.equal(manager.searchResults(6).text, '6 guy M. Mc6son user@example.edu');
+    assert.ok(manager.searchResults(6).active);
+  });
 
 
-test('manage instructors search groups', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  let searchBox = find('.search-box', container);
-  assert.equal(searchBox.length, 1);
-  searchBox = searchBox.eq(0);
-  let searchBoxInput = find('input', searchBox);
-  assert.equal(searchBoxInput.attr('placeholder'), 'Find Instructor or Group');
-  await fillIn(searchBoxInput, 'group');
-  await click('span.search-icon', searchBox);
-  let searchResults = find('[data-test-user-search] .results li', container);
-  assert.equal(searchResults.length, 6);
-  let expectedResults = '5 Results instructorgroup 0 instructorgroup 1 instructorgroup 2 instructorgroup 3 instructorgroup 4';
-  assert.equal(getElementText(searchResults), getText(expectedResults));
+  test('manage instructors search groups', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-  let activeResults = find('[data-test-user-search] .results li.active', container);
-  assert.equal(getElementText(activeResults), getText('instructorgroup 3 instructorgroup 4'));
+    await manager.search('group');
+    assert.equal(manager.searchResults().count, 5);
+    assert.equal(manager.searchResults(0).text, 'instructor group 0');
+    assert.ok(manager.searchResults(0).inactive);
+    assert.equal(manager.searchResults(1).text, 'instructor group 1');
+    assert.ok(manager.searchResults(1).inactive);
+    assert.equal(manager.searchResults(2).text, 'instructor group 2');
+    assert.ok(manager.searchResults(2).inactive);
+    assert.equal(manager.searchResults(3).text, 'instructor group 3');
+    assert.ok(manager.searchResults(3).active);
+    assert.equal(manager.searchResults(4).text, 'instructor group 4');
+    assert.ok(manager.searchResults(4).active);
+  });
 
-  let inActiveResults = find('[data-test-user-search] .results li.inactive', container);
-  assert.equal(getElementText(inActiveResults), getText('instructorgroup 0 instructorgroup 1 instructorgroup 2'));
-});
+  test('add instructor group', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-test('add instructor group', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  let input = find('.search-box input', container);
-  await fillIn(input, 'group');
-  await click('span.search-icon', container);
-  await click('[data-test-user-search] .results li:eq(4)');
-  let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, 4);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
+    await manager.search('group');
+    await manager.searchResults(3).add();
 
-  let selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, fixtures.ilmSession.instructors.length);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-  await click('.bigadd', container);
-  let groups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(groups.length, 4);
-  assert.equal(getElementText(groups), getText('instructor group 0 instructor group 1 instructor group 2 instructor group 3'));
+    assert.equal(manager.instructorGroups().count, 4);
+    assert.equal(manager.instructorGroups(0).text, 'instructor group 0');
+    assert.equal(manager.instructorGroups(1).text, 'instructor group 1');
+    assert.equal(manager.instructorGroups(2).text, 'instructor group 2');
+    assert.equal(manager.instructorGroups(3).text, 'instructor group 3');
 
-  let users = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(users.length, 3);
-  assert.equal(getElementText(users), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-});
+    assert.equal(manager.instructors().count, 3);
+    assert.equal(manager.instructors(0).text, '1 guy M. Mc1son');
+    assert.equal(manager.instructors(1).text, '2 guy M. Mc2son');
+    assert.equal(manager.instructors(2).text, '3 guy M. Mc3son');
 
-test('add instructor', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  let input = find('.search-box input', container);
-  await fillIn(input, 'guy');
-  await click('span.search-icon', container);
-  await click('[data-test-user-search] .results li:eq(5)');
-  var selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, fixtures.ilmSession.instructorGroups.length);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+    await page.instructors.save();
+    assert.equal(page.instructors.currentGroups().count, 4);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(2).title, 'instructor group 2');
+    assert.equal(page.instructors.currentGroups(3).title, 'instructor group 3');
 
-  var selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, 4);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son'));
-  await click('.bigadd', container);
-  selectedGroups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, 3);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+    assert.equal(page.instructors.currentInstructors().count, 3);
+    assert.equal(page.instructors.currentInstructors(0).title, '1 guy M. Mc1son');
+    assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
 
-  selectedUsers = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, 4);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son 4 guy M. Mc4son'));
-});
+  });
 
-test('remove instructor group', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  await click('.instructor-selection-manager ul:eq(0) li:eq(0)', container);
-  let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, 2);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
+  test('add instructor', async function(assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-  let selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, 3);
-  assert.equal(getElementText(selectedUsers), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-  await click('.bigadd', container);
-  let groups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(groups.length, 2);
-  assert.equal(getElementText(groups), getText('instructor group 1 instructor group 2'));
+    await manager.search('guy');
+    await manager.searchResults(4).add();
 
-  let users = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(users.length, 3);
-  assert.equal(getElementText(users), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
-});
+    assert.equal(manager.instructorGroups().count, 3);
+    assert.equal(manager.instructorGroups(0).text, 'instructor group 0');
+    assert.equal(manager.instructorGroups(1).text, 'instructor group 1');
+    assert.equal(manager.instructorGroups(2).text, 'instructor group 2');
 
-test('remove instructor', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  await click('.instructor-selection-manager ul:eq(1) li:eq(0)', container);
-  let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, 3);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 0 instructor group 1 instructor group 2'));
+    assert.equal(manager.instructors().count, 4);
+    assert.equal(manager.instructors(0).text, '1 guy M. Mc1son');
+    assert.equal(manager.instructors(1).text, '2 guy M. Mc2son');
+    assert.equal(manager.instructors(2).text, '3 guy M. Mc3son');
+    assert.equal(manager.instructors(3).text, '4 guy M. Mc4son');
 
-  let selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, 2);
-  assert.equal(getElementText(selectedUsers), getText('2 guy M. Mc2son 3 guy M. Mc3son'));
-  await click('.bigadd', container);
-  let groups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(groups.length, 3);
-  assert.equal(getElementText(groups), getText('instructor group 0 instructor group 1 instructor group 2'));
+    await page.instructors.save();
+    assert.equal(page.instructors.currentGroups().count, 3);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(2).title, 'instructor group 2');
 
-  let users = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(users.length, 2);
-  assert.equal(getElementText(users), getText('2 guy M. Mc2son 3 guy M. Mc3son'));
-});
+    assert.equal(page.instructors.currentInstructors().count, 4);
+    assert.equal(page.instructors.currentInstructors(0).title, '1 guy M. Mc1son');
+    assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
+    assert.equal(page.instructors.currentInstructors(3).title, '4 guy M. Mc4son');
+  });
 
-test('undo instructor/group changes', async function(assert) {
-  await visit(url);
-  assert.equal(currentPath(), 'course.session.index');
-  var container = find('.detail-instructors');
-  await click('.actions button', container);
-  await click('.instructor-selection-manager ul:eq(0) li:eq(0)', container);
-  await click('.instructor-selection-manager ul:eq(1) li:eq(0)', container);
-  let selectedGroups = find('.instructor-selection-manager ul:eq(0) li', container);
-  assert.equal(selectedGroups.length, 2);
-  assert.equal(getElementText(selectedGroups), getText('instructor group 1 instructor group 2'));
+  test('remove instructor group', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
 
-  let selectedUsers = find('.instructor-selection-manager ul:eq(1) li', container);
-  assert.equal(selectedUsers.length, 2);
-  assert.equal(getElementText(selectedUsers), getText('2 guy M. Mc2son 3 guy M. Mc3son'));
-  await click('.bigcancel', container);
-  let groups = find('.detail-instructors-list ul:eq(0) li', container);
-  assert.equal(groups.length, 3);
-  assert.equal(getElementText(groups), getText('instructor group 0 instructor group 1 instructor group 2'));
+    await manager.instructorGroups(0).remove();
 
-  let users = find('.detail-instructors-list ul:eq(1) li', container);
-  assert.equal(users.length, 3);
-  assert.equal(getElementText(users), getText('1 guy M. Mc1son 2 guy M. Mc2son 3 guy M. Mc3son'));
+    assert.equal(manager.instructorGroups().count, 2);
+    assert.equal(manager.instructorGroups(0).text, 'instructor group 1');
+    assert.equal(manager.instructorGroups(1).text, 'instructor group 2');
+
+    assert.equal(manager.instructors().count, 3);
+    assert.equal(manager.instructors(0).text, '1 guy M. Mc1son');
+    assert.equal(manager.instructors(1).text, '2 guy M. Mc2son');
+    assert.equal(manager.instructors(2).text, '3 guy M. Mc3son');
+
+    await page.instructors.save();
+    assert.equal(page.instructors.currentGroups().count, 2);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 2');
+
+    assert.equal(page.instructors.currentInstructors().count, 3);
+    assert.equal(page.instructors.currentInstructors(0).title, '1 guy M. Mc1son');
+    assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
+  });
+
+  test('remove instructor', async function (assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
+
+    await manager.instructors(0).remove();
+
+    assert.equal(manager.instructorGroups().count, 3);
+    assert.equal(manager.instructorGroups(0).text, 'instructor group 0');
+    assert.equal(manager.instructorGroups(1).text, 'instructor group 1');
+    assert.equal(manager.instructorGroups(2).text, 'instructor group 2');
+
+    assert.equal(manager.instructors().count, 2);
+    assert.equal(manager.instructors(0).text, '2 guy M. Mc2son');
+    assert.equal(manager.instructors(1).text, '3 guy M. Mc3son');
+
+    await page.instructors.save();
+    assert.equal(page.instructors.currentGroups().count, 3);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(2).title, 'instructor group 2');
+
+    assert.equal(page.instructors.currentInstructors().count, 2);
+    assert.equal(page.instructors.currentInstructors(0).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(1).title, '3 guy M. Mc3son');
+  });
+
+  test('undo instructor/group changes', async function(assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+    await page.instructors.manage();
+    const { manager } = page.instructors;
+
+    await manager.instructorGroups(0).remove();
+    await manager.instructors(0).remove();
+
+
+    await page.instructors.cancel();
+
+    assert.equal(page.instructors.currentGroups().count, 3);
+    assert.equal(page.instructors.currentGroups(0).title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups(1).title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups(2).title, 'instructor group 2');
+
+    assert.equal(page.instructors.currentInstructors().count, 3);
+    assert.equal(page.instructors.currentInstructors(0).title, '1 guy M. Mc1son');
+    assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
+    assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
+
+  });
 });

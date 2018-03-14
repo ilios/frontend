@@ -1,216 +1,207 @@
-import destroyApp from '../../helpers/destroy-app';
+import { click, currentRouteName, visit, findAll } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: Course - Publish', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.create('school');
-    server.create('cohort');
-  },
-
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
-
-test('check published course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    cohortIds: [1],
+module('Acceptance: Course - Publish', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
+    this.server.create('school');
+    this.server.create('cohort');
   });
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    publishedAsTbd: true,
-    cohortIds: [1],
+
+  test('check published course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      cohortIds: [1],
+    });
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      publishedAsTbd: true,
+      cohortIds: [1],
+    });
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+
+    assert.equal(currentRouteName(), 'course.index');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(await getElementText(selector), getText('Published'));
+    //we have to click the button to create the options
+    await click(selector);
+    let items = findAll(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Course'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+    }
   });
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    cohortIds: [1],
+
+  test('check scheduled course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      publishedAsTbd: true,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+
+    assert.equal(currentRouteName(), 'course.index');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(await getElementText(selector), getText('Scheduled'));
+    //we have to click the button to create the options
+    await click(selector);
+    let items = findAll(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Course'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+    }
   });
-  await visit('/courses/1');
 
-  assert.equal(currentPath(), 'course.index');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  assert.equal(getElementText(selector), getText('Published'));
-  //we have to click the button to create the options
-  await click(selector);
-  let items = find(choices);
-  assert.equal(items.length, 3);
-  let expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Course'];
-  for(let i = 0; i < items.length; i++){
-    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-  }
-});
+  test('check draft course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
 
-test('check scheduled course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    publishedAsTbd: true,
-    cohortIds: [1],
+    assert.equal(currentRouteName(), 'course.index');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    assert.equal(await getElementText(selector), getText('Not Published'));
+    //we have to click the button to create the options
+    await click(selector);
+    let items = findAll(choices);
+    assert.equal(items.length, 3);
+    let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
+    for(let i = 0; i < items.length; i++){
+      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+    }
   });
-  await visit('/courses/1');
 
-  assert.equal(currentPath(), 'course.index');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  assert.equal(getElementText(selector), getText('Scheduled'));
-  //we have to click the button to create the options
-  await click(selector);
-  let items = find(choices);
-  assert.equal(items.length, 3);
-  let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Course'];
-  for(let i = 0; i < items.length; i++){
-    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-  }
-});
+  test('check publish draft course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
 
-test('check draft course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    cohortIds: [1],
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[0]);
+
+    assert.equal(await getElementText(selector), getText('Published'));
   });
-  await visit('/courses/1');
 
-  assert.equal(currentPath(), 'course.index');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  assert.equal(getElementText(selector), getText('Not Published'));
-  //we have to click the button to create the options
-  await click(selector);
-  let items = find(choices);
-  assert.equal(items.length, 3);
-  let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
-  for(let i = 0; i < items.length; i++){
-    assert.equal(getElementText(items.eq(i)), getText(expectedItems[i]));
-  }
-});
+  test('check schedule draft course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[2]);
 
-test('check publish draft course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    cohortIds: [1],
+    assert.equal(await getElementText(selector), getText('Scheduled'));
   });
-  await visit('/courses/1');
 
+  test('check publish scheduled course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      publishedAsTbd: true,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[0]);
 
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const publish = `${choices}:eq(0)`;
-  await click(selector);
-  await click(publish);
-
-  assert.equal(getElementText(find(selector)), getText('Published'));
-});
-
-test('check schedule draft course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    cohortIds: [1],
+    assert.equal(await getElementText(selector), getText('Published'));
   });
-  await visit('/courses/1');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const schedule = `${choices}:eq(2)`;
-  await click(selector);
-  await click(schedule);
 
-  assert.equal(getElementText(selector), getText('Scheduled'));
-});
+  test('check unpublish scheduled course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      publishedAsTbd: true,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[2]);
 
-test('check publish scheduled course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    publishedAsTbd: true,
-    cohortIds: [1],
+    assert.equal(await getElementText(selector), getText('Not Published'));
   });
-  await visit('/courses/1');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const publish = `${choices}:eq(0)`;
-  await click(selector);
-  await click(publish);
 
-  assert.equal(getElementText(selector), getText('Published'));
-});
+  test('check schedule published course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[1]);
 
-test('check unpublish scheduled course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    publishedAsTbd: true,
-    cohortIds: [1],
+    assert.equal(await getElementText(selector), getText('Scheduled'));
   });
-  await visit('/courses/1');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const unPublish = `${choices}:eq(2)`;
-  await click(selector);
-  await click(unPublish);
 
-  assert.equal(getElementText(selector), getText('Not Published'));
-});
+  test('check unpublish published course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      published: true,
+      cohortIds: [1],
+    });
+    await visit('/courses/1');
+    const menu = '[data-test-course-header] .publish-menu';
+    const selector = `${menu} .rl-dropdown-toggle`;
+    const choices = `${menu} .rl-dropdown button`;
+    await click(selector);
+    await click(findAll(choices)[2]);
 
-test('check schedule published course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    cohortIds: [1],
+    assert.equal(await getElementText(selector), getText('Not Published'));
   });
-  await visit('/courses/1');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const schedule = `${choices}:eq(1)`;
-  await click(selector);
-  await click(schedule);
-
-  assert.equal(getElementText(selector), getText('Scheduled'));
-});
-
-test('check unpublish published course', async function(assert) {
-  server.create('course', {
-    year: 2013,
-    schoolId: 1,
-    published: true,
-    cohortIds: [1],
-  });
-  await visit('/courses/1');
-  const menu = '.publish-menu:eq(0)';
-  const selector = `${menu} .rl-dropdown-toggle`;
-  const choices = `${menu} .rl-dropdown button`;
-  const unPublish = `${choices}:eq(2)`;
-  await click(selector);
-  await click(unPublish);
-
-  assert.equal(getElementText(selector), getText('Not Published'));
 });

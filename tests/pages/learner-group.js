@@ -2,12 +2,11 @@ import {
   create,
   clickable,
   collection,
+  fillable,
   isVisible,
   text,
   visitable
 } from 'ember-cli-page-object';
-
-import selectable from '../helpers/selectable';
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
@@ -40,7 +39,7 @@ export default create({
       item: {
         name: text('[data-test-group-name]', {scope: 'td:eq(0)'}),
         createNewGroup: clickable('[data-test-create-group]', {scope: 'td:eq(0)'}),
-        chooseGroup: selectable('td:eq(1) select'),
+        chooseGroup: fillable('td:eq(1) select'),
       }
     }),
 

@@ -14,18 +14,20 @@
     {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{loading-spinner}}{{/unless}}
   </h4>
   {{search-box search=(action (mut filter)) placeholder=(t 'general.filterPlaceholder')}}
-  {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
-    <div class='cohort-learner-groups'>
-      {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program) (is-fulfilled cohort.rootLevelLearnerGroups))}}
-        <h5 class='cohort-title'>{{cohort.programYear.program.title}} {{cohort.title}}</h5>
-        <ul class='tree-groups-list'>
-          {{#each (sort-by 'title' (await cohort.rootLevelLearnerGroups)) as |learnerGroup|}}
-            {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
-          {{/each}}
-        </ul>
-      {{else}}
-        {{loading-spinner}}
-      {{/if}}
-    </div>
-  {{/each}}
+  <div data-test-cohorts>
+    {{#each (sort-by 'title' (await cohorts)) as |cohort|}}
+      <div class='cohort-learner-groups' data-test-cohort>
+        {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program) (is-fulfilled cohort.rootLevelLearnerGroups))}}
+          <h5 class='cohort-title'>{{cohort.programYear.program.title}} {{cohort.title}}</h5>
+          <ul class='tree-groups-list'>
+            {{#each (sort-by 'title' (await cohort.rootLevelLearnerGroups)) as |learnerGroup|}}
+              {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
+            {{/each}}
+          </ul>
+        {{else}}
+          {{loading-spinner}}
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
 </div>

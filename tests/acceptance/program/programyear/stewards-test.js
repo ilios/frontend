@@ -1,181 +1,181 @@
-import destroyApp from '../../../helpers/destroy-app';
+import { click, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
-let url = '/programs/1/programyears/1?pyStewardDetails=true';
-module('Acceptance: Program Year - Stewards', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-    server.createList('school', 2);
-    server.create('program', {
-      schoolId: 1,
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+const url = '/programs/1/programyears/1?pyStewardDetails=true';
+
+module('Acceptance: Program Year - Stewards', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('school');
+    this.server.create('program', {
+      school,
     });
-    server.create('programYear', {
+    this.server.create('programYear', {
       programId: 1,
     });
-    server.create('cohort', { programId: 1});
-    server.create('department', {
-      schoolId: 1,
+    this.server.create('cohort', { programId: 1});
+    this.server.create('department', {
+      school,
     });
-    server.create('department', {
-      schoolId: 1
+    this.server.create('department', {
+      school
     });
-    server.create('department', {
+    this.server.create('department', {
       schoolId: 2,
     });
-    server.create('department', {
+    this.server.create('department', {
       schoolId: 3
     });
-    server.createList('department', 5, {
-      schoolId: 1
+    this.server.createList('department', 5, {
+      school
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
-      schoolId: 1,
+      school,
       departmentId: 1
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
       schoolId: 2,
       departmentId: 3
     });
-    server.create('programYearSteward', {
+    this.server.create('programYearSteward', {
       programYearId: 1,
       schoolId: 3
     });
-  },
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('list', async function(assert) {
+    assert.expect(2);
+    const container = '.detail-stewards';
+    const title = `${container} .title`;
+    const list = `${container} .static-list`;
 
-test('list', async function(assert) {
-  assert.expect(2);
-  const container = '.detail-stewards';
-  const title = `${container} .title`;
-  const list = `${container} .static-list`;
+    await visit(url);
+    assert.equal(await getElementText(title), getText('Stewarding Schools and Departments (3)'));
+    assert.equal(await getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
 
-  await visit(url);
-  assert.equal(getElementText(title), getText('Stewarding Schools and Departments (3)'));
-  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+  });
 
-});
+  test('save', async function(assert) {
+    assert.expect(5);
+    const container = '.detail-stewards';
+    const manage = `${container} .actions button`;
+    const save = `${container} .bigadd`;
+    const selected = `${container} .remove-list`;
+    const available = `${container} .add-list`;
+    const department1 = `${available} li:nth-of-type(1) ul li:nth-of-type(1)`;
+    const department0 = `${selected} li:nth-of-type(1) ul li:nth-of-type(1)`;
+    const list = `${container} .static-list`;
 
-test('save', async function(assert) {
-  assert.expect(5);
-  const container = '.detail-stewards';
-  const manage = `${container} .actions button`;
-  const save = `${container} .bigadd`;
-  const selected = `${container} .remove-list`;
-  const available = `${container} .add-list`;
-  const department1 = `${available} li:eq(0) ul li:eq(0)`;
-  const department0 = `${selected} li:eq(0) ul li:eq(0)`;
-  const list = `${container} .static-list`;
+    await visit(url);
+    await click(manage);
+    assert.equal(await getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
+    await click(department1);
+    await click(department0);
+    assert.equal(await getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
+    await click(save);
+    assert.equal(await getElementText(list), getText('school 0 department 1 school 1 department 2 school 2'));
 
-  await visit(url);
-  await click(manage);
-  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
-  await click(department1);
-  await click(department0);
-  assert.equal(getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
-  await click(save);
-  assert.equal(getElementText(list), getText('school 0 department 1 school 1 department 2 school 2'));
+  });
 
-});
+  test('select school and all departments', async function(assert) {
+    assert.expect(3);
+    const container = '.detail-stewards';
+    const manage = `${container} .actions button`;
+    const save = `${container} .bigadd`;
+    const selected = `${container} .remove-list`;
+    const available = `${container} .add-list`;
+    const school0 = `${available} li:nth-of-type(1) .clickable`;
+    const list = `${container} .static-list`;
+    await visit(url);
+    await click(manage);
+    await click(school0);
+    assert.equal(await getElementText(available), getText('school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+    await click(save);
+    assert.equal(await getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+  });
 
-test('select school and all departments', async function(assert) {
-  assert.expect(3);
-  const container = '.detail-stewards';
-  const manage = `${container} .actions button`;
-  const save = `${container} .bigadd`;
-  const selected = `${container} .remove-list`;
-  const available = `${container} .add-list`;
-  const school0 = `${available} li:eq(0) .clickable`;
-  const list = `${container} .static-list`;
-  await visit(url);
-  await click(manage);
-  await click(school0);
-  assert.equal(getElementText(available), getText('school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-  await click(save);
-  assert.equal(getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-});
+  test('select all departments but not school', async function(assert) {
+    assert.expect(3);
+    const container = '.detail-stewards';
+    const manage = `${container} .actions button`;
+    const save = `${container} .bigadd`;
+    const selected = `${container} .remove-list`;
+    const available = `${container} .add-list`;
+    const departments = `${available} li:nth-of-type(1) ul li`;
+    const department1 = `${departments}:nth-of-type(1)`;
+    const department4 = `${departments}:nth-of-type(1)`;
+    const department5 = `${departments}:nth-of-type(1)`;
+    const department6 = `${departments}:nth-of-type(1)`;
+    const department7 = `${departments}:nth-of-type(1)`;
+    const department8 = `${departments}:nth-of-type(1)`;
+    const list = `${container} .static-list`;
+    await visit(url);
+    await click(manage);
+    await click(department1);
+    await click(department4);
+    await click(department5);
+    await click(department6);
+    await click(department7);
+    await click(department8);
+    assert.equal(await getElementText(available), getText('school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+    await click(save);
+    assert.equal(await getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
+  });
 
-test('select all departments but not school', async function(assert) {
-  assert.expect(3);
-  const container = '.detail-stewards';
-  const manage = `${container} .actions button`;
-  const save = `${container} .bigadd`;
-  const selected = `${container} .remove-list`;
-  const available = `${container} .add-list`;
-  const departments = `${available} li:eq(0) ul li`;
-  const department1 = `${departments}:eq(0)`;
-  const department4 = `${departments}:eq(0)`;
-  const department5 = `${departments}:eq(0)`;
-  const department6 = `${departments}:eq(0)`;
-  const department7 = `${departments}:eq(0)`;
-  const department8 = `${departments}:eq(0)`;
-  const list = `${container} .static-list`;
-  await visit(url);
-  await click(manage);
-  await click(department1);
-  await click(department4);
-  await click(department5);
-  await click(department6);
-  await click(department7);
-  await click(department8);
-  assert.equal(getElementText(available), getText('school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-  await click(save);
-  assert.equal(getElementText(list), getText('school 0 department 0 department 1 department 4 department 5 department 6 department 7 department 8 school 1 department 2 school 2'));
-});
+  test('remove solo school with no departments', async function(assert) {
+    assert.expect(3);
+    const container = '.detail-stewards';
+    const manage = `${container} .actions button`;
+    const save = `${container} .bigadd`;
+    const selected = `${container} .remove-list`;
+    const available = `${container} .add-list`;
+    const school2 = `${selected} ul:nth-of-type(1)>li:nth-of-type(3) .removable`;
+    const list = `${container} .static-list`;
+    await visit(url);
+    await click(manage);
+    await click(school2);
+    assert.equal(await getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 0 school 1 department 2'));
+    await click(save);
+    assert.equal(await getElementText(list), getText('school 0 department 0 school 1 department 2'));
+  });
 
-test('remove solo school with no departments', async function(assert) {
-  assert.expect(3);
-  const container = '.detail-stewards';
-  const manage = `${container} .actions button`;
-  const save = `${container} .bigadd`;
-  const selected = `${container} .remove-list`;
-  const available = `${container} .add-list`;
-  const school2 = `${selected} ul:eq(0)>li:eq(2) .removable`;
-  const list = `${container} .static-list`;
-  await visit(url);
-  await click(manage);
-  await click(school2);
-  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2'));
-  await click(save);
-  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2'));
-});
-
-test('cancel', async function(assert) {
-  assert.expect(6);
-  const container = '.detail-stewards';
-  const manage = `${container} .actions button`;
-  const cancel = `${container} .bigcancel`;
-  const selected = `${container} .remove-list`;
-  const available = `${container} .add-list`;
-  const department0 = `${selected} li:eq(0) ul li:eq(0)`;
-  const department1 = `${available} li:eq(0) ul li:eq(0)`;
-  const list = `${container} .static-list`;
-  await visit(url);
-  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
-  await click(manage);
-  assert.equal(getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
-  await click(department1);
-  await click(department0);
-  assert.equal(getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
-  assert.equal(getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
-  await click(cancel);
-  assert.equal(getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+  test('cancel', async function(assert) {
+    assert.expect(6);
+    const container = '.detail-stewards';
+    const manage = `${container} .actions button`;
+    const cancel = `${container} .bigcancel`;
+    const selected = `${container} .remove-list`;
+    const available = `${container} .add-list`;
+    const department0 = `${selected} li:nth-of-type(1) ul li:nth-of-type(1)`;
+    const department1 = `${available} li:nth-of-type(1) ul li:nth-of-type(1)`;
+    const list = `${container} .static-list`;
+    await visit(url);
+    assert.equal(await getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+    await click(manage);
+    assert.equal(await getElementText(available), getText('school 0 department 1 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 0 school 1 department 2 school 2'));
+    await click(department1);
+    await click(department0);
+    assert.equal(await getElementText(available), getText('school 0 department 0 department 4 department 5 department 6 department 7 department 8 school 2 department 3'));
+    assert.equal(await getElementText(selected), getText('school 0 department 1 school 1 department 2 school 2'));
+    await click(cancel);
+    assert.equal(await getElementText(list), getText('school 0 department 0 school 1 department 2 school 2'));
+  });
 });

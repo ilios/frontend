@@ -30,6 +30,7 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
   publishTarget: alias('course'),
 
   editable: not('course.locked'),
+  'data-test-course-header': true,
 
   actions: {
     changeTitle() {

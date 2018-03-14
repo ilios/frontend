@@ -1,33 +1,31 @@
-import destroyApp from '../helpers/destroy-app';
+import { currentRouteName, visit } from '@ember/test-helpers';
 import {
   module,
   test
 } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-var application;
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-module('Acceptance: FourOhFour', {
-  beforeEach: function() {
-    application = startApp();
-    setupAuthentication(application);
-  },
+module('Acceptance: FourOhFour', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
+  });
 
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+  test('visiting /four-oh-four', async function(assert) {
+    await visit('/four-oh-four');
 
-test('visiting /four-oh-four', async function(assert) {
-  await visit('/four-oh-four');
+    assert.equal(currentRouteName(), 'fourOhFour');
+    assert.equal(await getElementText('.full-screen-error'), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
+  });
 
-  assert.equal(currentPath(), 'fourOhFour');
-  assert.equal(getElementText(find('.full-screen-error')), getText("Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"));
-});
+  test('visiting /nothing', async function(assert) {
+    await visit('/nothing');
 
-test('visiting /nothing', async function(assert) {
-  await visit('/nothing');
-
-  assert.equal(currentPath(), 'fourOhFour');
+    assert.equal(currentRouteName(), 'fourOhFour');
+  });
 });

@@ -1,57 +1,53 @@
-import { run } from '@ember/runloop';
+import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
-let url = '/users/4136';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: User', {
-  beforeEach() {
-    application = startApp();
+module('Acceptance: User', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
     let userObject = {
-      id: 4136,
+      id: 100,
       campusId: '123',
       email: 'user@example.edu',
       phone: '111-111-1111',
       primaryCohortId: 1,
       cohortIds: [1, 2, 3],
       learnerGroupIds: [3, 5],
-      schoolId: 1
+      school
     };
+    this.server.create('program', { school });
+    this.server.createList('programYear', 3, { programId: 1});
+    this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
+    this.server.create('cohort', { programYearId: 2 });
+    this.server.create('cohort', { programYearId: 3 });
+    this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
+    await setupAuthentication( userObject );
+  });
 
-    server.create('school');
-    server.create('program');
-    server.createList('programYear', 3, { programId: 1});
-    server.create('cohort', { title: 'Medicine', programYearId: 1 });
-    server.create('cohort', { programYearId: 2 });
-    server.create('cohort', { programYearId: 3 });
-    server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
-    setupAuthentication(application, userObject);
-  },
+  test('can search for users', async function(assert) {
+    this.server.createList('user', 20, { email: 'user@example.edu' });
+    this.server.createList('authentication', 20);
 
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
+    const userSearch = '.user-search input';
+    const secondResult = '.user-search .results li:nth-of-type(3)';
+    const secondResultUsername = `${secondResult} .name`;
+    const secondResultEmail = `${secondResult} .email`;
+    const name = '.user-display-name';
 
-test('can search for users', async function(assert) {
-  server.createList('user', 20, { email: 'user@example.edu' });
-  server.createList('authentication', 20);
+    await visit('/users/100');
+    await fillIn(userSearch, 'son');
+    await triggerEvent(userSearch, 'keyup');
+    assert.equal(find(secondResultUsername).textContent.trim(), '1 guy M. Mc1son', 'user name is correct');
+    assert.equal(find(secondResultEmail).textContent.trim(), 'user@example.edu', 'user email is correct');
 
-  const userSearch = '.user-search input';
-  const secondResult = '.user-search .results li:eq(2)';
-  const secondResultUsername = `${secondResult} .name`;
-  const secondResultEmail = `${secondResult} .email`;
-  const name = '.user-display-name';
-
-  await visit(url);
-  await fillIn(userSearch, 'son');
-  await triggerEvent(userSearch, 'keyup');
-  assert.equal(find(secondResultUsername).text().trim(), '1 guy M. Mc1son', 'user name is correct');
-  assert.equal(find(secondResultEmail).text().trim(), 'user@example.edu', 'user email is correct');
-
-  await click(secondResultUsername);
-  assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-  assert.equal(find(name).text().trim(), '1 guy M. Mc1son', 'user name is shown');
+    await click(secondResultUsername);
+    assert.equal(currentURL(), '/users/2', 'new user profile is shown');
+    assert.equal(find(name).textContent.trim(), '1 guy M. Mc1son', 'user name is shown');
+  });
 });

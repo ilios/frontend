@@ -14,6 +14,7 @@ export default Component.extend({
   session: null,
   offerings: oneWay('session.offerings'),
   editable: true,
+  'data-test-session-offerings-list': true,
 
   /**
    * @property offeringBlocks

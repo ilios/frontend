@@ -1,24 +1,25 @@
+import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import startApp from 'ilios/tests/helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-let application;
-module('Acceptance | assign students', {
-  beforeEach: function() {
-    application = startApp();
-    server.createList('school', 2);
-    setupAuthentication(application, { id: 4136, schoolId: 1});
-  },
-  afterEach: function() {
-    destroyApp(application);
-  }
-});
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-test('visiting /admin/assignstudents', async function(assert) {
-  await visit('/admin/assignstudents');
+module('Acceptance: assign students', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('school');
+  });
 
-  assert.equal(getElementText('.schoolsfilter'), getText('school 0'));
+  test('visiting /admin/assignstudents', async function(assert) {
+    await visit('/admin/assignstudents');
 
-  assert.equal(currentURL(), '/admin/assignstudents');
+    assert.equal(await getElementText('.schoolsfilter'), getText('school 0'));
+
+    assert.equal(currentURL(), '/admin/assignstudents');
+  });
 });
