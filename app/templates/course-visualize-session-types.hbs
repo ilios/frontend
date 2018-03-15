@@ -1,9 +1,9 @@
-<section class='course-visualize-objectives'>
+<section class='course-visualize-session-types'>
   <div class="backtolink">
     {{#link-to 'course-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
   </div>
   <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
-  <h3>{{t 'general.objectivesTotalInstructionalTime'}}</h3>
+  <h3>{{t 'general.sessionTypes'}}</h3>
 
-  {{visualizer-course-objectives course=model}}
+  {{visualizer-course-session-types course=model}}
 </section>

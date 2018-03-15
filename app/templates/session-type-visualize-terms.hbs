@@ -1,0 +1,11 @@
+<section class='session-type-visualize-terms'>
+  <h2>
+    {{#link-to 'session-type-visualize-vocabularies' model.sessionType}}
+      {{model.sessionType.title}}
+    {{/link-to}}
+    > {{model.vocabulary.title}}
+  </h2>
+  <h3>{{t 'general.terms'}}</h3>
+
+  {{visualizer-session-type-terms sessionType=model.sessionType vocabulary=model.vocabulary}}
+</section>
