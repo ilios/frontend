@@ -4018,11 +4018,11 @@ ember-hash-helper-polyfill@^0.2.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.1.0"
 
-ember-i18n-cp-validations@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/ember-i18n-cp-validations/-/ember-i18n-cp-validations-3.0.2.tgz#560a5717fdeab9258fec78902205499e6a7eb6fa"
+ember-i18n-cp-validations@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ember-i18n-cp-validations/-/ember-i18n-cp-validations-3.1.0.tgz#e66c4b032e6546b3358f4a48690a3e503a411965"
   dependencies:
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.6.0"
 
 ember-i18n@^5.0.1:
   version "5.1.0"
