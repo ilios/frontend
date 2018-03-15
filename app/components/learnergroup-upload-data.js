@@ -85,6 +85,7 @@ export default Component.extend({
     const proposedUsers = yield this.getFileContents(file);
     const data = yield map(proposedUsers, async ({firstName, lastName, campusId, subGroupName }) => {
       const errors = [];
+      const warnings = [];
       if (isEmpty(firstName)) {
         errors.push(i18n.t('errors.required', {description: i18n.t('general.firstName')}));
       }
@@ -114,10 +115,10 @@ export default Component.extend({
             errors.push(i18n.t('general.userNotInGroupCohort', {cohortTitle: cohort.get('title')}));
           }
           if (user.get('firstName') != firstName) {
-            errors.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.firstName'), record: user.get('firstName')}));
+            warnings.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.firstName'), record: user.get('firstName')}));
           }
           if (user.get('lastName') != lastName) {
-            errors.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.lastName'), record: user.get('lastName')}));
+            warnings.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.lastName'), record: user.get('lastName')}));
           }
           userRecord = user;
         }
@@ -130,6 +131,8 @@ export default Component.extend({
         subGroupName: typeof(subGroupName) === 'string'?subGroupName.trim():subGroupName,
         userRecord,
         errors,
+        warning: warnings.join(', '),
+        hasWarning: warnings.length > 0,
         isValid: errors.length === 0
       };
     });

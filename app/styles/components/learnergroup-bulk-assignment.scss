@@ -13,6 +13,11 @@
         @include ilios-heading-h1;
       }
     }
+
+    .issue {
+      color: $dark-grey;
+      margin-left: 1rem;
+    }
   }
 
   .group-matcher {

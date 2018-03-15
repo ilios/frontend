@@ -147,7 +147,7 @@ export default {
     'disabled': "désactivée",
     'disableUser': 'Désactiver compte d’utilisateur',
     'displayName': "Nom d’Affichage",
-    'doesNotMatchUserRecord': "{{description}} ne correspond pas avec l'enregistrement utilisateur : {{record}}",
+    'doesNotMatchUserRecord': 'Téléchargé {{description}} ne correspond pas aux informations dans Ilios, qui est "{{record}}"',
     'domain': 'Domaine',
     'done': "Fini",
     'downloadingCurriculumInventoryReport': 'Rapport téléchargement a commencé. Cela peut prendre un peu de temps...',
