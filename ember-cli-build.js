@@ -53,6 +53,7 @@ module.exports = function(defaults) {
     },
     'ember-service-worker': {
       immediateClaim: false,
+      skipWaitingOnMessage: true,
       versionStrategy: 'every-build',
     },
     'asset-cache': {
