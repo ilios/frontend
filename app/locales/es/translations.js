@@ -147,7 +147,7 @@
     'disabled': 'desactivado',
     'disableUser': 'Desactivar el usuario',
     'displayName': 'Nombre de Mostrar',
-    'doesNotMatchUserRecord': '{{description}} no coincide con el registro de usuario: {{record}}',
+    'doesNotMatchUserRecord': 'Cargado {{description}} no coincide con la información en Ilios, cuál es "{{record}}"',
     'domain': 'Dominio',
     'done': 'Acabado',
     'downloadingCurriculumInventoryReport': 'Informe descarga ha comenzado. Esto puede tardar un rato...',

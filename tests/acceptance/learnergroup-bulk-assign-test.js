@@ -84,13 +84,52 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       ['jackson', 'johnson', '12345'],
     ];
     await triggerUpload(users, '[data-test-user-upload]');
+
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
+    assert.ok(page.bulkAssign.validUploadedUsers(0).isValid);
     assert.equal(page.bulkAssign.validUploadedUsers(0).firstName, 'jasper');
     assert.equal(page.bulkAssign.validUploadedUsers(0).lastName, 'johnson');
     assert.equal(page.bulkAssign.validUploadedUsers(0).campusId, '1234567890');
     assert.equal(page.bulkAssign.validUploadedUsers(0).smallGroupName, '123Test');
+    assert.ok(page.bulkAssign.validUploadedUsers(1).isValid);
     assert.equal(page.bulkAssign.validUploadedUsers(1).firstName, 'jackson');
     assert.equal(page.bulkAssign.validUploadedUsers(1).lastName, 'johnson');
+    assert.equal(page.bulkAssign.validUploadedUsers(1).campusId, '12345');
+    assert.equal(page.bulkAssign.validUploadedUsers(1).smallGroupName, '');
+
+    assert.ok(page.bulkAssign.showConfirmUploadButton);
+  });
+
+  test('upload user warnings', async function (assert) {
+    await page.visit({ learnerGroupId: 1 });
+    await page.activateBulkAssign();
+    this.server.create('user', {
+      firstName: 'jasper',
+      lastName: 'johnson',
+      campusId: '1234567890',
+      cohortIds: [1],
+    });
+    this.server.create('user', {
+      firstName: 'jackson',
+      lastName: 'johnson',
+      campusId: '12345',
+      cohortIds: [1],
+    });
+    let users = [
+      ['jasper J', 'johnson', '1234567890', '123Test'],
+      ['jackson', 'johnson the seconds', '12345'],
+    ];
+    await triggerUpload(users, '[data-test-user-upload]');
+
+    assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
+    assert.ok(page.bulkAssign.validUploadedUsers(0).hasWarning);
+    assert.equal(page.bulkAssign.validUploadedUsers(0).firstName, 'jasper (jasper J)');
+    assert.equal(page.bulkAssign.validUploadedUsers(0).lastName, 'johnson');
+    assert.equal(page.bulkAssign.validUploadedUsers(0).campusId, '1234567890');
+    assert.equal(page.bulkAssign.validUploadedUsers(0).smallGroupName, '123Test');
+    assert.ok(page.bulkAssign.validUploadedUsers(1).hasWarning);
+    assert.equal(page.bulkAssign.validUploadedUsers(1).firstName, 'jackson');
+    assert.equal(page.bulkAssign.validUploadedUsers(1).lastName, 'johnson (johnson the seconds)');
     assert.equal(page.bulkAssign.validUploadedUsers(1).campusId, '12345');
     assert.equal(page.bulkAssign.validUploadedUsers(1).smallGroupName, '');
 
@@ -127,13 +166,11 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     ];
     await triggerUpload(users, '[data-test-user-upload]');
 
-    assert.equal(page.bulkAssign.invalidUploadedUsers().count, 6);
-    assert.equal(page.bulkAssign.invalidUploadedUsers(0).errors, 'First Name does not match user record: jasper');
-    assert.equal(page.bulkAssign.invalidUploadedUsers(1).errors, 'Last Name does not match user record: johnson');
-    assert.equal(page.bulkAssign.invalidUploadedUsers(2).errors, 'First Name is required');
-    assert.equal(page.bulkAssign.invalidUploadedUsers(3).errors, 'Last Name is required');
-    assert.equal(page.bulkAssign.invalidUploadedUsers(4).errors, 'Could not find a user with the campusId abcd');
-    assert.equal(page.bulkAssign.invalidUploadedUsers(5).errors, "User is not in this group's cohort: class of this year");
+    assert.equal(page.bulkAssign.invalidUploadedUsers().count, 4);
+    assert.equal(page.bulkAssign.invalidUploadedUsers(0).errors, 'First Name is required');
+    assert.equal(page.bulkAssign.invalidUploadedUsers(1).errors, 'Last Name is required');
+    assert.equal(page.bulkAssign.invalidUploadedUsers(2).errors, 'Could not find a user with the campusId abcd');
+    assert.equal(page.bulkAssign.invalidUploadedUsers(3).errors, "User is not in this group's cohort: class of this year");
     assert.notOk(page.bulkAssign.showConfirmUploadButton);
   });
 

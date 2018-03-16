@@ -60,11 +60,27 @@
     </thead>
     <tbody>
       {{#each validUsers as |user|}}
-        <tr class={{unless user.isValid 'invalid'}}>
-          <td colspan=1>{{fa-icon 'check' class='yes'}}</td>
-          <td colspan=3>{{user.firstName}}</td>
-          <td colspan=3>{{user.lastName}}</td>
-          <td colspan=3>{{user.campusId}}</td>
+        <tr>
+          <td colspan=1>
+            {{#if user.hasWarning}}
+              {{fa-icon 'exclamation-triangle' class='warning' title=user.warning}}
+            {{else}}
+              {{fa-icon 'check' class='yes'}}
+            {{/if}}
+          </td>
+          <td colspan=3>
+            {{user.userRecord.firstName}}
+            {{#if (not-eq user.firstName user.userRecord.firstName)}}
+              <span class='issue'>({{user.firstName}})</span>
+            {{/if}}
+          </td>
+          <td colspan=3>
+            {{user.userRecord.lastName}}
+            {{#if (not-eq user.lastName user.userRecord.lastName)}}
+              <span class='issue'>({{user.lastName}})</span>
+            {{/if}}
+          </td>
+          <td colspan=3>{{user.userRecord.campusId}}</td>
           <td colspan=3>{{user.subGroupName}}</td>
         </tr>
       {{/each}}
