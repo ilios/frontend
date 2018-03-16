@@ -71,22 +71,16 @@
         {{new-myreport close=(action 'toggleEditor')}}
       {{/liquid-if}}
       {{#if (is-fulfilled sortedReports)}}
-        {{#if (get (await sortedReports) 'length')}}
-          <table>
-            <tbody data-test-saved-reports>
-              {{#each (await sortedReports) as |report|}}
-                <tr>
-                  <td colspan=4>
-                    {{myreports-list-item report=report selectReport='selectReport'}}
-                  </td>
-                  <td class='text-right clickable remove' colspan=1 {{action 'deleteReport' report}}>{{fa-icon 'trash'}}</td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        {{else}}
-          {{t 'general.none'}}
-        {{/if}}
+        <ul class='saved-reports' data-test-saved-reports>
+          {{#each (await sortedReports) as |report|}}
+            <li>
+              {{myreports-list-item report=report selectReport='selectReport'}}
+              {{fa-icon 'trash' class='clickable remove' click=(action 'deleteReport' report)}}
+            </li>
+          {{else}}
+            <li>{{t 'general.none'}}</li>
+          {{/each}}
+        </ul>
       {{else}}
         {{loading-spinner tagName='h1'}}
       {{/if}}

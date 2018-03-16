@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend(ReportTitleMixin, {
   reporttitle: null,
+  classNames: ['myreports-list-item'],
   tagName: 'span',
 
   didReceiveAttrs() {

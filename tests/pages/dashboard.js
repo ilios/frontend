@@ -16,10 +16,11 @@ export default create({
     scope: '[data-test-myreports]',
     addNewReport: clickable('[data-test-add-new-report]'),
     reports: collection({
-      itemScope: '[data-test-saved-reports] tr',
+      scope: '[data-test-saved-reports]',
+      itemScope: 'li',
       item: {
-        title: text('td:eq(0)'),
-        select: clickable('.clickable', { scope: 'td:eq(0)' })
+        title: text(),
+        select: clickable('.clickable')
       },
     }),
     selectedReport: {
