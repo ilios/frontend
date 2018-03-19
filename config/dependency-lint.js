@@ -7,6 +7,6 @@ module.exports = {
     'ember-getowner-polyfill': '^1.0.0 || ^2.0.0',
     'ember-inflector': '^1.0.0 || ^2.0.0',
     'ember-hash-helper-polyfill': '^0.1.2 || ^0.2.0', // workaround for dep. conflict ember-tooltips/liquid-fire
-    'ember-require-module': '^0.1.3 || ^0.2.0' // workaround for dep. conflict ember-cp-validations/ember-validators
+    'ember-require-module': '^0.1.2 || ^0.2.0' // workaround for dep. conflict ember-cp-validations/ember-validators
   }
 };
