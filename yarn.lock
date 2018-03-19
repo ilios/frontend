@@ -3876,7 +3876,7 @@ ember-cryptojs-shim@^4.0.0:
     crypto-js "^3.1.8"
     ember-cli-babel "^6.6.0"
 
-ember-d3@^0.4.1:
+ember-d3@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/ember-d3/-/ember-d3-0.4.3.tgz#3025897ec6a294cd4c6763e91c2e30a78a0ecb7e"
   dependencies:
@@ -4372,15 +4372,15 @@ ember-simple-auth@^1.4.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.11.0.tgz#0711101ef06a2c3e3e707bbc62bfc7ddbea81ac4"
+ember-simple-charts@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.11.1.tgz#e35ef7f542f15450e68ff748e14431577bd3f8e9"
   dependencies:
     d3 "^4.13.0"
     ember-cli-babel "^6.8.1"
     ember-cli-htmlbars "^2.0.1"
     ember-cli-sass "^7.1.2"
-    ember-d3 "^0.4.1"
+    ember-d3 "^0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-tether v0.4.1
     merge "^1.2.0"
