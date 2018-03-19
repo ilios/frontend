@@ -64,9 +64,6 @@ module.exports = {
       excludedFiles: ['tests/dummy/**/*.js'],
       "globals": {
         "$": true,
-        "getElementText": true,
-        "getText": true,
-        "pickOption": true,
       },
     }
   ]
