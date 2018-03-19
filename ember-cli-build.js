@@ -21,7 +21,6 @@ module.exports = function(defaults) {
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     'ember-cli-babel': {
-      includePolyfill: true,
       sourceMaps: isProductionLikeBuild?false:'inline'
     },
     'ember-cli-image-transformer': {
