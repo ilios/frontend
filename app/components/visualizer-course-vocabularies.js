@@ -4,8 +4,10 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  router: service(),
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabularies'],
@@ -22,20 +24,21 @@ export default Component.extend({
 
       return {
         sessionTitle: session.get('title'),
-        vocabularies: vocabularies.mapBy('title'),
+        vocabularies,
         minutes,
       };
     });
 
     const data = dataMap.reduce((set, obj) => {
-      obj.vocabularies.forEach(vocabularyTitle => {
+      obj.vocabularies.forEach(vocabulary => {
+        const vocabularyTitle = vocabulary.get('title');
         let existing = set.findBy('label', vocabularyTitle);
         if (!existing) {
           existing = {
             data: 0,
             label: vocabularyTitle,
             meta: {
-              vocabulary: vocabularyTitle,
+              vocabulary,
               sessions: []
             }
           };
@@ -50,6 +53,18 @@ export default Component.extend({
 
     return data;
   }),
+  actions: {
+    donutClick(obj) {
+      const course = this.get('course');
+      const isIcon = this.get('isIcon');
+      const router = this.get('router');
+      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+        return;
+      }
+
+      router.transitionTo('course-visualize-vocabulary', course.get('id'), obj.meta.vocabulary.get('id'));
+    }
+  },
   donutHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.get('isIcon');
@@ -58,10 +73,10 @@ export default Component.extend({
     }
     const { meta } = obj;
 
-    const title = htmlSafe(meta.vocabulary);
+    const title = htmlSafe(meta.vocabulary.get('title'));
     const sessions = meta.sessions.uniq().sort().join();
 
     this.set('tooltipTitle', title);
     this.set('tooltipContent', sessions);
-  })
+  }),
 });
