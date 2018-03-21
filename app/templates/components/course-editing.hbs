@@ -1,3 +1,19 @@
+{{#if (or (and (eq course.directors.length 0) (eq course.administrators.length 0)) courseLeadershipDetails)}}
+  {{course-leadership-expanded
+    course=course
+    collapse=(action setCourseLeadershipDetails false)
+    expand=(action setCourseLeadershipDetails true)
+    isManaging=courseManageLeadership
+    setIsManaging=setCourseManageLeadership
+  }}
+{{else}}
+  {{leadership-collapsed
+    title=(t 'general.courseLeadership')
+    directorsCount=(has-many-length course 'directors')
+    administratorsCount=(has-many-length course 'administrators')
+    expand=(action setCourseLeadershipDetails true)
+  }}
+{{/if}}
 {{#if (or (eq course.objectives.length 0) courseObjectiveDetails)}}
   {{detail-objectives
     subject=course

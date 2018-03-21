@@ -111,6 +111,7 @@
     'couldNotFindUserCampusId': 'No se pudo encontrar un usuario con el campusId {{campusId}}',
     'countAsOneOffering': 'Cuenta como un Ofrecimiento',
     'courseDirector': 'Director del Curso',
+    'courseLeadership': 'Liderazgo del Curso',
     'courseRollover': 'Copiar Curso',
     'courseRolloverSuccess': 'Curso Copiado con Éxito',
     'courseRolloverSummary': 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en "done". Para volver a su curso corriente, haga clic en "cancel"',

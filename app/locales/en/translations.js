@@ -111,6 +111,7 @@ export default {
     'couldNotFindUserCampusId': 'Could not find a user with the campusId {{campusId}}',
     'countAsOneOffering': 'Count as one offering',
     'courseDirector': 'Course Director',
+    'courseLeadership': 'Course Leadership',
     'courseRollover': 'Rollover Course',
     'courseRolloverSuccess': 'Course-Rollover Completed Successfully',
     'courseRolloverSummary': 'You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “done”. To return to your current course, click “cancel”',

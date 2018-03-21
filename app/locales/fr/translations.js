@@ -111,6 +111,7 @@ export default {
     'couldNotFindUserCampusId': 'Ne pouvait pas trouver utilisateur avec le Campus ID {{campusId}}',
     'countAsOneOffering': 'Comptent pour un séance',
     'courseDirector': 'Directeur de Cours',
+    'courseLeadership': 'Dirigeants de Cours',
     'courseRollover': 'Roulement Cours',
     'courseRolloverSuccess': 'Roulement achevée avec succès',
     'courseRolloverSummary': "Vous êtes sur le point le roulement ce cours dans l'année universitaire choisie, avec toutes les options choisies. Continuer, cliquer \"done\". Pour retourner à votre cours actuel, le clic \"annul\"",

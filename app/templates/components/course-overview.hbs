@@ -149,31 +149,5 @@
     <label>{{t 'general.universalLocator'}}:</label>
     <span class="universallocator"><strong>{{universalLocator}}{{course.id}}</strong></span>
   </div>
-  <div class="coursedirectors">
-    <label class={{if editable 'clickable link'}} onclick={{if editable (action (toggle 'manageDirectors' this))}}>
-      {{t 'general.directors'}}:
-    </label>
-    {{#unless showDirectorManagerLoader}}
-      {{#if manageDirectors}}
-        {{course-director-manager
-          directors=directorsToPassToManager.lastSuccessful.value
-          save=(action 'saveDirectors')
-          close=(toggle-action 'manageDirectors' this)
-        }}
-      {{else}}
-        {{#if (get (await course.directors) 'length')}}
-          <ul class="directors">
-            {{#each (sort-by 'lastName' (await course.directors)) as |director|}}
-              <li>{{director.fullName}}</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <span>{{t 'general.none'}}</span>
-        {{/if}}
-      {{/if}}
-    {{else}}
-      {{loading-spinner}}
-    {{/unless}}
-  </div>
 
 </div>

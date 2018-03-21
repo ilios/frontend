@@ -5,4 +5,5 @@ export default Component.extend({
   classNames: ['leadership-manager'],
   directors: null,
   administrators: null,
+  'data-test-leadership-manager': true,
 });

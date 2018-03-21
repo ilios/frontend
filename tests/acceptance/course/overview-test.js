@@ -50,8 +50,6 @@ module('Acceptance: Course - Overview', function(hooks) {
       assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
-      assert.equal(page.overview.courseDirectors.selected().count, 1);
-      assert.equal(page.overview.courseDirectors.selected(0).name, 'A M. Director');
       assert.equal(page.overview.rollover.link, '/courses/1/rollover');
     });
 
@@ -63,8 +61,6 @@ module('Acceptance: Course - Overview', function(hooks) {
       assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
-      assert.equal(page.overview.courseDirectors.selected().count, 1);
-      assert.equal(page.overview.courseDirectors.selected(0).name, 'A M. Director');
       assert.equal(page.overview.rollover.link, '/courses/1/rollover?details=true');
     });
 
@@ -229,110 +225,6 @@ module('Acceptance: Course - Overview', function(hooks) {
     await page.overview.level.set(newValue);
     await page.overview.level.save();
     assert.equal(page.overview.level.value, newValue);
-  });
-
-  test('remove director', async function (assert) {
-    this.server.create('user', {
-      firstName: 'A',
-      lastName: 'Director'
-    });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      externalId: 123,
-      level: 3,
-      directorIds: [2]
-    });
-    await page.visit({ courseId: 1, details: true });
-    assert.equal(page.overview.courseDirectors.selected().count, 1);
-    await page.overview.courseDirectors.manage();
-    await page.overview.courseDirectors.manager.selected(0).remove();
-    await page.overview.courseDirectors.manager.save();
-    assert.equal(page.overview.courseDirectors.selected().count, 0);
-  });
-
-  test('manage directors', async function (assert) {
-    let directorRole = this.server.create('userRole', {
-      title: 'Course Director'
-    });
-    let addedGuy = this.server.create('user', {
-      firstName: 'Added',
-      lastName: 'Guy',
-      roles: [directorRole]
-    });
-    this.server.create('user', {
-      firstName: 'Disabled',
-      lastName: 'Guy',
-      enabled: false,
-      roles: [directorRole]
-    });
-    this.server.db.users.update(this.user.id, {roles: [directorRole]});
-
-    let secondRole = this.server.create('userRole');
-    this.server.create('user', {
-      firstName: 'Not a director',
-      lastName: 'Guy',
-      roles: [secondRole]
-    });
-
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      externalId: 123,
-      level: 3,
-      directors: [addedGuy]
-    });
-    await page.visit({ courseId: 1, details: true });
-    assert.equal(page.overview.courseDirectors.selected().count, 1);
-    await page.overview.courseDirectors.manage();
-    await page.overview.courseDirectors.manager.search('guy');
-    assert.equal(page.overview.courseDirectors.manager.searchResults().count, 3);
-    assert.equal(page.overview.courseDirectors.manager.searchResults(0).name, '0 guy M. Mc0son user@example.edu');
-    assert.ok(page.overview.courseDirectors.manager.searchResults(0).isActive);
-    assert.equal(page.overview.courseDirectors.manager.searchResults(1).name, 'Added M. Guy user@example.edu');
-    assert.ok(page.overview.courseDirectors.manager.searchResults(1).inactive);
-    assert.equal(page.overview.courseDirectors.manager.searchResults(2).name, 'Disabled M. Guy user@example.edu');
-    assert.ok(page.overview.courseDirectors.manager.searchResults(2).inactive);
-
-    await page.overview.courseDirectors.manager.selected(0).remove();
-    await page.overview.courseDirectors.manager.searchResults(0).add();
-    assert.ok(page.overview.courseDirectors.manager.searchResults(0).inactive);
-    assert.ok(page.overview.courseDirectors.manager.searchResults(1).isActive);
-    await page.overview.courseDirectors.manager.save();
-    assert.equal(page.overview.courseDirectors.selected().count, 1);
-    assert.equal(page.overview.courseDirectors.selected(0).name, '0 guy M. Mc0son');
-  });
-
-  // //test for a bug where the search results were not cleared between searches
-  test('search twice and list should be correct', async function(assert) {
-    const directorRole = this.server.create('userRole');
-    let user = this.server.create('user', {
-      firstName: 'Added',
-      lastName: 'Guy',
-      roles: [directorRole]
-    });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      externalId: 123,
-      level: 3,
-      directors: [user]
-    });
-    this.server.db.users.update(this.user.id, {roles: [directorRole]});
-
-    await page.visit({ courseId: 1, details: true });
-    assert.equal(page.overview.courseDirectors.selected().count, 1);
-    await page.overview.courseDirectors.manage();
-    await page.overview.courseDirectors.manager.search('guy');
-    assert.equal(page.overview.courseDirectors.manager.searchResults().count, 2);
-    assert.equal(page.overview.courseDirectors.manager.searchResults(0).name, '0 guy M. Mc0son user@example.edu');
-    assert.equal(page.overview.courseDirectors.manager.searchResults(1).name, 'Added M. Guy user@example.edu');
-    await page.overview.courseDirectors.manager.searchResults(0).add();
-    await page.overview.courseDirectors.manager.search('');
-    await page.overview.courseDirectors.manager.search('guy');
-    assert.equal(page.overview.courseDirectors.manager.searchResults().count, 2);
-    assert.equal(page.overview.courseDirectors.manager.searchResults(0).name, '0 guy M. Mc0son user@example.edu');
-    assert.equal(page.overview.courseDirectors.manager.searchResults(1).name, 'Added M. Guy user@example.edu');
   });
 
   test('click rollover', async function(assert) {

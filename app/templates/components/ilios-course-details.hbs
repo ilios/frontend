@@ -8,12 +8,16 @@
 {{else}}
   {{course-editing
     course=course
+    courseLeadershipDetails=courseLeadershipDetails
     courseObjectiveDetails=courseObjectiveDetails
     courseTaxonomyDetails = courseTaxonomyDetails
     courseCompetencyDetails = courseCompetencyDetails
+    courseManageLeadership = courseManageLeadership
     setCourseObjectiveDetails=(action setCourseObjectiveDetails)
+    setCourseLeadershipDetails=(action setCourseLeadershipDetails)
     setCourseTaxonomyDetails=(action setCourseTaxonomyDetails)
     setCourseCompetencyDetails=(action setCourseCompetencyDetails)
+    setCourseManageLeadership=(action setCourseManageLeadership)
   }}
   <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'general.collapseDetail'}}{{fa-icon 'minus-square'}}</span></div>
 {{/if}}
