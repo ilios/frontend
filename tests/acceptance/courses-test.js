@@ -10,8 +10,8 @@ module('Acceptance | Courses', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function() {
-    const school = this.server.create('school');
-    this.user = await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('school');
   });
 
@@ -621,5 +621,30 @@ module('Acceptance | Courses', function(hooks) {
 
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, firstCourse.title);
+  });
+
+  test('can not delete course with descendants #3620', async function (assert) {
+    const year = moment().year().toString();
+    this.server.create('academicYear', {id: year});
+    const course1 = this.server.create('course', {
+      year,
+      school: this.school,
+    });
+    this.server.create('course', {
+      year,
+      school: this.school,
+      ancestor: course1
+    });
+
+    this.server.create('userRole', {
+      title: 'Developer'
+    });
+    this.server.db.users.update(this.user.id, {roleIds: [1]});
+
+    assert.expect(2);
+    await page.visit({ year });
+
+    assert.equal(page.courses(0).removeActionCount, 0, 'privileged user cannot delete course with descendants');
+    assert.equal(page.courses(1).removeActionCount, 1, 'privileged user can delete course with ancestors');
   });
 });

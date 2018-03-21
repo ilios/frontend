@@ -33,6 +33,8 @@ const CourseProxy = ObjectProxy.extend({
       const currentUser = this.get('currentUser');
       if (course.get('isPublishedOrScheduled')) {
         resolve(false);
+      } else if (course.hasMany('descendants').ids().length > 0) {
+        resolve(false);
       } else {
         currentUser.get('userIsDeveloper').then(isDeveloper => {
           if (isDeveloper) {
