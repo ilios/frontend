@@ -19,14 +19,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   supplemental: attr('boolean'),
   attendanceRequired: attr('boolean'),
   updatedAt: attr('date'),
-  sessionType: belongsTo('session-type', {async: true}),
-  course: belongsTo('course', {async: true}),
-  ilmSession: belongsTo('ilm-session', {async: true}),
-  objectives: hasMany('objective', {async: true}),
-  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
-  sessionDescription: belongsTo('session-description', {async: true}),
-  learningMaterials: hasMany('session-learning-material', {async: true}),
-  offerings: hasMany('offering', {async: true}),
+  sessionType: belongsTo('session-type', { async: true }),
+  course: belongsTo('course', { async: true }),
+  ilmSession: belongsTo('ilm-session', { async: true }),
+  objectives: hasMany('objective', { async: true }),
+  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
+  sessionDescription: belongsTo('session-description', { async: true }),
+  learningMaterials: hasMany('session-learning-material', { async: true }),
+  offerings: hasMany('offering', { async: true }),
   administrators: hasMany('user', {
     async: true,
     inverse: 'administeredSessions'
@@ -36,7 +36,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   assignableVocabularies: alias('course.assignableVocabularies'),
 
-  isIndependentLearning: computed('ilmSession', function(){
+  isIndependentLearning: computed('ilmSession', function () {
     return !isEmpty(this.belongsTo('ilmSession').id());
   }),
 
@@ -45,13 +45,13 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property sortedOfferingsByDate
    * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed('offerings.@each.startDate', async function() {
+  sortedOfferingsByDate: computed('offerings.@each.startDate', async function () {
     const offerings = await this.get('offerings');
     const filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
     return filteredOfferings.sort((a, b) => {
       let aDate = moment(a.get('startDate'));
       let bDate = moment(b.get('startDate'));
-      if(aDate === bDate){
+      if (aDate === bDate) {
         return 0;
       }
       return aDate > bDate ? 1 : -1;
@@ -64,14 +64,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property firstOfferingDate
    * @type {Ember.computed}
    */
-  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', async function(){
+  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', async function () {
     const ilmSession = await this.get('ilmSession');
-    if(ilmSession){
+    if (ilmSession) {
       return ilmSession.get('dueDate');
     }
 
     const offerings = await this.get('sortedOfferingsByDate');
-    if(isEmpty(offerings)){
+    if (isEmpty(offerings)) {
       return null;
     }
 
@@ -80,10 +80,10 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings.
-   * @property sortedTerms
+   * @property maxSingleOfferingDuration
    * @type {Ember.computed}
    */
-  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function(){
+  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function () {
     const offerings = await this.get('offerings');
     if (isEmpty(offerings)) {
       return 0;
@@ -107,10 +107,10 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
 
   /**
    * The total duration in hours (incl. fractions) of all session offerings.
-   * @property sortedTerms
+   * @property totalSumOfferingsDuration
    * @type {Ember.computed}
    */
-  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function() {
+  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function () {
     const offerings = await this.get('offerings');
     if (isEmpty(offerings)) {
       return 0;
@@ -119,6 +119,24 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return offerings.reduce((total, offering) => {
       return total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
     }, 0).toFixed(2);
+  }),
+
+  /**
+   * Total duration in hours for offerings and ILM Sessions
+   * If both ILM and offerings are present sum them
+   * @property totalSumDuration
+   * @type {Ember.computed}
+   */
+  totalSumDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
+    const maxSingleOfferingDuration = await this.get('maxSingleOfferingDuration');
+    const ilmSession = await this.get('ilmSession');
+    if (!ilmSession) {
+      return maxSingleOfferingDuration;
+    }
+
+    const ilmHours = ilmSession.get('hours');
+
+    return parseInt(ilmHours, 10) + parseInt(maxSingleOfferingDuration, 10);
   }),
 
   requiredPublicationIssues: computed(
