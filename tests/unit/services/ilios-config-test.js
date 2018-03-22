@@ -1,11 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('service:ilios-config', 'Unit | Service | ilios config', {
-  needs: ['service:commonAjax', 'service:serverVariables']
-});
+module('Unit | Service | ilios config', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let service = this.subject();
-  assert.ok(service);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    let service = this.owner.lookup('service:ilios-config');
+    assert.ok(service);
+  });
 });

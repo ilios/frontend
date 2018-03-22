@@ -1,17 +1,17 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
-import modelList from '../../helpers/model-list';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import { initialize } from '../../../initializers/replace-promise';
 
-initialize();
-moduleForModel('session-learning-material', 'Unit | Model | SessionLearningMaterial', {
-  needs: modelList
-});
+import { run } from '@ember/runloop';
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
+initialize();
+
+module('Unit | Model | SessionLearningMaterial', function(hooks) {
+  setupTest(hooks);
+
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('session-learning-material'));
+    // let store = this.store();
+    assert.ok(!!model);
+  });
 });

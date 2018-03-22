@@ -1,15 +1,17 @@
-import { moduleForModel, test } from 'ember-qunit';
-import modelList from '../../helpers/model-list';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import { initialize } from '../../../initializers/replace-promise';
 
-initialize();
-moduleForModel('aamc-resource-type', 'Unit | Model | AAMC Resource Type', {
-  // Specify the other units that are required for this test.
-  needs: modelList
-});
+import { run } from '@ember/runloop';
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
+initialize();
+
+module('Unit | Model | AAMC Resource Type', function(hooks) {
+  setupTest(hooks);
+
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('aamc-resource-type'));
+    // let store = this.store();
+    assert.ok(!!model);
+  });
 });

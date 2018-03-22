@@ -1,31 +1,33 @@
 
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('filesize', 'helper:filesize', {
-  integration: true
-});
+module('helper:filesize', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it bytes', function(assert) {
-  this.set('inputValue', '42');
+  test('it bytes', async function(assert) {
+    this.set('inputValue', '42');
 
-  this.render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize inputValue}}`);
 
-  assert.equal(this.$().text().trim(), '42b');
-});
+    assert.equal(this.element.textContent.trim(), '42b');
+  });
 
-test('it kilobytes', function(assert) {
-  this.set('inputValue', '4200');
+  test('it kilobytes', async function(assert) {
+    this.set('inputValue', '4200');
 
-  this.render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize inputValue}}`);
 
-  assert.equal(this.$().text().trim(), '4kb');
-});
+    assert.equal(this.element.textContent.trim(), '4kb');
+  });
 
-test('it megabytes', function(assert) {
-  this.set('inputValue', '4200000');
+  test('it megabytes', async function(assert) {
+    this.set('inputValue', '4200000');
 
-  this.render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize inputValue}}`);
 
-  assert.equal(this.$().text().trim(), '4mb');
+    assert.equal(this.element.textContent.trim(), '4mb');
+  });
 });

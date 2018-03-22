@@ -1,48 +1,38 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
-import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-const { resolve } = RSVP;
+module('Integration | Component | ilios calendar single event', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-let ourEvent;
-let course;
-let session;
-let sessionType;
-let sessionDescription;
-let offering;
-let storeMock;
-let sessionLearningMaterials;
-moduleForComponent('single-event', 'Integration | Component | ilios calendar single event', {
-  integration: true,
-  beforeEach() {
+  hooks.beforeEach(function() {
     const now = moment().hour(8).minute(0).second(0);
-    course = EmberObject.create({
+    const course = this.server.create('course', {
       id: 1,
       title: 'test course',
-      sortedObjectives: resolve([]),
     });
-    sessionType = EmberObject.create({
+    const sessionType = this.server.create('session-type', {
       id: 1,
       title: 'test type',
     });
-    sessionDescription = EmberObject.create({
+    const sessionDescription = this.server.create('session-description', {
       id: 1,
       description: 'test description',
     });
-    session = EmberObject.create({
+    const session = this.server.create('session', {
       id: 1,
       title: 'test session',
-      course: resolve(course),
-      sessionType: resolve(sessionType),
-      sessionDescription: resolve(sessionDescription),
-      sortedObjectives: resolve([]),
+      course,
+      sessionType,
+      sessionDescription,
     });
-    sessionLearningMaterials = [
-      EmberObject.create({
+    this.sessionLearningMaterials = [
+      this.server.create('session-learning-material', {
         title: 'Lecture Notes',
         sessionLearningMaterial: '1',
         description: 'Lecture Notes in PDF format',
@@ -53,7 +43,7 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
         publicNotes: 'Lorem Ipsum',
         position: 0,
       }),
-      EmberObject.create({
+      this.server.create('session-learning-material', {
         title: 'Mystery Meat',
         sessionLearningMaterial: '2',
         position: 1,
@@ -61,11 +51,11 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
         endDate: new Date('2013-03-01T01:10:00')
       })
     ];
-    offering = EmberObject.create({
+    this.server.create('offering', {
       id: 1,
-      session: resolve(session),
+      session,
     });
-    ourEvent = EmberObject.create({
+    this.ourEvent = EmberObject.create({
       user: 1,
       courseExternalId: 'ext1',
       sessionTypeTitle: 'session type',
@@ -76,37 +66,28 @@ moduleForComponent('single-event', 'Integration | Component | ilios calendar sin
       location: 'here',
       instructors: ['Great Teacher'],
       offering: 1,
-      learningMaterials: sessionLearningMaterials
+      learningMaterials: this.sessionLearningMaterials
     });
+  });
 
-    storeMock = Service.extend({
-      findRecord(what){
-        if (what === 'offering') {
-          return resolve(offering);
-        }
-      },
-    });
-    this.register('service:store', storeMock);
-  }
-});
+  test('it renders', async function(assert) {
+    assert.expect(11);
+    this.set('event', this.ourEvent);
+    await render(hbs`{{single-event event=event}}`);
+    await settled();
 
-test('it renders', async function(assert) {
-  assert.expect(11);
-  this.set('event', ourEvent);
-  this.render(hbs`{{single-event event=event}}`);
-  await wait();
-
-  assert.ok(this.$('.single-event-summary').text().includes('test course'), 'course title is displayed');
-  assert.ok(this.$('.single-event-summary').text().includes('test session'), 'session title is displayed');
-  assert.ok(this.$('.single-event-location').text().includes('here'), 'location is displayed');
-  assert.ok(this.$('.single-event-instructors').text().includes('Taught By Great Teacher'), 'instructors are displayed');
-  assert.ok(this.$('.single-event-session-is').text().includes('This session is "test type"'), 'session type is displayed');
-  assert.ok(this.$('.single-event-summary').text().includes('test description'), 'session description is displayed');
-  let $sessionLm = this.$('.single-event-learningmaterial-list:eq(0) .single-event-learningmaterial-item:eq(0)');
-  assert.equal(this.$('.single-event-learningmaterial-item-notes', $sessionLm).text().trim(), sessionLearningMaterials[0].get('publicNotes'));
-  assert.equal(this.$('.single-event-learningmaterial-item-description', $sessionLm).text().trim(), sessionLearningMaterials[0].get('description'));
-  assert.ok(this.$('.single-event-learningmaterial-item-title', $sessionLm).text().includes(sessionLearningMaterials[0].get('title')));
-  $sessionLm = this.$('.single-event-learningmaterial-list:eq(0) .single-event-learningmaterial-item:eq(1)');
-  assert.equal(this.$('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');
-  assert.ok(this.$('.single-event-learningmaterial-item-title', $sessionLm).text().includes(sessionLearningMaterials[0].get('title')));
+    assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test course'), 'course title is displayed');
+    assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test session'), 'session title is displayed');
+    assert.ok(this.element.querySelector('.single-event-location').textContent.includes('here'), 'location is displayed');
+    assert.ok(this.element.querySelector('.single-event-instructors').textContent.includes('Taught By Great Teacher'), 'instructors are displayed');
+    assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('This session is "test type"'), 'session type is displayed');
+    assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test description'), 'session description is displayed');
+    let $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
+    assert.equal(this.element.querySelector('.single-event-learningmaterial-item-notes', $sessionLm).textContent.trim(), this.sessionLearningMaterials[0].publicNotes);
+    assert.equal(this.element.querySelector('.single-event-learningmaterial-item-description', $sessionLm).textContent.trim(), this.sessionLearningMaterials[0].description);
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
+    assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+  });
 });

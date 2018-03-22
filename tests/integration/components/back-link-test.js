@@ -1,12 +1,14 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('back-link', 'Integration | Component | back link', {
-  integration: true
-});
+module('Integration | Component | back link', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  this.render(hbs`{{back-link}}`);
+  test('it renders', async function(assert) {
+    await render(hbs`{{back-link}}`);
 
-  assert.equal(this.$().text().trim(), 'Back');
+    assert.equal(this.element.textContent.trim(), 'Back');
+  });
 });

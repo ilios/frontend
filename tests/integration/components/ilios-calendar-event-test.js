@@ -1,19 +1,20 @@
-import { moduleForComponent, skip } from 'ember-qunit';
+import { module, skip } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('ilios-calendar-event', 'Integration | Component | ilios calendar event', {
-  integration: true
-});
+module('Integration | Component | ilios calendar event', function(hooks) {
+  setupRenderingTest(hooks);
 
-//@todo needs some real tests JJ 6/2017
-skip('it renders', function(assert) {
-  this.render(hbs`{{ilios-calendar-event}}`);
+  //@todo needs some real tests JJ 6/2017
+  skip('it renders', function(assert) {
+    this.render(hbs`{{ilios-calendar-event}}`);
 
-  assert.equal(this.$().text().trim(), '');
-});
+    assert.equal(this.element.textContent.trim(), '');
+  });
 
-skip('it calculates recentlyUpdated correctly', function(assert) {
-  this.render(hbs`{{ilios-calendar-event}}`);
+  skip('it calculates recentlyUpdated correctly', function(assert) {
+    this.render(hbs`{{ilios-calendar-event}}`);
 
-  assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
+  });
 });

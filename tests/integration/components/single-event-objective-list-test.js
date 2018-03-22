@@ -1,83 +1,88 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('single-event-objective-list', 'Integration | Component | ilios calendar single event objective list', {
-  integration: true
-});
+module('Integration | Component | ilios calendar single event objective list', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(18);
+  test('it renders', async function(assert) {
+    assert.expect(18);
 
-  const objectives = [
-    {domain: 'great things', title: 'cheese', position: 1},
-    {domain: 'great things', title: 'ice cream', position: 2},
-    {domain: 'annoying things', title: 'buying gas', position: 3},
-    {domain: 'annoying things', title: 'traffic', position: 4},
-  ];
+    const objectives = [
+      {domain: 'great things', title: 'cheese', position: 1},
+      {domain: 'great things', title: 'ice cream', position: 2},
+      {domain: 'annoying things', title: 'buying gas', position: 3},
+      {domain: 'annoying things', title: 'traffic', position: 4},
+    ];
 
-  const courseObjectivesPhrase = 'Course Objectives';
-  const listByPriorityPhrase = 'List by Priority';
-  const groupByCompetenciesPhrase = 'Group by Competencies';
+    const courseObjectivesPhrase = 'Course Objectives';
+    const listByPriorityPhrase = 'List by Priority';
+    const groupByCompetenciesPhrase = 'Group by Competencies';
 
-  this.set('courseObjectivesPhrase', courseObjectivesPhrase);
-  this.set('groupByCompetenciesPhrase', groupByCompetenciesPhrase);
-  this.set('listByPriorityPhrase', listByPriorityPhrase);
-  this.set('objectives', objectives);
-  this.render(hbs`{{single-event-objective-list
-    objectives=objectives
-    groupByCompetenciesPhrase=groupByCompetenciesPhrase
-    listByPriorityPhrase=listByPriorityPhrase
-    title=courseObjectivesPhrase
-  }}`);
+    this.set('courseObjectivesPhrase', courseObjectivesPhrase);
+    this.set('groupByCompetenciesPhrase', groupByCompetenciesPhrase);
+    this.set('listByPriorityPhrase', listByPriorityPhrase);
+    this.set('objectives', objectives);
+    await render(hbs`{{single-event-objective-list
+      objectives=objectives
+      groupByCompetenciesPhrase=groupByCompetenciesPhrase
+      listByPriorityPhrase=listByPriorityPhrase
+      title=courseObjectivesPhrase
+    }}`);
 
-  assert.equal(this.$('h2').text().trim(), courseObjectivesPhrase, 'Title is visible');
-  assert.ok(this.$('ul.tree').length, 'Domains/Objectives tree is visible');
-  assert.notOk(this.$('ul.list-in-order').length, 'Objectives list is not visible');
-  assert.equal(this.$('ul:eq(0)>li:eq(0)').text().trim().search(/^annoying things/), 0);
-  assert.equal(this.$('ul:eq(0)>li:eq(0)>ul>li:eq(1)').text().trim().search(/^traffic/), 0);
-  assert.equal(this.$('ul:eq(0)>li:eq(1)').text().trim().search(/^great things/), 0);
-  assert.equal(this.$('ul:eq(0)>li:eq(1)>ul>li:eq(0)').text().trim().search(/^cheese/), 0);
-  assert.ok(this.$('h2 button').hasClass('active'), 'Display-mode button is visible and is "active"');
-  this.$('h2 button').click();
-  assert.notOk(this.$('ul.tree').length, 'Domains/Objectives tree is not visible');
-  assert.ok(this.$('ul.list-in-order').length, 'Objectives list is visible');
-  for(let i = 0, n = objectives.length; i < n; i++) {
-    assert.equal(0, this.$(`.list-in-order li:eq(${i})`).text().trim().indexOf(objectives[i].title), 'Objective title is visible');
-    assert.equal(this.$(`.list-in-order li:eq(${i}) .details`).text().trim(), objectives[i].domain, 'Domain is visible.');
-  }
-});
 
-test('displays `None` when provided no content', function(assert) {
-  assert.expect(1);
+    assert.equal(this.element.querySelector('h2').textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is visible');
+    assert.notOk(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is not visible');
+    assert.equal(this.element.querySelector('ul.tree>li').textContent.trim().search(/^annoying things/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').textContent.trim().search(/^traffic/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)').textContent.trim().search(/^great things/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)>ul>li').textContent.trim().search(/^cheese/), 0);
+    assert.ok(this.element.querySelector('h2 button').classList.contains('active'), 'Display-mode button is visible and is "active"');
+    await click('h2 button');
 
-  this.set('objectives', []);
-  this.render(hbs`{{single-event-objective-list
-    objectives=objectives
-  }}`);
+    assert.notOk(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is not visible');
+    assert.ok(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is visible');
+    for(let i = 0, n = objectives.length; i < n; i++) {
+      assert.equal(0, this.$(`.list-in-order li:nth-of-type(${i + 1})`).text().trim().indexOf(objectives[i].title), 'Objective title is visible');
+      assert.equal(this.$(`.list-in-order li:nth-of-type(${i + 1}) .details`).text().trim(), objectives[i].domain, 'Domain is visible.');
+    }
+  });
 
-  assert.equal(this.$('.no-content').text(), 'None');
-});
+  test('displays `None` when provided no content', async function(assert) {
+    assert.expect(1);
 
-test('no display mode toggle if none of the objectives are prioritized', function(assert) {
-  assert.expect(3);
+    this.set('objectives', []);
+    await render(hbs`{{single-event-objective-list
+      objectives=objectives
+    }}`);
 
-  const objectives = [
-    {domain: 'great things', title: 'cheese', position: 0},
-    {domain: 'great things', title: 'ice cream', position: 0},
-    {domain: 'annoying things', title: 'buying gas', position: 0},
-    {domain: 'annoying things', title: 'traffic', position: 0},
-  ];
+    assert.equal(this.element.querySelector('.no-content').textContent, 'None');
+  });
 
-  const courseObjectivesPhrase = 'Course Objectives';
-  this.set('courseObjectivesPhrase', courseObjectivesPhrase);
-  this.set('objectives', objectives);
-  this.render(hbs`{{single-event-objective-list
-    objectives=objectives
-    title=courseObjectivesPhrase
-  }}`);
+  test('no display mode toggle if none of the objectives are prioritized', async function(assert) {
+    assert.expect(3);
 
-  assert.notOk(this.$('h2 button').hasClass('active'), 'Display-mode button is not visible');
-  // briefly check if the component renders fine otherwise.
-  assert.equal(this.$('h2').text().trim(), courseObjectivesPhrase, 'Title is visible');
-  assert.ok(this.$('ul.tree').length, 'Domains/Objectives tree');
+    const objectives = [
+      {domain: 'great things', title: 'cheese', position: 0},
+      {domain: 'great things', title: 'ice cream', position: 0},
+      {domain: 'annoying things', title: 'buying gas', position: 0},
+      {domain: 'annoying things', title: 'traffic', position: 0},
+    ];
+
+    const courseObjectivesPhrase = 'Course Objectives';
+    this.set('courseObjectivesPhrase', courseObjectivesPhrase);
+    this.set('objectives', objectives);
+    await render(hbs`{{single-event-objective-list
+      objectives=objectives
+      title=courseObjectivesPhrase
+    }}`);
+
+    const h2 = this.element.querySelector('h2');
+    assert.equal(h2.querySelectorAll('button').length, 0, 'Display-mode button is not visible');
+    // briefly check if the component renders fine otherwise.
+    assert.equal(h2.textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree');
+  });
 });
