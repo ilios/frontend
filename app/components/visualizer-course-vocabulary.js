@@ -53,7 +53,7 @@ export default Component.extend({
           }
         };
       }
-      const hours = await session.get('maxSingleOfferingDuration');
+      const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       termObjects[id].data += minutes;
       termObjects[id].meta.sessions.pushObject(session.get('title'));
