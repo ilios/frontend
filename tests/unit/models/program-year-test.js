@@ -1,42 +1,41 @@
 import { run } from '@ember/runloop';
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 
 initialize();
-moduleForModel('program-year', 'Unit | Model | ProgramYear', {
-  needs: modelList
-});
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
+module('Unit | Model | ProgramYear', function(hooks) {
+  setupTest(hooks);
 
-test('academic year string', function(assert) {
-  let model = this.subject();
-  run(function(){
-    model.set('startYear', 2000);
-    assert.equal(model.get('academicYear'), '2000 - 2001');
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('program-year'));
+    // let store = this.store();
+    assert.ok(!!model);
   });
-});
 
-test('classOf string', function(assert) {
-  assert.expect(3);
-  let model = this.subject();
-  var store = model.store;
-  run(function(){
-    let program = store.createRecord('program', {id:99, duration:1});
-    model.set('program', program);
-    model.set('startYear', 2000);
-    assert.equal(model.get('classOfYear'), '2001');
-    program.set('duration', 5);
-    assert.equal(model.get('classOfYear'), '2005');
-    model.set('startYear', 2001);
-    assert.equal(model.get('classOfYear'), '2006');
+  test('academic year string', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('program-year'));
+    run(function(){
+      model.set('startYear', 2000);
+      assert.equal(model.get('academicYear'), '2000 - 2001');
+    });
+  });
+
+  test('classOf string', function(assert) {
+    assert.expect(3);
+    let model = run(() => this.owner.lookup('service:store').createRecord('program-year'));
+    var store = model.store;
+    run(function(){
+      let program = store.createRecord('program', {id:99, duration:1});
+      model.set('program', program);
+      model.set('startYear', 2000);
+      assert.equal(model.get('classOfYear'), '2001');
+      program.set('duration', 5);
+      assert.equal(model.get('classOfYear'), '2005');
+      model.set('startYear', 2001);
+      assert.equal(model.get('classOfYear'), '2006');
+    });
   });
 });

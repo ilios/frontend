@@ -1,17 +1,18 @@
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 
-initialize();
-moduleForModel('program-year-steward', 'Unit | Model | program-year-steward', {
-  needs: modelList
-});
+import { run } from '@ember/runloop';
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
+initialize();
+
+module('Unit | Model | program-year-steward', function(hooks) {
+  setupTest(hooks);
+
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('program-year-steward'));
+    // let store = this.store();
+    assert.ok(!!model);
+  });
 });

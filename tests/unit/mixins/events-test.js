@@ -8,14 +8,17 @@ const { resolve } = RSVP;
 
 let course, session, intermediary, storeMock;
 
-module('Unit | Mixin | events', {
-  subject() {
-    const EventsMixinObject = EmberObject.extend(EventsMixin);
-    return EventsMixinObject.create({
-      store: storeMock
-    });
-  },
-  beforeEach() {
+module('Unit | Mixin | events', function(hooks) {
+  hooks.beforeEach(function() {
+    this.subject = function() {
+      const EventsMixinObject = EmberObject.extend(EventsMixin);
+      return EventsMixinObject.create({
+        store: storeMock
+      });
+    };
+  });
+
+  hooks.beforeEach(function() {
     const term1 =  EmberObject.create({
       id: 1,
     });
@@ -65,91 +68,91 @@ module('Unit | Mixin | events', {
         throw 'Unsupported model type requested.';
       },
     });
-  }
-});
-
-test('getSessionForEvent from offering-event', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const sessionForEvent = await subject.getSessionForEvent(event);
-    assert.equal(sessionForEvent, session);
   });
-});
 
-test('getSessionForEvent from ILM-event', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { ilmSession: 1 };
-  run( async () => {
-    const sessionForEvent = await subject.getSessionForEvent(event);
-    assert.equal(sessionForEvent, session);
+  test('getSessionForEvent from offering-event', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const sessionForEvent = await subject.getSessionForEvent(event);
+      assert.equal(sessionForEvent, session);
+    });
   });
-});
 
-test('getCourseForEvent', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const courseForEvent = await subject.getCourseForEvent(event);
-    assert.equal(courseForEvent, course);
+  test('getSessionForEvent from ILM-event', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { ilmSession: 1 };
+    run( async () => {
+      const sessionForEvent = await subject.getSessionForEvent(event);
+      assert.equal(sessionForEvent, session);
+    });
   });
-});
 
-test('getTermIdsForEvent', async function(assert) {
-  assert.expect(4);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const termIds = await subject.getTermIdsForEvent(event);
-    assert.equal(termIds.length, 3);
-    assert.ok(termIds.includes(1));
-    assert.ok(termIds.includes(2));
-    assert.ok(termIds.includes(3));
+  test('getCourseForEvent', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const courseForEvent = await subject.getCourseForEvent(event);
+      assert.equal(courseForEvent, course);
+    });
   });
-});
 
-test('getSessionTypeIdForEvent', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const sessionTypeId = await subject.getSessionTypeIdForEvent(event);
-    assert.equal(sessionTypeId, 10);
+  test('getTermIdsForEvent', async function(assert) {
+    assert.expect(4);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const termIds = await subject.getTermIdsForEvent(event);
+      assert.equal(termIds.length, 3);
+      assert.ok(termIds.includes(1));
+      assert.ok(termIds.includes(2));
+      assert.ok(termIds.includes(3));
+    });
   });
-});
 
-test('getCourseLevelForEvent', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const courseLevel = await subject.getCourseLevelForEvent(event);
-    assert.equal(courseLevel, 4);
+  test('getSessionTypeIdForEvent', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const sessionTypeId = await subject.getSessionTypeIdForEvent(event);
+      assert.equal(sessionTypeId, 10);
+    });
   });
-});
 
-test('getCourseIdForEvent', async function(assert) {
-  assert.expect(1);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const courseId = await subject.getCourseIdForEvent(event);
-    assert.equal(courseId, 22);
+  test('getCourseLevelForEvent', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const courseLevel = await subject.getCourseLevelForEvent(event);
+      assert.equal(courseLevel, 4);
+    });
   });
-});
 
-test('getCohortIdsForEvent', async function(assert) {
-  assert.expect(4);
-  const subject = this.subject();
-  const event = { offering: 1 };
-  run( async () => {
-    const cohortIds = await subject.getCohortIdsForEvent(event);
-    assert.equal(cohortIds.length, 3);
-    assert.ok(cohortIds.includes(10));
-    assert.ok(cohortIds.includes(20));
-    assert.ok(cohortIds.includes(30));
+  test('getCourseIdForEvent', async function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const courseId = await subject.getCourseIdForEvent(event);
+      assert.equal(courseId, 22);
+    });
+  });
+
+  test('getCohortIdsForEvent', async function(assert) {
+    assert.expect(4);
+    const subject = this.subject();
+    const event = { offering: 1 };
+    run( async () => {
+      const cohortIds = await subject.getCohortIdsForEvent(event);
+      assert.equal(cohortIds.length, 3);
+      assert.ok(cohortIds.includes(10));
+      assert.ok(cohortIds.includes(20));
+      assert.ok(cohortIds.includes(30));
+    });
   });
 });

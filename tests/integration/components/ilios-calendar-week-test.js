@@ -1,65 +1,72 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('ilios-calendar-week', 'Integration | Component | ilios calendar week', {
-  integration: true
-});
+module('Integration | Component | ilios calendar week', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(2);
-  let date = new Date('2015-09-30T12:00:00');
-  this.set('date', date);
-
-  this.render(hbs`{{ilios-calendar-week date=date}}`);
-  assert.equal(this.$().text().trim().search(/^Week of September/), 0);
-  assert.equal(this.$('.event').length, 0);
-});
-
-test('clicking on a day header fires the correct events', function(assert) {
-  assert.expect(4);
-  let date = new Date('2015-09-30T12:00:00');
-  this.set('date', date);
-  this.on('changeDate', newDate => {
-    assert.ok(newDate instanceof Date);
-    assert.ok(newDate.toString().search(/Sun Sep 27/) === 0);
-  });
-  this.on('changeView', newView => {
-    assert.equal(newView, 'day');
+  hooks.beforeEach(function() {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
-  this.render(hbs`{{ilios-calendar-week
-    date=date
-    changeDate=(action 'changeDate')
-    changeView=(action 'changeView')
-  }}`);
+  test('it renders', async function(assert) {
+    assert.expect(2);
+    let date = new Date('2015-09-30T12:00:00');
+    this.set('date', date);
 
-  const weekTitles = '.week-titles .cell';
-  const sunday = `${weekTitles}:eq(1)`;
-
-  assert.ok(this.$(sunday).hasClass('clickable'));
-
-  this.$(sunday).click();
-});
-
-test('clicking on a day header does nothing when areDaysSelectable is false', function(assert) {
-  assert.expect(1);
-  let date = new Date('2015-09-30T12:00:00');
-  this.set('date', date);
-  this.set('nothing', () => {
-    assert.ok(false, 'this should never be called');
+    await render(hbs`{{ilios-calendar-week date=date}}`);
+    assert.equal(this.$().text().trim().search(/^Week of September/), 0);
+    assert.equal(this.$('.event').length, 0);
   });
 
-  this.render(hbs`{{ilios-calendar-week
-    date=date
-    areDaysSelectable=false
-    changeDate=(action nothing)
-    changeView=(action nothing)
-  }}`);
+  test('clicking on a day header fires the correct events', async function(assert) {
+    assert.expect(4);
+    let date = new Date('2015-09-30T12:00:00');
+    this.set('date', date);
+    this.actions.changeDate = newDate => {
+      assert.ok(newDate instanceof Date);
+      assert.ok(newDate.toString().search(/Sun Sep 27/) === 0);
+    };
+    this.actions.changeView = newView => {
+      assert.equal(newView, 'day');
+    };
 
-  const weekTitles = '.week-titles .cell';
-  const sunday = `${weekTitles}:eq(1)`;
+    await render(hbs`{{ilios-calendar-week
+      date=date
+      changeDate=(action 'changeDate')
+      changeView=(action 'changeView')
+    }}`);
 
-  assert.notOk(this.$(sunday).hasClass('clickable'));
+    const weekTitles = '.week-titles .cell';
+    const sunday = `${weekTitles}:eq(1)`;
 
-  this.$(sunday).click();
+    assert.ok(this.$(sunday).hasClass('clickable'));
+
+    this.$(sunday).click();
+  });
+
+  test('clicking on a day header does nothing when areDaysSelectable is false', async function(assert) {
+    assert.expect(1);
+    let date = new Date('2015-09-30T12:00:00');
+    this.set('date', date);
+    this.set('nothing', () => {
+      assert.ok(false, 'this should never be called');
+    });
+
+    await render(hbs`{{ilios-calendar-week
+      date=date
+      areDaysSelectable=false
+      changeDate=(action nothing)
+      changeView=(action nothing)
+    }}`);
+
+    const weekTitles = '.week-titles .cell';
+    const sunday = `${weekTitles}:eq(1)`;
+
+    assert.notOk(this.$(sunday).hasClass('clickable'));
+
+    this.$(sunday).click();
+  });
 });

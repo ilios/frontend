@@ -1,16 +1,18 @@
-import { moduleForComponent, skip } from 'ember-qunit';
+import { module, skip } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('ilios-calendar-multiday-events', 'Integration | Component | ilios calendar multiday events', {
-  integration: true
-});
+module('Integration | Component | ilios calendar multiday events', function(hooks) {
+  setupRenderingTest(hooks);
 
-skip('it renders', function(assert) {
+  skip('it renders', function(assert) {
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{ilios-calendar-multiday-events}}`);
+    this.render(hbs`{{ilios-calendar-multiday-events}}`);
 
-  assert.equal(this.$().text().trim(), '');
+    assert.equal(this.$().text().trim(), '');
+  });
 });

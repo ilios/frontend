@@ -1,20 +1,24 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 import { singularize, pluralize } from 'ember-inflector';
 
+import { run } from '@ember/runloop';
+
 initialize();
-moduleForModel('aamc-pcrs', 'Unit | Model | AamcPcrs', {
-  needs: modelList
-});
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
+module('Unit | Model | AamcPcrs', function(hooks) {
+  setupTest(hooks);
 
-test('pluralization', function(assert){
-  assert.equal(pluralize('aamc-pcrs'), 'aamc-pcrs');
-  assert.equal(singularize('aamc-pcrs'), 'aamc-pcrs');
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('aamc-pcrs'));
+    // let store = this.store();
+    assert.ok(!!model);
+  });
+
+  test('pluralization', function(assert){
+    assert.equal(pluralize('aamc-pcrs'), 'aamc-pcrs');
+    assert.equal(singularize('aamc-pcrs'), 'aamc-pcrs');
+  });
 });

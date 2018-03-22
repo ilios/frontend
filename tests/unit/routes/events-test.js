@@ -1,10 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:events', 'Unit | Route | events', {
-  needs: ['service:session', 'service:userEvents', 'service:schoolEvents']
-});
+module('Unit | Route | events', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:events');
+    assert.ok(route);
+  });
 });

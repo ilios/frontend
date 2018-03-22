@@ -1,12 +1,14 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('ilios-calendar-event-month', 'Integration | Component | ilios calendar event month', {
-  integration: true
-});
+module('Integration | Component | ilios calendar event month', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  this.render(hbs`{{ilios-calendar-event-month}}`);
+  test('it renders', async function(assert) {
+    await render(hbs`{{ilios-calendar-event-month}}`);
 
-  assert.equal(this.$().text().trim(), '');
+    assert.equal(this.$().text().trim(), '');
+  });
 });
