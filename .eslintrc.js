@@ -75,7 +75,6 @@ module.exports = {
       files: ['tests/**/*.js'],
       excludedFiles: ['tests/dummy/**/*.js'],
       "globals": {
-        "server": true,
         // embertest ENV globals manually added since we're not supporting andThen anymore
         "click": true,
         "currentPath": true,

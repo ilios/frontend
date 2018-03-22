@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 import { singularize, pluralize } from 'ember-inflector';
 

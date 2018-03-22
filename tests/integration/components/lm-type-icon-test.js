@@ -22,7 +22,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.equal(this.$('i.fa-paragraph').length, 1, 'Correct type icon is used.');
   });
 
-  test('file', function(assert) {
+  test('file', async function(assert) {
     assert.expect(16);
     let fixtures = [
       { lm: { type: 'file', mimetype: 'application/pdf' }, icon: 'fa-file-pdf-o' },
@@ -43,12 +43,13 @@ module('Integration | Component | lm type icon', function(hooks) {
       { lm: { type: 'file', mimetype: 'xyz' }, icon: 'fa-file' },
     ];
 
-    fixtures.forEach(async fixture => {
-      let lm = fixture.lm;
+    for (let i = 0; i < fixtures.length; i++) {
+      let lm = fixtures[i].lm;
+      let icon = fixtures[i].icon;
       this.set('lm', lm);
       await render(hbs`{{lm-type-icon type=lm.type mimetype=lm.mimetype}}`);
-      assert.equal(this.$(`i.${fixture.icon}`).length, 1, 'Correct type icon is used.');
-    });
+      assert.equal(this.$(`i.${icon}`).length, 1, 'Correct type icon is used.');
+    }
   });
 
   test('listItem', async function(assert) {

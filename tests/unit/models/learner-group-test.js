@@ -1,7 +1,6 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import modelList from '../../helpers/model-list';
 import { initialize } from '../../../initializers/replace-promise';
 
 initialize();
