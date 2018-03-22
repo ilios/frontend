@@ -18,6 +18,14 @@ export default Model.extend({
   instructorGroups: hasMany('instructor-group', { async: true }),
   users: hasMany('user', { async: true, inverse: 'learnerGroups' }),
   instructors: hasMany('user', { async: true, inverse: 'instructedLearnerGroups' }),
+  ancestor: belongsTo('learner-group', {
+    inverse: 'descendants',
+    async: true
+  }),
+  descendants: hasMany('learner-group', {
+    inverse: 'ancestor',
+    async: true
+  }),
 
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
