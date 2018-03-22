@@ -12,13 +12,4 @@ test('it renders', function(assert) {
   this.render(hbs`{{visualizer-session-type-vocabularies}}`);
 
   assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#visualizer-session-type-vocabularies}}
-      template block text
-    {{/visualizer-session-type-vocabularies}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
 });

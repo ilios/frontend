@@ -13,14 +13,5 @@ module('Integration | Component | visualizer-course-vocabulary', function(hooks)
     await render(hbs`{{visualizer-course-vocabulary}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#visualizer-course-vocabulary}}
-        template block text
-      {{/visualizer-course-vocabulary}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

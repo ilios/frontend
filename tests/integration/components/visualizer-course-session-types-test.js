@@ -13,14 +13,5 @@ module('Integration | Component | visualizer-course-session-types', function(hoo
     await render(hbs`{{visualizer-course-session-types}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#visualizer-course-session-types}}
-        template block text
-      {{/visualizer-course-session-types}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
