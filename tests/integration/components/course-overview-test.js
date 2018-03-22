@@ -176,28 +176,3 @@ test('course external id validation passes on empty value', function(assert) {
     });
   });
 });
-
-test('shows a list of course directors', function(assert) {
-  storeMock.reopen({
-    findAll(what){
-      assert.equal('course-clerkship-type', what);
-      return resolve([]);
-    }
-  });
-
-  let course = EmberObject.create({
-    clerkshipType: resolve(EmberObject.create()),
-    directors: resolve([
-      EmberObject.create({ 'fullName': 'Adam Zyzzyva', 'lastName': 'Zyzzyva' }),
-      EmberObject.create({ 'fullName': 'Zoe Aaardvark', 'lastName': 'Aardvark' }),
-      EmberObject.create({ 'fullName': 'Mike Middleman', 'lastName': 'Middleman' })
-    ])
-  });
-  this.set('course', course);
-  this.render(hbs`{{course-overview course=course}}`);
-
-  const directorsList = '.coursedirectors ul';
-  assert.equal(this.$(`${directorsList} li:eq(0)`).text().trim(), 'Zoe Aaardvark');
-  assert.equal(this.$(`${directorsList} li:eq(1)`).text().trim(), 'Mike Middleman');
-  assert.equal(this.$(`${directorsList} li:eq(2)`).text().trim(), 'Adam Zyzzyva');
-});

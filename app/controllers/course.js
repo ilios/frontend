@@ -1,10 +1,19 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  queryParams: ['details', 'courseObjectiveDetails', 'courseTaxonomyDetails', 'courseCompetencyDetails'],
+  queryParams: [
+    'details',
+    'courseLeadershipDetails',
+    'courseObjectiveDetails',
+    'courseTaxonomyDetails',
+    'courseCompetencyDetails',
+    'courseManageLeadership',
+  ],
 
   details: false,
+  courseLeadershipDetails: false,
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
   courseCompetencyDetails: false,
+  courseManageLeadership: false,
 });

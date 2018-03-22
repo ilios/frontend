@@ -19,6 +19,9 @@ import learningMaterials from 'ilios/tests/pages/components/learning-materials';
 import meshTerms from 'ilios/tests/pages/components/mesh-terms';
 import taxonomies from 'ilios/tests/pages/components/taxonomies';
 import collapsedTaxonomies from 'ilios/tests/pages/components/collapsed-taxonomies';
+import leadershipCollapsed from 'ilios/tests/pages/components/leadership-collapsed';
+import leadershipList from 'ilios/tests/pages/components/leadership-list';
+import leadershipManager from 'ilios/tests/pages/components/leadership-manager';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -82,43 +85,18 @@ export default create({
       set: fillable('select'),
       save: clickable('.done')
     },
-    courseDirectors: {
-      scope: '.coursedirectors',
-      selected: collection({
-        scope: '.directors',
-        itemScope: 'li',
-        item: {
-          name: text(),
-        },
-      }),
-      manager: {
-        scope: '[data-test-course-director-manager]',
-        selected: collection({
-          scope: '.selected-directors',
-          itemScope: 'li',
-          item: {
-            name: text(),
-            remove: clickable(),
-          },
-        }),
-        search: fillable('[data-test-search-box] input'),
-        searchResults: collection({
-          scope: '.results',
-          itemScope: '[data-test-result]',
-          item: {
-            name: text(),
-            add: clickable(),
-            isActive: notHasClass('inactive'),
-            inactive: hasClass('inactive'),
-          },
-        }),
-        save: clickable('.bigadd'),
-      },
-      manage: clickable('.clickable'),
-    },
-
   },
 
+  leadershipCollapsed,
+  leadershipExpanded: {
+    scope: '[data-test-course-leadership-expanded]',
+    title: text('.title'),
+    manage: clickable('.actions button'),
+    save: clickable('.actions button.bigadd'),
+    cancel: clickable('.actions button.bigcancel'),
+    leadershipList,
+    leadershipManager,
+  },
   objectives,
   learningMaterials,
   meshTerms,

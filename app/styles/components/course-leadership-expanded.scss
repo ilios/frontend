@@ -1,0 +1,19 @@
+.course-leadership-expanded {
+  @include detail-container($ilios-orange);
+
+  .course-leadership-expanded-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .course-leadership-expanded-content {
+    @include detail-container-content;
+  }
+}

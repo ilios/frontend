@@ -16,18 +16,20 @@ export default Component.extend({
   i18n: service(),
   classNames: ['leadership-search'],
   existingUsers: null,
+  searchValue: null,
   existingUserIds: mapBy('existingUsers', 'id'),
+  'data-test-leadership-search': true,
 
   searchForUsers: task(function * (query) {
     const i18n = this.get('i18n');
     const store = this.get('store');
+    this.set('searchValue', query);
 
     let q = cleanQuery(query);
     if (isBlank(q)) {
       yield timeout(1);
       return [];
     }
-    yield timeout(DEBOUNCE_MS);
 
     if (q.length < MIN_INPUT) {
       return [{
@@ -35,6 +37,7 @@ export default Component.extend({
         text: i18n.t('general.moreInputRequiredPrompt')
       }];
     }
+    yield timeout(DEBOUNCE_MS);
 
     let searchResults = yield store.query('user', {
       q,

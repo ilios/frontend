@@ -1,7 +1,7 @@
 <input
   type="search"
   value={{searchValue}}
-  oninput={{action (mut searchValue) value="target.value"}}
+  oninput={{perform searchForUsers value="target.value"}}
   placeholder={{t 'general.searchForIliosUsers'}}
   incremental=true
   onsearch={{perform searchForUsers value="target.value"}}
@@ -19,7 +19,7 @@
         <li class='summary'>{{result.text}}</li>
       {{/if}}
       {{#if (eq result.type 'user')}}
-        <li class='user {{unless (contains result.user.id existingUserIds) "clickable"}}' {{action (perform clickUser) result.user}}>
+        <li class='user {{unless (contains result.user.id existingUserIds) "clickable"}}' {{action (perform clickUser) result.user}} data-test-result>
           <span class='name'>
             {{result.user.fullName}}
             {{#unless result.user.enabled}}

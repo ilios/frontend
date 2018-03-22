@@ -6,4 +6,5 @@ export default Component.extend({
   directorsCount: null,
   tagName: 'section',
   classNames: ['leadership-collapsed'],
+  'data-test-leadership-collapsed': true,
 });
