@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ilios calendar single event objective list', function(hooks) {
@@ -31,20 +31,22 @@ module('Integration | Component | ilios calendar single event objective list', f
       title=courseObjectivesPhrase
     }}`);
 
-    assert.equal(this.$('h2').text().trim(), courseObjectivesPhrase, 'Title is visible');
-    assert.ok(this.$('ul.tree').length, 'Domains/Objectives tree is visible');
-    assert.notOk(this.$('ul.list-in-order').length, 'Objectives list is not visible');
-    assert.equal(this.$('ul:eq(0)>li:eq(0)').text().trim().search(/^annoying things/), 0);
-    assert.equal(this.$('ul:eq(0)>li:eq(0)>ul>li:eq(1)').text().trim().search(/^traffic/), 0);
-    assert.equal(this.$('ul:eq(0)>li:eq(1)').text().trim().search(/^great things/), 0);
-    assert.equal(this.$('ul:eq(0)>li:eq(1)>ul>li:eq(0)').text().trim().search(/^cheese/), 0);
-    assert.ok(this.$('h2 button').hasClass('active'), 'Display-mode button is visible and is "active"');
-    this.$('h2 button').click();
-    assert.notOk(this.$('ul.tree').length, 'Domains/Objectives tree is not visible');
-    assert.ok(this.$('ul.list-in-order').length, 'Objectives list is visible');
+
+    assert.equal(this.element.querySelector('h2').textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is visible');
+    assert.notOk(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is not visible');
+    assert.equal(this.element.querySelector('ul.tree>li').textContent.trim().search(/^annoying things/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').textContent.trim().search(/^traffic/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)').textContent.trim().search(/^great things/), 0);
+    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)>ul>li').textContent.trim().search(/^cheese/), 0);
+    assert.ok(this.element.querySelector('h2 button').classList.contains('active'), 'Display-mode button is visible and is "active"');
+    await click('h2 button');
+
+    assert.notOk(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is not visible');
+    assert.ok(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is visible');
     for(let i = 0, n = objectives.length; i < n; i++) {
-      assert.equal(0, this.$(`.list-in-order li:eq(${i})`).text().trim().indexOf(objectives[i].title), 'Objective title is visible');
-      assert.equal(this.$(`.list-in-order li:eq(${i}) .details`).text().trim(), objectives[i].domain, 'Domain is visible.');
+      assert.equal(0, this.$(`.list-in-order li:nth-of-type(${i + 1})`).text().trim().indexOf(objectives[i].title), 'Objective title is visible');
+      assert.equal(this.$(`.list-in-order li:nth-of-type(${i + 1}) .details`).text().trim(), objectives[i].domain, 'Domain is visible.');
     }
   });
 
@@ -56,7 +58,7 @@ module('Integration | Component | ilios calendar single event objective list', f
       objectives=objectives
     }}`);
 
-    assert.equal(this.$('.no-content').text(), 'None');
+    assert.equal(this.element.querySelector('.no-content').textContent, 'None');
   });
 
   test('no display mode toggle if none of the objectives are prioritized', async function(assert) {
@@ -77,9 +79,10 @@ module('Integration | Component | ilios calendar single event objective list', f
       title=courseObjectivesPhrase
     }}`);
 
-    assert.notOk(this.$('h2 button').hasClass('active'), 'Display-mode button is not visible');
+    const h2 = this.element.querySelector('h2');
+    assert.equal(h2.querySelectorAll('button').length, 0, 'Display-mode button is not visible');
     // briefly check if the component renders fine otherwise.
-    assert.equal(this.$('h2').text().trim(), courseObjectivesPhrase, 'Title is visible');
-    assert.ok(this.$('ul.tree').length, 'Domains/Objectives tree');
+    assert.equal(h2.textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree');
   });
 });

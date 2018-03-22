@@ -8,6 +8,6 @@ module('Integration | Component | pulse loader', function(hooks) {
 
   test('it renders', async function(assert) {
     await render(hbs`{{pulse-loader}}`);
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

@@ -1,6 +1,5 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ilios calendar multiday events', function(hooks) {
@@ -13,6 +12,6 @@ module('Integration | Component | ilios calendar multiday events', function(hook
 
     this.render(hbs`{{ilios-calendar-multiday-events}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

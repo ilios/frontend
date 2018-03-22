@@ -147,7 +147,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const fifthFirstOffering = `${materials}:eq(4) td:eq(4)`;
 
     await settled();
-    assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
+    assert.equal(this.element.querySelector(title).textContent.trim(), 'My Learning Materials for the next 60 days');
 
     assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
     assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1?inline');
@@ -222,7 +222,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
 
     await render(hbs`{{dashboard-materials}}`);
     await settled();
-    assert.equal(this.$(title).text().trim(), 'My Learning Materials for the next 60 days');
-    assert.equal(this.$(body).text().trim(), 'None');
+    assert.equal(this.element.querySelector(title).textContent.trim(), 'My Learning Materials for the next 60 days');
+    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
   });
 });

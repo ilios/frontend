@@ -11,9 +11,12 @@ export default Component.extend({
   clickable: or('isIlm', 'isOffering'),
   isEventSelectable: true,
   actions: {
-    selectEvent(){
-      if (this.get('clickable')) {
-        this.get('selectEvent')();
+    selectEvent(selectedEvent) {
+      const clickable = this.get('clickable');
+      const isEventSelectable = this.get('isEventSelectable');
+      const selectEvent = this.get('selectEvent');
+      if (clickable && isEventSelectable) {
+        selectEvent(selectedEvent);
       }
     }
   }

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | weekly events', function(hooks) {
@@ -19,11 +19,12 @@ module('Integration | Component | weekly events', function(hooks) {
     const yearPickers = '.year';
     const weeks = '.week-glance';
 
-    assert.equal(this.$(yearPickers).length, 2);
-    assert.equal(this.$(yearPickers).eq(0).text().trim(), '2017');
-    assert.equal(this.$(yearPickers).eq(1).text().trim(), '2017');
+    const years = this.element.querySelectorAll(yearPickers);
+    assert.equal(years.length, 2);
+    assert.equal(years[0].textContent.trim(), '2017');
+    assert.equal(years[1].textContent.trim(), '2017');
 
-    assert.equal(this.$(weeks).length, 52);
+    assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });
 
   test('goes forward by years', async function(assert) {
@@ -41,15 +42,17 @@ module('Integration | Component | weekly events', function(hooks) {
       toggleOpenWeek=(action nothing)
     }}`);
     const yearPickers = '.year';
-    const moveForward = `${yearPickers}:eq(0) i.fa-forward`;
+    const moveForward = `${yearPickers}:nth-of-type(1) i.fa-forward`;
     const weeks = '.week-glance';
 
-    this.$(moveForward).click();
+    click(moveForward);
 
-    assert.equal(this.$(yearPickers).eq(0).text().trim(), '2018');
-    assert.equal(this.$(yearPickers).eq(1).text().trim(), '2018');
+    const years = this.element.querySelectorAll(yearPickers);
+    assert.equal(years.length, 2);
+    assert.equal(years[0].textContent.trim(), '2017');
+    assert.equal(years[1].textContent.trim(), '2017');
 
-    assert.equal(this.$(weeks).length, 52);
+    assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });
 
   test('goes backward by years', async function(assert) {
@@ -67,14 +70,16 @@ module('Integration | Component | weekly events', function(hooks) {
       toggleOpenWeek=(action nothing)
     }}`);
     const yearPickers = '.year';
-    const moveBackward = `${yearPickers}:eq(0) i.fa-backward`;
+    const moveBackward = `${yearPickers}:nth-of-type(1) i.fa-backward`;
     const weeks = '.week-glance';
 
-    this.$(moveBackward).click();
+    click(moveBackward);
 
-    assert.equal(this.$(yearPickers).eq(0).text().trim(), '2016');
-    assert.equal(this.$(yearPickers).eq(1).text().trim(), '2016');
+    const years = this.element.querySelectorAll(yearPickers);
+    assert.equal(years.length, 2);
+    assert.equal(years[0].textContent.trim(), '2017');
+    assert.equal(years[1].textContent.trim(), '2017');
 
-    assert.equal(this.$(weeks).length, 52);
+    assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });
 });

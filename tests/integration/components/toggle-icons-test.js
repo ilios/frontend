@@ -9,11 +9,11 @@ module('Integration | Component | toggle icons', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(9);
 
-    const firstLabel = 'label:eq(0)';
-    const firstRadio = 'input:eq(0)';
-    const secondLabel = 'label:eq(1)';
-    const secondRadio = 'input:eq(1)';
-    const icon = 'i:eq(0)';
+    const firstLabel = 'label:nth-of-type(1)';
+    const firstRadio = 'input:nth-of-type(1)';
+    const secondLabel = 'label:nth-of-type(2)';
+    const secondRadio = 'input:nth-of-type(2)';
+    const icon = 'i:nth-of-type(1)';
 
     this.set('nothing', parseInt);
     await render(hbs`{{toggle-icons
@@ -40,8 +40,8 @@ module('Integration | Component | toggle icons', function(hooks) {
   test('clicking radio fires toggle action', async function(assert) {
     assert.expect(2);
 
-    const first = 'input:eq(0)';
-    const second = 'input:eq(1)';
+    const first = 'input:nth-of-type(1)';
+    const second = 'input:nth-of-type(2)';
 
     this.set('firstOptionSelected', true);
     let called = 0;
@@ -68,7 +68,7 @@ module('Integration | Component | toggle icons', function(hooks) {
   test('clicking selected radio does not fire toggle action', async function(assert) {
     assert.expect(1);
 
-    const first = 'input:eq(0)';
+    const first = 'input:nth-of-type(1)';
 
     this.set('firstOptionSelected', true);
     this.set('toggle', () => {
@@ -88,7 +88,7 @@ module('Integration | Component | toggle icons', function(hooks) {
   test('clicking icon fires toggle action', async function(assert) {
     assert.expect(8);
 
-    const icon = 'i:eq(0)';
+    const icon = 'i:nth-of-type(1)';
 
     this.set('firstOptionSelected', true);
     let called = 0;

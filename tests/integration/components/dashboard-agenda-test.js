@@ -42,11 +42,11 @@ module('Integration | Component | dashboard agenda', function(hooks) {
     const title = 'h3';
 
     return settled().then(()=>{
-      assert.equal(this.$(title).text().trim(), 'My Activities for the next 60 days');
+      assert.equal(this.element.querySelector(title).textContent.trim(), 'My Activities for the next 60 days');
       for(let i = 0; i < 3; i++){
-        let tds = this.$(`table tr:eq(${i}) td`);
-        assert.equal(tds.eq(0).text().trim(), moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
-        assert.equal(tds.eq(1).text().trim(), mockEvents[i].name);
+        let tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
+        assert.equal(tds[0].textContent.trim(), moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
+        assert.equal(tds[1].textContent.trim(), mockEvents[i].name);
       }
     });
   });
@@ -58,12 +58,12 @@ module('Integration | Component | dashboard agenda', function(hooks) {
 
     await render(hbs`{{dashboard-agenda}}`);
     return settled().then(()=>{
-      assert.equal(this.$('table tr:eq(0) td:eq(3) .fa-black-tie').length, 1);
-      assert.equal(this.$('table tr:eq(0) td:eq(3) .fa-flask').length, 1);
-      assert.equal(this.$('table tr:eq(0) td:eq(3) .fa-calendar-check-o').length, 1);
-      assert.equal(this.$('table tr:eq(1) td:eq(3) .fa-black-tie').length, 0);
-      assert.equal(this.$('table tr:eq(1) td:eq(3) .fa-flask').length, 0);
-      assert.equal(this.$('table tr:eq(1) td:eq(3) .fa-calendar-check-o').length, 0);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie').length, 1);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length, 1);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check-o').length, 1);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie').length, 0);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length, 0);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check-o').length, 0);
     });
   });
 
@@ -77,8 +77,8 @@ module('Integration | Component | dashboard agenda', function(hooks) {
     const body = 'p';
 
     return settled().then(()=>{
-      assert.equal(this.$(title).text().trim(), 'My Activities for the next 60 days');
-      assert.equal(this.$(body).text().trim(), 'None');
+      assert.equal(this.element.querySelector(title).textContent.trim(), 'My Activities for the next 60 days');
+      assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
     });
   });
 });

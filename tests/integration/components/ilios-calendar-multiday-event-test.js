@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -28,10 +28,10 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
     this.set('nothing', parseInt);
     await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=(action nothing)}}`);
 
-    assert.equal(this.$().text().search(/11\/11\/84/), 0);
-    assert.equal(this.$().text().search(/11\/12\/84/), 19);
-    assert.equal(this.$().text().search(/Cheramie is born/), 39);
-    assert.equal(this.$().text().search(/Lancaster, CA/), 57);
+    assert.equal(this.element.textContent.search(/11\/11\/84/), 0);
+    assert.equal(this.element.textContent.search(/11\/12\/84/), 19);
+    assert.equal(this.element.textContent.search(/Cheramie is born/), 39);
+    assert.equal(this.element.textContent.search(/Lancaster, CA/), 57);
 
   });
 
@@ -45,9 +45,9 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       assert.deepEqual(event, value);
     });
     await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=selectEvent}}`);
-    assert.ok(this.$().text().search(/Cheramie is born/) > 0);
+    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
 
-    this.$('.clickable').click();
+    await click('[data-test-event-name]');
   });
 
   test('action does not fire for scheduled events', async function(assert) {
@@ -60,10 +60,9 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       assert.ok(false);
     };
     await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=(action 'handleAction')}}`);
-    assert.ok(this.$().text().search(/Cheramie is born/) > 0);
+    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
 
-
-    this.$('.clickable').click();
+    await click('[data-test-event-name]');
   });
 
   test('action does not fire for unslecatbleEvents events', async function(assert) {
@@ -79,9 +78,9 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
     await render(
       hbs`{{ilios-calendar-multiday-event event=event isEventSelectable=false selectEvent=(action 'handleAction')}}`
     );
-    assert.ok(this.$().text().search(/Cheramie is born/) > 0);
+    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
 
 
-    this.$('.clickable').click();
+    await click('[data-test-event-name]');
   });
 });

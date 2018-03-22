@@ -133,22 +133,22 @@ module('Integration | Component | dashboard week', function(hooks) {
     const title = 'h3';
     const allWeeks = '.weeklylink a';
     const events = '.event';
-    const firstEvent = `${events}:eq(0)`;
-    const secondEvent = `${events}:eq(1)`;
+    const firstEvent = `${events}:nth-of-type(1)`;
+    const secondEvent = `${events}:nth-of-type(2)`;
 
     const firstEventTitle = `${firstEvent} .title`;
     const firstSessionType = `${firstEvent} .sessiontype`;
     const firstLocation = `${firstEvent} .location`;
     const firstDescription = `${firstEvent} .description`;
     const firstLearningMaterials = `${firstEvent} .learning-material`;
-    const firstLm1 = `${firstLearningMaterials}:eq(0)`;
+    const firstLm1 = `${firstLearningMaterials}:nth-of-type(1)`;
     const firstLm1TypeIcon = `${firstLm1} i.fa-paragraph`;
-    const firstLm2 = `${firstLearningMaterials}:eq(1)`;
+    const firstLm2 = `${firstLearningMaterials}:nth-of-type(2)`;
     const firstLm2Link = `${firstLm2} a`;
     const firstLm2TypeIcon = `${firstLm2} i.fa-link`;
-    const firstLm3 = `${firstLearningMaterials}:eq(2)`;
-    const firstLm3Link = `${firstLm3} a:eq(0)`;
-    const firstLm3DownloadLink = `${firstLm3} a:eq(1)`;
+    const firstLm3 = `${firstLearningMaterials}:nth-of-type(3)`;
+    const firstLm3Link = `${firstLm3} a:nth-of-type(1)`;
+    const firstLm3DownloadLink = `${firstLm3} a:nth-of-type(2)`;
 
     const firstLm3TypeIcon = `${firstLm3} i.fa-file-pdf-o`;
 
@@ -159,7 +159,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     const secondLocation = `${secondEvent} .location`;
     const secondDescription = `${secondEvent} .description`;
     const secondLearningMaterials = `${secondEvent} .learning-material`;
-    const secondLm1 = `${secondLearningMaterials}:eq(0)`;
+    const secondLm1 = `${secondLearningMaterials}:nth-of-type(1)`;
     const secondLm1Link = `${secondLm1} a`;
     const secondLm1TypeIcon = `${secondLm1} i.fa-file-powerpoint-o`;
 
@@ -169,9 +169,9 @@ module('Integration | Component | dashboard week', function(hooks) {
     await settled();
 
     const expectedTitle = getTitle();
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(allWeeks).text().trim(), 'Last Week / Next Week / All Weeks');
-    assert.equal(this.$(events).length, 2, 'Blank events are not shown');
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelector(allWeeks).textContent.trim(), 'Last Week / Next Week / All Weeks');
+    assert.equal(this.element.querySelectorAll(events).length, 2, 'Blank events are not shown');
 
     assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
     assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
@@ -210,8 +210,8 @@ module('Integration | Component | dashboard week', function(hooks) {
 
     await settled();
 
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(body).text().trim(), 'None');
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
 
   });
 });

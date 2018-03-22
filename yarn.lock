@@ -272,6 +272,10 @@ ast-traverse@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ast-traverse/-/ast-traverse-0.1.1.tgz#69cf2b8386f19dcda1bb1e05d68fe359d8897de6"
 
+ast-types@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.10.2.tgz#aef76a04fde54634976fc94defaad1a67e2eadb0"
+
 ast-types@0.8.12:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.8.12.tgz#a0d90e4351bb887716c83fd637ebf818af4adfcc"
@@ -404,7 +408,7 @@ babel-core@^5.0.0:
     trim-right "^1.0.0"
     try-resolve "^1.0.0"
 
-babel-core@^6.14.0, babel-core@^6.24.1, babel-core@^6.26.0:
+babel-core@^6.10.4, babel-core@^6.14.0, babel-core@^6.24.1, babel-core@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.0.tgz#af32f78b31a6fcef119c87b0fd8d9753f03a0bb8"
   dependencies:
@@ -2919,6 +2923,15 @@ ember-promise-helpers@^1.0.6:
   dependencies:
     ember-cli-babel "^6.6.0"
 
+ember-qunit-nice-errors@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ember-qunit-nice-errors/-/ember-qunit-nice-errors-1.2.0.tgz#8db4468fbe761f42bec9adcddfd21efa31237267"
+  dependencies:
+    babel-core "^6.10.4"
+    broccoli-persistent-filter "^1.4.3"
+    ember-cli-babel "^6.6.0"
+    recast "^0.13.0"
+
 ember-qunit@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.2.2.tgz#96c8818ecfa3894580a3dc805f7e7f1e82e07c4a"
@@ -3324,7 +3337,7 @@ esprima@^2.6.0:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
 
-esprima@^4.0.0:
+esprima@^4.0.0, esprima@~4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
 
@@ -6383,6 +6396,15 @@ recast@^0.11.17, recast@^0.11.3:
     esprima "~3.1.0"
     private "~0.1.5"
     source-map "~0.5.0"
+
+recast@^0.13.0:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.13.2.tgz#919e7e856d5154f13284142ed1797753c6756137"
+  dependencies:
+    ast-types "0.10.2"
+    esprima "~4.0.0"
+    private "~0.1.5"
+    source-map "~0.6.1"
 
 redent@^1.0.0:
   version "1.0.0"

@@ -4,7 +4,7 @@ import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -234,8 +234,8 @@ module('Integration | Component | week glance', function(hooks) {
     await settled();
 
     const expectedTitle = getTitle(true);
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(events).length, 3, 'Blank events are not shown');
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelectorAll(events).length, 3, 'Blank events are not shown');
     assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
     assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
     assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
@@ -253,9 +253,9 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(this.$(firstLm3DownloadLink).attr('href'), 'http://myhost.com/url1');
     assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
     assert.equal(this.$(firstAttributes).length, 3, 'All attributes flags show up');
-    assert.equal(this.$('.fa-black-tie').attr('title'), 'Whitecoats / special attire');
-    assert.equal(this.$('.fa-flask').attr('title'), 'Special Equipment');
-    assert.equal(this.$('.fa-calendar-check-o').attr('title'), 'Attendance is required');
+    assert.equal(this.element.querySelector('.fa-black-tie').getAttribute('title'), 'Whitecoats / special attire');
+    assert.equal(this.element.querySelector('.fa-flask').getAttribute('title'), 'Special Equipment');
+    assert.equal(this.element.querySelector('.fa-calendar-check-o').getAttribute('title'), 'Attendance is required');
 
     assert.equal(this.$(secondEventTitle).text().trim(), 'Finding the Point in Life');
     assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');
@@ -294,8 +294,8 @@ module('Integration | Component | week glance', function(hooks) {
 
     await settled();
 
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(body).text().trim(), 'None');
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
 
   });
 
@@ -316,7 +316,7 @@ module('Integration | Component | week glance', function(hooks) {
     const expectedTitle = getTitle(false);
     await settled();
 
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
   });
 
   test('it renders collapsed', async function(assert) {
@@ -338,8 +338,8 @@ module('Integration | Component | week glance', function(hooks) {
 
     await settled();
 
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(body).length, 0);
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelectorAll(body).length, 0);
 
   });
 
@@ -362,7 +362,7 @@ module('Integration | Component | week glance', function(hooks) {
     }}`);
     const title = 'h3';
     await settled();
-    this.$(title).click();
+    await click(title);
   });
 
   test('click to collapse', async function(assert) {
@@ -384,7 +384,7 @@ module('Integration | Component | week glance', function(hooks) {
     }}`);
     const title = 'h3';
     await settled();
-    this.$(title).click();
+    await click(title);
   });
 
   test('changing passed properties re-renders', async function(assert) {
@@ -436,8 +436,8 @@ module('Integration | Component | week glance', function(hooks) {
 
     await settled();
 
-    assert.equal(this.$(title).text().replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.$(body).text().trim(), 'None');
+    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
+    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
 
     this.set('year', nextYear.format('YYYY'));
 

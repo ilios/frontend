@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -44,10 +44,10 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       selectEvent=(action nothing)
       showMore='Show More'}}`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.equal(this.$().text().trim().search(/^September 2015/), 0);
-    assert.equal(this.$(events).length, 2);
-    assert.equal(this.$(more).length, 1);
-    assert.equal(this.$(more).text().trim(), 'Show More');
+    assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
+    assert.equal(this.element.querySelectorAll(events).length, 2);
+    assert.equal(this.element.querySelectorAll(more).length, 1);
+    assert.equal(this.element.querySelector(more).textContent.trim(), 'Show More');
   });
 
   test('month displays with two events', async function(assert) {
@@ -77,9 +77,9 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       selectEvent=(action nothing)
       showMore='Show More'}}`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.equal(this.$().text().trim().search(/^September 2015/), 0);
-    assert.equal(this.$(events).length, 2);
-    assert.equal(this.$(more).length, 0);
+    assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
+    assert.equal(this.element.querySelectorAll(events).length, 2);
+    assert.equal(this.element.querySelectorAll(more).length, 0);
   });
 
   test('clicking on a day fires the correct event', async function(assert) {
@@ -102,7 +102,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       calendarEvents=events
     }}`);
 
-    this.$('.day .clickable').eq(0).click();
+    click('.day:nth-of-type(1) .clickable');
   });
 
   let createUserEventObject = function(){

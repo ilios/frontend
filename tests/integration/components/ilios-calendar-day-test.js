@@ -13,7 +13,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{ilios-calendar-day date=date selectEvent=(action nothing)}}`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.equal(this.$().text().trim().search(/^Wednesday/), 0);
-    assert.equal(this.$('.event').length, 0);
+    assert.equal(this.element.textContent.trim().search(/^Wednesday/), 0);
+    assert.equal(this.element.querySelectorAll('.event').length, 0);
   });
 });

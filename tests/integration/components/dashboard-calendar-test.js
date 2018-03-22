@@ -1,8 +1,6 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import '@ember/test-helpers';
-
 module('Integration | Component | dashboard calendar', function(hooks) {
   setupRenderingTest(hooks);
 

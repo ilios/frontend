@@ -9,7 +9,7 @@ module('Integration | Component | ics feed', function(hooks) {
   test('it show instructions', async function(assert) {
     assert.expect(1);
     const instructions = 'SOME TEST INS';
-    const element = 'p:eq(0)';
+    const element = 'p:nth-of-type(1)';
     this.set('instructions', instructions);
 
     await render(hbs`{{ics-feed instructions=instructions}}`);

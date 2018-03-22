@@ -11,7 +11,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     let lm = { type: 'link' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type}}`);
-    assert.equal(this.$('i.fa-link').length, 1, 'Correct type icon is used.');
+    assert.equal(this.element.querySelectorAll('i.fa-link').length, 1, 'Correct type icon is used.');
   });
 
   test('citation', async function(assert) {
@@ -19,7 +19,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     let lm = { type: 'citation' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type}}`);
-    assert.equal(this.$('i.fa-paragraph').length, 1, 'Correct type icon is used.');
+    assert.equal(this.element.querySelectorAll('i.fa-paragraph').length, 1, 'Correct type icon is used.');
   });
 
   test('file', async function(assert) {
@@ -57,7 +57,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     let lm = { type: 'link' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type listItem=true}}`);
-    assert.equal(this.$('i.fa-li').length, 1, 'List icon is applied.');
+    assert.equal(this.element.querySelectorAll('i.fa-li').length, 1, 'List icon is applied.');
   });
 
   test('no listItem', async function(assert) {
@@ -66,9 +66,9 @@ module('Integration | Component | lm type icon', function(hooks) {
     this.set('lm', lm);
 
     await render(hbs`{{lm-type-icon type=lm.type}}`);
-    assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied by default.');
+    assert.equal(this.element.querySelectorAll('i.fa-li').length, 0, 'List icon class is not applied by default.');
 
     await render(hbs`{{lm-type-icon type=lm.type listItem=false}}`);
-    assert.equal(this.$('i.fa-li').length, 0, 'List icon class is not applied.');
+    assert.equal(this.element.querySelectorAll('i.fa-li').length, 0, 'List icon class is not applied.');
   });
 });

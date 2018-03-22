@@ -1,6 +1,5 @@
 import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ilios calendar event', function(hooks) {
@@ -10,12 +9,12 @@ module('Integration | Component | ilios calendar event', function(hooks) {
   skip('it renders', function(assert) {
     this.render(hbs`{{ilios-calendar-event}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 
   skip('it calculates recentlyUpdated correctly', function(assert) {
     this.render(hbs`{{ilios-calendar-event}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

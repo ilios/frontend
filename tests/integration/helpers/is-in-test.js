@@ -12,20 +12,20 @@ module('helper:is-in', function(hooks) {
     this.set('array', ['42']);
     await render(hbs`{{if (is-in array value) 'true' 'false'}}`);
 
-    assert.equal(this.$().text().trim(), 'true');
+    assert.equal(this.element.textContent.trim(), 'true');
 
     this.set('value', 42);
-    assert.equal(this.$().text().trim(), 'false');
+    assert.equal(this.element.textContent.trim(), 'false');
 
     this.set('array', [42]);
-    assert.equal(this.$().text().trim(), 'true');
+    assert.equal(this.element.textContent.trim(), 'true');
     const obj = {};
     this.set('array', [obj]);
     this.set('value', obj);
-    assert.equal(this.$().text().trim(), 'true');
+    assert.equal(this.element.textContent.trim(), 'true');
 
     this.set('value', {});
-    assert.equal(this.$().text().trim(), 'false');
+    assert.equal(this.element.textContent.trim(), 'false');
 
   });
 });

@@ -17,8 +17,8 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     this.set('date', date);
 
     await render(hbs`{{ilios-calendar-week date=date}}`);
-    assert.equal(this.$().text().trim().search(/^Week of September/), 0);
-    assert.equal(this.$('.event').length, 0);
+    assert.equal(this.element.textContent.trim().search(/^Week of September/), 0);
+    assert.equal(this.element.querySelectorAll('.event').length, 0);
   });
 
   test('clicking on a day header fires the correct events', async function(assert) {
@@ -40,7 +40,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     }}`);
 
     const weekTitles = '.week-titles .cell';
-    const sunday = `${weekTitles}:eq(1)`;
+    const sunday = `${weekTitles}:nth-of-type(2)`;
 
     assert.ok(this.$(sunday).hasClass('clickable'));
 
@@ -63,7 +63,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     }}`);
 
     const weekTitles = '.week-titles .cell';
-    const sunday = `${weekTitles}:eq(1)`;
+    const sunday = `${weekTitles}:nth-of-type(2)`;
 
     assert.notOk(this.$(sunday).hasClass('clickable'));
 

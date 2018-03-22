@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import '@ember/test-helpers';
 import { default as en } from 'ilios-common/locales/en/translations';
 import { default as es } from 'ilios-common/locales/es/translations';
 import { default as fr } from 'ilios-common/locales/fr/translations';
