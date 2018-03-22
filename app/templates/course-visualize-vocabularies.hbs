@@ -2,8 +2,8 @@
   <div class="backtolink">
     {{#link-to 'course-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
   </div>
-  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
-  <h3>{{t 'general.vocabularies'}}</h3>
+  <h2>{{t 'general.vocabularies'}}</h2>
+  <h3 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
 
   {{visualizer-course-vocabularies course=model}}
 </section>

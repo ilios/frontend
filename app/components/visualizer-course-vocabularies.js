@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   router: service(),
+  i18n: service(),
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabularies'],
@@ -67,6 +68,7 @@ export default Component.extend({
   },
   donutHover: task(function* (obj) {
     yield timeout(100);
+    const i18n = this.get('i18n');
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
       return;
@@ -74,9 +76,7 @@ export default Component.extend({
     const { meta } = obj;
 
     const title = htmlSafe(meta.vocabulary.get('title'));
-    const sessions = meta.sessions.uniq().sort().join();
-
     this.set('tooltipTitle', title);
-    this.set('tooltipContent', sessions);
+    this.set('tooltipContent', i18n.t('general.clickForMore'));
   }),
 });

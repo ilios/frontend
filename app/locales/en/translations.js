@@ -68,6 +68,7 @@ export default {
     'clearErrors': 'Clear Errors and Return to Ilios',
     'clerkship': 'Clerkship',
     'clerkshipType': 'Clerkship Type',
+    'clickForMore': 'Click for more information',
     'clickToAddDescription': 'Click to add a description.',
     'clickToAddTermDescription': 'Click to add descriptive notes',
     'clickToEdit': 'Click to edit',

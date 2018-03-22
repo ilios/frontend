@@ -1,10 +1,10 @@
 {{#if (or true isIcon (gt (get (await data) 'length') 0))}}
   {{#simple-chart
-    name='donut'
+    name=chartType
     isIcon=isIcon
     data=(await data)
-    hover=(perform donutHover)
-    leave=(perform donutHover)
+    hover=(perform barHover)
+    leave=(perform barHover)
 
     as |chart|
   }}

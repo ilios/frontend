@@ -5,8 +5,10 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  i18n: service(),
   course: null,
   vocabulary: null,
   isIcon: false,
@@ -61,17 +63,27 @@ export default Component.extend({
       termData.push(termObjects[key]);
     });
 
-    return termData;
+    const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
+    const mappedTermsWithLabel = termData.map(obj => {
+      const percent = (obj.data / totalMinutes * 100).toFixed(1);
+      obj.label = `${obj.meta.term} ${percent}%`;
+      obj.meta.totalMinutes = totalMinutes;
+      obj.meta.percent = percent;
+      return obj;
+    });
+
+    return mappedTermsWithLabel;
   }),
-  donutHover: task(function* (obj) {
+  barHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
       return;
     }
-    const { meta } = obj;
+    const i18n = this.get('i18n');
+    const { label, data, meta } = obj;
 
-    const title = htmlSafe(meta.term);
+    const title = htmlSafe(`${label} ${data} ${i18n.t('general.minutes')}`);
     const sessions = meta.sessions.uniq().sort().join();
 
     this.set('tooltipTitle', title);

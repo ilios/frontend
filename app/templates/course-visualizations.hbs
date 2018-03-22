@@ -2,8 +2,8 @@
   <div class="backtolink">
     {{#link-to 'course' model}}{{t 'general.backToCourse'}}{{/link-to}}
   </div>
-  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
-  <h3>{{t 'general.courseVisualizations'}}</h3>
+  <h2>{{t 'general.courseVisualizations'}}</h2>
+  <h3 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
 
 
   <div class='visualizations'>
@@ -21,7 +21,7 @@
         <h4>
           {{t 'general.sessionTypes'}}
         </h4>
-        {{visualizer-course-session-types isIcon=true course=model}}
+        {{visualizer-course-session-types isIcon=true course=model chartType='donut'}}
       {{/link-to}}
     </div>
 

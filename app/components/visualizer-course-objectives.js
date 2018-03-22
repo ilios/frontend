@@ -5,10 +5,12 @@ import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 const { map, filter } = RSVP;
 
 export default Component.extend({
+  i18n: service(),
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],
@@ -96,11 +98,12 @@ export default Component.extend({
   }),
 
   async getTooltipData(obj){
+    const i18n = this.get('i18n');
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
     }
-    const { meta } = obj;
+    const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.get('title');
     let competency = await meta.courseObjective.get('competency');
@@ -108,7 +111,7 @@ export default Component.extend({
       objectiveTitle += `(${competency})`;
     }
 
-    const title = htmlSafe(objectiveTitle);
+    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${i18n.t('general.minutes')}`);
     const sessionTitles = meta.sessionObjectives.mapBy('sessionTitle');
     const content = sessionTitles.join(', ');
 
