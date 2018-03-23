@@ -43,6 +43,9 @@
               {{fa-icon 'trash' class=(if deleteSessionType.isRunning 'inactive' 'remove clickable') click=(perform deleteSessionType sessionType)}}
             {{/if}}
           {{/if}}
+          {{#link-to 'session-type-visualize-vocabularies' sessionType}}
+            {{fa-icon 'bar-chart'}}
+          {{/link-to}}
         </td>
       </tr>
     {{/each}}

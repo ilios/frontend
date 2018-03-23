@@ -1,0 +1,10 @@
+<section class='session-type-visualize-vocabularies'>
+  <h2 class='clickable'>
+    {{#link-to 'school' model.school (query-params schoolSessionTypeDetails=true)}}
+      {{model.school.title}} {{model.title}}
+    {{/link-to}}
+  </h2>
+  <h3>{{t 'general.termsBySessionType'}}</h3>
+
+  {{visualizer-session-type-vocabularies sessionType=model}}
+</section>

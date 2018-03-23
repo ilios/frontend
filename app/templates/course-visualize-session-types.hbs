@@ -1,0 +1,9 @@
+<section class='course-visualize-session-types'>
+  <div class="backtolink">
+    {{#link-to 'course-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
+  </div>
+  <h2>{{t 'general.sessionTypes'}}</h2>
+  <h3 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
+
+  {{visualizer-course-session-types course=model}}
+</section>

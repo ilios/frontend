@@ -23,7 +23,11 @@
 @import 'components/course-rollover';
 @import 'components/course-sessions';
 @import 'components/course-summary-header';
+@import 'components/course-visualizations';
 @import 'components/course-visualize-objectives';
+@import 'components/course-visualize-session-types';
+@import 'components/course-visualize-vocabularies';
+@import 'components/course-visualize-vocabulary';
 @import 'components/courses-list';
 @import 'components/curriculum-inventory-report-details';
 @import 'components/curriculum-inventory-report-header';
@@ -163,3 +167,8 @@
 @import 'components/user-profile-schools';
 @import 'components/user-search';
 @import 'components/visualizer-course-objectives';
+@import 'components/visualizer-course-session-types';
+@import 'components/visualizer-course-vocabularies';
+@import 'components/visualizer-course-vocabulary';
+@import 'components/visualizer-session-type-terms';
+@import 'components/visualizer-session-type-vocabularies';

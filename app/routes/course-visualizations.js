@@ -1,11 +1,12 @@
-/* eslint ember/order-in-routes: 0 */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
-const { all } = RSVP;
+import { all } from 'rsvp';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default  Route.extend({
+export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
+  titleToken: 'general.coursesAndSessions',
+
   /**
    * Prefetch related data to limit network requests
   */
@@ -31,22 +32,18 @@ export default  Route.extend({
     ];
     const maximumSessionLoad = 100;
     if (sessions.length < maximumSessionLoad) {
+      promises.pushObject(store.query('objective', { filters: { sessions } }));
       promises.pushObject(store.query('session-type', { filters: { sessions } }));
+      promises.pushObject(store.query('term', { filters: { sessions } }));
     } else {
       for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
         let slice = sessions.slice(i, i + maximumSessionLoad);
+        promises.pushObject(store.query('objective', { filters: { sessions: slice } }));
         promises.pushObject(store.query('session-type', { filters: { sessions: slice } }));
+        promises.pushObject(store.query('term', { filters: { sessions: slice } }));
       }
     }
 
     return all(promises);
   },
-  queryParams: {
-    sortSessionsBy: {
-      replace: true
-    },
-    filterSessionsBy: {
-      replace: true
-    },
-  }
 });

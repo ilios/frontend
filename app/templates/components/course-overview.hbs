@@ -14,8 +14,8 @@
         {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
       {{/link-to}}
     {{/if}}
-    {{#link-to 'course-visualize-objectives' course}}
-      {{visualizer-course-objectives course=course isIcon=true}}
+    {{#link-to 'course-visualizations' course title=(t 'general.courseVisualizations')}}
+      {{fa-icon 'bar-chart'}}
     {{/link-to}}
   </div>
 </div>
