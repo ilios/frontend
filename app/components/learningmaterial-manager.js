@@ -63,6 +63,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isLink: equal('type', 'link'),
   isCitation: equal('type', 'citation'),
 
+  canEditTitle: computed('learningMaterial.learningMaterial.courseLearningMaterials.[]', 'learningMaterial.learningMaterial.sessionLearningMaterials.[]', async function() {
+    const learningMaterial = this.get('learningMaterial');
+    const parent = await learningMaterial.get('learningMaterial');
+    const cLmIds = parent.hasMany('courseLearningMaterials').ids();
+    const sLmIds = parent.hasMany('sessionLearningMaterials').ids();
+
+    return cLmIds.length + sLmIds.length === 1;
+  }),
+
   setup: task(function * (){
     const learningMaterial = this.get('learningMaterial');
     if (!learningMaterial) {
@@ -114,6 +123,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.send('clearErrorDisplay');
     const {
       learningMaterial,
+      title,
       notes,
       required,
       publicNotes,
@@ -122,7 +132,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       statusId,
       terms,
       closeManager,
-    } = this.getProperties('learningMaterial', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
+    } = this.getProperties('learningMaterial', 'title', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
     learningMaterial.set('publicNotes', publicNotes);
     learningMaterial.set('required', required);
     learningMaterial.set('notes', notes);
@@ -134,6 +144,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     const parent = yield learningMaterial.get('learningMaterial');
     parent.set('status', status);
+    parent.set('title', title);
 
     learningMaterial.set('meshDescriptors', terms);
     yield learningMaterial.save();

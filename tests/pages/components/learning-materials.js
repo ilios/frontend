@@ -69,7 +69,10 @@ export default {
   },
   manager: {
     scope: '.learningmaterial-manager',
-    name: text('.displayname'),
+    name: {
+      scope: '.displayname input'
+    },
+    nameValue: text('.displayname span'),
     author: text('.originalauthor'),
     description: text('.description'),
     copyrightPermission: text('.copyrightpermission'),
