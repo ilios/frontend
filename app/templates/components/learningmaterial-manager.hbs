@@ -1,9 +1,17 @@
 {{#if setup.isRunning}}
   {{loading-spinner class='loading'}}
 {{else}}
-  <div class="item">
+  <div class="item displayname">
     <label>{{t 'general.displayName'}}:</label>
-    <span class='displayname'>{{title}}</span>
+    {{#if (await canEditTitle)}}
+      <input
+        type='text'
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+      >
+    {{else}}
+      <span>{{title}}</span>
+    {{/if}}
   </div>
   <div class="item status">
     <label>{{t 'general.status'}}:</label>
