@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   i18n: service(),
+  router: service(),
   course: null,
   isIcon: false,
   chartType: 'horz-bar',
@@ -24,6 +25,7 @@ export default Component.extend({
       return {
         sessionTitle: session.get('title'),
         sessionTypeTitle: sessionType.get('title'),
+        sessionTypeId: sessionType.get('id'),
         minutes,
       };
     });
@@ -36,6 +38,7 @@ export default Component.extend({
           label: obj.sessionTypeTitle,
           meta: {
             sessionType: obj.sessionTypeTitle,
+            sessionTypeId: obj.sessionTypeId,
             sessions: []
           }
         };
@@ -59,6 +62,18 @@ export default Component.extend({
 
     return mappedSessionTypesWithLabel;
   }),
+  actions: {
+    barClick(obj) {
+      const course = this.get('course');
+      const isIcon = this.get('isIcon');
+      const router = this.get('router');
+      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+        return;
+      }
+
+      router.transitionTo('course-visualize-session-type', course.get('id'), obj.meta.sessionTypeId);
+    }
+  },
   barHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.get('isIcon');
