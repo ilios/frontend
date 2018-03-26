@@ -7,7 +7,7 @@ import { isPresent } from '@ember/utils';
 import ArrayProxy from '@ember/array/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 const { Promise } = RSVP;
-const { reads, gt, sort } = computed;
+const { gt } = computed;
 
 export default Component.extend({
   store: service(),
@@ -16,12 +16,9 @@ export default Component.extend({
     this._super(...arguments);
     this.set('sortSchoolsBy', ['title']);
   },
-  tagName: 'div',
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
   alert: gt('_updatesProxy.length', 0),
   schoolId: null,
-  hasMoreThanOneSchool: gt('currentUser.model.schools.length', 1),
-  schools: reads('currentUser.model.schools'),
 
   /**
    * The currently selected school, defaults to the current-user's primary school if none is selected.
@@ -29,6 +26,15 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
+  schools: computed('currentUser.model.schools.[]', function(){
+    return new Promise(resolve => {
+      this.get('currentUser.model').then(user => {
+        user.get('schools').then(schools => {
+          resolve(schools);
+        });
+      });
+    });
+  }),
   selectedSchool: computed('currentUser', 'schoolId', function(){
     return new Promise(resolve => {
       this.get('currentUser').get('model').then(user => {
@@ -48,8 +54,6 @@ export default Component.extend({
       });
     });
   }),
-  sortSchoolsBy: null,
-  sortedSchools: sort('schools', 'sortSchoolsBy'),
 
 
   /**
