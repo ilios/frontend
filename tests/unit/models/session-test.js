@@ -376,14 +376,14 @@ module('Unit | Model | Session', function(hooks) {
     const store = this.owner.lookup('service:store');
 
     await run( async () => {
-      const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+      const allDayOffering = store.createRecord('offering', { startDate: moment('2017-01-01'), endDate: moment('2017-01-02').add(30, 'minutes') });
       const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
       subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
-      let ilmSession = store.createRecord('ilmSession', { hours: 2});
+      let ilmSession = store.createRecord('ilmSession', { hours: 2.1});
       subject.set('ilmSession', ilmSession);
 
       const max = await subject.get('totalSumDuration');
-      assert.equal(max, 26.00);
+      assert.equal(max, 26.60);
     });
   });
 
