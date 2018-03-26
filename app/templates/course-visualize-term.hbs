@@ -1,0 +1,12 @@
+<section class='course-visualize-term'>
+  <div class="backtolink">
+    {{#link-to 'course-visualizations' model.course}}{{t 'general.otherVisualizations'}}{{/link-to}}
+  </div>
+  <h2>
+    {{#link-to 'course-visualize-vocabulary' model.course.id model.term.vocabulary.id}}{{model.term.vocabulary.title}}{{/link-to}}
+     - {{model.term.title}}
+  </h2>
+  <h3 class='clickable'>{{#link-to 'course' model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
+
+  {{visualizer-course-term course=model.course term=model.term}}
+</section>

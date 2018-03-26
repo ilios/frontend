@@ -20,6 +20,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       course.get('school'),
       vocabulary.get('terms'),
       map(sessions.toArray(), s => s.get('terms')),
+      map(sessions.toArray(), s => s.get('totalSumDuration')),
     ]);
   }
 });

@@ -9,6 +9,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   i18n: service(),
+  router: service(),
   course: null,
   vocabulary: null,
   isIcon: false,
@@ -48,7 +49,8 @@ export default Component.extend({
           data: 0,
           label: term.get('title'),
           meta: {
-            term: term.get('title'),
+            termTitle: term.get('title'),
+            termId: term.get('id'),
             sessions: []
           }
         };
@@ -66,7 +68,7 @@ export default Component.extend({
     const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map(obj => {
       const percent = (obj.data / totalMinutes * 100).toFixed(1);
-      obj.label = `${obj.meta.term} ${percent}%`;
+      obj.label = `${obj.meta.termTitle} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
@@ -74,6 +76,18 @@ export default Component.extend({
 
     return mappedTermsWithLabel;
   }),
+  actions: {
+    barClick(obj) {
+      const course = this.get('course');
+      const isIcon = this.get('isIcon');
+      const router = this.get('router');
+      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+        return;
+      }
+
+      router.transitionTo('course-visualize-term', course.get('id'), obj.meta.termId);
+    }
+  },
   barHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.get('isIcon');

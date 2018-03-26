@@ -115,6 +115,9 @@ Router.map(function() {
   this.route('course-visualize-vocabulary', {
     path: 'data/courses/:course_id/vocabularies/:vocabulary_id'
   });
+  this.route('course-visualize-term', {
+    path: 'data/courses/:course_id/terms/:term_id'
+  });
   this.route('session-type-visualize-vocabularies', {
     path: 'data/sessiontype/:session_type_id/vocabularies'
   });
