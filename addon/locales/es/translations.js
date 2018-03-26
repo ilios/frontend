@@ -60,6 +60,7 @@ export default {
     'specialEquipment': 'Equipo especial',
     'specialEquipmentIs_Required_': 'Se <strong><em>require</em></strong> equipo especial',
     'specialEquipmentRequired': 'Equipo Especial Requerido',
+    'supplementalCurriculum': 'Plan de Estudios No Requerido',
     'taughtBy': 'Ènsenada Por {{instructors}}',
     'terms': 'Términos',
     'timedRelease': 'Lanzamiento Calculado',

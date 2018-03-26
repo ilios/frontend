@@ -1,4 +1,3 @@
-import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import Service from '@ember/service';
 import moment from 'moment';
@@ -47,6 +46,7 @@ const mockEvents = [
     attireRequired: true,
     equipmentRequired: true,
     attendanceRequired: true,
+    supplemental: true,
   },
   {
     name: 'Finding the Point in Life',
@@ -73,6 +73,7 @@ const mockEvents = [
     attireRequired: false,
     equipmentRequired: false,
     attendanceRequired: false,
+    supplemental: false,
   },
   {
     name: 'Blank',
@@ -130,19 +131,13 @@ const mockEvents = [
     attireRequired: true,
     equipmentRequired: true,
     attendanceRequired: true,
+    supplemental: true,
   },
 ];
 const userEventsMock = Service.extend({
   getEvents(){
     return new resolve(mockEvents);
   },
-  getSessionForEvent() {
-    return EmberObject.create({
-      attireRequired: false,
-      equipmentRequired: false,
-      attendanceRequired: false,
-    });
-  }
 });
 let blankEventsMock = Service.extend({
   getEvents(){
@@ -220,7 +215,7 @@ module('Integration | Component | week glance', function(hooks) {
     const secondLm1TypeIcon = `${secondLm1} i.fa-file-pdf-o`;
     const secondLm1Notes = `${secondLm1} .public-notes`;
     const secondInstructors = `${secondEvent} .instructors`;
-    const secondAttributes = `${secondAttributes} .session-attributes i`;
+    const secondAttributes = `${secondEvent} .session-attributes i`;
     const thirdEventTitle = `${thirdEvent} .title`;
     const thirdLearningMaterials = `${thirdEvent} .learning-material`;
     const thirdLm1 = `${thirdLearningMaterials}:eq(0)`;
@@ -252,7 +247,7 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1?inline');
     assert.equal(this.$(firstLm3DownloadLink).attr('href'), 'http://myhost.com/url1');
     assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
-    assert.equal(this.$(firstAttributes).length, 3, 'All attributes flags show up');
+    assert.equal(this.$(firstAttributes).length, 4, 'All attributes flags show up');
     assert.equal(this.element.querySelector('.fa-black-tie').getAttribute('title'), 'Whitecoats / special attire');
     assert.equal(this.element.querySelector('.fa-flask').getAttribute('title'), 'Special Equipment');
     assert.equal(this.element.querySelector('.fa-calendar-check-o').getAttribute('title'), 'Attendance is required');

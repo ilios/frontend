@@ -60,6 +60,7 @@ export default {
     'specialEquipment': "Équipage particulier",
     'specialEquipmentIs_Required_': "Équipage particulier est <strong><em>requis</em></strong>",
     'specialEquipmentRequired': "Équipage particulier requis",
+    'supplementalCurriculum': "Supplemental Curriculum",
     'taughtBy': "Dispensé à {{instructors}}",
     'terms': 'Termes',
     'timedRelease': 'Période Limitée',
