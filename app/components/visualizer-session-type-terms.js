@@ -94,6 +94,8 @@ export default Component.extend({
     yield timeout(100);
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
+      this.set('tooltipTitle', null);
+      this.set('tooltipContent', null);
       return;
     }
     const { meta } = obj;
@@ -104,5 +106,5 @@ export default Component.extend({
 
     this.set('tooltipTitle', title);
     this.set('tooltipContent', { sessions, courses });
-  })
+  }).restartable()
 });

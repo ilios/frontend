@@ -71,6 +71,8 @@ export default Component.extend({
     const i18n = this.get('i18n');
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
+      this.set('tooltipTitle', null);
+      this.set('tooltipContent', null);
       return;
     }
     const { meta } = obj;
@@ -78,5 +80,5 @@ export default Component.extend({
     const title = htmlSafe(meta.vocabulary.get('title'));
     this.set('tooltipTitle', title);
     this.set('tooltipContent', i18n.t('general.clickForMore'));
-  }),
+  }).restartable(),
 });

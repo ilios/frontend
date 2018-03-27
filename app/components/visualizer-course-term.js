@@ -67,6 +67,8 @@ export default Component.extend({
     yield timeout(100);
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
+      this.set('tooltipTitle', null);
+      this.set('tooltipContent', null);
       return;
     }
     const i18n = this.get('i18n');
@@ -78,5 +80,5 @@ export default Component.extend({
 
     this.set('tooltipTitle', title);
     this.set('tooltipContent', sessions);
-  })
+  }).restartable()
 });
