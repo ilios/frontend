@@ -3,7 +3,7 @@
     {{#link-to 'course-visualizations' model.course}}{{t 'general.otherVisualizations'}}{{/link-to}}
   </div>
   <h2>
-    {{model.sessionType.title}}
+    {{t 'general.vocabularyTermsFor' subject=model.sessionType.title}}
   </h2>
   <h3 class='clickable'>{{#link-to 'course' model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
 

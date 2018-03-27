@@ -3,8 +3,7 @@
     {{#link-to 'course-visualizations' model.course}}{{t 'general.otherVisualizations'}}{{/link-to}}
   </div>
   <h2>
-    {{#link-to 'course-visualize-vocabulary' model.course.id model.term.vocabulary.id}}{{model.term.vocabulary.title}}{{/link-to}}
-     - {{model.term.title}}
+    {{t 'general.sessionTypesFor' subject=(concat model.term.vocabulary.title ' - ' model.term.title)}}
   </h2>
   <h3 class='clickable'>{{#link-to 'course' model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
 
