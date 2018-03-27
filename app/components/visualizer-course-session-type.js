@@ -26,10 +26,12 @@ export default Component.extend({
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       const terms = await session.get('terms');
-      return terms.map(term => {
+      return map(terms.toArray(), async term => {
+        const vocabulary = await term.get('vocabulary');
         return {
           sessionTitle: session.get('title'),
           termTitle: term.get('title'),
+          vocabularyTitle: vocabulary.get('title'),
           minutes
         };
       });
@@ -40,11 +42,12 @@ export default Component.extend({
     }, []);
 
     const data = flat.reduce((set, obj) => {
-      let existing = set.findBy('label', obj.termTitle);
+      const label = obj.vocabularyTitle + ' - ' + obj.termTitle;
+      let existing = set.findBy('label', label);
       if (!existing) {
         existing = {
           data: 0,
-          label: obj.termTitle,
+          label,
           meta: {
             sessions: []
           }
