@@ -32,9 +32,10 @@
               </span>
             {{/if}}
             <span class='session-attributes'>
-              {{#if event.attireRequired}}{{fa-icon 'black-tie' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
-              {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
-              {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o' title=(t 'general.attendanceIsRequired')}}{{/if}}
+              {{#if event.attireRequired}}{{fa-icon 'black-tie' ariaHidden=false title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
+              {{#if event.equipmentRequired}}{{fa-icon 'flask' ariaHidden=false title=(t 'general.specialEquipment')}}{{/if}}
+              {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o' ariaHidden=false title=(t 'general.attendanceIsRequired')}}{{/if}}
+              {{#if event.supplemental}}{{fa-icon 'calendar-minus-o' ariaHidden=false title=(t 'general.supplementalCurriculum')}}{{/if}}
             </span>
           </p>
           {{#if event.instructors.length}}

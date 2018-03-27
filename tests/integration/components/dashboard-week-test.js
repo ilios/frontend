@@ -1,6 +1,5 @@
 import RSVP from 'rsvp';
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -88,13 +87,6 @@ const userEventsMock = Service.extend({
   getEvents(){
     return new resolve(mockEvents);
   },
-  getSessionForEvent() {
-    return EmberObject.create({
-      attireRequired: false,
-      equipmentRequired: false,
-      attendanceRequired: false,
-    });
-  }
 });
 let blankEventsMock = Service.extend({
   getEvents(){
