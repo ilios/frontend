@@ -8,7 +8,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
-const { Promise } = RSVP;
+const { Promise, all } = RSVP;
 
 const Validations = buildValidations({
   firstName: [
@@ -178,6 +178,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
       yield auth.save();
       yield user.save();
+      const pendingUpdates = yield user.get('pendingUserUpdates');
+      yield all(pendingUpdates.invoke('destroyRecord'));
 
       this.send('clearErrorDisplay');
       this.get('cancel').perform();
