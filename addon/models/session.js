@@ -136,7 +136,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
 
     const ilmHours = ilmSession.get('hours');
 
-    return parseInt(ilmHours, 10) + parseInt(maxSingleOfferingDuration, 10);
+    return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
   }),
 
   requiredPublicationIssues: computed(
