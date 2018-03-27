@@ -30,6 +30,7 @@ moduleForComponent('user-profile-bio', 'Integration | Component | user profile b
       cohorts: resolve([]),
       primaryCohort: resolve(null),
       authentication: resolve(authentication),
+      pendingUserUpdates: []
     });
   }
 });
@@ -116,11 +117,25 @@ test('clicking manage sends the action', function(assert) {
 });
 
 test('can edit user bio for ldap config', function(assert) {
-  assert.expect(19);
+  assert.expect(21);
   const iliosConfigMock = Service.extend({
     userSearchType: resolve('ldap')
   });
   this.register('service:iliosConfig', iliosConfigMock);
+  const pendingUpdate1 = EmberObject.create({
+    destroyRecord() {
+      assert.ok(true, 'pending updates are removed');
+      return resolve();
+    }
+  });
+  const pendingUpdate2 = EmberObject.create({
+    destroyRecord() {
+      assert.ok(true, 'pending updates are removed');
+      return resolve();
+    }
+  });
+  user.get('pendingUserUpdates').pushObject(pendingUpdate1);
+  user.get('pendingUserUpdates').pushObject(pendingUpdate2);
   this.set('user', user);
   this.set('nothing', parseInt);
 
