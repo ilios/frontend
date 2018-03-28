@@ -49,6 +49,7 @@ export default Component.extend({
           data: 0,
           label,
           meta: {
+            vocabularyTitle: obj.vocabularyTitle,
             sessions: []
           }
         };
@@ -70,6 +71,14 @@ export default Component.extend({
     });
 
     return mappedTermsWithLabel;
+  }),
+  sortedData: computed('data.[]', async function () {
+    const data = await this.get('data');
+    data.sort((first, second) => {
+      return first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) || first.data - second.data;
+    });
+
+    return data;
   }),
   barHover: task(function* (obj) {
     yield timeout(100);

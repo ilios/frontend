@@ -76,6 +76,14 @@ export default Component.extend({
 
     return mappedTermsWithLabel;
   }),
+  sortedData: computed('data.[]', async function () {
+    const data = await this.get('data');
+    data.sort((first, second) => {
+      return first.data - second.data;
+    });
+
+    return data;
+  }),
   actions: {
     barClick(obj) {
       const course = this.get('course');
