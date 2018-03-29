@@ -3882,7 +3882,7 @@ ember-composable-helpers@^2.0.1, ember-composable-helpers@^2.0.2:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency@0.8.17:
+ember-concurrency@0.8.17, ember-concurrency@^0.8.17:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.17.tgz#be47a90342f1960f4f57284c2fe5f7ce2396142a"
   dependencies:
@@ -4422,14 +4422,15 @@ ember-simple-auth@^1.4.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.12.1.tgz#b4e9139f05311fc78738bb49470bc53e88535883"
+ember-simple-charts@0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.12.2.tgz#7f99a707fea0343a7db474fc78de88645eec1c3a"
   dependencies:
     d3 "^4.13.0"
     ember-cli-babel "^6.8.1"
     ember-cli-htmlbars "^2.0.1"
     ember-cli-sass "^7.1.2"
+    ember-concurrency "^0.8.17"
     ember-d3 "^0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-resize-aware "^1.0.0"
