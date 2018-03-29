@@ -1,9 +1,11 @@
-<section class='course-visualize-vocabulary'>
+<section class='course-visualize-term'>
   <div class="backtolink">
     {{#link-to 'course-visualizations' model.course}}{{t 'general.otherVisualizations'}}{{/link-to}}
   </div>
-  <h2>{{model.vocabulary.title}}</h2>
+  <h2>
+    {{t 'general.sessionTypesFor' subject=(concat model.term.vocabulary.title ' - ' model.term.title)}}
+  </h2>
   <h3 class='clickable'>{{#link-to 'course' model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
 
-  {{visualizer-course-vocabulary course=model.course vocabulary=model.vocabulary}}
+  {{visualizer-course-term course=model.course term=model.term}}
 </section>

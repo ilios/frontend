@@ -2,10 +2,9 @@
   {{#simple-chart
     name='horz-bar'
     isIcon=isIcon
-    data=(await sortedData)
+    data=(await data)
     hover=(perform barHover)
     leave=(perform barHover)
-    click=(action 'barClick')
 
     as |chart|
   }}
