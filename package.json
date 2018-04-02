@@ -40,7 +40,7 @@
     "ember-cli-deploy-revision-data": "1.0.0",
     "ember-cli-deploy-s3-index": "1.0.1",
     "ember-cli-deprecation-workflow": "0.2.4",
-    "ember-cli-document-title": "0.3.3",
+    "ember-cli-document-title": "0.4.0",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-flash": "1.6.3",
     "ember-cli-head": "0.4.0",
