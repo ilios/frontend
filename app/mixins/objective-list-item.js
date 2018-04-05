@@ -28,6 +28,7 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
   title: null,
   isSaving: false,
   showRemoveConfirmation: false,
+  editable: true,
 
   actions: {
     saveTitleChanges() {
