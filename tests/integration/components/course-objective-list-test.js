@@ -15,12 +15,26 @@ test('it renders', function(assert){
 
   let objective1 = EmberObject.create({
     title: 'Objective A',
-    position: 0
+    position: 0,
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
 
   let objective2 = EmberObject.create({
     title: 'Objective B',
-    position: 0
+    position: 0,
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
 
   let objectives = [ objective1, objective2 ];
@@ -66,6 +80,13 @@ test('no "sort objectives" button in list with one item', function(assert){
   assert.expect(2);
   let objective = EmberObject.create({
     title: 'Objective A',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   let course = EmberObject.create({
     sortedObjectives: resolve([ objective ]),

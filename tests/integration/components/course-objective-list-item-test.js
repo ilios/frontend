@@ -17,7 +17,14 @@ moduleForComponent('course-objective-list-item', 'Integration | Component | cour
 
 test('it renders', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
@@ -35,9 +42,41 @@ test('it renders', function(assert) {
   assert.equal(this.$('td:eq(3) i').length, 1);
 });
 
+test('cannot delete objective with descendants', function(assert) {
+  let objective = EmberObject.create({
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [1];
+        }
+      };
+    }
+  });
+  this.set('objective', objective);
+  this.on('nothing', parseInt);
+
+  this.render(hbs`{{session-objective-list-item
+    objective=objective
+    remove=(action 'nothing')
+    manageParents=(action 'nothing')
+    manageDescriptors=(action 'nothing')
+    editable=true
+  }}`);
+
+  assert.equal(this.$('td:eq(3) i').length, 0);
+});
+
 test('renders removable', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
@@ -56,6 +95,13 @@ test('renders removable', function(assert) {
 test('can change title', async function(assert) {
   let objective = EmberObject.create({
     title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    },
     save(){
       assert.equal(this.get('title'), '<p>new title</p>');
       return resolve();
@@ -81,7 +127,14 @@ test('can change title', async function(assert) {
 
 test('can manage parents', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
@@ -102,7 +155,14 @@ test('can manage parents', function(assert) {
 
 test('can manage descriptors', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
@@ -123,7 +183,14 @@ test('can manage descriptors', function(assert) {
 
 test('can trigger removal', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
@@ -144,7 +211,14 @@ test('can trigger removal', function(assert) {
 
 test('read-only mode', function(assert) {
   let objective = EmberObject.create({
-    title: 'fake title'
+    title: 'fake title',
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    }
   });
   this.set('objective', objective);
   this.on('nothing', parseInt);
