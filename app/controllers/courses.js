@@ -7,12 +7,16 @@ import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
+import config from '../config/environment';
+
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 const { gt, sort } = computed;
 
 export default Controller.extend({
   i18n: service(),
   currentUser: service(),
+  permissionChecker: service(),
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',
@@ -122,6 +126,14 @@ export default Controller.extend({
     }
 
     return defaultYear;
+  }),
+  canCreateCourse: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = this.get('selectedSchool');
+    return permissionChecker.canCreateCourse(selectedSchool.get('id'));
   }),
 
   actions: {

@@ -89,6 +89,7 @@ module.exports = function (environment) {
       allowAddNewUser: true,
       schoolSessionAttributes: true,
       accessCourseVisualizations: true,
+      enforceRelationshipCapabilityPermissions: false,
     }
   };
 
@@ -107,6 +108,7 @@ module.exports = function (environment) {
     };
 
     ENV.IliosFeatures.accessCourseVisualizations = true;
+    ENV.IliosFeatures.enforceRelationshipCapabilityPermissions = true;
   }
 
   if (environment === 'test') {
