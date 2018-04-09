@@ -142,32 +142,25 @@ export default Model.extend({
   }),
 
   /**
-   * A list of all courses that this user is associated with - be it as learner, instructor or director.
-   * @property allRelatedCourses
+   * A list of all courses that this user is instructing in.
+   * @property allInstructedCourses
    * @type {Ember.computed}
    * @public
    */
-  allRelatedCourses: computed(
-    'directedCourses.[]',
-    'learnerGroups.[]',
+  allInstructedCourses: computed(
+    'instructedLearnerGroups.[]',
     'instructorGroups.[]',
     'instructedOfferings.[]',
-    'offerings.[]',
     'instructorGroupCourses.[]',
-    'learnerIlmSessions.[]',
     'instructorIlmSessions.[]',
     async function() {
-      const directedCourses = await this.get('directedCourses');
-      const learnerGroups = await this.get('learnerGroups');
+      const instructedLearnerGroups = await this.get('instructedLearnerGroups');
       const instructorGroups = await this.get('instructorGroups');
       const instructedOfferings = await this.get('instructedOfferings');
-      const offerings = await this.get('offerings');
-      const learnerIlmSessions = await this.get('learnerIlmSessions');
       const instructorIlmSessions = await this.get('instructorIlmSessions');
 
-      // get lists of courses associated with this user's learner- and instructor-groups
       const groups = [];
-      groups.pushObjects(learnerGroups.toArray());
+      groups.pushObjects(instructedLearnerGroups.toArray());
       groups.pushObjects(instructorGroups.toArray());
       const listsOfCourses = await map(groups.mapBy('courses'), courses => {
         return courses.toArray();
@@ -175,8 +168,6 @@ export default Model.extend({
 
       // get a list of sessions associated with this user's offerings and ILMs
       const offeringsAndIlms = instructedOfferings.toArray();
-      offeringsAndIlms.pushObjects(offerings.toArray());
-      offeringsAndIlms.pushObjects(learnerIlmSessions.toArray());
       offeringsAndIlms.pushObjects(instructorIlmSessions.toArray());
       const sessions = await all(offeringsAndIlms.mapBy('session'));
 
@@ -184,8 +175,54 @@ export default Model.extend({
       const listOfCourses = await all(sessions.uniq().mapBy('course'));
       listsOfCourses.pushObject(listOfCourses);
 
-      // add the list of directed courses to the lists of courses
+      // flatten these lists down to one list of courses, and de-dupe that list
+      return listsOfCourses.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, []).uniq();
+    }
+  ),
+
+  /**
+   * A list of all courses that this user is associated with - be it as learner, instructor or director.
+   * @property allRelatedCourses
+   * @type {Ember.computed}
+   * @public
+   */
+  allRelatedCourses: computed(
+    'directedCourses.[]',
+    'administeredCourses.[]',
+    'learnerGroups.[]',
+    'offerings.[]',
+    'learnerIlmSessions.[]',
+    'allInstructedCourses.[]',
+    async function() {
+      const directedCourses = await this.get('directedCourses');
+      const administeredCourses = await this.get('administeredCourses');
+      const learnerGroups = await this.get('learnerGroups');
+      const offerings = await this.get('offerings');
+      const learnerIlmSessions = await this.get('learnerIlmSessions');
+      const allInstructedCourses = await this.get('allInstructedCourses');
+
+      // get lists of courses associated with this user's learner-groups
+      const listsOfCourses = await map(learnerGroups.mapBy('courses'), courses => {
+        return courses.toArray();
+      });
+
+      // get a list of sessions associated with this user's offerings and ILMs
+      const offeringsAndIlms = [];
+      offeringsAndIlms.pushObjects(offerings.toArray());
+      offeringsAndIlms.pushObjects(learnerIlmSessions.toArray());
+      const sessions = await all(offeringsAndIlms.mapBy('session'));
+
+      // get a list of courses from these sessions and add it to the lists of courses
+      const listOfCourses = await all(sessions.uniq().mapBy('course'));
+      listsOfCourses.pushObject(listOfCourses);
+
+      // add the direct list of courses to the lists of courses
       listsOfCourses.pushObject(directedCourses.toArray());
+      listsOfCourses.pushObject(administeredCourses.toArray());
+      listsOfCourses.pushObject(allInstructedCourses.toArray());
 
       // flatten these lists down to one list of courses, and de-dupe that list
       return listsOfCourses.reduce((array, set) => {
