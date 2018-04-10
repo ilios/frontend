@@ -168,6 +168,7 @@
     'ends': 'Termina',
     'endTime': 'Hora de Cumplir',
     'errorDisplayMessage': 'Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde.',
+    'error': 'Error',
     'errors': 'Errores',
     'errorSavingAuthentication': 'Las cuentas fueron creadas para estos usuarios, pero no podrán iniciar sesión.  Esto generalmente sucede cuando el nombre de usuario ya existe, pero pertenece a otro usuario.  Por favor seleccione cada usuario y crear un nombre de usuario y contraseña.',
     'errorSavingUser': 'Estos usuarios fueron incapaces de salvarse. Por favor, compruebe que no existen.',
