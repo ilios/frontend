@@ -148,4 +148,33 @@ module('Unit | Model | term', function(hooks) {
     });
 
   });
+
+  test('allDescendants', async function(assert) {
+    assert.expect(4);
+    run( async () => {
+      const model = run(() => this.owner.lookup('service:store').createRecord('term'));
+      const store = model.store;
+      const child1 = store.createRecord('term', { parent: model });
+      const child2 = store.createRecord('term', { parent: model });
+      const child3 = store.createRecord('term', { parent: child1 });
+      const allDescendants = await model.get('allDescendants');
+      assert.equal(allDescendants.length, 3);
+      assert.equal(allDescendants[0], child1);
+      assert.equal(allDescendants[1], child2);
+      assert.equal(allDescendants[2], child3);
+    });
+  });
+
+  test('titleWithDescendantTitles', async function(assert) {
+    assert.expect(1);
+    run( async () => {
+      const model = run(() => this.owner.lookup('service:store').createRecord('term', { title: 'top'}));
+      const store = model.store;
+      const child1 = store.createRecord('term', { title: 'first', parent: model });
+      store.createRecord('term', { title: 'second', parent: model });
+      store.createRecord('term', { title: 'third', parent: child1 });
+      const titleWithDescendantTitles = await model.get('titleWithDescendantTitles');
+      assert.equal(titleWithDescendantTitles, 'first > second > third > top');
+    });
+  });
 });
