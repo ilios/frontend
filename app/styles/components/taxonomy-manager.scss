@@ -5,7 +5,27 @@
   }
 
   .vocabulary-picker {
-    margin: 20px 0 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include for-laptop-and-up {
+      flex-direction: row;
+    }
+
+    label {
+      @include ilios-label;
+    }
+
+    input {
+      @include ilios-input;
+      margin: 1rem 0 .5rem;
+      min-width: 25rem;
+
+      @include for-laptop-and-up {
+        margin: 0;
+      }
+    }
   }
 
   .terms-picker {

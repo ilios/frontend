@@ -2,8 +2,11 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
+import { filter } from 'rsvp';
+import { task, timeout } from 'ember-concurrency';
 const { sort } = computed;
+import escapeRegExp from '../utils/escape-reg-exp';
 
 export default Component.extend({
   store: service(),
@@ -21,6 +24,7 @@ export default Component.extend({
   subject: null,
   classNames: ['taxonomy-manager'],
   tagName: 'section',
+  termFilter: '',
 
   /**
    * The ID of the currently selected vocabulary.
@@ -131,6 +135,24 @@ export default Component.extend({
     return vocabulary.get('topLevelTerms');
   }),
 
+  /**
+   * @property filteredTerms
+   * @type {Ember.computed}
+   * @public
+   */
+  filteredTerms: computed('topLevelTerms.[]', 'termFilter', async function() {
+    const termFilter = this.get('termFilter');
+    const topLevelTerms = await this.get('topLevelTerms');
+    if (isEmpty(termFilter)) {
+      return topLevelTerms;
+    }
+    let exp = new RegExp(termFilter, 'gi');
+    return filter(topLevelTerms.toArray(), async term => {
+      const searchString = await term.get('titleWithDescendantTitles');
+      return searchString.match(exp);
+    });
+  }),
+
   actions: {
     add(term) {
       this.sendAction('add', term);
@@ -141,5 +163,13 @@ export default Component.extend({
     changeSelectedVocabulary(vocabId) {
       this.set('vocabId', vocabId);
     }
-  }
+  },
+
+  setTermFilter: task(function* (termFilter) {
+    const clean = escapeRegExp(termFilter);
+    if (isPresent(clean)) {
+      yield timeout(250);
+    }
+    this.set('termFilter', clean);
+  }).restartable(),
 });
