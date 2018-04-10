@@ -11,9 +11,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return await all([
       map(sessions.toArray(), s => s.get('offerings')),
       map(sessions.toArray(), s => s.get('totalSumDuration')),
-      map(sessions.toArray(), s => s.get('ilmSession')),
-      map(sessions.toArray(), s => s.get('instructors')),
-      map(sessions.toArray(), s => s.get('instructorGroups')),
+      map(sessions.toArray(), s => s.get('allInstructors')),
     ]);
   }
 });

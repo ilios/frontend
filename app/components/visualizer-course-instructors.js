@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   i18n: service(),
+  router: service(),
   course: null,
   isIcon: false,
   chartType: 'horz-bar',
@@ -19,7 +20,7 @@ export default Component.extend({
     const course = this.get('course');
     const sessions = await course.get('sessions');
     const dataMap = await map(sessions.toArray(), async session => {
-      const instructors = await this.getInstructorsForSession(session);
+      const instructors = await session.get('allInstructors');
 
       const hours = await session.get('maxSingleOfferingDuration');
       const minutes = Math.round(hours * 60);
@@ -34,13 +35,14 @@ export default Component.extend({
     const instructorData = dataMap.reduce((set, obj) => {
       obj.instructors.forEach(instructor => {
         const name = instructor.get('fullName');
+        const id = instructor.get('id');
         let existing = set.findBy('label', name);
         if (!existing) {
           existing = {
             data: 0,
             label: name,
             meta: {
-              instructor,
+              userId: id,
               sessions: []
             }
           };
@@ -82,31 +84,17 @@ export default Component.extend({
 
     return data;
   }),
-  flatten(arr) {
-    return arr.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-  },
-  async getInstructorsForSession(session) {
-    const offerings = await session.get('offerings');
-    const offeringInstructors = await all(offerings.mapBy('instructors'));
-    const offeringInstructorGroupsArr = await all(offerings.mapBy('instructorGroups'));
-    const offeringInstructorGroups = this.flatten(offeringInstructorGroupsArr);
+  actions: {
+    barClick(obj) {
+      const course = this.get('course');
+      const isIcon = this.get('isIcon');
+      const router = this.get('router');
+      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+        return;
+      }
 
-
-    let ilmInstructorGroups = [];
-    let ilmInstructors = [];
-    const ilmSession = await session.get('ilmSession');
-    if (ilmSession) {
-      ilmInstructors = await ilmSession.get('instructors');
-      ilmInstructorGroups = await ilmSession.get('instructorGroups');
+      router.transitionTo('course-visualize-instructor', course.get('id'), obj.meta.userId);
     }
-
-    const groupInstructors = await all([].concat(offeringInstructorGroups.toArray(), ilmInstructorGroups.toArray()).mapBy('users'));
-
-    const flat = this.flatten([].concat(offeringInstructors, ilmInstructors, groupInstructors));
-
-    return flat.uniq();
   },
   barHover: task(function* (obj) {
     yield timeout(100);

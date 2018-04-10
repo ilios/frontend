@@ -124,6 +124,9 @@ Router.map(function() {
   this.route('course-visualize-instructors', {
     path: 'data/courses/:course_id/instructors'
   });
+  this.route('course-visualize-instructor', {
+    path: 'data/courses/:course_id/instructors/:user_id'
+  });
   this.route('session-type-visualize-vocabularies', {
     path: 'data/sessiontype/:session_type_id/vocabularies'
   });

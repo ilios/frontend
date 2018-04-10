@@ -528,6 +528,8 @@ export default {
     'tokenInfo': "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{{apiDocsUrl}}\">{{apiDocsUrl}}</a>.",
     'tooManyResults': 'Votre recherche présente plus que les {{count}} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes.',
     'totalErrors': {'one': 'Il y a une erreur', 'other': 'Il y a {{count}} erreurs'},
+    'totalIlmTime': 'Durée totale par ILM {{minutes}} Minutes',
+    'totalInstructionalTime': "Durée d'enseignement totale {{minutes}} Minutes",
     'totalTime': 'Heures Totales',
     'transitionErrorMessage': "Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé.",
     'tryHarder': 'Faire un effort',
