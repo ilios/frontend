@@ -14,6 +14,7 @@ export default Component.extend({
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-instructors'],
   tooltipContent: null,
   tooltipTitle: null,
+  filter: '',
   data: computed('course.sessions.@each.{offerings,instructors,instructorGroups,ilmSessions}', async function () {
     const course = this.get('course');
     const sessions = await course.get('sessions');
@@ -63,8 +64,18 @@ export default Component.extend({
 
     return mappedInstructorsWithLabel;
   }),
-  sortedData: computed('data.[]', async function () {
+  filteredData: computed('data.[]', 'filter', async function(){
     const data = await this.get('data');
+    const filter = this.get('filter');
+    if (!filter) {
+      return data;
+    }
+
+    let exp = new RegExp(filter, 'gi');
+    return data.filter(({ label }) => label.match(exp));
+  }),
+  sortedData: computed('filteredData.[]', async function () {
+    const data = await this.get('filteredData');
     data.sort((first, second) => {
       return first.data - second.data;
     });

@@ -10,4 +10,16 @@
     margin-bottom: 1rem;
     text-align: center;
   }
+
+  .filter {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0 .5rem;
+    padding-right: 5rem;
+
+    input {
+      @include ilios-input;
+      width: 25rem;
+    }
+  }
 }

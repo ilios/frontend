@@ -5,5 +5,14 @@
   <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
   <h3>{{t 'general.instructors'}}</h3>
 
-  {{visualizer-course-instructors course=model}}
+  <div class='filter'>
+    <input
+      type="search"
+      value={{name}}
+      placeholder={{t 'general.filterPlaceholder'}}
+      oninput={{perform setName value="target.value"}}
+    >
+  </div>
+
+  {{visualizer-course-instructors filter=name course=model}}
 </section>
