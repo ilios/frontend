@@ -127,5 +127,115 @@ export default Service.extend({
         }
       });
     }
-  )
+  ),
+  isRoot: computed('session.data.authenticated.jwt', function(){
+    const session = this.get('session');
+    if(isEmpty(session)){
+      return null;
+    }
+
+    const jwt = session.get('data.authenticated.jwt');
+
+    if(isEmpty(jwt)){
+      return null;
+    }
+    const obj = jwtDecode(jwt);
+
+    return !!get(obj, 'is_root');
+  }),
+  schools: computed('model.schools', async function () {
+    const model = await this.get('model');
+    return model.get('schools');
+  }),
+  async isDirectingSchool(schoolId) {
+    const user = await this.get('model');
+    const ids = user.hasMany('directedSchools').ids();
+    return ids.includes(schoolId);
+  },
+  async isAdministeringSchool(schoolId) {
+    const user = await this.get('model');
+    const ids = user.hasMany('administeredSchools').ids();
+    return ids.includes(schoolId);
+  },
+  async isDirectingCourseInSchool(schoolId) {
+    const user = await this.get('model');
+    const schools = await this.get('schools');
+    const school = schools.findBy('id', schoolId);
+    const schoolCourseIds = school.hasMany('courses').ids();
+
+    const ids = user.hasMany('directedCourses').ids();
+    const matches = ids.filter(id => schoolCourseIds.includes(id));
+
+    return matches > 0;
+  },
+  async isAdministeringCourseInSchool(schoolId) {
+    const user = await this.get('model');
+    const schools = await this.get('schools');
+    const school = schools.findBy('id', schoolId);
+    const schoolCourseIds = school.hasMany('courses').ids();
+
+    const ids = user.hasMany('administeredCourses').ids();
+    const matches = ids.filter(id => schoolCourseIds.includes(id));
+
+    return matches > 0;
+  },
+  async isAdministeringSessionInSchool(schoolId) {
+    const user = await this.get('model');
+    const schools = await this.get('schools');
+    const school = schools.findBy('id', schoolId);
+    const schoolCourseIds = school.hasMany('courses').ids();
+
+    const sessions = await user.get('administeredSessions');
+    const matches = sessions.filter(session => schoolCourseIds.includes(session.belongsTo('course').id()));
+
+    return matches > 0;
+  },
+  async isTeachingCourseInSchool(schoolId) {
+    const user = await this.get('model');
+    const schools = await this.get('schools');
+    const school = schools.findBy('id', schoolId);
+    const schoolCourseIds = school.hasMany('courses').ids();
+
+    const courses = await user.get('allInstructedCourses');
+    const matches = courses.filter(course => schoolCourseIds.includes(course.get('id')));
+
+    return matches > 0;
+  },
+  async isAdministeringCurriculumInventoryReportInSchool(schoolId) {
+    const user = await this.get('model');
+    const schools = await this.get('schools');
+    const school = schools.findBy('id', schoolId);
+    const schoolProgramIds = school.hasMany('programs').ids();
+
+    const reports = await user.get('administeredCurriculumInventoryReports');
+    const matches = reports.filter(report => schoolProgramIds.includes(report.belongsTo('program').id()));
+
+    return matches > 0;
+  },
+  async getRolesInSchool(schoolId) {
+    let roles = [];
+    if (this.isDirectingSchool(schoolId)) {
+      roles.pushObject('SCHOOL_DIRECTOR');
+    }
+    if (this.isAdministeringSchool(schoolId)) {
+      roles.pushObject('SCHOOL_ADMINISTRATOR');
+    }
+    if (this.isDirectingCourseInSchool(schoolId)) {
+      roles.pushObject('COURSE_DIRECTOR');
+    }
+    if (this.isAdministeringCourseInSchool(schoolId)) {
+      roles.pushObject('COURSE_ADMINISTRATOR');
+    }
+    if (this.isAdministeringSessionInSchool(schoolId)) {
+      roles.pushObject('SESSION_ADMINISTRATOR');
+    }
+    if (this.isTeachingCourseInSchool(schoolId)) {
+      roles.pushObject('COURSE_INSTRUCTOR');
+    }
+    if (this.isAdministeringCurriculumInventoryReportInSchool(schoolId)) {
+      roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
+    }
+
+    return roles;
+  },
 });

@@ -57,6 +57,27 @@ module('Unit | Model | User', function(hooks) {
     });
   });
 
+  test('gets all administered courses', async function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
+    let store = this.owner.lookup('service:store');
+    let courses = [];
+    run( async () => {
+      courses.pushObject(store.createRecord('course', {
+        administrators: [model],
+        id: 1,
+      }));
+      courses.pushObject(store.createRecord('course', {
+        administrators: [model],
+        id: 2
+      }));
+      const allRelatedCourses = await model.get('allRelatedCourses');
+      assert.equal(allRelatedCourses.length, courses.length);
+      courses.forEach(course => {
+        assert.ok(allRelatedCourses.includes(course));
+      });
+    });
+  });
+
   test('gets all learner group courses', async function(assert) {
     let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
