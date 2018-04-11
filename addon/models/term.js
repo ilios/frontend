@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
+import { map } from 'rsvp';
 const { collect, sum, gte } = computed;
 const { attr, belongsTo, hasMany, Model } = DS;
 
@@ -94,6 +95,43 @@ export default Model.extend({
       return this.get('title');
     }
     return parentTitles.join(' > ') + ' > ' + this.get('title');
+  }),
+
+  /**
+   * A list of descendants terms of this term.
+   *
+   * @property termWithAllDescendants
+   * @type {Ember.computed}
+   * @public
+   */
+  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function(){
+    const descendants = [];
+    const children = await this.get('children');
+    descendants.pushObjects(children.toArray());
+    const childrenDescendants = await map(children.mapBy('allDescendants'), childDescendants => {
+      return childDescendants;
+    });
+    descendants.pushObjects(childrenDescendants.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, []));
+    return descendants;
+  }),
+
+  /**
+   * A list of descendant terms titles of this term, including this term's title as its last item.
+   *
+   * @property titleWithDescendantTitles
+   * @type {Ember.computed}
+   * @public
+   */
+  titleWithDescendantTitles: computed('title', 'allDescendants.[]', async function() {
+    const allDescendants = await this.get('allDescendants');
+    const allDescendantTitles = allDescendants.mapBy('title');
+    if(isEmpty(allDescendantTitles)) {
+      return this.get('title');
+    }
+    return allDescendantTitles.join(' > ') + ' > ' + this.get('title');
   }),
 
   /**
