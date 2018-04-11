@@ -283,7 +283,7 @@ module('Unit | Model | LearnerGroup', function(hooks) {
     });
 
     run( async () => {
-      const user1 = store.createRecord('user');
+      const user1 = store.createRecord('user', {id: 99});
       const subGroup1 = store.createRecord('learner-group', {parent: learnerGroup, users: [user1]});
       const subGroup2 = store.createRecord('learner-group', {parent: subGroup1, users: [user1]});
       const subGroup3 = store.createRecord('learner-group', {parent: subGroup2, users: [user1]});
