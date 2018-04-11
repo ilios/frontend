@@ -415,4 +415,42 @@ module('Unit | Model | Session', function(hooks) {
       assert.equal(max, 2.00);
     });
   });
+
+  test('allInstructors gets offerings data', async function(assert){
+    assert.expect(3);
+    const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
+    const store = this.owner.lookup('service:store');
+
+    await run(async () => {
+      let offering = store.createRecord('offering');
+      let instructorGroup = store.createRecord('instructorGroup', { offerings: [offering]});
+      let user1 = store.createRecord('user', { instructedOfferings: [offering]});
+      let user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
+      subject.set('offerings', [offering]);
+
+      const allInstructors = await subject.get('allInstructors');
+      assert.equal(allInstructors.length, 2);
+      assert.ok(allInstructors.includes(user1));
+      assert.ok(allInstructors.includes(user2));
+    });
+  });
+
+  test('allInstructors gets ilmSession data', async function(assert){
+    assert.expect(3);
+    const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
+    const store = this.owner.lookup('service:store');
+
+    await run(async () => {
+      let ilmSession = store.createRecord('ilmSession');
+      let instructorGroup = store.createRecord('instructorGroup', { ilmSessions: [ilmSession]});
+      let user1 = store.createRecord('user', { instructorIlmSessions: [ilmSession]});
+      let user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
+      subject.set('ilmSession', ilmSession);
+
+      const allInstructors = await subject.get('allInstructors');
+      assert.equal(allInstructors.length, 2);
+      assert.ok(allInstructors.includes(user1));
+      assert.ok(allInstructors.includes(user2));
+    });
+  });
 });

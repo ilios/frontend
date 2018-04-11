@@ -216,6 +216,38 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return objectives.toArray().sort(this.positionSortingCallback);
   }),
 
+  /**
+   * Every instructor associated with the session
+   * @property allInstructors
+   * @type {Ember.computed}
+   */
+  allInstructors: computed('offerings.[]', 'offerings.@each.{instructors,instructorGroups}', 'ilmSession.{instructors.[],instructorGroups.[]}', async function() {
+    const offerings = await this.get('offerings');
+    const offeringInstructors = await all(offerings.mapBy('instructors'));
+    const offeringInstructorGroupsArr = await all(offerings.mapBy('instructorGroups'));
+    const flatten = (flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    };
+
+    const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(flatten, []);
+
+    let ilmInstructorGroups = [];
+    let ilmInstructors = [];
+    const ilmSession = await this.get('ilmSession');
+    if (ilmSession) {
+      ilmInstructors = await ilmSession.get('instructors');
+      ilmInstructorGroups = await ilmSession.get('instructorGroups');
+    }
+
+    const groupInstructors = await all([].concat(offeringInstructorGroups.toArray(), ilmInstructorGroups.toArray()).mapBy('users'));
+
+    const flat = [].concat(offeringInstructors, ilmInstructors, groupInstructors).reduce(flatten, []);
+
+    return flat.uniq();
+  }),
+
+
+
   init() {
     this._super(...arguments);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
