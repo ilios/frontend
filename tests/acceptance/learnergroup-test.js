@@ -6,6 +6,7 @@ import moment from 'moment';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import page from '../pages/learner-group';
 
 module('Acceptance: Learnergroup', function(hooks) {
   setupApplicationTest(hooks);
@@ -14,6 +15,52 @@ module('Acceptance: Learnergroup', function(hooks) {
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     await setupAuthentication( { school} );
+  });
+
+  test('move learners individually from cohort to group', async function(assert) {
+    const programYear = this.server.create('programYear');
+    const cohort = this.server.create('cohort', { programYear });
+    this.server.create('learnerGroup', { cohort });
+    this.server.createList('user', 2, { cohorts: [cohort] });
+
+    assert.expect(8);
+
+    await visit('/learnergroups/1');
+    await page.overview.manage();
+    assert.equal(page.overview.list.length, 0);
+    assert.equal(page.usersInCohort.list.length, 2);
+    assert.equal(page.usersInCohort.list[0].firstName, '1 guy');
+    assert.equal(page.usersInCohort.list[1].firstName, '2 guy');
+
+    await page.usersInCohort.list[0].add();
+
+    assert.equal(page.overview.list.length, 1);
+    assert.equal(page.overview.list[0].firstName, '1 guy');
+    assert.equal(page.usersInCohort.list.length, 1);
+    assert.equal(page.usersInCohort.list[0].firstName, '2 guy');
+  });
+
+  test('remove learners individually from group', async function(assert) {
+    const programYear = this.server.create('programYear');
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learnerGroup', { cohort });
+    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+
+    assert.expect(8);
+
+    await visit('/learnergroups/1');
+    await page.overview.manage();
+    assert.equal(page.overview.list.length, 2);
+    assert.equal(page.overview.list[0].firstName, '1 guy');
+    assert.equal(page.overview.list[1].firstName, '2 guy');
+    assert.equal(page.usersInCohort.list.length, 0);
+
+    await page.overview.list[0].remove();
+
+    assert.equal(page.overview.list.length, 1);
+    assert.equal(page.overview.list[0].firstName, '2 guy');
+    assert.equal(page.usersInCohort.list.length, 1);
+    assert.equal(page.usersInCohort.list[0].firstName, '1 guy');
   });
 
 

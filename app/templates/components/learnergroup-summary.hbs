@@ -5,19 +5,19 @@
       <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t 'general.close'}}</button>
     {{else}}
       <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.uploadGroupAssignments'}}</button>
-      <button {{action setIsEditing true}}>{{t 'general.manage'}}</button>
+      <button {{action setIsEditing true}} data-test-manage>{{t 'general.manage'}}</button>
     {{/if}}
   </div>
   {{#if isBulkAssigning}}
     {{learnergroup-bulk-assignment learnerGroup=learnerGroup done=(action setIsBulkAssigning false)}}
-  {{else if (is-fulfilled usersToPassToManager)}}
+  {{else if createUsersToPassToManager.lastSuccessful}}
     <div class='learnergroup-overview-content'>
       {{learnergroup-user-manager
         learnerGroupId=learnerGroupId
         learnerGroupTitle=learnerGroupTitle
         topLevelGroupTitle=topLevelGroupTitle
         cohortTitle=cohortTitle
-        users=(await usersToPassToManager)
+        users=createUsersToPassToManager.lastSuccessful.value
         sortBy=sortUsersBy
         setSortBy=setSortUsersBy
         isEditing=isEditing
@@ -111,9 +111,9 @@
 {{learnergroup-subgroup-list parentGroup=learnerGroup}}
 
 <section class='cohortmembers'>
-  {{#if (is-fulfilled usersToPassToCohortManager)}}
+  {{#if createUsersToPassToCohortManager.lastSuccessful}}
     {{learnergroup-cohort-user-manager
-      users=(await usersToPassToCohortManager)
+      users=createUsersToPassToCohortManager.lastSuccessful.value
       learnerGroupTitle=learnerGroupTitle
       topLevelGroupTitle=topLevelGroupTitle
       sortBy=sortUsersBy

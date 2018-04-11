@@ -11,6 +11,17 @@ import {
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
+  overview: {
+    scope: '.learnergroup-overview',
+    manage: clickable('[data-test-manage]'),
+    list: collection('.list table:nth-of-type(2) tr', {
+      firstName: text('td', {at: 1}),
+      lastName: text('td', {at: 2}),
+      campusId: text('td', {at: 3}),
+      email: text('td', {at: 4}),
+      remove: clickable('.no.clickable'),
+    }),
+  },
   activateBulkAssign: clickable('[data-test-activate-bulk-assign]'),
   bulkAssign: {
     validUploadedUsers: collection({
@@ -66,5 +77,16 @@ export default create({
 
     canSubmitFinalData: isVisible('[data-test-finalize-users-submit]'),
     submitFinalData: clickable('[data-test-finalize-users-submit]'),
+  },
+  usersInCohort: {
+    scope: '.cohortmembers',
+    list: collection('tbody tr', {
+      scope: '.list',
+      firstName: text('td', {at: 1}),
+      lastName: text('td', {at: 2}),
+      campusId: text('td', { at: 3 }),
+      email: text('td', { at: 4 }),
+      add: clickable('.yes.clickable'),
+    }),
   }
 });
