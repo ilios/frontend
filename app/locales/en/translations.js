@@ -168,6 +168,7 @@ export default {
     'ends': 'Ends',
     'endTime': 'End Time',
     'errorDisplayMessage': 'Sorry! Something went wrong with your request. Please try refreshing or check back later.',
+    'error': 'Error',
     'errors': 'Errors',
     'errorSavingAuthentication': 'Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user in the list and create a username and password for them.',
     'errorSavingUser': 'These users were unable to be saved.  Please verify that they do not already exist.',

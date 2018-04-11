@@ -168,6 +168,7 @@ export default {
     'ends': "Terminé",
     'endTime': "Heure Terminé",
     'errorDisplayMessage': "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard.",
+    'error': 'Erreur',
     'errors': 'Erreurs',
     'errorSavingAuthentication': "Les comptes ont été créés pour ces utilisateurs, mais ils ne pourront pas à la connexion. Ceci arrive d'habitude quand le nom d'utilisateur existe déjà, mais appartient à un autre utilisateur. Cliquez S'il vous plaît sur chaque utilisateur et créez un nom d'utilisateur et un mot de passe pour eux.",
     'errorSavingUser': "Ces utilisateurs n'avait pas été sauvé. Vérifiez qu'ils n'existent pas déjà.",
