@@ -151,7 +151,7 @@
 </section>
 
 {{#each (await sortedSessionProxies) as |session|}}
-  <div class='header'>
+  <div class='header' data-test-session-header>
     <h2>{{session.title}}</h2>
     {{publication-status item=session}}
   </div>
