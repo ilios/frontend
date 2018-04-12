@@ -46,7 +46,9 @@
     <div class="header">
       <h2 class="title">{{t 'general.courses'}}</h2>
       <div class='actions'>
-        {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
+        {{#if (await canCreateCourse)}}
+          {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
+        {{/if}}
       </div>
     </div>
     <section class='new'>
