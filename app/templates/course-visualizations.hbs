@@ -33,6 +33,15 @@
         {{visualizer-course-vocabularies isIcon=true course=model}}
       {{/link-to}}
     </div>
+
+    <div>
+      {{#link-to 'course-visualize-instructors' model}}
+        <h4>
+          {{t 'general.instructors'}}
+        </h4>
+        {{visualizer-course-instructors isIcon=true course=model chartType='donut'}}
+      {{/link-to}}
+    </div>
   </div>
 
 </section>

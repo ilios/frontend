@@ -1,0 +1,31 @@
+.course-visualize-instructor {
+  h2 {
+    @include ilios-heading-h2;
+    margin: .5rem;
+    text-align: center;
+  }
+
+  h3 {
+    @include ilios-heading-h3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .visualizations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    margin-top: 2rem;
+
+    .visualizer-course-instructor-session-type,
+    .visualizer-course-instructor-term {
+      height: 80vh;
+      width: 80vw;
+
+      @include for-laptop-and-up {
+        height: 40vh;
+        width: 40vw;
+      }
+    }
+  }
+}

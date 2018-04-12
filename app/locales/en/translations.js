@@ -528,6 +528,8 @@ export default {
     'tokenInfo': 'API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at <a href="{{apiDocsUrl}}">{{apiDocsUrl}}</a>.',
     'tooManyResults': 'Search returned more than {{count}} results.  To see better results try your search again with more terms.',
     'totalErrors': { 'one': 'There is an error', 'other': 'There are {{count}} errors' },
+    'totalIlmTime': 'Total ILM Time {{minutes}} Minutes',
+    'totalInstructionalTime': 'Total Instructional Time {{minutes}} Minutes',
     'totalTime': 'Total time',
     'transitionErrorMessage': 'Sorry, we can’t get you where you asked to go: something seems to be broken...',
     'tryHarder': 'Try Harder',

@@ -1,0 +1,18 @@
+<section class='course-visualize-instructors'>
+  <div class="backtolink">
+    {{#link-to 'course-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
+  </div>
+  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
+  <h3>{{t 'general.instructors'}}</h3>
+
+  <div class='filter'>
+    <input
+      type="search"
+      value={{name}}
+      placeholder={{t 'general.filterPlaceholder'}}
+      oninput={{perform setName value="target.value"}}
+    >
+  </div>
+
+  {{visualizer-course-instructors filter=name course=model}}
+</section>
