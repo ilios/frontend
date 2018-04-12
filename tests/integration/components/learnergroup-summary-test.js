@@ -46,13 +46,17 @@ test('renders with data', function(assert) {
     allInstructors: resolve([user5, user6]),
     users: resolve([user1, user2]),
     allDescendantUsers: resolve([user1, user2]),
+    usersOnlyAtThisLevel: resolve([user1, user2]),
     courses: resolve([
       {title: 'test course 1'},
       {title: 'test course 2'},
     ]),
     cohort: resolve(cohort),
+    allDescendants: resolve([subGroup]),
   });
   learnerGroup.set('topLevelGroup', resolve(learnerGroup));
+  user1.set('getLowestMemberGroupInALearnerGroupTree', () => resolve(learnerGroup));
+  user2.set('getLowestMemberGroupInALearnerGroupTree', () => resolve(learnerGroup));
 
   this.set('nothing', parseInt);
   this.set('learnerGroup', learnerGroup);
@@ -97,11 +101,13 @@ test('Update location', function(assert) {
     allInstructors: resolve([]),
     users: resolve([]),
     allDescendantUsers: resolve([]),
+    usersOnlyAtThisLevel: resolve([]),
     courses: resolve([
       {title: 'test course 1'},
       {title: 'test course 2'},
     ]),
     cohort: resolve(cohort),
+    allDescendants: resolve([subGroup]),
     save(){
       assert.equal(this.get('location'), 'new location name');
       return resolve(this);

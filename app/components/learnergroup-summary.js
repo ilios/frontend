@@ -50,6 +50,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.get('topLevelGroup').then(topLevelGroup => {
         this.set('topLevelGroupTitle', topLevelGroup.get('title'));
       });
+      this.get('createUsersToPassToManager').perform();
+      this.get('createUsersToPassToCohortManager').perform();
     }
   },
   treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
@@ -72,11 +74,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     let groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
+    yield this.get('createUsersToPassToManager').perform();
+    yield this.get('createUsersToPassToCohortManager').perform();
   }).enqueue(),
   removeUserToCohort: task(function * (user) {
     const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
     let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
+    yield this.get('createUsersToPassToManager').perform();
+    yield this.get('createUsersToPassToCohortManager').perform();
   }).enqueue(),
   addUsersToGroup: task(function * (users) {
     const learnerGroup = this.get('learnerGroup');
@@ -90,6 +96,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(addGroups);
     }
     yield all(groupsToSave.uniq().invoke('save'));
+    yield this.get('createUsersToPassToManager').perform();
+    yield this.get('createUsersToPassToCohortManager').perform();
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
     const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
@@ -100,34 +108,36 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(removeGroups);
     }
     yield all(groupsToSave.uniq().invoke('save'));
+    yield this.get('createUsersToPassToManager').perform();
+    yield this.get('createUsersToPassToCohortManager').perform();
   }).enqueue(),
-  usersToPassToManager: computed('isEditing', 'learnerGroup.topLevelGroup.allDescendantUsers.[]', 'treeGroups.[]', async function () {
+  createUsersToPassToManager: task(function * () {
     const isEditing = this.get('isEditing');
     const learnerGroup = this.get('learnerGroup');
+    let users;
     if (isEditing) {
-      let topLevelGroup = await learnerGroup.get('topLevelGroup');
-      let allDescendantUsers = await topLevelGroup.get('allDescendantUsers');
-      let treeGroups = await this.get('treeGroups');
-
-      return await map(allDescendantUsers.toArray(), async user => {
-        let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-        return ObjectProxy.create({
-          content: user,
-          lowestGroupInTree,
-          //special sorting property
-          lowestGroupInTreeTitle: lowestGroupInTree.get('title')
-        });
-      });
+      let topLevelGroup = yield learnerGroup.get('topLevelGroup');
+      users = yield topLevelGroup.get('allDescendantUsers');
     } else {
-      return await learnerGroup.get('usersOnlyAtThisLevel');
+      users = yield learnerGroup.get('usersOnlyAtThisLevel');
     }
+    const treeGroups = yield this.get('treeGroups');
+    return yield map(users.toArray(), async user => {
+      let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+      return ObjectProxy.create({
+        content: user,
+        lowestGroupInTree,
+        //special sorting property
+        lowestGroupInTreeTitle: lowestGroupInTree.get('title')
+      });
+    });
   }),
-  usersToPassToCohortManager: computed('learnerGroup.topLevelGroup', 'learnerGroup.allDescendantUsers.[]', async function () {
+  createUsersToPassToCohortManager: task(function * () {
     const learnerGroup = this.get('learnerGroup');
-    const cohort = await learnerGroup.get('cohort');
-    const topLevelGroup = await learnerGroup.get('topLevelGroup');
-    const currentUsers = await topLevelGroup.get('allDescendantUsers');
-    const users = await cohort.get('users');
+    const cohort = yield learnerGroup.get('cohort');
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    const currentUsers = yield topLevelGroup.get('allDescendantUsers');
+    const users = yield cohort.get('users');
 
     let filteredUsers = users.filter(
       user => !currentUsers.includes(user)
