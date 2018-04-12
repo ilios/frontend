@@ -86,12 +86,12 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendantUsers: computed('users.[]', 'children.@each.allDescendantUsers', async function(){
+  allDescendantUsers: computed('users.[]', 'allDescendants.@each.users', async function () {
     let users = await this.get('users');
-    let subgroups = await this.get('children');
-    let usersInSubgroups = await all(subgroups.mapBy('allDescendantUsers'));
+    let allDescendants = await this.get('allDescendants');
+    let usersInSubgroups = await all(allDescendants.mapBy('users'));
     let allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
-      array.pushObjects(subGroupUsers);
+      array.pushObjects(subGroupUsers.toArray());
       return array;
     }, []);
     allUsers.pushObjects(users.toArray());
@@ -151,20 +151,17 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendants: computed('children.@each.allDescendants', async function(){
+  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function(){
     const descendants = [];
     const children = await this.get('children');
     descendants.pushObjects(children.toArray());
-    const childrenDescendants = await map(children.mapBy('allDescendants'), childDescendants => {
-      return childDescendants;
-    });
+    const childrenDescendants = await all(children.mapBy('allDescendants'));
     descendants.pushObjects(childrenDescendants.reduce((array, set) => {
       array.pushObjects(set);
       return array;
     }, []));
     return descendants;
   }),
-
 
   /**
    * A text string comprised of all learner-group titles in this group's tree.
@@ -288,19 +285,13 @@ export default Model.extend({
   async removeUserFromGroupAndAllDescendants(user) {
     const modifiedGroups = [];
     const userId = user.get('id');
-    if (this.hasMany('users').ids().includes(userId)) {
-      this.get('users').removeObject(user);
-      modifiedGroups.pushObject(this);
-    }
-    const children = await this.get('children');
-    const groups = await map(children.toArray(), async group => {
-      return group.removeUserFromGroupAndAllDescendants(user);
+    const allDescendants = await this.get('allDescendants');
+    [this].concat(allDescendants.toArray()).forEach(group => {
+      if (group.hasMany('users').ids().includes(userId)) {
+        group.get('users').removeObject(user);
+        modifiedGroups.pushObject(group);
+      }
     });
-    const flat = groups.reduce((flattened, arr) => {
-      return flattened.pushObjects(arr);
-    }, []);
-
-    modifiedGroups.pushObjects(flat);
     return modifiedGroups.uniq();
   },
 
@@ -314,15 +305,13 @@ export default Model.extend({
   async addUserToGroupAndAllParents(user){
     const modifiedGroups = [];
     const userId = user.get('id');
-    if (!this.hasMany('users').ids().includes(userId)) {
-      this.get('users').pushObject(user);
-      modifiedGroups.pushObject(this);
-    }
-    const parentGroup = await this.get('parent');
-    if (! isEmpty(parentGroup)) {
-      const parentGroups = await parentGroup.addUserToGroupAndAllParents(user);
-      modifiedGroups.pushObjects(parentGroups);
-    }
+    const allParents = await this.get('allParents');
+    [this].concat(allParents.toArray()).forEach(group => {
+      if (!group.hasMany('users').ids().includes(userId)) {
+        group.get('users').pushObject(user);
+        modifiedGroups.pushObject(group);
+      }
+    });
     return modifiedGroups.uniq();
   },
 });
