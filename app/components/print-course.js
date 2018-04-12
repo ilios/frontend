@@ -31,7 +31,7 @@ export default Component.extend(SortableByPosition, {
    * @type {Ember.computed}
    * @public
    */
-  sortedSessionProxies: computed('course.sessions.[]', function(){
+  sortedSessionProxies: computed('course.sessions.[]', 'includeUnpublishedSessions', function(){
     return new Promise(resolve => {
 
       const course = this.get('course');

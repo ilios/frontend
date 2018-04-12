@@ -12,13 +12,13 @@ module('Acceptance: Course - Print Course', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
+    this.user = await setupAuthentication();
     this.server.create('school');
     this.server.create('academicYear');
     this.server.create('cohort');
     this.server.create('learning-material-user-role');
     this.server.create('learning-material-status');
-    this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       published: true,
@@ -78,5 +78,58 @@ module('Acceptance: Course - Print Course', function(hooks) {
     assert.equal(find(findAll('.block .content tbody tr td')[2]).textContent.trim(), 'No');
     assert.equal(find(findAll('.block .content tbody tr td')[4]).textContent.trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
     assert.equal(find(findAll('.content ul li')[2]).textContent, 'Flux Capacitor');
+  });
+
+  test('test print unpublished sessions for elevated privileges', async function (assert) {
+    let director = this.server.create('userRole', {
+      title: 'course director'
+    });
+    this.server.db.users.update(this.user.id, {roles: [director]});
+    this.server.create('session', {
+      course: this.course,
+      published: false,
+      publishedAsTbd: false,
+    });
+    this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: false,
+    });
+    this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: true,
+    });
+    await visit('/course/1/print?unpublished=true');
+
+    const sessionHeaders = await findAll('[data-test-session-header] h2');
+    assert.equal(sessionHeaders.length, 3);
+    assert.equal(sessionHeaders[0].textContent, 'session 0');
+    assert.equal(sessionHeaders[1].textContent, 'session 1');
+    assert.equal(sessionHeaders[2].textContent, 'session 2');
+  });
+
+  test('test does not print unpublished sessions for unprivileged users', async function (assert) {
+    this.server.create('session', {
+      course: this.course,
+      published: false,
+      publishedAsTbd: false,
+    });
+    this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: false,
+    });
+    this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: true,
+    });
+    await visit('/course/1/print?unpublished=true');
+
+    const sessionHeaders = await findAll('[data-test-session-header] h2');
+    assert.equal(sessionHeaders.length, 2);
+    assert.equal(sessionHeaders[0].textContent, 'session 1');
+    assert.equal(sessionHeaders[1].textContent, 'session 2');
   });
 });
