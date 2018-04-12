@@ -288,6 +288,43 @@ module('Acceptance | learner group bulk assign', function(hooks) {
 
   });
 
+  test('not in group error only on users not in the group #3668', async function (assert) {
+    assert.expect(7);
+    this.server.create('user', {
+      firstName: 'jasper',
+      lastName: 'johnson',
+      campusId: '1234567890',
+      cohortIds: [1],
+      learnerGroupIds: [1],
+    });
+    this.server.create('user', {
+      firstName: 'jackson',
+      lastName: 'johnson',
+      campusId: '12345',
+      cohortIds: [1],
+    });
+    let users = [
+      ['jasper', 'johnson', '1234567890'],
+      ['jackson', 'johnson', '12345'],
+    ];
+    await page.visit({ learnerGroupId: 1 });
+    await page.activateBulkAssign();
+
+    await triggerUpload(users, '[data-test-user-upload]');
+    assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
+    await page.bulkAssign.confirmUploadedUsers();
+
+    assert.equal(page.bulkAssign.finalData().count, 0);
+
+    assert.equal(page.bulkAssign.finalErrorData().count, 1);
+    assert.equal(page.bulkAssign.finalErrorData(0).name, 'jasper M. johnson');
+    assert.equal(page.bulkAssign.finalErrorData(0).campusId, '1234567890');
+    assert.equal(page.bulkAssign.finalErrorData(0).error, 'Already in the group 1 group. Please remove them and try again.');
+
+    assert.notOk(page.bulkAssign.canSubmitFinalData);
+
+  });
+
   test('create a new group when requested', async function (assert) {
     assert.expect(14);
     this.server.create('user', {

@@ -9,10 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        {{#each finalData as |obj|}}
+        {{#each (await invalidUsers) as |obj|}}
           <tr>
-            <td>{{obj.user.fullName}}</td>
-            <td>{{obj.user.campusId}}</td>
+            <td>{{obj.userRecord.fullName}}</td>
+            <td>{{obj.userRecord.campusId}}</td>
             <td>{{t 'general.alreadyInLearnerGroup' learnerGroupTitle=learnerGroup.title}}</td>
           </tr>
         {{/each}}
