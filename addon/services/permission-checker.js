@@ -14,5 +14,24 @@ export default Service.extend({
     const rolesInSchool = await currentUser.getRolesInSchool(schoolId);
 
     return permissionMatrix.hasPermission(schoolId, 'CAN_CREATE_COURSES', rolesInSchool);
+  },
+  async canUpdateCourse(course, schoolId) {
+    const currentUser = await this.get('currentUser');
+    const permissionMatrix = this.get('permissionMatrix');
+    if (course.get('locked') || course.get('archived')) {
+      return false;
+    }
+    const isRoot = await currentUser.get('isRoot');
+    if (isRoot) {
+      return true;
+    }
+
+    const rolesInSchool = await currentUser.getRolesInSchool(schoolId);
+    if (await permissionMatrix.hasPermission(schoolId, 'CAN_UPDATE_ALL_COURSES', rolesInSchool)) {
+      return true;
+    }
+
+    const rolesInCourse = await currentUser.getRolesInCourse(course.get('id'));
+    return await permissionMatrix.hasPermission(schoolId, 'CAN_UPDATE_THEIR_COURSES', rolesInCourse);
   }
 });
