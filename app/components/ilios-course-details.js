@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import scrollTo from '../utils/scroll-to';
 
@@ -6,6 +5,7 @@ export default Component.extend({
   tagName: 'section',
   classNames: ['course-details'],
   course: null,
+  editable: false,
   showDetails: null,
   courseObjectiveDetails: null,
   courseTaxonomyDetails: null,

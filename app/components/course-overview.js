@@ -8,7 +8,7 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { not, reads } = computed;
+const { reads } = computed;
 const { Promise, all } = RSVP;
 
 const Validations = buildValidations({
@@ -37,7 +37,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
   routing: service('-routing'),
-  editable: not('course.locked'),
+  editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
   init(){

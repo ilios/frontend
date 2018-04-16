@@ -1,13 +1,14 @@
 <div class="back-to-courses-list">
   {{#link-to 'courses'}}{{t 'general.backToCourses'}}{{/link-to}}
 </div>
-{{course-header course=course}}
-{{course-overview course=course}}
+{{course-header course=course editable=editable}}
+{{course-overview course=course editable=editable}}
 {{#if (not showDetails)}}
   <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'general.expandDetail'}}{{fa-icon 'plus-square'}}</span></div>
 {{else}}
   {{course-editing
     course=course
+    editable=editable
     courseLeadershipDetails=courseLeadershipDetails
     courseObjectiveDetails=courseObjectiveDetails
     courseTaxonomyDetails = courseTaxonomyDetails

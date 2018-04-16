@@ -6,7 +6,7 @@ import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { alias, not } = computed;
+const { alias } = computed;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -29,7 +29,7 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
   courseTitle: null,
   publishTarget: alias('course'),
 
-  editable: not('course.locked'),
+  editable: false,
   'data-test-course-header': true,
 
   actions: {

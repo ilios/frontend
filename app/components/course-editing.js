@@ -1,10 +1,8 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-const { not } = computed;
 
 export default Component.extend({
-  editable: not('course.locked'),
+  editable: false,
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
   courseCompetencyDetails: false,

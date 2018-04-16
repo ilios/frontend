@@ -11,6 +11,7 @@ export default Controller.extend({
   ],
 
   details: false,
+  editable: false,
   courseLeadershipDetails: false,
   courseObjectiveDetails: false,
   courseTaxonomyDetails: false,
