@@ -14,7 +14,16 @@ export default Service.extend({
         'CAN_CREATE_COURSES': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR'
-        ]
+        ],
+        'CAN_UPDATE_ALL_COURSES': [
+          'SCHOOL_ADMINISTRATOR',
+          'SCHOOL_DIRECTOR',
+          'PROGRAM_DIRECTOR'
+        ],
+        'CAN_UPDATE_THEIR_COURSES': [
+          'COURSE_ADMINISTRATOR',
+          'COURSE_DIRECTOR'
+        ],
       };
     });
 

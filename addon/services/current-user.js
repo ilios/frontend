@@ -166,7 +166,7 @@ export default Service.extend({
     const ids = user.hasMany('directedCourses').ids();
     const matches = ids.filter(id => schoolCourseIds.includes(id));
 
-    return matches > 0;
+    return matches.length > 0;
   },
   async isAdministeringCourseInSchool(schoolId) {
     const user = await this.get('model');
@@ -177,7 +177,7 @@ export default Service.extend({
     const ids = user.hasMany('administeredCourses').ids();
     const matches = ids.filter(id => schoolCourseIds.includes(id));
 
-    return matches > 0;
+    return matches.length > 0;
   },
   async isAdministeringSessionInSchool(schoolId) {
     const user = await this.get('model');
@@ -188,7 +188,7 @@ export default Service.extend({
     const sessions = await user.get('administeredSessions');
     const matches = sessions.filter(session => schoolCourseIds.includes(session.belongsTo('course').id()));
 
-    return matches > 0;
+    return matches.length > 0;
   },
   async isTeachingCourseInSchool(schoolId) {
     const user = await this.get('model');
@@ -199,7 +199,7 @@ export default Service.extend({
     const courses = await user.get('allInstructedCourses');
     const matches = courses.filter(course => schoolCourseIds.includes(course.get('id')));
 
-    return matches > 0;
+    return matches.length > 0;
   },
   async isAdministeringCurriculumInventoryReportInSchool(schoolId) {
     const user = await this.get('model');
@@ -210,30 +210,79 @@ export default Service.extend({
     const reports = await user.get('administeredCurriculumInventoryReports');
     const matches = reports.filter(report => schoolProgramIds.includes(report.belongsTo('program').id()));
 
-    return matches > 0;
+    return matches.length > 0;
+  },
+  async isDirectingCourse(courseId) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('directedCourses').ids();
+    const matches = ids.filterBy('id', courseId);
+
+    return matches.length > 0;
+  },
+  async isAdministeringCourse(courseId) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('administeredCourses').ids();
+    const matches = ids.filterBy('id', courseId);
+
+    return matches.length > 0;
+  },
+  async isAdministeringSessionInCourse(courseId) {
+    const user = await this.get('model');
+
+    const sessions = await user.get('administeredSessions');
+    const matches = sessions.filter(session => courseId === session.belongsTo('course').id());
+
+    return matches.length > 0;
+  },
+  async isTeachingCourse(courseId) {
+    const user = await this.get('model');
+
+    const courses = await user.get('allInstructedCourses');
+    const matches = courses.filterBy('id', courseId);
+
+    return matches.length > 0;
   },
   async getRolesInSchool(schoolId) {
     let roles = [];
-    if (this.isDirectingSchool(schoolId)) {
+    if (await this.isDirectingSchool(schoolId)) {
       roles.pushObject('SCHOOL_DIRECTOR');
     }
-    if (this.isAdministeringSchool(schoolId)) {
+    if (await this.isAdministeringSchool(schoolId)) {
       roles.pushObject('SCHOOL_ADMINISTRATOR');
     }
-    if (this.isDirectingCourseInSchool(schoolId)) {
+    if (await this.isDirectingCourseInSchool(schoolId)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
-    if (this.isAdministeringCourseInSchool(schoolId)) {
+    if (await this.isAdministeringCourseInSchool(schoolId)) {
       roles.pushObject('COURSE_ADMINISTRATOR');
     }
-    if (this.isAdministeringSessionInSchool(schoolId)) {
+    if (await this.isAdministeringSessionInSchool(schoolId)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (this.isTeachingCourseInSchool(schoolId)) {
+    if (await this.isTeachingCourseInSchool(schoolId)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
-    if (this.isAdministeringCurriculumInventoryReportInSchool(schoolId)) {
+    if (await this.isAdministeringCurriculumInventoryReportInSchool(schoolId)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
+    }
+
+    return roles;
+  },
+  async getRolesInCourse(courseId) {
+    let roles = [];
+    if (await this.isDirectingCourse(courseId)) {
+      roles.pushObject('COURSE_DIRECTOR');
+    }
+    if (await this.isAdministeringCourse(courseId)) {
+      roles.pushObject('COURSE_ADMINISTRATOR');
+    }
+    if (await this.isAdministeringSessionInCourse(courseId)) {
+      roles.pushObject('SESSION_ADMINISTRATOR');
+    }
+    if (await this.isTeachingCourse(courseId)) {
+      roles.pushObject('COURSE_INSTRUCTOR');
     }
 
     return roles;
