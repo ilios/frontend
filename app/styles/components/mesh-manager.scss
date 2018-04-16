@@ -40,9 +40,17 @@
   }
 
   .selected-terms {
-    @include ilios-removable-list;
-
+    @include ilios-tag-list;
     margin-bottom: 2rem;
+
+    li {
+      display: flex;
+
+      .remove {
+        margin-left: .5em;
+      }
+    }
+
 
     .term-title {
       font-weight: bold;

@@ -3,7 +3,7 @@
 {{else}}
   <div class="item displayname">
     <label>{{t 'general.displayName'}}:</label>
-    {{#if (await canEditTitle)}}
+    {{#if (and editable (await canEditTitle))}}
       <input
         type='text'
         value={{title}}
@@ -146,53 +146,79 @@
     {{#if startDate}}
       <div class='item start-date'>
         <label>{{t 'general.startDate'}}:</label>
-        {{pikaday-input value=startDate onSelection=(action 'updateDate' 'startDate') format='M/D/YYYY'}}
+        {{#if editable}}
+          {{pikaday-input value=startDate onSelection=(action 'updateDate' 'startDate') format='M/D/YYYY'}}
+        {{else}}
+          {{moment-format startDate 'L'}}
+        {{/if}}
       </div>
 
       <div class='item start-time'>
         <label>{{t 'general.startTime'}}:</label>
-        {{time-picker date=startDate action=(action 'updateTime' 'startDate')}}
+        {{#if editable}}
+          {{time-picker date=startDate action=(action 'updateTime' 'startDate')}}
+        {{else}}
+          {{moment-format startDate 'h:mm a'}}
+        {{/if}}
       </div>
-      <button class='remove-date' {{action (mut startDate null)}}>{{t 'general.timedReleaseClearStartDate'}}</button>
-    {{else}}
+      {{#if editable}}
+        <button class='remove-date' {{action (mut startDate null)}}>{{t 'general.timedReleaseClearStartDate'}}</button>
+      {{/if}}
+    {{else if editable}}
       <p><button class='add-date' {{action 'addDate' 'startDate'}} data-test-add-start-date>{{t 'general.timedReleaseAddStartDate'}}</button></p>
     {{/if}}
 
     {{#if endDate}}
       <div class='item end-date'>
         <label>{{t 'general.endDate'}}:</label>
-        {{pikaday-input value=endDate onSelection=(action 'updateDate' 'endDate') format='M/D/YYYY'}}
+        {{#if editable}}
+          {{pikaday-input value=endDate onSelection=(action 'updateDate' 'endDate') format='M/D/YYYY'}}
+        {{else}}
+          {{moment-format endDate 'L'}}
+        {{/if}}
       </div>
 
       <div class='item end-time'>
         <label>{{t 'general.endTime'}}:</label>
-        {{time-picker date=endDate action=(action 'updateTime' 'endDate')}}
+        {{#if editable}}
+          {{time-picker date=endDate action=(action 'updateTime' 'endDate')}}
+        {{else}}
+          {{moment-format endDate 'h:mm a'}}
+        {{/if}}
       </div>
-
       {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
         <span class="validation-error-message" data-test-end-date-validation-error-message>{{v-get this 'endDate' 'message'}}</span>
       {{/if}}
-      <button class='remove-date' {{action (mut endDate null)}}>{{t 'general.timedReleaseClearEndDate'}}</button>
-    {{else}}
+      {{#if editable}}
+        <button class='remove-date' {{action (mut endDate null)}}>{{t 'general.timedReleaseClearEndDate'}}</button>
+      {{/if}}
+    {{else if editable}}
       <p><button class='add-date' {{action 'addDate' 'endDate'}} data-test-add-end-date>{{t 'general.timedReleaseAddEndDate'}}</button></p>
     {{/if}}
+
+
   </div>
 
   {{mesh-manager
     terms=terms
+    editable=editable
     add='addTerm'
     remove='removeTerm'
     targetItemTitle=title
   }}
 
   <div class='buttons'>
-    <button class='done' {{action (perform save)}} disabled={{save.isRunning}}>
-      {{#if save.isRunning}}
-        {{loading-spinner}}
-      {{else}}
-        {{t 'general.done'}}
-      {{/if}}
-    </button>
-    <button class='cancel' {{action (action closeManager)}}>{{t 'general.cancel'}}</button>
+    {{#if editable}}
+      <button class='done' {{action (perform save)}} disabled={{save.isRunning}}>
+        {{#if save.isRunning}}
+          {{loading-spinner}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel' {{action (action closeManager)}}>{{t 'general.cancel'}}</button>
+    {{else}}
+      <button {{action (action closeManager)}}>{{t 'general.close'}}</button>
+    {{/if}}
   </div>
 {{/if}}

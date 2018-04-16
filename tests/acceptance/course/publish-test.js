@@ -13,12 +13,13 @@ module('Acceptance: Course - Publish', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
-    this.server.create('school');
+    this.user = await setupAuthentication();
+    this.school = this.server.create('school');
     this.server.create('cohort');
   });
 
   test('check published course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -55,6 +56,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check scheduled course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -80,6 +82,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check draft course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -103,6 +106,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check publish draft course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -120,6 +124,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check schedule draft course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -136,6 +141,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check publish scheduled course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -154,6 +160,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check unpublish scheduled course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -172,6 +179,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check schedule published course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -189,6 +197,7 @@ module('Acceptance: Course - Publish', function(hooks) {
   });
 
   test('check unpublish published course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,

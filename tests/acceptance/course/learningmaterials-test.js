@@ -16,8 +16,8 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.user = await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('academicYear');
     this.server.create('learningMaterialStatus', {
       learningMaterialIds: [1]
@@ -28,6 +28,10 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
   });
   module('Single Linked Materials', function (hooks) {
     hooks.beforeEach(function () {
+      const course = this.server.create('course', {
+        year: 2013,
+        school: this.school,
+      });
       this.server.create('learningMaterial', {
         originalAuthor: 'Jennifer Johnson',
         owningUserId: this.user.id,
@@ -78,37 +82,33 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 1,
-        courseId: 1,
+        course,
         required: false,
         meshDescriptorIds: [2, 3],
         position: 0,
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 2,
-        courseId: 1,
+        course,
         required: false,
         position: 1,
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 3,
-        courseId: 1,
+        course,
         publicNotes: false,
         position: 2,
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 4,
-        courseId: 1,
+        course,
         position: 3,
         notes: 'test notes',
-      });
-
-      this.server.create('course', {
-        year: 2013,
-        schoolId: 1,
       });
     });
 
     test('list learning materials', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(currentRouteName(), 'course.index');
 
@@ -150,6 +150,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('create new link learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const testTitle = 'testsome title';
       const testAuthor = 'testsome author';
       const testDescription = 'testsome description';
@@ -176,6 +177,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('create new citation learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const testTitle = 'testsome title';
       const testAuthor = 'testsome author';
       const testDescription = 'testsome description';
@@ -202,6 +204,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('can only add one learning-material at a time', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       assert.ok(page.learningMaterials.canCreateNew);
@@ -213,7 +216,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('cancel new learning material', async function (assert) {
-
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       assert.ok(page.learningMaterials.canSearch);
@@ -225,6 +228,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view copyright file learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(0).details();
@@ -241,6 +245,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view rationale file learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(1).details();
@@ -257,6 +262,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view url file learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(1).details();
@@ -273,6 +279,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view link learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(2).details();
@@ -291,6 +298,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view citation learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(3).details();
@@ -309,6 +317,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('edit learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newNote = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, details: true });
@@ -334,6 +343,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('cancel editing learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newNote = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, details: true });
@@ -360,6 +370,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('manage terms', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(0).details();
@@ -391,6 +402,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('save terms', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
@@ -410,6 +422,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('cancel term changes', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
@@ -429,6 +442,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('find and add learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.search('doc');
@@ -445,6 +459,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('add timed release start date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.notOk(page.learningMaterials.current(0).isTimedRelease);
       await page.learningMaterials.current(0).details();
@@ -462,6 +477,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('add timed release start and end date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
       const newEndDate = newStartDate.clone().add(1, 'minute');
 
@@ -490,6 +506,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('add timed release end date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.notOk(page.learningMaterials.current(0).isTimedRelease);
       await page.learningMaterials.current(0).details();
@@ -507,6 +524,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('end date is after start date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
 
       await page.visit({ courseId: 1, details: true });
@@ -533,6 +551,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('edit learning material with no other links #3617', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newTitle = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, details: true });
@@ -552,6 +571,14 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
 
   module('Double Linked Materials', function (hooks) {
     hooks.beforeEach(function () {
+      const course1 = this.server.create('course', {
+        year: 2013,
+        school: this.school,
+      });
+      const course2 = this.server.create('course', {
+        year: 2013,
+        school: this.school,
+      });
       this.server.create('learningMaterial', {
         originalAuthor: 'Jennifer Johnson',
         owningUserId: this.user.id,
@@ -564,29 +591,21 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 1,
-        courseId: 1,
+        course: course1,
         required: false,
         meshDescriptorIds: [2, 3],
         position: 0,
       });
       this.server.create('courseLearningMaterial', {
         learningMaterialId: 1,
-        courseId: 2,
+        course: course2,
         required: false,
         position: 1,
-      });
-
-      this.server.create('course', {
-        year: 2013,
-        schoolId: 1,
-      });
-      this.server.create('course', {
-        year: 2013,
-        schoolId: 1,
       });
     });
 
     test('list learning materials', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(currentRouteName(), 'course.index');
 
@@ -602,6 +621,7 @@ module('Acceptance: Course - Learning Materials', function(hooks) {
     });
 
     test('view learning material details', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current().count, 1);
       await page.learningMaterials.current(0).details();

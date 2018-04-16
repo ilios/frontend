@@ -13,7 +13,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
     this.server.create('academicYear', {id: 2013});
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
@@ -27,6 +27,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
   });
 
   test('save new objective', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
@@ -47,6 +48,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
   });
 
   test('cancel new objective', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
@@ -62,6 +64,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
   });
 
   test('empty objective title can not be created', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);

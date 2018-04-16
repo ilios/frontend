@@ -28,7 +28,7 @@ test('renders with no course id', function(assert) {
     clerkshipType: resolve(EmberObject.create())
   });
   this.set('course', course);
-  this.render(hbs`{{course-overview course=course}}`);
+  this.render(hbs`{{course-overview course=course editable=true}}`);
 
   assert.notEqual(this.$('.courseexternalid').text().search(/Course ID:/), -1);
   assert.notEqual(this.$('.courseexternalid').text().search(/Click to edit/), -1);
@@ -47,7 +47,7 @@ test('course external id validation fails if value is too short', function(asser
     clerkshipType: resolve(EmberObject.create()),
   });
   this.set('course', course);
-  this.render(hbs`{{course-overview course=course}}`);
+  this.render(hbs`{{course-overview course=course editable=true}}`);
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;
@@ -77,7 +77,7 @@ test('course external id validation fails if value is too long', function(assert
     clerkshipType: resolve(EmberObject.create()),
   });
   this.set('course', course);
-  this.render(hbs`{{course-overview course=course}}`);
+  this.render(hbs`{{course-overview course=course editable=true}}`);
 
   const item = '.courseexternalid';
   const error = `${item} .validation-error-message`;

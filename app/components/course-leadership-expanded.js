@@ -4,6 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   course: null,
+  editable: false,
   classNames: ['course-leadership-expanded'],
   directors: null,
   administrators: null,

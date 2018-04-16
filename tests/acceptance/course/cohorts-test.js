@@ -12,7 +12,7 @@ module('Acceptance: Course - Cohorts', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function() {
     const school = this.server.create('school');
-    this.user = await setupAuthentication({ school });
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     this.server.create('academicYear', {id: 2013});
     const program = this.server.create('program', { school });
     const cohort1 = this.server.create('cohort');

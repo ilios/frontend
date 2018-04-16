@@ -25,7 +25,7 @@ test('it renders', function(assert) {
     isSchedule: false,
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course}}`);
+  this.render(hbs`{{course-summary-header course=course editable=true}}`);
   const title = 'h2';
   const actions = '.course-summary-actions';
   const materialsIcon = `${actions} i:eq(0)`;
@@ -65,7 +65,7 @@ test('no link to materials when that is the current route', function(assert) {
     endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course}}`);
+  this.render(hbs`{{course-summary-header course=course editable=true}}`);
   const actions = '.course-summary-actions i';
   const printIcon = `${actions}:eq(0)`;
   const rolloverIcon = `${actions}:eq(1)`;
@@ -88,7 +88,30 @@ test('no link to rollover when that is the current route', function(assert) {
     endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course}}`);
+  this.render(hbs`{{course-summary-header course=course editable=true}}`);
+  const actions = '.course-summary-actions i';
+  const materialsIcon = `${actions}:eq(0)`;
+  const printIcon = `${actions}:eq(1)`;
+
+  assert.ok(this.$(actions).length, 2);
+  assert.ok(this.$(printIcon).hasClass('fa-print'));
+  assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
+});
+
+test('no link to rollover when not editable', function(assert) {
+  let routerMock = Service.extend({
+    currentRouteName: 'course.rollover',
+    generateURL(){},
+  });
+  this.register('service:-routing', routerMock);
+
+  let course = EmberObject.create({
+    title: 'title',
+    startDate: new Date(2020, 4, 6, 12),
+    endDate: new Date(2020, 11, 11, 12),
+  });
+  this.set('course', course);
+  this.render(hbs`{{course-summary-header course=course editable=false}}`);
   const actions = '.course-summary-actions i';
   const materialsIcon = `${actions}:eq(0)`;
   const printIcon = `${actions}:eq(1)`;

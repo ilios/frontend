@@ -8,7 +8,7 @@
         {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if isSaving true false)}}
       </button>
       <button class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
-    {{else}}
+    {{else if editable}}
       <button {{action setIsManaging true}}>{{t 'general.manageLeadership'}}</button>
     {{/if}}
   </div>

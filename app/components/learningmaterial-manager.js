@@ -34,7 +34,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   learningMaterial: null,
   isCourse: false,
   isSession: not('isCourse'),
-  editable: true,
+  editable: false,
   type: null,
   title: null,
   owningUserName: null,

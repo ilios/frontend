@@ -1,6 +1,7 @@
 {{#if (or (and (eq course.directors.length 0) (eq course.administrators.length 0)) courseLeadershipDetails)}}
   {{course-leadership-expanded
     course=course
+    editable=editable
     collapse=(action setCourseLeadershipDetails false)
     expand=(action setCourseLeadershipDetails true)
     isManaging=courseManageLeadership

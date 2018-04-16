@@ -11,13 +11,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
   editable: false,
   async afterModel(course) {
     const permissionChecker = this.get('permissionChecker');
-    const schoolId = course.belongsTo('school').id();
 
     let editable;
     if (!enforceRelationshipCapabilityPermissions) {
       editable = !course.get('locked') && !course.get('archived');
     } else {
-      editable = await permissionChecker.canUpdateCourse(course, schoolId);
+      editable = await permissionChecker.canUpdateCourse(course);
     }
 
     this.set('editable', editable);

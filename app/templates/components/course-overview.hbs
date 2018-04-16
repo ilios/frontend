@@ -9,7 +9,7 @@
     {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
       {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
     {{/link-to}}
-    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
+    {{#if (and editable (is-fulfilled showRollover) (await showRollover))}}
       {{#link-to 'course.rollover' course class='rollover'}}
         {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
       {{/link-to}}
