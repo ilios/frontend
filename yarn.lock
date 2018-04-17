@@ -4033,9 +4033,9 @@ ember-font-awesome@^3.0.5:
     ember-cli-htmlbars "^2.0.2"
     font-awesome "^4.7.0"
 
-ember-froala-editor@2.7.6:
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.7.6.tgz#1e89d3dcbfafd506d599af51a2c190185698ba15"
+ember-froala-editor@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.8.0.tgz#5859cfc3077ec947b49bbd2cba95da12008718f9"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.1"
