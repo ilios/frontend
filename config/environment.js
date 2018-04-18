@@ -127,6 +127,7 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-host'] = '';
 
     ENV.IliosFeatures.accessCourseVisualizations = true;
+    ENV.IliosFeatures.enforceRelationshipCapabilityPermissions = true;
 
     //silence warnings in tests when dates are not initialized
     ENV.moment.allowEmpty = true;
