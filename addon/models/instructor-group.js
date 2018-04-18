@@ -1,9 +1,10 @@
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import DS from 'ember-data';
 
 const { attr, belongsTo, hasMany, Model } = DS;
-const { map } = RSVP;
+const { map, all } = RSVP;
 
 export default Model.extend({
   title: attr('string'),
@@ -38,5 +39,23 @@ export default Model.extend({
     courses.pushObjects(offeringCourses);
     courses.pushObjects(ilmCourses);
     return courses.uniqBy('id');
+  }),
+
+  /**
+   * A list of all sessions associated with this group, via offerings or via ILMs.
+   * @property sessions
+   * @type {Ember.computed}
+   * @public
+   */
+  sessions: computed('ilmSessions.[]', 'offerings.[]', async function () {
+    const offerings = await this.get('offerings');
+    const ilms = await this.get('ilmSessions');
+    const arr = [].concat(offerings.toArray(), ilms.toArray());
+
+    let sessions = await all(arr.mapBy('session'));
+
+    return sessions.filter(session => {
+      return !isEmpty(session);
+    }).uniq();
   })
 });

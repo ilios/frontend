@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import DS from 'ember-data';
+import { A } from '@ember/array';
 
 const { attr, belongsTo, hasMany, Model } = DS;
 const { all, map } = RSVP;
@@ -180,6 +181,38 @@ export default Model.extend({
         array.pushObjects(set);
         return array;
       }, []).uniq();
+    }
+  ),
+
+  /**
+   * A list of all sessions that this user is instructing in.
+   * @property allInstructedSessions
+   * @type {Ember.computed}
+   * @public
+   */
+  allInstructedSessions: computed(
+    'instructorGroups.[]',
+    'instructedOfferings.[]',
+    'instructorGroupCourses.[]',
+    'instructorIlmSessions.[]',
+    async function() {
+      const instructorGroups = await this.get('instructorGroups');
+      const instructedOfferings = await this.get('instructedOfferings');
+      const instructorIlmSessions = await this.get('instructorIlmSessions');
+
+      const instructorGroupSessions = await all(instructorGroups.mapBy('sessions'), sessions => {
+        return sessions.toArray();
+      });
+
+      // flatten these lists down to one list of sessions, and de-dupe that list
+      const flatInstructorGroupSessions = instructorGroupSessions.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, []).uniq();
+
+      const sessions = await all([].concat(instructedOfferings.toArray(), instructorIlmSessions.toArray()).mapBy('session'));
+
+      return A().concat(flatInstructorGroupSessions, sessions).uniq();
     }
   ),
 

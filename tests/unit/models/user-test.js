@@ -546,4 +546,84 @@ module('Unit | Model | User', function(hooks) {
       assert.ok(schools.includes(school3));
     });
   });
+
+  test('allInstructedCourses gets ALL instructed courses', async function(assert) {
+    const model = run(() => this.owner.lookup('service:store').createRecord('user'));
+    const store = this.owner.lookup('service:store');
+    run(async () => {
+      const course1 = store.createRecord('course');
+      const session1 = store.createRecord('session', { course: course1 });
+      store.createRecord('offering', {
+        session: session1,
+        instructors: [model]
+      });
+      const course2 = store.createRecord('course');
+      const session2 = store.createRecord('session', { course: course2 });
+      const instructorGroup1 = store.createRecord('instructor-group', { users: [model]});
+      store.createRecord('offering', {
+        session: session2,
+        instructorGroups: [instructorGroup1]
+      });
+
+      const course3 = store.createRecord('course');
+      const session3 = store.createRecord('session', { course: course3 });
+      store.createRecord('ilmSession', {
+        session: session3,
+        instructors: [model]
+      });
+
+      const instructorGroup2 = store.createRecord('instructor-group', { users: [model] });
+      const course4 = store.createRecord('course');
+      const session4 = store.createRecord('session', { course: course4 });
+      store.createRecord('ilmSession', {
+        session: session4,
+        instructorGroups: [instructorGroup2]
+      });
+
+      const course = [course1, course2, course3, course4];
+      const allInstructedCourses = await model.get('allInstructedCourses');
+      assert.equal(allInstructedCourses.length, course.length);
+      course.forEach(session => {
+        assert.ok(allInstructedCourses.includes(session));
+      });
+    });
+  });
+
+  test('allInstructedSessions gets ALL instructed sessions', async function(assert) {
+    const model = run(() => this.owner.lookup('service:store').createRecord('user'));
+    const store = this.owner.lookup('service:store');
+    run(async () => {
+      const session1 = store.createRecord('session');
+      store.createRecord('offering', {
+        session: session1,
+        instructors: [model]
+      });
+      const session2 = store.createRecord('session');
+      const instructorGroup1 = store.createRecord('instructor-group', { users: [model]});
+      store.createRecord('offering', {
+        session: session2,
+        instructorGroups: [instructorGroup1]
+      });
+
+      const session3 = store.createRecord('session');
+      store.createRecord('ilmSession', {
+        session: session3,
+        instructors: [model]
+      });
+
+      const instructorGroup2 = store.createRecord('instructor-group', { users: [model] });
+      const session4 = store.createRecord('session');
+      store.createRecord('ilmSession', {
+        session: session4,
+        instructorGroups: [instructorGroup2]
+      });
+
+      const sessions = [session1, session2, session3, session4];
+      const allInstructedSessions = await model.get('allInstructedSessions');
+      assert.equal(allInstructedSessions.length, sessions.length);
+      sessions.forEach(session => {
+        assert.ok(allInstructedSessions.includes(session));
+      });
+    });
+  });
 });

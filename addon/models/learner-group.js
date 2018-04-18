@@ -28,6 +28,24 @@ export default Model.extend({
   }),
 
   /**
+   * A list of all sessions associated with this learner group, via offerings or via ILMs.
+   * @property sessions
+   * @type {Ember.computed}
+   * @public
+   */
+  sessions: computed('ilmSessions.[]', 'offerings.[]', async function () {
+    const offerings = await this.get('offerings');
+    const ilms = await this.get('ilmSessions');
+    const arr = [].concat(offerings.toArray(), ilms.toArray());
+
+    let sessions = await all(arr.mapBy('session'));
+
+    return sessions.filter(session => {
+      return !isEmpty(session);
+    }).uniq();
+  }),
+
+  /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    * @property courses
    * @type {Ember.computed}

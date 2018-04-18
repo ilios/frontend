@@ -244,6 +244,46 @@ export default Service.extend({
 
     return matches.length > 0;
   },
+  async isAdministeringSession(sessionId) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('administeredSessions').ids();
+    const matches = ids.filterBy('id', sessionId);
+
+    return matches.length > 0;
+  },
+  async isTeachingSession(sessionId) {
+    const user = await this.get('model');
+
+    const sessions = await user.get('allInstructedSessions');
+    const matches = sessions.filterBy('id', sessionId);
+
+    return matches.length > 0;
+  },
+  async isDirectingProgram(programId) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('directedPrograms').ids();
+    const matches = ids.filterBy('id', programId);
+
+    return matches.length > 0;
+  },
+  async isDirectingProgramYearInProgram(programId) {
+    const user = await this.get('model');
+
+    const programYears = await user.get('programYears');
+    const matches = programYears.filter(programYear => programId === programYear.belongsTo('program').id());
+
+    return matches.length > 0;
+  },
+  async isAdministeringCurriculumInventoryReport(reportId) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('administeredCurriculumInventoryReports').ids();
+    const matches = ids.filterBy('id', reportId);
+
+    return matches.length > 0;
+  },
   async getRolesInSchool(schoolId) {
     let roles = [];
     if (await this.isDirectingSchool(schoolId)) {
@@ -283,6 +323,36 @@ export default Service.extend({
     }
     if (await this.isTeachingCourse(courseId)) {
       roles.pushObject('COURSE_INSTRUCTOR');
+    }
+
+    return roles;
+  },
+  async getRolesInSession(sessionId) {
+    let roles = [];
+    if (await this.isAdministeringSession(sessionId)) {
+      roles.pushObject('SESSION_ADMINISTRATOR');
+    }
+    if (await this.isTeachingSession(sessionId)) {
+      roles.pushObject('COURSE_INSTRUCTOR');
+    }
+
+    return roles;
+  },
+  async getRolesInProgram(programId) {
+    let roles = [];
+    if (await this.isDirectingProgram(programId)) {
+      roles.pushObject('PROGRAM_DIRECTOR');
+    }
+    if (await this.isDirectingProgramYearInProgram(programId)) {
+      roles.pushObject('PROGRAM_YEAR_DIRECTOR');
+    }
+
+    return roles;
+  },
+  async getRolesInCurriculumInventoryReport(reportId) {
+    let roles = [];
+    if (await this.isAdministeringCurriculumInventoryReport(reportId)) {
+      roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;
