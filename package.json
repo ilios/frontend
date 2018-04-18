@@ -71,7 +71,7 @@
     "ember-froala-editor": "2.8.0",
     "ember-i18n-cp-validations": "3.1.0",
     "ember-inflector": "^1.12.0",
-    "ember-lifeline": "^2.0.0",
+    "ember-lifeline": "^3.0.1",
     "ember-light-table": "^1.11.0",
     "ember-load": "0.0.12",
     "ember-load-initializers": "^1.0.0",
