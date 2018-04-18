@@ -22,7 +22,7 @@ export default Component.extend(SortableByPosition, {
     if (!learningMaterials) {
       return [];
     }
-    let sortedMaterials = learningMaterials.toArray().sort(this.positionSortingCallback);
+    let sortedMaterials = learningMaterials.toArray().sort(this.get('positionSortingCallback'));
 
     return sortedMaterials;
   }),

@@ -17,7 +17,7 @@ export default Component.extend(SortableByPosition, {
 
   loadAttr: task(function * (subject) {
     let learningMaterials = yield subject.get('learningMaterials');
-    this.set('sortableObjectList', learningMaterials.toArray().sort(this.positionSortingCallback));
+    this.set('sortableObjectList', learningMaterials.toArray().sort(this.get('positionSortingCallback')));
   }),
 
   actions: {

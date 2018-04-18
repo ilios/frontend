@@ -58,7 +58,7 @@ export default Controller.extend({
     return programs.sortBy('title');
   }),
 
-  programYears: computed('selectedProgram.programYears.[]', async function(){
+  programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function(){
     const program = await this.get('selectedProgram');
     if(isEmpty(program)){
       return [];
@@ -71,7 +71,7 @@ export default Controller.extend({
     });
   }),
 
-  sortedProgramYears: computed('programYears', async function() {
+  sortedProgramYears: computed('programYears.[]', async function() {
     const programYears = await this.get('programYears');
     return programYears.sortBy('startYear').reverse();
   }),
@@ -128,7 +128,7 @@ export default Controller.extend({
       return program;
     }
 
-    if(programs.length > 1) {
+    if(isEmpty(programs)) {
       return null;
     }
 
