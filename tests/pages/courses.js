@@ -5,6 +5,7 @@ import {
   count,
   fillable,
   hasClass,
+  isVisible,
   property,
   text,
   visitable
@@ -31,6 +32,7 @@ export default create({
     },
   }),
   toggleNewCourseForm: clickable('[data-test-toggle-new-course-form]'),
+  toggleNewCourseFormExists: isVisible('[data-test-toggle-new-course-form]'),
   newCourseForm: {
     scope: '[data-test-new-course]',
     title: fillable('[data-test-title]'),
