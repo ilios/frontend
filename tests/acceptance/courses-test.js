@@ -250,7 +250,8 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(3).removeActionCount, 1, 'privileged user can delete unpublished course');
   });
 
-  test('new course', async function(assert) {
+  test('new course', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     const year = moment().year();
     this.server.create('academicYear', {id: year});
     assert.expect(5);
@@ -268,7 +269,16 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(0).year, `${year} - ${year + 1}`, 'year is correct');
   });
 
+  test('new course toggle does not show up for unprivileged users', async function (assert) {
+    const year = moment().year();
+    this.server.create('academicYear', {id: year});
+    assert.expect(1);
+    await page.visit({ year });
+    assert.notOk(page.toggleNewCourseFormExists);
+  });
+
   test('new course in another year does not display in list', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('academicYear', {id: 2012});
     this.server.create('academicYear', {id: 2013});
     assert.expect(1);
@@ -283,6 +293,7 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('new course does not appear twice when navigating back', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     const year = moment().year();
     this.server.create('academicYear', {id: year});
     assert.expect(4);
@@ -305,6 +316,7 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('new course can be deleted', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     const year = moment().year();
     this.server.create('academicYear', {id: year});
     this.server.create('userRole', {
@@ -361,6 +373,7 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('no academic years exist', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
 
     await page.visit();
