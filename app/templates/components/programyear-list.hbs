@@ -85,9 +85,17 @@
                   {{else}}
                     {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}
-                      {{fa-icon 'lock' class=(if (await programYearProxy.userCanUnLock) 'clickable') click=(action 'unlockProgramYear' programYearProxy)}}
+                      {{#if (await programYearProxy.userCanLock)}}
+                        {{fa-icon 'lock' class='clickable' click=(action 'unlockProgramYear' programYearProxy)}}
+                      {{else}}
+                        {{fa-icon 'lock'}}
+                      {{/if}}
                     {{else}}
-                      {{fa-icon 'unlock' class=(if (await programYearProxy.userCanLock) 'clickable') click=(action 'lockProgramYear' programYearProxy)}}
+                      {{#if (await programYearProxy.userCanUnLock)}}
+                        {{fa-icon 'unlock' class='clickable' click=(action 'lockProgramYear' programYearProxy)}}
+                      {{else}}
+                        {{fa-icon 'unlock'}}
+                      {{/if}}
                     {{/if}}
                     {{#if (await programYearProxy.userCanDelete)}}
                       {{fa-icon 'trash' class='remove clickable' click=(action 'remove' programYearProxy)}}
