@@ -364,7 +364,7 @@ test('closing password box clears input', function(assert) {
   });
 });
 
-test('password strength 0 display', function(assert) {
+test('password strength 0 display', async function(assert) {
   assert.expect(3);
   setupConfigAndAuth(this);
   this.set('user', user);
@@ -375,18 +375,15 @@ test('password strength 0 display', function(assert) {
   const passwordStrengthText = '.password span:eq(0)';
   const passwordInput = '.password input:eq(0)';
   const activatePasswordField = '.activate-password-field';
+  await wait();
+  this.$(activatePasswordField).click();
+  await wait();
+  this.$(passwordInput).val('12345').trigger('input');
+  await wait();
+  assert.equal(this.$(passwordStrengthMeter).val(), 0, 'meter is intially at 0');
+  assert.equal(this.$(passwordStrengthText).text().trim(), 'Try Harder', 'try harder is displayed for level 0 password');
+  assert.ok(this.$(passwordStrengthText).hasClass('strength-0'), 'correct strength is applied to the meter');
 
-  return wait().then(()=>{
-    this.$(activatePasswordField).click();
-    return wait().then(()=>{
-      this.$(passwordInput).val('12345').trigger('input');
-      return wait().then(()=>{
-        assert.equal(this.$(passwordStrengthMeter).val(), 0, 'meter is intially at 0');
-        assert.equal(this.$(passwordStrengthText).text().trim(), 'Try Harder', 'try harder is displayed for level 0 password');
-        assert.ok(this.$(passwordStrengthText).hasClass('strength-0'), 'correct strength is applied to the meter');
-      });
-    });
-  });
 });
 
 test('password strength 1 display', function(assert) {
