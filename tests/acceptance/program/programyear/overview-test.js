@@ -31,8 +31,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
-    var container = find('.programyear-overview')[0];
-    var items = findAll('.removable-directors li', container);
+    var items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
     assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
@@ -65,16 +64,15 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
-    let container = find('.programyear-overview')[0];
-    let items = findAll('.removable-directors li', container);
+    let items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
     assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
     assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
 
-    await fillIn(find('.search-box input', container), 'guy');
-    await click(findAll('.results li')[6], container);
-    items = findAll('.removable-directors li', container);
+    await fillIn(find('.programyear-overview .search-box input'), 'guy');
+    await click(findAll('.programyear-overview .results li')[6]);
+    items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 4);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
     assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
@@ -86,9 +84,8 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
-    var container = find('.programyear-overview')[0];
-    await click(find('.removable-directors li'), container);
-    var items = findAll('.removable-directors li', container);
+    await click(find('.programyear-overview .removable-directors li'));
+    var items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 2);
     assert.equal(await getElementText(items[0]), getText('2 guy M. Mc2son'));
     assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
