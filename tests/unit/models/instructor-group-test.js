@@ -40,4 +40,34 @@ module('Unit | Model | InstructorGroup', function(hooks) {
       assert.ok(courses.includes(course3));
     });
   });
+  test('list sessions', async function(assert) {
+    assert.expect(5);
+    run( async () => {
+      const model = run(() => this.owner.lookup('service:store').createRecord('instructor-group'));
+      const store = model.store;
+      const session1 = store.createRecord('session');
+      const session2 = store.createRecord('session');
+      const session3 = store.createRecord('session');
+      const session4 = store.createRecord('session');
+
+      model.get('offerings').pushObjects([
+        store.createRecord('offering', { session: session1 }),
+        store.createRecord('offering', { session: session1 }),
+        store.createRecord('offering', { session: session1 }),
+        store.createRecord('offering', { session: session2 }),
+        store.createRecord('offering', { session: session2 }),
+        store.createRecord('offering', { session: session3 })
+      ]);
+      model.get('ilmSessions').pushObjects([
+        store.createRecord('ilmSession', { session: session3 }),
+        store.createRecord('ilmSession', { session: session4 })
+      ]);
+      const sessions = await model.get('sessions');
+      assert.equal(sessions.length, 4);
+      assert.ok(sessions.includes(session1));
+      assert.ok(sessions.includes(session2));
+      assert.ok(sessions.includes(session3));
+      assert.ok(sessions.includes(session4));
+    });
+  });
 });
