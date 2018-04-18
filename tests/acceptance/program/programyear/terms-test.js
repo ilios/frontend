@@ -42,8 +42,7 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   test('list terms', async function(assert) {
     assert.expect(2);
     await visit(url);
-    var container = find('.detail-taxonomies');
-    var items = findAll('ul.selected-taxonomy-terms li', container);
+    var items = findAll('.detail-taxonomies ul.selected-taxonomy-terms li');
     assert.equal(items.length, 1);
     assert.equal(await getElementText(items[0]), getText('term 0'));
   });
@@ -51,32 +50,29 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   test('manage terms', async function(assert) {
     assert.expect(3);
     await visit(url);
-    var container = find('.taxonomy-manager');
-    await click(find('.actions button', container));
-    assert.equal(await getElementText(find(find('.removable-list li'), container)), getText('term 0'));
-    assert.equal(await getElementText(find(find('.selectable-terms-list li'), container)), getText('term 0'));
-    assert.equal(await getElementText(find(findAll('.selectable-terms-list li')[1], container)), getText('term 1'));
+    await click(find('.taxonomy-manager .actions button'));
+    assert.equal(await getElementText(find('.taxonomy-manager .removable-list li')), getText('term 0'));
+    assert.equal(await getElementText(find('.taxonomy-manager .selectable-terms-list li')), getText('term 0'));
+    assert.equal(await getElementText(findAll('.taxonomy-manager .selectable-terms-list li')[1]), getText('term 1'));
   });
 
   test('save term changes', async function(assert) {
     assert.expect(1);
     await visit(url);
-    var container = find('.taxonomy-manager');
-    await click(find('.actions button', container));
-    await click(find(find('.removable-list li'), container));
-    await click(find('.selectable-terms-list li:nth-of-type(2) > div', container));
-    await click('button.bigadd', container);
-    assert.equal(await getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 1'));
+    await click(find('.taxonomy-manager .actions button'));
+    await click(find('.taxonomy-manager .removable-list li'));
+    await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
+    await click('.taxonomy-manager button.bigadd');
+    assert.equal(await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')), getText('term 1'));
   });
 
   test('cancel term changes', async function(assert) {
     assert.expect(1);
     await visit(url);
-    var container = find('.taxonomy-manager');
-    await click(find('.actions button', container));
-    await click(find(find('.removable-list li'), container));
-    await click(find('.selectable-terms-list li:nth-of-type(2) > div', container));
-    await click('button.bigcancel', container);
-    assert.equal(await getElementText(find('ul.selected-taxonomy-terms li', container)), getText('term 0'));
+    await click(find('.taxonomy-manager .actions button'));
+    await click('.taxonomy-manager .removable-list li');
+    await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
+    await click('.taxonomy-manager button.bigcancel');
+    assert.equal(await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')), getText('term 0'));
   });
 });

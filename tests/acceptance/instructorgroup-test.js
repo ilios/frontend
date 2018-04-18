@@ -52,9 +52,8 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   test('check fields', async function(assert) {
     await visit(url);
     assert.equal(currentRouteName(), 'instructorGroup');
-    let container = find('.instructorgroup-header');
-    assert.equal(await getElementText(find('.title .school-title', container)), getText('school 0 > '));
-    assert.equal(await getElementText(find('.title .editable', container)), getText('instructor group 0'));
+    assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')), getText('school 0 > '));
+    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('instructor group 0'));
     assert.equal(await getElementText(find('.info')), getText('Members:2'));
     assert.equal(await getElementText(find('.instructorgroup-overview h2')), getText('instructor group 0 Members (2)'));
 
@@ -68,14 +67,13 @@ module('Acceptance: Instructor Group Details', function(hooks) {
 
   test('change title', async function(assert) {
     await visit(url);
-    let container = find('.instructorgroup-header');
-    assert.equal(await getElementText(find('.title .editable', container)), getText('instructor group 0'));
-    await click(find('.title .editable', container));
-    let input = find('.title .editinplace input', container);
+    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('instructor group 0'));
+    await click(find('.instructorgroup-header .title .editable'));
+    let input = find('.instructorgroup-header .title .editinplace input');
     assert.equal(getText(input.value), getText('instructor group 0'));
     await fillIn(input, 'test new title');
-    await click(find('.title .editinplace .actions .done', container));
-    assert.equal(await getElementText(find('.title .editable', container)), getText('test new title'));
+    await click(find('.instructorgroup-header .title .editinplace .actions .done'));
+    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('test new title'));
   });
 
   test('search instructors', async function(assert) {
@@ -103,15 +101,14 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   test('add instructor', async function(assert) {
     await visit(url);
 
-    let container = find('.instructorgroup-overview')[0];
-    let items = findAll('.instructorgroup-users li', container);
+    let items = findAll('.instructorgroup-overview .instructorgroup-users li');
     assert.equal(items.length, 2);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
     assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
 
-    await fillIn(find('.search-box input', container), 'guy');
-    await click(findAll('.results li')[4], container);
-    items = findAll('.instructorgroup-users li', container);
+    await fillIn(find('.instructorgroup-overview .search-box input'), 'guy');
+    await click(findAll('.instructorgroup-overview .results li')[4]);
+    items = findAll('.instructorgroup-overview .instructorgroup-users li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
     assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
@@ -121,9 +118,8 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   test('remove default instructor', async function(assert) {
     await visit(url);
 
-    let container = find('.instructorgroup-overview')[0];
-    await click(find('.instructorgroup-users li'), container);
-    let items = findAll('.instructorgroup-users li', container);
+    await click(find('.instructorgroup-overview .instructorgroup-users li'));
+    let items = findAll('.instructorgroup-overview .instructorgroup-users li');
     assert.equal(items.length, 1);
     assert.equal(await getElementText(items[0]), getText('2 guy M. Mc2son'));
   });
