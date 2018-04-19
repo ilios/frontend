@@ -8,6 +8,9 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 const { reads } = computed;
 const { Promise, all } = RSVP;
 
@@ -37,6 +40,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
   routing: service('-routing'),
+  permissionChecker: service(),
   editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
@@ -101,22 +105,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return users;
   }).restartable(),
 
-  showRollover: computed('currentUser', 'routing.currentRouteName', function(){
-    return new Promise(resolve => {
-      const routing = this.get('routing');
-      if (routing.get('currentRouteName') === 'course.rollover') {
-        resolve(false);
-      } else {
-        const currentUser = this.get('currentUser');
-        all([
-          currentUser.get('userIsCourseDirector'),
-          currentUser.get('userIsDeveloper')
-        ]).then(hasRole => {
-          resolve(hasRole.includes(true));
-        });
-      }
-
-    });
+  showRollover: computed('course', 'currentUser', 'routing.currentRouteName', async function () {
+    const routing = this.get('routing');
+    if (routing.get('currentRouteName') === 'course.rollover') {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const currentUser = this.get('currentUser');
+      const hasRole = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsDeveloper')
+      ]);
+      return hasRole.includes(true);
+    } else {
+      const permissionChecker = this.get('permissionChecker');
+      const course = this.get('course');
+      const school = await course.get('school');
+      return permissionChecker.canCreateCourse(school);
+    }
   }),
 
   actions: {

@@ -3,6 +3,7 @@ import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
+import { resolve } from 'rsvp';
 
 moduleForComponent('course-summary-header', 'Integration | Component | course summary header', {
   integration: true,
@@ -14,9 +15,18 @@ moduleForComponent('course-summary-header', 'Integration | Component | course su
   }
 });
 
-test('it renders', function(assert) {
+test('it renders', function (assert) {
+  let school = EmberObject.create({});
+  let permissionCheckerMock = Service.extend({
+    canCreateCourse(inSchool) {
+      assert.equal(school, inSchool);
+      return resolve(true);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
   let course = EmberObject.create({
     title: 'title',
+    school: resolve(school),
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),
     externalId: 'abc',
@@ -25,7 +35,7 @@ test('it renders', function(assert) {
     isSchedule: false,
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course editable=true}}`);
+  this.render(hbs`{{course-summary-header course=course}}`);
   const title = 'h2';
   const actions = '.course-summary-actions';
   const materialsIcon = `${actions} i:eq(0)`;
@@ -52,7 +62,15 @@ test('it renders', function(assert) {
 
 });
 
-test('no link to materials when that is the current route', function(assert) {
+test('no link to materials when that is the current route', function (assert) {
+  let school = EmberObject.create({});
+  let permissionCheckerMock = Service.extend({
+    canCreateCourse(inSchool) {
+      assert.equal(school, inSchool);
+      return resolve(true);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
   let routerMock = Service.extend({
     currentRouteName: 'course-materials',
     generateURL(){},
@@ -61,11 +79,12 @@ test('no link to materials when that is the current route', function(assert) {
 
   let course = EmberObject.create({
     title: 'title',
+    school: resolve(school),
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course editable=true}}`);
+  this.render(hbs`{{course-summary-header course=course}}`);
   const actions = '.course-summary-actions i';
   const printIcon = `${actions}:eq(0)`;
   const rolloverIcon = `${actions}:eq(1)`;
@@ -88,7 +107,7 @@ test('no link to rollover when that is the current route', function(assert) {
     endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course editable=true}}`);
+  this.render(hbs`{{course-summary-header course=course}}`);
   const actions = '.course-summary-actions i';
   const materialsIcon = `${actions}:eq(0)`;
   const printIcon = `${actions}:eq(1)`;
@@ -98,20 +117,29 @@ test('no link to rollover when that is the current route', function(assert) {
   assert.ok(this.$(materialsIcon).hasClass('fa-archive'));
 });
 
-test('no link to rollover when not editable', function(assert) {
+test('no link to rollover when user cannot edit the course', function (assert) {
+  let school = EmberObject.create({});
   let routerMock = Service.extend({
     currentRouteName: 'course.rollover',
     generateURL(){},
   });
   this.register('service:-routing', routerMock);
+  let permissionCheckerMock = Service.extend({
+    canCreateCourse(inSchool) {
+      assert.equal(school, inSchool);
+      return resolve(false);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
   let course = EmberObject.create({
     title: 'title',
+    school: resolve(school),
     startDate: new Date(2020, 4, 6, 12),
     endDate: new Date(2020, 11, 11, 12),
   });
   this.set('course', course);
-  this.render(hbs`{{course-summary-header course=course editable=false}}`);
+  this.render(hbs`{{course-summary-header course=course}}`);
   const actions = '.course-summary-actions i';
   const materialsIcon = `${actions}:eq(0)`;
   const printIcon = `${actions}:eq(1)`;
