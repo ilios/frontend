@@ -12,7 +12,7 @@ module('Acceptance: Course - Leadership', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function() {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     this.server.create('academicYear', {id: 2013});
 
     const users = this.server.createList('user', 4);

@@ -13,7 +13,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school =  this.server.create('school');
     this.server.create('program');
     this.server.create('programYear', {
       programId: 1,
@@ -54,6 +54,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   });
 
   test('list parent objectives by competency', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(19);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -85,6 +86,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   });
 
   test('save changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 2);
@@ -110,6 +112,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   });
 
   test('cancel changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 2);

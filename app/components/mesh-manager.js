@@ -30,6 +30,7 @@ export default Component.extend({
   layout: layout,
   classNames: ['mesh-manager'],
   terms: null,
+  editable: false,
   query: '',
   searchResults: null,
   searchPage: 0,
@@ -107,10 +108,16 @@ export default Component.extend({
       this.set('query', '');
     },
     add(term) {
-      this.sendAction('add', term.get('content'));
+      const editable = this.get('editable');
+      if (editable) {
+        this.sendAction('add', term.get('content'));
+      }
     },
     remove(term) {
-      this.sendAction('remove', term);
+      const editable = this.get('editable');
+      if (editable) {
+        this.sendAction('remove', term);
+      }
     }
   }
 });

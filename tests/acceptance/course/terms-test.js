@@ -13,9 +13,9 @@ module('Acceptance: Course - Terms', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
     this.server.create('vocabulary', {
-      schoolId: 1,
+      school: this.school,
       active: true,
     });
     this.server.create('academicYear', {id: 2013});
@@ -31,7 +31,7 @@ module('Acceptance: Course - Terms', function(hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       termIds: [1]
     });
   });
@@ -61,6 +61,7 @@ module('Acceptance: Course - Terms', function(hooks) {
   });
 
   test('manage terms', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
     await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);
@@ -76,6 +77,7 @@ module('Acceptance: Course - Terms', function(hooks) {
   });
 
   test('save term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);
@@ -92,6 +94,7 @@ module('Acceptance: Course - Terms', function(hooks) {
   });
 
   test('cancel term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);

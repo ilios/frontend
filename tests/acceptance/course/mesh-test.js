@@ -13,7 +13,7 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
     this.server.create('academicYear');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
@@ -48,6 +48,7 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
   });
 
   test('manage terms', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.meshTerms.current().count, 3);
     await page.meshTerms.manage();
@@ -81,6 +82,7 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
   });
 
   test('save terms', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.meshTerms.current().count, 3);
@@ -105,6 +107,7 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
   });
 
   test('cancel term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.meshTerms.current().count, 3);

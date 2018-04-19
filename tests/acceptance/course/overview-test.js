@@ -16,16 +16,13 @@ module('Acceptance: Course - Overview', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school =  this.server.create('school');
     this.server.createList('courseClerkshipType', 2);
   });
 
   module('check fields', function(hooks) {
     hooks.beforeEach(function() {
-      let director = this.server.create('userRole', {
-        title: 'course director'
-      });
-      this.server.db.users.update(this.user.id, {roles: [director]});
+      this.user.update({ administeredSchools: [this.school] });
       this.clerkshipType = this.server.create('courseClerkshipType');
       this.course = this.server.create('course', {
         year: 2013,
@@ -37,7 +34,6 @@ module('Acceptance: Course - Overview', function(hooks) {
       this.server.create('user', {
         firstName: 'A',
         lastName: 'Director',
-        roles: [director],
         directedCourses: [this.course]
       });
     });
@@ -78,6 +74,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('pick clerkship type', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -91,6 +88,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('remove clerkship type', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('courseClerkshipType');
     this.server.create('course', {
       year: 2013,
@@ -107,6 +105,7 @@ module('Acceptance: Course - Overview', function(hooks) {
 
 
   test('change title', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -120,6 +119,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change start date', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
@@ -138,6 +138,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('start date validation', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     let course = this.server.create('course', {
       year: 2013,
@@ -158,6 +159,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change end date', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
@@ -176,6 +178,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('end date validation', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     let course = this.server.create('course', {
       year: 2013,
@@ -196,6 +199,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change externalId', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -212,6 +216,7 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('change level', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -228,14 +233,11 @@ module('Acceptance: Course - Overview', function(hooks) {
   });
 
   test('click rollover', async function(assert) {
-    const directorRole = this.server.create('userRole', {
-      title: 'course director'
-    });
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    this.server.db.users.update(this.user.id, {roles: [directorRole]});
     await page.visit({ courseId: 1, details: true });
     assert.ok(page.overview.rollover.isVisible);
     await page.overview.rollover.visit();
@@ -243,54 +245,31 @@ module('Acceptance: Course - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'course.rollover');
   });
 
-  test('rollover hidden from instructors', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'instructor'
-    });
+  test('rollover hidden from unprivileged users', async function(assert) {
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    this.server.db.users.update(this.user.id, {roles: [role]});
     await page.visit({ courseId: 1, details: true });
     assert.notOk(page.overview.rollover.isVisible);
   });
 
-  test('rollover visible to developers', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'developer'
-    });
+  test('rollover visible to privileged users', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    this.server.db.users.update(this.user.id, {roles: [role]});
-    await page.visit({ courseId: 1, details: true });
-    assert.ok(page.overview.rollover.isVisible);
-  });
-
-  test('rollover visible to course directors', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'course director'
-    });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-    });
-    this.server.db.users.update(this.user.id, {roles: [role]});
     await page.visit({ courseId: 1, details: true });
     assert.ok(page.overview.rollover.isVisible);
   });
 
   test('rollover hidden on rollover route', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'course director'
-    });
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    this.server.db.users.update(this.user.id, {roles: [role]});
     await page.visit({ courseId: 1, details: true });
     assert.ok(page.overview.rollover.isVisible);
     await page.overview.rollover.visit();

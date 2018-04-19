@@ -5,28 +5,34 @@ import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 const { Promise, all } = RSVP;
 
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 export default Component.extend({
   currentUser: service(),
   routing: service('-routing'),
+  permissionChecker: service(),
   classNames: ['course-summary-header'],
   course: null,
 
-  showRollover: computed('currentUser', 'routing.currentRouteName', function(){
-    return new Promise(resolve => {
-      const routing = this.get('routing');
-      if (routing.get('currentRouteName') === 'course.rollover') {
-        resolve(false);
-      } else {
-        const currentUser = this.get('currentUser');
-        all([
-          currentUser.get('userIsCourseDirector'),
-          currentUser.get('userIsDeveloper')
-        ]).then(hasRole => {
-          resolve(hasRole.includes(true));
-        });
-      }
-
-    });
+  showRollover: computed('course', 'currentUser', 'routing.currentRouteName', async function () {
+    const routing = this.get('routing');
+    if (routing.get('currentRouteName') === 'course.rollover') {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const currentUser = this.get('currentUser');
+      const hasRole = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsDeveloper')
+      ]);
+      return hasRole.includes(true);
+    } else {
+      const permissionChecker = this.get('permissionChecker');
+      const course = this.get('course');
+      const school = await course.get('school');
+      return permissionChecker.canCreateCourse(school);
+    }
   }),
 
   showMaterials: computed('routing.currentRouteName', function(){

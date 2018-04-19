@@ -59,7 +59,7 @@
   padding: 0;
 
   button {
-    background-color: $white;
+    @include ilios-button;
     border-style: solid;
     border-width: 1px;
     margin-right: 1rem;
@@ -69,6 +69,7 @@
     }
 
     &.done {
+      background-color: $white;
       border-color: $ilios-green;
       color: $ilios-green;
 
@@ -78,6 +79,7 @@
     }
 
     &.cancel {
+      background-color: $white;
       border-color: $ilios-red;
       color: $ilios-red;
 

@@ -13,13 +13,13 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    this.school = this.server.create('school');
+    const program = this.server.create('program', { school: this.school });
 
     const programYears = this.server.createList('programYear', 2, { program });
     const cohort1 = this.server.create('cohort', { programYear: programYears[0]});
     const cohort2 = this.server.create('cohort', { programYear: programYears[1]});
-    const competencies = this.server.createList('competency', 2, { school, programYears });
+    const competencies = this.server.createList('competency', 2, { school: this.school, programYears });
 
     const objective1 = this.server.create('objective', { programYears: [programYears[0]], competency: competencies[0] });
     this.server.create('objective', { programYears: [programYears[0]], competency: competencies[1] });
@@ -33,13 +33,14 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
     const objective4 = this.server.create('objective');
     this.server.create('course', {
       year: 2013,
-      school,
+      school: this.school,
       objectives: [objective3, objective4],
       cohorts: [cohort1, cohort2]
     });
   });
 
   test('list parent objectives by competency', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(33);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -90,6 +91,7 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
   });
 
   test('save changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current(0).description.text, 'objective 4');
@@ -120,6 +122,7 @@ module('Acceptance: Course with multiple Cohorts - Objective Parents', function(
   });
 
   test('cancel changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.current(0).description.text, 'objective 4');
