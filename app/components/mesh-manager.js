@@ -30,7 +30,7 @@ export default Component.extend({
   layout: layout,
   classNames: ['mesh-manager'],
   terms: null,
-  editable: true,
+  editable: false,
   query: '',
   searchResults: null,
   searchPage: 0,
