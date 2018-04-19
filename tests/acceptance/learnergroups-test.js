@@ -310,7 +310,12 @@ module('Acceptance: Learner Groups', function(hooks) {
         programYearId: 1,
       });
       this.server.create('learnerGroup', {
-        cohortId: 1
+        cohortId: 1,
+        id:1,
+      });
+      this.server.create('learnerGroup', {
+        cohortId: 1,
+        parentId: 1,
       });
       await visit('/learnergroups');
       assert.equal(1, findAll('.list tbody tr').length);
