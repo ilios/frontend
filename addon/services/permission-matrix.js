@@ -251,8 +251,9 @@ export default Service.extend({
 
     return matrix;
   }),
-  async hasPermission(schoolId, capability, userRoles) {
+  async hasPermission(school, capability, userRoles) {
     const matrix = await this.get('permissionMatrix');
+    const schoolId = school.get('id');
     if (!matrix.hasOwnProperty(schoolId)) {
       return false;
     }
