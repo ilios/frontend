@@ -173,6 +173,10 @@ export default Controller.extend({
       const programYear = await this.get('selectedProgramYear');
       const cohort = await programYear.get('cohort');
       const learnerGroups = await cohort.get('learnerGroups');
+      const descendants = await learnerGroup.get('allDescendants');
+      descendants.forEach(descendant => {
+        learnerGroups.removeObject(descendant);
+      });
       learnerGroups.removeObject(learnerGroup);
       await learnerGroup.destroyRecord();
       this.set('deletedGroup', learnerGroup);
