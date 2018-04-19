@@ -147,20 +147,18 @@ export default Service.extend({
     const model = await this.get('model');
     return model.get('schools');
   }),
-  async isDirectingSchool(schoolId) {
+  async isDirectingSchool(school) {
     const user = await this.get('model');
     const ids = user.hasMany('directedSchools').ids();
-    return ids.includes(schoolId);
+    return ids.includes(school.get('id'));
   },
-  async isAdministeringSchool(schoolId) {
+  async isAdministeringSchool(school) {
     const user = await this.get('model');
     const ids = user.hasMany('administeredSchools').ids();
-    return ids.includes(schoolId);
+    return ids.includes(school.get('id'));
   },
-  async isDirectingCourseInSchool(schoolId) {
+  async isDirectingCourseInSchool(school) {
     const user = await this.get('model');
-    const schools = await this.get('schools');
-    const school = schools.findBy('id', schoolId);
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const ids = user.hasMany('directedCourses').ids();
@@ -168,10 +166,8 @@ export default Service.extend({
 
     return matches.length > 0;
   },
-  async isAdministeringCourseInSchool(schoolId) {
+  async isAdministeringCourseInSchool(school) {
     const user = await this.get('model');
-    const schools = await this.get('schools');
-    const school = schools.findBy('id', schoolId);
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const ids = user.hasMany('administeredCourses').ids();
@@ -179,10 +175,8 @@ export default Service.extend({
 
     return matches.length > 0;
   },
-  async isAdministeringSessionInSchool(schoolId) {
+  async isAdministeringSessionInSchool(school) {
     const user = await this.get('model');
-    const schools = await this.get('schools');
-    const school = schools.findBy('id', schoolId);
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const sessions = await user.get('administeredSessions');
@@ -190,10 +184,8 @@ export default Service.extend({
 
     return matches.length > 0;
   },
-  async isTeachingCourseInSchool(schoolId) {
+  async isTeachingCourseInSchool(school) {
     const user = await this.get('model');
-    const schools = await this.get('schools');
-    const school = schools.findBy('id', schoolId);
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const courses = await user.get('allInstructedCourses');
@@ -201,10 +193,8 @@ export default Service.extend({
 
     return matches.length > 0;
   },
-  async isAdministeringCurriculumInventoryReportInSchool(schoolId) {
+  async isAdministeringCurriculumInventoryReportInSchool(school) {
     const user = await this.get('model');
-    const schools = await this.get('schools');
-    const school = schools.findBy('id', schoolId);
     const schoolProgramIds = school.hasMany('programs').ids();
 
     const reports = await user.get('administeredCurriculumInventoryReports');
@@ -212,146 +202,146 @@ export default Service.extend({
 
     return matches.length > 0;
   },
-  async isDirectingCourse(courseId) {
+  async isDirectingCourse(course) {
     const user = await this.get('model');
 
     const ids = user.hasMany('directedCourses').ids();
-    const matches = ids.filterBy('id', courseId);
+    const matches = ids.filterBy('id', course.get('id'));
 
     return matches.length > 0;
   },
-  async isAdministeringCourse(courseId) {
+  async isAdministeringCourse(course) {
     const user = await this.get('model');
 
     const ids = user.hasMany('administeredCourses').ids();
-    const matches = ids.filterBy('id', courseId);
+    const matches = ids.filterBy('id', course.get('id'));
 
     return matches.length > 0;
   },
-  async isAdministeringSessionInCourse(courseId) {
+  async isAdministeringSessionInCourse(course) {
     const user = await this.get('model');
 
     const sessions = await user.get('administeredSessions');
-    const matches = sessions.filter(session => courseId === session.belongsTo('course').id());
+    const matches = sessions.filter(session => course.get('id') === session.belongsTo('course').id());
 
     return matches.length > 0;
   },
-  async isTeachingCourse(courseId) {
+  async isTeachingCourse(course) {
     const user = await this.get('model');
 
     const courses = await user.get('allInstructedCourses');
-    const matches = courses.filterBy('id', courseId);
+    const matches = courses.filterBy('id', course.get('id'));
 
     return matches.length > 0;
   },
-  async isAdministeringSession(sessionId) {
+  async isAdministeringSession(session) {
     const user = await this.get('model');
 
     const ids = user.hasMany('administeredSessions').ids();
-    const matches = ids.filterBy('id', sessionId);
+    const matches = ids.filterBy('id', session.get('id'));
 
     return matches.length > 0;
   },
-  async isTeachingSession(sessionId) {
+  async isTeachingSession(session) {
     const user = await this.get('model');
 
     const sessions = await user.get('allInstructedSessions');
-    const matches = sessions.filterBy('id', sessionId);
+    const matches = sessions.filterBy('id', session.get('id'));
 
     return matches.length > 0;
   },
-  async isDirectingProgram(programId) {
+  async isDirectingProgram(program) {
     const user = await this.get('model');
 
     const ids = user.hasMany('directedPrograms').ids();
-    const matches = ids.filterBy('id', programId);
+    const matches = ids.filterBy('id', program.get('id'));
 
     return matches.length > 0;
   },
-  async isDirectingProgramYearInProgram(programId) {
+  async isDirectingProgramYearInProgram(program) {
     const user = await this.get('model');
 
     const programYears = await user.get('programYears');
-    const matches = programYears.filter(programYear => programId === programYear.belongsTo('program').id());
+    const matches = programYears.filter(programYear => program.get('id') === programYear.belongsTo('program').id());
 
     return matches.length > 0;
   },
-  async isAdministeringCurriculumInventoryReport(reportId) {
+  async isAdministeringCurriculumInventoryReport(report) {
     const user = await this.get('model');
 
     const ids = user.hasMany('administeredCurriculumInventoryReports').ids();
-    const matches = ids.filterBy('id', reportId);
+    const matches = ids.filterBy('id', report.get('id'));
 
     return matches.length > 0;
   },
-  async getRolesInSchool(schoolId) {
+  async getRolesInSchool(school) {
     let roles = [];
-    if (await this.isDirectingSchool(schoolId)) {
+    if (await this.isDirectingSchool(school)) {
       roles.pushObject('SCHOOL_DIRECTOR');
     }
-    if (await this.isAdministeringSchool(schoolId)) {
+    if (await this.isAdministeringSchool(school)) {
       roles.pushObject('SCHOOL_ADMINISTRATOR');
     }
-    if (await this.isDirectingCourseInSchool(schoolId)) {
+    if (await this.isDirectingCourseInSchool(school)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
-    if (await this.isAdministeringCourseInSchool(schoolId)) {
+    if (await this.isAdministeringCourseInSchool(school)) {
       roles.pushObject('COURSE_ADMINISTRATOR');
     }
-    if (await this.isAdministeringSessionInSchool(schoolId)) {
+    if (await this.isAdministeringSessionInSchool(school)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingCourseInSchool(schoolId)) {
+    if (await this.isTeachingCourseInSchool(school)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
-    if (await this.isAdministeringCurriculumInventoryReportInSchool(schoolId)) {
+    if (await this.isAdministeringCurriculumInventoryReportInSchool(school)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;
   },
-  async getRolesInCourse(courseId) {
+  async getRolesInCourse(course) {
     let roles = [];
-    if (await this.isDirectingCourse(courseId)) {
+    if (await this.isDirectingCourse(course)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
-    if (await this.isAdministeringCourse(courseId)) {
+    if (await this.isAdministeringCourse(course)) {
       roles.pushObject('COURSE_ADMINISTRATOR');
     }
-    if (await this.isAdministeringSessionInCourse(courseId)) {
+    if (await this.isAdministeringSessionInCourse(course)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingCourse(courseId)) {
+    if (await this.isTeachingCourse(course)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
 
     return roles;
   },
-  async getRolesInSession(sessionId) {
+  async getRolesInSession(session) {
     let roles = [];
-    if (await this.isAdministeringSession(sessionId)) {
+    if (await this.isAdministeringSession(session)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingSession(sessionId)) {
+    if (await this.isTeachingSession(session)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
 
     return roles;
   },
-  async getRolesInProgram(programId) {
+  async getRolesInProgram(program) {
     let roles = [];
-    if (await this.isDirectingProgram(programId)) {
+    if (await this.isDirectingProgram(program)) {
       roles.pushObject('PROGRAM_DIRECTOR');
     }
-    if (await this.isDirectingProgramYearInProgram(programId)) {
+    if (await this.isDirectingProgramYearInProgram(program)) {
       roles.pushObject('PROGRAM_YEAR_DIRECTOR');
     }
 
     return roles;
   },
-  async getRolesInCurriculumInventoryReport(reportId) {
+  async getRolesInCurriculumInventoryReport(report) {
     let roles = [];
-    if (await this.isAdministeringCurriculumInventoryReport(reportId)) {
+    if (await this.isAdministeringCurriculumInventoryReport(report)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
