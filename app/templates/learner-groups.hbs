@@ -68,7 +68,7 @@
         <h2>{{t 'general.learnerGroups'}}</h2>
       </div>
       <div class='actions'>
-        {{#if (await selectedProgramYear)}}
+        {{#if (and (await canCreateLearnerGroup) (await selectedProgramYear))}}
           {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
         {{/if}}
       </div>

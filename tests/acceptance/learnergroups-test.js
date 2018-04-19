@@ -18,8 +18,8 @@ module('Acceptance: Learner Groups', function(hooks) {
 
   module('User in single school with no special permissions', function(hooks) {
     hooks.beforeEach(async function () {
-      const school = this.server.create('school');
-      await setupAuthentication( { school} );
+      this.school = this.server.create('school');
+      this.user = await setupAuthentication( { school: this.school } );
     });
     test('visiting /learnergroups', async function(assert) {
       this.server.create('user', {id: 4136});
@@ -131,7 +131,6 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('list groups', async function(assert) {
-
       this.server.createList('user', 11);
       this.server.create('program', {
         schoolId: 1,
@@ -178,7 +177,6 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('filters by title', async function(assert) {
-
       this.server.create('program', {
         schoolId: 1,
       });
@@ -231,7 +229,8 @@ module('Acceptance: Learner Groups', function(hooks) {
       return find(`.list tbody tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
     }
 
-    test('add new learnergroup', async function(assert) {
+    test('add new learnergroup', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
 
       this.server.create('program', {
@@ -259,9 +258,8 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('cancel adding new learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(8);
-
-
       this.server.create('program', {
         schoolId: 1,
       });
@@ -426,7 +424,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     test('add new learnergroup with full cohort', async function(assert) {
       assert.expect(2);
 
-
+      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         schoolId: 1,
       });
