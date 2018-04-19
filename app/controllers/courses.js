@@ -133,7 +133,7 @@ export default Controller.extend({
     }
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
-    return permissionChecker.canCreateCourse(selectedSchool.get('id'));
+    return permissionChecker.canCreateCourse(selectedSchool);
   }),
 
   actions: {
