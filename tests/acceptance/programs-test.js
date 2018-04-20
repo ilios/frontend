@@ -15,8 +15,8 @@ module('Acceptance: Programs', function(hooks) {
 
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
-      const school = this.server.create('school');
-      await setupAuthentication({ school });
+      this.school = this.server.create('school');
+      this.user = await setupAuthentication({ school: this.school });
     });
 
     test('visiting /programs', async function(assert) {
@@ -28,19 +28,19 @@ module('Acceptance: Programs', function(hooks) {
       assert.expect(19);
       let firstProgram = this.server.create('program', {
         title: 'specialfirstprogram',
-        schoolId: 1,
+        school: this.school,
       });
       let secondProgram = this.server.create('program', {
         title: 'specialsecondprogram',
-        schoolId: 1
+        school: this.school
       });
       let regularProgram = this.server.create('program', {
         title: 'regularprogram',
-        schoolId: 1
+        school: this.school
       });
       let regexProgram = this.server.create('program', {
         title: '\\yoo hoo',
-        schoolId: 1
+        school: this.school
       });
       await visit('/programs');
       assert.equal(4, findAll('.list tbody tr').length);
@@ -72,7 +72,8 @@ module('Acceptance: Programs', function(hooks) {
 
     });
 
-    test('add new program', async function(assert) {
+    test('add new program', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
       const url = '/programs';
       const expandButton = '.expand-button';
@@ -94,9 +95,10 @@ module('Acceptance: Programs', function(hooks) {
     });
 
     test('remove program', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('program', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/programs');
       assert.equal(1, findAll('.list tbody tr').length);
@@ -108,9 +110,10 @@ module('Acceptance: Programs', function(hooks) {
     });
 
     test('cancel remove program', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('program', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/programs');
       assert.equal(1, findAll('.list tbody tr').length);
@@ -124,7 +127,7 @@ module('Acceptance: Programs', function(hooks) {
     test('click edit takes you to program route', async function(assert) {
       assert.expect(1);
       this.server.create('program', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/programs');
       var edit = find('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .edit');
@@ -135,7 +138,7 @@ module('Acceptance: Programs', function(hooks) {
     test('click title takes you to program route', async function(assert) {
       assert.expect(1);
       this.server.create('program', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/programs');
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
@@ -146,7 +149,7 @@ module('Acceptance: Programs', function(hooks) {
       assert.expect(4);
       this.server.create('program', {
         title: 'yes\\no',
-        schoolId: 1,
+        school: this.school,
       });
 
       const programs = '.list tbody tr';

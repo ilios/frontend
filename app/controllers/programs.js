@@ -3,16 +3,19 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty, isBlank } from '@ember/utils';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { resolve } = RSVP;
 const { gt } = computed;
+
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Controller.extend({
   currentUser: service(),
   i18n: service(),
+  permissionChecker: service(),
 
   queryParams: {
     schoolId: 'school',
@@ -73,6 +76,15 @@ export default Controller.extend({
         school: schoolId
       }
     });
+  }),
+
+  canCreate: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = this.get('selectedSchool');
+    return permissionChecker.canCreateProgram(selectedSchool);
   }),
 
   showNewProgramForm: false,

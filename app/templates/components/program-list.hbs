@@ -21,7 +21,7 @@
           {{#link-to 'program' program class='edit'}}
             {{fa-icon 'edit'}}
           {{/link-to}}
-          {{#if program.isDeletable}}
+          {{#if (await program.canDelete)}}
             <span class='clickable remove' {{action 'confirmRemove' program}}>{{fa-icon 'trash'}}</span>
           {{else}}
             {{fa-icon 'trash' class='disabled'}}

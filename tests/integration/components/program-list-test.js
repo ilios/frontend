@@ -1,7 +1,9 @@
+import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import { resolve } from 'rsvp';
 
 moduleForComponent('program-list', 'Integration | Component | program list', {
   integration: true
@@ -41,6 +43,12 @@ test('it renders', async function(assert){
     },
     isPublished: true,
   });
+  const permissionCheckerMock = Service.extend({
+    canDeleteProgram() {
+      return resolve(true);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
   this.set('programs', [ program1, program2 ]);
   this.render(hbs`{{program-list programs=programs}}`);
@@ -101,7 +109,7 @@ test('edit', async function(assert){
 });
 
 test('remove and cancel', async function(assert){
-  assert.expect(4);
+  assert.expect(5);
   const program1 = EmberObject.create({
     id: 1,
     school: {
@@ -117,6 +125,13 @@ test('remove and cancel', async function(assert){
       };
     },
   });
+  const permissionCheckerMock = Service.extend({
+    canDeleteProgram(program) {
+      assert.equal(program, program1);
+      return resolve(true);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
   this.set('programs', [ program1 ]);
   this.set('removeAction', () => {
@@ -135,7 +150,7 @@ test('remove and cancel', async function(assert){
 });
 
 test('remove and confirm', async function(assert){
-  assert.expect(4);
+  assert.expect(5);
   const program1 = EmberObject.create({
     id: 1,
     school: {
@@ -151,6 +166,13 @@ test('remove and confirm', async function(assert){
       };
     },
   });
+  const permissionCheckerMock = Service.extend({
+    canDeleteProgram(program) {
+      assert.equal(program, program1);
+      return resolve(true);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
   this.set('programs', [ program1 ]);
   this.set('removeAction', (program) => {
@@ -164,4 +186,36 @@ test('remove and confirm', async function(assert){
   assert.equal(this.$('tbody tr').length, 2);
   assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
   this.$('tbody tr:eq(1) .remove').click();
+});
+
+test('trash is disabled for unprivileged users', async function(assert){
+  assert.expect(3);
+  const program1 = EmberObject.create({
+    id: 1,
+    school: {
+      title: 'Foo'
+    },
+    title: 'Bar',
+    isPublished: true,
+    hasMany() {
+      return {
+        ids() {
+          return [];
+        }
+      };
+    },
+  });
+  const permissionCheckerMock = Service.extend({
+    canDeleteProgram(program) {
+      assert.equal(program, program1);
+      return resolve(false);
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
+
+  this.set('programs', [ program1 ]);
+  this.render(hbs`{{program-list programs=programs}}`);
+  await wait();
+  assert.equal(this.$('tbody tr').length, 1);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
 });
