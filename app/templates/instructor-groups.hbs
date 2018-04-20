@@ -28,7 +28,9 @@
         <h2>{{t 'general.instructorGroups'}}</h2>
       </div>
       <div class='actions'>
-        {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
+        {{#if (await canCreate)}}
+          {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
+        {{/if}}
       </div>
     </div>
     <section class='new'>
@@ -52,6 +54,7 @@
       {{#if (is-fulfilled filteredInstructorGroups)}}
         {{instructorgroup-list
           instructorGroups=(await filteredInstructorGroups)
+          canDelete=(await canDelete)
           edit='editInstructorGroup'
           remove='removeInstructorGroup'
         }}
