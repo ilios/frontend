@@ -119,6 +119,7 @@ test('Update location', function(assert) {
   this.set('learnerGroup', learnerGroup);
 
   this.render(hbs`{{learnergroup-summary
+    canUpdate=true
     setIsEditing=(action nothing)
     setSortUsersBy=(action nothing)
     setIsBulkAssigning=(action nothing)

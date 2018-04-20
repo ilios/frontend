@@ -32,7 +32,7 @@ test('can change title', async function(assert) {
   });
 
   this.set('learnerGroup', learnerGroup);
-  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
   assert.equal(this.$('h2').text().trim(), 'our group');
   this.$('h2 .editable').click();
@@ -81,7 +81,7 @@ test('validate title length', async function(assert) {
   });
 
   this.set('learnerGroup', learnerGroup);
-  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+  this.render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
   assert.equal(this.$(title).text().trim(), 'our group', 'title is correct');
   assert.equal(this.$(errors).length, 0, 'there are no errors');

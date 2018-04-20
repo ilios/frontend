@@ -9,4 +9,7 @@ export default Controller.extend({
   isEditing: false,
   isBulkAssigning: false,
   sortUsersBy: 'firstName',
+  canCreate: false,
+  canUpdate: false,
+  canDelete: false,
 });

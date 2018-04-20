@@ -167,7 +167,7 @@ export default Controller.extend({
     this.set('newGroup', newGroups[0]);
   }),
 
-  canCreateLearnerGroup: computed('selectedSchool', 'currentUser', async function () {
+  canCreate: computed('selectedSchool', 'currentUser', async function () {
     if (!enforceRelationshipCapabilityPermissions) {
       return true;
     }
@@ -176,7 +176,7 @@ export default Controller.extend({
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
-  canDeleteLearnerGroup: computed('selectedSchool', 'currentUser', async function () {
+  canDelete: computed('selectedSchool', 'currentUser', async function () {
     if (!enforceRelationshipCapabilityPermissions) {
       return true;
     }

@@ -497,6 +497,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('copy learnergroup without learners', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(20);
 
       this.server.create('program', {
@@ -579,6 +580,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('copy learnergroup with learners', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(20);
 
       this.server.createList('user', 10);

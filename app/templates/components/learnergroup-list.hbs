@@ -19,7 +19,7 @@
         <td class='text-center hide-from-small-screen'>{{learnerGroup.childrenCount}}</td>
         <td class='text-right'>
           {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
-            {{#if (or (not canDeleteLearnerGroup) (await learnerGroup.hasLearnersInGroupOrSubgroups))}}
+            {{#if (or (not canDelete) (await learnerGroup.hasLearnersInGroupOrSubgroups))}}
               {{fa-icon 'trash' class='disabled'}}
             {{else}}
               <span class='clickable remove' {{action 'confirmRemove' learnerGroup}}>{{fa-icon 'trash'}}</span>
@@ -27,7 +27,9 @@
           {{else}}
             {{loading-spinner}}
           {{/if}}
-          {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup) title=(t 'general.copy')}}
+          {{#if canCreate}}
+            {{fa-icon 'copy' class='clickable' click=(action 'startCopy' learnerGroup) title=(t 'general.copy')}}
+          {{/if}}
         </td>
       </tr>
       {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}

@@ -68,7 +68,7 @@
         <h2>{{t 'general.learnerGroups'}}</h2>
       </div>
       <div class='actions'>
-        {{#if (and (await canCreateLearnerGroup) (await selectedProgramYear))}}
+        {{#if (and (await canCreate) (await selectedProgramYear))}}
           {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
         {{/if}}
       </div>
@@ -94,7 +94,8 @@
           learnerGroups=(await filteredLearnerGroups)
           remove=(action 'removeLearnerGroup')
           copy=(perform copyGroup)
-          canDeleteLearnerGroup=(await canDeleteLearnerGroup)
+          canDelete=(await canDelete)
+          canCreate=(await canCreate)
         }}
       {{else}}
         {{pulse-loader}}

@@ -11,7 +11,9 @@
   </div>
 
   <div class='learnergroup-subgroup-list-actions'>
-    {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+    {{#if canCreate}}
+      {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+    {{/if}}
   </div>
 </div>
 
@@ -41,6 +43,8 @@
       {{#if (get (await parentGroup.children) 'length')}}
         {{learnergroup-list
           learnerGroups=(await parentGroup.children)
+          canDelete=canDelete
+          canCreate=canCreate
           remove=(action 'removeLearnerGroup')
           copy=(perform copyGroup)
         }}

@@ -1,12 +1,36 @@
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import { all } from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 
-const { all } = RSVP;
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  permissionChecker: service(),
+  editable: false,
   titleToken: 'general.learnerGroups',
-  afterModel(model){
+  async afterModel(model) {
+    const permissionChecker = this.get('permissionChecker');
+
+    let canUpdate;
+    let canDelete;
+    let canCreate;
+    if (!enforceRelationshipCapabilityPermissions) {
+      canUpdate = true;
+      canDelete = true;
+      canCreate = true;
+    } else {
+      const school = await model.get('school');
+      canUpdate = await permissionChecker.canUpdateLearnerGroup(school);
+      canDelete = await permissionChecker.canDeleteLearnerGroup(school);
+      canCreate = await permissionChecker.canCreateLearnerGroup(school);
+    }
+
+    this.set('canUpdate', canUpdate);
+    this.set('canDelete', canDelete);
+    this.set('canCreate', canCreate);
+
     //preload data to speed up rendering later
     return all([
       model.get('usersOnlyAtThisLevel'),
@@ -14,5 +38,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
       model.get('allParents'),
       model.get('courses'),
     ]);
+  },
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('canUpdate', this.get('canUpdate'));
+    controller.set('canDelete', this.get('canDelete'));
+    controller.set('canCreate', this.get('canCreate'));
   }
 });

@@ -44,11 +44,13 @@
           <tr class="{{unless user.enabled 'disabled-user-account'}}">
             <td class='text-left' colspan=1>
               {{#if user.enabled}}
-                <input
-                  type="checkbox"
-                  checked={{contains user selectedUsers}}
-                  onclick={{action 'toggleUserSelection' user}}
-                >
+                {{#if canUpdate}}
+                  <input
+                    type="checkbox"
+                    checked={{contains user selectedUsers}}
+                    onclick={{action 'toggleUserSelection' user}}
+                  >
+                {{/if}}
               {{else}}
                 {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
               {{/if}}
@@ -62,7 +64,7 @@
                 {{#if (contains user usersBeingMoved)}}
                   {{loading-spinner}}
                 {{else}}
-                  {{#if (eq selectedUsers.length 0)}}
+                  {{#if (and canUpdate (eq selectedUsers.length 0))}}
                     {{fa-icon
                       'plus'
                       class='yes clickable'
