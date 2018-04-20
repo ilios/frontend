@@ -28,7 +28,9 @@
         <h2>{{t 'general.programs'}}</h2>
       </div>
       <div class='actions'>
-        {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
+        {{#if (await canCreate)}}
+          {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
+        {{/if}}
       </div>
     </div>
     <section class='new'>
