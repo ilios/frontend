@@ -1,10 +1,8 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import initializer from "ilios/instance-initializers/ember-i18n";
-const { resolve } = RSVP;
 
 moduleForComponent('school-list', 'Integration | Component | school list', {
   integration: true,
@@ -31,10 +29,10 @@ test('it renders', function(assert) {
   assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'school 1');
 });
 
-test('create school button is visible to developers', function(assert) {
+test('create school button is visible to root', function(assert) {
   assert.expect(1);
   const currentUserMock = Service.extend({
-    userIsDeveloper: resolve(true)
+    isRoot: true
   });
   this.register('service:current-user', currentUserMock);
   this.set('schools', []);
@@ -42,10 +40,10 @@ test('create school button is visible to developers', function(assert) {
   assert.equal(this.$('.header .actions .expand-button').length, 1);
 });
 
-test('create school button is not visible to non-developers', function(assert) {
+test('create school button is not visible to non root users', function(assert) {
   assert.expect(1);
   const currentUserMock = Service.extend({
-    userIsDeveloper: resolve(false)
+    root: false
   });
   this.register('service:current-user', currentUserMock);
   this.set('schools', []);
