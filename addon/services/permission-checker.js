@@ -94,8 +94,7 @@ export default Service.extend({
 
     return this.canUpdateCourse(course);
   },
-  async canCreateSession(session) {
-    const course = await session.get('course');
+  async canCreateSession(course) {
     const school = await course.get('school');
     if (await this.canDoInSchool(school, 'CAN_CREATE_SESSIONS')) {
       return true;
