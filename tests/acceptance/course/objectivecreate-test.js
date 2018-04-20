@@ -21,7 +21,7 @@ module('Acceptance: Course - Objective Create', function(hooks) {
     this.objective = this.server.create('objective');
     this.course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [1]
     });
   });

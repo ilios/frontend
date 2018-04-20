@@ -22,11 +22,11 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
       programYearId: 1
     });
     this.server.create('competency', {
-      schoolId: 1,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.create('competency', {
-      schoolId: 1,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.create('objective', {
@@ -47,7 +47,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
     this.server.create('objective');
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [4,5],
       cohortIds: [1]
     });

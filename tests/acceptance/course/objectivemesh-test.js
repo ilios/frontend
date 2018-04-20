@@ -35,7 +35,7 @@ module('Acceptance: Course - Objective Mesh Descriptors', function(hooks) {
 
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [1,2,3]
     });
   });
