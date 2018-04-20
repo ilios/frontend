@@ -18,8 +18,8 @@ module('Acceptance: Learner Groups', function(hooks) {
 
   module('User in single school with no special permissions', function(hooks) {
     hooks.beforeEach(async function () {
-      const school = this.server.create('school');
-      await setupAuthentication( { school} );
+      this.school = this.server.create('school');
+      this.user = await setupAuthentication( { school: this.school } );
     });
     test('visiting /learnergroups', async function(assert) {
       this.server.create('user', {id: 4136});
@@ -131,7 +131,6 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('list groups', async function(assert) {
-
       this.server.createList('user', 11);
       this.server.create('program', {
         schoolId: 1,
@@ -178,7 +177,6 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('filters by title', async function(assert) {
-
       this.server.create('program', {
         schoolId: 1,
       });
@@ -231,7 +229,8 @@ module('Acceptance: Learner Groups', function(hooks) {
       return find(`.list tbody tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
     }
 
-    test('add new learnergroup', async function(assert) {
+    test('add new learnergroup', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
 
       this.server.create('program', {
@@ -259,9 +258,8 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('cancel adding new learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(8);
-
-
       this.server.create('program', {
         schoolId: 1,
       });
@@ -298,6 +296,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('remove learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
 
       this.server.create('program', {
@@ -326,6 +325,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('cancel remove learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
 
       this.server.create('program', {
@@ -350,6 +350,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('confirmation of remove message', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       this.server.createList('user', 5);
       this.server.create('program', {
@@ -379,6 +380,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('populated learner groups are not deletable', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       this.server.createList('user', 5);
       this.server.create('program', {
@@ -426,7 +428,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     test('add new learnergroup with full cohort', async function(assert) {
       assert.expect(2);
 
-
+      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         schoolId: 1,
       });
@@ -455,6 +457,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('no add button when there is no cohort', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       await visit('/learnergroups');
       const expandNewButton = '.actions .expand-button';
@@ -494,6 +497,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('copy learnergroup without learners', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(20);
 
       this.server.create('program', {
@@ -576,6 +580,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('copy learnergroup with learners', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(20);
 
       this.server.createList('user', 10);

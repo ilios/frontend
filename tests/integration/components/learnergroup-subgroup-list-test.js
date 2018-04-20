@@ -63,7 +63,7 @@ test('can remove group', function(assert) {
 
   this.set('parentGroup', parentGroup);
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
 
   this.$('tbody td:eq(3) .remove').click();
   this.$('tbody tr:eq(1) .remove').click();
@@ -81,7 +81,7 @@ test('removal confirmation', function(assert) {
 
   this.set('parentGroup', parentGroup);
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
 
   this.$('tbody td:eq(3) .remove').click();
 
@@ -125,7 +125,7 @@ test('add new group', function(assert) {
 
   this.set('parentGroup', EmberObject.create(parentGroup));
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
   assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
 
   this.$('.expand-button').click();
@@ -200,7 +200,7 @@ test('add multiple new groups', async function(assert) {
   const multiGroupCount = 'input';
   const done = '.done';
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
   assert.equal(this.$(firstGroupTitle).text().trim(), 'group 1');
   this.$(expandButton).click();
   await wait();
@@ -268,7 +268,7 @@ test('truncates multiple group with long name', async function(assert) {
   const multiGroupCount = 'input';
   const done = '.done';
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
   this.$(expandButton).click();
   await wait();
   await this.$(multiGroupButton).click();

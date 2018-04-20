@@ -1,25 +1,29 @@
 <div class='header-bar'>
   <span class='title'>
     <h2>
-      {{#editable-field
-        value=(if title title (t 'general.clickToEdit'))
-        save=(perform changeTitle)
-        close=(action 'revertTitleChanges')
-        saveOnEnter=true
-        closeOnEscape=true
-        as |isSaving|
-      }}
-        <input
-          type="text"
-          value={{title}}
-          oninput={{action (mut title) value="target.value"}}
-          disabled={{isSaving}}
-          onkeyup={{action 'addErrorDisplayFor' 'title'}}
-        >
-        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
-        {{/if}}
-      {{/editable-field}}
+      {{#if canUpdate}}
+        {{#editable-field
+          value=(if title title (t 'general.clickToEdit'))
+          save=(perform changeTitle)
+          close=(action 'revertTitleChanges')
+          saveOnEnter=true
+          closeOnEscape=true
+          as |isSaving|
+        }}
+          <input
+            type="text"
+            value={{title}}
+            oninput={{action (mut title) value="target.value"}}
+            disabled={{isSaving}}
+            onkeyup={{action 'addErrorDisplayFor' 'title'}}
+          >
+          {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+            <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
+      {{else}}
+        {{title}}
+      {{/if}}
     </h2>
   </span>
   <span class='info'>

@@ -23,6 +23,9 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
 
   learnerGroup: null,
+  canCreate: false,
+  canUpdate: false,
+  canDelete: false,
   learnerGroupId: null,
   learnerGroupTitle: null,
   cohortTitle: null,
@@ -176,6 +179,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
       this.set('manageInstructors', false);
       return learnerGroup.save();
+    },
+    manageInstructors() {
+      const canUpdate = this.get('canUpdate');
+      const manageInstructors = this.get('manageInstructors');
+      if (canUpdate) {
+        this.set('manageInstructors', !manageInstructors);
+      }
     }
   }
 });

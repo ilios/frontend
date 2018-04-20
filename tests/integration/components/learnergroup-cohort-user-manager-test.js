@@ -40,6 +40,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='lastName'
@@ -82,6 +83,7 @@ test('sort by firstName', function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'
@@ -113,6 +115,7 @@ test('add multiple users', async function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'
@@ -145,6 +148,7 @@ test('add single user', function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'
@@ -171,6 +175,7 @@ test('when users are selected single action is disabled', function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'
@@ -207,6 +212,7 @@ test('checkall', function(assert) {
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'
@@ -241,6 +247,7 @@ test('checking one puts checkall box into indeterminate state', function(assert)
 
   this.render(hbs`{{learnergroup-cohort-user-manager
     users=users
+    canUpdate=true
     learnerGroupTitle='this group'
     topLevelGroupTitle='top level group'
     sortBy='firstName'

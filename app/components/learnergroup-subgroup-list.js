@@ -15,6 +15,8 @@ export default Component.extend({
   i18n: service(),
   flashMessages: service(),
   parentGroup: null,
+  canCreate: false,
+  canDelete: false,
   classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',
   showNewLearnerGroupForm: false,

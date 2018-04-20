@@ -1,9 +1,9 @@
-{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy}}
+{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy canUpdate=canUpdate}}
 <section class='learnergroup-overview'>
   <div class='learnergroup-overview-actions'>
     {{#if (or isEditing isBulkAssigning)}}
       <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t 'general.close'}}</button>
-    {{else}}
+    {{else if canUpdate}}
       <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.uploadGroupAssignments'}}</button>
       <button {{action setIsEditing true}} data-test-manage>{{t 'general.manage'}}</button>
     {{/if}}
@@ -34,25 +34,33 @@
   <div class="block defaultlocation">
     <label>{{t 'general.defaultLocation'}}:</label>
     <span>
-      {{#editable-field
-        value=(if location location (t 'general.clickToEdit'))
-        save=(action 'changeLocation')
-        close=(action 'revertLocationChanges')
-        saveOnEnter=true
-        closeOnEscape=true
-        as |isSaving|
-      }}
-        <input
-          type="text"
-          value={{location}}
-          oninput={{action (mut location) value="target.value"}}
-          disabled={{isSaving}}
-          onkeyup={{action 'addErrorDisplayFor' 'location'}}
-        >
-        {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
-          <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
+      {{#if canUpdate}}
+        {{#editable-field
+          value=(if location location (t 'general.clickToEdit'))
+          save=(action 'changeLocation')
+          close=(action 'revertLocationChanges')
+          saveOnEnter=true
+          closeOnEscape=true
+          as |isSaving|
+        }}
+          <input
+            type="text"
+            value={{location}}
+            oninput={{action (mut location) value="target.value"}}
+            disabled={{isSaving}}
+            onkeyup={{action 'addErrorDisplayFor' 'location'}}
+          >
+          {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
+            <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
+          {{/if}}
+        {{/editable-field}}
+      {{else}}
+        {{#if location}}
+          {{location}}
+        {{else}}
+          {{t 'general.none'}}
         {{/if}}
-      {{/editable-field}}
+      {{/if}}
     </span>
   </div>
   <div class="block defaultinstructors">
@@ -66,7 +74,7 @@
             close=(toggle-action 'manageInstructors' this)
           }}
         {{else}}
-          <span class='clickable link' {{action (toggle 'manageInstructors' this)}}>
+          <span class={{if canUpdate 'clickable link'}} {{action 'manageInstructors'}}>
             {{#if (get (await learnerGroup.allInstructors) 'length')}}
               {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await learnerGroup.allInstructors)))}}
             {{else}}
@@ -108,12 +116,17 @@
 </section>
 
 
-{{learnergroup-subgroup-list parentGroup=learnerGroup}}
+{{learnergroup-subgroup-list
+  parentGroup=learnerGroup
+  canCreate=canCreate
+  canDelete=canDelete
+}}
 
 <section class='cohortmembers'>
   {{#if createUsersToPassToCohortManager.lastSuccessful}}
     {{learnergroup-cohort-user-manager
       users=createUsersToPassToCohortManager.lastSuccessful.value
+      canUpdate=canUpdate
       learnerGroupTitle=learnerGroupTitle
       topLevelGroupTitle=topLevelGroupTitle
       sortBy=sortUsersBy
