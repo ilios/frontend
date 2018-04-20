@@ -176,6 +176,15 @@ export default Controller.extend({
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
+  canDeleteLearnerGroup: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = await this.get('selectedSchool');
+    return permissionChecker.canDeleteLearnerGroup(selectedSchool);
+  }),
+
   actions: {
     editLearnerGroup(learnerGroup) {
       this.transitionToRoute('learnerGroup', learnerGroup);

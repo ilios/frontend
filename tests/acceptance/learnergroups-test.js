@@ -296,6 +296,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('remove learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
 
       this.server.create('program', {
@@ -324,6 +325,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('cancel remove learnergroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
 
       this.server.create('program', {
@@ -348,6 +350,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('confirmation of remove message', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       this.server.createList('user', 5);
       this.server.create('program', {
@@ -377,6 +380,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('populated learner groups are not deletable', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       this.server.createList('user', 5);
       this.server.create('program', {
@@ -453,6 +457,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     test('no add button when there is no cohort', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       await visit('/learnergroups');
       const expandNewButton = '.actions .expand-button';

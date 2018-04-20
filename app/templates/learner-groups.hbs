@@ -94,6 +94,7 @@
           learnerGroups=(await filteredLearnerGroups)
           remove=(action 'removeLearnerGroup')
           copy=(perform copyGroup)
+          canDeleteLearnerGroup=(await canDeleteLearnerGroup)
         }}
       {{else}}
         {{pulse-loader}}

@@ -8,6 +8,7 @@ export default Component.extend({
     this.set('learnerGroupsForCopy', []);
   },
   learnerGroups: null,
+  canDeleteLearnerGroup: false,
   learnerGroupsForRemovalConfirmation: null,
   learnerGroupsForCopy: null,
   actions: {
@@ -15,7 +16,10 @@ export default Component.extend({
       this.get('learnerGroupsForRemovalConfirmation').removeObject(learnerGroup);
     },
     confirmRemove(learnerGroup) {
-      this.get('learnerGroupsForRemovalConfirmation').pushObject(learnerGroup);
+      const canDeleteLearnerGroup = this.get('canDeleteLearnerGroup');
+      if (canDeleteLearnerGroup) {
+        this.get('learnerGroupsForRemovalConfirmation').pushObject(learnerGroup);
+      }
     },
     cancelCopy(learnerGroup) {
       this.get('learnerGroupsForCopy').removeObject(learnerGroup);
