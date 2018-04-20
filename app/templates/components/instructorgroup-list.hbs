@@ -28,7 +28,9 @@
           {{#link-to 'instructorGroup' instructorGroup class='edit'}}
             {{fa-icon 'edit'}}
           {{/link-to}}
-          <span class='clickable remove' {{action 'confirmRemove' instructorGroup}}>{{fa-icon 'trash'}}</span>
+          {{#if canDelete}}
+            <span class='clickable remove' {{action 'confirmRemove' instructorGroup}}>{{fa-icon 'trash'}}</span>
+          {{/if}}
         </td>
       </tr>
       {{#if instructorGroup.showRemoveConfirmation}}

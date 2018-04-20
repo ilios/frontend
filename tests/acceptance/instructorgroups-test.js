@@ -15,8 +15,8 @@ module('Acceptance: Instructor Groups', function(hooks) {
 
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
-      const school = this.server.create('school');
-      await setupAuthentication( { school} );
+      this.school = this.server.create('school');
+      this.user = await setupAuthentication( { school: this.school } );
     });
 
     test('visiting /instructorgroups', async function(assert) {
@@ -26,7 +26,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
 
     test('list groups', async function(assert) {
       this.server.createList('user', 5);
-      this.server.createList('course', 2, {schoolId: 1});
+      this.server.createList('course', 2, {school: this.school});
       this.server.create('session', {
         courseId: 1,
       });
@@ -34,11 +34,11 @@ module('Acceptance: Instructor Groups', function(hooks) {
         courseId: 2,
       });
       let firstInstructorgroup = this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
         userIds: [2, 3, 4, 5, 6]
       });
       let secondInstructorgroup = this.server.create('instructorGroup', {
-        schoolId: 1
+        school: this.school
       });
       this.server.create('offering', {
         instructorGroupIds: [1],
@@ -65,19 +65,19 @@ module('Acceptance: Instructor Groups', function(hooks) {
       this.server.create('school');
       let firstInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialfirstinstructorgroup',
-        schoolId: 1,
+        school: this.school,
       });
       let secondInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialsecondinstructorgroup',
-        schoolId: 1
+        school: this.school
       });
       let regularInstructorgroup = this.server.create('instructorGroup', {
         title: 'regularinstructorgroup',
-        schoolId: 1
+        school: this.school
       });
       let regexInstructorgroup = this.server.create('instructorGroup', {
         title: '\\yoo hoo',
-        schoolId: 1
+        school: this.school
       });
       assert.expect(19);
       await visit('/instructorgroups');
@@ -113,6 +113,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
 
     test('add new instructorgroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(1);
       await visit('/instructorgroups');
       let newTitle = 'new test tile';
@@ -123,9 +124,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
 
     test('cancel adding new instructorgroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/instructorgroups');
       assert.equal(1, findAll('.list tbody tr').length);
@@ -139,9 +141,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
 
     test('remove instructorgroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(3);
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/instructorgroups');
       assert.equal(1, findAll('.list tbody tr').length);
@@ -152,9 +155,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
 
     test('cancel remove instructorgroup', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/instructorgroups');
       assert.equal(1, findAll('.list tbody tr').length);
@@ -166,9 +170,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
     });
 
     test('confirmation of remove message', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
       this.server.createList('user', 5);
       this.server.createList('course', 2, {
-        schoolId: 1
+        school: this.school
       });
       this.server.create('session', {
         courseId: 1,
@@ -177,7 +182,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
         courseId: 2,
       });
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
         userIds: [2, 3, 4, 5, 6],
       });
       this.server.create('offering', {
@@ -202,7 +207,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
     test('click edit takes you to instructorgroup route', async function(assert) {
       assert.expect(1);
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/instructorgroups');
       let edit = find('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .edit');
@@ -213,7 +218,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
     test('click title takes you to instructorgroup route', async function(assert) {
       assert.expect(1);
       this.server.create('instructorGroup', {
-        schoolId: 1,
+        school: this.school,
       });
       await visit('/instructorgroups');
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
@@ -224,7 +229,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
       assert.expect(4);
       this.server.create('instructorGroup', {
         title: 'yes\\no',
-        schoolId: 1,
+        school: this.school,
       });
 
       const groups = '.list tbody tr';

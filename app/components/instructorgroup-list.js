@@ -5,6 +5,7 @@ import ObjectProxy from '@ember/object/proxy';
 
 export default Component.extend({
   instructorGroups: null,
+  canDelete: false,
 
   proxiedInstructorGroups: computed('instructorGroups.[]', function(){
     const instructorGroups = this.get('instructorGroups');

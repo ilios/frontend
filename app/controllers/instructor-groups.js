@@ -2,17 +2,20 @@
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 const { gt } = computed;
-const { resolve } = RSVP;
 
 export default Controller.extend({
   i18n: service(),
   currentUser: service(),
+  permissionChecker: service(),
   queryParams: {
     schoolId: 'school',
     titleFilter: 'filter'
@@ -72,6 +75,22 @@ export default Controller.extend({
     }
 
     return primarySchool;
+  }),
+  canCreate: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = this.get('selectedSchool');
+    return permissionChecker.canCreateInstructorGroup(selectedSchool);
+  }),
+  canDelete: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = this.get('selectedSchool');
+    return permissionChecker.canDeleteInstructorGroup(selectedSchool);
   }),
   actions: {
     async removeInstructorGroup(instructorGroup) {
