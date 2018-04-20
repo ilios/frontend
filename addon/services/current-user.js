@@ -128,20 +128,32 @@ export default Service.extend({
       });
     }
   ),
-  isRoot: computed('session.data.authenticated.jwt', function(){
+  getBooleanAttributeFromToken(attribute) {
     const session = this.get('session');
     if(isEmpty(session)){
-      return null;
+      return false;
     }
 
     const jwt = session.get('data.authenticated.jwt');
 
     if(isEmpty(jwt)){
-      return null;
+      return false;
     }
     const obj = jwtDecode(jwt);
 
-    return !!get(obj, 'is_root');
+    return !!get(obj, attribute);
+  },
+  isRoot: computed('session.data.authenticated.jwt', function(){
+    return this.getBooleanAttributeFromToken('is_root');
+  }),
+  performsNonLearnerFunction: computed('session.data.authenticated.jwt', function(){
+    return this.getBooleanAttributeFromToken('performs_non_learner_function');
+  }),
+  canCreateOrUpdateUserInAnySchool: computed('session.data.authenticated.jwt', function(){
+    return this.getBooleanAttributeFromToken('can_create_or_update_user_in_any_school');
+  }),
+  canCreateCIReportInAnySchool: computed('session.data.authenticated.jwt', function(){
+    return this.getBooleanAttributeFromToken('can_create_curriculum_inventory_report_in_any_school');
   }),
   schools: computed('model.schools', async function () {
     const model = await this.get('model');
