@@ -8,7 +8,8 @@ moduleForComponent('session-table-actions', 'Integration | Component | session t
 
 test('it renders', function(assert) {
   const row = EmberObject.create({
-    confirmDelete: false
+    confirmDelete: false,
+    canDelete: true
   });
   const deleteIcon = 'i.fa-trash';
 
@@ -17,9 +18,22 @@ test('it renders', function(assert) {
   assert.equal(this.$(deleteIcon).length, 1);
 });
 
-test('it does not display an icon when it should not', function(assert) {
+test('it does not display an icon when confirm delete is showing', function(assert) {
   const row = EmberObject.create({
-    confirmDelete: true
+    confirmDelete: true,
+    canDelete: true
+  });
+  const deleteIcon = 'i.fa-trash';
+
+  this.set('row', row);
+  this.render(hbs`{{session-table-actions row=row}}`);
+  assert.equal(this.$(deleteIcon).length, 0);
+});
+
+test('it does not display an icon when user does not have permission to delete', function(assert) {
+  const row = EmberObject.create({
+    confirmDelete: false,
+    canDelete: false
   });
   const deleteIcon = 'i.fa-trash';
 
@@ -30,7 +44,8 @@ test('it does not display an icon when it should not', function(assert) {
 
 test('clicking delete changes the row property', function(assert) {
   const row = EmberObject.create({
-    confirmDelete: false
+    confirmDelete: false,
+    canDelete: true
   });
   const deleteIcon = 'i.fa-trash';
 

@@ -1,3 +1,3 @@
-{{#unless row.confirmDelete}}
+{{#if (and row.canDelete (not row.confirmDelete))}}
   {{fa-icon 'trash' click=(action 'confirmDelete')}}
-{{/unless}}
+{{/if}}

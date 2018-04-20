@@ -33,7 +33,7 @@ module('Acceptance: Course - Mesh Terms', function(hooks) {
 
     this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       meshDescriptorIds: [1, 2, 3]
     });
   });

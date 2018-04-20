@@ -3,13 +3,13 @@
     {{t 'general.sessions'}} ({{sessionsCount}})
   </div>
   <div class='actions'>
-    {{#if editable}}
+    {{#if canCreateSession}}
       {{expand-collapse-button value=showNewSessionForm action=(toggle 'showNewSessionForm' this)}}
-      {{#if (gt sessionsCount 0)}}
-        {{#link-to 'course.publishall' course}}
-          <button>{{t 'general.publishAllSessions' sessionCount=sessionsCount}}</button>
-        {{/link-to}}
-      {{/if}}
+    {{/if}}
+    {{#if (and canUpdateCourse (gt sessionsCount 0))}}
+      {{#link-to 'course.publishall' course}}
+        <button>{{t 'general.publishAllSessions' sessionCount=sessionsCount}}</button>
+      {{/link-to}}
     {{/if}}
   </div>
 </div>

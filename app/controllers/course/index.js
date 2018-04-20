@@ -7,4 +7,6 @@ export default Controller.extend({
   },
   sortSessionsBy: 'title',
   filterSessionsBy: '',
+  canCreateSession: false,
+  canUpdateCourse: false,
 });
