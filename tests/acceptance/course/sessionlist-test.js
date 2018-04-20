@@ -16,11 +16,11 @@ module('Acceptance: Course - Session List', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    this.server.create('school');
-    server.create('sessionType', { schoolId: 1 });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
+    server.create('sessionType', { school: this.school });
     this.server.create('course', {
-      schoolId: 1,
+      school: this.school,
       directorIds: [this.user.id]
     });
     server.create('session', {

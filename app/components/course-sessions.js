@@ -2,21 +2,23 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 
-const { map } = RSVP;
-const { not } = computed;
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Component.extend({
   i18n: service(),
+  permissionChecker: service(),
   tagName: 'section',
   classNames: ['course-sessions'],
 
   course: null,
+  canCreateSession: false,
+  canUpdateCourse: false,
   sortBy: null,
   filterBy: null,
-  editable: not('course.locked'),
   sessionsCount: computed('course.sessions.[]', function(){
     const course = this.get('course');
     const sessionIds = course.hasMany('sessions').ids();
@@ -25,12 +27,15 @@ export default Component.extend({
   }),
   sessionObjects: computed('course.sessions.[]', async function(){
     const i18n = this.get('i18n');
+    const permissionChecker = this.get('permissionChecker');
     const course = this.get('course');
     const sessions = await course.get('sessions');
     const sessionObjects = await map(sessions.toArray(), async session => {
+      const canDelete = enforceRelationshipCapabilityPermissions?await permissionChecker.canDeleteSession(session):true;
       let sessionObject = {
         session,
         course,
+        canDelete,
         id: session.get('id'),
         title: session.get('title'),
         isPublished: session.get('isPublished'),
