@@ -1,5 +1,7 @@
 <div class="admin-dashboard">
-  {{manage-users-summary}}
-  {{pending-updates-summary}}
-  {{unassigned-students-summary}}
+  {{manage-users-summary canCreate=model.canCreate}}
+  {{#if model.canUpdate}}
+    {{pending-updates-summary}}
+    {{unassigned-students-summary}}
+  {{/if}}
 </div>

@@ -3,9 +3,15 @@ import { getContext } from '@ember/test-helpers';
 
 const defaultUserId = 100;
 
-export default async function(userObject = {id: defaultUserId}) {
+export default async function(userObject = {id: defaultUserId}, performsNonLearnerFunction = false) {
   const userId = (userObject && 'id' in userObject) ? userObject.id : defaultUserId;
-  let encodedData =  window.btoa('') + '.' +  window.btoa(`{"user_id": ${userId}}`) + '.';
+  const jwtObject = {
+    'user_id': userId
+  };
+  if (performsNonLearnerFunction) {
+    jwtObject['performs_non_learner_function'] = true;
+  }
+  let encodedData =  window.btoa('') + '.' +  window.btoa(JSON.stringify(jwtObject)) + '.';
   let token = {
     jwt: encodedData
   };

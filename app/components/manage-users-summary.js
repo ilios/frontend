@@ -14,6 +14,7 @@ export default Component.extend({
   routing: service('-routing'),
   tagName: 'section',
   classNames: ['manage-users-summary', 'large-component'],
+  canCreate: false,
   searchValue: null,
   searchForUsers: task(function * (query) {
     const i18n = this.get('i18n');
