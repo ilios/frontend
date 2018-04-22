@@ -399,12 +399,7 @@ module('Acceptance: Session - Overview', function(hooks) {
 
 
   test('click copy', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'course director'
-    });
-    await setupAuthentication({
-      roles: [role]
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0]
@@ -416,13 +411,8 @@ module('Acceptance: Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.copy');
   });
 
-  test('copy hidden from instructors', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'instructor'
-    });
-    await setupAuthentication({
-      roles: [role]
-    });
+  test('copy hidden from unprivledged users', async function(assert) {
+    await setupAuthentication({ school: this.school});
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0]
@@ -432,29 +422,8 @@ module('Acceptance: Session - Overview', function(hooks) {
     assert.notOk(page.overview.copy.isVisible);
   });
 
-  test('copy visible to developers', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'developer'
-    });
-    await setupAuthentication({
-      roles: [role]
-    });
-    this.server.create('session', {
-      course: this.course,
-      sessionType: this.sessionTypes[0]
-    });
-    await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(currentRouteName(), 'session.index');
-    assert.ok(page.overview.copy.isVisible);
-  });
-
-  test('copy visible to course directors', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'course director'
-    });
-    await setupAuthentication({
-      roles: [role]
-    });
+  test('copy visible to privileged users', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0]
@@ -465,12 +434,7 @@ module('Acceptance: Session - Overview', function(hooks) {
   });
 
   test('copy hidden on copy route', async function(assert) {
-    const role = this.server.create('userRole', {
-      title: 'course director'
-    });
-    await setupAuthentication({
-      roles: [role]
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0]

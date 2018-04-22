@@ -1,20 +1,21 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { isEmpty } from '@ember/utils';
+import { hash, all, filter } from 'rsvp';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import { computed } from '@ember/object';
 
-const { hash, all } = RSVP;
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 const Validations = buildValidations({
-  selectedCourse: [
+  bestSelectedCourse: [
     validator('presence', true)
   ],
-  selectedYear: [
+  bestSelectedYear: [
     validator('presence', true)
   ],
 });
@@ -22,20 +23,11 @@ const Validations = buildValidations({
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   flashMessages: service(),
-  init(){
-    this._super(...arguments);
-    this.set('years', []);
-    this.get('loadYears').perform();
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.get('loadCourses').perform();
-  },
+  permissionChecker: service(),
   classNames: ['session-copy'],
-  years: null,
   selectedYear: null,
   session: null,
-  selectedCourse: null,
+  selectedCourseId: null,
 
   save: task(function * (){
     yield timeout(10);
@@ -49,7 +41,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const store = this.get('store');
 
     let sessionToCopy = this.get('session');
-    let newCourse = this.get('selectedCourse');
+    let newCourse = yield this.get('bestSelectedCourse');
     let toSave = [];
 
     let session = store.createRecord(
@@ -111,59 +103,68 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return this.get('visit')(session);
   }).drop(),
 
-  loadYears: task(function * (){
+  years: computed(async function () {
     const now = moment();
     const thisYear = now.year();
-    yield timeout(10);
     const store = this.get('store');
 
-    let years = yield store.findAll('academicYear');
+    let years = await store.findAll('academicYear');
     let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
 
-    if (isEmpty(this.get('selectedYear'))) {
-      this.set('selectedYear', academicYears.get('firstObject'));
-    }
-
     return academicYears;
-  }).drop(),
+  }),
 
-  loadCourses: task(function * (){
-    yield timeout(10);
-    while (this.get('loadYears').get('isRunning')) {
-      yield timeout(10);
+  bestSelectedYear: computed('years.[]', 'selectedYear', async function () {
+    const selectedYear = this.get('selectedYear');
+    if (selectedYear) {
+      return selectedYear;
     }
+
+    const years = await this.get('years');
+    return years.get('firstObject');
+  }),
+
+  courses: computed('selectedYear', 'session.course.school', async function(){
     const store = this.get('store');
-    const year = this.get('selectedYear');
+    const permissionChecker = this.get('permissionChecker');
     const session = this.get('session');
     if (!session) {
       return [];
     }
-    const school = yield session.get('course').get('school').get('id');
-    let courses = yield store.query('course', {
+    const selectedYear = await this.get('bestSelectedYear');
+    const course = await session.get('course');
+    const school = await course.get('school');
+    const courses = await store.query('course', {
       filters: {
-        year,
-        school
+        year: selectedYear,
+        school: school.get('id')
       }
     });
 
-    if (isEmpty(this.get('selectedCourse'))) {
-      this.set('selectedCourse', courses.sortBy('title').get('firstObject'));
+    const filteredCourses = await filter(courses.toArray(), async course => {
+      return !enforceRelationshipCapabilityPermissions || permissionChecker.canCreateSession(course);
+    });
+
+    return filteredCourses.sortBy('title');
+  }),
+
+  bestSelectedCourse: computed('courses.[]', 'selectedCourseId', async function () {
+    const courses = await this.get('courses');
+    const selectedCourseId = this.get('selectedCourseId');
+    if (selectedCourseId) {
+      const course = courses.findBy('id', selectedCourseId);
+      if (course) {
+        return course;
+      }
     }
 
-    return courses;
-  }).restartable(),
+    return courses.get('firstObject');
+  }),
 
   actions: {
     changeSelectedYear(newYear){
-      this.set('selectedCourse', null);
-      this.set('selectedYear', newYear);
-      this.get('loadCourses').perform();
+      this.set('selectedCourseId', null);
+      this.set('selectedYear', parseInt(newYear, 10));
     },
-    changeSelectedCourse(id){
-      let courses = this.get('loadCourses.lastSuccessful.value');
-      let course = courses.findBy('id', id);
-
-      this.set('selectedCourse', course);
-    }
   }
 });

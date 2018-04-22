@@ -61,6 +61,13 @@ test('it renders', function(assert) {
   });
   this.register('service:store', storeMock);
 
+  let permissionCheckerMock = Service.extend({
+    canCreateSession() {
+      return true;
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
+
 
   this.set('session', session);
 
@@ -208,7 +215,12 @@ test('copy session', async function(assert) {
     }
   });
   this.register('service:flashMessages', flashmessagesMock);
-
+  let permissionCheckerMock = Service.extend({
+    canCreateSession() {
+      return true;
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
   this.set('session', session);
   this.set('visit', (newSession) => {
@@ -231,6 +243,12 @@ test('errors do not show up initially and save cannot be clicked', function(asse
     }
   });
   this.register('service:store', storeMock);
+  let permissionCheckerMock = Service.extend({
+    canCreateSession() {
+      return true;
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
 
 
   let school = EmberObject.create({
@@ -311,6 +329,12 @@ test('changing the year looks for new matching courses', async function(assert) 
     }
   });
   this.register('service:store', storeMock);
+  let permissionCheckerMock = Service.extend({
+    canCreateSession() {
+      return true;
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
   this.set('session', session);
 
   this.render(hbs`{{session-copy session=session}}`);
@@ -407,6 +431,12 @@ test('copy session into the first course in a different year #2130', async funct
     }
   });
   this.register('service:store', storeMock);
+  let permissionCheckerMock = Service.extend({
+    canCreateSession() {
+      return true;
+    }
+  });
+  this.register('service:permissionChecker', permissionCheckerMock);
   let flashmessagesMock = Service.extend({
     success(){
     }

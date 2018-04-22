@@ -8,19 +8,16 @@
 
   <div class='item year-select'>
     <label>{{t 'general.year'}}:</label>
-    {{#if loadYears.isRunning}}
-      {{loading-spinner}}
-    {{else}}
+    {{#if (is-fulfilled years)}}
       <select onchange={{action 'changeSelectedYear' value="target.value"}}>
-        {{#each loadYears.lastSuccessful.value as |year|}}
-          <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
+        {{#each (await years) as |year|}}
+          <option value={{year}} selected={{is-equal year (await bestSelectedYear)}}>
             {{year}} - {{inc year}}
-            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
-              ({{t 'general.courseRolloverYearUnavailable'}})
-            {{/if}}
           </option>
         {{/each}}
       </select>
+    {{else}}
+      {{loading-spinner}}
     {{/if}}
     {{#if (and (v-get this 'selectedYear' 'isInvalid') (is-in showErrorsFor 'selectedYear'))}}
       <span class="validation-error-message">{{v-get this 'selectedYear' 'message'}}</span>
@@ -29,16 +26,20 @@
 
   <div class='item course-select'>
     <label>{{t 'general.targetCourse'}}:</label>
-    {{#if loadCourses.isRunning}}
-      {{loading-spinner}}
+    {{#if (is-fulfilled courses)}}
+      {{#if (get (await courses) 'length')}}
+        <select onchange={{action (mut selectedCourse) value="target.value"}}>
+          {{#each (sort-by 'title' (await courses)) as |course|}}
+            <option value={{course.id}} selected={{is-equal course.id (get (await bestSelectedCourse) 'id')}}>
+              {{course.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{t 'general.none'}}
+      {{/if}}
     {{else}}
-      <select onchange={{action 'changeSelectedCourse' value="target.value"}}>
-        {{#each (sort-by 'title' loadCourses.lastSuccessful.value) as |course|}}
-          <option value={{course.id}} selected={{is-equal course selectedCourse}}>
-            {{course.title}}
-          </option>
-        {{/each}}
-      </select>
+      {{loading-spinner}}
     {{/if}}
     {{#if (and (v-get this 'selectedCourse' 'isInvalid') (is-in showErrorsFor 'selectedCourse'))}}
       <span class="validation-error-message">{{v-get this 'selectedCourse' 'message'}}</span>
@@ -46,7 +47,7 @@
   </div>
 
   <div class='buttons'>
-    <button class='done text' disabled={{if (or save.isRunning (not selectedYear) (not selectedCourse)) true}} {{action (perform save)}}>
+    <button class='done text' disabled={{if (or save.isRunning (not (await bestSelectedYear)) (not (await bestSelectedCourse))) true}} {{action (perform save)}}>
       {{#if save.isRunning}}
         {{loading-spinner}}
       {{else}}
