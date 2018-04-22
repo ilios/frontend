@@ -1,12 +1,9 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
 import ArrayProxy from '@ember/array/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-const { Promise } = RSVP;
 const { gt } = computed;
 
 export default Component.extend({
@@ -19,40 +16,23 @@ export default Component.extend({
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
   alert: gt('_updatesProxy.length', 0),
   schoolId: null,
+  schools: null,
+  selectedSchool: computed('currentUser', 'schoolId', async function () {
+    const schools = this.get('schools');
+    const currentUser = this.get('currentUser');
+    const schoolId = this.get('schoolId');
 
-  /**
-   * The currently selected school, defaults to the current-user's primary school if none is selected.
-   * @property selectedSchool
-   * @type {Ember.computed}
-   * @public
-   */
-  schools: computed('currentUser.model.schools.[]', function(){
-    return new Promise(resolve => {
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          resolve(schools);
-        });
-      });
-    });
-  }),
-  selectedSchool: computed('currentUser', 'schoolId', function(){
-    return new Promise(resolve => {
-      this.get('currentUser').get('model').then(user => {
-        user.get('schools').then(schools => {
-          const schoolId = this.get('schoolId');
-          if(isPresent(schoolId)){
-            const school = schools.findBy('id', schoolId);
-            if(school){
-              resolve(school);
-              return;
-            }
-          }
-          user.get('school').then(school => {
-            resolve(school);
-          });
-        });
-      });
-    });
+    if (schoolId) {
+      return schools.findBy('id', schoolId);
+    }
+    const user = await currentUser.get('model');
+    const school = await user.get('school');
+    const defaultSchool = schools.findBy('id', school.get('id'));
+    if (defaultSchool) {
+      return defaultSchool;
+    }
+
+    return schools.get('firstObject');
   }),
 
 

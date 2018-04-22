@@ -1,7 +1,7 @@
 <div class="admin-dashboard">
   {{manage-users-summary canCreate=model.canCreate}}
-  {{#if model.canUpdate}}
-    {{pending-updates-summary}}
-    {{unassigned-students-summary}}
+  {{#if (gt model.schoolsWithUpdateUserPermission.length 0)}}
+    {{pending-updates-summary schools=model.schoolsWithUpdateUserPermission}}
+    {{unassigned-students-summary schools=model.schoolsWithUpdateUserPermission}}
   {{/if}}
 </div>

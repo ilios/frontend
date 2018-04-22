@@ -24,25 +24,26 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const store = this.get('store');
     const permissionChecker = this.get('permissionChecker');
     let canCreate;
-    let canUpdate;
+    let schoolsWithUpdateUserPermission;
     if (!enforceRelationshipCapabilityPermissions) {
+      const currentUser = this.get('currentUser');
+      const user = await currentUser.get('model');
       canCreate = true;
-      canUpdate = true;
+      schoolsWithUpdateUserPermission = await user.get('schools');
     } else {
       const schools = await store.findAll('school');
       const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
         return permissionChecker.canCreateUser(school);
       });
       canCreate = schoolsWithCreateUserPermission.length > 0;
-      const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
+      schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
         return permissionChecker.canUpdateUser(school);
       });
-      canUpdate = schoolsWithUpdateUserPermission.length > 0;
     }
 
     return {
       canCreate,
-      canUpdate
+      schoolsWithUpdateUserPermission
     };
   },
 });

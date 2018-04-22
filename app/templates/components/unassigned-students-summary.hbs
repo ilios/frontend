@@ -10,9 +10,9 @@
       {{fa-icon 'university'}}
     </label>
     <div id="school-selection" class="inline-data">
-      {{#if (gt (get (await schools) 'length') 1)}}
+      {{#if (gt (get schools 'length') 1)}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' (await schools)) as |school|}}
+          {{#each (sort-by 'title' schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
               {{school.title}}
             </option>
