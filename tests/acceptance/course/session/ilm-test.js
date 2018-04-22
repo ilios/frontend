@@ -13,13 +13,13 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.createList('user', 6);
     this.server.create('academicYear');
-    const course = this.server.create('course', { school });
-    server.createList('instructorGroup', 5, { school });
-    this.server.create('sessionType', { school });
+    const course = this.server.create('course', { school: this.school });
+    server.createList('instructorGroup', 5, { school: this.school });
+    this.server.create('sessionType', { school: this.school });
     this.server.create('sessionDescription');
     const ilmSession = this.server.create('ilmSession', {
       instructorGroupIds: [1,2,3],
@@ -48,6 +48,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('manage instructors lists', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -65,6 +66,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('manage instructors search users', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -90,6 +92,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
 
 
   test('manage instructors search groups', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -110,6 +113,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('add instructor group', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -144,6 +148,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('add instructor', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -177,6 +182,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('remove instructor group', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -205,6 +211,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('remove instructor', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();
@@ -233,6 +240,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
   });
 
   test('undo instructor/group changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
     await page.instructors.manage();

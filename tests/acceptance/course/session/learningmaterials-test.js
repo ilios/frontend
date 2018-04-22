@@ -151,6 +151,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('create new link learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const testTitle = 'testsome title';
       const testAuthor = 'testsome author';
       const testDescription = 'testsome description';
@@ -177,6 +178,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('create new citation learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const testTitle = 'testsome title';
       const testAuthor = 'testsome author';
       const testDescription = 'testsome description';
@@ -203,6 +205,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('can only add one learning-material at a time', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
       assert.ok(page.learningMaterials.canCreateNew);
@@ -214,6 +217,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('cancel new learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
@@ -230,7 +234,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(0).details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 0');
+      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 0');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.equal(page.learningMaterials.manager.description, '0 lm description');
       assert.ok(page.learningMaterials.manager.hasFile);
@@ -246,7 +250,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(1).details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
+      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 1');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.equal(page.learningMaterials.manager.description, '1 lm description');
       assert.ok(page.learningMaterials.manager.hasFile);
@@ -262,7 +266,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(1).details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
+      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 1');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.equal(page.learningMaterials.manager.description, '1 lm description');
       assert.equal(page.learningMaterials.manager.uploadDate, moment('2011-03-14').format('M-D-YYYY'));
@@ -278,7 +282,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(2).details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 2');
+      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 2');
       assert.equal(page.learningMaterials.manager.author, 'Hunter Pence');
       assert.equal(page.learningMaterials.manager.description, '2 lm description');
       assert.equal(page.learningMaterials.manager.uploadDate, today.format('M-D-YYYY'));
@@ -296,7 +300,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(3).details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 3');
+      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 3');
       assert.equal(page.learningMaterials.manager.author, 'Willie Mays');
       assert.equal(page.learningMaterials.manager.description, '3 lm description');
       assert.equal(page.learningMaterials.manager.uploadDate, moment('2016-12-12').format('M-D-YYYY'));
@@ -310,6 +314,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('edit learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newNote = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, sessionId: 1 });
@@ -335,6 +340,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('cancel editing learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newNote = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, sessionId: 1 });
@@ -361,6 +367,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('manage terms', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.current(0).details();
@@ -392,6 +399,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('save terms', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
@@ -411,6 +419,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('cancel term changes', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
@@ -430,6 +439,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('find and add learning material', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
       await page.learningMaterials.search('doc');
@@ -446,6 +456,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('add timed release start date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.notOk(page.learningMaterials.current(0).isTimedRelease);
       await page.learningMaterials.current(0).details();
@@ -463,6 +474,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('add timed release start and end date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
       const newEndDate = newStartDate.clone().add(1, 'minute');
 
@@ -491,6 +503,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('add timed release end date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.notOk(page.learningMaterials.current(0).isTimedRelease);
       await page.learningMaterials.current(0).details();
@@ -508,6 +521,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('end date is after start date', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
 
       await page.visit({ courseId: 1, sessionId: 1 });
@@ -534,6 +548,7 @@ module('Acceptance: Session - Learning Materials', function(hooks) {
     });
 
     test('edit learning material with no other links #3617', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
       let newTitle = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, sessionId: 1 });

@@ -14,27 +14,27 @@ module('Acceptance: Session - Publish', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
-    this.server.create('school');
-    this.server.create('course');
+    const school = this.server.create('school');
+    await setupAuthentication({ school, administeredSchools: [school] });
+    const course = this.server.create('course', { school });
     this.server.create('sessionType');
     this.server.create('ilmSession', {
       dueDate: moment().format()
     });
     this.publishedSession = this.server.create('session', {
       published: true,
-      courseId: 1,
+      course,
     });
     this.scheduledSession = this.server.create('session', {
-      courseId: 1,
+      course,
       published: true,
       publishedAsTbd: true,
     });
     this.draftSession = this.server.create('session', {
-      courseId: 1,
+      course,
     });
     this.ilmSession = this.server.create('session', {
-      courseId: 1,
+      course,
       ilmSessionId: 1
     });
     this.server.create('offering', {
