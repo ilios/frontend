@@ -22,11 +22,11 @@ test('it renders', function(assert) {
   this.render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
 
   assert.equal(this.$('.school-title').text().trim(), 'medicine >');
-  assert.equal(this.$('.editinplace').text().trim(), 'lorem ipsum');
+  assert.equal(this.$('[data-test-group-title]').text().trim(), 'lorem ipsum');
   assert.equal(this.$('.info').text().replace(/\s/g,''), 'Members:3');
 });
 
-test('can change title', function(assert) {
+test('can change title', async function(assert) {
   assert.expect(3);
   let instructorGroup = EmberObject.create({
     title: 'lorem ipsum',
@@ -37,14 +37,14 @@ test('can change title', function(assert) {
   });
 
   this.set('instructorGroup', instructorGroup);
-  this.render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
+  this.render(hbs`{{instructorgroup-header instructorGroup=instructorGroup canUpdate=true}}`);
 
-  assert.equal(this.$('.editinplace').text().trim(), 'lorem ipsum');
+  assert.equal(this.$('[data-test-group-title]').text().trim(), 'lorem ipsum');
   this.$('.editable').click();
-  this.$('.editinplace input').val('new title');
-  this.$('.editinplace input').trigger('input');
-  this.$('.editinplace .done').click();
-  return wait().then(() => {
-    assert.equal(this.$('.editinplace').text().trim(), 'new title');
-  });
+  this.$('[data-test-group-title] input').val('new title');
+  this.$('[data-test-group-title] input').trigger('input');
+  this.$('[data-test-group-title] .done').click();
+
+  await wait();
+  assert.equal(this.$('[data-test-group-title]').text().trim(), 'new title');
 });
