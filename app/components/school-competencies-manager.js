@@ -6,6 +6,9 @@ import { isEmpty } from '@ember/utils';
 export default Component.extend({
   classNames: ['school-competencies-manager'],
   competencies: null,
+  canUpdate: false,
+  canDelete: false,
+  canCreate: false,
   domains: computed('competencies.[]', function(){
     let competencies = this.get('competencies');
     if(isEmpty(competencies)){

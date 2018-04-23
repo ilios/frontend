@@ -11,6 +11,7 @@ export default Component.extend({
   store: service(),
   classNames: ['school-session-attributes'],
   school: null,
+  canUpdate: false,
   isManaging: false,
   details: false,
   showSessionAttendanceRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){

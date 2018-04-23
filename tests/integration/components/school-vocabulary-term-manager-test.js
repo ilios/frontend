@@ -38,6 +38,9 @@ test('it renders', function(assert) {
     vocabulary=vocabulary
     manageTerm=(action 'nothing')
     manageVocabulary=(action 'nothing')
+    canUpdate=true
+    canDelete=true
+    canCreate=true
   }}`);
 
   const all = '.breadcrumbs span:eq(0)';
@@ -83,6 +86,9 @@ test('activate inactive term', async function(assert) {
     vocabulary=vocabulary
     manageTerm=(action 'nothing')
     manageVocabulary=(action 'nothing')
+    canUpdate=true
+    canDelete=true
+    canCreate=true
   }}`);
 
   const toggle = `.is-active .toggle-yesno`;
@@ -120,6 +126,9 @@ test('inactive active term', async function(assert) {
     vocabulary=vocabulary
     manageTerm=(action 'nothing')
     manageVocabulary=(action 'nothing')
+    canUpdate=true
+    canDelete=true
+    canCreate=true
   }}`);
 
   const toggle = `.is-active .toggle-yesno`;

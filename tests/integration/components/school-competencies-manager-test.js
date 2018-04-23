@@ -60,7 +60,7 @@ test('it renders', function(assert) {
   let competencies = [domain1, competency1, competency2];
   this.set('competencies', competencies);
   this.set('nothing', parseInt);
-  this.render(hbs`{{school-competencies-manager add=(action nothing) remove=(action nothing) competencies=competencies}}`);
+  this.render(hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action nothing) remove=(action nothing) competencies=competencies}}`);
 
   const title = 'h5';
   const input = 'input';
@@ -95,7 +95,7 @@ test('delete fires delete', function(assert) {
   this.set('remove', (what) => {
     assert.equal(what, domain1);
   });
-  this.render(hbs`{{school-competencies-manager add=(action nothing) remove=(action remove) competencies=competencies}}`);
+  this.render(hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action nothing) remove=(action remove) competencies=competencies}}`);
 
   const domains = '.domain';
   const domain1Icon = `${domains} i`;
@@ -119,7 +119,7 @@ test('add fires add', function(assert) {
     assert.equal(what, domain1);
     assert.equal(title, 'new c');
   });
-  this.render(hbs`{{school-competencies-manager add=(action add) remove=(action nothing) competencies=competencies}}`);
+  this.render(hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action add) remove=(action nothing) competencies=competencies}}`);
 
   const domains = '.domain';
   const domain1Input = `${domains} input:eq(0)`;

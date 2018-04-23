@@ -61,6 +61,7 @@ test('it renders', async function(assert) {
     canEditCalendarColor=true
     canEditAssessment=true
     canEditAssessmentOption=true
+    canEditActive=true
     title='one'
     calendarColor='#ffffff'
     assessment=true
@@ -132,6 +133,7 @@ test('changing assessment changes available aamcMethods', async function(assert)
     canEditCalendarColor=true
     canEditAssessment=true
     canEditAssessmentOption=true
+    canEditActive=true
     title='one'
     calendarColor='#ffffff'
     assessment=true
@@ -259,6 +261,7 @@ test('save fires save', async function(assert) {
     canEditCalendarColor=true
     canEditAssessment=true
     canEditAssessmentOption=true
+    canEditActive=true
     isActive=true
     save=(action save)
     close=(action nothing)
@@ -326,6 +329,7 @@ test('editing is blocked correctly', async function(assert) {
     canEditCalendarColor=false
     canEditAssessment=false
     canEditAssessmentOption=false
+    canEditActive=false
     title='one'
     selectedAamcMethodId='AM001'
     calendarColor='#ffffff'
@@ -351,6 +355,9 @@ test('editing is blocked correctly', async function(assert) {
   const assessmentOption = '.item:eq(4)';
   const assessmentOptionSelect = `${assessmentOption} select`;
   const assessmentOptionValue = `${assessmentOption} .value`;
+  const active = '.item:eq(5)';
+  const activeInput = `${active} input`;
+  const activeValue = `${active} .value`;
 
   await wait();
 
@@ -359,6 +366,7 @@ test('editing is blocked correctly', async function(assert) {
   assert.equal(this.$(colorInput).length, 0);
   assert.equal(this.$(assessmentInput).length, 0);
   assert.equal(this.$(assessmentOptionSelect).length, 0);
+  assert.equal(this.$(activeInput).length, 0);
 
   assert.equal(this.$(titleValue).text().trim(), 'one');
   assert.equal(this.$(aamcMethodValue).text().trim(), 'lorem ipsum');
@@ -366,4 +374,5 @@ test('editing is blocked correctly', async function(assert) {
   assert.equal(this.$(colorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
   assert.equal(this.$(assessmentValue).text().trim(), 'Yes');
   assert.equal(this.$(assessmentOptionValue).text().trim(), 'formative');
+  assert.equal(this.$(activeValue).text().trim(), 'Yes');
 });

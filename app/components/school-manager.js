@@ -28,6 +28,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   tagName: 'section',
   school: null,
   title: null,
+  canUpdateSchool: false,
+  canUpdateCompetency: false,
+  canDeleteCompetency: false,
+  canCreateCompetency: false,
+  canUpdateVocabulary: false,
+  canDeleteVocabulary: false,
+  canCreateVocabulary: false,
+  canUpdateTerm: false,
+  canDeleteTerm: false,
+  canCreateTerm: false,
+  canUpdateSessionType: false,
+  canDeleteSessionType: false,
+  canCreateSessionType: false,
+  canUpdateSchoolConfig: false,
 
   actions: {
     changeTitle() {

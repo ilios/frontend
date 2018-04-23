@@ -12,6 +12,7 @@ export default Component.extend({
   showSessionSpecialAttireRequired: false,
   showSessionSpecialEquipmentRequired: false,
   isManaging: false,
+  canUpdate: false,
   didReceiveAttrs(){
     this._super(...arguments);
     const isManaging = this.get('isManaging');

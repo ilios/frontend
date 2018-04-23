@@ -7,6 +7,7 @@ export default Component.extend({
     this._super(...arguments);
     this.set('deletedSessionTypes', []);
   },
+  canDelete: false,
   classNames: ['school-session-types-list'],
   deletedSessionTypes: null,
   deleteSessionType: task(function * (sessionType) {

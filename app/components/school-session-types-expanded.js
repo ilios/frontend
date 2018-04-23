@@ -9,6 +9,9 @@ const { notEmpty } = computed;
 export default Component.extend({
   store: service(),
   school: null,
+  canUpdate: false,
+  canDelete: false,
+  canCreate: false,
   tagName: 'section',
   classNames: ['school-session-types-expanded'],
   managedSessionTypeId: null,

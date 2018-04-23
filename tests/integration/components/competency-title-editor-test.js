@@ -13,7 +13,7 @@ test('validation errors do not show up initially', function(assert) {
     title: 'test'
   });
   this.set('competency', competency);
-  this.render(hbs`{{competency-title-editor competency=competency}}`);
+  this.render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
   return wait().then(()=>{
     assert.equal(this.$('.validation-error-message').length, 0);
   });
@@ -25,7 +25,7 @@ test('validation errors show up when saving', function(assert) {
     title: 'test'
   });
   this.set('competency', competency);
-  this.render(hbs`{{competency-title-editor competency=competency}}`);
+  this.render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
   this.$('.content span:eq(0)').click();
   this.$('input').val('').trigger('input');
   this.$('button.done').click();

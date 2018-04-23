@@ -42,6 +42,7 @@ test('it renders', async function(assert) {
   this.set('sessionType', sessionType);
   this.set('nothing', parseInt);
   this.render(hbs`{{school-session-type-manager
+    canUpdate=true
     sessionType=sessionType
     close=(action nothing)
   }}`);
@@ -76,6 +77,7 @@ test('close fires action', async function(assert) {
     assert.ok(true, 'action was fired');
   });
   this.render(hbs`{{school-session-type-manager
+    canUpdate=true
     sessionType=sessionType
     close=(action close)
   }}`);

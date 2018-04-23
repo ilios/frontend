@@ -192,6 +192,7 @@ test('session types without sessions can be deleted', async function(assert) {
   this.render(hbs`{{school-session-types-list
     sessionTypes=sessionTypes
     manageSessionType=(action nothing)
+    canDelete=true
   }}`);
 
   await wait();
@@ -231,6 +232,7 @@ test('clicking delete deletes the record', async function(assert) {
   this.render(hbs`{{school-session-types-list
     sessionTypes=sessionTypes
     manageSessionType=(action nothing)
+    canDelete=true
   }}`);
 
   await wait();

@@ -13,49 +13,65 @@
   <div class='school-vocabulary-term-manager-properties'>
     <div class='block term-title'>
       <h4>{{t 'general.title'}}:</h4>
-      {{#editable-field
-        value=(if title title (t 'general.clickToEdit'))
-        save=(action 'changeTermTitle')
-        close=(action 'revertTermTitleChanges')
-        saveOnEnter=true
-        closeOnEscape=true
-      as |isSaving|
-      }}
-        <input
-          value={{title}}
-          oninput={{action (mut title) value="target.value"}}
-          disabled={{isSaving}}
-        >
-      {{/editable-field}}
-      {{#unless (or term.hasChildren term.hasAssociations)}}
+      {{#if canUpdate}}
+        {{#editable-field
+          value=(if title title (t 'general.clickToEdit'))
+          save=(action 'changeTermTitle')
+          close=(action 'revertTermTitleChanges')
+          saveOnEnter=true
+          closeOnEscape=true
+        as |isSaving|
+        }}
+          <input
+            value={{title}}
+            oninput={{action (mut title) value="target.value"}}
+            disabled={{isSaving}}
+          >
+        {{/editable-field}}
+      {{else}}
+        {{title}}
+      {{/if}}
+      {{#if (and canDelete (or (not term.hasChildren) (not term.hasAssociations)))}}
         {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
-      {{/unless}}
+      {{/if}}
     </div>
     <div class='block is-active'>
       <label>{{t 'general.active'}}:</label>
-      {{toggle-yesno
-        yes=isActive
-        disabled=(if changeIsActive.isRunning true false)
-        toggle=(action (perform changeIsActive))
-      }}
+      {{#if canUpdate}}
+        {{toggle-yesno
+          yes=isActive
+          disabled=(if changeIsActive.isRunning true false)
+          toggle=(action (perform changeIsActive))
+        }}
+      {{else}}
+        {{#if isActive}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      {{/if}}
     </div>
     <div class='block term-description'>
       <label>{{t 'general.description'}}:</label>
-      {{#editable-field
-        value=(if description description (t 'general.clickToAddTermDescription'))
-        save=(action 'changeTermDescription')
-        close=(action 'revertTermDescriptionChanges')
-        closeOnEscape=true
-      as |isSaving|
-      }}
-        <textarea
-          value={{description}}
-          oninput={{action (mut description) value="target.value"}}
-          disabled={{isSaving}}
-        >
-          {{description}}
-        </textarea>
-      {{/editable-field}}
+      {{#if canUpdate}}
+        {{#editable-field
+          value=(if description description (t 'general.clickToAddTermDescription'))
+          save=(action 'changeTermDescription')
+          close=(action 'revertTermDescriptionChanges')
+          closeOnEscape=true
+        as |isSaving|
+        }}
+          <textarea
+            value={{description}}
+            oninput={{action (mut description) value="target.value"}}
+            disabled={{isSaving}}
+          >
+            {{description}}
+          </textarea>
+        {{/editable-field}}
+      {{else}}
+        {{description}}
+      {{/if}}
     </div>
   </div>
 {{/if}}
@@ -71,24 +87,26 @@
       {{t 'general.savedSuccessfully'}}
     </div>
   {{/if}}
-  <div>
-    <input
-      type="text"
-      value={{newTermTitle}}
-      oninput={{action (mut newTermTitle) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
-    >
-    <button class='save text' {{action 'createTerm'}}>
-      {{#if isSavingNewTerm}}
-        {{loading-spinner}}
-      {{else}}
-        {{t 'general.add'}}
+  {{#if canCreate}}
+    <div>
+      <input
+        type="text"
+        value={{newTermTitle}}
+        oninput={{action (mut newTermTitle) value="target.value"}}
+        onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
+      >
+      <button class='save text' {{action 'createTerm'}}>
+        {{#if isSavingNewTerm}}
+          {{loading-spinner}}
+        {{else}}
+          {{t 'general.add'}}
+        {{/if}}
+      </button>
+      {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
+        <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
       {{/if}}
-    </button>
-    {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
-      <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 
   {{#if (is-fulfilled sortedTerms)}}
     <ul>

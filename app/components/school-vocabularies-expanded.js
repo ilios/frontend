@@ -10,6 +10,12 @@ const { notEmpty } = computed;
 export default Component.extend({
   store: service(),
   school: null,
+  canUpdateVocabulary: false,
+  canUpdateTerm: false,
+  canDeleteVocabulary: false,
+  canDeleteTerm: false,
+  canCreateVocabulary: false,
+  canCreateTerm: false,
   tagName: 'section',
   classNames: ['school-vocabularies-expanded'],
   managedVocabularyId: null,

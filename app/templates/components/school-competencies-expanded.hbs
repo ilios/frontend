@@ -13,13 +13,18 @@
       </button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button {{action 'manage'}}>{{t 'general.manageCompetencies'}}</button>
+      {{#if (or canUpdate canDelete canCreate)}}
+        <button {{action 'manage'}}>{{t 'general.manageCompetencies'}}</button>
+      {{/if}}
     {{/if}}
   </div>
 </div>
 <div class='school-competencies-expanded-content'>
   {{#liquid-if isManaging class="horizontal"}}
     {{school-competencies-manager
+      canUpdate=canUpdate
+      canDelete=canDelete
+      canCreate=canCreate
       competencies=bufferedCompetencies
       add=(action 'addCompetencyToBuffer')
       remove=(action 'removeCompetencyFromBuffer')

@@ -13,7 +13,9 @@
       </button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
-      <button {{action manage true}}>{{t 'general.manageSessionAttributes'}}</button>
+      {{#if canUpdate}}
+        <button {{action manage true}}>{{t 'general.manageSessionAttributes'}}</button>
+      {{/if}}
     {{/if}}
   </div>
 </div>

@@ -3,32 +3,38 @@
 </div>
 
 <div class='school-overview'>
-  {{#editable-field
-    tagName='h2'
-    value=title
-    save=(action 'changeTitle')
-    close=(action 'revertTitleChanges')
-    saveOnEnter=true
-    closeOnEscape=true
-    as |isSaving|
-  }}
-    <input
-      type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'title'}}
-    >
-    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+  <h2>
+    {{#if canUpdateSchool}}
+      {{#editable-field
+        value=title
+        save=(action 'changeTitle')
+        close=(action 'revertTitleChanges')
+        saveOnEnter=true
+        closeOnEscape=true
+        as |isSaving|
+      }}
+        <input
+          type="text"
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action 'addErrorDisplayFor' 'title'}}
+        >
+        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
+          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
+    {{else}}
+      {{title}}
     {{/if}}
-  {{/editable-field}}
+  </h2>
 </div>
 
 <div class='school-manager-content'>
   {{#if (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)}}
     {{school-leadership-expanded
       school=school
+      canUpdate=canUpdateSchool
       collapse=(action setSchoolLeadershipDetails false)
       expand=(action setSchoolLeadershipDetails true)
       isManaging=schoolManageLeadership
@@ -45,6 +51,9 @@
   {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
     {{school-competencies-expanded
       school=school
+      canUpdate=canUpdateCompetency
+      canDelete=canDeleteCompetency
+      canCreate=canCreateCompetency
       collapse=(action setSchoolCompetencyDetails false)
       expand=(action setSchoolCompetencyDetails true)
       isManaging=schoolManageCompetencies
@@ -57,6 +66,12 @@
   {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
     {{school-vocabularies-expanded
       school=school
+      canUpdateVocabulary=canUpdateVocabulary
+      canDeleteVocabulary=canDeleteVocabulary
+      canCreateVocabulary=canCreateVocabulary
+      canUpdateTerm=canUpdateTerm
+      canDeleteTerm=canDeleteTerm
+      canCreateTerm=canCreateTerm
       collapse=(action setSchoolVocabularyDetails false)
       expand=(action setSchoolVocabularyDetails true)
       managedVocabularyId=schoolManagedVocabulary
@@ -71,6 +86,9 @@
   {{#if (or (eq (get (await school.sessionTypes) 'length') 0) schoolSessionTypeDetails)}}
     {{school-session-types-expanded
       school=school
+      canUpdate=canUpdateSessionType
+      canDelete=canDeleteSessionType
+      canCreate=canCreateSessionType
       collapse=(action setSchoolSessionTypeDetails false)
       expand=(action setSchoolSessionTypeDetails true)
       managedSessionTypeId=schoolManagedSessionType
@@ -83,6 +101,7 @@
   {{/if}}
   {{school-session-attributes
     school=school
+    canUpdate=canUpdateSchoolConfig
     collapse=(action setSchoolSessionAttributesDetails false)
     expand=(action setSchoolSessionAttributesDetails true)
     details=schoolSessionAttributesDetails

@@ -47,6 +47,7 @@ test('it renders', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{school-leadership-expanded
     school=school
+    canUpdate=true
     collapse=(action nothing)
     expand=(action nothing)
     isManaging=false
@@ -98,6 +99,7 @@ test('clicking the header collapses', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{school-leadership-expanded
     school=school
+    canUpdate=true
     collapse=(action click)
     expand=(action nothing)
     isManaging=false
@@ -138,6 +140,7 @@ test('clicking manage fires action', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{school-leadership-expanded
     school=school
+    canUpdate=true
     collapse=(action nothing)
     expand=(action nothing)
     isManaging=false
