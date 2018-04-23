@@ -8,9 +8,13 @@ import { isPresent, isEmpty } from '@ember/utils';
 const { Promise } = RSVP;
 const { gt, oneWay, sort } = computed;
 
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 export default Controller.extend({
   i18n: service(),
   currentUser: service(),
+  permissionChecker: service(),
 
   queryParams: {
     schoolId: 'school',
@@ -27,8 +31,8 @@ export default Controller.extend({
   sortByTitle:['title'],
 
   newReport: null,
-  sortedSchools: sort('schools', 'sortByTitle'),
-  hasMoreThanOneSchool: gt('schools.length', 1),
+  sortedSchools: sort('model', 'sortByTitle'),
+  hasMoreThanOneSchool: gt('model.length', 1),
 
   showNewCurriculumInventoryForm: false,
 
@@ -38,9 +42,9 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedSchool: computed('schools.[]', 'schoolId', function(){
+  selectedSchool: computed('model.[]', 'schoolId', function(){
     return new Promise(resolve => {
-      let schools = this.get('schools');
+      let schools = this.get('model');
       const schoolId = this.get('schoolId');
       if(isPresent(schoolId)){
         let school = schools.findBy('id', schoolId);
@@ -109,6 +113,15 @@ export default Controller.extend({
         }
       });
     });
+  }),
+
+  canCreate: computed('selectedSchool', 'currentUser', async function () {
+    if (!enforceRelationshipCapabilityPermissions) {
+      return true;
+    }
+    const permissionChecker = this.get('permissionChecker');
+    const selectedSchool = await this.get('selectedSchool');
+    return permissionChecker.canCreateCurriculumInventoryReport(selectedSchool);
   }),
 
   actions: {

@@ -12,7 +12,7 @@
         </select>
       {{else}}
         {{#if (await selectedSchool)}}
-          {{selectedSchool.title}}
+          {{get (await selectedSchool) 'title'}}
         {{else}}
           {{t 'general.none'}}
         {{/if}}
@@ -45,7 +45,7 @@
       <div class="title">
         <h2>{{t 'general.curriculumInventoryReports'}}</h2>
       </div>
-      {{#if (await selectedProgram)}}
+      {{#if (and (await canCreate) (await selectedProgram))}}
         <div class='actions'>
           {{expand-collapse-button
             value=showNewCurriculumInventoryReportForm
