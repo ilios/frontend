@@ -10,7 +10,7 @@ module('Acceptance: User', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    this.school = this.server.create('school');
     let userObject = {
       id: 100,
       campusId: '123',
@@ -19,9 +19,9 @@ module('Acceptance: User', function(hooks) {
       primaryCohortId: 1,
       cohortIds: [1, 2, 3],
       learnerGroupIds: [3, 5],
-      school
+      school: this.school
     };
-    this.server.create('program', { school });
+    this.server.create('program', { school: this.school });
     this.server.createList('programYear', 3, { programId: 1});
     this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
     this.server.create('cohort', { programYearId: 2 });
@@ -31,7 +31,7 @@ module('Acceptance: User', function(hooks) {
   });
 
   test('can search for users', async function(assert) {
-    this.server.createList('user', 20, { email: 'user@example.edu' });
+    this.server.createList('user', 20, { email: 'user@example.edu', school: this.school });
     this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
