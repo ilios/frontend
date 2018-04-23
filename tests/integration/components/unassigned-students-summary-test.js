@@ -21,8 +21,7 @@ test('it renders', function(assert) {
     title: 'school 1',
   });
   let user = EmberObject.create({
-    school: resolve(primarySchool),
-    schools: resolve([primarySchool, secondarySchool])
+    school: resolve(primarySchool)
   });
   let currentUserMock = Service.extend({
     model: resolve(user)
@@ -39,7 +38,8 @@ test('it renders', function(assert) {
   this.register('service:currentUser', currentUserMock);
   this.register('service:store', storeMock);
 
-  this.render(hbs`{{unassigned-students-summary}}`);
+  this.set('schools', [primarySchool, secondarySchool]);
+  this.render(hbs`{{unassigned-students-summary schools=schools}}`);
 
   return wait().then(() => {
     assert.equal(this.$().text().trim().search(/Students Requiring Cohort Assignment/), 0);
@@ -62,8 +62,7 @@ test('it renders empty', function(assert) {
     title: 'school 0',
   });
   let user = EmberObject.create({
-    school: resolve(primarySchool),
-    schools: resolve([primarySchool])
+    school: resolve(primarySchool)
   });
   let currentUserMock = Service.extend({
     model: resolve(user)
@@ -78,7 +77,8 @@ test('it renders empty', function(assert) {
   this.register('service:currentUser', currentUserMock);
   this.register('service:store', storeMock);
 
-  this.render(hbs`{{unassigned-students-summary}}`);
+  this.set('schools', [primarySchool]);
+  this.render(hbs`{{unassigned-students-summary schools=schools}}`);
 
   return wait().then(() => {
     assert.equal(this.$().text().trim().search(/Students Requiring Cohort Assignment/), 0);

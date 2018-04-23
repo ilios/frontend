@@ -4,26 +4,24 @@
   {{/if}}
   {{t 'general.pendingUpdatesSummaryTitle'}}
 </h3>
-{{#if (is-fulfilled schools)}}
-  <div id='schoolsfilter' class="filter">
-    <label class="inline-label">
-      {{fa-icon 'university'}}
-    </label>
-    <div id="school-selection" class="inline-data">
-      {{#if (gt (get (await schools) 'length') 1)}}
-        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' (await schools)) as |school|}}
-            <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{get (await selectedSchool) 'title'}}
-      {{/if}}
-    </div>
+<div id='schoolsfilter' class="filter">
+  <label class="inline-label">
+    {{fa-icon 'university'}}
+  </label>
+  <div id="school-selection" class="inline-data">
+    {{#if (gt (get schools 'length') 1)}}
+      <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+        {{#each (sort-by 'title' schools) as |school|}}
+          <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{get (await selectedSchool) 'title'}}
+    {{/if}}
   </div>
-{{/if}}
+</div>
 {{#if (is-fulfilled updates)}}
   <p>{{t 'general.pendingUpdatesSummary' count=(get (await updates) 'length')}}</p>
   {{#if (get (await updates) 'length')}}

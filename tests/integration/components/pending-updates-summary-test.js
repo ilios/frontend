@@ -31,8 +31,7 @@ test('it renders', async function(assert) {
     title: 'school 1'
   });
   let user = EmberObject.create({
-    school: resolve(primarySchool),
-    schools: resolve([primarySchool, secondarySchool])
+    school: resolve(primarySchool)
   });
   currentUserMock.reopen({
     model: resolve(user)
@@ -44,8 +43,8 @@ test('it renders', async function(assert) {
       return resolve([1, 2, 3, 4, 5]);
     }
   });
-
-  this.render(hbs`{{pending-updates-summary}}`);
+  this.set('schools', [primarySchool, secondarySchool]);
+  this.render(hbs`{{pending-updates-summary schools=schools}}`);
 
   await wait();
 

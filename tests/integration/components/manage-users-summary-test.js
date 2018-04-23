@@ -7,7 +7,7 @@ moduleForComponent('manage-users-summary', 'Integration | Component | manage use
 });
 
 test('it renders', function(assert) {
-  this.render(hbs`{{manage-users-summary}}`);
+  this.render(hbs`{{manage-users-summary canCreate=true}}`);
 
   assert.equal(this.$('h2').text().trim(), 'Ilios Users (View All)');
   assert.equal(this.$('a:eq(0)').text().trim(), 'View All');

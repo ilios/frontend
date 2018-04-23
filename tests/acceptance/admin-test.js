@@ -12,7 +12,7 @@ module('Acceptance: Admin', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school, administeredSchools: [school] }, true);
   });
 
   test('can transition to `users` route', async function(assert) {

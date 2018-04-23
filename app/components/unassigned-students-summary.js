@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
 import ArrayProxy from '@ember/array/proxy';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 const { Promise } = RSVP;
@@ -17,30 +16,23 @@ export default Component.extend({
   classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
   alert: gt('unassignedStudentsProxy.length', 0),
   schoolId: null,
-  schools: computed('currentUser.model.schools.[]', function(){
-    return new Promise(resolve => {
-      this.get('currentUser.model').then(user => {
-        user.get('schools').then(schools => {
-          resolve(schools);
-        });
-      });
-    });
-  }),
-  selectedSchool: computed('currentUser', 'schoolId', function(){
-    return new Promise(resolve => {
-      this.get('currentUser').get('model').then(user => {
-        user.get('schools').then(schools => {
-          if(isPresent(this.get('schoolId'))){
-            let school =  schools.findBy('id', this.get('schoolId'));
-            if(school){
-              resolve(school);
-              return;
-            }
-          }
-          resolve(user.get('school'));
-        });
-      });
-    });
+  schools: null,
+  selectedSchool: computed('currentUser', 'schoolId', async function () {
+    const schools = this.get('schools');
+    const currentUser = this.get('currentUser');
+    const schoolId = this.get('schoolId');
+
+    if (schoolId) {
+      return schools.findBy('id', schoolId);
+    }
+    const user = await currentUser.get('model');
+    const school = await user.get('school');
+    const defaultSchool = schools.findBy('id', school.get('id'));
+    if (defaultSchool) {
+      return defaultSchool;
+    }
+
+    return schools.get('firstObject');
   }),
 
   unassignedStudents: computed('selectedSchool', function(){
