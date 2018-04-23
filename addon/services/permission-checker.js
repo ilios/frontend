@@ -102,19 +102,23 @@ export default Service.extend({
 
     return this.canUpdateCourse(course);
   },
-  async canUpdateSessionType(school) {
+  async canUpdateSessionType(sessionType) {
+    const school = await sessionType.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_SESSION_TYPES');
   },
-  async canDeleteSessionType(school) {
+  async canDeleteSessionType(sessionType) {
+    const school = await sessionType.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_SESSION_TYPES');
   },
   async canCreateSessionType(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_SESSION_TYPES');
   },
-  async canUpdateDepartment(school) {
+  async canUpdateDepartment(department) {
+    const school = await department.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_DEPARTMENTS');
   },
-  async canDeleteDepartment(school) {
+  async canDeleteDepartment(department) {
+    const school = await department.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_DEPARTMENTS');
   },
   async canCreateDepartment(school) {
@@ -212,37 +216,45 @@ export default Service.extend({
   async canUpdateSchool(school) {
     return this.canDoInSchool(school, 'CAN_UPDATE_SCHOOLS');
   },
-  async canUpdateCompetency(school) {
+  async canUpdateCompetency(competency) {
+    const school = await competency.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_COMPETENCIES');
   },
-  async canDeleteCompetency(school) {
+  async canDeleteCompetency(competency) {
+    const school = await competency.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_COMPETENCIES');
   },
   async canCreateCompetency(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_COMPETENCIES');
   },
-  async canUpdateVocabulary(school) {
+  async canUpdateVocabulary(vocabulary) {
+    const school = await vocabulary.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_VOCABULARIES');
   },
-  async canDeleteVocabulary(school) {
+  async canDeleteVocabulary(vocabulary) {
+    const school = await vocabulary.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_VOCABULARIES');
   },
   async canCreateVocabulary(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_VOCABULARIES');
   },
-  async canUpdateTerm(school) {
+  async canUpdateTerm(term) {
+    const school = await term.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_TERMS');
   },
-  async canDeleteTerm(school) {
+  async canDeleteTerm(term) {
+    const school = await term.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_TERMS');
   },
   async canCreateTerm(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_TERMS');
   },
-  async canUpdateInstructorGroup(school) {
+  async canUpdateInstructorGroup(instructorGroup) {
+    const school = await instructorGroup.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_INSTRUCTOR_GROUPS');
   },
-  async canDeleteInstructorGroup(school) {
+  async canDeleteInstructorGroup(instructorGroup) {
+    const school = await instructorGroup.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_INSTRUCTOR_GROUPS');
   },
   async canCreateInstructorGroup(school) {
@@ -275,19 +287,23 @@ export default Service.extend({
   async canCreateCurriculumInventoryReport(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_CURRICULUM_INVENTORY_REPORTS');
   },
-  async canUpdateLearnerGroup(school) {
+  async canUpdateLearnerGroup(learnerGroup) {
+    const school = await learnerGroup.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_LEARNER_GROUPS');
   },
-  async canDeleteLearnerGroup(school) {
+  async canDeleteLearnerGroup(learnerGroup) {
+    const school = await learnerGroup.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_LEARNER_GROUPS');
   },
   async canCreateLearnerGroup(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_LEARNER_GROUPS');
   },
-  async canUpdateUser(school) {
+  async canUpdateUser(user) {
+    const school = await user.get('school');
     return this.canDoInSchool(school, 'CAN_UPDATE_USERS');
   },
-  async canDeleteUser(school) {
+  async canDeleteUser(user) {
+    const school = await user.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_USERS');
   },
   async canCreateUser(school) {
