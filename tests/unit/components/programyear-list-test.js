@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('programyear-list', 'Unit | Component | programyear list', {
-  needs: ['service:currentUser'],
+  needs: ['service:currentUser', 'service:permissionChecker'],
   unit: true
 });
 

@@ -3,23 +3,27 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import RSVP from 'rsvp';
+import { hash } from 'rsvp';
 import { run } from '@ember/runloop';
-import { isEmpty, isPresent } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import { task } from 'ember-concurrency';
 
 const { mapBy } = computed;
-const { Promise, hash } = RSVP;
+
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Component.extend({
   classNames: ['programyear-list'],
 
   store: service(),
   currentUser: service(),
+  permissionChecker: service(),
 
   program: null,
   programYears: null,
+  canCreate: false,
 
   sortedContent: computed('programYears.[]', async function() {
     const programYears = await this.get('programYears');
@@ -30,12 +34,14 @@ export default Component.extend({
   }),
 
   proxiedProgramYears: computed('sortedContent.[]', async function(){
+    const permissionChecker = this.get('permissionChecker');
     const currentUser = this.get('currentUser');
     const programYears = await this.get('sortedContent');
     return programYears.map(programYear => {
       return ProgramYearProxy.create({
         content: programYear,
-        currentUser
+        currentUser,
+        permissionChecker
       });
     });
   }),
@@ -192,47 +198,48 @@ export default Component.extend({
 const ProgramYearProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
+  permissionChecker: null,
   showRemoveConfirmation: false,
   isSaving: false,
-  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
-    return new Promise(resolve => {
-      const programYear = this.get('content');
-      const currentUser = this.get('currentUser');
-      if (programYear.get('isPublishedOrScheduled')) {
-        resolve(false);
-        return;
+  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+    const programYear = this.get('content');
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    if (programYear.get('isPublishedOrScheduled')) {
+      return false;
+    }
+    const cohort = await programYear.get('cohort');
+    const cohortUsers = cohort.hasMany('users').ids();
+    if (cohortUsers.length > 0) {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const isDeveloper = await currentUser.get('userIsDeveloper');
+      if (!isDeveloper) {
+        return false;
       }
-      currentUser.get('userIsDeveloper').then(isDeveloper => {
-        if (! isDeveloper) {
-          resolve(false);
-          return;
-        }
-        programYear.get('cohort').then(cohort => {
-          if (! isPresent(cohort)) {
-            resolve(false);
-            return;
-          }
-          cohort.get('users').then(users => {
-            resolve(0 === users.length);
-          });
-        });
-      });
-    });
+    }
+
+    return permissionChecker.canDeleteProgramYear(programYear);
   }),
-  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
-    return new Promise(resolve => {
-      const currentUser = this.get('currentUser');
-      currentUser.get('userIsDeveloper').then(isDeveloper => {
-        resolve(isDeveloper);
-      });
-    });
+  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+    const programYear = this.get('content');
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    if (!enforceRelationshipCapabilityPermissions) {
+      return currentUser.get('userIsDeveloper');
+    }
+
+    return permissionChecker.canUpdateProgramYear(programYear);
   }),
-  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', function(){
-    return new Promise(resolve => {
-      const currentUser = this.get('currentUser');
-      currentUser.get('userIsDeveloper').then(isDeveloper => {
-        resolve(isDeveloper);
-      });
-    });
+  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+    const programYear = this.get('content');
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    if (!enforceRelationshipCapabilityPermissions) {
+      return currentUser.get('userIsDeveloper');
+    }
+
+    return permissionChecker.canUnlockProgramYear(programYear);
   }),
 });
