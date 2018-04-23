@@ -3,6 +3,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   instructorGroup: null,
+  canUpdate: false,
   classNames: ['instructorgroup-details'],
   actions: {
     addUser(user) {

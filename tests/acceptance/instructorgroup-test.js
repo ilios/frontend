@@ -14,10 +14,11 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.createList('user', 4);
     this.server.createList('course', 2, {
-      schoolId: 1
+      school: this.school
     });
     this.server.create('session', {
       courseId: 1,
@@ -26,14 +27,14 @@ module('Acceptance: Instructor Group Details', function(hooks) {
       courseId: 2,
     });
     this.server.create('instructorGroup', {
-      schoolId: 1,
+      school: this.school,
       userIds: [2,3],
     });
     this.server.create('instructorGroup', {
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('instructorGroup', {
-      schoolId: 1
+      school: this.school
     });
     this.server.create('offering', {
       sessionId: 1,
@@ -53,7 +54,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
     await visit(url);
     assert.equal(currentRouteName(), 'instructorGroup');
     assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')), getText('school 0 > '));
-    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('instructor group 0'));
+    assert.equal(await getElementText(find('[data-test-group-title]')), getText('instructor group 0'));
     assert.equal(await getElementText(find('.info')), getText('Members:2'));
     assert.equal(await getElementText(find('.instructorgroup-overview h2')), getText('instructor group 0 Members (2)'));
 
@@ -65,7 +66,8 @@ module('Acceptance: Instructor Group Details', function(hooks) {
     assert.equal(await getElementText('.instructorgroupcourses li'), getText('course 0 course 1'));
   });
 
-  test('change title', async function(assert) {
+  test('change title', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('instructor group 0'));
     await click(find('.instructorgroup-header .title .editable'));
@@ -77,6 +79,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   });
 
   test('search instructors', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     const container = '.instructorgroup-overview';
     const search = `${container} .search-box input`;
@@ -99,6 +102,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   });
 
   test('add instructor', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
     let items = findAll('.instructorgroup-overview .instructorgroup-users li');
@@ -116,6 +120,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   });
 
   test('remove default instructor', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
     await click(find('.instructorgroup-overview .instructorgroup-users li'));
@@ -133,7 +138,7 @@ module('Acceptance: Instructor Group Details', function(hooks) {
   test('no associated courses', async function(assert) {
     await visit('/instructorgroups/3');
     assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')),getText('school 0 >'));
-    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')),getText('instructorgroup 2'));
+    assert.equal(await getElementText(find('[data-test-group-title]')),getText('instructorgroup 2'));
     assert.equal(await getElementText(find('.instructorgroupcourses')), getText('Associated Courses: None'));
   });
 });

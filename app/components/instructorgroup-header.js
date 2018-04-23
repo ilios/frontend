@@ -24,6 +24,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   store: service(),
   title: null,
+  canUpdate: false,
   classNames: ['instructorgroup-header'],
   actions: {
     changeTitle(){

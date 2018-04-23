@@ -15,9 +15,16 @@
     }
 
     .instructorgroup-users {
-      @include ilios-removable-list;
-
+      @include ilios-tag-list;
       margin-bottom: .5rem;
+
+      li {
+        display: flex;
+
+        .remove {
+          margin-left: .5em;
+        }
+      }
     }
   }
 

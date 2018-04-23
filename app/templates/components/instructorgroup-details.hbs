@@ -1,5 +1,5 @@
 <div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'general.backToInstructorGroups'}}{{/link-to}}</div>
-{{instructorgroup-header instructorGroup=instructorGroup}}
+{{instructorgroup-header instructorGroup=instructorGroup canUpdate=canUpdate}}
 
 <div class='instructorgroup-overview'>
   <h2>
@@ -10,7 +10,11 @@
     <div>
       <ul class='instructorgroup-users'>
         {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
-          <li {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+          {{#if canUpdate}}
+            <li class='clickable' {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+          {{else}}
+            <li>{{user.fullName}}</li>
+          {{/if}}
         {{/each}}
       </ul>
     </div>
@@ -18,10 +22,12 @@
     {{loading-spinner class='instructorgroup-loading'}}
   {{/if}}
 
-  {{user-search
-    addUser='addUser'
-    currentlyActiveUsers=(await instructorGroup.users)
-  }}
+  {{#if canUpdate}}
+    {{user-search
+      addUser='addUser'
+      currentlyActiveUsers=(await instructorGroup.users)
+    }}
+  {{/if}}
 
   <div class="instructorgroupcourses">
     <label>{{t 'general.associatedCourses'}}:</label>
