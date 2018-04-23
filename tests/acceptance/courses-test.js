@@ -217,9 +217,9 @@ module('Acceptance | Courses', function(hooks) {
     assert.ok(page.schoolFilters(1).selected);
   });
 
-  test('user can only delete non-published courses with proper privileges', async function(assert) {
+  test('unprivileged users can not delete courses', async function(assert) {
     this.server.create('academicYear', {id: 2014});
-    assert.expect(4);
+    assert.expect(2);
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -229,25 +229,31 @@ module('Acceptance | Courses', function(hooks) {
       year: 2014,
       schoolId: 1,
       published: false,
-    });
-    this.server.create('course', {
-      year: 2014,
-      schoolId: 1,
-      published: true,
-      directorIds: [this.user.id],
-    });
-    this.server.create('course', {
-      year: 2014,
-      schoolId: 1,
-      published: false,
-      directorIds: [this.user.id]
     });
     await page.visit();
 
     assert.equal(page.courses(0).removeActionCount, 0, 'non-privileged user cannot delete published course');
     assert.equal(page.courses(1).removeActionCount, 0, 'non-privileged user cannot delete unpublished course');
-    assert.equal(page.courses(2).removeActionCount, 0, 'privileged user cannot delete published course');
-    assert.equal(page.courses(3).removeActionCount, 1, 'privileged user can delete unpublished course');
+  });
+
+  test('privileged users can only delete unpublished courses', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    this.server.create('academicYear', {id: 2014});
+    assert.expect(2);
+    this.server.create('course', {
+      year: 2014,
+      schoolId: 1,
+      published: true,
+    });
+    this.server.create('course', {
+      year: 2014,
+      schoolId: 1,
+      published: false,
+    });
+    await page.visit();
+
+    assert.equal(page.courses(0).removeActionCount, 0, 'privileged user cannot delete published course');
+    assert.equal(page.courses(1).removeActionCount, 1, 'privileged user can delete unpublished course');
   });
 
   test('new course', async function (assert) {
@@ -526,13 +532,10 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(2).title, thirdCourse.title);
   });
 
-  test('developer users can lock and unlock course', async function(assert) {
+  test('privileged users can lock and unlock course', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     this.server.create('academicYear', {id: 2014});
-    this.server.create('userRole', {
-      title: 'Developer'
-    });
-    this.server.db.users.update(this.user.id, {roleIds: [1]});
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -555,37 +558,6 @@ module('Acceptance | Courses', function(hooks) {
     await page.courses(0).unLock();
     await page.courses(1).lock();
     assert.ok(page.courses(0).isUnlocked, 'first course is now unlocked');
-    assert.ok(page.courses(1).isLocked, 'second course is now locked');
-  });
-
-  test('course directors users can lock but not unlock course', async function(assert) {
-    assert.expect(5);
-    this.server.create('academicYear', {id: 2014});
-    this.server.create('course', {
-      year: 2014,
-      schoolId: 1,
-      published: true,
-      publishedAsTbd: false,
-      locked: true,
-      directorIds: [this.user.id],
-    });
-    this.server.create('course', {
-      year: 2014,
-      schoolId: 1,
-      published: true,
-      publishedAsTbd: true,
-      locked: false,
-      directorIds: [this.user.id],
-    });
-
-
-    await page.visit();
-    assert.equal(page.courses().count, 2);
-    assert.ok(page.courses(0).isLocked, 'first course is locked');
-    assert.ok(page.courses(1).isUnlocked, 'second course is unlocked');
-    await page.courses(0).unLock();
-    await page.courses(1).lock();
-    assert.ok(page.courses(0).isLocked, 'first course is still locked');
     assert.ok(page.courses(1).isLocked, 'second course is now locked');
   });
 
@@ -637,6 +609,7 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('can not delete course with descendants #3620', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     const year = moment().year().toString();
     this.server.create('academicYear', {id: year});
     const course1 = this.server.create('course', {
@@ -648,11 +621,6 @@ module('Acceptance | Courses', function(hooks) {
       school: this.school,
       ancestor: course1
     });
-
-    this.server.create('userRole', {
-      title: 'Developer'
-    });
-    this.server.db.users.update(this.user.id, {roleIds: [1]});
 
     assert.expect(2);
     await page.visit({ year });

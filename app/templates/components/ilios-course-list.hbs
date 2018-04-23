@@ -76,10 +76,18 @@
             {{loading-spinner}}
           {{else}}
             {{publication-status item=course showIcon=false}}
-            {{#if course.locked}}
-              {{fa-icon 'lock' class=(if (await course.userCanUnLock) 'clickable') click=(action 'unlockCourse' course)}}
+            {{#if (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)}}
+              {{#if (await course.userCanUnLock)}}
+                {{fa-icon 'lock' class='clickable link' click=(action 'unlockCourse' course)}}
+              {{else}}
+                {{fa-icon 'lock'}}
+              {{/if}}
             {{else}}
-              {{fa-icon 'unlock' class=(if (await course.userCanLock) 'clickable') click=(action 'lockCourse' course)}}
+              {{#if (await course.userCanLock)}}
+                {{fa-icon 'unlock' class='clickable link' click=(action 'lockCourse' course)}}
+              {{else}}
+                {{fa-icon 'unlock'}}
+              {{/if}}
             {{/if}}
             {{#if (await course.userCanDelete)}}
               <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>

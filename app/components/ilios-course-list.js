@@ -1,14 +1,16 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
-const { Promise }= RSVP;
+
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 const CourseProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
+  permissionChecker: null,
   showRemoveConfirmation: false,
   i18n: null,
   isSaving: false,
@@ -27,58 +29,54 @@ const CourseProxy = ObjectProxy.extend({
 
     return i18n.t(translation).string;
   }),
-  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.directedCourses.[]', function(){
-    return new Promise(resolve => {
-      const course = this.get('content');
-      const currentUser = this.get('currentUser');
-      if (course.get('isPublishedOrScheduled')) {
-        resolve(false);
-      } else if (course.hasMany('descendants').ids().length > 0) {
-        resolve(false);
-      } else {
-        currentUser.get('userIsDeveloper').then(isDeveloper => {
-          if (isDeveloper) {
-            resolve(true);
-          } else {
-            currentUser.get('model').then(user => {
-              user.get('directedCourses').then(directedCourses => {
-                resolve(directedCourses.includes(course));
-              });
-            });
-          }
-        });
+  userCanDelete: computed('content', 'currentUser', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('content');
+    if (course.get('isPublishedOrScheduled')) {
+      return false;
+    } else if (course.hasMany('descendants').ids().length > 0) {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const userIsDeveloper = await currentUser.get('userIsDeveloper');
+      if (userIsDeveloper) {
+        return true;
       }
-    });
+      return await currentUser.isDirectingCourse(course);
+    }
+
+    return permissionChecker.canDeleteCourse(course);
   }),
-  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.directedCourses.[]', function(){
-    return new Promise(resolve => {
-      const course = this.get('content');
-      const currentUser = this.get('currentUser');
-      currentUser.get('userIsDeveloper').then(isDeveloper => {
-        if (isDeveloper) {
-          resolve(true);
-        } else {
-          currentUser.get('model').then(user => {
-            user.get('directedCourses').then(directedCourses => {
-              resolve(directedCourses.includes(course));
-            });
-          });
-        }
-      });
-    });
+  userCanLock: computed('content', 'currentUser', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('content');
+    if (!enforceRelationshipCapabilityPermissions) {
+      const userIsDeveloper = await currentUser.get('userIsDeveloper');
+      if (userIsDeveloper) {
+        return true;
+      }
+      return await currentUser.isDirectingCourse(course);
+    }
+
+    return permissionChecker.canUpdateCourse(course);
   }),
-  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', function(){
-    return new Promise(resolve => {
-      const currentUser = this.get('currentUser');
-      currentUser.get('userIsDeveloper').then(isDeveloper => {
-        resolve(isDeveloper);
-      });
-    });
+  userCanUnLock: computed('content', 'currentUser', 'content.locked', 'content.archived', async function(){
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('content');
+    if (!enforceRelationshipCapabilityPermissions) {
+      return await currentUser.get('userIsDeveloper');
+    }
+
+    return permissionChecker.canUnlockCourse(course);
   }),
 });
 export default Component.extend({
   currentUser: service(),
   i18n: service(),
+  permissionChecker: service(),
   courses: null,
   proxiedCourses: computed('courses.[]', function(){
     const i18n = this.get('i18n');
@@ -90,7 +88,8 @@ export default Component.extend({
       return CourseProxy.create({
         content: course,
         i18n,
-        currentUser: this.get('currentUser')
+        currentUser: this.get('currentUser'),
+        permissionChecker: this.get('permissionChecker')
       });
     });
   }),
