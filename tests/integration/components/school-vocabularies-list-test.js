@@ -90,7 +90,7 @@ test('can create new vocabulary', function(assert) {
 
   this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canCreate=true}}`);
   this.$('.expand-button').click();
   this.$('input').val('new vocab').trigger('input');
   return wait().then(() => {
@@ -156,7 +156,7 @@ test('cannot delete vocabularies with terms', async function(assert) {
 
   this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canDelete=true}}`);
 
   await wait();
   assert.equal(this.$('tr:eq(1) td:eq(2) i').length, 1);
@@ -184,7 +184,7 @@ test('clicking delete removes the vocabulary', function(assert) {
   });
   this.on('edit', parseInt);
   this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
+  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canDelete=true}}`);
   return wait().then(() => {
     assert.notOk(this.$('tr:eq(1)').hasClass('confirm-removal'));
     assert.equal(this.$('tr:eq(1) td:eq(2) .remove').length, 1);

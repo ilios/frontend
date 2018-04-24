@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   store: service(),
   sessionType: null,
+  canUpdate: false,
   classNames: ['school-session-type-manager'],
   readonlySessionType: computed('sessionType', async function(){
     const sessionType = this.get('sessionType');

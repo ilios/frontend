@@ -8,17 +8,24 @@
       term=managedTerm
       manageTerm=setSchoolManagedVocabularyTerm
       manageVocabulary=setSchoolManagedVocabulary
+      canUpdate=canUpdateTerm
+      canDelete=canDeleteTerm
+      canCreate=canCreateTerm
     }}
   {{else if managedVocabularyId}}
     {{school-vocabulary-manager
       vocabulary=managedVocabulary
       manageTerm=setSchoolManagedVocabularyTerm
       manageVocabulary=setSchoolManagedVocabulary
+      canUpdate=canUpdateVocabulary
+      canCreate=canCreateTerm
     }}
   {{else}}
     {{school-vocabularies-list
       school=school
       manageVocabulary=setSchoolManagedVocabulary
+      canDelete=canDeleteVocabulary
+      canCreate=canCreateVocabulary
     }}
   {{/if}}
 </div>

@@ -5,20 +5,24 @@
 
 <div class='school-vocabulary-manager-title'>
   <h4>{{t 'general.title'}}: </h4>
-  {{#editable-field
-    value=(if title title (t 'general.clickToEdit'))
-    save=(action 'changeVocabularyTitle')
-    close=(action 'revertVocabularyTitleChanges')
-    saveOnEnter=true
-    closeOnEscape=true
-  as |isSaving|
-  }}
-    <input
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-    >
-  {{/editable-field}}
+  {{#if canUpdate}}
+    {{#editable-field
+      value=(if title title (t 'general.clickToEdit'))
+      save=(action 'changeVocabularyTitle')
+      close=(action 'revertVocabularyTitleChanges')
+      saveOnEnter=true
+      closeOnEscape=true
+    as |isSaving|
+    }}
+      <input
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+        disabled={{isSaving}}
+      >
+    {{/editable-field}}
+  {{else}}
+    {{title}}
+  {{/if}}
 </div>
 
 <h5>{{t 'general.terms'}}:</h5>
@@ -33,26 +37,27 @@
       {{t 'general.savedSuccessfully'}}
     </div>
   {{/if}}
-  <div class='form'>
-    <input
-      type="text"
-      value={{newTermTitle}}
-      oninput={{action (mut newTermTitle) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
-    >
-    <button class='save text' {{action 'createTerm'}}>
-      {{#if isSavingNewTerm}}
-        {{loading-spinner}}
-      {{else}}
-        {{t 'general.add'}}
+  {{#if canCreate}}
+    <div class='form'>
+      <input
+        type="text"
+        value={{newTermTitle}}
+        oninput={{action (mut newTermTitle) value="target.value"}}
+        onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
+      >
+      <button class='save text' {{action 'createTerm'}}>
+        {{#if isSavingNewTerm}}
+          {{loading-spinner}}
+        {{else}}
+          {{t 'general.add'}}
+        {{/if}}
+      </button>
+
+      {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
+        <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
       {{/if}}
-    </button>
-
-    {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
-      <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
-    {{/if}}
-  </div>
-
+    </div>
+  {{/if}}
   {{#if (is-fulfilled sortedTerms)}}
     <ul>
       {{#each (await sortedTerms) as |term|}}

@@ -1,7 +1,7 @@
 {{#each domains as |obj|}}
   <div class='domain'>
     <div class='block'>
-      {{competency-title-editor competency=obj.domain}}
+      {{competency-title-editor competency=obj.domain canUpdate=canUpdate}}
       {{#if (eq obj.competencies.length 0)}}
         {{fa-icon 'trash' class='remove clickable' click=(action remove obj.domain)}}
       {{/if}}
@@ -9,20 +9,22 @@
     <ul>
       {{#each obj.competencies as |competency|}}
         <li class='block'>
-          {{competency-title-editor competency=competency}}
-          {{#if (eq competency.objectives.length 0)}}
+          {{competency-title-editor competency=competency canUpdate=canUpdate}}
+          {{#if (and canDelete (eq competency.objectives.length 0))}}
             {{fa-icon 'trash' class='remove clickable' click=(action remove competency)}}
           {{else}}
             ({{competency.objectives.length}})
           {{/if}}
         </li>
       {{/each}}
-      {{#if obj.domain.id}}
+      {{#if (and obj.domain.id canCreate)}}
         {{new-competency add=(action add obj.domain)}}
       {{/if}}
     </ul>
   </div>
 {{/each}}
 
-<h5>{{t 'general.newDomain'}}</h5>
-{{new-competency add=(action add null)}}
+{{#if canCreate}}
+  <h5>{{t 'general.newDomain'}}</h5>
+  {{new-competency add=(action add null)}}
+{{/if}}

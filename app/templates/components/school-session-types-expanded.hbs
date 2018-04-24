@@ -3,9 +3,9 @@
     {{t 'general.sessionTypes'}}
   </div>
   <div class='actions'>
-    {{#unless managedSessionTypeId}}
+    {{#if (and canCreate (not managedSessionTypeId))}}
       {{expand-collapse-button value=schoolNewSessionType action="toggleSchoolNewSessionType"}}
-    {{/unless}}
+    {{/if}}
   </div>
 </div>
 <div class='school-session-types-expanded-content'>
@@ -20,6 +20,7 @@
       canEditCalendarColor=true
       canEditAssessment=true
       canEditAssessmentOption=true
+      canEditActive=true
       save=(perform save)
       close=(action setSchoolNewSessionType false)
     }}
@@ -28,11 +29,13 @@
     {{school-session-type-manager
       sessionType=(await managedSessionType)
       close=(action setSchoolManagedSessionType null)
+      canUpdate=canUpdate
     }}
   {{else}}
     {{school-session-types-list
       sessionTypes=(await sessionTypes)
       manageSessionType=setSchoolManagedSessionType
+      canDelete=canDelete
     }}
   {{/liquid-if}}
 </div>

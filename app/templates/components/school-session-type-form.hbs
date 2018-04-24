@@ -93,7 +93,17 @@
 
   <div class='item'>
     <label>{{t 'general.active'}}:</label>
-    {{toggle-yesno yes=isActive toggle=(action (mut isActive))}}
+    {{#if canEditActive}}
+      {{toggle-yesno yes=isActive toggle=(action (mut isActive))}}
+    {{else}}
+      <span class='value {{if isActive "yes" "no"}}'>
+        {{#if isActive}}
+          {{t 'general.yes'}}
+        {{else}}
+          {{t 'general.no'}}
+        {{/if}}
+      </span>
+    {{/if}}
   </div>
 
   <div class='buttons'>

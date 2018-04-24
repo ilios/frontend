@@ -54,6 +54,9 @@ test('it renders', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action nothing)
     expand=(action nothing)
     managedSessionTypeId=null
@@ -74,6 +77,9 @@ test('it renders as manager', async function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action nothing)
     expand=(action nothing)
     managedSessionTypeId=1
@@ -100,6 +106,9 @@ test('editing session type fires action', async function(assert) {
   });
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action nothing)
     expand=(action nothing)
     managedSessionTypeId=null
@@ -123,6 +132,9 @@ test('clicking expand new session fires action', async function(assert) {
   });
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action nothing)
     expand=(action nothing)
     managedSessionTypeId=null
@@ -145,6 +157,9 @@ test('close fires action', async function(assert) {
   });
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action nothing)
     expand=(action nothing)
     managedSessionTypeId=1
@@ -167,6 +182,9 @@ test('collapse fires action', async function(assert) {
   });
   this.render(hbs`{{school-session-types-expanded
     school=school
+    canUpdate=true
+    canDelete=true
+    canCreate=true
     collapse=(action click)
     expand=(action nothing)
     managedSessionTypeId=null

@@ -11,6 +11,9 @@ export default Component.extend({
   classNames: ['school-competencies-expanded'],
   school: null,
   isManaging: false,
+  canUpdate: false,
+  canDelete: false,
+  canCreate: false,
   bufferedCompetencies: null,
   competencies: computed('school.competencies.[]', async function(){
     const school = this.get('school');

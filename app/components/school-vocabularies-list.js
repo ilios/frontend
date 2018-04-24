@@ -22,6 +22,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   classNames: ['school-vocabularies-list'],
   school: null,
+  canDelete: false,
+  canCreate: false,
   newVocabulary: null,
 
   sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function(){
@@ -33,7 +35,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return vocabularies.filterBy('isNew', false).sortBy('title').toArray();
   }),
 
-  editable: true,
   showNewVocabularyForm: false,
   newVocabularyTitle: null,
   showRemovalConfirmationFor: null,

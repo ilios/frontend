@@ -27,6 +27,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   title: null,
   competency: null,
+  canUpdate: false,
   classNames: ['competency-title-editor'],
   tagName: 'span',
   save: task(function * (){
