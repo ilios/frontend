@@ -268,6 +268,12 @@ export default Service.extend({
   async canCreateInstructorGroup(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_INSTRUCTOR_GROUPS');
   },
+  async canUpdateInstructorGroupInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_INSTRUCTOR_GROUPS');
+  },
+  async canDeleteInstructorGroupInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_DELETE_INSTRUCTOR_GROUPS');
+  },
   async canUpdateCurriculumInventoryReport(curriculumInventoryReport) {
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
@@ -303,6 +309,12 @@ export default Service.extend({
     const school = await learnerGroup.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_LEARNER_GROUPS');
   },
+  async canUpdateLearnerGroupInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_LEARNER_GROUPS');
+  },
+  async canDeleteLearnerGroupInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_DELETE_LEARNER_GROUPS');
+  },
   async canCreateLearnerGroup(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_LEARNER_GROUPS');
   },
@@ -316,5 +328,8 @@ export default Service.extend({
   },
   async canCreateUser(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_USERS');
+  },
+  async canUpdateUserInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_USERS');
   },
 });
