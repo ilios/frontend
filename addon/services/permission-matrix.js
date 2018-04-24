@@ -106,8 +106,6 @@ export default Service.extend({
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
           'PROGRAM_DIRECTOR',
-          'COURSE_ADMINISTRATOR',
-          'COURSE_DIRECTOR',
         ],
         'CAN_UPDATE_THEIR_SESSIONS': [
           'SESSION_ADMINISTRATOR',
@@ -116,8 +114,6 @@ export default Service.extend({
         'CAN_DELETE_ALL_SESSIONS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'COURSE_ADMINISTRATOR',
-          'COURSE_DIRECTOR',
         ],
         'CAN_CREATE_COMPETENCIES': [
           'SCHOOL_ADMINISTRATOR',
