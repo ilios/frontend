@@ -37,7 +37,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       });
       canCreate = schoolsWithCreateUserPermission.length > 0;
       schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
-        return permissionChecker.canUpdateUser(school);
+        return permissionChecker.canUpdateUserInSchool(school);
       });
     }
 

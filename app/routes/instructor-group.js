@@ -16,8 +16,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     if (!enforceRelationshipCapabilityPermissions) {
       canUpdate = true;
     } else {
-      const school = await instructorGroup.get('school');
-      canUpdate = await permissionChecker.canUpdateInstructorGroup(school);
+      canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
     }
 
     this.set('canUpdate', canUpdate);

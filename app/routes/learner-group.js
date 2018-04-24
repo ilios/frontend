@@ -22,8 +22,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       canCreate = true;
     } else {
       const school = await model.get('school');
-      canUpdate = await permissionChecker.canUpdateLearnerGroup(school);
-      canDelete = await permissionChecker.canDeleteLearnerGroup(school);
+      canUpdate = await permissionChecker.canUpdateLearnerGroup(model);
+      canDelete = await permissionChecker.canDeleteLearnerGroup(model);
       canCreate = await permissionChecker.canCreateLearnerGroup(school);
     }
 

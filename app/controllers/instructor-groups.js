@@ -90,7 +90,7 @@ export default Controller.extend({
     }
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
-    return permissionChecker.canDeleteInstructorGroup(selectedSchool);
+    return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);
   }),
   actions: {
     async removeInstructorGroup(instructorGroup) {
