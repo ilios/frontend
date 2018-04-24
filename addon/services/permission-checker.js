@@ -65,6 +65,11 @@ export default Service.extend({
     const permissionMatrix = this.get('permissionMatrix');
 
     const course = await session.get('course');
+
+    if (course.get('locked') || course.get('archived')) {
+      return false;
+    }
+
     const school = await course.get('school');
     if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_SESSIONS')) {
       return true;
@@ -82,6 +87,11 @@ export default Service.extend({
     const permissionMatrix = this.get('permissionMatrix');
 
     const course = await session.get('course');
+
+    if (course.get('locked') || course.get('archived')) {
+      return false;
+    }
+
     const school = await course.get('school');
     if (await this.canDoInSchool(school, 'CAN_DELETE_ALL_SESSIONS')) {
       return true;
@@ -95,6 +105,10 @@ export default Service.extend({
     return this.canUpdateCourse(course);
   },
   async canCreateSession(course) {
+    if (course.get('locked') || course.get('archived')) {
+      return false;
+    }
+
     const school = await course.get('school');
     if (await this.canDoInSchool(school, 'CAN_CREATE_SESSIONS')) {
       return true;
