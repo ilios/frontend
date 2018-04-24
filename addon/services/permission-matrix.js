@@ -42,7 +42,6 @@ export default Service.extend({
         'CAN_UPDATE_ALL_PROGRAM_YEARS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'PROGRAM_DIRECTOR',
         ],
         'CAN_UPDATE_THEIR_PROGRAM_YEARS': [
           'PROGRAM_DIRECTOR',
@@ -50,7 +49,6 @@ export default Service.extend({
         'CAN_DELETE_ALL_PROGRAM_YEARS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'PROGRAM_DIRECTOR',
         ],
         'CAN_DELETE_THEIR_PROGRAM_YEARS': [
           'PROGRAM_DIRECTOR',
@@ -108,8 +106,6 @@ export default Service.extend({
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
           'PROGRAM_DIRECTOR',
-          'COURSE_ADMINISTRATOR',
-          'COURSE_DIRECTOR',
         ],
         'CAN_UPDATE_THEIR_SESSIONS': [
           'SESSION_ADMINISTRATOR',
@@ -118,8 +114,6 @@ export default Service.extend({
         'CAN_DELETE_ALL_SESSIONS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'COURSE_ADMINISTRATOR',
-          'COURSE_DIRECTOR',
         ],
         'CAN_CREATE_COMPETENCIES': [
           'SCHOOL_ADMINISTRATOR',
@@ -204,15 +198,7 @@ export default Service.extend({
         'CAN_DELETE_ALL_CURRICULUM_INVENTORY_REPORTS': [
           'SCHOOL_ADMINISTRATOR',
         ],
-        'CAN_CREATE_SCHOOL_CONFIGS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
         'CAN_UPDATE_SCHOOL_CONFIGS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
-        'CAN_DELETE_SCHOOL_CONFIGS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
         ],
