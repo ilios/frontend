@@ -182,7 +182,7 @@ export default Controller.extend({
     }
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = await this.get('selectedSchool');
-    return permissionChecker.canDeleteLearnerGroup(selectedSchool);
+    return permissionChecker.canDeleteLearnerGroupInSchool(selectedSchool);
   }),
 
   actions: {
