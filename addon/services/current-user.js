@@ -274,6 +274,13 @@ export default Service.extend({
 
     return matches.length > 0;
   },
+  async isDirectingProgramYear(programYear) {
+    const user = await this.get('model');
+
+    const ids = user.hasMany('programYears').ids();
+
+    return ids.includes(programYear.get('id'));
+  },
   async isAdministeringCurriculumInventoryReport(report) {
     const user = await this.get('model');
 
@@ -341,6 +348,14 @@ export default Service.extend({
       roles.pushObject('PROGRAM_DIRECTOR');
     }
     if (await this.isDirectingProgramYearInProgram(program)) {
+      roles.pushObject('PROGRAM_YEAR_DIRECTOR');
+    }
+
+    return roles;
+  },
+  async getRolesInProgramYear(programYear) {
+    let roles = [];
+    if (await this.isDirectingProgramYear(programYear)) {
       roles.pushObject('PROGRAM_YEAR_DIRECTOR');
     }
 
