@@ -221,12 +221,6 @@ export default Service.extend({
   async canUpdateSchoolConfig(school) {
     return this.canDoInSchool(school, 'CAN_UPDATE_SCHOOL_CONFIGS');
   },
-  async canDeleteSchoolConfig(school) {
-    return this.canDoInSchool(school, 'CAN_DELETE_SCHOOL_CONFIGS');
-  },
-  async canCreateSchoolConfig(school) {
-    return this.canDoInSchool(school, 'CAN_CREATE_SCHOOL_CONFIGS');
-  },
   async canUpdateSchool(school) {
     return this.canDoInSchool(school, 'CAN_UPDATE_SCHOOLS');
   },

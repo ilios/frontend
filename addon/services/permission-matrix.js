@@ -204,15 +204,7 @@ export default Service.extend({
         'CAN_DELETE_ALL_CURRICULUM_INVENTORY_REPORTS': [
           'SCHOOL_ADMINISTRATOR',
         ],
-        'CAN_CREATE_SCHOOL_CONFIGS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
         'CAN_UPDATE_SCHOOL_CONFIGS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
-        'CAN_DELETE_SCHOOL_CONFIGS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
         ],
