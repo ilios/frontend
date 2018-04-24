@@ -317,4 +317,7 @@ export default Service.extend({
   async canCreateUser(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_USERS');
   },
+  async canUpdateUserInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_USERS');
+  },
 });
