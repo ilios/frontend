@@ -24,6 +24,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   classNames: ['program-overview'],
   program: null,
+  canUpdate: false,
   shortTitle: null,
   duration: null,
 

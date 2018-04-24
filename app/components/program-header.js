@@ -26,6 +26,7 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
   },
   classNames: ['program-header'],
   program: null,
+  canUpdate: false,
   programTitle: null,
   publishTarget: alias('program'),
 

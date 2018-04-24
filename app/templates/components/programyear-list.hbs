@@ -1,9 +1,11 @@
 <section class='programyears'>
   <div class="header">
     <div class='title'>{{t 'general.programYears'}}</div>
-    <div class='actions'>
-      {{expand-collapse-button value=editorOn action="toggleEditor"}}
-    </div>
+    {{#if canCreate}}
+      <div class='actions'>
+        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+      </div>
+    {{/if}}
   </div>
   <section class='new'>
     {{#if editorOn}}

@@ -14,19 +14,19 @@ module('Acceptance: Program - Publish', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school, administeredSchools: [school] });
     this.published = this.server.create('program', {
       startYear: 2013,
-      schoolId: 1,
+      school,
     });
     this.scheduled = this.server.create('program', {
       startYear: 2013,
-      schoolId: 1,
+      school,
       publishedAsTbd: true
     });
     this.draft = this.server.create('program', {
       startYear: 2013,
-      schoolId: 1,
+      school,
       published: false,
     });
   });

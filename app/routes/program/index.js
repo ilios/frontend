@@ -1,14 +1,31 @@
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
-const { all } = RSVP;
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  async afterModel(model){
+  permissionChecker: service(),
+  canCreate: false,
+  async afterModel(program) {
+    const permissionChecker = this.get('permissionChecker');
+
+    let canCreate = true;
+    if (enforceRelationshipCapabilityPermissions) {
+      canCreate = await permissionChecker.canCreateProgramYear(program);
+    }
+
+    this.set('canCreate', canCreate);
+
     await all([
-      model.get('programYears'),
-      model.get('allPublicationIssuesLength')
+      program.get('programYears'),
+      program.get('allPublicationIssuesLength')
     ]);
+  },
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('canCreate', this.get('canCreate'));
   }
 });

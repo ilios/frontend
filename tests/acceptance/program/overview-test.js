@@ -13,8 +13,8 @@ module('Acceptance: Program - Overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
   });
 
   test('check fields', async function(assert) {
@@ -23,11 +23,12 @@ module('Acceptance: Program - Overview', function(hooks) {
     });
     await visit(url);
     assert.equal(currentRouteName(), 'program.index');
-    assert.equal(await getElementText('.program-overview .programtitleshort .editable'), getText(program.shortTitle));
-    assert.equal(await getElementText('.program-overview .programduration .editable'), program.duration);
+    assert.equal(await getElementText('.program-overview .programtitleshort span'), getText(program.shortTitle));
+    assert.equal(await getElementText('.program-overview .programduration span'), program.duration);
   });
 
-  test('change title', async function(assert) {
+  test('change title', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       schoolId: 1,
     });
@@ -49,6 +50,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('change short title', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let program = this.server.create('program', {
       schoolId: 1,
     });
@@ -70,6 +72,7 @@ module('Acceptance: Program - Overview', function(hooks) {
   });
 
   test('change duration', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let program = this.server.create('program', {
       schoolId: 1,
     });
@@ -97,6 +100,7 @@ module('Acceptance: Program - Overview', function(hooks) {
 
 
   test('leave duration at 1', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     let program = this.server.create('program', {
       schoolId: 1,
       duration: 1,
