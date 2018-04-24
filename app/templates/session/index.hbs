@@ -1,7 +1,7 @@
 <div class="backtolink backtosessionlink">{{#link-to 'course' (await model.course)}}{{t 'general.backToSessionList'}}{{/link-to}}</div>
 {{session-details
   session=model
-  course=(await model.course)
+  editable=canUpdate
   programs=(await model.course)
   sessionTypes=(await model.course.school.sessionTypes)
   sessionObjectiveDetails=sessionObjectiveDetails

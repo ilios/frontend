@@ -12,8 +12,8 @@ module('Acceptance: Session - Offerings', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const user = await setupAuthentication();
-    const school = this.server.create('school');
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('program');
     this.server.create('programYear', { programId: 1});
     this.server.create('cohort', {
@@ -21,26 +21,26 @@ module('Acceptance: Session - Offerings', function(hooks) {
     });
     this.server.create('course', {
       cohortIds: [1],
-      school,
-      directors: [user]
+      school: this.school,
+      directors: [this.user]
     });
     this.server.create('sessionType', {
-      school
+      school: this.school
     });
     this.server.createList('user', 8);
     this.server.create('instructorGroup', {
       userIds: [2, 3, 6, 7],
-      school,
+      school: this.school,
     });
     this.server.create('instructorGroup', {
       userIds: [4, 5],
-      school
+      school: this.school
     });
     this.server.create('learnerGroup', {
       userIds: [2, 3],
       cohortId: 1,
       location: 'default 1',
-      instructors: [user],
+      instructors: [this.user],
     });
     this.server.create('learnerGroup', {
       userIds: [4, 5],
@@ -159,6 +159,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('confirm removal message', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.dateBlocks(0).offerings(0).remove();
     assert.ok(page.offerings.dateBlocks(0).offerings(0).hasRemoveConfirm);
@@ -166,6 +167,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('remove offering', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.dateBlocks(0).offerings(0).remove();
@@ -175,6 +177,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('cancel remove offering', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.dateBlocks(0).offerings(0).remove();
@@ -184,6 +187,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('users can create a new offering single day', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.header.createNew();
@@ -224,6 +228,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
 
 
   test('users can create a new offering multi-day', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.header.createNew();
@@ -265,6 +270,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('users can create a new small group offering', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(19);
 
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -309,6 +315,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
 
 
   test('users can edit existing offerings', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(17);
 
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -355,6 +362,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('users can create recurring small groups', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(77);
 
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -409,6 +417,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('users can create recurring single offerings', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(53);
 
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -456,6 +465,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   });
 
   test('edit offerings twice #2850', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(2);
     this.server.create('learnerGroup', {
       cohortId: 1,

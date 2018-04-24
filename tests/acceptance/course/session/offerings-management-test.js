@@ -11,23 +11,23 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
+    this.school = this.server.create('school');
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
   });
 
   test('search for instructor who is a course director #2838', async function(assert) {
     assert.expect(1);
 
-    const school = this.server.create('school');
     const permission1 = this.server.create('permission', {
       tableRowId: '1',
       tableName: 'school'
     });
     const users = this.server.createList('user', 3, {
-      school,
+      school: this.school,
       permissions: [permission1],
     });
     const course = this.server.create('course', {
-      school,
+      school: this.school,
       directors: [users[0], users[1], users[2]],
     });
     const session = this.server.create('session', {
@@ -48,17 +48,16 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
     assert.expect(10);
 
-    const school = this.server.create('school');
     const permission1 = this.server.create('permission', {
       tableRowId: '1',
       tableName: 'school'
     });
     const users = this.server.createList('user', 3, {
-      school,
+      school: this.school,
       permissions: [permission1],
     });
     const course = this.server.create('course', {
-      school,
+      school: this.school,
       directors: [users[0], users[1]],
     });
     const session = this.server.create('session', {

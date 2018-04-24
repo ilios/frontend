@@ -12,12 +12,12 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    const school = this.server.create('school');
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     const objectives = this.server.createList('objective', 3);
     const course = this.server.create('course', {
       year: 2013,
-      school,
+      school: this.school,
       objectives,
     });
     const objective1 = this.server.create('objective', {
@@ -31,6 +31,7 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   });
 
   test('list parent objectives', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
 
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
@@ -55,6 +56,7 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   });
 
   test('save changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
@@ -82,6 +84,7 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   });
 
   test('cancel changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
@@ -108,6 +111,7 @@ module('Acceptance: Session - Objective Parents', function(hooks) {
   });
 
   test('deselect all parents for session objective', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 

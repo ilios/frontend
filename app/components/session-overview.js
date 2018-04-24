@@ -11,7 +11,7 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from '../config/environment';
 import { task } from 'ember-concurrency';
 
-const { IliosFeatures: { schoolSessionAttributes } } = config;
+const { IliosFeatures: { schoolSessionAttributes, enforceRelationshipCapabilityPermissions } } = config;
 const { oneWay, sort } = computed;
 const { Promise, all } = RSVP;
 
@@ -44,6 +44,7 @@ const Validations = buildValidations({
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
+  permissionChecker: service(),
   init() {
     this._super(...arguments);
     this.set('sortTypes', ['title']);
@@ -91,22 +92,46 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     });
   }),
 
-  showCopy: computed('currentUser', 'routing.currentRouteName', function(){
-    return new Promise(resolve => {
-      const routing = this.get('routing');
-      if (routing.get('currentRouteName') === 'session.copy') {
-        resolve(false);
-      } else {
-        const currentUser = this.get('currentUser');
-        all([
-          currentUser.get('userIsCourseDirector'),
-          currentUser.get('userIsDeveloper')
-        ]).then(hasRole => {
-          resolve(hasRole.includes(true));
-        });
+  /**
+   * Check if a user is allowed to create a session anywhere
+   * Try and do this by loading as little data as possible, but in the
+   * end we do need to check every course in the school.
+   */
+  showCopy: computed('currentUser', 'routing.currentRouteName', async function () {
+    const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+    const routing = this.get('routing');
+    if (routing.get('currentRouteName') === 'session.copy') {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const hasRole = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsDeveloper')
+      ]);
+      return hasRole.includes(true);
+    }
+    const session = this.get('session');
+    const course = await session.get('course');
+    if (await permissionChecker.canCreateSession(course)) {
+      return true;
+    }
+    const user = await currentUser.get('model');
+    const allRelatedCourses = await user.get('allRelatedCourses');
+    for (let course of allRelatedCourses) {
+      if (await permissionChecker.canCreateSession(course)) {
+        return true;
       }
+    }
+    const school = await course.get('school');
+    const schoolCourses = school.get('courses');
+    for (let course of schoolCourses) {
+      if (await permissionChecker.canCreateSession(course)) {
+        return true;
+      }
+    }
 
-    });
+    return false;
   }),
 
   school: computed('session.course.school', async function(){

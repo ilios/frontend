@@ -12,30 +12,31 @@ module('Acceptance: Session - Terms', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    this.server.create('school');
-    this.server.create('vocabulary', {
-      schoolId: 1,
+    this.server.logging = true;
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school});
+    const vocabulary = this.server.create('vocabulary', {
+      school: this.school,
       active: true,
     });
     this.server.create('academicYear', {id: 2013});
 
-    server.create('term', {
-      vocabularyId: 1,
+    const term1 = server.create('term', {
+      vocabulary,
       active: true
     });
     server.create('term', {
-      vocabularyId: 1,
+      vocabulary,
       active: true
     });
 
     const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('session', {
       course,
-      termIds: [1]
+      terms: [term1]
     });
   });
 
@@ -63,7 +64,8 @@ module('Acceptance: Session - Terms', function(hooks) {
     assert.equal(page.taxonomies.vocabularies(0).terms(0).name, 'term 0');
   });
 
-  test('manage terms', async function(assert) {
+  test('manage terms', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
     await page.visit({ courseId: 1, sessionId: 1, sessionTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);
@@ -76,9 +78,11 @@ module('Acceptance: Session - Terms', function(hooks) {
     assert.ok(page.taxonomies.manager.availableTerms(0).isSelected);
     assert.equal(page.taxonomies.manager.availableTerms(1).name, 'term 1');
     assert.ok(page.taxonomies.manager.availableTerms(1).notSelected);
+    await page.taxonomies.cancel();
   });
 
   test('save term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, sessionId: 1, sessionTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);
@@ -95,6 +99,7 @@ module('Acceptance: Session - Terms', function(hooks) {
   });
 
   test('cancel term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, sessionId: 1, sessionTaxonomyDetails: true });
     assert.equal(page.taxonomies.vocabularies().count, 1);

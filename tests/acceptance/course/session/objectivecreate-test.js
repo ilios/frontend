@@ -12,8 +12,8 @@ module('Acceptance: Session - Objective Create', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('academicYear', {id: 2013});
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
@@ -21,7 +21,7 @@ module('Acceptance: Session - Objective Create', function(hooks) {
     this.objective = this.server.create('objective');
     this.course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('session', {
       course: this.course,
@@ -30,6 +30,7 @@ module('Acceptance: Session - Objective Create', function(hooks) {
   });
 
   test('save new objective', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
@@ -50,6 +51,7 @@ module('Acceptance: Session - Objective Create', function(hooks) {
   });
 
   test('cancel new objective', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);
@@ -65,6 +67,7 @@ module('Acceptance: Session - Objective Create', function(hooks) {
   });
 
   test('empty objective title can not be created', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 1);

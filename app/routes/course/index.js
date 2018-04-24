@@ -58,8 +58,8 @@ export default  Route.extend({
     let canUpdateCourse;
     let canCreateSession;
     if (!enforceRelationshipCapabilityPermissions) {
-      canUpdateCourse = true;
-      canCreateSession = true;
+      canUpdateCourse = !course.get('locked');
+      canCreateSession = !course.get('locked');
     } else {
       canUpdateCourse = await permissionChecker.canUpdateCourse(course);
       canCreateSession = await permissionChecker.canCreateSession(course);

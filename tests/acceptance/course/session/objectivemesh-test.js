@@ -12,8 +12,8 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
+    this.school = this.server.create('school');
     this.user = await setupAuthentication();
-    this.server.create('school');
     this.server.create('academicYear', {id: 2013});
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
@@ -35,7 +35,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
 
     const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('session', {
       course,
@@ -44,6 +44,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
   });
 
   test('manage terms', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 3);
 
@@ -90,6 +91,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
   });
 
   test('save terms', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 3);
 
@@ -121,6 +123,7 @@ module('Acceptance: Session - Objective Mesh Descriptors', function(hooks) {
   });
 
   test('cancel changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.current().count, 3);
 

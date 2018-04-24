@@ -12,8 +12,8 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('academicYear');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
@@ -33,7 +33,7 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
 
     const course = this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('session', {
       course,
@@ -51,6 +51,7 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
   });
 
   test('manage terms', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.meshTerms.current().count, 3);
     await page.meshTerms.manage();
@@ -84,6 +85,7 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
   });
 
   test('save terms', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.meshTerms.current().count, 3);
@@ -108,6 +110,7 @@ module('Acceptance: Session - Mesh Terms', function(hooks) {
   });
 
   test('cancel term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.meshTerms.current().count, 3);
