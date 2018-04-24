@@ -124,6 +124,12 @@ export default Service.extend({
     const school = await sessionType.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_SESSION_TYPES');
   },
+  async canUpdateSessionTypeInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_SESSION_TYPES');
+  },
+  async canDeleteSessionTypeInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_DELETE_SESSION_TYPES');
+  },
   async canCreateSessionType(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_SESSION_TYPES');
   },
@@ -133,6 +139,12 @@ export default Service.extend({
   },
   async canDeleteDepartment(department) {
     const school = await department.get('school');
+    return this.canDoInSchool(school, 'CAN_DELETE_DEPARTMENTS');
+  },
+  async canUpdateDepartmentInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_DEPARTMENTS');
+  },
+  async canDeleteDepartmentInSchool(school) {
     return this.canDoInSchool(school, 'CAN_DELETE_DEPARTMENTS');
   },
   async canCreateDepartment(school) {
@@ -232,6 +244,12 @@ export default Service.extend({
     const school = await competency.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_COMPETENCIES');
   },
+  async canUpdateCompetencyInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_COMPETENCIES');
+  },
+  async canDeleteCompetencyInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_DELETE_COMPETENCIES');
+  },
   async canCreateCompetency(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_COMPETENCIES');
   },
@@ -243,6 +261,12 @@ export default Service.extend({
     const school = await vocabulary.get('school');
     return this.canDoInSchool(school, 'CAN_DELETE_VOCABULARIES');
   },
+  async canUpdateVocabularyInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_VOCABULARIES');
+  },
+  async canDeleteVocabularyInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_DELETE_VOCABULARIES');
+  },
   async canCreateVocabulary(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_VOCABULARIES');
   },
@@ -252,6 +276,12 @@ export default Service.extend({
   },
   async canDeleteTerm(term) {
     const school = await term.get('school');
+    return this.canDoInSchool(school, 'CAN_DELETE_TERMS');
+  },
+  async canUpdateTermInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_TERMS');
+  },
+  async canDeleteTermInSchool(school) {
     return this.canDoInSchool(school, 'CAN_DELETE_TERMS');
   },
   async canCreateTerm(school) {
