@@ -42,7 +42,6 @@ export default Service.extend({
         'CAN_UPDATE_ALL_PROGRAM_YEARS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'PROGRAM_DIRECTOR',
         ],
         'CAN_UPDATE_THEIR_PROGRAM_YEARS': [
           'PROGRAM_DIRECTOR',
@@ -50,7 +49,6 @@ export default Service.extend({
         'CAN_DELETE_ALL_PROGRAM_YEARS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
-          'PROGRAM_DIRECTOR',
         ],
         'CAN_DELETE_THEIR_PROGRAM_YEARS': [
           'PROGRAM_DIRECTOR',
