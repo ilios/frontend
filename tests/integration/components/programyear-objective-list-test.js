@@ -33,7 +33,7 @@ test('it renders', function(assert){
   this.set('subject', programYear);
 
   this.render(
-    hbs`{{programyear-objective-list subject=subject manageCompetency=(action 'nothing') manageDescriptors=(action 'nothing')}}`
+    hbs`{{programyear-objective-list subject=subject manageCompetency=(action 'nothing') manageDescriptors=(action 'nothing') editable=true}}`
   );
   return wait().then(() => {
     assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');

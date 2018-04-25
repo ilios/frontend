@@ -11,7 +11,7 @@
     </div>
   {{/if}}
   <div class='programyear-competencies-actions'>
-    {{#if editable}}
+    {{#if canUpdate}}
       {{#if isManaging}}
         <button class='bigadd' onclick={{perform save}}>
           {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}

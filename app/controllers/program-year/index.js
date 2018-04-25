@@ -1,6 +1,4 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-const { not } = computed;
 
 export default Controller.extend({
   queryParams: [
@@ -11,12 +9,11 @@ export default Controller.extend({
     'pyStewardDetails',
     'managePyStewards'
   ],
+  canUpdate: false,
   pyObjectiveDetails: false,
   pyTaxonomyDetails: false,
   pyCompetencyDetails: false,
   managePyCompetencies: false,
   pyStewardDetails: false,
   managePyStewards: false,
-
-  editable: not('model.locked'),
 });

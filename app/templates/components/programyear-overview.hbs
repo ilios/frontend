@@ -2,7 +2,7 @@
 <div class='programyear-overview-content'>
   <label>{{t 'general.directors'}}:</label>
   <div>
-    {{#if editable}}
+    {{#if canUpdate}}
       <ul class='removable-directors'>
         {{#each sortedDirectors as |user|}}
           <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
@@ -12,11 +12,13 @@
       <ul class='directors'>
         {{#each sortedDirectors as |user|}}
           <li>{{user.fullName}}</li>
+        {{else}}
+          {{t 'general.none'}}
         {{/each}}
       </ul>
     {{/if}}
   </div>
-  {{#if editable}}
+  {{#if canUpdate}}
     {{user-search
       addUser='addDirector'
       currentlyActiveUsers=(await programYear.directors)

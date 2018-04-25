@@ -1,11 +1,8 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { Promise, all, filter } from 'rsvp';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-
-const { not } = computed;
-const { Promise, all, filter } = RSVP;
 
 export default Component.extend({
   init(){
@@ -21,7 +18,7 @@ export default Component.extend({
   isManaging: null,
   classNames: ['programyear-competencies'],
   isSaving: false,
-  editable: not('programYear.locked'),
+  canUpdate: false,
   selectedCompetencies: null,
 
   loadSelectedCompetencies: task(function * (){

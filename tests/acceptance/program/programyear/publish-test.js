@@ -14,7 +14,7 @@ module('Acceptance: Program Year - Publish', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school, administeredSchools: [school] });
     this.server.create('program', { school });
     this.published = this.server.create('programYear', {
       programId: 1,

@@ -1,7 +1,7 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-const { filterBy, sort, not } = computed;
+const { filterBy, sort } = computed;
 
 export default Component.extend({
   init(){
@@ -10,7 +10,7 @@ export default Component.extend({
   },
   classNames: ['programyear-overview'],
   programYear: null,
-  editable: not('programYear.locked'),
+  canUpdate: false,
   directorsSort: null,
   directorsWithFullName: filterBy('programYear.directors', 'fullName'),
   sortedDirectors: sort('directorsWithFullName', 'directorsSort'),

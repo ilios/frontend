@@ -14,10 +14,10 @@ module('Acceptance: Program Year - Competencies', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('program', {
-      school,
+      school: this.school,
     });
     this.server.create('programYear', {
       programId: 1,
@@ -26,18 +26,18 @@ module('Acceptance: Program Year - Competencies', function(hooks) {
       programYearId: 1
     });
     this.server.create('competency', {
-      school,
+      school: this.school,
     });
     this.server.createList('competency', 2, {
       parentId: 1,
-      school,
+      school: this.school,
       programYearIds: [1]
     });
     this.server.create('competency', {
-      school,
+      school: this.school,
     });
     this.server.createList('competency', 2, {
-      school,
+      school: this.school,
       parentId: 4
     });
   });
@@ -50,6 +50,7 @@ module('Acceptance: Program Year - Competencies', function(hooks) {
   });
 
   test('manager', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     await click('.programyear-competencies .programyear-competencies-actions button');
     let checkboxes = findAll('.programyear-competencies input[type=checkbox]');

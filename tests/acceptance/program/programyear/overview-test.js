@@ -14,10 +14,10 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.createList('user', 5);
-    this.server.create('program', { school });
+    this.server.create('program', { school: this.school });
     this.server.create('programYear', {
       programId: 1,
       directorIds: [2, 3, 4]
@@ -31,6 +31,18 @@ module('Acceptance: Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
+    var items = findAll('.programyear-overview .directors li');
+    assert.equal(items.length, 3);
+    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
+    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
+    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
+  });
+
+  test('list directors with privileges', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await visit(url);
+
+    assert.equal(currentRouteName(), 'programYear.index');
     var items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
@@ -39,6 +51,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   });
 
   test('search directors', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
@@ -61,6 +74,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   });
 
   test('add director', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
@@ -81,6 +95,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   });
 
   test('remove director', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
@@ -92,6 +107,7 @@ module('Acceptance: Program Year - Overview', function(hooks) {
   });
 
   test('first director added is disabled #2770', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     this.server.create('programYear', {
       programId: 1,
