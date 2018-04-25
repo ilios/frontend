@@ -6,7 +6,7 @@ import EmberObject, { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { alias, reads } = computed;
+const { alias, filterBy, reads, sort } = computed;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -36,6 +36,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   routing: service('-routing'),
   currentRoute: '',
   year: null,
+
+  init(){
+    this._super(...arguments);
+    this.set('administratorsSort', ['lastName', 'firstName']);
+  },
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -94,6 +99,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   endDate: null,
   yearOptions: null,
   isFinalized: alias('report.isFinalized'),
+  administratorsSort: null,
+  administratorsWithFullNames: filterBy('report.administrators', 'fullName'),
+  sortedAdministrators: sort('administratorsWithFullNames', 'administratorsSort'),
   actions: {
     changeStartDate(){
       const newDate = this.get('startDate');
@@ -175,6 +183,22 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertDescriptionChanges(){
       const report = this.get('report');
       this.set('description', report.get('description'));
+    },
+    addAdministrator(user) {
+      let report = this.get('report');
+      report.get('administrators').then(administrators => {
+        administrators.addObject(user);
+        user.get('administeredCurriculumInventoryReports').addObject(report);
+        report.save();
+      });
+    },
+    removeAdministrator(user) {
+      let report = this.get('report');
+      report.get('administrators').then(administrators => {
+        administrators.removeObject(user);
+        user.get('administeredCurriculumInventoryReports').removeObject(report);
+        report.save();
+      });
     },
   }
 });
