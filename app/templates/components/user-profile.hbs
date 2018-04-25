@@ -1,5 +1,5 @@
 <div class='blocks'>
-  {{manage-users-summary}}
+  {{manage-users-summary canCreate=canCreate}}
 </div>
 
 <h1 class="user-display-name">
@@ -13,40 +13,40 @@
     <span class="user-is-student">{{t 'general.student'}}</span>
   {{/if}}
 </div>
-{{pending-single-user-update user=user}}
+{{pending-single-user-update user=user canUpdate=canUpdate}}
 
 <div class='blocks'>
   {{user-profile-bio
     user=user
-    isManagable=(await currentUser.userIsDeveloper)
+    isManagable=canUpdate
     isManaging=isManagingBio
     setIsManaging=setIsManagingBio
   }}
 
   {{user-profile-roles
     user=user
-    isManagable=(await currentUser.userIsDeveloper)
+    isManagable=canUpdate
     isManaging=isManagingRoles
     setIsManaging=setIsManagingRoles
   }}
 
   {{user-profile-cohorts
     user=user
-    isManagable=(await currentUser.userIsDeveloper)
+    isManagable=canUpdate
     isManaging=isManagingCohorts
     setIsManaging=setIsManagingCohorts
   }}
 
   {{user-profile-ics
     user=user
-    isManagable=(eq (get (await currentUser.model) 'id') user.id)
+    isManagable=(and canUpdate (eq (get (await currentUser.model) 'id') user.id))
     isManaging=isManagingIcs
     setIsManaging=setIsManagingIcs
   }}
 
   {{user-profile-schools
     user=user
-    isManagable=(await currentUser.userIsDeveloper)
+    isManagable=canUpdate
     isManaging=isManagingSchools
     setIsManaging=setIsManagingSchools
   }}
