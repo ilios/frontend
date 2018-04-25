@@ -10,26 +10,17 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
+    this.server.logging = true;
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
       id: 1,
       title: 'test course',
     });
-    const sessionType = this.server.create('session-type', {
-      id: 1,
-      title: 'test type',
-    });
-    const sessionDescription = this.server.create('session-description', {
-      id: 1,
-      description: 'test description',
-    });
-    const session = this.server.create('session', {
+    this.server.create('session', {
       id: 1,
       title: 'test session',
-      course,
-      sessionType,
-      sessionDescription,
+      course
     });
     this.sessionLearningMaterials = [
       this.server.create('session-learning-material', {
@@ -51,21 +42,18 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         endDate: new Date('2013-03-01T01:10:00')
       })
     ];
-    this.server.create('offering', {
-      id: 1,
-      session,
-    });
     this.ourEvent = EmberObject.create({
       user: 1,
       courseExternalId: 'ext1',
-      sessionTypeTitle: 'session type',
-      name: 'test event',
+      sessionTypeTitle: 'test type',
+      sessionDescription: 'test description',
+      name: 'test session',
       courseTitle: 'test course',
       startDate: now,
       endDate: now.clone().add(1, 'hour'),
       location: 'here',
       instructors: ['Great Teacher'],
-      offering: 1,
+      session: 1,
       learningMaterials: this.sessionLearningMaterials
     });
   });

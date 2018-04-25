@@ -6,8 +6,7 @@ import { isBlank, isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event';
 import moment from 'moment';
 
-const { notEmpty } = computed;
-const { map, resolve } = RSVP;
+const { map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -15,17 +14,6 @@ export default Component.extend({
   i18n: service(),
   event: null,
   classNames: ['single-event'],
-
-  description: computed('session.sessionDescription.description', async function(){
-    const session = await this.get('session');
-    const description = await session.get('sessionDescription');
-    if (isEmpty(description)) {
-      return null;
-    }
-    return description.get('description');
-  }),
-
-  isOffering: notEmpty('event.offering'),
 
   taughtBy: computed('i18n.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
@@ -35,30 +23,12 @@ export default Component.extend({
     return this.get('i18n').t('general.taughtBy', {instructors});
   }),
 
-  sessionIs: computed('session.sessionType', 'i18n.locale', async function(){
+  sessionIs: computed('event.sessionType', 'i18n.locale', function(){
     const i18n = this.get('i18n');
-    const session = await this.get('session');
-    const sessionType = await session.get('sessionType');
-    return i18n.t('general.sessionIs', { type: sessionType.get('title') });
+    const type = this.get('event.sessionTypeTitle');
+    return i18n.t('general.sessionIs', { type });
   }),
 
-  offering: computed('event.offering', async function(){
-    const offeringId = this.get('event.offering');
-    const store = this.get('store');
-    if(!offeringId){
-      return resolve(null);
-    }
-    return await store.findRecord('offering', offeringId);
-  }),
-
-  ilmSession: computed('event.ilmSession', async function(){
-    const ilmSessionId = this.get('event.ilmSession');
-    const store = this.get('store');
-    if(!ilmSessionId) {
-      resolve(null);
-    }
-    return await store.findRecord('ilm-session', ilmSessionId);
-  }),
   courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', async function(){
     const i18n = this.get('i18n');
     const course = await this.get('course');
@@ -186,20 +156,14 @@ export default Component.extend({
     return await session.get('course');
   }),
 
-  sessionTitle: computed('session.title', 'isOffering', async function(){
-    let prefix = this.get('isOffering')?'':'ILM: ';
-    const session = await this.get('session');
-    return (prefix + session.get('title'));
+  session: computed('event.session', async function () {
+    const store = this.get('store');
+    const sessionId = this.get('event.session');
+    return store.find('session', sessionId);
   }),
 
-  session: computed('offering.session', 'ilmSession.session', async function(){
-    const relationship = this.get('isOffering') ? 'offering' : 'ilmSession';
-    const related = await this.get(relationship);
-    return await related.get('session');
-  }),
-
-  recentlyUpdated: computed('lastModified', function(){
-    const lastModifiedDate = moment(this.get('lastModified'));
+  recentlyUpdated: computed('event.lastModified', function(){
+    const lastModifiedDate = moment(this.get('event.lastModified'));
     const today = moment();
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
     return daysSinceLastUpdate < 6;

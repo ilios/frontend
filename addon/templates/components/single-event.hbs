@@ -1,17 +1,17 @@
-{{#if (and event (is-fulfilled courseObjectives) (is-fulfilled courseLearningMaterials) (is-fulfilled sessionObjectives) (is-fulfilled sessionLearningMaterials))}}
+{{#if (and event (is-fulfilled courseObjectives) (is-fulfilled sessionObjectives))}}
   <div class='single-event-summary'>
     <h1>
       {{#if recentlyUpdated}}
         {{fa-icon 'exclamation-circle' class="recently-updated-icon-event" title=(t 'general.newUpdates')}}
       {{/if}}
-      {{get (await course) 'title'}} - <em>{{get (await session) 'title'}}</em>
+      {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
     <div class='single-event-offered-at'>{{t 'general.offeredAt' date=(moment-format event.startDate 'dddd, MMMM Do YYYY, h:mm a')}}</div>
     <div class='single-event-location'>{{event.location}}</div>
     {{#if taughtBy}}
       <div class='single-event-instructors'>{{taughtBy}}</div>
     {{/if}}
-    <div class='single-event-session-is'>{{await sessionIs}}</div>
+    <div class='single-event-session-is'>{{sessionIs}}</div>
     {{#if event.equipmentRequired}}
       <div class='single-event-equipment-required'>
         {{{t 'general.specialEquipmentIs_Required_'}}} {{fa-icon 'flask' title=(t 'general.specialEquipment')}}
@@ -32,8 +32,8 @@
         <strong>{{t 'general.supplementalCurriculum'}}</strong> {{fa-icon 'calendar-minus-o' title=(t 'general.supplementalCurriculum')}}
       </div>
     {{/if}}
-    {{#if (and (is-fulfilled description) (gt (get (await description) 'length') 0))}}
-      {{{await description}}}<br>
+    {{#if (gt (get event.sessionDescription 'length') 0)}}
+      {{{event.sessionDescription}}}<br>
     {{/if}}
   </div>
 
