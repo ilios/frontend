@@ -1,6 +1,7 @@
 {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
   {{programyear-competencies
     programYear=programYear
+    canUpdate=canUpdate
     isManaging=managePyCompetencies
     collapse=(action setPyCompetencyDetails false)
     expand=(action setPyCompetencyDetails true)
@@ -14,18 +15,18 @@
   {{detail-objectives
   subject=programYear
   isProgramYear=true
-  editable=editable
+  editable=canUpdate
   collapse=(action setPyObjectiveDetails false)
   expand=(action setPyObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=programYear editable=editable expand=(action setPyObjectiveDetails true)}}
+  {{collapsed-objectives subject=programYear expand=(action setPyObjectiveDetails true)}}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
   {{detail-taxonomies
   subject=programYear
-  editable=editable
+  editable=canUpdate
   collapse=(action setPyTaxonomyDetails false)
   expand=(action setPyTaxonomyDetails true)
   }}
@@ -36,7 +37,7 @@
 {{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
   {{detail-stewards
   programYear=programYear
-  editable=editable
+  editable=canUpdate
   collapse=(action setPyStewardDetails false)
   expand=(action setPyStewardDetails true)
   }}

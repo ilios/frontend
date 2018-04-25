@@ -15,10 +15,10 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('program', {
-      school,
+      school: this.school,
     });
     this.server.create('programYear', {
       programId: 1,
@@ -27,24 +27,24 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
       programYearId: 1
     });
     this.server.create('competency', {
-      school,
+      school: this.school,
     });
     this.server.create('competency', {
       parentId: 1,
-      school,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.create('competency', {
       parentId: 1,
-      school,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.create('competency', {
-      school,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.create('competency', {
-      school,
+      school: this.school,
       programYearIds: [1],
     });
     this.server.createList('meshDescriptor', 4);
@@ -63,7 +63,8 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     });
   });
 
-  test('list', async function(assert) {
+  test('list editable', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
 
@@ -80,6 +81,23 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3)'), getText('Add New'));
   });
 
+  test('list not editable', async function(assert) {
+    await visit(url);
+    assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
+
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('objective 0'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('competency 1 (competency 0)'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('descriptor 0 descriptor 1'));
+
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('objective 1'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('competency 3'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(3)'), getText('None'));
+
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('objective 2'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('None'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3)'), getText('None'));
+  });
+
   skip('manage terms', async function() {
     //skip until we convert this test to the page object system
   });
@@ -93,6 +111,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('manage competencies', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
     await visit(url);
     let tds = findAll('.programyear-objective-list tbody tr:nth-of-type(1) td');
@@ -118,6 +137,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('save competency', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
@@ -128,6 +148,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('save no competency', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
@@ -138,6 +159,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('cancel competency change', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
@@ -148,6 +170,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('cancel remove competency change', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
@@ -158,6 +181,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('add competency', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2) button');
@@ -168,6 +192,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
   });
 
   test('empty objective title can not be saved', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     await visit(url);
     const container = '.programyear-objective-list';

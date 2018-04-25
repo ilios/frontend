@@ -14,21 +14,21 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('school');
     this.server.create('program', {
-      school,
+      school: this.school,
     });
     this.server.create('programYear', {
       programId: 1,
     });
     this.server.create('cohort', { programId: 1});
     this.server.create('department', {
-      school,
+      school: this.school,
     });
     this.server.create('department', {
-      school
+      school: this.school,
     });
     this.server.create('department', {
       schoolId: 2,
@@ -37,11 +37,11 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
       schoolId: 3
     });
     this.server.createList('department', 5, {
-      school
+      school: this.school,
     });
     this.server.create('programYearSteward', {
       programYearId: 1,
-      school,
+      school: this.school,
       departmentId: 1
     });
     this.server.create('programYearSteward', {
@@ -68,6 +68,7 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   });
 
   test('save', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     const container = '.detail-stewards';
     const manage = `${container} .actions button`;
@@ -92,6 +93,7 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   });
 
   test('select school and all departments', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     const container = '.detail-stewards';
     const manage = `${container} .actions button`;
@@ -110,6 +112,7 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   });
 
   test('select all departments but not school', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     const container = '.detail-stewards';
     const manage = `${container} .actions button`;
@@ -139,6 +142,7 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   });
 
   test('remove solo school with no departments', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     const container = '.detail-stewards';
     const manage = `${container} .actions button`;
@@ -157,6 +161,7 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   });
 
   test('cancel', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     const container = '.detail-stewards';
     const manage = `${container} .actions button`;

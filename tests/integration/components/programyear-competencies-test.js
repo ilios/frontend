@@ -50,6 +50,7 @@ test('it renders', function(assert) {
   this.set('nothing', parseInt);
   this.render(hbs`{{programyear-competencies
     programYear=programYear
+    canUpdate=true
     isManaging=false
     collapse=(action nothing)
     expand=(action nothing)
@@ -74,6 +75,7 @@ test('clicking manage fires action', function(assert) {
   }));
   this.render(hbs`{{programyear-competencies
     programYear=programYear
+    canUpdate=true
     isManaging=false
     collapse=(action nothing)
     expand=(action nothing)

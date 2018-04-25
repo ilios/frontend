@@ -15,14 +15,14 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school });
     this.server.create('vocabulary', {
-      school,
+      school: this.school,
       active: true
     });
     this.server.create('program', {
-      school
+      school: this.school
     });
     this.server.create('programYear', {
       programId: 1,
@@ -48,6 +48,7 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   });
 
   test('manage terms', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     await visit(url);
     await click(find('.taxonomy-manager .actions button'));
@@ -57,6 +58,7 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   });
 
   test('save term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click(find('.taxonomy-manager .actions button'));
@@ -67,6 +69,7 @@ module('Acceptance: Program Year - Terms', function(hooks) {
   });
 
   test('cancel term changes', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
     await click(find('.taxonomy-manager .actions button'));
