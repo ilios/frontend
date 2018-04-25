@@ -6087,9 +6087,9 @@ ignore@^3.3.3, ignore@^3.3.5, ignore@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-ilios-common@12.8.0:
-  version "12.8.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-12.8.0.tgz#0f74350bb4e97a54e96ad75c001c8be9194e7e63"
+ilios-common@12.8.1:
+  version "12.8.1"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-12.8.1.tgz#029a384da9e8535e7640e756d73c17da8638e780"
   dependencies:
     elemental-calendar "^0.1.0"
     ember-cli-babel "^6.6.0"
