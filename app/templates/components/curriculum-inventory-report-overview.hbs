@@ -10,6 +10,32 @@
     </div>
   </div>
   <div class='curriculum-inventory-report-overview-content'>
+    <div class="block administrators">
+      <label>{{t 'general.administrators'}}:</label>
+      <div>
+        {{#unless isFinalized}}
+          <ul class='removable-administrators'>
+            {{#each sortedAdministrators as |user|}}
+              <li {{action 'removeAdministrator' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <ul class='administrators'>
+            {{#each sortedAdministrators as |user|}}
+              <li>{{user.fullName}}</li>
+            {{else}}
+              {{t 'general.none'}}
+            {{/each}}
+          </ul>
+        {{/unless}}
+      </div>
+      {{#unless isFinalized}}
+        {{user-search
+            addUser='addAdministrator'
+            currentlyActiveUsers=(await report.administrators)
+        }}
+      {{/unless}}
+    </div>
     <div class="block start-date">
       <label>{{t 'general.start'}}:</label>
       <span>
