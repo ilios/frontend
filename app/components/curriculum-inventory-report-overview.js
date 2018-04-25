@@ -184,21 +184,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const report = this.get('report');
       this.set('description', report.get('description'));
     },
-    addAdministrator(user) {
-      let report = this.get('report');
-      report.get('administrators').then(administrators => {
-        administrators.addObject(user);
-        user.get('administeredCurriculumInventoryReports').addObject(report);
-        report.save();
-      });
+    async addAdministrator(user) {
+      const report = this.get('report');
+      const administrators = await report.get('administrators');
+      administrators.addObject(user);
+      user.get('administeredCurriculumInventoryReports').addObject(report);
+      report.save();
     },
-    removeAdministrator(user) {
-      let report = this.get('report');
-      report.get('administrators').then(administrators => {
-        administrators.removeObject(user);
-        user.get('administeredCurriculumInventoryReports').removeObject(report);
-        report.save();
-      });
+    async removeAdministrator(user) {
+      const report = this.get('report');
+      const administrators = await report.get('administrators');
+      administrators.removeObject(user);
+      user.get('administeredCurriculumInventoryReports').removeObject(report);
+      report.save();
     },
   }
 });
