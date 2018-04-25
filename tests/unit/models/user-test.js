@@ -1,10 +1,7 @@
-import RSVP from 'rsvp';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { initialize } from '../../../initializers/replace-promise';
-
-const { resolve } = RSVP;
 
 initialize();
 
@@ -373,6 +370,149 @@ module('Unit | Model | User', function(hooks) {
     });
   });
 
+  test('performsNonLearnerFunction - directedCourses', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('course', { directors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - administeredCourses', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('course', { administrators: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - administeredSessions', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('session', { administrators: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - instructedLearnerGroups', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('learner-group', { instructors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - instructorGroups', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('instructor-group', { users: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - instructedOfferings', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('offering', { instructors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - directedPrograms', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('program', { directors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - programYears', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('program-year', { directors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - administeredCurriculumInventoryReports', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('curriculum-inventory-report', { administrators: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('performsNonLearnerFunction - directedSchools', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('school', { directors: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
+  test('isLearner - cohorts', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('cohort', { users: [model] });
+      let isLearner = model.get('isLearner');
+      assert.ok(isLearner);
+    });
+  });
+
+  test('isLearner - offerings', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('offering', { learners: [model] });
+      let isLearner = model.get('isLearner');
+      assert.ok(isLearner);
+    });
+  });
+
+  test('isLearner - learnerIlmSessions', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('ilm-session', { learners: [model] });
+      let isLearner = model.get('isLearner');
+      assert.ok(isLearner);
+    });
+  });
+
   test('gets all instructor ilm courses', async function(assert) {
     let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
@@ -494,56 +634,6 @@ module('Unit | Model | User', function(hooks) {
       assert.ok(cohorts.includes(secondaryCohort));
       assert.ok(cohorts.includes(anotherCohort));
       assert.notOk(cohorts.includes(primaryCohort));
-    });
-  });
-
-  test('all associated schools - user has only primary school, no school permissions', async function(assert) {
-    assert.expect(2);
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
-    let store = this.owner.lookup('service:store');
-    run( async () => {
-      const school = store.createRecord('school');
-      model.set('school', school);
-
-      const schools = await model.get('schools');
-      assert.equal(schools.length, 1);
-      assert.ok(schools.includes(school));
-    });
-  });
-
-  test('all associated schools - user has school permissions', async function(assert) {
-    assert.expect(10);
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
-    let store = this.owner.lookup('service:store');
-    run( async () => {
-      const school1 = store.createRecord('school', { id: 1 });
-      const school2 = store.createRecord('school', { id: 2 });
-      const school3 = store.createRecord('school', { id: 3 });
-      store.createRecord('permission', { user: model, tableRowId: 1, tableName: 'school'});
-      store.createRecord('permission', { user: model, tableRowId: 2, tableName: 'school'});
-      store.createRecord('permission', { user: model, tableRowId: 3, tableName: 'school'});
-      model.set('school', school1);
-
-      store.reopen({
-        findRecord(what, id){
-          assert.equal(what, 'school');
-          assert.ok(id >= 1 && id <= 3);
-          switch (id) {
-          case 1:
-            return resolve(school1);
-          case 2:
-            return resolve(school2);
-          case 3:
-            return resolve(school3);
-          }
-        },
-      });
-
-      const schools = await model.get('schools');
-      assert.equal(schools.length, 3);
-      assert.ok(schools.includes(school1));
-      assert.ok(schools.includes(school2));
-      assert.ok(schools.includes(school3));
     });
   });
 
