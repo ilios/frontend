@@ -4,9 +4,6 @@ import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 const CourseProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
@@ -29,8 +26,7 @@ const CourseProxy = ObjectProxy.extend({
 
     return i18n.t(translation).string;
   }),
-  userCanDelete: computed('content', 'currentUser', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const currentUser = this.get('currentUser');
+  userCanDelete: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
     const permissionChecker = this.get('permissionChecker');
     const course = this.get('content');
     if (course.get('isPublishedOrScheduled')) {
@@ -38,38 +34,16 @@ const CourseProxy = ObjectProxy.extend({
     } else if (course.hasMany('descendants').ids().length > 0) {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const userIsDeveloper = await currentUser.get('userIsDeveloper');
-      if (userIsDeveloper) {
-        return true;
-      }
-      return await currentUser.isDirectingCourse(course);
-    }
-
     return permissionChecker.canDeleteCourse(course);
   }),
-  userCanLock: computed('content', 'currentUser', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const currentUser = this.get('currentUser');
+  userCanLock: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
     const permissionChecker = this.get('permissionChecker');
     const course = this.get('content');
-    if (!enforceRelationshipCapabilityPermissions) {
-      const userIsDeveloper = await currentUser.get('userIsDeveloper');
-      if (userIsDeveloper) {
-        return true;
-      }
-      return await currentUser.isDirectingCourse(course);
-    }
-
     return permissionChecker.canUpdateCourse(course);
   }),
-  userCanUnLock: computed('content', 'currentUser', 'content.locked', 'content.archived', async function(){
-    const currentUser = this.get('currentUser');
+  userCanUnLock: computed('content', 'content.locked', 'content.archived', async function(){
     const permissionChecker = this.get('permissionChecker');
     const course = this.get('content');
-    if (!enforceRelationshipCapabilityPermissions) {
-      return await currentUser.get('userIsDeveloper');
-    }
-
     return permissionChecker.canUnlockCourse(course);
   }),
 });

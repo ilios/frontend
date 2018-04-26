@@ -1,9 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend({
   permissionChecker: service(),
   canUpdate: false,
@@ -17,14 +14,7 @@ export default Route.extend({
     const course = await session.get('course');
     const school = await course.get('school');
     await school.get('configurations');
-
-    let canUpdate;
-    if (!enforceRelationshipCapabilityPermissions) {
-      canUpdate = !course.get('locked');
-    } else {
-      canUpdate = await permissionChecker.canUpdateSession(session);
-    }
-
+    const canUpdate = await permissionChecker.canUpdateSession(session);
     this.set('canUpdate', canUpdate);
   },
   setupController(controller, model) {

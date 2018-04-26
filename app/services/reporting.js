@@ -4,10 +4,7 @@ import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 
-const { all, filter, Promise, resolve, map } = RSVP;
-
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+const { filter, Promise, resolve, map } = RSVP;
 
 export default Service.extend({
   store: service(),
@@ -102,45 +99,16 @@ export default Service.extend({
 
     return query;
   },
-  canViewCourses: computed(
-    'currentUser.userIsCourseDirector',
-    'currentUser.userIsFaculty',
-    'currentUser.userIsDeveloper',
-    'currentUser.performsNonLearnerFunction',
-    async function(){
-      const currentUser = this.get('currentUser');
-      if (!enforceRelationshipCapabilityPermissions) {
-        const roles = await all([
-          currentUser.get('userIsCourseDirector'),
-          currentUser.get('userIsFaculty'),
-          currentUser.get('userIsDeveloper')
-        ]);
 
-        return roles.includes(true);
-      }
+  canViewCourses: computed('currentUser.performsNonLearnerFunction', async function(){
+    const currentUser = this.get('currentUser');
+    return currentUser.get('performsNonLearnerFunction');
+  }),
 
-      return currentUser.get('performsNonLearnerFunction');
-    }
-  ),
-  canViewPrograms: computed(
-    'currentUser.userIsCourseDirector',
-    'currentUser.userIsDeveloper',
-    'currentUser.performsNonLearnerFunction',
-    async function(){
-      const currentUser = this.get('currentUser');
-      if (!enforceRelationshipCapabilityPermissions) {
-        const roles = await all([
-          currentUser.get('userIsCourseDirector'),
-          currentUser.get('userIsFaculty'),
-          currentUser.get('userIsDeveloper')
-        ]);
-
-        return roles.includes(true);
-      }
-
-      return currentUser.get('performsNonLearnerFunction');
-    }
-  ),
+  canViewPrograms: computed('currentUser.performsNonLearnerFunction', async function(){
+    const currentUser = this.get('currentUser');
+    return currentUser.get('performsNonLearnerFunction');
+  }),
 
   async coursesResults(results, year){
     const canView = await this.get('canViewCourses');

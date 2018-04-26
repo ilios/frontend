@@ -11,9 +11,6 @@ import { task } from 'ember-concurrency';
 
 const { mapBy } = computed;
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Component.extend({
   classNames: ['programyear-list'],
 
@@ -201,9 +198,8 @@ const ProgramYearProxy = ObjectProxy.extend({
   permissionChecker: null,
   showRemoveConfirmation: false,
   isSaving: false,
-  userCanDelete: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+  userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.get('content');
-    const currentUser = this.get('currentUser');
     const permissionChecker = this.get('permissionChecker');
     if (programYear.get('isPublishedOrScheduled')) {
       return false;
@@ -213,33 +209,16 @@ const ProgramYearProxy = ObjectProxy.extend({
     if (cohortUsers.length > 0) {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const isDeveloper = await currentUser.get('userIsDeveloper');
-      if (!isDeveloper) {
-        return false;
-      }
-    }
-
     return permissionChecker.canDeleteProgramYear(programYear);
   }),
-  userCanLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+  userCanLock: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.get('content');
-    const currentUser = this.get('currentUser');
     const permissionChecker = this.get('permissionChecker');
-    if (!enforceRelationshipCapabilityPermissions) {
-      return currentUser.get('userIsDeveloper');
-    }
-
     return permissionChecker.canUpdateProgramYear(programYear);
   }),
-  userCanUnLock: computed('content', 'currentUser.userIsDeveloper', 'currentUser.model.programYears.[]', async function(){
+  userCanUnLock: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.get('content');
-    const currentUser = this.get('currentUser');
     const permissionChecker = this.get('permissionChecker');
-    if (!enforceRelationshipCapabilityPermissions) {
-      return currentUser.get('userIsDeveloper');
-    }
-
     return permissionChecker.canUnlockProgramYear(programYear);
   }),
 });

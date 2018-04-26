@@ -9,9 +9,6 @@ import escapeRegExp from '../utils/escape-reg-exp';
 
 const { gt } = computed;
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Controller.extend({
   currentUser: service(),
   i18n: service(),
@@ -78,10 +75,7 @@ export default Controller.extend({
     });
   }),
 
-  canCreate: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
     return permissionChecker.canCreateProgram(selectedSchool);

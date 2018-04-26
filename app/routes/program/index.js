@@ -3,20 +3,12 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   canCreate: false,
   async afterModel(program) {
     const permissionChecker = this.get('permissionChecker');
-
-    let canCreate = true;
-    if (enforceRelationshipCapabilityPermissions) {
-      canCreate = await permissionChecker.canCreateProgramYear(program);
-    }
-
+    const canCreate = await permissionChecker.canCreateProgramYear(program);
     this.set('canCreate', canCreate);
 
     await all([

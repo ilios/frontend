@@ -8,11 +8,8 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 const { reads } = computed;
-const { Promise, all } = RSVP;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   externalId: [
@@ -105,24 +102,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return users;
   }).restartable(),
 
-  showRollover: computed('course', 'currentUser', 'routing.currentRouteName', async function () {
+  showRollover: computed('course', 'routing.currentRouteName', async function () {
     const routing = this.get('routing');
     if (routing.get('currentRouteName') === 'course.rollover') {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const currentUser = this.get('currentUser');
-      const hasRole = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsDeveloper')
-      ]);
-      return hasRole.includes(true);
-    } else {
-      const permissionChecker = this.get('permissionChecker');
-      const course = this.get('course');
-      const school = await course.get('school');
-      return permissionChecker.canCreateCourse(school);
-    }
+
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('course');
+    const school = await course.get('school');
+    return permissionChecker.canCreateCourse(school);
   }),
 
   actions: {

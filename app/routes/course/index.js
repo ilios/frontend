@@ -3,10 +3,7 @@ import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all } from 'rsvp';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
-export default  Route.extend({
+export default Route.extend({
   store: service(),
   permissionChecker: service(),
   canCreateSession: false,
@@ -55,15 +52,8 @@ export default  Route.extend({
   },
   async fillPermissions(course) {
     const permissionChecker = this.get('permissionChecker');
-    let canUpdateCourse;
-    let canCreateSession;
-    if (!enforceRelationshipCapabilityPermissions) {
-      canUpdateCourse = !course.get('locked');
-      canCreateSession = !course.get('locked');
-    } else {
-      canUpdateCourse = await permissionChecker.canUpdateCourse(course);
-      canCreateSession = await permissionChecker.canCreateSession(course);
-    }
+    const canUpdateCourse = await permissionChecker.canUpdateCourse(course);
+    const canCreateSession = await permissionChecker.canCreateSession(course);
 
     this.set('canUpdateCourse', canUpdateCourse);
     this.set('canCreateSession', canCreateSession);

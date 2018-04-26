@@ -8,9 +8,6 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { computed } from '@ember/object';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 const Validations = buildValidations({
   bestSelectedCourse: [
     validator('presence', true)
@@ -142,7 +139,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     });
 
     const filteredCourses = await filter(courses.toArray(), async course => {
-      return !enforceRelationshipCapabilityPermissions || permissionChecker.canCreateSession(course);
+      return permissionChecker.canCreateSession(course);
     });
 
     return filteredCourses.sortBy('title');

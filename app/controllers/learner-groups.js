@@ -6,8 +6,6 @@ import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Controller.extend({
   currentUser: service(),
@@ -167,19 +165,13 @@ export default Controller.extend({
     this.set('newGroup', newGroups[0]);
   }),
 
-  canCreate: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = await this.get('selectedSchool');
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
-  canDelete: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canDelete: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = await this.get('selectedSchool');
     return permissionChecker.canDeleteLearnerGroupInSchool(selectedSchool);

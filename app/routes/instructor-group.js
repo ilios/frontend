@@ -2,23 +2,13 @@ import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   titleToken: 'general.instructorGroups',
   canUpdate: false,
   async afterModel(instructorGroup) {
     const permissionChecker = this.get('permissionChecker');
-
-    let canUpdate;
-    if (!enforceRelationshipCapabilityPermissions) {
-      canUpdate = true;
-    } else {
-      canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
-    }
-
+    const canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
     this.set('canUpdate', canUpdate);
   },
   setupController(controller, model) {

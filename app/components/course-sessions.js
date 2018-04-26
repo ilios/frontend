@@ -5,9 +5,6 @@ import { computed } from '@ember/object';
 import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Component.extend({
   i18n: service(),
   permissionChecker: service(),
@@ -31,7 +28,7 @@ export default Component.extend({
     const course = this.get('course');
     const sessions = await course.get('sessions');
     const sessionObjects = await map(sessions.toArray(), async session => {
-      const canDelete = enforceRelationshipCapabilityPermissions?await permissionChecker.canDeleteSession(session):true;
+      const canDelete = await permissionChecker.canDeleteSession(session);
       let sessionObject = {
         session,
         course,

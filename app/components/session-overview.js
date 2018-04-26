@@ -11,9 +11,9 @@ import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import config from '../config/environment';
 import { task } from 'ember-concurrency';
 
-const { IliosFeatures: { schoolSessionAttributes, enforceRelationshipCapabilityPermissions } } = config;
+const { IliosFeatures: { schoolSessionAttributes } } = config;
 const { oneWay, sort } = computed;
-const { Promise, all } = RSVP;
+const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -104,13 +104,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     if (routing.get('currentRouteName') === 'session.copy') {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const hasRole = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsDeveloper')
-      ]);
-      return hasRole.includes(true);
-    }
+
     const session = this.get('session');
     const course = await session.get('course');
     if (await permissionChecker.canCreateSession(course)) {

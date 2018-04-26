@@ -3,9 +3,6 @@ import { hash, all, filter } from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   currentUser: service(),
@@ -19,7 +16,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   async afterModel(user){
     const store = this.get('store');
     const permissionChecker = this.get('permissionChecker');
-    const currentUser = this.get('currentUser');
     const obj = await hash({
       cohorts: user.get('cohorts'),
       learnerGroups: user.get('learnerGroups'),
@@ -27,16 +23,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
       schools: user.get('schools'),
     });
     await all([all(obj.cohorts.mapBy('school')), all(obj.learnerGroups.mapBy('school'))]);
-    let canUpdate = currentUser.get('userIsDeveloper');
-    let canCreate = currentUser.get('userIsDeveloper');
-    if (enforceRelationshipCapabilityPermissions) {
-      const schools = await store.findAll('school');
-      const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
-        return permissionChecker.canCreateUser(school);
-      });
-      canCreate = schoolsWithCreateUserPermission.length > 0;
-      canUpdate = permissionChecker.canUpdateUser(user);
-    }
+    const schools = await store.findAll('school');
+    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
+      return permissionChecker.canCreateUser(school);
+    });
+    const canCreate = schoolsWithCreateUserPermission.length > 0;
+    const canUpdate = permissionChecker.canUpdateUser(user);
 
     this.set('canUpdate', canUpdate);
     this.set('canCreate', canCreate);

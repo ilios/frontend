@@ -3,9 +3,6 @@ import { hash } from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   titleToken: 'general.schools',
@@ -55,36 +52,21 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   async loadPermissions(school) {
     const permissionChecker = this.get('permissionChecker');
-    let canUpdateSchool = true;
-    let canUpdateCompetency = true;
-    let canDeleteCompetency = true;
-    let canCreateCompetency = true;
-    let canUpdateVocabulary = true;
-    let canDeleteVocabulary = true;
-    let canCreateVocabulary = true;
-    let canUpdateTerm = true;
-    let canDeleteTerm = true;
-    let canCreateTerm = true;
-    let canUpdateSessionType = true;
-    let canDeleteSessionType = true;
-    let canCreateSessionType = true;
-    let canUpdateSchoolConfig = true;
-    if (enforceRelationshipCapabilityPermissions) {
-      canUpdateSchool = await permissionChecker.canUpdateSchool(school);
-      canUpdateCompetency = await permissionChecker.canUpdateCompetencyInSchool(school);
-      canDeleteCompetency = await permissionChecker.canDeleteCompetencyInSchool(school);
-      canCreateCompetency = await permissionChecker.canCreateCompetency(school);
-      canUpdateVocabulary = await permissionChecker.canUpdateVocabularyInSchool(school);
-      canDeleteVocabulary = await permissionChecker.canDeleteVocabularyInSchool(school);
-      canCreateVocabulary = await permissionChecker.canCreateVocabulary(school);
-      canUpdateTerm = await permissionChecker.canUpdateTermInSchool(school);
-      canDeleteTerm = await permissionChecker.canDeleteTermInSchool(school);
-      canCreateTerm = await permissionChecker.canCreateTerm(school);
-      canUpdateSessionType = await permissionChecker.canUpdateSessionTypeInSchool(school);
-      canDeleteSessionType = await permissionChecker.canDeleteSessionTypeInSchool(school);
-      canCreateSessionType = await permissionChecker.canCreateSessionType(school);
-      canUpdateSchoolConfig = await permissionChecker.canUpdateSchoolConfig(school);
-    }
+
+    const canUpdateSchool = await permissionChecker.canUpdateSchool(school);
+    const canUpdateCompetency = await permissionChecker.canUpdateCompetencyInSchool(school);
+    const canDeleteCompetency = await permissionChecker.canDeleteCompetencyInSchool(school);
+    const canCreateCompetency = await permissionChecker.canCreateCompetency(school);
+    const canUpdateVocabulary = await permissionChecker.canUpdateVocabularyInSchool(school);
+    const canDeleteVocabulary = await permissionChecker.canDeleteVocabularyInSchool(school);
+    const canCreateVocabulary = await permissionChecker.canCreateVocabulary(school);
+    const canUpdateTerm = await permissionChecker.canUpdateTermInSchool(school);
+    const canDeleteTerm = await permissionChecker.canDeleteTermInSchool(school);
+    const canCreateTerm = await permissionChecker.canCreateTerm(school);
+    const canUpdateSessionType = await permissionChecker.canUpdateSessionTypeInSchool(school);
+    const canDeleteSessionType = await permissionChecker.canDeleteSessionTypeInSchool(school);
+    const canCreateSessionType = await permissionChecker.canCreateSessionType(school);
+    const canUpdateSchoolConfig = await permissionChecker.canUpdateSchoolConfig(school);
 
     this.set('canUpdateSchool', canUpdateSchool);
     this.set('canUpdateCompetency', canUpdateCompetency);
