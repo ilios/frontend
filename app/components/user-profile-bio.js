@@ -103,7 +103,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   user: null,
   isManaging: false,
-  isManagable: false,
+  isManageable: false,
 
   firstName: null,
   middleName: null,

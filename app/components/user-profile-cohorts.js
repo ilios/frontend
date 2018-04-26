@@ -23,7 +23,7 @@ export default Component.extend({
 
   user: null,
   isManaging: false,
-  isManagable: false,
+  isManageable: false,
   cohorts: null,
   schools: null,
   selectedSchoolId: null,

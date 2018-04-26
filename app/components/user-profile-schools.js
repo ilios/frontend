@@ -20,7 +20,7 @@ export default Component.extend({
 
   user: null,
   isManaging: false,
-  isManagable: false,
+  isManageable: false,
 
   togglePermissions: null,
   hasSavedRecently: false,

@@ -34,7 +34,7 @@ test('clicking manage sends the action', function(assert) {
   this.set('click', (what) =>{
     assert.ok(what, 'recieved boolean true value');
   });
-  this.render(hbs`{{user-profile-ics user=user isManagable=true setIsManaging=(action click)}}`);
+  this.render(hbs`{{user-profile-ics user=user isManageable=true setIsManaging=(action click)}}`);
   return wait().then(()=>{
     const manage = 'button.manage';
     this.$(manage).click();

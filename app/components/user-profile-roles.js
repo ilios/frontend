@@ -16,7 +16,7 @@ export default Component.extend({
 
   user: null,
   isManaging: false,
-  isManagable: false,
+  isManageable: false,
   hasSavedRecently: false,
   finishedSetup: false,
   isCourseDirectorFlipped: false,

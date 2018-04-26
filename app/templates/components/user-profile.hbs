@@ -18,35 +18,35 @@
 <div class='blocks'>
   {{user-profile-bio
     user=user
-    isManagable=canUpdate
+    isManageable=canUpdate
     isManaging=isManagingBio
     setIsManaging=setIsManagingBio
   }}
 
   {{user-profile-roles
     user=user
-    isManagable=canUpdate
+    isManageable=canUpdate
     isManaging=isManagingRoles
     setIsManaging=setIsManagingRoles
   }}
 
   {{user-profile-cohorts
     user=user
-    isManagable=canUpdate
+    isManageable=canUpdate
     isManaging=isManagingCohorts
     setIsManaging=setIsManagingCohorts
   }}
 
   {{user-profile-ics
     user=user
-    isManagable=(and canUpdate (eq (get (await currentUser.model) 'id') user.id))
+    isManageable=(and canUpdate (eq (get (await currentUser.model) 'id') user.id))
     isManaging=isManagingIcs
     setIsManaging=setIsManagingIcs
   }}
 
   {{user-profile-schools
     user=user
-    isManagable=canUpdate
+    isManageable=canUpdate
     isManaging=isManagingSchools
     setIsManaging=setIsManagingSchools
   }}
