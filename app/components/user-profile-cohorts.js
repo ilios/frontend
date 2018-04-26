@@ -19,7 +19,7 @@ export default Component.extend({
     }
   },
 
-  classNameBindings: [':user-profile-cohorts', ':large-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  classNameBindings: [':user-profile-cohorts', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
 
   user: null,
   isManaging: false,

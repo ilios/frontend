@@ -1,0 +1,44 @@
+.user-profile-permissions {
+  span {
+    white-space: nowrap;
+  }
+
+  p {
+    padding: .25rem;
+    h5 {
+      cursor: pointer;
+    }
+    h6 {
+      margin: .5rem 0 0 .5rem;
+    }
+    ul {
+      margin: 0 0 .5rem 1rem;
+      list-style-position: inside;
+      list-style-type: circle;
+      padding: 0;
+    }
+
+    &.collapsed {
+      h5 {
+        &::after {
+          content: '\25BA';
+        }
+      }
+      h6,
+      ul,
+      .hide-on-collapse {
+        display: none;
+      }
+    }
+
+    &.expanded {
+      border-bottom: 1px solid $black;
+      h5 {
+        &::after {
+          content: '\25BC';
+        }
+      }
+
+    }
+  }
+}
