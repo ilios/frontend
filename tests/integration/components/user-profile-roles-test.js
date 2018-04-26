@@ -15,7 +15,10 @@ moduleForComponent('user-profile-roles', 'Integration | Component | user profile
       id: 6,
       enabled: true,
       userSyncIgnore: false,
+      isRoot: false,
       roles: resolve(userRoles),
+      performsNonLearnerFunction: resolve(false),
+      isLearner: resolve(false),
     });
   }
 });
@@ -35,6 +38,9 @@ test('it renders', function(assert) {
   const formerStudent = '.item:eq(1) span';
   const enabled = '.item:eq(2) span';
   const syncIgnored = '.item:eq(3) span';
+  const performsNonLearnerFunction = '.item:eq(4) span';
+  const learner = '.item:eq(5) span';
+  const root = '.item:eq(6) span';
 
   return wait().then(()=>{
     assert.equal(this.$(student).text().trim(), 'Yes', 'student shows status');
@@ -44,6 +50,13 @@ test('it renders', function(assert) {
     assert.ok(this.$(enabled).hasClass('yes'), 'enabled has right class');
     assert.equal(this.$(syncIgnored).text().trim(), 'No', 'sync ignored shows status');
     assert.ok(this.$(syncIgnored).hasClass('no'), 'sync ignored has right class');
+
+    assert.equal(this.$(performsNonLearnerFunction).text().trim(), 'No');
+    assert.ok(this.$(performsNonLearnerFunction).hasClass('no'));
+    assert.equal(this.$(learner).text().trim(), 'No');
+    assert.ok(this.$(learner).hasClass('no'));
+    assert.equal(this.$(root).text().trim(), 'No');
+    assert.ok(this.$(root).hasClass('no'));
   });
 });
 

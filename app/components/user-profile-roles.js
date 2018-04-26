@@ -8,7 +8,6 @@ import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-  currentUser: service(),
 
   classNameBindings: [':user-profile-roles', ':small-component', ':last', 'hasSavedRecently:has-saved:has-not-saved'],
 
