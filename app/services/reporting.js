@@ -6,6 +6,9 @@ import { singularize, pluralize } from 'ember-inflector';
 
 const { all, filter, Promise, resolve, map } = RSVP;
 
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 export default Service.extend({
   store: service(),
   currentUser: service(),
@@ -103,29 +106,39 @@ export default Service.extend({
     'currentUser.userIsCourseDirector',
     'currentUser.userIsFaculty',
     'currentUser.userIsDeveloper',
+    'currentUser.performsNonLearnerFunction',
     async function(){
       const currentUser = this.get('currentUser');
-      const roles = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsFaculty'),
-        currentUser.get('userIsDeveloper')
-      ]);
+      if (!enforceRelationshipCapabilityPermissions) {
+        const roles = await all([
+          currentUser.get('userIsCourseDirector'),
+          currentUser.get('userIsFaculty'),
+          currentUser.get('userIsDeveloper')
+        ]);
 
-      return roles.includes(true);
+        return roles.includes(true);
+      }
+
+      return currentUser.get('performsNonLearnerFunction');
     }
   ),
   canViewPrograms: computed(
     'currentUser.userIsCourseDirector',
     'currentUser.userIsDeveloper',
+    'currentUser.performsNonLearnerFunction',
     async function(){
       const currentUser = this.get('currentUser');
-      const roles = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsFaculty'),
-        currentUser.get('userIsDeveloper')
-      ]);
+      if (!enforceRelationshipCapabilityPermissions) {
+        const roles = await all([
+          currentUser.get('userIsCourseDirector'),
+          currentUser.get('userIsFaculty'),
+          currentUser.get('userIsDeveloper')
+        ]);
 
-      return roles.includes(true);
+        return roles.includes(true);
+      }
+
+      return currentUser.get('performsNonLearnerFunction');
     }
   ),
 
