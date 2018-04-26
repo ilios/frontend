@@ -12,8 +12,7 @@ module('Acceptance: Course - Print Course', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
-    this.server.create('school');
+    this.school = this.server.create('school');
     this.server.create('academicYear');
     this.server.create('cohort');
     this.server.create('learning-material-user-role');
@@ -68,6 +67,7 @@ module('Acceptance: Course - Print Course', function(hooks) {
   });
 
   test('test print course learning materials', async function (assert) {
+    await setupAuthentication( { school: this.school });
     await visit('/course/1/print');
 
     assert.equal(find('.header h2').textContent, 'Back to the Future');
@@ -81,10 +81,7 @@ module('Acceptance: Course - Print Course', function(hooks) {
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
-    let director = this.server.create('userRole', {
-      title: 'course director'
-    });
-    this.server.db.users.update(this.user.id, {roles: [director]});
+    await setupAuthentication( { school: this.school }, true);
     this.server.create('session', {
       course: this.course,
       published: false,
@@ -110,6 +107,7 @@ module('Acceptance: Course - Print Course', function(hooks) {
   });
 
   test('test does not print unpublished sessions for unprivileged users', async function (assert) {
+    await setupAuthentication( { school: this.school });
     this.server.create('session', {
       course: this.course,
       published: false,

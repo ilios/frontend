@@ -1,35 +1,42 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
+import { all }  from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { all } = RSVP;
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   titleToken: 'general.coursesAndSessions',
+  canViewUnpublished: false,
   // only allow privileged users to view unpublished courses
-  async afterModel(course, transition){
-    if (course.get('isPublishedOrScheduled')) {
-      return this.preloadCourseData(course);
-    }
+  async afterModel(course, transition) {
     const currentUser = this.get('currentUser');
-    const hasRole = await all([
-      currentUser.get('userIsCourseDirector'),
-      currentUser.get('userIsFaculty'),
-      currentUser.get('userIsDeveloper'),
-    ]);
-    if (!hasRole.includes(true)) {
-      transition.abort();
+    let canViewUnpublished;
+    if (!enforceRelationshipCapabilityPermissions) {
+      const hasRole = await all([
+        currentUser.get('userIsCourseDirector'),
+        currentUser.get('userIsFaculty'),
+        currentUser.get('userIsDeveloper'),
+      ]);
+      canViewUnpublished = hasRole.includes(true);
     } else {
-      return this.preloadCourseData(course);
+      canViewUnpublished = currentUser.get('performsNonLearnerFunction');
     }
+    this.set('canViewUnpublished', canViewUnpublished);
+    if (canViewUnpublished || course.get('isPublishedOrScheduled')) {
+      return all([
+        course.get('sessions'),
+        course.get('competencies'),
+        course.get('objectives'),
+      ]);
+    }
+
+    transition.abort();
   },
-  async preloadCourseData(course){
-    return all([
-      course.get('sessions'),
-      course.get('competencies'),
-      course.get('objectives'),
-    ]);
-  }
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('canViewUnpublished', this.get('canViewUnpublished'));
+  },
 });
