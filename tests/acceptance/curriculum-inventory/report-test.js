@@ -13,16 +13,13 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.user = await setupAuthentication( { school } );
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication( { school: this.school } );
   });
 
   test('create new sequence block Issue #2108', async function(assert) {
-    const developer = this.server.create('userRole', {
-      title: 'developer'
-    });
-    this.server.db.users.update(this.user.id, {roles: [developer]});
-    const program = this.server.create('program', {schoolId: 1});
+    this.user.update({ directedSchools: [this.school] });
+    const program = this.server.create('program', {school: this.school});
     const report = this.server.create('curriculumInventoryReport', {program});
     this.server.create('curriculumInventorySequence', {report});
 
@@ -42,15 +39,12 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
   });
 
 
-  test('rollover hidden from instructors', async function(assert) {
+  test('rollover hidden from unprivileged users', async function(assert) {
     this.server.create('program', {
       id: 1,
+      school: this.school,
       'title': 'Doctor of Medicine',
     });
-    const instructor = this.server.create('userRole', {
-      title: 'instructor'
-    });
-    this.server.db.users.update(this.user.id, {roles: [instructor]});
     this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
@@ -65,13 +59,11 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     assert.equal(findAll(rollover).length, 0);
   });
 
-  test('rollover visible to developers', async function (assert) {
-    const developer = this.server.create('userRole', {
-      title: 'developer'
-    });
-    this.server.db.users.update(this.user.id, {roles: [developer]});
+  test('rollover visible to privileged users', async function (assert) {
+    this.user.update({ directedSchools: [this.school] });
     this.server.create('program', {
       id: 1,
+      school: this.school,
       'title': 'Doctor of Medicine',
     });
     this.server.create('curriculumInventoryReport', {
@@ -88,36 +80,11 @@ module('Acceptance: Curriculum Inventory: Report', function(hooks) {
     assert.equal(findAll(rollover).length, 1);
   });
 
-  test('rollover not visible to course directors', async function(assert) {
-    const director = this.server.create('userRole', {
-      title: 'course director'
-    });
-    this.server.db.users.update(this.user.id, {roles: [director]});
-    this.server.create('program', {
-      id: 1,
-      'title': 'Doctor of Medicine',
-    });
-    this.server.create('curriculumInventoryReport', {
-      year: 2013,
-      name: 'foo bar',
-      description: 'lorem ipsum',
-      programId: 1,
-    });
-    await visit(url);
-    const container = '.curriculum-inventory-report-overview';
-    const rollover = `${container} a.rollover`;
-
-    assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.equal(findAll(rollover).length, 0);
-  });
-
   test('rollover hidden on rollover route', async function(assert) {
-    const director = this.server.create('userRole', {
-      title: 'course director'
-    });
-    this.server.db.users.update(this.user.id, {roles: [director]});
+    this.user.update({ directedSchools: [this.school] });
     this.server.create('program', {
       id: 1,
+      school: this.school,
       'title': 'Doctor of Medicine',
     });
     this.server.create('curriculumInventoryReport', {
