@@ -5,6 +5,9 @@ import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 const { all } = RSVP;
 
+import config from 'ilios/config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
 export default Component.extend({
   currentUser: service(),
   tagName: 'div',
@@ -18,14 +21,19 @@ export default Component.extend({
     'currentUser.userIsCourseDirector',
     'currentUser.userIsFaculty',
     'currentUser.userIsDeveloper',
+    'currentUser.performsNonLearnerFunction',
     async function(){
       const currentUser = this.get('currentUser');
-      const roles = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsFaculty'),
-        currentUser.get('userIsDeveloper')
-      ]);
+      if (!enforceRelationshipCapabilityPermissions) {
+        const roles = await all([
+          currentUser.get('userIsCourseDirector'),
+          currentUser.get('userIsFaculty'),
+          currentUser.get('userIsDeveloper')
+        ]);
 
-      return roles.includes(true);
+        return roles.includes(true);
+      }
+
+      return currentUser.get('performsNonLearnerFunction');
     }),
 });
