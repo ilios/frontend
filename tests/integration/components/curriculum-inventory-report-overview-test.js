@@ -57,11 +57,12 @@ test('it renders', function (assert) {
     sequenceBlocks: resolve([])
   });
 
-
-  const currentUserMock = Service.extend({
-    userIsDeveloper: resolve(true)
+  const permissionCheckerMock = Service.extend({
+    canCreateCurriculumInventoryReport() {
+      return resolve(true);
+    }
   });
-  this.register('service:current-user', currentUserMock);
+  this.register('service:permission-checker', permissionCheckerMock);
   this.set('report', report);
 
   this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
@@ -163,7 +164,7 @@ test('read-only/finalized mode', function (assert) {
   });
 });
 
-test('rollover button not visible for non-developer user', function (assert) {
+test('rollover button not visible for unprivileged user', function (assert) {
   assert.expect(1);
 
   let school = EmberObject.create({
@@ -198,10 +199,12 @@ test('rollover button not visible for non-developer user', function (assert) {
     sequenceBlocks: resolve([])
   });
 
-  const currentUserMock = Service.extend({
-    userIsDeveloper: resolve(false)
+  const permissionCheckerMock = Service.extend({
+    canCreateCurriculumInventoryReport() {
+      return resolve(false);
+    }
   });
-  this.register('service:current-user', currentUserMock);
+  this.register('service:permission-checker', permissionCheckerMock);
   this.set('report', report);
 
   this.render(hbs`{{curriculum-inventory-report-details report=report}}`);

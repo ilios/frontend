@@ -1,13 +1,16 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { all } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
+import config from '../config/environment';
+const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+
+
 const { alias, reads } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   description: [
@@ -33,6 +36,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
+  permissionChecker: service(),
   routing: service('-routing'),
   currentRoute: '',
   year: null,
@@ -72,18 +76,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return year + ' - ' + (parseInt(year, 10) + 1);
   }),
 
-  showRollover: computed('currentUser', 'routing.currentRouteName', function(){
-    return new Promise(resolve => {
-      const routing = this.get('routing');
-      if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
-        resolve(false);
-      } else {
-        const currentUser = this.get('currentUser');
-        currentUser.get('userIsDeveloper').then(hasRole => {
-          resolve(hasRole);
-        });
-      }
-    });
+  showRollover: computed('report.program', 'currentUser', 'routing.currentRouteName', async function () {
+    const routing = this.get('routing');
+    if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
+      return false;
+    }
+    if (!enforceRelationshipCapabilityPermissions) {
+      const currentUser = this.get('currentUser');
+      const hasRole = await all([
+        currentUser.get('userIsDeveloper')
+      ]);
+      return hasRole.includes(true);
+    } else {
+      const permissionChecker = this.get('permissionChecker');
+      const report = this.get('report');
+      const program = await report.get('program');
+      const school = await program.get('school');
+      return await permissionChecker.canCreateCurriculumInventoryReport(school);
+    }
   }),
 
   classNames: ['curriculum-inventory-report-overview'],
