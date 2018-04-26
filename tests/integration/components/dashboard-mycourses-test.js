@@ -39,24 +39,18 @@ let mockCourses = [
 ];
 
 let currentUserMock = Service.extend({
+  performsNonLearnerFunction: true,
   activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
-  userIsFaculty: resolve(false),
-  userIsCourseDirector: resolve(false),
-  userIsDeveloper: resolve(true),
 });
 
 let currentUserMockNoCourses = Service.extend({
+  performsNonLearnerFunction: true,
   activeRelatedCoursesInThisYearAndLastYear: resolve([]),
-  userIsFaculty: resolve(true),
-  userIsCourseDirector: resolve(false),
-  userIsDeveloper: resolve(false),
 });
 
 let currentUserMockUnprivileged = Service.extend({
+  performsNonLearnerFunction: false,
   activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
-  userIsFaculty: resolve(false),
-  userIsCourseDirector: resolve(false),
-  userIsDeveloper: resolve(false),
 });
 
 moduleForComponent('dashboard-mycourses', 'Integration | Component | dashboard mycourses', {
