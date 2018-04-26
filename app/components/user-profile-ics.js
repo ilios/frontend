@@ -27,7 +27,7 @@ export default Component.extend({
 
   user: null,
   isManaging: false,
-  isManagable: false,
+  isManageable: false,
   icsFeedKey: null,
   hasSavedRecently: false,
   finishedSetup: false,
