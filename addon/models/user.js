@@ -1,4 +1,5 @@
 import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 import DS from 'ember-data';
 import { A } from '@ember/array';
@@ -60,7 +61,7 @@ export default Model.extend({
     async: true,
     inverse: 'instructors'
   }),
-  programYears: hasMany('program-year', {async: true}),
+  programYears: hasMany('program-year', { async: true }),
   roles: hasMany('user-role', {async: true}),
   directedSchools: hasMany('school', {
     async: true,
@@ -85,7 +86,6 @@ export default Model.extend({
   }),
   primaryCohort: belongsTo('cohort', {async: true, inverse: null}),
   pendingUserUpdates: hasMany('pending-user-update', {async: true}),
-  permissions: hasMany('permission', {async: true}),
   administeredCurriculumInventoryReports: hasMany('curriculum-inventory-report', {
     async: true,
     inverse: 'administrators'
@@ -103,28 +103,56 @@ export default Model.extend({
   }),
 
   /**
-   * All schools that this user is associated with directly.
-   * This includes the user's school affiliation, as well as any additional schools that
-   * the user has read- and/or write-permissions to.
-   * @property schools
+   * Checks if a user is linked to any non-student things
+   * @property isLearner
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('school', async function(){
-    const store = this.get('store');
-    const primarySchool = await this.get('school');
-    const permissions = await this.get('permissions');
-    const schoolIds = permissions.toArray().filter(permission => {
-      return 'school' === permission.get('tableName');
-    }).mapBy('tableRowId');
+  isLearner: computed(
+    'cohorts.[]',
+    'offerings.[]',
+    'learnerIlmSessions.[]',
+    function () {
+      const cohorts = this.hasMany('cohorts').ids();
+      const offerings = this.hasMany('offerings').ids();
+      const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
 
-    const schools = await all(schoolIds.map(id => {
-      return store.findRecord('school', id);
-    }));
+      return !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions);
+    }
+  ),
 
-    schools.pushObject(primarySchool);
-    return schools.uniq();
-  }),
+  /**
+   * Checks if a user is linked to any non-student things
+   * @property performsNonLearnerFunction
+   * @type {Ember.computed}
+   * @public
+   */
+  performsNonLearnerFunction: computed(
+    'directedCourses.[]',
+    'administeredCourses.[]',
+    'administeredSessions.[]',
+    'instructedLearnerGroups.[]',
+    'instructorGroups.[]',
+    'instructedOfferings.[]',
+    'directedPrograms.[]',
+    'programYears.[]',
+    'administeredCurriculumInventoryReports.[]',
+    'directedSchools.[]',
+    function () {
+      const directedCourses = this.hasMany('directedCourses').ids();
+      const administeredCourses = this.hasMany('administeredCourses').ids();
+      const administeredSessions = this.hasMany('administeredSessions').ids();
+      const instructedLearnerGroups = this.hasMany('instructedLearnerGroups').ids();
+      const instructorGroups = this.hasMany('instructorGroups').ids();
+      const instructedOfferings = this.hasMany('instructedOfferings').ids();
+      const directedPrograms = this.hasMany('directedPrograms').ids();
+      const programYears = this.hasMany('programYears').ids();
+      const administeredCurriculumInventoryReports = this.hasMany('administeredCurriculumInventoryReports').ids();
+      const directedSchools = this.hasMany('directedSchools').ids();
+
+      return !isEmpty(directedCourses) || !isEmpty(administeredCourses) || !isEmpty(administeredSessions) || !isEmpty(instructedLearnerGroups) || !isEmpty(instructorGroups) || !isEmpty(instructedOfferings) || !isEmpty(directedPrograms) || !isEmpty(programYears) || !isEmpty(administeredCurriculumInventoryReports) || !isEmpty(directedSchools);
+    }
+  ),
 
   fullName: computed('firstName', 'middleName', 'lastName', function() {
     const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');

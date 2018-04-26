@@ -71,29 +71,9 @@ export default Service.extend({
     const roles = await user.get('roles');
     return roles.map(role => role.get('title').toLowerCase());
   }),
-
-  userIsCourseDirector: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
-    return roleTitles.includes('course director');
-  }),
-
-  userIsFaculty: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
-    return roleTitles.includes('faculty');
-  }),
-
-  userIsDeveloper: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
-    return roleTitles.includes('developer');
-
-  }),
   userIsStudent: computed('useRoleTitles.[]', async function(){
     const roleTitles = await this.get('userRoleTitles');
     return roleTitles.includes('student');
-  }),
-  userIsPublic: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
-    return roleTitles.includes('public');
   }),
   userIsFormerStudent: computed('useRoleTitles.[]', async function(){
     const roleTitles = await this.get('userRoleTitles');
