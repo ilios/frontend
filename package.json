@@ -92,7 +92,7 @@
     "ember-service-worker-update-notify": "^1.0.1",
     "ember-simple-charts": "0.12.3",
     "ember-source": "~3.1.0",
-    "ember-test-selectors": "^0.3.7",
+    "ember-test-selectors": "^1.0.0",
     "ember-tether": "0.4.1",
     "ember-truth-helpers": "^2.0.0",
     "ember-uploader": "1.2.3",
