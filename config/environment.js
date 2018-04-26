@@ -89,7 +89,7 @@ module.exports = function (environment) {
       allowAddNewUser: true,
       schoolSessionAttributes: true,
       accessCourseVisualizations: true,
-      enforceRelationshipCapabilityPermissions: false,
+      enforceRelationshipCapabilityPermissions: true,
     }
   };
 
