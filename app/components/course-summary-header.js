@@ -3,10 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-const { Promise, all } = RSVP;
-
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
+const { Promise } = RSVP;
 
 export default Component.extend({
   currentUser: service(),
@@ -20,19 +17,10 @@ export default Component.extend({
     if (routing.get('currentRouteName') === 'course.rollover') {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const currentUser = this.get('currentUser');
-      const hasRole = await all([
-        currentUser.get('userIsCourseDirector'),
-        currentUser.get('userIsDeveloper')
-      ]);
-      return hasRole.includes(true);
-    } else {
-      const permissionChecker = this.get('permissionChecker');
-      const course = this.get('course');
-      const school = await course.get('school');
-      return permissionChecker.canCreateCourse(school);
-    }
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('course');
+    const school = await course.get('school');
+    return permissionChecker.canCreateCourse(school);
   }),
 
   showMaterials: computed('routing.currentRouteName', function(){

@@ -3,9 +3,6 @@ import { all } from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   editable: false,
@@ -13,19 +10,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
   async afterModel(model) {
     const permissionChecker = this.get('permissionChecker');
 
-    let canUpdate;
-    let canDelete;
-    let canCreate;
-    if (!enforceRelationshipCapabilityPermissions) {
-      canUpdate = true;
-      canDelete = true;
-      canCreate = true;
-    } else {
-      const school = await model.get('school');
-      canUpdate = await permissionChecker.canUpdateLearnerGroup(model);
-      canDelete = await permissionChecker.canDeleteLearnerGroup(model);
-      canCreate = await permissionChecker.canCreateLearnerGroup(school);
-    }
+    const school = await model.get('school');
+    const canUpdate = await permissionChecker.canUpdateLearnerGroup(model);
+    const canDelete = await permissionChecker.canDeleteLearnerGroup(model);
+    const canCreate = await permissionChecker.canCreateLearnerGroup(school);
 
     this.set('canUpdate', canUpdate);
     this.set('canDelete', canDelete);

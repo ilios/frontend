@@ -4,17 +4,14 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 const ProgramProxy = ObjectProxy.extend({
   showRemoveConfirmation: false,
-  canDelete: computed('content.curriculumInventoryReports.[]', 'content.programYears.[]', 'currentUser', async function () {
+  canDelete: computed('content.curriculumInventoryReports.[]', 'content.programYears.[]', async function () {
     const program = this.get('content');
     const permissionChecker = this.get('permissionChecker');
     const hasCiReports = program.hasMany('curriculumInventoryReports').ids().length > 0;
     const hasProgramYears = program.hasMany('programYears').ids().length > 0;
-    const canDelete = enforceRelationshipCapabilityPermissions ? await permissionChecker.canDeleteProgram(program) : true;
+    const canDelete = await permissionChecker.canDeleteProgram(program);
 
     return !hasCiReports && !hasProgramYears && canDelete;
   })

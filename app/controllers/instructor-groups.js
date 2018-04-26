@@ -7,9 +7,6 @@ import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 const { gt } = computed;
 
 export default Controller.extend({
@@ -76,18 +73,12 @@ export default Controller.extend({
 
     return primarySchool;
   }),
-  canCreate: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
     return permissionChecker.canCreateInstructorGroup(selectedSchool);
   }),
-  canDelete: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canDelete: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
     return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);

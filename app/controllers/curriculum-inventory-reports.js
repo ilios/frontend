@@ -8,9 +8,6 @@ import { isPresent, isEmpty } from '@ember/utils';
 const { Promise } = RSVP;
 const { gt, oneWay, sort } = computed;
 
-import config from 'ilios/config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 export default Controller.extend({
   i18n: service(),
   currentUser: service(),
@@ -115,10 +112,7 @@ export default Controller.extend({
     });
   }),
 
-  canCreate: computed('selectedSchool', 'currentUser', async function () {
-    if (!enforceRelationshipCapabilityPermissions) {
-      return true;
-    }
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = await this.get('selectedSchool');
     return permissionChecker.canCreateCurriculumInventoryReport(selectedSchool);

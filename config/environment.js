@@ -89,7 +89,6 @@ module.exports = function (environment) {
       allowAddNewUser: true,
       schoolSessionAttributes: true,
       accessCourseVisualizations: true,
-      enforceRelationshipCapabilityPermissions: true,
     }
   };
 
@@ -108,7 +107,6 @@ module.exports = function (environment) {
     };
 
     ENV.IliosFeatures.accessCourseVisualizations = true;
-    ENV.IliosFeatures.enforceRelationshipCapabilityPermissions = true;
   }
 
   if (environment === 'test') {
@@ -127,7 +125,6 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-host'] = '';
 
     ENV.IliosFeatures.accessCourseVisualizations = true;
-    ENV.IliosFeatures.enforceRelationshipCapabilityPermissions = true;
 
     //silence warnings in tests when dates are not initialized
     ENV.moment.allowEmpty = true;

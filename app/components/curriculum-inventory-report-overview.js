@@ -1,14 +1,9 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { all } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-
-import config from '../config/environment';
-const { IliosFeatures: { enforceRelationshipCapabilityPermissions } } = config;
-
 
 const { alias, reads } = computed;
 
@@ -81,19 +76,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
       return false;
     }
-    if (!enforceRelationshipCapabilityPermissions) {
-      const currentUser = this.get('currentUser');
-      const hasRole = await all([
-        currentUser.get('userIsDeveloper')
-      ]);
-      return hasRole.includes(true);
-    } else {
-      const permissionChecker = this.get('permissionChecker');
-      const report = this.get('report');
-      const program = await report.get('program');
-      const school = await program.get('school');
-      return await permissionChecker.canCreateCurriculumInventoryReport(school);
-    }
+    const permissionChecker = this.get('permissionChecker');
+    const report = this.get('report');
+    const program = await report.get('program');
+    const school = await program.get('school');
+    return await permissionChecker.canCreateCurriculumInventoryReport(school);
   }),
 
   classNames: ['curriculum-inventory-report-overview'],
