@@ -8,6 +8,7 @@ import wait from 'ember-test-helpers/wait';
 const { resolve } = RSVP;
 let user;
 let authentication;
+let school;
 moduleForComponent('user-profile-bio', 'Integration | Component | user profile bio', {
   integration: true,
   beforeEach(){
@@ -15,6 +16,10 @@ moduleForComponent('user-profile-bio', 'Integration | Component | user profile b
       username: 'test-username',
       user: 13,
       password: null
+    });
+    school = EmberObject.create({
+      id: 1,
+      title: 'Cool School',
     });
     user = EmberObject.create({
       id: 13,
@@ -30,6 +35,7 @@ moduleForComponent('user-profile-bio', 'Integration | Component | user profile b
       cohorts: resolve([]),
       primaryCohort: resolve(null),
       authentication: resolve(authentication),
+      school: resolve(school),
       pendingUserUpdates: []
     });
   }
@@ -43,6 +49,7 @@ test('it renders for ldap user search', function(assert) {
   this.register('service:iliosConfig', iliosConfigMock);
   this.set('user', user);
   this.render(hbs`{{user-profile-bio user=user}}`);
+  const primarySchool = '.primary-school';
   const fields = '.item';
   const firstName = `${fields}:eq(0) span`;
   const middleName = `${fields}:eq(1) span`;
@@ -53,7 +60,8 @@ test('it renders for ldap user search', function(assert) {
   const phone = `${fields}:eq(6) span`;
   const username = `${fields}:eq(7) span`;
 
-  return wait().then(()=>{
+  return wait().then(() => {
+    assert.equal(this.$(primarySchool).text().trim(), 'Primary School: ' + school.title, 'primary school is correct');
     assert.equal(this.$(fields).length, 8);
     assert.equal(this.$(firstName).text().trim(), 'Test Person', 'first name is displayed');
     assert.equal(this.$(middleName).text().trim(), 'Name', 'middle name is displayed');
