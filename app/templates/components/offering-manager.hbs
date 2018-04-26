@@ -41,7 +41,7 @@
   {{#if editable}}
     <div class='offering-manager-actions'>
       <span class='clickable edit' {{action (toggle 'isEditing' this)}}>{{fa-icon 'edit'}}</span>
-      {{#if userCanDelete}}
+      {{#if (await userCanDelete)}}
         <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
       {{/if}}
     </div>
