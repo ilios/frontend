@@ -248,13 +248,8 @@ module('Acceptance: Instructor Groups', function(hooks) {
   test('filters options', async function(assert) {
     assert.expect(4);
     const schools = this.server.createList('school', 2);
-    const permission = this.server.create('permission', {
-      tableName: 'school',
-      tableRowId: 1
-    });
     await setupAuthentication({
       school: schools[1],
-      permissions: [permission]
     });
 
     const schoolSelect = '.schoolsfilter select';

@@ -18,13 +18,8 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   test('search for instructor who is a course director #2838', async function(assert) {
     assert.expect(1);
 
-    const permission1 = this.server.create('permission', {
-      tableRowId: '1',
-      tableName: 'school'
-    });
     const users = this.server.createList('user', 3, {
       school: this.school,
-      permissions: [permission1],
     });
     const course = this.server.create('course', {
       school: this.school,
@@ -48,14 +43,10 @@ module('Acceptance: Session - Offering Management', function(hooks) {
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
     assert.expect(10);
 
-    const permission1 = this.server.create('permission', {
-      tableRowId: '1',
-      tableName: 'school'
-    });
     const users = this.server.createList('user', 3, {
       school: this.school,
-      permissions: [permission1],
     });
+
     const course = this.server.create('course', {
       school: this.school,
       directors: [users[0], users[1]],

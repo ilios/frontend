@@ -222,12 +222,6 @@ export default function() {
   this.del('api/pendinguserupdates/:id');
   this.post('api/pendinguserupdates');
 
-  this.get('api/permissions', getAll);
-  this.get('api/permissions/:id', 'permission');
-  this.put('api/permissions/:id', 'permission');
-  this.del('api/permissions/:id', 'permission');
-  this.post('api/permissions', 'permission');
-
   this.get('api/programyears', getAll);
   this.get('api/programyears/:id', 'programYear');
   this.put('api/programyears/:id', 'programYear');
