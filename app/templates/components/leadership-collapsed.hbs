@@ -9,14 +9,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{t 'general.directors'}}</td>
-        <td>{{t 'general.directorCount' count=directorsCount}}</td>
-      </tr>
-      <tr>
-        <td>{{t 'general.administrators'}}</td>
-        <td>{{t 'general.administratorCount' count=administratorsCount}}</td>
-      </tr>
+      {{#if showDirectors}}
+        <tr>
+          <td>{{t 'general.directors'}}</td>
+          <td>{{t 'general.directorCount' count=directorsCount}}</td>
+        </tr>
+      {{/if}}
+      {{#if showAdministrators}}
+        <tr>
+          <td>{{t 'general.administrators'}}</td>
+          <td>{{t 'general.administratorCount' count=administratorsCount}}</td>
+        </tr>
+      {{/if}}
     </tbody>
   </table>
 </div>

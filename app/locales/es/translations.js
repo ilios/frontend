@@ -479,6 +479,7 @@
     'sequenceBlocks': 'Bloques de la Secuencia',
     'sequenceBlockTitlePlaceholder': 'Por favor, introduzca un título para esta bloque de la secuencia.',
     'sequenceNumber': 'No. de Secuencia',
+    'sessionAdministration': 'Administración de la Sesión',
     'sessionAttributes': 'Atributos de la Sesión',
     'sessions': 'Sesiones',
     'sessionTitle': 'Titulo de Sesión',

@@ -479,6 +479,7 @@ export default {
     'sequenceBlocks': 'Sequence Blocks',
     'sequenceBlockTitlePlaceholder': 'Please enter a title for this sequence block.',
     'sequenceNumber': 'Sequence #',
+    'sessionAdministration': 'Session Administration',
     'sessionAttributes': 'Session Attributes',
     'sessions': 'Sessions',
     'sessionTitle': 'Session Title',

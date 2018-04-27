@@ -479,6 +479,7 @@ export default {
     'sequenceBlocks': 'Blocs séquence',
     'sequenceBlockTitlePlaceholder': "Entrez S'il vous plaît dans une titre pour ceci bloc séquence.",
     'sequenceNumber': 'No. de séquence',
+    'sessionAdministration': 'Administration de Séance',
     'sessionAttributes': 'Attributs de Séance',
     'sessions': "Séances",
     'sessionTitle': "Titre de Session",

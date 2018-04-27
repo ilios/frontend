@@ -9,14 +9,14 @@ import {
 export default {
   scope: '[data-test-leadership-manager]',
   selectedDirectors: collection({
-    scope: 'tbody tr:nth-of-type(1) td:nth-of-type(1) ul',
+    scope: '[data-test-directors] ul',
     itemScope: 'li',
     item: {
       remove: clickable('i'),
     }
   }),
   directorSearch: {
-    scope: 'tbody tr:nth-of-type(2) td:nth-of-type(1) [data-test-leadership-search]',
+    scope: '[data-test-director-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
     results: collection({
       scope: '.results',
@@ -29,7 +29,7 @@ export default {
     }),
   },
   administratorSearch: {
-    scope: 'tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-leadership-search]',
+    scope: '[data-test-administrator-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
     results: collection({
       scope: '.results',
@@ -42,7 +42,7 @@ export default {
     }),
   },
   selectedAdministrators: collection({
-    scope: 'tbody tr:nth-of-type(1) td:nth-of-type(2) ul',
+    scope: '[data-test-administrators] ul',
     itemScope: 'li',
     item: {
       remove: clickable('i'),
