@@ -2,5 +2,6 @@ import Component from '@ember/component';
 
 export default Component.extend({
   tagName: 'span',
-  classNames: ['loading-spinner']
+  classNameBindings: ['value:yes:no'],
+  value: false,
 });

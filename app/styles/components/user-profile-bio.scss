@@ -7,6 +7,11 @@
     text-align: center;
   }
 
+  .primary-school {
+    font-size: 1.25rem;
+    padding: 0 .5rem;
+  }
+
   .form {
     @include ilios-form;
     grid-template-columns: 1fr;

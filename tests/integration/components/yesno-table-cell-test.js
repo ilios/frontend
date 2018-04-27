@@ -8,11 +8,11 @@ moduleForComponent('yesno-table-cell', 'Integration | Component | yesno table ce
 test('it renders yes', function (assert) {
   this.render(hbs`{{yesno-table-cell value=true}}`);
   assert.equal(this.$().text().trim(), 'Yes');
-  assert.ok(this.$('div').hasClass('yes'));
+  assert.ok(this.$('span').hasClass('yes'));
 });
 
 test('it renders no', function (assert) {
   this.render(hbs`{{yesno-table-cell value=false}}`);
   assert.equal(this.$().text().trim(), 'No');
-  assert.ok(this.$('div').hasClass('no'));
+  assert.ok(this.$('span').hasClass('no'));
 });
