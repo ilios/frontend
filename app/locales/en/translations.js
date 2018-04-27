@@ -475,6 +475,7 @@ export default {
     'sequenceBlockTitlePlaceholder': 'Please enter a title for this sequence block.',
     'sequenceNumber': 'Sequence #',
     'sessionAttributes': 'Session Attributes',
+    'sessionLeadership': 'Session Leadership',
     'sessions': 'Sessions',
     'sessionTitle': 'Session Title',
     'sessionTitleFilterPlaceholder': 'Filter by title, type, or status',

@@ -21,6 +21,9 @@ import instructorSelectionManager from 'ilios/tests/pages/components/instructor-
 import offeringForm from 'ilios/tests/pages/components/offering-form';
 import { datePicker } from 'ilios/tests/helpers/date-picker';
 import { fillInFroalaEditor } from 'ilios/tests/helpers/froala-editor';
+import leadershipCollapsed from 'ilios/tests/pages/components/leadership-collapsed';
+import leadershipList from 'ilios/tests/pages/components/leadership-list';
+import leadershipManager from 'ilios/tests/pages/components/leadership-manager';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -96,6 +99,17 @@ export default create({
       click: clickable('.toggle-yesno'),
     },
     toggleIlm: clickable('.toggle-yesno', { scope: '.independentlearningcontrol' }),
+  },
+
+  leadershipCollapsed,
+  leadershipExpanded: {
+    scope: '[data-test-session-leadership-expanded]',
+    title: text('.title'),
+    manage: clickable('.actions button'),
+    save: clickable('.actions button.bigadd'),
+    cancel: clickable('.actions button.bigcancel'),
+    leadershipList,
+    leadershipManager,
   },
 
   objectives,

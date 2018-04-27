@@ -4,6 +4,23 @@
   sessionTypes=sessionTypes
   editable=editable
 }}
+{{#if (or (eq session.administrators.length 0) sessionLeadershipDetails)}}
+  {{session-leadership-expanded
+    session=session
+    canUpdate=editable
+    collapse=(action setSessionLeadershipDetails false)
+    expand=(action setSessionLeadershipDetails true)
+    isManaging=sessionManageLeadership
+    setIsManaging=setSessionManageLeadership
+  }}
+{{else}}
+  {{leadership-collapsed
+    title=(t 'general.sessionLeadership')
+    showDirectors=false
+    administratorsCount=(has-many-length session 'administrators')
+    expand=(action setSessionLeadershipDetails true)
+  }}
+{{/if}}
 {{#if session.isIndependentLearning}}
   {{#if (or (eq (get (await session.ilmSession.learnerGroups) 'length') 0) sessionLearnergroupDetails)}}
     {{detail-learnergroups

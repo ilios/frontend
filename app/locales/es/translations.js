@@ -475,6 +475,7 @@
     'sequenceBlockTitlePlaceholder': 'Por favor, introduzca un título para esta bloque de la secuencia.',
     'sequenceNumber': 'No. de Secuencia',
     'sessionAttributes': 'Atributos de la Sesión',
+    'sessionLeadership': 'Liderazgo de la Sesión',
     'sessions': 'Sesiones',
     'sessionTitle': 'Titulo de Sesión',
     'sessionTitleFilterPlaceholder': 'Aplicar un Filtro por titulo, tipo, o estado de la publicación',

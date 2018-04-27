@@ -10,6 +10,8 @@ export default Component.extend({
   editable: false,
   sessionObjectiveDetails: null,
   sessionTaxonomyDetails: null,
+  sessionLeadershipDetails: null,
+  sessionManageLeadership: false,
   'data-test-session-details': true,
 
   didInsertElement() {

@@ -1,0 +1,34 @@
+<div class='session-leadership-expanded-header'>
+  <div class='title {{if isCollapsible "collapsible clickable"}}' {{action collapse}}>
+    {{t 'general.sessionLeadership'}}
+  </div>
+  <div class='actions'>
+    {{#if isManaging}}
+      <button class='bigadd' onclick={{perform save}}>
+        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if isSaving true false)}}
+      </button>
+      <button class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+    {{else if canUpdate}}
+      <button {{action setIsManaging true}}>{{t 'general.manageLeadership'}}</button>
+    {{/if}}
+  </div>
+</div>
+<div class='session-leadership-expanded-content'>
+  {{#if (is-array administrators)}}
+    {{#if isManaging}}
+      {{leadership-manager
+        showDirectors=false
+        administrators=administrators
+        removeAdministrator=(action 'removeAdministrator')
+        addAdministrator=(action 'addAdministrator')
+      }}
+    {{else}}
+      {{leadership-list
+        showDirectors=false
+        administrators=administrators
+      }}
+    {{/if}}
+  {{else}}
+    {{loading-spinner tagName='h3'}}
+  {{/if}}
+</div>

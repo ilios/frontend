@@ -475,6 +475,7 @@ export default {
     'sequenceBlockTitlePlaceholder': "Entrez S'il vous plaît dans une titre pour ceci bloc séquence.",
     'sequenceNumber': 'No. de séquence',
     'sessionAttributes': 'Attributs de Séance',
+    'sessionLeadership': 'Dirigeants de Séance',
     'sessions': "Séances",
     'sessionTitle': "Titre de Session",
     'sessionTitleFilterPlaceholder': "Filtre par titre, genre, ou statut",
