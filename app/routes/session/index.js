@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
 export default Route.extend({
   permissionChecker: service(),
@@ -16,6 +17,15 @@ export default Route.extend({
     await school.get('configurations');
     const canUpdate = await permissionChecker.canUpdateSession(session);
     this.set('canUpdate', canUpdate);
+
+    return all([
+      session.get('description'),
+      session.get('administrators'),
+      session.get('objectives'),
+      session.get('learningMaterials'),
+      session.get('terms'),
+      session.get('offerings'),
+    ]);
   },
   setupController(controller, model) {
     this._super(controller, model);

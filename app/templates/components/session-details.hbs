@@ -15,7 +15,7 @@
   }}
 {{else}}
   {{leadership-collapsed
-    title=(t 'general.sessionLeadership')
+    title=(t 'general.sessionAdministration')
     showDirectors=false
     administratorsCount=(has-many-length session 'administrators')
     expand=(action setSessionLeadershipDetails true)

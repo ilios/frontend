@@ -52,7 +52,7 @@ test('it renders', function(assert) {
   const firstAdministrator = `${administrators}:eq(0)`;
   const secondAdministrator = `${administrators}:eq(1)`;
 
-  assert.equal(this.$(title).text().trim(), 'Session Leadership');
+  assert.equal(this.$(title).text().trim(), 'Session Administration');
   assert.equal(this.$(administrators).length, 2);
   assert.equal(this.$(firstAdministrator).text().trim(), 'a b person');
   assert.equal(this.$(secondAdministrator).text().trim(), 'b a person');
