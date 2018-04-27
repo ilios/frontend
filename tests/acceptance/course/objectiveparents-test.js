@@ -14,7 +14,7 @@ module('Acceptance: Course - Objective Parents', function(hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school =  this.server.create('school');
-    this.server.create('program');
+    this.server.create('program', { school: this.school });
     this.server.create('programYear', {
       programId: 1,
     });

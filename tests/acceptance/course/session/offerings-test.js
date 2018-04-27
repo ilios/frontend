@@ -14,7 +14,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('program');
+    this.server.create('program', { school: this.school });
     this.server.create('programYear', { programId: 1});
     this.server.create('cohort', {
       programYearId: 1

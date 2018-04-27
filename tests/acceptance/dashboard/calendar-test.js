@@ -16,67 +16,69 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.user = await setupAuthentication( { school } );
-    this.server.create('program', {
-      schoolId: 1,
+    this.server.logging = true;
+    this.school = this.server.create('school');
+    this.user = await setupAuthentication( { school: this.school } );
+    const program = this.server.create('program', {
+      school: this.school,
     });
-    this.server.create('programYear', {
-      programId: 1,
+    const programYear1 = this.server.create('programYear', {
+      program,
       startYear: 2015,
     });
-    this.server.create('programYear', {
-      programId: 1,
+    const programYear2 = this.server.create('programYear', {
+      program,
       startYear: 2015,
     });
-    this.server.create('cohort', {
-      programYearId: 1,
+    const cohort1 = this.server.create('cohort', {
+      programYear: programYear1,
     });
-    this.server.create('cohort', {
-      programYearId: 2,
+    const cohort2 = this.server.create('cohort', {
+      programYear: programYear2,
+    });
+    const sessionType1 = this.server.create('sessionType', {
+      school: this.school,
+    });
+    const sessionType2 = this.server.create('sessionType', {
+      school: this.school,
     });
     this.server.create('sessionType', {
-      schoolId: 1,
+      school: this.school,
     });
-    this.server.create('sessionType', {
-      schoolId: 1,
-    });
-    this.server.create('sessionType', {
-      schoolId: 1,
-    });
-    this.server.create('course', {
-      schoolId: 1,
+    const course1 = this.server.create('course', {
+      school: this.school,
       year: 2015,
-      cohortIds: [1],
+      cohorts: [cohort1],
     });
-    this.server.create('course', {
+    const course2 = this.server.create('course', {
       year: 2015,
-      schoolId: 1,
-      cohortIds: [1],
+      school: this.school,
+      cohorts: [cohort2],
     });
-    this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 1,
+    const session1 = this.server.create('session', {
+      course: course1,
+      sessionType: sessionType1,
     });
-    this.server.create('session', {
-      courseId: 1,
-      sessionTypeId: 2,
+    const session2 = this.server.create('session', {
+      course: course1,
+      sessionType: sessionType2,
     });
-    this.server.create('session', {
-      courseId: 2,
+    const session3 = this.server.create('session', {
+      course: course2,
+      sessionType: sessionType2
     });
     this.server.create('academicYear', {
       id: 2015,
       title: 2015
     });
     this.server.create('offering', {
-      sessionId: 1
+      session: session1
     });
     this.server.create('offering', {
-      sessionId: 2
+      session: session2
     });
     this.server.create('offering', {
-      sessionId: 3
+      session: session3
     });
   });
 
@@ -536,7 +538,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
       title: 2014
     });
     this.server.create('program', {
-      schoolId: 1,
+      school: this.school,
     });
     this.server.create('programYear', {
       startYear: 2014,
@@ -563,7 +565,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     });
     this.server.create('course', {
       year: 2014,
-      schoolId: 1
+      school: this.school
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -579,7 +581,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('clear all filters', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
-      schoolId: 1
+      school: this.school
     });
     this.server.createList('term', 2, {
       vocabulary
@@ -740,7 +742,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('test term filter', async function(assert) {
     const vocabulary = this.server.create('vocabulary', {
-      schoolId: 1
+      school: this.school
     });
     this.server.create('term', {
       vocabulary,
@@ -778,7 +780,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
 
   test('clear vocab filter #3450', async function(assert) {
     const vocabulary = this.server.create('vocabulary', {
-      schoolId: 1
+      school: this.school
     });
     this.server.create('term', {
       vocabulary,

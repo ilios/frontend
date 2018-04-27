@@ -14,18 +14,13 @@ module('Acceptance: Course - Objective List', function(hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('academicYear', {id: 2013});
-    this.server.createList('program', 2);
-    this.server.createList('programYear', 2);
-    this.server.createList('cohort', 2);
-
+    this.server.create('academicYear', { id: 2013 });
   });
 
   test('list objectives', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(45);
-    assert.expect(45);
-    this.server.createList('competency', 2);
+    this.server.createList('competency', 2, { school: this.school });
     this.server.create('objective', {
       competencyId: 1
     });
@@ -42,7 +37,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
     this.server.createList('objective', 11);
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [3,4,5,6,7,8,9,10,11,12,13,14,15]
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -78,7 +73,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
 
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -96,7 +91,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
 
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -116,7 +111,7 @@ module('Acceptance: Course - Objective List', function(hooks) {
 
     this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
