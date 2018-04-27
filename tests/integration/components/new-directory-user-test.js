@@ -14,13 +14,19 @@ const mockSchools = [
   {id: 3, title: 'third', cohorts: resolve([])},
 ];
 const mockUser = EmberObject.create({
-  schools: resolve(mockSchools),
   school: resolve(EmberObject.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
   model: resolve(mockUser)
 });
+
+const permissionCheckerMock = Service.extend({
+  async canCreateUser() {
+    return resolve(true);
+  }
+});
+
 
 moduleForComponent('new-directory-user', 'Integration | Component | new directory user', {
   integration: true,
@@ -30,6 +36,7 @@ moduleForComponent('new-directory-user', 'Integration | Component | new director
   beforeEach(){
     this.register('service:current-user', currentUserMock);
     this.inject.service('current-user', { as: 'current-user' });
+    this.register('service:permissionChecker', permissionCheckerMock);
   }
 });
 
@@ -40,6 +47,12 @@ test('it renders', function(assert) {
 
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
+      return resolve([]);
+    },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
       return resolve([]);
     }
   });
@@ -60,6 +73,12 @@ test('input into the search field fires action', function(assert) {
     query(){
       return resolve([]);
     },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
+    }
   });
   this.register('service:store', storeMock);
   const searchTerm = 'search for me!';
@@ -91,6 +110,12 @@ test('initial search input fires search and fills input', function(assert) {
     query(){
       return resolve([]);
     },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
+    }
   });
   this.register('service:store', storeMock);
   this.set('nothing', parseInt);
@@ -169,9 +194,15 @@ test('create new user', function(assert) {
       assert.equal(filters.schools[0], 2, 'for school 2');
       return resolve([]);
     },
-    findAll(what){
-      assert.equal(what, 'user-role', 'looking for user roles');
-      return resolve([facultyRole, studentRole]);
+    findAll(what) {
+      if (what === 'user-role') {
+        assert.equal(what, 'user-role', 'looking for user roles');
+        return resolve([facultyRole, studentRole]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
     },
     createRecord(what, properties){
       createRecordCalled++;
