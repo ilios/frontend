@@ -4,7 +4,7 @@
   sessionTypes=sessionTypes
   editable=editable
 }}
-{{#if (or (eq session.administrators.length 0) sessionLeadershipDetails)}}
+{{#if sessionLeadershipDetails}}
   {{session-leadership-expanded
     session=session
     canUpdate=editable

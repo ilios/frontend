@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
@@ -8,14 +7,6 @@ export default Component.extend({
   administrators: null,
   isManaging: false,
   'data-test-session-leadership-expanded': true,
-  isCollapsible: computed('isManaging', 'session.administrators.length', function(){
-    const session = this.get('session');
-    const isManaging = this.get('isManaging');
-    const administratorIds = session.hasMany('administrators').ids();
-
-    return administratorIds.length > 0 && !isManaging;
-
-  }),
   didReceiveAttrs(){
     this._super(...arguments);
     const session = this.get('session');
