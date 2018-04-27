@@ -149,6 +149,12 @@ test('select student mode display cohort', async function(assert) {
       assert.equal(filters.schools[0], 2);
 
       return resolve(mockCohorts);
+    },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
     }
   });
 
