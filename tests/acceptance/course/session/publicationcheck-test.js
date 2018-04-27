@@ -14,12 +14,13 @@ module('Acceptance: Session - Publication Check', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     await setupAuthentication();
-    this.server.create('course');
+    const school = this.server.create('school');
+    this.server.create('course', { school });
     this.server.create('vocabulary', {
-      schoolId: 1,
+      school,
     });
     this.server.createList('sessionType', 2, {
-      schoolId: 1
+      school
     });
     this.server.create('sessionDescription');
     this.server.create('objective');

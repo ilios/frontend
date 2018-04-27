@@ -18,11 +18,10 @@ module('Acceptance: Program - Publication Check', function(hooks) {
     this.server.create('school');
     this.server.create('objective');
     this.server.create('term');
-    this.server.create('competency');
-    this.server.create('program');
+    this.server.create('competency', { school });
+    this.server.create('program', { school });
     this.fullProgramYear = this.server.create('programYear', {
       startYear: 2013,
-      schoolId: 1,
       programId: 1,
       directors: [user],
       objectiveIds: [1],
@@ -31,7 +30,6 @@ module('Acceptance: Program - Publication Check', function(hooks) {
     });
     this.emptyProgramYear = this.server.create('programYear', {
       startYear: 2013,
-      schoolId: 1,
       programId: 1
     });
     this.server.createList('cohort', 2);

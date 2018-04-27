@@ -16,14 +16,15 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('school');
+    const school2 = this.server.create('school');
+    const school3 = this.server.create('school');
     this.server.create('program', {
       school: this.school,
     });
     this.server.create('programYear', {
       programId: 1,
     });
-    this.server.create('cohort', { programId: 1});
+    this.server.create('cohort', { programYearId: 1});
     this.server.create('department', {
       school: this.school,
     });
@@ -31,10 +32,10 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
       school: this.school,
     });
     this.server.create('department', {
-      schoolId: 2,
+      school: school2,
     });
     this.server.create('department', {
-      schoolId: 3
+      school: school3
     });
     this.server.createList('department', 5, {
       school: this.school,
@@ -46,12 +47,12 @@ module('Acceptance: Program Year - Stewards', function(hooks) {
     });
     this.server.create('programYearSteward', {
       programYearId: 1,
-      schoolId: 2,
+      school: school2,
       departmentId: 3
     });
     this.server.create('programYearSteward', {
       programYearId: 1,
-      schoolId: 3
+      school: school3
     });
   });
 
