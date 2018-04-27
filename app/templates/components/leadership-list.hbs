@@ -1,38 +1,42 @@
 <table>
   <thead>
     <tr>
-      <th>{{t 'general.directors'}}</th>
-      <th>{{t 'general.administrators'}}</th>
+      {{#if showDirectors}}<th>{{t 'general.directors'}}</th>{{/if}}
+      {{#if showAdministrators}}<th>{{t 'general.administrators'}}</th>{{/if}}
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class='text-top'>
-        <ul>
-          {{#if (is-array directors)}}
-            {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
-              <li>{{user.fullName}}</li>
+      {{#if showDirectors}}
+        <td class='text-top' data-test-directors>
+          <ul>
+            {{#if (is-array directors)}}
+              {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
+                <li>{{user.fullName}}</li>
+              {{else}}
+                <li>{{t 'general.none'}}</li>
+              {{/each}}
             {{else}}
-              <li>{{t 'general.none'}}</li>
-            {{/each}}
-          {{else}}
-            {{loading-spinner}}
-          {{/if}}
-        </ul>
-      </td>
-      <td class='text-top'>
-        <ul>
-          {{#if (is-array administrators)}}
-            {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
-              <li>{{user.fullName}}</li>
+              {{loading-spinner}}
+            {{/if}}
+          </ul>
+        </td>
+      {{/if}}
+      {{#if showAdministrators}}
+        <td class='text-top' data-test-administrators>
+          <ul>
+            {{#if (is-array administrators)}}
+              {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
+                <li>{{user.fullName}}</li>
+              {{else}}
+                <li>{{t 'general.none'}}</li>
+              {{/each}}
             {{else}}
-              <li>{{t 'general.none'}}</li>
-            {{/each}}
-          {{else}}
-            {{loading-spinner}}
-          {{/if}}
-        </ul>
-      </td>
+              {{loading-spinner}}
+            {{/if}}
+          </ul>
+        </td>
+      {{/if}}
     </tr>
   </tbody>
 </table>

@@ -5,11 +5,11 @@ import {
 export default {
   scope: '[data-test-leadership-list]',
   directors: collection({
-    scope: 'tbody tr td:nth-of-type(1) ul',
+    scope: '[data-test-directors] ul',
     itemScope: 'li',
   }),
   administrators: collection({
-    scope: 'tbody tr td:nth-of-type(2) ul',
+    scope: '[data-test-administrators] ul',
     itemScope: 'li',
   }),
 };

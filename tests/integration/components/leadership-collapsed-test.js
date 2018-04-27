@@ -45,3 +45,49 @@ test('clicking the header expands the list', function(assert) {
 
   this.$(title).click();
 });
+
+test('it renders without directors', function(assert) {
+  assert.expect(2);
+
+  this.set('title', 'Test Title');
+  this.set('directorsCount', 3);
+  this.set('administratorsCount', 1);
+  this.on('click', parseInt);
+  this.render(hbs`{{leadership-collapsed
+    title=title
+    showDirectors=false
+    directorsCount=directorsCount
+    administratorsCount=administratorsCount
+    expand=(action 'click')
+  }}`);
+  const title = '.title';
+  const table = 'table';
+  const administratorsRow = `${table} tbody tr:eq(0)`;
+  const administrators = `${administratorsRow} td:eq(1)`;
+
+  assert.equal(this.$(title).text().trim(), 'Test Title');
+  assert.equal(this.$(administrators).text().trim(), 'There is 1 administrator');
+});
+
+test('it renders without administrators', function(assert) {
+  assert.expect(2);
+
+  this.set('title', 'Test Title');
+  this.set('directorsCount', 3);
+  this.set('administratorsCount', 1);
+  this.on('click', parseInt);
+  this.render(hbs`{{leadership-collapsed
+    title=title
+    showAdministrators=false
+    directorsCount=directorsCount
+    administratorsCount=administratorsCount
+    expand=(action 'click')
+  }}`);
+  const title = '.title';
+  const table = 'table';
+  const directorsRow = `${table} tbody tr:eq(0)`;
+  const directors = `${directorsRow} td:eq(1)`;
+
+  assert.equal(this.$(title).text().trim(), 'Test Title');
+  assert.equal(this.$(directors).text().trim(), 'There are 3 directors');
+});
