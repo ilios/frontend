@@ -11,7 +11,7 @@ module('Acceptance: assign students', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school, administeredSchools: [this.school] });
     this.server.create('school');
   });
 

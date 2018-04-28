@@ -1,26 +1,33 @@
-/* eslint ember/order-in-routes: 0 */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { filter } from 'rsvp';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
-  titleToken: 'general.admin',
-  model(){
-    return this.get('currentUser.model').then(user => {
-      return user.get('schools').then(schools => {
-        return user.get('school').then(primarySchool => {
-          return {
-            primarySchool,
-            schools
-          };
-        });
-      });
-    });
-  },
+  store: service(),
+  permissionChecker: service(),
   queryParams: {
     filter: {
       replace: true
     }
-  }
+  },
+  titleToken: 'general.admin',
+  async model(){
+    const currentUser = this.get('currentUser');
+    const store = this.get('store');
+    const permissionChecker = this.get('permissionChecker');
+
+    const user = await currentUser.get('model');
+    const schools = await store.findAll('school');
+    const primarySchool = await user.get('school');
+    const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
+      return permissionChecker.canUpdateUserInSchool(school);
+    });
+
+    return {
+      primarySchool,
+      schools: schoolsWithUpdateUserPermission
+    };
+  },
 });
