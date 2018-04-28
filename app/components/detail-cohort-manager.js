@@ -1,17 +1,16 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { all, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 
 import { translationMacro as t } from "ember-i18n";
 
 const { sort } = computed;
-const { all, Promise } = RSVP;
 
 export default Component.extend({
   i18n: service(),
-  currentUser: service(),
+  store: service(),
   init() {
     this._super(...arguments);
     this.set('sortBy', ['title']);
@@ -29,17 +28,22 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  availableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', function(){
-    const currentUser = this.get('currentUser');
-    return new Promise(resolve => {
-      currentUser.get('cohortsInAllAssociatedSchools').then(usableCohorts => {
-        let availableCohorts = usableCohorts.filter(cohort => {
-          return (
-            this.get('selectedCohorts') && !this.get('selectedCohorts').includes(cohort)
-          );
-        });
-        resolve(availableCohorts);
-      });
+  availableCohorts: computed('selectedCohorts.[]', async function(){
+    const store = this.get('store');
+    const schools = await store.findAll('school', { reload: true });
+
+    const cohorts = await map(schools.toArray(), async school => {
+      return school.get('cohorts');
+    });
+
+    const usableCohorts =  cohorts.reduce((array, set) => {
+      return array.pushObjects(set.toArray());
+    }, []);
+
+    return usableCohorts.filter(cohort => {
+      return (
+        this.get('selectedCohorts') && !this.get('selectedCohorts').includes(cohort)
+      );
     });
   }),
 
