@@ -170,12 +170,8 @@ module('Acceptance: Programs', function(hooks) {
     assert.expect(4);
 
     const schools = this.server.createList('school', 2);
-    const permission = this.server.create('permission', {
-      tableName: 'school',
-      tableRowId: 1,
-      canRead: true
-    });
-    await setupAuthentication( { school: schools[1], permissions: [permission]} );
+
+    await setupAuthentication( { school: schools[1] } );
 
     const schoolSelect = '.schoolsfilter select';
 

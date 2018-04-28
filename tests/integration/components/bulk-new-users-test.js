@@ -25,12 +25,17 @@ const mockSchools = [
   {id: 3, title: 'third', cohorts: resolve([])},
 ];
 const mockUser = EmberObject.create({
-  schools: resolve(mockSchools),
   school: resolve(EmberObject.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
   model: resolve(mockUser)
+});
+
+const permissionCheckerMock = Service.extend({
+  async canCreateUser() {
+    return resolve(true);
+  }
 });
 
 let storeMock;
@@ -55,6 +60,7 @@ moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users',
     this.register('service:current-user', currentUserMock);
     getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
     this.register('service:store', storeMock);
+    this.register('service:permissionChecker', permissionCheckerMock);
   }
 });
 
@@ -105,6 +111,12 @@ test('it renders', async function(assert) {
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
       return resolve([]);
+    },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
     }
   });
 
@@ -137,6 +149,12 @@ test('select student mode display cohort', async function(assert) {
       assert.equal(filters.schools[0], 2);
 
       return resolve(mockCohorts);
+    },
+    findAll(what) {
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
+      return resolve([]);
     }
   });
 
@@ -208,6 +226,9 @@ test('saves valid faculty users', async function(assert) {
     findAll(what) {
       if (what === 'authentication') {
         return resolve([{user: 199, username: 'existingName'}]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
       }
       assert.equal(what, 'user-role');
       return [facultyRole, studentRole];
@@ -305,6 +326,9 @@ test('saves valid student users', async function(assert) {
     findAll(what){
       if (what === 'authentication') {
         return resolve([{user: 199, username: 'existingName'}]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
       }
       assert.equal(what, 'user-role');
       return [facultyRole, studentRole];
@@ -557,6 +581,9 @@ test('duplicate username errors on save', async function(assert) {
       if (what === 'authentication') {
         return resolve([{user: 199, username: 'existingName'}]);
       }
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
       let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
       assert.equal(what, 'user-role');
@@ -611,6 +638,9 @@ test('error saving user', async function(assert) {
     findAll(what) {
       if (what === 'authentication') {
         return resolve([{user: 199, username: 'existingName'}]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
       }
       let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
@@ -695,6 +725,9 @@ test('dont create authentication if username is not set', async function(assert)
     findAll(what) {
       if (what === 'authentication') {
         return resolve([{user: 199, username: 'existingName'}]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
       }
       assert.equal(what, 'user-role');
       return [{id: '3'}, {id: '4'}];

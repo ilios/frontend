@@ -91,11 +91,14 @@ test('directory search renders when configured to', async function(assert) {
   let storeMock = Service.extend({
     query(){
       return resolve([]);
+    },
+    findAll() {
+      return resolve([]);
     }
   });
   this.register('service:store', storeMock);
   const iliosConfigMock = Service.extend({
-    userSearchType: resolve('ldap')
+    userSearchType: resolve('ldap'),
   });
   this.register('service:iliosConfig', iliosConfigMock);
   const mockSchools = [

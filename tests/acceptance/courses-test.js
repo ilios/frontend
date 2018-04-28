@@ -191,13 +191,8 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('year filter options', async function(assert) {
-    assert.expect(10);
+    assert.expect(14);
     this.server.createList('school', 2);
-    this.server.create('permission', {
-      tableName: 'school',
-      tableRowId: 1,
-      userId: this.user.id
-    });
     this.server.db.users.update(this.user.id, {schoolId: 2});
 
     this.server.create('academicYear', {id: 2013});
@@ -210,11 +205,15 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.yearFilters(1).text, '2013 - 2014');
     assert.notOk(page.yearFilters(1).selected);
 
-    assert.equal(page.schoolFilters().count, 2);
+    assert.equal(page.schoolFilters().count, 4);
     assert.equal(page.schoolFilters(0).text, 'school 0');
     assert.notOk(page.schoolFilters(0).selected);
     assert.equal(page.schoolFilters(1).text, 'school 1');
     assert.ok(page.schoolFilters(1).selected);
+    assert.equal(page.schoolFilters(2).text, 'school 2');
+    assert.notOk(page.schoolFilters(2).selected);
+    assert.equal(page.schoolFilters(3).text, 'school 3');
+    assert.notOk(page.schoolFilters(3).selected);
   });
 
   test('unprivileged users can not delete courses', async function(assert) {

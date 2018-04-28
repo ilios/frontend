@@ -14,12 +14,20 @@ const mockSchools = [
   {id: 3, title: 'third', cohorts: resolve([])},
 ];
 const mockUser = EmberObject.create({
-  schools: resolve(mockSchools),
   school: resolve(EmberObject.create(mockSchools[0]))
 });
 
 const currentUserMock = Service.extend({
-  model: resolve(mockUser)
+  model: resolve(mockUser),
+  async canCreateUser() {
+    return resolve(true);
+  }
+});
+
+const permissionCheckerMock = Service.extend({
+  async canCreateUser() {
+    return resolve(true);
+  }
 });
 
 moduleForComponent('new-user', 'Integration | Component | new user', {
@@ -29,6 +37,7 @@ moduleForComponent('new-user', 'Integration | Component | new user', {
   },
   beforeEach(){
     this.register('service:current-user', currentUserMock);
+    this.register('service:permissionChecker', permissionCheckerMock);
   }
 });
 
@@ -42,6 +51,9 @@ test('it renders', function(assert) {
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
       return resolve([]);
+    },
+    findAll() {
+      return resolve(mockSchools);
     }
   });
   this.register('service:store', storeMock);
@@ -100,6 +112,9 @@ test('errors show up', function(assert) {
       assert.equal('cohort', what);
       assert.equal(filters.schools[0], 2);
       return resolve([]);
+    },
+    findAll() {
+      return resolve(mockSchools);
     }
   });
   this.register('service:store', storeMock);
@@ -123,7 +138,7 @@ test('errors show up', function(assert) {
 });
 
 test('create new user', function(assert) {
-  assert.expect(21);
+  assert.expect(20);
   let facultyRole = EmberObject.create({
     id: 3,
     title: 'Faculty'
@@ -140,8 +155,12 @@ test('create new user', function(assert) {
       return resolve([]);
     },
     findAll(what){
-      assert.equal(what, 'user-role');
-      return resolve([facultyRole, studentRole]);
+      if (what === 'user-role') {
+        return resolve([facultyRole, studentRole]);
+      }
+      if (what === 'school') {
+        return resolve(mockSchools);
+      }
     },
     createRecord(what, properties){
       createRecordCalled++;

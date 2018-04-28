@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import moment from 'moment';
 
-const { Promise } = RSVP;
+const { Promise, filter } = RSVP;
 const { oneWay } = computed;
 
 
@@ -14,6 +14,7 @@ export default Mixin.create(ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
   flashMessages: service(),
+  permissionChecker: service(),
 
   init(){
     this._super(...arguments);
@@ -35,15 +36,14 @@ export default Mixin.create(ValidationErrorDisplay, {
   isSaving: false,
   nonStudentMode: true,
 
-  schools: computed('currentUser.model.schools.[]', {
-    get(){
-      return new Promise(resolve => {
-        this.get('currentUser.model').then(user => {
-          resolve(user.get('schools'));
-        });
-      });
-    }
-  }).readOnly(),
+  schools: computed(async function(){
+    const permissionChecker = this.get('permissionChecker');
+    const store = this.get('store');
+    const schools = await store.findAll('school', {reload: true});
+    return filter(schools.toArray(), async school => {
+      return permissionChecker.canCreateUser(school);
+    });
+  }),
 
   bestSelectedSchool: computed('schools.[]', 'schoolId', {
     get(){
