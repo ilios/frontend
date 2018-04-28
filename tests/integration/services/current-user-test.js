@@ -74,44 +74,6 @@ module('CurrentUserService', function(hooks) {
     assert.equal(model, null);
   });
 
-  test('cohortsInAllAssociatedSchools', async function(assert){
-    assert.expect(4);
-    const cohort1 = EmberObject.create();
-    const cohort2 = EmberObject.create();
-    const cohort3 = EmberObject.create();
-    const program1 = EmberObject.create({
-      cohorts: resolve([ cohort1, cohort2 ])
-    });
-    const program2 = EmberObject.create({
-      cohorts: resolve([])
-    });
-    const program3 = EmberObject.create({
-      cohorts: resolve([ cohort3 ])
-    });
-    const school1 = EmberObject.create({
-      programs: resolve([ program1, program2 ])
-    });
-    const school2 = EmberObject.create({
-      programs: resolve([ program3 ])
-    });
-    const user = EmberObject.create({
-      schools: resolve([school1, school2 ])
-    });
-
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
-
-    const subject = this.owner.lookup('service:current-user');
-    const cohorts = await subject.get('cohortsInAllAssociatedSchools');
-    assert.equal(cohorts.length, 3);
-    assert.ok(cohorts.includes(cohort1));
-    assert.ok(cohorts.includes(cohort2));
-    assert.ok(cohorts.includes(cohort3));
-  });
-
   test('userRoleTitles', async function(assert){
     assert.expect(3);
     const user = EmberObject.create({
