@@ -2,5 +2,12 @@
   {{#link-to 'curriculumInventoryReports'}}{{t 'general.backToReports'}}{{/link-to}}
 </div>
 
-{{curriculum-inventory-report-details report=model}}
+{{curriculum-inventory-report-details
+  report=model
+  canUpdate=canUpdate
+  leadershipDetails=leadershipDetails
+  setLeadershipDetails=(action (mut leadershipDetails))
+  manageLeadership=manageLeadership
+  setManageLeadership=(action (mut manageLeadership))
+}}
 {{outlet}}

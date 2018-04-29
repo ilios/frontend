@@ -144,7 +144,7 @@ test('read-only/finalized mode', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
   return wait().then(() => {
     assert.equal(this.$('.start-date > span:eq(0)').text().trim(),
       moment(report.get('startDate')).format('L'), 'Start date is visible.'
@@ -207,7 +207,7 @@ test('rollover button not visible for unprivileged user', function (assert) {
   this.register('service:permission-checker', permissionCheckerMock);
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
   return wait().then(() => {
     assert.equal(this.$('.report-overview-actions .rollover').length, 0,
       'Rollover course button is not visible.'
