@@ -23,6 +23,7 @@
 <div class='detail-cohorts-content'>
   {{#if isManaging class="horizontal"}}
     {{detail-cohort-manager
+      school=(await course.school)
       selectedCohorts=bufferedCohorts
       add='addCohortToBuffer'
       remove='removeCohortFromBuffer'

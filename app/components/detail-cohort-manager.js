@@ -1,7 +1,7 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { all, map } from 'rsvp';
+import { all, filter } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 
 import { translationMacro as t } from "ember-i18n";
@@ -11,6 +11,7 @@ const { sort } = computed;
 export default Component.extend({
   i18n: service(),
   store: service(),
+  permissionChecker: service(),
   init() {
     this._super(...arguments);
     this.set('sortBy', ['title']);
@@ -19,32 +20,46 @@ export default Component.extend({
   classNames: ['detail-cohort-manager'],
   placeholder: t('general.filterPlaceholder'),
   filter: '',
+  school: null,
   selectedCohorts: null,
   sortBy: null,
   sortedCohorts: sort('selectedCohorts', 'sortBy'),
+
+  allCohorts: computed('school', async function () {
+    const store = this.get('store');
+    const permissionChecker = this.get('permissionChecker');
+    const allCohorts = await store.findAll('cohort', { reload: true });
+    const courseSchool = this.get('school');
+
+    return filter(allCohorts.toArray(), async cohort => {
+      const cohortSchool = await cohort.get('school');
+      if (cohortSchool === courseSchool) {
+        return true;
+      }
+      // @todo HACK here. Until we update common to a version with canUpdateAllCoursesInSchool
+      // we have to reach into a permission checker internal method instead.
+      if (await permissionChecker.canDoInSchool(cohortSchool, 'CAN_UPDATE_ALL_COURSES')) {
+        return true;
+      }
+      const programYear = await cohort.get('programYear');
+      if (await permissionChecker.canUpdateProgramYear(programYear)) {
+        return true;
+      }
+
+      return false;
+    });
+  }),
 
   /**
    * @property availableCohorts
    * @type {Ember.computed}
    * @protected
    */
-  availableCohorts: computed('selectedCohorts.[]', async function(){
-    const store = this.get('store');
-    const schools = await store.findAll('school', { reload: true });
+  availableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function(){
+    const cohorts = await this.get('allCohorts');
+    const selectedCohorts = this.get('selectedCohorts') || [];
 
-    const cohorts = await map(schools.toArray(), async school => {
-      return school.get('cohorts');
-    });
-
-    const usableCohorts =  cohorts.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []);
-
-    return usableCohorts.filter(cohort => {
-      return (
-        this.get('selectedCohorts') && !this.get('selectedCohorts').includes(cohort)
-      );
-    });
+    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
   }),
 
   /**
