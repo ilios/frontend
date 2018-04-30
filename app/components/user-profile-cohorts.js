@@ -1,15 +1,15 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { all, filter } from 'rsvp';
 import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 
-const { Promise, filter } = RSVP;
-
 export default Component.extend({
   currentUser: service(),
+  permissionChecker: service(),
+  store: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -33,23 +33,31 @@ export default Component.extend({
 
   setup: task(function * (user){
     this.set('finishedSetup', false);
+    const store = this.get('store');
     const currentUser = this.get('currentUser');
+    const permissionChecker = this.get('permissionChecker');
+
     const cohorts = yield user.get('cohorts');
     const selectedCohorts = cohorts.toArray();
     const primaryCohort = yield user.get('primaryCohort');
+
     const sessionUser = yield currentUser.get('model');
-    const userSchools = yield sessionUser.get('schools');
     const primarySchool = yield sessionUser.get('school');
+
+    const allCohorts = yield store.findAll('cohort', { reload: true });
+    const allSchools = yield store.findAll('school', { reload: true });
+    const schoolsWithUpdateUserPermission = yield filter(allSchools.toArray(), async school => {
+      return permissionChecker.canUpdateUserInSchool(school);
+    });
 
     this.set('selectedCohorts', selectedCohorts);
     this.set('primaryCohort', primaryCohort);
-    this.set('schools', userSchools);
+    this.set('schools', schoolsWithUpdateUserPermission);
+    this.set('allCohorts', allCohorts);
     this.set('selectedSchoolId', primarySchool.get('id'));
 
-    //preload relationships for selected cohorts to make rendering smoother
-    for (let i = 0; i < selectedCohorts.length; i++) {
-      yield selectedCohorts[i].get('school');
-    }
+    //preload relationships for cohorts to make rendering smoother
+    yield all(allCohorts.mapBy('school'));
 
     this.set('finishedSetup', true);
   }),
@@ -83,42 +91,20 @@ export default Component.extend({
     return schools.findBy('id', selectedSchoolId);
   }),
 
-  assignableCohorts: computed('currentUser.cohortsInAllAssociatedSchools.[]', 'selectedCohorts.[]', function(){
-    const currentUser = this.get('currentUser');
-    const selectedCohorts = this.get('selectedCohorts');
-    return new Promise(resolve => {
-      currentUser.get('cohortsInAllAssociatedSchools').then(usableCohorts => {
-        filter(usableCohorts, cohort => {
-          return new Promise(resolve => {
-            cohort.get('programYear').then(programYear => {
-              resolve(
-                programYear.get('published') &&
-                !programYear.get('archived') &&
-                !selectedCohorts.includes(cohort)
-              );
-            });
-          });
-        }).then(assignableCohorts => {
-          resolve(assignableCohorts);
-        });
-      });
-    });
+  assignableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function () {
+    const cohorts = await this.get('allCohorts');
+    const selectedCohorts = this.get('selectedCohorts') || [];
+
+    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
   }),
 
-  assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', function(){
+  assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', async function(){
     const selectedSchool = this.get('selectedSchool');
-    return new Promise(resolve => {
-      this.get('assignableCohorts').then(assignableCohorts => {
-        filter(assignableCohorts, cohort => {
-          return new Promise(resolve => {
-            cohort.get('school').then(school => {
-              resolve(school.get('id') === selectedSchool.get('id'));
-            });
-          });
-        }).then(filteredCohorts => {
-          resolve(filteredCohorts);
-        });
-      });
+    const assignableCohorts = await this.get('assignableCohorts');
+
+    return filter(assignableCohorts, async cohort => {
+      const school = await cohort.get('school');
+      return school.get('id') === selectedSchool.get('id');
     });
   }),
 
@@ -129,7 +115,9 @@ export default Component.extend({
       return selectedCohorts;
     }
 
-    return selectedCohorts.filter(cohort => cohort.get('id') != primaryCohort.get('id'));
+    return selectedCohorts.filter(cohort => {
+      return cohort.get('id') != primaryCohort.get('id');
+    });
   }),
 
   actions: {
