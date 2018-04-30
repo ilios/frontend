@@ -10,7 +10,7 @@
       {{/if}}
     </div>
   </div>
-  <p>
+  <p data-test-primary-cohort>
     <h4>{{t 'general.primaryCohort'}}: </h4>
     {{#if primaryCohort}}
       {{#if (and (is-fulfilled primaryCohort.school) (is-fulfilled primaryCohort.program))}}
@@ -24,7 +24,7 @@
     {{/if}}
   </p>
 
-  <p>
+  <p data-test-secondary-cohorts>
     <h4>{{t 'general.secondaryCohorts'}}:</h4>
     {{#if (gt secondaryCohorts.length 0)}}
       <ul>
@@ -46,12 +46,12 @@
   </p>
 
   {{#if isManaging}}
-    <p class='select-available-cohort'>
+    <p class='select-available-cohort' >
       <h4>{{t 'general.availableCohorts'}}</h4>
       <div class="schoolsfilter">
         {{fa-icon 'university' fixedWidth=true}}
         {{#if (gt schools.length 1)}}
-          <select onchange={{action (mut selectedSchoolId) value="target.value"}}>
+          <select onchange={{action (mut selectedSchoolId) value="target.value"}} data-test-school>
             {{#each (sort-by 'title' schools) as |school|}}
               <option value={{school.id}} selected={{is-equal school selectedSchool}}>
                 {{school.title}}
@@ -64,7 +64,7 @@
       </div>
       {{#if (is-fulfilled assignableCohortsForSelectedSchool)}}
         {{#if (gt (get (await assignableCohortsForSelectedSchool) 'length') 0)}}
-          <ul>
+          <ul data-test-assignable-cohorts>
             {{#each (sort-by 'programYear.program.school.title' 'programYear.program.title' 'title' (await assignableCohortsForSelectedSchool)) as |cohort|}}
               <li>
                 {{fa-icon 'plus' class='clickable add' title=(t 'general.addCohort') click=(action 'addSelectedCohort' cohort)}}

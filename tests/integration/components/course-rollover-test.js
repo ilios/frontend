@@ -255,7 +255,8 @@ test('rollover course with new start date', function(assert) {
   storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
-    query(){return [];}
+    query(){return [];},
+    findAll() { return [];},
   });
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
@@ -348,7 +349,8 @@ test('rollover course prohibit non-matching day-of-week date selection', functio
   storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
-    query(){return [];}
+    query(){return [];},
+    findAll(){return [];},
   });
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
@@ -414,7 +416,8 @@ test('rollover start date adjustment with former year course start date', functi
   storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
-    query(){return [];}
+    query(){return [];},
+    findAll(){return [];},
   });
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
@@ -483,7 +486,8 @@ test('rollover course with no offerings', function(assert) {
   storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
-    query(){return [];}
+    query(){return [];},
+    findAll(){return [];},
   });
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 
@@ -513,9 +517,8 @@ test('rollover course with no offerings', function(assert) {
 
 test('errors do not show up initially', function(assert) {
   storeMock.reopen({
-    query(){
-      return [];
-    }
+    query(){return [];},
+    findAll(){return [];},
   });
   let course = EmberObject.create({
     id: 1
@@ -531,9 +534,8 @@ test('errors do not show up initially', function(assert) {
 
 test('errors show up', function(assert) {
   storeMock.reopen({
-    query(){
-      return [];
-    }
+    query(){return [];},
+    findAll(){return [];},
   });
   let course = EmberObject.create({
     id: 1
@@ -588,7 +590,7 @@ test('changing the title looks for new matching courses', function(assert) {
 });
 
 test('rollover course with cohorts', async function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   let som = EmberObject.create({
     id: '1',
     title: 'SOM'
@@ -609,9 +611,11 @@ test('rollover course with cohorts', async function(assert) {
     program: resolve(program1),
     school: resolve(som)
   });
+  som.set('cohorts', resolve([cohort]));
   let course = EmberObject.create({
     id: 1,
-    title: 'old course'
+    title: 'old course',
+    school: som
   });
   let ajaxMock = Service.extend({
     request(url, { data }) {
@@ -632,14 +636,17 @@ test('rollover course with cohorts', async function(assert) {
   storeMock.reopen({
     pushPayload(){},
     peekRecord(){},
-    query() { return []; }
+    query() { return []; },
+    findAll(what) {
+      assert.equal(what, 'cohort');
+      return resolve([cohort]);
+    }
   });
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
   const mockCurrentUser = EmberObject.create({});
 
   const currentUserMock = Service.extend({
-    model: resolve(mockCurrentUser),
-    cohortsInAllAssociatedSchools: resolve([cohort])
+    model: resolve(mockCurrentUser)
   });
   this.register('service:currentUser', currentUserMock);
 

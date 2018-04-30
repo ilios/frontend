@@ -16,7 +16,6 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.logging = true;
     this.school = this.server.create('school');
     this.user = await setupAuthentication( { school: this.school } );
     const program = this.server.create('program', {

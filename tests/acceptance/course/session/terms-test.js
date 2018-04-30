@@ -12,7 +12,6 @@ module('Acceptance: Session - Terms', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    this.server.logging = true;
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school});
     const vocabulary = this.server.create('vocabulary', {

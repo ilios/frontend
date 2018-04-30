@@ -1,186 +1,118 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
+import { resolve } from 'rsvp';
 import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { run } from "@ember/runloop";
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-const { resolve } = RSVP;
+module('Integration | Component | user profile cohorts', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('user-profile-cohorts', 'Integration | Component | user profile cohorts', {
-  integration: true,
-  beforeEach(){
-    this.register('service:currentUser', currentUserMock);
-  }
-});
-let som = EmberObject.create({
-  id: '1',
-  title: 'SOM'
-});
-let sod = EmberObject.create({
-  id: '2',
-  title: 'SOD'
-});
-let program1 = EmberObject.create({
-  title: 'Program1',
-  school: resolve(som)
-});
-let program2 = EmberObject.create({
-  title: 'Program2',
-  school: resolve(sod)
-});
-let programYear1 = EmberObject.create({
-  program: resolve(program1),
-  published: true,
-  archived: false,
-});
-let programYear2 = EmberObject.create({
-  program: resolve(program2),
-  published: true,
-  archived: false,
-});
-let programYear3 = EmberObject.create({
-  program: resolve(program2),
-  published: true,
-  archived: false,
-});
-let programYear4 = EmberObject.create({
-  program: resolve(program2),
-  published: true,
-  archived: false,
-});
-program1.set('programYears', resolve([programYear1, programYear4]));
-program2.set('programYears', resolve([programYear2, programYear3]));
+  hooks.beforeEach(async function() {
+    const school1 = this.server.create('school');
+    const school2 = this.server.create('school');
+    const program1 = this.server.create('program', { school: school1 });
+    const program2 = this.server.create('program', { school: school2 });
+    const programYear1 = this.server.create('program-year', { program: program1 });
+    const programYear2 = this.server.create('program-year', { program: program2 });
+    const programYear3 = this.server.create('program-year', { program: program1 });
+    const programYear4 = this.server.create('program-year', { program: program2 });
 
-let cohort1 = EmberObject.create({
-  id: 1,
-  title: 'Cohort1',
-  programYear: resolve(programYear1),
-  program: resolve(program1),
-  school: resolve(som)
-});
+    this.cohort1 = this.server.create('cohort', { programYear: programYear1 });
+    this.cohort2 = this.server.create('cohort', { programYear: programYear2 });
+    this.cohort3 = this.server.create('cohort', { programYear: programYear3 });
+    this.cohort4 = this.server.create('cohort', { programYear: programYear4 });
 
-let cohort2 = EmberObject.create({
-  id: 2,
-  title: 'Cohort2',
-  programYear: resolve(programYear2),
-  program: resolve(program2),
-  school: resolve(sod)
-});
-
-let cohort3 = EmberObject.create({
-  id: 3,
-  title: 'Cohort3',
-  programYear: resolve(programYear3),
-  program: resolve(program2),
-  school: resolve(sod)
-});
-
-let cohort4 = EmberObject.create({
-  id: 4,
-  title: 'Cohort4',
-  programYear: resolve(programYear4),
-  program: resolve(program1),
-  school: resolve(som)
-});
-programYear1.set('cohort', resolve(cohort1));
-programYear2.set('cohort', resolve(cohort2));
-programYear3.set('cohort', resolve(cohort3));
-programYear4.set('cohort', resolve(cohort4));
-som.set('programs', resolve([program1]));
-sod.set('programs', resolve([program2]));
-
-let usercohorts = [cohort1, cohort2];
-
-let user = EmberObject.create({
-  primaryCohort: resolve(cohort1),
-  cohorts: resolve(usercohorts),
-});
-
-const mockCurrentUser = EmberObject.create({
-  schools: resolve([som, sod]),
-  school: resolve(som),
-});
-
-const currentUserMock = Service.extend({
-  model: resolve(mockCurrentUser),
-  cohortsInAllAssociatedSchools: resolve([cohort1, cohort2, cohort3, cohort4])
-});
-
-
-test('it renders', function(assert) {
-  this.set('user', user);
-  this.render(hbs`{{user-profile-cohorts user=user}}`);
-  const primaryCohort = 'p:eq(0)';
-  const secondaryCohorts = 'ul:eq(0) li';
-
-  return wait().then(()=>{
-    assert.equal(this.$(primaryCohort).text().replace(/[\t\n\s]+/g, ""), 'PrimaryCohort:SOMProgram1Cohort1', 'primary cohort correct');
-    assert.equal(this.$(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
-    assert.equal(this.$(secondaryCohorts).text().trim(), 'SOD Program2 Cohort2', 'cohort correct');
-  });
-});
-
-test('clicking manage sends the action', function(assert) {
-  assert.expect(1);
-  this.set('user', user);
-  this.set('click', (what) =>{
-    assert.ok(what, 'recieved boolean true value');
-  });
-  this.render(hbs`{{user-profile-cohorts user=user isManageable=true setIsManaging=(action click)}}`);
-  const manage = 'button.manage';
-  this.$(manage).click();
-});
-
-test('can edit user cohorts', function(assert) {
-  assert.expect(12);
-
-  this.set('user', user);
-  this.set('nothing', parseInt);
-
-  user.set('save', ()=> {
-    assert.equal(user.get('primaryCohort'), cohort2, 'user has correct primary cohort');
-
-    assert.ok(!usercohorts.includes(cohort1), 'cohort1 has been removed');
-    assert.ok(usercohorts.includes(cohort2), 'cohort2 is still present');
-    assert.ok(usercohorts.includes(cohort3), 'cohort3 has been added');
-
-    return resolve(user);
-  });
-
-  this.render(hbs`{{user-profile-cohorts isManaging=true user=user setIsManaging=(action nothing)}}`);
-  const primaryCohort = 'p:eq(0)';
-  const secondaryCohorts = 'ul:eq(0) li';
-  const schoolPicker = 'select:eq(0)';
-  const assignableCohorts = 'ul:eq(1) li';
-  const promoteFirstSecondaryCohort = `${secondaryCohorts}:eq(0) i.add`;
-  const removeFirstSecondaryCohort = `${secondaryCohorts}:eq(0) i.remove`;
-  const addFirstAssignableCohort = `${assignableCohorts}:eq(0) i.add`;
-
-  return wait().then(()=>{
-    assert.equal(this.$(primaryCohort).text().replace(/[\t\n\s]+/g, ""), 'PrimaryCohort:SOMProgram1Cohort1', 'primary cohort correct');
-    assert.equal(this.$(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
-    assert.equal(this.$(secondaryCohorts).text().trim(), 'SOD Program2 Cohort2', 'cohort correct');
-    assert.equal(this.$(schoolPicker).val(), '1', 'correct school selected');
-    assert.equal(this.$(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-    assert.equal(this.$(assignableCohorts).text().trim(), 'Program1 Cohort4', 'cohort correct');
-
-    this.$(schoolPicker).val('2').change();
-    return wait().then(()=>{
-      assert.equal(this.$(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-      assert.equal(this.$(assignableCohorts).text().trim(), 'Program2 Cohort3', 'cohort correct');
-
-      this.$(promoteFirstSecondaryCohort).click();
-
-      return wait().then(()=>{
-        this.$(removeFirstSecondaryCohort).click();
-        this.$(addFirstAssignableCohort).click();
-
-        this.$('.bigadd').click();
-
-        return wait();
-      });
-
+    const user = this.server.create('user', {
+      primaryCohort: this.cohort1,
+      cohorts: [this.cohort1, this.cohort2]
     });
+    const user2 = this.server.create('user', {
+      school: school1
+    });
+
+    this.user = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const sessionUser = await run(() => this.owner.lookup('service:store').find('user', user2.id));
+
+    const currentUserMock = Service.extend({
+      model: resolve(sessionUser),
+      getRolesInSchool() {
+        return resolve(['SCHOOL_ADMINISTRATOR']);
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+  });
+
+  test('it renders', async function(assert) {
+    this.set('user', this.user);
+    await render(hbs`{{user-profile-cohorts user=user}}`);
+    const primaryCohort = '[data-test-primary-cohort]';
+    const secondaryCohorts = '[data-test-secondary-cohorts] li';
+    await settled();
+
+    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
+    assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
+    assert.equal(find(secondaryCohorts).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
+  });
+
+  test('clicking manage sends the action', async function(assert) {
+    assert.expect(1);
+    this.set('user', this.user);
+    this.set('click', (what) =>{
+      assert.ok(what, 'recieved boolean true value');
+    });
+    await render(hbs`{{user-profile-cohorts user=user isManageable=true setIsManaging=(action click)}}`);
+    const manage = 'button.manage';
+    await click(manage);
+  });
+
+  test('can edit user cohorts', async function(assert) {
+    assert.expect(12);
+
+    this.set('user', this.user);
+    this.set('nothing', parseInt);
+
+    this.server.put('api/users/:id', ({ db }, request) => {
+      let attrs = JSON.parse(request.requestBody);
+      assert.equal(attrs.user.primaryCohort, this.cohort2.id, 'user has correct primary cohort');
+
+      assert.ok(!attrs.user.cohorts.includes(this.cohort1.id), 'cohort1 has been removed');
+      assert.ok(attrs.user.cohorts.includes(this.cohort2.id), 'cohort2 is still present');
+      assert.ok(attrs.user.cohorts.includes(this.cohort4.id), 'cohort4 has been added');
+
+      const user = db.users.update(attrs);
+
+      return resolve(user);
+    });
+
+    await render(hbs`{{user-profile-cohorts isManaging=true user=user setIsManaging=(action nothing)}}`);
+    const primaryCohort = '[data-test-primary-cohort]';
+    const secondaryCohorts = '[data-test-secondary-cohorts] li';
+    const schoolPicker = '[data-test-school]';
+    const assignableCohorts = '[data-test-assignable-cohorts] li';
+    const promoteFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) i.add`;
+    const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) i.remove`;
+    const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) i.add`;
+
+    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
+    assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
+    assert.equal(find(secondaryCohorts).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
+
+    assert.equal(find(schoolPicker).value, '1', 'correct school selected');
+    assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
+    assert.equal(find(assignableCohorts).textContent.trim(), 'program 0 cohort 2', 'cohort correct');
+
+    await fillIn(schoolPicker, '2');
+
+    assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
+    assert.equal(find(assignableCohorts).textContent.trim(), 'program 1 cohort 3', 'cohort correct');
+
+    await click(promoteFirstSecondaryCohort);
+    await click(removeFirstSecondaryCohort);
+    await click(addFirstAssignableCohort);
+    await click('.bigadd');
   });
 });

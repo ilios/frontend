@@ -221,20 +221,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }),
   /**
-   * A list of schools that the current user is associated with, sorted by title.
+   * All schools, sorted by title.
    * @property schoolList
    * @type {Ember.computed}
    * @public
    */
-  schoolList: computed('currentUser.schools.[]', async function(){
-    const currentUser = this.get('currentUser');
-    const user = await currentUser.get('model');
+  schoolList: computed(async function(){
+    const store = this.get('store');
 
-    if (isEmpty(user)) {
-      return [];
-    }
-
-    const schools = await user.get('schools');
+    const schools = await store.findAll('school');
     return schools.sortBy('title');
   }),
 
