@@ -401,6 +401,7 @@
     'printSummary': 'Sumario Printado',
     'program': 'Programa',
     'programCohorts': 'Clases de La Graduación',
+    'programLeadership': 'Liderazgo del Programa',
     'programs': 'Programas',
     'programTitle': 'Titulo de Programa',
     'programTitleFilterPlaceholder': 'Filtrar por Titulo de Programa',

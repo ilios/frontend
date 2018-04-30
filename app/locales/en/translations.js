@@ -401,6 +401,7 @@ export default {
     'printSummary': 'Print Summary',
     'program': 'Program',
     'programCohorts': 'Program Cohorts',
+    'programLeadership': 'Program Leadership',
     'programs': 'Programs',
     'programTitle': 'Program Title',
     'programTitleFilterPlaceholder': 'Filter by Program Title',
