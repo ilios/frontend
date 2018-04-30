@@ -28,7 +28,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('reportName', this.get('report.name'));
-    this.set('isFinalized', this.get('report.isFinalized'));
 
     // check if the d/l link points at the same domain as the current page is on.
     let parser = document.createElement('a');
@@ -41,7 +40,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   report: null,
   reportName: null,
   publishTarget: alias('report'),
-  isFinalized: false,
+  canUpdate: false,
   isDownloading: false,
   downloadFromSameDomain: false,
 

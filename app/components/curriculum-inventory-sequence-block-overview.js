@@ -14,6 +14,7 @@ export default Component.extend({
   classNames: ['curriculum-inventory-sequence-block-overview'],
   tagName: 'section',
   sequenceBlock: null,
+  canUpdate: false,
   parent: null,
   report: null,
   minimum: 0,
@@ -26,7 +27,6 @@ export default Component.extend({
   orderInSequence: null,
   description: null,
   isSaving: false,
-  isFinalized: false,
   isManagingSessions: false,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
@@ -69,7 +69,6 @@ export default Component.extend({
     const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const description = sequenceBlock.get('description');
-    const isFinalized = yield report.get('isFinalized');
     const course = yield sequenceBlock.get('course');
     this.setProperties({
       parent,
@@ -84,7 +83,6 @@ export default Component.extend({
       childSequenceOrder,
       orderInSequence,
       description,
-      isFinalized,
       linkedSessions,
       course,
       required,

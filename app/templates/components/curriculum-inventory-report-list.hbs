@@ -55,9 +55,9 @@
           <span>
             <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank" rel="noopener">{{fa-icon 'download'}}</a>
           </span>
-          {{#unless report.isFinalized}}
+          {{#if (await report.userCanDelete)}}
             <span class='clickable remove' {{action 'confirmRemove' report}}>{{fa-icon 'trash'}}</span>
-          {{/unless}}
+          {{/if}}
         </td>
       </tr>
       {{#if report.showRemoveConfirmation}}

@@ -1,7 +1,20 @@
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 
 export default Route.extend({
-  model() {
-    return this.modelFor('curriculumInventoryReport');
-  }
+  store: service(),
+  permissionChecker: service(),
+  canUpdate: false,
+  async afterModel(report) {
+    await report.get('topLevelSequenceBlocks');
+
+    const permissionChecker = this.get('permissionChecker');
+    const canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
+
+    this.set('canUpdate', canUpdate);
+  },
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('canUpdate', this.get('canUpdate'));
+  },
 });

@@ -13,26 +13,24 @@ moduleForComponent('curriculum-inventory-report-header', 'Integration | Componen
 
 test('it renders', function(assert) {
   let report = EmberObject.create({
-    isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'
   });
   this.set('report', report);
-  this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
   assert.equal(this.$('.title').text().trim(), report.name, 'Report name shows.');
   assert.equal(this.$('.editable').length, 1, 'Report name is editable.');
   assert.equal(this.$(`.actions .finalize`).length, 1, 'Finalize button shows.');
   assert.equal(this.$(`.actions .download`).length, 1, 'Download button shows.');
 });
 
-test('finalized reports render in read-only mode.', function(assert) {
+test('non updatable reports render in read-only mode.', function(assert) {
   let report = EmberObject.create({
-    isFinalized: true,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'
   });
   this.set('report', report);
-  this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-header report=report canUpdate=false}}`);
   assert.equal(this.$('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
   assert.equal(this.$('.editable').length, 0, 'Report name is not editable.');
   assert.equal(this.$('.actions .download').length, 1, 'Download button shows.');
@@ -52,7 +50,7 @@ test('change name', function(assert) {
     }
   });
   this.set('report', report);
-  this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
   assert.equal(this.$('.editinplace').text().trim(), report.name);
   this.$('.editable').click();
   this.$('.editinplace input').val(newName);
@@ -74,7 +72,7 @@ test('change name fails on empty value', function(assert) {
     }
   });
   this.set('report', report);
-  this.render(hbs`{{curriculum-inventory-report-header report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('');
@@ -88,7 +86,6 @@ test('change name fails on empty value', function(assert) {
 test('clicking on finalize button fires action', function(assert){
   assert.expect(1);
   let report = EmberObject.create({
-    isFinalized: false,
     absoluteFileUri: 'foo/bar',
     name: 'Report name'
   });
@@ -97,7 +94,7 @@ test('clicking on finalize button fires action', function(assert){
   };
   this.set('report', report);
   this.set('finalizeAction', finalizeAction);
-  this.render(hbs`{{curriculum-inventory-report-header report=report finalize=(action finalizeAction)}}`);
+  this.render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true finalize=(action finalizeAction)}}`);
   return wait().then(()=>{
     this.$('button.finalize').click();
   });

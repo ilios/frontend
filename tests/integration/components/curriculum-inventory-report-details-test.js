@@ -54,6 +54,7 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{curriculum-inventory-report-details
     report=report
+    canUpdate=true
     setLeadershipDetails=(action nothing)
     setManageLeadership=(action nothing)
   }}`);
@@ -96,13 +97,14 @@ test('finalize report', async function(assert) {
     description: 'Lorem Ipsum',
     sequenceBlocks: resolve([])
   });
-
+  let test = this;
   let storeMock = Service.extend({
     createRecord(what, params) {
       assert.equal(what, 'curriculumInventoryExport', 'createRecord() got invoked for export.');
       assert.equal(params.report, report, 'Report gets passed to correctly.');
       return EmberObject.create({
         save() {
+          test.set('canUpdate', false);
           return resolve(this);
         }
       });
@@ -111,10 +113,12 @@ test('finalize report', async function(assert) {
 
   this.register('service:store', storeMock);
   this.set('report', report);
-  this.set('nothing', () =>{});
+  this.set('nothing', () => { });
+  this.set('canUpdate', true);
 
   this.render(hbs`{{curriculum-inventory-report-details
     report=report
+    canUpdate=canUpdate
     setLeadershipDetails=(action nothing)
     setManageLeadership=(action nothing)
   }}`);
@@ -172,6 +176,7 @@ test('start finalizing report, then cancel', async function(assert){
 
   this.render(hbs`{{curriculum-inventory-report-details
     report=report
+    canUpdate=true
     setLeadershipDetails=(action nothing)
     setManageLeadership=(action nothing)
   }}`);

@@ -1,7 +1,5 @@
 <div class='title'>
-  {{#if isFinalized}}
-    <h2>{{fa-icon "lock"}} {{sequenceBlock.title}}</h2>
-  {{else}}
+  {{#if canUpdate}}
     {{#editable-field
       tagName='h2'
       value=blockTitle
@@ -22,6 +20,8 @@
         <span class="validation-error-message">{{v-get this 'blockTitle' 'message'}}</span>
       {{/if}}
     {{/editable-field}}
+  {{else}}
+    <h2>{{fa-icon "lock"}} {{sequenceBlock.title}}</h2>
   {{/if}}
 </div>
 

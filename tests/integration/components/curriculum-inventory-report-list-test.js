@@ -1,9 +1,9 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-report-list', 'Integration | Component | curriculum inventory report list', {
   integration: true,
@@ -34,6 +34,13 @@ test('it renders', function(assert) {
     }),
     isFinalized: true,
   });
+
+  const permissionCheckerMock = Service.extend({
+    canDeleteCurriculumInventoryReport() {
+      return resolve(true);
+    }
+  });
+  this.register('service:permission-checker', permissionCheckerMock);
 
   const reports = [ report1, report2 ];
 
@@ -109,6 +116,14 @@ test('empty list', function(assert) {
 
 test('delete and confirm', function(assert) {
   assert.expect(3);
+
+  const permissionCheckerMock = Service.extend({
+    canDeleteCurriculumInventoryReport() {
+      return resolve(true);
+    }
+  });
+  this.register('service:permission-checker', permissionCheckerMock);
+
   let report = EmberObject.create();
   let removeAction =  function(obj) {
     assert.equal(report, obj, 'Report is passed to remove action.');
@@ -128,6 +143,14 @@ test('delete and confirm', function(assert) {
 
 test('delete and cancel', function(assert) {
   assert.expect(3);
+
+  const permissionCheckerMock = Service.extend({
+    canDeleteCurriculumInventoryReport() {
+      return resolve(true);
+    }
+  });
+  this.register('service:permission-checker', permissionCheckerMock);
+
   let report = EmberObject.create();
   let removeAction =  function() {
     assert.ok(false, 'Remove action should not have been invoked.');

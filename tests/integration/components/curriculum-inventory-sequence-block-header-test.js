@@ -16,20 +16,19 @@ test('it renders', function(assert) {
     title: 'Block title'
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
   assert.equal(this.$('.title').text().trim(), block.title, 'Block title is visible');
   assert.equal(this.$('.editable').length, 1, 'Block title is editable.');
 });
 
-test('read-only mode for block in finalized report', function(assert) {
+test('read-only mode for block in when it can not be updated', function(assert) {
   let block = EmberObject.create({
     title: 'Block title',
     report: {
-      isFinalized: true
     }
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=false}}`);
   assert.equal(this.$('.editable').length, 0, 'Block title is not editable.');
 });
 
@@ -44,7 +43,7 @@ test('change title', function(assert) {
     }
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
   assert.equal(this.$('.editinplace').text().trim(), block.title);
   this.$('.editable').click();
   this.$('.editinplace input').val(newTitle);
@@ -64,7 +63,7 @@ test('change title fails on empty value', function(assert) {
     }
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('');
@@ -84,7 +83,7 @@ test('change title fails on too-short value', function(assert) {
     }
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('ab');
@@ -104,7 +103,7 @@ test('change title fails on overlong value', function(assert) {
     }
   });
   this.set('sequenceBlock', block);
-  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
   this.$('.editable').click();
   assert.equal(this.$('.validation-error-message').length, 0, 'No validation error shown initially.');
   this.$('.editinplace input').val('0123456789'.repeat(21));

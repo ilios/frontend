@@ -1,13 +1,10 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-const { alias } = computed;
 
 export default Component.extend({
   store: service(),
   report: null,
-  isFinalized: alias('report.isFinalized'),
   canUpdate: false,
   showFinalizeConfirmation: false,
   isFinalizing: false,
@@ -26,7 +23,6 @@ export default Component.extend({
       });
       repExport.save().then((savedExport) => {
         report.set('export', savedExport);
-        this.set('isFinalized', true);
       }).finally(()=>{
         this.set('showFinalizeConfirmation', false);
         this.set('isFinalizing', false);

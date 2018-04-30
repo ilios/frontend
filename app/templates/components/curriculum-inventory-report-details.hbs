@@ -1,6 +1,7 @@
 {{curriculum-inventory-report-header
-  report=report finalize=(action 'confirmFinalization')
-  isFinalizing=isFinalizing
+  report=report
+  finalize=(action 'confirmFinalization')
+  canUpdate=canUpdate
 }}
 {{#if showFinalizeConfirmation}}
   <div class='confirm-finalize'>
@@ -13,7 +14,7 @@
     </div>
   </div>
 {{/if}}
-{{curriculum-inventory-report-overview report=report}}
+{{curriculum-inventory-report-overview report=report canUpdate=canUpdate}}
 {{#if leadershipDetails}}
   {{curriculum-inventory-leadership-expanded
     report=report

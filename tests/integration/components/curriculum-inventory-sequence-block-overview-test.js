@@ -174,7 +174,7 @@ test('it renders', function(assert) {
   this.set('setSortBy', null);
 
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
     assert.equal(
@@ -303,6 +303,7 @@ test('order in sequence is n/a for top level block', function(assert) {
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
       report=report
       sequenceBlock=sequenceBlock
+      canUpdate=true
       sortBy=sortBy
       setSortBy=setSortBy}}
   `);
@@ -365,7 +366,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.order-in-sequence > span').text().trim(), 'n/a');
   });
@@ -459,7 +460,7 @@ test('change course', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     this.$('.course .editinplace .clickable').click();
     return wait().then(() => {
@@ -549,7 +550,7 @@ test('change description', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
     assert.equal(this.$('.description .editinplace').text().trim(), 'Click to add a description.');
@@ -615,7 +616,7 @@ test('change required', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
     assert.equal(this.$('.required .editinplace').text().trim(), 'Optional (elective)');
@@ -681,7 +682,7 @@ test('change track', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.ok(this.$('.track input').prop('checked'), 'Track toggle is initially set to "yes"');
     this.$('.track .switch-label').click();
@@ -741,7 +742,7 @@ test('change child sequence order', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.child-sequence-order .editinplace').text().trim(), 'Ordered');
     this.$('.child-sequence-order .editinplace .clickable').click();
@@ -832,7 +833,7 @@ test('change order in sequence', function(assert) {
   this.set('setSortBy', null);
 
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.order-in-sequence .editinplace').text().trim(), block.get('orderInSequence'));
     this.$('.order-in-sequence .editinplace .clickable').click();
@@ -907,7 +908,7 @@ test('change academic level', function(assert) {
   this.set('sortBy', null);
   this.set('setSortBy', null);
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
 
     assert.equal(this.$('.academic-level .editinplace').text().trim(), academicLevels[0].get('name'));
@@ -1043,7 +1044,7 @@ test('manage sessions', function(assert) {
   this.set('setSortBy', null);
 
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(this.$('.curriculum-inventory-sequence-block-session-manager').length, 0,
       'Sessions-manager is initially not visible.'
@@ -1061,7 +1062,7 @@ test('manage sessions', function(assert) {
   });
 });
 
-test('finalized/read-only mode', function(assert) {
+test('read-only mode', function(assert) {
   assert.expect(23);
 
   let school = EmberObject.create({ id() { return 1; }});
@@ -1091,7 +1092,6 @@ test('finalized/read-only mode', function(assert) {
     year: '2016',
     program: resolve(program),
     linkedCourses: resolve([linkedCourse]),
-    isFinalized: resolve(true)
   });
 
   let parentBlock = EmberObject.create({
@@ -1212,7 +1212,7 @@ test('finalized/read-only mode', function(assert) {
   this.set('setSortBy', null);
 
   this.render(hbs`{{curriculum-inventory-sequence-block-overview
-    report=report sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    report=report sequenceBlock=sequenceBlock canUpdate=false sortBy=sortBy setSortBy=setSortBy}}`);
   return wait().then(() => {
     assert.equal(
       this.$('.description > span:eq(0)').text().trim(), block.get('description'),

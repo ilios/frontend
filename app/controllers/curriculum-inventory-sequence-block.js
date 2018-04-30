@@ -5,6 +5,7 @@ export default Controller.extend({
     'sortSessionsBy',
   ],
   sortSessionsBy: 'title',
+  canUpdate: false,
   actions: {
     removeChildSequenceBlock(block) {
       let parent = this.get('model');
