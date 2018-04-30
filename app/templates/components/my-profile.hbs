@@ -6,101 +6,51 @@
   <span class="is-student"><h2>{{t 'general.student'}}</h2></span>
 {{/if}}
 
-<div class="details">
-  <section class="permissions">
-    <h4 class="header">{{t 'general.userRoles'}}</h4>
+<div class='blocks'>
+  {{user-profile-roles
+    user=user
+    isManageable=false
+    setIsManaging=nothing
+  }}
 
-    <div class="permissions-body">
-      {{#if (is-fulfilled roles)}}
-        <div class="permissions-row">
-          <span>
-            {{fa-icon (if (contains 'Course Director' (await roles)) 'check' 'ban') class=(if (contains 'Course Director' (await roles)) 'yes' 'no')}}
-            {{t 'general.courseDirector'}}
-          </span>
-        </div>
-        <div class="permissions-row">
-          <span>
-            {{fa-icon (if (contains 'Faculty' (await roles)) 'check' 'ban') class=(if (contains 'Faculty' (await roles)) 'yes' 'no')}}
-            {{t 'general.instructor'}}
-          </span>
-        </div>
-        <div class="permissions-row">
-          <span>
-            {{fa-icon (if (contains 'Developer' (await roles)) 'check' 'ban') class=(if (contains 'Developer' (await roles)) 'yes' 'no')}}
-            {{t 'general.developer'}}
-          </span>
-        </div>
-        <div class="permissions-row">
-          <span>
-            {{fa-icon (if (contains 'Former Student' (await roles)) 'check' 'ban') class=(if (contains 'Former Student' (await roles)) 'yes' 'no')}}
-            {{t 'general.formerStudent'}}
-          </span>
-        </div>
-        <hr>
-
-        <div class="permissions-row">
-          <span>
-            {{fa-icon (if user.syncIgnore 'check' 'ban') class=(if user.syncIgnore 'yes' 'no')}}
-            {{t 'general.excludeFromSync'}}
-          </span>
-        </div>
+  <div class="small-component" data-test-info>
+    <div>
+      <label>{{t 'general.primarySchool'}}:</label>
+      {{#if (await user.school)}}
+        {{get (await user.school) 'title'}}
+      {{else}}
+        {{t 'general.unassigned'}}
       {{/if}}
     </div>
-  </section>
+    <div>
+      <label>{{t 'general.primaryCohort'}}:</label>
+      {{#if (await user.primaryCohort)}}
+        {{get (await user.primaryCohort) 'title'}}
+      {{else}}
+        {{t 'general.unassigned'}}
+      {{/if}}
+    </div>
+    <div>
+      <label>{{t 'general.secondaryCohorts'}}:</label>
+      {{#if (get (await user.secondaryCohorts) 'length')}}
+        <ul class="secondary-cohorts details-list">
+          {{#each (sort-by 'title' (await user.secondaryCohorts)) as |cohort|}}
+            <li>
+              <span class="title">{{cohort.title}} </span>
+              <span class="content">{{cohort.programYear.program.title}}</span>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        {{t 'general.unassigned'}}
+      {{/if}}
+    </div>
+  </div>
 
-  <section class="info">
-    <div class="row">
-      <span class='title'>{{t 'general.primarySchool'}}:</span>
-      <span class='content'>
-        {{#if (await user.school)}}
-          {{get (await user.school) 'title'}}
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="row">
-      <span class='title'>{{t 'general.primaryCohort'}}:</span>
-      <span class='content'>
-        {{#if (await user.primaryCohort)}}
-          {{get (await user.primaryCohort) 'title'}}
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="row">
-      <span class='title'>{{t 'general.secondaryCohorts'}}:</span>
-      <span class='content'>
-        {{#if (get (await user.secondaryCohorts) 'length')}}
-          <ul class="secondary-cohorts details-list">
-            {{#each (sort-by 'title' (await user.secondaryCohorts)) as |cohort|}}
-              <li>
-                <span class="title">{{cohort.title}} </span>
-                <span class="content">{{cohort.programYear.program.title}}</span>
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="row">
-      <span class='title'>{{t 'general.learnerGroups'}}:</span>
-      <span class='content'>
-        {{#if (await user.learnerGroups)}}
-          <ul class="secondary-cohorts details-list">
-            {{#each (sort-by 'title' (await user.learnerGroups)) as |group|}}
-              <li>{{group.title}} ({{group.cohort.title}} {{group.cohort.programYear.program.title}})</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          {{t 'general.unassigned'}}
-        {{/if}}
-      </span>
-    </div>
-  </section>
+  {{user-profile-permissions
+    user=user
+  }}
+  {{user-profile-learnergroups user=user}}
 </div>
 
 <section class='token-maintenance'>
