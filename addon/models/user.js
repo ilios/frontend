@@ -138,6 +138,7 @@ export default Model.extend({
     'programYears.[]',
     'administeredCurriculumInventoryReports.[]',
     'directedSchools.[]',
+    'administeredSchools.[]',
     function () {
       const directedCourses = this.hasMany('directedCourses').ids();
       const administeredCourses = this.hasMany('administeredCourses').ids();
@@ -149,8 +150,9 @@ export default Model.extend({
       const programYears = this.hasMany('programYears').ids();
       const administeredCurriculumInventoryReports = this.hasMany('administeredCurriculumInventoryReports').ids();
       const directedSchools = this.hasMany('directedSchools').ids();
+      const administeredSchools = this.hasMany('administeredSchools').ids();
 
-      return !isEmpty(directedCourses) || !isEmpty(administeredCourses) || !isEmpty(administeredSessions) || !isEmpty(instructedLearnerGroups) || !isEmpty(instructorGroups) || !isEmpty(instructedOfferings) || !isEmpty(directedPrograms) || !isEmpty(programYears) || !isEmpty(administeredCurriculumInventoryReports) || !isEmpty(directedSchools);
+      return !isEmpty(directedCourses) || !isEmpty(administeredCourses) || !isEmpty(administeredSessions) || !isEmpty(instructedLearnerGroups) || !isEmpty(instructorGroups) || !isEmpty(instructedOfferings) || !isEmpty(directedPrograms) || !isEmpty(programYears) || !isEmpty(administeredCurriculumInventoryReports) || !isEmpty(directedSchools) || !isEmpty(administeredSchools);
     }
   ),
 

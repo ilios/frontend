@@ -480,6 +480,17 @@ module('Unit | Model | User', function(hooks) {
     });
   });
 
+  test('performsNonLearnerFunction - administeredSchools', async function(assert){
+    run(() => {
+      assert.expect(1);
+      let store = this.owner.lookup('service:store');
+      let model = store.createRecord('user');
+      store.createRecord('school', { administrators: [model] });
+      let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+      assert.ok(performsNonLearnerFunction);
+    });
+  });
+
   test('isLearner - cohorts', async function(assert){
     run(() => {
       assert.expect(1);
