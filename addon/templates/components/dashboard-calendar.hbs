@@ -37,7 +37,7 @@
       {{fa-icon 'university'}}
       {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action changeSchool value="target.value"}}>
-          {{#each (await schools) as |school|}}
+          {{#each (sort-by 'title' (await allSchools)) as |school|}}
             <option value="{{school.id}}" selected={{is-equal school (await bestSelectedSchool)}}>
               {{school.title}}
             </option>

@@ -1,11 +1,8 @@
-import RSVP from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { get, computed } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
-
-const { map } = RSVP;
 
 export default Service.extend({
   store: service(),
@@ -33,35 +30,6 @@ export default Service.extend({
     }
     return await this.get('store').find('user', currentUserId);
   }),
-
-  /**
-   * All cohorts from all schools that the current user is associated with,
-   * via primary school association and the explicit schools permissions.
-   * @property cohortsInAllAssociatedSchools
-   * @type {Ember.computed}
-   * @readOnly
-   * @public
-   */
-  cohortsInAllAssociatedSchools: computed('model.schools.[]', async function(){
-    const user = await this.get('model');
-    if (!user) {
-      return [];
-    }
-    const schools = await user.get('schools');
-    const cohorts = await map(schools, async school => {
-      const programs = await school.get('programs');
-      const schoolCohorts = await map(programs.toArray(), async program => {
-        return await program.get('cohorts');
-      });
-      return schoolCohorts.reduce((array, set) => {
-        return array.pushObjects(set);
-      }, []);
-    });
-
-    return cohorts.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []);
-  }).readOnly(),
 
   userRoleTitles: computed('model.roles.[]', async function(){
     const user = await this.get('model');
@@ -134,10 +102,6 @@ export default Service.extend({
   }),
   canCreateCIReportInAnySchool: computed('session.data.authenticated.jwt', function(){
     return this.getBooleanAttributeFromToken('can_create_curriculum_inventory_report_in_any_school');
-  }),
-  schools: computed('model.schools', async function () {
-    const model = await this.get('model');
-    return model.get('schools');
   }),
   async isDirectingSchool(school) {
     const user = await this.get('model');

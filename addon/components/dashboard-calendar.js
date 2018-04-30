@@ -214,7 +214,7 @@ export default Component.extend({
     });
   }),
 
-  hasMoreThanOneSchool: computed('schools.[]', async function() {
+  hasMoreThanOneSchool: computed('allSchools.[]', async function() {
     const schools = await this.get('schools');
     return (schools.length > 1);
   }),
@@ -231,16 +231,6 @@ export default Component.extend({
     }
     const user = await this.get('currentUser').get('model');
     return await user.get('school');
-  }),
-
-  /**
-   * @property schools
-   * @type {Ember.computed}
-   * @public
-   */
-  schools: computed('allSchools.[]', async function(){
-    const schools = await this.get('allSchools');
-    return schools.sortBy('title');
   }),
 
   /**
@@ -449,9 +439,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  allSchools: computed(async function(){
-    const user = await this.get('currentUser.model');
-    return await user.get('schools');
+  allSchools: computed(async function () {
+    const store = this.get('store');
+    return store.findAll('school');
   }),
 
   /**
