@@ -7,5 +7,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-metal.run.sync"},
     { handler: "silence", matchId: "ember-simple-auth.session.authorize"},
     { handler: "silence", matchId: "ember-routing.route-router"},
+    { handler: "silence", matchId: "ember-inflector.globals"}, //waiting on https://github.com/emberjs/ember-inflector/issues/146
   ]
 };
