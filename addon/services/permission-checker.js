@@ -307,6 +307,11 @@ export default Service.extend({
   async canUpdateCurriculumInventoryReport(curriculumInventoryReport) {
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
+
+    if (curriculumInventoryReport.get('isFinalized')) {
+      return false;
+    }
+
     const program = await curriculumInventoryReport.get('program');
     const school = await program.get('school');
     if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
@@ -319,6 +324,11 @@ export default Service.extend({
   async canDeleteCurriculumInventoryReport(curriculumInventoryReport) {
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
+
+    if (curriculumInventoryReport.get('isFinalized')) {
+      return false;
+    }
+
     const program = await curriculumInventoryReport.get('program');
     const school = await program.get('school');
     if (await this.canDoInSchool(school, 'CAN_DELETE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
