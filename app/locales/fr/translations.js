@@ -401,6 +401,7 @@ export default {
     'printSummary': "Empreinte Résumé",
     'program': "Diplôme",
     'programCohorts': "Cohortes",
+    'programLeadership': 'Direction de Diplôme',
     'programs': "Diplômes",
     'programTitle': "Titre de Diplôme",
     'programTitleFilterPlaceholder': "Filtre par Titre de Diplôme",

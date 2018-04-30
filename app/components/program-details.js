@@ -6,4 +6,5 @@ export default Component.extend({
   classNames: ['program-details'],
   program: null,
   canUpdate: false,
+  'data-test-program-details': true,
 });
