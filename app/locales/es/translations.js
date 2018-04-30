@@ -131,6 +131,7 @@
     'currentSchool': 'Escuela Actual',
     'curriculumInventory': 'Inventario de plan de Estudios',
     'curriculumInventoryReport': "Informe de Inventario de Plan de Estudios",
+    'curriculumInventoryReportLeadership': 'Liderazgo de Inventario de plan de Estudios',
     'curriculumInventoryReportRollover': 'Copiar Inventario de plan de Estudios',
     'curriculumInventoryReportRolloverSummary': 'Esta acción copiará la estructura de este informe para ser utilizado en su año objetivo. No va a copiar la información del curso, sólo la estructura de bloque de secuencia de nivel superior. Usted tendrá que añadir la información del curso apropiado una vez que han rodado sobre la estructura del informe existente.',
     'curriculumInventoryReportRolloverSuccess': 'Inventario Copiado con Éxito',

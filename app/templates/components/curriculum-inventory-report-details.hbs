@@ -14,6 +14,23 @@
   </div>
 {{/if}}
 {{curriculum-inventory-report-overview report=report}}
+{{#if leadershipDetails}}
+  {{curriculum-inventory-leadership-expanded
+    report=report
+    canUpdate=canUpdate
+    collapse=(action setLeadershipDetails false)
+    expand=(action setLeadershipDetails true)
+    isManaging=manageLeadership
+    setIsManaging=setManageLeadership
+  }}
+{{else}}
+  {{leadership-collapsed
+    title=(t 'general.curriculumInventoryReportLeadership')
+    showDirectors=false
+    administratorsCount=(has-many-length report 'administrators')
+    expand=(action setLeadershipDetails true)
+  }}
+{{/if}}
 {{#liquid-if isFinalizing class='crossFade'}}
   {{#modal-dialog
     translucentOverlay=true

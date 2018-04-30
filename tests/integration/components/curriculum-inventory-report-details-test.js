@@ -50,8 +50,13 @@ test('it renders', function(assert) {
   });
 
   this.set('report', report);
+  this.set('nothing', () =>{});
 
-  this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-details
+    report=report
+    setLeadershipDetails=(action nothing)
+    setManageLeadership=(action nothing)
+  }}`);
 
   return wait().then(() => {
     assert.equal(this.$('.curriculum-inventory-report-header .title').text().trim(), report.get('name'),
@@ -104,10 +109,15 @@ test('finalize report', async function(assert) {
     }
   });
 
-  this.set('report', report);
   this.register('service:store', storeMock);
+  this.set('report', report);
+  this.set('nothing', () =>{});
 
-  this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-details
+    report=report
+    setLeadershipDetails=(action nothing)
+    setManageLeadership=(action nothing)
+  }}`);
 
   await wait();
   assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
@@ -158,8 +168,13 @@ test('start finalizing report, then cancel', async function(assert){
   });
 
   this.set('report', report);
+  this.set('nothing', () =>{});
 
-  this.render(hbs`{{curriculum-inventory-report-details report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-details
+    report=report
+    setLeadershipDetails=(action nothing)
+    setManageLeadership=(action nothing)
+  }}`);
 
   await this.$('.curriculum-inventory-report-header .finalize').click();
   await wait();

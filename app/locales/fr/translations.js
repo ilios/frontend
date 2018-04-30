@@ -131,6 +131,7 @@ export default {
     'currentSchool': "Écôle Actuelle",
     'curriculumInventory': "Inventaire des programmes d'études",
     'curriculumInventoryReport': "Rapport d'inventaire des programmes d'études",
+    'curriculumInventoryReportLeadership': "Dirigeants de Rapport d'inventaire des programmes d'études",
     'curriculumInventoryReportRollover': "Roulement Rapport d'inventaire des programmes d'études",
     'curriculumInventoryReportRolloverSummary': "Cette action permet de copier la structure de ce rapport qui doit être utilisé dans votre année cible. Il ne sera pas copier des informations de cours, seule la structure du bloc de séquence de niveau supérieur. Vous aurez besoin d'ajouter l'information de cours approprié une fois que vous avez roulé sur la structure du rapport existant.",
     'curriculumInventoryReportRolloverSuccess': 'Roulement achevée avec succès',

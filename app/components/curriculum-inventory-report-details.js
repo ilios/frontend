@@ -8,9 +8,11 @@ export default Component.extend({
   store: service(),
   report: null,
   isFinalized: alias('report.isFinalized'),
+  canUpdate: false,
   showFinalizeConfirmation: false,
   isFinalizing: false,
   classNames: ['curriculum-inventory-report-details'],
+  'data-test-curriculum-inventory-report-details': true,
 
   actions: {
     cancelFinalization(){

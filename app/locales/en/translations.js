@@ -131,6 +131,7 @@ export default {
     'currentSchool': 'Current School',
     'curriculumInventory': 'Curriculum Inventory',
     'curriculumInventoryReport': 'Curriculum Inventory Report',
+    'curriculumInventoryReportLeadership': 'Curriculum Inventory Report Leadership',
     'curriculumInventoryReportRollover': 'Rollover Report',
     'curriculumInventoryReportRolloverSummary': 'This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information once you have rolled over the existing report structure.',
     'curriculumInventoryReportRolloverSuccess': 'Report-Rollover Completed Successfully',
