@@ -130,8 +130,7 @@ module('Acceptance: Programs', function(hooks) {
         school: this.school,
       });
       await visit('/programs');
-      var edit = find('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .edit');
-      await click(edit);
+      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .edit');
       assert.equal(currentURL(), '/programs/1');
     });
 
