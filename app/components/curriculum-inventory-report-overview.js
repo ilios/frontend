@@ -5,7 +5,7 @@ import EmberObject, { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
-const { alias, reads } = computed;
+const { reads } = computed;
 
 const Validations = buildValidations({
   description: [
@@ -90,7 +90,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   startDate: null,
   endDate: null,
   yearOptions: null,
-  isFinalized: alias('report.isFinalized'),
+  canUpdate: false,
   actions: {
     changeStartDate(){
       const newDate = this.get('startDate');

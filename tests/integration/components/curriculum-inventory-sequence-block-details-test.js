@@ -85,7 +85,7 @@ test('it renders', function(assert) {
   this.set('sortBy', 'title');
   this.set('setSortSessionsBy', null);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-details sequenceBlock=sequenceBlock sortSessionsBy=sortBy setSortSessionBy=(action (mut sortSessionsBy))}}
+  this.render(hbs`{{curriculum-inventory-sequence-block-details sequenceBlock=sequenceBlock canUpdate=true sortSessionsBy=sortBy setSortSessionBy=(action (mut sortSessionsBy))}}
 `);
   return wait().then(() => {
     assert.equal(this.$('.curriculum-inventory-sequence-block-header .title').text().trim(),

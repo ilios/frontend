@@ -65,7 +65,7 @@ test('it renders', function (assert) {
   this.register('service:permission-checker', permissionCheckerMock);
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     assert.equal(this.$('.title').text().trim(), 'Overview',
       'Component title is visible.'
@@ -107,7 +107,7 @@ test('it renders', function (assert) {
   });
 });
 
-test('read-only/finalized mode', function (assert) {
+test('read-only', function (assert) {
   assert.expect(5);
 
   let school = EmberObject.create({
@@ -134,7 +134,6 @@ test('read-only/finalized mode', function (assert) {
     year: '2016',
     program,
     linkedCourses: resolve([]),
-    isFinalized: true,
     name: 'Lorem Ipsum',
     startDate: moment('2015-06-12').toDate(),
     endDate: moment('2016-04-11').toDate(),
@@ -144,7 +143,7 @@ test('read-only/finalized mode', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=false}}`);
   return wait().then(() => {
     assert.equal(this.$('.start-date > span:eq(0)').text().trim(),
       moment(report.get('startDate')).format('L'), 'Start date is visible.'
@@ -207,7 +206,7 @@ test('rollover button not visible for unprivileged user', function (assert) {
   this.register('service:permission-checker', permissionCheckerMock);
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     assert.equal(this.$('.report-overview-actions .rollover').length, 0,
       'Rollover course button is not visible.'
@@ -256,7 +255,7 @@ test('change start date', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     this.$('.start-date .editinplace .editable').click();
     return wait().then(() => {
@@ -317,7 +316,7 @@ test('validation fails if given start date follows end date', function (assert) 
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     this.$('.start-date .editinplace .editable').click();
     return wait().then(() => {
@@ -378,7 +377,7 @@ test('change end date', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     this.$('.end-date .editinplace .editable').click();
     return wait().then(() => {
@@ -439,7 +438,7 @@ test('validation fails if given end date precedes end date', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     this.$('.end-date .editinplace .editable').click();
     return wait().then(() => {
@@ -499,7 +498,7 @@ test('change academic year', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     this.$('.academic-year .editinplace .editable').click();
     return wait().then(() => {
@@ -558,7 +557,7 @@ test('academic year unchangeable if course has been linked', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     assert.equal(this.$('.academic-year > span:eq(0)').text().trim(),
       report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
@@ -609,7 +608,7 @@ test('change description', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     assert.equal(this.$('.description .editinplace').text().trim(), 'Click to edit');
     this.$('.description .editinplace .editable').click();
@@ -662,7 +661,7 @@ test('description validation fails if text is too long', function (assert) {
 
   this.set('report', report);
 
-  this.render(hbs`{{curriculum-inventory-report-overview report=report}}`);
+  this.render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
   return wait().then(() => {
     assert.equal(this.$('.description .editinplace').text().trim(), 'Click to edit');
     this.$('.description .editinplace .editable').click();

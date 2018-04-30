@@ -5,9 +5,9 @@
     </div>
 
     <div class='actions'>
-      {{#unless report.isFinalized}}
+      {{#if canUpdate}}
         {{expand-collapse-button value=editorOn action="toggleEditor"}}
-      {{/unless}}
+      {{/if}}
     </div>
   </div>
   <div class='new'>
@@ -84,9 +84,9 @@
                   {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
                     {{fa-icon 'edit'}}
                   {{/link-to}}
-                  {{#unless report.isFinalized}}
+                  {{#if canUpdate}}
                     <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
-                  {{/unless}}
+                  {{/if}}
                 </td>
               </tr>
               {{#if block.showRemoveConfirmation}}

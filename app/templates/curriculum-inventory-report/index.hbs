@@ -1,6 +1,5 @@
-{{#if (is-fulfilled model.topLevelSequenceBlocks)}}
-  {{curriculum-inventory-sequence-block-list
+{{curriculum-inventory-sequence-block-list
   report=(await model)
+  canUpdate=canUpdate
   remove='removeSequenceBlock'
-  }}
-{{/if}}
+}}

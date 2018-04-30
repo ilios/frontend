@@ -1,7 +1,5 @@
 <div class='title'>
-  {{#if isFinalized}}
-    <h2>{{fa-icon "lock"}} {{report.name}}</h2>
-  {{else}}
+  {{#if canUpdate}}
     {{#editable-field
     tagName='h2'
     value=reportName
@@ -22,6 +20,8 @@
         <span class="validation-error-message">{{v-get this 'reportName' 'message'}}</span>
       {{/if}}
     {{/editable-field}}
+  {{else}}
+    <h2>{{fa-icon "lock"}} {{report.name}}</h2>
   {{/if}}
 </div>
 <div class ='actions'>
@@ -35,7 +35,7 @@
       {{t 'general.download'}}
     </button>
   </a>
-  {{#unless isFinalized}}
+  {{#if canUpdate}}
     <button {{action 'finalize'}} class="finalize">{{t 'general.finalize'}}</button>
-  {{/unless}}
+  {{/if}}
 </div>

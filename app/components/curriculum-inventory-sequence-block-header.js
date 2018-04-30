@@ -27,9 +27,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   classNames: ['curriculum-inventory-sequence-block-header'],
   report: null,
+  canUpdate: false,
   reportName: null,
   publishTarget: alias('sequenceBlock'),
-  isFinalized: alias('sequenceBlock.report.isFinalized'),
   actions: {
     changeTitle(){
       const block = this.get('sequenceBlock');

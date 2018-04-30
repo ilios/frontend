@@ -21,6 +21,7 @@ export default Component.extend({
   classNames: ['curriculum-inventory-sequence-block-list'],
   parent: null,
   report: null,
+  canUpdate: false,
   sequenceBlocks: null,
   editorOn: false,
   saved: false,

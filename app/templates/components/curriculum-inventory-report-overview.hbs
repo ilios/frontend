@@ -13,9 +13,7 @@
     <div class="block start-date">
       <label>{{t 'general.start'}}:</label>
       <span>
-        {{#if isFinalized}}
-          {{moment-format report.startDate 'L'}}
-        {{else}}
+        {{#if canUpdate}}
           {{#editable-field
             value=(moment-format report.startDate 'L')
             save=(action 'changeStartDate')
@@ -31,15 +29,15 @@
               <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
             {{/if}}
           {{/editable-field}}
+        {{else}}
+          {{moment-format report.startDate 'L'}}
         {{/if}}
       </span>
     </div>
     <div class="block end-date">
       <label>{{t 'general.end'}}:</label>
       <span>
-        {{#if isFinalized}}
-          {{moment-format report.endDate 'L'}}
-        {{else}}
+        {{#if canUpdate}}
           {{#editable-field
             value=(moment-format report.endDate 'L')
             save=(action 'changeEndDate')
@@ -55,14 +53,14 @@
               <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
             {{/if}}
           {{/editable-field}}
+        {{else}}
+          {{moment-format report.endDate 'L'}}
         {{/if}}
       </span>
     </div>
     <div class="block academic-year">
       <label>{{t 'general.academicYear'}}:</label>
-      {{#if (or isFinalized (await report.hasLinkedCourses))}}
-        <span>{{yearLabel}}</span>
-      {{else}}
+      {{#if (and canUpdate (not (await report.hasLinkedCourses)))}}
         {{#editable-field
           value=yearLabel
           save=(action 'changeYear')
@@ -76,6 +74,8 @@
             update=(action (mut year))
           }}
         {{/editable-field}}
+      {{else}}
+        <span>{{yearLabel}}</span>
       {{/if}}
     </div>
 
@@ -86,9 +86,7 @@
     <div class="description">
       <label>{{t 'general.description'}}:</label>
       <span>
-        {{#if isFinalized}}
-          {{description}}
-        {{else}}
+        {{#if canUpdate}}
           {{#editable-field
           value=description
           save=(action 'changeDescription')
@@ -109,6 +107,8 @@
               <span class="validation-error-message">{{v-get this 'description' 'message'}}</span>
             {{/if}}
           {{/editable-field}}
+        {{else}}
+          {{description}}
         {{/if}}
       </span>
     </div>

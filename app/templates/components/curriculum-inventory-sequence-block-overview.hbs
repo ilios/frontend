@@ -4,9 +4,7 @@
     <div class="block course">
       <span>
         <label>{{t 'general.course'}}:</label>
-        {{#if isFinalized}}
-          <span data-test-course-title>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
-        {{else}}
+        {{#if canUpdate}}
           {{#editable-field
             value=course.title
             save=(action 'changeCourse')
@@ -22,6 +20,8 @@
               update=(action (mut course))
             }}
           {{/editable-field}}
+        {{else}}
+          <span data-test-course-title>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
         {{/if}}
       </span>
       {{#if course}}
@@ -37,9 +37,7 @@
     </div>
     <div class="block description">
       <label>{{t 'general.description'}}:</label>
-      {{#if isFinalized}}
-        <span>{{sequenceBlock.description}}</span>
-      {{else}}
+      {{#if canUpdate}}
         {{#editable-field
           value=(if description description (t 'general.clickToAddDescription'))
           save=(action 'changeDescription')
@@ -55,15 +53,13 @@
             {{description}}
           </textarea>
         {{/editable-field}}
+      {{else}}
+        <span>{{sequenceBlock.description}}</span>
       {{/if}}
     </div>
     <div class="block required">
       <label>{{t 'general.required'}}:</label>
-      {{#if isFinalized}}
-        <span>
-          {{requiredLabel}}
-        </span>
-      {{else}}
+      {{#if canUpdate}}
         {{#editable-field
           value=requiredLabel
           save=(action 'changeRequired')
@@ -75,28 +71,22 @@
             <option value=3 selected={{eq required '3'}}>{{t 'general.requiredInTrack'}}</option>
           </select>
         {{/editable-field}}
+      {{else}}
+        <span>{{requiredLabel}}</span>
       {{/if}}
     </div>
     <div class="block track">
       <label>{{t 'general.isTrack'}}:</label>
-      {{#if isFinalized}}
-        <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
-      {{else}}
+      {{#if canUpdate}}
         {{toggle-yesno yes=sequenceBlock.track toggle=(action 'changeTrack')}}
+      {{else}}
+        <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
       {{/if}}
     </div>
     {{#unless isEditingDatesAndDuration}}
       <div class="block start-date">
         <label>{{t 'general.start'}}:</label>
-        {{#if isFinalized}}
-          <span>
-            {{#if sequenceBlock.startDate}}
-              {{moment-format sequenceBlock.startDate 'L'}}
-            {{else}}
-              {{t 'general.notApplicableAbbr'}}
-            {{/if}}
-          </span>
-        {{else}}
+        {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.startDate}}
@@ -106,19 +96,19 @@
               {{/if}}
             </span>
           </span>
-        {{/if}}
-      </div>
-      <div class="block end-date">
-        <label>{{t 'general.end'}}:</label>
-        {{#if isFinalized}}
+        {{else}}
           <span>
-            {{#if sequenceBlock.endDate}}
-              {{moment-format sequenceBlock.endDate 'L'}}
+            {{#if sequenceBlock.startDate}}
+              {{moment-format sequenceBlock.startDate 'L'}}
             {{else}}
               {{t 'general.notApplicableAbbr'}}
             {{/if}}
           </span>
-        {{else}}
+        {{/if}}
+      </div>
+      <div class="block end-date">
+        <label>{{t 'general.end'}}:</label>
+        {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.endDate}}
@@ -128,16 +118,24 @@
               {{/if}}
             </span>
           </span>
+        {{else}}
+          <span>
+            {{#if sequenceBlock.endDate}}
+              {{moment-format sequenceBlock.endDate 'L'}}
+            {{else}}
+              {{t 'general.notApplicableAbbr'}}
+            {{/if}}
+          </span>
         {{/if}}
       </div>
       <div class="block duration">
         <label>{{t 'general.durationInDays'}}:</label>
-        {{#if isFinalized}}
-          <span>{{sequenceBlock.duration}}</span>
-        {{else}}
+        {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
           </span>
+        {{else}}
+          <span>{{sequenceBlock.duration}}</span>
         {{/if}}
       </div>
     {{else}}
@@ -149,9 +147,7 @@
     {{/unless}}
     <div class="block child-sequence-order">
       <label>{{t 'general.childSequenceOrder'}}:</label>
-      {{#if isFinalized}}
-        <span>{{childSequenceOrderLabel}}</span>
-      {{else}}
+      {{#if canUpdate}}
         {{#editable-field
           value=childSequenceOrderLabel
           save=(action 'changeChildSequenceOrder')
@@ -163,6 +159,8 @@
             <option value=3 selected={{eq childSequenceOrder '3'}}>{{t 'general.parallel'}}</option>
           </select>
         {{/editable-field}}
+      {{else}}
+        <span>{{childSequenceOrderLabel}}</span>
       {{/if}}
     </div>
 
@@ -170,9 +168,7 @@
       <label>{{t 'general.orderInSequence'}}:</label>
       <span>
         {{#if isInOrderedSequence}}
-          {{#if isFinalized}}
-            {{sequenceBlock.orderInSequence}}
-          {{else}}
+          {{#if canUpdate}}
             {{#editable-field
               value=orderInSequence
               save=(action 'changeOrderInSequence')
@@ -184,6 +180,8 @@
                 update=(action (mut orderInSequence))
               }}
             {{/editable-field}}
+          {{else}}
+            {{sequenceBlock.orderInSequence}}
           {{/if}}
         {{else}}
           {{t 'general.notApplicableAbbr'}}
@@ -196,22 +194,22 @@
     {{#unless isEditingMinMax}}
       <div class="block minimum">
         <label>{{t 'general.minimum'}}:</label>
-        {{#if isFinalized}}
-          <span>{{sequenceBlock.minimum}}</span>
-        {{else}}
+        {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
           </span>
+        {{else}}
+          <span>{{sequenceBlock.minimum}}</span>
         {{/if}}
       </div>
       <div class="block maximum">
         <label>{{t 'general.maximum'}}:</label>
-        {{#if isFinalized}}
-          <span>{{sequenceBlock.maximum}}</span>
-        {{else}}
+        {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
           </span>
+        {{else}}
+          <span>{{sequenceBlock.maximum}}</span>
         {{/if}}
       </div>
     {{else}}
@@ -223,9 +221,7 @@
     {{/unless}}
     <div class="block academic-level">
       <label>{{t 'general.academicLevel'}}:</label>
-      {{#if isFinalized}}
-        <span>{{academicLevel.name}}</span>
-      {{else}}
+      {{#if canUpdate}}
         {{#editable-field
           value=academicLevel.name
           save=(action 'changeAcademicLevel')
@@ -239,6 +235,8 @@
             update=(action 'setAcademicLevel')
           }}
         {{/editable-field}}
+      {{else}}
+        <span>{{academicLevel.name}}</span>
       {{/if}}
     </div>
     {{#unless (is-fulfilled linkableSessions)}}
@@ -257,7 +255,7 @@
         {{else}}
           <div class="block sessions">
             <label>{{t 'general.sessions'}} ({{get (await linkableSessions) 'length'}})</label>
-            {{#unless (or isManagingSessions isFinalized)}}
+            {{#unless (or isManagingSessions (not canUpdate))}}
               <div class="actions">
                 <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>
               </div>
