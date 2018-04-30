@@ -3,9 +3,9 @@
 <div class='form'>
   <div class="startyear-select">
     <label>{{t 'general.academicYear'}}:</label>
-    <select onchange={{action (mut selectedYear) value="target.value"}}>
+    <select onchange={{action (mut year) value="target.value"}}>
       {{#each (sort-by 'value' availableAcademicYears) as |obj|}}
-        <option value={{obj.value}} selected={{eq obj.value selectedYear}}>
+        <option value={{obj.value}} selected={{eq obj selectedYear}}>
           {{obj.label}}
         </option>
       {{/each}}
