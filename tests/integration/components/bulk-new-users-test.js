@@ -220,7 +220,6 @@ test('parses file into table', async function (assert) {
 test('saves valid faculty users', async function(assert) {
   assert.expect(35);
   let called = 0;
-  let facultyRole = {id: '3'};
   let studentRole = {id: '4'};
   storeMock.reopen({
     findAll(what) {
@@ -231,7 +230,7 @@ test('saves valid faculty users', async function(assert) {
         return resolve(mockSchools);
       }
       assert.equal(what, 'user-role');
-      return [facultyRole, studentRole];
+      return [studentRole];
     },
     createRecord(what, obj) {
       let rhett = EmberObject.create(obj);
@@ -250,7 +249,7 @@ test('saves valid faculty users', async function(assert) {
             assert.equal(this.get('otherId'), '123Other');
             assert.equal(this.get('addedViaIlios'), true);
             assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles')[0], facultyRole);
+            assert.equal(this.get('roles'), null);
           }
         });
         break;
@@ -279,7 +278,7 @@ test('saves valid faculty users', async function(assert) {
             assert.equal(this.get('otherId'), '1234Other');
             assert.equal(this.get('addedViaIlios'), true);
             assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles')[0], facultyRole);
+            assert.equal(this.get('roles'), null);
 
           }
         });
@@ -320,7 +319,6 @@ test('saves valid faculty users', async function(assert) {
 test('saves valid student users', async function(assert) {
   assert.expect(37);
   let called = 0;
-  let facultyRole = {id: '3'};
   let studentRole = {id: '4'};
   storeMock.reopen({
     findAll(what){
@@ -331,7 +329,7 @@ test('saves valid student users', async function(assert) {
         return resolve(mockSchools);
       }
       assert.equal(what, 'user-role');
-      return [facultyRole, studentRole];
+      return [studentRole];
     },
     createRecord(what, obj) {
       let rhett = EmberObject.create(obj);
@@ -584,10 +582,9 @@ test('duplicate username errors on save', async function(assert) {
       if (what === 'school') {
         return resolve(mockSchools);
       }
-      let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
       assert.equal(what, 'user-role');
-      return [facultyRole, studentRole];
+      return [studentRole];
     },
     createRecord(what, obj) {
       let rhett = EmberObject.create(obj);
@@ -642,10 +639,9 @@ test('error saving user', async function(assert) {
       if (what === 'school') {
         return resolve(mockSchools);
       }
-      let facultyRole = {id: '3'};
       let studentRole = {id: '4'};
       assert.equal(what, 'user-role');
-      return [facultyRole, studentRole];
+      return [studentRole];
     },
     createRecord(what, obj) {
       let rhett = EmberObject.create(obj);
