@@ -141,9 +141,10 @@ export default Mixin.create(ValidationErrorDisplay, {
       phone,
       username,
       password,
-      store
-    } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store');
-    const roles = yield store.findAll('user-role');
+      store,
+      nonStudentMode
+    } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store', 'nonStudentMode');
+    const roles = yield store.findAll('user-role', { reload: true });
     const school = yield this.get('bestSelectedSchool');
     const primaryCohort = yield this.get('bestSelectedCohort');
     let user = this.get('store').createRecord('user', {
@@ -158,10 +159,7 @@ export default Mixin.create(ValidationErrorDisplay, {
       enabled: true,
       root: false
     });
-    if (this.get('nonStudentMode')) {
-      let facultyRole = roles.findBy('title', 'Faculty');
-      user.set('roles', [facultyRole]);
-    } else {
+    if (!nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
       let studentRole = roles.findBy('title', 'Student');
       user.set('roles', [studentRole]);

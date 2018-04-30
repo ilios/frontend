@@ -175,10 +175,10 @@ export default Component.extend(NewUser, {
   save: task(function * () {
     this.set('savedUserIds', []);
     const store = this.get('store');
+    const nonStudentMode = this.get('nonStudentMode');
     const selectedSchool = yield this.get('bestSelectedSchool');
     const selectedCohort = yield this.get('bestSelectedCohort');
-    const roles = yield store.findAll('user-role');
-    const facultyRole = roles.findBy('id', '3');
+    const roles = yield store.findAll('user-role', { reload: true});
     const studentRole = roles.findBy('id', '4');
 
     let proposedUsers = this.get('selectedUsers');
@@ -202,9 +202,7 @@ export default Component.extend(NewUser, {
       ));
       user.set('school', selectedSchool);
 
-      if (this.get('nonStudentMode')) {
-        user.set('roles', [facultyRole]);
-      } else {
+      if (!nonStudentMode) {
         user.set('primaryCohort', selectedCohort);
         user.set('roles', [studentRole]);
       }

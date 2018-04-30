@@ -128,11 +128,7 @@ test('initial search input fires search and fills input', function(assert) {
 });
 
 test('create new user', function(assert) {
-  assert.expect(42);
-  let facultyRole = EmberObject.create({
-    id: 3,
-    title: 'Faculty'
-  });
+  assert.expect(41);
   let studentRole = EmberObject.create({
     id: 4,
     title: 'Student'
@@ -197,7 +193,7 @@ test('create new user', function(assert) {
     findAll(what) {
       if (what === 'user-role') {
         assert.equal(what, 'user-role', 'looking for user roles');
-        return resolve([facultyRole, studentRole]);
+        return resolve([studentRole]);
       }
       if (what === 'school') {
         return resolve(mockSchools);
@@ -221,8 +217,7 @@ test('create new user', function(assert) {
         return new EmberObject({
           save(){
             const roles = this.get('roles');
-            assert.equal(roles.length, 1, 'Only one new role was added');
-            assert.ok(roles.includes(facultyRole), 'The faculty role was added');
+            assert.equal(roles, null, 'Faculty get no roles');
             assert.ok(true, 'save gets called');
 
             return EmberObject.create({
