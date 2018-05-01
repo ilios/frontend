@@ -84,3 +84,35 @@ test('it renders without data', function(assert) {
   assert.equal(this.$(administrators).length, 1);
   assert.equal(this.$(administrators).eq(0).text().trim(), 'None');
 });
+
+test('disabled users are indicated with an icon', function(assert) {
+  assert.expect(7);
+  let user1 = EmberObject.create({
+    enabled: true,
+    firstName: 'a',
+    lastName: 'person',
+    fullName: 'a b person',
+  });
+  let user2 = EmberObject.create({
+    enabled: false,
+    firstName: 'b',
+    lastName: 'person',
+    fullName: 'b a person',
+  });
+  this.set('directors', [user1]);
+  this.set('administrators', [user2, user1]);
+
+  this.render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
+  const directors = 'table tbody tr:eq(0) td:eq(0) li';
+  const administrators = 'table tbody tr:eq(0) td:eq(1) li';
+  const disabledDirectors = `${directors} .fa-user-times`;
+  const disabledAdministrators = `${administrators} .fa-user-times`;
+
+  assert.equal(this.$(directors).length, 1);
+  assert.equal(this.$(disabledDirectors).length, 0);
+  assert.equal(this.$(directors).eq(0).text().trim(), 'a b person');
+  assert.equal(this.$(administrators).length, 2);
+  assert.equal(this.$(disabledAdministrators).length, 1);
+  assert.equal(this.$(administrators).eq(0).text().trim(), 'a b person');
+  assert.equal(this.$(administrators).eq(1).text().trim(), 'b a person');
+});
