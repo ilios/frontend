@@ -30,6 +30,9 @@ export default Service.extend({
     const rolesInCourse = await currentUser.getRolesInCourse(course);
     return await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_COURSES', rolesInCourse);
   },
+  async canUpdateAllCoursesInSchool(school) {
+    return this.canDoInSchool(school, 'CAN_UPDATE_ALL_COURSES');
+  },
   async canDeleteCourse(course) {
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
