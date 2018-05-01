@@ -28,9 +28,7 @@ export default Component.extend({
       if (cohortSchool === courseSchool) {
         return true;
       }
-      // @todo HACK here. Until we update common to a version with canUpdateAllCoursesInSchool
-      // we have to reach into a permission checker internal method instead.
-      if (await permissionChecker.canDoInSchool(cohortSchool, 'CAN_UPDATE_ALL_COURSES')) {
+      if (await permissionChecker.canUpdateAllCoursesInSchool(cohortSchool)) {
         return true;
       }
       const programYear = await cohort.get('programYear');
