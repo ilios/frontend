@@ -5,6 +5,10 @@
 
     ul {
       @include ilios-list-reset;
+
+      .disabled-user {
+        color: $dark-grey;
+      }
     }
   }
 

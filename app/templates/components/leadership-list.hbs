@@ -12,7 +12,12 @@
           <ul>
             {{#if (is-array directors)}}
               {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
-                <li>{{user.fullName}}</li>
+                <li>
+                  {{#unless user.enabled}}
+                    {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                  {{/unless}}
+                  {{user.fullName}}
+                </li>
               {{else}}
                 <li>{{t 'general.none'}}</li>
               {{/each}}
@@ -27,7 +32,12 @@
           <ul>
             {{#if (is-array administrators)}}
               {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
-                <li>{{user.fullName}}</li>
+                <li>
+                  {{#unless user.enabled}}
+                    {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                  {{/unless}}
+                  {{user.fullName}}
+                </li>
               {{else}}
                 <li>{{t 'general.none'}}</li>
               {{/each}}

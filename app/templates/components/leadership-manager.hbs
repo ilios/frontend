@@ -11,7 +11,13 @@
         <td class='text-top' data-test-directors>
           <ul>
             {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
-              <li>{{fa-icon 'remove' class='clickable remove' click=(action removeDirector user)}} {{user.fullName}}</li>
+              <li>
+                {{fa-icon 'remove' class='clickable remove' click=(action removeDirector user)}}
+                {{#unless user.enabled}}
+                  {{fa-icon 'user-times' title=(t 'general.disabled') class='disabled-user'}}
+                {{/unless}}
+                {{user.fullName}}
+              </li>
             {{else}}
               {{t 'general.none'}}
             {{/each}}
@@ -22,7 +28,13 @@
         <td class='text-top' data-test-administrators>
           <ul>
             {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
-              <li>{{fa-icon 'remove' class='clickable remove' click=(action removeAdministrator user)}} {{user.fullName}}</li>
+              <li>
+                {{fa-icon 'remove' class='clickable remove' click=(action removeAdministrator user)}}
+                {{#unless user.enabled}}
+                  {{fa-icon 'user-times' title=(t 'general.disabled') class='disabled-user'}}
+                {{/unless}}
+                {{user.fullName}}
+              </li>
             {{else}}
               {{t 'general.none'}}
             {{/each}}
