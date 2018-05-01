@@ -215,7 +215,7 @@ export default Component.extend({
   }),
 
   hasMoreThanOneSchool: computed('allSchools.[]', async function() {
-    const schools = await this.get('schools');
+    const schools = await this.get('allSchools');
     return (schools.length > 1);
   }),
 
