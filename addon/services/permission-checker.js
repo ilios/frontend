@@ -180,6 +180,10 @@ export default Service.extend({
     return this.canDoInSchool(school, 'CAN_CREATE_PROGRAMS');
   },
   async canUpdateProgramYear(programYear) {
+    if (programYear.get('locked') || programYear.get('archived')) {
+      return false;
+    }
+
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
 
@@ -196,6 +200,10 @@ export default Service.extend({
     return this.canUpdateProgram(program);
   },
   async canDeleteProgramYear(programYear) {
+    if (programYear.get('locked') || programYear.get('archived')) {
+      return false;
+    }
+
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');
 
