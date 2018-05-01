@@ -166,13 +166,17 @@ export default Component.extend({
             subGroupName: isPresent(arr[3])?arr[3]:null,
           });
         });
-        let notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
+        const notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
+        const skipEmpty = notHeaderRow.filter(obj => {
+          return !(isEmpty(obj.firstName) && isEmpty(obj.lastName) && isEmpty(obj.campusId) && isEmpty(obj.subGroupName));
+        });
 
-        resolve(notHeaderRow);
+        resolve(skipEmpty);
       };
 
       PapaParse.parse(file, {
-        complete
+        complete,
+        skipEmptyLines: true,
       });
     });
   },
