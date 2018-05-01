@@ -13,34 +13,15 @@ moduleForComponent('my-profile', 'Integration | Component | my profile', {
   integration: true
 });
 
-test('it renders all yes', function(assert) {
-  const cohort = EmberObject.create({
-    title: 'test cohort',
-    programYear: EmberObject.create({
-      program: EmberObject.create({
-        title: 'test program'
-      })
-    })
-  });
+test('it renders', function(assert) {
   const user = EmberObject.create({
     fullName: 'test name',
     isStudent: true,
-    roles: resolve([
-      EmberObject.create({title: 'Course Director'}),
-      EmberObject.create({title: 'Faculty'}),
-      EmberObject.create({title: 'Developer'}),
-      EmberObject.create({title: 'Former Student'}),
-    ]),
-    userSyncIgnore: true,
     school: resolve(EmberObject.create({title: 'test school'})),
     primaryCohort: resolve(EmberObject.create({title: 'test cohort'})),
     secondaryCohorts: resolve([
       EmberObject.create({title: 'second cohort'}),
       EmberObject.create({title: 'a third cohort'}),
-    ]),
-    learnerGroups: resolve([
-      EmberObject.create({title: 'first group', cohort}),
-      EmberObject.create({title: 'a second group', cohort}),
     ]),
   });
 
@@ -51,17 +32,11 @@ test('it renders all yes', function(assert) {
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), 'Student');
-  assert.ok(this.$('.permissions-row:eq(0) i').hasClass('fa-check'));
-  assert.ok(this.$('.permissions-row:eq(1) i').hasClass('fa-check'));
-  assert.ok(this.$('.permissions-row:eq(2) i').hasClass('fa-check'));
-  assert.ok(this.$('.permissions-row:eq(3) i').hasClass('fa-check'));
 
-  assert.equal(this.$('.info .row:eq(0) .content').text().trim(), 'test school');
-  assert.equal(this.$('.info .row:eq(1) .content').text().trim(), 'test cohort');
-  assert.equal(this.$('.info .row:eq(2) .content li:eq(0)').text().trim(), 'a third cohort');
-  assert.equal(this.$('.info .row:eq(2) .content li:eq(1)').text().trim(), 'second cohort');
-  assert.equal(this.$('.info .row:eq(3) .content li:eq(0)').text().trim(), 'a second group (test cohort test program)');
-  assert.equal(this.$('.info .row:eq(3) .content li:eq(1)').text().trim(), 'first group (test cohort test program)');
+  assert.equal(this.$('[data-test-info] div:eq(0)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
+  assert.equal(this.$('[data-test-info] div:eq(1)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
+  assert.equal(this.$('[data-test-info] div:eq(2) li:eq(0)').text().trim(), 'a third cohort');
+  assert.equal(this.$('[data-test-info] div:eq(2) li:eq(1)').text().trim(), 'second cohort');
 
 });
 
@@ -74,7 +49,6 @@ test('it renders all no', function(assert) {
     school: resolve(),
     primaryCohort: resolve(),
     secondaryCohorts: resolve([]),
-    learnerGroups: resolve([]),
   });
 
   this.set('user', user);
@@ -84,16 +58,11 @@ test('it renders all no', function(assert) {
 
   assert.equal(this.$('.name').text().trim(), 'test name');
   assert.equal(this.$('.is-student').text().trim(), '');
-  assert.ok(this.$('.permissions-row:eq(0) i').hasClass('fa-ban'));
-  assert.ok(this.$('.permissions-row:eq(1) i').hasClass('fa-ban'));
-  assert.ok(this.$('.permissions-row:eq(2) i').hasClass('fa-ban'));
-  assert.ok(this.$('.permissions-row:eq(3) i').hasClass('fa-ban'));
 
-  assert.equal(this.$('.info .row:eq(0) .content').text().trim(), 'Unassigned');
-  assert.equal(this.$('.info .row:eq(1) .content').text().trim(), 'Unassigned');
-  assert.equal(this.$('.info .row:eq(2) .content li').length, 0);
-  assert.equal(this.$('.info .row:eq(3) .content li').length, 0);
+  assert.equal(this.$('[data-test-info] div:eq(0)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
+  assert.equal(this.$('[data-test-info] div:eq(1)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
 
+  assert.equal(this.$('[data-test-info] div:eq(2)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Secondary Cohorts:Unassigned');
 });
 
 test('generates token when asked with good expiration date', function(assert) {

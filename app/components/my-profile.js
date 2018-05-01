@@ -90,6 +90,9 @@ export default Component.extend({
     }
   }),
   actions: {
+    nothing() {
+      //noop action to pass to profile components
+    },
     tokenCopied(){
       const flashMessages = this.get('flashMessages');
       flashMessages.success('general.copiedSuccessfully');
