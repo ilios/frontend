@@ -383,4 +383,28 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 2);
   });
+
+  test('ignore blank lines #3684', async function (assert) {
+    await page.visit({ learnerGroupId: 1 });
+    await page.activateBulkAssign();
+    this.server.create('user', {
+      firstName: 'jasper',
+      lastName: 'johnson',
+      campusId: '1234567890',
+      cohortIds: [1],
+    });
+    let users = [
+      ['jasper', 'johnson', '1234567890', '123Test'],
+      [' ', '   ', '', '  '],
+      [' ', '  ', '', ' '],
+      [' ', '   ', '', '  '],
+      ['', '   ', '', '  '],
+    ];
+    await triggerUpload(users, '[data-test-user-upload]');
+
+    assert.equal(page.bulkAssign.validUploadedUsers().count, 1);
+    assert.ok(page.bulkAssign.validUploadedUsers(0).isValid);
+    assert.equal(page.bulkAssign.invalidUploadedUsers().count, 0);
+    assert.ok(page.bulkAssign.showConfirmUploadButton);
+  });
 });
