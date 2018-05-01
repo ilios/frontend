@@ -1,5 +1,5 @@
 <ul class='selected-cohorts'>
-  {{#each sortedCohorts as |cohort|}}
+  {{#each (sort-by 'title' selectedCohorts) as |cohort|}}
     <li {{action 'remove' cohort}}>
       {{cohort.programYear.program.school.title}} |
       {{cohort.programYear.program.title}} |
