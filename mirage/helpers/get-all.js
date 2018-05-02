@@ -32,7 +32,7 @@ const extractQueryParams = function(request){
   let rhett = {
     filterParams: [],
     queryTerms: [],
-    limit: 20
+    limit: 100000
   };
 
   if (params) {

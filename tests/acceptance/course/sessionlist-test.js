@@ -19,7 +19,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     server.create('sessionType', { school: this.school });
-    this.server.create('course', {
+    this.course = this.server.create('course', {
       school: this.school,
       directorIds: [this.user.id]
     });
@@ -291,5 +291,24 @@ module('Acceptance: Course - Session List', function(hooks) {
 
     assert.equal(findAll(rows).length, 3);
     assert.equal(await getElementText(firstTitle), getText('session1'));
+  });
+
+  test('back and forth #3771', async function (assert) {
+    const sessions = 50;
+    server.createList('session', sessions, {
+      course: this.course,
+      sessionTypeId: 1
+    });
+    await visit(url);
+    const table = '.session-table table';
+    const rows = `${table} tbody tr`;
+    const back = '[data-test-back-to-sessions] a';
+
+    assert.equal(findAll(rows).length, sessions + 4);
+    for (let i = 1; i < 10; i++) {
+      await click(`${rows}:nth-of-type(${i}) td:nth-of-type(2) a`);
+      await click(back);
+      assert.equal(findAll(rows).length, sessions + 4);
+    }
   });
 });

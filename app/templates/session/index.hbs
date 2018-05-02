@@ -1,4 +1,4 @@
-<div class="backtolink backtosessionlink">{{#link-to 'course' (await model.course)}}{{t 'general.backToSessionList'}}{{/link-to}}</div>
+<div class="backtolink backtosessionlink" data-test-back-to-sessions>{{#link-to 'course' (await model.course)}}{{t 'general.backToSessionList'}}{{/link-to}}</div>
 {{session-details
   session=model
   editable=canUpdate
