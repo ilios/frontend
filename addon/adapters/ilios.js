@@ -14,6 +14,8 @@ export default RESTAdapter.extend(DataAdapterMixin, {
 
   coalesceFindRequests: true,
 
+  shouldReloadAll() { return true; },
+
   findMany(store, type, ids, snapshots) {
     let url = this.urlForFindMany(ids, type.modelName, snapshots);
 
