@@ -31,7 +31,7 @@
       {{else}}
         {{title}}
       {{/if}}
-      {{#if (and canDelete (or (not term.hasChildren) (not term.hasAssociations)))}}
+      {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
         {{fa-icon 'trash' class='clickable remove' click=(action 'deleteTerm')}}
       {{/if}}
     </div>
