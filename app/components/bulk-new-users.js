@@ -178,7 +178,7 @@ export default Component.extend(NewUser, {
     const nonStudentMode = this.get('nonStudentMode');
     const selectedSchool = yield this.get('bestSelectedSchool');
     const selectedCohort = yield this.get('bestSelectedCohort');
-    const roles = yield store.findAll('user-role', { reload: true});
+    const roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('id', '4');
 
     let proposedUsers = this.get('selectedUsers');

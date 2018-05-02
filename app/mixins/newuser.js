@@ -144,7 +144,7 @@ export default Mixin.create(ValidationErrorDisplay, {
       store,
       nonStudentMode
     } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store', 'nonStudentMode');
-    const roles = yield store.findAll('user-role', { reload: true });
+    const roles = yield store.findAll('user-role');
     const school = yield this.get('bestSelectedSchool');
     const primaryCohort = yield this.get('bestSelectedCohort');
     let user = this.get('store').createRecord('user', {

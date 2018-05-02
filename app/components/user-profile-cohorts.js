@@ -44,8 +44,8 @@ export default Component.extend({
     const sessionUser = yield currentUser.get('model');
     const primarySchool = yield sessionUser.get('school');
 
-    const allCohorts = yield store.findAll('cohort', { reload: true });
-    const allSchools = yield store.findAll('school', { reload: true });
+    const allCohorts = yield store.findAll('cohort');
+    const allSchools = yield store.findAll('school');
     const schoolsWithUpdateUserPermission = yield filter(allSchools.toArray(), async school => {
       return permissionChecker.canUpdateUserInSchool(school);
     });
