@@ -303,22 +303,21 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     const secondProgramYearRow = '.list tbody tr:nth-of-type(2)';
     const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(7) i:nth-of-type(1)`;
     const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) i:nth-of-type(1)`;
-    this.server.create('school');
-    this.server.create('program',  {
-      schoolId: 1
+    const program = this.server.create('program',  {
+      school: this.school
     });
-    this.server.createList('cohort', 2);
+    const cohorts = this.server.createList('cohort', 2);
     this.server.create('programYear', {
-      programId: 1,
+      program,
       startYear: 2014,
-      cohortId: 1,
+      cohort: cohorts[0],
       locked: true,
       directorIds: [this.user.id],
     });
     this.server.create('programYear', {
-      programId: 1,
+      program,
       startYear: 2015,
-      cohortId: 2,
+      cohort: cohorts[2],
       locked: false,
       directorIds: [this.user.id],
     });

@@ -87,13 +87,13 @@
                   {{else}}
                     {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}
-                      {{#if (await programYearProxy.userCanLock)}}
+                      {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon 'lock' class='clickable' click=(action 'unlockProgramYear' programYearProxy)}}
                       {{else}}
                         {{fa-icon 'lock'}}
                       {{/if}}
                     {{else}}
-                      {{#if (await programYearProxy.userCanUnLock)}}
+                      {{#if (await programYearProxy.userCanLock)}}
                         {{fa-icon 'unlock' class='clickable' click=(action 'lockProgramYear' programYearProxy)}}
                       {{else}}
                         {{fa-icon 'unlock'}}
