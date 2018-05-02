@@ -20,7 +20,7 @@ export default Component.extend({
   allCohorts: computed('school', async function () {
     const store = this.get('store');
     const permissionChecker = this.get('permissionChecker');
-    const allCohorts = await store.findAll('cohort', { reload: true });
+    const allCohorts = await store.findAll('cohort');
     const courseSchool = this.get('school');
 
     return filter(allCohorts.toArray(), async cohort => {

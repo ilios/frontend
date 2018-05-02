@@ -12,7 +12,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     let defer = RSVP.defer();
     let model = {};
     this.get('currentUser.model').then(currentUser=>{
-      this.get('store').findAll('school', { reload: true }).then(schools => {
+      this.get('store').findAll('school').then(schools => {
         model.schools = schools;
         currentUser.get('school').then(primarySchool => {
           model.primarySchool = primarySchool;

@@ -30,7 +30,7 @@ export default Component.extend({
     const isEnabled = yield this.get('isEnabled');
     const isUserSyncIgnored = yield this.get('isUserSyncIgnored');
 
-    let roles = yield store.findAll('user-role', { reload: true });
+    let roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('title', 'Student');
     const formerStudentRole = roles.findBy('title', 'Former Student');
 
