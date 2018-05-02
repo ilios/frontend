@@ -40,7 +40,7 @@
     "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~2.18.0",
+    "ember-source": "~3.1.1",
     "ember-tether": "^0.4.1",
     "eslint-plugin-ember": "^5.0.0",
     "ilios-common": "13.1.1",
