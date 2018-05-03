@@ -163,6 +163,8 @@ export default Service.extend({
         ],
         'CAN_UPDATE_INSTRUCTOR_GROUPS': [
           'SCHOOL_ADMINISTRATOR',
+          'SCHOOL_DIRECTOR',
+          'PROGRAM_DIRECTOR',
           'COURSE_ADMINISTRATOR',
           'COURSE_DIRECTOR',
         ],
