@@ -13,6 +13,7 @@
     canEditAssessment=(and canUpdate (eq sessionType.sessionCount 0))
     canEditAssessmentOption=(and canUpdate (eq sessionType.sessionCount 0))
     canEditActive=canUpdate
+    canUpdate=canUpdate
     save=(perform save)
     close=close
   }}

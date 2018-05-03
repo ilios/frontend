@@ -55,6 +55,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   canEditAssessment: false,
   canEditAssessmentOption: false,
   canEditActive: false,
+  canUpdate: false,
   saveSessionType: task(function * () {
     this.send('addErrorDisplaysFor', ['title', 'calendarColor', 'selectedAamcMethodId']);
     let {validations} = yield this.validate();

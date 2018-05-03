@@ -107,13 +107,17 @@
   </div>
 
   <div class='buttons'>
-    <button class='done text' {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
-      {{#if saveSessionType.isRunning}}
-        {{loading-spinner}}
-      {{else}}
-        {{t 'general.done'}}
-      {{/if}}
-    </button>
-    <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
+    {{#if canUpdate}}
+      <button class='done text' {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
+        {{#if saveSessionType.isRunning}}
+          {{loading-spinner}}
+        {{else}}
+          {{t 'general.done'}}
+        {{/if}}
+      </button>
+      <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
+    {{else}}
+      <button class='text' {{action close}}>{{t 'general.close'}}</button>
+    {{/if}}
   </div>
 </div>
