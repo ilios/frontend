@@ -100,9 +100,6 @@ export default Service.extend({
   canCreateOrUpdateUserInAnySchool: computed('session.data.authenticated.jwt', function(){
     return this.getBooleanAttributeFromToken('can_create_or_update_user_in_any_school');
   }),
-  canCreateCIReportInAnySchool: computed('session.data.authenticated.jwt', function(){
-    return this.getBooleanAttributeFromToken('can_create_curriculum_inventory_report_in_any_school');
-  }),
   async isDirectingSchool(school) {
     const user = await this.get('model');
     const ids = user.hasMany('directedSchools').ids();
