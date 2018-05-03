@@ -278,7 +278,7 @@ export default Service.extend({
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
     if (await this.isTeachingSession(session)) {
-      roles.pushObject('COURSE_INSTRUCTOR');
+      roles.pushObject('SESSION_INSTRUCTOR');
     }
 
     return roles;
