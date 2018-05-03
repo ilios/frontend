@@ -31,7 +31,7 @@ export default Component.extend({
     const language = i18n.get('locale');
 
     return {
-      key   : 'vD1Ua1Mf1e1VSYKa1EPYD==',
+      key   : '3A9A5C4A3gC3E3C3E3B7A4A2F4B2D2zHMDUGENKACTMXQL==',
       theme : 'gray',
       language,
       toolbarInline: false,
