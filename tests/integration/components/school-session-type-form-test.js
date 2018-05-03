@@ -195,6 +195,31 @@ test('assessment option hidden when assessment is false', async function(assert)
   assert.equal(this.$(assessmentOption).length, 0);
 });
 
+test('cancel fires action', async function(assert) {
+  assert.expect(1);
+  this.set('assessmentOptions', []);
+  this.set('nothing', parseInt);
+  this.set('close', ()=>{
+    assert.ok(true, 'action was fired');
+  });
+  this.render(hbs`{{school-session-type-form
+    title='one'
+    calendarColor='#ffffff'
+    assessment=false
+    assessmentOption=null
+    assessmentOptions=assessmentOptions
+    canUpdate=true
+    save=(action nothing)
+    close=(action close)
+  }}`);
+
+  const button = '.cancel';
+
+  await wait();
+
+  this.$(button).click();
+});
+
 test('close fires action', async function(assert) {
   assert.expect(1);
   this.set('assessmentOptions', []);
@@ -208,11 +233,12 @@ test('close fires action', async function(assert) {
     assessment=false
     assessmentOption=null
     assessmentOptions=assessmentOptions
+    canUpdate=false
     save=(action nothing)
     close=(action close)
   }}`);
 
-  const button = '.cancel';
+  const button = '.text';
 
   await wait();
 
@@ -263,6 +289,7 @@ test('save fires save', async function(assert) {
     canEditAssessmentOption=true
     canEditActive=true
     isActive=true
+    canUpdate=true
     save=(action save)
     close=(action nothing)
   }}`);
