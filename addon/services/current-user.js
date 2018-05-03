@@ -113,6 +113,15 @@ export default Service.extend({
     const ids = user.hasMany('administeredSchools').ids();
     return ids.includes(school.get('id'));
   },
+  async isDirectingProgramInSchool(school) {
+    const user = await this.get('model');
+    const schoolProgramIds = school.hasMany('programs').ids();
+
+    const ids = user.hasMany('directedPrograms').ids();
+    const matches = ids.filter(id => schoolProgramIds.includes(id));
+
+    return matches.length > 0;
+  },
   async isDirectingCourseInSchool(school) {
     const user = await this.get('model');
     const schoolCourseIds = school.hasMany('courses').ids();
@@ -239,6 +248,9 @@ export default Service.extend({
     }
     if (await this.isAdministeringSchool(school)) {
       roles.pushObject('SCHOOL_ADMINISTRATOR');
+    }
+    if (await this.isDirectingProgramInSchool(school)) {
+      roles.pushObject('PROGRAM_DIRECTOR');
     }
     if (await this.isDirectingCourseInSchool(school)) {
       roles.pushObject('COURSE_DIRECTOR');
