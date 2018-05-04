@@ -3699,13 +3699,6 @@ ember-cli-is-package-missing@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-is-package-missing/-/ember-cli-is-package-missing-1.0.0.tgz#6e6184cafb92635dd93ca6c946b104292d4e3390"
 
-ember-cli-js-cookie@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-js-cookie/-/ember-cli-js-cookie-0.1.1.tgz#f856f2ec78077181e3c4a998e6b07c5662aec106"
-  dependencies:
-    ember-cli-babel "^5.1.7"
-    js-cookie "^2.1.4"
-
 ember-cli-lodash-subset@^1.0.7:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-1.0.12.tgz#af2e77eba5dcb0d77f3308d3a6fd7d3450f6e537"
@@ -6568,10 +6561,6 @@ jquery@>=1.11.0, jquery@^3.2.1, jquery@^3.3.1:
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
-
-js-cookie@^2.1.4:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
 
 js-reporters@1.2.1:
   version "1.2.1"
