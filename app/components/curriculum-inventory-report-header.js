@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import Cookies from 'ember-cli-js-cookie';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
@@ -24,6 +23,7 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   flashMessages: service(),
+  cookies: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -44,7 +44,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isDownloading: false,
   downloadFromSameDomain: false,
 
-  downloadReport: task(function * (report){
+  downloadReport: task(function* (report) {
+    const cookies = this.get('cookies');
     let anchor = document.createElement('a');
     anchor.href = report.get('absoluteFileUri');
     anchor.target = '_blank';
@@ -58,9 +59,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         let cookieName = 'report-download-' + report.get('id');
         while (!downloadHasStarted) {
           yield timeout(1000);
-          if (Cookies.get(cookieName)) {
+          if (cookies.exists(cookieName)) {
             downloadHasStarted = true;
-            Cookies.remove(cookieName);
+            cookies.clear(cookieName);
           }
         }
       }
