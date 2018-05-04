@@ -2597,6 +2597,17 @@ ember-cli-node-assets@^0.1.4, ember-cli-node-assets@^0.1.6:
     lodash "^4.5.1"
     resolve "^1.1.7"
 
+ember-cli-node-assets@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.2.2.tgz#d2d55626e7cc6619f882d7fe55751f9266022708"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.1.1"
+    broccoli-source "^1.1.0"
+    debug "^2.2.0"
+    lodash "^4.5.1"
+    resolve "^1.1.7"
+
 ember-cli-normalize-entity-name@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-normalize-entity-name/-/ember-cli-normalize-entity-name-1.0.0.tgz#0b14f7bcbc599aa117b5fddc81e4fd03c4bad5b7"
@@ -3115,6 +3126,14 @@ ember-tether@^0.4.1:
   dependencies:
     ember-cli-babel "^5.2.1"
     ember-cli-node-assets "^0.1.6"
+    tether "^1.4.0"
+
+ember-tether@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0-beta.2.tgz#9cce5874e8c0779273db11379f04aff4ad983e44"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+    ember-cli-node-assets "^0.2.2"
     tether "^1.4.0"
 
 ember-tooltips@^2.8.2:
