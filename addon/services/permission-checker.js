@@ -11,7 +11,8 @@ export default Service.extend({
       return true;
     }
     const permissionMatrix = this.get('permissionMatrix');
-    const rolesInSchool = await currentUser.getRolesInSchool(school);
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInSchool = await currentUser.getRolesInSchool(school, rolesToCheck);
 
     return permissionMatrix.hasPermission(school, capability, rolesInSchool);
   },
@@ -22,12 +23,13 @@ export default Service.extend({
       return false;
     }
     const school = await course.get('school');
-
-    if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_COURSES')) {
+    const capability = 'CAN_UPDATE_ALL_COURSES';
+    if (await this.canDoInSchool(school, capability)) {
       return true;
     }
 
-    const rolesInCourse = await currentUser.getRolesInCourse(course);
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInCourse = await currentUser.getRolesInCourse(course, rolesToCheck);
     return await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_COURSES', rolesInCourse);
   },
   async canUpdateAllCoursesInSchool(school) {
@@ -45,8 +47,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInCourse = await currentUser.getRolesInCourse(course);
-    return await permissionMatrix.hasPermission(school, 'CAN_DELETE_THEIR_COURSES', rolesInCourse);
+    const capability = 'CAN_DELETE_THEIR_COURSES';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInCourse = await currentUser.getRolesInCourse(course, rolesToCheck);
+    return await permissionMatrix.hasPermission(school, capability, rolesInCourse);
   },
   async canCreateCourse(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_COURSES');
@@ -60,8 +64,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInCourse = await currentUser.getRolesInCourse(course);
-    return await permissionMatrix.hasPermission(school, 'CAN_UNLOCK_THEIR_COURSES', rolesInCourse);
+    const capability = 'CAN_UNLOCK_THEIR_COURSES';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInCourse = await currentUser.getRolesInCourse(course, rolesToCheck);
+    return await permissionMatrix.hasPermission(school, capability, rolesInCourse);
   },
   async canUpdateSession(session) {
     const currentUser = await this.get('currentUser');
@@ -78,8 +84,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInSession = await currentUser.getRolesInSession(session);
-    if (await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_SESSIONS', rolesInSession)) {
+    const capability = 'CAN_UPDATE_THEIR_SESSIONS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInSession = await currentUser.getRolesInSession(session, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInSession)) {
       return true;
     }
 
@@ -100,8 +108,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInSession = await currentUser.getRolesInSession(session);
-    if (await permissionMatrix.hasPermission(school, 'CAN_DELETE_THEIR_SESSIONS', rolesInSession)) {
+    const capability = 'CAN_DELETE_THEIR_SESSIONS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInSession = await currentUser.getRolesInSession(session, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInSession)) {
       return true;
     }
 
@@ -162,8 +172,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInProgram = await currentUser.getRolesInProgram(program);
-    return await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_PROGRAMS', rolesInProgram);
+    const capability = 'CAN_UPDATE_THEIR_PROGRAMS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgram = await currentUser.getRolesInProgram(program, rolesToCheck);
+    return await permissionMatrix.hasPermission(school, capability, rolesInProgram);
   },
   async canDeleteProgram(program) {
     const currentUser = await this.get('currentUser');
@@ -173,8 +185,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInProgram = await currentUser.getRolesInProgram(program);
-    return await permissionMatrix.hasPermission(school, 'CAN_DELETE_THEIR_PROGRAMS', rolesInProgram);
+    const capability = 'CAN_DELETE_THEIR_PROGRAMS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgram = await currentUser.getRolesInProgram(program, rolesToCheck);
+    return await permissionMatrix.hasPermission(school, capability, rolesInProgram);
   },
   async canCreateProgram(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_PROGRAMS');
@@ -192,8 +206,11 @@ export default Service.extend({
     if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_PROGRAM_YEARS')) {
       return true;
     }
-    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear);
-    if (await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_PROGRAM_YEARS', rolesInProgramYear)) {
+
+    const capability = 'CAN_UPDATE_THEIR_PROGRAM_YEARS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
     }
 
@@ -212,8 +229,11 @@ export default Service.extend({
     if (await this.canDoInSchool(school, 'CAN_DELETE_ALL_PROGRAM_YEARS')) {
       return true;
     }
-    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear);
-    if (await permissionMatrix.hasPermission(school, 'CAN_DELETE_THEIR_PROGRAM_YEARS', rolesInProgramYear)) {
+
+    const capability = 'CAN_DELETE_THEIR_PROGRAM_YEARS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
     }
 
@@ -234,8 +254,10 @@ export default Service.extend({
     if (await this.canDoInSchool(school, 'CAN_UNLOCK_ALL_PROGRAM_YEARS')) {
       return true;
     }
-    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear);
-    if (await permissionMatrix.hasPermission(school, 'CAN_UNLOCK_THEIR_PROGRAM_YEARS', rolesInProgramYear)) {
+    const capability = 'CAN_UNLOCK_THEIR_PROGRAM_YEARS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
     }
 
@@ -328,9 +350,12 @@ export default Service.extend({
     if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
       return true;
     }
-    const rolesInReport = await currentUser.getRolesInCurriculumInventoryReport(curriculumInventoryReport);
 
-    return permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_CURRICULUM_INVENTORY_REPORTS', rolesInReport);
+    const capability = 'CAN_UPDATE_THEIR_CURRICULUM_INVENTORY_REPORTS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInReport = await currentUser.getRolesInCurriculumInventoryReport(curriculumInventoryReport, rolesToCheck);
+
+    return permissionMatrix.hasPermission(school, capability, rolesInReport);
   },
   async canDeleteCurriculumInventoryReport(curriculumInventoryReport) {
     const currentUser = await this.get('currentUser');
@@ -346,8 +371,10 @@ export default Service.extend({
       return true;
     }
 
-    const rolesInReport = await currentUser.getRolesInCurriculumInventoryReport(curriculumInventoryReport);
-    return permissionMatrix.hasPermission(school, 'CAN_DELETE_THEIR_CURRICULUM_INVENTORY_REPORTS', rolesInReport);
+    const capability = 'CAN_DELETE_THEIR_CURRICULUM_INVENTORY_REPORTS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInReport = await currentUser.getRolesInCurriculumInventoryReport(curriculumInventoryReport, rolesToCheck);
+    return permissionMatrix.hasPermission(school, capability, rolesInReport);
   },
   async canCreateCurriculumInventoryReport(school) {
     return this.canDoInSchool(school, 'CAN_CREATE_CURRICULUM_INVENTORY_REPORTS');

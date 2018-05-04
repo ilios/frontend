@@ -254,4 +254,17 @@ export default Service.extend({
 
     return matchedRoles.length > 0;
   },
+  async getPermittedRoles(school, capability) {
+    const matrix = await this.get('permissionMatrix');
+    const schoolId = school.get('id');
+    if (!matrix.hasOwnProperty(schoolId)) {
+      return [];
+    }
+    const schoolMatrix = matrix[schoolId];
+    if (!schoolMatrix.hasOwnProperty(capability)) {
+      return [];
+    }
+
+    return schoolMatrix[capability];
+  },
 });
