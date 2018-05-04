@@ -238,85 +238,85 @@ export default Service.extend({
 
     return ids.includes(report.get('id'));
   },
-  async getRolesInSchool(school) {
+  async getRolesInSchool(school, rolesToCheck = []) {
     let roles = [];
-    if (await this.isDirectingSchool(school)) {
+    if (rolesToCheck.includes('SCHOOL_DIRECTOR') && await this.isDirectingSchool(school)) {
       roles.pushObject('SCHOOL_DIRECTOR');
     }
-    if (await this.isAdministeringSchool(school)) {
+    if (rolesToCheck.includes('SCHOOL_ADMINISTRATOR') && await this.isAdministeringSchool(school)) {
       roles.pushObject('SCHOOL_ADMINISTRATOR');
     }
-    if (await this.isDirectingProgramInSchool(school)) {
+    if (rolesToCheck.includes('PROGRAM_DIRECTOR') && await this.isDirectingProgramInSchool(school)) {
       roles.pushObject('PROGRAM_DIRECTOR');
     }
-    if (await this.isDirectingCourseInSchool(school)) {
+    if (rolesToCheck.includes('COURSE_DIRECTOR') && await this.isDirectingCourseInSchool(school)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
-    if (await this.isAdministeringCourseInSchool(school)) {
+    if (rolesToCheck.includes('COURSE_ADMINISTRATOR') && await this.isAdministeringCourseInSchool(school)) {
       roles.pushObject('COURSE_ADMINISTRATOR');
     }
-    if (await this.isAdministeringSessionInSchool(school)) {
+    if (rolesToCheck.includes('SESSION_ADMINISTRATOR') && await this.isAdministeringSessionInSchool(school)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingCourseInSchool(school)) {
+    if (rolesToCheck.includes('COURSE_INSTRUCTOR') && await this.isTeachingCourseInSchool(school)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
-    if (await this.isAdministeringCurriculumInventoryReportInSchool(school)) {
+    if (rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') && await this.isAdministeringCurriculumInventoryReportInSchool(school)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;
   },
-  async getRolesInCourse(course) {
+  async getRolesInCourse(course, rolesToCheck = []) {
     let roles = [];
-    if (await this.isDirectingCourse(course)) {
+    if (rolesToCheck.includes('COURSE_DIRECTOR') && await this.isDirectingCourse(course)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
-    if (await this.isAdministeringCourse(course)) {
+    if (rolesToCheck.includes('COURSE_ADMINISTRATOR') && await this.isAdministeringCourse(course)) {
       roles.pushObject('COURSE_ADMINISTRATOR');
     }
-    if (await this.isAdministeringSessionInCourse(course)) {
+    if (rolesToCheck.includes('SESSION_ADMINISTRATOR') && await this.isAdministeringSessionInCourse(course)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingCourse(course)) {
+    if (rolesToCheck.includes('COURSE_INSTRUCTOR') && await this.isTeachingCourse(course)) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
 
     return roles;
   },
-  async getRolesInSession(session) {
+  async getRolesInSession(session, rolesToCheck = []) {
     let roles = [];
-    if (await this.isAdministeringSession(session)) {
+    if (rolesToCheck.includes('SESSION_ADMINISTRATOR') && await this.isAdministeringSession(session)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (await this.isTeachingSession(session)) {
+    if (rolesToCheck.includes('SESSION_INSTRUCTOR') && await this.isTeachingSession(session)) {
       roles.pushObject('SESSION_INSTRUCTOR');
     }
 
     return roles;
   },
-  async getRolesInProgram(program) {
+  async getRolesInProgram(program, rolesToCheck = []) {
     let roles = [];
-    if (await this.isDirectingProgram(program)) {
+    if (rolesToCheck.includes('PROGRAM_DIRECTOR') && await this.isDirectingProgram(program)) {
       roles.pushObject('PROGRAM_DIRECTOR');
     }
-    if (await this.isDirectingProgramYearInProgram(program)) {
+    if (rolesToCheck.includes('PROGRAM_YEAR_DIRECTOR') && await this.isDirectingProgramYearInProgram(program)) {
       roles.pushObject('PROGRAM_YEAR_DIRECTOR');
     }
 
     return roles;
   },
-  async getRolesInProgramYear(programYear) {
+  async getRolesInProgramYear(programYear, rolesToCheck = []) {
     let roles = [];
-    if (await this.isDirectingProgramYear(programYear)) {
+    if (rolesToCheck.includes('PROGRAM_YEAR_DIRECTOR') && await this.isDirectingProgramYear(programYear)) {
       roles.pushObject('PROGRAM_YEAR_DIRECTOR');
     }
 
     return roles;
   },
-  async getRolesInCurriculumInventoryReport(report) {
+  async getRolesInCurriculumInventoryReport(report, rolesToCheck = []) {
     let roles = [];
-    if (await this.isAdministeringCurriculumInventoryReport(report)) {
+    if (rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') && await this.isAdministeringCurriculumInventoryReport(report)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
