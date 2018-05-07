@@ -127,5 +127,8 @@
     "lint:js",
     "lint:style"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ember-cli-file-saver": "^1.2.2"
+  }
 }
