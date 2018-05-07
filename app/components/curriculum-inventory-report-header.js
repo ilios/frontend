@@ -1,13 +1,13 @@
 /* eslint ember/order-in-components: 0 */
-import Ember from 'ember';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import Cookies from 'ember-cli-js-cookie';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
+import FileSaverMixin from 'ember-cli-file-saver/mixins/file-saver';
+
 
 const { alias } = computed;
 const { Promise } = RSVP;
@@ -22,19 +22,13 @@ const Validations = buildValidations({
   ],
 });
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
+export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisplay, {
   flashMessages: service(),
+  ajax: service(),
 
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('reportName', this.get('report.name'));
-
-    // check if the d/l link points at the same domain as the current page is on.
-    let parser = document.createElement('a');
-    parser.href = this.get('report.absoluteFileUri');
-    let backendDomain = parser.hostname;
-    let frontendDomain = window.location.hostname;
-    this.set('downloadFromSameDomain', (backendDomain === frontendDomain));
   },
   classNames: ['curriculum-inventory-report-header'],
   report: null,
@@ -42,33 +36,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   publishTarget: alias('report'),
   canUpdate: false,
   isDownloading: false,
-  downloadFromSameDomain: false,
 
-  downloadReport: task(function * (report){
-    let anchor = document.createElement('a');
-    anchor.href = report.get('absoluteFileUri');
-    anchor.target = '_blank';
-    anchor.rel = 'noopener';
-    anchor.download = 'report.xml';
-    anchor.click();
-    if (this.get('downloadFromSameDomain')) {
-      this.set('isDownloading', true);
-      let downloadHasStarted = false;
-      if (!Ember.testing) {
-        let cookieName = 'report-download-' + report.get('id');
-        while (!downloadHasStarted) {
-          yield timeout(1000);
-          if (Cookies.get(cookieName)) {
-            downloadHasStarted = true;
-            Cookies.remove(cookieName);
-          }
-        }
-      }
-      this.set('isDownloading', false);
-    } else {
-      this.get('flashMessages').success('general.downloadingCurriculumInventoryReport');
-      yield timeout(1000);
-    }
+  downloadReport: task(function * (report) {
+    const ajax = this.get('ajax');
+    this.set('isDownloading', true);
+    const content = yield ajax.request(report.get('absoluteFileUri'), {
+      method: 'GET',
+      dataType: 'arraybuffer',
+      processData: false
+    });
+    this.saveFileAs('report.xml', content, 'application/xml');
+    this.set('isDownloading', false);
   }).drop(),
 
   actions: {

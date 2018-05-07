@@ -156,7 +156,6 @@ export default {
     'doesNotMatchUserRecord': 'Téléchargé {{description}} ne correspond pas aux informations dans Ilios, qui est "{{record}}"',
     'domain': 'Domaine',
     'done': "Fini",
-    'downloadingCurriculumInventoryReport': 'Rapport téléchargement a commencé. Cela peut prendre un peu de temps...',
     'downloadResults': 'Télécharger les indices',
     'draft': 'Provisoire',
     'duration': 'Durée',
