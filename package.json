@@ -128,6 +128,5 @@
     "lint:js",
     "lint:style"
   ],
-  "private": true,
-  "dependencies": {}
+  "private": true
 }
