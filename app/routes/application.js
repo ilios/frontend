@@ -37,6 +37,19 @@ export default Route.extend(ApplicationRouteMixin, {
       });
     }
   },
+  //Override the default sessionAuthenticated can do a service worker refresh if needed
+  sessionAuthenticated() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg.waiting) {
+          reg.waiting.postMessage('skipWaiting');
+          this._super(...arguments);
+        }
+      });
+    } else {
+      this._super(...arguments);
+    }
+  },
   beforeModel() {
     const i18n = this.get('i18n');
     const moment = this.get('moment');
