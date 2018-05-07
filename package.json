@@ -42,6 +42,7 @@
     "ember-cli-deprecation-workflow": "0.2.4",
     "ember-cli-document-title": "0.4.0",
     "ember-cli-eslint": "^4.2.1",
+    "ember-cli-file-saver": "^1.2.2",
     "ember-cli-flash": "1.6.3",
     "ember-cli-head": "0.4.0",
     "ember-cli-htmlbars": "^2.0.1",
@@ -128,7 +129,5 @@
     "lint:style"
   ],
   "private": true,
-  "dependencies": {
-    "ember-cli-file-saver": "^1.2.2"
-  }
+  "dependencies": {}
 }
