@@ -11,7 +11,7 @@
   "repository": "https://github.com/ilios/frontend",
   "scripts": {
     "build": "ember build",
-    "lint:js": "eslint ./*.js app config lib server tests",
+    "lint:js": "eslint ./*.js app blueprints config lib server tests",
     "lint:style": "stylelint app/styles",
     "start": "ember serve",
     "test": "ember test"
@@ -22,7 +22,7 @@
     "caniuse-db": "^1.0.30000820",
     "ember-ajax": "^3.0.0",
     "ember-chrome-devtools": "^0.2.0",
-    "ember-cli": "3.1.2",
+    "ember-cli": "3.1.4",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-autoprefixer": "0.8.1",
     "ember-cli-babel": "^6.6.0",
