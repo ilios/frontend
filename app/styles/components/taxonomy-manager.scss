@@ -33,7 +33,8 @@
     overflow-x: scroll;
 
     & > ul {
-      @include ilios-tag-tree-list;
+      @include ilios-list-reset;
+      margin-bottom: 1rem;
     }
   }
 }
