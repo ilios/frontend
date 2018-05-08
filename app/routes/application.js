@@ -5,12 +5,12 @@ import Route from '@ember/routing/route';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'ilios/config/environment';
 
-
 export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
   i18n: service(),
   moment: service(),
   currentUser: service(),
+  session: service(),
 
   /**
   * Leave titles as an array
@@ -35,19 +35,6 @@ export default Route.extend(ApplicationRouteMixin, {
           window.location.replace(config.rootURL);
         }
       });
-    }
-  },
-  //Override the default sessionAuthenticated can do a service worker refresh if needed
-  sessionAuthenticated() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistration().then(reg => {
-        if (reg.waiting) {
-          reg.waiting.postMessage('skipWaiting');
-          this._super(...arguments);
-        }
-      });
-    } else {
-      this._super(...arguments);
     }
   },
   beforeModel() {
@@ -75,6 +62,16 @@ export default Route.extend(ApplicationRouteMixin, {
       });
       this.set('event', event);
     }
+
+    const session = this.get('session');
+    session.on('authenticationSucceeded', async () => {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.getRegistration();
+        if (reg && reg.waiting) {
+          reg.waiting.postMessage('skipWaiting');
+        }
+      }
+    });
   },
   deactivate() {
     const event = this.get('event');
