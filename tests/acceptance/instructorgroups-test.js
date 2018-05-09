@@ -171,27 +171,10 @@ module('Acceptance: Instructor Groups', function(hooks) {
 
     test('confirmation of remove message', async function(assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.createList('user', 5);
-      this.server.createList('course', 2, {
-        school: this.school
-      });
-      this.server.create('session', {
-        courseId: 1,
-      });
-      this.server.create('session', {
-        courseId: 2,
-      });
+      const users = this.server.createList('user', 5);
       this.server.create('instructorGroup', {
         school: this.school,
-        userIds: [2, 3, 4, 5, 6],
-      });
-      this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 1
-      });
-      this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 2
+        users,
       });
 
       assert.expect(5);
@@ -201,7 +184,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
       assert.ok(find('.list tbody tr').classList.contains('confirm-removal'));
       assert.ok(find(findAll('.list tbody tr')[1]).classList.contains('confirm-removal'));
-      assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this instructor group, with 5 instructors and 2 courses? This action cannot be undone. Yes Cancel'));
+      assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'));
     });
 
     test('click edit takes you to instructorgroup route', async function(assert) {
@@ -243,6 +226,28 @@ module('Acceptance: Instructor Groups', function(hooks) {
       assert.equal(findAll(groups).length, 1);
       assert.equal(await getElementText(firstGroupTitle), 'yes\\no');
     });
+
+    test('cannot delete instructorgroup with attached courses #3767', async function(assert) {
+      this.user.update({ administeredSchools: [this.school] });
+      assert.expect(4);
+      const group1 = this.server.create('instructorGroup', {
+        school: this.school,
+      });
+      const group2 = this.server.create('instructorGroup', {
+        school: this.school,
+      });
+      const course = this.server.create('course');
+      const session1 = this.server.create('session', { course });
+      const session2 = this.server.create('session', { course });
+      this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
+      this.server.create('offering', { session: session2, instructorGroups: [group2] });
+      await visit('/instructorgroups');
+      assert.equal(findAll('.list tbody tr').length, 2);
+      assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
+      assert.equal(findAll('.list tbody tr:nth-of-type(0) td:nth-of-type(4) .remove').length, 0);
+      assert.equal(findAll('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove').length, 0);
+    });
+
   });
 
   test('filters options', async function(assert) {

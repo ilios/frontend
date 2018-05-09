@@ -90,7 +90,7 @@
     'confirmRemoval': '¿Está seguro que desea eliminar este material de aprendizaje?',
     'confirmRemove': '¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer.',
     'confirmRemoveCourse': ' ¿Estás seguro que quieres borrar este curso, con {{publishedOfferingCount}} ofrecimientos publicados? Esta acción borrará todas las sesiones y ofrecimientos para este curso y no se puede deshacer.',
-    'confirmRemoveInstructorGroup': '¿Estás seguro que quieres remover este grupo de instructores, con {{instructorCount}} instructores y {{courseCount}} cursos? Esta acción no se puede deshacer.',
+    'confirmRemoveInstructorGroup': '¿Estás seguro que quieres remover este grupo de instructores, con {{instructorCount}} instructores? Esta acción no se puede deshacer.',
     'confirmRemoveLearnerGroup': '¿Estás seguro que quieres borrar este grupo de aprendedores, con {{subgroupCount}} grupos subordinados? Esta acción no se puede deshacer.',
     'confirmRemoveProgram': '¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer.',
     'confirmRemoveProgramYear': '¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {{courseCount}} curso(s), y no se puede deshacer.',
