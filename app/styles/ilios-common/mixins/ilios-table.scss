@@ -118,3 +118,9 @@
     }
   }
 }
+
+@mixin ilios-zebra-table () {
+  tbody tr:nth-child(even) {
+    background-color: $grey;
+  }
+}
