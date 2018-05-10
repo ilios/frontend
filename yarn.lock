@@ -3421,7 +3421,7 @@ ember-cli-babel@6.12.0, ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, e
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
 
-ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.2.1:
+ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.2.1:
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.8.tgz#0356b03cc3fdff5d0f2ecaa46a0e1cfaebffd876"
   dependencies:
@@ -4402,11 +4402,11 @@ ember-one-way-select@4.0.0:
     ember-cli-htmlbars "^2.0.1"
     ember-invoke-action "^1.5.0"
 
-ember-pad@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/ember-pad/-/ember-pad-1.2.2.tgz#1c8ed9e7e93d2176f049eb8b3d3836aea9672a81"
+ember-pad@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/ember-pad/-/ember-pad-1.2.3.tgz#e75b0f580348e6447cda3ddfb0a415024f09ca83"
   dependencies:
-    ember-cli-babel "^5.1.5"
+    ember-cli-babel "^6.6.0"
 
 ember-papaparse@1.0.0:
   version "1.0.0"
