@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   linkedSessions: null,
   linkableSessionsBuffer: null,
-  classNames: ['curriculum-inventory-sequence-block-session-list', 'resultslist'],
+  classNames: ['curriculum-inventory-sequence-block-session-list'],
   tagName: 'section',
   sortBy: 'title',
 

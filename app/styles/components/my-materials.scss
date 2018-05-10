@@ -33,6 +33,7 @@
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
+    @include ilios-zebra-table;
 
     grid-column: 1 / -1;
   }

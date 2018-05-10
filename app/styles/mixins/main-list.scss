@@ -102,6 +102,7 @@
     @include ilios-table-structure;
     @include ilios-table-colors;
     @include ilios-removable-table;
+    @include ilios-zebra-table;
 
     thead {
       background-color: $header-grey;
