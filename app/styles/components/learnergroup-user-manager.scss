@@ -21,6 +21,7 @@
 
     .list {
       @include main-list-box-table;
+      @include ilios-zebra-table;
       grid-column: 1 / -1;
       max-height: 540px;
       overflow: auto;
