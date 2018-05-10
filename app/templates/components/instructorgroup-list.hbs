@@ -28,7 +28,7 @@
           {{#link-to 'instructorGroup' instructorGroup class='edit'}}
             {{fa-icon 'edit'}}
           {{/link-to}}
-          {{#if canDelete}}
+          {{#if (and canDelete (eq (get (await instructorGroup.courses) 'length') 0))}}
             <span class='clickable remove' {{action 'confirmRemove' instructorGroup}}>{{fa-icon 'trash'}}</span>
           {{/if}}
         </td>
@@ -37,7 +37,7 @@
         <tr class='confirm-removal'>
           <td colspan=5>
             <div class='confirm-message'>
-              {{t 'general.confirmRemoveInstructorGroup' instructorCount=(get (await instructorGroup.users) 'length') courseCount=(get (await instructorGroup.courses) 'length')}} <br>
+              {{t 'general.confirmRemoveInstructorGroup' instructorCount=(get (await instructorGroup.users) 'length')}} <br>
               <div class="confirm-buttons">
                 <button {{action 'remove' instructorGroup}} class='remove text'>{{t 'general.yes'}}</button>
                 <button {{action 'cancelRemove' instructorGroup}} class='done text'>{{t 'general.cancel'}}</button>

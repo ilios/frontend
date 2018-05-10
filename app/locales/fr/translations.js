@@ -90,7 +90,7 @@ export default {
     'confirmRemoval': "Êtes-vous sûr vous voulez supprimer cette matière d’étude?",
     'confirmRemove': "Êtes-vous sûr vous voulez supprimer cette offre avec {{learnerGroupCount}} groupes d'apprenants?  Ça action ne peut pas être défait.",
     'confirmRemoveCourse': "Êtes-vous sûr vous voulez supprimer ce cours, avec {{publishedOfferingCount}} offres publié? Cela supprimera toutes sessions et offres pour ce cours, et ne peut pas être défait.",
-    'confirmRemoveInstructorGroup': "Êtes-vous sûr vous voulez supprimer cette groupe des instructeurs, avec {{instructorCount}} membres et {{courseCount}} cours? Ça action ne peut pas être défait.",
+    'confirmRemoveInstructorGroup': "Êtes-vous sûr vous voulez supprimer cette groupe des instructeurs, avec {{instructorCount}} membres? Ça action ne peut pas être défait.",
     'confirmRemoveLearnerGroup': "Êtes-vous sûr vous voulez supprimer cette groupe d'apprenants, avec {{subgroupCount}} sous-groupes? Ça action ne peut pas être défait.",
     'confirmRemoveProgram': "Êtes-vous certain que vous voulez supprimer ce diplôme? Cette action ne peut être annulée.",
     'confirmRemoveProgramYear': "Êtes-vous certain que vous voulez supprimer cette année de diplôme? Cette action va supprimer tous les cohortes et groupes des étudiants associées, et liaisons avec {{courseCount}} des cours, et ne peut être annulée.",
