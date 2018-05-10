@@ -79,7 +79,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.12.1",
     "ember-noscript": "^2.0.0",
-    "ember-pad": "1.2.2",
+    "ember-pad": "1.2.3",
     "ember-papaparse": "1.0.0",
     "ember-pikaday": "2.2.4",
     "ember-qunit-nice-errors": "^1.2.0",
