@@ -4661,7 +4661,15 @@ ember-test-selectors@^1.0.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-ember-tether@0.4.1, ember-tether@^0.4.1, ember-tether@v0.4.1:
+ember-tether@1.0.0-beta.2, ember-tether@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0-beta.2.tgz#9cce5874e8c0779273db11379f04aff4ad983e44"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+    ember-cli-node-assets "^0.2.2"
+    tether "^1.4.0"
+
+ember-tether@^0.4.1, ember-tether@v0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-0.4.1.tgz#b3fa3910bb4c430e14007e016774f78ced478cf7"
   dependencies:
@@ -6077,9 +6085,9 @@ ignore@^3.3.3, ignore@^3.3.5, ignore@^3.3.7:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.8.tgz#3f8e9c35d38708a3a7e0e9abb6c73e7ee7707b2b"
 
-ilios-common@15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-15.1.0.tgz#a1ee940c70f8849ddd3f7e40f8cbeb9ba7072f88"
+ilios-common@15.2.1:
+  version "15.2.1"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-15.2.1.tgz#0d96aac04e3649163568b6496068f93b0ae8a29a"
   dependencies:
     elemental-calendar "^0.1.0"
     ember-cli-babel "^6.6.0"
@@ -6095,7 +6103,7 @@ ilios-common@15.1.0:
     ember-promise-helpers "^1.0.6"
     ember-simple-auth "^1.4.0"
     ember-simple-auth-token "^3.0.0"
-    ember-tether "^0.4.1"
+    ember-tether "^1.0.0-beta.2"
     ember-tooltips "^2.8.2"
     ember-truth-helpers "^2.0.0"
     liquid-fire "^0.29.0"
