@@ -6,7 +6,7 @@ export default Component.extend({
   selectedTerms: null,
   term: null,
   tagName: 'div',
-  classNameBindings: ['isSelected:selected'],
+  classNameBindings: [':selectable-terms-list-item', 'isSelected:selected'],
 
   isSelected: computed('term', 'selectedTerms.[]', function() {
     let term = this.get('term');
