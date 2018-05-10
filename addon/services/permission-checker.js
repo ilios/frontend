@@ -23,14 +23,14 @@ export default Service.extend({
       return false;
     }
     const school = await course.get('school');
-    const capability = 'CAN_UPDATE_ALL_COURSES';
-    if (await this.canDoInSchool(school, capability)) {
+    if (await this.canDoInSchool(school, 'CAN_UPDATE_ALL_COURSES')) {
       return true;
     }
 
+    const capability = 'CAN_UPDATE_THEIR_COURSES';
     const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
     const rolesInCourse = await currentUser.getRolesInCourse(course, rolesToCheck);
-    return await permissionMatrix.hasPermission(school, 'CAN_UPDATE_THEIR_COURSES', rolesInCourse);
+    return await permissionMatrix.hasPermission(school, capability, rolesInCourse);
   },
   async canUpdateAllCoursesInSchool(school) {
     return this.canDoInSchool(school, 'CAN_UPDATE_ALL_COURSES');
