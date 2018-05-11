@@ -1,7 +1,12 @@
 {{#if event}}
-  {{#tooltip-on-component}}
+  {{#attach-tooltip
+    lazyRender=true
+    placement='left'
+    interactive=true
+    animation='shift'
+  }}
     {{{tooltipContent}}}
-  {{/tooltip-on-component}}
+  {{/attach-tooltip}}
   {{#if recentlyUpdated}}
     {{fa-icon 'exclamation' class="recently-updated-icon" title=(t 'general.newUpdates')}}
   {{/if}}
