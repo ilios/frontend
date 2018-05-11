@@ -1,8 +1,13 @@
 {{#if event}}
   <div>
-    {{#tooltip-on-element}}
+    {{#attach-tooltip
+      lazyRender=true
+      placement='left'
+      interactive=true
+      animation='shift'
+    }}
       {{{tooltipContent}}}
-    {{/tooltip-on-element}}
+    {{/attach-tooltip}}
     {{#if recentlyUpdated}}
       {{fa-icon 'exclamation-circle' class="recently-updated-icon" title=(t 'general.newUpdates')}}
     {{/if}}
