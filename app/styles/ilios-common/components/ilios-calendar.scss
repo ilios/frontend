@@ -63,7 +63,7 @@
 
       }
     }
-}
+  }
 
   .ilios-calendar-event {
     @include border-top-radius($base-border-radius);
@@ -150,4 +150,8 @@
   .no-content {
     list-style-type: none;
   }
+}
+
+.ilios-calendar-event-tooltip {
+  text-align: left;
 }
