@@ -1,3 +1,6 @@
+{{#if (is-pending offeringBlocks)}}
+  {{loading-spinner}}
+{{/if}}
 {{#each (await offeringBlocks) as |block|}}
   <div class='offering-block'>
     <div class='offering-block-date'>

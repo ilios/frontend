@@ -17,7 +17,7 @@
   {{#t.body
     canExpand=false
     canSelect=false
-    rowComponent=(component 'removeable-row')
+    rowComponent=(component 'removable-row')
     as |body|
   }}
     {{#body.expanded-row as |row|}}
@@ -40,7 +40,7 @@
       {{else if (gt row.offeringCount 0)}}
         {{session-offerings-list session=row.session editable=false}}
       {{else}}
-        <p>{{t 'general.noOfferings'}}</p>
+        <p class='no-offerings'>{{t 'general.noOfferings'}}</p>
       {{/if}}
     {{/body.expanded-row}}
   {{/t.body}}

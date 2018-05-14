@@ -161,6 +161,72 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(findAll(rows).length, 4);
   });
 
+  test('expanded all sessions', async function(assert) {
+    await visit(url);
+
+    const table = '.session-table table';
+    const expandAllSessions = `${table} thead tr:nth-of-type(1) th:nth-of-type(1)`;
+    const expandedSessionOfferings = `${table} .session-offerings-list`;
+    const expandedSessionNoOfferings = `${table} .no-offerings`;
+
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+    await click(expandAllSessions);
+    assert.equal(findAll(expandedSessionOfferings).length, 1);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 3);
+    await click(expandAllSessions);
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+  });
+
+  test('expanded all sessions with one session expanded already', async function(assert) {
+    await visit(url);
+
+    const table = '.session-table table';
+    const expandAllSessions = `${table} thead tr:nth-of-type(1) th:nth-of-type(1)`;
+    const expandedSessionOfferings = `${table} .session-offerings-list`;
+    const expandedSessionNoOfferings = `${table} .no-offerings`;
+    const expandFirstSession = `${table} tbody tr:nth-of-type(1) td:nth-of-type(1) .clickable`;
+
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+    await click(expandFirstSession);
+    assert.equal(findAll(expandedSessionOfferings).length, 1);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+    await click(expandAllSessions);
+    assert.equal(findAll(expandedSessionOfferings).length, 1);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 3);
+    await click(expandAllSessions);
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+  });
+
+  test('expanded sessions one at a time and collapse all', async function(assert) {
+    await visit(url);
+
+    const table = '.session-table table';
+    const expandAllSessions = `${table} thead tr:nth-of-type(1) th:nth-of-type(1)`;
+    const expandedSessionOfferings = `${table} .session-offerings-list`;
+    const expandedSessionNoOfferings = `${table} .no-offerings`;
+    const rows = `${table} tbody tr`;
+    const expandFirstSession = `${rows}:nth-of-type(1) td:nth-of-type(1) .clickable`;
+    const expandSecondSession = `${rows}:nth-of-type(2) td:nth-of-type(1) .clickable`;
+    const expandThirdSession = `${rows}:nth-of-type(3) td:nth-of-type(1) .clickable`;
+    const expandFourthSession = `${rows}:nth-of-type(4) td:nth-of-type(1) .clickable`;
+
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+    await click(expandFourthSession);
+    await click(expandThirdSession);
+    await click(expandSecondSession);
+    await click(expandFirstSession);
+    assert.equal(findAll(expandedSessionOfferings).length, 1);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 3);
+    await click(expandAllSessions);
+    assert.equal(findAll(expandedSessionOfferings).length, 0);
+    assert.equal(findAll(expandedSessionNoOfferings).length, 0);
+  });
+
   test('new session', async function(assert) {
     const container = '.course-sessions';
     const expandButton = `${container} .expand-button`;
