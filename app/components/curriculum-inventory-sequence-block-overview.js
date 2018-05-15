@@ -184,9 +184,7 @@ export default Component.extend({
     });
   }),
 
-  saveCourseChange: task(function * (courseId) {
-    let linkableCourses = yield this.get('linkableCourses');
-    let course = linkableCourses.toArray().findBy('id', courseId);
+  saveCourseChange: task(function * (course) {
     let block = this.get('sequenceBlock');
     block.set('course', course);
     yield block.save();
@@ -206,7 +204,7 @@ export default Component.extend({
 
     changeCourse() {
       let course = this.get('course');
-      this.get('saveCourseChange').perform(course.get('id'));
+      this.get('saveCourseChange').perform(course);
     },
 
     revertCourseChanges() {
