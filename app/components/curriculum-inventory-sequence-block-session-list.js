@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  linkedSessions: null,
+  sessions: null,
   linkableSessionsBuffer: null,
   classNames: ['curriculum-inventory-sequence-block-session-list'],
   tagName: 'section',
@@ -12,20 +12,20 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('linkedSessions', []);
+    this.set('sessions', []);
     this.set('linkableSessionsBuffer', []);
   },
 
   didReceiveAttrs(){
     this._super(...arguments);
     const sequenceBlock = this.get('sequenceBlock');
-    const linkableSessions = this.get('linkableSessions');
-    this.get('loadAttr').perform(sequenceBlock, linkableSessions);
+    const sessions = this.get('sessions');
+    this.get('loadAttr').perform(sequenceBlock, sessions);
   },
 
-  loadAttr: task(function * (sequenceBlock, linkableSessions) {
+  loadAttr: task(function * (sequenceBlock, sessions) {
     const linkedSessions = yield sequenceBlock.get('sessions');
-    const linkableSessionsBuffer = yield linkableSessions;
+    const linkableSessionsBuffer = yield sessions;
     this.setProperties({
       linkedSessions,
       linkableSessionsBuffer

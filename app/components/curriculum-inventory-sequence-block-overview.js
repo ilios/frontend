@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import { isEmpty, isPresent } from '@ember/utils';
+import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
 const { Promise } = RSVP;
@@ -116,13 +116,13 @@ export default Component.extend({
   }),
 
   /**
-   * A list of sessions that this sequence block can be linked to. Excludes ILMs.
+   * A list of sessions owned by the course this this sequence block may be linked to.
    *
-   * @property linkableSessions
+   * @property sessions
    * @type {Ember.computed}
    * @public
    */
-  linkableSessions: computed('sequenceBlock.course', function(){
+  sessions: computed('sequenceBlock.course', function(){
     return new Promise(resolve => {
       this.get('sequenceBlock').get('course').then(course => {
         if (! isPresent(course)) {
@@ -135,12 +135,7 @@ export default Component.extend({
             published: true
           },
         }).then(sessions => {
-          // filter out ILM sessions
-          let filteredSessions = sessions.toArray().filter(function(session) {
-            return isEmpty(session.belongsTo('ilmSession').id());
-
-          });
-          resolve(filteredSessions);
+          resolve(sessions.toArray());
         });
       });
     });
