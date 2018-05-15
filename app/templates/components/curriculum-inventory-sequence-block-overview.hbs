@@ -13,6 +13,8 @@
           }}
             {{one-way-select
               course
+              prompt=(t 'general.selectCourse')
+              promptIsSelectable=true
               options=(sort-by 'title' (await linkableCourses))
               optionValuePath="id"
               optionLabelPath="title"

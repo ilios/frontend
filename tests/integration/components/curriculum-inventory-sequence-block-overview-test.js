@@ -374,7 +374,7 @@ test('order in sequence is n/a for nested sequence block in non-ordered sequence
 
 
 test('change course', function(assert) {
-  assert.expect(11);
+  assert.expect(12);
   let program = EmberObject.create({
     belongsTo() {
       return  EmberObject.create({ id() { return 1; }});
@@ -464,16 +464,17 @@ test('change course', function(assert) {
   return wait().then(() => {
     this.$('.course .editinplace .clickable').click();
     return wait().then(() => {
-      assert.equal(this.$('.course option').length, 3, 'Linkable courses dropdown contains three options.');
-      assert.equal(this.$('.course option:eq(0)').text().trim(), 'Course A', 'Options are sorted by course title');
-      assert.equal(this.$('.course option:eq(1)').text().trim(), 'Course B', 'Options are sorted by course title');
-      assert.equal(this.$('.course option:eq(2)').text().trim(), 'Course C', 'Options are sorted by course title');
+      assert.equal(this.$('.course option').length, 4, 'Linkable courses dropdown contains four options.');
+      assert.equal(this.$('.course option:eq(0)').text().trim(), 'Select a Course', 'First option is placeholder');
+      assert.equal(this.$('.course option:eq(1)').text().trim(), 'Course A', 'Options are sorted by course title');
+      assert.equal(this.$('.course option:eq(2)').text().trim(), 'Course B', 'Options are sorted by course title');
+      assert.equal(this.$('.course option:eq(3)').text().trim(), 'Course C', 'Options are sorted by course title');
       assert.equal(
         this.$('.course option:selected').text().trim(),
         linkedCourse.get('title'),
         'The linked course is selected.'
       );
-      this.$('.course option:eq(2)').prop('selected', true).change();
+      this.$('.course option:eq(3)').prop('selected', true).change();
       return wait().then(() => {
         let details = this.$('[data-test-course-details]').text().trim();
         assert.ok(details.indexOf('Level: ' + linkableCourse1.get('level')) === 0,
