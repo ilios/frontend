@@ -39,10 +39,10 @@
               {{if (is-in linkedSessions session) (t 'general.yes') (t 'general.no')}}
             </td>
             <td class='text-left' colspan=3>
-              {{session.title}}
               {{#if session.isIndependentLearning}}
                 <strong>({{t 'general.ilm'}})</strong>
               {{/if}}
+              {{session.title}}
             </td>
             <td class='text-left' colspan=3>{{get (await session.sessionType) "title"}}</td>
             <td class='text-center' colspan=1>
