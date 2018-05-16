@@ -4,21 +4,19 @@ import EmberObject from '@ember/object';
 import { moduleForComponent } from 'ember-qunit';
 import { test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
+import initializer from "ilios/instance-initializers/load-common-translations";
 
 const { resolve } = RSVP;
 
 moduleForComponent('curriculum-inventory-sequence-block-session-manager', 'Integration | Component | curriculum inventory sequence block session manager', {
   integration: true,
-
-  beforeEach: function () {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
+  setup(){
+    initializer.initialize(getOwner(this));
+  },
 });
 
 test('it renders', function(assert) {
-  assert.expect(22);
+  assert.expect(29);
 
   let offering1 = EmberObject.create({id: 1});
   let offering2 = EmberObject.create({id: 2});
@@ -27,20 +25,27 @@ test('it renders', function(assert) {
   let offerings1 = [ offering1, offering2 ];
   let offerings2 = [ offering3 ];
   let offerings3 = [];
+  let offerings4 = [];
+
 
   let sessionType1 = EmberObject.create({ title: 'Lecture'});
   let sessionType2 = EmberObject.create({ title: 'Ceremony'});
   let sessionType3 = EmberObject.create({ title: 'Small Group'});
+  let sessionType4 = EmberObject.create({ title: 'Rocket Surgery'});
+
 
   let totalTime1 = (30).toFixed(2);
   let totalTime2 = (15).toFixed(2);
   let totalTime3 = (0).toFixed(2);
+  let totalTime4 = (0).toFixed(2);
+
 
   let session1 = EmberObject.create({
     id: 1,
     title: 'Aardvark',
     offerings: resolve(offerings1),
     sessionType: resolve(sessionType1),
+    isIndependentLearning: false,
     maxSingleOfferingDuration: resolve(totalTime1)
   });
 
@@ -49,6 +54,7 @@ test('it renders', function(assert) {
     title: 'Bluebird',
     offerings: resolve(offerings2),
     sessionType: resolve(sessionType2),
+    isIndependentLearning: false,
     totalSumOfferingsDuration: resolve(totalTime2)
   });
 
@@ -57,22 +63,32 @@ test('it renders', function(assert) {
     title: 'Zeppelin',
     offerings: resolve(offerings3),
     sessionType: resolve(sessionType3),
+    isIndependentLearning: false,
     maxSingleOfferingDuration: resolve(totalTime3)
   });
 
+  let session4 = EmberObject.create({
+    id: 4,
+    title: 'Zwickzange',
+    offerings: resolve(offerings4),
+    sessionType: resolve(sessionType4),
+    isIndependentLearning: true,
+    totalSumOfferingsDuration: resolve(totalTime4)
+  });
+
   let linkedSessions = [session1, session3];
-  let linkableSessions = [session1, session2, session3];
+  let sessions = [session1, session2, session3, session4];
 
   let block = EmberObject.create({
     id: 1,
     sessions: resolve(linkedSessions),
   });
 
-  this.set('linkableSessions', resolve(linkableSessions));
+  this.set('sessions', resolve(sessions));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', function(){});
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
 
   assert.equal(this.$('.actions .bigadd').length, 1, 'Save button is visible.');
   assert.equal(this.$('.actions .bigcancel').length, 1, 'Cancel button is visible.');
@@ -83,23 +99,31 @@ test('it renders', function(assert) {
   assert.equal(this.$('thead th:eq(3)').text().trim(), 'Total time', 'Column header is labeled correctly.');
   assert.equal(this.$('thead th:eq(4)').text().trim(), 'Offerings', 'Column header is labeled correctly.');
 
-  assert.equal(this.$('tbody tr:eq(0) td:eq(0) input:checked').length, 1, 'Count offerings as one is checked.');
+  assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
   assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), session1.get('title'), 'Session title is shown.');
   assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), sessionType1.get('title'), 'Session type is visible.');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalTime1, 'Total time is shown.');
   assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), offerings1.length, 'Number of offerings is shown.');
 
-  assert.equal(this.$('tbody tr:eq(1) td:eq(0) input:checked').length, 0, 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
   assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), session2.get('title'), 'Title is visible.');
   assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), sessionType2.get('title'), 'Session type is visible.');
   assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalTime2, 'Total time is shown.');
   assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), offerings2.length, 'Number of offerings is shown.');
 
-  assert.equal(this.$('tbody tr:eq(2) td:eq(0) input:checked').length, 1, 'Count offerings as one is checked.');
+  assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
   assert.equal(this.$('tbody tr:eq(2) td:eq(1)').text().trim(), session3.get('title'), 'Title is visible.');
   assert.equal(this.$('tbody tr:eq(2) td:eq(2)').text().trim(), sessionType3.get('title'), 'Session type is visible.');
   assert.equal(this.$('tbody tr:eq(2) td:eq(3)').text().trim(), totalTime3, 'Total time is shown.');
   assert.equal(this.$('tbody tr:eq(2) td:eq(4)').text().trim(), offerings3.length, 'Number of offerings is shown.');
+
+  assert.ok(this.$('tbody tr:eq(3) td:eq(0) input').is(':disabled'), 'Checkbox is disabled.');
+  assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().startsWith('(ILM)'), 'ILM is labeled as such.');
+  assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().endsWith(session4.get('title')), 'Title is visible.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(2)').text().trim(), sessionType4.get('title'), 'Session type is visible.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(3)').text().trim(), totalTime4, 'Total time is shown.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(4)').text().trim(), offerings4.length, 'Number of offerings is shown.');
 });
 
 test('empty list', function(assert) {
@@ -110,11 +134,11 @@ test('empty list', function(assert) {
     sessions: resolve([]),
   });
 
-  this.set('linkableSessions', resolve([]));
+  this.set('sessions', resolve([]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.set('setSortBy', function(){});
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   assert.equal(this.$('thead tr').length, 1, 'Table header is visible,');
   assert.equal(this.$('tbody tr').length, 0, 'but table body is empty.');
 });
@@ -134,13 +158,13 @@ test('sort by title', function(assert) {
     sessions: resolve([ session ]),
   });
 
-  this.set('linkableSessions', resolve([ session ]));
+  this.set('sessions', resolve([ session ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'id');
   this.set('setSortBy', function(what){
     assert.equal(what, 'title', "Sorting callback gets called for session titles.");
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   this.$('thead th:eq(1)').click();
 });
 
@@ -159,13 +183,13 @@ test('sort by session type', function(assert) {
     sessions: resolve([ session ]),
   });
 
-  this.set('linkableSessions', resolve([ session ]));
+  this.set('sessions', resolve([ session ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'id');
   this.set('setSortBy', function(what){
     assert.equal(what, 'sessionType.title', "Sorting callback gets called for session type titles.");
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   this.$('thead th:eq(2)').click();
 });
 
@@ -184,13 +208,13 @@ test('sort by offerings total', function(assert) {
     sessions: resolve([ session ]),
   });
 
-  this.set('linkableSessions', resolve([ session ]));
+  this.set('sessions', resolve([ session ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'id');
   this.set('setSortBy', function(what){
     assert.equal(what, 'offerings.length', "Sorting callback gets called for offerings length.");
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   this.$('thead th:eq(4)').click();
 });
 
@@ -212,11 +236,11 @@ test('change count as one offering', function(assert) {
     sessions: resolve([ session ]),
   });
 
-  this.set('linkableSessions', resolve([ session ]));
+  this.set('sessions', resolve([ session ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'id');
   this.set('setSortBy', function(){});
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
   this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('click');
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumOfferingsDuration);
@@ -251,10 +275,10 @@ test('change count as one offering for all sessions', function(assert) {
     sessions: resolve([ session1 ]),
   });
 
-  this.set('linkableSessions', resolve([ session1, session2 ]));
+  this.set('sessions', resolve([ session1, session2 ]));
   this.set('sequenceBlock', block);
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock }}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`);
 
   assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
   assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumOfferingsDuration);
@@ -294,7 +318,7 @@ test('save', function(assert) {
     sessions: resolve([ session1 ]),
   });
 
-  this.set('linkableSessions', resolve([ session1, session2 ]));
+  this.set('sessions', resolve([ session1, session2 ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.on('save', function(sessions){
@@ -302,7 +326,7 @@ test('save', function(assert) {
     assert.ok(sessions.includes(session1));
     assert.ok(sessions.includes(session2));
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action 'save')}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action 'save')}}`);
   this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
   this.$('.actions .bigadd').click();
 });
@@ -324,12 +348,98 @@ test('cancel', function(assert) {
     sessions: resolve([ session ]),
   });
 
-  this.set('linkableSessions', resolve([ session ]));
+  this.set('sessions', resolve([ session ]));
   this.set('sequenceBlock', block);
   this.set('sortBy', 'title');
   this.on('cancel', function(){
     assert.ok(true, 'Cancel action fired.');
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager linkableSessions=linkableSessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action 'cancel')}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action 'cancel')}}`);
   this.$('.actions .bigcancel').click();
+});
+
+
+test('check all/uncheck all', function(assert) {
+  assert.expect(15);
+
+  let sessionType = EmberObject.create({ title: 'Lecture'});
+
+  let session1 = EmberObject.create({
+    id: 1,
+    title: 'Aardvark',
+    offerings: resolve([]),
+    sessionType: resolve(sessionType),
+    isIndependentLearning: false,
+    totalSumOfferingsDuration: resolve(0)
+  });
+
+  let session2 = EmberObject.create({
+    id: 2,
+    title: 'Bluebird',
+    offerings: resolve([]),
+    sessionType: resolve(sessionType),
+    isIndependentLearning: false,
+    totalSumOfferingsDuration: resolve(0)
+  });
+
+  let session3 = EmberObject.create({
+    id: 3,
+    title: 'Zeppelin',
+    offerings: resolve([]),
+    sessionType: resolve(sessionType),
+    isIndependentLearning: false,
+    totalSumOfferingsDuration: resolve(0)
+  });
+
+  let session4 = EmberObject.create({
+    id: 4,
+    title: 'Zwickzange',
+    offerings: resolve([]),
+    sessionType: resolve(sessionType),
+    isIndependentLearning: true,
+    totalSumOfferingsDuration: resolve(0)
+  });
+
+  let session5 = EmberObject.create({
+    id: 4,
+    title: 'Zylinder',
+    offerings: resolve([]),
+    sessionType: resolve(sessionType),
+    isIndependentLearning: true,
+    totalSumOfferingsDuration: resolve(0)
+  });
+
+  let sessions = [session1, session2, session3, session4, session5];
+
+  let block = EmberObject.create({
+    id: 1,
+    sessions: resolve([session5]),
+  });
+
+  this.set('sessions', resolve(sessions));
+  this.set('sequenceBlock', block);
+  this.set('sortBy', 'title');
+  this.set('setSortBy', function(){});
+  this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+
+  assert.notOk(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+
+  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
+  assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+  assert.ok(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+  assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+  assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'ILM checkbox remains un-checked');
+  assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+
+  this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
+  assert.notOk(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+  assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings remains checked.');
+
 });
