@@ -241,14 +241,14 @@
         <span>{{academicLevel.name}}</span>
       {{/if}}
     </div>
-    {{#unless (is-fulfilled linkableSessions)}}
+    {{#unless (is-fulfilled sessions)}}
       <div class="block sessions">{{loading-spinner}}</div>
     {{else}}
-      {{#if (get (await linkableSessions) 'length')}}
+      {{#if (get (await sessions) 'length')}}
         {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
           {{curriculum-inventory-sequence-block-session-manager
             sequenceBlock=sequenceBlock
-            linkableSessions=(await linkableSessions)
+            sessions=(await sessions)
             cancel=(action 'cancelManagingSessions')
             save=(action 'changeSessions')
             sortBy=sortBy
@@ -256,7 +256,7 @@
           }}
         {{else}}
           <div class="block sessions">
-            <label>{{t 'general.sessions'}} ({{get (await linkableSessions) 'length'}})</label>
+            <label>{{t 'general.sessions'}} ({{get (await sessions) 'length'}})</label>
             {{#unless (or isManagingSessions (not canUpdate))}}
               <div class="actions">
                 <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>
@@ -265,7 +265,7 @@
           </div>
           {{curriculum-inventory-sequence-block-session-list
             sequenceBlock=sequenceBlock
-            linkableSessions=(await linkableSessions)
+            sessions=(await sessions)
             sortBy=sortBy
             setSortBy=setSortBy
           }}

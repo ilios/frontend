@@ -24,7 +24,7 @@ moduleForComponent('curriculum-inventory-sequence-block-overview', 'Integration 
 });
 
 test('it renders', function(assert) {
-  assert.expect(38);
+  assert.expect(40);
 
   let school = EmberObject.create({ id() { return 1; }});
 
@@ -70,15 +70,7 @@ test('it renders', function(assert) {
     title: 'Session A',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return 1;
-          }
-        };
-      }
-    },
+    isIndependentLearning: true,
     sessionType: EmberObject.create({
       'title': 'Independent Learning'
     }),
@@ -92,15 +84,7 @@ test('it renders', function(assert) {
     title: 'Session B',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return null;
-          }
-        };
-      }
-    },
+    isIndependentLearning: false,
     sessionType: resolve(EmberObject.create({
       'title': 'Presentation'
     })),
@@ -114,15 +98,7 @@ test('it renders', function(assert) {
     title: 'Session C',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return null;
-          }
-        };
-      }
-    },
+    isIndependentLearning: false,
     sessionType: resolve(EmberObject.create({
       'title': 'Lecture'
     }))
@@ -237,19 +213,29 @@ test('it renders', function(assert) {
     assert.equal(this.$('.maximum .editinplace').text().trim(), block.get('maximum'), 'Maximum is visible.');
     assert.equal(this.$('.academic-level label').text().trim(), 'Academic Level:', 'Academic level label is correct.');
     assert.equal(this.$('.academic-level .editinplace').text().trim(), academicLevel.get('name'), 'Academic level is visible.');
-    assert.equal(this.$('.sessions label').text().trim(), 'Sessions (2)', 'List is labeled with number of linkable sessions');
+    assert.equal(this.$('.sessions label').text().trim(), 'Sessions (3)', 'List is labeled with number of linkable sessions');
     assert.equal(this.$('.sessions .actions button').text().trim(), 'Manage', 'Manage button for sessions is visible.');
     // we're just going to peak at the list items here,
     // any other tests are performed in the respective integration test for the list component.
-    assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
+    assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 3,
       'All linkable sessions are visible'
     );
+    assert.ok(
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().startsWith('(ILM)'),
+      'ILM is labeled as such.'
+    );
+
+    assert.ok(
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().endsWith('Session A'),
+      'Sessions are sorted by title.'
+    );
+
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim(), 'Session B',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session B',
       'Sessions are sorted by title.'
     );
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session C',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(1)').text().trim(), 'Session C',
       'Sessions are sorted by title.'
     );
   });
@@ -1064,7 +1050,7 @@ test('manage sessions', function(assert) {
 });
 
 test('read-only mode', function(assert) {
-  assert.expect(23);
+  assert.expect(24);
 
   let school = EmberObject.create({ id() { return 1; }});
 
@@ -1109,15 +1095,7 @@ test('read-only mode', function(assert) {
     title: 'Session A',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return 1;
-          }
-        };
-      }
-    },
+    isIndependentLearning: true,
     sessionType: EmberObject.create({
       'title': 'Independent Learning'
     }),
@@ -1131,15 +1109,7 @@ test('read-only mode', function(assert) {
     title: 'Session B',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return null;
-          }
-        };
-      }
-    },
+    isIndependentLearning: false,
     sessionType: resolve(EmberObject.create({
       'title': 'Presentation'
     })),
@@ -1153,15 +1123,7 @@ test('read-only mode', function(assert) {
     title: 'Session C',
     ilms: resolve([]),
     offerings: resolve([]),
-    belongsTo(what) {
-      if ('ilmSession' === what) {
-        return {
-          id() {
-            return null;
-          }
-        };
-      }
-    },
+    isIndependentLearning: false,
     sessionType: resolve(EmberObject.create({
       'title': 'Lecture'
     }))
@@ -1252,15 +1214,19 @@ test('read-only mode', function(assert) {
     assert.equal(this.$('.maximum > span:eq(0)').text().trim(), block.get('maximum'), 'Maximum is visible.');
     assert.equal(this.$('.academic-level > span:eq(0)').text().trim(), academicLevel.get('name'), 'Academic level is visible.');
     assert.notOk(this.$('.sessions .actions button').length, 'Manage button for sessions is visible.');
-    assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 2,
+    assert.equal(this.$('.curriculum-inventory-sequence-block-session-list tbody tr').length, 3,
       'All linkable sessions are visible'
     );
-    assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim(), 'Session B',
+    assert.ok(
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().endsWith('Session A'),
       'Sessions are sorted by title.'
     );
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session C',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session B',
+      'Sessions are sorted by title.'
+    );
+    assert.equal(
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(1)').text().trim(), 'Session C',
       'Sessions are sorted by title.'
     );
   });

@@ -53,9 +53,15 @@
                 type='checkbox'
                 checked=(is-in linkedSessionsBuffer session)
                 change=(action 'changeSession' session)
+                disabled=session.isIndependentLearning
               }}
             </td>
-            <td class='text-left' colspan=3>{{session.title}}</td>
+            <td class='text-left' colspan=3>
+              {{#if session.isIndependentLearning}}
+                <strong>({{t 'general.ilm'}})</strong>
+              {{/if}}
+              {{session.title}}
+            </td>
             <td class='text-left' colspan=3>{{get (await session.sessionType) "title"}}</td>
             <td class='text-center' colspan=1>
               {{#if (is-in linkedSessionsBuffer session)}}

@@ -22,23 +22,27 @@ export default Component.extend({
   didReceiveAttrs(){
     this._super(...arguments);
     const sequenceBlock = this.get('sequenceBlock');
-    const linkableSessions = this.get('linkableSessions');
-    this.get('loadAttr').perform(sequenceBlock, linkableSessions);
+    const sessions = this.get('sessions');
+    this.get('loadAttr').perform(sequenceBlock, sessions);
   },
 
-  loadAttr: task(function * (sequenceBlock, linkableSessions) {
+  loadAttr: task(function * (sequenceBlock, sessions) {
     let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
     linkedSessionsBuffer = linkedSessionsBuffer.toArray();
-    let linkableSessionsBuffer = yield linkableSessions;
+    let linkableSessionsBuffer = yield sessions;
     this.setProperties({
       linkedSessionsBuffer,
       linkableSessionsBuffer
     });
   }),
 
-  allSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionBuffer.[]', function(){
-    const linkedSessions = this.get('linkedSessionsBuffer');
-    const linkableSessions = this.get('linkableSessionsBuffer');
+  allSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
+    const linkedSessions = this.get('linkedSessionsBuffer').filter(session => {
+      return ! session.get('isIndependentLearning');
+    });
+    const linkableSessions = this.get('linkableSessionsBuffer').filter(session => {
+      return ! session.get('isIndependentLearning');
+    });
     if (isEmpty(linkedSessions) || isEmpty(linkableSessions) || linkedSessions.length < linkableSessions.length) {
       return false;
     }
@@ -57,8 +61,12 @@ export default Component.extend({
   }),
 
   noneSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
-    const linkedSessions = this.get('linkedSessionsBuffer');
-    const linkableSessions = this.get('linkableSessionsBuffer');
+    const linkedSessions = this.get('linkedSessionsBuffer').filter(session => {
+      return ! session.get('isIndependentLearning');
+    });
+    const linkableSessions = this.get('linkableSessionsBuffer').filter(session => {
+      return ! session.get('isIndependentLearning');
+    });
     if (isEmpty(linkedSessions) || isEmpty(linkableSessions)) {
       return true;
     }
@@ -94,10 +102,16 @@ export default Component.extend({
     },
     toggleSelectAll() {
       const allSelected = this.get('allSelected');
-      if (allSelected) {
-        this.set('linkedSessionsBuffer', []);
-      } else {
-        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer').toArray());
+
+      if (allSelected) { // un-select all sessions, ignoring linked ILMs (leave them as-is)
+        this.set('linkedSessionsBuffer', this.get('linkedSessionsBuffer').filter(session => {
+          return session.get('isIndependentLearning');
+        }));
+      } else { //select all sessions, ignoring un-linked ILMs (leave them as-is)
+        const linkedSessions = this.get('linkedSessionsBuffer');
+        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer').filter((session) => {
+          return ! session.get('isIndependentLearning') || linkedSessions.includes(session);
+        }));
       }
     },
     sortBy(what){
