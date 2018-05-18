@@ -53,7 +53,6 @@
                 type='checkbox'
                 checked=(is-in linkedSessionsBuffer session)
                 change=(action 'changeSession' session)
-                disabled=session.isIndependentLearning
               }}
             </td>
             <td class='text-left' colspan=3>
@@ -65,16 +64,16 @@
             <td class='text-left' colspan=3>{{get (await session.sessionType) "title"}}</td>
             <td class='text-center' colspan=1>
               {{#if (is-in linkedSessionsBuffer session)}}
-                {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
+                {{#unless (is-fulfilled session.maxDuration)}}
                   {{loading-spinner}}
                 {{else}}
-                  {{await session.maxSingleOfferingDuration}}
+                  {{await session.maxDuration}}
                 {{/unless}}
               {{else}}
-                {{#unless (is-fulfilled session.totalSumOfferingsDuration)}}
+                {{#unless (is-fulfilled session.totalSumDuration)}}
                   {{loading-spinner}}
                 {{else}}
-                  {{await session.totalSumOfferingsDuration}}
+                  {{await session.totalSumDuration}}
                 {{/unless}}
               {{/if}}
             </td>

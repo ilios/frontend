@@ -16,7 +16,7 @@ moduleForComponent('curriculum-inventory-sequence-block-session-manager', 'Integ
 });
 
 test('it renders', function(assert) {
-  assert.expect(29);
+  assert.expect(28);
 
   let offering1 = EmberObject.create({id: 1});
   let offering2 = EmberObject.create({id: 2});
@@ -46,7 +46,7 @@ test('it renders', function(assert) {
     offerings: resolve(offerings1),
     sessionType: resolve(sessionType1),
     isIndependentLearning: false,
-    maxSingleOfferingDuration: resolve(totalTime1)
+    maxDuration: resolve(totalTime1)
   });
 
   let session2 = EmberObject.create({
@@ -55,7 +55,7 @@ test('it renders', function(assert) {
     offerings: resolve(offerings2),
     sessionType: resolve(sessionType2),
     isIndependentLearning: false,
-    totalSumOfferingsDuration: resolve(totalTime2)
+    totalSumDuration: resolve(totalTime2)
   });
 
   let session3 = EmberObject.create({
@@ -64,7 +64,7 @@ test('it renders', function(assert) {
     offerings: resolve(offerings3),
     sessionType: resolve(sessionType3),
     isIndependentLearning: false,
-    maxSingleOfferingDuration: resolve(totalTime3)
+    maxDuration: resolve(totalTime3)
   });
 
   let session4 = EmberObject.create({
@@ -73,7 +73,7 @@ test('it renders', function(assert) {
     offerings: resolve(offerings4),
     sessionType: resolve(sessionType4),
     isIndependentLearning: true,
-    totalSumOfferingsDuration: resolve(totalTime4)
+    totalSumDuration: resolve(totalTime4)
   });
 
   let linkedSessions = [session1, session3];
@@ -117,7 +117,6 @@ test('it renders', function(assert) {
   assert.equal(this.$('tbody tr:eq(2) td:eq(3)').text().trim(), totalTime3, 'Total time is shown.');
   assert.equal(this.$('tbody tr:eq(2) td:eq(4)').text().trim(), offerings3.length, 'Number of offerings is shown.');
 
-  assert.ok(this.$('tbody tr:eq(3) td:eq(0) input').is(':disabled'), 'Checkbox is disabled.');
   assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
   assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().startsWith('(ILM)'), 'ILM is labeled as such.');
   assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().endsWith(session4.get('title')), 'Title is visible.');
@@ -150,7 +149,7 @@ test('sort by title', function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -175,7 +174,7 @@ test('sort by session type', function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -200,7 +199,7 @@ test('sort by offerings total', function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -220,15 +219,15 @@ test('sort by offerings total', function(assert) {
 
 test('change count as one offering', function(assert) {
   assert.expect(3);
-  let maxSingleOfferingDuration = (20).toFixed(2);
-  let totalSumOfferingsDuration = (15).toFixed(2);
+  let maxDuration = (20).toFixed(2);
+  let totalSumDuration = (15).toFixed(2);
   let session = EmberObject.create({
     id: 1,
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(maxSingleOfferingDuration),
-    totalSumOfferingsDuration: resolve(totalSumOfferingsDuration)
+    maxDuration: resolve(maxDuration),
+    totalSumDuration: resolve(totalSumDuration)
   });
 
   let block = EmberObject.create({
@@ -241,24 +240,24 @@ test('change count as one offering', function(assert) {
   this.set('sortBy', 'id');
   this.set('setSortBy', function(){});
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxDuration);
   this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('click');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumOfferingsDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumDuration);
   this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', true).trigger('click');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxDuration);
 });
 
 test('change count as one offering for all sessions', function(assert) {
   assert.expect(6);
-  let maxSingleOfferingDuration = (20).toFixed(2);
-  let totalSumOfferingsDuration = (15).toFixed(2);
+  let maxDuration = (20).toFixed(2);
+  let totalSumDuration = (15).toFixed(2);
   let session1 = EmberObject.create({
     id: 1,
     title: 'Alpha',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(maxSingleOfferingDuration),
-    totalSumOfferingsDuration: resolve(totalSumOfferingsDuration)
+    maxDuration: resolve(maxDuration),
+    totalSumDuration: resolve(totalSumDuration)
   });
 
   let session2 = EmberObject.create({
@@ -266,8 +265,8 @@ test('change count as one offering for all sessions', function(assert) {
     title: 'Omega',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(maxSingleOfferingDuration),
-    totalSumOfferingsDuration: resolve(totalSumOfferingsDuration)
+    maxDuration: resolve(maxDuration),
+    totalSumDuration: resolve(totalSumDuration)
   });
 
   let block = EmberObject.create({
@@ -280,16 +279,16 @@ test('change count as one offering for all sessions', function(assert) {
 
   this.render(hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`);
 
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumOfferingsDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxDuration);
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumDuration);
 
   this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxSingleOfferingDuration);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), maxSingleOfferingDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), maxDuration);
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), maxDuration);
 
   this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumOfferingsDuration);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumOfferingsDuration);
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalSumDuration);
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalSumDuration);
 });
 
 test('save', function(assert) {
@@ -300,8 +299,8 @@ test('save', function(assert) {
     title: 'Alpha',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0),
-    totalSumOfferingsDuration: resolve(0)
+    maxDuration: resolve(0),
+    totalSumDuration: resolve(0)
   });
 
   let session2 = EmberObject.create({
@@ -309,8 +308,8 @@ test('save', function(assert) {
     title: 'Omega',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0),
-    totalSumOfferingsDuration: resolve(0)
+    maxDuration: resolve(0),
+    totalSumDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -339,8 +338,8 @@ test('cancel', function(assert) {
     title: 'Alpha',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0),
-    totalSumOfferingsDuration: resolve(0)
+    maxDuration: resolve(0),
+    totalSumDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -370,7 +369,7 @@ test('check all/uncheck all', function(assert) {
     offerings: resolve([]),
     sessionType: resolve(sessionType),
     isIndependentLearning: false,
-    totalSumOfferingsDuration: resolve(0)
+    totalSumDuration: resolve(0)
   });
 
   let session2 = EmberObject.create({
@@ -379,7 +378,7 @@ test('check all/uncheck all', function(assert) {
     offerings: resolve([]),
     sessionType: resolve(sessionType),
     isIndependentLearning: false,
-    totalSumOfferingsDuration: resolve(0)
+    totalSumDuration: resolve(0)
   });
 
   let session3 = EmberObject.create({
@@ -388,7 +387,7 @@ test('check all/uncheck all', function(assert) {
     offerings: resolve([]),
     sessionType: resolve(sessionType),
     isIndependentLearning: false,
-    totalSumOfferingsDuration: resolve(0)
+    totalSumDuration: resolve(0)
   });
 
   let session4 = EmberObject.create({
@@ -397,7 +396,7 @@ test('check all/uncheck all', function(assert) {
     offerings: resolve([]),
     sessionType: resolve(sessionType),
     isIndependentLearning: true,
-    totalSumOfferingsDuration: resolve(0)
+    totalSumDuration: resolve(0)
   });
 
   let session5 = EmberObject.create({
@@ -406,7 +405,7 @@ test('check all/uncheck all', function(assert) {
     offerings: resolve([]),
     sessionType: resolve(sessionType),
     isIndependentLearning: true,
-    totalSumOfferingsDuration: resolve(0)
+    totalSumDuration: resolve(0)
   });
 
   let sessions = [session1, session2, session3, session4, session5];
@@ -432,7 +431,7 @@ test('check all/uncheck all', function(assert) {
   assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
   assert.ok(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
   assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-  assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'ILM checkbox remains un-checked');
+  assert.ok(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
   assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
 
   this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
@@ -440,6 +439,6 @@ test('check all/uncheck all', function(assert) {
   assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
   assert.notOk(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
   assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-  assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings remains checked.');
+  assert.notOk(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
 
 });
