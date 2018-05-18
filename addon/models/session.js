@@ -127,7 +127,25 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    * @property totalSumDuration
    * @type {Ember.computed}
    */
-  totalSumDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
+  totalSumDuration: computed('totalSumOfferingsDuration', 'ilmSession.hours', async function () {
+    const totalSumOfferingsDuration = await this.get('totalSumOfferingsDuration');
+    const ilmSession = await this.get('ilmSession');
+    if (!ilmSession) {
+      return totalSumOfferingsDuration;
+    }
+
+    const ilmHours = ilmSession.get('hours');
+
+    return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
+  }),
+
+  /**
+   * The maximum duration in hours (incl. fractions) of any session offerings, plus any ILM hours.
+   * If both ILM and offerings are present sum them
+   * @property totalSumDuration
+   * @type {Ember.computed}
+   */
+  maxDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
     const maxSingleOfferingDuration = await this.get('maxSingleOfferingDuration');
     const ilmSession = await this.get('ilmSession');
     if (!ilmSession) {
