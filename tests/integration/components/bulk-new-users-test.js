@@ -1,5 +1,5 @@
 import { getOwner } from '@ember/application';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
@@ -7,60 +7,51 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
+import { startMirage } from 'ilios/initializers/ember-cli-mirage';
+import Response from 'ember-cli-mirage/response';
 
-const { resolve } = RSVP;
-const duration = 4;
-const program = EmberObject.create({id: 1, title: 'Program', duration});
-const startYear = moment().format('YYYY');
-const py1 = EmberObject.create({program, startYear});
-const py2 = EmberObject.create({program, startYear});
-const mockCohorts = [
-  EmberObject.create({id: 2, title: 'second', programYear: py1}),
-  EmberObject.create({id: 1, title: 'first', programYear: py2}),
-];
-
-const mockSchools = [
-  {id: 2, title: 'second', cohorts: resolve(mockCohorts)},
-  {id: 1, title: 'first', cohorts: resolve([])},
-  {id: 3, title: 'third', cohorts: resolve([])},
-];
-const mockUser = EmberObject.create({
-  school: resolve(EmberObject.create(mockSchools[0]))
-});
-
-const currentUserMock = Service.extend({
-  model: resolve(mockUser)
-});
-
-const permissionCheckerMock = Service.extend({
-  async canCreateUser() {
-    return resolve(true);
-  }
-});
-
-let storeMock;
 
 moduleForComponent('bulk-new-users', 'Integration | Component | bulk new users', {
   integration: true,
-  beforeEach(){
-    storeMock = Service.extend({
-      findAll(what){
-        if (what === 'authentication') {
-          return resolve([{user: 199, username: 'existingName'}]);
-        }
-        throw new Error('findAll record called in untested context');
-      },
-      query(){
-        return resolve([]);
-      },
-      createRecord(){
-        throw new Error('Create record called in untested context');
+  beforeEach() {
+    this.server = startMirage();
+
+    const duration = 4;
+    this.server.create('school', { title: 'first' });
+    const school = this.server.create('school', { title: 'second' });
+    this.server.create('school', { title: 'third' });
+
+    const program = this.server.create('program', {id: 1, title: 'Program', duration, school});
+    const startYear = moment().format('YYYY');
+    const py1 = this.server.create('program-year', {program, startYear});
+    const py2 = this.server.create('program-year', {program, startYear});
+    this.server.create('cohort', {id: 2, title: 'second', programYear: py1});
+    this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
+
+    const mockSchool = EmberObject.create(this.server.db.schools[1], {
+      cohorts: resolve(this.server.db.cohorts.map(c => EmberObject.create(c)))
+    });
+
+    const mockUser = EmberObject.create({
+      school: resolve(mockSchool)
+    });
+
+    const currentUserMock = Service.extend({
+      model: resolve(mockUser)
+    });
+
+    const permissionCheckerMock = Service.extend({
+      async canCreateUser() {
+        return resolve(true);
       }
     });
+
     this.register('service:current-user', currentUserMock);
     getOwner(this).lookup('service:flash-messages').registerTypes(['success', 'warning']);
-    this.register('service:store', storeMock);
     this.register('service:permissionChecker', permissionCheckerMock);
+  },
+  teardown() {
+    this.server.shutdown();
   }
 });
 
@@ -100,25 +91,8 @@ let triggerUpload = async function(users, inputElement){
 };
 
 test('it renders', async function(assert) {
-  assert.expect(8);
+  assert.expect(6);
   this.set('nothing', parseInt);
-
-  storeMock.reopen({
-    query(what, {filters}){
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-      return resolve([]);
-    },
-    findAll(what) {
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    }
-  });
 
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -130,56 +104,38 @@ test('it renders', async function(assert) {
 
   const schools = 'select:eq(0) option';
   let options = this.$(schools);
-  assert.equal(options.length, mockSchools.length);
+  assert.equal(options.length, 3);
   assert.equal(options.eq(0).text().trim(), 'first');
   assert.equal(options.eq(1).text().trim(), 'second');
   assert.equal(options.eq(2).text().trim(), 'third');
 });
 
 test('select student mode display cohort', async function(assert) {
-  assert.expect(12);
+  assert.expect(10);
   this.set('nothing', parseInt);
 
-  storeMock.reopen({
-    query(what, {filters}){
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-
-      return resolve(mockCohorts);
-    },
-    findAll(what) {
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    }
-  });
-
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
-  run( async () => {
-    this.$('.click-choice-buttons .second-button').click();
-    await wait();
-    let content = this.$().text().trim();
-    assert.notEqual(content.search(/File with user data/), -1);
-    assert.notEqual(content.search(/Primary School/), -1);
-    assert.notEqual(content.search(/Primary Cohort/), -1);
+  await wait();
 
-    const schools = 'select:eq(0) option';
-    let options = this.$(schools);
-    assert.equal(options.length, mockSchools.length);
-    assert.equal(options.eq(0).text().trim(), 'first');
-    assert.equal(options.eq(1).text().trim(), 'second');
-    assert.equal(options.eq(2).text().trim(), 'third');
+  this.$('.click-choice-buttons .second-button').click();
+  await wait();
+  let content = this.$().text().trim();
+  assert.notEqual(content.search(/File with user data/), -1);
+  assert.notEqual(content.search(/Primary School/), -1);
+  assert.notEqual(content.search(/Primary Cohort/), -1);
 
-    const cohorts = 'select:eq(1) option';
-    options = this.$(cohorts);
-    assert.equal(options.length, mockCohorts.length);
-    assert.equal(options.eq(0).text().trim(), 'Program first');
-    assert.equal(options.eq(1).text().trim(), 'Program second');
-  });
+  const schools = 'select:eq(0) option';
+  let options = this.$(schools);
+  assert.equal(options.length, 3);
+  assert.equal(options.eq(0).text().trim(), 'first');
+  assert.equal(options.eq(1).text().trim(), 'second');
+  assert.equal(options.eq(2).text().trim(), 'third');
+
+  const cohorts = 'select:eq(1) option';
+  options = this.$(cohorts);
+  assert.equal(options.length, 2);
+  assert.equal(options.eq(0).text().trim(), 'Program first');
+  assert.equal(options.eq(1).text().trim(), 'Program second');
 });
 
 test('parses file into table', async function (assert) {
@@ -218,91 +174,8 @@ test('parses file into table', async function (assert) {
 });
 
 test('saves valid faculty users', async function(assert) {
-  assert.expect(35);
-  let called = 0;
-  let studentRole = {id: '4'};
-  storeMock.reopen({
-    findAll(what) {
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      assert.equal(what, 'user-role');
-      return [studentRole];
-    },
-    createRecord(what, obj) {
-      let rhett = EmberObject.create(obj);
-      switch (called) {
-      case 0:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('firstName'), 'jasper');
-            assert.equal(this.get('lastName'), 'johnson');
-            assert.equal(this.get('middleName'), null);
-            assert.equal(this.get('phone'), '1234567890');
-            assert.equal(this.get('email'), 'jasper.johnson@example.com');
-            assert.equal(this.get('campusId'), '123Campus');
-            assert.equal(this.get('otherId'), '123Other');
-            assert.equal(this.get('addedViaIlios'), true);
-            assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles'), null);
-          }
-        });
-        break;
-      case 1:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('username'), 'jasper');
-            assert.equal(this.get('password'), '123Test');
-            assert.equal(this.get('user').get('firstName'), 'jasper');
-          }
-        });
-        break;
-      case 2:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('firstName'), 'jackson');
-            assert.equal(this.get('lastName'), 'johnson');
-            assert.equal(this.get('middleName'), 'middle');
-            assert.equal(this.get('phone'), '12345');
-            assert.equal(this.get('email'), 'jj@example.com');
-            assert.equal(this.get('campusId'), '1234Campus');
-            assert.equal(this.get('otherId'), '1234Other');
-            assert.equal(this.get('addedViaIlios'), true);
-            assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles'), null);
-
-          }
-        });
-
-        break;
-      case 3:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('username'), 'jck');
-            assert.equal(this.get('password'), '1234Test');
-            assert.equal(this.get('user').get('firstName'), 'jackson');
-          }
-        });
-        break;
-      default:
-        assert.ok(false, 'Extra createRecord called when it shoul not have been');
-      }
-
-      called++;
-      return rhett;
-    }
-  });
+  assert.expect(30);
+  this.server.create('user-role', { id: 4 });
 
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
@@ -314,96 +187,46 @@ test('saves valid faculty users', async function(assert) {
   ];
   await triggerUpload(users, this.$('input[type=file]'));
   this.$('.done').click();
+  await wait();
+  assert.equal(this.server.db.users[0].firstName, 'jasper');
+  assert.equal(this.server.db.users[0].lastName, 'johnson');
+  assert.equal(this.server.db.users[0].middleName, null);
+  assert.equal(this.server.db.users[0].phone, '1234567890');
+  assert.equal(this.server.db.users[0].email, 'jasper.johnson@example.com');
+  assert.equal(this.server.db.users[0].campusId, '123Campus');
+  assert.equal(this.server.db.users[0].otherId, '123Other');
+  assert.equal(this.server.db.users[0].addedViaIlios, true);
+  assert.equal(this.server.db.users[0].enabled, true);
+  assert.equal(this.server.db.users[0].roleIds, null);
+  assert.equal(this.server.db.users[0].cohortIds, null);
+  assert.equal(this.server.db.users[0].authenticationId, '1');
+
+  assert.equal(this.server.db.authentications[0].username, 'jasper');
+  assert.equal(this.server.db.authentications[0].password, '123Test');
+  assert.equal(this.server.db.authentications[0].userId, '1');
+
+
+  assert.equal(this.server.db.users[1].firstName, 'jackson');
+  assert.equal(this.server.db.users[1].lastName, 'johnson');
+  assert.equal(this.server.db.users[1].middleName, 'middle');
+  assert.equal(this.server.db.users[1].phone, '12345');
+  assert.equal(this.server.db.users[1].email, 'jj@example.com');
+  assert.equal(this.server.db.users[1].campusId, '1234Campus');
+  assert.equal(this.server.db.users[1].otherId, '1234Other');
+  assert.equal(this.server.db.users[1].addedViaIlios, true);
+  assert.equal(this.server.db.users[1].enabled, true);
+  assert.equal(this.server.db.users[1].roleIds, null);
+  assert.equal(this.server.db.users[1].cohortIds, null);
+  assert.equal(this.server.db.users[1].authenticationId, '2');
+
+  assert.equal(this.server.db.authentications[1].username, 'jck');
+  assert.equal(this.server.db.authentications[1].password, '1234Test');
+  assert.equal(this.server.db.authentications[1].userId, 2);
 });
 
 test('saves valid student users', async function(assert) {
-  assert.expect(37);
-  let called = 0;
-  let studentRole = {id: '4'};
-  storeMock.reopen({
-    findAll(what){
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      assert.equal(what, 'user-role');
-      return [studentRole];
-    },
-    createRecord(what, obj) {
-      let rhett = EmberObject.create(obj);
-      switch (called) {
-      case 0:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('firstName'), 'jasper');
-            assert.equal(this.get('lastName'), 'johnson');
-            assert.equal(this.get('middleName'), null);
-            assert.equal(this.get('phone'), '1234567890');
-            assert.equal(this.get('email'), 'jasper.johnson@example.com');
-            assert.equal(this.get('campusId'), '123Campus');
-            assert.equal(this.get('otherId'), '123Other');
-            assert.equal(this.get('addedViaIlios'), true);
-            assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles')[0], studentRole);
-            assert.equal(this.get('primaryCohort').get('id'), mockCohorts[1].get('id'));
-          }
-        });
-        break;
-      case 1:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('username'), 'jasper');
-            assert.equal(this.get('password'), '123Test');
-            assert.equal(this.get('user').get('firstName'), 'jasper');
-          }
-        });
-        break;
-      case 2:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('firstName'), 'jackson');
-            assert.equal(this.get('lastName'), 'johnson');
-            assert.equal(this.get('middleName'), 'middle');
-            assert.equal(this.get('phone'), '12345');
-            assert.equal(this.get('email'), 'jj@example.com');
-            assert.equal(this.get('campusId'), '1234Campus');
-            assert.equal(this.get('otherId'), '1234Other');
-            assert.equal(this.get('addedViaIlios'), true);
-            assert.equal(this.get('enabled'), true);
-            assert.equal(this.get('roles')[0], studentRole);
-            assert.equal(this.get('primaryCohort').get('id'), mockCohorts[1].get('id'));
-
-          }
-        });
-
-        break;
-      case 3:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){
-            assert.equal(this.get('username'), 'jck');
-            assert.equal(this.get('password'), '1234Test');
-            assert.equal(this.get('user').get('firstName'), 'jackson');
-          }
-        });
-        break;
-      default:
-        assert.ok(false, 'Extra createRecord called when it shoul not have been');
-      }
-
-      called++;
-      return rhett;
-    }
-  });
+  assert.expect(28);
+  this.server.create('user-role', { id: 4 });
 
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
@@ -419,6 +242,41 @@ test('saves valid student users', async function(assert) {
   ];
   await triggerUpload(users, this.$('input[type=file]'));
   this.$('.done').click();
+
+  await wait();
+  assert.equal(this.server.db.users[0].firstName, 'jasper');
+  assert.equal(this.server.db.users[0].lastName, 'johnson');
+  assert.equal(this.server.db.users[0].middleName, null);
+  assert.equal(this.server.db.users[0].phone, '1234567890');
+  assert.equal(this.server.db.users[0].email, 'jasper.johnson@example.com');
+  assert.equal(this.server.db.users[0].campusId, '123Campus');
+  assert.equal(this.server.db.users[0].otherId, '123Other');
+  assert.equal(this.server.db.users[0].addedViaIlios, true);
+  assert.equal(this.server.db.users[0].enabled, true);
+  assert.deepEqual(this.server.db.users[0].roleIds, ['4']);
+  assert.equal(this.server.db.users[0].authenticationId, '1');
+
+  assert.equal(this.server.db.authentications[0].username, 'jasper');
+  assert.equal(this.server.db.authentications[0].password, '123Test');
+  assert.equal(this.server.db.authentications[0].userId, '1');
+
+
+  assert.equal(this.server.db.users[1].firstName, 'jackson');
+  assert.equal(this.server.db.users[1].lastName, 'johnson');
+  assert.equal(this.server.db.users[1].middleName, 'middle');
+  assert.equal(this.server.db.users[1].phone, '12345');
+  assert.equal(this.server.db.users[1].email, 'jj@example.com');
+  assert.equal(this.server.db.users[1].campusId, '1234Campus');
+  assert.equal(this.server.db.users[1].otherId, '1234Other');
+  assert.equal(this.server.db.users[1].addedViaIlios, true);
+  assert.equal(this.server.db.users[1].enabled, true);
+  assert.deepEqual(this.server.db.users[1].roleIds, ['4']);
+  assert.equal(this.server.db.users[1].authenticationId, '2');
+
+  assert.equal(this.server.db.authentications[1].username, 'jck');
+  assert.equal(this.server.db.authentications[1].password, '1234Test');
+  assert.equal(this.server.db.authentications[1].userId, 2);
+
 });
 
 
@@ -554,6 +412,8 @@ test('validate otherId', async function(assert) {
 
 test('validate username', async function(assert) {
   this.set('nothing', parseInt);
+  const user = this.server.create('user');
+  this.server.create('authentication', { user, username: 'existingName' });
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
   let users = [
@@ -572,104 +432,28 @@ test('validate username', async function(assert) {
   assert.ok(this.$(BadBox).hasClass('error'));
 });
 
-test('duplicate username errors on save', async function(assert) {
-  let called = 0;
-  storeMock.reopen({
-    findAll(what) {
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      let studentRole = {id: '4'};
-      assert.equal(what, 'user-role');
-      return [studentRole];
-    },
-    createRecord(what, obj) {
-      let rhett = EmberObject.create(obj);
-      switch (called) {
-      case 0:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-
-          }
-        });
-        break;
-      case 1:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){
-            this.isError = true;
-            throw new Error();
-          }
-        });
-        break;
-      default:
-        assert.ok(false, 'Extra createRecord called when it shoul not have been');
-      }
-
-      called++;
-      return rhett;
-    }
+test('duplicate username errors on save', async function (assert) {
+  this.server.post('api/authentications', function () {
+    return new Response(500);
   });
   this.set('nothing', parseInt);
+  const user = this.server.create('user');
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
   let users = [
     ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
   ];
   await triggerUpload(users, this.$('input[type=file]'));
+  this.server.create('authentication', { user, username: 'jasper' });
   await this.$('.done').click();
   await wait();
   assert.ok(this.$('.saving-authentication-errors').length, 1);
   assert.equal(this.$('.saving-authentication-errors li').text().trim(), 'johnson, jasper (jasper.johnson@example.com)');
 });
 
-test('error saving user', async function(assert) {
-  let called = 0;
-  storeMock.reopen({
-    findAll(what) {
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      let studentRole = {id: '4'};
-      assert.equal(what, 'user-role');
-      return [studentRole];
-    },
-    createRecord(what, obj) {
-      let rhett = EmberObject.create(obj);
-      switch (called) {
-      case 0:
-        assert.equal(what, 'user');
-        assert.equal(window.Object.keys(obj).length, 9);
-        rhett.reopen({
-          save(){
-            this.isError = true;
-            throw new Error();
-          }
-        });
-        break;
-      case 1:
-        assert.equal(what, 'authentication');
-        assert.equal(window.Object.keys(obj).length, 2);
-        rhett.reopen({
-          save(){}
-        });
-        break;
-      default:
-        assert.ok(false, 'Extra createRecord called when it shoul not have been');
-      }
-
-      called++;
-      return rhett;
-    }
+test('error saving user', async function (assert) {
+  this.server.post('api/users', function () {
+    return new Response(500);
   });
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
@@ -716,36 +500,6 @@ test('password not required if username is blank', async function(assert) {
 
 test('dont create authentication if username is not set', async function(assert) {
   assert.expect(2);
-  let called = 0;
-  storeMock.reopen({
-    findAll(what) {
-      if (what === 'authentication') {
-        return resolve([{user: 199, username: 'existingName'}]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      assert.equal(what, 'user-role');
-      return [{id: '3'}, {id: '4'}];
-    },
-    createRecord(what, obj) {
-      let rhett = EmberObject.create(obj);
-      switch (called) {
-      case 0:
-        rhett.reopen({
-          save(){
-            assert.ok(true);
-          }
-        });
-        break;
-      default:
-        assert.ok(false, 'Should not have called create record since there was no username sent');
-      }
-
-      called++;
-      return rhett;
-    }
-  });
   this.set('nothing', parseInt);
   this.render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
@@ -754,6 +508,10 @@ test('dont create authentication if username is not set', async function(assert)
   ];
   await triggerUpload(users, this.$('input[type=file]'));
   this.$('.done').click();
+  await wait();
+  assert.equal(this.server.db.users[0].firstName, 'jasper');
+  assert.equal(this.server.db.users[0].authenticationId, null);
+
 });
 
 test('ignore header row', async function(assert) {

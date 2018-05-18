@@ -95,7 +95,7 @@
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
         {{#each (sort-by 'title' (await schools)) as |school|}}
-          <option value={{school.id}} selected={{eq school (await bestSelectedSchool)}}>
+          <option value={{school.id}} selected={{eq school.id (get (await bestSelectedSchool) 'id')}}>
             {{school.title}}
           </option>
         {{/each}}
