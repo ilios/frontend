@@ -18,7 +18,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
 
     const minutes = await map(sessionsWithUser, async session => {
-      const totalHours = await session.get('totalSumDuration');
+      const totalHours = await session.get('totalSumOfferingsDuration');
       const offeringHours = await session.get('maxSingleOfferingDuration');
       const offeringMinutes = Math.round(offeringHours * 60);
       const totalMinutes = Math.round(totalHours * 60);
@@ -40,7 +40,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       course.get('school'),
       map(sessions.toArray(), s => s.get('sessionType')),
       map(sessions.toArray(), s => s.get('allInstructors')),
-      map(sessions.toArray(), s => s.get('totalSumDuration')),
+      map(sessions.toArray(), s => s.get('totalSumOfferingsDuration')),
     ]);
   }
 });

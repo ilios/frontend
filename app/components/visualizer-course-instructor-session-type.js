@@ -28,7 +28,7 @@ export default Component.extend({
     const dataMap = await map(sessionsWithUser, async session => {
       const sessionType = await session.get('sessionType');
 
-      const hours = await session.get('totalSumDuration');
+      const hours = await session.get('totalSumOfferingsDuration');
       const minutes = Math.round(hours * 60);
 
       return {

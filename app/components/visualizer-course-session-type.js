@@ -23,7 +23,7 @@ export default Component.extend({
 
     const sessions = courseSessions.filter(session => sessionTypeSessionIds.includes(session.get('id')));
     const termData = await map(sessions, async session => {
-      const hours = await session.get('totalSumDuration');
+      const hours = await session.get('totalSumOfferingsDuration');
       const minutes = Math.round(hours * 60);
       const terms = await session.get('terms');
       return map(terms.toArray(), async term => {

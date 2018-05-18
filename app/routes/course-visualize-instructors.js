@@ -10,7 +10,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const sessions = await course.get('sessions');
     return await all([
       map(sessions.toArray(), s => s.get('offerings')),
-      map(sessions.toArray(), s => s.get('totalSumDuration')),
+      map(sessions.toArray(), s => s.get('totalSumOfferingsDuration')),
       map(sessions.toArray(), s => s.get('allInstructors')),
     ]);
   }

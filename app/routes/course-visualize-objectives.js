@@ -13,7 +13,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return await all([
       course.get('objectives'),
       map(sessions.toArray(), s => s.get('objectives')),
-      map(sessions.toArray(), s => s.get('totalSumDuration')),
+      map(sessions.toArray(), s => s.get('totalSumOfferingsDuration')),
     ]);
   }
 });
