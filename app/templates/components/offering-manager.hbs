@@ -18,9 +18,9 @@
         <li>
           {{learnerGroup.title}}
           {{#if (is-fulfilled learnerGroup.allParents)}}
-            {{#tooltip-on-element}}
+            {{#attach-tooltip lazy-render=true animation='shift'}}
               {{join ' > ' (map-by 'title' (await learnerGroup.allParents))}}
-            {{/tooltip-on-element}}
+            {{/attach-tooltip}}
           {{/if}}
         </li>
       {{else}}
