@@ -21,6 +21,7 @@ export default Model.extend({
   children: hasMany('curriculum-inventory-sequence-block', {async: true, inverse: 'parent'}),
   report: belongsTo('curriculum-inventory-report', {async: true}),
   sessions: hasMany('session', {async: true}),
+  excludedSessions: hasMany('session', {async: true}),
   course: belongsTo('course', {async: true}),
 
   isFinalized: alias('report.isFinalized'),
