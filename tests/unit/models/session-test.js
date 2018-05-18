@@ -370,6 +370,53 @@ module('Unit | Model | Session', function(hooks) {
     });
   });
 
+  test('maxDuration with ILM', async function(assert){
+    assert.expect(1);
+    const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
+    const store = this.owner.lookup('service:store');
+
+    await run( async () => {
+      const allDayOffering = store.createRecord('offering', { startDate: moment('2017-01-01'), endDate: moment('2017-01-02').add(30, 'minutes') });
+      const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+      subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+      let ilmSession = store.createRecord('ilmSession', { hours: 2.1});
+      subject.set('ilmSession', ilmSession);
+
+      const max = await subject.get('maxDuration');
+      assert.equal(max, 26.60);
+    });
+  });
+
+  test('maxDuration without ILM', async function(assert){
+    assert.expect(1);
+    const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
+    const store = this.owner.lookup('service:store');
+
+    await run( async () => {
+      const allDayOffering = store.createRecord('offering', {startDate: moment('2017-01-01') , endDate: moment('2017-01-02') });
+      const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
+      subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+
+      const max = await subject.get('maxDuration');
+      assert.equal(max, 24.00);
+    });
+  });
+
+  test('maxDuration only ILM', async function(assert){
+    assert.expect(1);
+    const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
+    const store = this.owner.lookup('service:store');
+
+    await run( async () => {
+      let ilmSession = store.createRecord('ilmSession', { hours: 2});
+      subject.set('ilmSession', ilmSession);
+
+      const max = await subject.get('maxDuration');
+      assert.equal(max, 2.00);
+    });
+  });
+
+
   test('totalSumDuration with ILM', async function(assert){
     assert.expect(1);
     const subject = run(() => this.owner.lookup('service:store').createRecord('session'));
@@ -383,7 +430,7 @@ module('Unit | Model | Session', function(hooks) {
       subject.set('ilmSession', ilmSession);
 
       const max = await subject.get('totalSumDuration');
-      assert.equal(max, 26.60);
+      assert.equal(max, 27.10);
     });
   });
 
@@ -398,7 +445,7 @@ module('Unit | Model | Session', function(hooks) {
       subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
       const max = await subject.get('totalSumDuration');
-      assert.equal(max, 24.00);
+      assert.equal(max, 24.50);
     });
   });
 
