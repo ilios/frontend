@@ -4,16 +4,17 @@ import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import { startMirage } from 'ilios/initializers/ember-cli-mirage';
 
 const { resolve } = RSVP;
 
-let storeMock;
-
 moduleForComponent('assign-students', 'Integration | Component | assign students', {
   integration: true,
-  beforeEach(){
-    storeMock = Service.extend({});
-    this.register('service:store', storeMock);
+  setup(){
+    this.server = startMirage();
+  },
+  teardown() {
+    this.server.shutdown();
   }
 });
 
@@ -21,25 +22,23 @@ test('nothing', function(assert){
   assert.ok(true);
 });
 
-test('it renders', function(assert) {
-  let program = EmberObject.create({
+test('it renders', function (assert) {
+  const school = this.server.create('school');
+  const program = this.server.create('program', {
     duration: 20,
-    title: 'program title'
+    title: 'program title',
+    school
   });
-  let programYear = EmberObject.create({
+  const programYear = this.server.create('programYear', {
     program,
     startYear: 2020
   });
-  let cohort = EmberObject.create({
+  this.server.create('cohort', {
     title: 'test cohort',
     programYear
   });
 
-  let school = EmberObject.create({
-    id: 1,
-    cohorts: resolve([cohort])
-  });
-  let students = [
+  const students = [
     EmberObject.create({
       id: 1,
       fullName: 'test person',
@@ -54,26 +53,18 @@ test('it renders', function(assert) {
     })
   ];
 
-  storeMock.reopen({
-    query(what, {filters}){
-      assert.equal('cohort', what);
-      assert.equal(1, filters.schools[0]);
-      return resolve([cohort]);
-    }
-  });
-
-  this.set('school', school);
+  this.set('school', EmberObject.create(this.server.db.schools[0]));
   this.set('students', students);
-  this.on('setOffset', parseInt);
-  this.on('setLimit', parseInt);
+  this.set('setOffset', ()=>{});
+  this.set('setLimit', ()=>{});
 
   this.render(hbs`{{assign-students
     students=students
     school=school
     offset=0
     limit=10
-    setOffset=(action 'setOffset')
-    setLimit=(action 'setLimit')
+    setOffset=(action setOffset)
+    setLimit=(action setLimit)
   }}`);
 
   return wait().then(() => {
@@ -101,24 +92,18 @@ test('check all checks all', function(assert) {
     })
   ];
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    }
-  });
-
   this.set('school', school);
   this.set('students', students);
-  this.on('setOffset', parseInt);
-  this.on('setLimit', parseInt);
+  this.set('setOffset', ()=>{});
+  this.set('setLimit', ()=>{});
 
   this.render(hbs`{{assign-students
     students=students
     school=school
     offset=0
     limit=10
-    setOffset=(action 'setOffset')
-    setLimit=(action 'setLimit')
+    setOffset=(action setOffset)
+    setLimit=(action setLimit)
   }}`);
   const checkAll = 'thead tr:eq(0) input';
   const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
@@ -153,24 +138,18 @@ test('check some sets indeterminate state', async function(assert) {
     }),
   ];
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    }
-  });
-
   this.set('school', school);
   this.set('students', students);
-  this.on('setOffset', parseInt);
-  this.on('setLimit', parseInt);
+  this.set('setOffset', ()=>{});
+  this.set('setLimit', ()=>{});
 
   this.render(hbs`{{assign-students
     students=students
     school=school
     offset=0
     limit=10
-    setOffset=(action 'setOffset')
-    setLimit=(action 'setLimit')
+    setOffset=(action setOffset)
+    setLimit=(action setLimit)
   }}`);
   const checkAll = 'thead tr:eq(0) input';
   const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
@@ -211,24 +190,18 @@ test('when some are selected check all checks all', function(assert) {
     }),
   ];
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    }
-  });
-
   this.set('school', school);
   this.set('students', students);
-  this.on('setOffset', parseInt);
-  this.on('setLimit', parseInt);
+  this.set('setOffset', ()=>{});
+  this.set('setLimit', ()=>{});
 
   this.render(hbs`{{assign-students
     students=students
     school=school
     offset=0
     limit=10
-    setOffset=(action 'setOffset')
-    setLimit=(action 'setLimit')
+    setOffset=(action setOffset)
+    setLimit=(action setLimit)
   }}`);
   const checkAll = 'thead tr:eq(0) input';
   const firstStudent = 'tbody tr:eq(0) td:eq(0) input';
@@ -255,54 +228,43 @@ test('save sets primary cohort', function(assert) {
     }
   });
   this.register('service:flashMessages', flashmessagesMock);
-  let program = EmberObject.create({
+
+  const school = this.server.create('school');
+  const program = this.server.create('program', {
     duration: 20,
-    title: 'program title'
+    title: 'program title',
+    school
   });
-  let programYear = EmberObject.create({
+  const programYear = this.server.create('programYear', {
     program,
     startYear: 2020
   });
-  let cohort = EmberObject.create({
-    id: 1,
+  this.server.create('cohort', {
     title: 'test cohort',
     programYear
   });
 
-  let school = EmberObject.create({
-    id: 1,
-    cohorts: resolve([cohort])
-  });
-  let students = [
+  const students = [
     EmberObject.create({
       id: 1,
       fullName: 'test person',
       email: 'tstemail',
-      campusId: 'id123',
-      save(){
-        assert.equal(this.get('primaryCohort'), cohort);
-      }
+      campusId: 'id123'
     })
   ];
 
-  storeMock.reopen({
-    query(){
-      return resolve([cohort]);
-    }
-  });
-
-  this.set('school', school);
+  this.set('school', EmberObject.create(this.server.db.schools[0]));
   this.set('students', students);
-  this.on('setOffset', parseInt);
-  this.on('setLimit', parseInt);
+  this.set('setOffset', ()=>{});
+  this.set('setLimit', ()=>{});
 
   this.render(hbs`{{assign-students
     students=students
     school=school
     offset=0
     limit=10
-    setOffset=(action 'setOffset')
-    setLimit=(action 'setLimit')
+    setOffset=(action setOffset)
+    setLimit=(action setLimit)
   }}`);
 
   return wait().then(() => {
