@@ -1,7 +1,7 @@
 {{#if term.description.length}}
-  {{#tooltip-on-component  class='tooltip-description'}}
+  {{#attach-tooltip lazy-render=true animation='shift'}}
     {{term.description}}
-  {{/tooltip-on-component}}
+  {{/attach-tooltip}}
 {{/if}}
 {{term.title}}
 <span class="actions">

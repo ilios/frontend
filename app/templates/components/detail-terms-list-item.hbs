@@ -1,7 +1,7 @@
 {{#if term.description.length}}
-  {{#tooltip-on-component}}
+  {{#attach-tooltip lazy-render=true animation='shift'}}
     {{term.description}}
-  {{/tooltip-on-component}}
+  {{/attach-tooltip}}
 {{/if}}
 {{#if term.isTopLevel}}
   {{term.title}}
