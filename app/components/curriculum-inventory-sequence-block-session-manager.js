@@ -37,12 +37,8 @@ export default Component.extend({
   }),
 
   allSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
-    const linkedSessions = this.get('linkedSessionsBuffer').filter(session => {
-      return ! session.get('isIndependentLearning');
-    });
-    const linkableSessions = this.get('linkableSessionsBuffer').filter(session => {
-      return ! session.get('isIndependentLearning');
-    });
+    const linkedSessions = this.get('linkedSessionsBuffer');
+    const linkableSessions = this.get('linkableSessionsBuffer');
     if (isEmpty(linkedSessions) || isEmpty(linkableSessions) || linkedSessions.length < linkableSessions.length) {
       return false;
     }
@@ -61,12 +57,9 @@ export default Component.extend({
   }),
 
   noneSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
-    const linkedSessions = this.get('linkedSessionsBuffer').filter(session => {
-      return ! session.get('isIndependentLearning');
-    });
-    const linkableSessions = this.get('linkableSessionsBuffer').filter(session => {
-      return ! session.get('isIndependentLearning');
-    });
+    const linkedSessions = this.get('linkedSessionsBuffer');
+    const linkableSessions = this.get('linkableSessionsBuffer');
+
     if (isEmpty(linkedSessions) || isEmpty(linkableSessions)) {
       return true;
     }
@@ -103,15 +96,10 @@ export default Component.extend({
     toggleSelectAll() {
       const allSelected = this.get('allSelected');
 
-      if (allSelected) { // un-select all sessions, ignoring linked ILMs (leave them as-is)
-        this.set('linkedSessionsBuffer', this.get('linkedSessionsBuffer').filter(session => {
-          return session.get('isIndependentLearning');
-        }));
-      } else { //select all sessions, ignoring un-linked ILMs (leave them as-is)
-        const linkedSessions = this.get('linkedSessionsBuffer');
-        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer').filter((session) => {
-          return ! session.get('isIndependentLearning') || linkedSessions.includes(session);
-        }));
+      if (allSelected) { // un-select all sessions
+        this.set('linkedSessionsBuffer', []);
+      } else { //select all sessions
+        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer'));
       }
     },
     sortBy(what){
