@@ -14,7 +14,6 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('sessionsBuffer', []);
   },
 
   didReceiveAttrs(){
@@ -27,11 +26,10 @@ export default Component.extend({
   loadAttr: task(function * (sequenceBlock, sessions) {
     const linkedSessions = yield sequenceBlock.get('sessions');
     const excludedSessions = yield sequenceBlock.get('excludedSessions');
-    const sessionsBuffer = yield sessions;
     this.setProperties({
       linkedSessions,
       excludedSessions,
-      sessionsBuffer
+      sessionsBuffer: sessions
     });
   }),
 

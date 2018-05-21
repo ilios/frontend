@@ -18,7 +18,7 @@ moduleForComponent('curriculum-inventory-sequence-block-session-list', 'Integrat
 });
 
 test('it renders', async function(assert) {
-  assert.expect(26);
+  assert.expect(31);
 
   let offering1 = EmberObject.create({id: 1});
   let offering2 = EmberObject.create({id: 2});
@@ -83,6 +83,7 @@ test('it renders', async function(assert) {
   let block = EmberObject.create({
     id: 1,
     sessions: resolve([session1, session3]),
+    excludedSessions: resolve([session2]),
   });
 
   this.set('sessions', resolve(sessions));
@@ -91,35 +92,40 @@ test('it renders', async function(assert) {
   this.set('setSortBy', function(){});
   await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   assert.equal(this.$('thead th:eq(0)').text().trim(), 'Count as one offering', 'Column header is labeled correctly.');
-  assert.equal(this.$('thead th:eq(1)').text().trim(), 'Session Title', 'Column header is labeled correctly.');
-  assert.equal(this.$('thead th:eq(2)').text().trim(), 'Session Type', 'Column header is labeled correctly.');
-  assert.equal(this.$('thead th:eq(3)').text().trim(), 'Total time', 'Column header is labeled correctly.');
-  assert.equal(this.$('thead th:eq(4)').text().trim(), 'Offerings', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(1)').text().trim(), 'Excluded', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(2)').text().trim(), 'Session Title', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(3)').text().trim(), 'Session Type', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(4)').text().trim(), 'Total time', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(5)').text().trim(), 'Offerings', 'Column header is labeled correctly.');
 
   assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'Yes', 'All offerings in session are counted as one.');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), session1.get('title'), 'Session title is shown.');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), sessionType1.get('title'), 'Session type title is shown.');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), totalTime1, 'Total time is shown.');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), offerings1.length, 'Number of offerings is shown.');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'No', 'Excluded value is shown.');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), session1.get('title'), 'Session title is shown.');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), sessionType1.get('title'), 'Session type title is shown.');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), totalTime1, 'Total time is shown.');
+  assert.equal(this.$('tbody tr:eq(0) td:eq(5)').text().trim(), offerings1.length, 'Number of offerings is shown.');
 
   assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'No', 'All offerings are counted individually.');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), session2.get('title'), 'Title is visible.');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), sessionType2.get('title'), 'Session type is visible.');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), totalTime2, 'Total time is shown.');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), offerings2.length, 'Number of offerings is shown.');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Yes', 'Excluded value is shown.');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), session2.get('title'), 'Title is visible.');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), sessionType2.get('title'), 'Session type is visible.');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), totalTime2, 'Total time is shown.');
+  assert.equal(this.$('tbody tr:eq(1) td:eq(5)').text().trim(), offerings2.length, 'Number of offerings is shown.');
 
   assert.equal(this.$('tbody tr:eq(2) td:eq(0)').text().trim(), 'Yes', 'All offerings in session are counted as one.');
-  assert.equal(this.$('tbody tr:eq(2) td:eq(1)').text().trim(), session3.get('title'), 'Title is visible.');
-  assert.equal(this.$('tbody tr:eq(2) td:eq(2)').text().trim(), sessionType3.get('title'), 'Session type is visible.');
-  assert.equal(this.$('tbody tr:eq(2) td:eq(3)').text().trim(), totalTime3, 'Total time is shown.');
-  assert.equal(this.$('tbody tr:eq(2) td:eq(4)').text().trim(), offerings3.length, 'Number of offerings is shown.');
+  assert.equal(this.$('tbody tr:eq(2) td:eq(1)').text().trim(), 'No', 'Excluded value is shown.');
+  assert.equal(this.$('tbody tr:eq(2) td:eq(2)').text().trim(), session3.get('title'), 'Title is visible.');
+  assert.equal(this.$('tbody tr:eq(2) td:eq(3)').text().trim(), sessionType3.get('title'), 'Session type is visible.');
+  assert.equal(this.$('tbody tr:eq(2) td:eq(4)').text().trim(), totalTime3, 'Total time is shown.');
+  assert.equal(this.$('tbody tr:eq(2) td:eq(5)').text().trim(), offerings3.length, 'Number of offerings is shown.');
 
   assert.equal(this.$('tbody tr:eq(3) td:eq(0)').text().trim(), 'No', 'All offerings are counted individually.');
-  assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
-  assert.ok(this.$('tbody tr:eq(3) td:eq(1)').text().trim().endsWith(session4.get('title')), 'Title is visible.');
-  assert.equal(this.$('tbody tr:eq(3) td:eq(2)').text().trim(), sessionType4.get('title'), 'Session type is visible.');
-  assert.equal(this.$('tbody tr:eq(3) td:eq(3)').text().trim(), totalTime4, 'Total time is shown.');
-  assert.equal(this.$('tbody tr:eq(3) td:eq(4)').text().trim(), offerings4.length, 'Number of offerings is shown.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(1)').text().trim(), 'No', 'Excluded value is shown.');
+  assert.ok(this.$('tbody tr:eq(3) td:eq(2)').text().trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
+  assert.ok(this.$('tbody tr:eq(3) td:eq(2)').text().trim().endsWith(session4.get('title')), 'Title is visible.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(3)').text().trim(), sessionType4.get('title'), 'Session type is visible.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(4)').text().trim(), totalTime4, 'Total time is shown.');
+  assert.equal(this.$('tbody tr:eq(3) td:eq(5)').text().trim(), offerings4.length, 'Number of offerings is shown.');
 });
 
 test('empty list', async function(assert) {
@@ -161,7 +167,7 @@ test('sort by title', async function(assert) {
     assert.equal(what, 'title', "Sorting callback gets called for session titles.");
   });
   await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-  this.$('thead th:eq(1)').click();
+  this.$('thead th:eq(2)').click();
 });
 
 test('sort by session type', async function(assert) {
@@ -186,7 +192,7 @@ test('sort by session type', async function(assert) {
     assert.equal(what, 'sessionType.title', "Sorting callback gets called for session type titles.");
   });
   await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-  this.$('thead th:eq(2)').click();
+  this.$('thead th:eq(3)').click();
 });
 
 test('sort by offerings total', async function(assert) {
@@ -211,5 +217,5 @@ test('sort by offerings total', async function(assert) {
     assert.equal(what, 'offerings.length', "Sorting callback gets called for offerings length.");
   });
   await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-  this.$('thead th:eq(4)').click();
+  this.$('thead th:eq(5)').click();
 });

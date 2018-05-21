@@ -105,6 +105,7 @@ test('it renders', function(assert) {
   });
 
   linkedCourse.set('sessions', resolve([session1, session2, ilmSession]));
+  linkedCourse.set('excludedSessions', resolve([]));
 
   let block = EmberObject.create({
     id: 2,
@@ -221,21 +222,21 @@ test('it renders', function(assert) {
       'All linkable sessions are visible'
     );
     assert.ok(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().startsWith('(ILM)'),
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(2)').text().trim().startsWith('(ILM)'),
       'ILM is labeled as such.'
     );
 
     assert.ok(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().endsWith('Session A'),
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(2)').text().trim().endsWith('Session A'),
       'Sessions are sorted by title.'
     );
 
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session B',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(2)').text().trim(), 'Session B',
       'Sessions are sorted by title.'
     );
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(1)').text().trim(), 'Session C',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(2)').text().trim(), 'Session C',
       'Sessions are sorted by title.'
     );
   });
@@ -995,6 +996,7 @@ test('manage sessions', function(assert) {
     report: resolve(report),
     parent: resolve(null),
     sessions: resolve([]),
+    excludedSessions: resolve([]),
     duration: 12,
     startDate: moment('2015-01-02'),
     endDate: moment('2015-04-30'),
@@ -1218,15 +1220,15 @@ test('read-only mode', function(assert) {
       'All linkable sessions are visible'
     );
     assert.ok(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(1)').text().trim().endsWith('Session A'),
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(0) td:eq(2)').text().trim().endsWith('Session A'),
       'Sessions are sorted by title.'
     );
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(1)').text().trim(), 'Session B',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(1) td:eq(2)').text().trim(), 'Session B',
       'Sessions are sorted by title.'
     );
     assert.equal(
-      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(1)').text().trim(), 'Session C',
+      this.$('.curriculum-inventory-sequence-block-session-list tbody tr:eq(2) td:eq(2)').text().trim(), 'Session C',
       'Sessions are sorted by title.'
     );
   });

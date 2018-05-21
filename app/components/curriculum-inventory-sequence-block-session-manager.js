@@ -8,7 +8,8 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   store: service(),
   linkedSessionsBuffer: null,
-  linkableSessionsBuffer: null,
+  excludedSessionsBuffer: null,
+  sessionsBuffer: null,
   classNames: ['curriculum-inventory-sequence-block-session-manager', 'resultslist'],
   tagName: 'section',
   sortBy: 'title',
@@ -29,21 +30,38 @@ export default Component.extend({
   loadAttr: task(function * (sequenceBlock, sessions) {
     let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
     linkedSessionsBuffer = linkedSessionsBuffer.toArray();
-    let linkableSessionsBuffer = yield sessions;
+    let excludedSessionsBuffer = yield sequenceBlock.get('excludedSessions');
+    excludedSessionsBuffer = excludedSessionsBuffer.toArray();
+    let sessionsBuffer = yield sessions;
     this.setProperties({
       linkedSessionsBuffer,
-      linkableSessionsBuffer
+      excludedSessionsBuffer,
+      sessionsBuffer,
     });
   }),
 
-  allSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
+  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
     const linkedSessions = this.get('linkedSessionsBuffer');
-    const linkableSessions = this.get('linkableSessionsBuffer');
-    if (isEmpty(linkedSessions) || isEmpty(linkableSessions) || linkedSessions.length < linkableSessions.length) {
+    const sessions = this.get('sessionsBuffer');
+    if (isEmpty(linkedSessions) || isEmpty(sessions) || linkedSessions.length < sessions.length) {
       return false;
     }
-    linkableSessions.forEach(linkableSession => {
-      if (! linkedSessions.includes(linkableSession)) {
+    sessions.forEach(session => {
+      if (! linkedSessions.includes(session)) {
+        return false;
+      }
+    });
+    return true;
+  }),
+
+  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+    const excludedSessions = this.get('excludedSessionsBuffer');
+    const sessions = this.get('sessionsBuffer');
+    if (isEmpty(excludedSessions) || isEmpty(sessions) || excludedSessions.length < sessions.length) {
+      return false;
+    }
+    sessions.forEach(session => {
+      if (! excludedSessions.includes(session)) {
         return false;
       }
     });
@@ -56,17 +74,40 @@ export default Component.extend({
     return (!allSelected && !noneSelected);
   }),
 
-  noneSelected: computed('linkedSessionsBuffer.[]', 'linkableSessionsBuffer.[]', function(){
-    const linkedSessions = this.get('linkedSessionsBuffer');
-    const linkableSessions = this.get('linkableSessionsBuffer');
+  someExcluded: computed('allExcluded', 'noneExcluded', function(){
+    const allExcluded = this.get('allExcluded');
+    const noneExcluded = this.get('noneExcluded');
+    return (!allExcluded && !noneExcluded);
+  }),
 
-    if (isEmpty(linkedSessions) || isEmpty(linkableSessions)) {
+  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+    const linkedSessions = this.get('linkedSessionsBuffer');
+    const sessions = this.get('sessionsBuffer');
+
+    if (isEmpty(linkedSessions) || isEmpty(sessions)) {
       return true;
     }
 
     let isSelected = false;
     linkedSessions.forEach(linkedSession => {
-      if (linkableSessions.includes(linkedSession)) {
+      if (sessions.includes(linkedSession)) {
+        isSelected = true;
+      }
+    });
+    return !isSelected;
+  }),
+
+  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+    const excludedSessions = this.get('excludedSessionsBuffer');
+    const sessions = this.get('sessionsBuffer');
+
+    if (isEmpty(excludedSessions) || isEmpty(sessions)) {
+      return true;
+    }
+
+    let isSelected = false;
+    excludedSessions.forEach(session => {
+      if (sessions.includes(session)) {
         isSelected = true;
       }
     });
@@ -75,7 +116,8 @@ export default Component.extend({
 
   saveChanges: task(function * () {
     let sessions = this.get('linkedSessionsBuffer');
-    yield this.sendAction('save', sessions);
+    let excludedSessions = this.get('excludedSessionsBuffer');
+    yield this.sendAction('save', sessions, excludedSessions);
 
   }),
 
@@ -93,15 +135,36 @@ export default Component.extend({
         sessions.addObject(session);
       }
     },
+
+    excludeSession(session) {
+      let sessions = this.get('excludedSessionsBuffer');
+      if (sessions.includes(session)) {
+        sessions.removeObject(session);
+      } else {
+        sessions.addObject(session);
+      }
+    },
+
     toggleSelectAll() {
       const allSelected = this.get('allSelected');
 
       if (allSelected) { // un-select all sessions
         this.set('linkedSessionsBuffer', []);
       } else { //select all sessions
-        this.set('linkedSessionsBuffer', this.get('linkableSessionsBuffer'));
+        this.set('linkedSessionsBuffer', this.get('sessionsBuffer'));
       }
     },
+
+    toggleExcludeAll() {
+      const allSelected = this.get('allExcluded');
+
+      if (allSelected) { // un-select all sessions
+        this.set('excludedSessionsBuffer', []);
+      } else { //select all sessions
+        this.set('excludedSessionsBuffer', this.get('sessionsBuffer'));
+      }
+    },
+
     sortBy(what){
       const sortBy = this.get('sortBy');
       if(sortBy === what){
