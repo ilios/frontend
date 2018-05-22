@@ -18,40 +18,40 @@ module('Acceptance: Course - Session List', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    server.create('sessionType', { school: this.school });
+    this.server.create('sessionType', { school: this.school });
     this.course = this.server.create('course', {
       school: this.school,
       directorIds: [this.user.id]
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
     });
-    server.create('session', {
+    this.server.create('session', {
       courseId: 1,
       sessionTypeId: 1,
       title: 'session3\\'
     });
     let today = moment().hour(8);
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1,
       startDate: today.clone().add(1, 'day').add(1, 'hour').format(),
       endDate: today.clone().add(1, 'day').add(4, 'hour').format(),
     });
-    server.create('offering', {
+    this.server.create('offering', {
       sessionId: 1,
       startDate: today.clone().add(2, 'days').format(),
       endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
@@ -110,12 +110,12 @@ module('Acceptance: Course - Session List', function(hooks) {
 
     await click(expandFirstSession);
     assert.equal(findAll(dateBlocks).length, 3);
-    const offering1StartDate = moment(server.db.offerings[0].startDate);
-    const offering1EndDate = moment(server.db.offerings[0].endDate);
-    const offering2StartDate = moment(server.db.offerings[1].startDate);
-    const offering2EndDate = moment(server.db.offerings[1].endDate);
-    const offering3StartDate = moment(server.db.offerings[2].startDate);
-    const offering3EndDate = moment(server.db.offerings[2].endDate);
+    const offering1StartDate = moment(this.server.db.offerings[0].startDate);
+    const offering1EndDate = moment(this.server.db.offerings[0].endDate);
+    const offering2StartDate = moment(this.server.db.offerings[1].startDate);
+    const offering2EndDate = moment(this.server.db.offerings[1].endDate);
+    const offering3StartDate = moment(this.server.db.offerings[2].startDate);
+    const offering3EndDate = moment(this.server.db.offerings[2].endDate);
 
     assert.equal(await getElementText(firstBlockDayOfWeek), getText(offering1StartDate.format('dddd')));
     assert.equal(await getElementText(firstBlockDayOfMonth), getText(offering1StartDate.format('MMMM Do')));
@@ -295,7 +295,7 @@ module('Acceptance: Course - Session List', function(hooks) {
 
   test('back and forth #3771', async function (assert) {
     const sessions = 50;
-    server.createList('session', sessions, {
+    this.server.createList('session', sessions, {
       course: this.course,
       sessionTypeId: 1
     });

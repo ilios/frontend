@@ -20,7 +20,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     const programYear = this.server.create('program-year', {
       program,
     });
-    const cohort =server.create('cohort', {
+    const cohort = this.server.create('cohort', {
       title: 'class of this year',
       programYear,
     });
@@ -344,7 +344,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
     assert.equal( this.server.db.learnerGroups.length, 3);
-    assert.equal(server.db.learnerGroups[0].userIds, null);
+    assert.equal(this.server.db.learnerGroups[0].userIds, null);
     await page.bulkAssign.groupsToMatch(0).createNewGroup();
     assert.equal( this.server.db.learnerGroups.length, 4);
     assert.equal( this.server.db.learnerGroups[3].userIds, null);

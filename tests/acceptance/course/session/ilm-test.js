@@ -18,7 +18,7 @@ module('Acceptance: Session - Independent Learning', function(hooks) {
     this.server.createList('user', 6);
     this.server.create('academicYear');
     const course = this.server.create('course', { school: this.school });
-    server.createList('instructorGroup', 5, { school: this.school });
+    this.server.createList('instructorGroup', 5, { school: this.school });
     this.server.create('sessionType', { school: this.school });
     this.server.create('sessionDescription');
     const ilmSession = this.server.create('ilmSession', {
