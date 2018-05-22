@@ -20,11 +20,11 @@ module('Acceptance: Course - Terms', function(hooks) {
     });
     this.server.create('academicYear', {id: 2013});
 
-    server.create('term', {
+    this.server.create('term', {
       vocabularyId: 1,
       active: true
     });
-    server.create('term', {
+    this.server.create('term', {
       vocabularyId: 1,
       active: true
     });

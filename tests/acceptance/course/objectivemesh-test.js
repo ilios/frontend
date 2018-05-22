@@ -19,14 +19,14 @@ module('Acceptance: Course - Objective Mesh Descriptors', function(hooks) {
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
 
-    server.createList('meshDescriptor', 6);
-    server.create('objective', {
+    this.server.createList('meshDescriptor', 6);
+    this.server.create('objective', {
       meshDescriptorIds: [1]
     });
-    server.create('objective', {
+    this.server.create('objective', {
       meshDescriptorIds: [2, 3, 4, 5, 6]
     });
-    server.create('objective');
+    this.server.create('objective');
     //create some other objectives not in this course
     this.server.createList('objective', 2);
 
