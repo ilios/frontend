@@ -23,6 +23,7 @@ export default Component.extend({
   columns: computed('sortInfo', function(){
     const sortInfo = this.get('sortInfo');
     const expand = {
+      type: 'expand-all',
       cellComponent: 'session-table-expand',
       width: '40px',
       sortable: false,
@@ -177,12 +178,25 @@ export default Component.extend({
     yield session.save();
   }).drop(),
 
+  expandOrCollapseAllRows() {
+    const { rows } = this.get('table');
+    const allRowsExpanded = rows.isEvery('expanded', true);
+    if (allRowsExpanded) {
+      rows.setEach('expanded', false);
+    } else {
+      rows.setEach('expanded', true);
+    }
+  },
+
   actions: {
     columnClicked(column){
       if (column.get('sortable')) {
         const what = column.get('valuePath');
         const direction = column.ascending ? '' : ':desc';
         this.get('setSortBy')(`${what}${direction}`);
+      }
+      if (column.get('type') === 'expand-all') {
+        this.expandOrCollapseAllRows();
       }
     },
     remove(session){
