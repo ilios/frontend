@@ -73,7 +73,7 @@ test('it renders with top-level sequence blocks', function(assert) {
 
   this.set('report', report);
   this.set('removeSequenceBlock', function() {});
-  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true remove='removeSequenceBlock'}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`);
   return wait().then(() => {
     assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${blocks.length})`,
       'Component title is correct, and show the correct number of blocks.'
@@ -182,7 +182,7 @@ test('it renders with nested blocks', function(assert) {
 
   this.set('parent', parentBlock);
   this.set('removeSequenceBlock', function() {});
-  this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent canUpdate=true remove='removeSequenceBlock'}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children) canUpdate=true remove='removeSequenceBlock'}}`);
   return wait().then(() => {
     assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${nestedBlocks.length})`,
       'Component title is correct, and show the correct number of nested blocks.'
@@ -244,7 +244,7 @@ test('read-only mode', function(assert){
 
   this.set('report', report);
   this.set('removeSequenceBlock', function() {});
-  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=false remove='removeSequenceBlock'}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=false remove='removeSequenceBlock'}}`);
   return wait().then(() => {
     assert.equal(this.$('.actions .expand-button').length, 0, 'Add new button is not visible.');
     assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
@@ -291,7 +291,7 @@ test('delete', async function(assert){
     assert.equal(block, block1, 'Remove action was invoked, and sequence block was passed.');
     report.set('toLevelSequenceBlocks', resolve([ block1 ])); // fake deletion.
   });
-  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true remove='removeSequenceBlock'}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`);
   await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
   assert.equal(this.$('tbody tr:eq(1) .confirm-message').text().trim().indexOf('Are you sure you want to delete'), 0,
     'Confirmation message is visible.');
@@ -335,7 +335,7 @@ test('cancel delete', async function(assert){
   });
 
   this.set('report', report);
-  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list report=report  sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true}}`);
   await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
   await wait();
   assert.equal(this.$('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
@@ -419,7 +419,7 @@ test('empty nested blocks list', function(assert) {
   parentBlock.set('report', resolve(report));
 
   this.set('parent', parentBlock);
-  this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent}}`);
+  this.render(hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children)}}`);
   return wait().then(() => {
     assert.equal(this.$('.title').text().trim(), `Sequence Blocks (0)`,
       'Component title is correct, and show the correct number of blocks.'
