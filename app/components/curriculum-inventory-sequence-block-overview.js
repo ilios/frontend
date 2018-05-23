@@ -181,6 +181,11 @@ export default Component.extend({
 
   saveCourseChange: task(function * (course) {
     let block = this.get('sequenceBlock');
+    const oldCourse = block.get('course');
+    if (oldCourse !== course) {
+      block.set('sessions', []);
+      block.set('excludedSessions', []);
+    }
     block.set('course', course);
     yield block.save();
   }).drop(),
