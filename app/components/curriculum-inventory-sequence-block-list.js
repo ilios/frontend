@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { isPresent } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
-import { task } from 'ember-concurrency';
 
 const { Promise } = RSVP;
 
@@ -27,33 +26,6 @@ export default Component.extend({
   saved: false,
   savedBlock: null,
   isSaving: null,
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const parent = this.get('parent');
-    const report = this.get('report');
-    this.get('loadAttr').perform(parent, report);
-  },
-
-  loadAttr: task(function * (parent, report) {
-    if (isPresent(parent)) {
-      let sequenceBlocks = yield parent.get('children');
-      let parentReport = yield parent.get('report');
-      this.setProperties({
-        sequenceBlocks,
-        report: parentReport,
-        savedBlock: null,
-        saved: false,
-      });
-    } else {
-      let sequenceBlocks = yield report.get('topLevelSequenceBlocks');
-      this.setProperties({
-        sequenceBlocks,
-        savedBlock: null,
-        saved: false,
-      });
-    }
-  }),
 
   isInOrderedSequence: computed('parent', function () {
     const parent = this.get('parent');

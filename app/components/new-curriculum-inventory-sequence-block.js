@@ -3,13 +3,11 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
-import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
 const { gt, reads } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -168,27 +166,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function(){
-    return new Promise(resolve => {
-      const report = this.get('report');
-      report.get('program').then(program => {
-        let schoolId = program.belongsTo('school').id();
-        this.get('store').query('course', {
-          filters: {
-            school: [schoolId],
-            published: true,
-            year: report.get('year'),
-          }
-        }).then(allLinkableCourses => {
-          report.get('linkedCourses').then(linkedCourses => {
-            // Filter out all courses that are linked to (sequence blocks in) this report.
-            let linkableCourses = allLinkableCourses.filter(function(course) {
-              return ! linkedCourses.includes(course);
-            });
-            resolve(linkableCourses);
-          });
-        });
-      });
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', async function(){
+    const report = this.get('report');
+    const program = await report.get('program');
+    const schoolId = program.belongsTo('school').id();
+    const linkedCourses = await report.get('linkedCourses');
+    const allLinkableCourses = await this.get('store').query('course', {
+      filters: {
+        school: [schoolId],
+        published: true,
+        year: report.get('year'),
+      }
+    });
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    return allLinkableCourses.filter(course => {
+      return ! linkedCourses.includes(course);
     });
   }),
 

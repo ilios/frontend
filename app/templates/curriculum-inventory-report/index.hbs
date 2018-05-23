@@ -1,5 +1,6 @@
 {{curriculum-inventory-sequence-block-list
   report=(await model)
+  sequenceBlocks=(await model.topLevelSequenceBlocks)
   canUpdate=canUpdate
   remove='removeSequenceBlock'
 }}
