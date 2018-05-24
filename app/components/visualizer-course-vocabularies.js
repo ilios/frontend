@@ -20,7 +20,7 @@ export default Component.extend({
     const dataMap = await map(sessions.toArray(), async session => {
       const terms = await session.get('terms');
       const vocabularies = await all(terms.mapBy('vocabulary'));
-      const hours = await session.get('totalSumDuration');
+      const hours = await session.get('totalSumOfferingsDuration');
       const minutes = Math.round(hours * 60);
 
       return {

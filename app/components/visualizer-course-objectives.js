@@ -21,7 +21,7 @@ export default Component.extend({
     const course = this.get('course');
     const sessions = await course.get('sessions');
     const sessionCourseObjectiveMap = await map(sessions.toArray(), async session => {
-      const hours = await session.get('totalSumDuration');
+      const hours = await session.get('totalSumOfferingsDuration');
       const minutes = Math.round(hours * 60);
       const sessionObjectives = await session.get('objectives');
       const sessionObjectivesWithParents = await filter(sessionObjectives.toArray(), async sessionObjective => {

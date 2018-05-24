@@ -19,7 +19,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return await all([
       map(sessions.toArray(), s => s.get('sessionType')),
       map(sessions.toArray(), s => s.get('terms')),
-      map(sessions.toArray(), s => s.get('totalSumDuration')),
+      map(sessions.toArray(), s => s.get('totalSumOfferingsDuration')),
     ]);
   }
 });
