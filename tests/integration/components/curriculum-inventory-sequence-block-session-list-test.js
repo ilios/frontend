@@ -92,7 +92,7 @@ test('it renders', async function(assert) {
   this.set('setSortBy', function(){});
   await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
   assert.equal(this.$('thead th:eq(0)').text().trim(), 'Count as one offering', 'Column header is labeled correctly.');
-  assert.equal(this.$('thead th:eq(1)').text().trim(), 'Excluded', 'Column header is labeled correctly.');
+  assert.equal(this.$('thead th:eq(1)').text().trim(), 'Exclude', 'Column header is labeled correctly.');
   assert.equal(this.$('thead th:eq(2)').text().trim(), 'Session Title', 'Column header is labeled correctly.');
   assert.equal(this.$('thead th:eq(3)').text().trim(), 'Session Type', 'Column header is labeled correctly.');
   assert.equal(this.$('thead th:eq(4)').text().trim(), 'Total time', 'Column header is labeled correctly.');
