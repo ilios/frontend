@@ -4,6 +4,7 @@
       <thead>
         <tr>
           <th class='text-center' colspan=2>{{t 'general.countAsOneOffering'}}</th>
+          <th class='text-center' colspan=2>{{t 'general.exclude'}}</th>
           {{#sortable-th
             colspan=3
             click=(action 'sortBy' 'title')
@@ -33,10 +34,13 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by sortBy linkableSessionsBuffer) as |session|}}
+        {{#each (sort-by sortBy sessionsBuffer) as |session|}}
           <tr>
             <td class='text-center' colspan=2>
               {{if (is-in linkedSessions session) (t 'general.yes') (t 'general.no')}}
+            </td>
+            <td class='text-center' colspan=2>
+              {{if (is-in excludedSessions session) (t 'general.yes') (t 'general.no')}}
             </td>
             <td class='text-left' colspan=3>
               {{#if session.isIndependentLearning}}

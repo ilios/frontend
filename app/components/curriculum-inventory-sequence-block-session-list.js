@@ -5,15 +5,12 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   sessions: null,
-  linkableSessionsBuffer: null,
+  linkedSessions: null,
+  excludedSessions: null,
+  sessionsBuffer: null,
   classNames: ['curriculum-inventory-sequence-block-session-list'],
   tagName: 'section',
   sortBy: 'title',
-
-  init() {
-    this._super(...arguments);
-    this.set('linkableSessionsBuffer', []);
-  },
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -24,10 +21,11 @@ export default Component.extend({
 
   loadAttr: task(function * (sequenceBlock, sessions) {
     const linkedSessions = yield sequenceBlock.get('sessions');
-    const linkableSessionsBuffer = yield sessions;
+    const excludedSessions = yield sequenceBlock.get('excludedSessions');
     this.setProperties({
       linkedSessions,
-      linkableSessionsBuffer
+      excludedSessions,
+      sessionsBuffer: sessions
     });
   }),
 
