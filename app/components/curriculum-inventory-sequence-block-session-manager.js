@@ -117,7 +117,7 @@ export default Component.extend({
   saveChanges: task(function * () {
     let sessions = this.get('linkedSessionsBuffer');
     let excludedSessions = this.get('excludedSessionsBuffer');
-    yield this.sendAction('save', sessions, excludedSessions);
+    yield this.get('save')(sessions, excludedSessions);
 
   }),
 
