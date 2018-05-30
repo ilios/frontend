@@ -151,7 +151,7 @@ export default Component.extend({
       if (allSelected) { // un-select all sessions
         this.set('linkedSessionsBuffer', []);
       } else { //select all sessions
-        this.set('linkedSessionsBuffer', this.get('sessionsBuffer'));
+        this.set('linkedSessionsBuffer', this.get('sessionsBuffer').toArray());
       }
     },
 
@@ -161,7 +161,7 @@ export default Component.extend({
       if (allSelected) { // un-select all sessions
         this.set('excludedSessionsBuffer', []);
       } else { //select all sessions
-        this.set('excludedSessionsBuffer', this.get('sessionsBuffer'));
+        this.set('excludedSessionsBuffer', this.get('sessionsBuffer').toArray());
       }
     },
 
