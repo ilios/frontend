@@ -12,10 +12,6 @@ export default Component.extend({
   tagName: 'section',
   sortBy: 'title',
 
-  init() {
-    this._super(...arguments);
-  },
-
   didReceiveAttrs(){
     this._super(...arguments);
     const sequenceBlock = this.get('sequenceBlock');
