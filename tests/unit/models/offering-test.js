@@ -2,6 +2,7 @@ import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { initialize } from '../../../initializers/replace-promise';
+import moment from 'moment';
 
 initialize();
 
@@ -48,5 +49,34 @@ module('Unit | Model | Offering', function(hooks) {
       assert.ok(allInstructors.includes(user4));
       assert.ok(allInstructors.includes(user5));
     });
+  });
+  test('duration', function(assert) {
+    let store = this.owner.lookup('service:store');
+    let model = run(() => store.createRecord('offering', {}));
+    assert.equal(model.get('durationHours'), 0);
+    assert.equal(model.get('durationMinutes'), 0);
+    run(() => {
+      model.set('startDate', moment().toDate());
+      model.set('endDate', moment().add(90, 'minutes').toDate());
+    });
+
+    assert.equal(model.get('durationHours'), 1);
+    assert.equal(model.get('durationMinutes'), 30);
+
+    run(() => {
+      model.set('startDate', moment().toDate());
+      model.set('endDate', moment().add(30, 'minutes').toDate());
+    });
+
+    assert.equal(model.get('durationHours'), 0);
+    assert.equal(model.get('durationMinutes'), 30);
+
+    run(() => {
+      model.set('startDate', moment().toDate());
+      model.set('endDate', moment().add(60, 'minutes').toDate());
+    });
+
+    assert.equal(model.get('durationHours'), 1);
+    assert.equal(model.get('durationMinutes'), 0);
   });
 });
