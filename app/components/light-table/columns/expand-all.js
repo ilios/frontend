@@ -2,7 +2,7 @@ import Column from 'ember-light-table/components/columns/base';
 import { computed } from '@ember/object';
 
 export default Column.extend({
-  classNames: ['clickable'],
+  // classNames: ['clickable'],
   allRowsExpanded: computed('table.rows.@each.expanded', function () {
     const { rows } = this.get('table');
     if (rows.length === 0) {

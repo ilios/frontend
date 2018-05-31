@@ -196,7 +196,7 @@ export default Component.extend({
         this.get('setSortBy')(`${what}${direction}`);
       }
       if (column.get('type') === 'expand-all') {
-        this.expandOrCollapseAllRows();
+        // this.expandOrCollapseAllRows();
       }
     },
     remove(session){
