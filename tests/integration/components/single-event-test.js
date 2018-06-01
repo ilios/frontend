@@ -54,7 +54,10 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       location: 'here',
       instructors: ['Great Teacher'],
       session: 1,
-      learningMaterials: this.sessionLearningMaterials
+      learningMaterials: this.sessionLearningMaterials,
+      sessionObjectives: [],
+      courseObjectives: [],
+      competencies: [],
     });
   });
 
