@@ -2,7 +2,8 @@ import { click, fillIn, findAll, currentRouteName, find, visit } from '@ember/te
 import moment from 'moment';
 import {
   module,
-  test
+  test,
+  skip
 } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -161,7 +162,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(findAll(rows).length, 4);
   });
 
-  test('expanded all sessions', async function(assert) {
+  skip('expand all sessions', async function(assert) {
     await visit(url);
 
     const table = '.session-table table';
@@ -179,7 +180,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(findAll(expandedSessionNoOfferings).length, 0);
   });
 
-  test('expanded all sessions with one session expanded already', async function(assert) {
+  skip('expand all sessions with one session expanded already', async function(assert) {
     await visit(url);
 
     const table = '.session-table table';
@@ -201,7 +202,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(findAll(expandedSessionNoOfferings).length, 0);
   });
 
-  test('expanded sessions one at a time and collapse all', async function(assert) {
+  skip('expand sessions one at a time and collapse all', async function(assert) {
     await visit(url);
 
     const table = '.session-table table';
