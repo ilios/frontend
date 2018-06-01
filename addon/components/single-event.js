@@ -1,12 +1,9 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
 import { isBlank, isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event';
 import moment from 'moment';
-
-const { map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -29,31 +26,37 @@ export default Component.extend({
     return i18n.t('general.sessionIs', { type });
   }),
 
-  courseObjectives: computed('i18n.locale', 'course.sortedObjectives.[]', async function(){
+  courseObjectives: computed('i18n.locale', 'event.courseObjectives.[]', 'event.competencies.[]', async function(){
     const i18n = this.get('i18n');
-    const course = await this.get('course');
-    const objectives = await course.get('sortedObjectives');
-    return await map(objectives, async objective => {
-      const parents = await objective.get('topParents');
-      const parent = parents.get('firstObject');
-      const competency = await parent.get('competency');
+    const event = this.get('event');
+    const objectives =  event.courseObjectives;
+    const competencies = event.competencies;
+    return objectives.map(objective => {
       //strip all HTML
-      const title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
-      const position = objective.get('position');
-      if(isEmpty(competency)) {
+      const title = objective.title.replace(/(<([^>]+)>)/ig,"");
+      const position = objective.position;
+      if(isEmpty(objective.competencies)) {
         return {
+          id: objective.id,
           title,
           domain: i18n.t('general.noAssociatedCompetencies'),
           position
         };
       }
-      const domain = await competency.get('domain');
+      const competencyId = objective.competencies[0];
+      const competency = competencies.findBy('id', competencyId);
+      const parentId = competency.parent;
+      let domain = competency;
+      if (! isEmpty(parentId)) {
+        domain = competencies.findBy('id', parentId);
+      }
       return {
+        id: objective.id,
         title,
-        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+        domain: competency.title + ' (' + domain.title + ')',
         position
       };
-    });
+    }).sort(this.positionSortingCallback);
   }),
 
   typedLearningMaterials: computed('event.learningMaterials', function() {
@@ -99,31 +102,37 @@ export default Component.extend({
     });
   }),
 
-  sessionObjectives: computed('i18n.locale', 'session.sortedObjectives.[]', async function(){
+  sessionObjectives: computed('i18n.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', async function(){
     const i18n = this.get('i18n');
-    const session = await this.get('session');
-    const objectives = await session.get('sortedObjectives');
-    return await map(objectives, async objective => {
-      const parents = await objective.get('topParents');
-      const parent =  parents.get('firstObject');
-      const competency = await parent.get('competency');
+    const event = this.get('event');
+    const objectives =  event.sessionObjectives;
+    const competencies = event.competencies;
+    return objectives.map(objective => {
       //strip all HTML
-      let title = objective.get('title').replace(/(<([^>]+)>)/ig,"");
-      let position = objective.get('position');
-      if(isEmpty(competency)) {
+      const title = objective.title.replace(/(<([^>]+)>)/ig,"");
+      const position = objective.position;
+      if(isEmpty(objective.competencies)) {
         return {
+          id: objective.id,
           title,
           domain: i18n.t('general.noAssociatedCompetencies'),
           position
         };
       }
-      const domain = await competency.get('domain');
+      const competencyId = objective.competencies[0];
+      const competency = competencies.findBy('id', competencyId);
+      const parentId = competency.parent;
+      let domain = competency;
+      if (! isEmpty(parentId)) {
+        domain = competencies.findBy('id', parentId);
+      }
       return {
+        id: objective.id,
         title,
-        domain: competency.get('title') + ' (' + domain.get('title') + ')',
+        domain: competency.title + ' (' + domain.title + ')',
         position
       };
-    });
+    }).sort(this.positionSortingCallback);
   }),
 
   sessionLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
@@ -168,4 +177,34 @@ export default Component.extend({
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
     return daysSinceLastUpdate < 6;
   }),
+
+  /**
+   * Callback function for <code>Array.sort()<code>.
+   * Compares two given Objects by their position property (in ascending order), and then by id (descending).
+   *
+   * @method positionSortingCallback
+   * @param {Object} obj1
+   * @param {Object} obj2
+   * @return {Number}
+   */
+  positionSortingCallback(obj1, obj2) {
+    let pos1 = obj1.position;
+    let pos2 = obj2.position;
+    // 1. position, asc
+    if (pos1 > pos2) {
+      return 1;
+    } else if (pos1 < pos2) {
+      return -1;
+    }
+
+    // 2. id, desc
+    let id1 = obj1.id;
+    let id2 = obj2.id;
+    if (id1 > id2) {
+      return -1;
+    } else if (id1 < id2) {
+      return 1;
+    }
+    return 0;
+  },
 });
