@@ -55,14 +55,68 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       instructors: ['Great Teacher'],
       session: 1,
       learningMaterials: this.sessionLearningMaterials,
-      sessionObjectives: [],
-      courseObjectives: [],
-      competencies: [],
+      sessionObjectives: [
+        {
+          id: 1,
+          title: 'Session Objective A',
+          position: 2,
+          competencies: [2]
+        },
+        {
+          id: 2,
+          title: 'Session Objective B',
+          position: 0,
+          competencies: [2]
+        },
+        {
+          id: 3,
+          title: 'Session Objective C',
+          position: 0,
+          competencies: [3]
+        }
+      ],
+      courseObjectives: [
+        {
+          id: 4,
+          title: 'Course Objective A',
+          position: 0,
+          competencies: [1]
+        },
+        {
+          id: 5,
+          title: 'Course Objective B',
+          position: 0,
+          competencies: [1]
+        },
+        {
+          id: 6,
+          title: 'Course Objective C',
+          position: 0,
+          competencies: [3]
+        }
+      ],
+      competencies: [
+        {
+          id: 1,
+          title: 'Domain A',
+          parent: null
+        },
+        {
+          id: 2,
+          title: 'Competency A',
+          parent: 1,
+        },
+        {
+          id: 3,
+          title: 'Domain B',
+          parent: null
+        }
+      ],
     });
   });
 
   test('it renders', async function(assert) {
-    assert.expect(11);
+    assert.expect(20);
     this.set('event', this.ourEvent);
     await render(hbs`{{single-event event=event}}`);
     await settled();
@@ -80,5 +134,17 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
     assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:eq(0)';
+    assert.ok(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0)`).text().trim().startsWith('Competency A (Domain A)'));
+    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0) li:eq(0)`).text().trim(), 'Session Objective B');
+    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0) li:eq(1)`).text().trim(), 'Session Objective A');
+    assert.ok(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(1)`).text().trim().startsWith('Domain B (Domain B)'));
+    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(1) li:eq(0)`).text().trim(), 'Session Objective C');
+
+    let courseObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:eq(1)';
+    assert.ok(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0)`).text().trim().startsWith('Domain A (Domain A)'));
+    assert.equal(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0) li:eq(0)`).text().trim(), 'Course Objective B');
+    assert.equal(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0) li:eq(1)`).text().trim(), 'Course Objective A');
+    assert.ok(this.$(`${courseObjectivesSelector} ul.tree > li:eq(1)`).text().trim().startsWith('Domain B (Domain B)'));
   });
 });
