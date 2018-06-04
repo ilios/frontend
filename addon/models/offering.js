@@ -2,6 +2,7 @@ import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
+import moment from 'moment';
 
 const { not } = computed;
 const { all } = RSVP;
@@ -80,5 +81,43 @@ export default Model.extend({
     allInstructors.pushObjects(instructors.toArray());
 
     return allInstructors.uniq().sortBy('lastName', 'firstName');
+  }),
+
+  durationHours: computed('startDate', 'endDate', function(){
+    const startDate = this.get('startDate');
+    const endDate = this.get('endDate');
+
+    if (!startDate || !endDate) {
+      return 0;
+    }
+    let mStart = moment(startDate);
+    let mEnd = moment(endDate);
+    let diffInHours = mEnd.diff(mStart, 'hours');
+
+    return diffInHours;
+  }),
+  durationMinutes: computed('startDate', 'endDate', function(){
+    const startDate = this.get('startDate');
+    const endDate = this.get('endDate');
+
+    if (!startDate || !endDate) {
+      return 0;
+    }
+    let mStart = moment(startDate);
+    let mEnd = moment(endDate);
+
+    const endHour = mEnd.hour();
+    const endMinute = mEnd.minute();
+
+    mStart.hour(endHour);
+    const startMinute = mStart.minute();
+
+    let diff = 0;
+    if (endMinute > startMinute) {
+      diff = endMinute - startMinute;
+    } else if (endMinute < startMinute) {
+      diff = (60 - startMinute) + endMinute;
+    }
+    return diff;
   }),
 });
