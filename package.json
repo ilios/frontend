@@ -17,6 +17,7 @@
     "test": "ember test"
   },
   "devDependencies": {
+    "@ember/optional-features": "^0.6.1",
     "broccoli-asset-rev": "^2.4.5",
     "browserslist": "^3.2.3",
     "caniuse-db": "^1.0.30000820",
