@@ -4,41 +4,61 @@ import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
+import { startMirage } from 'ilios/initializers/ember-cli-mirage';
 
 const { resolve } = RSVP;
 
 moduleForComponent('unassigned-students-summary', 'Integration | Component | unassigned students summary', {
   integration: true,
+  setup(){
+    this.server = startMirage();
+  },
+  teardown() {
+    this.server.shutdown();
+  }
 });
 
-test('it renders', function(assert) {
-  let primarySchool = EmberObject.create({
+test('it renders', function (assert) {
+  const school = this.server.create('school', {
     id: 1,
     title: 'school 0',
   });
-  let secondarySchool = EmberObject.create({
-    id: 1,
+  this.server.create('school', {
+    id: 2,
     title: 'school 1',
   });
-  let user = EmberObject.create({
-    school: resolve(primarySchool)
+  this.server.create('user', {
+    school
   });
-  let currentUserMock = Service.extend({
-    model: resolve(user)
+  const school1Mock = EmberObject.create(this.server.db.schools[0]);
+  const school2Mock = EmberObject.create(this.server.db.schools[1]);
+  const currentUserMock = Service.extend({
+    model: resolve(EmberObject.create({
+      school: resolve(school1Mock)
+    }))
+  });
+  const studentRole = this.server.create('user-role', {
+    id: 4,
+    title: 'Student'
+  });
+  this.server.createList('user', 5, {
+    school,
+    roles: [studentRole]
   });
 
-  let storeMock = Service.extend({
-    query(what, {filters}){
-      assert.equal(filters.school, 1);
-      assert.equal('user', what);
-      return resolve([1, 2, 3, 4, 5]);
-    }
+  this.server.get('api/users', ({ db }, { queryParams }) => {
+    assert.equal(queryParams['filters[school]'], 1);
+    assert.deepEqual(queryParams['filters[roles]'], ['4']);
+    assert.equal(queryParams['filters[cohorts]'], '');
+
+    const users = db.users.find([2, 3, 4, 5, 6]);
+
+    return { users };
   });
 
   this.register('service:currentUser', currentUserMock);
-  this.register('service:store', storeMock);
 
-  this.set('schools', [primarySchool, secondarySchool]);
+  this.set('schools', [school1Mock, school2Mock]);
   this.render(hbs`{{unassigned-students-summary schools=schools}}`);
 
   return wait().then(() => {
@@ -68,14 +88,7 @@ test('it renders empty', function(assert) {
     model: resolve(user)
   });
 
-  let storeMock = Service.extend({
-    query(){
-      return resolve([]);
-    }
-  });
-
   this.register('service:currentUser', currentUserMock);
-  this.register('service:store', storeMock);
 
   this.set('schools', [primarySchool]);
   this.render(hbs`{{unassigned-students-summary schools=schools}}`);
