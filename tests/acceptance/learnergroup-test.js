@@ -372,7 +372,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     this.server.create('offering');
 
     const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
-    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] input:nth-of-type(1)';
+    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] [data-test-toggle-yesno]';
     const event = '.event';
 
     await visit('/learnergroups/1');
