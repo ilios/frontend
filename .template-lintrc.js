@@ -6,15 +6,15 @@ var defaultAllowedBaseStrings = ['(', ')', ',', '.', '&', '+', '-', '=', '*', '/
 module.exports = {
   extends: 'recommended',
   rules: {
-    'bare-strings': ['?', '»', '&mdash;'].concat(defaultAllowedBaseStrings),
+    'no-bare-strings': ['?', '»', '&mdash;'].concat(defaultAllowedBaseStrings),
     'block-indentation': true,
-    'html-comments': true,
-    'nested-interactive': true,
+    'no-html-comments': true,
+    'no-nested-interactive': true,
     'self-closing-void-elements': true,
     'img-alt-attributes': false,
-    'invalid-interactive': false,
+    'no-invalid-interactive': false,
     'inline-link-to': true,
-    'triple-curlies': false,
+    'no-triple-curlies': false,
     'deprecated-each-syntax': true,
     'deprecated-inline-view-helper': false,
     'simple-unless': false
