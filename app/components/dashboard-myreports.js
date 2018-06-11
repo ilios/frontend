@@ -68,6 +68,10 @@ export default Component.extend(ReportTitleMixin, {
 
     return prepositionalObject != 'course' && ['course', 'session'].includes(subject);
   }),
+  selectedReportTitle: computed('selectedReport', async function(){
+    const report = this.get('selectedReport');
+    return this.getReportTitle(report);
+  }),
   downloadReport: task(function* () {
     const report = this.get('selectedReport');
     const title = yield this.getReportTitle(report);

@@ -22,7 +22,7 @@
 
   {{#liquid-if selectedReport class='crossFade'}}
     <div class='dashboard-block-body' data-test-selected-report>
-      <h3 data-test-report-title>{{report-title selectedReport}}</h3>
+      <h3 data-test-report-title>{{await selectedReportTitle}}</h3>
 
       {{#if showAcademicYearFilter}}
         <div class="years-filter">

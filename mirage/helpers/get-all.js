@@ -107,10 +107,14 @@ const filterByFilterParams = function(all, filterParams){
             match = false;
           }
         } else if (obj[param] instanceof Collection) {
-          let result = obj[param].filter(model => {
-            return model.id.toString() === value.toString();
-          });
-          match = result.length > 0;
+          if (value === '' && obj[param].length === 0) {
+            match = true;
+          } else {
+            let result = obj[param].filter(model => {
+              return model.id.toString() === value.toString();
+            });
+            match = result.length > 0;
+          }
         } else
         //convert everything to a string and do a strict comparison
         if(obj[param].toString() !== value.toString()){
