@@ -4744,9 +4744,9 @@ ember-simple-auth@^1.4.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.13.0.tgz#2c62868f5e369c4106c7804ee4be438cb2910608"
+ember-simple-charts@0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.15.0.tgz#ee51f54523f5153c6b81472af31b83ff42f754e2"
   dependencies:
     d3 "^5.4.0"
     ember-cli-babel "^6.8.1"
@@ -4756,7 +4756,7 @@ ember-simple-charts@0.13.0:
     ember-d3 "0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-resize-aware "^1.0.0"
-    ember-tether "1.0.0-beta.2"
+    ember-tether "1.0.0"
     merge "^1.2.0"
 
 ember-singularity@^1.2.1:
@@ -4812,6 +4812,14 @@ ember-test-selectors@^1.0.0:
   dependencies:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
+
+ember-tether@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0.tgz#6117ea7351927887cb74fa5d46097dd300280c2d"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-node-assets "^0.2.2"
+    tether "^1.4.0"
 
 ember-tether@1.0.0-beta.2:
   version "1.0.0-beta.2"
