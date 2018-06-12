@@ -627,8 +627,8 @@ autoprefixer@^8.0.0:
     postcss-value-parser "^3.2.3"
 
 aws-sdk@^2.1.48, aws-sdk@^2.252.1:
-  version "2.254.1"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.254.1.tgz#70d0a97bac0d5e8ceaf36ddb6b3651f01da4790e"
+  version "2.255.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.255.1.tgz#d780515e37121784880db310c43b18ebc16e98cb"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -4412,8 +4412,8 @@ ember-invoke-action@^1.5.0:
     ember-cli-babel "^6.6.0"
 
 ember-legacy-class-shim@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/ember-legacy-class-shim/-/ember-legacy-class-shim-1.0.4.tgz#c71a3b3bad5103da697fc7689793be6e5051eb1b"
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/ember-legacy-class-shim/-/ember-legacy-class-shim-1.0.5.tgz#c40b66e12d56655a98f1bffe7f02dd7df0202daf"
   dependencies:
     browserslist "^3.1.0"
     ember-cli-version-checker "^2.0.0"
@@ -4744,9 +4744,9 @@ ember-simple-auth@^1.4.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.13.0.tgz#2c62868f5e369c4106c7804ee4be438cb2910608"
+ember-simple-charts@0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.15.0.tgz#ee51f54523f5153c6b81472af31b83ff42f754e2"
   dependencies:
     d3 "^5.4.0"
     ember-cli-babel "^6.8.1"
@@ -4756,7 +4756,7 @@ ember-simple-charts@0.13.0:
     ember-d3 "0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-resize-aware "^1.0.0"
-    ember-tether "1.0.0-beta.2"
+    ember-tether "1.0.0"
     merge "^1.2.0"
 
 ember-singularity@^1.2.1:
@@ -4813,11 +4813,11 @@ ember-test-selectors@^1.0.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-ember-tether@1.0.0-beta.2:
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0-beta.2.tgz#9cce5874e8c0779273db11379f04aff4ad983e44"
+ember-tether@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0.tgz#6117ea7351927887cb74fa5d46097dd300280c2d"
   dependencies:
-    ember-cli-babel "^6.0.0"
+    ember-cli-babel "^6.6.0"
     ember-cli-node-assets "^0.2.2"
     tether "^1.4.0"
 
@@ -10108,8 +10108,8 @@ terser@^3.7.5:
     source-map "~0.6.1"
 
 testem@^2.0.0:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/testem/-/testem-2.7.2.tgz#7c4da147f4b184e79808748a2a6b0e4d11537703"
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/testem/-/testem-2.8.0.tgz#1c9a8c8cc229e63e2331b1972fe1f5745ecdd1c2"
   dependencies:
     backbone "^1.1.2"
     bluebird "^3.4.6"
