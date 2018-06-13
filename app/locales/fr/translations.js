@@ -409,6 +409,7 @@ export default {
     'programTitleShort': "Titre de Diplôme (bref)",
     'programYear': "Année de Diplôme",
     'programYears': "Années des Diplôme",
+    'programYearVisualizations': 'Tableau de Matière de Curriculum par Année de Diplôme',
     'promoteToPrimaryCohort': 'Promouvoir à Cohorte Primaire',
     'publicationStatus': 'Statut de Publication',
     'publishAllConfirmation': "Publier {{publishCount}}, réserver {{scheduleCount}}, et ignorer des {{ignoreCount}} séances",

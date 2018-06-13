@@ -1,0 +1,33 @@
+<section class='program-year-visualizations'>
+  <div class="backtolink">
+    {{#link-to 'programYear.index' model.program model}}
+      {{t 'general.backToProgramYear'}}
+    {{/link-to}}
+  </div>
+  <h2>{{t 'general.programYearVisualizations'}}</h2>
+  <h3>
+    {{#link-to 'program' model.program}}
+      {{get (await model.program) 'title'}}
+    {{/link-to}}
+    {{#link-to 'programYear' model.program model}}
+      {{#if (get (await model.cohort) 'title')}}
+        {{get (await model.cohort) 'title'}}
+      {{else}}
+        {{t 'general.classOf' year=model.classOfYear}}
+      {{/if}}
+    {{/link-to}}
+  </h3>
+
+
+  <div class='visualizations'>
+    <div>
+      {{#link-to 'program-year-visualize-competencies' model}}
+        <h4>
+          {{t 'general.competencies'}}
+        </h4>
+        {{visualizer-program-year-competencies isIcon=true programYear=model}}
+      {{/link-to}}
+    </div>
+  </div>
+
+</section>

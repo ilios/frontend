@@ -409,6 +409,7 @@
     'programTitleShort': 'Titulo de Programa (corto)',
     'programYear': 'Año de Programa',
     'programYears': 'Años de Programa',
+    'programYearVisualizations': 'Visualizaciones de Año de Programa',
     'promoteToPrimaryCohort': 'Ascender al Principal Cohorte',
     'publicationStatus': 'Estado de Publicación',
     'publishAllConfirmation': 'Publique {{publishCount}}, Programe {{scheduleCount}}, y ignore {{ignoreCount}} sesiónes',

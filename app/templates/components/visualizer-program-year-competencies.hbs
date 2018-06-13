@@ -1,0 +1,17 @@
+{{#if (or true isIcon (gt (get (await data) 'length') 0))}}
+  {{#simple-chart
+    name='cluster'
+    isIcon=isIcon
+    data=(await data)
+    hover=(perform nodeHover)
+    leave=(perform nodeHover)
+
+    as |chart|
+  }}
+    {{#if tooltip}}
+      {{#chart.tooltip}}
+        {{tooltip}}
+      {{/chart.tooltip}}
+    {{/if}}
+  {{/simple-chart}}
+{{/if}}

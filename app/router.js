@@ -134,6 +134,12 @@ Router.map(function() {
     path: 'data/sessiontype/:session_type_id/vocabularies/:vocabulary_id'
   });
   this.route('weeklyevents');
+  this.route('program-year-visualizations', {
+    path: 'data/programyears/:program_year_id'
+  });
+  this.route('program-year-visualize-competencies', {
+    path: 'data/programyears/:program_year_id/competencies'
+  });
 });
 
 export default Router;

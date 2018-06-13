@@ -10,6 +10,16 @@
     margin-top: .5rem;
   }
 
+  .programyear-overview-actions {
+    @include ilios-overview-actions;
+
+    a {
+      color: $header-blue;
+      font-size: 1.2rem;
+      margin-right: .5rem;
+    }
+  }
+
   .programyear-overview-content {
     padding-top: 1rem;
 

@@ -409,6 +409,7 @@ export default {
     'programTitleShort': 'Program Title (short)',
     'programYear': 'Program Year',
     'programYears': 'Program Years',
+    'programYearVisualizations': 'Program Year Visualizations',
     'promoteToPrimaryCohort': 'Promote to primary cohort',
     'publicationStatus': 'Publication Status',
     'publishAllConfirmation': 'Publish {{publishCount}}, schedule {{scheduleCount}}, and ignore {{ignoreCount}} sessions',
