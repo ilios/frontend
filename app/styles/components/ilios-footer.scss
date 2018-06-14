@@ -1,5 +1,14 @@
 .ilios-footer {
   background-color: $ilios-orange;
+  display: flex;
   height: 20px;
+  justify-content: end;
   width: 100%;
+
+  .version {
+    color: $white;
+    font-size: .5rem;
+    font-weight: 100;
+    padding: .5rem .5rem 0 0;
+  }
 }
