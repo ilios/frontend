@@ -4232,9 +4232,9 @@ ember-d3@0.4.3:
     d3-selection-multi "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-data@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.1.0.tgz#6d9c3280f745f4c7b4a668232e8c86ef3e259a6c"
+ember-data@3.2.0-beta.4:
+  version "3.2.0-beta.4"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.2.0-beta.4.tgz#15f98bf2b8d29a84f9d66cfc1769e3fe34a27657"
   dependencies:
     "@ember/ordered-set" "^1.0.0"
     amd-name-resolver "0.0.7"
@@ -4259,7 +4259,6 @@ ember-data@3.1.0:
     ember-cli-version-checker "^2.1.0"
     ember-inflector "^2.0.0"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
-    exists-sync "0.0.3"
     git-repo-info "^1.1.2"
     heimdalljs "^0.3.0"
     inflection "^1.8.0"
