@@ -86,9 +86,6 @@ module.exports = function (environment) {
     },
     //Hide a feature while it is in development
     IliosFeatures: {
-      allowAddNewUser: true,
-      schoolSessionAttributes: true,
-      accessCourseVisualizations: true,
     }
   };
 
@@ -105,8 +102,6 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
-
-    ENV.IliosFeatures.accessCourseVisualizations = true;
   }
 
   if (environment === 'test') {
@@ -124,8 +119,6 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
 
-    ENV.IliosFeatures.accessCourseVisualizations = true;
-
     //silence warnings in tests when dates are not initialized
     ENV.moment.allowEmpty = true;
     ENV.APP.autoboot = false;
@@ -136,7 +129,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'preview') {
-    ENV.IliosFeatures.accessCourseVisualizations = true;
+    // here you can enable a preview-specific feature
   }
 
   //add our API host to the list of acceptable data sources
