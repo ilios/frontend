@@ -2,11 +2,11 @@
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import EmberUploader from 'ember-uploader';
+import FileField from 'ember-uploader/components/file-field';
+import Uploader from 'ember-uploader/uploaders/uploader';
+
 import readableFileSize from 'ilios/utils/readable-file-size';
 import { task, timeout } from 'ember-concurrency';
-
-const { FileField, Uploader } = EmberUploader;
 
 const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
