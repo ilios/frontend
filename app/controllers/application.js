@@ -4,6 +4,9 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 const { alias } = computed;
+import ENV from 'ilios/config/environment';
+
+const { apiVersion } = ENV.APP;
 
 export default Controller.extend({
   currentUser: service(),
@@ -14,6 +17,7 @@ export default Controller.extend({
   titleTokenKeys: null,
 
   currentlyLoading: false,
+  apiVersion,
 
   init() {
     this._super(...arguments);

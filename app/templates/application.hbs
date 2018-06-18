@@ -14,7 +14,12 @@
       {{outlet}}
     {{/if}}
   </main>
-  <footer class='ilios-footer'></footer>
+  <footer class='ilios-footer'>
+    <div class='version'>
+      {{apiVersion}}
+      {{app-version versionOnly=true}}
+    </div>
+  </footer>
   {{loading-bar isLoading=currentlyLoading}}
 </div>
 {{flash-messages}}
