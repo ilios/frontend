@@ -8,10 +8,8 @@ import moment from 'moment';
 import Publishable from 'ilios/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
-import config from '../config/environment';
 import { task } from 'ember-concurrency';
 
-const { IliosFeatures: { schoolSessionAttributes } } = config;
 const { oneWay, sort } = computed;
 const { Promise } = RSVP;
 
@@ -135,30 +133,18 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   }),
 
   showAttendanceRequired: computed('school.configurations.[]', async function(){
-    if (!schoolSessionAttributes) {
-      return false;
-    }
     const school = await this.get('school');
     return await school.getConfigValue('showSessionAttendanceRequired');
   }),
   showSupplemental: computed('school.configurations.[]', async function(){
-    if (!schoolSessionAttributes) {
-      return true;
-    }
     const school = await this.get('school');
     return await school.getConfigValue('showSessionSupplemental');
   }),
   showSpecialAttireRequired: computed('school.configurations.[]', async function(){
-    if (!schoolSessionAttributes) {
-      return true;
-    }
     const school = await this.get('school');
     return await school.getConfigValue('showSessionSpecialAttireRequired');
   }),
   showSpecialEquipmentRequired: computed('school.configurations.[]', async function(){
-    if (!schoolSessionAttributes) {
-      return true;
-    }
     const school = await this.get('school');
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
