@@ -1665,7 +1665,7 @@ broccoli-debug@^0.6.1, broccoli-debug@^0.6.2, broccoli-debug@^0.6.3, broccoli-de
     symlink-or-copy "^1.1.8"
     tree-sync "^1.2.2"
 
-broccoli-file-creator@^1.0.0, broccoli-file-creator@^1.0.1, broccoli-file-creator@^1.1.1:
+broccoli-file-creator@^1.0.0, broccoli-file-creator@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/broccoli-file-creator/-/broccoli-file-creator-1.2.0.tgz#27f1b25b1b00e7bb7bf3d5d7abed5f4d5388df4d"
   dependencies:
@@ -4853,12 +4853,10 @@ ember-try@^0.2.23:
     rsvp "^3.0.17"
     semver "^5.1.0"
 
-ember-uploader@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/ember-uploader/-/ember-uploader-1.3.0.tgz#f825e7f48b0181817416f76f17915061af6e6b84"
+ember-uploader@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-uploader/-/ember-uploader-2.0.0.tgz#a8272af1c55e0f51a707364364085995a533c3ee"
   dependencies:
-    broccoli-file-creator "^1.0.1"
-    broccoli-merge-trees "^1.0.0"
     ember-cli-babel "^6.6.0"
 
 ember-validators@1.0.4:
