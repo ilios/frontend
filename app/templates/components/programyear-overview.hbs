@@ -1,8 +1,10 @@
 <h5>{{t 'general.overview'}}</h5>
 <div class='programyear-overview-actions'>
-  {{#link-to 'program-year-visualizations' programYear title=(t 'general.programYearVisualizations')}}
-    {{fa-icon 'bar-chart'}}
-  {{/link-to}}
+  {{#if programYearVisualizations}}
+    {{#link-to 'program-year-visualizations' programYear title=(t 'general.programYearVisualizations')}}
+      {{fa-icon 'bar-chart'}}
+    {{/link-to}}
+  {{/if}}
 </div>
 <div class='programyear-overview-content'>
   <label>{{t 'general.directors'}}:</label>
