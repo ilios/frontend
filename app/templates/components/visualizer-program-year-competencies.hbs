@@ -1,6 +1,6 @@
 {{#if (or true isIcon (gt (get (await data) 'length') 0))}}
   {{#simple-chart
-    name='cluster'
+    name='tree'
     isIcon=isIcon
     data=(await data)
     hover=(perform nodeHover)
