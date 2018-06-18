@@ -160,17 +160,6 @@ export default Component.extend({
     });
   }),
 
-  course: computed('session.course', async function(){
-    const session = await this.get('session');
-    return await session.get('course');
-  }),
-
-  session: computed('event.session', async function () {
-    const store = this.get('store');
-    const sessionId = this.get('event.session');
-    return store.find('session', sessionId);
-  }),
-
   recentlyUpdated: computed('event.lastModified', function(){
     const lastModifiedDate = moment(this.get('event.lastModified'));
     const today = moment();
