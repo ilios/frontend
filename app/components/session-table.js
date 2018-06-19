@@ -99,13 +99,6 @@ export default Component.extend({
 
     return columns;
   }),
-
-  height: computed('sessions.length', function(){
-    const sessions = this.get('sessions');
-    const count = sessions?sessions.length:0;
-
-    return count < 10?'25vh':'75vh';
-  }),
   filteredSessions: computed('sessions.[]', 'filterBy', function(){
     const sessions = this.get('sessions');
     const filterBy = this.get('filterBy');
