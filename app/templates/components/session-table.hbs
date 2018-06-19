@@ -5,7 +5,7 @@
     placeholder={{t 'general.sessionTitleFilterPlaceholder'}}
   >
 </div>
-{{#light-table table height=height responsive=true as |t|}}
+{{#light-table table height='75vh' responsive=true as |t|}}
   {{t.head
     onColumnClick=(action 'columnClicked')
     iconAscending='fa fa-sort-asc'
