@@ -82,11 +82,12 @@ export default Component.extend({
     }, []);
 
     const children = competencyObjects.reduce((set, obj) => {
-      let existing = set.findBy('domainId', obj.meta.domainId);
+      let existing = set.findBy('domainId', obj.domainId);
       if (!existing) {
         existing = {
           children: [],
           name: obj.domainTitle,
+          domainId: obj.domainId,
           meta: obj.meta
         };
         set.pushObject(existing);
