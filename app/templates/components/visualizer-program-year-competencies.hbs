@@ -8,9 +8,16 @@
 
     as |chart|
   }}
-    {{#if tooltip}}
-      {{#chart.tooltip}}
-        {{tooltip}}
+    {{#if tooltipTitle}}
+      {{#chart.tooltip title=tooltipTitle}}
+        <div>
+          <h5>{{t 'general.courses'}} ({{tooltipCourses.length}})</h5>
+          {{truncate (join ', ' tooltipCourses) 200 true}}
+        </div>
+        <div>
+          <h5>{{t 'general.sessions'}} ({{tooltipSessions.length}})</h5>
+          {{truncate (join ', ' tooltipSessions) 200 true}}
+        </div>
       {{/chart.tooltip}}
     {{/if}}
   {{/simple-chart}}

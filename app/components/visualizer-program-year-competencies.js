@@ -12,7 +12,9 @@ export default Component.extend({
   programYear: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-program-year-competencies'],
-  tooltip: null,
+  tooltipCourses: null,
+  tooltipSessions: null,
+  tooltipTitle: null,
   programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function(){
     const i18n = this.get('i18n');
     const programYear = this.get('programYear');
@@ -22,45 +24,54 @@ export default Component.extend({
 
     return title ? title : classOfYear;
   }),
-  data: computed('programYear.competencies.[]', async function(){
+  data: computed('programYear.objectives.[]', async function(){
     const programYear = this.get('programYear');
     const name = await this.get('programYearName');
-    const buildTree = async function(parent) {
+    const buildTree = async function (parent) {
       const children = await parent.get('children');
       const childrenTree = await map(children.toArray(), buildTree);
+      const courses = await parent.get('courses');
+      const sessions = await parent.get('sessions');
+      const courseTitles = courses.mapBy('title');
+      const sessionTitles = sessions.mapBy('title');
 
       const rhett = {
         name: parent.get('title'),
-        children: childrenTree
+        children: childrenTree,
+        meta: {
+          courseTitles,
+          sessionTitles
+        }
       };
 
       return rhett;
     };
     const objectives = await programYear.get('objectives');
-    const objetiveObjects = await map(objectives.toArray(), async objective => {
+    const objectiveObjects = await map(objectives.toArray(), async objective => {
       const obj = await buildTree(objective);
       const competency = await objective.get('competency');
       const domain = await competency.get('domain');
-      obj.meta = {
-        domainId: domain.get('id'),
-        domainTitle: domain.get('title'),
-        competencyId: competency.get('id'),
-        competencyTitle: competency.get('title'),
-      };
+
+      obj.domainId = domain.get('id');
+      obj.domainTitle = domain.get('title');
+      obj.competencyId = competency.get('id');
+      obj.competencyTitle = competency.get('title');
 
       return obj;
     });
 
-    const competencyObjects = objetiveObjects.reduce((set, obj) => {
-      let existing = set.findBy('name', obj.meta.competencyTitle);
+    const competencyObjects = objectiveObjects.reduce((set, obj) => {
+      let existing = set.findBy('competencyId', obj.competencyId);
       if (!existing) {
         existing = {
           children: [],
-          name: obj.meta.competencyTitle,
+          name: obj.competencyTitle,
+          competencyId: obj.competencyId,
+          domainId: obj.domainId,
+          domainTitle: obj.domainTitle,
           meta: {
-            id: obj.meta.competencyId,
-            domainTitle: obj.meta.domainTitle,
-            domainId: obj.meta.domainId,
+            courseTitles: [],
+            sessionTitles: [],
           }
         };
         set.pushObject(existing);
@@ -71,11 +82,12 @@ export default Component.extend({
     }, []);
 
     const children = competencyObjects.reduce((set, obj) => {
-      let existing = set.findBy('name', obj.meta.domainTitle);
+      let existing = set.findBy('domainId', obj.meta.domainId);
       if (!existing) {
         existing = {
           children: [],
-          name: obj.meta.domainTitle,
+          name: obj.domainTitle,
+          meta: obj.meta
         };
         set.pushObject(existing);
       }
@@ -98,10 +110,28 @@ export default Component.extend({
     yield timeout(100);
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltip', null);
+      this.set('tooltipTitle', null);
+      this.set('tooltipCourses', null);
+      this.set('tooltipSessions', null);
       return;
     }
+    const { name, children, meta } = obj;
 
-    this.set('tooltip', htmlSafe(obj.name));
+    const getCourseTitles = (courseTitles, {children, meta}) => {
+      courseTitles.pushObjects(meta.courseTitles);
+
+      return children.reduce(getCourseTitles, courseTitles);
+    };
+    const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles);
+    const getSessionTitles = (sessionTitles, {children, meta}) => {
+      sessionTitles.pushObjects(meta.sessionTitles);
+
+      return children.reduce(getSessionTitles, sessionTitles);
+    };
+    const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles);
+
+    this.set('tooltipTitle', htmlSafe(name));
+    this.set('tooltipCourses', allCourseTitles.uniq().sort());
+    this.set('tooltipSessions', allSessionTitles.uniq().sort());
   }).restartable()
 });
