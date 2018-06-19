@@ -357,6 +357,7 @@
     'objectiveCompetencyManagerTitle': 'Seleccione Competencia Principal para Objetivo',
     'objectiveCount': { 'one': 'Hay 1 objetivo', 'other': 'Hay {{count}} objetivos' },
     'objectiveDescriptorTitle': 'Seleccione Descriptores de MeSH para Objetivo',
+    'objectiveMap': 'Mapa de Objetivos',
     'objectiveParentsTitle': 'Seleccione Objetivos Matrices',
     'objectiveParentTitle': 'Seleccione Objetivos Principales',
     'objectiveParentTitleSingular': 'Seleccione Objetivo Principale',

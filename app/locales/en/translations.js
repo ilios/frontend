@@ -357,6 +357,7 @@ export default {
     'objectiveCompetencyManagerTitle': 'Select Parent Competency for Objective',
     'objectiveCount': { 'one': 'There is 1 objective', 'other': 'There are {{count}} objectives' },
     'objectiveDescriptorTitle': 'Select MeSH Descriptors for Objective',
+    'objectiveMap': 'Objective Map',
     'objectiveParentsTitle': 'Select Parent Objectives',
     'objectiveParentTitle': 'Select Parent Objectives',
     'objectiveParentTitleSingular': 'Select Parent Objective',

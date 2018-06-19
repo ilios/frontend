@@ -357,6 +357,7 @@ export default {
     'objectiveCompetencyManagerTitle': "Sélectionner Compétence Mère pour Objectif",
     'objectiveCount': { 'one': 'Il y a 1 objectif', 'other': 'Il y a {{count}} objectifs' },
     'objectiveDescriptorTitle': "Choisi MeSH pour l'objectif",
+    'objectiveMap': 'Tableau Objectifs',
     'objectiveParentsTitle': "Affichez objectifs mères",
     'objectiveParentTitle': "Choisi Objectifs mères",
     'objectiveParentTitleSingular': "Choisi Objectif mère",
