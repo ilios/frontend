@@ -1,6 +1,6 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { map } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
@@ -24,9 +24,8 @@ export default Component.extend({
 
     return title ? title : classOfYear;
   }),
-  data: computed('programYear.objectives.[]', async function(){
+  objectiveObjects: computed('programYear.objectives.[]', async function () {
     const programYear = this.get('programYear');
-    const name = await this.get('programYearName');
     const buildTree = async function (parent) {
       const children = await parent.get('children');
       const childrenTree = await map(children.toArray(), buildTree);
@@ -47,64 +46,78 @@ export default Component.extend({
       return rhett;
     };
     const objectives = await programYear.get('objectives');
-    const objectiveObjects = await map(objectives.toArray(), async objective => {
+    const objectivesWithCompetency = await filter(objectives.toArray(), async objective => {
+      const competency = await objective.get('competency');
+      return !!competency;
+    });
+    const objectiveObjects = await map(objectivesWithCompetency, async objective => {
       const obj = await buildTree(objective);
       const competency = await objective.get('competency');
-      const domain = await competency.get('domain');
-
-      obj.domainId = domain.get('id');
-      obj.domainTitle = domain.get('title');
       obj.competencyId = competency.get('id');
-      obj.competencyTitle = competency.get('title');
 
       return obj;
     });
 
-    const competencyObjects = objectiveObjects.reduce((set, obj) => {
-      let existing = set.findBy('competencyId', obj.competencyId);
-      if (!existing) {
-        existing = {
-          children: [],
-          name: obj.competencyTitle,
-          competencyId: obj.competencyId,
-          domainId: obj.domainId,
-          domainTitle: obj.domainTitle,
-          meta: {
-            courseTitles: [],
-            sessionTitles: [],
-          }
-        };
-        set.pushObject(existing);
-      }
-      existing.children.pushObject(obj);
+    return objectiveObjects;
+  }),
+  competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function () {
+    const programYear = this.get('programYear');
+    const objectiveObjects = await this.get('objectiveObjects');
+    const competencies = await programYear.get('competencies');
+    const competencyObjects = await map(competencies.toArray(), async competency => {
+      const domain = await competency.get('domain');
 
-      return set;
-    }, []);
+      const domainId = domain.get('id');
+      const competencyId = competency.get('id');
+      const competencyTitle = competency.get('title');
+      return {
+        domainId,
+        name: competencyTitle,
+        children: objectiveObjects.filterBy('competencyId', competencyId)
+      };
+    });
 
-    const children = competencyObjects.reduce((set, obj) => {
-      let existing = set.findBy('domainId', obj.domainId);
-      if (!existing) {
-        existing = {
-          children: [],
-          name: obj.domainTitle,
-          domainId: obj.domainId,
-          meta: obj.meta
-        };
-        set.pushObject(existing);
-      }
-      //if the domain and the competency are the same
-      if (obj.meta.id === obj.meta.domainId) {
-        existing.children.pushObjects(obj.children);
-      } else {
-        existing.children.pushObject(obj);
-      }
+    return competencyObjects;
+  }),
+  domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function () {
+    const programYear = this.get('programYear');
+    const competencies = await programYear.get('competencies');
+    const competencyObjects = await this.get('competencyObjects');
+    const domains = await map(competencies.toArray(), async competency => competency.get('domain'));
 
-      return set;
-    }, []);
+    const domainObjects = domains.uniq().map(domain => {
+      const id = domain.get('id');
+      const name = domain.get('title');
+      const domainCompetencyObjects = competencyObjects.filterBy('domainId', id);
+
+      const children = domainCompetencyObjects.reduce((arr, { domainId, name, children }) => {
+        if (id === domainId) {
+          arr.pushObjects(children);
+        } else {
+          arr.pushObject({ name, children });
+        }
+
+        return arr;
+      }, []);
+
+      return {
+        name,
+        children,
+        meta: {}
+      };
+    });
+
+    return domainObjects;
+  }),
+
+  data: computed('domainObjects.[]', async function () {
+    const name = await this.get('programYearName');
+    const children = await this.get('domainObjects');
 
     return {
       name,
-      children
+      children,
+      meta: {}
     };
   }),
   nodeHover: task(function* (obj) {
@@ -119,20 +132,20 @@ export default Component.extend({
     const { name, children, meta } = obj;
 
     const getCourseTitles = (courseTitles, {children, meta}) => {
-      courseTitles.pushObjects(meta.courseTitles);
+      courseTitles.pushObjects(meta.courseTitles || []);
 
       return children.reduce(getCourseTitles, courseTitles);
     };
-    const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles);
+    const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles || []);
     const getSessionTitles = (sessionTitles, {children, meta}) => {
-      sessionTitles.pushObjects(meta.sessionTitles);
+      sessionTitles.pushObjects(meta.sessionTitles || []);
 
       return children.reduce(getSessionTitles, sessionTitles);
     };
-    const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles);
+    const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles || []);
 
     this.set('tooltipTitle', htmlSafe(name));
-    this.set('tooltipCourses', allCourseTitles.uniq().sort());
-    this.set('tooltipSessions', allSessionTitles.uniq().sort());
+    this.set('tooltipCourses', allCourseTitles.uniq());
+    this.set('tooltipSessions', allSessionTitles.uniq());
   }).restartable()
 });
