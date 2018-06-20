@@ -86,6 +86,7 @@ module.exports = function (environment) {
     },
     //Hide a feature while it is in development
     IliosFeatures: {
+      programYearVisualizations: false
     }
   };
 
@@ -102,6 +103,8 @@ module.exports = function (environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+
+    ENV.IliosFeatures.programYearVisualizations = true;
   }
 
   if (environment === 'test') {
@@ -130,6 +133,7 @@ module.exports = function (environment) {
 
   if (environment === 'preview') {
     // here you can enable a preview-specific feature
+    ENV.IliosFeatures.programYearVisualizations = true;
   }
 
   //add our API host to the list of acceptable data sources

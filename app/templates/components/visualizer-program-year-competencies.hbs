@@ -1,0 +1,24 @@
+{{#if (or true isIcon (gt (get (await data) 'length') 0))}}
+  {{#simple-chart
+    name='tree'
+    isIcon=isIcon
+    data=(await data)
+    hover=(perform nodeHover)
+    leave=(perform nodeHover)
+
+    as |chart|
+  }}
+    {{#if tooltipTitle}}
+      {{#chart.tooltip title=tooltipTitle}}
+        <div>
+          <h5>{{t 'general.courses'}} ({{tooltipCourses.length}})</h5>
+          {{truncate (join ', ' tooltipCourses) 200 true}}
+        </div>
+        <div>
+          <h5>{{t 'general.sessions'}} ({{tooltipSessions.length}})</h5>
+          {{truncate (join ', ' tooltipSessions) 200 true}}
+        </div>
+      {{/chart.tooltip}}
+    {{/if}}
+  {{/simple-chart}}
+{{/if}}
