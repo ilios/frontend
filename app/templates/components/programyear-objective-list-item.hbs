@@ -1,4 +1,11 @@
-<td id='objective-{{objective.id}}' class='text-left text-top' colspan=3>
+<td colspan=1 class='link' {{action toggleExpand objective.id}}>
+  {{#if expanded}}
+    {{fa-icon 'caret-down'}}
+  {{else}}
+    {{fa-icon 'caret-right'}}
+  {{/if}}
+</td>
+<td id='objective-{{objective.id}}' class='text-left text-top' colspan=12>
   {{#if editable}}
     {{#editable-field
       value=title
@@ -19,7 +26,7 @@
     {{{title}}}
   {{/if}}
 </td>
-<td class='text-left text-top' colspan=2>
+<td class='text-left text-top' colspan=8>
   {{#if (await objective.competency)}}
     {{#if editable}}
       <span class='clickable link' {{action manageCompetency objective}}>
@@ -39,7 +46,7 @@
     {{/if}}
   {{/if}}
 </td>
-<td class='text-left text-top' colspan=2>
+<td class='text-left text-top' colspan=8>
   {{#if objective.meshDescriptors.length}}
     <ul>
       {{#each (await objective.meshDescriptors) as |descriptor|}}
