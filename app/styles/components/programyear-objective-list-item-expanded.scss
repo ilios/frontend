@@ -1,0 +1,22 @@
+.programyear-objective-list-item-expanded {
+  &:nth-child(even) {
+    background-color: $grey;
+  }
+  ul {
+    @include ilios-list-reset;
+
+    p {
+      margin: 0;
+    }
+
+    li {
+      border-top: 1px solid $dark-grey;
+      padding-top: 1rem;
+    }
+
+    li:nth-of-type(1) {
+      border: 0;
+      padding: 0
+    }
+  }
+}

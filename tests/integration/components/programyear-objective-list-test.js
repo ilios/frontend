@@ -37,12 +37,12 @@ test('it renders', function(assert){
   );
   return wait().then(() => {
     assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
-    assert.equal(this.$('thead th:eq(0)').text().trim(), 'Description');
-    assert.equal(this.$('thead th:eq(1)').text().trim(), 'Competency');
-    assert.equal(this.$('thead th:eq(2)').text().trim(), 'MeSH Terms');
+    assert.equal(this.$('thead th:eq(1)').text().trim(), 'Description');
+    assert.equal(this.$('thead th:eq(2)').text().trim(), 'Competency');
+    assert.equal(this.$('thead th:eq(3)').text().trim(), 'MeSH Terms');
     for (let i = 0, n = objectives.length; i < n; i++) {
       let objective = objectives[i];
-      assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), objective.get('title'));
+      assert.equal(this.$(`tbody tr:eq(${i}) td:eq(1)`).text().trim(), objective.get('title'));
     }
   });
 });
@@ -79,6 +79,6 @@ test('no "sort objectives" button in list with one item', function(assert){
 
   return wait().then(() => {
     assert.notOk(this.$('.sort-materials-btn').length, 'Sort button is not visible');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), objective.get('title'), 'Objective is visible');
+    assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), objective.get('title'), 'Objective is visible');
   });
 });

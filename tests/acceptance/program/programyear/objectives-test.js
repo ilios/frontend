@@ -49,7 +49,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     });
     this.server.createList('meshDescriptor', 4);
 
-    this.server.create('objective', {
+    const objective1 = this.server.create('objective', {
       programYearIds: [1],
       competencyId: 2,
       meshDescriptorIds: [1, 2]
@@ -61,6 +61,11 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     this.server.create('objective', {
       programYearIds: [1]
     });
+    const course = this.server.create('course');
+    this.server.create('objective', {
+      courses: [course],
+      parents: [objective1]
+    });
   });
 
   test('list editable', async function(assert) {
@@ -68,34 +73,34 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     await visit(url);
     assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('objective 0'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('competency 1 (competency 0)'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('descriptor 0 descriptor 1'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('objective 0'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('competency 1 (competency 0)'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(4)'), getText('descriptor 0 descriptor 1'));
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('objective 1'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('competency 3'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(3)'), getText('Add New'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('objective 1'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(3)'), getText('competency 3'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(4)'), getText('Add New'));
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('objective 2'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('Add New'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('objective 2'));
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3)'), getText('Add New'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(4)'), getText('Add New'));
   });
 
   test('list not editable', async function(assert) {
     await visit(url);
     assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('objective 0'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('competency 1 (competency 0)'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('descriptor 0 descriptor 1'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('objective 0'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('competency 1 (competency 0)'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(4)'), getText('descriptor 0 descriptor 1'));
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('objective 1'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('competency 3'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(3)'), getText('None'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('objective 1'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(3)'), getText('competency 3'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(2) td:nth-of-type(4)'), getText('None'));
 
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('objective 2'));
-    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('None'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('objective 2'));
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3)'), getText('None'));
+    assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(4)'), getText('None'));
   });
 
   skip('manage terms', async function() {
@@ -115,8 +120,8 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     assert.expect(14);
     await visit(url);
     let tds = findAll('.programyear-objective-list tbody tr:nth-of-type(1) td');
-    assert.equal(tds.length, 3);
-    await click(find('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link'));
+    assert.equal(tds.length, 4);
+    await click(find('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link'));
     assert.equal(await getElementText(find('.specific-title')), 'SelectParentCompetencyforObjective');
     assert.equal(await getElementText(find('.objective-manage-competency .objectivetitle')), getText('objective 0'));
     assert.equal(await getElementText(find('.objective-manage-competency .parent-picker')), getText('competency0 competency1 competency2 competency3 competency4'));
@@ -140,55 +145,55 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
-    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
+    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
     let objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 2 (competency 0)'));
+    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 2 (competency 0)'));
   });
 
   test('save no competency', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
-    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
+    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
     let objectiveManager = find('.objective-manage-competency')[0];
     await click(find('.parent-picker .clickable'), objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('Add New'));
+    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('Add New'));
   });
 
   test('cancel competency change', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
-    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
+    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
     let objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker li')[1], objectiveManager);
     await click('.detail-objectives button.bigcancel');
-    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 1 (competency 0)'));
+    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 1 (competency 0)'));
   });
 
   test('cancel remove competency change', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
-    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2) .link');
+    await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
     let objectiveManager = find('.objective-manage-competency')[0];
     await click(find('.parent-picker li'), objectiveManager);
     await click('.detail-objectives button.bigcancel');
-    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[1])), getText('competency 1 (competency 0)'));
+    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 1 (competency 0)'));
   });
 
   test('add competency', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(1);
     await visit(url);
-    await click('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(2) button');
+    await click('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3) button');
     let objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
-    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr:nth-of-type(3) td')[1])), getText('competency 2 (competency 0)'));
+    assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr:nth-of-type(3) td')[2])), getText('competency 2 (competency 0)'));
   });
 
   test('empty objective title can not be saved', async function(assert) {
@@ -196,7 +201,7 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
     assert.expect(3);
     await visit(url);
     const container = '.programyear-objective-list';
-    const title = `${container} tbody tr:nth-of-type(1) td:nth-of-type(1)`;
+    const title = `${container} tbody tr:nth-of-type(1) td:nth-of-type(2)`;
     const edit = `${title} .editable span`;
     const editor = `${title} .fr-box`;
     const initialObjectiveTitle = 'objective 0';
@@ -213,5 +218,22 @@ module('Acceptance: Program Year - Objectives', function(hooks) {
 
     assert.equal(await getElementText(errorMessage), getText('This field cannot be blank'));
     assert.ok(find(save).disabled);
+  });
+
+  test('expand objective and view links', async function(assert) {
+    assert.expect(2);
+    await visit(url);
+    const rows = '.programyear-objective-list tbody tr';
+    const objective = `${rows}:nth-of-type(1)`;
+    const expand = `${objective} td:nth-of-type(1)`;
+    const firstCourse = `${rows}:nth-of-type(3)`;
+    const firstCourseTitle = `${firstCourse} td:nth-of-type(2)`;
+    const firstCourseObjectives = `${firstCourse} td:nth-of-type(3) li`;
+    const firstCourseFirstObjective = `${firstCourseObjectives}:nth-of-type(1)`;
+
+    await click(expand);
+    assert.equal(await getElementText(firstCourseTitle), getText('course 0'));
+    assert.equal(await getElementText(firstCourseFirstObjective), getText('objective 3'));
+
   });
 });
