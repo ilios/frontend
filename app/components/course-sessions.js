@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { map } from 'rsvp';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   i18n: service(),
@@ -100,4 +100,23 @@ export default Component.extend({
 
     return sessionTypes;
   }),
+
+  filterByDebounced: computed('filterByLocalCache', 'filterBy', function(){
+    const filterBy = this.get('filterBy');
+    const filterByLocalCache = this.get('filterByLocalCache');
+    const changeFilterBy = this.get('changeFilterBy');
+
+    if (changeFilterBy.get('isIdle')) {
+      return filterBy;
+    }
+
+    return filterByLocalCache;
+  }),
+
+  changeFilterBy: task(function * (value){
+    const setFilterBy = this.get('setFilterBy');
+    this.set('filterByLocalCache', value);
+    yield timeout(250);
+    setFilterBy(value);
+  }).restartable(),
 });

@@ -10,6 +10,10 @@ export default Component.extend(DomMixin, {
     const distanceToTopOfWindow = this.distanceToTopOfWindow;
     return distanceToTopOfWindow <= 0;
   }),
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
+  }),
   didInsertElement() {
     this._super();
     this.addEventListener(window, 'scroll', () => {
@@ -17,5 +21,13 @@ export default Component.extend(DomMixin, {
       this.set('distanceToTopOfWindow', rect.top);
     });
   },
-
+  actions: {
+    setSortBy(what){
+      const sortBy = this.get('sortBy');
+      if(sortBy === what){
+        what += ':desc';
+      }
+      this.setSortBy(what);
+    },
+  }
 });

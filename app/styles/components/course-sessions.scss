@@ -1,5 +1,6 @@
 .course-sessions {
   @include detail-container($ilios-orange);
+  margin: .5rem 1rem 0 .5rem;
 
   .course-sessions-header {
     @include detail-container-header;
@@ -19,16 +20,35 @@
     padding: .75rem;
   }
 
+  .filter {
+    display: block;
+    margin-top: 1rem;
+    text-align: right;
+    width: 100%;
+
+    input {
+      width: 90%;
+      @include for-tablet-and-up {
+        width: 300px;
+      }
+    }
+  }
+
   .course-sessions-table {
     @include ilios-table-colors;
     @include ilios-zebra-table;
 
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin-top: .25rem;
     width: 100%;
 
     td {
       padding: 0;
+    }
+
+    th:nth-of-type(1),
+    td:nth-of-type(1) {
+      padding: 0 .25rem;
     }
   }
 }

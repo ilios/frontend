@@ -1,4 +1,4 @@
-{{#each sessions as |obj|}}
+{{#each sortedSessions as |obj|}}
   <tr>
     <td colspan=1>{{fa-icon 'caret-right'}}</td>
     <td colspan=10>{{obj.title}}</td>
@@ -16,6 +16,6 @@
       {{/if}}
     </td>
     <td colspan=2>{{obj.offeringCount}}</td>
-    <td colspan=3>{{publication-status item=obj showText=false}}</td>
+    <td colspan=2>{{publication-status item=obj showText=false}}</td>
   </tr>
 {{/each}}

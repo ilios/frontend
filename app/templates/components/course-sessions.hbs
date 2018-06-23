@@ -34,15 +34,23 @@
     {{t "general.savedSuccessfully"}}
   </div>
 {{/if}}
+<div class="filter">
+  <input
+    value={{filterByDebounced}}
+    oninput={{action (perform changeFilterBy) value="target.value"}}
+    placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+  >
+</div>
 <table class="course-sessions-table">
-  {{sessions-grid-header showExpandAll=(is-fulfilled sessionObjects)}}
+  {{sessions-grid-header
+    showExpandAll=(is-fulfilled sessionObjects)
+    setSortBy=setSortBy
+    sortBy=sortBy
+  }}
   {{#if (is-fulfilled sessionObjects)}}
     {{sessions-grid
       sessions=(await sessionObjects)
-      course=course
-      setSortBy=setSortBy
       sortBy=sortBy
-      setFilterBy=setFilterBy
       filterBy=filterBy
     }}
   {{else}}

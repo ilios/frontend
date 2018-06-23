@@ -28,6 +28,7 @@ export default Component.extend({
   textDirection: computed('align', function(){
     return 'text-' + this.get('align');
   }),
-  attributeBindings: ['colspan'],
-  colspan: 1
+  attributeBindings: ['colspan', 'title'],
+  colspan: 1,
+  title: ''
 });
