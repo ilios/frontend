@@ -1,0 +1,21 @@
+{{#each sessions as |obj|}}
+  <tr>
+    <td colspan=1>{{fa-icon 'caret-right'}}</td>
+    <td colspan=10>{{obj.title}}</td>
+    <td colspan=6>{{obj.sessionTypeTitle}}</td>
+    <td colspan=2>{{obj.learnerGroupCount}}</td>
+    <td colspan=2>{{obj.objectiveCount}}</td>
+    <td colspan=2>{{obj.termCount}}</td>
+    <td colspan=4>
+      {{#if obj.firstOfferingDate}}
+        {{#if obj.isIlm}}
+          <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format obj.firstOfferingDate 'L'}}
+        {{else}}
+          {{moment-format obj.firstOfferingDate 'L LT'}}
+        {{/if}}
+      {{/if}}
+    </td>
+    <td colspan=2>{{obj.offeringCount}}</td>
+    <td colspan=3>{{publication-status item=obj showText=false}}</td>
+  </tr>
+{{/each}}

@@ -34,12 +34,18 @@
     {{t "general.savedSuccessfully"}}
   </div>
 {{/if}}
-<div class="course-sessions-content">
-  {{session-table
-    sessions=(await sessionObjects)
-    setSortBy=setSortBy
-    sortBy=sortBy
-    setFilterBy=setFilterBy
-    filterBy=filterBy
-  }}
-</div>
+<table class="course-sessions-table">
+  {{sessions-grid-header showExpandAll=(is-fulfilled sessionObjects)}}
+  {{#if (is-fulfilled sessionObjects)}}
+    {{sessions-grid
+      sessions=(await sessionObjects)
+      course=course
+      setSortBy=setSortBy
+      sortBy=sortBy
+      setFilterBy=setFilterBy
+      filterBy=filterBy
+    }}
+  {{else}}
+    {{sessions-grid-loading count=(has-many-length course "sessions")}}
+  {{/if}}
+</table>

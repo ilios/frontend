@@ -29,10 +29,12 @@ export default Component.extend({
     const sessions = await course.get('sessions');
     const sessionObjects = await map(sessions.toArray(), async session => {
       const canDelete = await permissionChecker.canDeleteSession(session);
+      const canUpdate = await permissionChecker.canUpdateSession(session);
       let sessionObject = {
         session,
         course,
         canDelete,
+        canUpdate,
         id: session.get('id'),
         title: session.get('title'),
         isPublished: session.get('isPublished'),
@@ -52,6 +54,8 @@ export default Component.extend({
       }
       const offerings = await session.get('offerings');
       sessionObject.offeringCount = offerings.length;
+      sessionObject.objectiveCount = session.hasMany('objectives').ids().length;
+      sessionObject.termCount = session.hasMany('terms').ids().length;
       const offeringLearerGroupCount = offerings.reduce((total, offering) => {
         let count = offering.hasMany('learnerGroups').ids().length;
 

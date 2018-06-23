@@ -1,0 +1,23 @@
+.sessions-grid-header {
+  background-color: $header-blue;
+  color: $white;
+  font-size: .8rem;
+  font-weight: normal;
+
+  tr {
+    background-color: $header-blue;
+    border-bottom: 1px solid $dark-grey;
+    border-collapse: collapse;
+  }
+
+  th {
+    background-color: $header-blue;
+    padding: .5rem 0;
+    text-align: left;
+  }
+
+  &.is-fixed {
+    position: sticky;
+    top: 0;
+  }
+}

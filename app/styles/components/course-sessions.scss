@@ -1,8 +1,6 @@
 .course-sessions {
   @include detail-container($ilios-orange);
 
-  background-color: $active-background-color;
-
   .course-sessions-header {
     @include detail-container-header;
   }
@@ -21,7 +19,16 @@
     padding: .75rem;
   }
 
-  .course-sessions-content {
-    @include detail-container-content;
+  .course-sessions-table {
+    @include ilios-table-colors;
+    @include ilios-zebra-table;
+
+    border-collapse: collapse;
+    margin-top: 1rem;
+    width: 100%;
+
+    td {
+      padding: 0;
+    }
   }
 }
