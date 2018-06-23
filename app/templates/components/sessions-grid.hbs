@@ -1,7 +1,11 @@
 {{#each sortedSessions as |obj|}}
   <tr>
     <td colspan=1>{{fa-icon 'caret-right'}}</td>
-    <td colspan=8>{{truncate obj.title 100 true}}</td>
+    <td colspan=8>
+      {{#link-to 'session' obj.course obj.session}}
+        {{truncate obj.title 100 true}}
+      {{/link-to}}
+    </td>
     <td colspan=6>{{obj.sessionTypeTitle}}</td>
     <td colspan=2>{{obj.learnerGroupCount}}</td>
     <td colspan=2>{{obj.objectiveCount}}</td>
