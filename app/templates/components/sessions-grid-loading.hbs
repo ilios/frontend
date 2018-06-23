@@ -2,7 +2,7 @@
 {{#each (repeat @count) as |empty|}}
   <tr>
     <td colspan=1></td>
-    <td colspan=10>{{repeat (random 3 10) 'ilios rocks'}}</td>
+    <td colspan=8>{{truncate (repeat (random 3 15) 'ilios rocks') 100}}</td>
     <td colspan=6>{{repeat (random 1 3) 'loading '}}</td>
     <td colspan=2>{{random 1 99}}</td>
     <td colspan=2>{{random 1 99}}</td>
