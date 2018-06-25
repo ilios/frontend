@@ -4937,15 +4937,6 @@ ember-pad@1.2.3:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-papaparse@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-papaparse/-/ember-papaparse-1.0.0.tgz#7116ad3392f0f3179e4b062341b88cb86092ca44"
-  dependencies:
-    broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
-    ember-cli-babel "^6.6.0"
-    papaparse "^4.3.6"
-
 ember-pikaday@2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-2.2.4.tgz#72c2ada3e5c028f66b56df760bf9f1583e6d5b99"
@@ -8923,7 +8914,7 @@ pako@~1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
 
-papaparse@^4.3.6:
+papaparse@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-4.5.0.tgz#fb625d390b6e5d544db20658ce3665002c3d8e80"
 
