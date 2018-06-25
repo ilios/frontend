@@ -1,0 +1,32 @@
+<td colspan=1></td>
+<td colspan=9>{{moment-format offering.startDate 'L LT'}} - {{moment-format offering.endDate 'L LT'}}</td>
+<td colspan=7>
+  {{#if canUpdate}}
+    {{#editable-field
+      value=offering.room
+      save=(perform changeRoom)
+      close=(action 'revertRoomChanges')
+      saveOnEnter=true
+      closeOnEscape=true
+      isSaveDisabled=(and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))
+      as |isSaving|
+    }}
+      <input
+        type="text"
+        value={{room}}
+        oninput={{action (mut room) value="target.value"}}
+        disabled={{isSaving}}
+        onkeyup={{action 'addErrorDisplayFor' 'room'}}
+      >
+      {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
+        <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
+      {{/if}}
+    {{/editable-field}}
+  {{else}}
+    {{offering.room}}
+  {{/if}}
+</td>
+<td colspan=3 title={{t 'general.learners'}}>{{has-many-length offering 'learners'}}</td>
+<td colspan=3 title={{t 'general.learnerGroups'}}>{{has-many-length offering 'learnerGroups'}}</td>
+<td colspan=3 title={{t 'general.instructors'}}>{{has-many-length offering 'instructors'}}</td>
+<td colspan=3 title={{t 'general.instructorGroups'}}>{{has-many-length offering 'instructorGroups'}}</td>

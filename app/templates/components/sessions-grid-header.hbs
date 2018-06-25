@@ -1,7 +1,11 @@
 <tr>
-  <th colspan=1>
+  <th class='link' colspan=1 {{action toggleExpandAll}}>
     {{#if @showExpandAll}}
-      {{fa-icon 'caret-right'}}
+      {{#if @allSessionsExpanded}}
+        {{fa-icon 'caret-down'}}
+      {{else}}
+        {{fa-icon 'caret-right'}}
+      {{/if}}
     {{/if}}
   </th>
   {{#sortable-th

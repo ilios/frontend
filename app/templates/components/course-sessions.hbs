@@ -46,12 +46,17 @@
     showExpandAll=(is-fulfilled sessionObjects)
     setSortBy=setSortBy
     sortBy=sortBy
+    allSessionsExpanded=(eq expandedSessions.length (has-many-length course 'sessions'))
+    toggleExpandAll=(action 'toggleExpandAll')
   }}
   {{#if (is-fulfilled sessionObjects)}}
     {{sessions-grid
       sessions=(await sessionObjects)
       sortBy=sortBy
       filterBy=filterBy
+      expandedSessions=expandedSessions
+      closeSession=(action 'closeSession')
+      expandSession=(action 'expandSession')
     }}
   {{else}}
     {{sessions-grid-loading count=(has-many-length course "sessions")}}

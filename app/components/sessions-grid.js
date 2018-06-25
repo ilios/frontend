@@ -5,6 +5,7 @@ import escapeRegExp from '../utils/escape-reg-exp';
 
 export default Component.extend({
   tagName: 'tbody',
+  classNames: ['sessions-grid'],
 
   filteredSessions: computed('sessions.[]', 'filterBy', function(){
     const sessions = this.get('sessions');

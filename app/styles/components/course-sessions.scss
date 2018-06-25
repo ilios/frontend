@@ -36,7 +36,6 @@
 
   .course-sessions-table {
     @include ilios-table-colors;
-    @include ilios-zebra-table;
 
     border-collapse: collapse;
     margin-top: .25rem;

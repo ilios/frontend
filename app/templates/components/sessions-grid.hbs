@@ -1,6 +1,12 @@
 {{#each sortedSessions as |obj|}}
-  <tr>
-    <td colspan=1>{{fa-icon 'caret-right'}}</td>
+  <tr class='{{if (contains obj.session expandedSessions) 'is-expanded' 'not-expanded'}} session-row'>
+    <td colspan=1>
+      {{#if (contains obj.session expandedSessions)}}
+        {{fa-icon 'caret-down' class='link' click=(action closeSession obj.session)}}
+      {{else}}
+        {{fa-icon 'caret-right' class='link' click=(action expandSession obj.session)}}
+      {{/if}}
+    </td>
     <td colspan=8>
       {{#link-to 'session' obj.course obj.session}}
         {{truncate obj.title 100 true}}
@@ -22,4 +28,14 @@
     <td colspan=2>{{obj.offeringCount}}</td>
     <td colspan=2>{{publication-status item=obj showText=false}}</td>
   </tr>
+  {{#if (contains obj.session expandedSessions)}}
+    <tr class='first-expanded-row is-expanded'>
+      <td colspan=29>{{t 'general.offerings'}}</td>
+    </tr>
+    {{#each (sort-by 'startDate' (await obj.session.offerings)) as |offering|}}
+      {{sessions-grid-offering offering=offering canUpdate=obj.canUpdate}}
+    {{/each}}
+    <tr class='last-expanded-row is-expanded'></tr>
+  {{/if}}
+
 {{/each}}

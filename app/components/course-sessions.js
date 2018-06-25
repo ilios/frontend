@@ -16,6 +16,7 @@ export default Component.extend({
   canUpdateCourse: false,
   sortBy: null,
   filterBy: null,
+  expandedSessions: null,
   sessionsCount: computed('course.sessions.[]', function(){
     const course = this.get('course');
     const sessionIds = course.hasMany('sessions').ids();
@@ -112,6 +113,29 @@ export default Component.extend({
 
     return filterByLocalCache;
   }),
+
+  init() {
+    this._super(...arguments);
+    this.set('expandedSessions', []);
+  },
+
+  actions: {
+    expandSession(session) {
+      this.expandedSessions.pushObject(session);
+    },
+    closeSession(session) {
+      this.expandedSessions.removeObject(session);
+    },
+    async toggleExpandAll() {
+      const course = this.get('course');
+      if (this.expandedSessions.length === course.hasMany('sessions').ids().length) {
+        this.set('expandedSessions', []);
+      } else {
+        const sessions = await course.get('sessions');
+        this.set('expandedSessions', sessions.toArray());
+      }
+    },
+  },
 
   changeFilterBy: task(function * (value){
     const setFilterBy = this.get('setFilterBy');
