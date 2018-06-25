@@ -14,21 +14,27 @@ export default Component.extend({
       let obj = {
         title: courseObjective.title,
         courseId: null,
-        courseTitle: null
+        courseTitle: null,
+        courseExternalId: null
       };
       if (courses.length) {
         const course = courses.firstObject;
         obj.courseId = course.id;
         obj.courseTitle = course.title;
+        obj.courseExternalId = course.externalId;
       }
       return obj;
     });
     return objectiveObjects.reduce((set, obj) => {
       let existing = set.findBy('id', obj.courseId);
       if (!existing) {
+        let title = obj.courseTitle;
+        if (obj.courseExternalId) {
+          title += ` (${obj.courseExternalId})`;
+        }
         existing = {
           id: obj.courseId,
-          title: obj.courseTitle,
+          title,
           objectives: []
         };
         set.pushObject(existing);
