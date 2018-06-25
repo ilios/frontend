@@ -10,11 +10,13 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
   test('it renders', async function (assert) {
     const course1 = {
       id: 1,
-      title: 'course 1'
+      title: 'course 1',
+      externalId: 'ABC 123'
     };
     const course2 = {
       id: 2,
-      title: 'course 2'
+      title: 'course 2',
+      externalId: null,
     };
     const courseObjective1 = {
       title: 'objective 1',
@@ -52,7 +54,7 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
     assert.equal(this.element.querySelectorAll(rows).length, 3);
     assert.ok(this.element.querySelector(titles).textContent.includes('Courses'));
     assert.ok(this.element.querySelector(titles).textContent.includes('Objectives'));
-    assert.equal(this.element.querySelector(firstCourseTitle).textContent.trim(), 'course 1');
+    assert.equal(this.element.querySelector(firstCourseTitle).textContent.trim(), 'course 1 (ABC 123)');
     assert.equal(this.element.querySelectorAll(firstCourseObjectives).length, 2);
     assert.equal(this.element.querySelector(firstCourseFirstObjective).textContent.trim(), 'objective 1');
     assert.equal(this.element.querySelector(firstCourseSecondObjective).textContent.trim(), 'objective 2');
