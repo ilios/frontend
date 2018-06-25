@@ -3816,13 +3816,13 @@ ember-cli-htmlbars@^2.0.1, ember-cli-htmlbars@^2.0.2, ember-cli-htmlbars@^2.0.3:
     json-stable-stringify "^1.0.0"
     strip-bom "^3.0.0"
 
-ember-cli-image-transformer@^1.0.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-image-transformer/-/ember-cli-image-transformer-1.4.0.tgz#d74ca9cac13e7dd71cff20ac0bc890cbbf4569b2"
+ember-cli-image-transformer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-image-transformer/-/ember-cli-image-transformer-2.0.0.tgz#f220b4395dc10c33a31f9f5d16661941d9ff4083"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^3.0.0"
     ember-cli-babel "^6.6.0"
     rsvp "^4.7.0"
     sharp "^0.20.0"
