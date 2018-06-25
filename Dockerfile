@@ -1,15 +1,12 @@
-FROM node:boron-alpine
+FROM node:carbon
 
 MAINTAINER Ilios Project Team <support@iliosproject.org>
-
-RUN apk add --update git
-RUN rm -rf /var/cache/apk/* && rm -rf /tmp/*
 
 WORKDIR /web
 ENV PATH=/web/node_modules/.bin:$PATH
 COPY . /web
 
-RUN npm install
+RUN yarn install
 
-CMD ["ember", "serve"]
+CMD ["yarn", "start"]
 EXPOSE 4200
