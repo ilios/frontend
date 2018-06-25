@@ -4,7 +4,7 @@ import Component from '@ember/component';
 import { isEmpty, isPresent } from '@ember/utils';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import SHA256 from 'cryptojs/sha256';
+import sha256 from 'crypto-js/sha256';
 
 const { reads } = computed;
 
@@ -42,7 +42,7 @@ export default Component.extend({
   randomToken(userId){
     const now = Date.now();
     const randomValue = Math.random().toString(36).substr(2);
-    const hash = SHA256(userId + randomValue + now).toString();
+    const hash = sha256(userId + randomValue + now).toString();
 
     return hash;
   },
