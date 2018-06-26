@@ -21,6 +21,7 @@ export default Component.extend({
     changeLocale(newLocale){
       this.get('i18n').set('locale', newLocale);
       this.get('moment').setLocale(newLocale);
+      window.document.querySelector('html').setAttribute('lang', newLocale);
     }
   }
 });

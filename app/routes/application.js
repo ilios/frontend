@@ -40,7 +40,9 @@ export default Route.extend(ApplicationRouteMixin, {
   beforeModel() {
     const i18n = this.get('i18n');
     const moment = this.get('moment');
-    moment.setLocale(i18n.get('locale'));
+    const locale = i18n.get('locale');
+    moment.setLocale(locale);
+    window.document.querySelector('html').setAttribute('lang', locale);
   },
 
   /**
