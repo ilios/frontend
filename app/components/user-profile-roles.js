@@ -20,6 +20,7 @@ export default Component.extend({
   isFormerStudentFlipped: false,
   isEnabledFlipped: false,
   isUserSyncIgnoredFlipped: false,
+  'data-test-user-profile-roles': true,
 
   save: task(function * (){
     const store = this.get('store');
@@ -83,7 +84,7 @@ export default Component.extend({
     return (originallyYes && !flipped) || (!originallyYes && flipped);
   }),
 
-  isEnabled: computed('user.enabled', 'isEnabledFlipped', async function(){
+  isEnabled: computed('user.enabled', 'isEnabledFlipped', function(){
     const flipped = this.get('isEnabledFlipped');
     const user = this.get('user');
     if (isEmpty(user)) {
@@ -93,8 +94,8 @@ export default Component.extend({
     return (originallyYes && !flipped) || (!originallyYes && flipped);
   }),
 
-  isUserSyncIgnored: computed('user.enabled', 'isEnabledFlipped', async function(){
-    const flipped = this.get('isEnabledFlipped');
+  isUserSyncIgnored: computed('user.userSyncIgnore', 'isUserSyncIgnoredFlipped', function(){
+    const flipped = this.get('isUserSyncIgnoredFlipped');
     const user = this.get('user');
     if (isEmpty(user)) {
       return false;
