@@ -1,195 +1,138 @@
-import { getOwner } from '@ember/application';
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import { moduleForComponent } from 'ember-qunit';
-import { test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | curriculum inventory report details', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('curriculum-inventory-report-details', 'Integration | Component | curriculum inventory report details', {
-  integration: true,
+  test('it renders', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const program = this.server.create('program', {
+      school
+    });
+    this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+      isFinalized: false,
+      name: 'Lorem Ipsum',
+      startDate: moment('2015-06-12').toDate(),
+      endDate: moment('2016-04-11').toDate(),
+      description: 'Lorem Ipsum',
+    });
+    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
 
-  beforeEach: function () {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
-});
+    this.set('report', report);
+    this.set('nothing', () =>{});
 
-test('it renders', function(assert) {
-  assert.expect(2);
+    await render(hbs`{{curriculum-inventory-report-details
+      report=report
+      canUpdate=true
+      setLeadershipDetails=(action nothing)
+      setManageLeadership=(action nothing)
+    }}`);
 
-  let school = EmberObject.create({ id() { return 1; }});
-
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
-  }
-
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
+    return settled().then(() => {
+      assert.equal(find('.curriculum-inventory-report-header .title').textContent.trim(), report.get('name'),
+        'Report name is visible in header.'
+      );
+      assert.equal(find('.curriculum-inventory-report-overview .description .editable').textContent.trim(), report.get('description'),
+        'Report description is visible in overview.'
+      );
+    });
   });
 
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([]),
-    isFinalized: false,
-    name: 'Lorem Ipsum',
-    startDate: moment('2015-06-12').toDate(),
-    endDate: moment('2016-04-11').toDate(),
-    description: 'Lorem Ipsum',
-    sequenceBlocks: resolve([])
-  });
+  test('finalize report', async function(assert) {
+    assert.expect(6);
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const program = this.server.create('program', {
+      school
+    });
+    this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+      isFinalized: false,
+      name: 'Lorem Ipsum',
+      startDate: moment('2015-06-12').toDate(),
+      endDate: moment('2016-04-11').toDate(),
+      description: 'Lorem Ipsum',
+    });
+    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    this.set('report', report);
+    this.set('nothing', () => { });
+    this.set('canUpdate', true);
 
-  this.set('report', report);
-  this.set('nothing', () =>{});
+    await render(hbs`{{curriculum-inventory-report-details
+      report=report
+      canUpdate=canUpdate
+      setLeadershipDetails=(action nothing)
+      setManageLeadership=(action nothing)
+    }}`);
 
-  this.render(hbs`{{curriculum-inventory-report-details
-    report=report
-    canUpdate=true
-    setLeadershipDetails=(action nothing)
-    setManageLeadership=(action nothing)
-  }}`);
-
-  return wait().then(() => {
-    assert.equal(this.$('.curriculum-inventory-report-header .title').text().trim(), report.get('name'),
-      'Report name is visible in header.'
+    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
+    await click('.curriculum-inventory-report-header .finalize');
+    assert.equal(findAll('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
+    assert.ok(
+      find('.confirm-finalize .confirm-message').textContent.trim().indexOf('By finalizing this report') === 0,
+      'Finalize confirmation message is visible'
     );
-    assert.equal(this.$('.curriculum-inventory-report-overview .description .editable').text().trim(), report.get('description'),
-      'Report description is visible in overview.'
+    await click('.confirm-finalize .confirm-buttons .finalize');
+    this.set('canUpdate', false);
+    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-finalization.');
+    assert.equal(findAll('.curriculum-inventory-report-header .title .fa-lock').length, 1,
+      'Lock icon is visible next to title post-finalization.'
+    );
+    assert.equal(findAll('.curriculum-inventory-report-header .finalize').length, 0,
+      'Finalize button is not visible post-finalization.'
     );
   });
-});
 
-test('finalize report', async function(assert) {
-  assert.expect(8);
+  test('start finalizing report, then cancel', async function(assert){
+    assert.expect(3);
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const program = this.server.create('program', {
+      school
+    });
+    this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+      isFinalized: false,
+      name: 'Lorem Ipsum',
+      startDate: moment('2015-06-12').toDate(),
+      endDate: moment('2016-04-11').toDate(),
+      description: 'Lorem Ipsum',
+    });
+    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
 
-  let school = EmberObject.create({ id() { return 1; }});
+    this.set('report', report);
+    this.set('nothing', () =>{});
 
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
-  }
+    await render(hbs`{{curriculum-inventory-report-details
+      report=report
+      canUpdate=true
+      setLeadershipDetails=(action nothing)
+      setManageLeadership=(action nothing)
+    }}`);
 
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
+    await click('.curriculum-inventory-report-header .finalize');
+    await click('.confirm-finalize .confirm-buttons .done');
+    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
+    assert.equal(findAll('.curriculum-inventory-report-header .title .fa-lock').length, 0,
+      'Lock icon is not visible post-cancellation.'
+    );
+    assert.equal(findAll('.curriculum-inventory-report-header .finalize').length, 1,
+      'Finalize button is visible post-cancellation.'
+    );
   });
-
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([]),
-    isFinalized: false,
-    name: 'Lorem Ipsum',
-    startDate: moment('2015-06-12').toDate(),
-    endDate: moment('2016-04-11').toDate(),
-    description: 'Lorem Ipsum',
-    sequenceBlocks: resolve([])
-  });
-  let test = this;
-  let storeMock = Service.extend({
-    createRecord(what, params) {
-      assert.equal(what, 'curriculumInventoryExport', 'createRecord() got invoked for export.');
-      assert.equal(params.report, report, 'Report gets passed to correctly.');
-      return EmberObject.create({
-        save() {
-          test.set('canUpdate', false);
-          return resolve(this);
-        }
-      });
-    }
-  });
-
-  this.register('service:store', storeMock);
-  this.set('report', report);
-  this.set('nothing', () => { });
-  this.set('canUpdate', true);
-
-  this.render(hbs`{{curriculum-inventory-report-details
-    report=report
-    canUpdate=canUpdate
-    setLeadershipDetails=(action nothing)
-    setManageLeadership=(action nothing)
-  }}`);
-
-  await wait();
-  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
-  await this.$('.curriculum-inventory-report-header .finalize').click();
-  await wait();
-  assert.equal(this.$('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
-  assert.ok(
-    this.$('.confirm-finalize .confirm-message').text().trim().indexOf('By finalizing this report') === 0,
-    'Finalize confirmation message is visible'
-  );
-  await this.$('.confirm-finalize .confirm-buttons .finalize').click();
-  await wait();
-  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-finalization.');
-  assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 1,
-    'Lock icon is visible next to title post-finalization.'
-  );
-  assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 0,
-    'Finalize button is not visible post-finalization.'
-  );
-});
-
-test('start finalizing report, then cancel', async function(assert){
-  assert.expect(3);
-  let school = EmberObject.create({ id() { return 1; }});
-
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
-  }
-
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([]),
-    isFinalized: false,
-    name: 'Lorem Ipsum',
-    startDate: moment('2015-06-12').toDate(),
-    endDate: moment('2016-04-11').toDate(),
-    description: 'Lorem Ipsum',
-    sequenceBlocks: resolve([])
-  });
-
-  this.set('report', report);
-  this.set('nothing', () =>{});
-
-  this.render(hbs`{{curriculum-inventory-report-details
-    report=report
-    canUpdate=true
-    setLeadershipDetails=(action nothing)
-    setManageLeadership=(action nothing)
-  }}`);
-
-  await this.$('.curriculum-inventory-report-header .finalize').click();
-  await wait();
-  await this.$('.confirm-finalize .confirm-buttons .done').click();
-  await wait();
-  assert.equal(this.$('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
-  assert.equal(this.$('.curriculum-inventory-report-header .title .fa-lock').length, 0,
-    'Lock icon is not visible post-cancellation.'
-  );
-  assert.equal(this.$('.curriculum-inventory-report-header .finalize').length, 1,
-    'Finalize button is visible post-cancellation.'
-  );
 });
