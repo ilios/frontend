@@ -4,6 +4,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import page from 'ilios/tests/pages/user';
 
 module('Acceptance: User', function(hooks) {
   setupApplicationTest(hooks);
@@ -49,5 +50,95 @@ module('Acceptance: User', function(hooks) {
     await click(secondResultUsername);
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
     assert.equal(find(name).textContent.trim(), '1 guy M. Mc1son', 'user name is shown');
+  });
+
+  test('User roles display', async function (assert) {
+    const studentRole = this.server.create('user-role', {
+      title: 'Student',
+    });
+    const formerStudentRole = this.server.create('user-role', {
+      title: 'Former Student',
+    });
+    const user1 = this.server.create('user', {
+      enabled: true,
+      userSyncIgnore: true,
+      roles: [studentRole, formerStudentRole],
+      school: this.school
+    });
+    const user2 = this.server.create('user', {
+      enabled: false,
+      userSyncIgnore: false,
+      roles: [],
+      school: this.school
+    });
+    await page.visit({ userId: user1.id });
+    assert.equal(page.roles.student.value, 'Yes');
+    assert.equal(page.roles.student.label, 'Student:');
+    assert.equal(page.roles.formerStudent.value, 'Yes');
+    assert.equal(page.roles.formerStudent.label, 'Former Student:');
+    assert.equal(page.roles.enabled.value, 'Yes');
+    assert.equal(page.roles.enabled.label, 'Account Enabled:');
+    assert.equal(page.roles.excludeFromSync.value, 'Yes');
+    assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
+    await page.roles.manage();
+    assert.ok(page.roles.formerStudent.selected);
+    assert.ok(page.roles.enabled.selected);
+    assert.ok(page.roles.excludeFromSync.selected);
+
+    await page.visit({ userId: user2.id });
+    assert.equal(page.roles.student.value, 'No');
+    assert.equal(page.roles.student.label, 'Student:');
+    assert.equal(page.roles.formerStudent.value, 'No');
+    assert.equal(page.roles.formerStudent.label, 'Former Student:');
+    assert.equal(page.roles.enabled.value, 'No');
+    assert.equal(page.roles.enabled.label, 'Account Enabled:');
+    assert.equal(page.roles.excludeFromSync.value, 'No');
+    assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
+    await page.roles.manage();
+    assert.notOk(page.roles.formerStudent.selected);
+    assert.notOk(page.roles.enabled.selected);
+    assert.notOk(page.roles.excludeFromSync.selected);
+  });
+
+  test('Change user roles #3887', async function (assert) {
+    const studentRole = this.server.create('user-role', {
+      title: 'Student',
+    });
+    const formerStudentRole = this.server.create('user-role', {
+      title: 'Former Student',
+    });
+    const user = this.server.create('user', {
+      enabled: true,
+      userSyncIgnore: true,
+      roles: [studentRole, formerStudentRole],
+      school: this.school
+    });
+    await page.visit({ userId: user.id });
+    assert.equal(page.roles.student.value, 'Yes');
+    assert.equal(page.roles.formerStudent.value, 'Yes');
+    assert.equal(page.roles.enabled.value, 'Yes');
+    assert.equal(page.roles.excludeFromSync.value, 'Yes');
+    await page.roles.manage();
+    assert.ok(page.roles.formerStudent.selected);
+    assert.ok(page.roles.enabled.selected);
+    assert.ok(page.roles.excludeFromSync.selected);
+    await page.roles.formerStudent.click();
+    await page.roles.enabled.click();
+    await page.roles.excludeFromSync.click();
+    assert.notOk(page.roles.formerStudent.selected);
+    assert.notOk(page.roles.enabled.selected);
+    assert.notOk(page.roles.excludeFromSync.selected);
+
+    await page.roles.save();
+    assert.equal(page.roles.student.value, 'Yes');
+    assert.equal(page.roles.formerStudent.value, 'No');
+    assert.equal(page.roles.enabled.value, 'No');
+    assert.equal(page.roles.excludeFromSync.value, 'No');
+    await page.visit({ userId: user.id });
+    assert.equal(page.roles.student.value, 'Yes');
+    assert.equal(page.roles.formerStudent.value, 'No');
+    assert.equal(page.roles.enabled.value, 'No');
+    assert.equal(page.roles.excludeFromSync.value, 'No');
+
   });
 });

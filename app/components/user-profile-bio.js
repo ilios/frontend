@@ -119,6 +119,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   changeUserPassword: false,
   updatedFieldsFromSync: null,
   showSyncErrorMessage: false,
+  'data-test-user-profile-bio': true,
 
   manage: task(function * (){
     const user = this.get('user');

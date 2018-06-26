@@ -115,7 +115,7 @@ test('clicking manage sends the action', function(assert) {
   assert.expect(1);
   this.set('user', user);
   this.set('click', (what) =>{
-    assert.ok(what, 'recieved boolean true value');
+    assert.ok(what, 'received boolean true value');
   });
   this.render(hbs`{{user-profile-bio user=user isManageable=true setIsManaging=(action click)}}`);
   return wait().then(()=>{

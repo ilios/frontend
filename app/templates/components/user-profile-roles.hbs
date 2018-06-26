@@ -1,9 +1,9 @@
 <div class='actions'>
   {{#if isManaging}}
-    <button class='bigadd' {{action (perform save)}}>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
+    <button class='bigadd' {{action (perform save)}} data-test-save>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
     <button disabled={{save.isRunning}} class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
   {{else if isManageable}}
-    <button class='manage' {{action setIsManaging true}}>{{fa-icon 'edit'}}</button>
+    <button class='manage' {{action setIsManaging true}} data-test-manage>{{fa-icon 'edit'}}</button>
   {{/if}}
 </div>
 <div class='form'>
@@ -18,7 +18,7 @@
     </span>
   </div>
   <div class='item'>
-    <label onclick={{if isManaging (action (mut isFormerStudentFlipped) (not isFormerStudentFlipped))}}>{{t 'general.formerStudent'}}:</label>
+    <label for='former-student'>{{t 'general.formerStudent'}}:</label>
     {{#unless isManaging}}
       <span class='value {{if (await isFormerStudent) "yes" "no"}}'>
         {{#if (await isFormerStudent)}}
@@ -29,7 +29,8 @@
       </span>
     {{else}}
       <input
-        type="checkbox"
+        id='former-student'
+        type='checkbox'
         checked={{await isFormerStudent}}
         onclick={{action (mut isFormerStudentFlipped) (not isFormerStudentFlipped)}}
       >
@@ -39,7 +40,7 @@
   <hr>
 
   <div class='item'>
-    <label onclick={{if isManaging (action (mut isEnabledFlipped) (not isEnabledFlipped))}}>{{t 'general.accountEnabled'}}:</label>
+    <label for='is-enabled'>{{t 'general.accountEnabled'}}:</label>
     {{#unless isManaging}}
       <span class='value {{if (await isEnabled) "yes" "no"}}'>
         {{#if (await isEnabled)}}
@@ -50,15 +51,16 @@
       </span>
     {{else}}
       <input
-        type="checkbox"
-        checked={{await isEnabled}}
+        id='is-enabled'
+        type='checkbox'
+        checked={{isEnabled}}
         onclick={{action (mut isEnabledFlipped) (not isEnabledFlipped)}}
         disabled={{if (eq user.id currentUser.model.id) true}}
       >
     {{/unless}}
   </div>
   <div class='item'>
-    <label onclick={{if isManaging (action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped))}}>{{t 'general.excludeFromSync'}}:</label>
+    <label for='exclude-from-sync' >{{t 'general.excludeFromSync'}}:</label>
     {{#unless isManaging}}
       <span class='value {{if (await isUserSyncIgnored) "yes" "no"}}'>
         {{#if (await isUserSyncIgnored)}}
@@ -69,8 +71,9 @@
       </span>
     {{else}}
       <input
-        type="checkbox"
-        checked={{await isUserSyncIgnored}}
+        id='exclude-from-sync'
+        type='checkbox'
+        checked={{isUserSyncIgnored}}
         onclick={{action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped)}}
       >
     {{/unless}}

@@ -8,4 +8,5 @@ export default Component.extend({
   canUpdate: false,
   canCreate: false,
   classNames: ['user-profile'],
+  'data-test-user-profile': true,
 });
