@@ -15,9 +15,9 @@
 
     {{#unless isMonth}}
       {{#if (not event.isPublished)}}
-        {{fa-icon 'files-o'}}
+        {{fa-icon 'file-edit' prefix='far'}}
       {{else if event.isScheduled}}
-        {{fa-icon 'clock-o'}}
+        {{fa-icon 'clock'}}
       {{/if}}
     {{/unless}}
     <span class='ilios-calendar-event-time'>

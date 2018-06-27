@@ -7,6 +7,21 @@ module.exports = function(defaults) {
     // Add options here
     dotEnv: {
       clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST']
+    },
+    fontawesome: {
+      enableExperimentalBuildTimeTransform: true,
+      icons: {
+        'free-solid-svg-icons': [
+          'link',
+          'paragraph',
+          'external-link-square',
+          'file-pdf',
+          'file-powerpoint',
+          'file-video',
+          'file-audio',
+          'file',
+        ]
+      }
     }
   });
 
