@@ -43,7 +43,7 @@
     "ember-source": "~3.1.1",
     "ember-tether": "^1.0.0",
     "eslint-plugin-ember": "^5.0.0",
-    "ilios-common": "15.4.0",
+    "ilios-common": "15.5.0",
     "loader.js": "^4.2.3"
   },
   "engines": {
