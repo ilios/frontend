@@ -79,4 +79,46 @@ module('Unit | Model | Offering', function(hooks) {
     assert.equal(model.get('durationHours'), 1);
     assert.equal(model.get('durationMinutes'), 0);
   });
+
+  test('check allLearners', async function(assert) {
+    assert.expect(8);
+    let offering = run(() => this.owner.lookup('service:store').createRecord('offering'));
+    let store = this.owner.lookup('service:store');
+
+    await run( async () => {
+      const allLearners = await offering.get('allLearners');
+      assert.equal(allLearners.length, 0);
+    });
+
+    await run( async () => {
+      const user1 = store.createRecord('user');
+      const user2 = store.createRecord('user');
+      const user3 = store.createRecord('user');
+      offering.get('learners').pushObject(user1);
+      const learnerGroup1 = store.createRecord('learner-group', {users: [user2]});
+      const learnerGroup2 = store.createRecord('learner-group', {users: [user3]});
+      offering.get('learnerGroups').pushObjects([learnerGroup1, learnerGroup2]);
+
+      const allLearners = await offering.get('allLearners');
+
+      assert.equal(allLearners.length, 3);
+      assert.ok(allLearners.includes(user1));
+      assert.ok(allLearners.includes(user2));
+      assert.ok(allLearners.includes(user3));
+    });
+
+    await run( async () => {
+      const user4 = store.createRecord('user');
+      const user5 = store.createRecord('user');
+      offering.get('learners').pushObject(user4);
+      const learnerGroup3 = store.createRecord('learner-group', {users: [user5]});
+      offering.get('learnerGroups').pushObject(learnerGroup3);
+
+      const allLearners = await offering.get('allLearners');
+
+      assert.equal(allLearners.length, 5);
+      assert.ok(allLearners.includes(user4));
+      assert.ok(allLearners.includes(user5));
+    });
+  });
 });

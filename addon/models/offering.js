@@ -82,6 +82,23 @@ export default Model.extend({
 
     return allInstructors.uniq().sortBy('lastName', 'firstName');
   }),
+  /**
+   * All learners associated with this offering, either directly or indirectly via learner groups.
+   * @property allLearners
+   * @type {Ember.computed}
+   */
+  allLearners: computed('learners.[]', 'learnerGroups.[]', async function(){
+    const learnerGroups = await this.get('learnerGroups');
+    const learners = await this.get('learners');
+    const learnersInLearnerGroups = await all(learnerGroups.mapBy('users'));
+    const allLearners = learnersInLearnerGroups.reduce((array, set) => {
+      return array.pushObjects(set.toArray());
+    }, []);
+
+    allLearners.pushObjects(learners.toArray());
+
+    return allLearners.uniq().sortBy('lastName', 'firstName');
+  }),
 
   durationHours: computed('startDate', 'endDate', function(){
     const startDate = this.get('startDate');
