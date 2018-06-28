@@ -41,13 +41,13 @@
     placeholder={{t "general.sessionTitleFilterPlaceholder"}}
   >
 </div>
-<table class="course-sessions-table">
+<section>
   {{sessions-grid-header
     showExpandAll=(is-fulfilled sessionObjects)
     setSortBy=setSortBy
     sortBy=sortBy
-    allSessionsExpanded=(eq expandedSessions.length (has-many-length course 'sessions'))
-    toggleExpandAll=(action 'toggleExpandAll')
+    allSessionsExpanded=(eq expandedSessions.length (has-many-length course "sessions"))
+    toggleExpandAll=(action "toggleExpandAll")
   }}
   {{#if (is-fulfilled sessionObjects)}}
     {{sessions-grid
@@ -55,10 +55,10 @@
       sortBy=sortBy
       filterBy=filterBy
       expandedSessions=expandedSessions
-      closeSession=(action 'closeSession')
-      expandSession=(action 'expandSession')
+      closeSession=(action "closeSession")
+      expandSession=(action "expandSession")
     }}
   {{else}}
     {{sessions-grid-loading count=(has-many-length course "sessions")}}
   {{/if}}
-</table>
+</section>

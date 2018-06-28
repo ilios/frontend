@@ -1,22 +1,22 @@
 {{#each sortedSessions as |obj|}}
-  <tr class='{{if (contains obj.session expandedSessions) 'is-expanded' 'not-expanded'}} session-row'>
-    <td colspan=1>
+  <div class='{{if (contains obj.session expandedSessions) 'is-expanded' 'not-expanded'}} session-row'>
+    <span>
       {{#if (contains obj.session expandedSessions)}}
         {{fa-icon 'caret-down' class='link' click=(action closeSession obj.session)}}
       {{else}}
         {{fa-icon 'caret-right' class='link' click=(action expandSession obj.session)}}
       {{/if}}
-    </td>
-    <td colspan=8>
+    </span>
+    <span>
       {{#link-to 'session' obj.course obj.session}}
         {{truncate obj.title 100 true}}
       {{/link-to}}
-    </td>
-    <td colspan=6>{{obj.sessionTypeTitle}}</td>
-    <td colspan=2>{{obj.learnerGroupCount}}</td>
-    <td colspan=2>{{obj.objectiveCount}}</td>
-    <td colspan=2>{{obj.termCount}}</td>
-    <td colspan=4>
+    </span>
+    <span>{{obj.sessionTypeTitle}}</span>
+    <span>{{obj.learnerGroupCount}}</span>
+    <span>{{obj.objectiveCount}}</span>
+    <span>{{obj.termCount}}</span>
+    <span>
       {{#if obj.firstOfferingDate}}
         {{#if obj.isIlm}}
           <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format obj.firstOfferingDate 'L'}}
@@ -24,18 +24,23 @@
           {{moment-format obj.firstOfferingDate 'L LT'}}
         {{/if}}
       {{/if}}
-    </td>
-    <td colspan=2>{{obj.offeringCount}}</td>
-    <td colspan=2>{{publication-status item=obj showText=false}}</td>
-  </tr>
+    </span>
+    <span>{{obj.offeringCount}}</span>
+    <span>{{publication-status item=obj showText=false}}</span>
+  </div>
   {{#if (contains obj.session expandedSessions)}}
-    <tr class='first-expanded-row is-expanded'>
-      <td colspan=29>{{t 'general.offerings'}}</td>
-    </tr>
-    {{#each (sort-by 'startDate' (await obj.session.offerings)) as |offering|}}
-      {{sessions-grid-offering offering=offering canUpdate=obj.canUpdate}}
-    {{/each}}
-    <tr class='last-expanded-row is-expanded'></tr>
+    <table>
+      <caption>{{t 'general.offerings'}}</caption>
+      <thead>
+        <tr></tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by 'startDate' (await obj.session.offerings)) as |offering|}}
+          {{sessions-grid-offering offering=offering canUpdate=obj.canUpdate}}
+        {{/each}}
+      </tbody>
+    </table>
+    <div class='last-expanded-row is-expanded'></div>
   {{/if}}
 
 {{/each}}

@@ -1,21 +1,20 @@
 .sessions-grid {
-  tr:nth-child(even).not-expanded {
-    background-color: $grey;
-  }
-  .is-expanded {
-    background-color: $active-background-color;
-    border-left: 1px solid $ilios-blue;
-    border-right: 1px solid $ilios-blue;
-
-    &.session-row {
-      border-top: 1px solid $ilios-blue;
+  .session-row {
+    @include sessions-grid;
+    &:nth-child(even).not-expanded {
+      background-color: $grey;
     }
-  }
-  tr:nth-child(even).is-expanded {
-    background-color: darken($active-background-color, 5);
-  }
+    &.is-expanded {
+      background-color: $active-background-color;
+      border-left: 1px solid $ilios-blue;
+      border-right: 1px solid $ilios-blue;
+    }
+    &:nth-child(even).is-expanded {
+      background-color: darken($active-background-color, 5);
+    }
 
-  .last-expanded-row {
-    border-bottom: 1px solid $ilios-blue;
+    .last-expanded-row {
+      border-bottom: 1px solid $ilios-blue;
+    }
   }
 }

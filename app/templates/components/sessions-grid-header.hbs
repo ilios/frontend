@@ -1,85 +1,75 @@
-<tr>
-  <th class='link' colspan=1 {{action toggleExpandAll}}>
-    {{#if @showExpandAll}}
-      {{#if @allSessionsExpanded}}
-        {{fa-icon 'caret-down'}}
-      {{else}}
-        {{fa-icon 'caret-right'}}
-      {{/if}}
+<div class='link' {{action toggleExpandAll}}>
+  {{#if @showExpandAll}}
+    {{#if @allSessionsExpanded}}
+      {{fa-icon 'caret-down'}}
+    {{else}}
+      {{fa-icon 'caret-right'}}
     {{/if}}
-  </th>
-  {{#sortable-th
-    colspan=8
-    click=(action 'setSortBy' 'title')
-    sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
-    sortedAscending=sortedAscending
-  }}
-    {{t 'general.title'}}
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=6
-    click=(action 'setSortBy' 'sessionTypeTitle')
-    sortedBy=(or (eq sortBy 'sessionTypeTitle') (eq sortBy 'sessionTypeTitle:desc'))
-    sortedAscending=sortedAscending
-  }}
-    {{t 'general.type'}}
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=2
-    sortType='numeric'
-    click=(action 'setSortBy' 'learnerGroupCount')
-    sortedBy=(or (eq sortBy 'learnerGroupCount') (eq sortBy 'learnerGroupCount:desc'))
-    sortedAscending=sortedAscending
-    title=(t 'general.groups')
-  }}
-    {{truncate (t 'general.groups') 2 false}}.
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=2
-    sortType='numeric'
-    click=(action 'setSortBy' 'objectiveCount')
-    sortedBy=(or (eq sortBy 'objectiveCount') (eq sortBy 'objectiveCount:desc'))
-    sortedAscending=sortedAscending
-    title=(t 'general.objectives')
-  }}
-    {{truncate (t 'general.objectives') 2 false}}.
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=2
-    sortType='numeric'
-    click=(action 'setSortBy' 'termCount')
-    sortedBy=(or (eq sortBy 'termCount') (eq sortBy 'termCount:desc'))
-    sortedAscending=sortedAscending
-    title=(t 'general.terms')
-  }}
-    {{truncate (t 'general.terms') 2 false}}.
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=4
-    sortType='numeric'
-    click=(action 'setSortBy' 'firstOfferingDate')
-    sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
-    sortedAscending=sortedAscending
-  }}
-    {{t 'general.firstOffering'}}
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=2
-    sortType='numeric'
-    click=(action 'setSortBy' 'offeringCount')
-    sortedBy=(or (eq sortBy 'offeringCount') (eq sortBy 'offeringCount:desc'))
-    sortedAscending=sortedAscending
-    title=(t 'general.offerings')
-  }}
-    {{truncate (t 'general.offerings') 2 false}}.
-  {{/sortable-th}}
-  {{#sortable-th
-    colspan=2
-    click=(action 'setSortBy' 'status')
-    sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
-    sortedAscending=sortedAscending
-    title=(t 'general.status')
-  }}
-    {{truncate (t 'general.status') 2 false}}.
-  {{/sortable-th}}
-</tr>
+  {{/if}}
+</div>
+{{#sortable-heading
+  click=(action 'setSortBy' 'title')
+  sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+  sortedAscending=sortedAscending
+}}
+  {{t 'general.title'}}
+{{/sortable-heading}}
+{{#sortable-heading
+  click=(action 'setSortBy' 'sessionTypeTitle')
+  sortedBy=(or (eq sortBy 'sessionTypeTitle') (eq sortBy 'sessionTypeTitle:desc'))
+  sortedAscending=sortedAscending
+}}
+  {{t 'general.type'}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType='numeric'
+  click=(action 'setSortBy' 'learnerGroupCount')
+  sortedBy=(or (eq sortBy 'learnerGroupCount') (eq sortBy 'learnerGroupCount:desc'))
+  sortedAscending=sortedAscending
+  title=(t 'general.groups')
+}}
+  {{truncate (t 'general.groups') 3 false}}.
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType='numeric'
+  click=(action 'setSortBy' 'objectiveCount')
+  sortedBy=(or (eq sortBy 'objectiveCount') (eq sortBy 'objectiveCount:desc'))
+  sortedAscending=sortedAscending
+  title=(t 'general.objectives')
+}}
+  {{truncate (t 'general.objectives') 3 false}}.
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType='numeric'
+  click=(action 'setSortBy' 'termCount')
+  sortedBy=(or (eq sortBy 'termCount') (eq sortBy 'termCount:desc'))
+  sortedAscending=sortedAscending
+  title=(t 'general.terms')
+}}
+  {{truncate (t 'general.terms') 3 false}}.
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType='numeric'
+  click=(action 'setSortBy' 'firstOfferingDate')
+  sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
+  sortedAscending=sortedAscending
+}}
+  {{t 'general.firstOffering'}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType='numeric'
+  click=(action 'setSortBy' 'offeringCount')
+  sortedBy=(or (eq sortBy 'offeringCount') (eq sortBy 'offeringCount:desc'))
+  sortedAscending=sortedAscending
+  title=(t 'general.offerings')
+}}
+  {{truncate (t 'general.offerings') 3 false}}.
+{{/sortable-heading}}
+{{#sortable-heading
+  click=(action 'setSortBy' 'status')
+  sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
+  sortedAscending=sortedAscending
+  title=(t 'general.status')
+}}
+  {{truncate (t 'general.status') 3 false}}.
+{{/sortable-heading}}

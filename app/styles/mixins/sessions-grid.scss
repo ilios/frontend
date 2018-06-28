@@ -1,0 +1,4 @@
+@mixin sessions-grid () {
+  display: grid;
+  grid-template-columns: 1fr 7fr 5fr 1fr 1fr 1fr 5fr 1fr 1fr;
+}

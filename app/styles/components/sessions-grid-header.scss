@@ -1,23 +1,14 @@
 .sessions-grid-header {
+  @include sessions-grid;
   background-color: $header-blue;
+  border-bottom: 1px solid $dark-grey;
   color: $white;
   font-size: .8rem;
   font-weight: normal;
+  position: sticky;
+  top: 0;
 
-  tr {
-    background-color: $header-blue;
-    border-bottom: 1px solid $dark-grey;
-    border-collapse: collapse;
-  }
-
-  th {
-    background-color: $header-blue;
+  .sortable-heading {
     padding: .5rem 0;
-    text-align: left;
-  }
-
-  &.is-fixed {
-    position: sticky;
-    top: 0;
   }
 }

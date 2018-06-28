@@ -1,8 +1,12 @@
 .sessions-grid-loading {
-  tr:nth-child(even) {
-    background-color: $grey;
+  div {
+    @include sessions-grid;
+
+    &:nth-child(even) {
+      background-color: $grey;
+    }
   }
-  td {
+  span {
     color: transparent;
     text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
   }
