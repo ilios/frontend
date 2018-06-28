@@ -1,0 +1,30 @@
+{{#click-outside action=(action (mut isOpen) false)}}
+  <button
+    {{action 'toggleMenu'}}
+    aria-label={{t (concat 'general.language.' locale.id)}}
+    class='toggle'
+    aria-haspopup="true"
+    aria-expanded={{if isOpen 'true' 'false'}}
+    data-level='toggle'
+    data-test-toggle
+  >
+    {{fa-icon 'globe'}} <span>{{t (concat 'general.language.' locale.id)}}</span>
+  </button>
+  {{#if isOpen}}
+    <div class='menu' role="menu">
+      {{#each locales as |loc|}}
+        <button
+          {{action 'changeLocale' loc.id}}
+          role="menuitemradio"
+          lang={{loc.id}}
+          tabindex="-1"
+          aria-checked={{if (eq locale.id loc.id) 'true' 'false'}}
+          data-level='item'
+          data-test-item
+        >
+          {{loc.text}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
+{{/click-outside}}
