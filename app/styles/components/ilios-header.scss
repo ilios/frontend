@@ -53,10 +53,10 @@
     justify-self: end;
     margin-right: 1rem;
 
-    .user,
-    .locales {
+    .user {
       color: $ilios-orange;
       font-weight: 800;
+      margin-left: 1rem;
 
       span {
         display: none;
@@ -78,10 +78,6 @@
           color: $ilios-orange;
         }
       }
-    }
-
-    .user {
-      margin-left: 1rem;
     }
   }
 

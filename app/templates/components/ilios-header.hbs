@@ -6,13 +6,8 @@
 {{/link-to}}
 <h1>{{title}}</h1>
 <div class="tools">
-  <div class='locales'>
-    {{#action-menu title=(t (concat 'general.language.' i18n.locale)) icon='globe'}}
-      {{#each locales as |loc|}}
-        <li {{action 'changeLocale' loc.id}}>{{loc.text}}</li>
-      {{/each}}
-    {{/action-menu}}
-  </div>
+  {{locale-chooser}}
+
   {{#if session.isAuthenticated}}
     <div class='user'>
       {{#action-menu title=(get (await currentUser.model) 'fullName') icon='user' class='right-edge'}}
