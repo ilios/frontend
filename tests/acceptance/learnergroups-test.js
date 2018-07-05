@@ -5,6 +5,7 @@ import {
   test
 } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { percySnapshot } from 'ember-percy';
 
 const url = '/learnergroups';
 
@@ -25,6 +26,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     this.server.create('user', {id: 4136});
     this.server.create('school');
     await visit('/learnergroups');
+    percySnapshot(assert);
     assert.equal(currentRouteName(), 'learnerGroups');
   });
 
@@ -44,6 +46,7 @@ module('Acceptance: Learner Groups', function(hooks) {
       programYearId: 1,
     });
     await visit('/learnergroups');
+    percySnapshot(assert);
     assert.equal(await getElementText(find(schoolsFilter)), getText('school 0'));
     assert.equal(await getElementText(find(programsFilter)), getText('program 0'));
     assert.equal(await getElementText(find(programyearsfilter)), getText('cohort 0'));
@@ -81,6 +84,7 @@ module('Acceptance: Learner Groups', function(hooks) {
       cohortId: 2
     });
     await visit('/learnergroups');
+    percySnapshot(assert);
     assert.equal(await getElementText(find(selectedProgram)), getText('program 0'));
     assert.equal(await getElementText(find(firstListedLearnerGroup)), getText(firstLearnergroup.title));
     var options = findAll(programOptions);
@@ -120,6 +124,7 @@ module('Acceptance: Learner Groups', function(hooks) {
       cohortId: 2
     });
     await visit('/learnergroups');
+    percySnapshot(assert);
     assert.equal(await getElementText(find(selectedProgramYear)), getText('cohort 1'));
     assert.equal(await getElementText(find(firstListedLearnerGroup)), getText(secondLearnergroup.title));
     var options = findAll(programYearOptions);
@@ -165,6 +170,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     });
 
     await visit('/learnergroups');
+    percySnapshot(assert);
     const rows = '.list tbody tr';
     assert.equal(2, findAll(rows).length);
     assert.equal(await getElementText(`${rows}:nth-of-type(1) td:nth-of-type(1)`), getText(firstLearnergroup.title));
@@ -251,7 +257,9 @@ module('Acceptance: Learner Groups', function(hooks) {
     await visit(url);
     await click(expandButton);
     await fillIn(input, newTitle);
+    percySnapshot(assert);
     await click(done);
+    percySnapshot(assert);
     assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
     assert.equal(getCellData(0, 1), 0, 'member count is correct');
     assert.equal(await getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully', 'Success message is shown.'));
@@ -320,6 +328,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
     await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    percySnapshot(assert);
     await click('.list tbody tr:nth-of-type(2) .remove');
     assert.equal(0, findAll('.list tbody tr').length);
   });
@@ -451,6 +460,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     await click(expandButton);
     await fillIn(input, 'A New Test Title');
     await click(addFullCohort);
+    percySnapshot(assert);
     await click(done);
     assert.equal(getCellData(0, 0), 'A New Test Title', 'title is correct');
     assert.equal(getCellData(0, 1), 5, 'member count is correct');
@@ -555,6 +565,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     assert.equal(await getElementText(find(firstMembers)), getText('0'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
+    percySnapshot(assert);
     await click(firstGroupCopyNoLearners);
     assert.equal(2, findAll(groups).length);
     assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
@@ -644,6 +655,7 @@ module('Acceptance: Learner Groups', function(hooks) {
     assert.equal(await getElementText(find(firstMembers)), getText('7'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
+    percySnapshot(assert);
     await click(firstGroupCopyWithLearners);
     assert.equal(2, findAll(groups).length);
     assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));

@@ -3,6 +3,7 @@ import { visit } from '@ember/test-helpers';
 import $ from 'jquery';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { percySnapshot } from 'ember-percy';
 
 import ENV from 'ilios/config/environment';
 const { apiVersion } = ENV.APP;
@@ -48,5 +49,6 @@ module('Acceptance: API Version Check', function(hooks) {
 
     await visit(url);
     assert.equal($(warningOverlay).length, 1);
+    percySnapshot(assert);
   });
 });

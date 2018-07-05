@@ -1,6 +1,7 @@
 import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { percySnapshot } from 'ember-percy';
 
 let url = '/admin';
 
@@ -21,6 +22,7 @@ module('Acceptance: Admin', function(hooks) {
     await visit(url);
     await click(button);
     assert.equal(currentURL(), '/users', 'transition occurred');
+    percySnapshot(assert);
   });
 
   test('can search for users', async function(assert) {
@@ -42,5 +44,6 @@ module('Acceptance: Admin', function(hooks) {
     await click(secondResultUsername);
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
     assert.equal(find(name).textContent.trim(), '1 guy M. Mc1son', 'user name is shown');
+    percySnapshot(assert);
   });
 });

@@ -7,6 +7,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import page from '../pages/learner-group';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance: Learnergroup', function(hooks) {
   setupApplicationTest(hooks);
@@ -28,7 +29,9 @@ module('Acceptance: Learnergroup', function(hooks) {
     assert.expect(8);
 
     await visit('/learnergroups/1');
+    percySnapshot(assert);
     await page.overview.manage();
+    percySnapshot(assert);
     assert.equal(page.overview.list.length, 0);
     assert.equal(page.usersInCohort.list.length, 2);
     assert.equal(page.usersInCohort.list[0].firstName, '1 guy');
@@ -105,7 +108,9 @@ module('Acceptance: Learnergroup', function(hooks) {
     await click(expandButton);
     await click(multiGroupsButton);
     await fillIn(input, '5');
+    percySnapshot(assert);
     await click(done);
+    percySnapshot(assert);
     function getCellData(row, cell) {
       return find(`${table} tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
     }
@@ -274,6 +279,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await visit('/learnergroups');
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
+    percySnapshot(assert);
 
     assert.equal(2, findAll(subGroupList).length);
 
@@ -342,6 +348,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await visit('/learnergroups/1');
     assert.equal(findAll(event).length, 0);
     await click(calendarToggle);
+    percySnapshot(assert);
     assert.equal(findAll(event).length, 1);
   });
 
@@ -380,6 +387,7 @@ module('Acceptance: Learnergroup', function(hooks) {
     await click(calendarToggle);
     assert.equal(findAll(event).length, 1);
     await click(subgroupEventsToggle);
+    percySnapshot(assert);
     assert.equal(findAll(event).length, 2);
   });
 

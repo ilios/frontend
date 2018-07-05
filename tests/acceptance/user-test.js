@@ -5,6 +5,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/user';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance: User', function(hooks) {
   setupApplicationTest(hooks);
@@ -44,6 +45,7 @@ module('Acceptance: User', function(hooks) {
     await visit('/users/100');
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
+    percySnapshot(assert);
     assert.equal(find(secondResultUsername).textContent.trim(), '1 guy M. Mc1son', 'user name is correct');
     assert.equal(find(secondResultEmail).textContent.trim(), 'user@example.edu', 'user email is correct');
 
@@ -72,6 +74,7 @@ module('Acceptance: User', function(hooks) {
       school: this.school
     });
     await page.visit({ userId: user1.id });
+    percySnapshot(assert);
     assert.equal(page.roles.student.value, 'Yes');
     assert.equal(page.roles.student.label, 'Student:');
     assert.equal(page.roles.formerStudent.value, 'Yes');
@@ -81,11 +84,13 @@ module('Acceptance: User', function(hooks) {
     assert.equal(page.roles.excludeFromSync.value, 'Yes');
     assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
+    percySnapshot(assert);
     assert.ok(page.roles.formerStudent.selected);
     assert.ok(page.roles.enabled.selected);
     assert.ok(page.roles.excludeFromSync.selected);
 
     await page.visit({ userId: user2.id });
+    percySnapshot(assert);
     assert.equal(page.roles.student.value, 'No');
     assert.equal(page.roles.student.label, 'Student:');
     assert.equal(page.roles.formerStudent.value, 'No');
@@ -95,6 +100,7 @@ module('Acceptance: User', function(hooks) {
     assert.equal(page.roles.excludeFromSync.value, 'No');
     assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
+    percySnapshot(assert);
     assert.notOk(page.roles.formerStudent.selected);
     assert.notOk(page.roles.enabled.selected);
     assert.notOk(page.roles.excludeFromSync.selected);
