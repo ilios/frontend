@@ -1,10 +1,9 @@
 /* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   session: service(),
-  currentUser: service(),
   classNames: ['ilios-header'],
   tagName: 'header',
   ariaRole: 'banner',

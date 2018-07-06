@@ -1,0 +1,19 @@
+<button
+  {{action 'toggleMenu'}}
+  aria-label={{get (await currentUser.model) 'fullName'}}
+  class='toggle'
+  aria-haspopup="true"
+  aria-expanded={{if isOpen 'true' 'false'}}
+  data-test-toggle
+>
+  {{fa-icon 'user'}} <span>{{get (await currentUser.model) 'fullName'}}</span>
+</button>
+{{#if isOpen}}
+  {{#click-outside action=(action (mut isOpen) false)}}
+    <ul class='menu'>
+      <li tabindex='-1' data-test-item>{{#link-to 'myprofile' invokeAction=(action (mut isOpen) false)}}{{t 'general.myProfile'}}{{/link-to}}</li>
+      <li tabindex='-1' data-test-item>{{#link-to 'mymaterials' invokeAction=(action (mut isOpen) false)}}{{t 'general.myMaterials'}}{{/link-to}}</li>
+      <li tabindex='-1' data-test-item>{{#link-to 'logout' invokeAction=(action (mut isOpen) false)}}{{t 'general.logout'}}{{/link-to}}</li>
+    </ul>
+  {{/click-outside}}
+{{/if}}

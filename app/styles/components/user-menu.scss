@@ -1,6 +1,8 @@
-.locale-chooser {
+.user-menu {
   position: relative;
+  margin-right: .5rem;
   text-align: right;
+  
   button {
     background-color: transparent;
     border: 0;
@@ -11,7 +13,7 @@
     width: 4rem;
 
     @include for-laptop-and-up {
-      width: 10rem;
+      width: auto;
     }
   }
 
@@ -19,23 +21,33 @@
     box-shadow: 0 2px 2px transparentize($black, .8);
     display: flex;
     flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 1.75rem;
+    right: 0;
     z-index: 100;
 
-    button {
+    li {
+      padding: 0;
+    }
+
+    a {
       border: 0;
       background-color: $white;
       color: $black;
+      display: block;
       outline: none;
       padding: .5rem 1rem;
-      width: 10rem;
 
-      &[aria-checked='true'] {
+      &.active {
         background-color: lighten($ilios-green, 25);
       }
       &:hover,
       &:focus {
         background-color: darken($base-background-color, 3);
-        &[aria-checked='true'] {
+        &.active {
           background-color: lighten($ilios-green, 15);
         }
       }
@@ -51,6 +63,7 @@
 
       @include for-laptop-and-up {
         display: inline;
+        margin-left: .5rem;
       }
     }
     &:hover,

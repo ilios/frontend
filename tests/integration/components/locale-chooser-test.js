@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/locale-chooser';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { percySnapshot } from 'ember-percy';
 
 module('Integration | Component | locale-chooser', function(hooks) {
   setupRenderingTest(hooks);
@@ -11,11 +12,14 @@ module('Integration | Component | locale-chooser', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{locale-chooser}}`);
 
+    await a11yAudit(this.element);
     assert.equal(component.text, 'English (en)');
+    percySnapshot(assert);
 
     await component.toggle.click();
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    percySnapshot(assert);
   });
 
   test('click opens menu', async function(assert) {
