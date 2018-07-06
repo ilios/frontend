@@ -6,6 +6,7 @@ let url = '/users';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance: Users', function(hooks) {
   setupApplicationTest(hooks);
@@ -26,6 +27,7 @@ module('Acceptance: Users', function(hooks) {
     const firstStudent = 'tbody tr td:nth-of-type(2) a';
 
     await visit(url);
+    percySnapshot(assert);
     assert.equal(getCellContent(0), '', 'user is a student');
     assert.equal(getCellContent(1), '0 guy M. Mc0son', 'name is shown');
     assert.equal(getCellContent(2), '123', 'campus ID is shown');

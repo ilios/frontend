@@ -5,6 +5,7 @@ import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | Courses', function(hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +19,7 @@ module('Acceptance | Courses', function(hooks) {
   test('visiting /courses', async function(assert) {
     await page.visit();
     assert.equal(currentURL(), '/courses');
+    percySnapshot(assert);
   });
 
   test('visiting /courses with title filter', async function(assert) {
@@ -45,6 +47,7 @@ module('Acceptance | Courses', function(hooks) {
     await page.visit({filter: 'Last'});
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, lastCourse.title);
+    percySnapshot(assert);
   });
 
   test('filters by title', async function(assert) {
@@ -272,6 +275,7 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(0).title, 'Course 1', 'course title is correct');
     assert.equal(page.courses(0).school, 'school 0', 'school is correct');
     assert.equal(page.courses(0).year, `${year} - ${year + 1}`, 'year is correct');
+    percySnapshot(assert);
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
@@ -347,6 +351,7 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses().count, 1);
     assert.equal(page.savedCoursesCount, 1);
     assert.equal(page.newCourseLink, 'Course 1');
+    percySnapshot(assert);
     await page.courses(0).remove();
     await page.confirmCourseRemoval();
     assert.equal(page.courses().count, 0);
@@ -551,6 +556,7 @@ module('Acceptance | Courses', function(hooks) {
     });
 
     await page.visit();
+    percySnapshot(assert);
     assert.equal(page.courses().count, 2);
     assert.ok(page.courses(0).isLocked, 'first course is locked');
     assert.ok(page.courses(1).isUnlocked, 'second course is unlocked');
@@ -579,6 +585,7 @@ module('Acceptance | Courses', function(hooks) {
     });
 
     await page.visit();
+    percySnapshot(assert);
     assert.equal(page.courses().count, 2);
     assert.ok(page.courses(0).isLocked, 'first course is locked');
     assert.ok(page.courses(1).isUnlocked, 'second course is unlocked');

@@ -1,6 +1,7 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { percySnapshot } from 'ember-percy';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -21,5 +22,6 @@ module('Acceptance: assign students', function(hooks) {
     assert.equal(await getElementText('.schoolsfilter'), getText('school 0'));
 
     assert.equal(currentURL(), '/admin/assignstudents');
+    percySnapshot(assert);
   });
 });

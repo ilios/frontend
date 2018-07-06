@@ -8,6 +8,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance: Programs', function(hooks) {
   setupApplicationTest(hooks);
@@ -21,6 +22,7 @@ module('Acceptance: Programs', function(hooks) {
 
     test('visiting /programs', async function(assert) {
       await visit('/programs');
+      percySnapshot(assert);
       assert.equal(currentRouteName(), 'programs');
     });
 
@@ -43,6 +45,7 @@ module('Acceptance: Programs', function(hooks) {
         school: this.school
       });
       await visit('/programs');
+      percySnapshot(assert);
       assert.equal(4, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(regexProgram.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),getText(regularProgram.title));
@@ -84,6 +87,7 @@ module('Acceptance: Programs', function(hooks) {
       await visit(url);
       await click(expandButton);
       await fillIn(input, 'Test Title');
+      percySnapshot(assert);
       await click(saveButton);
       function getContent(i) {
         return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
@@ -104,6 +108,7 @@ module('Acceptance: Programs', function(hooks) {
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('program 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+      percySnapshot(assert);
       await click('.confirm-buttons .remove');
       assert.equal(findAll('.flash-messages').length, 1);
       assert.equal(0, findAll('.list tbody tr').length);

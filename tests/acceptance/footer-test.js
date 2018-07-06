@@ -6,6 +6,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import ENV from 'ilios/config/environment';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 const { version, apiVersion } = ENV.APP;
+import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | footer', function(hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +19,7 @@ module('Acceptance | footer', function(hooks) {
 
   test('footer displays version', async function(assert) {
     await visit('/');
+    percySnapshot(assert);
     assert.ok(find('.ilios-footer .version').textContent.includes(version.match(versionRegExp)));
     assert.ok(find('.ilios-footer .version').textContent.includes(apiVersion));
   });
