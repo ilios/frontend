@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/locale-chooser';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | locale-chooser', function(hooks) {
   setupRenderingTest(hooks);
@@ -11,6 +12,10 @@ module('Integration | Component | locale-chooser', function(hooks) {
     await render(hbs`{{locale-chooser}}`);
 
     assert.equal(component.text, 'English (en)');
+
+    await component.toggle.click();
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('click opens menu', async function(assert) {
