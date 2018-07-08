@@ -3,10 +3,8 @@
   background-color: $ilios-orange;
   display: grid;
   grid-template-areas:
-  'tools tools'
-  'logo heading';
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 1.5rem 60px;
+  'logo tools'
+  'heading heading';
 
   @include for-tablet-and-up {
     grid-template-areas:
@@ -28,6 +26,7 @@
   }
 
   .logo {
+    align-self: start;
     grid-area: logo;
 
     .image {
@@ -40,45 +39,21 @@
   }
 
   h1 {
+    align-self: center;
     color: $white;
-    font-size: 2.3vmax;
+    font-size: 3vmax;
     grid-area: heading;
+    text-align: center;
   }
 
   // Elements on the far right
   .tools {
+    align-self: center;
     background: transparent;
     display: flex;
     grid-area: tools;
     justify-self: end;
     margin-right: 1rem;
-
-    .user {
-      color: $ilios-orange;
-      font-weight: 800;
-      margin-left: 1rem;
-
-      span {
-        display: none;
-
-        @include for-laptop-and-up {
-          display: inline;
-        }
-      }
-
-      .button {
-        background-color: transparent;
-        border: 0;
-        border-radius: $base-border-radius;
-        color: $white;
-        font-weight: normal;
-
-        &:hover {
-          background-color: $white;
-          color: $ilios-orange;
-        }
-      }
-    }
   }
 
   .visually-hidden {
