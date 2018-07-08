@@ -21,7 +21,7 @@ module('Integration | Component | user-menu', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders and is accessible', async function(assert) {
     await render(hbs`{{user-menu}}`);
 
     await a11yAudit(this.element);

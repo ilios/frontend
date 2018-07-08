@@ -9,7 +9,7 @@ import { percySnapshot } from 'ember-percy';
 module('Integration | Component | locale-chooser', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders and is accessible', async function(assert) {
     await render(hbs`{{locale-chooser}}`);
 
     await a11yAudit(this.element);
