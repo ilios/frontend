@@ -290,7 +290,7 @@ module('Integration | Component | week glance', function(hooks) {
     await settled();
 
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
+    assert.dom(this.element.querySelector(body)).hasText('None');
 
   });
 
@@ -432,7 +432,7 @@ module('Integration | Component | week glance', function(hooks) {
     await settled();
 
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
+    assert.dom(this.element.querySelector(body)).hasText('None');
 
     this.set('year', nextYear.format('YYYY'));
 

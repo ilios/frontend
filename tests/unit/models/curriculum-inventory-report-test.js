@@ -1,9 +1,6 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { initialize } from '../../../initializers/replace-promise';
-
-initialize();
 
 module('Unit | Model | CurriculumInventoryReport', function(hooks) {
   setupTest(hooks);

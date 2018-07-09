@@ -12,7 +12,7 @@ module('helper:filesize', function(hooks) {
 
     await render(hbs`{{filesize inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '42b');
+    assert.dom(this.element).hasText('42b');
   });
 
   test('it kilobytes', async function(assert) {
@@ -20,7 +20,7 @@ module('helper:filesize', function(hooks) {
 
     await render(hbs`{{filesize inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '4kb');
+    assert.dom(this.element).hasText('4kb');
   });
 
   test('it megabytes', async function(assert) {
@@ -28,6 +28,6 @@ module('helper:filesize', function(hooks) {
 
     await render(hbs`{{filesize inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '4mb');
+    assert.dom(this.element).hasText('4mb');
   });
 });

@@ -47,7 +47,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
     assert.equal(this.element.querySelectorAll(events).length, 2);
     assert.equal(this.element.querySelectorAll(more).length, 1);
-    assert.equal(this.element.querySelector(more).textContent.trim(), 'Show More');
+    assert.dom(this.element.querySelector(more)).hasText('Show More');
   });
 
   test('month displays with two events', async function(assert) {

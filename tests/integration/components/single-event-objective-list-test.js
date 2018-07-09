@@ -32,14 +32,14 @@ module('Integration | Component | ilios calendar single event objective list', f
     }}`);
 
 
-    assert.equal(this.element.querySelector('h2').textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.dom(this.element.querySelector('h2')).hasText(courseObjectivesPhrase, 'Title is visible');
     assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is visible');
     assert.notOk(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is not visible');
     assert.equal(this.element.querySelector('ul.tree>li').textContent.trim().search(/^annoying things/), 0);
     assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').textContent.trim().search(/^traffic/), 0);
     assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)').textContent.trim().search(/^great things/), 0);
     assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)>ul>li').textContent.trim().search(/^cheese/), 0);
-    assert.ok(this.element.querySelector('h2 button').classList.contains('active'), 'Display-mode button is visible and is "active"');
+    assert.dom(this.element.querySelector('h2 button')).hasClass('active', 'Display-mode button is visible and is "active"');
     await click('h2 button');
 
     assert.notOk(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is not visible');
@@ -58,7 +58,7 @@ module('Integration | Component | ilios calendar single event objective list', f
       objectives=objectives
     }}`);
 
-    assert.equal(this.element.querySelector('.no-content').textContent, 'None');
+    assert.dom(this.element.querySelector('.no-content')).hasText('None');
   });
 
   test('no display mode toggle if none of the objectives are prioritized', async function(assert) {
@@ -82,7 +82,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     const h2 = this.element.querySelector('h2');
     assert.equal(h2.querySelectorAll('button').length, 0, 'Display-mode button is not visible');
     // briefly check if the component renders fine otherwise.
-    assert.equal(h2.textContent.trim(), courseObjectivesPhrase, 'Title is visible');
+    assert.dom(h2).hasText(courseObjectivesPhrase, 'Title is visible');
     assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree');
   });
 });

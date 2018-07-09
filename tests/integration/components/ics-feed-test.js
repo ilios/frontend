@@ -14,6 +14,6 @@ module('Integration | Component | ics feed', function(hooks) {
 
     await render(hbs`{{ics-feed instructions=instructions}}`);
 
-    assert.equal(this.$(element).text().trim(), instructions);
+    assert.dom(element).hasText(instructions);
   });
 });

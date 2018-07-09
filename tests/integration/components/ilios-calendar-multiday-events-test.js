@@ -12,6 +12,6 @@ module('Integration | Component | ilios calendar multiday events', function(hook
 
     this.render(hbs`{{ilios-calendar-multiday-events}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });
