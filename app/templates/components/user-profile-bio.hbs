@@ -23,6 +23,7 @@
         value={{firstName}}
         oninput={{action (mut firstName) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'firstName'}}
+        data-test-first-name-input
       >
       {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
         <span class="message error">{{v-get this 'firstName' 'message'}}</span>
@@ -39,6 +40,7 @@
         value={{middleName}}
         oninput={{action (mut middleName) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'middleName'}}
+        data-test-middle-name-input
       >
       {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
         <span class="message error">{{v-get this 'middleName' 'message'}}</span>
@@ -55,6 +57,7 @@
         value={{lastName}}
         oninput={{action (mut lastName) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'lastName'}}
+        data-test-last-name-input
       >
       {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
         <span class="message error">{{v-get this 'lastName' 'message'}}</span>
@@ -72,6 +75,7 @@
           value={{campusId}}
           oninput={{action (mut campusId) value="target.value"}}
           onkeyup={{action 'addErrorDisplayFor' 'campusId'}}
+          data-test-campus-id-input
         >
         <button class='directory-sync {{if syncComplete "directory-sync-complete"}}' title={{t 'general.updateUserFromDirectory'}} {{action (perform directorySync)}}>{{fa-icon (if (and (not syncComplete) directorySync.isRunning) 'spinner' 'refresh') spin=(if (and (not syncComplete) directorySync.isRunning) true false)}}</button>
         {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
@@ -93,6 +97,7 @@
         value={{otherId}}
         oninput={{action (mut otherId) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'otherId'}}
+        data-test-other-id-input
       >
       {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
         <span class="message error">{{v-get this 'otherId' 'message'}}</span>
@@ -109,6 +114,7 @@
         value={{email}}
         oninput={{action (mut email) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'email'}}
+        data-test-email-input
       >
       {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
         <span class="message error">{{v-get this 'email' 'message'}}</span>
@@ -125,6 +131,7 @@
         value={{phone}}
         oninput={{action (mut phone) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'phone'}}
+        data-test-phone-input
       >
       {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
         <span class="message error">{{v-get this 'phone' 'message'}}</span>
@@ -142,6 +149,7 @@
         oninput={{action (mut username) value="target.value"}}
         onkeyup={{action 'addErrorDisplayFor' 'username'}}
         disabled={{not (await canEditUsernameAndPassword)}}
+        data-test-username-input
       >
       {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
         <span class="message error">{{v-get this 'username' 'message'}}</span>
@@ -160,11 +168,12 @@
             value={{password}}
             oninput={{action (mut password) value="target.value"}}
             onkeyup={{action 'addErrorDisplayFor' 'password'}}
+            data-test-password-input
           >
           {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
             <span class="message error">{{v-get this 'password' 'message'}}</span>
           {{else if (gt password.length 0)}}
-            <span class='password-strength {{concat "strength-" (await passwordStrengthScore)}}'>
+            <span class='password-strength {{concat "strength-" (await passwordStrengthScore)}}' data-test-password-strength-text>
               {{#if (eq (await passwordStrengthScore) 0)}}
                 {{t 'general.tryHarder'}}
               {{else if (eq (await passwordStrengthScore) 1)}}
@@ -177,7 +186,7 @@
                 {{t 'general.strong'}}
               {{/if}}
             </span>
-            <meter max="4" value={{await passwordStrengthScore}}></meter>
+            <meter max="4" value={{await passwordStrengthScore}}  data-test-password-strength-meter></meter>
           {{/if}}
           <span class='cancel-password-field clickable link' onclick={{action 'cancelChangeUserPassword'}}>{{t 'general.cancel'}}</span>
 
