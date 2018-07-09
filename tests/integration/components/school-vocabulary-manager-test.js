@@ -10,9 +10,13 @@ moduleForComponent('school-vocabulary-manager', 'Integration | Component | schoo
 });
 
 test('it renders', function(assert) {
+  assert.expect(4);
   let vocabulary = EmberObject.create({
     title: 'fake vocab',
-    terms: resolve([])
+    terms: resolve([
+      { title: 'first', isTopLevel: true, isNew: false, isDeleted: false, active: false },
+      { title: 'second', isTopLevel: true, isNew: false, isDeleted: false, active: true },
+    ])
   });
 
   this.set('vocabulary', vocabulary);
@@ -28,4 +32,6 @@ test('it renders', function(assert) {
 
   assert.equal(this.$(all).text().trim(), 'All Vocabularies');
   assert.equal(this.$(vocab).text().trim(), vocabulary.title);
+  assert.equal(this.$('.terms ul li:eq(0)').text().trim(), 'first (inactive)');
+  assert.equal(this.$('.terms ul li:eq(1)').text().trim(), 'second');
 });

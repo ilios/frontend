@@ -45,6 +45,10 @@
 
     ul {
       @include ilios-selectable-list;
+
+      em {
+        color: $ilios-red;
+      }
     }
   }
 

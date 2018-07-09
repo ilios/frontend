@@ -11,17 +11,32 @@ moduleForComponent('school-vocabulary-term-manager', 'Integration | Component | 
 });
 
 test('it renders', function(assert) {
-  assert.expect(7);
+  assert.expect(9);
   let allParents = resolve([
     {id: 1, title: 'first'},
     {id: 2, title: 'second'},
   ]);
-  let children = resolve([]);
+
+  let child1 = EmberObject.create({
+    title: 'first child',
+    active: true,
+    isNew: false,
+    isDeleted: false,
+  });
+
+  let child2 = EmberObject.create({
+    title: 'second child',
+    active: false,
+    isNew: false,
+    isDeleted: false,
+  });
+
+  let children = resolve([ child1, child2 ]);
   let vocabulary = EmberObject.create({
     title: 'fake vocab'
   });
   let title = 'fake term';
-  let description = 'fake tescription';
+  let description = 'fake description';
   let term = EmberObject.create({
     allParents,
     children,
@@ -29,6 +44,7 @@ test('it renders', function(assert) {
     title,
     description
   });
+
   this.set('term', term);
   this.set('vocabulary', vocabulary);
   this.on('nothing', parseInt);
@@ -51,6 +67,7 @@ test('it renders', function(assert) {
 
   const termTitle = '.term-title .editinplace';
   const termDescription = '.term-description .editinplace';
+
   assert.equal(this.$(all).text().trim(), 'All Vocabularies');
   assert.equal(this.$(vocab).text().trim(), vocabulary.title);
   assert.equal(this.$(firstParent).text().trim(), 'first');
@@ -58,6 +75,8 @@ test('it renders', function(assert) {
   assert.equal(this.$(termCrumb).text().trim(), title);
   assert.equal(this.$(termTitle).text().trim(), title);
   assert.equal(this.$(termDescription).text().trim(), description);
+  assert.equal(this.$('.terms ul li:eq(0)').text().trim(), 'first child');
+  assert.equal(this.$('.terms ul li:eq(1)').text().trim(), 'second child (inactive)');
 });
 
 test('activate inactive term', async function(assert) {
