@@ -61,7 +61,9 @@
   {{#if (is-fulfilled sortedTerms)}}
     <ul>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action manageTerm term.id}}>{{term.title}}</li>
+        <li {{action manageTerm term.id}}>
+          {{term.title}}{{#if (not term.active)}} <em>({{t 'general.inactive'}})</em>{{/if}}
+        </li>
       {{/each}}
     </ul>
   {{else}}
