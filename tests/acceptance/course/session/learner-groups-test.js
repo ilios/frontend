@@ -19,14 +19,14 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
 
   module('With Fixtures', function (hooks) {
     hooks.beforeEach(async function () {
-      this.server.create('program', {
+      this.program = this.server.create('program', {
         school: this.school
       });
-      this.server.create('programYear', {
-        programId: 1
+      const programYear = this.server.create('programYear', {
+        program: this.program
       });
       this.server.create('cohort', {
-        programYearId: 1
+        programYear
       });
       this.server.create('course', {
         school: this.school,
@@ -446,14 +446,14 @@ module('Acceptance: Session - Learner Groups', function(hooks) {
     });
 
     test('collapsed learner groups', async function (assert) {
-      this.server.create('programYear', {
-        programId: 1
+      const programYear = this.server.create('programYear', {
+        program: this.program
       });
-      this.server.create('cohort', {
-        programYearId: 2
+      const cohort = this.server.create('cohort', {
+        programYear
       });
       this.server.createList('learnerGroup', 2, {
-        cohortId: 2
+        cohort
       });
       this.server.create('ilmSession', {
         sessionId: 1,
