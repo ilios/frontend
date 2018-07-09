@@ -11,14 +11,14 @@
   "repository": "https://github.com/ilios/frontend",
   "scripts": {
     "build": "ember build",
-    "lint:js": "eslint ./*.js app blueprints config lib server tests",
+    "lint:js": "eslint .",
     "lint:style": "stylelint app/styles",
     "start": "ember serve",
     "test": "ember test"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.1",
-    "broccoli-asset-rev": "^2.4.5",
+    "broccoli-asset-rev": "^2.7.0",
     "browserslist": "^4.0.0",
     "caniuse-db": "^1.0.30000820",
     "crypto-js": "^3.1.9-1",
@@ -57,7 +57,7 @@
     "ember-cli-mirage": "0.4.7",
     "ember-cli-page-object": "1.15.0-beta.2",
     "ember-cli-password-strength": "2.0.0",
-    "ember-cli-qunit": "^4.1.1",
+    "ember-cli-qunit": "^4.3.2",
     "ember-cli-sass": "7.2.0",
     "ember-cli-server-variables": "2.2.0",
     "ember-cli-shims": "^1.2.0",
@@ -79,7 +79,7 @@
     "ember-lifeline": "^2.0.0",
     "ember-light-table": "1.13.1",
     "ember-load": "0.0.12",
-    "ember-load-initializers": "^1.0.0",
+    "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.12.1",
     "ember-noscript": "^2.0.0",
@@ -108,13 +108,14 @@
     "normalize.css": "^8.0.0",
     "papaparse": "^4.5.0",
     "pre-commit": "^1.2.2",
+    "qunit-dom": "^0.6.2",
     "stylelint": "^9.1.3",
     "stylelint-config-recommended-scss": "^3.1.0",
     "stylelint-scss": "^3.0.0",
     "validator": "^10.0.0"
   },
   "engines": {
-    "node": ">= 8.*"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
     "paths": [

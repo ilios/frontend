@@ -1,6 +1,16 @@
-node_modules
-bower_components
-dist
-tmp
-app/mirage/fixtures
-/blueprints/*/files/**/*.js
+# unconventional js
+/blueprints/*/files/
+/vendor/
+
+# compiled output
+/dist/
+/tmp/
+
+# dependencies
+/bower_components/
+
+# misc
+/coverage/
+
+# ember-try
+/.node_modules.ember-try/
