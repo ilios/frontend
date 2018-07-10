@@ -119,8 +119,7 @@
   "ember-addon": {
     "paths": [
       "lib/ilios-error",
-      "lib/ilios-loading",
-      "lib/sw-skip-wait"
+      "lib/ilios-loading"
     ]
   },
   "greenkeeper": {
