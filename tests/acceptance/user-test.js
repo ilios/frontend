@@ -84,13 +84,13 @@ module('Acceptance: User', function(hooks) {
     assert.equal(page.roles.excludeFromSync.value, 'Yes');
     assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
-    percySnapshot(assert);
+    percySnapshot('User roles display manage');
     assert.ok(page.roles.formerStudent.selected);
     assert.ok(page.roles.enabled.selected);
     assert.ok(page.roles.excludeFromSync.selected);
 
     await page.visit({ userId: user2.id });
-    percySnapshot(assert);
+    percySnapshot('User roles display user 2');
     assert.equal(page.roles.student.value, 'No');
     assert.equal(page.roles.student.label, 'Student:');
     assert.equal(page.roles.formerStudent.value, 'No');
@@ -100,7 +100,7 @@ module('Acceptance: User', function(hooks) {
     assert.equal(page.roles.excludeFromSync.value, 'No');
     assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
-    percySnapshot(assert);
+    percySnapshot('User roles display user 2 manage');
     assert.notOk(page.roles.formerStudent.selected);
     assert.notOk(page.roles.enabled.selected);
     assert.notOk(page.roles.excludeFromSync.selected);
