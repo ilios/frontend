@@ -21,8 +21,8 @@ module('Integration | Component | weekly events', function(hooks) {
 
     const years = this.element.querySelectorAll(yearPickers);
     assert.equal(years.length, 2);
-    assert.equal(years[0].textContent.trim(), '2017');
-    assert.equal(years[1].textContent.trim(), '2017');
+    assert.dom(years[0]).hasText('2017');
+    assert.dom(years[1]).hasText('2017');
 
     assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });
@@ -49,8 +49,8 @@ module('Integration | Component | weekly events', function(hooks) {
 
     const years = this.element.querySelectorAll(yearPickers);
     assert.equal(years.length, 2);
-    assert.equal(years[0].textContent.trim(), '2017');
-    assert.equal(years[1].textContent.trim(), '2017');
+    assert.dom(years[0]).hasText('2017');
+    assert.dom(years[1]).hasText('2017');
 
     assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });
@@ -77,8 +77,8 @@ module('Integration | Component | weekly events', function(hooks) {
 
     const years = this.element.querySelectorAll(yearPickers);
     assert.equal(years.length, 2);
-    assert.equal(years[0].textContent.trim(), '2017');
-    assert.equal(years[1].textContent.trim(), '2017');
+    assert.dom(years[0]).hasText('2017');
+    assert.dom(years[1]).hasText('2017');
 
     assert.equal(this.element.querySelectorAll(weeks).length, 52);
   });

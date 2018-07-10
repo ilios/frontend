@@ -9,12 +9,12 @@ module('Integration | Component | ilios calendar event', function(hooks) {
   skip('it renders', function(assert) {
     this.render(hbs`{{ilios-calendar-event}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 
   skip('it calculates recentlyUpdated correctly', function(assert) {
     this.render(hbs`{{ilios-calendar-event}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

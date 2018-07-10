@@ -1,11 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { initialize } from '../../../initializers/replace-promise';
 import { singularize, pluralize } from 'ember-inflector';
-
 import { run } from '@ember/runloop';
-
-initialize();
 
 module('Unit | Model | AamcPcrs', function(hooks) {
   setupTest(hooks);

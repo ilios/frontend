@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | toggle buttons', function(hooks) {
@@ -23,13 +23,13 @@ module('Integration | Component | toggle buttons', function(hooks) {
       secondLabel='Second'
       secondIcon='expand'
     }}`);
-    assert.equal(this.$(firstLabel).text().trim(), 'First', 'first label has correct text');
+    assert.dom(firstLabel).hasText('First', 'first label has correct text');
     assert.ok(this.$(firstRadio).is(':checked'), 'first radio is checked');
-    assert.equal(this.$(firstLabel).attr('for'), this.$(firstRadio).attr('id'), 'first label is linked to radio correctly');
+    assert.equal(find(firstLabel).getAttribute('for'), find(firstRadio).id, 'first label is linked to radio correctly');
 
-    assert.equal(this.$(secondLabel).text().trim(), 'Second', 'second label has correct text');
+    assert.dom(secondLabel).hasText('Second', 'second label has correct text');
     assert.notOk(this.$(secondRadio).is(':checked'), 'second radio is not checked');
-    assert.equal(this.$(secondLabel).attr('for'), this.$(secondRadio).attr('id'), 'second label is linked to radio correctly');
+    assert.equal(find(secondLabel).getAttribute('for'), find(secondRadio).id, 'second label is linked to radio correctly');
 
   });
 
@@ -57,8 +57,8 @@ module('Integration | Component | toggle buttons', function(hooks) {
       secondLabel='Right'
     }}`);
 
-    this.$(second).click();
-    this.$(first).click();
+    await click(second);
+    await click(first);
   });
 
   test('clicking selected radio does not fire toggle action', async function(assert) {
@@ -77,7 +77,7 @@ module('Integration | Component | toggle buttons', function(hooks) {
       secondLabel='Right'
     }}`);
 
-    this.$(first).click();
+    await click(first);
     assert.equal(this.get('firstOptionSelected'), true);
   });
 });

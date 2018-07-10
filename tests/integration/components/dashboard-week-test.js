@@ -162,7 +162,7 @@ module('Integration | Component | dashboard week', function(hooks) {
 
     const expectedTitle = getTitle();
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.element.querySelector(allWeeks).textContent.trim(), 'Last Week / Next Week / All Weeks');
+    assert.dom(this.element.querySelector(allWeeks)).hasText('Last Week / Next Week / All Weeks');
     assert.equal(this.element.querySelectorAll(events).length, 2, 'Blank events are not shown');
 
     assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
@@ -203,7 +203,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     await settled();
 
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
+    assert.dom(this.element.querySelector(body)).hasText('None');
 
   });
 });

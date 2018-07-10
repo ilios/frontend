@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | toggle icons', function(hooks) {
@@ -24,17 +24,17 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondLabel='Second'
       secondIcon='expand'
     }}`);
-    assert.equal(this.$(firstLabel).text().trim(), 'First', 'first label has correct text');
+    assert.dom(firstLabel).hasText('First', 'first label has correct text');
     assert.ok(this.$(firstRadio).is(':checked'), 'first radio is checked');
-    assert.equal(this.$(firstLabel).attr('for'), this.$(firstRadio).attr('id'), 'first label is linked to radio correctly');
+    assert.equal(find(firstLabel).getAttribute('for'), find(firstRadio).id, 'first label is linked to radio correctly');
 
-    assert.equal(this.$(secondLabel).text().trim(), 'Second', 'second label has correct text');
+    assert.dom(secondLabel).hasText('Second', 'second label has correct text');
     assert.notOk(this.$(secondRadio).is(':checked'), 'second radio is not checked');
-    assert.equal(this.$(secondLabel).attr('for'), this.$(secondRadio).attr('id'), 'second label is linked to radio correctly');
+    assert.equal(find(secondLabel).getAttribute('for'), find(secondRadio).id, 'second label is linked to radio correctly');
 
-    assert.equal(this.$(icon).length, 1);
-    assert.ok(this.$(icon).hasClass('fa-user'), 'correct icon is visible');
-    assert.equal(this.$(icon).attr('title').trim(), 'Second', 'Title text is correct');
+    assert.dom(icon).exists({ count: 1 });
+    assert.dom(icon).hasClass('fa-user', 'correct icon is visible');
+    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
   });
 
   test('clicking radio fires toggle action', async function(assert) {
@@ -61,8 +61,8 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondLabel='Right'
     }}`);
 
-    this.$(second).click();
-    this.$(first).click();
+    await click(second);
+    await click(first);
   });
 
   test('clicking selected radio does not fire toggle action', async function(assert) {
@@ -81,7 +81,7 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondLabel='Right'
     }}`);
 
-    this.$(first).click();
+    await click(first);
     assert.equal(this.get('firstOptionSelected'), true);
   });
 
@@ -110,13 +110,13 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondIcon='expand'
     }}`);
 
-    assert.ok(this.$(icon).hasClass('fa-user'));
-    assert.equal(this.$(icon).attr('title').trim(), 'Second', 'Title text is correct');
-    this.$(icon).click();
-    assert.ok(this.$(icon).hasClass('fa-expand'));
-    assert.equal(this.$(icon).attr('title').trim(), 'First', 'Title text is correct');
-    this.$(icon).click();
-    assert.ok(this.$(icon).hasClass('fa-user'));
-    assert.equal(this.$(icon).attr('title').trim(), 'Second', 'Title text is correct');
+    assert.dom(icon).hasClass('fa-user');
+    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
+    await click(icon);
+    assert.dom(icon).hasClass('fa-expand');
+    assert.equal(find(icon).getAttribute('title').trim(), 'First', 'Title text is correct');
+    await click(icon);
+    assert.dom(icon).hasClass('fa-user');
+    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
   });
 });

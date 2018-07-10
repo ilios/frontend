@@ -42,11 +42,11 @@ module('Integration | Component | dashboard agenda', function(hooks) {
     const title = 'h3';
 
     return settled().then(()=>{
-      assert.equal(this.element.querySelector(title).textContent.trim(), 'My Activities for the next 60 days');
+      assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
       for(let i = 0; i < 3; i++){
         let tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
-        assert.equal(tds[0].textContent.trim(), moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
-        assert.equal(tds[1].textContent.trim(), mockEvents[i].name);
+        assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
+        assert.dom(tds[1]).hasText(mockEvents[i].name);
       }
     });
   });
@@ -77,8 +77,8 @@ module('Integration | Component | dashboard agenda', function(hooks) {
     const body = 'p';
 
     return settled().then(()=>{
-      assert.equal(this.element.querySelector(title).textContent.trim(), 'My Activities for the next 60 days');
-      assert.equal(this.element.querySelector(body).textContent.trim(), 'None');
+      assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
+      assert.dom(this.element.querySelector(body)).hasText('None');
     });
   });
 });

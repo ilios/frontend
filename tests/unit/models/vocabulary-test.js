@@ -1,10 +1,7 @@
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { initialize } from '../../../initializers/replace-promise';
 import { pluralize } from 'ember-inflector';
-
-initialize();
 
 module('Unit | Model | vocabulary', function(hooks) {
   setupTest(hooks);

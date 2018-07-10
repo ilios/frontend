@@ -1,18 +1,14 @@
 import { run } from '@ember/runloop';
 import { module, skip, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { initialize } from '../../../initializers/replace-promise';
-
-
-initialize();
 
 module('Unit | Model | Competency', function(hooks) {
   setupTest(hooks);
 
   test('isDomain', function(assert) {
     assert.expect(2);
-    const model = run(() => this.owner.lookup('service:store').createRecord('competency'));
     const store = this.owner.lookup('service:store');
+    const model = run(() => store.createRecord('competency'));
     run(() => {
       assert.ok(model.get('isDomain'));
 
@@ -25,8 +21,8 @@ module('Unit | Model | Competency', function(hooks) {
   // skipping test further notice. Travis/CI is currently rejecting this test for reasons unknown. [ST 2018/07/09]
   skip('domain', async function(assert) {
     assert.expect(2);
-    const model = run(() => this.owner.lookup('service:store').createRecord('competency'));
     const store = this.owner.lookup('service:store');
+    const model = run(() => store.createRecord('competency'));
     await run(async () => {
       const domain = await model.get('domain');
       assert.equal(domain, model);
@@ -42,8 +38,8 @@ module('Unit | Model | Competency', function(hooks) {
 
   test('treeChildren', async function(assert){
     assert.expect(7);
-    const model = run(() => this.owner.lookup('service:store').createRecord('competency'));
     const store = this.owner.lookup('service:store');
+    const model = run(() => store.createRecord('competency'));
     await run(async () => {
       const treeChildren = await model.get('treeChildren');
       assert.equal(treeChildren.length, 0);
@@ -67,8 +63,8 @@ module('Unit | Model | Competency', function(hooks) {
 
   test('childCount', function(assert){
     assert.expect(2);
-    const model = run(() => this.owner.lookup('service:store').createRecord('competency'));
     const store = this.owner.lookup('service:store');
+    const model = run(() => store.createRecord('competency'));
     assert.equal(model.get('childCount'), 0);
     run(() => {
       let child1 = store.createRecord('competency');

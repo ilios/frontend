@@ -7,6 +7,6 @@ module('Integration | Component | toggle wide', function(hooks) {
 
   skip('it renders', function(assert) {
     this.render(hbs`{{toggle-wide}}`);
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

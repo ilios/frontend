@@ -39,6 +39,6 @@ module('Integration | Component | ilios calendar single event learningmaterial l
       learningMaterials=learningMaterials
     }}`);
 
-    assert.equal(this.element.querySelector('.no-content').textContent, 'None');
+    assert.dom(this.element.querySelector('.no-content')).hasText('None');
   });
 });

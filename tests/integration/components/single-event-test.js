@@ -128,8 +128,12 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('This session is "test type"'), 'session type is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test description'), 'session description is displayed');
     let $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
-    assert.equal(this.element.querySelector('.single-event-learningmaterial-item-notes', $sessionLm).textContent.trim(), this.sessionLearningMaterials[0].publicNotes);
-    assert.equal(this.element.querySelector('.single-event-learningmaterial-item-description', $sessionLm).textContent.trim(), this.sessionLearningMaterials[0].description);
+    assert.dom(
+      this.element.querySelector('.single-event-learningmaterial-item-notes', $sessionLm)
+    ).hasText(this.sessionLearningMaterials[0].publicNotes);
+    assert.dom(
+      this.element.querySelector('.single-event-learningmaterial-item-description', $sessionLm)
+    ).hasText(this.sessionLearningMaterials[0].description);
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
     $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
     assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');

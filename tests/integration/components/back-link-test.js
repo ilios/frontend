@@ -9,6 +9,6 @@ module('Integration | Component | back link', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{back-link}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Back');
+    assert.dom(this.element).hasText('Back');
   });
 });

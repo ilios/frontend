@@ -10,13 +10,13 @@ module('Integration | Component | timed release schedule', function(hooks) {
   test('it renders with no start and end date', async function(assert) {
     await render(hbs`{{timed-release-schedule}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Available immediately when published');
+    assert.dom(this.element).hasText('Available immediately when published');
   });
 
   test('it renders nothing with no start and end date and showNoSchedule set to false', async function(assert) {
     await render(hbs`{{timed-release-schedule showNoSchedule=false}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 
   test('it renders with both start and end date', async function(assert) {
@@ -28,7 +28,7 @@ module('Integration | Component | timed release schedule', function(hooks) {
     const expectedStartDate = startDate.format('L LT');
     const expectedEndDate = endDate.format('L LT');
 
-    assert.equal(this.element.textContent.trim(), `(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
+    assert.dom(this.element).hasText(`(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
   });
 
   test('it renders just start date', async function(assert) {
@@ -37,7 +37,7 @@ module('Integration | Component | timed release schedule', function(hooks) {
     await render(hbs`{{timed-release-schedule startDate=tomorrow}}`);
     const expectedDate = tomorrow.format('L LT');
 
-    assert.equal(this.element.textContent.trim(), `(Available: ${expectedDate})`);
+    assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
 
   test('it renders just end date', async function(assert) {
@@ -46,6 +46,6 @@ module('Integration | Component | timed release schedule', function(hooks) {
     await render(hbs`{{timed-release-schedule endDate=tomorrow}}`);
     const expectedDate = tomorrow.format('L LT');
 
-    assert.equal(this.element.textContent.trim(), `(Available until ${expectedDate})`);
+    assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
 });
