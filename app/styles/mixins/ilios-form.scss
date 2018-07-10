@@ -63,6 +63,7 @@
     border-style: solid;
     border-width: 1px;
     margin-right: 1rem;
+    transition: all 0.08s linear;
 
     &:enabled:hover {
       color: $white;
@@ -71,10 +72,16 @@
     &.done {
       background-color: $white;
       border-color: $ilios-green;
-      color: $ilios-green;
+      color: $text-grey;
 
-      &:enabled:hover {
-        background-color: $ilios-green;
+      &:enabled {
+        &:hover {
+          background-color: $ilios-green;
+        }
+        &:active,
+        &.active {
+          background-color: darken($ilios-green, 10);
+        }
       }
     }
 
