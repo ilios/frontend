@@ -1,11 +1,13 @@
+$header-menu-background-color: darken($base-background-color, 3);
+
 @mixin header-menu () {
-  position: relative;
   margin: 0 .5rem;
+  position: relative;
   text-align: right;
-  
+
   button {
-    background-color: $white;
-    border: 0;
+    background-color: transparent;
+    border: 1px solid $header-menu-background-color;
     border-radius: .2rem;
     color: $text-grey;
     font-weight: normal;
@@ -13,6 +15,7 @@
   }
 
   .menu {
+    background-color: $header-menu-background-color;
     box-shadow: 0 2px 2px transparentize($black, .8);
     display: flex;
     flex-direction: column;
@@ -26,6 +29,7 @@
   }
 
   .toggle {
+    background-color: $header-menu-background-color;
     &::after {
       content: '\25BE';
     }
@@ -38,13 +42,9 @@
       }
     }
 
-    i {
-      color: $ilios-orange;
-    }
-
     &:hover,
     &[aria-expanded='true'] {
-      background-color: darken($base-background-color, 3);
+      background-color: $white;
     }
     &[aria-expanded='true'] {
       border-bottom-right-radius: 0;
@@ -55,7 +55,7 @@
 
 @mixin header-menu-item () {
   border: 0;
-  background-color: $white;
+  background-color: $header-menu-background-color;
   color: $black;
   display: block;
   outline: none;
@@ -67,9 +67,9 @@
   &.active {
     background-color: lighten($ilios-green, 25);
   }
-  &:hover,
-  &:focus {
-    background-color: darken($base-background-color, 3);
+
+  &:hover {
+    background-color: $white;
     &[aria-checked='true'],
     &.active {
       background-color: lighten($ilios-green, 15);
