@@ -247,7 +247,7 @@ export default Model.extend({
   ),
 
   /**
-   * A list of all courses that this user is associated with - be it as learner, instructor or director.
+   * A list of all courses that this user is associated with - be it as administrator, learner, instructor or director.
    * @property allRelatedCourses
    * @type {Ember.computed}
    * @public
