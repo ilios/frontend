@@ -26,6 +26,10 @@
 
     .buttons {
       @include ilios-form-buttons;
+
+      button {
+        width: 6rem;
+      }
     }
   }
 
