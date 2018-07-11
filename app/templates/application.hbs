@@ -2,6 +2,9 @@
 {{#service-worker-update-notify}}
   {{update-notification}}
 {{/service-worker-update-notify}}
+{{#new-version-notifier as |version lastVersion reload|}}
+  {{update-notification reload=(action reload)}}
+{{/new-version-notifier}}
 <div class='application-wrapper {{if currentUser.performsNonLearnerFunction "show-navigation"}}'>
   {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
   {{#if session.isAuthenticated}}

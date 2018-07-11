@@ -91,6 +91,10 @@ module.exports = function(defaults) {
         /\/weeklyevents(\/.*)?$/,
       ]
     },
+    newVersion: {
+      enabled: true,
+      useAppVersion: true
+    },
   });
 
   app.import('node_modules/normalize.css/normalize.css');
