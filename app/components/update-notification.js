@@ -11,7 +11,13 @@ export default Component.extend({
   async click() {
     if ('serviceWorker' in navigator) {
       const reg = await navigator.serviceWorker.getRegistration();
-      reg.waiting.postMessage('skipWaiting');
+      if (reg && reg.waiting) {
+        reg.waiting.postMessage('skipWaiting');
+      }
+    }
+    const reload = this.get('reload');
+    if (reload) {
+      reload();
     }
   }
 });
