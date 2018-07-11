@@ -124,7 +124,7 @@ module('Acceptance: Instructor Groups', function(hooks) {
       percySnapshot(assert);
       await click('.new-instructorgroup .done');
       assert.equal(await getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
-      percySnapshot(assert);
+      percySnapshot('add new instructorgroup saved');
     });
 
     test('cancel adding new instructorgroup', async function(assert) {

@@ -69,7 +69,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     percySnapshot(assert);
     await page.activateBulkAssign();
-    percySnapshot(assert);
+    percySnapshot('upload users bulk assign');
     this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
@@ -88,7 +88,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     ];
     await triggerUpload(users, '[data-test-user-upload]');
 
-    percySnapshot(assert);
+    percySnapshot('upload users uploaded');
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     assert.ok(page.bulkAssign.validUploadedUsers(0).isValid);
     assert.equal(page.bulkAssign.validUploadedUsers(0).firstName, 'jasper');
