@@ -2,5 +2,8 @@
   "name": "ilios-loading",
   "keywords": [
     "ember-addon"
-  ]
+  ],
+  "ember-addon": {
+    "before": "ilios-error"
+  }
 }
