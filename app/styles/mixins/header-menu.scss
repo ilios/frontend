@@ -1,0 +1,78 @@
+$header-menu-background-color: darken($base-background-color, 3);
+
+@mixin header-menu () {
+  margin: 0 .5rem;
+  position: relative;
+  text-align: right;
+
+  button {
+    background-color: transparent;
+    border: 1px solid $header-menu-background-color;
+    border-radius: .2rem;
+    color: $text-grey;
+    font-weight: normal;
+    padding: .25rem;
+  }
+
+  .menu {
+    background-color: $header-menu-background-color;
+    box-shadow: 0 2px 2px transparentize($black, .8);
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 1.6rem;
+    right: 0;
+    z-index: 100;
+  }
+
+  .toggle {
+    background-color: $header-menu-background-color;
+    &::after {
+      content: '\25BE';
+    }
+    span {
+      display: none;
+
+      @include for-laptop-and-up {
+        display: inline;
+        margin-left: .5rem;
+      }
+    }
+
+    &:hover,
+    &[aria-expanded='true'] {
+      background-color: $white;
+    }
+    &[aria-expanded='true'] {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius:  0;
+    }
+  }
+}
+
+@mixin header-menu-item () {
+  border: 0;
+  background-color: $header-menu-background-color;
+  color: $black;
+  display: block;
+  outline: none;
+  padding: .5rem 1rem;
+  text-align: right;
+  white-space: nowrap;
+
+  &[aria-checked='true'],
+  &.active {
+    background-color: lighten($ilios-green, 25);
+  }
+
+  &:hover {
+    background-color: $white;
+    &[aria-checked='true'],
+    &.active {
+      background-color: lighten($ilios-green, 15);
+    }
+  }
+}

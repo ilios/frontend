@@ -1,8 +1,12 @@
-.locale-chooser {
+.user-menu {
   @include header-menu;
 
   .menu {
-    button {
+    li {
+      padding: 0;
+    }
+
+    a {
       @include header-menu-item;
     }
   }

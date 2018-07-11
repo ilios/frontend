@@ -79,6 +79,7 @@
     "ember-inflector": "^2.3.0",
     "ember-lifeline": "^2.0.0",
     "ember-light-table": "1.13.1",
+    "ember-link-action": "^0.1.0",
     "ember-load": "0.0.12",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",

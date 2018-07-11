@@ -4880,6 +4880,12 @@ ember-light-table@1.13.1:
     ember-truth-helpers "^2.0.0"
     ember-wormhole "^0.5.4"
 
+ember-link-action@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.1.0.tgz#af39a5ea2218e5634fcbf137b4d90b8c719fdf55"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+
 ember-load-initializers@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-1.1.0.tgz#4edacc0f3a14d9f53d241ac3e5561804c8377978"
