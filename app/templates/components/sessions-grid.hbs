@@ -29,18 +29,11 @@
     <span>{{publication-status item=obj showText=false}}</span>
   </div>
   {{#if (contains obj.session expandedSessions)}}
-    <table>
-      <caption>{{t 'general.offerings'}}</caption>
-      <thead>
-        <tr></tr>
-      </thead>
-      <tbody>
-        {{#each (sort-by 'startDate' (await obj.session.offerings)) as |offering|}}
-          {{sessions-grid-offering offering=offering canUpdate=obj.canUpdate}}
-        {{/each}}
-      </tbody>
-    </table>
-    <div class='last-expanded-row is-expanded'></div>
+    {{#if (gt (has-many-length obj.session 'offerings') 0)}}
+      {{sessions-grid-offering-table offerings=(await obj.session.offerings) canUpdate=obj.canUpdate}}
+    {{else}}
+      <div class='no-offerings'>{{t 'general.noOfferings'}}</div>
+    {{/if}}
   {{/if}}
 
 {{/each}}

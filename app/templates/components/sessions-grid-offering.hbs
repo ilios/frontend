@@ -1,9 +1,20 @@
-<td colspan=1></td>
-<td colspan=9>{{moment-format offering.startDate 'L LT'}} - {{moment-format offering.endDate 'L LT'}}</td>
-<td colspan=7>
+{{#if @showTime}}
+  <td class= 'offering-block-time-time' colspan=2 rowspan={{@span}}>
+    <span class='offering-block-time-time-starttime'>{{@startTime}}</span>
+    <span class='offering-block-time-time-duration'>
+      {{#if (gte @durationHours 1)}}
+        {{t 'general.durationHours' count=@durationHours}}
+      {{/if}}
+      {{#if (lt durationMinutes 60)}}
+        {{t 'general.durationMinutes' count=@durationMinutes}}
+      {{/if}}
+    </span>
+  </td>
+{{/if}}
+<td>
   {{#if canUpdate}}
     {{#editable-field
-      value=offering.room
+      value=@offering.room
       save=(perform changeRoom)
       close=(action 'revertRoomChanges')
       saveOnEnter=true
@@ -23,10 +34,11 @@
       {{/if}}
     {{/editable-field}}
   {{else}}
-    {{offering.room}}
+    {{@offering.room}}
   {{/if}}
 </td>
-<td colspan=3 title={{t 'general.learners'}}>{{has-many-length offering 'learners'}}</td>
-<td colspan=3 title={{t 'general.learnerGroups'}}>{{has-many-length offering 'learnerGroups'}}</td>
-<td colspan=3 title={{t 'general.instructors'}}>{{has-many-length offering 'instructors'}}</td>
-<td colspan=3 title={{t 'general.instructorGroups'}}>{{has-many-length offering 'instructorGroups'}}</td>
+<td class='text-center'>{{get (await @offering.allLearners) 'length'}}</td>
+<td colspan=2>
+  {{truncate (join ', ' (map-by 'title' (sort-by 'title' (await @offering.learnerGroups)))) 30}}
+</td>
+<td class='text-center'>{{get (await @offering.allInstructors) 'length'}}</td>

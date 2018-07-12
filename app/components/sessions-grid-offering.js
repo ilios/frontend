@@ -16,7 +16,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   tagName: 'tr',
-  classNames: ['is-expanded'],
+  classNames: ['sessions-grid-offering'],
   canUpdate: false,
   room: null,
 

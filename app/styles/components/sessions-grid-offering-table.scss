@@ -1,0 +1,25 @@
+.sessions-grid-offering-table {
+  @include ilios-table-structure;
+  @include ilios-table-colors;
+
+  thead {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .offering-block-date {
+    border-top: 1px solid $grey;
+    font-weight: bold;
+  }
+
+  .sessions-grid-offering {
+    &:nth-of-type(odd) {
+      background-color: $grey;
+    }
+  }
+
+  th,
+  td {
+    padding: .2rem .5rem;
+  }
+}
