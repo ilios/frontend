@@ -47,12 +47,13 @@ module('Acceptance | Courses', function(hooks) {
     await page.visit({filter: 'Last'});
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, lastCourse.title);
+    assert.equal(page.headerTitle, 'Courses (1)');
     percySnapshot(assert);
   });
 
   test('filters by title', async function(assert) {
     this.server.create('academicYear', {id: 2014});
-    assert.expect(26);
+    assert.expect(32);
     let firstCourse = this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
@@ -96,15 +97,19 @@ module('Acceptance | Courses', function(hooks) {
     await page.filterByTitle('first');
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, firstCourse.title);
+    assert.equal(page.headerTitle, 'Courses (1)');
+
 
     await page.filterByTitle('second');
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, secondCourse.title);
+    assert.equal(page.headerTitle, 'Courses (1)');
 
     await page.filterByTitle('special');
     assert.equal(page.courses().count, 2);
     assert.equal(page.courses(0).title, firstCourse.title);
     assert.equal(page.courses(1).title, secondCourse.title);
+    assert.equal(page.headerTitle, 'Courses (2)');
 
     await page.filterByTitle('course');
     assert.equal(page.courses().count, 4);
@@ -112,6 +117,7 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(1).title, regularCourse.title);
     assert.equal(page.courses(2).title, firstCourse.title);
     assert.equal(page.courses(3).title, secondCourse.title);
+    assert.equal(page.headerTitle, 'Courses (4)');
 
     await page.filterByTitle('');
     assert.equal(page.courses().count, 5);
@@ -120,10 +126,12 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(2).title, regularCourse.title);
     assert.equal(page.courses(3).title, firstCourse.title);
     assert.equal(page.courses(4).title, secondCourse.title);
+    assert.equal(page.headerTitle, 'Courses (5)');
 
     await page.filterByTitle('\\');
     assert.equal(page.courses().count, 1);
     assert.equal(page.courses(0).title, regexCourse.title);
+    assert.equal(page.headerTitle, 'Courses (1)');
   });
 
   test('filters by year', async function(assert) {

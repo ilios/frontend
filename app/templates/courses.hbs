@@ -44,7 +44,7 @@
   </div>
   <section class='courses'>
     <div class="header">
-      <h2 class="title">{{t 'general.courses'}}</h2>
+      <h2 data-test-courses-header-title class="title">{{t 'general.courses'}} ({{get (await filteredCourses) "length"}})</h2>
       <div class='actions'>
         {{#if (await canCreateCourse)}}
           {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
