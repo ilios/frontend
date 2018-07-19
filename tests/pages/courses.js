@@ -31,6 +31,7 @@ export default create({
       selected: property('selected'),
     },
   }),
+  headerTitle: text('[data-test-courses-header-title]'),
   toggleNewCourseForm: clickable('[data-test-toggle-new-course-form]'),
   toggleNewCourseFormExists: isVisible('[data-test-toggle-new-course-form]'),
   newCourseForm: {
