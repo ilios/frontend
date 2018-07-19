@@ -59,7 +59,7 @@ test('cannot delete objective with descendants', function(assert) {
     editable=true
   }}`);
 
-  assert.equal(this.$('td:eq(3) i').length, 0);
+  assert.equal(this.$('td:eq(3) .disabled').length, 1);
 });
 
 test('renders removable', function(assert) {
