@@ -63,5 +63,7 @@
 <td class='text-left text-top' colspan=1>
   {{#if deletable}}
     <span class='clickable remove' {{action remove objective}}>{{fa-icon 'trash'}}</span>
+  {{else}}
+    {{fa-icon 'trash' class='disabled'}}
   {{/if}}
 </td>
