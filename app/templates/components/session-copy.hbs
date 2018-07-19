@@ -28,7 +28,7 @@
     <label>{{t 'general.targetCourse'}}:</label>
     {{#if (is-fulfilled courses)}}
       {{#if (get (await courses) 'length')}}
-        <select onchange={{action (mut selectedCourse) value="target.value"}}>
+        <select onchange={{action (mut selectedCourseId) value="target.value"}}>
           {{#each (sort-by 'title' (await courses)) as |course|}}
             <option value={{course.id}} selected={{is-equal course.id (get (await bestSelectedCourse) 'id')}}>
               {{course.title}}
