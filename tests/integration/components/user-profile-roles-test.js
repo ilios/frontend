@@ -15,7 +15,7 @@ moduleForComponent('user-profile-roles', 'Integration | Component | user profile
       id: 6,
       enabled: true,
       userSyncIgnore: false,
-      isRoot: false,
+      root: false,
       roles: resolve(userRoles),
       performsNonLearnerFunction: resolve(false),
       isLearner: resolve(false),
@@ -58,6 +58,18 @@ test('it renders', function(assert) {
     assert.equal(this.$(root).text().trim(), 'No');
     assert.ok(this.$(root).hasClass('no'));
   });
+});
+
+// @link https://github.com/ilios/frontend/issues/3899
+test('check root flag', async function(assert) {
+  user.set('root', true);
+  this.set('user', user);
+  this.render(hbs`{{user-profile-roles user=user}}`);
+  const root = '.item:eq(6) span';
+
+  await wait();
+  assert.equal(this.$(root).text().trim(), 'Yes');
+  assert.ok(this.$(root).hasClass('yes'));
 });
 
 test('clicking manage sends the action', function(assert) {
