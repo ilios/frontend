@@ -11,7 +11,7 @@
   {{#if searchForUsers.isRunning}}
     <li>{{t 'general.currentlySearchingPrompt'}}</li>
   {{else}}
-    {{#each searchForUsers.lastSuccessful.value as |result|}}
+    {{#each searchForUsers.lastSuccessful.value as |result index|}}
       {{#if (eq result.type 'text')}}
         <li>{{result.text}}</li>
       {{/if}}
@@ -19,7 +19,7 @@
         <li class='summary'>{{result.text}}</li>
       {{/if}}
       {{#if (eq result.type 'user')}}
-        <li class='user {{unless (contains result.user.id existingUserIds) "clickable"}}' {{action (perform clickUser) result.user}} data-test-result>
+        <li class='user {{unless (contains result.user.id existingUserIds) "clickable"}}' {{action (perform clickUser) result.user}} data-test-result data-test-result-index='{{index}}'>
           <span class='name'>
             {{result.user.fullName}}
             {{#unless result.user.enabled}}
