@@ -2,7 +2,7 @@
 import getName from './get-name';
 import { Collection, Model } from 'ember-cli-mirage';
 
-export default function getAll(schema, request){
+export default function getAll(schema, request) {
   //turn /api/programyears?limit=1 into 'programYears'
   const modelRegex = /\/api\/([a-z]+).*/i;
   const modelName = getName(request.url.match(modelRegex)[1]);
@@ -93,6 +93,10 @@ const filterByFilterParams = function(all, filterParams){
             return (arr.indexOf(model.id.toString()) !== -1);
           });
           match = result.length > 0;
+        } else if (obj[param] instanceof Model) {
+          if(obj[param].id.toString() !== value.toString()){
+            match = false;
+          }
         } else {
           if(!(param in obj) || arr.indexOf(obj[param].toString()) === -1) {
             match = false;
