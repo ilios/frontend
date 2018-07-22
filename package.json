@@ -74,7 +74,7 @@
     "ember-drag-drop": "0.4.8",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "^3.0.5",
-    "ember-froala-editor": "2.8.0",
+    "ember-froala-editor": "2.8.4",
     "ember-i18n-cp-validations": "3.1.0",
     "ember-inflector": "^2.3.0",
     "ember-lifeline": "^2.0.0",
