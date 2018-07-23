@@ -122,23 +122,21 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  sessions: computed('sequenceBlock.course', function(){
-    return new Promise(resolve => {
-      this.get('sequenceBlock').get('course').then(course => {
-        if (! isPresent(course)) {
-          resolve([]);
-          return;
-        }
-        this.get('store').query('session', {
-          filters: {
-            course: course.get('id'),
-            published: true
-          },
-        }).then(sessions => {
-          resolve(sessions.toArray());
-        });
-      });
+  sessions: computed('sequenceBlock.course', async function () {
+    const store = this.get('store');
+    const course = await this.sequenceBlock.get('course');
+    if (!course) {
+      return [];
+    }
+
+    const sessions = await store.query('session', {
+      filters: {
+        course: course.get('id'),
+        published: true
+      },
     });
+
+    return sessions.toArray();
   }),
 
   /**
