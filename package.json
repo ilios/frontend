@@ -89,7 +89,7 @@
     "ember-percy": "^1.4.2",
     "ember-pikaday": "2.2.4",
     "ember-qunit-nice-errors": "^1.2.0",
-    "ember-resolver": "^4.0.0",
+    "ember-resolver": "^5.0.0",
     "ember-responsive": "^2.0.4",
     "ember-rl-dropdown": "0.10.2",
     "ember-service-worker": "^0.6.8",
