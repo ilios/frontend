@@ -63,7 +63,7 @@
           {{#each (sort-by sortBy usersInCurrentGroup) as |user|}}
             <tr class="{{unless user.enabled 'disabled-user-account'}}">
               <td class='text-left' colspan=1>
-                {{#if user.enabled}}
+                {{#if (or user.enabled currentUser.isRoot)}}
                   {{#if isEditing}}
                     <input
                       type="checkbox"
@@ -71,7 +71,8 @@
                       onclick={{action 'toggleUserSelection' user.content}}
                     >
                   {{/if}}
-                {{else}}
+                {{/if}}
+                {{#if (not user.enabled)}}
                   {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
                 {{/if}}
               </td>
@@ -120,7 +121,7 @@
             {{#each (sort-by sortBy usersNotInCurrentGroup) as |user|}}
               <tr class="{{unless user.enabled 'disabled-user-account'}}">
                 <td class='text-left' colspan=1>
-                  {{#if user.enabled}}
+                  {{#if (or user.enabled currentUser.isRoot)}}
                     {{#if isEditing}}
                       <input
                         type="checkbox"
@@ -128,7 +129,8 @@
                         onclick={{action 'toggleUserSelection' user.content}}
                       >
                     {{/if}}
-                  {{else}}
+                  {{/if}}
+                  {{#if (not user.enabled)}}
                     {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
                   {{/if}}
                 </td>

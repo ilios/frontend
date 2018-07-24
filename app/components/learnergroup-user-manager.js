@@ -1,10 +1,12 @@
 /* eslint ember/order-in-components: 0 */
+import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
+  currentUser: service(),
   init(){
     this._super(...arguments);
     this.set('usersBeingMoved', []);

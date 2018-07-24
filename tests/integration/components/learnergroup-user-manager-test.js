@@ -1,4 +1,6 @@
 import EmberObject from '@ember/object';
+import { getOwner } from '@ember/application';
+import Service from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
@@ -473,4 +475,82 @@ test('checking one puts checkall box into indeterminate state', function(assert)
   this.$(checkAllBox).click();
   assert.notOk(this.$(user1CheckBox).prop('checked'));
   assert.notOk(this.$(user2CheckBox).prop('checked'));
+});
+
+test('root users can manage disabled users', function(assert) {
+  assert.expect(2);
+  const currentUserMock = Service.extend({
+    isRoot: true,
+  });
+  getOwner(this).register('service:currentUser', currentUserMock);
+
+  const userCheckbox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const userDisabledIcon = 'tbody tr:eq(0) td:eq(0) .fa-user-times';
+
+  let user1 = EmberObject.create({
+    enabled: false,
+    lowestGroupInTree: EmberObject.create({
+      id: 1
+    }),
+  });
+
+  this.set('users', [ObjectProxy.create({content: user1})]);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-user-manager
+    learnerGroupId=1
+    learnerGroupTitle='this group'
+    topLevelGroupTitle='top group'
+    cohortTitle='this cohort'
+    users=users
+    sortBy='lastName'
+    setSortBy=(action nothing)
+    isEditing=true
+    addUserToGroup=(action nothing)
+    removeUserFromGroup=(action nothing)
+    addUsersToGroup=(action nothing)
+    removeUsersFromGroup=(action nothing)
+  }}`);
+
+  assert.equal(1, this.$(userCheckbox).length, 'Checkbox visible');
+  assert.equal(1, this.$(userDisabledIcon).length, 'User is labeled as disabled.');
+});
+
+test('non-root users cannot manage disabled users', function(assert) {
+  assert.expect(2);
+  const currentUserMock = Service.extend({
+    isRoot: false,
+  });
+  getOwner(this).register('service:currentUser', currentUserMock);
+
+  const userCheckbox = 'tbody tr:eq(0) td:eq(0) input[type=checkbox]';
+  const userDisabledIcon = 'tbody tr:eq(0) td:eq(0) .fa-user-times';
+
+  let user1 = EmberObject.create({
+    enabled: false,
+    lowestGroupInTree: EmberObject.create({
+      id: 1
+    }),
+  });
+
+  this.set('users', [ObjectProxy.create({content: user1})]);
+  this.set('nothing', parseInt);
+
+  this.render(hbs`{{learnergroup-user-manager
+    learnerGroupId=1
+    learnerGroupTitle='this group'
+    topLevelGroupTitle='top group'
+    cohortTitle='this cohort'
+    users=users
+    sortBy='lastName'
+    setSortBy=(action nothing)
+    isEditing=true
+    addUserToGroup=(action nothing)
+    removeUserFromGroup=(action nothing)
+    addUsersToGroup=(action nothing)
+    removeUsersFromGroup=(action nothing)
+  }}`);
+
+  assert.equal(0, this.$(userCheckbox).length, 'Checkbox is not visible');
+  assert.equal(1, this.$(userDisabledIcon).length, 'User is labeled as disabled.');
 });
