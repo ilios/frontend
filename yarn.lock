@@ -4195,9 +4195,9 @@ ember-cli-file-saver@^1.2.2:
     ember-cli-babel "^6.3.0"
     file-saver "1.3.3"
 
-ember-cli-flash@1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/ember-cli-flash/-/ember-cli-flash-1.6.4.tgz#9830e11f76d8b3863d37bbe604b3cb6b9a92d2f2"
+ember-cli-flash@1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/ember-cli-flash/-/ember-cli-flash-1.6.5.tgz#a7d77ca5aab51f9406e8df7826a9b885dac8a701"
   dependencies:
     ember-cli-babel "^6.10.0"
     ember-cli-htmlbars "^2.0.1"
