@@ -156,6 +156,7 @@
     'doesNotMatchUserRecord': 'Cargado {{description}} no coincide con la información en Ilios, cuál es "{{record}}"',
     'domain': 'Dominio',
     'done': 'Acabado',
+    'downloadCompetencyMap': 'Descargar el mapa de competencias',
     'downloadResults': 'Descargar Resultados',
     'draft': 'Borrador',
     'duration': 'Duración',

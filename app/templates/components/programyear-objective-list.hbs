@@ -10,6 +10,12 @@
       {{#if (and editable (await hasMoreThanOneObjective))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortObjectives'}}</button>
       {{/if}}
+      <a class="button" {{action (perform downloadReport subject)}}>
+        <button class="download">
+          {{fa-icon (if downloadReport.isRunning 'spinner' 'download') spin=(if downloadReport.isRunning true false)}}
+          {{t 'general.downloadCompetencyMap'}}
+        </button>
+      </a>
       <table>
         <thead>
           <tr>
