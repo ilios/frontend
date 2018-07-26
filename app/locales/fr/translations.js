@@ -156,6 +156,7 @@ export default {
     'doesNotMatchUserRecord': 'Téléchargé {{description}} ne correspond pas aux informations dans Ilios, qui est "{{record}}"',
     'domain': 'Domaine',
     'done': "Fini",
+    'downloadCompetencyMap': 'Télécharger la tableau de compétences',
     'downloadResults': 'Télécharger les indices',
     'draft': 'Provisoire',
     'duration': 'Durée',

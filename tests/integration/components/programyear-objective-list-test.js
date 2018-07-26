@@ -11,7 +11,7 @@ moduleForComponent('programyear-objective-list', 'Integration | Component | prog
 });
 
 test('it renders', function(assert){
-  assert.expect(6);
+  assert.expect(7);
 
   let objective1 = EmberObject.create({
     title: 'Objective A',
@@ -37,6 +37,7 @@ test('it renders', function(assert){
   );
   return wait().then(() => {
     assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
+    assert.equal(this.$('button.download').length, 1, 'Download button shows.');
     assert.equal(this.$('thead th:eq(1)').text().trim(), 'Description');
     assert.equal(this.$('thead th:eq(2)').text().trim(), 'Competency');
     assert.equal(this.$('thead th:eq(3)').text().trim(), 'MeSH Terms');

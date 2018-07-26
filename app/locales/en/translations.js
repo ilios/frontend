@@ -156,6 +156,7 @@ export default {
     'doesNotMatchUserRecord': 'Uploaded {{description}} does not match the information in Ilios, which is "{{record}}"',
     'domain': 'Domain',
     'done': 'Done',
+    'downloadCompetencyMap': 'Download Competency Map',
     'downloadResults': 'Download Results',
     'draft': 'Draft',
     'duration': 'Duration',
