@@ -33,11 +33,6 @@ module('Acceptance: Course - Print Course', function(hooks) {
       courseIds: [1],
       vocabularyId: 1,
     });
-    this.server.create('objective', {
-      schoolId: 1,
-      courseIds: [1],
-      title: 'Gigawatt Conversion'
-    });
     this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
@@ -61,7 +56,6 @@ module('Acceptance: Course - Print Course', function(hooks) {
     });
     this.server.create('meshDescriptor', {
       courseIds: [1],
-      objectiveIds: [1],
       name: "Flux Capacitor"
     });
   });
@@ -71,13 +65,11 @@ module('Acceptance: Course - Print Course', function(hooks) {
     await visit('/course/1/print');
 
     assert.equal(find('.header h2').textContent, 'Back to the Future');
-    assert.equal(find('.content ul li').textContent.trim(), 'Time Travel');
-    assert.equal(find(findAll('.content ul li')[1]).textContent, 'Gigawatt Conversion');
+    assert.equal(find('.content ul li').textContent.trim(), 'Flux Capacitor');
     assert.equal(find('.block .content tbody tr td').textContent.trim(), 'Save the Clock Tower');
     assert.equal(find(findAll('.block .content tbody tr td')[1]).textContent, 'file');
     assert.equal(find(findAll('.block .content tbody tr td')[2]).textContent.trim(), 'No');
     assert.equal(find(findAll('.block .content tbody tr td')[4]).textContent.trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
-    assert.equal(find(findAll('.content ul li')[2]).textContent, 'Flux Capacitor');
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
@@ -132,7 +124,6 @@ module('Acceptance: Course - Print Course', function(hooks) {
   });
 
   test('test print ILM details', async function (assert) {
-
     assert.expect(6);
     await setupAuthentication( { school: this.school });
 
@@ -161,5 +152,99 @@ module('Acceptance: Course - Print Course', function(hooks) {
     assert.equal(labels[1].textContent.trim(), 'Due By');
     assert.equal(values[0].textContent.trim(), '1.5');
     assert.equal(values[1].textContent.trim(), '12/17/1995');
+  });
+
+  test('test print session objectives', async function(assert) {
+    assert.expect(7);
+    await setupAuthentication( { school: this.school });
+
+    this.server.create('session', {
+      courseId: 1,
+      published: true,
+      publishedAsTbd: false,
+    });
+
+    this.server.create('objective', {
+      schoolId: 1,
+      courseIds: [1],
+      title: 'Course Objective 1',
+    });
+
+    this.server.create('objective', {
+      schoolId: 1,
+      sessionIds: [1],
+      parentIds: [1],
+      title: 'Session Objective 1',
+    });
+
+    this.server.create('meshDescriptor', {
+      objectiveIds: [2],
+      name: "MeSH Descriptor 1",
+    });
+
+    this.server.create('meshDescriptor', {
+      objectiveIds: [2],
+      name: "MeSH Descriptor 2",
+    });
+
+    await visit('/course/1/print');
+
+    const labels = await findAll('[data-test-session-objectives] th');
+    const values = await findAll('[data-test-session-objectives] td');
+
+    assert.equal(labels[0].textContent.trim(), 'Objectives');
+    assert.equal(labels[1].textContent.trim(), 'Parent Objectives');
+    assert.equal(labels[2].textContent.trim(), 'MeSH Terms');
+    assert.equal(values[0].textContent.trim(), 'Session Objective 1');
+    assert.equal(values[1].textContent.trim(), 'Course Objective 1');
+    assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));
+    assert.ok(values[2].textContent.trim().endsWith('MeSH Descriptor 2'));
+  });
+
+  test('test print course objectives', async function(assert) {
+    assert.expect(8);
+    await setupAuthentication( { school: this.school });
+
+    this.server.create('competency', {
+      schoolId: 1,
+      title: 'Competency 1',
+    });
+
+    this.server.create('objective', {
+      schoolId: 1,
+      competencyId: 1,
+      title: 'Program Year Objective 1',
+    });
+
+    this.server.create('objective', {
+      schoolId: 1,
+      courseIds: [1],
+      parentIds: [1],
+      title: 'Course Objective 1',
+    });
+
+    this.server.create('meshDescriptor', {
+      objectiveIds: [2],
+      name: "MeSH Descriptor 1",
+    });
+
+    this.server.create('meshDescriptor', {
+      objectiveIds: [2],
+      name: "MeSH Descriptor 2",
+    });
+
+    await visit('/course/1/print');
+
+    const labels = await findAll('[data-test-course-objectives] th');
+    const values = await findAll('[data-test-course-objectives] td');
+
+    assert.equal(labels[0].textContent.trim(), 'Objectives');
+    assert.equal(labels[1].textContent.trim(), 'Parent Objectives');
+    assert.equal(labels[2].textContent.trim(), 'MeSH Terms');
+    assert.equal(values[0].textContent.trim(), 'Course Objective 1');
+    assert.ok(values[1].textContent.trim().startsWith('Program Year Objective 1'));
+    assert.ok(values[1].textContent.trim().endsWith('(Competency 1)'));
+    assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));
+    assert.ok(values[2].textContent.trim().endsWith('MeSH Descriptor 2'));
   });
 });

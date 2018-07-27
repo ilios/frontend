@@ -77,19 +77,60 @@
   </div>
 </section>
 
-<section class='block'>
+<section class='block' data-test-course-objectives>
   <div class='title'>
     {{t 'general.objectives'}} ({{course.objectives.length}})
   </div>
-  <div class='content'>
-    <ul>
-      {{#each (await course.sortedObjectives) as |objective|}}
-        <li>{{objective.textTitle}}</li>
-      {{/each}}
-    </ul>
-  </div>
+  {{#if (get (await course.objectives) 'length')}}
+    <div class='content'>
+      <table>
+        <thead>
+          <tr>
+            <th class='text-left'>{{t 'general.objectives'}}</th>
+            <th class='text-left'>{{t 'general.parentObjectives'}}</th>
+            <th class='text-left'>{{t 'general.meshTerms'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await course.sortedObjectives) as |objective|}}
+            <tr>
+              <td class='text-left text-top'>{{objective.textTitle}}</td>
+              <td class='text-left text-top'>
+                {{#if objective.hasParents}}
+                  {{#each objective.parents as |parent|}}
+                    {{#if course.hasMultipleCohorts}}
+                      <strong>
+                        {{get (await parent.firstProgram) 'title'}}
+                        {{#if (get (await parent.firstCohort) 'title')}}
+                          {{get (await parent.firstCohort) 'title'}}
+                        {{else}}
+                          {{t 'general.classOf' year=(await (get (await parent.firstCohort) 'classOfYear'))}}
+                        {{/if}}
+                      </strong>
+                      <br>
+                    {{/if}}
+                    {{parent.textTitle}}
+                    {{#if parent.competency}}
+                      ({{parent.competency.title}})
+                    {{/if}}
+                    <br>
+                  {{/each}}
+                {{/if}}
+              </td>
+              <td class='text-left text-top'>
+                <ul class="inline-list">
+                  {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
+                    <li>{{descriptor.name}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
 </section>
-
 
 <section class='block'>
   <div class='title'>
@@ -189,17 +230,47 @@
     </div>
   </section>
 
-  <section class='block'>
+  <section class='block' data-test-session-objectives>
     <div class='title'>
       {{t 'general.objectives'}} ({{session.objectives.length}})
     </div>
-    <div class='content'>
-      <ul>
-        {{#each (await session.sortedObjectives) as |objective|}}
-          <li>{{objective.textTitle}}</li>
-        {{/each}}
-      </ul>
-    </div>
+    {{#if (get (await session.objectives) 'length')}}
+      <div class='content'>
+        <table>
+          <thead>
+            <tr>
+              <th class='text-left'>{{t 'general.objectives'}}</th>
+              <th class='text-left'>{{t 'general.parentObjectives'}}</th>
+              <th class='text-left'>{{t 'general.meshTerms'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each (await session.sortedObjectives) as |objective|}}
+              <tr>
+                <td class='text-left text-top'>{{objective.textTitle}}</td>
+                <td class='text-left text-top'>
+                  {{#if objective.hasParents}}
+                    {{#each objective.parents as |parent|}}
+                      {{parent.textTitle}}
+                      {{#if objective.hasMultipleParents}}
+                        <br><br>
+                      {{/if}}
+                    {{/each}}
+                  {{/if}}
+                </td>
+                <td class='text-left text-top'>
+                  <ul class="inline-list">
+                    {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
+                      <li>{{descriptor.name}}</li>
+                    {{/each}}
+                  </ul>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/if}}
   </section>
 
   <section class='block'>
