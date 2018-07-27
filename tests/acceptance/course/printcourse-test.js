@@ -130,4 +130,36 @@ module('Acceptance: Course - Print Course', function(hooks) {
     assert.equal(sessionHeaders[0].textContent, 'session 1');
     assert.equal(sessionHeaders[1].textContent, 'session 2');
   });
+
+  test('test print ILM details', async function (assert) {
+
+    assert.expect(6);
+    await setupAuthentication( { school: this.school });
+
+    this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: false,
+    });
+
+    this.server.create('ilmSession', {
+      sessionId: 1,
+      hours: 1.5,
+      dueDate: new Date('1995-12-17T03:24:00')
+    });
+
+    await visit('/course/1/print');
+
+    const ilmSection = await findAll('[data-test-session-ilm-section]');
+    const title = await find('[data-test-session-ilm-section] .title');
+    const labels = await findAll('[data-test-session-ilm-section] th');
+    const values = await findAll('[data-test-session-ilm-section] td');
+
+    assert.equal(ilmSection.length, 1);
+    assert.equal(title.textContent.trim(), 'Independent Learning');
+    assert.equal(labels[0].textContent.trim(), 'Hours');
+    assert.equal(labels[1].textContent.trim(), 'Due By');
+    assert.equal(values[0].textContent.trim(), '1.5');
+    assert.equal(values[1].textContent.trim(), '12/17/1995');
+  });
 });

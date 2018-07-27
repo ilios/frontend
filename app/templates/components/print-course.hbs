@@ -269,6 +269,28 @@
     </div>
   </section>
 
+  {{#if session.isIndependentLearning}}
+    <section class="block" data-test-session-ilm-section>
+      <div class='title'>{{t 'general.independentLearning'}}</div>
+      <div class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>{{t 'general.hours'}}</th>
+              <th>{{t 'general.dueBy'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{get (await session.ilmSession) "hours"}}</td>
+              <td>{{moment-format (get (await session.ilmSession) "dueDate") "L"}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  {{/if}}
+
   <section class='block'>
     <div class='title'>
       {{t 'general.offerings'}} ({{session.offerings.length}})
@@ -308,3 +330,4 @@
     </div>
   </section>
 {{/each}}
+
