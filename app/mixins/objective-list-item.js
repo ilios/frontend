@@ -1,7 +1,5 @@
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
 
@@ -31,21 +29,6 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
   isSaving: false,
   showRemoveConfirmation: false,
   editable: true,
-
-  /**
-   * Resolves to TRUE if this objective can be deleted, FALSE otherwise.
-   * @property deletable
-   * @type {Ember.computed}
-   * @public
-   */
-  deletable: computed('objective.descendants.[]', 'editable', function(){
-    const editable = this.get('editable');
-    if (!editable) {
-      return false;
-    }
-    const objective = this.get('objective');
-    return isEmpty(objective.hasMany('descendants').ids());
-  }),
 
   actions: {
     saveTitleChanges() {
