@@ -1,8 +1,8 @@
-<div class='header'>
+<div class='header' data-test-course-header>
   <h2>{{course.title}}</h2><h4>{{course.academicYear}}</h4>
   {{publication-status item=course}}
 </div>
-<section class='overview block'>
+<section class='overview block' data-test-course-overview>
   <div class='title'>
     {{t 'general.overview'}}
   </div>
@@ -39,7 +39,7 @@
   </div>
 </section>
 
-<section class='block'>
+<section class='block' data-test-course-competencies>
   <div class='title'>
     {{t 'general.competencies'}} ({{get (await course.competencies) 'length'}})
   </div>
@@ -65,7 +65,7 @@
   </div>
 </section>
 
-<section class='block'>
+<section class='block' data-test-course-terms>
   <div class='title'>
     {{t 'general.terms'}} ({{course.terms.length}})
   </div>
@@ -132,7 +132,7 @@
   {{/if}}
 </section>
 
-<section class='block'>
+<section class='block' data-test-course-learningmaterials>
   <div class='title'>
     {{t 'general.learningMaterials'}} ({{get (await courseLearningMaterials) 'length'}})
   </div>
@@ -178,7 +178,7 @@
   </div>
 </section>
 
-<section class='block'>
+<section class='block' data-test-course-mesh>
   <div class='title'>
     {{t 'general.mesh'}} ({{course.meshDescriptors.length}})
   </div>
