@@ -4082,7 +4082,7 @@ ember-cli-dependency-lint@1.0.3:
     chalk "^2.3.0"
     semver "^5.5.0"
 
-ember-cli-deploy-archive@^1.0.0-beta.1:
+ember-cli-deploy-archive@1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/ember-cli-deploy-archive/-/ember-cli-deploy-archive-1.0.0-beta.2.tgz#3b951cc8fb4bdcb3cc5d512b13017c3c11c7fe53"
   dependencies:
