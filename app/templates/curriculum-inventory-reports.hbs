@@ -24,7 +24,10 @@
       {{#if (gt (get (await programs) "length") 1)}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
           {{#each (sort-by "title" (await programs)) as |program|}}
-            <option value={{program.id}} selected={{is-equal program (await selectedProgram)}}>
+            <option
+              value={{program.id}}
+              selected={{is-equal program (await selectedProgram)}}
+            >
               {{program.title}}
             </option>
           {{/each}}

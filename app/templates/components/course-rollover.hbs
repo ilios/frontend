@@ -11,7 +11,10 @@
     <input
       type="text"
       value={{title}}
-      oninput={{pipe (action "changeTitle" value="target.value") (action "addErrorDisplayFor" "title")}}
+      oninput={{pipe
+                (action "changeTitle" value="target.value")
+                (action "addErrorDisplayFor" "title")
+              }}
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.courseTitlePlaceholder"}}
@@ -28,7 +31,11 @@
     {{else}}
       <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
         {{#each years as |year|}}
-          <option disabled={{contains year loadUnavailableYears.lastSuccessful.value}} value={{year}} selected={{is-equal year selectedYear}}>
+          <option
+            disabled={{contains year loadUnavailableYears.lastSuccessful.value}}
+            value={{year}}
+            selected={{is-equal year selectedYear}}
+          >
             {{year}} - {{inc year}}
             {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
               ({{t "general.courseRolloverYearUnavailable"}})
@@ -37,12 +44,19 @@
         {{/each}}
       </select>
     {{/if}}
-    {{#if (and (v-get this "selectedYear" "isInvalid") (is-in showErrorsFor "selectedYear"))}}
+    {{#if
+      (and (v-get this "selectedYear" "isInvalid") (is-in showErrorsFor "selectedYear"))
+    }}
       <span class="validation-error-message">{{v-get this "selectedYear" "message"}}</span>
     {{/if}}
   </div>
 
-  <span onclick={{toggle-action "expandAdvancedOptions" this}} class="advanced-options-title {{if expandAdvancedOptions "expanded" "collapsed"}}">{{t "general.advancedOptions"}}</span>
+  <span
+    onclick={{toggle-action "expandAdvancedOptions" this}}
+    class="advanced-options-title {{if expandAdvancedOptions "expanded" "collapsed"}}"
+  >
+    {{t "general.advancedOptions"}}
+  </span>
   <div class="advanced-options">
     {{#liquid-if expandAdvancedOptions class="vertical"}}
       <div class="item">
@@ -87,7 +101,16 @@
   </div>
 
   <div class="buttons">
-    <button disabled={{if (or isSaving (not selectedYear) (contains selectedYear loadUnavailableYears.lastSuccessful.value)) true}} class="done text" {{action (perform save)}}>
+    <button {{action (perform save)}}
+      disabled={{if
+                 (or isSaving
+                   (not selectedYear)
+                   (contains selectedYear loadUnavailableYears.lastSuccessful.value)
+                 )
+                 true
+               }}
+      class="done text"
+    >
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}

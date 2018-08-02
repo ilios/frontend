@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="title">{{t "general.newReport"}}</div>
 <div class="new-myreport-content" data-test-new-report>
   <p>
@@ -8,7 +9,7 @@
       oninput={{action (mut title) value="target.value"}}
       disabled={{save.isRunning}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
-      data-test-report-title=true
+      data-test-report-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>
@@ -17,12 +18,18 @@
   <p>
     <label>{{t "general.for"}}</label>
     {{#if (is-fulfilled currentSchool)}}
-      <select onchange={{perform changeSchool value="target.value"}} data-test-report-school>
-        <option value=null selected={{is-equal null (await currentSchool)}}>
+      <select
+        onchange={{perform changeSchool value="target.value"}}
+        data-test-report-school
+      >
+        <option value="null" selected={{is-equal null (await currentSchool)}}>
           {{t "general.allSchools"}}
         </option>
         {{#each (await schoolList) as |school|}}
-          <option value={{school.id}} selected={{is-equal school.id (get (await currentSchool) "id")}}>
+          <option
+            value={{school.id}}
+            selected={{is-equal school.id (get (await currentSchool) "id")}}
+          >
             {{school.title}}
           </option>
         {{/each}}
@@ -31,30 +38,45 @@
   </p>
   <p>
     <label>{{t "general.all"}}</label>
-    <select onchange={{action "changeSubject" value="target.value"}} data-test-report-subject>
-      {{#each subjectList as |option|}}
-        <option value={{option.value}} selected={{is-equal option.value currentSubject}}>
-          {{option.label}}
+    <select
+      onchange={{action "changeSubject" value="target.value"}}
+      data-test-report-subject
+    >
+      {{#each subjectList as |o|}}
+        <option
+          value={{o.value}}
+          selected={{is-equal o.value currentSubject}}
+        >
+          {{o.label}}
         </option>
       {{/each}}
     </select>
   </p>
   <p>
     <label>{{t "general.associatedWith"}}</label>
-    <select onchange={{action "changePrepositionalObject" value="target.value"}} data-test-report-object-type>
+    <select
+      onchange={{action "changePrepositionalObject" value="target.value"}}
+      data-test-report-object-type
+    >
       <option value="" selected={{is-equal null currentPrepositionalObject}}>
         {{t "general.anything"}}
       </option>
-      {{#each prepositionalObjectList as |option|}}
-        <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObject}}>
-          {{option.label}}
+      {{#each prepositionalObjectList as |o|}}
+        <option
+          value={{o.value}}
+          selected={{is-equal o.value currentPrepositionalObject}}
+        >
+          {{o.label}}
         </option>
       {{/each}}
     </select>
   </p>
   {{#if currentPrepositionalObject class="crossFade"}}
     {{#if (contains currentPrepositionalObject (w "course session"))}}
-      <select onchange={{action "changeSelectedYear" value="target.value"}} data-test-report-year-filter>
+      <select
+        onchange={{action "changeSelectedYear" value="target.value"}}
+        data-test-report-year-filter
+      >
         <option value="" selected={{is-empty selectedYear}}>{{t "general.allAcademicYears"}}</option>
         {{#each (sort-by "academicYearTitle:desc" (await allAcademicYears)) as |year|}}
           <option value={{year.id}} selected={{is-equal year selectedYear}}>
@@ -99,11 +121,20 @@
         {{/if}}
       {{else}}
         {{#if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
-          <select onchange={{action "changePrepositionalObjectId" value="target.value"}} data-test-report-object>
-            {{#each (sort-by "active:desc" "label" (await filteredPrepositionalObjectIdList)) as |option|}}
-              <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
-                {{await option.label}}
-                {{#unless option.active}}
+          <select
+            onchange={{action "changePrepositionalObjectId" value="target.value"}}
+            data-test-report-object
+          >
+            {{#each
+              (sort-by "active:desc" "label" (await filteredPrepositionalObjectIdList))
+              as |o|
+            }}
+              <option
+                value={{o.value}}
+                selected={{is-equal o.value currentPrepositionalObjectId}}
+              >
+                {{await o.label}}
+                {{#unless o.active}}
                   ({{t "general.inactive"}})
                 {{/unless}}
               </option>

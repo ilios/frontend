@@ -58,7 +58,12 @@
   <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
     <button class="new-token done text" onclick={{action toggleShowCreateNewToken}}>{{t "general.createNew"}}</button>
-    <button class="invalidate-tokens cancel text" onclick={{action toggleShowInvalidateTokens}}>{{t "general.invalidateTokens"}}</button>
+    <button
+      class="invalidate-tokens cancel text"
+      onclick={{action toggleShowInvalidateTokens}}
+    >
+      {{t "general.invalidateTokens"}}
+    </button>
   {{else}}
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
@@ -68,7 +73,11 @@
           {{#copy-button success="tokenCopied" clipboardText=generatedJwt}}
             {{fa-icon "copy"}}
           {{/copy-button}}
-          <button class="bigcancel" {{action (pipe toggleShowCreateNewToken (action "reset"))}}>{{fa-icon "times"}}</button>
+          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+            class="bigcancel"
+          >
+            {{fa-icon "times"}}
+          </button>
         </div>
       {{else}}
         <div class="new-token-form">
@@ -88,7 +97,11 @@
               {{fa-icon "check"}}
             {{/if}}
           </button>
-          <button class="bigcancel" {{action (pipe toggleShowCreateNewToken (action "reset"))}}>{{fa-icon "times"}}</button>
+          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+            class="bigcancel"
+          >
+            {{fa-icon "times"}}
+          </button>
         </div>
       {{/if}}
     {{/if}}

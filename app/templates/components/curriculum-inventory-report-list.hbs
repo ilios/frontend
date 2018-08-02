@@ -9,7 +9,7 @@
       }}
         {{t "general.reportName"}}
       {{/sortable-th}}
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.program"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.program"}}</th>
       {{#sortable-th
         colspan=2
         click=(action "sortBy" "year")
@@ -21,25 +21,45 @@
       }}
         {{t "general.academicYear"}}
       {{/sortable-th}}
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.startDate"}}</th>
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.endDate"}}</th>
-      <th class="text-center" colspan=2>{{t "general.status"}}</th>
-      <th class="text-right" colspan=2>{{t "general.actions"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.startDate"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.endDate"}}</th>
+      <th class="text-center" colspan="2">{{t "general.status"}}</th>
+      <th class="text-right" colspan="2">{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody>
     {{#each (sort-by sortBy (await proxiedReports)) as |report|}}
-      <tr class="{{if report.showRemoveConfirmation "confirm-removal"}}">
-        <td class="text-left" colspan=4>
+      <tr class={{if report.showRemoveConfirmation "confirm-removal" ""}}>
+        <td class="text-left" colspan="4">
           {{#link-to "curriculumInventoryReport" report.content}}
             {{report.name}}
           {{/link-to}}
         </td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" report}}>{{report.program.title}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" report}}>{{report.yearLabel}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" report}}>{{moment-format report.startDate "L"}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" report}}>{{moment-format report.endDate "L"}}</td>
-        <td class="text-center" colspan=2 {{action "edit" report}}>
+        <td {{action "edit" report}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{report.program.title}}
+        </td>
+        <td {{action "edit" report}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{report.yearLabel}}
+        </td>
+        <td {{action "edit" report}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{moment-format report.startDate "L"}}
+        </td>
+        <td {{action "edit" report}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{moment-format report.endDate "L"}}
+        </td>
+        <td class="text-center" colspan="2" {{action "edit" report}}>
           {{#if report.isFinalized}}{{fa-icon "lock"}}{{/if}}
           {{publication-status
             publishedLangKey="general.finalized"
@@ -48,12 +68,19 @@
             showIcon=false
           }}
         </td>
-        <td class="text-right report-actions" colspan=2>
+        <td class="text-right report-actions" colspan="2">
           {{#link-to "curriculumInventoryReport" report.content}}
             {{fa-icon "edit"}}
           {{/link-to}}
           <span>
-            <a href="{{report.content.absoluteFileUri}}" download="report.xml" target="_blank" rel="noopener">{{fa-icon "download"}}</a>
+            <a
+              href={{report.content.absoluteFileUri}}
+              download="report.xml"
+              target="_blank"
+              rel="noopener"
+            >
+              {{fa-icon "download"}}
+            </a>
           </span>
           {{#if (await report.userCanDelete)}}
             <span class="clickable remove" {{action "confirmRemove" report}}>{{fa-icon "trash"}}</span>
@@ -62,7 +89,7 @@
       </tr>
       {{#if report.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan=16>
+          <td colspan="16">
             <div class="confirm-message">
               {{t "general.reportConfirmRemove"}} <br>
               <div class="confirm-buttons">

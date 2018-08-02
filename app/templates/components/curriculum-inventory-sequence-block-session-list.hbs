@@ -3,8 +3,8 @@
     <table>
       <thead>
         <tr>
-          <th class="text-center" colspan=2>{{t "general.countAsOneOffering"}}</th>
-          <th class="text-center" colspan=2>{{t "general.exclude"}}</th>
+          <th class="text-center" colspan="2">{{t "general.countAsOneOffering"}}</th>
+          <th class="text-center" colspan="2">{{t "general.exclude"}}</th>
           {{#sortable-th
             colspan=3
             click=(action "sortBy" "title")
@@ -21,7 +21,7 @@
           }}
             {{t "general.sessionType"}}
           {{/sortable-th}}
-          <th class="text-center" colspan=1>{{t "general.totalTime"}}</th>
+          <th class="text-center" colspan="1">{{t "general.totalTime"}}</th>
           {{#sortable-th
             colspan=1
             click=(action "sortBy" "offerings.length")
@@ -36,20 +36,20 @@
       <tbody>
         {{#each (sort-by sortBy sessionsBuffer) as |session|}}
           <tr>
-            <td class="text-center" colspan=2>
+            <td class="text-center" colspan="2">
               {{if (is-in linkedSessions session) (t "general.yes") (t "general.no")}}
             </td>
-            <td class="text-center" colspan=2>
+            <td class="text-center" colspan="2">
               {{if (is-in excludedSessions session) (t "general.yes") (t "general.no")}}
             </td>
-            <td class="text-left" colspan=3>
+            <td class="text-left" colspan="3">
               {{#if session.isIndependentLearning}}
                 <strong>({{t "general.ilm"}})</strong>
               {{/if}}
               {{session.title}}
             </td>
-            <td class="text-left" colspan=3>{{get (await session.sessionType) "title"}}</td>
-            <td class="text-center" colspan=1>
+            <td class="text-left" colspan="3">{{get (await session.sessionType) "title"}}</td>
+            <td class="text-center" colspan="1">
               {{#if (is-in linkedSessions session)}}
                 {{#unless (is-fulfilled session.maxSingleOfferingDuration)}}
                   {{loading-spinner}}
@@ -64,7 +64,7 @@
                 {{/unless}}
               {{/if}}
             </td>
-            <td class="text-center" colspan=1>{{get (await session.offerings) "length"}}</td>
+            <td class="text-center" colspan="1">{{get (await session.offerings) "length"}}</td>
           </tr>
         {{/each}}
       </tbody>

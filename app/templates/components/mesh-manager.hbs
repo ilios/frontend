@@ -23,7 +23,12 @@
 </ul>
 
 {{#if editable}}
-  {{search-box placeholder=(t "general.meshSearchPlaceholder") liveSearch=false search=(action "search") clear=(action "clear")}}
+  {{search-box
+    placeholder=(t "general.meshSearchPlaceholder")
+    liveSearch=false
+    search=(action "search")
+    clear=(action "clear")
+  }}
 {{/if}}
 
 {{#if searching}}
@@ -34,7 +39,10 @@
   {{#if searchResults.length}}
     <ul class="mesh-search-results" data-test-search-results>
       {{#each searchResults as |term|}}
-        <li class="{{unless term.isActive "disabled"}}" {{action "add" term}} data-test-search-result>
+        <li {{action "add" term}}
+          class={{unless term.isActive "disabled" ""}}
+          data-test-search-result
+        >
           <span class="descriptor-name" data-test-name>{{term.name}}</span>
           <span class="descriptor-id">
             {{term.id}}
@@ -45,7 +53,11 @@
           <ul class="mesh-concepts">
             {{#each term.concepts as |concept| }}
               {{#if concept.scopeNote }}
-                <li class="{{unless term.isActive "disabled"}} {{if concept.hasTruncatedScopeNote "truncated"}}">{{concept.truncatedScopeNote}}</li>
+                <li
+                  class="{{unless term.isActive "disabled"}} {{if concept.hasTruncatedScopeNote "truncated"}}"
+                >
+                  {{concept.truncatedScopeNote}}
+                </li>
               {{/if}}
             {{/each}}
           </ul>
@@ -53,8 +65,13 @@
       {{/each}}
     </ul>
     {{#if hasMoreSearchResults}}
-      <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
-        {{fa-icon (if searchMore.isRunning "spinner") spin=(if searchMore.isRunning true false)}}
+      <button {{action (perform searchMore)}}
+        disabled={{if searchMore.isRunning true}}
+      >
+        {{fa-icon
+          (if searchMore.isRunning "spinner")
+          spin=(if searchMore.isRunning true false)
+        }}
         {{t "general.showMore" }}
       </button>
     {{/if}}

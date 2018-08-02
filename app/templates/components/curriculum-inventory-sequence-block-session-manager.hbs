@@ -1,7 +1,10 @@
 {{#unless loadAttr.isRunning}}
   <div class="actions">
     <button class="bigadd" {{action (perform saveChanges)}}>
-      {{fa-icon (if saveChanges.isRunning "spinner" "check") spin=(if saveChanges.isRunning true false)}}
+      {{fa-icon
+        (if saveChanges.isRunning "spinner" "check")
+        spin=(if saveChanges.isRunning true false)
+      }}
     </button>
     <button class="bigcancel" {{action "close"}}>{{fa-icon "undo"}}</button>
   </div>
@@ -9,21 +12,23 @@
     <table>
       <thead>
         <tr>
-          <th class="text-center count-as-one-header" colspan=2>
+          <th class="text-center count-as-one-header" colspan="2">
             <input
-            type="checkbox"
-            checked={{allSelected}}
-            onclick={{action "toggleSelectAll" value="target.value"}}
-            indeterminate={{someSelected}}
-            >{{t "general.countAsOneOffering"}}
+              type="checkbox"
+              checked={{allSelected}}
+              onclick={{action "toggleSelectAll" value="target.value"}}
+              indeterminate={{someSelected}}
+            >
+            {{t "general.countAsOneOffering"}}
           </th>
-          <th class="text-center count-as-one-header" colspan=2>
+          <th class="text-center count-as-one-header" colspan="2">
             <input
-            type="checkbox"
-            checked={{allExcluded}}
-            onclick={{action "toggleExcludeAll" value="target.value"}}
-            indeterminate={{someExcluded}}
-            >{{t "general.exclude"}}
+              type="checkbox"
+              checked={{allExcluded}}
+              onclick={{action "toggleExcludeAll" value="target.value"}}
+              indeterminate={{someExcluded}}
+            >
+            {{t "general.exclude"}}
           </th>
           {{#sortable-th
             colspan=3
@@ -41,7 +46,7 @@
           }}
             {{t "general.sessionType"}}
           {{/sortable-th}}
-          <th class="text-center" colspan=1>{{t "general.totalTime"}}</th>
+          <th class="text-center" colspan="1">{{t "general.totalTime"}}</th>
           {{#sortable-th
             colspan=1
             click=(action "sortBy" "offerings.length")
@@ -56,28 +61,28 @@
       <tbody>
         {{#each (sort-by sortBy sessionsBuffer) as |session|}}
           <tr>
-            <td class="text-center" colspan=2>
+            <td class="text-center" colspan="2">
               {{input
                 type="checkbox"
                 checked=(is-in linkedSessionsBuffer session)
                 change=(action "changeSession" session)
               }}
             </td>
-            <td class="text-center" colspan=2>
+            <td class="text-center" colspan="2">
               {{input
                 type="checkbox"
                 checked=(is-in excludedSessionsBuffer session)
                 change=(action "excludeSession" session)
               }}
             </td>
-            <td class="text-left" colspan=3>
+            <td class="text-left" colspan="3">
               {{#if session.isIndependentLearning}}
                 <strong>({{t "general.ilm"}})</strong>
               {{/if}}
               {{session.title}}
             </td>
-            <td class="text-left" colspan=3>{{get (await session.sessionType) "title"}}</td>
-            <td class="text-center" colspan=1>
+            <td class="text-left" colspan="3">{{get (await session.sessionType) "title"}}</td>
+            <td class="text-center" colspan="1">
               {{#if (is-in linkedSessionsBuffer session)}}
                 {{#unless (is-fulfilled session.maxDuration)}}
                   {{loading-spinner}}
@@ -92,7 +97,7 @@
                 {{/unless}}
               {{/if}}
             </td>
-            <td class="text-center" colspan=1>{{get (await session.offerings) "length"}}</td>
+            <td class="text-center" colspan="1">{{get (await session.offerings) "length"}}</td>
           </tr>
         {{/each}}
       </tbody>

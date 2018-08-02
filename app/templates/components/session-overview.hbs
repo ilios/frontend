@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="session-header">
   <span class="title">
     {{#if editable}}
@@ -7,7 +8,7 @@
         close=(action "revertTitleChanges")
         saveOnEnter=true
         closeOnEscape=true
-      as |isSaving|
+        as |isSaving|
       }}
         <input
           type="text"
@@ -115,7 +116,10 @@
         <label>{{t "general.specialAttireRequired"}}:</label>
         <span>
           {{#if editable}}
-            {{toggle-yesno yes=session.attireRequired toggle=(action "changeSpecialAttire")}}
+            {{toggle-yesno
+              yes=session.attireRequired
+              toggle=(action "changeSpecialAttire")
+            }}
           {{else}}
             {{#if session.attireRequired}}
               <span class="add">{{t "general.yes"}}</span>
@@ -131,7 +135,10 @@
         <label>{{t "general.specialEquipmentRequired"}}:</label>
         <span>
           {{#if editable}}
-            {{toggle-yesno yes=session.equipmentRequired toggle=(action "changeSpecialEquipment")}}
+            {{toggle-yesno
+              yes=session.equipmentRequired
+              toggle=(action "changeSpecialEquipment")
+            }}
           {{else}}
             {{#if session.equipmentRequired}}
               <span class="add">{{t "general.yes"}}</span>
@@ -147,7 +154,10 @@
         <label>{{t "general.attendanceRequired"}}:</label>
         <span>
           {{#if editable}}
-            {{toggle-yesno yes=session.attendanceRequired toggle=(action "changeAttendanceRequired")}}
+            {{toggle-yesno
+              yes=session.attendanceRequired
+              toggle=(action "changeAttendanceRequired")
+            }}
           {{else}}
             {{#if session.attendanceRequired}}
               <span class="add">{{t "general.yes"}}</span>
@@ -163,7 +173,10 @@
       <label>{{t "general.independentLearning"}}:</label>
       <span class="independentlearningcontrol-value">
         {{#if editable}}
-          {{toggle-yesno yes=session.isIndependentLearning toggle=(action "saveIndependentLearning")}}
+          {{toggle-yesno
+            yes=session.isIndependentLearning
+            toggle=(action "saveIndependentLearning")
+          }}
         {{else}}
           {{#if session.isIndependentLearning}}
             <span class="add">{{t "general.yes"}}</span>
@@ -247,7 +260,9 @@
               content=description
               update=(action "changeDescription")
             }}
-            {{#if (and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))}}
+            {{#if
+              (and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))
+            }}
               <span class="validation-error-message">{{v-get this "description" "message"}}</span>
             {{/if}}
           {{/editable-field}}

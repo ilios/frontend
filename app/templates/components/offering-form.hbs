@@ -8,13 +8,22 @@
     }}
   </div>
   {{#if showOfferingCalendar}}
-    {{offering-calendar startDate=startDate endDate=endDate learnerGroups=learnerGroups session=session}}
+    {{offering-calendar
+      startDate=startDate
+      endDate=endDate
+      learnerGroups=learnerGroups
+      session=session
+    }}
   {{/if}}
 
   <div class="form">
     <div class="item start-date">
       <label>{{t "general.startDate"}}:</label>
-      {{pikaday-input value=startDate onSelection=(action "updateStartDate") format="M/D/YYYY"}}
+      {{pikaday-input
+        value=startDate
+        onSelection=(action "updateStartDate")
+        format="M/D/YYYY"
+      }}
     </div>
 
     <div class="item start-time">
@@ -31,9 +40,14 @@
             value={{durationHours}}
             oninput={{action (perform updateDurationHours) value="target.value"}}
             onkeyup={{action "addErrorDisplayFor" "durationHours"}}
-            class={{if (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours")) "has-error"}}
+            class={{if
+                    (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
+                    "has-error"
+                  }}
           >
-          {{#if (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))}}
+          {{#if
+            (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
+          }}
             <span class="validation-error-message">{{v-get this "durationHours" "message"}}</span>
           {{/if}}
           <label>{{t "general.hours"}}</label>
@@ -44,9 +58,14 @@
             value={{durationMinutes}}
             oninput={{action (perform updateDurationMinutes) value="target.value"}}
             onkeyup={{action "addErrorDisplayFor" "durationMinutes"}}
-            class={{if (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes")) "has-error"}}
+            class={{if
+                    (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
+                    "has-error"
+                  }}
           >
-          {{#if (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))}}
+          {{#if
+            (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
+          }}
             <span class="validation-error-message">{{v-get this "durationMinutes" "message"}}</span>
           {{/if}}
           <label>{{t "general.minutes"}}</label>
@@ -88,10 +107,15 @@
                 value={{numberOfWeeks}}
                 oninput={{action (mut numberOfWeeks) value="target.value"}}
                 onkeyup={{action "addErrorDisplayFor" "numberOfWeeks"}}
-                class={{concat "make-recurring-input " (if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks")) "has-error")}}
+                class={{concat
+                        "make-recurring-input "
+                        (if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks")) "has-error")
+                      }}
               >
               <label class="make-recurring-input-label">{{t "general.weeks"}}</label>
-              {{#if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks"))}}
+              {{#if
+                (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks"))
+              }}
                 <span class="validation-error-message">{{v-get this "numberOfWeeks" "message"}}</span>
               {{/if}}
             </div>
@@ -154,13 +178,18 @@
       {{else}}
         <p>{{t "general.noAvailableLearnerGroups"}}</p>
       {{/if}}
-      {{#if (and (v-get this "learnerGroups" "isInvalid") (is-in showErrorsFor "learnerGroups"))}}
+      {{#if
+        (and (v-get this "learnerGroups" "isInvalid") (is-in showErrorsFor "learnerGroups"))
+      }}
         <p class="validation-error-message">{{v-get this "learnerGroups" "message"}}</p>
       {{/if}}
     </div>
 
     <div class="buttons">
-      <button class="done text" {{action (perform validateThenSaveOffering)}} disabled={{or saveOffering.isRunning}}>
+      <button {{action (perform validateThenSaveOffering)}}
+        class="done text"
+        disabled={{or saveOffering.isRunning}}
+      >
         {{#if saveOffering.isRunning}}
           {{loading-spinner}}
         {{else}}

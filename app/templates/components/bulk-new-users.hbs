@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 {{#if savingUserErrors.length}}
   <div class="saving-user-errors">
     <p>{{t "general.errorSavingUser"}}</p>
@@ -13,7 +14,10 @@
   <div class="saving-authentication-errors">
     <p>{{t "general.errorSavingAuthentication"}}</p>
     <ul>
-      {{#each (sort-by "lastName" (map-by "user" savingAuthenticationErrors)) as |user|}}
+      {{#each
+        (sort-by "lastName" (map-by "user" savingAuthenticationErrors))
+        as |user|
+      }}
         <li>
           {{#link-to "user" user}}
             {{user.lastName}}, {{user.firstName}} ({{user.email}})
@@ -39,11 +43,19 @@
   <div class="upload-users">
     <label>
       {{t "general.uploadUsers"}}(
-      <a target="_blank" rel="noopener" download="SampleUserUpload.tsv" href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}">
+      <a
+        target="_blank"
+        rel="noopener"
+        download="SampleUserUpload.tsv"
+        href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}"
+      >
         {{t "general.sampleFile"}}
       </a>):
     </label>
-    <input type="file" onchange={{action "updateSelectedFile" value="target.files"}}>
+    <input
+      type="file"
+      onchange={{action "updateSelectedFile" value="target.files"}}
+    >
   </div>
   {{#if parseFile.isRunning}}
     <div class="file-is-loading">{{loading-spinner}}</div>
@@ -75,14 +87,14 @@
                   disabled={{v-get obj "isInvalid"}}
                 >
               </td>
-              <td class="{{if (v-get obj "firstName" "isInvalid") "error"}}">{{obj.firstName}}</td>
-              <td class="{{if (v-get obj "lastName" "isInvalid") "error"}}">{{obj.lastName}}</td>
-              <td class="{{if (v-get obj "middleName" "isInvalid") "error"}}">{{obj.middleName}}</td>
+              <td class={{if (v-get obj "firstName" "isInvalid") "error" ""}}>{{obj.firstName}}</td>
+              <td class={{if (v-get obj "lastName" "isInvalid") "error" ""}}>{{obj.lastName}}</td>
+              <td class={{if (v-get obj "middleName" "isInvalid") "error" ""}}>{{obj.middleName}}</td>
               <td>{{obj.phone}}</td>
-              <td class="{{if (v-get obj "email" "isInvalid") "error"}}">{{obj.email}}</td>
-              <td class="{{if (v-get obj "campusId" "isInvalid") "error"}}">{{obj.campusId}}</td>
-              <td class="{{if (v-get obj "otherId" "isInvalid") "error"}}">{{obj.otherId}}</td>
-              <td class="{{if (v-get obj "username" "isInvalid") "error"}}">{{obj.username}}</td>
+              <td class={{if (v-get obj "email" "isInvalid") "error" ""}}>{{obj.email}}</td>
+              <td class={{if (v-get obj "campusId" "isInvalid") "error" ""}}>{{obj.campusId}}</td>
+              <td class={{if (v-get obj "otherId" "isInvalid") "error" ""}}>{{obj.otherId}}</td>
+              <td class={{if (v-get obj "username" "isInvalid") "error" ""}}>{{obj.username}}</td>
               <td>{{obj.password}}</td>
             </tr>
           {{/each}}
@@ -95,7 +107,10 @@
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
         {{#each (sort-by "title" (await schools)) as |school|}}
-          <option value={{school.id}} selected={{eq school.id (get (await bestSelectedSchool) "id")}}>
+          <option
+            value={{school.id}}
+            selected={{eq school.id (get (await bestSelectedSchool) "id")}}
+          >
             {{school.title}}
           </option>
         {{/each}}
@@ -104,13 +119,19 @@
       {{loading-spinner}}
     {{/if}}
   </div>
-  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
+  {{#if
+    (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
+    class="vertical"
+  }}
     <div class="item last">
       <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
           {{#each (sort-by "title" cohorts) as |cohort|}}
-            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
+            <option
+              value={{cohort.id}}
+              selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
+            >
               {{cohort.title}}
             </option>
           {{/each}}
@@ -122,7 +143,15 @@
   {{/if}}
 
   <div class="buttons">
-    <button class="done text" {{action (perform save)}} disabled={{or (lt selectedUsers.length 1) isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{or
+                 (lt selectedUsers.length 1)
+                 isSaving
+                 (is-pending bestSelectedCohort)
+                 (and (not nonStudentMode) (is-pending bestSelectedSchool))
+               }}
+    >
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}

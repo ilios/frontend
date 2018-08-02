@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="header-bar">
   <span class="title">
     <h2>
@@ -27,7 +28,9 @@
     </h2>
   </span>
   <span class="info">
-    {{#if (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))}}
+    {{#if
+      (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))
+    }}
       {{t "general.members"}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) "length"}} / {{learnerGroup.cohort.users.length}}
     {{/if}}
   </span>
@@ -49,7 +52,8 @@
     {{#each (reverse (await learnerGroup.allParents)) as |parent|}}
       <span>
         {{#link-to
-          "learnerGroup" parent
+          "learnerGroup"
+          parent
           (query-params
             sortUsersBy=sortUsersBy
           )

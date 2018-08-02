@@ -6,9 +6,9 @@
   {{t "general.pagedResultsCount" start=start end=end total=total}}
 {{else}}
   <select onchange={{action "setLimit" value="target.value"}}>
-    {{#each offsetOptions as |option|}}
-      <option value={{option}} selected={{is-equal option limit}}>
-        {{option}}
+    {{#each offsetOptions as |o|}}
+      <option value={{o}} selected={{is-equal o limit}}>
+        {{o}}
       </option>
     {{/each}}
   </select>
@@ -21,9 +21,9 @@
 
 {{#unless limitless}}
   <select onchange={{action "setLimit" value="target.value"}}>
-    {{#each offsetOptions as |option|}}
-      <option value={{option}} selected={{is-equal option limit}}>
-        {{option}}
+    {{#each offsetOptions as |o|}}
+      <option value={{o}} selected={{is-equal o limit}}>
+        {{o}}
       </option>
     {{/each}}
   </select>

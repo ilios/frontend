@@ -1,3 +1,4 @@
+{{! template-lint-disable no-inline-styles }}
 <div class="form">
   <div class="item">
     <label>{{t "general.title"}}:</label>
@@ -23,12 +24,17 @@
         <select onchange={{action (mut selectedAamcMethodId) value="target.value"}}>
           <option selected={{not selectedAamcMethodId}}></option>
           {{#each (sort-by "description" (await filteredAamcMethods)) as |aamcMethod|}}
-            <option value="{{aamcMethod.id}}" selected={{eq aamcMethod.id selectedAamcMethodId}}>
+            <option
+              value={{aamcMethod.id}}
+              selected={{eq aamcMethod.id selectedAamcMethodId}}
+            >
               {{aamcMethod.description}}
             </option>
           {{/each}}
         </select>
-        {{#if (and (v-get this "selectedAamcMethodId" "isInvalid") (is-in showErrorsFor "selectedAamcMethodId"))}}
+        {{#if
+          (and (v-get this "selectedAamcMethodId" "isInvalid") (is-in showErrorsFor "selectedAamcMethodId"))
+        }}
           <span class="message error">{{v-get this "selectedAamcMethodId" "message"}}</span>
         {{/if}}
       {{else}}
@@ -48,7 +54,9 @@
         onkeyup={{action "addErrorDisplayFor" "calendarColor"}}
         oninput={{action (mut calendarColor) value="target.value"}}
       >
-      {{#if (and (v-get this "calendarColor" "isInvalid") (is-in showErrorsFor "calendarColor"))}}
+      {{#if
+        (and (v-get this "calendarColor" "isInvalid") (is-in showErrorsFor "calendarColor"))
+      }}
         <span class="message error">{{v-get this "calendarColor" "message"}}</span>
       {{/if}}
     {{else}}
@@ -78,10 +86,15 @@
     <div class="item">
       <label>{{t "general.assessmentOption"}}:</label>
       {{#if canEditAssessmentOption}}
-        <select onchange={{action (mut selectedAssessmentOptionId) value="target.value"}}>
-          {{#each (sort-by "name" (await assessmentOptions)) as |option|}}
-            <option value={{option.id}} selected={{eq option.id selectedAssessmentOptionId}}>
-              {{option.name}}
+        <select
+          onchange={{action (mut selectedAssessmentOptionId) value="target.value"}}
+        >
+          {{#each (sort-by "name" (await assessmentOptions)) as |o|}}
+            <option
+              value={{o.id}}
+              selected={{eq o.id selectedAssessmentOptionId}}
+            >
+              {{o.name}}
             </option>
           {{/each}}
         </select>
@@ -108,7 +121,10 @@
 
   <div class="buttons">
     {{#if canUpdate}}
-      <button class="done text" {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
+      <button {{action (perform saveSessionType)}}
+        class="done text"
+        disabled={{saveSessionType.isRunning}}
+      >
         {{#if saveSessionType.isRunning}}
           {{loading-spinner}}
         {{else}}

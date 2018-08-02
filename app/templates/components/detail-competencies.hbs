@@ -1,4 +1,6 @@
-<div class="title {{if (await showCollapsible) "clickable collapsible"}}" {{action "collapse"}}>
+<div {{action "collapse"}}
+  class="title {{if (await showCollapsible) "clickable collapsible"}}"
+>
   {{t "general.competencies"}} ({{get (await course.competencies) "length"}})
 </div>
 {{#if (get (await course.competencies) "length")}}

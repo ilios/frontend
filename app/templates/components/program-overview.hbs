@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <h2>{{t "general.overview"}}</h2>
 <div class="program-overview-content">
   <div class="block programtitleshort">
@@ -20,7 +21,9 @@
             disabled={{isSaving}}
             onkeyup={{action "addErrorDisplayFor" "shortTitle"}}
           >
-          {{#if (and (v-get this "shortTitle" "isInvalid") (is-in showErrorsFor "shortTitle"))}}
+          {{#if
+            (and (v-get this "shortTitle" "isInvalid") (is-in showErrorsFor "shortTitle"))
+          }}
             <span class="validation-error-message">{{v-get this "shortTitle" "message"}}</span>
           {{/if}}
         {{/editable-field}}

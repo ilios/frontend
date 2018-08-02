@@ -4,7 +4,10 @@
   </div>
   <div class="actions">
     {{#if canCreateSession}}
-      {{expand-collapse-button value=showNewSessionForm action=(toggle "showNewSessionForm" this)}}
+      {{expand-collapse-button
+        value=showNewSessionForm
+        action=(toggle "showNewSessionForm" this)
+      }}
     {{/if}}
     {{#if (and canUpdateCourse (gt sessionsCount 0))}}
       {{#link-to "course.publishall" course}}

@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <span class="title">
   {{#if course.locked}}{{fa-icon "lock"}}{{/if}}
   {{#if editable}}
@@ -17,7 +18,9 @@
           oninput={{action (mut courseTitle) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "courseTitle"}}
         >
-        {{#if (and (v-get this "courseTitle" "isInvalid") (is-in showErrorsFor "courseTitle"))}}
+        {{#if
+          (and (v-get this "courseTitle" "isInvalid") (is-in showErrorsFor "courseTitle"))
+        }}
           <span class="validation-error-message">{{v-get this "courseTitle" "message"}}</span>
         {{/if}}
       {{/editable-field}}

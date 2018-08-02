@@ -34,53 +34,53 @@
         <table>
           <thead>
             <tr>
-              <th class="text-center" colspan=5>{{t "general.sequenceBlock"}}</th>
-              <th class="text-center" colspan=1>{{t "general.level"}}</th>
-              <th class="text-center" colspan=2>{{t "general.sequenceNumber"}}</th>
-              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.startDate"}}</th>
-              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.endDate"}}</th>
-              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.course"}}</th>
-              <th class="text-left" colspan=1>{{t "general.actions"}}</th>
+              <th class="text-center" colspan="5">{{t "general.sequenceBlock"}}</th>
+              <th class="text-center" colspan="1">{{t "general.level"}}</th>
+              <th class="text-center" colspan="2">{{t "general.sequenceNumber"}}</th>
+              <th class="text-center hide-from-small-screen" colspan="2">{{t "general.startDate"}}</th>
+              <th class="text-center hide-from-small-screen" colspan="2">{{t "general.endDate"}}</th>
+              <th class="text-center hide-from-small-screen" colspan="2">{{t "general.course"}}</th>
+              <th class="text-left" colspan="1">{{t "general.actions"}}</th>
             </tr>
           </thead>
           <tbody>
             {{#each (await sortedBlocks) as |block|}}
-              <tr class="{{if block.showRemoveConfirmation "confirm-removal"}}">
-                <td class="text-left" colspan=5>
+              <tr class={{if block.showRemoveConfirmation "confirm-removal" ""}}>
+                <td class="text-left" colspan="5">
                   {{#link-to "curriculumInventorySequenceBlock" block.content}}
                     {{block.title}}
                   {{/link-to}}
                 </td>
-                <td class="text-center" colspan=1>{{get (await block.academicLevel) "level"}}</td>
-                <td class="text-center" colspan=2>
+                <td class="text-center" colspan="1">{{get (await block.academicLevel) "level"}}</td>
+                <td class="text-center" colspan="2">
                   {{#if isInOrderedSequence}}
                     {{block.orderInSequence}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class="text-center hide-from-small-screen" colspan=2>
+                <td class="text-center hide-from-small-screen" colspan="2">
                   {{#if block.startDate}}
                     {{moment-format block.startDate "L"}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class="text-center hide-from-small-screen" colspan=2>
+                <td class="text-center hide-from-small-screen" colspan="2">
                   {{#if block.endDate}}
                     {{moment-format block.endDate "L"}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class="text-center hide-from-small-screen" colspan=2>
+                <td class="text-center hide-from-small-screen" colspan="2">
                   {{#if (await block.course)}}
                     {{get (await block.course) "title"}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class="text-center" colspan=1>
+                <td class="text-center" colspan="1">
                   {{#link-to "curriculumInventorySequenceBlock" block.content class="edit"}}
                     {{fa-icon "edit"}}
                   {{/link-to}}
@@ -91,7 +91,7 @@
               </tr>
               {{#if block.showRemoveConfirmation}}
                 <tr class="confirm-removal">
-                  <td colspan=15>
+                  <td colspan="15">
                     <div class="confirm-message">
                       {{t "general.sequenceBlockConfirmRemove"}} <br>
                       <div class="confirm-buttons">

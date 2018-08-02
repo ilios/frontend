@@ -1,15 +1,25 @@
-{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy canUpdate=canUpdate}}
+{{! template-lint-disable attribute-indentation }}
+{{learnergroup-header
+  learnerGroup=learnerGroup
+  sortUsersBy=sortUsersBy
+  canUpdate=canUpdate
+}}
 <section class="learnergroup-overview">
   <div class="learnergroup-overview-actions">
     {{#if (or isEditing isBulkAssigning)}}
-      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t "general.close"}}</button>
+      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>
+        {{t "general.close"}}
+      </button>
     {{else if canUpdate}}
       <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t "general.uploadGroupAssignments"}}</button>
       <button {{action setIsEditing true}} data-test-manage>{{t "general.manage"}}</button>
     {{/if}}
   </div>
   {{#if isBulkAssigning}}
-    {{learnergroup-bulk-assignment learnerGroup=learnerGroup done=(action setIsBulkAssigning false)}}
+    {{learnergroup-bulk-assignment
+      learnerGroup=learnerGroup
+      done=(action setIsBulkAssigning false)
+    }}
   {{else if createUsersToPassToManager.lastSuccessful}}
     <div class="learnergroup-overview-content">
       {{learnergroup-user-manager
@@ -50,7 +60,9 @@
             disabled={{isSaving}}
             onkeyup={{action "addErrorDisplayFor" "location"}}
           >
-          {{#if (and (v-get this "location" "isInvalid") (is-in showErrorsFor "location"))}}
+          {{#if
+            (and (v-get this "location" "isInvalid") (is-in showErrorsFor "location"))
+          }}
             <span class="validation-error-message">{{v-get this "location" "message"}}</span>
           {{/if}}
         {{/editable-field}}
@@ -76,7 +88,10 @@
         {{else}}
           <span class={{if canUpdate "clickable link"}} {{action "manageInstructors"}}>
             {{#if (get (await learnerGroup.allInstructors) "length")}}
-              {{join "; " (map-by "fullName" (sort-by "lastName" (await learnerGroup.allInstructors)))}}
+              {{join
+                "; "
+                (map-by "fullName" (sort-by "lastName" (await learnerGroup.allInstructors)))
+              }}
             {{else}}
               {{t "general.none"}}
             {{/if}}

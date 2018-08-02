@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="material-list">
   <h3>{{t "general.courseLearningMaterials"}} ({{get (await course.learningMaterials) "length"}})</h3>
   {{#if (gt (get (await course.learningMaterials) "length") 0)}}
@@ -86,7 +87,10 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by sortBy (await filteredSessionLearningMaterialObjects)) as |lmObject|}}
+        {{#each
+          (sort-by sortBy (await filteredSessionLearningMaterialObjects))
+          as |lmObject|
+        }}
           <tr>
             <td colspan="3">
               {{#if (contains lmObject.type typesWithUrl)}}

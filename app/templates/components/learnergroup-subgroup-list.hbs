@@ -12,7 +12,10 @@
 
   <div class="learnergroup-subgroup-list-actions">
     {{#if canCreate}}
-      {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle "showNewLearnerGroupForm" this)}}
+      {{expand-collapse-button
+        value=showNewLearnerGroupForm
+        action=(toggle "showNewLearnerGroupForm" this)
+      }}
     {{/if}}
   </div>
 </div>

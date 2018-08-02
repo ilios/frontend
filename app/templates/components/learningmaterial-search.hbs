@@ -1,4 +1,9 @@
-{{search-box placeholder=(t "general.searchPlaceholder") liveSearch=true search=(action "search") clear=(action "clear")}}
+{{search-box
+  placeholder=(t "general.searchPlaceholder")
+  liveSearch=true
+  search=(action "search")
+  clear=(action "clear")
+}}
 
 {{#if searching}}
   <ul class="lm-search-results">
@@ -8,7 +13,9 @@
   {{#if searchResults.length}}
     <ul class="lm-search-results">
       {{#each searchResults as |learningMaterial|}}
-        <li class="{{if (contains learningMaterial (await currentMaterials)) "disabled"}}" {{action (perform addLearningMaterial learningMaterial)}}>
+        <li {{action (perform addLearningMaterial learningMaterial)}}
+          class={{if (contains learningMaterial (await currentMaterials)) "disabled" ""}}
+        >
           <h4 class="learning-material-title">{{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}} {{learningMaterial.title}}</h4>
           <span class="learning-material-description">{{{learningMaterial.description}}}</span>
           {{#if learningMaterial.status.title}}
@@ -25,8 +32,13 @@
       {{/each}}
       {{#if hasMoreSearchResults}}
         <li>
-          <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
-            {{fa-icon (if searchMore.isRunning "spinner") spin=(if searchMore.isRunning true false)}}
+          <button {{action (perform searchMore)}}
+            disabled={{if searchMore.isRunning true}}
+          >
+            {{fa-icon
+              (if searchMore.isRunning "spinner")
+              spin=(if searchMore.isRunning true false)
+            }}
             {{t "general.showMore" }}
           </button>
         </li>

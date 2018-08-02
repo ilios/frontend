@@ -1,7 +1,10 @@
 <h2 class="offering-calendar-title">{{t "general.calendar"}}</h2>
 <p class="offering-calendar-filter-options">
   <span class="filter">
-    {{toggle-yesno yes=showLearnerGroupEvents toggle=(action (mut showLearnerGroupEvents))}}
+    {{toggle-yesno
+      yes=showLearnerGroupEvents
+      toggle=(action (mut showLearnerGroupEvents))
+    }}
     <label onclick={{toggle "showLearnerGroupEvents" this}}>{{t "general.showLearnerGroupEvents"}}</label>
   </span>
   <span class="filter">

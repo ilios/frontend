@@ -2,7 +2,11 @@
   <h5>{{t "general.overview"}}</h5>
   <div class="programyear-overview-actions">
     {{#if programYearVisualizations}}
-      {{#link-to "program-year-visualizations" programYear title=(t "general.programYearVisualizations")}}
+      {{#link-to
+        "program-year-visualizations"
+        programYear
+        title=(t "general.programYearVisualizations")
+      }}
         {{fa-icon "bar-chart"}}
       {{/link-to}}
     {{/if}}

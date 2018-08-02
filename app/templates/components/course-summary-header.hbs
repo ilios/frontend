@@ -3,7 +3,11 @@
   <div class="course-summary-actions">
     {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
       {{#link-to "course-materials" course class="materials"}}
-        {{fa-icon "archive" title=(t "general.learningMaterialsSummary") fixedWidth=true}}
+        {{fa-icon
+          "archive"
+          title=(t "general.learningMaterialsSummary")
+          fixedWidth=true
+        }}
       {{/link-to}}
     {{/if}}
     {{#link-to "printCourse" course (query-params unpublished=true) class="print"}}

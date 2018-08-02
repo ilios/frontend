@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="backtolink">
   {{#link-to "schools"}}{{t "general.backToSchools"}}{{/link-to}}
 </div>
@@ -31,7 +32,9 @@
 </div>
 
 <div class="school-manager-content">
-  {{#if (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)}}
+  {{#if
+    (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)
+  }}
     {{school-leadership-expanded
       school=school
       canUpdate=canUpdateSchool
@@ -60,7 +63,10 @@
       setSchoolManageCompetencies=setSchoolManageCompetencies
     }}
   {{else}}
-    {{school-competencies-collapsed school=school expand=(action setSchoolCompetencyDetails true)}}
+    {{school-competencies-collapsed
+      school=school
+      expand=(action setSchoolCompetencyDetails true)
+    }}
   {{/if}}
 
   {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
@@ -80,10 +86,15 @@
       setSchoolManagedVocabularyTerm=setSchoolManagedVocabularyTerm
     }}
   {{else}}
-    {{school-vocabularies-collapsed school=school expand=(action setSchoolVocabularyDetails true)}}
+    {{school-vocabularies-collapsed
+      school=school
+      expand=(action setSchoolVocabularyDetails true)
+    }}
   {{/if}}
 
-  {{#if (or (eq (get (await school.sessionTypes) "length") 0) schoolSessionTypeDetails)}}
+  {{#if
+    (or (eq (get (await school.sessionTypes) "length") 0) schoolSessionTypeDetails)
+  }}
     {{school-session-types-expanded
       school=school
       canUpdate=canUpdateSessionType
@@ -97,7 +108,10 @@
       setSchoolNewSessionType=setSchoolNewSessionType
     }}
   {{else}}
-    {{school-session-types-collapsed school=school expand=(action setSchoolSessionTypeDetails true)}}
+    {{school-session-types-collapsed
+      school=school
+      expand=(action setSchoolSessionTypeDetails true)
+    }}
   {{/if}}
   {{school-session-attributes
     school=school

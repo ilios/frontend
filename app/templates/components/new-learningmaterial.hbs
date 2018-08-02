@@ -42,7 +42,9 @@
       disabled={{prepareSave.isRunning}}
       onkeyup={{action "addErrorDisplayFor" "originalAuthor"}}
     >
-    {{#if (and (v-get this "originalAuthor" "isInvalid") (is-in showErrorsFor "originalAuthor"))}}
+    {{#if
+      (and (v-get this "originalAuthor" "isInvalid") (is-in showErrorsFor "originalAuthor"))
+    }}
       <span class="validation-error-message">{{v-get this "originalAuthor" "message"}}</span>
     {{/if}}
   </span>
@@ -82,8 +84,14 @@
   <div class="item">
     <label>{{t "general.citation"}}:</label>
     <span class="citation">
-      {{textarea value=citation focus-out=(action "addErrorDisplayFor" "citation") key-press=(action "addErrorDisplayFor" "citation") }}
-      {{#if (and (v-get this "citation" "isInvalid") (is-in showErrorsFor "citation"))}}
+      {{textarea
+        value=citation
+        focus-out=(action "addErrorDisplayFor" "citation")
+        key-press=(action "addErrorDisplayFor" "citation")
+      }}
+      {{#if
+        (and (v-get this "citation" "isInvalid") (is-in showErrorsFor "citation"))
+      }}
         <span class="validation-error-message">{{v-get this "citation" "message"}}</span>
       {{/if}}
     </span>
@@ -119,8 +127,14 @@
     <div class="item">
       <label>{{t "general.copyrightRationale"}}:</label>
       <span>
-        {{textarea value=copyrightRationale focus-out=(action "addErrorDisplayFor" "copyrightRationale") key-press=(action "addErrorDisplayFor" "copyrightRationale") }}
-        {{#if (and (v-get this "copyrightRationale" "isInvalid") (is-in showErrorsFor "copyrightRationale"))}}
+        {{textarea
+          value=copyrightRationale
+          focus-out=(action "addErrorDisplayFor" "copyrightRationale")
+          key-press=(action "addErrorDisplayFor" "copyrightRationale")
+        }}
+        {{#if
+          (and (v-get this "copyrightRationale" "isInvalid") (is-in showErrorsFor "copyrightRationale"))
+        }}
           <span class="validation-error-message">{{v-get this "copyrightRationale" "message"}}</span>
         {{/if}}
       </span>

@@ -1,3 +1,4 @@
+{{! template-lint-disable no-attrs-in-components }}
 {{#if selectedUser}}
   <div class="form">
     <div class="choose-form-type">
@@ -56,7 +57,9 @@
           oninput={{action (mut username) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "username"}}
         >
-        {{#if (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))}}
+        {{#if
+          (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))
+        }}
           <span class="validation-error-message">{{v-get this "username" "message"}}</span>
         {{/if}}
       {{else}}
@@ -73,7 +76,9 @@
           oninput={{action (mut password) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "password"}}
         >
-        {{#if (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))}}
+        {{#if
+          (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))
+        }}
           <span class="validation-error-message">{{v-get this "password" "message"}}</span>
         {{/if}}
       </div>
@@ -93,13 +98,19 @@
       {{/if}}
     </div>
 
-    {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
+    {{#if
+      (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
+      class="vertical"
+    }}
       <div class="item">
         <label>{{t "general.primaryCohort"}}:</label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
           <select onchange={{action "setPrimaryCohort" value="target.value"}}>
             {{#each (sort-by "title" cohorts) as |cohort|}}
-              <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
+              <option
+                value={{cohort.id}}
+                selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
+              >
                 {{cohort.title}}
               </option>
             {{/each}}
@@ -111,7 +122,14 @@
     {{/if}}
 
     <div class="buttons">
-      <button class="done text" {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+      <button {{action (perform save)}}
+        class="done text"
+        disabled={{or
+                   save.isRunning
+                   (is-pending bestSelectedCohort)
+                   (and (not nonStudentMode) (is-pending bestSelectedSchool))
+                 }}
+      >
         {{#if save.isRunning}}
           {{loading-spinner}}
         {{else}}
@@ -141,35 +159,49 @@
             <table>
               <thead>
                 <tr>
-                  <th class="text-right" colspan=1></th>
-                  <th class="text-left" colspan=3>{{t "general.fullName"}}</th>
-                  <th class="text-left" colspan=2>{{t "general.campusId"}}</th>
-                  <th class="text-left" colspan=5>{{t "general.email"}}</th>
+                  <th class="text-right" colspan="1"></th>
+                  <th class="text-left" colspan="3">{{t "general.fullName"}}</th>
+                  <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
+                  <th class="text-left" colspan="5">{{t "general.email"}}</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each searchResults as |user|}}
                   <tr>
-                    <td class="text-right" colspan=1>
+                    <td class="text-right" colspan="1">
                       {{#if user.user}}
-                        {{fa-icon "sun-o" class="warning clickable" click=(action attrs.transitionToUser user.user) title=(t "general.goToUser")}}
+                        {{fa-icon
+                          "sun-o"
+                          class="warning clickable"
+                          click=(action attrs.transitionToUser user.user)
+                          title=(t "general.goToUser")
+                        }}
                       {{else}}
                         {{#if user.addable}}
-                          {{fa-icon "plus" class="yes clickable" click=(action "pickUser" user) title=(t "general.addNew")}}
+                          {{fa-icon
+                            "plus"
+                            class="yes clickable"
+                            click=(action "pickUser" user)
+                            title=(t "general.addNew")
+                          }}
                         {{else}}
-                          {{fa-icon "ambulance" class="no" title=(t "general.userNotAddableFromDirectory")}}
+                          {{fa-icon
+                            "ambulance"
+                            class="no"
+                            title=(t "general.userNotAddableFromDirectory")
+                          }}
                         {{/if}}
                       {{/if}}
                     </td>
-                    <td class="text-left" colspan=3>
+                    <td class="text-left" colspan="3">
                       {{#if user.user}}
                         {{#link-to "user" user.user}}{{user.firstName}} {{user.lastName}}{{/link-to}}
                       {{else}}
                         {{user.firstName}} {{user.lastName}}
                       {{/if}}
                     </td>
-                    <td class="text-left" colspan=2>{{user.campusId}}</td>
-                    <td class="text-left" colspan=5>{{user.email}}</td>
+                    <td class="text-left" colspan="2">{{user.campusId}}</td>
+                    <td class="text-left" colspan="5">{{user.email}}</td>
                   </tr>
                 {{/each}}
               </tbody>

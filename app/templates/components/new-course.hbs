@@ -7,12 +7,12 @@
     <input
       class="course-title"
       type="text"
-      data-test-title
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.courseTitlePlaceholder"}}
+      data-test-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>

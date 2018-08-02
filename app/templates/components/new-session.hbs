@@ -8,7 +8,10 @@
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
-      class={{if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title")) "has-error"}}
+      class={{if
+              (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+              "has-error"
+            }}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>
@@ -20,7 +23,10 @@
     {{#if (is-fulfilled activeSessionTypes)}}
       <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
         {{#each (sort-by "title" (await activeSessionTypes)) as |sessionType|}}
-          <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) "id")}}>
+          <option
+            value={{sessionType.id}}
+            selected={{eq sessionType.id (get (await selectedSessionType) "id")}}
+          >
             {{sessionType.title}}
           </option>
         {{/each}}

@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="title">{{t "general.overview"}}</div>
 <div class="curriculum-inventory-sequence-block-overview-content">
   {{#unless loadAttr.isRunning}}
@@ -68,9 +69,9 @@
           close=(action "revertRequiredChanges")
         }}
           <select onchange={{action (mut required) value="target.value"}}>
-            <option value=1 selected={{eq required "1"}}>{{t "general.required"}}</option>
-            <option value=2 selected={{eq required "2"}}>{{t "general.optionalElective"}}</option>
-            <option value=3 selected={{eq required "3"}}>{{t "general.requiredInTrack"}}</option>
+            <option value="1" selected={{eq required "1"}}>{{t "general.required"}}</option>
+            <option value="2" selected={{eq required "2"}}>{{t "general.optionalElective"}}</option>
+            <option value="3" selected={{eq required "3"}}>{{t "general.requiredInTrack"}}</option>
           </select>
         {{/editable-field}}
       {{else}}
@@ -156,9 +157,9 @@
           close=(action "revertChildSequenceOrderChanges")
         }}
           <select onchange={{action (mut childSequenceOrder) value="target.value"}}>
-            <option value=1 selected={{eq childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
-            <option value=2 selected={{eq childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
-            <option value=3 selected={{eq childSequenceOrder "3"}}>{{t "general.parallel"}}</option>
+            <option value="1" selected={{eq childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
+            <option value="2" selected={{eq childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
+            <option value="3" selected={{eq childSequenceOrder "3"}}>{{t "general.parallel"}}</option>
           </select>
         {{/editable-field}}
       {{else}}

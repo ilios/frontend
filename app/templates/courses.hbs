@@ -24,7 +24,10 @@
     </div>
     <div class="yearsfilter">
       {{fa-icon "calendar" fixedWidth=true}}
-      <select onchange={{action "changeSelectedYear" value="target.value"}} data-test-year-filter>
+      <select
+        onchange={{action "changeSelectedYear" value="target.value"}}
+        data-test-year-filter
+      >
         {{#each sortedYears as |year|}}
           <option value={{year.year}} selected={{is-equal year selectedYear}}>
             {{year.academicYearTitle}}
@@ -35,10 +38,10 @@
 
     <div class="titlefilter">
       <input
-        data-test-title-filter
         value={{titleFilter}}
         oninput={{action (perform changeTitleFilter) value="target.value"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
+        data-test-title-filter
       >
     </div>
   </div>
@@ -47,7 +50,11 @@
       <h2 data-test-courses-header-title class="title">{{t "general.courses"}} ({{get (await filteredCourses) "length"}})</h2>
       <div class="actions">
         {{#if (await canCreateCourse)}}
-          {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
+          {{expand-collapse-button
+            data-test-toggle-new-course-form
+            value=showNewCourseForm
+            action="toggleNewCourseForm"
+          }}
         {{/if}}
       </div>
     </div>

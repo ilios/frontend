@@ -7,14 +7,14 @@
     <table>
       <thead>
         <tr>
-          <th colspan=4>{{t "general.cohort"}}</th>
+          <th colspan="4">{{t "general.cohort"}}</th>
           <th>{{t "general.learnerGroups"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (sort-by "title" (await cohortSummaries)) as |obj|}}
           <tr>
-            <td colspan=4>
+            <td colspan="4">
               {{obj.title}}
             </td>
             <td>

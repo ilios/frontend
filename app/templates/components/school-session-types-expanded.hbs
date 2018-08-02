@@ -1,10 +1,15 @@
 <div class="school-session-types-header">
-  <div class="title {{if (await isCollapsible) "collapsible clickable"}}" {{action "collapse"}}>
+  <div {{action "collapse"}}
+    class="title {{if (await isCollapsible) "collapsible clickable"}}"
+  >
     {{t "general.sessionTypes"}}
   </div>
   <div class="actions">
     {{#if (and canCreate (not managedSessionTypeId))}}
-      {{expand-collapse-button value=schoolNewSessionType action="toggleSchoolNewSessionType"}}
+      {{expand-collapse-button
+        value=schoolNewSessionType
+        action="toggleSchoolNewSessionType"
+      }}
     {{/if}}
   </div>
 </div>

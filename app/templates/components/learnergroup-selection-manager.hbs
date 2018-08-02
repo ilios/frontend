@@ -1,9 +1,14 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="selected-learner-groups">
   <h4>
     {{t "general.selectedLearnerGroups"}}
   </h4>
   {{#if learnerGroups.length}}
-    {{detail-learnergroups-list learnerGroups=learnerGroups isManaging=true remove=remove}}
+    {{detail-learnergroups-list
+      learnerGroups=learnerGroups
+      isManaging=true
+      remove=remove
+    }}
   {{else}}
     <p>{{t "general.none"}}</p>
   {{/if}}
@@ -13,15 +18,28 @@
     {{t "general.availableLearnerGroups"}}
     {{#unless (and (is-fulfilled allLearnerGroups) (is-fulfilled cohorts))}}{{loading-spinner}}{{/unless}}
   </h4>
-  {{search-box search=(action (mut filter)) placeholder=(t "general.filterPlaceholder")}}
+  {{search-box
+    search=(action (mut filter))
+    placeholder=(t "general.filterPlaceholder")
+  }}
   <div data-test-cohorts>
     {{#each (sort-by "title" (await cohorts)) as |cohort|}}
       <div class="cohort-learner-groups" data-test-cohort>
-        {{#if (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program) (is-fulfilled cohort.rootLevelLearnerGroups))}}
+        {{#if
+          (and (is-fulfilled cohort.programYear) (is-fulfilled cohort.programYear.program) (is-fulfilled cohort.rootLevelLearnerGroups))
+        }}
           <h5 class="cohort-title">{{cohort.programYear.program.title}} {{cohort.title}}</h5>
           <ul class="tree-groups-list">
-            {{#each (sort-by "title" (await cohort.rootLevelLearnerGroups)) as |learnerGroup|}}
-              {{learnergroup-tree learnerGroup=learnerGroup selectedGroups=learnerGroups filter=filter add=(action add)}}
+            {{#each
+              (sort-by "title" (await cohort.rootLevelLearnerGroups))
+              as |learnerGroup|
+            }}
+              {{learnergroup-tree
+                learnerGroup=learnerGroup
+                selectedGroups=learnerGroups
+                filter=filter
+                add=(action add)
+              }}
             {{/each}}
           </ul>
         {{else}}

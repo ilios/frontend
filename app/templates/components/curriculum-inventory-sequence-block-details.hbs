@@ -1,4 +1,7 @@
-{{curriculum-inventory-sequence-block-header canUpdate=canUpdate sequenceBlock=sequenceBlock}}
+{{curriculum-inventory-sequence-block-header
+  canUpdate=canUpdate
+  sequenceBlock=sequenceBlock
+}}
 {{#if (is-fulfilled sequenceBlock.allParents)}}
   <div class="breadcrumbs">
     <span>
@@ -12,4 +15,9 @@
     <span>{{sequenceBlock.title}}</span>
   </div>
 {{/if}}
-{{curriculum-inventory-sequence-block-overview sequenceBlock=sequenceBlock canUpdate=canUpdate sortBy=sortSessionsBy setSortBy=setSortSessionBy}}
+{{curriculum-inventory-sequence-block-overview
+  sequenceBlock=sequenceBlock
+  canUpdate=canUpdate
+  sortBy=sortSessionsBy
+  setSortBy=setSortSessionBy
+}}

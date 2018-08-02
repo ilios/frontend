@@ -1,5 +1,8 @@
 {{#if (or currentUser.performsNonLearnerFunction)}}
-  <ul class="expand-navigation link clickable" onclick={{action (toggle "expanded" this)}}>
+  <ul
+    class="expand-navigation link clickable"
+    onclick={{action (toggle "expanded" this)}}
+  >
     <li title={{t "general.menu"}}>{{fa-icon "bars"}}</li>
   </ul>
   <ul class="navigation-links" role="navigation">
@@ -15,7 +18,15 @@
       <li>{{#link-to "admin-dashboard" title=(t "general.admin")}}{{fa-icon "cogs" fixedWidth=true}}<span class="text">{{t "general.admin"}}</span>{{/link-to}}</li>
     {{/if}}
     {{#if currentUser.performsNonLearnerFunction}}
-      <li>{{#link-to "curriculumInventoryReports" title=(t "general.curriculumInventory")}}{{fa-icon "bar-chart" fixedWidth=true}}<span class="text">{{t "general.curriculumInventory"}}</span>{{/link-to}}</li>
+      <li>
+        {{#link-to
+          "curriculumInventoryReports"
+          title=(t "general.curriculumInventory")
+        }}
+          {{fa-icon "bar-chart" fixedWidth=true}}
+          <span class="text">{{t "general.curriculumInventory"}}</span>
+        {{/link-to}}
+      </li>
     {{/if}}
   </ul>
 {{/if}}

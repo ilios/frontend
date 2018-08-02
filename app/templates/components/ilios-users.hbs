@@ -28,7 +28,8 @@
   <section class="new">
     {{#if showNewUserForm class="vertical"}}
       {{#if (is-fulfilled newUserComponent)}}
-        {{component (await newUserComponent)
+        {{component
+          (await newUserComponent)
           close=(action setShowNewUserForm false)
           transitionToUser=transitionToUser
           searchTerms=searchTerms

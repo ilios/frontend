@@ -18,7 +18,9 @@
       oninput={{action (mut firstName) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "firstName"}}
     >
-    {{#if (and (v-get this "firstName" "isInvalid") (is-in showErrorsFor "firstName"))}}
+    {{#if
+      (and (v-get this "firstName" "isInvalid") (is-in showErrorsFor "firstName"))
+    }}
       <span class="message error">{{v-get this "firstName" "message"}}</span>
     {{/if}}
   </div>
@@ -30,7 +32,9 @@
       oninput={{action (mut middleName) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "middleName"}}
     >
-    {{#if (and (v-get this "middleName" "isInvalid") (is-in showErrorsFor "middleName"))}}
+    {{#if
+      (and (v-get this "middleName" "isInvalid") (is-in showErrorsFor "middleName"))
+    }}
       <span class="message error">{{v-get this "middleName" "message"}}</span>
     {{/if}}
   </div>
@@ -42,7 +46,9 @@
       oninput={{action (mut lastName) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "lastName"}}
     >
-    {{#if (and (v-get this "lastName" "isInvalid") (is-in showErrorsFor "lastName"))}}
+    {{#if
+      (and (v-get this "lastName" "isInvalid") (is-in showErrorsFor "lastName"))
+    }}
       <span class="message error">{{v-get this "lastName" "message"}}</span>
     {{/if}}
   </div>
@@ -54,7 +60,9 @@
       oninput={{action (mut campusId) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "campusId"}}
     >
-    {{#if (and (v-get this "campusId" "isInvalid") (is-in showErrorsFor "campusId"))}}
+    {{#if
+      (and (v-get this "campusId" "isInvalid") (is-in showErrorsFor "campusId"))
+    }}
       <span class="message error">{{v-get this "campusId" "message"}}</span>
     {{/if}}
   </div>
@@ -102,7 +110,9 @@
       oninput={{action (mut username) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "username"}}
     >
-    {{#if (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))}}
+    {{#if
+      (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))
+    }}
       <span class="message error">{{v-get this "username" "message"}}</span>
     {{/if}}
   </div>
@@ -114,7 +124,9 @@
       oninput={{action (mut password) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "password"}}
     >
-    {{#if (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))}}
+    {{#if
+      (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))
+    }}
       <span class="message error">{{v-get this "password" "message"}}</span>
     {{/if}}
   </div>
@@ -132,13 +144,19 @@
       {{loading-spinner}}
     {{/if}}
   </div>
-  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
+  {{#if
+    (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
+    class="vertical"
+  }}
     <div class="item last">
       <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
           {{#each (sort-by "title" cohorts) as |cohort|}}
-            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
+            <option
+              value={{cohort.id}}
+              selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
+            >
               {{cohort.title}}
             </option>
           {{/each}}
@@ -150,7 +168,15 @@
   {{/if}}
 
   <div class="buttons">
-    <button class="done text" {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{or
+                 save.isRunning
+                 (is-pending bestSelectedCohort)
+                 (and (not nonStudentMode) (is-pending bestSelectedSchool)
+                 )
+               }}
+    >
       {{#if save.isRunning}}
         {{loading-spinner}}
       {{else}}

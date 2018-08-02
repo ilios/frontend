@@ -1,11 +1,12 @@
+{{! template-lint-disable no-inline-styles }}
 <table>
   <thead>
     <tr>
-      <th colspan=3>{{t "general.title"}}</th>
+      <th colspan="3">{{t "general.title"}}</th>
       <th class="hide-from-small-screen">{{t "general.sessions"}}</th>
       <th>{{t "general.assessment"}}</th>
-      <th class="hide-from-small-screen" colspan=2>{{t "general.assessmentOption"}}</th>
-      <th class="hide-from-small-screen" colspan=2>{{t "general.aamcMethod"}}</th>
+      <th class="hide-from-small-screen" colspan="2">{{t "general.assessmentOption"}}</th>
+      <th class="hide-from-small-screen" colspan="2">{{t "general.aamcMethod"}}</th>
       <th class="hide-from-small-screen">{{t "general.color"}}</th>
       <th>{{t "general.actions"}}</th>
     </tr>
@@ -13,7 +14,7 @@
   <tbody>
     {{#each (sort-by "active:desc" "title" sessionTypes) as |sessionType|}}
       <tr>
-        <td colspan=3>
+        <td colspan="3">
           <a class="clickable" {{action manageSessionType sessionType.id}}>
             {{sessionType.title}}
           </a>
@@ -29,18 +30,30 @@
             {{fa-icon "ban" class="no"}}
           {{/if}}
         </td>
-        <td class="hide-from-small-screen" colspan=2>{{get (await sessionType.assessmentOption) "name"}}</td>
-        <td class="hide-from-small-screen" colspan=2>{{get (await sessionType.firstAamcMethod) "description"}}</td>
+        <td class="hide-from-small-screen" colspan="2">{{get (await sessionType.assessmentOption) "name"}}</td>
+        <td class="hide-from-small-screen" colspan="2">{{get (await sessionType.firstAamcMethod) "description"}}</td>
         <td class="calendar-color hide-from-small-screen">
-          <span class="box" style={{{concat "background-color: " sessionType.safeCalendarColor}}}></span>
+          <span
+            class="box"
+            style={{{concat "background-color: " sessionType.safeCalendarColor}}}
+          >
+          </span>
         </td>
         <td>
-          {{fa-icon "edit" class="edit clickable" click=(action manageSessionType sessionType.id)}}
+          {{fa-icon
+            "edit"
+            class="edit clickable"
+            click=(action manageSessionType sessionType.id)
+          }}
           {{#if (eq sessionType.sessionCount 0)}}
             {{#if (contains sessionType.id deletedSessionTypes)}}
               {{loading-spinner}}
             {{else if canDelete}}
-              {{fa-icon "trash" class=(if deleteSessionType.isRunning "inactive" "remove clickable") click=(perform deleteSessionType sessionType)}}
+              {{fa-icon
+                "trash"
+                class=(if deleteSessionType.isRunning "inactive" "remove clickable")
+                click=(perform deleteSessionType sessionType)
+              }}
             {{/if}}
           {{/if}}
           {{#link-to "session-type-visualize-vocabularies" sessionType}}

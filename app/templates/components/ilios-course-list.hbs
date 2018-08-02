@@ -10,8 +10,8 @@
       }}
         {{t "general.courseTitle"}}
       {{/sortable-th}}
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.school"}}</th>
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.year"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.school"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.year"}}</th>
       {{#sortable-th
         colspan=1
         click=(action "sortBy" "level")
@@ -24,7 +24,7 @@
         {{t "general.level"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=2
+        colspan="2"
         click=(action "sortBy" "startDate")
         sortedBy=(or (eq sortBy "startDate") (eq sortBy "startDate:desc"))
         sortedAscending=sortedAscending
@@ -35,7 +35,7 @@
         {{t "general.startDate"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=2
+        colspan="2"
         click=(action "sortBy" "endDate")
         sortedBy=(or (eq sortBy "endDate") (eq sortBy "endDate:desc"))
         sortedAscending=sortedAscending
@@ -46,7 +46,7 @@
         {{t "general.endDate"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=3
+        colspan="3"
         click=(action "sortBy" "status")
         sortedBy=(or (eq sortBy "status") (eq sortBy "status:desc"))
         sortedAscending=sortedAscending
@@ -57,8 +57,8 @@
   </thead>
   <tbody data-test-courses>
     {{#each (await sortedCourses) as |course|}}
-      <tr class="{{if course.showRemoveConfirmation "confirm-removal"}}">
-        <td class="text-left" colspan=3>
+      <tr class={{if course.showRemoveConfirmation "confirm-removal" ""}}>
+        <td class="text-left" colspan="3">
           {{#link-to "course" course.content}}
             {{course.title}}
             {{#if course.externalId}}
@@ -66,17 +66,19 @@
             {{/if}}
           {{/link-to}}
         </td>
-        <td class="text-center hide-from-small-screen" colspan=2>{{course.school.title}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2>{{course.academicYear}}</td>
-        <td class="text-center hide-from-small-screen" colspan=1>{{course.level}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2>{{moment-format course.startDate "L"}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2>{{moment-format course.endDate "L"}}</td>
-        <td class="text-left" colspan=3>
+        <td class="text-center hide-from-small-screen" colspan="2">{{course.school.title}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{course.academicYear}}</td>
+        <td class="text-center hide-from-small-screen" colspan="1">{{course.level}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{moment-format course.startDate "L"}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{moment-format course.endDate "L"}}</td>
+        <td class="text-left" colspan="3">
           {{#if course.isSaving}}
             {{loading-spinner}}
           {{else}}
             {{publication-status item=course showIcon=false}}
-            {{#if (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)}}
+            {{#if
+              (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)
+            }}
               {{#if (await course.userCanUnLock)}}
                 {{fa-icon "lock" class="clickable link" click=(action "unlockCourse" course)}}
               {{else}}
@@ -97,9 +99,12 @@
       </tr>
       {{#if course.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan=15>
+          <td colspan="15">
             <div class="confirm-message">
-              {{t "general.confirmRemoveCourse" publishedOfferingcount=course.publishedOfferingCount}} <br>
+              {{t
+                "general.confirmRemoveCourse"
+                publishedOfferingcount=course.publishedOfferingCount
+              }} <br>
               <div class="confirm-buttons">
                 <button {{action "remove" course}} class="remove text">{{t "general.yes"}}</button>
                 <button {{action "cancelRemove" course}} class="done text">{{t "general.cancel"}}</button>

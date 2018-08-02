@@ -7,7 +7,9 @@
 {{/liquid-if}}
 
 <section class="publish-all-sessions-unpublishable">
-  <div class="title {{if unPublishableCollapsed "collapsed" "collapsible"}}" {{action "toggleUnPublishableCollapsed"}}>
+  <div {{action "toggleUnPublishableCollapsed"}}
+    class="title {{if unPublishableCollapsed "collapsed" "collapsible"}}"
+  >
     {{t "general.incompleteSessions"}} ({{get (await unPublishableSessions) "length"}})
   </div>
   {{#unless unPublishableCollapsed}}
@@ -55,7 +57,9 @@
 </section>
 
 <section class="publish-all-sessions-publishable">
-  <div class="title {{if publishableCollapsed "collapsed" "collapsible"}}" {{action "togglePublishableCollapsed"}}>
+  <div {{action "togglePublishableCollapsed"}}
+    class="title {{if publishableCollapsed "collapsed" "collapsible"}}"
+  >
     {{t "general.completeSessions"}} ({{get (await publishableSessions) "length"}})
   </div>
   {{#unless publishableCollapsed}}
@@ -179,7 +183,8 @@
 
 <div class="publish-all-sessions-review">
   <p>
-    {{t "general.publishAllConfirmation"
+    {{t
+      "general.publishAllConfirmation"
       publishCount=(await publishCount)
       scheduleCount=(await scheduleCount)
       ignoreCount=(await ignoreCount)

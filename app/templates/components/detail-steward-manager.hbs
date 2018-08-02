@@ -1,14 +1,21 @@
+{{! template-lint-disable attribute-indentation }}
 <section class="remove-list">
   {{#if (and stewardsBySchoolLoaded (not isSaving))}}
     <ul>
-      {{#each (sort-by "school.title" getStewardsBySchool.lastSuccessful.value) as |obj|}}
+      {{#each
+        (sort-by "school.title" getStewardsBySchool.lastSuccessful.value)
+        as |obj|
+      }}
         <li>
           <span class="removable" onclick={{perform removeSchool obj.school}}>
             {{fa-icon "times"}} {{obj.school.title}}
           </span>
           <ul>
             {{#each (sort-by "title" obj.departments) as |department|}}
-              <li class="clickable" onclick={{perform removeDepartment obj.school department}}>
+              <li
+                class="clickable"
+                onclick={{perform removeDepartment obj.school department}}
+              >
                 {{fa-icon "times"}} {{department.title}}
               </li>
             {{/each}}
@@ -23,11 +30,13 @@
   {{/if}}
 </section>
 
-
 <section class="add-list">
   {{#if (and availableSchoolsLoaded (not isSaving))}}
     <ul>
-      {{#each (sort-by "school.title" getAvailableSchools.lastSuccessful.value) as |obj|}}
+      {{#each
+        (sort-by "school.title" getAvailableSchools.lastSuccessful.value)
+        as |obj|
+      }}
         <li>
           <span class="clickable" onclick={{perform addSchool obj.school}}>
             {{obj.school.title}}

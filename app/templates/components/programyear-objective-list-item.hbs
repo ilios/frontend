@@ -1,11 +1,11 @@
-<td colspan=1 class="link" {{action toggleExpand objective.id}}>
+<td colspan="1" class="link" {{action toggleExpand objective.id}}>
   {{#if expanded}}
     {{fa-icon "caret-down"}}
   {{else}}
     {{fa-icon "caret-right"}}
   {{/if}}
 </td>
-<td id="objective-{{objective.id}}" class="text-left text-top" colspan=12>
+<td id="objective-{{objective.id}}" class="text-left text-top" colspan="12">
   {{#if editable}}
     {{#editable-field
       value=title
@@ -26,7 +26,7 @@
     {{{title}}}
   {{/if}}
 </td>
-<td class="text-left text-top" colspan=8>
+<td class="text-left text-top" colspan="8">
   {{#if (await objective.competency)}}
     {{#if editable}}
       <span class="clickable link" {{action manageCompetency objective}}>
@@ -35,7 +35,9 @@
     {{else}}
       {{get (await objective.competency) "title"}}
     {{/if}}
-    {{#if (not-eq (get (await objective.competency) "id") (get (await objective.competency.domain) "id"))}}
+    {{#if
+      (not-eq (get (await objective.competency) "id") (get (await objective.competency.domain) "id"))
+    }}
       ({{get (await objective.competency.domain) "title"}})
     {{/if}}
   {{else}}
@@ -46,7 +48,7 @@
     {{/if}}
   {{/if}}
 </td>
-<td class="text-left text-top" colspan=8>
+<td class="text-left text-top" colspan="8">
   {{#if objective.meshDescriptors.length}}
     <ul>
       {{#each (await objective.meshDescriptors) as |descriptor|}}

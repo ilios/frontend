@@ -18,7 +18,9 @@
       {{/if}}
     </div>
   {{else}}
-    <div class="title {{if showCollapsible "clickable collapsible"}}" {{action "collapse"}}>
+    <div {{action "collapse"}}
+      class="title {{if showCollapsible "clickable collapsible"}}"
+    >
       {{t "general.objectives"}} ({{subject.objectives.length}})
     </div>
   {{/if}}
@@ -33,7 +35,10 @@
             {{visualizer-course-objectives course=subject width=20 height=20 isIcon=true}}
           {{/link-to}}
         {{/if}}
-        {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
+        {{expand-collapse-button
+          value=newObjectiveEditorOn
+          action="toggleNewObjectiveEditor"
+        }}
       {{/if}}
     {{/if}}
   </div>
@@ -84,7 +89,10 @@
       {{/if}}
     {{/if}}
     {{#if isManagingDescriptors}}
-      {{objective-manage-descriptors objective=manageDescriptorsObjective editable=editable}}
+      {{objective-manage-descriptors
+        objective=manageDescriptorsObjective
+        editable=editable
+      }}
     {{/if}}
     {{#if isManagingCompetency}}
       {{objective-manage-competency objective=manageCompetencyObjective}}

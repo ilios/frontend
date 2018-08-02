@@ -1,23 +1,33 @@
 <table>
   <thead>
     <tr>
-      <th class="text-left" colspan=3>{{t "general.programTitle"}}</th>
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.school"}}</th>
-      <th class="text-center hide-from-small-screen" colspan=2>{{t "general.status"}}</th>
-      <th class="text-center" colspan=2>{{t "general.actions"}}</th>
+      <th class="text-left" colspan="3">{{t "general.programTitle"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.school"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.status"}}</th>
+      <th class="text-center" colspan="2">{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody>
     {{#each proxiedPrograms as |program|}}
-      <tr class="{{if program.showRemoveConfirmation "confirm-removal"}}">
-        <td class="text-left" colspan=3>
+      <tr class={{if program.showRemoveConfirmation "confirm-removal" ""}}>
+        <td class="text-left" colspan="3">
           {{#link-to "program" program.content}}
             {{program.title}}
           {{/link-to}}
         </td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" program}}>{{program.school.title}}</td>
-        <td class="text-center hide-from-small-screen" colspan=2 {{action "edit" program}}>{{publication-status item=program showIcon=false}}</td>
-        <td class="text-right" colspan=2>
+        <td {{action "edit" program}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{program.school.title}}
+        </td>
+        <td {{action "edit" program}}
+          class="text-center hide-from-small-screen"
+          colspan="2"
+        >
+          {{publication-status item=program showIcon=false}}
+        </td>
+        <td class="text-right" colspan="2">
           {{#link-to "program" program.content class="edit"}}
             {{fa-icon "edit"}}
           {{/link-to}}
@@ -30,10 +40,11 @@
       </tr>
       {{#if program.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan=9>
+          <td colspan="9">
             <div class="confirm-message">
               {{#if (is-fulfilled program.courses)}}
-                {{t "general.confirmRemoveProgram"
+                {{t
+                  "general.confirmRemoveProgram"
                   programYearCount=(get (await program.programYears) "length")
                   courseCount=(get (await program.courses) "length")
                 }}

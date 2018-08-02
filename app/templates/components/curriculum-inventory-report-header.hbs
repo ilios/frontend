@@ -1,13 +1,14 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="title">
   {{#if canUpdate}}
     {{#editable-field
-    tagName="h2"
-    value=reportName
-    save=(action "changeName")
-    close=(action "revertNameChanges")
-    saveOnEnter=true
-    closeOnEscape=true
-    as |isSaving|
+      tagName="h2"
+      value=reportName
+      save=(action "changeName")
+      close=(action "revertNameChanges")
+      saveOnEnter=true
+      closeOnEscape=true
+      as |isSaving|
     }}
       <input
         type="text"
@@ -16,7 +17,9 @@
         disabled={{isSaving}}
         onkeyup={{action "addErrorDisplayFor" "reportName"}}
       >
-      {{#if (and (v-get this "reportName" "isInvalid") (is-in showErrorsFor "reportName"))}}
+      {{#if
+        (and (v-get this "reportName" "isInvalid") (is-in showErrorsFor "reportName"))
+      }}
         <span class="validation-error-message">{{v-get this "reportName" "message"}}</span>
       {{/if}}
     {{/editable-field}}
@@ -27,7 +30,10 @@
 <div class ="actions">
   <a class="button" {{action (perform downloadReport report)}}>
     <button class="download">
-      {{fa-icon (if downloadReport.isRunning "spinner" "download") spin=(if downloadReport.isRunning true false)}}
+      {{fa-icon
+        (if downloadReport.isRunning "spinner" "download")
+        spin=(if downloadReport.isRunning true false)
+      }}
       {{t "general.download"}}
     </button>
   </a>

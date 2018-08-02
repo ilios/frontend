@@ -26,7 +26,10 @@
   <p>{{t "general.pendingUpdatesSummary" count=(get (await updates) "length")}}</p>
   {{#if (get (await updates) "length")}}
     <div class="actions">
-      {{#link-to "pending-user-updates" (query-params school=(get (await selectedSchool) "id"))}}
+      {{#link-to
+        "pending-user-updates"
+        (query-params school=(get (await selectedSchool) "id"))
+      }}
         <button>{{t "general.manage"}}</button>
       {{/link-to}}
     </div>

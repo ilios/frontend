@@ -14,11 +14,21 @@
     {{#if (and showReview reviewRoute reviewObject)}}
       {{#if parentObject}}
         {{#link-to reviewRoute parentObject reviewObject}}
-          <button class="good" >{{t "general.reviewMissingItems" count=(get reviewObject "allPublicationIssuesLength")}}</button>
+          <button class="good">
+            {{t
+              "general.reviewMissingItems"
+              count=(get reviewObject "allPublicationIssuesLength")
+            }}
+          </button>
         {{/link-to}}
       {{else}}
         {{#link-to reviewRoute reviewObject}}
-          <button class="good" >{{t "general.reviewMissingItems" count=(get reviewObject "allPublicationIssuesLength")}}</button>
+          <button class="good">
+            {{t
+              "general.reviewMissingItems"
+              count=(get reviewObject "allPublicationIssuesLength")
+            }}
+          </button>
         {{/link-to}}
       {{/if}}
     {{/if}}

@@ -1,4 +1,7 @@
-{{#if (and isEditing (is-fulfilled offering.session.course.cohorts)) class="horizontal"}}
+{{#if
+  (and isEditing (is-fulfilled offering.session.course.cohorts))
+  class="horizontal"
+}}
   {{offering-form
     showRoom=true
     showInstructors=true
@@ -17,7 +20,9 @@
       {{#each (await offering.learnerGroups) as |learnerGroup|}}
         <li>
           {{learnerGroup.title}}
-          {{#if (and (not learnerGroup.isTopLevelGroup) (is-fulfilled learnerGroup.allParents))}}
+          {{#if
+            (and (not learnerGroup.isTopLevelGroup) (is-fulfilled learnerGroup.allParents))
+          }}
             {{#attach-tooltip lazy-render=true animation="shift"}}
               {{join " > " (map-by "title" (await learnerGroup.allParents))}}
             {{/attach-tooltip}}

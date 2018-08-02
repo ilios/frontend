@@ -22,7 +22,9 @@
   }}
 {{/if}}
 {{#if session.isIndependentLearning}}
-  {{#if (or (eq (get (await session.ilmSession.learnerGroups) "length") 0) sessionLearnergroupDetails)}}
+  {{#if
+    (or (eq (get (await session.ilmSession.learnerGroups) "length") 0) sessionLearnergroupDetails)
+  }}
     {{detail-learnergroups
       subject=(await session.ilmSession)
       cohorts=(await session.course.cohorts)
@@ -34,7 +36,10 @@
       expand=(action setSessionLearnergroupDetails true)
     }}
   {{else}}
-    {{collapsed-learnergroups subject=(await session.ilmSession) expand=(action setSessionLearnergroupDetails true)}}
+    {{collapsed-learnergroups
+      subject=(await session.ilmSession)
+      expand=(action setSessionLearnergroupDetails true)
+    }}
   {{/if}}
   {{detail-instructors
     ilmSession=session.ilmSession
@@ -50,7 +55,11 @@
     expand=(action setSessionObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=session editable=editable expand=(action setSessionObjectiveDetails true)}}
+  {{collapsed-objectives
+    subject=session
+    editable=editable
+    expand=(action setSessionObjectiveDetails true)
+  }}
 {{/if}}
 {{detail-learning-materials subject=session isCourse=false editable=editable}}
 {{#if (or (eq session.terms.length 0) sessionTaxonomyDetails)}}
@@ -61,7 +70,10 @@
     expand=(action setSessionTaxonomyDetails true)
   }}
 {{else}}
-  {{collapsed-taxonomies subject=session expand=(action setSessionTaxonomyDetails true)}}
+  {{collapsed-taxonomies
+    subject=session
+    expand=(action setSessionTaxonomyDetails true)
+  }}
 {{/if}}
 {{detail-mesh
   subject=session

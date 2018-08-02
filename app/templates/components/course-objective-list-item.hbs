@@ -1,4 +1,4 @@
-<td id="objective-{{objective.id}}" class="text-left text-top" colspan=3>
+<td id="objective-{{objective.id}}" class="text-left text-top" colspan="3">
   {{#if editable}}
     {{#editable-field
       value=title
@@ -19,7 +19,7 @@
     {{{objective.title}}}
   {{/if}}
 </td>
-<td class="text-left text-top" colspan=2>
+<td class="text-left text-top" colspan="2">
   {{#if objective.hasParents}}
     {{#each objective.parents as |parent|}}
       {{#if course.hasMultipleCohorts}}
@@ -28,13 +28,19 @@
           {{#if (get (await parent.firstCohort) "title")}}
             {{get (await parent.firstCohort) "title"}}
           {{else}}
-            {{t "general.classOf" year=(await (get (await parent.firstCohort) "classOfYear"))}}
+            {{t
+              "general.classOf"
+              year=(await (get (await parent.firstCohort) "classOfYear"))
+            }}
           {{/if}}
         </strong>
         <br>
       {{/if}}
       {{#if editable}}
-        <span class="clickable link" {{action manageParents objective}} data-test-parent>
+        <span {{action manageParents objective}}
+          class="clickable link"
+          data-test-parent
+        >
           {{parent.textTitle}}
         </span>
       {{else}}
@@ -53,11 +59,16 @@
     {{/if}}
   {{/if}}
 </td>
-<td class="text-left text-top" colspan=2>
+<td class="text-left text-top" colspan="2">
   <ul class="mesh-descriptor-list">
     {{#each (sort-by "name" (await objective.meshDescriptors)) as |descriptor|}}
       {{#if editable}}
-        <li class="clickable link" {{action manageDescriptors objective}} data-test-term>{{descriptor.name}}</li>
+        <li {{action manageDescriptors objective}}
+          class="clickable link"
+          data-test-term
+        >
+          {{descriptor.name}}
+        </li>
       {{else}}
         <li data-test-term>{{descriptor.name}}</li>
       {{/if}}
@@ -72,7 +83,7 @@
     {{/each}}
   </ul>
 </td>
-<td class="text-left text-top" colspan=1>
+<td class="text-left text-top" colspan="1">
   {{#if editable}}
     <span class="clickable remove" {{action remove objective}}>{{fa-icon "trash"}}</span>
   {{else}}

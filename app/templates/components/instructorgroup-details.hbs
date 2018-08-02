@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="backtolink">{{#link-to "instructorGroups"}}{{t "general.backToInstructorGroups"}}{{/link-to}}</div>
 {{instructorgroup-header instructorGroup=instructorGroup canUpdate=canUpdate}}
 
@@ -9,7 +10,10 @@
     <label>{{t "general.instructors"}}:</label>
     <div>
       <ul class="instructorgroup-users">
-        {{#each (sort-by "lastName" "firstName" (await instructorGroup.users)) as |user|}}
+        {{#each
+          (sort-by "lastName" "firstName" (await instructorGroup.users))
+          as |user|
+        }}
           {{#if canUpdate}}
             <li class="clickable" {{action "removeUser" user}}>{{user.fullName}}{{fa-icon "remove" class="remove"}}</li>
           {{else}}

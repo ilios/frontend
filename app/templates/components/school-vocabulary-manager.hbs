@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="breadcrumbs">
   <span {{action manageVocabulary null}}>{{t "general.allVocabularies"}}</span>
   <span>{{vocabulary.title}}</span>
@@ -12,7 +13,7 @@
       close=(action "revertVocabularyTitleChanges")
       saveOnEnter=true
       closeOnEscape=true
-    as |isSaving|
+      as |isSaving|
     }}
       <input
         value={{title}}
@@ -53,7 +54,9 @@
         {{/if}}
       </button>
 
-      {{#if (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))}}
+      {{#if
+        (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))
+      }}
         <span class="validation-error-message">{{v-get this "newTermTitle" "message"}}</span>
       {{/if}}
     </div>

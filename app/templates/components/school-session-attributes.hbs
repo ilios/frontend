@@ -1,4 +1,6 @@
-{{#if (and (is-fulfilled showSessionAttendanceRequired) (is-fulfilled showSessionSupplemental) (is-fulfilled showSessionSpecialAttireRequired) (is-fulfilled showSessionSpecialEquipmentRequired))}}
+{{#if
+  (and (is-fulfilled showSessionAttendanceRequired) (is-fulfilled showSessionSupplemental) (is-fulfilled showSessionSpecialAttireRequired) (is-fulfilled showSessionSpecialEquipmentRequired))
+}}
   {{#if details}}
     {{school-session-attributes-expanded
       canUpdate=canUpdate

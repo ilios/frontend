@@ -15,7 +15,7 @@
     <table>
       <thead>
         <tr>
-          <th class="text-left" colspan=1>
+          <th class="text-left" colspan="1">
             <input type="checkbox" onclick={{action "toggleUserSelectionAllOrNone"}}>
           </th>
           {{#sortable-th
@@ -34,15 +34,15 @@
           }}
             {{t "general.lastName"}}
           {{/sortable-th}}
-          <th class="text-left" colspan=2>{{t "general.campusId"}}</th>
-          <th class="text-left hide-from-small-screen" colspan=5>{{t "general.email"}}</th>
-          <th class="text-left" colspan=1>{{t "general.actions"}}</th>
+          <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
+          <th class="text-left hide-from-small-screen" colspan="5">{{t "general.email"}}</th>
+          <th class="text-left" colspan="1">{{t "general.actions"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (sort-by sortBy filteredUsers) as |user|}}
-          <tr class="{{unless user.enabled "disabled-user-account"}}">
-            <td class="text-left" colspan=1>
+          <tr class={{unless user.enabled "disabled-user-account" ""}}>
+            <td class="text-left" colspan="1">
               {{#if (or user.enabled currentUser.isRoot)}}
                 {{#if canUpdate}}
                   <input
@@ -56,11 +56,11 @@
                 {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
               {{/if}}
             </td>
-            <td class="text-left" colspan=2>{{user.firstName}}</td>
-            <td class="text-left" colspan=2>{{user.lastName}}</td>
-            <td class="text-left" colspan=2>{{user.campusId}}</td>
-            <td class="text-left hide-from-small-screen" colspan=5>{{user.email}}</td>
-            <td class="text-left" colspan=1>
+            <td class="text-left" colspan="2">{{user.firstName}}</td>
+            <td class="text-left" colspan="2">{{user.lastName}}</td>
+            <td class="text-left" colspan="2">{{user.campusId}}</td>
+            <td class="text-left hide-from-small-screen" colspan="5">{{user.email}}</td>
+            <td class="text-left" colspan="1">
               {{#if user.enabled}}
                 {{#if (contains user usersBeingMoved)}}
                   {{loading-spinner}}
@@ -83,5 +83,13 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0)}}
-  <button class="done text" {{action (perform addSelectedUsers)}}>{{t "general.moveToGroup" groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+  <button {{action (perform addSelectedUsers)}}
+    class="done text"
+  >
+    {{t
+      "general.moveToGroup"
+      groupTitle=learnerGroupTitle
+      count=selectedUsers.length
+    }}
+  </button>
 {{/if}}

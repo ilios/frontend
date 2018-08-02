@@ -1,10 +1,21 @@
+{{! template-lint-disable attribute-indentation }}
 {{#if finishedSetup}}
   <div class="user-profile-cohorts-header">
     <h3 class="title">{{t "general.cohorts"}}</h3>
     <div class="actions">
       {{#if isManaging}}
-        <button class="bigadd" {{action (perform save)}}>{{fa-icon (if save.isRunning "spinner" "check") spin=(if save.isRunning true false)}}</button>
-        <button disabled={{save.isRunning}} class="bigcancel" {{action setIsManaging false}}>{{fa-icon "undo"}}</button>
+        <button class="bigadd" {{action (perform save)}}>
+          {{fa-icon
+            (if save.isRunning "spinner" "check")
+            spin=(if save.isRunning true false)
+          }}
+        </button>
+        <button
+          disabled={{save.isRunning}}
+          class="bigcancel" {{action setIsManaging false}}
+        >
+          {{fa-icon "undo"}}
+        </button>
       {{else if isManageable}}
         <button class="manage" {{action setIsManaging true}}>{{fa-icon "edit"}}</button>
       {{/if}}
@@ -13,9 +24,16 @@
   <p data-test-primary-cohort>
     <h4>{{t "general.primaryCohort"}}: </h4>
     {{#if primaryCohort}}
-      {{#if (and (is-fulfilled primaryCohort.school) (is-fulfilled primaryCohort.program))}}
+      {{#if
+        (and (is-fulfilled primaryCohort.school) (is-fulfilled primaryCohort.program))
+      }}
         {{#if isManaging}}
-          {{fa-icon "level-down" class="clickable remove" title=(t "general.removePrimaryCohort") click=(action (mut primaryCohort) null)}}
+          {{fa-icon
+            "level-down"
+            class="clickable remove"
+            title=(t "general.removePrimaryCohort")
+            click=(action (mut primaryCohort) null)
+          }}
         {{/if}}
         {{get (await primaryCohort.school) "title"}} <strong>{{get (await primaryCohort.program) "title"}}</strong> {{primaryCohort.title}}
       {{/if}}
@@ -28,12 +46,25 @@
     <h4>{{t "general.secondaryCohorts"}}:</h4>
     {{#if (gt secondaryCohorts.length 0)}}
       <ul>
-        {{#each (sort-by "programYear.program.school.title" "programYear.program.title" "title" secondaryCohorts) as |cohort|}}
+        {{#each
+          (sort-by "programYear.program.school.title" "programYear.program.title" "title" secondaryCohorts)
+          as |cohort|
+        }}
           <li>
             {{#if (and (is-fulfilled cohort.school) (is-fulfilled cohort.program))}}
               {{#if isManaging}}
-                {{fa-icon "level-up" class="clickable add" title=(t "general.promoteToPrimaryCohort") click=(action (mut primaryCohort) cohort)}}
-                {{fa-icon "times" class="clickable remove" title=(t "general.removeCohort") click=(action "removeSelectedCohort" cohort)}}
+                {{fa-icon
+                  "level-up"
+                  class="clickable add"
+                  title=(t "general.promoteToPrimaryCohort")
+                  click=(action (mut primaryCohort) cohort)
+                }}
+                {{fa-icon
+                  "times"
+                  class="clickable remove"
+                  title=(t "general.removeCohort")
+                  click=(action "removeSelectedCohort" cohort)
+                }}
               {{/if}}
               {{get (await cohort.school) "title"}} <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
             {{/if}}
@@ -51,7 +82,10 @@
       <div class="schoolsfilter">
         {{fa-icon "university" fixedWidth=true}}
         {{#if (gt schools.length 1)}}
-          <select onchange={{action (mut selectedSchoolId) value="target.value"}} data-test-school>
+          <select
+            onchange={{action (mut selectedSchoolId) value="target.value"}}
+            data-test-school
+          >
             {{#each (sort-by "title" schools) as |school|}}
               <option value={{school.id}} selected={{is-equal school selectedSchool}}>
                 {{school.title}}
@@ -65,9 +99,21 @@
       {{#if (is-fulfilled assignableCohortsForSelectedSchool)}}
         {{#if (gt (get (await assignableCohortsForSelectedSchool) "length") 0)}}
           <ul data-test-assignable-cohorts>
-            {{#each (sort-by "programYear.program.school.title" "programYear.program.title" "title" (await assignableCohortsForSelectedSchool)) as |cohort|}}
+            {{#each
+              (sort-by
+                "programYear.program.school.title"
+                "programYear.program.title"
+                "title"
+                (await assignableCohortsForSelectedSchool))
+              as |cohort|
+            }}
               <li>
-                {{fa-icon "plus" class="clickable add" title=(t "general.addCohort") click=(action "addSelectedCohort" cohort)}}
+                {{fa-icon
+                  "plus"
+                  class="clickable add"
+                  title=(t "general.addCohort")
+                  click=(action "addSelectedCohort" cohort)
+                }}
                 <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
               </li>
             {{/each}}

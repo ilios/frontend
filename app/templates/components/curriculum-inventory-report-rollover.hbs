@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="rollover-form">
   <h3 class="title">{{t "general.curriculumInventoryReportRollover"}}</h3>
 
@@ -8,7 +9,10 @@
     <input
       type="text"
       value={{name}}
-      oninput={{pipe (action "changeName" value="target.value") (action "addErrorDisplayFor" "name")}}
+      oninput={{pipe
+                (action "changeName" value="target.value")
+                (action "addErrorDisplayFor" "name")
+              }}
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "name"}}
       placeholder={{t "general.reportNamePlaceholder"}}
@@ -41,7 +45,10 @@
   </div>
 
   <div class="buttons">
-    <button class="done text" disabled={{if isSaving true}} {{action (perform save)}}>
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{if isSaving true}}
+    >
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}

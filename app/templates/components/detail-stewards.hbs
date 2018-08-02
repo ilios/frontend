@@ -4,7 +4,9 @@
       <span class="detail-specific-title">{{t "general.stewardingSchoolsAndDepartments"}}</span>
     </div>
   {{else}}
-    <div class="title {{if showCollapsible "clickable collapsible"}}" {{action "collapse"}}>
+    <div {{action "collapse"}}
+      class="title {{if showCollapsible "clickable collapsible"}}"
+    >
       {{t "general.stewardingSchoolsAndDepartments"}} ({{programYear.stewards.length}})
     </div>
   {{/if}}

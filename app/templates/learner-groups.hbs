@@ -24,7 +24,10 @@
         {{#if (gt (get (await sortedPrograms) "length") 1)}}
           <select onchange={{action "changeSelectedProgram" value="target.value"}}>
             {{#each (await sortedPrograms) as |program|}}
-              <option value={{program.id}} selected={{is-equal program (await selectedProgram)}}>
+              <option
+                value={{program.id}}
+                selected={{is-equal program (await selectedProgram)}}
+              >
                 {{program.title}}
               </option>
             {{/each}}
@@ -42,7 +45,10 @@
         {{#if (gt (get (await sortedProgramYears) "length") 1)}}
           <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
             {{#each (await sortedProgramYears) as |programYear|}}
-              <option value={{programYear.id}} selected={{is-equal programYear (await selectedProgramYear)}}>
+              <option
+                value={{programYear.id}}
+                selected={{is-equal programYear (await selectedProgramYear)}}
+              >
                 {{programYear.cohort.title}}
               </option>
             {{/each}}
@@ -69,14 +75,21 @@
       </div>
       <div class="actions">
         {{#if (and (await canCreate) (await selectedProgramYear))}}
-          {{expand-collapse-button value=showNewLearnerGroupForm action="toggleNewLearnerGroupForm"}}
+          {{expand-collapse-button
+            value=showNewLearnerGroupForm
+            action="toggleNewLearnerGroupForm"
+          }}
         {{/if}}
       </div>
     </div>
 
     <section class="new">
       {{#liquid-if showNewLearnerGroupForm class="vertical"}}
-        {{new-learnergroup save=(action "saveNewLearnerGroup") cancel=(action "cancel") fillModeSupported=true}}
+        {{new-learnergroup
+          save=(action "saveNewLearnerGroup")
+          cancel=(action "cancel")
+          fillModeSupported=true
+        }}
       {{/liquid-if}}
       {{#if newGroup}}
         <div class="saved-result">

@@ -1,7 +1,7 @@
 <table>
   <thead>
     <tr>
-      <th class="text-left" colspan=2>{{t "general.learnerGroupTitle"}}</th>
+      <th class="text-left" colspan="2">{{t "general.learnerGroupTitle"}}</th>
       <th class="text-center hide-from-small-screen">{{t "general.members"}}</th>
       <th class="text-center hide-from-small-screen">{{t "general.subgroups"}}</th>
       <th class="text-right">{{t "general.actions"}}</th>
@@ -9,8 +9,14 @@
   </thead>
   <tbody>
     {{#each (sort-by "title" learnerGroups) as |learnerGroup|}}
-      <tr class="{{if (contains learnerGroup learnerGroupsForRemovalConfirmation) "confirm-removal"}}">
-        <td class="text-left" colspan=2>
+      <tr
+        class={{if
+                (contains learnerGroup learnerGroupsForRemovalConfirmation)
+                "confirm-removal"
+                ""
+              }}
+      >
+        <td class="text-left" colspan="2">
           {{#link-to "learnerGroup" learnerGroup}}
             {{learnerGroup.title}}
           {{/link-to}}
@@ -28,15 +34,23 @@
             {{loading-spinner}}
           {{/if}}
           {{#if canCreate}}
-            {{fa-icon "copy" class="clickable" click=(action "startCopy" learnerGroup) title=(t "general.copy")}}
+            {{fa-icon
+              "copy"
+              class="clickable"
+              click=(action "startCopy" learnerGroup)
+              title=(t "general.copy")
+            }}
           {{/if}}
         </td>
       </tr>
       {{#if (contains learnerGroup learnerGroupsForRemovalConfirmation)}}
         <tr class="confirm-removal">
-          <td colspan=5>
+          <td colspan="5">
             <div class="confirm-message">
-              {{t "general.confirmRemoveLearnerGroup" subgroupCount=learnerGroup.children.length}} <br>
+              {{t
+                "general.confirmRemoveLearnerGroup"
+                subgroupCount=learnerGroup.children.length
+              }} <br>
               <div class="confirm-buttons">
                 <button {{action remove learnerGroup}} class="remove text">{{t "general.yes"}}</button>
                 <button {{action "cancelRemove" learnerGroup}} class="done text">{{t "general.cancel"}}</button>
@@ -47,7 +61,7 @@
       {{/if}}
       {{#if (contains learnerGroup learnerGroupsForCopy)}}
         <tr class="confirm-copy">
-          <td colspan=5>
+          <td colspan="5">
             <div class="confirm-buttons">
               <button {{action "copy" true learnerGroup}} class="done text">{{t "general.copyWithLearners"}}</button>
               <button {{action "copy" false learnerGroup}} class="done text">{{t "general.copyWithoutLearners"}}</button>

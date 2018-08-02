@@ -3,18 +3,18 @@
 {{program-overview program=program canUpdate=canUpdate}}
 {{#if leadershipDetails}}
   {{program-leadership-expanded
-      program=program
-      canUpdate=canUpdate
-      collapse=(action setLeadershipDetails false)
-      expand=(action setLeadershipDetails true)
-      isManaging=manageLeadership
-      setIsManaging=setManageLeadership
+    program=program
+    canUpdate=canUpdate
+    collapse=(action setLeadershipDetails false)
+    expand=(action setLeadershipDetails true)
+    isManaging=manageLeadership
+    setIsManaging=setManageLeadership
   }}
 {{else}}
   {{leadership-collapsed
-      title=(t "general.programLeadership")
-      showAdministrators=false
-      directorsCount=(has-many-length program "directors")
-      expand=(action setLeadershipDetails true)
+    title=(t "general.programLeadership")
+    showAdministrators=false
+    directorsCount=(has-many-length program "directors")
+    expand=(action setLeadershipDetails true)
   }}
 {{/if}}

@@ -1,10 +1,15 @@
+{{! template-lint-disable attribute-indentation }}
 {{#unless loadAttr.isRunning}}
   <div class="report-overview-header">
     <div class="title">{{t "general.overview"}}</div>
     <div class="report-overview-actions">
       {{#if (and (is-fulfilled showRollover) (await showRollover))}}
         {{#link-to "curriculumInventoryReport.rollover" report class="rollover"}}
-          {{fa-icon "random" title=(t "general.curriculumInventoryReportRollover") fixedWidth=true}}
+          {{fa-icon
+            "random"
+            title=(t "general.curriculumInventoryReportRollover")
+            fixedWidth=true
+          }}
         {{/link-to}}
       {{/if}}
     </div>
@@ -25,7 +30,9 @@
               onSelection=(action (mut startDate))
               focusOut=(action "addErrorDisplayFor" "startDate")
             }}
-            {{#if (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))}}
+            {{#if
+              (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+            }}
               <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
             {{/if}}
           {{/editable-field}}
@@ -88,12 +95,12 @@
       <span>
         {{#if canUpdate}}
           {{#editable-field
-          value=description
-          save=(action "changeDescription")
-          close=(action "revertDescriptionChanges")
-          clickPrompt=(if description description (t "general.clickToEdit"))
-          closeOnEscape=true
-          as |isSaving|
+            value=description
+            save=(action "changeDescription")
+            close=(action "revertDescriptionChanges")
+            clickPrompt=(if description description (t "general.clickToEdit"))
+            closeOnEscape=true
+            as |isSaving|
           }}
             <textarea
               oninput={{action (mut description) value="target.value"}}
@@ -103,7 +110,9 @@
             >
               {{description}}
             </textarea>
-            {{#if (and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))}}
+            {{#if
+              (and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))
+            }}
               <span class="validation-error-message">{{v-get this "description" "message"}}</span>
             {{/if}}
           {{/editable-field}}

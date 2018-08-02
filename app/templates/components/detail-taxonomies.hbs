@@ -4,7 +4,9 @@
       <span class="detail-specific-title">{{t "general.termsManageTitle"}}</span>
     </div>
   {{else}}
-    <div class="title {{if showCollapsible "clickable collapsible"}}" {{action "collapse"}}>
+    <div {{action "collapse"}}
+      class="title {{if showCollapsible "clickable collapsible"}}"
+    >
       {{t "general.terms"}} ({{subject.terms.length}})
     </div>
   {{/if}}
@@ -22,10 +24,11 @@
 <div class="content">
   {{#if isManaging}}
     {{taxonomy-manager
-    subject=subject
-    selectedTerms=bufferedTerms
-    add="addTermToBuffer"
-    remove="removeTermFromBuffer"}}
+      subject=subject
+      selectedTerms=bufferedTerms
+      add="addTermToBuffer"
+      remove="removeTermFromBuffer"
+    }}
   {{else}}
     {{#each (await subject.associatedVocabularies) as |vocab| }}
       {{#if vocab.termCount}}

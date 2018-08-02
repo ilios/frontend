@@ -6,7 +6,10 @@
           {{t "general.allCourses"}}
         </option>
         {{#each courses as |courseObj|}}
-          <option value={{courseObj.id}} selected={{is-equal courseObj.id courseIdFilter}}>
+          <option
+            value={{courseObj.id}}
+            selected={{is-equal courseObj.id courseIdFilter}}
+          >
             {{courseObj.title}}
           </option>
         {{/each}}
@@ -90,7 +93,12 @@
                 {{/if}}
               {{/if}}
             </td>
-            <td colspan="1">{{big-text length=25 text=(join ", " (sort-by (action "sortString") lmObject.instructors))}}</td>
+            <td colspan="1">
+              {{big-text
+                length=25
+                text=(join ", " (sort-by (action "sortString") lmObject.instructors))
+              }}
+            </td>
             <td>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate "L"}}

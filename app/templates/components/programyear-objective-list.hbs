@@ -12,17 +12,20 @@
       {{/if}}
       <a class="button" {{action (perform downloadReport subject)}}>
         <button class="download">
-          {{fa-icon (if downloadReport.isRunning "spinner" "download") spin=(if downloadReport.isRunning true false)}}
+          {{fa-icon
+            (if downloadReport.isRunning "spinner" "download")
+            spin=(if downloadReport.isRunning true false)
+          }}
           {{t "general.downloadCompetencyMap"}}
         </button>
       </a>
       <table>
         <thead>
           <tr>
-            <th colspan=1></th>
-            <th class="text-left" colspan=12>{{t "general.description"}}</th>
-            <th class="text-left" colspan=8>{{t "general.competency"}}</th>
-            <th class="text-left" colspan=8>{{t "general.meshTerms"}}</th>
+            <th colspan="1"></th>
+            <th class="text-left" colspan="12">{{t "general.description"}}</th>
+            <th class="text-left" colspan="8">{{t "general.competency"}}</th>
+            <th class="text-left" colspan="8">{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
         <tbody>

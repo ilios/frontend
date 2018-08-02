@@ -9,7 +9,11 @@
   </div>
   <section class="new">
     {{#if editorOn}}
-      {{new-programyear availableAcademicYears=availableAcademicYears save=(perform save) cancel=(action "cancel")}}
+      {{new-programyear
+        availableAcademicYears=availableAcademicYears
+        save=(perform save)
+        cancel=(action "cancel")
+      }}
     {{/if}}
 
     {{#if saved}}
@@ -32,13 +36,13 @@
             <th class="text-left hide-from-small-screen">{{t "general.objectives"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.directors"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.terms"}}</th>
-            <th class="text-center" colspan=2>{{t "general.status"}}</th>
+            <th class="text-center" colspan="2">{{t "general.status"}}</th>
           </tr>
         </thead>
         <tbody>
           {{#each (await proxiedProgramYears) as |programYearProxy|}}
             {{#unless programYearProxy.archived}}
-              <tr class="{{if programYearProxy.showRemoveConfirmation "confirm-removal"}}">
+              <tr class={{if programYearProxy.showRemoveConfirmation "confirm-removal" ""}}>
                 <td class="text-left">
                   {{#link-to "programYear.index" program programYearProxy.content}}
                     {{fa-icon "external-link-square"}} {{programYearProxy.academicYear}}
@@ -81,26 +85,38 @@
                   {{/if}}
                 </td>
 
-                <td class="text-center" colspan=2>
+                <td class="text-center" colspan="2">
                   {{#if programYearProxy.isSaving}}
                     {{loading-spinner}}
                   {{else}}
                     {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}
                       {{#if (await programYearProxy.userCanUnLock)}}
-                        {{fa-icon "lock" class="clickable" click=(action "unlockProgramYear" programYearProxy)}}
+                        {{fa-icon
+                          "lock"
+                          class="clickable"
+                          click=(action "unlockProgramYear" programYearProxy)
+                        }}
                       {{else}}
                         {{fa-icon "lock"}}
                       {{/if}}
                     {{else}}
                       {{#if (await programYearProxy.userCanLock)}}
-                        {{fa-icon "unlock" class="clickable" click=(action "lockProgramYear" programYearProxy)}}
+                        {{fa-icon
+                          "unlock"
+                          class="clickable"
+                          click=(action "lockProgramYear" programYearProxy)
+                        }}
                       {{else}}
                         {{fa-icon "unlock"}}
                       {{/if}}
                     {{/if}}
                     {{#if (await programYearProxy.userCanDelete)}}
-                      {{fa-icon "trash" class="remove clickable" click=(action "remove" programYearProxy)}}
+                      {{fa-icon
+                        "trash"
+                        class="remove clickable"
+                        click=(action "remove" programYearProxy)
+                      }}
                     {{/if}}
                   {{/if}}
                 </td>
@@ -108,9 +124,13 @@
 
               {{#if programYearProxy.showRemoveConfirmation}}
                 <tr class="confirm-removal">
-                  <td colspan=8>
+                  <td colspan="8">
                     <div class="confirm-message">
-                      {{t "general.confirmRemoveProgramYear" courseCount=programYearProxy.cohort.courses.length}} <br>
+                      {{t
+                        "general.confirmRemoveProgramYear"
+                        courseCount=programYearProxy.cohort.courses.length
+                      }}
+                      <br>
                       <div class="confirm-buttons">
                         <button {{action "confirmRemove" programYearProxy}} class="remove text">{{t "general.yes"}}</button>
                         <button {{action "cancelRemove" programYearProxy}} class="done text">{{t "general.cancel"}}</button>

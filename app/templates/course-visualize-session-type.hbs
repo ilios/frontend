@@ -5,7 +5,12 @@
   <h2>
     {{t "general.vocabularyTermsFor" subject=model.sessionType.title}}
   </h2>
-  <h3 class="clickable">{{#link-to "course" model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
+  <h3 class="clickable">
+    {{#link-to "course" model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}
+  </h3>
 
-  {{visualizer-course-session-type course=model.course sessionType=model.sessionType}}
+  {{visualizer-course-session-type
+    course=model.course
+    sessionType=model.sessionType
+  }}
 </section>

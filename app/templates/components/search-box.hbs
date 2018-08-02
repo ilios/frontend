@@ -5,6 +5,9 @@
   oninput={{action "update" value="target.value"}}
   placeholder={{placeholder}}
 >
-<span class="search-icon" onclick={{pipe-action (action "focus") (perform searchTask)}}>
+<span
+  class="search-icon"
+  onclick={{pipe-action (action "focus") (perform searchTask)}}
+>
   {{fa-icon "search"}}
 </span>

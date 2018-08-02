@@ -29,7 +29,10 @@
       </div>
       <div class="actions">
         {{#if (await canCreate)}}
-          {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
+          {{expand-collapse-button
+            value=showNewInstructorGroupForm
+            action="toggleNewInstructorGroupForm"
+          }}
         {{/if}}
       </div>
     </div>

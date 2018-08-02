@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 {{#unless loadAttr.isRunning}}
   <h4>{{t "general.newCurriculumInventoryReport"}}</h4>
   <div class="form">
@@ -38,7 +39,8 @@
         options=years
         optionValuePath="id"
         optionLabelPath="title"
-        update=(action (mut selectedYear))}}
+        update=(action (mut selectedYear))
+      }}
     </div>
 
     <div class="buttons">

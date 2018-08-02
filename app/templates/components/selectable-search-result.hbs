@@ -1,4 +1,4 @@
-<li class="{{if selected "disabled" "enabled"}}">
+<li class={{if selected "disabled" "enabled"}}>
   {{#unless selected}}
     <span {{translateAttr title="general.add"}} class="add" {{action "add" this}}>{{fa-icon "plus-circle"}}</span>
   {{else}}

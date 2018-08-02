@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <div class="title">
   {{#if canUpdate}}
     {{#editable-field
@@ -16,7 +17,9 @@
         disabled={{isSaving}}
         onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
       >
-      {{#if (and (v-get this "blockTitle" "isInvalid") (is-in showErrorsFor "blockTitle"))}}
+      {{#if
+        (and (v-get this "blockTitle" "isInvalid") (is-in showErrorsFor "blockTitle"))
+      }}
         <span class="validation-error-message">{{v-get this "blockTitle" "message"}}</span>
       {{/if}}
     {{/editable-field}}

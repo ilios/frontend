@@ -1,3 +1,4 @@
+{{! template-lint-disable attribute-indentation }}
 <h2 class="title">{{t "general.newSequenceBlock"}}</h2>
 {{#if isLoaded}}
   <div class="form">
@@ -66,16 +67,28 @@
 
     <div class="item start-date">
       <label>{{t "general.startDate"}}:</label>
-      {{pikaday-input value=startDate onSelection=(action "changeStartDate") format="M/D/YYYY"}}
-      {{#if (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))}}
+      {{pikaday-input
+        value=startDate
+        onSelection=(action "changeStartDate")
+        format="M/D/YYYY"
+      }}
+      {{#if
+        (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+      }}
         <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
       {{/if}}
     </div>
 
     <div class="item end-date">
       <label>{{t "general.endDate"}}:</label>
-      {{pikaday-input value=endDate onSelection=(action "changeEndDate") format="M/D/YYYY"}}
-      {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
+      {{pikaday-input
+        value=endDate
+        onSelection=(action "changeEndDate")
+        format="M/D/YYYY"
+      }}
+      {{#if
+        (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))
+      }}
         <span class="validation-error-message">{{v-get this "endDate" "message"}}</span>
       {{/if}}
     </div>
@@ -89,7 +102,9 @@
         disabled={{isSaving}}
         onkeyup={{action "addErrorDisplayFor" "duration"}}
       >
-      {{#if (and (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration"))}}
+      {{#if
+        (and (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration"))
+      }}
         <span class="validation-error-message">{{v-get this "duration" "message"}}</span>
       {{/if}}
     </div>

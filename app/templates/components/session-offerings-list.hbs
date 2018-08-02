@@ -29,7 +29,12 @@
         {{/if}}
         <div class="offering-block-time-offerings" data-test-offerings>
           {{#each offeringTimeBlock.sortedOfferings as |offering|}}
-            {{offering-manager offering=offering save="save" remove="removeOffering" editable=editable}}
+            {{offering-manager
+              offering=offering
+              save="save"
+              remove="removeOffering"
+              editable=editable
+            }}
           {{/each}}
         </div>
       </div>

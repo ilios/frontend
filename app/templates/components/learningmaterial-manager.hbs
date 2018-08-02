@@ -104,7 +104,7 @@
     <div class="item weblink">
       <label>{{t "general.link"}}:</label>
       <span class="link">
-        <a href="{{link}}" target="_blank" rel="noopener">{{link}}</a>
+        <a href={{link}} target="_blank" rel="noopener">{{link}}</a>
         {{#copy-button clipboardText=link}}
           {{fa-icon "copy" title=(t "general.copyLink")}}
         {{/copy-button}}
@@ -119,11 +119,11 @@
           <a href="{{absoluteFileUri}}?inline">
             {{filename}}
           </a>
-          <a href="{{absoluteFileUri}}" target="_blank" rel="noopener">
+          <a href={{absoluteFileUri}} target="_blank" rel="noopener">
             {{fa-icon "download" title=(t "general.download")}}
           </a>
         {{else}}
-          <a href="{{absoluteFileUri}}" target="_blank" rel="noopener">
+          <a href={{absoluteFileUri}} target="_blank" rel="noopener">
             {{filename}}
           </a>
         {{/if}}
@@ -147,7 +147,11 @@
       <div class="item start-date">
         <label>{{t "general.startDate"}}:</label>
         {{#if editable}}
-          {{pikaday-input value=startDate onSelection=(action "updateDate" "startDate") format="M/D/YYYY"}}
+          {{pikaday-input
+            value=startDate
+            onSelection=(action "updateDate" "startDate")
+            format="M/D/YYYY"
+          }}
         {{else}}
           {{moment-format startDate "L"}}
         {{/if}}
@@ -165,14 +169,25 @@
         <button class="remove-date" {{action (mut startDate null)}}>{{t "general.timedReleaseClearStartDate"}}</button>
       {{/if}}
     {{else if editable}}
-      <p><button class="add-date" {{action "addDate" "startDate"}} data-test-add-start-date>{{t "general.timedReleaseAddStartDate"}}</button></p>
+      <p>
+        <button {{action "addDate" "startDate"}}
+          class="add-date"
+          data-test-add-start-date
+        >
+          {{t "general.timedReleaseAddStartDate"}}
+        </button>
+      </p>
     {{/if}}
 
     {{#if endDate}}
       <div class="item end-date">
         <label>{{t "general.endDate"}}:</label>
         {{#if editable}}
-          {{pikaday-input value=endDate onSelection=(action "updateDate" "endDate") format="M/D/YYYY"}}
+          {{pikaday-input
+            value=endDate
+            onSelection=(action "updateDate" "endDate")
+            format="M/D/YYYY"
+          }}
         {{else}}
           {{moment-format endDate "L"}}
         {{/if}}
@@ -187,7 +202,12 @@
         {{/if}}
       </div>
       {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
-        <span class="validation-error-message" data-test-end-date-validation-error-message>{{v-get this "endDate" "message"}}</span>
+        <span
+          class="validation-error-message"
+          data-test-end-date-validation-error-message
+        >
+          {{v-get this "endDate" "message"}}
+        </span>
       {{/if}}
       {{#if editable}}
         <button class="remove-date" {{action (mut endDate null)}}>{{t "general.timedReleaseClearEndDate"}}</button>

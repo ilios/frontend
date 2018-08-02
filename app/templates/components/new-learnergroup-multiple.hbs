@@ -13,7 +13,9 @@
       onkeyup={{action "addErrorDisplayFor" "numSubGroups"}}
       placeholder={{t "general.numberOfGroupsToGenerate"}}
     >
-    {{#if (and (v-get this "numSubGroups" "isInvalid") (is-in showErrorsFor "numSubGroups"))}}
+    {{#if
+      (and (v-get this "numSubGroups" "isInvalid") (is-in showErrorsFor "numSubGroups"))
+    }}
       <span class="validation-error-message">{{v-get this "numSubGroups" "message"}}</span>
     {{/if}}
   </div>
