@@ -1,28 +1,28 @@
-<div class='title clickable'  {{action expand}}>
-  {{t 'general.sessionTypes'}}
+<div class="title clickable"  {{action expand}}>
+  {{t "general.sessionTypes"}}
 </div>
 {{#if (is-pending sessionTyepes)}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{else}}
-  <div class='content'>
-    <table class='condensed'>
+  <div class="content">
+    <table class="condensed">
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.sessionTypes'}}</th>
-          <th class='text-left'>{{t 'general.summary'}}</th>
+          <th class="text-left">{{t "general.sessionTypes"}}</th>
+          <th class="text-left">{{t "general.summary"}}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{t 'general.assessmentMethods'}}</td>
-          <td class='summary-highlight'>
-            {{get (await assessmentMethods) 'length'}}
+          <td>{{t "general.assessmentMethods"}}</td>
+          <td class="summary-highlight">
+            {{get (await assessmentMethods) "length"}}
           </td>
         </tr>
         <tr>
-          <td>{{t 'general.instructionalMethods'}}</td>
-          <td class='summary-highlight'>
-            {{get (await instructionalMethods) 'length'}}
+          <td>{{t "general.instructionalMethods"}}</td>
+          <td class="summary-highlight">
+            {{get (await instructionalMethods) "length"}}
           </td>
         </tr>
       </tbody>

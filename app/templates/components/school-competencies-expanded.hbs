@@ -1,33 +1,33 @@
-<div class='school-competencies-expanded-header'>
+<div class="school-competencies-expanded-header">
   {{#if isManaging}}
-    <div class='title'>{{t 'general.competencies'}}</div>
+    <div class="title">{{t "general.competencies"}}</div>
   {{else}}
-    <div class='title {{if showCollapsible "collapsible clickable"}}' {{action 'collapse'}}>
-      {{t 'general.competencies'}} ({{get (await domains) 'length'}}/{{get (await childCompetencies) 'length'}})
+    <div class="title {{if showCollapsible "collapsible clickable"}}" {{action "collapse"}}>
+      {{t "general.competencies"}} ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
     </div>
   {{/if}}
-  <div class='actions'>
+  <div class="actions">
     {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>
-        {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+      <button class="bigadd" {{action "save"}}>
+        {{fa-icon (if isSaving "spinner" "check") spin=(if isSaving true false)}}
       </button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
     {{else}}
       {{#if (or canUpdate canDelete canCreate)}}
-        <button {{action 'manage'}}>{{t 'general.manageCompetencies'}}</button>
+        <button {{action "manage"}}>{{t "general.manageCompetencies"}}</button>
       {{/if}}
     {{/if}}
   </div>
 </div>
-<div class='school-competencies-expanded-content'>
+<div class="school-competencies-expanded-content">
   {{#liquid-if isManaging class="horizontal"}}
     {{school-competencies-manager
       canUpdate=canUpdate
       canDelete=canDelete
       canCreate=canCreate
       competencies=bufferedCompetencies
-      add=(action 'addCompetencyToBuffer')
-      remove=(action 'removeCompetencyFromBuffer')
+      add=(action "addCompetencyToBuffer")
+      remove=(action "removeCompetencyFromBuffer")
     }}
   {{else}}
     {{school-competencies-list

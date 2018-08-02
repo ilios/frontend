@@ -1,123 +1,123 @@
-<div class='form'>
-  <div class='item'>
-    <label>{{t 'general.title'}}:</label>
+<div class="form">
+  <div class="item">
+    <label>{{t "general.title"}}:</label>
     {{#if canEditTitle}}
       <input
         type="text"
         value={{title}}
         oninput={{action (mut title) value="target.value"}}
-        onkeyup={{action 'addErrorDisplayFor' 'title'}}
+        onkeyup={{action "addErrorDisplayFor" "title"}}
       >
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="message error">{{v-get this 'title' 'message'}}</span>
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        <span class="message error">{{v-get this "title" "message"}}</span>
       {{/if}}
     {{else}}
-      <span class='value'>{{title}}</span>
+      <span class="value">{{title}}</span>
     {{/if}}
   </div>
 
-  <div class='item'>
-    <label>{{t 'general.aamcMethod'}}</label>
+  <div class="item">
+    <label>{{t "general.aamcMethod"}}</label>
     {{#if (is-fulfilled filteredAamcMethods)}}
       {{#if canEditAamcMethod}}
         <select onchange={{action (mut selectedAamcMethodId) value="target.value"}}>
           <option selected={{not selectedAamcMethodId}}></option>
-          {{#each (sort-by 'description' (await filteredAamcMethods)) as |aamcMethod|}}
+          {{#each (sort-by "description" (await filteredAamcMethods)) as |aamcMethod|}}
             <option value="{{aamcMethod.id}}" selected={{eq aamcMethod.id selectedAamcMethodId}}>
               {{aamcMethod.description}}
             </option>
           {{/each}}
         </select>
-        {{#if (and (v-get this 'selectedAamcMethodId' 'isInvalid') (is-in showErrorsFor 'selectedAamcMethodId'))}}
-          <span class="message error">{{v-get this 'selectedAamcMethodId' 'message'}}</span>
+        {{#if (and (v-get this "selectedAamcMethodId" "isInvalid") (is-in showErrorsFor "selectedAamcMethodId"))}}
+          <span class="message error">{{v-get this "selectedAamcMethodId" "message"}}</span>
         {{/if}}
       {{else}}
-        <span class='value'>{{get (await selectedAamcMethod) 'description'}}</span>
+        <span class="value">{{get (await selectedAamcMethod) "description"}}</span>
       {{/if}}
     {{else}}
       {{loading-spinner}}
     {{/if}}
   </div>
 
-  <div class='item calendar-color'>
-    <label>{{t 'general.color'}}:</label>
+  <div class="item calendar-color">
+    <label>{{t "general.color"}}:</label>
     {{#if canEditCalendarColor}}
       <input
         type="color"
         value={{calendarColor}}
-        onkeyup={{action 'addErrorDisplayFor' 'calendarColor'}}
+        onkeyup={{action "addErrorDisplayFor" "calendarColor"}}
         oninput={{action (mut calendarColor) value="target.value"}}
       >
-      {{#if (and (v-get this 'calendarColor' 'isInvalid') (is-in showErrorsFor 'calendarColor'))}}
-        <span class="message error">{{v-get this 'calendarColor' 'message'}}</span>
+      {{#if (and (v-get this "calendarColor" "isInvalid") (is-in showErrorsFor "calendarColor"))}}
+        <span class="message error">{{v-get this "calendarColor" "message"}}</span>
       {{/if}}
     {{else}}
-      <span class='value'>
-        <span class='box' style={{{concat 'background-color: ' calendarColor}}}></span>
+      <span class="value">
+        <span class="box" style={{{concat "background-color: " calendarColor}}}></span>
         {{calendarColor}}
       </span>
     {{/if}}
   </div>
 
-  <div class='item'>
-    <label>{{t 'general.assessment'}}:</label>
+  <div class="item">
+    <label>{{t "general.assessment"}}:</label>
     {{#if canEditAssessment}}
-      {{toggle-yesno yes=assessment toggle=(action 'updateAssessment')}}
+      {{toggle-yesno yes=assessment toggle=(action "updateAssessment")}}
     {{else}}
-      <span class='value {{if assessment "yes" "no"}}'>
+      <span class="value {{if assessment "yes" "no"}}">
         {{#if assessment}}
-          {{t 'general.yes'}}
+          {{t "general.yes"}}
         {{else}}
-          {{t 'general.no'}}
+          {{t "general.no"}}
         {{/if}}
       </span>
     {{/if}}
   </div>
 
   {{#if (and assessment (is-fulfilled assessmentOptions))}}
-    <div class='item'>
-      <label>{{t 'general.assessmentOption'}}:</label>
+    <div class="item">
+      <label>{{t "general.assessmentOption"}}:</label>
       {{#if canEditAssessmentOption}}
         <select onchange={{action (mut selectedAssessmentOptionId) value="target.value"}}>
-          {{#each (sort-by 'name' (await assessmentOptions)) as |option|}}
+          {{#each (sort-by "name" (await assessmentOptions)) as |option|}}
             <option value={{option.id}} selected={{eq option.id selectedAssessmentOptionId}}>
               {{option.name}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        <span class='value'>{{get (await selectedAssessmentOption) 'name'}}</span>
+        <span class="value">{{get (await selectedAssessmentOption) "name"}}</span>
       {{/if}}
     </div>
   {{/if}}
 
-  <div class='item'>
-    <label>{{t 'general.active'}}:</label>
+  <div class="item">
+    <label>{{t "general.active"}}:</label>
     {{#if canEditActive}}
       {{toggle-yesno yes=isActive toggle=(action (mut isActive))}}
     {{else}}
-      <span class='value {{if isActive "yes" "no"}}'>
+      <span class="value {{if isActive "yes" "no"}}">
         {{#if isActive}}
-          {{t 'general.yes'}}
+          {{t "general.yes"}}
         {{else}}
-          {{t 'general.no'}}
+          {{t "general.no"}}
         {{/if}}
       </span>
     {{/if}}
   </div>
 
-  <div class='buttons'>
+  <div class="buttons">
     {{#if canUpdate}}
-      <button class='done text' {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
+      <button class="done text" {{action (perform saveSessionType)}} disabled={{saveSessionType.isRunning}}>
         {{#if saveSessionType.isRunning}}
           {{loading-spinner}}
         {{else}}
-          {{t 'general.done'}}
+          {{t "general.done"}}
         {{/if}}
       </button>
-      <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
+      <button class="cancel text" {{action close}}>{{t "general.cancel"}}</button>
     {{else}}
-      <button class='text' {{action close}}>{{t 'general.close'}}</button>
+      <button class="text" {{action close}}>{{t "general.close"}}</button>
     {{/if}}
   </div>
 </div>

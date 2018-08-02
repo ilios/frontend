@@ -1,11 +1,11 @@
 <td>
   <span data-test-group-name>{{groupName}}</span>
   {{#if noGroupWithThisName}}
-    <button {{action createGroup groupName}} data-test-create-group>{{t 'general.createNewGroup' title=groupName}}</button>
+    <button {{action createGroup groupName}} data-test-create-group>{{t "general.createNewGroup" title=groupName}}</button>
   {{/if}}
 </td>
 <td>
-  <select onchange={{action 'matchGroup' value="target.value"}} id='sub-group-{{elementId}}'>
+  <select onchange={{action "matchGroup" value="target.value"}} id="sub-group-{{elementId}}">
     <option value=null selected={{is-equal null matchedGroupId}}></option>
     {{#each groups as |learnerGroup|}}
       <option value={{learnerGroup.id}} selected={{is-equal learnerGroup.id matchedGroupId}}>

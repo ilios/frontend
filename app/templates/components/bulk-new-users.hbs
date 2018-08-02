@@ -1,8 +1,8 @@
 {{#if savingUserErrors.length}}
-  <div class='saving-user-errors'>
-    <p>{{t 'general.errorSavingUser'}}</p>
+  <div class="saving-user-errors">
+    <p>{{t "general.errorSavingUser"}}</p>
     <ul>
-      {{#each (sort-by 'lastName' (map-by 'userInput' savingUserErrors)) as |obj|}}
+      {{#each (sort-by "lastName" (map-by "userInput" savingUserErrors)) as |obj|}}
         <li>{{obj.lastName}}, {{obj.firstName}} ({{obj.email}})</li>
       {{/each}}
     </ul>
@@ -10,12 +10,12 @@
 {{/if}}
 
 {{#if savingAuthenticationErrors.length}}
-  <div class='saving-authentication-errors'>
-    <p>{{t 'general.errorSavingAuthentication'}}</p>
+  <div class="saving-authentication-errors">
+    <p>{{t "general.errorSavingAuthentication"}}</p>
     <ul>
-      {{#each (sort-by 'lastName' (map-by 'user' savingAuthenticationErrors)) as |user|}}
+      {{#each (sort-by "lastName" (map-by "user" savingAuthenticationErrors)) as |user|}}
         <li>
-          {{#link-to 'user' user}}
+          {{#link-to "user" user}}
             {{user.lastName}}, {{user.firstName}} ({{user.email}})
           {{/link-to}}
         </li>
@@ -24,44 +24,44 @@
   </div>
 {{/if}}
 
-<h3>{{t 'general.newUser'}}</h3>
+<h3>{{t "general.newUser"}}</h3>
 
-<div class='new-user-form'>
-  <div class='choose-form-type'>
-    <label>{{t 'general.createNew'}}:</label>
+<div class="new-user-form">
+  <div class="choose-form-type">
+    <label>{{t "general.createNew"}}:</label>
     {{click-choice-buttons
-      buttonContent1=(t 'general.nonStudent')
-      buttonContent2=(t 'general.student')
+      buttonContent1=(t "general.nonStudent")
+      buttonContent2=(t "general.student")
       firstChoicePicked=nonStudentMode
       toggle=(action (mut nonStudentMode))
     }}
   </div>
-  <div class='upload-users'>
+  <div class="upload-users">
     <label>
-      {{t 'general.uploadUsers'}}(
-      <a target='_blank' rel='noopener' download="SampleUserUpload.tsv" href='data:application/octet-stream;charset=utf-8;base64,{{sampleData}}'>
-        {{t 'general.sampleFile'}}
+      {{t "general.uploadUsers"}}(
+      <a target="_blank" rel="noopener" download="SampleUserUpload.tsv" href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}">
+        {{t "general.sampleFile"}}
       </a>):
     </label>
-    <input type='file' onchange={{action 'updateSelectedFile' value="target.files"}}>
+    <input type="file" onchange={{action "updateSelectedFile" value="target.files"}}>
   </div>
   {{#if parseFile.isRunning}}
-    <div class='file-is-loading'>{{loading-spinner}}</div>
+    <div class="file-is-loading">{{loading-spinner}}</div>
   {{else if (gte proposedUsers.length 1)}}
-    <div  class='proposed-new-users'>
+    <div  class="proposed-new-users">
       <table>
         <thead>
           <tr>
             <th></th>
-            <th>{{t 'general.firstName'}}</th>
-            <th>{{t 'general.lastName'}}</th>
-            <th>{{t 'general.middleName'}}</th>
-            <th>{{t 'general.phone'}}</th>
-            <th>{{t 'general.email'}}</th>
-            <th>{{t 'general.campusId'}}</th>
-            <th>{{t 'general.otherId'}}</th>
-            <th>{{t 'general.username'}}</th>
-            <th>{{t 'general.password'}}</th>
+            <th>{{t "general.firstName"}}</th>
+            <th>{{t "general.lastName"}}</th>
+            <th>{{t "general.middleName"}}</th>
+            <th>{{t "general.phone"}}</th>
+            <th>{{t "general.email"}}</th>
+            <th>{{t "general.campusId"}}</th>
+            <th>{{t "general.otherId"}}</th>
+            <th>{{t "general.username"}}</th>
+            <th>{{t "general.password"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -70,19 +70,19 @@
               <td>
                 <input
                   type="checkbox"
-                  checked={{and (v-get obj 'isValid') (contains obj selectedUsers)}}
-                  onclick={{action 'toggleUserSelection' obj}}
-                  disabled={{v-get obj 'isInvalid'}}
+                  checked={{and (v-get obj "isValid") (contains obj selectedUsers)}}
+                  onclick={{action "toggleUserSelection" obj}}
+                  disabled={{v-get obj "isInvalid"}}
                 >
               </td>
-              <td class="{{if (v-get obj 'firstName' 'isInvalid') 'error'}}">{{obj.firstName}}</td>
-              <td class="{{if (v-get obj 'lastName' 'isInvalid') 'error'}}">{{obj.lastName}}</td>
-              <td class="{{if (v-get obj 'middleName' 'isInvalid') 'error'}}">{{obj.middleName}}</td>
+              <td class="{{if (v-get obj "firstName" "isInvalid") "error"}}">{{obj.firstName}}</td>
+              <td class="{{if (v-get obj "lastName" "isInvalid") "error"}}">{{obj.lastName}}</td>
+              <td class="{{if (v-get obj "middleName" "isInvalid") "error"}}">{{obj.middleName}}</td>
               <td>{{obj.phone}}</td>
-              <td class="{{if (v-get obj 'email' 'isInvalid') 'error'}}">{{obj.email}}</td>
-              <td class="{{if (v-get obj 'campusId' 'isInvalid') 'error'}}">{{obj.campusId}}</td>
-              <td class="{{if (v-get obj 'otherId' 'isInvalid') 'error'}}">{{obj.otherId}}</td>
-              <td class="{{if (v-get obj 'username' 'isInvalid') 'error'}}">{{obj.username}}</td>
+              <td class="{{if (v-get obj "email" "isInvalid") "error"}}">{{obj.email}}</td>
+              <td class="{{if (v-get obj "campusId" "isInvalid") "error"}}">{{obj.campusId}}</td>
+              <td class="{{if (v-get obj "otherId" "isInvalid") "error"}}">{{obj.otherId}}</td>
+              <td class="{{if (v-get obj "username" "isInvalid") "error"}}">{{obj.username}}</td>
               <td>{{obj.password}}</td>
             </tr>
           {{/each}}
@@ -90,12 +90,12 @@
       </table>
     </div>
   {{/if}}
-  <div class='item last'>
-    <label>{{t 'general.primarySchool'}}:</label>
+  <div class="item last">
+    <label>{{t "general.primarySchool"}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
-        {{#each (sort-by 'title' (await schools)) as |school|}}
-          <option value={{school.id}} selected={{eq school.id (get (await bestSelectedSchool) 'id')}}>
+        {{#each (sort-by "title" (await schools)) as |school|}}
+          <option value={{school.id}} selected={{eq school.id (get (await bestSelectedSchool) "id")}}>
             {{school.title}}
           </option>
         {{/each}}
@@ -104,13 +104,13 @@
       {{loading-spinner}}
     {{/if}}
   </div>
-  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
-    <div class='item last'>
-      <label>{{t 'general.primaryCohort'}}:</label>
+  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
+    <div class="item last">
+      <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
-          {{#each (sort-by 'title' cohorts) as |cohort|}}
-            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+          {{#each (sort-by "title" cohorts) as |cohort|}}
+            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
               {{cohort.title}}
             </option>
           {{/each}}
@@ -121,19 +121,19 @@
     </div>
   {{/if}}
 
-  <div class='buttons'>
-    <button class='done text' {{action (perform save)}} disabled={{or (lt selectedUsers.length 1) isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+  <div class="buttons">
+    <button class="done text" {{action (perform save)}} disabled={{or (lt selectedUsers.length 1) isSaving (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action (action close)}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action (action close)}}>{{t "general.cancel"}}</button>
   </div>
 </div>
 
-{{#liquid-if save.isRunning class='crossFade'}}
+{{#liquid-if save.isRunning class="crossFade"}}
   {{wait-saving
     showProgress=true
     totalProgress=selectedUsers.length

@@ -1,4 +1,4 @@
-<div class="backtolink">{{#link-to 'programs'}}{{t 'general.backToPrograms'}}{{/link-to}}</div>
+<div class="backtolink">{{#link-to "programs"}}{{t "general.backToPrograms"}}{{/link-to}}</div>
 {{program-header program=program canUpdate=canUpdate}}
 {{program-overview program=program canUpdate=canUpdate}}
 {{#if leadershipDetails}}
@@ -12,9 +12,9 @@
   }}
 {{else}}
   {{leadership-collapsed
-      title=(t 'general.programLeadership')
+      title=(t "general.programLeadership")
       showAdministrators=false
-      directorsCount=(has-many-length program 'directors')
+      directorsCount=(has-many-length program "directors")
       expand=(action setLeadershipDetails true)
   }}
 {{/if}}

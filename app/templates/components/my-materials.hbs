@@ -1,9 +1,9 @@
-<div class='material-list'>
-  {{#if (gt (get materials 'length') 0)}}
-    <span class='course-filter'>
+<div class="material-list">
+  {{#if (gt (get materials "length") 0)}}
+    <span class="course-filter">
       <select onchange={{action setCourseIdFilter value="target.value"}}>
         <option value="">
-          {{t 'general.allCourses'}}
+          {{t "general.allCourses"}}
         </option>
         {{#each courses as |courseObj|}}
           <option value={{courseObj.id}} selected={{is-equal courseObj.id courseIdFilter}}>
@@ -14,10 +14,10 @@
     </span>
     <span class="filter">
       <input
-        type='text'
+        type="text"
         value={{filter}}
         oninput={{action (action setFilter) value="target.value"}}
-        placeholder={{t 'general.filterPlaceholder'}}
+        placeholder={{t "general.filterPlaceholder"}}
       >
     </span>
     <table>
@@ -25,39 +25,39 @@
         <tr>
           {{#sortable-th
             colspan=3
-            click=(action 'sortBy' 'sessionTitle')
-            sortedBy=(or (eq sortBy 'sessionTitle') (eq sortBy 'sessionTitle:desc'))
+            click=(action "sortBy" "sessionTitle")
+            sortedBy=(or (eq sortBy "sessionTitle") (eq sortBy "sessionTitle:desc"))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.session'}}
+            {{t "general.session"}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=3
-            click=(action 'sortBy' 'courseTitle')
-            sortedBy=(or (eq sortBy 'courseTitle') (eq sortBy 'courseTitle:desc'))
+            click=(action "sortBy" "courseTitle")
+            sortedBy=(or (eq sortBy "courseTitle") (eq sortBy "courseTitle:desc"))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.course'}}
+            {{t "general.course"}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=3
-            click=(action 'sortBy' 'title')
-            sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+            click=(action "sortBy" "title")
+            sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.title'}}
+            {{t "general.title"}}
           {{/sortable-th}}
-          <th class='hide-from-small-screen'>
-            {{t 'general.instructor'}}
+          <th class="hide-from-small-screen">
+            {{t "general.instructor"}}
           </th>
           {{#sortable-th
             colspan=1
-            click=(action 'sortBy' 'firstOfferingDate')
-            sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
+            click=(action "sortBy" "firstOfferingDate")
+            sortedBy=(or (eq sortBy "firstOfferingDate") (eq sortBy "firstOfferingDate:desc"))
             sortedAscending=sortedAscending
-            sortType='numeric'
+            sortType="numeric"
           }}
-            {{t 'general.date'}}
+            {{t "general.date"}}
           {{/sortable-th}}
         </tr>
       </thead>
@@ -68,7 +68,7 @@
             <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">
               {{#if lmObject.isBlanked}}
-                <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
+                <span class="lm-type-icon">{{fa-icon "clock-o" title=(t "general.timedRelease")}}</span>
                 {{lmObject.title}}
                 <span class="timed-release-info">
                   ({{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate}})
@@ -76,26 +76,26 @@
               {{else}}
                 {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
                 {{#if lmObject.absoluteFileUri}}
-                  {{#if (eq lmObject.mimetype 'application/pdf')}}
+                  {{#if (eq lmObject.mimetype "application/pdf")}}
                     <a href="{{lmObject.absoluteFileUri}}?inline">{{lmObject.title}}</a>
-                    <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{fa-icon 'download' title=(t 'general.download')}}</a>
+                    <a href={{lmObject.absoluteFileUri}} target="_blank" rel="noopener">{{fa-icon "download" title=(t "general.download")}}</a>
                   {{else}}
-                    <a href={{lmObject.absoluteFileUri}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+                    <a href={{lmObject.absoluteFileUri}} target="_blank" rel="noopener">{{lmObject.title}}</a>
                   {{/if}}
                 {{else if lmObject.link}}
-                  <a href={{lmObject.link}} target='_blank' rel='noopener'>{{lmObject.title}}</a>
+                  <a href={{lmObject.link}} target="_blank" rel="noopener">{{lmObject.title}}</a>
                 {{else}}
                   {{lmObject.title}}<br>
                   <small>{{lmObject.citation}}</small>
                 {{/if}}
               {{/if}}
             </td>
-            <td colspan="1">{{big-text length=25 text=(join ', ' (sort-by (action 'sortString') lmObject.instructors))}}</td>
+            <td colspan="1">{{big-text length=25 text=(join ", " (sort-by (action "sortString") lmObject.instructors))}}</td>
             <td>
               {{#if lmObject.firstOfferingDate}}
-                {{moment-format lmObject.firstOfferingDate 'L'}}
+                {{moment-format lmObject.firstOfferingDate "L"}}
               {{else}}
-                {{t 'general.none'}}
+                {{t "general.none"}}
               {{/if}}
             </td>
           </tr>
@@ -103,6 +103,6 @@
       </tbody>
     </table>
   {{else}}
-    {{t 'general.none'}}
+    {{t "general.none"}}
   {{/if}}
 </div>

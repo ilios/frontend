@@ -1,10 +1,10 @@
-<section class='instructorgroups-list'>
+<section class="instructorgroups-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' model.schools) as |school|}}
+          {{#each (sort-by "title" model.schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school selectedSchool}}>
               {{school.title}}
             </option>
@@ -18,45 +18,45 @@
       <input
         value={{titleFilter}}
         oninput={{action (perform changeTitleFilter) value="target.value"}}
-        placeholder={{t 'general.instructorGroupTitleFilterPlaceholder'}}
+        placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
       >
     </div>
   </div>
-  <section class='instructorgroups'>
+  <section class="instructorgroups">
     <div class="header">
       <div class="title">
-        <h2>{{t 'general.instructorGroups'}}</h2>
+        <h2>{{t "general.instructorGroups"}}</h2>
       </div>
-      <div class='actions'>
+      <div class="actions">
         {{#if (await canCreate)}}
           {{expand-collapse-button value=showNewInstructorGroupForm action="toggleNewInstructorGroupForm"}}
         {{/if}}
       </div>
     </div>
-    <section class='new'>
-      {{#liquid-if showNewInstructorGroupForm class='vertical'}}
+    <section class="new">
+      {{#liquid-if showNewInstructorGroupForm class="vertical"}}
         {{new-instructorgroup
           currentSchool=selectedSchool
-          save=(action 'saveNewInstructorGroup')
-          cancel='toggleNewInstructorGroupForm'
+          save=(action "saveNewInstructorGroup")
+          cancel="toggleNewInstructorGroupForm"
         }}
       {{/liquid-if}}
       {{#if newInstructorGroup}}
-        <div class='saved-result'>
-          {{#link-to 'instructorGroup' newInstructorGroup}}
-            {{fa-icon 'external-link-square'}} {{newInstructorGroup.title}}
+        <div class="saved-result">
+          {{#link-to "instructorGroup" newInstructorGroup}}
+            {{fa-icon "external-link-square"}} {{newInstructorGroup.title}}
           {{/link-to}}
-          {{t 'general.savedSuccessfully'}}
+          {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
-    <div class='list'>
+    <div class="list">
       {{#if (is-fulfilled filteredInstructorGroups)}}
         {{instructorgroup-list
           instructorGroups=(await filteredInstructorGroups)
           canDelete=(await canDelete)
-          edit='editInstructorGroup'
-          remove='removeInstructorGroup'
+          edit="editInstructorGroup"
+          remove="removeInstructorGroup"
         }}
       {{else}}
         {{pulse-loader}}

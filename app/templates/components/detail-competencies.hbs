@@ -1,9 +1,9 @@
-<div class='title {{if (await showCollapsible) "clickable collapsible"}}' {{action 'collapse'}}>
-  {{t 'general.competencies'}} ({{get (await course.competencies) 'length'}})
+<div class="title {{if (await showCollapsible) "clickable collapsible"}}" {{action "collapse"}}>
+  {{t "general.competencies"}} ({{get (await course.competencies) "length"}})
 </div>
-{{#if (get (await course.competencies) 'length')}}
-  <div class='detail-competencies-content'>
-    <ul class='static-list'>
+{{#if (get (await course.competencies) "length")}}
+  <div class="detail-competencies-content">
+    <ul class="static-list">
       {{#each (await course.domains) as |domain|}}
         <li>
           {{domain.title}}

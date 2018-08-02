@@ -3,9 +3,9 @@
     <table data-test-final-error-data>
       <thead>
         <tr>
-          <th>{{t 'general.name'}}</th>
-          <th>{{t 'general.campusId'}}</th>
-          <th>{{t 'general.error'}}</th>
+          <th>{{t "general.name"}}</th>
+          <th>{{t "general.campusId"}}</th>
+          <th>{{t "general.error"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -13,20 +13,20 @@
           <tr>
             <td>{{obj.userRecord.fullName}}</td>
             <td>{{obj.userRecord.campusId}}</td>
-            <td>{{t 'general.alreadyInLearnerGroup' learnerGroupTitle=learnerGroup.title}}</td>
+            <td>{{t "general.alreadyInLearnerGroup" learnerGroupTitle=learnerGroup.title}}</td>
           </tr>
         {{/each}}
       </tbody>
     </table>
 
   {{else}}
-    <h3>{{t 'general.finalResults'}}</h3>
+    <h3>{{t "general.finalResults"}}</h3>
     <table data-test-final-data>
       <thead>
         <tr>
-          <th>{{t 'general.name'}}</th>
-          <th>{{t 'general.campusId'}}</th>
-          <th>{{t 'general.learnerGroups'}}</th>
+          <th>{{t "general.name"}}</th>
+          <th>{{t "general.campusId"}}</th>
+          <th>{{t "general.learnerGroups"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +44,7 @@
       {{#if save.isRunning}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.save'}}
+        {{t "general.save"}}
       {{/if}}
     </button>
   {{/if}}

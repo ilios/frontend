@@ -2,34 +2,34 @@
   {{loading-spinner}}
 {{/if}}
 {{#each (await offeringBlocks) as |block|}}
-  <div class='offering-block'>
-    <div class='offering-block-date'>
-      <span class='offering-block-date-dayofweek'>{{block.dayOfWeek}}</span>
-      <span class='offering-block-date-dayofmonth'>{{block.dayOfMonth}}</span>
+  <div class="offering-block">
+    <div class="offering-block-date">
+      <span class="offering-block-date-dayofweek">{{block.dayOfWeek}}</span>
+      <span class="offering-block-date-dayofmonth">{{block.dayOfMonth}}</span>
     </div>
     {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
-      <div class= 'offering-block-time'>
+      <div class= "offering-block-time">
         {{#if offeringTimeBlock.isMultiDay}}
-          <div class= 'multiday-offering-block-time-time'>
-            <span class='multiday-offering-block-time-time-description'>
-              {{t 'general.multiday'}}
+          <div class= "multiday-offering-block-time-time">
+            <span class="multiday-offering-block-time-time-description">
+              {{t "general.multiday"}}
             </span>
-            <span class='multiday-offering-block-time-time-starts'>
-              {{t 'general.starts'}} {{offeringTimeBlock.longStartText}}
+            <span class="multiday-offering-block-time-time-starts">
+              {{t "general.starts"}} {{offeringTimeBlock.longStartText}}
             </span>
-            <span class='multiday-offering-block-time-time-ends'>
-              {{t 'general.ends'}} {{offeringTimeBlock.longEndText}}
+            <span class="multiday-offering-block-time-time-ends">
+              {{t "general.ends"}} {{offeringTimeBlock.longEndText}}
             </span>
           </div>
         {{else}}
-          <div class= 'offering-block-time-time'>
-            <span class='offering-block-time-time-starttime'><label class='offering-block-time-time-starttime-label'>{{t 'general.starts'}}:</label> {{offeringTimeBlock.startTime}}</span>
-            <span class='offering-block-time-time-endtime'><label class='offering-block-time-time-endtime-label'>{{t 'general.ends'}}:</label> {{offeringTimeBlock.endTime}}</span>
+          <div class= "offering-block-time-time">
+            <span class="offering-block-time-time-starttime"><label class="offering-block-time-time-starttime-label">{{t "general.starts"}}:</label> {{offeringTimeBlock.startTime}}</span>
+            <span class="offering-block-time-time-endtime"><label class="offering-block-time-time-endtime-label">{{t "general.ends"}}:</label> {{offeringTimeBlock.endTime}}</span>
           </div>
         {{/if}}
-        <div class='offering-block-time-offerings' data-test-offerings>
+        <div class="offering-block-time-offerings" data-test-offerings>
           {{#each offeringTimeBlock.sortedOfferings as |offering|}}
-            {{offering-manager offering=offering save='save' remove='removeOffering' editable=editable}}
+            {{offering-manager offering=offering save="save" remove="removeOffering" editable=editable}}
           {{/each}}
         </div>
       </div>

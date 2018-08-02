@@ -1,28 +1,28 @@
-<h4>{{t 'general.newObjective'}}</h4>
+<h4>{{t "general.newObjective"}}</h4>
 
 <div class="new-objective-form">
   <div class="item">
-    <label class="form-label">{{t 'general.description'}}:</label>
+    <label class="form-label">{{t "general.description"}}:</label>
 
     <div class="form-data form-data-text form-input-row">
       {{html-editor
         content=title
         update=(action "changeTitle")
       }}
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
       {{/if}}
     </div>
   </div>
 
   <div class="buttons">
-    <button disabled={{or isSaving (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}} class='done text' {{action 'save'}}>
+    <button disabled={{or isSaving (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}} class="done text" {{action "save"}}>
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
   </div>
 </div>

@@ -1,25 +1,25 @@
-<div class='detail-actions'>
-  <button class='bigadd' {{action (perform saveChanges)}}>
-    {{fa-icon (if saveChanges.isRunning 'spinner' 'check') spin=(if saveChanges.isRunning true false)}}
+<div class="detail-actions">
+  <button class="bigadd" {{action (perform saveChanges)}}>
+    {{fa-icon (if saveChanges.isRunning "spinner" "check") spin=(if saveChanges.isRunning true false)}}
   </button>
-  <button class='bigcancel' {{action close}}>{{fa-icon 'undo'}}</button>
+  <button class="bigcancel" {{action close}}>{{fa-icon "undo"}}</button>
 </div>
-<div class='detail-content'>
-  <ul class='removable-list tag-list'>
-    {{#each (sort-by 'lastName' instructors) as |user|}}
-      <li {{action 'removeInstructor' user}}>
-        {{user.fullName}} | {{fa-icon 'remove'}}
+<div class="detail-content">
+  <ul class="removable-list tag-list">
+    {{#each (sort-by "lastName" instructors) as |user|}}
+      <li {{action "removeInstructor" user}}>
+        {{user.fullName}} | {{fa-icon "remove"}}
       </li>
     {{/each}}
-    {{#each (sort-by 'title' instructorGroups) as |instructorGroup|}}
-      <li {{action 'removeInstructorGroup' instructorGroup}}>
-        {{instructorGroup.title}} | {{fa-icon 'remove'}}
+    {{#each (sort-by "title" instructorGroups) as |instructorGroup|}}
+      <li {{action "removeInstructorGroup" instructorGroup}}>
+        {{instructorGroup.title}} | {{fa-icon "remove"}}
       </li>
     {{/each}}
   </ul>
   {{user-search
-    addUser='addInstructor'
-    addInstructorGroup='addInstructorGroup'
+    addUser="addInstructor"
+    addInstructorGroup="addInstructorGroup"
     currentlyActiveUsers=instructors
     availableInstructorGroups=(await availableInstructorGroups)
     currentlyActiveInstructorGroups=instructorGroups

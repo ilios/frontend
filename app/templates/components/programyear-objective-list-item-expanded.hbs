@@ -1,17 +1,17 @@
 <tr>
   <td colspan=2></td>
-  <td colspan=13><strong>{{t 'general.courses'}}</strong></td>
-  <td colspan=13><strong>{{t 'general.objectives'}}</strong></td>
+  <td colspan=13><strong>{{t "general.courses"}}</strong></td>
+  <td colspan=13><strong>{{t "general.objectives"}}</strong></td>
   <td colspan=1></td>
 </tr>
 {{#if (is-fulfilled courseObjects)}}
-  {{#each (sort-by 'title' (await courseObjects)) as |obj|}}
-    <tr class='programyear-objective-list-item-expanded'>
+  {{#each (sort-by "title" (await courseObjects)) as |obj|}}
+    <tr class="programyear-objective-list-item-expanded">
       <td colspan=2></td>
-      <td colspan=13 class='text-top'>{{obj.title}}</td>
-      <td colspan=13 class='text-top'>
+      <td colspan=13 class="text-top">{{obj.title}}</td>
+      <td colspan=13 class="text-top">
         <ul>
-          {{#each (sort-by 'title' obj.objectives) as |obj|}}
+          {{#each (sort-by "title" obj.objectives) as |obj|}}
             <li>{{obj.title}}</li>
           {{/each}}
         </ul>
@@ -21,7 +21,7 @@
   {{else}}
     <tr>
       <td colspan=2></td>
-      <td colspan=27>{{t 'general.none'}}</td>
+      <td colspan=27>{{t "general.none"}}</td>
     </tr>
   {{/each}}
 {{else}}

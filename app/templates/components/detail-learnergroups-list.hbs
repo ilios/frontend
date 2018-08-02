@@ -1,22 +1,22 @@
 {{#if (is-fulfilled trees)}}
-  <div class='trees'>
-    {{#each (sort-by 'topLevelGroup.title' (await trees)) as |tree|}}
+  <div class="trees">
+    {{#each (sort-by "topLevelGroup.title" (await trees)) as |tree|}}
       <fieldset>
         <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
         {{#if (is-fulfilled tree.groups)}}
           {{#if isManaging}}
-            <div class='remove-all-subgroups'><span class='clickable remove' onclick={{action remove tree.topLevelGroup}} data-test-remove-all>{{t 'general.removeAll'}} ({{fa-icon 'times'}})</span></div>
+            <div class="remove-all-subgroups"><span class="clickable remove" onclick={{action remove tree.topLevelGroup}} data-test-remove-all>{{t "general.removeAll"}} ({{fa-icon "times"}})</span></div>
           {{/if}}
           <ul>
-            <li class='top-level-group'>
-              {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup 'users'}})
+            <li class="top-level-group">
+              {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup "users"}})
             </li>
 
             {{#each (without tree.topLevelGroup (await tree.groups)) as |learnerGroup|}}
-              <li class='{{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}} {{if isManaging "clickable"}}' onclick={{if isManaging (action remove learnerGroup)}}>
-                {{learnerGroup.title}} ({{count-related learnerGroup 'users'}})
+              <li class="{{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}} {{if isManaging "clickable"}}" onclick={{if isManaging (action remove learnerGroup)}}>
+                {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if isManaging}}
-                  {{fa-icon 'remove' class='remove'}}
+                  {{fa-icon "remove" class="remove"}}
                 {{/if}}
               </li>
             {{/each}}

@@ -1,5 +1,5 @@
 {{#if term.description.length}}
-  {{#attach-tooltip lazy-render=true animation='shift'}}
+  {{#attach-tooltip lazy-render=true animation="shift"}}
     {{term.description}}
   {{/attach-tooltip}}
 {{/if}}
@@ -12,8 +12,8 @@
   {{term.title}}
 {{/if}}
 {{#if (and canEdit (not (await term.isActiveInTree)))}}
-  <span class="inactive">({{t 'general.inactive'}})</span>
+  <span class="inactive">({{t "general.inactive"}})</span>
 {{/if}}
 {{#if canEdit}}
-  {{fa-icon 'remove' class='remove'}}
+  {{fa-icon "remove" class="remove"}}
 {{/if}}

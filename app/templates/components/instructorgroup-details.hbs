@@ -1,17 +1,17 @@
-<div class="backtolink">{{#link-to 'instructorGroups'}}{{t 'general.backToInstructorGroups'}}{{/link-to}}</div>
+<div class="backtolink">{{#link-to "instructorGroups"}}{{t "general.backToInstructorGroups"}}{{/link-to}}</div>
 {{instructorgroup-header instructorGroup=instructorGroup canUpdate=canUpdate}}
 
-<div class='instructorgroup-overview'>
+<div class="instructorgroup-overview">
   <h2>
-    {{instructorGroup.title}} {{t 'general.members'}} ({{instructorGroup.users.length}})
+    {{instructorGroup.title}} {{t "general.members"}} ({{instructorGroup.users.length}})
   </h2>
   {{#if (is-fulfilled instructorGroup.users)}}
-    <label>{{t 'general.instructors'}}:</label>
+    <label>{{t "general.instructors"}}:</label>
     <div>
-      <ul class='instructorgroup-users'>
-        {{#each (sort-by 'lastName' 'firstName' (await instructorGroup.users)) as |user|}}
+      <ul class="instructorgroup-users">
+        {{#each (sort-by "lastName" "firstName" (await instructorGroup.users)) as |user|}}
           {{#if canUpdate}}
-            <li class='clickable' {{action 'removeUser' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+            <li class="clickable" {{action "removeUser" user}}>{{user.fullName}}{{fa-icon "remove" class="remove"}}</li>
           {{else}}
             <li>{{user.fullName}}</li>
           {{/if}}
@@ -19,28 +19,28 @@
       </ul>
     </div>
   {{else}}
-    {{loading-spinner class='instructorgroup-loading'}}
+    {{loading-spinner class="instructorgroup-loading"}}
   {{/if}}
 
   {{#if canUpdate}}
     {{user-search
-      addUser='addUser'
+      addUser="addUser"
       currentlyActiveUsers=(await instructorGroup.users)
     }}
   {{/if}}
 
   <div class="instructorgroupcourses">
-    <label>{{t 'general.associatedCourses'}}:</label>
+    <label>{{t "general.associatedCourses"}}:</label>
     {{#if (is-fulfilled instructorGroup.courses)}}
       <ul>
-        {{#each (sort-by 'title' (await instructorGroup.courses)) as |course|}}
-          <li>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.title}}{{/link-to}}</li>
+        {{#each (sort-by "title" (await instructorGroup.courses)) as |course|}}
+          <li>{{#link-to "course" course}}{{fa-icon "external-link-square"}} {{course.title}}{{/link-to}}</li>
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/each}}
       </ul>
     {{else}}
-      {{loading-spinner class='instructorgroup-loading'}}
+      {{loading-spinner class="instructorgroup-loading"}}
     {{/if}}
   </div>
 </div>

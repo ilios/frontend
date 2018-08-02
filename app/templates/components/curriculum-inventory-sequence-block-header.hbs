@@ -1,10 +1,10 @@
-<div class='title'>
+<div class="title">
   {{#if canUpdate}}
     {{#editable-field
-      tagName='h2'
+      tagName="h2"
       value=blockTitle
-      save=(action 'changeTitle')
-      close=(action 'revertTitleChanges')
+      save=(action "changeTitle")
+      close=(action "revertTitleChanges")
       saveOnEnter=true
       closeOnEscape=true
       as |isSaving|
@@ -14,10 +14,10 @@
         value={{blockTitle}}
         oninput={{action (mut blockTitle) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'blockTitle'}}
+        onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
       >
-      {{#if (and (v-get this 'blockTitle' 'isInvalid') (is-in showErrorsFor 'blockTitle'))}}
-        <span class="validation-error-message">{{v-get this 'blockTitle' 'message'}}</span>
+      {{#if (and (v-get this "blockTitle" "isInvalid") (is-in showErrorsFor "blockTitle"))}}
+        <span class="validation-error-message">{{v-get this "blockTitle" "message"}}</span>
       {{/if}}
     {{/editable-field}}
   {{else}}

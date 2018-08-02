@@ -1,10 +1,10 @@
-<h4 class='title'>{{t 'general.newProgramYear'}}</h4>
+<h4 class="title">{{t "general.newProgramYear"}}</h4>
 
-<div class='form'>
+<div class="form">
   <div class="startyear-select">
-    <label>{{t 'general.academicYear'}}:</label>
+    <label>{{t "general.academicYear"}}:</label>
     <select onchange={{action (mut year) value="target.value"}}>
-      {{#each (sort-by 'value' availableAcademicYears) as |obj|}}
+      {{#each (sort-by "value" availableAcademicYears) as |obj|}}
         <option value={{obj.value}} selected={{eq obj selectedYear}}>
           {{obj.label}}
         </option>
@@ -12,14 +12,14 @@
     </select>
   </div>
 
-  <div class='buttons'>
-    <button class='done text' {{action (perform saveNewYear)}}>
+  <div class="buttons">
+    <button class="done text" {{action (perform saveNewYear)}}>
       {{#if saveNewYear.isRunning}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
   </div>
 </div>

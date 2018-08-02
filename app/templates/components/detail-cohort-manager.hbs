@@ -1,16 +1,16 @@
-<ul class='selected-cohorts'>
-  {{#each (sort-by 'title' selectedCohorts) as |cohort|}}
-    <li {{action 'remove' cohort}}>
+<ul class="selected-cohorts">
+  {{#each (sort-by "title" selectedCohorts) as |cohort|}}
+    <li {{action "remove" cohort}}>
       {{cohort.programYear.program.school.title}} |
       {{cohort.programYear.program.title}} |
-      {{cohort.title}} | {{fa-icon 'remove' class='remove'}}
+      {{cohort.title}} | {{fa-icon "remove" class="remove"}}
     </li>
   {{/each}}
 </ul>
-<ul class='selectable-cohorts'>
+<ul class="selectable-cohorts">
   {{#if (is-fulfilled sortedAvailableCohorts)}}
     {{#each (await sortedAvailableCohorts) as |cohort|}}
-      <li {{action 'add' cohort}}>
+      <li {{action "add" cohort}}>
         {{cohort.programYear.program.school.title}} |
         {{cohort.programYear.program.title}} |
         {{cohort.title}}

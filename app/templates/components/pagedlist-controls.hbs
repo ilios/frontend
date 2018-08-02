@@ -1,9 +1,9 @@
 {{#unless firstPage}}
-  <span class='clickable link backward' {{action 'goBack'}}>{{fa-icon 'backward'}}</span>
+  <span class="clickable link backward" {{action "goBack"}}>{{fa-icon "backward"}}</span>
 {{/unless}}
 
 {{#unless limitless}}
-  {{t 'general.pagedResultsCount' start=start end=end total=total}}
+  {{t "general.pagedResultsCount" start=start end=end total=total}}
 {{else}}
   <select onchange={{action "setLimit" value="target.value"}}>
     {{#each offsetOptions as |option|}}
@@ -12,11 +12,11 @@
       </option>
     {{/each}}
   </select>
-  {{t 'general.perPage'}}
+  {{t "general.perPage"}}
 {{/unless}}
 
 {{#unless lastPage}}
-  <span class='clickable link forward' {{action 'goForward'}}>{{fa-icon 'forward'}}</span>
+  <span class="clickable link forward" {{action "goForward"}}>{{fa-icon "forward"}}</span>
 {{/unless}}
 
 {{#unless limitless}}
@@ -27,5 +27,5 @@
       </option>
     {{/each}}
   </select>
-  {{t 'general.perPage'}}
+  {{t "general.perPage"}}
 {{/unless}}

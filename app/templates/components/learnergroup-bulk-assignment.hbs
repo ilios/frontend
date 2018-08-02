@@ -1,14 +1,14 @@
-<h3>{{t 'general.uploadGroupAssignments'}}</h3>
+<h3>{{t "general.uploadGroupAssignments"}}</h3>
 {{#if validUsers}}
-  <p>{{t 'general.usersSelected' count=validUsers.length}} <br><button {{action 'clear'}}>{{t 'general.startOver'}}</button></p>
+  <p>{{t "general.usersSelected" count=validUsers.length}} <br><button {{action "clear"}}>{{t "general.startOver"}}</button></p>
 
   {{#if unmatchedGroups.length}}
-    <table class='group-matcher' data-test-match-groups-unmatched>
-      <caption>{{t 'general.matchGroups'}}</caption>
-      <thead><tr><td>{{t 'general.uploadedGroup'}}</td><td>{{t 'general.existingGroup'}}</td></tr></thead>
+    <table class="group-matcher" data-test-match-groups-unmatched>
+      <caption>{{t "general.matchGroups"}}</caption>
+      <thead><tr><td>{{t "general.uploadedGroup"}}</td><td>{{t "general.existingGroup"}}</td></tr></thead>
       <tbody>
         {{#each unmatchedGroups as |name|}}
-          {{learnergroup-bulk-group-matcher groupName=name setMatch=(action 'addMatch') unsetMatch=(action 'removeMatch')  createGroup=(action 'createGroup') matches=matchedGroups groups=(sort-by 'title' (await groups))}}
+          {{learnergroup-bulk-group-matcher groupName=name setMatch=(action "addMatch") unsetMatch=(action "removeMatch")  createGroup=(action "createGroup") matches=matchedGroups groups=(sort-by "title" (await groups))}}
         {{/each}}
       </tbody>
     </table>

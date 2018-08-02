@@ -1,32 +1,32 @@
 {{#if selectedUser}}
   <div class="form">
     <div class="choose-form-type">
-      <label>{{t 'general.createNew'}}:</label>
+      <label>{{t "general.createNew"}}:</label>
       {{click-choice-buttons
-        buttonContent1=(t 'general.nonStudent')
-        buttonContent2=(t 'general.student')
+        buttonContent1=(t "general.nonStudent")
+        buttonContent2=(t "general.student")
         firstChoicePicked=nonStudentMode
         toggle=(action (mut nonStudentMode))
       }}
     </div>
     <div class="item">
-      <label>{{t 'general.firstName'}}:</label>
+      <label>{{t "general.firstName"}}:</label>
       <span>{{firstName}}</span>
     </div>
     <div class="item">
-      <label>{{t 'general.lastName'}}:</label>
+      <label>{{t "general.lastName"}}:</label>
       <span>{{lastName}}</span>
     </div>
     <div class="item">
-      <label>{{t 'general.campusId'}}:</label>
+      <label>{{t "general.campusId"}}:</label>
       <span>{{campusId}}</span>
     </div>
     <div class="item">
-      <label>{{t 'general.email'}}:</label>
+      <label>{{t "general.email"}}:</label>
       <span>{{email}}</span>
     </div>
     <div class="item">
-      <label>{{t 'general.phone'}}:</label>
+      <label>{{t "general.phone"}}:</label>
       <span>
         {{#if phone.length}}
           {{phone}}
@@ -36,28 +36,28 @@
       </span>
     </div>
     <div class="item">
-      <label>{{t 'general.otherId'}}:</label>
+      <label>{{t "general.otherId"}}:</label>
       <input
         type="text"
         value={{otherId}}
         oninput={{action (mut otherId) value="target.value"}}
-        onkeyup={{action 'addErrorDisplayFor' 'otherId'}}
+        onkeyup={{action "addErrorDisplayFor" "otherId"}}
       >
-      {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
-        <span class="validation-error-message">{{v-get this 'otherId' 'message'}}</span>
+      {{#if (and (v-get this "otherId" "isInvalid") (is-in showErrorsFor "otherId"))}}
+        <span class="validation-error-message">{{v-get this "otherId" "message"}}</span>
       {{/if}}
     </div>
     <div class="item">
-      <label>{{t 'general.username'}}:</label>
+      <label>{{t "general.username"}}:</label>
       {{#if (await allowCustomUserName)}}
         <input
           type="text"
           value={{username}}
           oninput={{action (mut username) value="target.value"}}
-          onkeyup={{action 'addErrorDisplayFor' 'username'}}
+          onkeyup={{action "addErrorDisplayFor" "username"}}
         >
-        {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
-          <span class="validation-error-message">{{v-get this 'username' 'message'}}</span>
+        {{#if (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))}}
+          <span class="validation-error-message">{{v-get this "username" "message"}}</span>
         {{/if}}
       {{else}}
         <span>{{username}}</span>
@@ -66,23 +66,23 @@
 
     {{#if (await allowCustomUserName)}}
       <div class="item">
-        <label>{{t 'general.password'}}:</label>
+        <label>{{t "general.password"}}:</label>
         <input
           type="text"
           value={{password}}
           oninput={{action (mut password) value="target.value"}}
-          onkeyup={{action 'addErrorDisplayFor' 'password'}}
+          onkeyup={{action "addErrorDisplayFor" "password"}}
         >
-        {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
-          <span class="validation-error-message">{{v-get this 'password' 'message'}}</span>
+        {{#if (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))}}
+          <span class="validation-error-message">{{v-get this "password" "message"}}</span>
         {{/if}}
       </div>
     {{/if}}
     <div class="item">
-      <label>{{t 'general.primarySchool'}}:</label>
+      <label>{{t "general.primarySchool"}}:</label>
       {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
         <select onchange={{action "setSchool" value="target.value"}}>
-          {{#each (sort-by 'title' (await schools)) as |school|}}
+          {{#each (sort-by "title" (await schools)) as |school|}}
             <option value={{school.id}} selected={{eq school (await bestSelectedSchool)}}>
               {{school.title}}
             </option>
@@ -93,13 +93,13 @@
       {{/if}}
     </div>
 
-    {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
+    {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
       <div class="item">
-        <label>{{t 'general.primaryCohort'}}:</label>
+        <label>{{t "general.primaryCohort"}}:</label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
           <select onchange={{action "setPrimaryCohort" value="target.value"}}>
-            {{#each (sort-by 'title' cohorts) as |cohort|}}
-              <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+            {{#each (sort-by "title" cohorts) as |cohort|}}
+              <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
                 {{cohort.title}}
               </option>
             {{/each}}
@@ -111,65 +111,65 @@
     {{/if}}
 
     <div class="buttons">
-      <button class='done text' {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+      <button class="done text" {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
         {{#if save.isRunning}}
           {{loading-spinner}}
         {{else}}
-          {{t 'general.done'}}
+          {{t "general.done"}}
         {{/if}}
       </button>
-      <button class='cancel text' {{action 'unPickUser'}}>{{t 'general.cancel'}}</button>
+      <button class="cancel text" {{action "unPickUser"}}>{{t "general.cancel"}}</button>
     </div>
   </div>
 {{else}}
-  <h3>{{t 'general.newUser'}}</h3>
-  <div class='new-directory-user-search-tools'>
+  <h3>{{t "general.newUser"}}</h3>
+  <div class="new-directory-user-search-tools">
     <input
       type="search"
       value={{searchTerms}}
       oninput={{action setSearchTerms value="target.value"}}
     >
-    <button type='search' {{action (perform findUsersInDirectory) searchTerms}}>{{t 'general.searchDirectory'}}</button>
+    <button type="search" {{action (perform findUsersInDirectory) searchTerms}}>{{t "general.searchDirectory"}}</button>
   </div>
   {{#if isSearching}}
-    {{loading-spinner}} {{t 'general.currentlySearchingPrompt'}}
+    {{loading-spinner}} {{t "general.currentlySearchingPrompt"}}
   {{else if searchResultsReturned}}
     {{#if searchResults.length}}
-      <section class='new-directory-user-search-results'>
+      <section class="new-directory-user-search-results">
         <div>
           {{#if searchResults.length}}
             <table>
               <thead>
                 <tr>
-                  <th class='text-right' colspan=1></th>
-                  <th class='text-left' colspan=3>{{t 'general.fullName'}}</th>
-                  <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
-                  <th class='text-left' colspan=5>{{t 'general.email'}}</th>
+                  <th class="text-right" colspan=1></th>
+                  <th class="text-left" colspan=3>{{t "general.fullName"}}</th>
+                  <th class="text-left" colspan=2>{{t "general.campusId"}}</th>
+                  <th class="text-left" colspan=5>{{t "general.email"}}</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each searchResults as |user|}}
                   <tr>
-                    <td class='text-right' colspan=1>
+                    <td class="text-right" colspan=1>
                       {{#if user.user}}
-                        {{fa-icon 'sun-o' class='warning clickable' click=(action attrs.transitionToUser user.user) title=(t 'general.goToUser')}}
+                        {{fa-icon "sun-o" class="warning clickable" click=(action attrs.transitionToUser user.user) title=(t "general.goToUser")}}
                       {{else}}
                         {{#if user.addable}}
-                          {{fa-icon 'plus' class='yes clickable' click=(action 'pickUser' user) title=(t 'general.addNew')}}
+                          {{fa-icon "plus" class="yes clickable" click=(action "pickUser" user) title=(t "general.addNew")}}
                         {{else}}
-                          {{fa-icon 'ambulance' class='no' title=(t 'general.userNotAddableFromDirectory')}}
+                          {{fa-icon "ambulance" class="no" title=(t "general.userNotAddableFromDirectory")}}
                         {{/if}}
                       {{/if}}
                     </td>
-                    <td class='text-left' colspan=3>
+                    <td class="text-left" colspan=3>
                       {{#if user.user}}
-                        {{#link-to 'user' user.user}}{{user.firstName}} {{user.lastName}}{{/link-to}}
+                        {{#link-to "user" user.user}}{{user.firstName}} {{user.lastName}}{{/link-to}}
                       {{else}}
                         {{user.firstName}} {{user.lastName}}
                       {{/if}}
                     </td>
-                    <td class='text-left' colspan=2>{{user.campusId}}</td>
-                    <td class='text-left' colspan=5>{{user.email}}</td>
+                    <td class="text-left" colspan=2>{{user.campusId}}</td>
+                    <td class="text-left" colspan=5>{{user.email}}</td>
                   </tr>
                 {{/each}}
               </tbody>
@@ -180,10 +180,10 @@
         </div>
       </section>
       {{#if tooManyResults}}
-        <p><em>{{t 'general.tooManyResults' count=50}}</em></p>
+        <p><em>{{t "general.tooManyResults" count=50}}</em></p>
       {{/if}}
     {{else}}
-      <p><em>{{t 'general.noResultsFound'}}</em></p>
+      <p><em>{{t "general.noResultsFound"}}</em></p>
     {{/if}}
   {{/if}}
 {{/if}}

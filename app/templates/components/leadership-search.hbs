@@ -2,31 +2,31 @@
   type="search"
   value={{searchValue}}
   oninput={{perform searchForUsers value="target.value"}}
-  placeholder={{t 'general.searchForIliosUsers'}}
+  placeholder={{t "general.searchForIliosUsers"}}
   incremental=true
   onsearch={{perform searchForUsers value="target.value"}}
   onkeyup={{perform searchForUsers value="target.value"}}
 >
-<ul class="results {{unless (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length) 'hidden'}}">
+<ul class="results {{unless (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length) "hidden"}}">
   {{#if searchForUsers.isRunning}}
-    <li>{{t 'general.currentlySearchingPrompt'}}</li>
+    <li>{{t "general.currentlySearchingPrompt"}}</li>
   {{else}}
     {{#each searchForUsers.lastSuccessful.value as |result index|}}
-      {{#if (eq result.type 'text')}}
+      {{#if (eq result.type "text")}}
         <li>{{result.text}}</li>
       {{/if}}
-      {{#if (eq result.type 'summary')}}
-        <li class='summary'>{{result.text}}</li>
+      {{#if (eq result.type "summary")}}
+        <li class="summary">{{result.text}}</li>
       {{/if}}
-      {{#if (eq result.type 'user')}}
-        <li class='user {{unless (contains result.user.id existingUserIds) "clickable"}}' {{action (perform clickUser) result.user}} data-test-result data-test-result-index='{{index}}'>
-          <span class='name'>
+      {{#if (eq result.type "user")}}
+        <li class="user {{unless (contains result.user.id existingUserIds) "clickable"}}" {{action (perform clickUser) result.user}} data-test-result data-test-result-index="{{index}}">
+          <span class="name">
             {{result.user.fullName}}
             {{#unless result.user.enabled}}
-              {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+              {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
             {{/unless}}
           </span>
-          <span class='email'>{{result.user.email}}</span>
+          <span class="email">{{result.user.email}}</span>
         </li>
       {{/if}}
 

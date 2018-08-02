@@ -1,13 +1,13 @@
 {{curriculum-inventory-sequence-block-header canUpdate=canUpdate sequenceBlock=sequenceBlock}}
 {{#if (is-fulfilled sequenceBlock.allParents)}}
-  <div class='breadcrumbs'>
+  <div class="breadcrumbs">
     <span>
-      {{#link-to 'curriculumInventoryReport' sequenceBlock.report}}
-        {{t 'general.curriculumInventoryReport'}}
+      {{#link-to "curriculumInventoryReport" sequenceBlock.report}}
+        {{t "general.curriculumInventoryReport"}}
       {{/link-to}}
     </span>
     {{#each (reverse (await sequenceBlock.allParents)) as |parent|}}
-      <span>{{#link-to 'curriculumInventorySequenceBlock' parent}}{{parent.title}}{{/link-to}}</span>
+      <span>{{#link-to "curriculumInventorySequenceBlock" parent}}{{parent.title}}{{/link-to}}</span>
     {{/each}}
     <span>{{sequenceBlock.title}}</span>
   </div>

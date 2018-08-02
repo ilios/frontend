@@ -1,20 +1,20 @@
-<section class='course-visualize-instructor'>
+<section class="course-visualize-instructor">
   <div class="backtolink">
-    {{#link-to 'course-visualizations' model.course}}{{t 'general.otherVisualizations'}}{{/link-to}}
+    {{#link-to "course-visualizations" model.course}}{{t "general.otherVisualizations"}}{{/link-to}}
   </div>
   <h2>{{model.user.fullName}}</h2>
-  <h3>{{t 'general.totalInstructionalTime' minutes=model.offeringMinutes}}</h3>
-  <h3>{{t 'general.totalIlmTime' minutes=model.ilmMinutes}}</h3>
-  <h3 class='clickable'>{{#link-to 'course' model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
+  <h3>{{t "general.totalInstructionalTime" minutes=model.offeringMinutes}}</h3>
+  <h3>{{t "general.totalIlmTime" minutes=model.ilmMinutes}}</h3>
+  <h3 class="clickable">{{#link-to "course" model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}</h3>
 
-  <div class='visualizations'>
+  <div class="visualizations">
     <div>
-      <h4>{{t 'general.terms'}}</h4>
+      <h4>{{t "general.terms"}}</h4>
       {{visualizer-course-instructor-term course=model.course user=model.user}}
     </div>
 
     <div>
-      <h4>{{t 'general.sessionTypes'}}</h4>
+      <h4>{{t "general.sessionTypes"}}</h4>
       {{visualizer-course-instructor-session-type course=model.course user=model.user}}
     </div>
   </div>

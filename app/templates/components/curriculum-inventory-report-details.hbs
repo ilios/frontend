@@ -1,15 +1,15 @@
 {{curriculum-inventory-report-header
   report=report
-  finalize=(action 'confirmFinalization')
+  finalize=(action "confirmFinalization")
   canUpdate=canUpdate
 }}
 {{#if showFinalizeConfirmation}}
-  <div class='confirm-finalize'>
-    <div class='confirm-message'>
-      {{t 'general.finalizeReportConfirmation'}} <br>
+  <div class="confirm-finalize">
+    <div class="confirm-message">
+      {{t "general.finalizeReportConfirmation"}} <br>
       <div class="confirm-buttons">
-        <button {{action 'finalize'}} class='finalize text'>{{t 'general.yes'}}</button>
-        <button {{action 'cancelFinalization'}} class='done text'>{{t 'general.cancel'}}</button>
+        <button {{action "finalize"}} class="finalize text">{{t "general.yes"}}</button>
+        <button {{action "cancelFinalization"}} class="done text">{{t "general.cancel"}}</button>
       </div>
     </div>
   </div>
@@ -26,18 +26,18 @@
   }}
 {{else}}
   {{leadership-collapsed
-    title=(t 'general.curriculumInventoryReportLeadership')
+    title=(t "general.curriculumInventoryReportLeadership")
     showDirectors=false
-    administratorsCount=(has-many-length report 'administrators')
+    administratorsCount=(has-many-length report "administrators")
     expand=(action setLeadershipDetails true)
   }}
 {{/if}}
-{{#liquid-if isFinalizing class='crossFade'}}
+{{#liquid-if isFinalizing class="crossFade"}}
   {{#modal-dialog
     translucentOverlay=true
     animatable=false
   }}
     {{pulse-loader}}
-    <h2 class='page-title'>{{t 'general.finalizingReport'}}</h2>
+    <h2 class="page-title">{{t "general.finalizingReport"}}</h2>
   {{/modal-dialog}}
 {{/liquid-if}}

@@ -1,11 +1,11 @@
-<div class='header-bar'>
-  <span class='title'>
+<div class="header-bar">
+  <span class="title">
     <h2>
       {{#if canUpdate}}
         {{#editable-field
-          value=(if title title (t 'general.clickToEdit'))
+          value=(if title title (t "general.clickToEdit"))
           save=(perform changeTitle)
-          close=(action 'revertTitleChanges')
+          close=(action "revertTitleChanges")
           saveOnEnter=true
           closeOnEscape=true
           as |isSaving|
@@ -15,10 +15,10 @@
             value={{title}}
             oninput={{action (mut title) value="target.value"}}
             disabled={{isSaving}}
-            onkeyup={{action 'addErrorDisplayFor' 'title'}}
+            onkeyup={{action "addErrorDisplayFor" "title"}}
           >
-          {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-            <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+          {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+            <span class="validation-error-message">{{v-get this "title" "message"}}</span>
           {{/if}}
         {{/editable-field}}
       {{else}}
@@ -26,30 +26,30 @@
       {{/if}}
     </h2>
   </span>
-  <span class='info'>
+  <span class="info">
     {{#if (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))}}
-      {{t 'general.members'}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) 'length'}} / {{learnerGroup.cohort.users.length}}
+      {{t "general.members"}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) "length"}} / {{learnerGroup.cohort.users.length}}
     {{/if}}
   </span>
 </div>
 {{#if (is-fulfilled learnerGroup.allParents)}}
-  <div class='breadcrumbs'>
+  <div class="breadcrumbs">
     <span>
       {{#link-to
-        'learnerGroups'
+        "learnerGroups"
         (query-params
-          schoolId=(get (await learnerGroup.cohort.programYear.program.school) 'id')
-          programId=(get (await learnerGroup.cohort.programYear.program) 'id')
-          programYearId=(get (await learnerGroup.cohort.programYear) 'id')
+          schoolId=(get (await learnerGroup.cohort.programYear.program.school) "id")
+          programId=(get (await learnerGroup.cohort.programYear.program) "id")
+          programYearId=(get (await learnerGroup.cohort.programYear) "id")
         )
       }}
-        {{t 'general.learnerGroups'}}
+        {{t "general.learnerGroups"}}
       {{/link-to}}
     </span>
     {{#each (reverse (await learnerGroup.allParents)) as |parent|}}
       <span>
         {{#link-to
-          'learnerGroup' parent
+          "learnerGroup" parent
           (query-params
             sortUsersBy=sortUsersBy
           )

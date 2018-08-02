@@ -1,6 +1,6 @@
-{{#if (or true isIcon (gt (get (await objectiveWithMinutes) 'length') 0))}}
+{{#if (or true isIcon (gt (get (await objectiveWithMinutes) "length") 0))}}
   {{#simple-chart
-    name='donut'
+    name="donut"
     isIcon=isIcon
     data=(await objectiveWithMinutes)
     hover=(perform donutHover)
@@ -16,18 +16,18 @@
   {{/simple-chart}}
 
 {{else}}
-  <div class='with-hours'>
-    <p>{{t 'general.objectivesWithNoLink'}}</p>
-    <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
+  <div class="with-hours">
+    <p>{{t "general.objectivesWithNoLink"}}</p>
+    <h4>{{fa-icon "meh-o" class="meh-o"}}</h4>
   </div>
 {{/if}}
 
-{{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) 'length') 0))}}
-  <div class='zero-hours'>
-    <h4>{{fa-icon 'warning' class='warning'}} {{t 'general.unusedObjectives'}}:</h4>
-    <p>{{t 'general.objectivesWithNoHours'}}</p>
+{{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) "length") 0))}}
+  <div class="zero-hours">
+    <h4>{{fa-icon "warning" class="warning"}} {{t "general.unusedObjectives"}}:</h4>
+    <p>{{t "general.objectivesWithNoHours"}}</p>
     <ul>
-      {{#each (sort-by 'meta.courseObjective.title' (await objectiveWithoutMinutes)) as |obj|}}
+      {{#each (sort-by "meta.courseObjective.title" (await objectiveWithoutMinutes)) as |obj|}}
         <li>{{{obj.meta.courseObjective.title}}}</li>
       {{/each}}
     </ul>

@@ -1,14 +1,14 @@
 <div class="backtolink">
-  {{#link-to 'schools'}}{{t 'general.backToSchools'}}{{/link-to}}
+  {{#link-to "schools"}}{{t "general.backToSchools"}}{{/link-to}}
 </div>
 
-<div class='school-overview'>
+<div class="school-overview">
   <h2>
     {{#if canUpdateSchool}}
       {{#editable-field
         value=title
-        save=(action 'changeTitle')
-        close=(action 'revertTitleChanges')
+        save=(action "changeTitle")
+        close=(action "revertTitleChanges")
         saveOnEnter=true
         closeOnEscape=true
         as |isSaving|
@@ -18,10 +18,10 @@
           value={{title}}
           oninput={{action (mut title) value="target.value"}}
           disabled={{isSaving}}
-          onkeyup={{action 'addErrorDisplayFor' 'title'}}
+          onkeyup={{action "addErrorDisplayFor" "title"}}
         >
-        {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-          <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+        {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+          <span class="validation-error-message">{{v-get this "title" "message"}}</span>
         {{/if}}
       {{/editable-field}}
     {{else}}
@@ -30,7 +30,7 @@
   </h2>
 </div>
 
-<div class='school-manager-content'>
+<div class="school-manager-content">
   {{#if (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)}}
     {{school-leadership-expanded
       school=school
@@ -42,9 +42,9 @@
     }}
   {{else}}
     {{leadership-collapsed
-      title=(t 'general.schoolLeadership')
-      directorsCount=(has-many-length school 'directors')
-      administratorsCount=(has-many-length school 'administrators')
+      title=(t "general.schoolLeadership")
+      directorsCount=(has-many-length school "directors")
+      administratorsCount=(has-many-length school "administrators")
       expand=(action setSchoolLeadershipDetails true)
     }}
   {{/if}}
@@ -83,7 +83,7 @@
     {{school-vocabularies-collapsed school=school expand=(action setSchoolVocabularyDetails true)}}
   {{/if}}
 
-  {{#if (or (eq (get (await school.sessionTypes) 'length') 0) schoolSessionTypeDetails)}}
+  {{#if (or (eq (get (await school.sessionTypes) "length") 0) schoolSessionTypeDetails)}}
     {{school-session-types-expanded
       school=school
       canUpdate=canUpdateSessionType

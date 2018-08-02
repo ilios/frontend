@@ -1,6 +1,6 @@
-{{#if (or true isIcon (gt (get (await data) 'length') 0))}}
+{{#if (or true isIcon (gt (get (await data) "length") 0))}}
   {{#simple-chart
-    name='horz-bar'
+    name="horz-bar"
     isIcon=isIcon
     data=(await sortedData)
     hover=(perform barHover)

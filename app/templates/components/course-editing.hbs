@@ -9,9 +9,9 @@
   }}
 {{else}}
   {{leadership-collapsed
-    title=(t 'general.courseLeadership')
-    directorsCount=(has-many-length course 'directors')
-    administratorsCount=(has-many-length course 'administrators')
+    title=(t "general.courseLeadership")
+    directorsCount=(has-many-length course "directors")
+    administratorsCount=(has-many-length course "administrators")
     expand=(action setCourseLeadershipDetails true)
   }}
 {{/if}}
@@ -29,7 +29,7 @@
 
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 
-{{#if (or (eq (get (await course.competencies) 'length') 0) courseCompetencyDetails)}}
+{{#if (or (eq (get (await course.competencies) "length") 0) courseCompetencyDetails)}}
   {{detail-competencies
     course=course
     editable=editable

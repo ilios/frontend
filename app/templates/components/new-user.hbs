@@ -1,128 +1,128 @@
-<h3>{{t 'general.newUser'}}</h3>
+<h3>{{t "general.newUser"}}</h3>
 
-<div class='new-user-form'>
-  <div class='choose-form-type'>
-    <label>{{t 'general.createNew'}}:</label>
+<div class="new-user-form">
+  <div class="choose-form-type">
+    <label>{{t "general.createNew"}}:</label>
     {{click-choice-buttons
-      buttonContent1=(t 'general.nonStudent')
-      buttonContent2=(t 'general.student')
+      buttonContent1=(t "general.nonStudent")
+      buttonContent2=(t "general.student")
       firstChoicePicked=nonStudentMode
       toggle=(action (mut nonStudentMode))
     }}
   </div>
-  <div class='item'>
-    <label>{{t 'general.firstName'}}:</label>
+  <div class="item">
+    <label>{{t "general.firstName"}}:</label>
     <input
       type="text"
       value={{firstName}}
       oninput={{action (mut firstName) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'firstName'}}
+      onkeyup={{action "addErrorDisplayFor" "firstName"}}
     >
-    {{#if (and (v-get this 'firstName' 'isInvalid') (is-in showErrorsFor 'firstName'))}}
-      <span class="message error">{{v-get this 'firstName' 'message'}}</span>
+    {{#if (and (v-get this "firstName" "isInvalid") (is-in showErrorsFor "firstName"))}}
+      <span class="message error">{{v-get this "firstName" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.middleName'}}:</label>
+  <div class="item">
+    <label>{{t "general.middleName"}}:</label>
     <input
       type="text"
       value={{middleName}}
       oninput={{action (mut middleName) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'middleName'}}
+      onkeyup={{action "addErrorDisplayFor" "middleName"}}
     >
-    {{#if (and (v-get this 'middleName' 'isInvalid') (is-in showErrorsFor 'middleName'))}}
-      <span class="message error">{{v-get this 'middleName' 'message'}}</span>
+    {{#if (and (v-get this "middleName" "isInvalid") (is-in showErrorsFor "middleName"))}}
+      <span class="message error">{{v-get this "middleName" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.lastName'}}:</label>
+  <div class="item">
+    <label>{{t "general.lastName"}}:</label>
     <input
       type="text"
       value={{lastName}}
       oninput={{action (mut lastName) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'lastName'}}
+      onkeyup={{action "addErrorDisplayFor" "lastName"}}
     >
-    {{#if (and (v-get this 'lastName' 'isInvalid') (is-in showErrorsFor 'lastName'))}}
-      <span class="message error">{{v-get this 'lastName' 'message'}}</span>
+    {{#if (and (v-get this "lastName" "isInvalid") (is-in showErrorsFor "lastName"))}}
+      <span class="message error">{{v-get this "lastName" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.campusId'}}:</label>
+  <div class="item">
+    <label>{{t "general.campusId"}}:</label>
     <input
       type="text"
       value={{campusId}}
       oninput={{action (mut campusId) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'campusId'}}
+      onkeyup={{action "addErrorDisplayFor" "campusId"}}
     >
-    {{#if (and (v-get this 'campusId' 'isInvalid') (is-in showErrorsFor 'campusId'))}}
-      <span class="message error">{{v-get this 'campusId' 'message'}}</span>
+    {{#if (and (v-get this "campusId" "isInvalid") (is-in showErrorsFor "campusId"))}}
+      <span class="message error">{{v-get this "campusId" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.otherId'}}:</label>
+  <div class="item">
+    <label>{{t "general.otherId"}}:</label>
     <input
       type="text"
       value={{otherId}}
       oninput={{action (mut otherId) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'otherId'}}
+      onkeyup={{action "addErrorDisplayFor" "otherId"}}
     >
-    {{#if (and (v-get this 'otherId' 'isInvalid') (is-in showErrorsFor 'otherId'))}}
-      <span class="message error">{{v-get this 'otherId' 'message'}}</span>
+    {{#if (and (v-get this "otherId" "isInvalid") (is-in showErrorsFor "otherId"))}}
+      <span class="message error">{{v-get this "otherId" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.email'}}:</label>
+  <div class="item">
+    <label>{{t "general.email"}}:</label>
     <input
       type="text"
       value={{email}}
       oninput={{action (mut email) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'email'}}
+      onkeyup={{action "addErrorDisplayFor" "email"}}
     >
-    {{#if (and (v-get this 'email' 'isInvalid') (is-in showErrorsFor 'email'))}}
-      <span class="message error">{{v-get this 'email' 'message'}}</span>
+    {{#if (and (v-get this "email" "isInvalid") (is-in showErrorsFor "email"))}}
+      <span class="message error">{{v-get this "email" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.phone'}}:</label>
+  <div class="item">
+    <label>{{t "general.phone"}}:</label>
     <input
       type="text"
       value={{phone}}
       oninput={{action (mut phone) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'phone'}}
+      onkeyup={{action "addErrorDisplayFor" "phone"}}
     >
-    {{#if (and (v-get this 'phone' 'isInvalid') (is-in showErrorsFor 'phone'))}}
-      <span class="message error">{{v-get this 'phone' 'message'}}</span>
+    {{#if (and (v-get this "phone" "isInvalid") (is-in showErrorsFor "phone"))}}
+      <span class="message error">{{v-get this "phone" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.username'}}:</label>
+  <div class="item">
+    <label>{{t "general.username"}}:</label>
     <input
       type="text"
       value={{username}}
       oninput={{action (mut username) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'username'}}
+      onkeyup={{action "addErrorDisplayFor" "username"}}
     >
-    {{#if (and (v-get this 'username' 'isInvalid') (is-in showErrorsFor 'username'))}}
-      <span class="message error">{{v-get this 'username' 'message'}}</span>
+    {{#if (and (v-get this "username" "isInvalid") (is-in showErrorsFor "username"))}}
+      <span class="message error">{{v-get this "username" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.password'}}:</label>
+  <div class="item">
+    <label>{{t "general.password"}}:</label>
     <input
       type="text"
       value={{password}}
       oninput={{action (mut password) value="target.value"}}
-      onkeyup={{action 'addErrorDisplayFor' 'password'}}
+      onkeyup={{action "addErrorDisplayFor" "password"}}
     >
-    {{#if (and (v-get this 'password' 'isInvalid') (is-in showErrorsFor 'password'))}}
-      <span class="message error">{{v-get this 'password' 'message'}}</span>
+    {{#if (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))}}
+      <span class="message error">{{v-get this "password" "message"}}</span>
     {{/if}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.primarySchool'}}:</label>
+  <div class="item">
+    <label>{{t "general.primarySchool"}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
-        {{#each (sort-by 'title' (await schools)) as |school|}}
+        {{#each (sort-by "title" (await schools)) as |school|}}
           <option value={{school.id}} selected={{eq school (await bestSelectedSchool)}}>
             {{school.title}}
           </option>
@@ -132,13 +132,13 @@
       {{loading-spinner}}
     {{/if}}
   </div>
-  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class='vertical'}}
-    <div class='item last'>
-      <label>{{t 'general.primaryCohort'}}:</label>
+  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool)) class="vertical"}}
+    <div class="item last">
+      <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>
-          {{#each (sort-by 'title' cohorts) as |cohort|}}
-            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+          {{#each (sort-by "title" cohorts) as |cohort|}}
+            <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}>
               {{cohort.title}}
             </option>
           {{/each}}
@@ -149,14 +149,14 @@
     </div>
   {{/if}}
 
-  <div class='buttons'>
-    <button class='done text' {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
+  <div class="buttons">
+    <button class="done text" {{action (perform save)}} disabled={{or save.isRunning (is-pending bestSelectedCohort)  (and (not nonStudentMode) (is-pending bestSelectedSchool))}}>
       {{#if save.isRunning}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action (action close)}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action (action close)}}>{{t "general.cancel"}}</button>
   </div>
 </div>

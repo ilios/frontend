@@ -1,15 +1,15 @@
-<div class='school-session-types-header'>
-  <div class='title {{if (await isCollapsible) "collapsible clickable"}}' {{action 'collapse'}}>
-    {{t 'general.sessionTypes'}}
+<div class="school-session-types-header">
+  <div class="title {{if (await isCollapsible) "collapsible clickable"}}" {{action "collapse"}}>
+    {{t "general.sessionTypes"}}
   </div>
-  <div class='actions'>
+  <div class="actions">
     {{#if (and canCreate (not managedSessionTypeId))}}
       {{expand-collapse-button value=schoolNewSessionType action="toggleSchoolNewSessionType"}}
     {{/if}}
   </div>
 </div>
-<div class='school-session-types-expanded-content'>
-  {{#liquid-if schoolNewSessionType class='vertical'}}
+<div class="school-session-types-expanded-content">
+  {{#liquid-if schoolNewSessionType class="vertical"}}
     {{school-session-type-form
       title=null
       calendarColor="#ffffff"
@@ -26,7 +26,7 @@
       close=(action setSchoolNewSessionType false)
     }}
   {{/liquid-if}}
-  {{#liquid-if managedSessionTypeId class='horizontal'}}
+  {{#liquid-if managedSessionTypeId class="horizontal"}}
     {{school-session-type-manager
       sessionType=(await managedSessionType)
       close=(action setSchoolManagedSessionType null)

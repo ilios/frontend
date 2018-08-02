@@ -1,51 +1,51 @@
-{{#liquid-if isSaving class='crossFade'}}
+{{#liquid-if isSaving class="crossFade"}}
   {{wait-saving
     showProgress=true
     totalProgress=totalGroupsToSave
     currentProgress=currentGroupsSaved
   }}
 {{/liquid-if}}
-<div class='learnergroup-subgroup-list-header'>
-  <div class='title'>
-    {{t 'general.subgroups'}} ({{get (await parentGroup.children) 'length'}})
+<div class="learnergroup-subgroup-list-header">
+  <div class="title">
+    {{t "general.subgroups"}} ({{get (await parentGroup.children) "length"}})
   </div>
 
-  <div class='learnergroup-subgroup-list-actions'>
+  <div class="learnergroup-subgroup-list-actions">
     {{#if canCreate}}
-      {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle 'showNewLearnerGroupForm' this)}}
+      {{expand-collapse-button value=showNewLearnerGroupForm action=(toggle "showNewLearnerGroupForm" this)}}
     {{/if}}
   </div>
 </div>
 
-<div class='learnergroup-subgroup-list-content'>
-  <section class='learnergroup-subgroup-list-new'>
-    {{#liquid-if showNewLearnerGroupForm class='vertical'}}
+<div class="learnergroup-subgroup-list-content">
+  <section class="learnergroup-subgroup-list-new">
+    {{#liquid-if showNewLearnerGroupForm class="vertical"}}
       {{new-learnergroup
-        save=(action 'saveNewLearnerGroup')
-        cancel=(action (toggle 'showNewLearnerGroupForm' this))
-        generateNewLearnerGroups=(action 'generateNewLearnerGroups')
+        save=(action "saveNewLearnerGroup")
+        cancel=(action (toggle "showNewLearnerGroupForm" this))
+        generateNewLearnerGroups=(action "generateNewLearnerGroups")
         multiModeSupported=true
       }}
     {{/liquid-if}}
   </section>
 
   {{#if saved}}
-    <div class='saved-result'>
-      {{#link-to 'learnerGroup' savedGroup}}
-        {{fa-icon 'external-link-square'}} {{savedGroup.title}}
+    <div class="saved-result">
+      {{#link-to "learnerGroup" savedGroup}}
+        {{fa-icon "external-link-square"}} {{savedGroup.title}}
       {{/link-to}}
-      {{t 'general.savedSuccessfully'}}
+      {{t "general.savedSuccessfully"}}
     </div>
   {{/if}}
 
-  <div class='learnergroup-subgroup-list-list'>
+  <div class="learnergroup-subgroup-list-list">
     {{#if (is-fulfilled parentGroup.children)}}
-      {{#if (get (await parentGroup.children) 'length')}}
+      {{#if (get (await parentGroup.children) "length")}}
         {{learnergroup-list
           learnerGroups=(await parentGroup.children)
           canDelete=canDelete
           canCreate=canCreate
-          remove=(action 'removeLearnerGroup')
+          remove=(action "removeLearnerGroup")
           copy=(perform copyGroup)
         }}
       {{/if}}

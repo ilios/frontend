@@ -2,10 +2,10 @@
   <div>
     <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
     {{#if (and canEdit (not vocabulary.active))}}
-      <span class="inactive">({{t 'general.inactive'}})</span>
+      <span class="inactive">({{t "general.inactive"}})</span>
     {{/if}}
   </div>
-  <ul class="{{if canEdit 'removable-list' null}} selected-taxonomy-terms">
+  <ul class="{{if canEdit "removable-list" null}} selected-taxonomy-terms">
     {{#each (await sortedTerms) as |term|}}
       {{#if canEdit}}
         {{detail-terms-list-item canEdit=true remove=remove term=term}}

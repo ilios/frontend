@@ -1,7 +1,7 @@
-<section id='curriculumInventoryReports' class='curriculum-inventory-reports'>
+<section id="curriculumInventoryReports" class="curriculum-inventory-reports">
   <div class="filter-tools">
     <div class="schoolsfilter">
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
@@ -12,18 +12,18 @@
         </select>
       {{else}}
         {{#if (await selectedSchool)}}
-          {{get (await selectedSchool) 'title'}}
+          {{get (await selectedSchool) "title"}}
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/if}}
       {{/if}}
     </div>
 
     <div class="programsfilter">
-      {{fa-icon 'list-alt' fixedWidth=true}}
-      {{#if (gt (get (await programs) 'length') 1)}}
+      {{fa-icon "list-alt" fixedWidth=true}}
+      {{#if (gt (get (await programs) "length") 1)}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
-          {{#each (sort-by 'title' (await programs)) as |program|}}
+          {{#each (sort-by "title" (await programs)) as |program|}}
             <option value={{program.id}} selected={{is-equal program (await selectedProgram)}}>
               {{program.title}}
             </option>
@@ -32,21 +32,21 @@
       {{else}}
         {{#if (is-fulfilled selectedProgram)}}
           {{#if (await selectedProgram)}}
-            {{get (await selectedProgram) 'title'}}
+            {{get (await selectedProgram) "title"}}
           {{else}}
-            {{t 'general.none'}}
+            {{t "general.none"}}
           {{/if}}
         {{/if}}
       {{/if}}
     </div>
   </div>
-  <section class='reports'>
+  <section class="reports">
     <div class="header">
       <div class="title">
-        <h2>{{t 'general.curriculumInventoryReports'}}</h2>
+        <h2>{{t "general.curriculumInventoryReports"}}</h2>
       </div>
       {{#if (and (await canCreate) (await selectedProgram))}}
-        <div class='actions'>
+        <div class="actions">
           {{expand-collapse-button
             value=showNewCurriculumInventoryReportForm
             action="toggleNewCurriculumInventoryReportForm"
@@ -54,28 +54,28 @@
         </div>
       {{/if}}
     </div>
-    <section class='new'>
-      {{#liquid-if showNewCurriculumInventoryReportForm class='vertical'}}
+    <section class="new">
+      {{#liquid-if showNewCurriculumInventoryReportForm class="vertical"}}
         {{new-curriculum-inventory-report
           currentProgram=(await selectedProgram)
-          save=(action 'saveNewCurriculumInventoryReport')
-          cancel=(action 'cancel')
+          save=(action "saveNewCurriculumInventoryReport")
+          cancel=(action "cancel")
         }}
       {{/liquid-if}}
       {{#if newReport}}
-        <div class='saved-result'>
-          {{#link-to 'curriculumInventoryReport' newReport}}
-            {{fa-icon 'external-link-square'}} {{newReport.name}}
+        <div class="saved-result">
+          {{#link-to "curriculumInventoryReport" newReport}}
+            {{fa-icon "external-link-square"}} {{newReport.name}}
           {{/link-to}}
-          {{t 'general.savedSuccessfully'}}
+          {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
-    <div class='list'>
+    <div class="list">
       {{#if (is-fulfilled reports)}}
         {{curriculum-inventory-report-list
-          edit='editCurriculumInventoryReport'
-          remove='removeCurriculumInventoryReport'
+          edit="editCurriculumInventoryReport"
+          remove="removeCurriculumInventoryReport"
           sortBy=sortReportsBy
           program=(await selectedProgram)
           setSortBy=(action (mut sortReportsBy))

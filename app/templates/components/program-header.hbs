@@ -1,10 +1,10 @@
-<div class='title'>
+<div class="title">
   <h4>
     {{#if canUpdate}}
       {{#editable-field
         value=programTitle
-        save=(action 'changeTitle')
-        close=(action 'revertTitleChanges')
+        save=(action "changeTitle")
+        close=(action "revertTitleChanges")
         saveOnEnter=true
         closeOnEscape=true
         as |isSaving|
@@ -14,10 +14,10 @@
           value={{programTitle}}
           oninput={{action (mut programTitle) value="target.value"}}
           disabled={{isSaving}}
-          onkeyup={{action 'addErrorDisplayFor' 'programTitle'}}
+          onkeyup={{action "addErrorDisplayFor" "programTitle"}}
         >
-        {{#if (and (v-get this 'programTitle' 'isInvalid') (is-in showErrorsFor 'programTitle'))}}
-          <span class="validation-error-message">{{v-get this 'programTitle' 'message'}}</span>
+        {{#if (and (v-get this "programTitle" "isInvalid") (is-in showErrorsFor "programTitle"))}}
+          <span class="validation-error-message">{{v-get this "programTitle" "message"}}</span>
         {{/if}}
       {{/editable-field}}
     {{else}}
@@ -25,7 +25,7 @@
     {{/if}}
   </h4>
 </div>
-<div class ='program-publication'>
+<div class ="program-publication">
   {{#if canUpdate}}
     {{publish-menu
       title=menuTitle
@@ -36,13 +36,13 @@
       showReview=showReview
       showTbd=showTbd
       showUnPublish=showUnPublish
-      reviewRoute='program.publicationCheck'
+      reviewRoute="program.publicationCheck"
       reviewObject=program
-      publishTranslation='general.publishProgram'
-      unPublishTranslation='general.unPublishProgram'
-      publish=(action 'publish')
-      publishAsTbd=(action 'publishAsTbd')
-      unpublish=(action 'unpublish')
+      publishTranslation="general.publishProgram"
+      unPublishTranslation="general.unPublishProgram"
+      publish=(action "publish")
+      publishAsTbd=(action "publishAsTbd")
+      unpublish=(action "unpublish")
     }}
   {{else}}
     {{publication-status item=program}}

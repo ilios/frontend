@@ -1,28 +1,28 @@
-<div class="title">{{t 'general.newReport'}}</div>
+<div class="title">{{t "general.newReport"}}</div>
 <div class="new-myreport-content" data-test-new-report>
   <p>
-    <label>{{t 'general.reportTitle'}}:</label>
+    <label>{{t "general.reportTitle"}}:</label>
     <input
       type="text"
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{save.isRunning}}
-      onkeyup={{action 'addErrorDisplayFor' 'title'}}
+      onkeyup={{action "addErrorDisplayFor" "title"}}
       data-test-report-title=true
     >
-    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
     {{/if}}
   </p>
   <p>
-    <label>{{t 'general.for'}}</label>
+    <label>{{t "general.for"}}</label>
     {{#if (is-fulfilled currentSchool)}}
       <select onchange={{perform changeSchool value="target.value"}} data-test-report-school>
         <option value=null selected={{is-equal null (await currentSchool)}}>
-          {{t 'general.allSchools'}}
+          {{t "general.allSchools"}}
         </option>
         {{#each (await schoolList) as |school|}}
-          <option value={{school.id}} selected={{is-equal school.id (get (await currentSchool) 'id')}}>
+          <option value={{school.id}} selected={{is-equal school.id (get (await currentSchool) "id")}}>
             {{school.title}}
           </option>
         {{/each}}
@@ -30,7 +30,7 @@
     {{/if}}
   </p>
   <p>
-    <label>{{t 'general.all'}}</label>
+    <label>{{t "general.all"}}</label>
     <select onchange={{action "changeSubject" value="target.value"}} data-test-report-subject>
       {{#each subjectList as |option|}}
         <option value={{option.value}} selected={{is-equal option.value currentSubject}}>
@@ -40,10 +40,10 @@
     </select>
   </p>
   <p>
-    <label>{{t 'general.associatedWith'}}</label>
+    <label>{{t "general.associatedWith"}}</label>
     <select onchange={{action "changePrepositionalObject" value="target.value"}} data-test-report-object-type>
-      <option value='' selected={{is-equal null currentPrepositionalObject}}>
-        {{t 'general.anything'}}
+      <option value="" selected={{is-equal null currentPrepositionalObject}}>
+        {{t "general.anything"}}
       </option>
       {{#each prepositionalObjectList as |option|}}
         <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObject}}>
@@ -52,11 +52,11 @@
       {{/each}}
     </select>
   </p>
-  {{#if currentPrepositionalObject class='crossFade'}}
-    {{#if (contains currentPrepositionalObject (w 'course session'))}}
-      <select onchange={{action 'changeSelectedYear' value="target.value"}} data-test-report-year-filter>
-        <option value='' selected={{is-empty selectedYear}}>{{t 'general.allAcademicYears'}}</option>
-        {{#each (sort-by 'academicYearTitle:desc' (await allAcademicYears)) as |year|}}
+  {{#if currentPrepositionalObject class="crossFade"}}
+    {{#if (contains currentPrepositionalObject (w "course session"))}}
+      <select onchange={{action "changeSelectedYear" value="target.value"}} data-test-report-year-filter>
+        <option value="" selected={{is-empty selectedYear}}>{{t "general.allAcademicYears"}}</option>
+        {{#each (sort-by "academicYearTitle:desc" (await allAcademicYears)) as |year|}}
           <option value={{year.id}} selected={{is-equal year selectedYear}}>
             {{year.academicYearTitle}}
           </option>
@@ -64,20 +64,20 @@
       </select>
     {{/if}}
     <p>
-      <label>{{t 'general.whichIs'}}</label>
-      {{#if (is-equal currentPrepositionalObject 'instructor')}}
+      <label>{{t "general.whichIs"}}</label>
+      {{#if (is-equal currentPrepositionalObject "instructor")}}
         {{#if selectedUser}}
-          <ul class='removable-list tag-list'>
-            <li {{action 'changePrepositionalObjectId' null}}>{{selectedUser.fullName}} {{fa-icon 'remove'}}</li>
+          <ul class="removable-list tag-list">
+            <li {{action "changePrepositionalObjectId" null}}>{{selectedUser.fullName}} {{fa-icon "remove"}}</li>
           </ul>
         {{else}}
           {{user-search
-            addUser='chooseInstructor'
+            addUser="chooseInstructor"
           }}
         {{/if}}
-      {{else if (is-equal currentPrepositionalObject 'mesh term')}}
+      {{else if (is-equal currentPrepositionalObject "mesh term")}}
         {{#if selectedMeshTerm}}
-          <ul class='removable-list tag-list details-list'>
+          <ul class="removable-list tag-list details-list">
             <li>
               <div class="content">
                 <span class="title">{{selectedMeshTerm.name}}</span>
@@ -88,23 +88,23 @@
                   {{/if}}
                 </span>
               </div>
-              {{fa-icon 'remove'}}
+              {{fa-icon "remove"}}
             </li>
           </ul>
         {{else}}
           {{mesh-manager
-            add='chooseMeshTerm'
+            add="chooseMeshTerm"
             editable=true
           }}
         {{/if}}
       {{else}}
-        {{#if (is-fulfilled filteredPrepositionalObjectIdList) class='crossFade'}}
+        {{#if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
           <select onchange={{action "changePrepositionalObjectId" value="target.value"}} data-test-report-object>
-            {{#each (sort-by 'active:desc' 'label' (await filteredPrepositionalObjectIdList)) as |option|}}
+            {{#each (sort-by "active:desc" "label" (await filteredPrepositionalObjectIdList)) as |option|}}
               <option value={{option.value}} selected={{is-equal option.value currentPrepositionalObjectId}}>
                 {{await option.label}}
                 {{#unless option.active}}
-                  ({{t 'general.inactive'}})
+                  ({{t "general.inactive"}})
                 {{/unless}}
               </option>
             {{/each}}
@@ -116,13 +116,13 @@
     </p>
   {{/if}}
   <div class="input-buttons">
-    <button class='done text' onclick={{perform save}} data-test-report-save>
+    <button class="done text" onclick={{perform save}} data-test-report-save>
       {{#if save.isRunning}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.save'}}
+        {{t "general.save"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action close}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action close}}>{{t "general.cancel"}}</button>
   </div>
 </div>

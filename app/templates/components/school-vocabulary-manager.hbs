@@ -1,15 +1,15 @@
-<div class='breadcrumbs'>
-  <span {{action manageVocabulary null}}>{{t 'general.allVocabularies'}}</span>
+<div class="breadcrumbs">
+  <span {{action manageVocabulary null}}>{{t "general.allVocabularies"}}</span>
   <span>{{vocabulary.title}}</span>
 </div><br>
 
-<div class='school-vocabulary-manager-title'>
-  <h4>{{t 'general.title'}}: </h4>
+<div class="school-vocabulary-manager-title">
+  <h4>{{t "general.title"}}: </h4>
   {{#if canUpdate}}
     {{#editable-field
-      value=(if title title (t 'general.clickToEdit'))
-      save=(action 'changeVocabularyTitle')
-      close=(action 'revertVocabularyTitleChanges')
+      value=(if title title (t "general.clickToEdit"))
+      save=(action "changeVocabularyTitle")
+      close=(action "revertVocabularyTitleChanges")
       saveOnEnter=true
       closeOnEscape=true
     as |isSaving|
@@ -25,36 +25,36 @@
   {{/if}}
 </div>
 
-<h5>{{t 'general.terms'}}:</h5>
+<h5>{{t "general.terms"}}:</h5>
 
 
-<div class='terms'>
+<div class="terms">
   {{#if newTerm}}
-    <div class='saved-result'>
-      <span class='clickable link' {{action manageTerm newTerm.id}}>
-        {{fa-icon 'external-link-square'}} {{newTerm.title}}
+    <div class="saved-result">
+      <span class="clickable link" {{action manageTerm newTerm.id}}>
+        {{fa-icon "external-link-square"}} {{newTerm.title}}
       </span>
-      {{t 'general.savedSuccessfully'}}
+      {{t "general.savedSuccessfully"}}
     </div>
   {{/if}}
   {{#if canCreate}}
-    <div class='form'>
+    <div class="form">
       <input
         type="text"
         value={{newTermTitle}}
         oninput={{action (mut newTermTitle) value="target.value"}}
-        onkeyup={{action 'addErrorDisplayFor' 'newTermTitle'}}
+        onkeyup={{action "addErrorDisplayFor" "newTermTitle"}}
       >
-      <button class='save text' {{action 'createTerm'}}>
+      <button class="save text" {{action "createTerm"}}>
         {{#if isSavingNewTerm}}
           {{loading-spinner}}
         {{else}}
-          {{t 'general.add'}}
+          {{t "general.add"}}
         {{/if}}
       </button>
 
-      {{#if (and (v-get this 'newTermTitle' 'isInvalid') (is-in showErrorsFor 'newTermTitle'))}}
-        <span class="validation-error-message">{{v-get this 'newTermTitle' 'message'}}</span>
+      {{#if (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))}}
+        <span class="validation-error-message">{{v-get this "newTermTitle" "message"}}</span>
       {{/if}}
     </div>
   {{/if}}
@@ -62,7 +62,7 @@
     <ul>
       {{#each (await sortedTerms) as |term|}}
         <li {{action manageTerm term.id}}>
-          {{term.title}}{{#if (not term.active)}} <em>({{t 'general.inactive'}})</em>{{/if}}
+          {{term.title}}{{#if (not term.active)}} <em>({{t "general.inactive"}})</em>{{/if}}
         </li>
       {{/each}}
     </ul>

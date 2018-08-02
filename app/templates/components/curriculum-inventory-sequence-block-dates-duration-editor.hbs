@@ -1,37 +1,37 @@
 <div class="item start-date">
-  <label>{{t 'general.start'}}:</label>
-  {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
-  {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
-    <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+  <label>{{t "general.start"}}:</label>
+  {{pikaday-input value=startDate onSelection=(action "changeStartDate") format="M/D/YYYY"}}
+  {{#if (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))}}
+    <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
   {{/if}}
 </div>
 <div class="item end-date">
-  <label>{{t 'general.end'}}:</label>
-  {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
-  {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
-    <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+  <label>{{t "general.end"}}:</label>
+  {{pikaday-input value=endDate onSelection=(action "changeEndDate") format="M/D/YYYY"}}
+  {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
+    <span class="validation-error-message">{{v-get this "endDate" "message"}}</span>
   {{/if}}
 </div>
 <div class="item duration">
-  <label>{{t 'general.durationInDays'}}:</label>
+  <label>{{t "general.durationInDays"}}:</label>
   <input
     type="text"
     value={{duration}}
     oninput={{action (mut duration) value="target.value"}}
     disabled={{isSaving}}
-    onkeyup={{action 'addErrorDisplayFor' 'duration'}}
+    onkeyup={{action "addErrorDisplayFor" "duration"}}
   >
-  {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
-    <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
+  {{#if (and (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration"))}}
+    <span class="validation-error-message">{{v-get this "duration" "message"}}</span>
   {{/if}}
 </div>
-<div class='buttons'>
-  <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+<div class="buttons">
+  <button class="done text" {{action "save"}} disabled={{or isSaving}}>
     {{#if isSaving}}
       {{loading-spinner}}
     {{else}}
-      {{t 'general.done'}}
+      {{t "general.done"}}
     {{/if}}
   </button>
-  <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
 </div>

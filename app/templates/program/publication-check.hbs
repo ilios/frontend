@@ -1,16 +1,16 @@
-<div class='program-publication-check'>
+<div class="program-publication-check">
   <section>
-    <div class='detail-title'>
-      {{t 'general.missingItems'}} ({{model.allPublicationIssuesLength}})
+    <div class="detail-title">
+      {{t "general.missingItems"}} ({{model.allPublicationIssuesLength}})
     </div>
-    <div class='detail-content'>
+    <div class="detail-content">
       <table>
         <thead>
           <tr>
-            <th>{{t 'general.title'}}</th>
-            <th>{{t 'general.programTitleShort'}}</th>
-            <th>{{t 'general.durationInYears'}}</th>
-            <th>{{t 'general.programYears'}}</th>
+            <th>{{t "general.title"}}</th>
+            <th>{{t "general.programTitleShort"}}</th>
+            <th>{{t "general.durationInYears"}}</th>
+            <th>{{t "general.programYears"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -19,9 +19,9 @@
             <td>{{model.shortTitle}}</td>
             <td>{{model.duration}}</td>
             {{#if model.programYears.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.programYears.length}})</td>
+              <td class="yes">{{t "general.yes"}} ({{model.programYears.length}})</td>
             {{else}}
-              <td class='no'>{{t 'general.no'}}</td>
+              <td class="no">{{t "general.no"}}</td>
             {{/if}}
           </tr>
         </tbody>

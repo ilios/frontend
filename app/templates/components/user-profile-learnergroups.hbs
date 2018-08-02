@@ -1,9 +1,9 @@
-<h2 class='title'>{{t 'general.learnerGroups'}}</h2>
+<h2 class="title">{{t "general.learnerGroups"}}</h2>
 {{#if (is-fulfilled selectedLearnerGroups)}}
   <p>
-    {{#if (gt (get (await selectedLearnerGroups) 'length') 0)}}
+    {{#if (gt (get (await selectedLearnerGroups) "length") 0)}}
       <ul>
-        {{#each (sort-by 'sortTitle' (await selectedLearnerGroups)) as |learnerGroup|}}
+        {{#each (sort-by "sortTitle" (await selectedLearnerGroups)) as |learnerGroup|}}
           <li>
             {{learnerGroup.schoolTitle}}: {{learnerGroup.programTitle}}
             <em>{{learnerGroup.cohortTitle}} &mdash;</em>
@@ -13,7 +13,7 @@
         {{/each}}
       </ul>
     {{else}}
-      {{t 'general.none'}}
+      {{t "general.none"}}
     {{/if}}
   </p>
 {{else}}

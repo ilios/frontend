@@ -1,49 +1,49 @@
-<div class='title'  {{action (action expand)}}>
-  {{t 'general.objectives'}} ({{get (await objectives) 'length'}})
+<div class="title"  {{action (action expand)}}>
+  {{t "general.objectives"}} ({{get (await objectives) "length"}})
 </div>
 {{#if (and (is-fulfilled objectives) (is-fulfilled objectivesWithMesh) (is-fulfilled objectivesWithParents))}}
-  <div class='content'>
+  <div class="content">
     <table>
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.summary'}}</th>
-          <th class='text-center'>{{t 'general.parentObjectives'}}</th>
-          <th class='text-center'>{{t 'general.meshTerms'}}</th>
+          <th class="text-left">{{t "general.summary"}}</th>
+          <th class="text-center">{{t "general.parentObjectives"}}</th>
+          <th class="text-center">{{t "general.meshTerms"}}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            {{t 'general.objectiveCount' count=(get (await objectives) 'length')}}
+            {{t "general.objectiveCount" count=(get (await objectives) "length")}}
           </td>
-          <td class='text-middle text-center' rowspan=3>
-            {{#if (eq (get (await objectivesWithParents) 'length') (get (await objectives) 'length'))}}
-              {{fa-icon 'circle' class='yes'}}
-            {{else if (gte (get (await objectivesWithParents) 'length') 1)}}
-              {{fa-icon 'circle' class='maybe'}}
+          <td class="text-middle text-center" rowspan=3>
+            {{#if (eq (get (await objectivesWithParents) "length") (get (await objectives) "length"))}}
+              {{fa-icon "circle" class="yes"}}
+            {{else if (gte (get (await objectivesWithParents) "length") 1)}}
+              {{fa-icon "circle" class="maybe"}}
             {{else}}
-              {{fa-icon 'ban' class='no'}}
+              {{fa-icon "ban" class="no"}}
             {{/if}}
           </td>
-          <td class='text-middle text-center' rowspan=3>
-            {{#if (eq (get (await objectivesWithMesh) 'length') (get (await objectives) 'length'))}}
-              {{fa-icon 'circle' class='yes'}}
-            {{else if (gte (get (await objectivesWithMesh) 'length') 1)}}
-              {{fa-icon 'circle' class='maybe'}}
+          <td class="text-middle text-center" rowspan=3>
+            {{#if (eq (get (await objectivesWithMesh) "length") (get (await objectives) "length"))}}
+              {{fa-icon "circle" class="yes"}}
+            {{else if (gte (get (await objectivesWithMesh) "length") 1)}}
+              {{fa-icon "circle" class="maybe"}}
             {{else}}
-              {{fa-icon 'ban' class='no'}}
+              {{fa-icon "ban" class="no"}}
             {{/if}}
           </td>
         </tr>
         <tr>
-          <td>&nbsp;&nbsp;{{t 'general.parentCount' count=(get (await objectivesWithParents) 'length')}}</td>
+          <td>&nbsp;&nbsp;{{t "general.parentCount" count=(get (await objectivesWithParents) "length")}}</td>
         </tr>
         <tr>
-          <td>&nbsp;&nbsp;{{t 'general.meshCount' count=(get (await objectivesWithMesh) 'length')}}</td>
+          <td>&nbsp;&nbsp;{{t "general.meshCount" count=(get (await objectivesWithMesh) "length")}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 {{else}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{/if}}

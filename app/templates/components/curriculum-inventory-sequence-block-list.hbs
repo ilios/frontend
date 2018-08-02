@@ -1,102 +1,102 @@
 {{#unless loadAttr.running}}
-  <div class='header'>
-    <div class='title'>
-      {{t 'general.sequenceBlocks'}} ({{get (await sortedBlocks) 'length'}})
+  <div class="header">
+    <div class="title">
+      {{t "general.sequenceBlocks"}} ({{get (await sortedBlocks) "length"}})
     </div>
 
-    <div class='actions'>
+    <div class="actions">
       {{#if canUpdate}}
         {{expand-collapse-button value=editorOn action="toggleEditor"}}
       {{/if}}
     </div>
   </div>
-  <div class='new'>
+  <div class="new">
     {{#if editorOn}}
       {{new-curriculum-inventory-sequence-block
         parent=parent
         report=report
-        save=(action 'save')
-        cancel=(action 'cancel')
+        save=(action "save")
+        cancel=(action "cancel")
       }}
     {{/if}}
     {{#if saved}}
-      <div class='saved-result'>
-        {{#link-to 'curriculumInventorySequenceBlock' savedBlock}}
-          {{fa-icon 'external-link-square'}} {{savedBlock.title}}
+      <div class="saved-result">
+        {{#link-to "curriculumInventorySequenceBlock" savedBlock}}
+          {{fa-icon "external-link-square"}} {{savedBlock.title}}
         {{/link-to}}
-        {{t 'general.savedSuccessfully'}}
+        {{t "general.savedSuccessfully"}}
       </div>
     {{/if}}
   </div>
   {{#if (is-fulfilled sortedBlocks)}}
-    {{#if (get (await sortedBlocks) 'length')}}
-      <div class='list'>
+    {{#if (get (await sortedBlocks) "length")}}
+      <div class="list">
         <table>
           <thead>
             <tr>
-              <th class='text-center' colspan=5>{{t 'general.sequenceBlock'}}</th>
-              <th class='text-center' colspan=1>{{t 'general.level'}}</th>
-              <th class='text-center' colspan=2>{{t 'general.sequenceNumber'}}</th>
-              <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.startDate'}}</th>
-              <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.endDate'}}</th>
-              <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.course'}}</th>
-              <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+              <th class="text-center" colspan=5>{{t "general.sequenceBlock"}}</th>
+              <th class="text-center" colspan=1>{{t "general.level"}}</th>
+              <th class="text-center" colspan=2>{{t "general.sequenceNumber"}}</th>
+              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.startDate"}}</th>
+              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.endDate"}}</th>
+              <th class="text-center hide-from-small-screen" colspan=2>{{t "general.course"}}</th>
+              <th class="text-left" colspan=1>{{t "general.actions"}}</th>
             </tr>
           </thead>
           <tbody>
             {{#each (await sortedBlocks) as |block|}}
-              <tr class="{{if block.showRemoveConfirmation 'confirm-removal'}}">
-                <td class='text-left' colspan=5>
-                  {{#link-to 'curriculumInventorySequenceBlock' block.content}}
+              <tr class="{{if block.showRemoveConfirmation "confirm-removal"}}">
+                <td class="text-left" colspan=5>
+                  {{#link-to "curriculumInventorySequenceBlock" block.content}}
                     {{block.title}}
                   {{/link-to}}
                 </td>
-                <td class='text-center' colspan=1>{{get (await block.academicLevel) 'level'}}</td>
-                <td class='text-center' colspan=2>
+                <td class="text-center" colspan=1>{{get (await block.academicLevel) "level"}}</td>
+                <td class="text-center" colspan=2>
                   {{#if isInOrderedSequence}}
                     {{block.orderInSequence}}
                   {{else}}
-                    {{t 'general.notApplicableAbbr'}}
+                    {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class='text-center hide-from-small-screen' colspan=2>
+                <td class="text-center hide-from-small-screen" colspan=2>
                   {{#if block.startDate}}
-                    {{moment-format block.startDate 'L'}}
+                    {{moment-format block.startDate "L"}}
                   {{else}}
-                    {{t 'general.notApplicableAbbr'}}
+                    {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class='text-center hide-from-small-screen' colspan=2>
+                <td class="text-center hide-from-small-screen" colspan=2>
                   {{#if block.endDate}}
-                    {{moment-format block.endDate 'L'}}
+                    {{moment-format block.endDate "L"}}
                   {{else}}
-                    {{t 'general.notApplicableAbbr'}}
+                    {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class='text-center hide-from-small-screen' colspan=2>
+                <td class="text-center hide-from-small-screen" colspan=2>
                   {{#if (await block.course)}}
-                    {{get (await block.course) 'title'}}
+                    {{get (await block.course) "title"}}
                   {{else}}
-                    {{t 'general.notApplicableAbbr'}}
+                    {{t "general.notApplicableAbbr"}}
                   {{/if}}
                 </td>
-                <td class='text-center' colspan=1>
-                  {{#link-to 'curriculumInventorySequenceBlock' block.content class='edit'}}
-                    {{fa-icon 'edit'}}
+                <td class="text-center" colspan=1>
+                  {{#link-to "curriculumInventorySequenceBlock" block.content class="edit"}}
+                    {{fa-icon "edit"}}
                   {{/link-to}}
                   {{#if canUpdate}}
-                    <span class='clickable remove' {{action 'confirmRemove' block}}>{{fa-icon 'trash'}}</span>
+                    <span class="clickable remove" {{action "confirmRemove" block}}>{{fa-icon "trash"}}</span>
                   {{/if}}
                 </td>
               </tr>
               {{#if block.showRemoveConfirmation}}
-                <tr class='confirm-removal'>
+                <tr class="confirm-removal">
                   <td colspan=15>
-                    <div class='confirm-message'>
-                      {{t 'general.sequenceBlockConfirmRemove'}} <br>
+                    <div class="confirm-message">
+                      {{t "general.sequenceBlockConfirmRemove"}} <br>
                       <div class="confirm-buttons">
-                        <button {{action 'remove' block}} class='remove text'>{{t 'general.yes'}}</button>
-                        <button {{action 'cancelRemove' block}} class='done text'>{{t 'general.cancel'}}</button>
+                        <button {{action "remove" block}} class="remove text">{{t "general.yes"}}</button>
+                        <button {{action "cancelRemove" block}} class="done text">{{t "general.cancel"}}</button>
                       </div>
                     </div>
                   </td>
@@ -108,12 +108,12 @@
       </div>
     {{else}}
       {{#if parent}}
-        <div class="default-message">{{t 'general.noSubSequenceBlocks'}}</div>
+        <div class="default-message">{{t "general.noSubSequenceBlocks"}}</div>
       {{else}}
-        <div class="default-message">{{t 'general.noSequenceBlocks'}}</div>
+        <div class="default-message">{{t "general.noSequenceBlocks"}}</div>
       {{/if}}
     {{/if}}
   {{else}}
-    {{loading-spinner tagName='div'}}
+    {{loading-spinner tagName="div"}}
   {{/if}}
 {{/unless}}

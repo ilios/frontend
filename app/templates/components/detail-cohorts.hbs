@@ -1,32 +1,32 @@
-<div class='detail-cohorts-header'>
-  <div class='title'>
+<div class="detail-cohorts-header">
+  <div class="title">
     {{#if isManaging}}
-      <span class='specific-title'>
-        {{t 'general.cohortsManageTitle'}}
+      <span class="specific-title">
+        {{t "general.cohortsManageTitle"}}
       </span>
     {{else}}
-      {{t 'general.programCohorts'}} ({{course.cohorts.length}})
+      {{t "general.programCohorts"}} ({{course.cohorts.length}})
     {{/if}}
   </div>
 
-  <div class='actions'>
+  <div class="actions">
     {{#if isManaging}}
-      <button class='bigadd' {{action 'save'}}>
-        {{fa-icon (if isSaving 'spinner' 'check') spin=(if isSaving true false)}}
+      <button class="bigadd" {{action "save"}}>
+        {{fa-icon (if isSaving "spinner" "check") spin=(if isSaving true false)}}
       </button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
     {{else if editable}}
-      <button {{action 'manage'}}>{{t 'general.cohortsManageTitle'}}</button>
+      <button {{action "manage"}}>{{t "general.cohortsManageTitle"}}</button>
     {{/if}}
   </div>
 </div>
-<div class='detail-cohorts-content'>
+<div class="detail-cohorts-content">
   {{#if isManaging class="horizontal"}}
     {{detail-cohort-manager
       school=(await course.school)
       selectedCohorts=bufferedCohorts
-      add='addCohortToBuffer'
-      remove='removeCohortFromBuffer'
+      add="addCohortToBuffer"
+      remove="removeCohortFromBuffer"
     }}
   {{else}}
     {{detail-cohort-list

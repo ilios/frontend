@@ -1,81 +1,81 @@
 {{#if canCreate}}
   <div class="school-vocabularies-list-header">
-    <div class='school-vocabularies-list-actions'>
+    <div class="school-vocabularies-list-actions">
       {{expand-collapse-button value=showNewVocabularyForm action="toggleShowNewVocabularyForm"}}
     </div>
   </div>
 {{/if}}
 
-<section class='school-vocabularies-list-new'>
-  {{#liquid-if showNewVocabularyForm class='vertical'}}
-    <div class='form'>
+<section class="school-vocabularies-list-new">
+  {{#liquid-if showNewVocabularyForm class="vertical"}}
+    <div class="form">
       <div class="item">
-        <label>{{t 'general.title'}}:</label>
+        <label>{{t "general.title"}}:</label>
         <input
           type="text"
           value={{newVocabularyTitle}}
           oninput={{action (mut newVocabularyTitle) value="target.value"}}
-          onkeyup={{action 'addErrorDisplayFor' 'newVocabularyTitle'}}
+          onkeyup={{action "addErrorDisplayFor" "newVocabularyTitle"}}
         >
-        {{#if (and (v-get this 'newVocabularyTitle' 'isInvalid') (is-in showErrorsFor 'newVocabularyTitle'))}}
-          <span class="validation-error-message">{{v-get this 'newVocabularyTitle' 'message'}}</span>
+        {{#if (and (v-get this "newVocabularyTitle" "isInvalid") (is-in showErrorsFor "newVocabularyTitle"))}}
+          <span class="validation-error-message">{{v-get this "newVocabularyTitle" "message"}}</span>
         {{/if}}
       </div>
       <div class="buttons">
-        <button class='done text' {{action (perform saveNew) newVocabularyTitle}}>
+        <button class="done text" {{action (perform saveNew) newVocabularyTitle}}>
           {{#if saveNew.isRunning}}
             {{loading-spinner}}
           {{else}}
-            {{t 'general.done'}}
+            {{t "general.done"}}
           {{/if}}
         </button>
-        <button class='cancel text' {{action 'toggleShowNewVocabularyForm'}}>{{t 'general.cancel'}}</button>
+        <button class="cancel text" {{action "toggleShowNewVocabularyForm"}}>{{t "general.cancel"}}</button>
       </div>
     </div>
   {{/liquid-if}}
 
   {{#if newVocabulary}}
-    <div class='savedvocabulary'>
-      <span class='clickable link' {{action manageVocabulary newVocabulary.id}}>
-        {{fa-icon 'external-link-square'}} {{newVocabulary.title}}
+    <div class="savedvocabulary">
+      <span class="clickable link" {{action manageVocabulary newVocabulary.id}}>
+        {{fa-icon "external-link-square"}} {{newVocabulary.title}}
       </span>
-      {{t 'general.savedSuccessfully'}}
+      {{t "general.savedSuccessfully"}}
     </div>
   {{/if}}
 </section>
-<div class='school-vocabularies-list-list'>
+<div class="school-vocabularies-list-list">
   {{#if (is-fulfilled sortedVocabularies)}}
     <table>
       <thead>
         <tr>
-          <th class='text-left' colspan=3>{{t 'general.vocabulary'}}</th>
-          <th class='text-left' colspan=1>{{t 'general.terms'}}</th>
-          <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+          <th class="text-left" colspan=3>{{t "general.vocabulary"}}</th>
+          <th class="text-left" colspan=1>{{t "general.terms"}}</th>
+          <th class="text-left" colspan=1>{{t "general.actions"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (await sortedVocabularies) as |vocabulary|}}
-          <tr class="{{if (eq showRemovalConfirmationFor vocabulary) 'confirm-removal'}}">
-            <td class='text-left text-top' colspan=3>
-              <span class='clickable link' {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
+          <tr class="{{if (eq showRemovalConfirmationFor vocabulary) "confirm-removal"}}">
+            <td class="text-left text-top" colspan=3>
+              <span class="clickable link" {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
             </td>
-            <td class='text-left text-top' colspan=1>{{vocabulary.termCount}}</td>
+            <td class="text-left text-top" colspan=1>{{vocabulary.termCount}}</td>
 
-            <td class='text-left text-top' colspan=1>
-              <span class='clickable edit' {{action manageVocabulary vocabulary.id}}>{{fa-icon 'edit'}}</span>
+            <td class="text-left text-top" colspan=1>
+              <span class="clickable edit" {{action manageVocabulary vocabulary.id}}>{{fa-icon "edit"}}</span>
               {{#if (and canDelete (eq vocabulary.termCount 0))}}
-                {{fa-icon 'trash' class='remove clickable' click=(action 'confirmRemoval' vocabulary)}}
+                {{fa-icon "trash" class="remove clickable" click=(action "confirmRemoval" vocabulary)}}
               {{/if}}
             </td>
           </tr>
           {{#if (eq showRemovalConfirmationFor vocabulary)}}
-            <tr class='confirm-removal'>
+            <tr class="confirm-removal">
               <td colspan=5>
-                <div class='confirm-message'>
-                  {{t 'general.confirmVocabularyRemoval'}}<br>
+                <div class="confirm-message">
+                  {{t "general.confirmVocabularyRemoval"}}<br>
                   <div class="confirm-buttons">
-                    <button {{action (perform remove) vocabulary}} class='remove text'>{{t 'general.yes'}}</button>
-                    <button {{action 'cancelRemoval'}} class='done text'>{{t 'general.cancel'}}</button>
+                    <button {{action (perform remove) vocabulary}} class="remove text">{{t "general.yes"}}</button>
+                    <button {{action "cancelRemoval"}} class="done text">{{t "general.cancel"}}</button>
                   </div>
                 </div>
               </td>

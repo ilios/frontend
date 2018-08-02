@@ -1,46 +1,46 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=2>{{t 'general.instructorGroupTitle'}}</th>
-      <th class='text-center hide-from-small-screen'>{{t 'general.members'}}</th>
-      <th class='text-center hide-from-small-screen'>{{t 'general.associatedCourses'}}</th>
-      <th class='text-right hide-from-small-screen'>{{t 'general.actions'}}</th>
+      <th class="text-left" colspan=2>{{t "general.instructorGroupTitle"}}</th>
+      <th class="text-center hide-from-small-screen">{{t "general.members"}}</th>
+      <th class="text-center hide-from-small-screen">{{t "general.associatedCourses"}}</th>
+      <th class="text-right hide-from-small-screen">{{t "general.actions"}}</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     {{#each proxiedInstructorGroups as |instructorGroup|}}
-      <tr class="{{if instructorGroup.showRemoveConfirmation 'confirm-removal'}}">
-        <td class='text-left' colspan=2>
-          {{#link-to 'instructorGroup' instructorGroup.content}}
+      <tr class="{{if instructorGroup.showRemoveConfirmation "confirm-removal"}}">
+        <td class="text-left" colspan=2>
+          {{#link-to "instructorGroup" instructorGroup.content}}
             {{instructorGroup.title}}
           {{/link-to}}
         </td>
-        <td class='text-center hide-from-small-screen'>{{instructorGroup.users.length}}</td>
-        <td class='text-center hide-from-small-screen'>
+        <td class="text-center hide-from-small-screen">{{instructorGroup.users.length}}</td>
+        <td class="text-center hide-from-small-screen">
           {{#if (is-fulfilled instructorGroup.courses)}}
-            {{get (await instructorGroup.courses) 'length'}}
+            {{get (await instructorGroup.courses) "length"}}
           {{else}}
             {{loading-spinner}}
           {{/if}}
         </td>
-        <td class='text-right'>
-          {{#link-to 'instructorGroup' instructorGroup class='edit'}}
-            {{fa-icon 'edit'}}
+        <td class="text-right">
+          {{#link-to "instructorGroup" instructorGroup class="edit"}}
+            {{fa-icon "edit"}}
           {{/link-to}}
-          {{#if (and canDelete (eq (get (await instructorGroup.courses) 'length') 0))}}
-            <span class='clickable remove' {{action 'confirmRemove' instructorGroup}}>{{fa-icon 'trash'}}</span>
+          {{#if (and canDelete (eq (get (await instructorGroup.courses) "length") 0))}}
+            <span class="clickable remove" {{action "confirmRemove" instructorGroup}}>{{fa-icon "trash"}}</span>
           {{/if}}
         </td>
       </tr>
       {{#if instructorGroup.showRemoveConfirmation}}
-        <tr class='confirm-removal'>
+        <tr class="confirm-removal">
           <td colspan=5>
-            <div class='confirm-message'>
-              {{t 'general.confirmRemoveInstructorGroup' instructorCount=(get (await instructorGroup.users) 'length')}} <br>
+            <div class="confirm-message">
+              {{t "general.confirmRemoveInstructorGroup" instructorCount=(get (await instructorGroup.users) "length")}} <br>
               <div class="confirm-buttons">
-                <button {{action 'remove' instructorGroup}} class='remove text'>{{t 'general.yes'}}</button>
-                <button {{action 'cancelRemove' instructorGroup}} class='done text'>{{t 'general.cancel'}}</button>
+                <button {{action "remove" instructorGroup}} class="remove text">{{t "general.yes"}}</button>
+                <button {{action "cancelRemove" instructorGroup}} class="done text">{{t "general.cancel"}}</button>
               </div>
             </div>
           </td>

@@ -1,20 +1,20 @@
 {{! template-lint-disable bare-strings }}
 <div class="error-main">
   {{#if isOffline}}
-    <h2>{{t 'general.connectionLost'}}</h2>
-    <p class='clear-errors'><button {{action 'refresh'}}>{{fa-icon 'refresh'}} {{t 'general.reconnectNow'}}</button></p>
+    <h2>{{t "general.connectionLost"}}</h2>
+    <p class="clear-errors"><button {{action "refresh"}}>{{fa-icon "refresh"}} {{t "general.reconnectNow"}}</button></p>
   {{else if is404}}
     {{not-found}}
   {{else}}
-    <h2>{{t 'general.errorDisplayMessage'}}</h2>
-    <p class='clear-errors'><button {{action clearErrors}}>{{t 'general.clearErrors'}}</button></p>
-    <span class="error-detail-action" {{action 'toggleDetails'}}>
-      {{t (if showDetails 'general.collapseDetail' 'general.expandDetail' )}}
+    <h2>{{t "general.errorDisplayMessage"}}</h2>
+    <p class="clear-errors"><button {{action clearErrors}}>{{t "general.clearErrors"}}</button></p>
+    <span class="error-detail-action" {{action "toggleDetails"}}>
+      {{t (if showDetails "general.collapseDetail" "general.expandDetail" )}}
     </span>
     {{#if showDetails}}
       <div class="timestamp">{{moment-format now moment.ISO_8601}}</div>
       <div class="error-detail">
-        <h3 class="error-total">{{t 'general.totalErrors' count=(get errors 'length')}}</h3>
+        <h3 class="error-total">{{t "general.totalErrors" count=(get errors "length")}}</h3>
 
         {{#each errors as |error|}}
           <div class="error-details">

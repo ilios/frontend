@@ -1,15 +1,15 @@
-<section class='course-visualize-instructors'>
+<section class="course-visualize-instructors">
   <div class="backtolink">
-    {{#link-to 'course-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
+    {{#link-to "course-visualizations" model}}{{t "general.otherVisualizations"}}{{/link-to}}
   </div>
-  <h2 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
-  <h3>{{t 'general.instructors'}}</h3>
+  <h2 class="clickable">{{#link-to "course" model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h2>
+  <h3>{{t "general.instructors"}}</h3>
 
-  <div class='filter'>
+  <div class="filter">
     <input
       type="search"
       value={{name}}
-      placeholder={{t 'general.filterPlaceholder'}}
+      placeholder={{t "general.filterPlaceholder"}}
       oninput={{perform setName value="target.value"}}
     >
   </div>

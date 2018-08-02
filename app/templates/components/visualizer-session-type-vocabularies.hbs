@@ -1,9 +1,9 @@
-{{#if (or isIcon (gt (get (await vocabulariesWithLinkedTerms) 'length') 0))}}
+{{#if (or isIcon (gt (get (await vocabulariesWithLinkedTerms) "length") 0))}}
   {{#simple-chart
-    name='pie'
+    name="pie"
     isIcon=isIcon
     data=(await vocabulariesWithLinkedTerms)
-    click=(action 'donutClick')
+    click=(action "donutClick")
     hover=(perform donutHover)
     leave=(perform donutHover)
 
@@ -17,7 +17,7 @@
   {{/simple-chart}}
 
 {{else}}
-  <div class='with-hours'>
-    <h4>{{fa-icon 'meh-o' class='meh-o'}}</h4>
+  <div class="with-hours">
+    <h4>{{fa-icon "meh-o" class="meh-o"}}</h4>
   </div>
 {{/if}}

@@ -1,26 +1,26 @@
 <div class="backtolink">
   {{#if (is-fulfilled programYear.program)}}
-    {{#link-to 'program' (await programYear.program)}}
-      {{t 'general.backToProgramYears'}}
+    {{#link-to "program" (await programYear.program)}}
+      {{t "general.backToProgramYears"}}
     {{/link-to}}
   {{/if}}
 </div>
 
 <header>
-  <div class='title'>
-    {{#if programYear.locked}}{{fa-icon 'lock'}}{{/if}}
+  <div class="title">
+    {{#if programYear.locked}}{{fa-icon "lock"}}{{/if}}
     {{#if programYear}}
-      <h4>{{t 'general.matriculationYear'}} {{programYear.academicYear}}</h4>
+      <h4>{{t "general.matriculationYear"}} {{programYear.academicYear}}</h4>
       <h5>
-        {{#if (get (await programYear.cohort) 'title')}}
-          {{get (await programYear.cohort) 'title'}}
+        {{#if (get (await programYear.cohort) "title")}}
+          {{get (await programYear.cohort) "title"}}
         {{else}}
-          {{t 'general.classOf' year=(await programYear.cohort.classOfYear)}}
+          {{t "general.classOf" year=(await programYear.cohort.classOfYear)}}
         {{/if}}
       </h5>
     {{/if}}
   </div>
-  <div class ='programyear-publication'>
+  <div class ="programyear-publication">
     {{#if canUpdate}}
       {{publish-menu
         title=menuTitle
@@ -31,14 +31,14 @@
         showReview=showReview
         showTbd=showTbd
         showUnPublish=showUnPublish
-        reviewRoute='programYear.publicationCheck'
+        reviewRoute="programYear.publicationCheck"
         reviewObject=programYear
         parentObject=(await programYear.program)
-        publishTranslation='general.publishProgramYear'
-        unPublishTranslation='general.unPublishProgramYear'
-        publish=(action 'publish')
-        publishAsTbd=(action 'publishAsTbd')
-        unpublish=(action 'unpublish')
+        publishTranslation="general.publishProgramYear"
+        unPublishTranslation="general.unPublishProgramYear"
+        publish=(action "publish")
+        publishAsTbd=(action "publishAsTbd")
+        unpublish=(action "unpublish")
       }}
     {{else}}
       {{publication-status item=programYear}}

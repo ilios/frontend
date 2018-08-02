@@ -1,25 +1,25 @@
 <table>
   <thead>
     <tr>
-      {{#if showDirectors}}<th>{{t 'general.directors'}}</th>{{/if}}
-      {{#if showAdministrators}}<th>{{t 'general.administrators'}}</th>{{/if}}
+      {{#if showDirectors}}<th>{{t "general.directors"}}</th>{{/if}}
+      {{#if showAdministrators}}<th>{{t "general.administrators"}}</th>{{/if}}
     </tr>
   </thead>
   <tbody>
     <tr>
       {{#if showDirectors}}
-        <td class='text-top' data-test-directors>
+        <td class="text-top" data-test-directors>
           <ul>
             {{#if (is-array directors)}}
-              {{#each (sort-by 'lastName' 'firstName' directors) as |user|}}
+              {{#each (sort-by "lastName" "firstName" directors) as |user|}}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                    {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
                   {{/unless}}
                   {{user.fullName}}
                 </li>
               {{else}}
-                <li>{{t 'general.none'}}</li>
+                <li>{{t "general.none"}}</li>
               {{/each}}
             {{else}}
               {{loading-spinner}}
@@ -28,18 +28,18 @@
         </td>
       {{/if}}
       {{#if showAdministrators}}
-        <td class='text-top' data-test-administrators>
+        <td class="text-top" data-test-administrators>
           <ul>
             {{#if (is-array administrators)}}
-              {{#each (sort-by 'lastName' 'firstName' administrators) as |user|}}
+              {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                    {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
                   {{/unless}}
                   {{user.fullName}}
                 </li>
               {{else}}
-                <li>{{t 'general.none'}}</li>
+                <li>{{t "general.none"}}</li>
               {{/each}}
             {{else}}
               {{loading-spinner}}

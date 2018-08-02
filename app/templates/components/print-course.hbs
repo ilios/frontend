@@ -1,33 +1,33 @@
-<div class='header' data-test-course-header>
+<div class="header" data-test-course-header>
   <h2>{{course.title}}</h2><h4>{{course.academicYear}}</h4>
   {{publication-status item=course}}
 </div>
-<section class='overview block' data-test-course-overview>
-  <div class='title'>
-    {{t 'general.overview'}}
+<section class="overview block" data-test-course-overview>
+  <div class="title">
+    {{t "general.overview"}}
   </div>
-  <div class='content'>
+  <div class="content">
     <div class="inline-label-data-block">
-      <label>{{t 'general.start'}}:</label>
-      <div>{{moment-format course.startDate 'L'}}</div>
+      <label>{{t "general.start"}}:</label>
+      <div>{{moment-format course.startDate "L"}}</div>
     </div>
     <div class="inline-label-data-block">
-      <label>{{t 'general.externalId'}}:</label>
+      <label>{{t "general.externalId"}}:</label>
       <div>{{course.externalId}}</div>
     </div>
     <div class="inline-label-data-block">
-      <label>{{t 'general.level'}}:</label>
+      <label>{{t "general.level"}}:</label>
       <div>{{course.level}}</div>
     </div>
     <div class="inline-label-data-block">
-      <label>{{t 'general.end'}}:</label>
-      <div>{{moment-format course.endDate 'L'}}</div>
+      <label>{{t "general.end"}}:</label>
+      <div>{{moment-format course.endDate "L"}}</div>
     </div>
     <br>
     <br>
 
     <div class="inline-label-data-block">
-      <label>{{t 'general.directors'}}:</label>
+      <label>{{t "general.directors"}}:</label>
       <div>
         <span>
           {{#each sortedDirectors as |user|}}
@@ -39,14 +39,14 @@
   </div>
 </section>
 
-<section class='block' data-test-course-competencies>
-  <div class='title'>
-    {{t 'general.competencies'}} ({{get (await course.competencies) 'length'}})
+<section class="block" data-test-course-competencies>
+  <div class="title">
+    {{t "general.competencies"}} ({{get (await course.competencies) "length"}})
   </div>
-  <div class='content'>
+  <div class="content">
     {{#if (is-fulfilled course.competencies)}}
-      {{#if (get (await course.competencies) 'length')}}
-        <ul class='static-list'>
+      {{#if (get (await course.competencies) "length")}}
+        <ul class="static-list">
           {{#each (await course.domains) as |domain|}}
             <li>
               {{domain.title}}
@@ -65,46 +65,46 @@
   </div>
 </section>
 
-<section class='block' data-test-course-terms>
-  <div class='title'>
-    {{t 'general.terms'}} ({{course.terms.length}})
+<section class="block" data-test-course-terms>
+  <div class="title">
+    {{t "general.terms"}} ({{course.terms.length}})
   </div>
 
-  <div class='content'>
+  <div class="content">
     {{#each (await course.associatedVocabularies) as |vocab|}}
       {{detail-terms-list vocabulary=vocab terms=course.terms canEdit=false}}
     {{/each}}
   </div>
 </section>
 
-<section class='block' data-test-course-objectives>
-  <div class='title'>
-    {{t 'general.objectives'}} ({{course.objectives.length}})
+<section class="block" data-test-course-objectives>
+  <div class="title">
+    {{t "general.objectives"}} ({{course.objectives.length}})
   </div>
-  {{#if (get (await course.objectives) 'length')}}
-    <div class='content'>
+  {{#if (get (await course.objectives) "length")}}
+    <div class="content">
       <table>
         <thead>
           <tr>
-            <th class='text-left'>{{t 'general.objectives'}}</th>
-            <th class='text-left'>{{t 'general.parentObjectives'}}</th>
-            <th class='text-left'>{{t 'general.meshTerms'}}</th>
+            <th class="text-left">{{t "general.objectives"}}</th>
+            <th class="text-left">{{t "general.parentObjectives"}}</th>
+            <th class="text-left">{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
         <tbody>
           {{#each (await course.sortedObjectives) as |objective|}}
             <tr>
-              <td class='text-left text-top'>{{objective.textTitle}}</td>
-              <td class='text-left text-top'>
+              <td class="text-left text-top">{{objective.textTitle}}</td>
+              <td class="text-left text-top">
                 {{#if objective.hasParents}}
                   {{#each objective.parents as |parent|}}
                     {{#if course.hasMultipleCohorts}}
                       <strong>
-                        {{get (await parent.firstProgram) 'title'}}
-                        {{#if (get (await parent.firstCohort) 'title')}}
-                          {{get (await parent.firstCohort) 'title'}}
+                        {{get (await parent.firstProgram) "title"}}
+                        {{#if (get (await parent.firstCohort) "title")}}
+                          {{get (await parent.firstCohort) "title"}}
                         {{else}}
-                          {{t 'general.classOf' year=(await (get (await parent.firstCohort) 'classOfYear'))}}
+                          {{t "general.classOf" year=(await (get (await parent.firstCohort) "classOfYear"))}}
                         {{/if}}
                       </strong>
                       <br>
@@ -117,9 +117,9 @@
                   {{/each}}
                 {{/if}}
               </td>
-              <td class='text-left text-top'>
+              <td class="text-left text-top">
                 <ul class="inline-list">
-                  {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
+                  {{#each (sort-by "name" (await objective.meshDescriptors)) as |descriptor|}}
                     <li>{{descriptor.name}}</li>
                   {{/each}}
                 </ul>
@@ -132,44 +132,44 @@
   {{/if}}
 </section>
 
-<section class='block' data-test-course-learningmaterials>
-  <div class='title'>
-    {{t 'general.learningMaterials'}} ({{get (await courseLearningMaterials) 'length'}})
+<section class="block" data-test-course-learningmaterials>
+  <div class="title">
+    {{t "general.learningMaterials"}} ({{get (await courseLearningMaterials) "length"}})
   </div>
-  <div class='content'>
-    {{#if (get (await courseLearningMaterials) 'length')}}
+  <div class="content">
+    {{#if (get (await courseLearningMaterials) "length")}}
       <table>
         <thead>
           <tr>
-            <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-            <th class='text-center'>{{t 'general.type'}}</th>
-            <th class='text-center'>{{t 'general.required'}}</th>
-            <th class='text-left'>{{t 'general.notes'}}</th>
-            <th class='text-left description' colspan=4>{{t 'general.description'}}</th>
+            <th class="text-left" colspan=2>{{t "general.displayName"}}</th>
+            <th class="text-center">{{t "general.type"}}</th>
+            <th class="text-center">{{t "general.required"}}</th>
+            <th class="text-left">{{t "general.notes"}}</th>
+            <th class="text-left description" colspan=4>{{t "general.description"}}</th>
           </tr>
         </thead>
         <tbody>
           {{#each (await courseLearningMaterials) as |lm|}}
             <tr>
-              <td class='text-left text-top' colspan=2>
+              <td class="text-left text-top" colspan=2>
                 {{lm.learningMaterial.title}}
               </td>
-              <td class='text-center text-top'>{{lm.learningMaterial.type}}</td>
-              <td class='text-center text-top'>
+              <td class="text-center text-top">{{lm.learningMaterial.type}}</td>
+              <td class="text-center text-top">
                 {{#if lm.required}}
-                  <span class='add'>{{t 'general.yes'}}</span>
+                  <span class="add">{{t "general.yes"}}</span>
                 {{else}}
-                  <span class='remove'>{{t 'general.no'}}</span>
+                  <span class="remove">{{t "general.no"}}</span>
                 {{/if}}
               </td>
-              <td class='text-left text-top'>
+              <td class="text-left text-top">
                 {{#if lm.notes}}
-                  <span class='add'>{{t 'general.yes'}}</span>
+                  <span class="add">{{t "general.yes"}}</span>
                 {{else}}
-                  <span class='remove'>{{t 'general.no'}}</span>
+                  <span class="remove">{{t "general.no"}}</span>
                 {{/if}}
               </td>
-              <td class='text-left text-top' colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
+              <td class="text-left text-top" colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
             </tr>
           {{/each}}
         </tbody>
@@ -178,12 +178,12 @@
   </div>
 </section>
 
-<section class='block' data-test-course-mesh>
-  <div class='title'>
-    {{t 'general.mesh'}} ({{course.meshDescriptors.length}})
+<section class="block" data-test-course-mesh>
+  <div class="title">
+    {{t "general.mesh"}} ({{course.meshDescriptors.length}})
   </div>
-  <div class='content'>
-    <ul class='inline-list'>
+  <div class="content">
+    <ul class="inline-list">
       {{#each sortedMeshDescriptors as |descriptor|}}
         <li>{{descriptor.name}}</li>
       {{/each}}
@@ -192,63 +192,63 @@
 </section>
 
 {{#each (await sortedSessionProxies) as |session|}}
-  <div class='header' data-test-session-header>
+  <div class="header" data-test-session-header>
     <h2>{{session.title}}</h2>
     {{publication-status item=session}}
   </div>
-  <section class='overview block'>
-    <div class='title'>
-      {{t 'general.overview'}}
+  <section class="overview block">
+    <div class="title">
+      {{t "general.overview"}}
     </div>
-    <div class='content'>
+    <div class="content">
       <div class="inline-label-data-block">
-        <label>{{t 'general.sessionType'}}:</label>
+        <label>{{t "general.sessionType"}}:</label>
         <div>{{session.sessionType.title}}</div>
       </div>
       <br>
       <div class="inline-label-data-block">
-        <label>{{t 'general.supplementalCurriculum'}}:</label>
+        <label>{{t "general.supplementalCurriculum"}}:</label>
         <div>{{boolean-check value=session.supplemental}}</div>
       </div>
       <div class="inline-label-data-block">
-        <label>{{t 'general.specialAttireRequired'}}:</label>
+        <label>{{t "general.specialAttireRequired"}}:</label>
         <div>{{boolean-check value=session.attireRequired}}</div>
       </div>
       <div class="inline-label-data-block">
-        <label>{{t 'general.specialEquipmentRequired'}}:</label>
+        <label>{{t "general.specialEquipmentRequired"}}:</label>
         <div>{{boolean-check value=session.equipmentRequired}}</div>
       </div>
       <div class="inline-label-data-block">
-        <label>{{t 'general.attendanceRequired'}}:</label>
+        <label>{{t "general.attendanceRequired"}}:</label>
         <div>{{boolean-check value=session.attendanceRequired}}</div>
       </div>
       <br>
       <div class="inline-label-data-block">
-        <label>{{t 'general.description'}}:</label>
+        <label>{{t "general.description"}}:</label>
         <div>{{session.sessionDescription.textDescription}}</div>
       </div>
     </div>
   </section>
 
-  <section class='block' data-test-session-objectives>
-    <div class='title'>
-      {{t 'general.objectives'}} ({{session.objectives.length}})
+  <section class="block" data-test-session-objectives>
+    <div class="title">
+      {{t "general.objectives"}} ({{session.objectives.length}})
     </div>
-    {{#if (get (await session.objectives) 'length')}}
-      <div class='content'>
+    {{#if (get (await session.objectives) "length")}}
+      <div class="content">
         <table>
           <thead>
             <tr>
-              <th class='text-left'>{{t 'general.objectives'}}</th>
-              <th class='text-left'>{{t 'general.parentObjectives'}}</th>
-              <th class='text-left'>{{t 'general.meshTerms'}}</th>
+              <th class="text-left">{{t "general.objectives"}}</th>
+              <th class="text-left">{{t "general.parentObjectives"}}</th>
+              <th class="text-left">{{t "general.meshTerms"}}</th>
             </tr>
           </thead>
           <tbody>
             {{#each (await session.sortedObjectives) as |objective|}}
               <tr>
-                <td class='text-left text-top'>{{objective.textTitle}}</td>
-                <td class='text-left text-top'>
+                <td class="text-left text-top">{{objective.textTitle}}</td>
+                <td class="text-left text-top">
                   {{#if objective.hasParents}}
                     {{#each objective.parents as |parent|}}
                       {{parent.textTitle}}
@@ -258,9 +258,9 @@
                     {{/each}}
                   {{/if}}
                 </td>
-                <td class='text-left text-top'>
+                <td class="text-left text-top">
                   <ul class="inline-list">
-                    {{#each (sort-by 'name' (await objective.meshDescriptors)) as |descriptor|}}
+                    {{#each (sort-by "name" (await objective.meshDescriptors)) as |descriptor|}}
                       <li>{{descriptor.name}}</li>
                     {{/each}}
                   </ul>
@@ -273,38 +273,38 @@
     {{/if}}
   </section>
 
-  <section class='block'>
-    <div class='title'>
-      {{t 'general.learningMaterials'}}({{get (await session.sessionLearningMaterials) 'length'}})
+  <section class="block">
+    <div class="title">
+      {{t "general.learningMaterials"}}({{get (await session.sessionLearningMaterials) "length"}})
     </div>
-    <div class='content'>
-      {{#if (get (await session.sessionLearningMaterials) 'length')}}
+    <div class="content">
+      {{#if (get (await session.sessionLearningMaterials) "length")}}
         <table>
           <thead>
             <tr>
-              <th class='text-left' colspan=2>{{t 'general.displayName'}}</th>
-              <th class='text-center'>{{t 'general.type'}}</th>
-              <th class='text-center'>{{t 'general.required'}}</th>
-              <th class='text-left'>{{t 'general.notes'}}</th>
-              <th class='text-left' colspan=4>{{t 'general.description'}}</th>
+              <th class="text-left" colspan=2>{{t "general.displayName"}}</th>
+              <th class="text-center">{{t "general.type"}}</th>
+              <th class="text-center">{{t "general.required"}}</th>
+              <th class="text-left">{{t "general.notes"}}</th>
+              <th class="text-left" colspan=4>{{t "general.description"}}</th>
             </tr>
           </thead>
           <tbody>
             {{#each (await session.sessionLearningMaterials) as |lm|}}
               <tr>
-                <td class='text-left text-top' colspan=2>
+                <td class="text-left text-top" colspan=2>
                   {{lm.learningMaterial.title}}
                 </td>
-                <td class='text-center text-top'>{{lm.learningMaterial.type}}</td>
-                <td class='text-center text-top'>
+                <td class="text-center text-top">{{lm.learningMaterial.type}}</td>
+                <td class="text-center text-top">
                   {{#if lm.required}}
-                    <span class='add'>{{t 'general.yes'}}</span>
+                    <span class="add">{{t "general.yes"}}</span>
                   {{else}}
-                    <span class='remove'>{{t 'general.no'}}</span>
+                    <span class="remove">{{t "general.no"}}</span>
                   {{/if}}
                 </td>
-                <td class='text-left text-top'>{{lm.learningMaterial.notes}}</td>
-                <td class='text-left text-top' colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
+                <td class="text-left text-top">{{lm.learningMaterial.notes}}</td>
+                <td class="text-left text-top" colspan=4>{{remove-html-tags lm.learningMaterial.description}}<p/>{{lm.learningMaterial.citation}}</td>
               </tr>
             {{/each}}
           </tbody>
@@ -313,13 +313,13 @@
     </div>
   </section>
 
-  <section class='block'>
-    <div class='title'>
-      {{t 'general.terms'}} ({{session.terms.length}})
+  <section class="block">
+    <div class="title">
+      {{t "general.terms"}} ({{session.terms.length}})
     </div>
 
-    <div class='content'>
-      <div class='content'>
+    <div class="content">
+      <div class="content">
         {{#each (await session.associatedVocabularies) as |vocab|}}
           {{detail-terms-list vocabulary=vocab terms=session.terms canEdit=false}}
         {{/each}}
@@ -327,12 +327,12 @@
     </div>
   </section>
 
-  <section class='block'>
-    <div class='title'>
-      {{t 'general.mesh'}} ({{session.sortedMeshDescriptors.length}})
+  <section class="block">
+    <div class="title">
+      {{t "general.mesh"}} ({{session.sortedMeshDescriptors.length}})
     </div>
-    <div class='content'>
-      <ul class='inline-list'>
+    <div class="content">
+      <ul class="inline-list">
         {{#each session.sortedMeshDescriptors as |descriptor|}}
           <li>{{descriptor.name}}</li>
         {{/each}}
@@ -342,13 +342,13 @@
 
   {{#if session.isIndependentLearning}}
     <section class="block" data-test-session-ilm-section>
-      <div class='title'>{{t 'general.independentLearning'}}</div>
+      <div class="title">{{t "general.independentLearning"}}</div>
       <div class="content">
         <table>
           <thead>
             <tr>
-              <th>{{t 'general.hours'}}</th>
-              <th>{{t 'general.dueBy'}}</th>
+              <th>{{t "general.hours"}}</th>
+              <th>{{t "general.dueBy"}}</th>
             </tr>
           </thead>
           <tbody>
@@ -362,29 +362,29 @@
     </section>
   {{/if}}
 
-  <section class='block'>
-    <div class='title'>
-      {{t 'general.offerings'}} ({{session.offerings.length}})
+  <section class="block">
+    <div class="title">
+      {{t "general.offerings"}} ({{session.offerings.length}})
     </div>
-    <div class='content'>
+    <div class="content">
       {{#if session.offerings.length}}
         <table>
           <thead>
             <tr>
-              <th class='text-left'>{{t 'general.time'}}</th>
-              <th class='text-left'>{{t 'general.location'}}</th>
-              <th class='text-left'>{{t 'general.instructors'}}</th>
+              <th class="text-left">{{t "general.time"}}</th>
+              <th class="text-left">{{t "general.location"}}</th>
+              <th class="text-left">{{t "general.instructors"}}</th>
             </tr>
           </thead>
           <tbody>
             {{#each (await session.offerings) as |offering|}}
               <tr>
-                <td class='text-left'>
-                  {{moment-format offering.startDate 'L LT'}} -
-                  {{moment-format offering.endDate 'L LT'}}
+                <td class="text-left">
+                  {{moment-format offering.startDate "L LT"}} -
+                  {{moment-format offering.endDate "L LT"}}
                 </td>
-                <td class='text-left'>{{offering.room}}</td>
-                <td class='text-left'>
+                <td class="text-left">{{offering.room}}</td>
+                <td class="text-left">
                   <ul>
                     {{#each (await offering.allInstructors) as |user|}}
                       <li>{{user.fullName}}</li>
@@ -396,7 +396,7 @@
           </tbody>
         </table>
       {{else}}
-        <p>{{t 'general.noOfferings'}}</p>
+        <p>{{t "general.noOfferings"}}</p>
       {{/if}}
     </div>
   </section>

@@ -2,45 +2,45 @@
   <input
     value={{filterByDebounced}}
     oninput={{action (perform changeFilterBy) value="target.value"}}
-    placeholder={{t 'general.sessionTitleFilterPlaceholder'}}
+    placeholder={{t "general.sessionTitleFilterPlaceholder"}}
   >
 </div>
-{{#light-table table height='75vh' responsive=true as |t|}}
+{{#light-table table height="75vh" responsive=true as |t|}}
   {{t.head
-    onColumnClick=(action 'columnClicked')
-    iconAscending='fa fa-sort-asc'
-    iconDescending='fa fa-sort-desc'
-    iconSortable='fa fa-sort'
+    onColumnClick=(action "columnClicked")
+    iconAscending="fa fa-sort-asc"
+    iconDescending="fa fa-sort-desc"
+    iconSortable="fa fa-sort"
     fixed=true
   }}
 
   {{#t.body
     canExpand=false
     canSelect=false
-    rowComponent=(component 'removable-row')
+    rowComponent=(component "removable-row")
     as |body|
   }}
     {{#body.expanded-row as |row|}}
       {{#if row.confirmDelete}}
-        <div class='confirm-removal'>
+        <div class="confirm-removal">
           <p>
-            {{t 'general.confirmSessionRemoval'}}
+            {{t "general.confirmSessionRemoval"}}
             <div class="confirm-buttons">
-              <button {{action (perform removeSession row.session)}} class='remove {{if removeSession.isIdle "clickable"}}'>
+              <button {{action (perform removeSession row.session)}} class="remove {{if removeSession.isIdle "clickable"}}">
                 {{#if removeSession.isRunning}}
                   {{loading-spinner}}
                 {{else}}
-                  {{t 'general.yes'}}
+                  {{t "general.yes"}}
                 {{/if}}
               </button>
-              <button {{action 'cancelRemove' row}} class='done text'>{{t 'general.cancel'}}</button>
+              <button {{action "cancelRemove" row}} class="done text">{{t "general.cancel"}}</button>
             </div>
           </p>
         </div>
       {{else if (gt row.offeringCount 0)}}
         {{session-offerings-list session=row.session editable=false}}
       {{else}}
-        <p class='no-offerings'>{{t 'general.noOfferings'}}</p>
+        <p class="no-offerings">{{t "general.noOfferings"}}</p>
       {{/if}}
     {{/body.expanded-row}}
   {{/t.body}}

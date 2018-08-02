@@ -1,75 +1,75 @@
-<div class='learnergroup-cohort-user-manager-header'>
-  <div class='title'>
-    {{t 'general.cohortMembersNotInGroup' groupTitle=topLevelGroupTitle}} ({{users.length}})
+<div class="learnergroup-cohort-user-manager-header">
+  <div class="title">
+    {{t "general.cohortMembersNotInGroup" groupTitle=topLevelGroupTitle}} ({{users.length}})
   </div>
   <div class="actions">
     <input
       value={{filter}}
       oninput={{action (mut filter) value="target.value"}}
-      placeholder={{t 'general.filterByNameOrEmail'}}
+      placeholder={{t "general.filterByNameOrEmail"}}
     >
   </div>
 </div>
-<div class='learnergroup-cohort-user-manager-content'>
-  <div class='list'>
+<div class="learnergroup-cohort-user-manager-content">
+  <div class="list">
     <table>
       <thead>
         <tr>
-          <th class='text-left' colspan=1>
-            <input type='checkbox' onclick={{action 'toggleUserSelectionAllOrNone'}}>
+          <th class="text-left" colspan=1>
+            <input type="checkbox" onclick={{action "toggleUserSelectionAllOrNone"}}>
           </th>
           {{#sortable-th
             colspan=2
-            click=(action 'sortBy' 'firstName')
-            sortedBy=(or (eq sortBy 'firstName') (eq sortBy 'firstName:desc'))
+            click=(action "sortBy" "firstName")
+            sortedBy=(or (eq sortBy "firstName") (eq sortBy "firstName:desc"))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.firstName'}}
+            {{t "general.firstName"}}
           {{/sortable-th}}
           {{#sortable-th
             colspan=2
-            click=(action 'sortBy' 'lastName')
-            sortedBy=(or (eq sortBy 'lastName') (eq sortBy 'lastName:desc'))
+            click=(action "sortBy" "lastName")
+            sortedBy=(or (eq sortBy "lastName") (eq sortBy "lastName:desc"))
             sortedAscending=sortedAscending
           }}
-            {{t 'general.lastName'}}
+            {{t "general.lastName"}}
           {{/sortable-th}}
-          <th class='text-left' colspan=2>{{t 'general.campusId'}}</th>
-          <th class='text-left hide-from-small-screen' colspan=5>{{t 'general.email'}}</th>
-          <th class='text-left' colspan=1>{{t 'general.actions'}}</th>
+          <th class="text-left" colspan=2>{{t "general.campusId"}}</th>
+          <th class="text-left hide-from-small-screen" colspan=5>{{t "general.email"}}</th>
+          <th class="text-left" colspan=1>{{t "general.actions"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (sort-by sortBy filteredUsers) as |user|}}
-          <tr class="{{unless user.enabled 'disabled-user-account'}}">
-            <td class='text-left' colspan=1>
+          <tr class="{{unless user.enabled "disabled-user-account"}}">
+            <td class="text-left" colspan=1>
               {{#if (or user.enabled currentUser.isRoot)}}
                 {{#if canUpdate}}
                   <input
                     type="checkbox"
                     checked={{contains user selectedUsers}}
-                    onclick={{action 'toggleUserSelection' user}}
+                    onclick={{action "toggleUserSelection" user}}
                   >
                 {{/if}}
               {{/if}}
               {{#if (not user.enabled)}}
-                {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
               {{/if}}
             </td>
-            <td class='text-left' colspan=2>{{user.firstName}}</td>
-            <td class='text-left' colspan=2>{{user.lastName}}</td>
-            <td class='text-left' colspan=2>{{user.campusId}}</td>
-            <td class='text-left hide-from-small-screen' colspan=5>{{user.email}}</td>
-            <td class='text-left' colspan=1>
+            <td class="text-left" colspan=2>{{user.firstName}}</td>
+            <td class="text-left" colspan=2>{{user.lastName}}</td>
+            <td class="text-left" colspan=2>{{user.campusId}}</td>
+            <td class="text-left hide-from-small-screen" colspan=5>{{user.email}}</td>
+            <td class="text-left" colspan=1>
               {{#if user.enabled}}
                 {{#if (contains user usersBeingMoved)}}
                   {{loading-spinner}}
                 {{else}}
                   {{#if (and canUpdate (eq selectedUsers.length 0))}}
                     {{fa-icon
-                      'plus'
-                      class='yes clickable'
-                      title=(t 'general.moveToGroup' groupTitle=learnerGroupTitle count=1)
+                      "plus"
+                      class="yes clickable"
+                      title=(t "general.moveToGroup" groupTitle=learnerGroupTitle count=1)
                       click=(perform addSingleUser user)
                     }}
                   {{/if}}
@@ -83,5 +83,5 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0)}}
-  <button class='done text' {{action (perform addSelectedUsers)}}>{{t 'general.moveToGroup' groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
+  <button class="done text" {{action (perform addSelectedUsers)}}>{{t "general.moveToGroup" groupTitle=learnerGroupTitle count=selectedUsers.length}}</button>
 {{/if}}

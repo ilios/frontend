@@ -1,16 +1,16 @@
-<section class='program-year-visualize-competencies'>
+<section class="program-year-visualize-competencies">
   <div class="backtolink">
-    {{#link-to 'program-year-visualizations' model}}{{t 'general.otherVisualizations'}}{{/link-to}}
+    {{#link-to "program-year-visualizations" model}}{{t "general.otherVisualizations"}}{{/link-to}}
   </div>
   <h3>
-    {{#link-to 'program' model.program}}
-      {{get (await model.program) 'title'}}
+    {{#link-to "program" model.program}}
+      {{get (await model.program) "title"}}
     {{/link-to}}
-    {{#link-to 'programYear' model.program model}}
-      {{#if (get (await model.cohort) 'title')}}
-        {{get (await model.cohort) 'title'}}
+    {{#link-to "programYear" model.program model}}
+      {{#if (get (await model.cohort) "title")}}
+        {{get (await model.cohort) "title"}}
       {{else}}
-        {{t 'general.classOf' year=model.classOfYear}}
+        {{t "general.classOf" year=model.classOfYear}}
       {{/if}}
     {{/link-to}}
   </h3>

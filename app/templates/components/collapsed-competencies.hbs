@@ -1,22 +1,22 @@
-<div class='title'  {{action (action expand)}}>
-  {{t 'general.competencies'}} ({{get (await subject.competencies) 'length'}})
+<div class="title"  {{action (action expand)}}>
+  {{t "general.competencies"}} ({{get (await subject.competencies) "length"}})
 </div>
 {{#unless (is-fulfilled summary)}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{else}}
-  <div class='content'>
+  <div class="content">
     <table>
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.school'}}</th>
-          <th class='text-center'>{{t 'general.competencies'}}</th>
+          <th class="text-left">{{t "general.school"}}</th>
+          <th class="text-center">{{t "general.competencies"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (await summary) as |item|}}
           <tr>
             <td>{{item.school.title}}</td>
-            <td class='text-center'>
+            <td class="text-center">
               {{item.competencies.length}}
             </td>
           </tr>
