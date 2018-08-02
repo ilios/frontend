@@ -7,6 +7,19 @@
     top: 2rem;
   }
 
+  th,
+  td {
+    padding: .2rem .5rem;
+  }
+
+  .offering-block {
+    border-top: 1px solid $ilios-blue;
+
+    &>td {
+      padding-top: .5rem;
+    }
+  }
+
   .offering-block-date {
     border-top: 1px solid $grey;
     font-weight: bold;
@@ -18,8 +31,7 @@
     }
   }
 
-  th,
-  td {
-    padding: .2rem .5rem;
+  .offering-block-time-time {
+    background-color: $white;
   }
 }
