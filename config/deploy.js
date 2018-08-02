@@ -6,7 +6,7 @@ module.exports = function(deployTarget) {
     build: {},
     pipeline: {
       runOrder: {
-        'archive': { after: 'json-config' },
+        'archive': { after: 'gzip' },
       },
     },
     's3-index': {
@@ -55,6 +55,10 @@ module.exports = function(deployTarget) {
 
         return jsonBlueprint;
       }
+    },
+    gzip: {
+      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,woff,woff2,webmanifest}',
+      ignorePattern: 'index.json',
     }
   };
 
@@ -72,11 +76,9 @@ module.exports = function(deployTarget) {
     ENV['cloudfront'].distribution = 'E1RJJYSB507IYA';
   }
   if (deployTarget === 'development') {
-    ENV.pipeline = {
-      disabled: {
-        's3-index': true,
-        'cloudfront': true,
-      },
+    ENV.pipeline.disabled = {
+      's3-index': true,
+      'cloudfront': true,
     };
   }
 
