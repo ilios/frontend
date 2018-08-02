@@ -26,6 +26,7 @@
 
   .programyear-overview-content {
     @include ilios-overview-content;
+    align-items: start;
     padding-top: 1rem;
 
     .removable-directors {
