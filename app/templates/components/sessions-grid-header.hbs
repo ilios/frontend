@@ -11,6 +11,7 @@
   click=(action 'setSortBy' 'title')
   sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
   sortedAscending=sortedAscending
+  title=(t 'general.title')
 }}
   {{t 'general.title'}}
 {{/sortable-heading}}
@@ -18,6 +19,7 @@
   click=(action 'setSortBy' 'sessionTypeTitle')
   sortedBy=(or (eq sortBy 'sessionTypeTitle') (eq sortBy 'sessionTypeTitle:desc'))
   sortedAscending=sortedAscending
+  title=(t 'general.type')
 }}
   {{t 'general.type'}}
 {{/sortable-heading}}
@@ -53,6 +55,7 @@
   click=(action 'setSortBy' 'firstOfferingDate')
   sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
   sortedAscending=sortedAscending
+  title=(t 'general.firstOffering')
 }}
   {{t 'general.firstOffering'}}
 {{/sortable-heading}}
