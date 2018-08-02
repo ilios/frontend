@@ -1,6 +1,6 @@
 {{#each sortedSessions as |obj|}}
   <div class='{{if (contains obj.session expandedSessions) 'is-expanded' 'not-expanded'}} session-row'>
-    <span>
+    <span class='expand-collapse-control'>
       {{#if (contains obj.session expandedSessions)}}
         {{fa-icon 'caret-down' class='link' click=(action closeSession obj.session)}}
       {{else}}
