@@ -20,7 +20,8 @@
         {{sessions-grid-offering
           offering=offering
           canUpdate=canUpdate
-          showTime=(eq index 0)
+          firstRow=(eq index 0)
+          even=(eq (mod index 2) 1)
           span=offeringTimeBlock.sortedOfferings.length
           startTime=offeringTimeBlock.startTime
           durationHours=offeringTimeBlock.durationHours

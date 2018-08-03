@@ -16,9 +16,11 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   tagName: 'tr',
-  classNames: ['sessions-grid-offering'],
+  classNameBindings: [':sessions-grid-offering', 'firstRow', 'even'],
   canUpdate: false,
   room: null,
+  firstRow: false,
+  even: false,
 
   didReceiveAttrs(){
     this._super(...arguments);
