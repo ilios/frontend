@@ -18,6 +18,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   equipmentRequired: attr('boolean'),
   supplemental: attr('boolean'),
   attendanceRequired: attr('boolean'),
+  instructionalNotes: attr('string'),
   updatedAt: attr('date'),
   sessionType: belongsTo('session-type', { async: true }),
   course: belongsTo('course', { async: true }),
