@@ -1,44 +1,62 @@
-{{#if @firstRow}}
-  <td class= 'text-top offering-block-time-time' colspan=2 rowspan={{@span}}>
-    <span class='offering-block-time-time-starttime'>{{@startTime}}</span>
-    <span class='offering-block-time-time-duration'>
-      {{#if (gte @durationHours 1)}}
-        {{t 'general.durationHours' count=@durationHours}}
-      {{/if}}
-      {{#if (lt durationMinutes 60)}}
-        {{t 'general.durationMinutes' count=@durationMinutes}}
-      {{/if}}
-    </span>
-  </td>
-{{/if}}
-<td>
-  {{#if canUpdate}}
-    {{#editable-field
-      value=@offering.room
-      save=(perform changeRoom)
-      close=(action 'revertRoomChanges')
-      saveOnEnter=true
-      closeOnEscape=true
-      isSaveDisabled=(and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))
-      as |isSaving|
+{{#if (and isEditing (is-fulfilled @offering.session.course.cohorts)) class='horizontal'}}
+  <td colspan=9>
+    {{offering-form
+      showRoom=true
+      showInstructors=true
+      cohorts=(await @offering.session.course.cohorts)
+      courseStartDate=(await @offering.session.course.startDate)
+      courseEndDate=(await @offering.session.course.startDate)
+      close=(toggle 'isEditing' this)
+      save=(action 'save')
+      smallGroupMode=false
+      offering=@offering
+      session=(await @offering.session)
     }}
-      <input
-        type="text"
-        value={{room}}
-        oninput={{action (mut room) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'room'}}
-      >
-      {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
-        <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
-      {{/if}}
-    {{/editable-field}}
-  {{else}}
-    {{@offering.room}}
+  </td>
+{{else}}
+  {{#if @firstRow}}
+    <td class= 'text-top offering-block-time-time' colspan=2 rowspan={{@span}}>
+      <span class='offering-block-time-time-starttime'>{{@startTime}}</span>
+      <span class='offering-block-time-time-duration'>
+        {{#if (gte @durationHours 1)}}
+          {{t 'general.durationHours' count=@durationHours}}
+        {{/if}}
+        {{#if (lt durationMinutes 60)}}
+          {{t 'general.durationMinutes' count=@durationMinutes}}
+        {{/if}}
+      </span>
+    </td>
   {{/if}}
-</td>
-<td class='text-center'>{{get (await @offering.allLearners) 'length'}}</td>
-<td colspan=2>
-  {{truncate (join ', ' (map-by 'title' (sort-by 'title' (await @offering.learnerGroups)))) 30}}
-</td>
-<td class='text-center'>{{get (await @offering.allInstructors) 'length'}}</td>
+  <td>
+    {{#if canUpdate}}
+      {{#editable-field
+        value=@offering.room
+        save=(perform changeRoom)
+        close=(action 'revertRoomChanges')
+        saveOnEnter=true
+        closeOnEscape=true
+        isSaveDisabled=(and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))
+        as |isSaving|
+      }}
+        <input
+          type="text"
+          value={{room}}
+          oninput={{action (mut room) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action 'addErrorDisplayFor' 'room'}}
+        >
+        {{#if (and (v-get this 'room' 'isInvalid') (is-in showErrorsFor 'room'))}}
+          <span class="validation-error-message">{{v-get this 'room' 'message'}}</span>
+        {{/if}}
+      {{/editable-field}}
+    {{else}}
+      {{@offering.room}}
+    {{/if}}
+  </td>
+  <td class='text-center'>{{get (await @offering.allLearners) 'length'}}</td>
+  <td colspan=2>
+    {{truncate (join ', ' (map-by 'title' (sort-by 'title' (await @offering.learnerGroups)))) 30}}
+  </td>
+  <td class='text-center'>{{get (await @offering.allInstructors) 'length'}}</td>
+  <td class='text-center link' {{action (toggle 'isEditing' this)}}>{{fa-icon 'pencil' title=(t 'general.edit') ariaHidden=false}}</td>
+{{/if}}

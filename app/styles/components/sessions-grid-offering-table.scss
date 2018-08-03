@@ -42,4 +42,10 @@
   .offering-block + .first-row td {
     padding-top: 0;
   }
+
+  .offering-form {
+    border: 1px solid $grey;
+    margin-left: 2rem;
+    padding: .5rem;
+  }
 }

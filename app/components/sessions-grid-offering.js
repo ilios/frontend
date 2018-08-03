@@ -21,6 +21,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   room: null,
   firstRow: false,
   even: false,
+  isEditing: false,
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -32,6 +33,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     revertRoomChanges(){
       const offering = this.get('offering');
       this.set('room', offering.get('room'));
+    },
+    save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
+      const offering = this.get('offering');
+      offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+
+      return offering.save();
     },
   },
   changeRoom: task(function * (){
