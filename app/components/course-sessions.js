@@ -16,7 +16,7 @@ export default Component.extend({
   canUpdateCourse: false,
   sortBy: null,
   filterBy: null,
-  expandedSessions: null,
+  expandedSessionIds: null,
   sessionsCount: computed('course.sessions.[]', function(){
     const course = this.get('course');
     const sessionIds = course.hasMany('sessions').ids();
@@ -94,6 +94,26 @@ export default Component.extend({
     return yield session.save();
   }),
 
+  expandSession: task(function * (session) {
+    yield timeout(1);
+    this.expandedSessionIds.pushObject(session.id);
+  }),
+
+  closeSession: task(function * (session) {
+    yield timeout(1);
+    this.expandedSessionIds.removeObject(session.id);
+  }),
+
+  toggleExpandAll: task(function * () {
+    yield timeout(1);
+    const course = this.get('course');
+    if (this.expandedSessionIds.length === course.hasMany('sessions').ids().length) {
+      this.set('expandedSessionIds', []);
+    } else {
+      this.set('expandedSessionIds', course.hasMany('sessions').ids());
+    }
+  }).drop(),
+
   sessionTypes: computed('course.school.sessionTypes.[]', async function(){
     const course = this.get('course');
     const school = await course.get('school');
@@ -116,25 +136,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('expandedSessions', []);
-  },
-
-  actions: {
-    expandSession(session) {
-      this.expandedSessions.pushObject(session);
-    },
-    closeSession(session) {
-      this.expandedSessions.removeObject(session);
-    },
-    async toggleExpandAll() {
-      const course = this.get('course');
-      if (this.expandedSessions.length === course.hasMany('sessions').ids().length) {
-        this.set('expandedSessions', []);
-      } else {
-        const sessions = await course.get('sessions');
-        this.set('expandedSessions', sessions.toArray());
-      }
-    },
+    this.set('expandedSessionIds', []);
   },
 
   changeFilterBy: task(function * (value){

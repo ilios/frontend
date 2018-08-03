@@ -1,7 +1,7 @@
 {{#each sortedSessions as |obj|}}
-  <div class='{{if (contains obj.session expandedSessions) 'is-expanded' 'not-expanded'}} session-row'>
+  <div class='{{if (contains obj.session.id expandedSessionIds) 'is-expanded' 'not-expanded'}} session-row'>
     <span class='expand-collapse-control'>
-      {{#if (contains obj.session expandedSessions)}}
+      {{#if (contains obj.session.id expandedSessionIds)}}
         {{fa-icon 'caret-down' class='link' click=(action closeSession obj.session)}}
       {{else}}
         {{fa-icon 'caret-right' class='link' click=(action expandSession obj.session)}}
@@ -28,7 +28,7 @@
     <span class='session-grid-offerings'>{{obj.offeringCount}}</span>
     <span class='session-grid-status'>{{publication-status item=obj showText=false}}</span>
   </div>
-  {{#if (contains obj.session expandedSessions)}}
+  {{#if (contains obj.session.id expandedSessionIds)}}
     {{#if (gt (has-many-length obj.session 'offerings') 0)}}
       {{sessions-grid-offering-table offerings=(await obj.session.offerings) canUpdate=obj.canUpdate}}
     {{else}}
