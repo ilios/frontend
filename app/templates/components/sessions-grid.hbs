@@ -7,16 +7,16 @@
         {{fa-icon 'caret-right' class='link' click=(action expandSession obj.session)}}
       {{/if}}
     </span>
-    <span>
+    <span class='session-grid-title'>
       {{#link-to 'session' obj.course obj.session}}
         {{truncate obj.title 100 true}}
       {{/link-to}}
     </span>
-    <span>{{obj.sessionTypeTitle}}</span>
-    <span>{{obj.learnerGroupCount}}</span>
-    <span>{{obj.objectiveCount}}</span>
-    <span>{{obj.termCount}}</span>
-    <span>
+    <span class='session-grid-type'>{{obj.sessionTypeTitle}}</span>
+    <span class='session-grid-groups'>{{obj.learnerGroupCount}}</span>
+    <span class='session-grid-objectives'>{{obj.objectiveCount}}</span>
+    <span class='session-grid-terms'>{{obj.termCount}}</span>
+    <span class='session-grid-first-offering'>
       {{#if obj.firstOfferingDate}}
         {{#if obj.isIlm}}
           <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format obj.firstOfferingDate 'L'}}
@@ -25,8 +25,8 @@
         {{/if}}
       {{/if}}
     </span>
-    <span>{{obj.offeringCount}}</span>
-    <span>{{publication-status item=obj showText=false}}</span>
+    <span class='session-grid-offerings'>{{obj.offeringCount}}</span>
+    <span class='session-grid-status'>{{publication-status item=obj showText=false}}</span>
   </div>
   {{#if (contains obj.session expandedSessions)}}
     {{#if (gt (has-many-length obj.session 'offerings') 0)}}

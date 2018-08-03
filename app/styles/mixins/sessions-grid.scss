@@ -1,6 +1,47 @@
 @mixin sessions-grid () {
   display: grid;
-  grid-template-columns: 1fr 7fr 5fr 1fr 1fr 1fr 5fr 1fr 1fr;
+  grid-template-columns: 1fr 8fr 2fr;
+
+  .session-grid-type,
+  .session-grid-groups,
+  .session-grid-objectives,
+  .session-grid-terms,
+  .session-grid-first-offering,
+  .session-grid-offerings,
+   {
+    display: none;
+  }
+
+  .session-grid-groups,
+  .session-grid-objectives,
+  .session-grid-terms,
+  .session-grid-offerings,
+  .session-grid-status,
+   {
+    text-align: center;
+  }
+
+  @include for-tablet-and-up {
+    grid-template-columns: 1fr 8fr repeat(5, 3fr);
+    .session-grid-groups,
+    .session-grid-objectives,
+    .session-grid-terms,
+    .session-grid-offerings,
+    {
+      display: inline;
+    }
+  }
+
+  @include for-laptop-and-up {
+    grid-template-columns: 1fr 8fr 6fr repeat(3, 3fr) 6fr repeat(2, 3fr);
+    .session-grid-type,
+    .session-grid-first-offering {
+      display: inline;
+    }
+
+  }
+
+
 
   .expand-collapse-control {
     cursor: pointer;

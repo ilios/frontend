@@ -12,6 +12,7 @@
   sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.title')
+  class='session-grid-title'
 }}
   {{t 'general.title'}}
 {{/sortable-heading}}
@@ -20,6 +21,7 @@
   sortedBy=(or (eq sortBy 'sessionTypeTitle') (eq sortBy 'sessionTypeTitle:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.type')
+  class='session-grid-type'
 }}
   {{t 'general.type'}}
 {{/sortable-heading}}
@@ -29,8 +31,9 @@
   sortedBy=(or (eq sortBy 'learnerGroupCount') (eq sortBy 'learnerGroupCount:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.groups')
+  class='session-grid-groups'
 }}
-  {{truncate (t 'general.groups') 3 false}}.
+  {{t 'general.groups'}}
 {{/sortable-heading}}
 {{#sortable-heading
   sortType='numeric'
@@ -38,8 +41,9 @@
   sortedBy=(or (eq sortBy 'objectiveCount') (eq sortBy 'objectiveCount:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.objectives')
+  class='session-grid-objectives'
 }}
-  {{truncate (t 'general.objectives') 3 false}}.
+  {{t 'general.objectives'}}
 {{/sortable-heading}}
 {{#sortable-heading
   sortType='numeric'
@@ -47,8 +51,9 @@
   sortedBy=(or (eq sortBy 'termCount') (eq sortBy 'termCount:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.terms')
+  class='session-grid-terms'
 }}
-  {{truncate (t 'general.terms') 3 false}}.
+  {{t 'general.terms'}}
 {{/sortable-heading}}
 {{#sortable-heading
   sortType='numeric'
@@ -56,6 +61,7 @@
   sortedBy=(or (eq sortBy 'firstOfferingDate') (eq sortBy 'firstOfferingDate:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.firstOffering')
+  class='session-grid-first-offering'
 }}
   {{t 'general.firstOffering'}}
 {{/sortable-heading}}
@@ -65,14 +71,16 @@
   sortedBy=(or (eq sortBy 'offeringCount') (eq sortBy 'offeringCount:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.offerings')
+  class='session-grid-offerings'
 }}
-  {{truncate (t 'general.offerings') 3 false}}.
+  {{t 'general.offerings'}}
 {{/sortable-heading}}
 {{#sortable-heading
   click=(action 'setSortBy' 'status')
   sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
   sortedAscending=sortedAscending
   title=(t 'general.status')
+  class='session-grid-status'
 }}
-  {{truncate (t 'general.status') 3 false}}.
+  {{t 'general.status'}}
 {{/sortable-heading}}
