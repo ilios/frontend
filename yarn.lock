@@ -4345,9 +4345,9 @@ ignore@^3.3.3:
   version "3.3.10"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
 
-ilios-common@15.5.0:
-  version "15.5.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-15.5.0.tgz#e885e1fac17b48fe51200d721ab819e28fe1e2d6"
+ilios-common@16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-16.0.0.tgz#90f53d6425c01115bce00d8b6197ffc93bb6af3e"
   dependencies:
     elemental-calendar "^0.1.0"
     ember-attacher "^0.13.5"
