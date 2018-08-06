@@ -8,10 +8,8 @@
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
-      class={{if
-              (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
-              "has-error"
-            }}
+      class={{if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title")) "has-error"}}
+      data-test-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>
@@ -21,12 +19,9 @@
   <div class="item">
     <label>{{t "general.sessionType"}}:</label>
     {{#if (is-fulfilled activeSessionTypes)}}
-      <select onchange={{action (mut selectedSessionTypeId) value="target.value"}}>
+      <select onchange={{action (mut selectedSessionTypeId) value="target.value"}} data-test-type>
         {{#each (sort-by "title" (await activeSessionTypes)) as |sessionType|}}
-          <option
-            value={{sessionType.id}}
-            selected={{eq sessionType.id (get (await selectedSessionType) "id")}}
-          >
+          <option value="{{sessionType.id}}" selected={{eq sessionType.id (get (await selectedSessionType) "id")}}>
             {{sessionType.title}}
           </option>
         {{/each}}
@@ -37,13 +32,13 @@
   </div>
 
   <div class="buttons">
-    <button class="done text" {{action (perform saveNewSession)}}>
+    <button class="done text" {{action (perform saveNewSession)}} data-test-save>
       {{#if saveNewSession.isRunning}}
         {{loading-spinner}}
       {{else}}
         {{t "general.save"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" {{action cancel}} data-test-cancel>{{t "general.cancel"}}</button>
   </div>
 </div>

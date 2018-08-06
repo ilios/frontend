@@ -1,4 +1,4 @@
-<div class='expand-collapse-control' {{action toggleExpandAll}}>
+<span class='expand-collapse-control' {{action toggleExpandAll}} data-test-expand-collapse-all>
   {{#if @showExpandAll}}
     {{#if @allSessionsExpanded}}
       {{fa-icon 'caret-down'}}
@@ -6,7 +6,7 @@
       {{fa-icon 'caret-right'}}
     {{/if}}
   {{/if}}
-</div>
+</span>
 {{#sortable-heading
   click=(action 'setSortBy' 'title')
   sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
@@ -84,3 +84,4 @@
 }}
   {{t 'general.status'}}
 {{/sortable-heading}}
+<span class='session-grid-actions'></span>

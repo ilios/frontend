@@ -1,6 +1,6 @@
 @mixin sessions-grid () {
   display: grid;
-  grid-template-columns: 1fr 8fr 2fr;
+  grid-template-columns: 1fr 8fr 2fr 1fr;
 
   .session-grid-type,
   .session-grid-groups,
@@ -21,8 +21,13 @@
     text-align: center;
   }
 
+  .session-grid-actions {
+    padding-right: .5rem;
+    text-align: right;
+  }
+
   @include for-tablet-and-up {
-    grid-template-columns: 1fr 8fr repeat(5, 3fr);
+    grid-template-columns: 1fr 8fr repeat(5, 3fr) 1fr;
     .session-grid-groups,
     .session-grid-objectives,
     .session-grid-terms,
@@ -33,7 +38,7 @@
   }
 
   @include for-laptop-and-up {
-    grid-template-columns: 1fr 8fr 6fr repeat(3, 3fr) 6fr repeat(2, 3fr);
+    grid-template-columns: 1fr 8fr 6fr repeat(3, 3fr) 6fr repeat(2, 3fr) 1fr;
     .session-grid-type,
     .session-grid-first-offering {
       display: inline;

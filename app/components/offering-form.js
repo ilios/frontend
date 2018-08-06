@@ -108,6 +108,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   savedOfferings: 0,
   recurringDayOptions: null,
   loaded: false,
+  'data-test-offering-form': true,
   associatedSchools: computed('cohorts.[]', function(){
     return new Promise(resolve => {
       const cohorts = this.get('cohorts');

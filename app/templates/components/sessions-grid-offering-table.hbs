@@ -11,9 +11,9 @@
 <tbody>
   {{#each offeringBlocks as |block|}}
     <tr class='offering-block'>
-      <td class='text-top offering-block-date' colspan=7>
-        <span class='offering-block-date-dayofweek'>{{block.dayOfWeek}}</span>
-        <span class='offering-block-date-dayofmonth'>{{block.dayOfMonth}}</span>
+      <td class='text-top offering-block-date' colspan=7 data-test-offering-block-date>
+        <span class='offering-block-date-dayofweek' data-test-dayofweek>{{block.dayOfWeek}}</span>
+        <span class='offering-block-date-dayofmonth' data-test-dayofmonth>{{block.dayOfMonth}}</span>
       </td>
     </tr>
     {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}

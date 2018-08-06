@@ -16,8 +16,8 @@
 {{else}}
   {{#if @firstRow}}
     <td class= 'text-top offering-block-time-time' colspan=2 rowspan={{@span}}>
-      <span class='offering-block-time-time-starttime'>{{@startTime}}</span>
-      <span class='offering-block-time-time-duration'>
+      <span class='offering-block-time-time-starttime' data-test-starttime>{{@startTime}}</span>
+      <span class='offering-block-time-time-duration' data-test-duration>
         {{#if (gte @durationHours 1)}}
           {{t 'general.durationHours' count=@durationHours}}
         {{/if}}

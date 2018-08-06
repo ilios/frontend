@@ -2,9 +2,12 @@ import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import { computed } from '@ember/object';
 import escapeRegExp from '../utils/escape-reg-exp';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
   classNames: ['sessions-grid'],
+  'data-test-sessions-grid': true,
+  confirmDeleteSessionIds: null,
 
   filteredSessions: computed('sessions.[]', 'filterBy', function(){
     const sessions = this.get('sessions');
@@ -53,4 +56,23 @@ export default Component.extend({
 
     return { column, descending, sortBy };
   }),
+
+  init() {
+    this._super(...arguments);
+    this.set('confirmDeleteSessionIds', []);
+  },
+
+  actions: {
+    confirmDelete(sessionId) {
+      this.confirmDeleteSessionIds.pushObject(sessionId);
+    },
+    cancelDelete(sessionId) {
+      this.confirmDeleteSessionIds.removeObject(sessionId);
+    },
+  },
+
+  removeSession: task(function * (session){
+    session.deleteRecord();
+    yield session.save();
+  }).drop(),
 });

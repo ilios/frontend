@@ -10,6 +10,7 @@ export default Component.extend({
   permissionChecker: service(),
   tagName: 'section',
   classNames: ['course-sessions'],
+  'data-test-course-sessions': true,
 
   course: null,
   canCreateSession: false,

@@ -2,7 +2,7 @@
   <div class="title">
     {{t "general.sessions"}} ({{sessionsCount}})
   </div>
-  <div class="actions">
+  <div class="actions" data-test-actions>
     {{#if canCreateSession}}
       {{expand-collapse-button
         value=showNewSessionForm
@@ -27,7 +27,7 @@
 {{/if}}
 
 {{#if saveSession.lastSuccessful.value}}
-  <div class="save-result">
+  <div class="save-result" data-test-new-saved-session>
     {{#link-to "session.index" course saveSession.lastSuccessful.value}}
       {{fa-icon "external-link-square"}} {{get saveSession.lastSuccessful.value "title"}}
     {{/link-to}}
@@ -39,6 +39,7 @@
     value={{filterByDebounced}}
     oninput={{action (perform changeFilterBy) value="target.value"}}
     placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+    data-test-session-filter
   >
 </div>
 <section>

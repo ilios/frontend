@@ -5,6 +5,7 @@ import OfferingDateBlock from 'ilios/utils/offering-date-block';
 export default Component.extend({
   tagName: 'table',
   classNames: ['sessions-grid-offering-table'],
+  'data-test-sessions-grid-offering-table': true,
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', function() {
     let offerings = this.get('offerings');
     if (!offerings) {

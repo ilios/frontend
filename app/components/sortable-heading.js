@@ -8,6 +8,7 @@ export default Component.extend({
   align: 'left',
   sortType: 'alpha',
   classNameBindings: ['textDirection', ':sortable', ':clickable', ':sortable-heading', 'hideFromSmallScreen'],
+  tagName: 'span',
   hideFromSmallScreen: false,
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
     const sortedBy = this.get('sortedBy');

@@ -7,20 +7,15 @@ module('Integration | Component | sessions-grid', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`{{sessions-grid}}`);
+    this.set('sessions', []);
+    this.set('sortBy', 'title');
+    this.set('setSortBy', () => { });
+    await render(hbs`{{sessions-grid
+      sessions=sessions
+      sortBy=sortBy
+      setSortBy=(action setSortBy)
+    }}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#sessions-grid}}
-        template block text
-      {{/sessions-grid}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

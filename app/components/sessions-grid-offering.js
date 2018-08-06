@@ -22,6 +22,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   firstRow: false,
   even: false,
   isEditing: false,
+  'data-test-sessions-grid-offering': true,
 
   didReceiveAttrs(){
     this._super(...arguments);
