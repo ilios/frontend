@@ -1,62 +1,70 @@
+{{! template-lint-disable attribute-indentation }}
 {{#each sortedSessions as |obj|}}
-  <div data-test-session data-test-expanded-session={{contains obj.session.id expandedSessionIds}}>
-    <div class='{{if (contains obj.session.id expandedSessionIds) 'is-expanded' 'not-expanded'}} session-row'>
-      <span class='expand-collapse-control'>
+  <div
+    data-test-session
+    data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
+  >
+    <div class="{{if (contains obj.session.id expandedSessionIds) "is-expanded" "not-expanded"}} session-row">
+      <span class="expand-collapse-control">
         {{#if (contains obj.session.id expandedSessionIds)}}
-          {{fa-icon 'caret-down' class='link' click=(action closeSession obj.session)}}
+          {{fa-icon "caret-down" class="link" click=(action closeSession obj.session)}}
         {{else}}
-          {{fa-icon 'caret-right' class='link' click=(action expandSession obj.session)}}
+          {{fa-icon "caret-right" class="link" click=(action expandSession obj.session)}}
         {{/if}}
       </span>
-      <span class='session-grid-title'>
-        {{#link-to 'session' obj.course obj.session}}
+      <span class="session-grid-title">
+        {{#link-to "session" obj.course obj.session}}
           {{truncate obj.title 100 true}}
         {{/link-to}}
       </span>
-      <span class='session-grid-type'>{{obj.sessionTypeTitle}}</span>
-      <span class='session-grid-groups'>{{obj.learnerGroupCount}}</span>
-      <span class='session-grid-objectives'>{{obj.objectiveCount}}</span>
-      <span class='session-grid-terms'>{{obj.termCount}}</span>
-      <span class='session-grid-first-offering'>
+      <span class="session-grid-type">{{obj.sessionTypeTitle}}</span>
+      <span class="session-grid-groups">{{obj.learnerGroupCount}}</span>
+      <span class="session-grid-objectives">{{obj.objectiveCount}}</span>
+      <span class="session-grid-terms">{{obj.termCount}}</span>
+      <span class="session-grid-first-offering">
         {{#if obj.firstOfferingDate}}
           {{#if obj.isIlm}}
-            <strong>{{t 'general.ilm'}}: {{t 'general.dueBy'}}</strong> {{moment-format obj.firstOfferingDate 'L'}}
+            <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format obj.firstOfferingDate "L"}}
           {{else}}
-            {{moment-format obj.firstOfferingDate 'L LT'}}
+            {{moment-format obj.firstOfferingDate "L LT"}}
           {{/if}}
         {{/if}}
       </span>
-      <span class='session-grid-offerings'>{{obj.offeringCount}}</span>
-      <span class='session-grid-status'>{{publication-status item=obj showText=false}}</span>
-      <span class='session-grid-actions' data-test-actions>
-        {{fa-icon 'trash'
-          class='clickable remove'
-          title=(t 'general.remove')
+      <span class="session-grid-offerings">{{obj.offeringCount}}</span>
+      <span class="session-grid-status">{{publication-status item=obj showText=false}}</span>
+      <span class="session-grid-actions" data-test-actions>
+        {{fa-icon
+          "trash"
+          class="clickable remove"
+          title=(t "general.remove")
           ariaHidden=false
-          click=(action 'confirmDelete' obj.session.id)
+          click=(action "confirmDelete" obj.session.id)
         }}
       </span>
     </div>
     {{#if (contains obj.session.id confirmDeleteSessionIds)}}
-      <div class='confirm-removal' data-test-confirm-removal>
-        {{t 'general.confirmSessionRemoval'}}
+      <div class="confirm-removal" data-test-confirm-removal>
+        {{t "general.confirmSessionRemoval"}}
         <div class="confirm-buttons">
-          <button {{action (perform removeSession obj.session)}} class='cancel' disabled={{removeSession.isRunning}} data-test-yes>
+          <button {{action (perform removeSession obj.session)}} class="cancel" disabled={{removeSession.isRunning}} data-test-yes>
             {{#if removeSession.isRunning}}
               {{loading-spinner}}
             {{else}}
-              {{t 'general.yes'}}
+              {{t "general.yes"}}
             {{/if}}
           </button>
-          <button {{action 'cancelDelete' obj.session.id}} class='done'>{{t 'general.cancel'}}</button>
+          <button {{action "cancelDelete" obj.session.id}} class="done">{{t "general.cancel"}}</button>
         </div>
       </div>
     {{/if}}
     {{#if (contains obj.session.id expandedSessionIds)}}
-      {{#if (gt (has-many-length obj.session 'offerings') 0)}}
-        {{sessions-grid-offering-table offerings=(await obj.session.offerings) canUpdate=obj.canUpdate}}
+      {{#if (gt (has-many-length obj.session "offerings") 0)}}
+        {{sessions-grid-offering-table
+          offerings=(await obj.session.offerings)
+          canUpdate=obj.canUpdate
+        }}
       {{else}}
-        <div class='no-offerings' data-test-no-offerings>{{t 'general.noOfferings'}}</div>
+        <div class="no-offerings" data-test-no-offerings>{{t "general.noOfferings"}}</div>
       {{/if}}
     {{/if}}
   </div>
