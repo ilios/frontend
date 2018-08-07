@@ -1,9 +1,19 @@
-{{#each (sort-by 'title' terms) as |term|}}
+{{#each (sort-by "title" terms) as |term|}}
   {{#if (await term.isActiveInTree)}}
-    <li class="{{if term.isTopLevel 'top-level'}}">
-      {{selectable-terms-list-item selectedTerms=selectedTerms term=term add='add' remove='remove'}}
+    <li class={{if term.isTopLevel "top-level" ""}}>
+      {{selectable-terms-list-item
+        selectedTerms=selectedTerms
+        term=term
+        add="add"
+        remove="remove"
+      }}
       {{#if term.hasChildren}}
-        {{selectable-terms-list selectedTerms=selectedTerms terms=(await term.children) add='add' remove='remove'}}
+        {{selectable-terms-list
+          selectedTerms=selectedTerms
+          terms=(await term.children)
+          add="add"
+          remove="remove"
+        }}
       {{/if}}
     </li>
   {{/if}}

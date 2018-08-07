@@ -1,42 +1,42 @@
-<div class="backtolink">{{#link-to 'programYear' model}}{{t 'general.backToProgramYear'}}{{/link-to}}</div>
-<div class='programyear-publication-check'>
+<div class="backtolink">{{#link-to "programYear" model}}{{t "general.backToProgramYear"}}{{/link-to}}</div>
+<div class="programyear-publication-check">
   <section>
-    <div class='detail-title'>
-      {{t 'general.missingItems'}} ({{model.allPublicationIssuesLength}})
+    <div class="detail-title">
+      {{t "general.missingItems"}} ({{model.allPublicationIssuesLength}})
     </div>
-    <div class='detail-content'>
+    <div class="detail-content">
       <table>
         <thead>
           <tr>
-            <th>{{t 'general.matriculationYear'}}</th>
-            <th>{{t 'general.directors'}}</th>
-            <th>{{t 'general.terms'}}</th>
-            <th>{{t 'general.competencies'}}</th>
-            <th>{{t 'general.objectives'}}</th>
+            <th>{{t "general.matriculationYear"}}</th>
+            <th>{{t "general.directors"}}</th>
+            <th>{{t "general.terms"}}</th>
+            <th>{{t "general.competencies"}}</th>
+            <th>{{t "general.objectives"}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{model.academicYear}}</td>
             {{#if model.directors.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.directors.length}})</td>
+              <td class="yes">{{t "general.yes"}} ({{model.directors.length}})</td>
             {{else}}
-              <td class='no'>{{t 'general.no'}}</td>
+              <td class="no">{{t "general.no"}}</td>
             {{/if}}
             {{#if model.terms.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.terms.length}})</td>
+              <td class="yes">{{t "general.yes"}} ({{model.terms.length}})</td>
             {{else}}
-              <td class='no'>{{t 'general.no'}}</td>
+              <td class="no">{{t "general.no"}}</td>
             {{/if}}
             {{#if model.competencies.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.competencies.length}})</td>
+              <td class="yes">{{t "general.yes"}} ({{model.competencies.length}})</td>
             {{else}}
-              <td class='no'>{{t 'general.no'}}</td>
+              <td class="no">{{t "general.no"}}</td>
             {{/if}}
             {{#if model.objectives.length}}
-              <td class='yes'>{{t 'general.yes'}} ({{model.objectives.length}})</td>
+              <td class="yes">{{t "general.yes"}} ({{model.objectives.length}})</td>
             {{else}}
-              <td class='no'>{{t 'general.no'}}</td>
+              <td class="no">{{t "general.no"}}</td>
             {{/if}}
           </tr>
         </tbody>

@@ -1,17 +1,27 @@
-{{learnergroup-header learnerGroup=learnerGroup sortUsersBy=sortUsersBy canUpdate=canUpdate}}
-<section class='learnergroup-overview'>
-  <div class='learnergroup-overview-actions'>
+{{! template-lint-disable attribute-indentation }}
+{{learnergroup-header
+  learnerGroup=learnerGroup
+  sortUsersBy=sortUsersBy
+  canUpdate=canUpdate
+}}
+<section class="learnergroup-overview">
+  <div class="learnergroup-overview-actions">
     {{#if (or isEditing isBulkAssigning)}}
-      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>{{t 'general.close'}}</button>
+      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>
+        {{t "general.close"}}
+      </button>
     {{else if canUpdate}}
-      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t 'general.uploadGroupAssignments'}}</button>
-      <button {{action setIsEditing true}} data-test-manage>{{t 'general.manage'}}</button>
+      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t "general.uploadGroupAssignments"}}</button>
+      <button {{action setIsEditing true}} data-test-manage>{{t "general.manage"}}</button>
     {{/if}}
   </div>
   {{#if isBulkAssigning}}
-    {{learnergroup-bulk-assignment learnerGroup=learnerGroup done=(action setIsBulkAssigning false)}}
+    {{learnergroup-bulk-assignment
+      learnerGroup=learnerGroup
+      done=(action setIsBulkAssigning false)
+    }}
   {{else if createUsersToPassToManager.lastSuccessful}}
-    <div class='learnergroup-overview-content'>
+    <div class="learnergroup-overview-content">
       {{learnergroup-user-manager
         learnerGroupId=learnerGroupId
         learnerGroupTitle=learnerGroupTitle
@@ -28,17 +38,17 @@
       }}
     </div>
   {{else}}
-    <h1 class='text-center'>{{loading-spinner}}</h1>
+    <h1 class="text-center">{{loading-spinner}}</h1>
   {{/if}}
 
   <div class="block defaultlocation">
-    <label>{{t 'general.defaultLocation'}}:</label>
+    <label>{{t "general.defaultLocation"}}:</label>
     <span>
       {{#if canUpdate}}
         {{#editable-field
-          value=(if location location (t 'general.clickToEdit'))
-          save=(action 'changeLocation')
-          close=(action 'revertLocationChanges')
+          value=(if location location (t "general.clickToEdit"))
+          save=(action "changeLocation")
+          close=(action "revertLocationChanges")
           saveOnEnter=true
           closeOnEscape=true
           as |isSaving|
@@ -48,37 +58,42 @@
             value={{location}}
             oninput={{action (mut location) value="target.value"}}
             disabled={{isSaving}}
-            onkeyup={{action 'addErrorDisplayFor' 'location'}}
+            onkeyup={{action "addErrorDisplayFor" "location"}}
           >
-          {{#if (and (v-get this 'location' 'isInvalid') (is-in showErrorsFor 'location'))}}
-            <span class="validation-error-message">{{v-get this 'location' 'message'}}</span>
+          {{#if
+            (and (v-get this "location" "isInvalid") (is-in showErrorsFor "location"))
+          }}
+            <span class="validation-error-message">{{v-get this "location" "message"}}</span>
           {{/if}}
         {{/editable-field}}
       {{else}}
         {{#if location}}
           {{location}}
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/if}}
       {{/if}}
     </span>
   </div>
   <div class="block defaultinstructors">
-    <label>{{t 'general.defaultInstructors'}}:</label>
+    <label>{{t "general.defaultInstructors"}}:</label>
     <div>
       {{#if (is-fulfilled learnerGroup.allInstructors)}}
-        {{#liquid-if manageInstructors class='crossFade'}}
+        {{#liquid-if manageInstructors class="crossFade"}}
           {{learnergroup-instructor-manager
             learnerGroup=learnerGroup
-            save=(action 'saveInstructors')
-            close=(toggle-action 'manageInstructors' this)
+            save=(action "saveInstructors")
+            close=(toggle-action "manageInstructors" this)
           }}
         {{else}}
-          <span class={{if canUpdate 'clickable link'}} {{action 'manageInstructors'}}>
-            {{#if (get (await learnerGroup.allInstructors) 'length')}}
-              {{join '; ' (map-by 'fullName' (sort-by 'lastName' (await learnerGroup.allInstructors)))}}
+          <span class={{if canUpdate "clickable link"}} {{action "manageInstructors"}}>
+            {{#if (get (await learnerGroup.allInstructors) "length")}}
+              {{join
+                "; "
+                (map-by "fullName" (sort-by "lastName" (await learnerGroup.allInstructors)))
+              }}
             {{else}}
-              {{t 'general.none'}}
+              {{t "general.none"}}
             {{/if}}
           </span>
         {{/liquid-if}}
@@ -87,14 +102,14 @@
       {{/if}}
     </div>
   </div>
-  <div class='block associatedcourses'>
-    <label>{{t 'general.associatedCourses'}}:</label>
+  <div class="block associatedcourses">
+    <label>{{t "general.associatedCourses"}}:</label>
     <div>
       {{#if (is-fulfilled learnerGroup.courses)}}
-        {{#if (get (await learnerGroup.courses) 'length')}}
-          {{join '; ' (map-by 'title' (await learnerGroup.courses))}}
+        {{#if (get (await learnerGroup.courses) "length")}}
+          {{join "; " (map-by "title" (await learnerGroup.courses))}}
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/if}}
       {{else}}
         {{loading-spinner}}
@@ -102,12 +117,12 @@
     </div>
   </div>
 
-  <p class='block' data-test-toggle-learnergroup-calendar>
+  <p class="block" data-test-toggle-learnergroup-calendar>
     {{toggle-buttons
       firstOptionSelected=(not showLearnerGroupCalendar)
-      firstLabel=(t 'general.hideCalendar')
-      secondLabel=(t 'general.showCalendar')
-      toggle=(toggle 'showLearnerGroupCalendar' this)
+      firstLabel=(t "general.hideCalendar")
+      secondLabel=(t "general.showCalendar")
+      toggle=(toggle "showLearnerGroupCalendar" this)
     }}
   </p>
   {{#if showLearnerGroupCalendar}}
@@ -122,7 +137,7 @@
   canDelete=canDelete
 }}
 
-<section class='cohortmembers'>
+<section class="cohortmembers">
   {{#if createUsersToPassToCohortManager.lastSuccessful}}
     {{learnergroup-cohort-user-manager
       users=createUsersToPassToCohortManager.lastSuccessful.value
@@ -135,7 +150,7 @@
       addUsersToGroup=(perform addUsersToGroup)
     }}
   {{else}}
-    {{loading-spinner class='cohortmembers-loading'}}
+    {{loading-spinner class="cohortmembers-loading"}}
   {{/if}}
 </section>
 

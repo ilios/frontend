@@ -1,40 +1,44 @@
-<div class='course-summary-header-top'>
+<div class="course-summary-header-top">
   <h2>{{course.title}}</h2>
-  <div class='course-summary-actions'>
+  <div class="course-summary-actions">
     {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
-      {{#link-to 'course-materials' course class='materials'}}
-        {{fa-icon 'archive' title=(t 'general.learningMaterialsSummary') fixedWidth=true}}
+      {{#link-to "course-materials" course class="materials"}}
+        {{fa-icon
+          "archive"
+          title=(t "general.learningMaterialsSummary")
+          fixedWidth=true
+        }}
       {{/link-to}}
     {{/if}}
-    {{#link-to 'printCourse' course (query-params unpublished=true) class='print'}}
-      {{fa-icon 'print' title=(t 'general.printSummary') fixedWidth=true}}
+    {{#link-to "printCourse" course (query-params unpublished=true) class="print"}}
+      {{fa-icon "print" title=(t "general.printSummary") fixedWidth=true}}
     {{/link-to}}
     {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-      {{#link-to 'course.rollover' course class='rollover'}}
-        {{fa-icon 'random' title=(t 'general.courseRollover') fixedWidth=true}}
+      {{#link-to "course.rollover" course class="rollover"}}
+        {{fa-icon "random" title=(t "general.courseRollover") fixedWidth=true}}
       {{/link-to}}
     {{/if}}
   </div>
 </div>
-<div class='course-summary-content'>
+<div class="course-summary-content">
   <div class="block">
-    <label>{{t 'general.startDate'}}:</label>
-    <span>{{moment-format course.startDate 'L'}}</span>
+    <label>{{t "general.startDate"}}:</label>
+    <span>{{moment-format course.startDate "L"}}</span>
   </div>
   <div class="block">
-    <label>{{t 'general.externalId'}}:</label>
+    <label>{{t "general.externalId"}}:</label>
     <span>{{course.externalId}}</span>
   </div>
   <div class="block">
-    <label>{{t 'general.endDate'}}:</label>
-    <span>{{moment-format course.endDate 'L'}}</span>
+    <label>{{t "general.endDate"}}:</label>
+    <span>{{moment-format course.endDate "L"}}</span>
   </div>
   <div class="block">
-    <label>{{t 'general.level'}}:</label>
+    <label>{{t "general.level"}}:</label>
     <span>{{course.level}}</span>
   </div>
   <div class="block">
-    <label>{{t 'general.publicationStatus'}}:</label>
+    <label>{{t "general.publicationStatus"}}:</label>
     <span>{{publication-status item=course}}</span>
   </div>
 </div>

@@ -1,21 +1,28 @@
 <div class="detail-content">
   {{#if multiModeSupported}}
     <div class="multi-mode-chooser">
-      <label>{{t 'general.createNew'}}:</label>
+      <label>{{t "general.createNew"}}:</label>
       {{click-choice-buttons
-        buttonContent1=(t 'general.singleGroup')
-        buttonContent2=(t 'general.multipleGroups')
+        buttonContent1=(t "general.singleGroup")
+        buttonContent2=(t "general.multipleGroups")
         firstChoicePicked=singleMode
         toggle=(action (mut singleMode))
       }}
     </div>
   {{else}}
-    <h4>{{t 'general.newLearnerGroup'}}</h4>
+    <h4>{{t "general.newLearnerGroup"}}</h4>
   {{/if}}
 
   {{#if singleMode}}
-    {{new-learnergroup-single save=save cancel=cancel fillModeSupported=fillModeSupported}}
+    {{new-learnergroup-single
+      save=save
+      cancel=cancel
+      fillModeSupported=fillModeSupported
+    }}
   {{else}}
-    {{new-learnergroup-multiple generateNewLearnerGroups='generateNewLearnerGroups' cancel=cancel}}
+    {{new-learnergroup-multiple
+      generateNewLearnerGroups="generateNewLearnerGroups"
+      cancel=cancel
+    }}
   {{/if}}
 </div>

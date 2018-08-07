@@ -1,157 +1,172 @@
-<h2 class="title">{{t 'general.newSequenceBlock'}}</h2>
+{{! template-lint-disable attribute-indentation }}
+<h2 class="title">{{t "general.newSequenceBlock"}}</h2>
 {{#if isLoaded}}
-  <div class='form'>
+  <div class="form">
     <div class="item title">
-      <label>{{t 'general.title'}}:</label>
+      <label>{{t "general.title"}}:</label>
       <input
         type="text"
         value={{title}}
         oninput={{action (mut title) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'title'}}
-        placeholder={{t 'general.sequenceBlockTitlePlaceholder'}}
+        onkeyup={{action "addErrorDisplayFor" "title"}}
+        placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
       >
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
       {{/if}}
     </div>
     <div class="item course">
-      <label>{{t 'general.course'}}:</label>
+      <label>{{t "general.course"}}:</label>
       {{one-way-select
         value=course
-        options=(sort-by 'title' (await linkableCourses))
-        optionValuePath='id'
-        optionLabelPath='title'
+        options=(sort-by "title" (await linkableCourses))
+        optionValuePath="id"
+        optionLabelPath="title"
         update=(action (mut course))
-        prompt=(t 'general.selectCourse')
+        prompt=(t "general.selectCourse")
         promptIsSelectable=true
       }}
       {{#if course}}
         <span class="details">
-          {{t 'general.level'}}: {{course.level}},
-          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
-          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{t "general.level"}}: {{course.level}},
+          {{t "general.startDate"}}: {{moment-format course.startDate "YYYY-MM-DD"}},
+          {{t "general.endDate"}}: {{moment-format course.endDate "YYYY-MM-DD"}}
           {{#if course.clerkshipType}}
-            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+            - {{t "general.clerkship"}} ({{course.clerkshipType.title}})
           {{/if}}
         </span>
       {{/if}}
     </div>
     <div class="item description">
-      <label>{{t 'general.description'}}:</label>
+      <label>{{t "general.description"}}:</label>
       <textarea
         value={{description}}
         oninput={{action (mut description) value="target.value"}}
         disabled={{isSaving}}
-        placeholder={{t 'general.sequenceBlockDescriptionPlaceholder'}}
+        placeholder={{t "general.sequenceBlockDescriptionPlaceholder"}}
       ></textarea>
     </div>
 
     <div class="item required">
-      <label>{{t 'general.required'}}:</label>
+      <label>{{t "general.required"}}:</label>
       {{one-way-select
         value=required
         options=requiredOptions
-        optionValuePath='id'
-        optionLabelPath='title'
+        optionValuePath="id"
+        optionLabelPath="title"
         update=(action (mut required))
       }}
     </div>
 
     <div class="item track">
-      <label>{{t 'general.isTrack'}}?</label>
-      {{toggle-yesno yes=track toggle=(action 'changeTrack')}}
+      <label>{{t "general.isTrack"}}?</label>
+      {{toggle-yesno yes=track toggle=(action "changeTrack")}}
 
     </div>
 
-    <div class='item start-date'>
-      <label>{{t 'general.startDate'}}:</label>
-      {{pikaday-input value=startDate onSelection=(action 'changeStartDate') format='M/D/YYYY'}}
-      {{#if (and (v-get this 'startDate' 'isInvalid') (is-in showErrorsFor 'startDate'))}}
-        <span class="validation-error-message">{{v-get this 'startDate' 'message'}}</span>
+    <div class="item start-date">
+      <label>{{t "general.startDate"}}:</label>
+      {{pikaday-input
+        value=startDate
+        onSelection=(action "changeStartDate")
+        format="M/D/YYYY"
+      }}
+      {{#if
+        (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+      }}
+        <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
       {{/if}}
     </div>
 
-    <div class='item end-date'>
-      <label>{{t 'general.endDate'}}:</label>
-      {{pikaday-input value=endDate onSelection=(action 'changeEndDate') format='M/D/YYYY'}}
-      {{#if (and (v-get this 'endDate' 'isInvalid') (is-in showErrorsFor 'endDate'))}}
-        <span class="validation-error-message">{{v-get this 'endDate' 'message'}}</span>
+    <div class="item end-date">
+      <label>{{t "general.endDate"}}:</label>
+      {{pikaday-input
+        value=endDate
+        onSelection=(action "changeEndDate")
+        format="M/D/YYYY"
+      }}
+      {{#if
+        (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))
+      }}
+        <span class="validation-error-message">{{v-get this "endDate" "message"}}</span>
       {{/if}}
     </div>
 
     <div class="item duration">
-      <label>{{t 'general.durationInDays'}}:</label>
+      <label>{{t "general.durationInDays"}}:</label>
       <input
         type="text"
         value={{duration}}
         oninput={{action (mut duration) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'duration'}}
+        onkeyup={{action "addErrorDisplayFor" "duration"}}
       >
-      {{#if (and (v-get this 'duration' 'isInvalid') (is-in showErrorsFor 'duration'))}}
-        <span class="validation-error-message">{{v-get this 'duration' 'message'}}</span>
+      {{#if
+        (and (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration"))
+      }}
+        <span class="validation-error-message">{{v-get this "duration" "message"}}</span>
       {{/if}}
     </div>
 
     <div class="item clear-dates">
-      <button {{action 'clearDates'}}>{{t 'general.clearDates'}}</button>
+      <button {{action "clearDates"}}>{{t "general.clearDates"}}</button>
     </div>
 
     <div class="item selective">
-      <label>{{t 'general.isSelective'}}?</label>
+      <label>{{t "general.isSelective"}}?</label>
     </div>
 
     <div class="item minimum">
-      <label>{{t 'general.minimum'}}:</label>
+      <label>{{t "general.minimum"}}:</label>
       <input
         type="text"
         value={{minimum}}
         oninput={{action (mut minimum) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'minimum'}}
+        onkeyup={{action "addErrorDisplayFor" "minimum"}}
       >
-      {{#if (and (v-get this 'minimum' 'isInvalid') (is-in showErrorsFor 'minimum'))}}
-        <span class="validation-error-message">{{v-get this 'minimum' 'message'}}</span>
+      {{#if (and (v-get this "minimum" "isInvalid") (is-in showErrorsFor "minimum"))}}
+        <span class="validation-error-message">{{v-get this "minimum" "message"}}</span>
       {{/if}}
     </div>
 
     <div class="item maximum">
-      <label>{{t 'general.maximum'}}:</label>
+      <label>{{t "general.maximum"}}:</label>
       <input
         type="text"
         value={{maximum}}
         oninput={{action (mut maximum) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'maximum'}}
+        onkeyup={{action "addErrorDisplayFor" "maximum"}}
       >
-      {{#if (and (v-get this 'maximum' 'isInvalid') (is-in showErrorsFor 'maximum'))}}
-        <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
+      {{#if (and (v-get this "maximum" "isInvalid") (is-in showErrorsFor "maximum"))}}
+        <span class="validation-error-message">{{v-get this "maximum" "message"}}</span>
       {{/if}}
     </div>
     <div class="item academic-level">
-      <label>{{t 'general.academicLevel'}}:</label>
+      <label>{{t "general.academicLevel"}}:</label>
       {{one-way-select
         value=academicLevel
-        options=(sort-by 'level' (await academicLevels))
-        optionValuePath='id'
-        optionLabelPath='name'
+        options=(sort-by "level" (await academicLevels))
+        optionValuePath="id"
+        optionLabelPath="name"
         update=(action (mut academicLevel))
       }}
     </div>
     <div class="item child-sequence-order">
-      <label>{{t 'general.childSequenceOrder'}}:</label>
+      <label>{{t "general.childSequenceOrder"}}:</label>
       {{one-way-select
         value=childSequenceOrder
         options=childSequenceOrderOptions
-        optionValuePath='id'
-        optionLabelPath='title'
+        optionValuePath="id"
+        optionLabelPath="title"
         update=(action (mut childSequenceOrder))
       }}
     </div>
     {{#if isInOrderedSequence}}
       <div class="item order-in-sequence">
-        <label>{{t 'general.orderInSequence'}}:</label>
+        <label>{{t "general.orderInSequence"}}:</label>
         {{one-way-select
           value=orderInSequence
           options=orderInSequenceOptions
@@ -159,15 +174,15 @@
         }}
       </div>
     {{/if}}
-    <div class='buttons'>
-      <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+    <div class="buttons">
+      <button class="done text" {{action "save"}} disabled={{or isSaving}}>
         {{#if isSaving}}
           {{loading-spinner}}
         {{else}}
-          {{t 'general.done'}}
+          {{t "general.done"}}
         {{/if}}
       </button>
-      <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+      <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
     </div>
   </div>
 {{/if}}

@@ -1,22 +1,35 @@
 <div class="header">
-  <h2>{{t 'general.unassignedStudentsSummaryTitle'}}</h2>
+  <h2>{{t "general.unassignedStudentsSummaryTitle"}}</h2>
 </div>
 
-<div class='form'>
-  <label>{{t 'general.unassignedStudentsConfirmation' count=selectedUserIds.length}}:</label>
-  {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))}}
+<div class="form">
+  <label>{{t "general.unassignedStudentsConfirmation" count=selectedUserIds.length}}:</label>
+  {{#if
+    (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))
+  }}
     <select onchange={{action (mut primaryCohortId) value="target.value"}}>
-      {{#each (sort-by 'title' cohorts) as |cohort|}}
-        <option value={{cohort.id}} selected={{eq cohort.id (get (await bestSelectedCohort) 'id')}}>
+      {{#each (sort-by "title" cohorts) as |cohort|}}
+        <option
+          value={{cohort.id}}
+          selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
+        >
           {{cohort.title}}
         </option>
       {{/each}}
     </select>
-    <button class='done text' {{action (perform save)}} disabled={{or isSaving (is-pending bestSelectedCohort) (lt cohorts.length 1) (eq selectedUserIds.length 0)}}>
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{or
+                 isSaving
+                 (is-pending bestSelectedCohort)
+                 (lt cohorts.length 1)
+                 (eq selectedUserIds.length 0)
+               }}
+    >
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.save'}}
+        {{t "general.save"}}
       {{/if}}
     </button>
   {{else}}
@@ -24,41 +37,48 @@
   {{/if}}
 </div>
 
-<div class='list'>
+<div class="list">
   <table>
     <thead>
       <tr>
-        <th class='text-left clickable' colspan="1" onclick={{action 'toggleCheck'}}>
+        <th class="text-left clickable" colspan="1" onclick={{action "toggleCheck"}}>
           <input
-            type='checkbox'
+            type="checkbox"
             checked={{eq selectedUserIds.length filteredStudents.length}}
-            indeterminate={{and (gt selectedUserIds.length 0) (lt selectedUserIds.length filteredStudents.length)}}>
-          {{t 'general.all'}}
+            indeterminate={{and
+                            (gt selectedUserIds.length 0)
+                            (lt selectedUserIds.length filteredStudents.length)
+                          }}
+          >
+          {{t "general.all"}}
         </th>
-        <th class='text-left' colspan="4">{{t 'general.fullName'}}</th>
-        <th class='text-left' colspan="4">{{t 'general.email'}}</th>
-        <th class='text-left' colspan="2">{{t 'general.campusId'}}</th>
+        <th class="text-left" colspan="4">{{t "general.fullName"}}</th>
+        <th class="text-left" colspan="4">{{t "general.email"}}</th>
+        <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
       </tr>
     </thead>
     <tbody>
       {{#each filteredStudents as |user|}}
-        <tr class='{{if (is-in selectedUserIds user.id) "highlighted"}}'>
-          <td class='text-left clickable' colspan="1" {{action 'toggleUserSelection' user.id}}>
+        <tr class={{if (is-in selectedUserIds user.id) "highlighted" ""}}>
+          <td {{action "toggleUserSelection" user.id}}
+            class="text-left clickable"
+            colspan="1"
+          >
             {{#if (is-in selectedUserIds user.id)}}
-              <input type='checkbox' checked>
+              <input type="checkbox" checked>
             {{else}}
-              <input type='checkbox'>
+              <input type="checkbox">
             {{/if}}
           </td>
-          <td class='text-left' colspan="4">{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>
-          <td class='text-left' colspan="4">{{user.email}}</td>
-          <td class='text-left' colspan="2">{{user.campusId}}</td>
+          <td class="text-left" colspan="4">{{#link-to "user" user}}{{user.fullName}}{{/link-to}}</td>
+          <td class="text-left" colspan="4">{{user.email}}</td>
+          <td class="text-left" colspan="2">{{user.campusId}}</td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
-{{#liquid-if isSaving class='crossFade'}}
+{{#liquid-if isSaving class="crossFade"}}
   {{wait-saving
     showProgress=true
     totalProgress=selectedUserIds.length

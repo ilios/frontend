@@ -4,105 +4,110 @@
       {{#sortable-th
         data-test-course-title-heading
         colspan=3
-        click=(action 'sortBy' 'title')
-        sortedBy=(or (eq sortBy 'title') (eq sortBy 'title:desc'))
+        click=(action "sortBy" "title")
+        sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
         sortedAscending=sortedAscending
       }}
-        {{t 'general.courseTitle'}}
+        {{t "general.courseTitle"}}
       {{/sortable-th}}
-      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.school'}}</th>
-      <th class='text-center hide-from-small-screen' colspan=2>{{t 'general.year'}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.school"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.year"}}</th>
       {{#sortable-th
         colspan=1
-        click=(action 'sortBy' 'level')
-        sortedBy=(or (eq sortBy 'level') (eq sortBy 'level:desc'))
+        click=(action "sortBy" "level")
+        sortedBy=(or (eq sortBy "level") (eq sortBy "level:desc"))
         sortedAscending=sortedAscending
-        sortType='numeric'
-        align='center'
+        sortType="numeric"
+        align="center"
         hideFromSmallScreen=true
       }}
-        {{t 'general.level'}}
+        {{t "general.level"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=2
-        click=(action 'sortBy' 'startDate')
-        sortedBy=(or (eq sortBy 'startDate') (eq sortBy 'startDate:desc'))
+        colspan="2"
+        click=(action "sortBy" "startDate")
+        sortedBy=(or (eq sortBy "startDate") (eq sortBy "startDate:desc"))
         sortedAscending=sortedAscending
-        sortType='numeric'
-        align='center'
+        sortType="numeric"
+        align="center"
         hideFromSmallScreen=true
       }}
-        {{t 'general.startDate'}}
+        {{t "general.startDate"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=2
-        click=(action 'sortBy' 'endDate')
-        sortedBy=(or (eq sortBy 'endDate') (eq sortBy 'endDate:desc'))
+        colspan="2"
+        click=(action "sortBy" "endDate")
+        sortedBy=(or (eq sortBy "endDate") (eq sortBy "endDate:desc"))
         sortedAscending=sortedAscending
-        sortType='numeric'
-        align='center'
+        sortType="numeric"
+        align="center"
         hideFromSmallScreen=true
       }}
-        {{t 'general.endDate'}}
+        {{t "general.endDate"}}
       {{/sortable-th}}
       {{#sortable-th
-        colspan=3
-        click=(action 'sortBy' 'status')
-        sortedBy=(or (eq sortBy 'status') (eq sortBy 'status:desc'))
+        colspan="3"
+        click=(action "sortBy" "status")
+        sortedBy=(or (eq sortBy "status") (eq sortBy "status:desc"))
         sortedAscending=sortedAscending
       }}
-        {{t 'general.status'}}
+        {{t "general.status"}}
       {{/sortable-th}}
     </tr>
   </thead>
   <tbody data-test-courses>
     {{#each (await sortedCourses) as |course|}}
-      <tr class="{{if course.showRemoveConfirmation 'confirm-removal'}}">
-        <td class='text-left' colspan=3>
-          {{#link-to 'course' course.content}}
+      <tr class={{if course.showRemoveConfirmation "confirm-removal" ""}}>
+        <td class="text-left" colspan="3">
+          {{#link-to "course" course.content}}
             {{course.title}}
             {{#if course.externalId}}
               ({{course.externalId}})
             {{/if}}
           {{/link-to}}
         </td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{course.school.title}}</td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{course.academicYear}}</td>
-        <td class='text-center hide-from-small-screen' colspan=1>{{course.level}}</td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.startDate 'L'}}</td>
-        <td class='text-center hide-from-small-screen' colspan=2>{{moment-format course.endDate 'L'}}</td>
-        <td class='text-left' colspan=3>
+        <td class="text-center hide-from-small-screen" colspan="2">{{course.school.title}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{course.academicYear}}</td>
+        <td class="text-center hide-from-small-screen" colspan="1">{{course.level}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{moment-format course.startDate "L"}}</td>
+        <td class="text-center hide-from-small-screen" colspan="2">{{moment-format course.endDate "L"}}</td>
+        <td class="text-left" colspan="3">
           {{#if course.isSaving}}
             {{loading-spinner}}
           {{else}}
             {{publication-status item=course showIcon=false}}
-            {{#if (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)}}
+            {{#if
+              (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)
+            }}
               {{#if (await course.userCanUnLock)}}
-                {{fa-icon 'lock' class='clickable link' click=(action 'unlockCourse' course)}}
+                {{fa-icon "lock" class="clickable link" click=(action "unlockCourse" course)}}
               {{else}}
-                {{fa-icon 'lock'}}
+                {{fa-icon "lock"}}
               {{/if}}
             {{else}}
               {{#if (await course.userCanLock)}}
-                {{fa-icon 'unlock' class='clickable link' click=(action 'lockCourse' course)}}
+                {{fa-icon "unlock" class="clickable link" click=(action "lockCourse" course)}}
               {{else}}
-                {{fa-icon 'unlock'}}
+                {{fa-icon "unlock"}}
               {{/if}}
             {{/if}}
             {{#if (await course.userCanDelete)}}
-              <span class='clickable remove' {{action 'confirmRemove' course}}>{{fa-icon 'trash'}}</span>
+              <span class="clickable remove" {{action "confirmRemove" course}}>{{fa-icon "trash"}}</span>
             {{/if}}
           {{/if}}
         </td>
       </tr>
       {{#if course.showRemoveConfirmation}}
-        <tr class='confirm-removal'>
-          <td colspan=15>
-            <div class='confirm-message'>
-              {{t 'general.confirmRemoveCourse' publishedOfferingcount=course.publishedOfferingCount}} <br>
+        <tr class="confirm-removal">
+          <td colspan="15">
+            <div class="confirm-message">
+              {{t
+                "general.confirmRemoveCourse"
+                publishedOfferingcount=course.publishedOfferingCount
+              }} <br>
               <div class="confirm-buttons">
-                <button {{action 'remove' course}} class='remove text'>{{t 'general.yes'}}</button>
-                <button {{action 'cancelRemove' course}} class='done text'>{{t 'general.cancel'}}</button>
+                <button {{action "remove" course}} class="remove text">{{t "general.yes"}}</button>
+                <button {{action "cancelRemove" course}} class="done text">{{t "general.cancel"}}</button>
               </div>
             </div>
           </td>

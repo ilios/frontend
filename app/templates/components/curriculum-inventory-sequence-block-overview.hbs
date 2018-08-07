@@ -1,21 +1,22 @@
-<div class='title'>{{t 'general.overview'}}</div>
-<div class='curriculum-inventory-sequence-block-overview-content'>
+{{! template-lint-disable attribute-indentation }}
+<div class="title">{{t "general.overview"}}</div>
+<div class="curriculum-inventory-sequence-block-overview-content">
   {{#unless loadAttr.isRunning}}
     <div class="block course">
       <span>
-        <label>{{t 'general.course'}}:</label>
+        <label>{{t "general.course"}}:</label>
         {{#if canUpdate}}
           {{#editable-field
             value=course.title
-            save=(action 'changeCourse')
-            close=(action 'revertCourseChanges')
-            clickPrompt=(t 'general.selectCourse')
+            save=(action "changeCourse")
+            close=(action "revertCourseChanges")
+            clickPrompt=(t "general.selectCourse")
           }}
             {{one-way-select
               course
-              prompt=(t 'general.selectCourse')
+              prompt=(t "general.selectCourse")
               promptIsSelectable=true
-              options=(sort-by 'title' (await linkableCourses))
+              options=(sort-by "title" (await linkableCourses))
               optionValuePath="id"
               optionLabelPath="title"
               disabled=saveCourseChange.isRunning
@@ -23,27 +24,27 @@
             }}
           {{/editable-field}}
         {{else}}
-          <span data-test-course-title>{{if course course.title (t 'general.notApplicableAbbr')}}</span>
+          <span data-test-course-title>{{if course course.title (t "general.notApplicableAbbr")}}</span>
         {{/if}}
       </span>
       {{#if course}}
         <span class="details" data-test-course-details>
-          {{t 'general.level'}}: {{course.level}},
-          {{t 'general.startDate'}}: {{moment-format course.startDate 'YYYY-MM-DD'}},
-          {{t 'general.endDate'}}: {{moment-format course.endDate 'YYYY-MM-DD'}}
+          {{t "general.level"}}: {{course.level}},
+          {{t "general.startDate"}}: {{moment-format course.startDate "YYYY-MM-DD"}},
+          {{t "general.endDate"}}: {{moment-format course.endDate "YYYY-MM-DD"}}
           {{#if course.clerkshipType}}
-            - {{t 'general.clerkship'}} ({{course.clerkshipType.title}})
+            - {{t "general.clerkship"}} ({{course.clerkshipType.title}})
           {{/if}}
         </span>
       {{/if}}
     </div>
     <div class="block description">
-      <label>{{t 'general.description'}}:</label>
+      <label>{{t "general.description"}}:</label>
       {{#if canUpdate}}
         {{#editable-field
-          value=(if description description (t 'general.clickToAddDescription'))
-          save=(action 'changeDescription')
-          close=(action 'revertDescriptionChanges')
+          value=(if description description (t "general.clickToAddDescription"))
+          save=(action "changeDescription")
+          close=(action "revertDescriptionChanges")
           closeOnEscape=true
           as |isSaving|
         }}
@@ -60,17 +61,17 @@
       {{/if}}
     </div>
     <div class="block required">
-      <label>{{t 'general.required'}}:</label>
+      <label>{{t "general.required"}}:</label>
       {{#if canUpdate}}
         {{#editable-field
           value=requiredLabel
-          save=(action 'changeRequired')
-          close=(action 'revertRequiredChanges')
+          save=(action "changeRequired")
+          close=(action "revertRequiredChanges")
         }}
           <select onchange={{action (mut required) value="target.value"}}>
-            <option value=1 selected={{eq required '1'}}>{{t 'general.required'}}</option>
-            <option value=2 selected={{eq required '2'}}>{{t 'general.optionalElective'}}</option>
-            <option value=3 selected={{eq required '3'}}>{{t 'general.requiredInTrack'}}</option>
+            <option value="1" selected={{eq required "1"}}>{{t "general.required"}}</option>
+            <option value="2" selected={{eq required "2"}}>{{t "general.optionalElective"}}</option>
+            <option value="3" selected={{eq required "3"}}>{{t "general.requiredInTrack"}}</option>
           </select>
         {{/editable-field}}
       {{else}}
@@ -78,60 +79,60 @@
       {{/if}}
     </div>
     <div class="block track">
-      <label>{{t 'general.isTrack'}}:</label>
+      <label>{{t "general.isTrack"}}:</label>
       {{#if canUpdate}}
-        {{toggle-yesno yes=sequenceBlock.track toggle=(action 'changeTrack')}}
+        {{toggle-yesno yes=sequenceBlock.track toggle=(action "changeTrack")}}
       {{else}}
-        <span>{{if sequenceBlock.track (t 'general.yes') (t 'general.no')}}</span>
+        <span>{{if sequenceBlock.track (t "general.yes") (t "general.no")}}</span>
       {{/if}}
     </div>
     {{#unless isEditingDatesAndDuration}}
       <div class="block start-date">
-        <label>{{t 'general.start'}}:</label>
+        <label>{{t "general.start"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.startDate}}
-                {{moment-format sequenceBlock.startDate 'L'}}
+                {{moment-format sequenceBlock.startDate "L"}}
               {{else}}
-                {{t 'general.clickToEdit'}}
+                {{t "general.clickToEdit"}}
               {{/if}}
             </span>
           </span>
         {{else}}
           <span>
             {{#if sequenceBlock.startDate}}
-              {{moment-format sequenceBlock.startDate 'L'}}
+              {{moment-format sequenceBlock.startDate "L"}}
             {{else}}
-              {{t 'general.notApplicableAbbr'}}
+              {{t "general.notApplicableAbbr"}}
             {{/if}}
           </span>
         {{/if}}
       </div>
       <div class="block end-date">
-        <label>{{t 'general.end'}}:</label>
+        <label>{{t "general.end"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">
               {{#if sequenceBlock.endDate}}
-                {{moment-format sequenceBlock.endDate 'L'}}
+                {{moment-format sequenceBlock.endDate "L"}}
               {{else}}
-                {{t 'general.clickToEdit'}}
+                {{t "general.clickToEdit"}}
               {{/if}}
             </span>
           </span>
         {{else}}
           <span>
             {{#if sequenceBlock.endDate}}
-              {{moment-format sequenceBlock.endDate 'L'}}
+              {{moment-format sequenceBlock.endDate "L"}}
             {{else}}
-              {{t 'general.notApplicableAbbr'}}
+              {{t "general.notApplicableAbbr"}}
             {{/if}}
           </span>
         {{/if}}
       </div>
       <div class="block duration">
-        <label>{{t 'general.durationInDays'}}:</label>
+        <label>{{t "general.durationInDays"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editDatesAndDuration"}} class="editable">{{sequenceBlock.duration}}</span>
@@ -148,17 +149,17 @@
       }}
     {{/unless}}
     <div class="block child-sequence-order">
-      <label>{{t 'general.childSequenceOrder'}}:</label>
+      <label>{{t "general.childSequenceOrder"}}:</label>
       {{#if canUpdate}}
         {{#editable-field
           value=childSequenceOrderLabel
-          save=(action 'changeChildSequenceOrder')
-          close=(action 'revertChildSequenceOrderChanges')
+          save=(action "changeChildSequenceOrder")
+          close=(action "revertChildSequenceOrderChanges")
         }}
           <select onchange={{action (mut childSequenceOrder) value="target.value"}}>
-            <option value=1 selected={{eq childSequenceOrder '1'}}>{{t 'general.ordered'}}</option>
-            <option value=2 selected={{eq childSequenceOrder '2'}}>{{t 'general.unordered'}}</option>
-            <option value=3 selected={{eq childSequenceOrder '3'}}>{{t 'general.parallel'}}</option>
+            <option value="1" selected={{eq childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
+            <option value="2" selected={{eq childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
+            <option value="3" selected={{eq childSequenceOrder "3"}}>{{t "general.parallel"}}</option>
           </select>
         {{/editable-field}}
       {{else}}
@@ -167,14 +168,14 @@
     </div>
 
     <div class="block order-in-sequence">
-      <label>{{t 'general.orderInSequence'}}:</label>
+      <label>{{t "general.orderInSequence"}}:</label>
       <span>
         {{#if isInOrderedSequence}}
           {{#if canUpdate}}
             {{#editable-field
               value=orderInSequence
-              save=(action 'changeOrderInSequence')
-              close=(action 'revertOrderInSequenceChanges')
+              save=(action "changeOrderInSequence")
+              close=(action "revertOrderInSequenceChanges")
             }}
               {{one-way-select
                 value=orderInSequence
@@ -186,16 +187,16 @@
             {{sequenceBlock.orderInSequence}}
           {{/if}}
         {{else}}
-          {{t 'general.notApplicableAbbr'}}
+          {{t "general.notApplicableAbbr"}}
         {{/if}}
       </span>
     </div>
     <div class="block selective">
-      <label>{{t 'general.isSelective'}}?</label>
+      <label>{{t "general.isSelective"}}?</label>
     </div>
     {{#unless isEditingMinMax}}
       <div class="block minimum">
-        <label>{{t 'general.minimum'}}:</label>
+        <label>{{t "general.minimum"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
@@ -205,7 +206,7 @@
         {{/if}}
       </div>
       <div class="block maximum">
-        <label>{{t 'general.maximum'}}:</label>
+        <label>{{t "general.maximum"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
             <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
@@ -222,19 +223,19 @@
       }}
     {{/unless}}
     <div class="block academic-level">
-      <label>{{t 'general.academicLevel'}}:</label>
+      <label>{{t "general.academicLevel"}}:</label>
       {{#if canUpdate}}
         {{#editable-field
           value=academicLevel.name
-          save=(action 'changeAcademicLevel')
-          close=(action 'revertAcademicLevelChanges')
+          save=(action "changeAcademicLevel")
+          close=(action "revertAcademicLevelChanges")
         }}
           {{one-way-select
             academicLevel.id
-            options=(sort-by 'level' academicLevels)
+            options=(sort-by "level" academicLevels)
             optionTargetPath="id"
             optionLabelPath="name"
-            update=(action 'setAcademicLevel')
+            update=(action "setAcademicLevel")
           }}
         {{/editable-field}}
       {{else}}
@@ -244,22 +245,22 @@
     {{#unless (is-fulfilled sessions)}}
       <div class="block sessions">{{loading-spinner}}</div>
     {{else}}
-      {{#if (get (await sessions) 'length')}}
-        {{#liquid-if isManagingSessions class='horizontal sessions-list'}}
+      {{#if (get (await sessions) "length")}}
+        {{#liquid-if isManagingSessions class="horizontal sessions-list"}}
           {{curriculum-inventory-sequence-block-session-manager
             sequenceBlock=sequenceBlock
             sessions=(await sessions)
-            cancel=(action 'cancelManagingSessions')
-            save=(action 'changeSessions')
+            cancel=(action "cancelManagingSessions")
+            save=(action "changeSessions")
             sortBy=sortBy
             setSortBy=setSortBy
           }}
         {{else}}
           <div class="block sessions">
-            <label>{{t 'general.sessions'}} ({{get (await sessions) 'length'}})</label>
+            <label>{{t "general.sessions"}} ({{get (await sessions) "length"}})</label>
             {{#unless (or isManagingSessions (not canUpdate))}}
               <div class="actions">
-                <button {{action 'toggleManagingSessions'}}>{{t 'general.manage'}}</button>
+                <button {{action "toggleManagingSessions"}}>{{t "general.manage"}}</button>
               </div>
             {{/unless}}
           </div>

@@ -1,48 +1,53 @@
-<div class='detail-objectives-header'>
+<div class="detail-objectives-header">
   {{#if isManaging}}
-    <div class='title'>
+    <div class="title">
       {{#if isManagingParents}}
-        <span class='specific-title'>
+        <span class="specific-title">
           {{objectiveParentTitle}}
         </span>
       {{/if}}
       {{#if isManagingDescriptors}}
-        <span class='specific-title'>
-          {{t 'general.objectiveDescriptorTitle'}}
+        <span class="specific-title">
+          {{t "general.objectiveDescriptorTitle"}}
         </span>
       {{/if}}
       {{#if isManagingCompetency}}
-        <span class='specific-title'>
-          {{t 'general.objectiveCompetencyManagerTitle'}}
+        <span class="specific-title">
+          {{t "general.objectiveCompetencyManagerTitle"}}
         </span>
       {{/if}}
     </div>
   {{else}}
-    <div class='title {{if showCollapsible "clickable collapsible"}}' {{action 'collapse'}}>
-      {{t 'general.objectives'}} ({{subject.objectives.length}})
+    <div {{action "collapse"}}
+      class="title {{if showCollapsible "clickable collapsible"}}"
+    >
+      {{t "general.objectives"}} ({{subject.objectives.length}})
     </div>
   {{/if}}
-  <div class='detail-objectives-actions'>
-    {{#if isManaging class='horizontal'}}
-      <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-      <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+  <div class="detail-objectives-actions">
+    {{#if isManaging class="horizontal"}}
+      <button class="bigadd" {{action "save"}}>{{fa-icon "check"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
     {{else}}
       {{#if editable}}
         {{#if isCourse}}
-          {{#link-to 'course-visualize-objectives' subject}}
+          {{#link-to "course-visualize-objectives" subject}}
             {{visualizer-course-objectives course=subject width=20 height=20 isIcon=true}}
           {{/link-to}}
         {{/if}}
-        {{expand-collapse-button value=newObjectiveEditorOn action="toggleNewObjectiveEditor"}}
+        {{expand-collapse-button
+          value=newObjectiveEditorOn
+          action="toggleNewObjectiveEditor"
+        }}
       {{/if}}
     {{/if}}
   </div>
 </div>
-<div class='detail-objectives-content'>
-  {{#if newObjectiveEditorOn class='vertical'}}
+<div class="detail-objectives-content">
+  {{#if newObjectiveEditorOn class="vertical"}}
     {{new-objective
-      save=(action 'saveNewObjective')
-      cancel=(action 'toggleNewObjectiveEditor')
+      save=(action "saveNewObjective")
+      cancel=(action "toggleNewObjectiveEditor")
     }}
   {{/if}}
   {{#unless isManaging class="horizontal"}}
@@ -84,7 +89,10 @@
       {{/if}}
     {{/if}}
     {{#if isManagingDescriptors}}
-      {{objective-manage-descriptors objective=manageDescriptorsObjective editable=editable}}
+      {{objective-manage-descriptors
+        objective=manageDescriptorsObjective
+        editable=editable
+      }}
     {{/if}}
     {{#if isManagingCompetency}}
       {{objective-manage-competency objective=manageCompetencyObjective}}

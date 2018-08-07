@@ -1,34 +1,43 @@
 {{#unless loadAttr.isRunning}}
-  <div class='dashboard-block-header'>
-    <h3>{{t 'general.myReports'}}</h3>
+  <div class="dashboard-block-header">
+    <h3>{{t "general.myReports"}}</h3>
     <div class="dashboard-block-actions">
-      {{#liquid-if selectedReport class='crossFade'}}
-        <button {{action 'selectReport' null}}>{{t 'general.allReports'}}</button>
-        <button {{action (perform downloadReport)}} disabled={{downloadReport.isRunning}}>
+      {{#liquid-if selectedReport class="crossFade"}}
+        <button {{action "selectReport" null}}>{{t "general.allReports"}}</button>
+        <button {{action (perform downloadReport)}}
+          disabled={{downloadReport.isRunning}}
+        >
           {{#if finishedBuildingReport}}
-            {{fa-icon 'check'}}
+            {{fa-icon "check"}}
           {{else if downloadReport.isRunning}}
             {{loading-spinner}}
           {{else}}
-            {{fa-icon 'download'}}
+            {{fa-icon "download"}}
           {{/if}}
-          {{t 'general.downloadResults'}}
+          {{t "general.downloadResults"}}
         </button>
       {{else}}
-        {{expand-collapse-button value=myReportEditorOn action="toggleEditor" data-test-add-new-report=true}}
+        {{expand-collapse-button
+          value=myReportEditorOn
+          action="toggleEditor"
+          data-test-add-new-report=true
+        }}
       {{/liquid-if}}
     </div>
   </div>
 
-  {{#liquid-if selectedReport class='crossFade'}}
-    <div class='dashboard-block-body' data-test-selected-report>
+  {{#liquid-if selectedReport class="crossFade"}}
+    <div class="dashboard-block-body" data-test-selected-report>
       <h3 data-test-report-title>{{await selectedReportTitle}}</h3>
 
       {{#if showAcademicYearFilter}}
         <div class="years-filter">
-          <select onchange={{action (mut selectedYear) value="target.value"}} data-test-year-filter>
-            <option value='' selected={{is-empty selectedYear}}>{{t 'general.allAcademicYears'}}</option>
-            {{#each (sort-by 'academicYearTitle:desc' (await allAcademicYears)) as |year|}}
+          <select
+            onchange={{action (mut selectedYear) value="target.value"}}
+            data-test-year-filter
+          >
+            <option value="" selected={{is-empty selectedYear}}>{{t "general.allAcademicYears"}}</option>
+            {{#each (sort-by "academicYearTitle:desc" (await allAcademicYears)) as |year|}}
               <option value={{year.id}} selected={{is-equal year selectedYear}}>
                 {{year.academicYearTitle}}
               </option>
@@ -37,7 +46,7 @@
         </div>
       {{/if}}
       {{#if (is-fulfilled reportResultsList)}}
-        {{#if (get (await reportResultsList) 'length')}}
+        {{#if (get (await reportResultsList) "length")}}
           <ul data-test-results>
             {{#each (await reportResultsList) as |item|}}
               {{#if item.model2}}
@@ -59,30 +68,34 @@
             {{/each}}
           </ul>
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/if}}
       {{else}}
-        {{loading-spinner tagName='h1'}}
+        {{loading-spinner tagName="h1"}}
       {{/if}}
     </div>
   {{else}}
-    <div class='dashboard-block-body'>
-      {{#liquid-if myReportEditorOn class='vertical'}}
-        {{new-myreport close=(action 'toggleEditor')}}
+    <div class="dashboard-block-body">
+      {{#liquid-if myReportEditorOn class="vertical"}}
+        {{new-myreport close=(action "toggleEditor")}}
       {{/liquid-if}}
       {{#if (is-fulfilled sortedReports)}}
-        <ul class='saved-reports' data-test-saved-reports>
+        <ul class="saved-reports" data-test-saved-reports>
           {{#each (await sortedReports) as |report|}}
             <li>
-              {{myreports-list-item report=report selectReport='selectReport'}}
-              {{fa-icon 'trash' class='clickable remove' click=(action 'deleteReport' report)}}
+              {{myreports-list-item report=report selectReport="selectReport"}}
+              {{fa-icon
+                "trash"
+                class="clickable remove"
+                click=(action "deleteReport" report)
+              }}
             </li>
           {{else}}
-            <li>{{t 'general.none'}}</li>
+            <li>{{t "general.none"}}</li>
           {{/each}}
         </ul>
       {{else}}
-        {{loading-spinner tagName='h1'}}
+        {{loading-spinner tagName="h1"}}
       {{/if}}
     </div>
   {{/liquid-if}}

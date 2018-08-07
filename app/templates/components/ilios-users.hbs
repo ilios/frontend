@@ -4,31 +4,32 @@
       type="search"
       value={{query}}
       oninput={{setQuery}}
-      placeholder={{t 'general.searchUsers'}}
+      placeholder={{t "general.searchUsers"}}
     >
   </div>
 </div>
 
-<section class='users'>
+<section class="users">
   <div class="header">
-    <span class='title'>{{t 'general.users'}}</span>
-    <div class='actions'>
+    <span class="title">{{t "general.users"}}</span>
+    <div class="actions">
       {{#unless (or showNewUserForm showBulkNewUserForm)}}
-        <button {{action (toggle 'showNewUserForm' this)}}>{{t 'general.create'}}</button>
-        {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-          <button {{action (toggle 'showBulkNewUserForm' this)}}>{{t 'general.createBulk'}}</button>
+        <button {{action (toggle "showNewUserForm" this)}}>{{t "general.create"}}</button>
+        {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
+          <button {{action (toggle "showBulkNewUserForm" this)}}>{{t "general.createBulk"}}</button>
         {{/if}}
       {{else}}
-        <button {{action (if showNewUserForm (toggle 'showNewUserForm' this) (toggle 'showBulkNewUserForm' this))}}>
-          {{fa-icon 'minus'}}
+        <button {{action (if showNewUserForm (toggle "showNewUserForm" this) (toggle "showBulkNewUserForm" this))}}>
+          {{fa-icon "minus"}}
         </button>
       {{/unless}}
     </div>
   </div>
-  <section class='new'>
-    {{#if showNewUserForm class='vertical'}}
+  <section class="new">
+    {{#if showNewUserForm class="vertical"}}
       {{#if (is-fulfilled newUserComponent)}}
-        {{component (await newUserComponent)
+        {{component
+          (await newUserComponent)
           close=(action setShowNewUserForm false)
           transitionToUser=transitionToUser
           searchTerms=searchTerms
@@ -38,7 +39,7 @@
         {{loading-spinner}}
       {{/if}}
     {{/if}}
-    {{#if showBulkNewUserForm class='vertical'}}
+    {{#if showBulkNewUserForm class="vertical"}}
       {{#if (is-fulfilled newBulkUserComponent)}}
         {{bulk-new-users
           close=(action setShowNewUserForm false)
@@ -53,15 +54,15 @@
       offset=offset
       limit=limit
       limitless=true
-      setOffset=(action 'setOffset')
+      setOffset=(action "setOffset")
       setLimit=setLimit
     }}
 
-    <div class='list'>
+    <div class="list">
       {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
         {{user-list users=searchForUsers.lastSuccessful.value}}
       {{else}}
-        <span class="no-results">{{t 'general.noResultsFound'}}</span>
+        <span class="no-results">{{t "general.noResultsFound"}}</span>
       {{/if}}
     </div>
 
@@ -69,7 +70,7 @@
       offset=offset
       limit=limit
       limitless=true
-      setOffset=(action 'setOffset')
+      setOffset=(action "setOffset")
       setLimit=setLimit
     }}
 

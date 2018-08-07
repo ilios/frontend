@@ -1,37 +1,37 @@
 <div class="item minimum">
-  <label>{{t 'general.minimum'}}:</label>
+  <label>{{t "general.minimum"}}:</label>
   <input
     type="text"
     value={{minimum}}
     oninput={{action (mut minimum) value="target.value"}}
     disabled={{isSaving}}
-    onkeyup={{action 'addErrorDisplayFor' 'minimum'}}
+    onkeyup={{action "addErrorDisplayFor" "minimum"}}
   >
-  {{#if (and (v-get this 'minimum' 'isInvalid') (is-in showErrorsFor 'minimum'))}}
-    <span class="validation-error-message">{{v-get this 'minimum' 'message'}}</span>
+  {{#if (and (v-get this "minimum" "isInvalid") (is-in showErrorsFor "minimum"))}}
+    <span class="validation-error-message">{{v-get this "minimum" "message"}}</span>
   {{/if}}
 </div>
 
 <div class="item maximum">
-  <label>{{t 'general.maximum'}}:</label>
+  <label>{{t "general.maximum"}}:</label>
   <input
     type="text"
     value={{maximum}}
     oninput={{action (mut maximum) value="target.value"}}
     disabled={{isSaving}}
-    onkeyup={{action 'addErrorDisplayFor' 'maximum'}}
+    onkeyup={{action "addErrorDisplayFor" "maximum"}}
   >
-  {{#if (and (v-get this 'maximum' 'isInvalid') (is-in showErrorsFor 'maximum'))}}
-    <span class="validation-error-message">{{v-get this 'maximum' 'message'}}</span>
+  {{#if (and (v-get this "maximum" "isInvalid") (is-in showErrorsFor "maximum"))}}
+    <span class="validation-error-message">{{v-get this "maximum" "message"}}</span>
   {{/if}}
 </div>
-<div class='buttons'>
-  <button class='done text' {{action 'save'}} disabled={{or isSaving}}>
+<div class="buttons">
+  <button class="done text" {{action "save"}} disabled={{or isSaving}}>
     {{#if isSaving}}
       {{loading-spinner}}
     {{else}}
-      {{t 'general.done'}}
+      {{t "general.done"}}
     {{/if}}
   </button>
-  <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+  <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
 </div>

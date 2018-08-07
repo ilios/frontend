@@ -1,24 +1,24 @@
-<div class='title' {{action (action expand)}}>
-  {{t 'general.terms'}} ({{subject.terms.length}})
+<div class="title" {{action (action expand)}}>
+  {{t "general.terms"}} ({{subject.terms.length}})
 </div>
 {{#if (is-pending subject.associatedVocabularies)}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{else}}
-  <div class='content'>
-    <table class='condensed'>
+  <div class="content">
+    <table class="condensed">
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.vocabulary'}}</th>
-          <th class='text-center'>{{t 'general.school'}}</th>
-          <th class='text-center'>{{t 'general.assignedTerms'}}</th>
+          <th class="text-left">{{t "general.vocabulary"}}</th>
+          <th class="text-center">{{t "general.school"}}</th>
+          <th class="text-center">{{t "general.assignedTerms"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each (await subject.associatedVocabularies) as |vocab| }}
           <tr>
-            <td class='text-left'>{{vocab.title}}</td>
-            <td class='text-center'>{{vocab.school.title}}</td>
-            <td class='text-center'>{{intersection-count subject.terms vocab.terms}}</td>
+            <td class="text-left">{{vocab.title}}</td>
+            <td class="text-center">{{vocab.school.title}}</td>
+            <td class="text-center">{{intersection-count subject.terms vocab.terms}}</td>
           </tr>
         {{/each}}
       </tbody>

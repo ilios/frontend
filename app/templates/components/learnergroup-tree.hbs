@@ -1,11 +1,19 @@
-<span class={{if selectable 'clickable'}} onclick={{if selectable (action add learnerGroup)}}>
+<span
+  class={{if selectable "clickable"}}
+  onclick={{if selectable (action add learnerGroup)}}
+>
   {{learnerGroup.title}}
 </span>
 {{#if learnerGroup.children.length}}
   <ul>
     {{#if (is-fulfilled learnerGroup.children)}}
-      {{#each (sort-by 'title' (await learnerGroup.children)) as |child|}}
-        {{learnergroup-tree learnerGroup=child selectedGroups=selectedGroups filter=filter add=(action add)}}
+      {{#each (sort-by "title" (await learnerGroup.children)) as |child|}}
+        {{learnergroup-tree
+          learnerGroup=child
+          selectedGroups=selectedGroups
+          filter=filter
+          add=(action add)
+        }}
       {{/each}}
     {{else}}
       <li>{{loading-spinner}}</li>

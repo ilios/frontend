@@ -1,25 +1,25 @@
 <table>
   <thead>
     <tr>
-      <th class='text-left' colspan=1></th>
-      <th class='text-left' colspan=3>{{t 'general.fullName'}}</th>
-      <th class='text-left hide-from-small-screen' colspan=2>{{t 'general.campusId'}}</th>
-      <th class='text-left hide-from-small-screen' colspan=5>{{t 'general.email'}}</th>
-      <th class='text-left hide-from-small-screen' colspan=2>{{t 'general.primarySchool'}}</th>
+      <th class="text-left" colspan="1"></th>
+      <th class="text-left" colspan="3">{{t "general.fullName"}}</th>
+      <th class="text-left hide-from-small-screen" colspan="2">{{t "general.campusId"}}</th>
+      <th class="text-left hide-from-small-screen" colspan="5">{{t "general.email"}}</th>
+      <th class="text-left hide-from-small-screen" colspan="2">{{t "general.primarySchool"}}</th>
     </tr>
   </thead>
   <tbody>
     {{#each users as |user|}}
-      <tr class="{{unless user.enabled 'disabled-user-account'}}">
-        <td class='text-left' colspan=1>
+      <tr class={{unless user.enabled "disabled-user-account" ""}}>
+        <td class="text-left" colspan="1">
           {{#unless user.enabled}}
-            {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+            {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
           {{/unless}}
         </td>
-        <td class='text-left' colspan=3>{{#link-to 'user' user}}{{user.fullName}}{{/link-to}}</td>
-        <td class='text-left hide-from-small-screen' colspan=2>{{user.campusId}}</td>
-        <td class='text-left hide-from-small-screen' colspan=5>{{user.email}}</td>
-        <td class='text-left hide-from-small-screen' colspan=2>{{user.school.title}}</td>
+        <td class="text-left" colspan="3">{{#link-to "user" user}}{{user.fullName}}{{/link-to}}</td>
+        <td class="text-left hide-from-small-screen" colspan="2">{{user.campusId}}</td>
+        <td class="text-left hide-from-small-screen" colspan="5">{{user.email}}</td>
+        <td class="text-left hide-from-small-screen" colspan="2">{{user.school.title}}</td>
       </tr>
     {{/each}}
   </tbody>

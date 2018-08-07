@@ -2,27 +2,30 @@
   {{#if isSorting}}
     {{objective-sort-manager
       subject=programYear
-      save=(action 'saveSortOrder')
-      cancel=(action 'cancelSorting')
+      save=(action "saveSortOrder")
+      cancel=(action "cancelSorting")
     }}
   {{else}}
-    {{#if (get (await objectives) 'length')}}
+    {{#if (get (await objectives) "length")}}
       {{#if (and editable (await hasMoreThanOneObjective))}}
-        <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t 'general.sortObjectives'}}</button>
+        <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t "general.sortObjectives"}}</button>
       {{/if}}
       <a class="button" {{action (perform downloadReport subject)}}>
         <button class="download">
-          {{fa-icon (if downloadReport.isRunning 'spinner' 'download') spin=(if downloadReport.isRunning true false)}}
-          {{t 'general.downloadCompetencyMap'}}
+          {{fa-icon
+            (if downloadReport.isRunning "spinner" "download")
+            spin=(if downloadReport.isRunning true false)
+          }}
+          {{t "general.downloadCompetencyMap"}}
         </button>
       </a>
       <table>
         <thead>
           <tr>
-            <th colspan=1></th>
-            <th class='text-left' colspan=12>{{t 'general.description'}}</th>
-            <th class='text-left' colspan=8>{{t 'general.competency'}}</th>
-            <th class='text-left' colspan=8>{{t 'general.meshTerms'}}</th>
+            <th colspan="1"></th>
+            <th class="text-left" colspan="12">{{t "general.description"}}</th>
+            <th class="text-left" colspan="8">{{t "general.competency"}}</th>
+            <th class="text-left" colspan="8">{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +37,7 @@
               manageDescriptors=manageDescriptors
               editable=editable
               expanded=(contains objective.id expandedObjectiveIds)
-              toggleExpand=(action 'toggleExpand')
+              toggleExpand=(action "toggleExpand")
             }}
             {{#if (contains objective.id expandedObjectiveIds)}}
               {{programyear-objective-list-item-expanded objective=objective}}
@@ -51,7 +54,7 @@
   {{/each}}
 {{/if}}
 
-{{#liquid-if isSaving class='crossFade'}}
+{{#liquid-if isSaving class="crossFade"}}
   {{wait-saving
     showProgress=true
     totalProgress=totalObjectivesToSave

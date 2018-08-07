@@ -4,21 +4,23 @@
   </h3>
 {{else}}
   <div class="item">
-    <label>{{t 'general.numberOfGroups'}}:</label>
+    <label>{{t "general.numberOfGroups"}}:</label>
     <input
       type="text"
       value={{numSubGroups}}
       oninput={{action (mut numSubGroups) value="target.value"}}
       disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'numSubGroups'}}
-      placeholder={{t 'general.numberOfGroupsToGenerate'}}
+      onkeyup={{action "addErrorDisplayFor" "numSubGroups"}}
+      placeholder={{t "general.numberOfGroupsToGenerate"}}
     >
-    {{#if (and (v-get this 'numSubGroups' 'isInvalid') (is-in showErrorsFor 'numSubGroups'))}}
-      <span class="validation-error-message">{{v-get this 'numSubGroups' 'message'}}</span>
+    {{#if
+      (and (v-get this "numSubGroups" "isInvalid") (is-in showErrorsFor "numSubGroups"))
+    }}
+      <span class="validation-error-message">{{v-get this "numSubGroups" "message"}}</span>
     {{/if}}
   </div>
   <div class="buttons">
-    <button class='done text' {{action 'save'}}>{{t 'general.done'}}</button>
-    <button class='cancel text' {{action cancel}}>{{t 'general.cancel'}}</button>
+    <button class="done text" {{action "save"}}>{{t "general.done"}}</button>
+    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
   </div>
 {{/if}}

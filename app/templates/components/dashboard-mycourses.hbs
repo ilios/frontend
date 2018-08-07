@@ -1,18 +1,18 @@
-<div class='dashboard-block-header'>
-  <h3>{{t 'general.myCourses'}}</h3>
+<div class="dashboard-block-header">
+  <h3>{{t "general.myCourses"}}</h3>
 </div>
 
-<div class='dashboard-block-body'>
+<div class="dashboard-block-body">
   {{#if (is-fulfilled listOfCourses)}}
-    {{#if (get (await listOfCourses) 'length')}}
+    {{#if (get (await listOfCourses) "length")}}
       <table>
         <tbody>
           {{#each (await listOfCourses) as |course|}}
             {{#if (await canEditCourses)}}
-              <tr class='clickable'>
-                <td>{{#link-to 'course' course}}{{fa-icon 'external-link-square'}} {{course.academicYear}}{{/link-to}}</td>
+              <tr class="clickable">
+                <td>{{#link-to "course" course}}{{fa-icon "external-link-square"}} {{course.academicYear}}{{/link-to}}</td>
                 <td>
-                  {{#link-to 'course' course}}
+                  {{#link-to "course" course}}
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
@@ -30,9 +30,9 @@
         </tbody>
       </table>
     {{else}}
-      {{t 'general.none'}}
+      {{t "general.none"}}
     {{/if}}
   {{else}}
-    {{loading-spinner tagName='h1'}}
+    {{loading-spinner tagName="h1"}}
   {{/if}}
 </div>

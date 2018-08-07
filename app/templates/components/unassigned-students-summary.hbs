@@ -1,36 +1,44 @@
 <h3>
-  {{#if (gt (get (await unassignedStudents) 'length') 1)}}
-    {{fa-icon 'warning'  class='no'}}
+  {{#if (gt (get (await unassignedStudents) "length") 1)}}
+    {{fa-icon "warning"  class="no"}}
   {{/if}}
-  {{t 'general.unassignedStudentsSummaryTitle'}}
+  {{t "general.unassignedStudentsSummaryTitle"}}
 </h3>
 {{#if (is-fulfilled schools)}}
-  <div id='schoolsfilter' class="filter">
+  <div id="schoolsfilter" class="filter">
     <label class="inline-label">
-      {{fa-icon 'university'}}
+      {{fa-icon "university"}}
     </label>
     <div id="school-selection" class="inline-data">
-      {{#if (gt (get schools 'length') 1)}}
+      {{#if (gt (get schools "length") 1)}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' schools) as |school|}}
+          {{#each (sort-by "title" schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{get (await selectedSchool) 'title'}}
+        {{get (await selectedSchool) "title"}}
       {{/if}}
     </div>
   </div>
 {{/if}}
 
 {{#if (is-fulfilled unassignedStudents)}}
-  <p>{{t 'general.unassignedStudentsSummary' count=(get (await unassignedStudents) 'length')}}</p>
-  {{#if (gt (get (await unassignedStudents) 'length') 0)}}
-    <div class='actions'>
-      {{#link-to 'assign-students' (query-params school=(get (await selectedSchool) 'id'))}}
-        <button>{{t 'general.manage'}}</button>
+  <p>
+    {{t
+      "general.unassignedStudentsSummary"
+      count=(get (await unassignedStudents) "length")
+    }}
+  </p>
+  {{#if (gt (get (await unassignedStudents) "length") 0)}}
+    <div class="actions">
+      {{#link-to
+        "assign-students"
+        (query-params school=(get (await selectedSchool) "id"))
+      }}
+        <button>{{t "general.manage"}}</button>
       {{/link-to}}
     </div>
   {{/if}}

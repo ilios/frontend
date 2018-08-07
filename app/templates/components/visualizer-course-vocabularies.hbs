@@ -1,10 +1,11 @@
-{{#if (or true isIcon (gt (get (await data) 'length') 0))}}
+{{! template-lint-disable attribute-indentation }}
+{{#if (or true isIcon (gt (get (await data) "length") 0))}}
   {{#simple-chart
-    name='donut'
+    name="donut"
     isIcon=isIcon
     data=(await data)
     hover=(perform donutHover)
-    click=(action 'donutClick')
+    click=(action "donutClick")
     leave=(perform donutHover)
 
     as |chart|

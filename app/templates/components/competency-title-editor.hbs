@@ -1,8 +1,9 @@
+{{! template-lint-disable attribute-indentation }}
 {{#if canUpdate}}
   {{#editable-field
     value=title
     save=(perform save)
-    close=(action 'revert')
+    close=(action "revert")
     saveOnEnter=true
     closeOnEscape=true
     as |isSaving|
@@ -12,11 +13,11 @@
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'title'}}
+      onkeyup={{action "addErrorDisplayFor" "title"}}
     >
   {{/editable-field}}
-  {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-    <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+  {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+    <span class="validation-error-message">{{v-get this "title" "message"}}</span>
   {{/if}}
 {{else}}
   {{title}}

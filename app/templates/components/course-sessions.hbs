@@ -1,37 +1,40 @@
-<div class='course-sessions-header'>
-  <div class='title'>
-    {{t 'general.sessions'}} ({{sessionsCount}})
+<div class="course-sessions-header">
+  <div class="title">
+    {{t "general.sessions"}} ({{sessionsCount}})
   </div>
-  <div class='actions'>
+  <div class="actions">
     {{#if canCreateSession}}
-      {{expand-collapse-button value=showNewSessionForm action=(toggle 'showNewSessionForm' this)}}
+      {{expand-collapse-button
+        value=showNewSessionForm
+        action=(toggle "showNewSessionForm" this)
+      }}
     {{/if}}
     {{#if (and canUpdateCourse (gt sessionsCount 0))}}
-      {{#link-to 'course.publishall' course}}
-        <button>{{t 'general.publishAllSessions' sessionCount=sessionsCount}}</button>
+      {{#link-to "course.publishall" course}}
+        <button>{{t "general.publishAllSessions" sessionCount=sessionsCount}}</button>
       {{/link-to}}
     {{/if}}
   </div>
 </div>
 {{#if showNewSessionForm}}
-  <div class='new-session-form'>
+  <div class="new-session-form">
     {{new-session
       sessionTypes=sessionTypes
       save=(perform saveSession)
-      cancel=(toggle 'showNewSessionForm' this)
+      cancel=(toggle "showNewSessionForm" this)
     }}
   </div>
 {{/if}}
 
 {{#if saveSession.lastSuccessful.value}}
-  <div class='save-result'>
-    {{#link-to 'session.index' course saveSession.lastSuccessful.value}}
-      {{fa-icon 'external-link-square'}} {{get saveSession.lastSuccessful.value 'title'}}
+  <div class="save-result">
+    {{#link-to "session.index" course saveSession.lastSuccessful.value}}
+      {{fa-icon "external-link-square"}} {{get saveSession.lastSuccessful.value "title"}}
     {{/link-to}}
-    {{t 'general.savedSuccessfully'}}
+    {{t "general.savedSuccessfully"}}
   </div>
 {{/if}}
-<div class='course-sessions-content'>
+<div class="course-sessions-content">
   {{session-table
     sessions=(await sessionObjects)
     setSortBy=setSortBy

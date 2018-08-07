@@ -1,9 +1,10 @@
-<h3 class='title'>{{t 'general.permissions'}} {{#unless (is-fulfilled isLoaded)}}{{loading-spinner}}{{/unless}}</h3>
+{{! template-lint-disable attribute-indentation }}
+<h3 class="title">{{t "general.permissions"}} {{#unless (is-fulfilled isLoaded)}}{{loading-spinner}}{{/unless}}</h3>
 
 <span>
-  {{fa-icon 'university' fixedWidth=true}}
+  {{fa-icon "university" fixedWidth=true}}
   <select onchange={{action (mut selectedSchoolId) value="target.value"}}>
-    {{#each (sort-by 'title' (await schools)) as |school|}}
+    {{#each (sort-by "title" (await schools)) as |school|}}
       <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
         {{school.title}}
       </option>
@@ -12,9 +13,9 @@
 </span>
 
 <span>
-  {{fa-icon 'calendar' fixedWidth=true}}
+  {{fa-icon "calendar" fixedWidth=true}}
   <select onchange={{action (mut selectedYearId) value="target.value"}}>
-    {{#each (sort-by 'title' (await academicYears)) as |year|}}
+    {{#each (sort-by "title" (await academicYears)) as |year|}}
       <option value={{year.id}} selected={{is-equal year (await selectedYear)}}>
         {{year.academicYearTitle}}
       </option>
@@ -24,75 +25,83 @@
 
 {{#if (is-fulfilled isLoaded)}}
   <p>
-    <h5>{{t 'general.school'}} ({{get (await selectedSchool) 'title'}})</h5>
-    <span class='hide-on-collapse'><strong>{{t 'general.director'}}: </strong> {{yes-no value=(await isDirectingSchool)}} <br></span>
-    <span class='hide-on-collapse'><strong>{{t 'general.administrator'}}: </strong> {{yes-no value=(await isAdministeringSchool)}} <br></span>
+    <h5>{{t "general.school"}} ({{get (await selectedSchool) "title"}})</h5>
+    <span class="hide-on-collapse"><strong>{{t "general.director"}}: </strong> {{yes-no value=(await isDirectingSchool)}} <br></span>
+    <span class="hide-on-collapse"><strong>{{t "general.administrator"}}: </strong> {{yes-no value=(await isAdministeringSchool)}} <br></span>
   </p>
-  <p class={{if programCollapsed 'collapsed' 'expanded'}}>
-    <h5 {{action (toggle 'programCollapsed' this)}}>{{t 'general.programs'}} ({{get (await directedPrograms) 'length'}})</h5>
-    <h6>{{t 'general.director'}}</h6>
+  <p class={{if programCollapsed "collapsed" "expanded"}}>
+    <h5 {{action (toggle "programCollapsed" this)}}>{{t "general.programs"}} ({{get (await directedPrograms) "length"}})</h5>
+    <h6>{{t "general.director"}}</h6>
     <ul>
-      {{#each (sort-by 'title' (await directedPrograms)) as |program|}}
+      {{#each (sort-by "title" (await directedPrograms)) as |program|}}
         <li>{{program.title}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
   </p>
-  <p class={{if programYearCollapsed 'collapsed' 'expanded'}}>
-    <h5 {{action (toggle 'programYearCollapsed' this)}}>{{t 'general.programYears'}} ({{get (await directedProgramYears) 'length'}})</h5>
-    <h6>{{t 'general.director'}}</h6>
+  <p class={{if programYearCollapsed "collapsed" "expanded"}}>
+    <h5 {{action (toggle "programYearCollapsed" this)}}>
+      {{t "general.programYears"}} ({{get (await directedProgramYears) "length"}})
+    </h5>
+    <h6>{{t "general.director"}}</h6>
     <ul>
-      {{#each (sort-by 'program.title' 'title' (await directedProgramYears)) as |programYear|}}
+      {{#each
+        (sort-by "program.title" "title" (await directedProgramYears))
+        as |programYear|
+      }}
         <li>{{programYear.program.title}} <strong>{{programYear.cohort.title}}</strong></li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
   </p>
-  <p class={{if courseCollapsed 'collapsed' 'expanded'}}>
-    <h5 {{action (toggle 'courseCollapsed' this)}}>{{t 'general.courses'}} ({{await courseCount}})</h5>
-    <h6>{{t 'general.director'}}</h6>
+  <p class={{if courseCollapsed "collapsed" "expanded"}}>
+    <h5 {{action (toggle "courseCollapsed" this)}}>{{t "general.courses"}} ({{await courseCount}})</h5>
+    <h6>{{t "general.director"}}</h6>
     <ul>
-      {{#each (sort-by 'title' (await directedCourses)) as |course|}}
-        <li>{{course.academicYear}} {{#link-to 'course' course }}{{course.title}}{{/link-to}}</li>
+      {{#each (sort-by "title" (await directedCourses)) as |course|}}
+        <li>{{course.academicYear}} {{#link-to "course" course }}{{course.title}}{{/link-to}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
-    <h6>{{t 'general.administrator'}}</h6>
+    <h6>{{t "general.administrator"}}</h6>
     <ul>
-      {{#each (sort-by 'title' (await administeredCourses)) as |course|}}
-        <li>{{course.academicYear}} {{#link-to 'course' course }}{{course.title}}{{/link-to}}</li>
+      {{#each (sort-by "title" (await administeredCourses)) as |course|}}
+        <li>{{course.academicYear}} {{#link-to "course" course }}{{course.title}}{{/link-to}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
-    <h6>{{t 'general.instructor'}}</h6>
+    <h6>{{t "general.instructor"}}</h6>
     <ul>
-      {{#each (sort-by 'title' (await instructedCourses)) as |course|}}
-        <li>{{course.academicYear}} {{#link-to 'course' course }}{{course.title}}{{/link-to}}</li>
+      {{#each (sort-by "title" (await instructedCourses)) as |course|}}
+        <li>{{course.academicYear}} {{#link-to "course" course }}{{course.title}}{{/link-to}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
   </p>
-  <p class={{if sessionCollapsed 'collapsed' 'expanded'}}>
-    <h5 {{action (toggle 'sessionCollapsed' this)}}>{{t 'general.sessions'}}  ({{await sessionCount}})</h5>
-    <h6>{{t 'general.administrator'}}</h6>
+  <p class={{if sessionCollapsed "collapsed" "expanded"}}>
+    <h5 {{action (toggle "sessionCollapsed" this)}}>{{t "general.sessions"}}  ({{await sessionCount}})</h5>
+    <h6>{{t "general.administrator"}}</h6>
     <ul>
       {{#each (await administeredSessions) as |session|}}
-        <li>{{session.course.academicYear}} {{session.course.title}} &raquo; {{#link-to 'session' session.course session }}{{session.title}}{{/link-to}}</li>
+        <li>{{session.course.academicYear}} {{session.course.title}} &raquo; {{#link-to "session" session.course session }}{{session.title}}{{/link-to}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
-    <h6>{{t 'general.instructor'}}</h6>
+    <h6>{{t "general.instructor"}}</h6>
     <ul>
-      {{#each (sort-by 'course.year:desc' 'course.title' 'title' (await instructedSessions)) as |session|}}
-        <li>{{session.course.academicYear}} {{session.course.title}} &raquo; {{#link-to 'session' session.course session }}{{session.title}}{{/link-to}}</li>
+      {{#each
+        (sort-by "course.year:desc" "course.title" "title" (await instructedSessions))
+        as |session|
+      }}
+        <li>{{session.course.academicYear}} {{session.course.title}} &raquo; {{#link-to "session" session.course session }}{{session.title}}{{/link-to}}</li>
       {{else}}
-        <li>{{t 'general.none'}}</li>
+        <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
   </p>

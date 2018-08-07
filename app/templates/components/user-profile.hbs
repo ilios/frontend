@@ -1,21 +1,21 @@
-<div class='blocks'>
+<div class="blocks">
   {{manage-users-summary canCreate=canCreate}}
 </div>
 
 <h1 class="user-display-name">
   {{#unless user.enabled}}
-    {{fa-icon 'ban' class='no' title=(t 'general.disabled')}}
+    {{fa-icon "ban" class="no" title=(t "general.disabled")}}
   {{/unless}}
   {{user.fullName}}
 </h1>
-<div class='user-roles'>
+<div class="user-roles">
   {{#if (await user.isStudent)}}
-    <span class="user-is-student">{{t 'general.student'}}</span>
+    <span class="user-is-student">{{t "general.student"}}</span>
   {{/if}}
 </div>
 {{pending-single-user-update user=user canUpdate=canUpdate}}
 
-<div class='blocks'>
+<div class="blocks">
   {{user-profile-bio
     user=user
     isManageable=canUpdate
@@ -39,7 +39,7 @@
 
   {{user-profile-ics
     user=user
-    isManageable=(and canUpdate (eq (get (await currentUser.model) 'id') user.id))
+    isManageable=(and canUpdate (eq (get (await currentUser.model) "id") user.id))
     isManaging=isManagingIcs
     setIsManaging=setIsManagingIcs
   }}

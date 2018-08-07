@@ -8,39 +8,51 @@
     setIsManaging=(action setManagePyCompetencies)
   }}
 {{else}}
-  {{collapsed-competencies subject=programYear expand=(action setPyCompetencyDetails true)}}
+  {{collapsed-competencies
+    subject=programYear
+    expand=(action setPyCompetencyDetails true)
+  }}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
   {{detail-objectives
-  subject=programYear
-  isProgramYear=true
-  editable=canUpdate
-  collapse=(action setPyObjectiveDetails false)
-  expand=(action setPyObjectiveDetails true)
+    subject=programYear
+    isProgramYear=true
+    editable=canUpdate
+    collapse=(action setPyObjectiveDetails false)
+    expand=(action setPyObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=programYear expand=(action setPyObjectiveDetails true)}}
+  {{collapsed-objectives
+    subject=programYear
+    expand=(action setPyObjectiveDetails true)
+  }}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
   {{detail-taxonomies
-  subject=programYear
-  editable=canUpdate
-  collapse=(action setPyTaxonomyDetails false)
-  expand=(action setPyTaxonomyDetails true)
+    subject=programYear
+    editable=canUpdate
+    collapse=(action setPyTaxonomyDetails false)
+    expand=(action setPyTaxonomyDetails true)
   }}
 {{else}}
-  {{collapsed-taxonomies subject=programYear expand=(action setPyTaxonomyDetails true)}}
+  {{collapsed-taxonomies
+    subject=programYear
+    expand=(action setPyTaxonomyDetails true)
+  }}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
   {{detail-stewards
-  programYear=programYear
-  editable=canUpdate
-  collapse=(action setPyStewardDetails false)
-  expand=(action setPyStewardDetails true)
+    programYear=programYear
+    editable=canUpdate
+    collapse=(action setPyStewardDetails false)
+    expand=(action setPyStewardDetails true)
   }}
 {{else}}
-  {{collapsed-stewards programYear=programYear expand=(action setPyStewardDetails true)}}
+  {{collapsed-stewards
+    programYear=programYear
+    expand=(action setPyStewardDetails true)
+  }}
 {{/liquid-if}}

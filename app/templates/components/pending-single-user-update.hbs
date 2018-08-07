@@ -1,31 +1,31 @@
-{{#liquid-if updates.isFulfilled class='crossFade'}}
+{{#liquid-if updates.isFulfilled class="crossFade"}}
   {{#if isSaving}}
-    {{loading-spinner tagName='h2'}}
+    {{loading-spinner tagName="h2"}}
   {{else}}
     {{#each updates as |update|}}
-      <div class='update'>
-        <div class='explanation'>
-          <h2>{{fa-icon 'exclamation-triangle' class='no'}}</h2>
+      <div class="update">
+        <div class="explanation">
+          <h2>{{fa-icon "exclamation-triangle" class="no"}}</h2>
           {{t
-            (concat 'general.pendingUserUpdates.' update.type)
+            (concat "general.pendingUserUpdates." update.type)
             update=update
           }}
         </div>
 
-        <div class='actions'>
-          {{#if (eq update.type 'emailMismatch')}}
-            <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
-              {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
-              {{t 'general.pendingUserUpdates.updateIlios'}}
+        <div class="actions">
+          {{#if (eq update.type "emailMismatch")}}
+            <span class="clickable link" onclick={{action "updateEmailAddress" update}}>
+              {{fa-icon "arrow-circle-up" class="yes" title=(t "general.update")}}
+              {{t "general.pendingUserUpdates.updateIlios"}}
             </span>
           {{/if}}
-          <span class='clickable link' onclick={{action 'excludeFromSync' update}}>
-            {{fa-icon 'ban' class='no' title=(t 'general.excludeFromSync')}}
-            {{t 'general.excludeFromSync'}}
+          <span class="clickable link" onclick={{action "excludeFromSync" update}}>
+            {{fa-icon "ban" class="no" title=(t "general.excludeFromSync")}}
+            {{t "general.excludeFromSync"}}
           </span>
-          <span class='clickable link' onclick={{action 'disableUser' update}}>
-            {{fa-icon 'times' class='no' title=(t 'general.disableUser')}}
-            {{t 'general.disableUser'}}
+          <span class="clickable link" onclick={{action "disableUser" update}}>
+            {{fa-icon "times" class="no" title=(t "general.disableUser")}}
+            {{t "general.disableUser"}}
           </span>
         </div>
       </div>

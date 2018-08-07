@@ -1,24 +1,24 @@
-<div class='title clickable'  {{action (action expand)}}>
-  {{t 'general.vocabularies'}} ({{get (await school.vocabularies) 'length'}})
+<div class="title clickable"  {{action (action expand)}}>
+  {{t "general.vocabularies"}} ({{get (await school.vocabularies) "length"}})
 </div>
 {{#if (is-pending school.vocabularies)}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{/if}}
 {{#unless (is-pending school.vocabularies)}}
-  <div class='content'>
-    <table class='condensed'>
+  <div class="content">
+    <table class="condensed">
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.vocabulary'}}</th>
-          <th class='text-left'>{{t 'general.summary'}}</th>
+          <th class="text-left">{{t "general.vocabulary"}}</th>
+          <th class="text-left">{{t "general.summary"}}</th>
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by 'title' (await school.vocabularies)) as |vocabulary|}}
+        {{#each (sort-by "title" (await school.vocabularies)) as |vocabulary|}}
           <tr>
             <td>{{vocabulary.title}}</td>
-            <td class='summary-highlight'>
-              {{t 'general.termCount' count=vocabulary.termCount}}
+            <td class="summary-highlight">
+              {{t "general.termCount" count=vocabulary.termCount}}
             </td>
           </tr>
         {{/each}}

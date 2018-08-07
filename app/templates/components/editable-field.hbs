@@ -1,9 +1,9 @@
-<span class='content'>
+<span class="content">
   {{#unless isEditing}}
-    <span onclick={{perform edit}} class='editable'>
+    <span onclick={{perform edit}} class="editable">
       {{#if value}}
         {{#if looksEmpty}}
-          {{fa-icon 'edit'}}
+          {{fa-icon "edit"}}
         {{else}}
           {{big-text text=value renderHtml=renderHtml}}
         {{/if}}
@@ -12,13 +12,22 @@
       {{/if}}
     </span>
   {{else}}
-    <span class='editor'>
+    <span class="editor">
       {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
-      <span class='actions'>
-        <button disabled={{isSaveDisabled}} class='done' title='{{t 'general.save'}}' {{action (perform saveData)}}>
-          {{fa-icon (if saveData.isRunning 'spinner' 'check') spin=saveData.isRunning}}
+      <span class="actions">
+        <button {{action (perform saveData)}}
+          disabled={{isSaveDisabled}}
+          class="done"
+          title={{t "general.save"}}
+        >
+          {{fa-icon (if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
         </button>
-        <button class='cancel' title='{{t 'general.cancel'}}' {{action (perform closeEditor)}}>{{fa-icon 'times'}}</button>
+        <button {{action (perform closeEditor)}}
+          class="cancel"
+          title={{t "general.cancel"}}
+        >
+          {{fa-icon "times"}}
+        </button>
       </span>
     </span>
   {{/unless}}

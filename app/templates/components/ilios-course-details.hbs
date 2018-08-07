@@ -1,10 +1,10 @@
 <div class="back-to-courses-list">
-  {{#link-to 'courses'}}{{t 'general.backToCourses'}}{{/link-to}}
+  {{#link-to "courses"}}{{t "general.backToCourses"}}{{/link-to}}
 </div>
 {{course-header course=course editable=editable}}
 {{course-overview course=course editable=editable}}
 {{#if (not showDetails)}}
-  <div {{action setShowDetails true}} class='detail-collapsed-control'><span>{{t 'general.expandDetail'}}{{fa-icon 'plus-square'}}</span></div>
+  <div {{action setShowDetails true}} class="detail-collapsed-control"><span>{{t "general.expandDetail"}}{{fa-icon "plus-square"}}</span></div>
 {{else}}
   {{course-editing
     course=course
@@ -20,5 +20,5 @@
     setCourseCompetencyDetails=(action setCourseCompetencyDetails)
     setCourseManageLeadership=(action setCourseManageLeadership)
   }}
-  <div {{action 'collapse'}} class='detail-collapsed-control'><span class='is-expanded'>{{t 'general.collapseDetail'}}{{fa-icon 'minus-square'}}</span></div>
+  <div {{action "collapse"}} class="detail-collapsed-control"><span class="is-expanded">{{t "general.collapseDetail"}}{{fa-icon "minus-square"}}</span></div>
 {{/if}}

@@ -1,36 +1,41 @@
-<div class='actions'>
+<div class="actions">
   {{#if isManaging}}
-    <button class='bigadd' {{action (perform save)}} data-test-save>{{fa-icon (if save.isRunning 'spinner' 'check') spin=(if save.isRunning true false)}}</button>
-    <button disabled={{save.isRunning}} class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    <button class="bigadd" {{action (perform save)}} data-test-save>
+      {{fa-icon
+        (if save.isRunning "spinner" "check")
+        spin=(if save.isRunning true false)
+      }}
+    </button>
+    <button disabled={{save.isRunning}} class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
   {{else if isManageable}}
-    <button class='manage' {{action setIsManaging true}} data-test-manage>{{fa-icon 'edit'}}</button>
+    <button class="manage" {{action setIsManaging true}} data-test-manage>{{fa-icon "edit"}}</button>
   {{/if}}
 </div>
-<div class='form'>
-  <div class='item'>
-    <label>{{t 'general.student'}}:</label>
-    <span class='value {{if (await isStudent) "yes" "no"}}'>
+<div class="form">
+  <div class="item">
+    <label>{{t "general.student"}}:</label>
+    <span class="value {{if (await isStudent) "yes" "no"}}">
       {{#if (await isStudent)}}
-        {{t 'general.yes'}}
+        {{t "general.yes"}}
       {{else}}
-        {{t 'general.no'}}
+        {{t "general.no"}}
       {{/if}}
     </span>
   </div>
-  <div class='item'>
-    <label for='former-student'>{{t 'general.formerStudent'}}:</label>
+  <div class="item">
+    <label for="former-student">{{t "general.formerStudent"}}:</label>
     {{#unless isManaging}}
-      <span class='value {{if (await isFormerStudent) "yes" "no"}}'>
+      <span class="value {{if (await isFormerStudent) "yes" "no"}}">
         {{#if (await isFormerStudent)}}
-          {{t 'general.yes'}}
+          {{t "general.yes"}}
         {{else}}
-          {{t 'general.no'}}
+          {{t "general.no"}}
         {{/if}}
       </span>
     {{else}}
       <input
-        id='former-student'
-        type='checkbox'
+        id="former-student"
+        type="checkbox"
         checked={{await isFormerStudent}}
         onclick={{action (mut isFormerStudentFlipped) (not isFormerStudentFlipped)}}
       >
@@ -39,40 +44,40 @@
 
   <hr>
 
-  <div class='item'>
-    <label for='is-enabled'>{{t 'general.accountEnabled'}}:</label>
+  <div class="item">
+    <label for="is-enabled">{{t "general.accountEnabled"}}:</label>
     {{#unless isManaging}}
-      <span class='value {{if (await isEnabled) "yes" "no"}}'>
+      <span class="value {{if (await isEnabled) "yes" "no"}}">
         {{#if (await isEnabled)}}
-          {{t 'general.yes'}}
+          {{t "general.yes"}}
         {{else}}
-          {{t 'general.no'}}
+          {{t "general.no"}}
         {{/if}}
       </span>
     {{else}}
       <input
-        id='is-enabled'
-        type='checkbox'
+        id="is-enabled"
+        type="checkbox"
         checked={{isEnabled}}
         onclick={{action (mut isEnabledFlipped) (not isEnabledFlipped)}}
         disabled={{if (eq user.id currentUser.model.id) true}}
       >
     {{/unless}}
   </div>
-  <div class='item'>
-    <label for='exclude-from-sync' >{{t 'general.excludeFromSync'}}:</label>
+  <div class="item">
+    <label for="exclude-from-sync" >{{t "general.excludeFromSync"}}:</label>
     {{#unless isManaging}}
-      <span class='value {{if (await isUserSyncIgnored) "yes" "no"}}'>
+      <span class="value {{if (await isUserSyncIgnored) "yes" "no"}}">
         {{#if (await isUserSyncIgnored)}}
-          {{t 'general.yes'}}
+          {{t "general.yes"}}
         {{else}}
-          {{t 'general.no'}}
+          {{t "general.no"}}
         {{/if}}
       </span>
     {{else}}
       <input
-        id='exclude-from-sync'
-        type='checkbox'
+        id="exclude-from-sync"
+        type="checkbox"
         checked={{isUserSyncIgnored}}
         onclick={{action (mut isUserSyncIgnoredFlipped) (not isUserSyncIgnoredFlipped)}}
       >
@@ -80,17 +85,17 @@
   </div>
 
   <hr>
-  <div class='item'>
-    <label>{{t 'general.performsNonLearnerFunctions'}}:</label>
+  <div class="item">
+    <label>{{t "general.performsNonLearnerFunctions"}}:</label>
     {{yes-no value=(await user.performsNonLearnerFunction)}}
   </div>
-  <div class='item'>
-    <label>{{t 'general.learner'}}:</label>
+  <div class="item">
+    <label>{{t "general.learner"}}:</label>
     {{yes-no value=(await user.isLearner)}}
   </div>
   <hr>
-  <div class='item'>
-    <label>{{t 'general.root'}}:</label>
+  <div class="item">
+    <label>{{t "general.root"}}:</label>
     {{yes-no value=(await user.root)}}
   </div>
 </div>

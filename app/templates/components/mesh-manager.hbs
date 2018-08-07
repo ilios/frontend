@@ -1,14 +1,14 @@
 {{#if targetItemTitle}}
-  <h2>{{t 'general.selectMeshFor' title=targetItemTitle}}</h2>
+  <h2>{{t "general.selectMeshFor" title=targetItemTitle}}</h2>
 {{/if}}
-<ul class='selected-terms'>
+<ul class="selected-terms">
   {{#each sortedTerms as |term|}}
-    <li class={{if editable 'clickable'}} {{action 'remove' term}}>
+    <li class={{if editable "clickable"}} {{action "remove" term}}>
       <span class="term-title">{{term.name}}</span>
       <span class="term-details">
         {{term.id}}
         {{#if term.deleted}}
-          - <span class="deprecated">({{t 'general.deprecatedAbbreviation'}})</span>
+          - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
         {{else}}
           {{#if term.trees}}
             - {{term.trees.lastObject.treeNumber}}
@@ -16,25 +16,33 @@
         {{/if}}
       </span>
       {{#if editable}}
-        {{fa-icon 'remove' class='remove'}}
+        {{fa-icon "remove" class="remove"}}
       {{/if}}
     </li>
   {{/each}}
 </ul>
 
 {{#if editable}}
-  {{search-box placeholder=(t 'general.meshSearchPlaceholder') liveSearch=false search=(action 'search') clear=(action 'clear')}}
+  {{search-box
+    placeholder=(t "general.meshSearchPlaceholder")
+    liveSearch=false
+    search=(action "search")
+    clear=(action "clear")
+  }}
 {{/if}}
 
 {{#if searching}}
-  <ul class='results'>
-    <li>{{t 'general.currentlySearchingPrompt'}}</li>
+  <ul class="results">
+    <li>{{t "general.currentlySearchingPrompt"}}</li>
   </ul>
 {{else}}
   {{#if searchResults.length}}
-    <ul class='mesh-search-results' data-test-search-results>
+    <ul class="mesh-search-results" data-test-search-results>
       {{#each searchResults as |term|}}
-        <li class="{{unless term.isActive 'disabled'}}" {{action 'add' term}} data-test-search-result>
+        <li {{action "add" term}}
+          class={{unless term.isActive "disabled" ""}}
+          data-test-search-result
+        >
           <span class="descriptor-name" data-test-name>{{term.name}}</span>
           <span class="descriptor-id">
             {{term.id}}
@@ -45,7 +53,11 @@
           <ul class="mesh-concepts">
             {{#each term.concepts as |concept| }}
               {{#if concept.scopeNote }}
-                <li class="{{unless term.isActive 'disabled'}} {{if concept.hasTruncatedScopeNote 'truncated'}}">{{concept.truncatedScopeNote}}</li>
+                <li
+                  class="{{unless term.isActive "disabled"}} {{if concept.hasTruncatedScopeNote "truncated"}}"
+                >
+                  {{concept.truncatedScopeNote}}
+                </li>
               {{/if}}
             {{/each}}
           </ul>
@@ -53,15 +65,20 @@
       {{/each}}
     </ul>
     {{#if hasMoreSearchResults}}
-      <button {{action (perform searchMore)}} disabled={{if searchMore.isRunning true}}>
-        {{fa-icon (if searchMore.isRunning 'spinner') spin=(if searchMore.isRunning true false)}}
-        {{t 'general.showMore' }}
+      <button {{action (perform searchMore)}}
+        disabled={{if searchMore.isRunning true}}
+      >
+        {{fa-icon
+          (if searchMore.isRunning "spinner")
+          spin=(if searchMore.isRunning true false)
+        }}
+        {{t "general.showMore" }}
       </button>
     {{/if}}
   {{else}}
     {{#if searchReturned}}
-      <ul class='results'>
-        <li>{{t 'general.noSearchResultsPrompt'}}</li>
+      <ul class="results">
+        <li>{{t "general.noSearchResultsPrompt"}}</li>
       </ul>
     {{/if}}
   {{/if}}

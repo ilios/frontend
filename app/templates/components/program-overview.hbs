@@ -1,14 +1,15 @@
-<h2>{{t 'general.overview'}}</h2>
-<div class='program-overview-content'>
+{{! template-lint-disable attribute-indentation }}
+<h2>{{t "general.overview"}}</h2>
+<div class="program-overview-content">
   <div class="block programtitleshort">
-    <label>{{t 'general.programTitleShort'}}:</label>
+    <label>{{t "general.programTitleShort"}}:</label>
     <span>
       {{#if canUpdate}}
         {{#editable-field
           value=shortTitle
-          save=(action 'changeShortTitle')
-          close=(action 'revertShortTitleChanges')
-          clickPrompt=(t 'general.clickToEdit')
+          save=(action "changeShortTitle")
+          close=(action "revertShortTitleChanges")
+          clickPrompt=(t "general.clickToEdit")
           saveOnEnter=true
           closeOnEscape=true
           as |isSaving|
@@ -18,10 +19,12 @@
             value={{shortTitle}}
             oninput={{action (mut shortTitle) value="target.value"}}
             disabled={{isSaving}}
-            onkeyup={{action 'addErrorDisplayFor' 'shortTitle'}}
+            onkeyup={{action "addErrorDisplayFor" "shortTitle"}}
           >
-          {{#if (and (v-get this 'shortTitle' 'isInvalid') (is-in showErrorsFor 'shortTitle'))}}
-            <span class="validation-error-message">{{v-get this 'shortTitle' 'message'}}</span>
+          {{#if
+            (and (v-get this "shortTitle" "isInvalid") (is-in showErrorsFor "shortTitle"))
+          }}
+            <span class="validation-error-message">{{v-get this "shortTitle" "message"}}</span>
           {{/if}}
         {{/editable-field}}
       {{else}}
@@ -31,13 +34,13 @@
   </div>
 
   <div class="block programduration">
-    <label>{{t 'general.durationInYears'}}:</label>
+    <label>{{t "general.durationInYears"}}:</label>
     <span>
       {{#if canUpdate}}
         {{#editable-field
           value=duration
-          save=(action 'changeDuration')
-          close=(action 'revertDurationChanges')
+          save=(action "changeDuration")
+          close=(action "revertDurationChanges")
         }}
           {{one-way-select
             duration

@@ -1,4 +1,4 @@
-<div class='ilios-dashboard' data-test-dashboard>
+<div class="ilios-dashboard" data-test-dashboard>
   {{common-dashboard
     show=show
     setShow=(action (mut show))
@@ -6,19 +6,19 @@
     selectedView=selectedView
     mySchedule=mySchedule
     showFilters=showFilters
-    changeDate=(action 'changeDate')
+    changeDate=(action "changeDate")
     changeView=(action (mut view))
-    selectEvent=(action 'selectEvent')
-    toggleMySchedule=(action 'toggleMySchedule')
-    toggleShowFilters=(action 'toggleShowFilters')
+    selectEvent=(action "selectEvent")
+    toggleMySchedule=(action "toggleMySchedule")
+    toggleShowFilters=(action "toggleShowFilters")
     selectedAcademicYear=selectedAcademicYear
     selectedSchool=selectedSchool
     changeAcademicYear=(action (mut academicYear))
     changeSchool=(action (mut school))
     courseFilters=courseFilters
-    toggleCourseFilters=(action (toggle 'courseFilters' this))
+    toggleCourseFilters=(action (toggle "courseFilters" this))
   }}
-  <div class='dashboard-blocks'>
+  <div class="dashboard-blocks">
     {{dashboard-myreports data-test-myreports}}
     {{dashboard-mycourses}}
   </div>

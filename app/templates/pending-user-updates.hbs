@@ -1,8 +1,8 @@
-{{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
-<section class='pending-user-updates'>
+{{#link-to "admin-dashboard"}}{{t "general.backToAdminDashboard"}}{{/link-to}}
+<section class="pending-user-updates">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
@@ -18,56 +18,56 @@
 
     <div class="titlefilter">
       <input
-        type='text'
+        type="text"
         value={{filter}}
         oninput={{action (mut filter) value="target.value"}}
-        placeholder={{t 'general.pendingUserUpdates.filterBy'}}
+        placeholder={{t "general.pendingUserUpdates.filterBy"}}
       >
     </div>
   </div>
 
-  <div class='updates'>
+  <div class="updates">
     {{#liquid-if (is-fulfilled allUpdates)}}
-      <div class='list'>
+      <div class="list">
         <table>
           <thead>
             <tr>
-              <th class='text-left' colspan=2>{{t 'general.fullName'}}</th>
-              <th class='text-left' colspan=6>{{t 'general.description'}}</th>
+              <th class="text-left" colspan="2">{{t "general.fullName"}}</th>
+              <th class="text-left" colspan="6">{{t "general.description"}}</th>
               <th></th>
-              <th class='text-left' colspan=2>{{t 'general.actions'}}</th>
+              <th class="text-left" colspan="2">{{t "general.actions"}}</th>
 
             </tr>
           </thead>
           <tbody>
             {{#each (await displayedUpdates) as |update|}}
               <tr>
-                <td class='text-left' colspan="2">{{#link-to 'user' update.user}}{{update.user.fullName}}{{/link-to}}</td>
+                <td class="text-left" colspan="2">{{#link-to "user" update.user}}{{update.user.fullName}}{{/link-to}}</td>
 
-                <td class='text-left' colspan="6">
+                <td class="text-left" colspan="6">
                   {{t
-                    (concat 'general.pendingUserUpdates.' update.type)
+                    (concat "general.pendingUserUpdates." update.type)
                     update=update
                   }}
                 </td>
                 <td></td>
-                <td class='text-left' colspan="2">
+                <td class="text-left" colspan="2">
                   {{#if (is-in updatesBeingSaved update)}}
                     {{loading-spinner}}
                   {{else}}
-                    {{#if (eq update.type 'emailMismatch')}}
-                      <span class='clickable link' onclick={{action 'updateEmailAddress' update}}>
-                        {{fa-icon 'arrow-circle-up' class='yes' title=(t 'general.update')}}
-                        {{t 'general.pendingUserUpdates.updateIlios'}}
+                    {{#if (eq update.type "emailMismatch")}}
+                      <span class="clickable link" onclick={{action "updateEmailAddress" update}}>
+                        {{fa-icon "arrow-circle-up" class="yes" title=(t "general.update")}}
+                        {{t "general.pendingUserUpdates.updateIlios"}}
                       </span><br>
                     {{/if}}
-                    <span class='clickable link' onclick={{action 'excludeFromSync' update}}>
-                      {{fa-icon 'ban' class='no' title=(t 'general.excludeFromSync')}}
-                      {{t 'general.excludeFromSync'}}
+                    <span class="clickable link" onclick={{action "excludeFromSync" update}}>
+                      {{fa-icon "ban" class="no" title=(t "general.excludeFromSync")}}
+                      {{t "general.excludeFromSync"}}
                     </span><br>
-                    <span class='clickable link' onclick={{action 'disableUser' update}}>
-                      {{fa-icon 'times' class='no' title=(t 'general.disableUser')}}
-                      {{t 'general.disableUser'}}
+                    <span class="clickable link" onclick={{action "disableUser" update}}>
+                      {{fa-icon "times" class="no" title=(t "general.disableUser")}}
+                      {{t "general.disableUser"}}
                     </span>
                   {{/if}}
                 </td>

@@ -1,7 +1,7 @@
 {{#unless loadAttr.isRunning}}
   <div class="actions">
-    <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
-    <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
+    <button class="bigadd" {{action "save"}}>{{fa-icon "check"}}</button>
+    <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
   </div>
   <div class="content">
     {{#sortable-objects
@@ -16,7 +16,7 @@
           isSortable=true
           sortingScope="sortingGroup"
         }}
-          {{fa-icon 'arrows'}}
+          {{fa-icon "arrows"}}
           <span class="draggable-object-content">
             <span>{{big-text text=item.title}}</span>
           </span>

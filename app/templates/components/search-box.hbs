@@ -1,10 +1,13 @@
 <input
-  class='search-input'
-  type='search'
+  class="search-input"
+  type="search"
   value={{value}}
-  oninput={{action 'update' value="target.value"}}
+  oninput={{action "update" value="target.value"}}
   placeholder={{placeholder}}
 >
-<span class="search-icon" onclick={{pipe-action (action "focus") (perform searchTask)}}>
-  {{fa-icon 'search'}}
+<span
+  class="search-icon"
+  onclick={{pipe-action (action "focus") (perform searchTask)}}
+>
+  {{fa-icon "search"}}
 </span>

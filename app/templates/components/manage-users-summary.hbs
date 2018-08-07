@@ -1,50 +1,70 @@
-<div class='header'>
-  <h2 class='title'>
-    {{t 'general.manageUsersSummaryTitle'}} ({{#link-to 'users' (query-params showBulkNewUserForm=false showNewUserForm=false)}}{{t 'general.viewAll'}}{{/link-to}})
+{{! template-lint-disable attribute-indentation }}
+<div class="header">
+  <h2 class="title">
+    {{t "general.manageUsersSummaryTitle"}}
+    (
+    {{#link-to
+      "users"
+      (query-params showBulkNewUserForm=false showNewUserForm=false)
+    }}
+      {{t "general.viewAll"}}
+    {{/link-to}}
+    )
   </h2>
-  <div class='actions'>
+  <div class="actions">
     {{#if canCreate}}
-      {{#link-to 'users' (query-params showNewUserForm=true showBulkNewUserForm=false)}}
-        <button>{{t 'general.create'}}</button>
+      {{#link-to
+        "users"
+        (query-params showNewUserForm=true showBulkNewUserForm=false)
+      }}
+        <button>{{t "general.create"}}</button>
       {{/link-to}}
-      {{#if (not-eq (await iliosConfig.userSearchType) 'ldap')}}
-        {{#link-to 'users' (query-params showBulkNewUserForm=true showNewUserForm=false)}}
-          <button>{{t 'general.createBulk'}}</button>
+      {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
+        {{#link-to
+          "users"
+          (query-params showBulkNewUserForm=true showNewUserForm=false)
+        }}
+          <button>{{t "general.createBulk"}}</button>
         {{/link-to}}
       {{/if}}
     {{/if}}
   </div>
 </div>
-<div class='user-search'>
+<div class="user-search">
   <input
     type="search"
     value={{searchValue}}
     oninput={{action (mut searchValue) value="target.value"}}
-    placeholder={{t 'general.searchForIliosUsers'}}
-    incremental=true
+    placeholder={{t "general.searchForIliosUsers"}}
+    incremental="true"
     onsearch={{perform searchForUsers value="target.value"}}
     onkeyup={{perform searchForUsers value="target.value"}}
   >
-  <ul class="results {{unless (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length) 'hidden'}}">
+  <ul
+    class="results {{unless
+                     (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+                     "hidden"
+                   }}"
+  >
     {{#if searchForUsers.isRunning}}
-      <li>{{t 'general.currentlySearchingPrompt'}}</li>
+      <li>{{t "general.currentlySearchingPrompt"}}</li>
     {{else}}
       {{#each searchForUsers.lastSuccessful.value as |result|}}
-        {{#if (eq result.type 'text')}}
+        {{#if (eq result.type "text")}}
           <li>{{result.text}}</li>
         {{/if}}
-        {{#if (eq result.type 'summary')}}
-          <li class='summary'>{{result.text}}</li>
+        {{#if (eq result.type "summary")}}
+          <li class="summary">{{result.text}}</li>
         {{/if}}
-        {{#if (eq result.type 'user')}}
-          <li class='user clickable' {{action (perform clickUser) result.user}}>
-            <span class='name'>
+        {{#if (eq result.type "user")}}
+          <li class="user clickable" {{action (perform clickUser) result.user}}>
+            <span class="name">
               {{result.user.fullName}}
               {{#unless result.user.enabled}}
-                {{fa-icon 'user-times' title=(t 'general.disabled') class='error'}}
+                {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
               {{/unless}}
             </span>
-            <span class='email'>{{result.user.email}}</span>
+            <span class="email">{{result.user.email}}</span>
           </li>
         {{/if}}
 

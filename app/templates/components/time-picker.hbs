@@ -1,18 +1,18 @@
-<select onchange={{action "changeHour" value="target.value"}} class='hour'>
+<select onchange={{action "changeHour" value="target.value"}} class="hour">
   {{#each hours as |listHour|}}
     <option value={{listHour}} selected={{is-equal listHour hour}}>
       {{listHour}}
     </option>
   {{/each}}
 </select>
-<select onchange={{action "changeMinute" value="target.value"}} class='minute'>
+<select onchange={{action "changeMinute" value="target.value"}} class="minute">
   {{#each minutes as |listMinute|}}
     <option value={{listMinute}} selected={{is-equal listMinute minute}}>
       {{listMinute}}
     </option>
   {{/each}}
 </select>
-<select onchange={{action "changeAmPm" value="target.value"}} class='ampm'>
+<select onchange={{action "changeAmPm" value="target.value"}} class="ampm">
   {{#each ampms as |listAmPm|}}
     <option value={{listAmPm}} selected={{is-equal listAmPm ampm}}>
       {{listAmPm}}

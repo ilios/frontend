@@ -1,37 +1,54 @@
-<div class='objectivetitle course-objective-title'>{{{courseObjective.title}}}</div>
+{{! template-lint-disable attribute-indentation }}
+<div class="objectivetitle course-objective-title">{{{courseObjective.title}}}</div>
 {{#unless loadAttr.isRunning}}
-  {{#liquid-if (get (await cohorts) 'length')  class="horizontal"}}
-    <label class='group-picker'>
-      <span class="choose-cohort-title">{{t 'general.chooseCohortTitle'}}:</span>
-      {{#if (gt (get (await cohorts) 'length') 1)}}
+  {{#liquid-if (get (await cohorts) "length")  class="horizontal"}}
+    <label class="group-picker">
+      <span class="choose-cohort-title">{{t "general.chooseCohortTitle"}}:</span>
+      {{#if (gt (get (await cohorts) "length") 1)}}
         {{one-way-select
-          value=(get (await selectedCohort) 'id')
+          value=(get (await selectedCohort) "id")
           options=(await cohorts)
           optionTargetPath="id"
           optionLabelPath="title"
-          update=(action 'setSelectedCohort')
+          update=(action "setSelectedCohort")
         }}
       {{else}}
-        {{get (await currentCohort) 'title'}}
+        {{get (await currentCohort) "title"}}
       {{/if}}
     </label>
-    <ul class='parent-picker'>
-      {{#if (await currentCohort) class='vertical'}}
-        {{#each (await (get (await currentCohort) 'objectivesByCompetency')) as |competency|}}
+    <ul class="parent-picker">
+      {{#if (await currentCohort) class="vertical"}}
+        {{#each
+          (await (get (await currentCohort) "objectivesByCompetency"))
+          as |competency|
+        }}
           <li data-test-competency>
-            <h5 class="competency-title {{if competency.selected 'selected'}}">
-              {{if competency.noTitle (t 'general.noAssociatedCompetency') competency.title}}
+            <h5 class="competency-title {{if competency.selected "selected"}}">
+              {{if competency.noTitle (t "general.noAssociatedCompetency") competency.title}}
             </h5>
             <ul>
               {{#each (await competency.objectives) as |objective|}}
                 {{#if objective.selected}}
-                  <li class='selected clickable' {{action 'removeParent' objective}}>
-                    <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}} checked="checked">
+                  <li class="selected clickable" {{action "removeParent" objective}}>
+                    <input
+                      type={{if
+                             (await (get (await currentCohort) "allowMultipleParents"))
+                             "checkbox"
+                             "radio"
+                           }}
+                      checked="checked"
+                    >
                     {{objective.textTitle}}
                   </li>
                 {{else}}
-                  <li class='clickable' {{action (perform addParent objective)}}>
-                    <input type={{if (await (get (await currentCohort) 'allowMultipleParents')) 'checkbox' 'radio'}}>
+                  <li class="clickable" {{action (perform addParent objective)}}>
+                    <input
+                      type={{if
+                             (await (get (await currentCohort) "allowMultipleParents"))
+                             "checkbox"
+                             "radio"
+                           }}
+                    >
                     {{objective.textTitle}}
                   </li>
                 {{/if}}
@@ -42,9 +59,9 @@
       {{/if}}
     </ul>
   {{else}}
-    <div class='no-group'>
+    <div class="no-group">
       <p>
-        {{t 'general.missingCohortMessage'}}
+        {{t "general.missingCohortMessage"}}
       </p>
     </div>
   {{/liquid-if}}

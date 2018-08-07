@@ -2,16 +2,16 @@
   type="text"
   value={{title}}
   oninput={{action (mut title) value="target.value"}}
-  onkeyup={{action 'addErrorDisplayFor' 'title'}}
-  placeholder={{t 'general.title'}}
+  onkeyup={{action "addErrorDisplayFor" "title"}}
+  placeholder={{t "general.title"}}
 >
-<button class='save text' {{action (perform save)}}>
+<button class="save text" {{action (perform save)}}>
   {{#if save.isRunning}}
     {{loading-spinner}}
   {{else}}
-    {{t 'general.add'}}
+    {{t "general.add"}}
   {{/if}}
 </button>
-{{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-  <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+{{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+  <span class="validation-error-message">{{v-get this "title" "message"}}</span>
 {{/if}}

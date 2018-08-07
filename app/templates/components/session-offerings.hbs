@@ -1,15 +1,18 @@
-{{#liquid-if saving class='crossFade'}}
+{{#liquid-if saving class="crossFade"}}
   {{wait-saving}}
 {{/liquid-if}}
 
 <div class="offering-section-top">
-  <div class='title'>
-    {{t 'general.offerings'}} ({{offerings.length}})
+  <div class="title">
+    {{t "general.offerings"}} ({{offerings.length}})
   </div>
 
-  <div class='actions'>
+  <div class="actions">
     {{#if editable}}
-      {{expand-collapse-button value=showNewOfferingForm action=toggleShowNewOfferingForm}}
+      {{expand-collapse-button
+        value=showNewOfferingForm
+        action=toggleShowNewOfferingForm
+      }}
     {{/if}}
   </div>
 </div>
@@ -24,17 +27,17 @@
   }}
 {{/if}}
 
-<div class='session-offerings-content'>
+<div class="session-offerings-content">
   {{#if offerings.length}}
-    <div class='session-offerings-header'>
-      <div>{{t 'general.dateTime'}}</div>
-      <div>{{t 'general.groupName'}}</div>
-      <div>{{t 'general.location'}}</div>
-      <div>{{t 'general.instructors'}}</div>
-      <div>{{t 'general.actions'}}</div>
+    <div class="session-offerings-header">
+      <div>{{t "general.dateTime"}}</div>
+      <div>{{t "general.groupName"}}</div>
+      <div>{{t "general.location"}}</div>
+      <div>{{t "general.instructors"}}</div>
+      <div>{{t "general.actions"}}</div>
     </div>
     {{session-offerings-list session=session editable=editable}}
   {{else}}
-    <p>{{t 'general.noOfferings'}}</p>
+    <p>{{t "general.noOfferings"}}</p>
   {{/if}}
 </div>

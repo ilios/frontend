@@ -1,26 +1,26 @@
-<h4>{{t 'general.newCourse'}}</h4>
+<h4>{{t "general.newCourse"}}</h4>
 
 <div data-test-new-course>
 
   <div class="item">
-    <label> {{t 'general.title'}}:</label>
+    <label> {{t "general.title"}}:</label>
     <input
-      class='course-title'
+      class="course-title"
       type="text"
-      data-test-title
       value={{title}}
       oninput={{action (mut title) value="target.value"}}
       disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'title'}}
-      placeholder={{t 'general.courseTitlePlaceholder'}}
+      onkeyup={{action "addErrorDisplayFor" "title"}}
+      placeholder={{t "general.courseTitlePlaceholder"}}
+      data-test-title
     >
-    {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-      <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
     {{/if}}
   </div>
 
   <div class="item">
-    <label>{{t 'general.academicYear'}}:</label>
+    <label>{{t "general.academicYear"}}:</label>
     <select onchange={{action "setYear" value="target.value"}} data-test-year>
       {{#each years as |year|}}
         <option value={{year}} selected={{is-equal year selectedYear}}>
@@ -31,13 +31,13 @@
   </div>
 
   <div class="buttons">
-    <button class='done text' {{action 'save'}}>
+    <button class="done text" {{action "save"}}>
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    <button class='cancel text' {{action 'cancel'}}>{{t 'general.cancel'}}</button>
+    <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
   </div>
 </div>

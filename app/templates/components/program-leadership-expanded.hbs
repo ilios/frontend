@@ -1,26 +1,26 @@
-<div class='program-leadership-expanded-header'>
-  <h3 class='title collapsible clickable' {{action collapse}}>
-    {{t 'general.programLeadership'}}
+<div class="program-leadership-expanded-header">
+  <h3 class="title collapsible clickable" {{action collapse}}>
+    {{t "general.programLeadership"}}
   </h3>
-  <div class='actions'>
+  <div class="actions">
     {{#if isManaging}}
-      <button class='bigadd' onclick={{perform save}}>
-        {{fa-icon (if save.isRunning 'spinner' 'check') spin=(if isSaving true false)}}
+      <button class="bigadd" onclick={{perform save}}>
+        {{fa-icon (if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
       </button>
-      <button class='bigcancel' {{action setIsManaging false}}>{{fa-icon 'undo'}}</button>
+      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon "undo"}}</button>
     {{else if canUpdate}}
-      <button {{action setIsManaging true}}>{{t 'general.manageLeadership'}}</button>
+      <button {{action setIsManaging true}}>{{t "general.manageLeadership"}}</button>
     {{/if}}
   </div>
 </div>
-<div class='program-leadership-expanded-content'>
+<div class="program-leadership-expanded-content">
   {{#if (is-array directors)}}
     {{#if isManaging}}
       {{leadership-manager
         showAdministrators=false
         directors=directors
-        removeDirector=(action 'removeDirector')
-        addDirector=(action 'addDirector')
+        removeDirector=(action "removeDirector")
+        addDirector=(action "addDirector")
       }}
     {{else}}
       {{leadership-list
@@ -29,6 +29,6 @@
       }}
     {{/if}}
   {{else}}
-    {{loading-spinner tagName='h3'}}
+    {{loading-spinner tagName="h3"}}
   {{/if}}
 </div>

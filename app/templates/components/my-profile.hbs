@@ -3,10 +3,10 @@
 </h1>
 
 {{#if (await user.isStudent)}}
-  <span class="is-student"><h2>{{t 'general.student'}}</h2></span>
+  <span class="is-student"><h2>{{t "general.student"}}</h2></span>
 {{/if}}
 
-<div class='blocks'>
+<div class="blocks">
   {{user-profile-roles
     user=user
     isManageable=false
@@ -15,26 +15,26 @@
 
   <div class="small-component" data-test-info>
     <div>
-      <label>{{t 'general.primarySchool'}}:</label>
+      <label>{{t "general.primarySchool"}}:</label>
       {{#if (await user.school)}}
-        {{get (await user.school) 'title'}}
+        {{get (await user.school) "title"}}
       {{else}}
-        {{t 'general.unassigned'}}
+        {{t "general.unassigned"}}
       {{/if}}
     </div>
     <div>
-      <label>{{t 'general.primaryCohort'}}:</label>
+      <label>{{t "general.primaryCohort"}}:</label>
       {{#if (await user.primaryCohort)}}
-        {{get (await user.primaryCohort) 'title'}}
+        {{get (await user.primaryCohort) "title"}}
       {{else}}
-        {{t 'general.unassigned'}}
+        {{t "general.unassigned"}}
       {{/if}}
     </div>
     <div>
-      <label>{{t 'general.secondaryCohorts'}}:</label>
-      {{#if (get (await user.secondaryCohorts) 'length')}}
+      <label>{{t "general.secondaryCohorts"}}:</label>
+      {{#if (get (await user.secondaryCohorts) "length")}}
         <ul class="secondary-cohorts details-list">
-          {{#each (sort-by 'title' (await user.secondaryCohorts)) as |cohort|}}
+          {{#each (sort-by "title" (await user.secondaryCohorts)) as |cohort|}}
             <li>
               <span class="title">{{cohort.title}} </span>
               <span class="content">{{cohort.programYear.program.title}}</span>
@@ -42,7 +42,7 @@
           {{/each}}
         </ul>
       {{else}}
-        {{t 'general.unassigned'}}
+        {{t "general.unassigned"}}
       {{/if}}
     </div>
   </div>
@@ -53,57 +53,70 @@
   {{user-profile-learnergroups user=user}}
 </div>
 
-<section class='token-maintenance'>
-  <h3>{{t 'general.manageAPITokens'}}</h3>
-  <p>{{t 'general.tokenInfo' apiDocsUrl=apiDocsUrl}}</p>
+<section class="token-maintenance">
+  <h3>{{t "general.manageAPITokens"}}</h3>
+  <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
-    <button class='new-token done text' onclick={{action toggleShowCreateNewToken}}>{{t 'general.createNew'}}</button>
-    <button class='invalidate-tokens cancel text' onclick={{action toggleShowInvalidateTokens}}>{{t 'general.invalidateTokens'}}</button>
+    <button class="new-token done text" onclick={{action toggleShowCreateNewToken}}>{{t "general.createNew"}}</button>
+    <button
+      class="invalidate-tokens cancel text"
+      onclick={{action toggleShowInvalidateTokens}}
+    >
+      {{t "general.invalidateTokens"}}
+    </button>
   {{else}}
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
-        <div class='new-token-result'>
-          <h3>{{t 'general.newToken'}}:</h3>
+        <div class="new-token-result">
+          <h3>{{t "general.newToken"}}:</h3>
           <input readonly value={{generatedJwt}}>
-          {{#copy-button success='tokenCopied' clipboardText=generatedJwt}}
-            {{fa-icon 'copy'}}
+          {{#copy-button success="tokenCopied" clipboardText=generatedJwt}}
+            {{fa-icon "copy"}}
           {{/copy-button}}
-          <button class='bigcancel' {{action (pipe toggleShowCreateNewToken (action 'reset'))}}>{{fa-icon 'times'}}</button>
+          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+            class="bigcancel"
+          >
+            {{fa-icon "times"}}
+          </button>
         </div>
       {{else}}
-        <div class='new-token-form'>
-          <label>{{t 'general.validUntil'}}</label>
+        <div class="new-token-form">
+          <label>{{t "general.validUntil"}}</label>
           {{pikaday-input
             size=10
             value=expiresAt
             maxDate=maxDate
             minDate=minDate
-            format='YYYY-MM-DD'
-            onSelection=(action 'selectExpiresAtDate')
+            format="YYYY-MM-DD"
+            onSelection=(action "selectExpiresAtDate")
           }}
-          <button class='bigadd' {{action (perform createNewToken)}}>
+          <button class="bigadd" {{action (perform createNewToken)}}>
             {{#if createNewToken.isRunning}}
               {{loading-spinner}}
             {{else}}
-              {{fa-icon 'check'}}
+              {{fa-icon "check"}}
             {{/if}}
           </button>
-          <button class='bigcancel' {{action (pipe toggleShowCreateNewToken (action 'reset'))}}>{{fa-icon 'times'}}</button>
+          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+            class="bigcancel"
+          >
+            {{fa-icon "times"}}
+          </button>
         </div>
       {{/if}}
     {{/if}}
     {{#if showInvalidateTokens}}
-      <div class='invalidate-tokens-form'>
-        <h3>{{t 'general.invalidateTokens'}}</h3>
-        <p>{{t 'general.invalidateTokensConfirmation'}}</p>
-        <button class='done text' {{action (perform invalidateTokens)}}>
+      <div class="invalidate-tokens-form">
+        <h3>{{t "general.invalidateTokens"}}</h3>
+        <p>{{t "general.invalidateTokensConfirmation"}}</p>
+        <button class="done text" {{action (perform invalidateTokens)}}>
           {{#if invalidateTokens.isRunning}}
             {{loading-spinner}}
           {{else}}
-            {{t 'general.yes'}}
+            {{t "general.yes"}}
           {{/if}}
         </button>
-        <button class='cancel text' {{action toggleShowInvalidateTokens}}>{{t 'general.cancel'}}</button>
+        <button class="cancel text" {{action toggleShowInvalidateTokens}}>{{t "general.cancel"}}</button>
       </div>
     {{/if}}
   {{/unless}}

@@ -1,8 +1,13 @@
-{{curriculum-inventory-sequence-block-details sequenceBlock=model canUpdate=canUpdate sortSessionsBy=sortSessionsBy setSortSessionBy=(action (mut sortSessionsBy))}}
+{{curriculum-inventory-sequence-block-details
+  sequenceBlock=model
+  canUpdate=canUpdate
+  sortSessionsBy=sortSessionsBy
+  setSortSessionBy=(action (mut sortSessionsBy))
+}}
 {{curriculum-inventory-sequence-block-list
   report=(await model.report)
   parent=model
   canUpdate=canUpdate
   sequenceBlocks=(await model.children)
-  remove='removeChildSequenceBlock'
+  remove="removeChildSequenceBlock"
 }}

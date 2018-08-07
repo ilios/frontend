@@ -1,4 +1,4 @@
-{{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
+{{#link-to "admin-dashboard"}}{{t "general.backToAdminDashboard"}}{{/link-to}}
 {{ilios-users
   offset=offset
   setOffset=(action (mut offset))
@@ -12,5 +12,5 @@
   setShowBulkNewUserForm=(action (mut showBulkNewUserForm))
   searchTerms=searchTerms
   setSearchTerms=(action (mut searchTerms))
-  transitionToUser=(action 'transitionToUser')
+  transitionToUser=(action "transitionToUser")
 }}

@@ -1,7 +1,7 @@
 <ul>
-  {{#each (sort-by 'name' (await row.meshDescriptors)) as |descriptor|}}
+  {{#each (sort-by "name" (await row.meshDescriptors)) as |descriptor|}}
     <li>{{descriptor.name}}</li>
   {{else}}
-    {{t 'general.none'}}
+    {{t "general.none"}}
   {{/each}}
 </ul>

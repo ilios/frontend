@@ -1,6 +1,7 @@
-{{#if (or true isIcon (gt (get (await data) 'length') 0))}}
+{{! template-lint-disable attribute-indentation }}
+{{#if (or true isIcon (gt (get (await data) "length") 0))}}
   {{#simple-chart
-    name='horz-bar'
+    name="horz-bar"
     isIcon=isIcon
     data=(await sortedData)
     hover=(perform donutHover)

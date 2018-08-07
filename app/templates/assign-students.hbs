@@ -1,12 +1,12 @@
-{{#link-to 'admin-dashboard'}}{{t 'general.backToAdminDashboard'}}{{/link-to}}
+{{#link-to "admin-dashboard"}}{{t "general.backToAdminDashboard"}}{{/link-to}}
 
-<section class='assign-students'>
+<section class="assign-students">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' model.schools) as |school|}}
+          {{#each (sort-by "title" model.schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school selectedSchool}}>
               {{school.title}}
             </option>
@@ -19,10 +19,10 @@
 
     <div class="titlefilter">
       <input
-        type='text'
+        type="text"
         value={{filter}}
         oninput={{action (mut filter) value="target.value"}}
-        placeholder={{t 'general.pendingUserUpdates.filterBy'}}
+        placeholder={{t "general.pendingUserUpdates.filterBy"}}
       >
     </div>
   </div>

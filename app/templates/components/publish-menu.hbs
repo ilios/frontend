@@ -4,29 +4,39 @@
     <span>{{title}}</span>
   {{/rl-dropdown-toggle}}
 
-  {{#rl-dropdown closeOnChildClick='button'}}
+  {{#rl-dropdown closeOnChildClick="button"}}
     {{#if showAsIs}}
-      <button class='danger' {{action publish}}>{{t 'general.publishAsIs'}}</button>
+      <button class="danger" {{action publish}}>{{t "general.publishAsIs"}}</button>
     {{/if}}
     {{#if showPublish}}
-      <button class='good' {{action publish}}>{{t publishTranslation}}</button>
+      <button class="good" {{action publish}}>{{t publishTranslation}}</button>
     {{/if}}
     {{#if (and showReview reviewRoute reviewObject)}}
       {{#if parentObject}}
         {{#link-to reviewRoute parentObject reviewObject}}
-          <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
+          <button class="good">
+            {{t
+              "general.reviewMissingItems"
+              count=(get reviewObject "allPublicationIssuesLength")
+            }}
+          </button>
         {{/link-to}}
       {{else}}
         {{#link-to reviewRoute reviewObject}}
-          <button class='good' >{{t 'general.reviewMissingItems' count=(get reviewObject 'allPublicationIssuesLength')}}</button>
+          <button class="good">
+            {{t
+              "general.reviewMissingItems"
+              count=(get reviewObject "allPublicationIssuesLength")
+            }}
+          </button>
         {{/link-to}}
       {{/if}}
     {{/if}}
     {{#if showTbd}}
-      <button class='good' {{action publishAsTbd}}>{{t 'general.markAsScheduled'}}</button>
+      <button class="good" {{action publishAsTbd}}>{{t "general.markAsScheduled"}}</button>
     {{/if}}
     {{#if showUnPublish}}
-      <button class='danger' {{action unpublish}}>{{t unPublishTranslation}}</button>
+      <button class="danger" {{action unpublish}}>{{t unPublishTranslation}}</button>
     {{/if}}
   {{/rl-dropdown}}
 {{/rl-dropdown-container}}

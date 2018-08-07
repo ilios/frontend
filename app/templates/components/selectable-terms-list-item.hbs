@@ -1,13 +1,13 @@
 {{#if term.description.length}}
-  {{#attach-tooltip lazy-render=true animation='shift'}}
+  {{#attach-tooltip lazy-render=true animation="shift"}}
     {{term.description}}
   {{/attach-tooltip}}
 {{/if}}
 {{term.title}}
 <span class="actions">
   {{#if isSelected}}
-    {{fa-icon 'remove'}}
+    {{fa-icon "remove"}}
   {{else}}
-    {{fa-icon 'plus' class='add'}}
+    {{fa-icon "plus" class="add"}}
   {{/if}}
 </span>

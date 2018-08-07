@@ -1,11 +1,12 @@
-<div class='title'>
+{{! template-lint-disable attribute-indentation }}
+<div class="title">
   <h4 class="school-title">{{instructorGroup.school.title}} &gt; </h4>
   {{#if canUpdate}}
     {{#editable-field
       data-test-group-title
       value=title
-      save=(action 'changeTitle')
-      close=(action 'revertTitleChanges')
+      save=(action "changeTitle")
+      close=(action "revertTitleChanges")
       saveOnEnter=true
       closeOnEscape=true
       as |isSaving|
@@ -15,16 +16,16 @@
         value={{title}}
         oninput={{action (mut title) value="target.value"}}
         disabled={{isSaving}}
-        onkeyup={{action 'addErrorDisplayFor' 'title'}}
+        onkeyup={{action "addErrorDisplayFor" "title"}}
       >
-      {{#if (and (v-get this 'title' 'isInvalid') (is-in showErrorsFor 'title'))}}
-        <span class="validation-error-message">{{v-get this 'title' 'message'}}</span>
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
       {{/if}}
     {{/editable-field}}
   {{else}}
     <h4 data-test-group-title>{{title}}</h4>
   {{/if}}
 </div>
-<span class='info'>
-  {{t 'general.members'}}: {{instructorGroup.users.length}}
+<span class="info">
+  {{t "general.members"}}: {{instructorGroup.users.length}}
 </span>

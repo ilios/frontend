@@ -1,45 +1,45 @@
-<section class='course-visualizations'>
+<section class="course-visualizations">
   <div class="backtolink">
-    {{#link-to 'course' model}}{{t 'general.backToCourse'}}{{/link-to}}
+    {{#link-to "course" model}}{{t "general.backToCourse"}}{{/link-to}}
   </div>
-  <h2>{{t 'general.courseVisualizations'}}</h2>
-  <h3 class='clickable'>{{#link-to 'course' model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
+  <h2>{{t "general.courseVisualizations"}}</h2>
+  <h3 class="clickable">{{#link-to "course" model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
 
 
-  <div class='visualizations'>
+  <div class="visualizations">
     <div>
-      {{#link-to 'course-visualize-objectives' model}}
+      {{#link-to "course-visualize-objectives" model}}
         <h4>
-          {{t 'general.objectives'}}
+          {{t "general.objectives"}}
         </h4>
         {{visualizer-course-objectives isIcon=true course=model}}
       {{/link-to}}
     </div>
 
     <div>
-      {{#link-to 'course-visualize-session-types' model}}
+      {{#link-to "course-visualize-session-types" model}}
         <h4>
-          {{t 'general.sessionTypes'}}
+          {{t "general.sessionTypes"}}
         </h4>
-        {{visualizer-course-session-types isIcon=true course=model chartType='donut'}}
+        {{visualizer-course-session-types isIcon=true course=model chartType="donut"}}
       {{/link-to}}
     </div>
 
     <div>
-      {{#link-to 'course-visualize-vocabularies' model}}
+      {{#link-to "course-visualize-vocabularies" model}}
         <h4>
-          {{t 'general.vocabularies'}}
+          {{t "general.vocabularies"}}
         </h4>
         {{visualizer-course-vocabularies isIcon=true course=model}}
       {{/link-to}}
     </div>
 
     <div>
-      {{#link-to 'course-visualize-instructors' model}}
+      {{#link-to "course-visualize-instructors" model}}
         <h4>
-          {{t 'general.instructors'}}
+          {{t "general.instructors"}}
         </h4>
-        {{visualizer-course-instructors isIcon=true course=model chartType='donut'}}
+        {{visualizer-course-instructors isIcon=true course=model chartType="donut"}}
       {{/link-to}}
     </div>
   </div>

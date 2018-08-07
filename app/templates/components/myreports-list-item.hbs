@@ -1,10 +1,10 @@
 {{#unless loadTitle.isRunning}}
   {{#if reporttitle}}
-    <span {{action 'selectReport' report}} class='link clickable'>
-      {{fa-icon 'external-link-square'}}
+    <span {{action "selectReport" report}} class="link clickable">
+      {{fa-icon "external-link-square"}}
       {{reporttitle}}
     </span>
   {{else}}
-    <span>{{t 'general.thisReportIsNoLongerAvailable'}}</span>
+    <span>{{t "general.thisReportIsNoLongerAvailable"}}</span>
   {{/if}}
 {{/unless}}

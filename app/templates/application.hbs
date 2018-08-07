@@ -5,20 +5,22 @@
 {{#new-version-notifier as |version lastVersion reload|}}
   {{update-notification reload=(action reload)}}
 {{/new-version-notifier}}
-<div class='application-wrapper {{if currentUser.performsNonLearnerFunction "show-navigation"}}'>
+<div
+  class="application-wrapper {{if currentUser.performsNonLearnerFunction "show-navigation"}}"
+>
   {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
   {{#if session.isAuthenticated}}
     {{ilios-navigation}}
   {{/if}}
   <main>
     {{#if showErrorDisplay}}
-      {{error-display errors=errors clearErrors=(action 'clearErrors')}}
+      {{error-display errors=errors clearErrors=(action "clearErrors")}}
     {{else}}
       {{focusing-outlet}}
     {{/if}}
   </main>
-  <footer class='ilios-footer'>
-    <div class='version'>
+  <footer class="ilios-footer">
+    <div class="version">
       {{apiVersion}}
       {{app-version versionOnly=true}}
     </div>

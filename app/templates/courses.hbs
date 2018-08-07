@@ -1,15 +1,15 @@
-<section class='courses-list' data-test-courses>
+<section class="courses-list" data-test-courses>
   <div class="filters">
-    <div class='toggle-mycourses' data-test-my-courses-filter>
+    <div class="toggle-mycourses" data-test-my-courses-filter>
       {{toggle-buttons
         firstOptionSelected=userCoursesOnly
-        firstLabel=(t 'general.myCourses')
-        secondLabel=(t 'general.allCourses')
-        toggle=(toggle 'userCoursesOnly' this)
+        firstLabel=(t "general.myCourses")
+        secondLabel=(t "general.allCourses")
+        toggle=(toggle "userCoursesOnly" this)
       }}
     </div>
     <div class="schoolsfilter" data-test-school-filter>
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
@@ -23,8 +23,11 @@
       {{/if}}
     </div>
     <div class="yearsfilter">
-      {{fa-icon 'calendar' fixedWidth=true}}
-      <select onchange={{action "changeSelectedYear" value="target.value"}} data-test-year-filter>
+      {{fa-icon "calendar" fixedWidth=true}}
+      <select
+        onchange={{action "changeSelectedYear" value="target.value"}}
+        data-test-year-filter
+      >
         {{#each sortedYears as |year|}}
           <option value={{year.year}} selected={{is-equal year selectedYear}}>
             {{year.academicYearTitle}}
@@ -35,50 +38,54 @@
 
     <div class="titlefilter">
       <input
-        data-test-title-filter
         value={{titleFilter}}
         oninput={{action (perform changeTitleFilter) value="target.value"}}
-        placeholder={{t 'general.courseTitleFilterPlaceholder'}}
+        placeholder={{t "general.courseTitleFilterPlaceholder"}}
+        data-test-title-filter
       >
     </div>
   </div>
-  <section class='courses'>
+  <section class="courses">
     <div class="header">
-      <h2 data-test-courses-header-title class="title">{{t 'general.courses'}} ({{get (await filteredCourses) "length"}})</h2>
-      <div class='actions'>
+      <h2 data-test-courses-header-title class="title">{{t "general.courses"}} ({{get (await filteredCourses) "length"}})</h2>
+      <div class="actions">
         {{#if (await canCreateCourse)}}
-          {{expand-collapse-button data-test-toggle-new-course-form value=showNewCourseForm action="toggleNewCourseForm"}}
+          {{expand-collapse-button
+            data-test-toggle-new-course-form
+            value=showNewCourseForm
+            action="toggleNewCourseForm"
+          }}
         {{/if}}
       </div>
     </div>
-    <section class='new'>
+    <section class="new">
       {{#liquid-if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
         {{new-course
           currentSchool=selectedSchool
           currentYear=selectedYear
-          save=(action 'saveNewCourse')
-          cancel='toggleNewCourseForm'
+          save=(action "saveNewCourse")
+          cancel="toggleNewCourseForm"
         }}
       {{/liquid-if}}
 
       {{#if newCourse}}
-        <div class='saved-result' data-test-new-course>
-          {{#link-to 'course' newCourse}}
-            {{fa-icon 'external-link-square'}} {{newCourse.title}}
+        <div class="saved-result" data-test-new-course>
+          {{#link-to "course" newCourse}}
+            {{fa-icon "external-link-square"}} {{newCourse.title}}
           {{/link-to}}
-          {{t 'general.savedSuccessfully'}}
+          {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
-    <div class='list'>
+    <div class="list">
       {{#if (is-fulfilled filteredCourses)}}
         {{ilios-course-list
           courses=(await filteredCourses)
-          remove='removeCourse'
+          remove="removeCourse"
           sortBy=sortCoursesBy
           setSortBy=(action (mut sortCoursesBy))
-          lock=(action 'lockCourse')
-          unlock=(action 'unlockCourse')
+          lock=(action "lockCourse")
+          unlock=(action "unlockCourse")
         }}
       {{else}}
         {{pulse-loader}}

@@ -1,35 +1,39 @@
-<div class='programyear-overview-header'>
-  <h5>{{t 'general.overview'}}</h5>
-  <div class='programyear-overview-actions'>
+<div class="programyear-overview-header">
+  <h5>{{t "general.overview"}}</h5>
+  <div class="programyear-overview-actions">
     {{#if programYearVisualizations}}
-      {{#link-to 'program-year-visualizations' programYear title=(t 'general.programYearVisualizations')}}
-        {{fa-icon 'bar-chart'}}
+      {{#link-to
+        "program-year-visualizations"
+        programYear
+        title=(t "general.programYearVisualizations")
+      }}
+        {{fa-icon "bar-chart"}}
       {{/link-to}}
     {{/if}}
   </div>
 </div>
-<div class='programyear-overview-content'>
-  <label>{{t 'general.directors'}}:</label>
+<div class="programyear-overview-content">
+  <label>{{t "general.directors"}}:</label>
   <div>
     {{#if canUpdate}}
-      <ul class='removable-directors'>
+      <ul class="removable-directors">
         {{#each sortedDirectors as |user|}}
-          <li {{action 'removeDirector' user}}>{{user.fullName}}{{fa-icon 'remove' class='remove'}}</li>
+          <li {{action "removeDirector" user}}>{{user.fullName}}{{fa-icon "remove" class="remove"}}</li>
         {{/each}}
       </ul>
     {{else}}
-      <ul class='directors'>
+      <ul class="directors">
         {{#each sortedDirectors as |user|}}
           <li>{{user.fullName}}</li>
         {{else}}
-          {{t 'general.none'}}
+          {{t "general.none"}}
         {{/each}}
       </ul>
     {{/if}}
   </div>
   {{#if canUpdate}}
     {{user-search
-      addUser='addDirector'
+      addUser="addDirector"
       currentlyActiveUsers=(await programYear.directors)
     }}
   {{/if}}

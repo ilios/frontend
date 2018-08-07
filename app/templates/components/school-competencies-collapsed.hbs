@@ -1,24 +1,24 @@
-<div class='title clickable'  {{action expand}}>
-  {{t 'general.competencies'}} ({{get (await domains) 'length'}}/{{get (await childCompetencies) 'length'}})
+<div class="title clickable"  {{action expand}}>
+  {{t "general.competencies"}} ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
 </div>
 {{#if competencies.isPending}}
-  {{loading-spinner tagName='h3'}}
+  {{loading-spinner tagName="h3"}}
 {{/if}}
 {{#unless (is-pending school.competencies)}}
-  <div class='content'>
-    <table class='condensed'>
+  <div class="content">
+    <table class="condensed">
       <thead>
         <tr>
-          <th class='text-left'>{{t 'general.domain'}}</th>
-          <th class='text-left'>{{t 'general.summary'}}</th>
+          <th class="text-left">{{t "general.domain"}}</th>
+          <th class="text-left">{{t "general.summary"}}</th>
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by 'title' (await domains)) as |domain|}}
+        {{#each (sort-by "title" (await domains)) as |domain|}}
           <tr>
             <td>{{domain.title}}</td>
-            <td class='summary-highlight'>
-              {{t 'general.competencyCount' count=domain.childCount}}
+            <td class="summary-highlight">
+              {{t "general.competencyCount" count=domain.childCount}}
             </td>
           </tr>
         {{/each}}

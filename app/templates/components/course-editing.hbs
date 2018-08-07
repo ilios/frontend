@@ -1,4 +1,6 @@
-{{#if (or (and (eq course.directors.length 0) (eq course.administrators.length 0)) courseLeadershipDetails)}}
+{{#if
+  (or (and (eq course.directors.length 0) (eq course.administrators.length 0)) courseLeadershipDetails)
+}}
   {{course-leadership-expanded
     course=course
     editable=editable
@@ -9,9 +11,9 @@
   }}
 {{else}}
   {{leadership-collapsed
-    title=(t 'general.courseLeadership')
-    directorsCount=(has-many-length course 'directors')
-    administratorsCount=(has-many-length course 'administrators')
+    title=(t "general.courseLeadership")
+    directorsCount=(has-many-length course "directors")
+    administratorsCount=(has-many-length course "administrators")
     expand=(action setCourseLeadershipDetails true)
   }}
 {{/if}}
@@ -24,12 +26,17 @@
     expand=(action setCourseObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives subject=course expand=(action setCourseObjectiveDetails true)}}
+  {{collapsed-objectives
+    subject=course
+    expand=(action setCourseObjectiveDetails true)
+  }}
 {{/if}}
 
 {{detail-learning-materials subject=course isCourse=true editable=editable}}
 
-{{#if (or (eq (get (await course.competencies) 'length') 0) courseCompetencyDetails)}}
+{{#if
+  (or (eq (get (await course.competencies) "length") 0) courseCompetencyDetails)
+}}
   {{detail-competencies
     course=course
     editable=editable
@@ -37,7 +44,10 @@
     expand=(action setCourseCompetencyDetails true)
   }}
 {{else}}
-  {{collapsed-competencies subject=course expand=(action setCourseCompetencyDetails true)}}
+  {{collapsed-competencies
+    subject=course
+    expand=(action setCourseCompetencyDetails true)
+  }}
 {{/if}}
 
 {{#if (or (eq course.terms.length 0) courseTaxonomyDetails)}}
@@ -49,7 +59,10 @@
     expand=(action setCourseTaxonomyDetails true)
   }}
 {{else}}
-  {{collapsed-taxonomies subject=course expand=(action setCourseTaxonomyDetails true)}}
+  {{collapsed-taxonomies
+    subject=course
+    expand=(action setCourseTaxonomyDetails true)
+  }}
 {{/if}}
 
 {{detail-mesh

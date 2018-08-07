@@ -1,10 +1,10 @@
 {{#if domains.length}}
   <ul data-test-domains>
-    {{#each (sort-by 'title' domains) as |domain|}}
+    {{#each (sort-by "title" domains) as |domain|}}
       <li>
         {{domain.title}}
         <ul>
-          {{#each (sort-by 'title' (await domain.children)) as |competency|}}
+          {{#each (sort-by "title" (await domain.children)) as |competency|}}
             <li>{{competency.title}}</li>
           {{/each}}
         </ul>

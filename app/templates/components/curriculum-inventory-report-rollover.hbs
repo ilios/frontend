@@ -1,35 +1,39 @@
-<div class='rollover-form'>
-  <h3 class="title">{{t 'general.curriculumInventoryReportRollover'}}</h3>
+{{! template-lint-disable attribute-indentation }}
+<div class="rollover-form">
+  <h3 class="title">{{t "general.curriculumInventoryReportRollover"}}</h3>
 
-  <p class='rollover-summary'>{{t 'general.curriculumInventoryReportRolloverSummary'}}</p>
+  <p class="rollover-summary">{{t "general.curriculumInventoryReportRolloverSummary"}}</p>
 
-  <div class='item name'>
-    <label>{{t 'general.name'}}:</label>
+  <div class="item name">
+    <label>{{t "general.name"}}:</label>
     <input
       type="text"
       value={{name}}
-      oninput={{pipe (action 'changeName' value="target.value") (action 'addErrorDisplayFor' 'name')}}
+      oninput={{pipe
+                (action "changeName" value="target.value")
+                (action "addErrorDisplayFor" "name")
+              }}
       disabled={{isSaving}}
-      onkeyup={{action 'addErrorDisplayFor' 'name'}}
-      placeholder={{t 'general.reportNamePlaceholder'}}
+      onkeyup={{action "addErrorDisplayFor" "name"}}
+      placeholder={{t "general.reportNamePlaceholder"}}
     >
-    {{#if (and (v-get this 'name' 'isInvalid') (is-in showErrorsFor 'name'))}}
-      <span class="validation-error-message">{{v-get this 'name' 'message'}}</span>
+    {{#if (and (v-get this "name" "isInvalid") (is-in showErrorsFor "name"))}}
+      <span class="validation-error-message">{{v-get this "name" "message"}}</span>
     {{/if}}
   </div>
 
   <div class="item description">
-    <label>{{t 'general.description'}}:</label>
+    <label>{{t "general.description"}}:</label>
     <textarea
       value={{description}}
       oninput={{action (mut description) value="target.value"}}
       disabled={{isSaving}}
-      placeholder={{t 'general.reportDescriptionPlaceholder'}}
+      placeholder={{t "general.reportDescriptionPlaceholder"}}
     ></textarea>
   </div>
 
   <div class="item years">
-    <label>{{t 'general.academicYear'}}:</label>
+    <label>{{t "general.academicYear"}}:</label>
     {{one-way-select
       value=selectedYear
       options=years
@@ -40,16 +44,19 @@
     }}
   </div>
 
-  <div class='buttons'>
-    <button class='done text' disabled={{if isSaving true}} {{action (perform save)}}>
+  <div class="buttons">
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{if isSaving true}}
+    >
       {{#if isSaving}}
         {{loading-spinner}}
       {{else}}
-        {{t 'general.done'}}
+        {{t "general.done"}}
       {{/if}}
     </button>
-    {{#link-to 'curriculumInventoryReport' report}}
-      <button class='cancel text'>{{t 'general.cancel'}}</button>
+    {{#link-to "curriculumInventoryReport" report}}
+      <button class="cancel text">{{t "general.cancel"}}</button>
     {{/link-to}}
   </div>
 </div>

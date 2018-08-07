@@ -1,10 +1,10 @@
-<section class='programs-list'>
+<section class="programs-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon 'university' fixedWidth=true}}
+      {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by 'title' model.schools) as |school|}}
+          {{#each (sort-by "title" model.schools) as |school|}}
             <option value={{school.id}} selected={{is-equal school selectedSchool}}>
               {{school.title}}
             </option>
@@ -18,47 +18,47 @@
       <input
         value={{titleFilter}}
         oninput={{action (perform changeTitleFilter) value="target.value"}}
-        placeholder={{t 'general.programTitleFilterPlaceholder'}}
+        placeholder={{t "general.programTitleFilterPlaceholder"}}
       >
     </div>
   </div>
-  <section class='programs'>
+  <section class="programs">
     <div class="header">
       <div class="title">
-        <h2>{{t 'general.programs'}}</h2>
+        <h2>{{t "general.programs"}}</h2>
       </div>
-      <div class='actions'>
+      <div class="actions">
         {{#if (await canCreate)}}
           {{expand-collapse-button value=showNewProgramForm action="toggleEditor"}}
         {{/if}}
       </div>
     </div>
-    <section class='new'>
+    <section class="new">
       {{#liquid-if showNewProgramForm class="vertical"}}
-        {{new-program save=(action 'saveNewProgram') cancel=(action 'cancel')}}
+        {{new-program save=(action "saveNewProgram") cancel=(action "cancel")}}
       {{/liquid-if}}
 
       {{#if newProgram}}
-        <div class='saved-result'>
-          {{#link-to 'program' newProgram}}
-            {{fa-icon 'external-link-square'}} {{newProgram.title}}
+        <div class="saved-result">
+          {{#link-to "program" newProgram}}
+            {{fa-icon "external-link-square"}} {{newProgram.title}}
           {{/link-to}}
-          {{t 'general.savedSuccessfully'}}
+          {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
     {{#if deleted}}
-      <div class='saved-program'>
-        {{savedProgram.title}} {{t 'general.removedSuccessfully'}}
+      <div class="saved-program">
+        {{savedProgram.title}} {{t "general.removedSuccessfully"}}
       </div>
     {{/if}}
 
-    <div class='list'>
+    <div class="list">
       {{#if (is-fulfilled filteredCourses)}}
         {{program-list
           programs=(await filteredPrograms)
-          edit='editProgram'
-          remove='removeProgram'
+          edit="editProgram"
+          remove="removeProgram"
         }}
       {{else}}
         {{pulse-loader}}
