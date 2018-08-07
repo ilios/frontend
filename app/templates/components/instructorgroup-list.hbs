@@ -4,8 +4,7 @@
       <th class="text-left" colspan="2">{{t "general.instructorGroupTitle"}}</th>
       <th class="text-center hide-from-small-screen">{{t "general.members"}}</th>
       <th class="text-center hide-from-small-screen">{{t "general.associatedCourses"}}</th>
-      <th class="text-right hide-from-small-screen">{{t "general.actions"}}</th>
-      <th>&nbsp;</th>
+      <th class="text-right">{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody>
@@ -35,7 +34,8 @@
       </tr>
       {{#if instructorGroup.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan="5">
+          <td class="hide-from-small-screen"></td>
+          <td colspan="3">
             <div class="confirm-message">
               {{t
                 "general.confirmRemoveInstructorGroup"
@@ -48,6 +48,7 @@
               </div>
             </div>
           </td>
+          <td class="hide-from-small-screen"></td>
         </tr>
       {{/if}}
     {{/each}}
