@@ -18,9 +18,7 @@ let userProxy = ObjectProxy.extend({
     }
     return !this.get('currentlyActiveUsers').includes(user);
   }),
-  sortTerm: computed('content.firstName', 'content.lastName', function(){
-    return this.get('content.lastName')+this.get('content.firstName');
-  }),
+  sortTerm: oneWay('content.fullName'),
 });
 let instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
@@ -68,7 +66,6 @@ export default Component.extend({
       return userProxy.create({
         content: user,
         currentlyActiveUsers,
-        sortTerm: oneWay('content.fullName'),
       });
     });
 
