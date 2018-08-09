@@ -1,4 +1,3 @@
-import { resolve } from 'rsvp';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -304,7 +303,6 @@ module('Integration | Component | curriculum inventory sequence block overview',
 
     const course = this.server.create('course', {
       school,
-      sessions: resolve([]),
       clerkshipType,
       published: true,
       year: '2016',

@@ -317,7 +317,7 @@ module('Acceptance: Program - ProgramYear List', function(hooks) {
     this.server.create('programYear', {
       program,
       startYear: 2015,
-      cohort: cohorts[2],
+      cohort: cohorts[1],
       locked: false,
       directorIds: [this.user.id],
     });

@@ -70,7 +70,6 @@ module('Acceptance: User', function(hooks) {
     const user2 = this.server.create('user', {
       enabled: false,
       userSyncIgnore: false,
-      roles: [],
       school: this.school
     });
     await page.visit({ userId: user1.id });
