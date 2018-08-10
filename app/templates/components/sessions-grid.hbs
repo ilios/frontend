@@ -28,11 +28,11 @@
       <span class="session-grid-objectives">{{obj.objectiveCount}}</span>
       <span class="session-grid-terms">{{obj.termCount}}</span>
       <span class="session-grid-first-offering">
-        {{#if obj.firstOfferingDate}}
+        {{#if (await obj.session.firstOfferingDate)}}
           {{#if obj.isIlm}}
-            <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format obj.firstOfferingDate "L"}}
+            <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await obj.session.firstOfferingDate) "L"}}
           {{else}}
-            {{moment-format obj.firstOfferingDate "L LT"}}
+            {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
           {{/if}}
         {{/if}}
       </span>

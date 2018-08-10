@@ -284,8 +284,6 @@ module('Acceptance: Course - Session List', function(hooks) {
     await form.startTime.ampm(newDate.format('a'));
     await form.save();
 
-    await sessions.objectAt(0).visit();
-    await click('[data-test-back-to-sessions] a');
     assert.equal(sessions.objectAt(0).firstOffering, newDate.format('L LT'));
 
   });
