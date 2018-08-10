@@ -162,11 +162,13 @@ module('Acceptance: Course - Session List', function(hooks) {
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
     assert.equal(expandedSessions.length, 0);
+    assert.notOk(page.showsAllSessionsExpanded);
     await page.expandCollapseAllSessions();
     assert.equal(expandedSessions.length, 4);
+    assert.ok(page.showsAllSessionsExpanded);
     await page.expandCollapseAllSessions();
     assert.equal(expandedSessions.length, 0);
-
+    assert.notOk(page.showsAllSessionsExpanded);
   });
 
   test('expand all sessions with one session expanded already', async function(assert) {
@@ -192,6 +194,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     await sessions.objectAt(2).expandCollapse();
     await sessions.objectAt(3).expandCollapse();
     assert.equal(expandedSessions.length, 4);
+    assert.ok(page.showsAllSessionsExpanded);
     await page.expandCollapseAllSessions();
     assert.equal(expandedSessions.length, 0);
   });
