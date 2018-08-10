@@ -22,7 +22,7 @@
         {{#if (gte @durationHours 1)}}
           {{t "general.durationHours" count=@durationHours}}
         {{/if}}
-        {{#if (lt durationMinutes 60)}}
+        {{#if (and (gt durationMinutes 0) (lt durationMinutes 60))}}
           {{t "general.durationMinutes" count=@durationMinutes}}
         {{/if}}
       </span>
