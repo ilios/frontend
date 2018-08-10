@@ -1,6 +1,7 @@
 {{! template-lint-disable attribute-indentation }}
 {{#each sortedSessions as |obj|}}
   <div
+    class="session"
     data-test-session
     data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
   >

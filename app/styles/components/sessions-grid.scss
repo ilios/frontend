@@ -1,31 +1,36 @@
 .sessions-grid {
-  .session-row {
-    @include sessions-grid;
-    &:nth-child(even).not-expanded {
+  .session {
+    &:nth-of-type(even) {
       background-color: $grey;
     }
-    &.is-expanded {
-      background-color: $active-background-color;
-      border-left: 1px solid $ilios-blue;
-      border-right: 1px solid $ilios-blue;
-    }
-    &:nth-child(even).is-expanded {
+    &:nth-of-type(even).is-expanded {
       background-color: darken($active-background-color, 5);
     }
-  }
-  .confirm-removal {
-    background-color: $remove-background-color;
-    color: $ilios-remove-color;
-    font-weight: bold;
-    margin: 0;
-    padding: 0 8rem;
-    text-align: center;
-    width: 100%;
+    .session-row {
+      @include sessions-grid;
+      &.is-expanded {
+        background-color: $active-background-color;
+        border-left: 1px solid $ilios-blue;
+        border-right: 1px solid $ilios-blue;
+      }
+    }
 
-    .confirm-buttons {
-      @include ilios-form-buttons;
-      padding-bottom: 1.5rem;
-      padding-top: 1.1rem;
+    .confirm-removal {
+      background-color: $remove-background-color;
+      color: $ilios-remove-color;
+      font-weight: bold;
+      margin: 0;
+      padding: 0 8rem;
+      text-align: center;
+      width: 100%;
+
+      .confirm-buttons {
+        @include ilios-form-buttons;
+        padding-bottom: 1.5rem;
+        padding-top: 1.1rem;
+      }
     }
   }
+
+
 }
