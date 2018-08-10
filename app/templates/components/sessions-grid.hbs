@@ -1,11 +1,11 @@
 {{! template-lint-disable attribute-indentation }}
 {{#each sortedSessions as |obj|}}
   <div
-    class="session"
+    class="{{if (contains obj.session.id expandedSessionIds) "is-expanded" "not-expanded"}} session"
     data-test-session
     data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
   >
-    <div class="{{if (contains obj.session.id expandedSessionIds) "is-expanded" "not-expanded"}} session-row">
+    <div class="session-row">
       <span class="expand-collapse-control">
         {{#if (contains obj.session.id expandedSessionIds)}}
           {{fa-icon "caret-down" class="link" click=(action closeSession obj.session)}}

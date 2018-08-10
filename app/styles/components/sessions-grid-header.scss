@@ -11,4 +11,10 @@
   .sortable-heading {
     padding: .5rem 0;
   }
+
+  .expand-collapse-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 }
