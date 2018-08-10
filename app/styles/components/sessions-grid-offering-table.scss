@@ -20,6 +20,16 @@
 
   td {
     padding: .2rem .5rem;
+
+    .change-room {
+      max-width: 75%;
+    }
+
+    .actions {
+      z-index: 10;
+    }
+
+
   }
 
   .offering-block {
