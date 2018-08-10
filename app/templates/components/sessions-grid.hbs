@@ -6,11 +6,16 @@
     data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
   >
     <div class="session-row">
-      <span class="expand-collapse-control">
+      <span class="expand-collapse-control" data-test-expand-collapse-control>
         {{#if (contains obj.session.id expandedSessionIds)}}
           {{fa-icon "caret-down" class="link" click=(action closeSession obj.session)}}
         {{else}}
-          {{fa-icon "caret-right" class="link" click=(action expandSession obj.session)}}
+          {{fa-icon
+            "caret-right"
+            class=(if (gt obj.offeringCount 0) "link" "disabled")
+            click=(action "expandSession" obj)
+            title=(if (eq obj.offeringCount 0) (t "general.noOfferings"))
+          }}
         {{/if}}
       </span>
       <span class="session-grid-title">
@@ -59,14 +64,10 @@
       </div>
     {{/if}}
     {{#if (contains obj.session.id expandedSessionIds)}}
-      {{#if (gt (has-many-length obj.session "offerings") 0)}}
-        {{sessions-grid-offering-table
-          offerings=(await obj.session.offerings)
-          canUpdate=obj.canUpdate
-        }}
-      {{else}}
-        <div class="no-offerings" data-test-no-offerings>{{t "general.noOfferings"}}</div>
-      {{/if}}
+      {{sessions-grid-offering-table
+        offerings=(await obj.session.offerings)
+        canUpdate=obj.canUpdate
+      }}
     {{/if}}
   </div>
 

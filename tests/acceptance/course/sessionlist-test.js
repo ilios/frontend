@@ -23,35 +23,35 @@ module('Acceptance: Course - Session List', function(hooks) {
       school: this.school,
       directorIds: [this.user.id]
     });
-    const session1 = this.server.create('session', {
+    this.session1 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
     });
-    this.server.create('session', {
+    this.session2 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
     });
-    this.server.create('session', {
+    this.session3 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
     });
-    this.server.create('session', {
+    this.session4 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
       title: 'session3\\'
     });
     this.server.create('offering', {
-      session: session1,
+      session: this.session1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
     });
     this.server.create('offering', {
-      session: session1,
+      session: this.session1,
       startDate: today.clone().add(1, 'day').add(1, 'hour').format(),
       endDate: today.clone().add(1, 'day').add(4, 'hour').format(),
     });
     this.server.create('offering', {
-      session: session1,
+      session: this.session1,
       startDate: today.clone().add(2, 'days').format(),
       endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
     });
@@ -142,8 +142,13 @@ module('Acceptance: Course - Session List', function(hooks) {
     const { sessions } = page.sessionsList;
 
     assert.equal(sessions.length, 4);
-    await sessions.objectAt(1).expandCollapse();
-    assert.equal(sessions.objectAt(1).noOfferings, 'This session has no offerings');
+    assert.ok(sessions.objectAt(0).canExpand);
+    assert.equal(sessions.objectAt(1).expandTitle, 'This session has no offerings');
+    assert.notOk(sessions.objectAt(1).canExpand);
+    assert.equal(sessions.objectAt(2).expandTitle, 'This session has no offerings');
+    assert.notOk(sessions.objectAt(2).canExpand);
+    assert.equal(sessions.objectAt(3).expandTitle, 'This session has no offerings');
+    assert.notOk(sessions.objectAt(3).canExpand);
   });
 
   test('close offering details', async function (assert) {
@@ -157,7 +162,10 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(expandedSessions.length, 0);
   });
 
-  test('expand all sessions', async function(assert) {
+  test('expand all sessions', async function (assert) {
+    this.server.create('offering', { session: this.session2 });
+    this.server.create('offering', { session: this.session3 });
+    this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
@@ -172,6 +180,9 @@ module('Acceptance: Course - Session List', function(hooks) {
   });
 
   test('expand all sessions with one session expanded already', async function(assert) {
+    this.server.create('offering', { session: this.session2 });
+    this.server.create('offering', { session: this.session3 });
+    this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
@@ -185,6 +196,9 @@ module('Acceptance: Course - Session List', function(hooks) {
   });
 
   test('expand sessions one at a time and collapse all', async function(assert) {
+    this.server.create('offering', { session: this.session2 });
+    this.server.create('offering', { session: this.session3 });
+    this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);

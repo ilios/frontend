@@ -69,6 +69,11 @@ export default Component.extend({
     cancelDelete(sessionId) {
       this.confirmDeleteSessionIds.removeObject(sessionId);
     },
+    expandSession(sessionObject) {
+      if (sessionObject.offeringCount) {
+        this.expandSession(sessionObject.session);
+      }
+    }
   },
 
   removeSession: task(function * (session){

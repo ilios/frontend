@@ -46,11 +46,17 @@
 
   }
 
-
-
   .expand-collapse-control {
-    cursor: pointer;
     font-size: 1.2rem;
     margin-left: .25rem;
+
+    &>.active {
+      color: $ilios-blue;
+      cursor: pointer;
+    }
+
+    &>.disabled {
+      color: $dark-grey;
+    }
   }
 }
