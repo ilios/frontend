@@ -1,14 +1,14 @@
 {{! template-lint-disable attribute-indentation }}
 {{#if (and isEditing (is-fulfilled @offering.session.course.cohorts))}}
-  <td colspan="9">
+  <td colspan="9" class="expanded-offering-manager">
     {{offering-form
       showRoom=true
       showInstructors=true
       cohorts=(await @offering.session.course.cohorts)
       courseStartDate=(await @offering.session.course.startDate)
       courseEndDate=(await @offering.session.course.startDate)
-      close=(toggle "isEditing" this)
-      save=(action "save")
+      close=(action "close")
+      save=(perform save)
       smallGroupMode=false
       offering=@offering
       session=(await @offering.session)
