@@ -122,19 +122,19 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(offerings.offerings.objectAt(0).location, 'room 0');
     assert.equal(offerings.offerings.objectAt(0).learners, '0');
     assert.equal(offerings.offerings.objectAt(0).learnerGroups, '');
-    assert.equal(offerings.offerings.objectAt(0).instructors, '0');
+    assert.equal(offerings.offerings.objectAt(0).instructors, '');
 
     assert.equal(offerings.offerings.objectAt(1).startTime, offering2StartDate.format('LT'));
     assert.equal(offerings.offerings.objectAt(1).location, 'room 1');
     assert.equal(offerings.offerings.objectAt(1).learners, '0');
     assert.equal(offerings.offerings.objectAt(1).learnerGroups, '');
-    assert.equal(offerings.offerings.objectAt(1).instructors, '0');
+    assert.equal(offerings.offerings.objectAt(1).instructors, '');
 
     assert.equal(offerings.offerings.objectAt(2).startTime, offering3StartDate.format('LT'));
     assert.equal(offerings.offerings.objectAt(2).location, 'room 2');
     assert.equal(offerings.offerings.objectAt(2).learners, '0');
     assert.equal(offerings.offerings.objectAt(2).learnerGroups, '');
-    assert.equal(offerings.offerings.objectAt(2).instructors, '0');
+    assert.equal(offerings.offerings.objectAt(2).instructors, '');
   });
 
   test('no offerings', async function(assert) {
