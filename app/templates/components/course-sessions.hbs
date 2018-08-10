@@ -47,7 +47,7 @@
     showExpandAll=(is-fulfilled sessionObjects)
     setSortBy=setSortBy
     sortBy=sortBy
-    allSessionsExpanded=(eq expandedSessionIds.length (has-many-length course "sessions"))
+    allSessionsExpanded=(eq expandedSessionIds.length (get (await sessionsWithOfferings) "length"))
     toggleExpandAll=(perform toggleExpandAll)
   }}
   {{#if (is-fulfilled sessionObjects)}}

@@ -179,6 +179,22 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.notOk(page.showsAllSessionsExpanded);
   });
 
+  test('expand all sessions does not expand sessions with no offerings', async function (assert) {
+    this.server.create('offering', { session: this.session2 });
+    this.server.create('offering', { session: this.session4 });
+    await page.visit({ courseId: 1, details: true });
+    const { sessions, expandedSessions } = page.sessionsList;
+    assert.equal(sessions.length, 4);
+    assert.equal(expandedSessions.length, 0);
+    assert.notOk(page.showsAllSessionsExpanded);
+    await page.expandCollapseAllSessions();
+    assert.equal(expandedSessions.length, 3);
+    assert.ok(page.showsAllSessionsExpanded);
+    await page.expandCollapseAllSessions();
+    assert.equal(expandedSessions.length, 0);
+    assert.notOk(page.showsAllSessionsExpanded);
+  });
+
   test('expand all sessions with one session expanded already', async function(assert) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });

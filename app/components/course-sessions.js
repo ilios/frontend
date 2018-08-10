@@ -24,11 +24,22 @@ export default Component.extend({
 
     return sessionIds.length;
   }),
-  sessionObjects: computed('course.sessions.[]', async function(){
+  sessions: computed('course.sessions.[]', async function () {
+    const course = this.get('course');
+    return await course.get('sessions');
+  }),
+  sessionsWithOfferings: computed('sessions.[]', async function () {
+    const sessions = await this.get('sessions');
+    return sessions.filter(session => {
+      const ids = session.hasMany('offerings').ids();
+      return ids.length > 0;
+    });
+  }),
+  sessionObjects: computed('course', 'sessions.[]', async function(){
     const i18n = this.get('i18n');
     const permissionChecker = this.get('permissionChecker');
     const course = this.get('course');
-    const sessions = await course.get('sessions');
+    const sessions = await this.get('sessions');
     const sessionObjects = await map(sessions.toArray(), async session => {
       const canDelete = await permissionChecker.canDeleteSession(session);
       const canUpdate = await permissionChecker.canUpdateSession(session);
@@ -106,12 +117,12 @@ export default Component.extend({
   }),
 
   toggleExpandAll: task(function * () {
-    yield timeout(1);
-    const course = this.get('course');
-    if (this.expandedSessionIds.length === course.hasMany('sessions').ids().length) {
+    const sessionsWithOfferings = yield this.get('sessionsWithOfferings');
+    if (this.expandedSessionIds.length === sessionsWithOfferings.length) {
       this.set('expandedSessionIds', []);
     } else {
-      this.set('expandedSessionIds', course.hasMany('sessions').ids());
+      const ids = sessionsWithOfferings.mapBy('id');
+      this.set('expandedSessionIds', ids);
     }
   }).drop(),
 
