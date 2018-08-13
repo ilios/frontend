@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.1",
-    "broccoli-asset-rev": "^2.7.0",
+    "broccoli-asset-rev": "^3.0.0",
     "browserslist": "^4.0.0",
     "caniuse-db": "^1.0.30000820",
     "crypto-js": "^3.1.9-1",
