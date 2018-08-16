@@ -39,7 +39,7 @@ export default Service.extend(EventMixin, {
       event.isBlanked = !event.offering && !event.ilmSession;
       event.slug = this.getSlugForEvent(event);
       return event;
-    }).sortBy('startDate');
+    }).sortBy('startDate', 'name');
   },
 
   /**
