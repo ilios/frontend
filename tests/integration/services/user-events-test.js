@@ -112,6 +112,37 @@ module('Integration | Service | user events', function(hooks) {
     });
   });
 
+  test('getEvents - sorted by name for events occupying same time slot', async function(assert){
+    assert.expect(3);
+    const event1 = {
+      name: 'Zeppelin',
+      offering: 1,
+      startDate: '2011-04-21'
+    };
+    const event2 = {
+      name: 'Aardvark',
+      offering: 2,
+      startDate: '2011-04-21'
+    };
+
+    const from = moment('20110421', 'YYYYMMDD').hour(0);
+    const to = from.clone().hour(24);
+    this.commonAjax.reopen({
+      request() {
+        return resolve({ userEvents: [ event1, event2 ] });
+      }
+    });
+
+    const subject = this.owner.lookup('service:user-events');
+    run(async () => {
+      const events = await subject.getEvents(from.unix(), to.unix());
+      assert.equal(events.length, 2);
+      assert.equal(events[0], event2);
+      assert.equal(events[1], event1);
+    });
+  });
+
+
   test('getEventsForSlug - offering', async function(assert){
     assert.expect(2);
     const event1 = {
