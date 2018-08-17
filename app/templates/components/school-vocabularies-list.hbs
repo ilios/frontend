@@ -50,55 +50,57 @@
 </section>
 <div class="school-vocabularies-list-list">
   {{#if (is-fulfilled sortedVocabularies)}}
-    <table>
-      <thead>
-        <tr>
-          <th class="text-left" colspan="3">{{t "general.vocabulary"}}</th>
-          <th class="text-left" colspan="1">{{t "general.terms"}}</th>
-          <th class="text-left" colspan="1">{{t "general.actions"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await sortedVocabularies) as |vocabulary|}}
-          <tr
-            class={{if (eq showRemovalConfirmationFor vocabulary) "confirm-removal" ""}}
-          >
-            <td class="text-left text-top" colspan="3">
-              <span class="clickable link" {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
-            </td>
-            <td class="text-left text-top" colspan="1">{{vocabulary.termCount}}</td>
-
-            <td class="text-left text-top" colspan="1">
-              <span
-                class="clickable edit" {{action manageVocabulary vocabulary.id}}
-              >
-                {{fa-icon "edit"}}
-              </span>
-              {{#if (and canDelete (eq vocabulary.termCount 0))}}
-                {{fa-icon
-                  "trash"
-                  class="remove clickable"
-                  click=(action "confirmRemoval" vocabulary)
-                }}
-              {{/if}}
-            </td>
+    {{#if (get (await sortedVocabularies) "length")}}
+      <table>
+        <thead>
+          <tr>
+            <th class="text-left" colspan="3">{{t "general.vocabulary"}}</th>
+            <th class="text-left" colspan="1">{{t "general.terms"}}</th>
+            <th class="text-left" colspan="1">{{t "general.actions"}}</th>
           </tr>
-          {{#if (eq showRemovalConfirmationFor vocabulary)}}
-            <tr class="confirm-removal">
-              <td colspan="5">
-                <div class="confirm-message">
-                  {{t "general.confirmVocabularyRemoval"}}<br>
-                  <div class="confirm-buttons">
-                    <button {{action (perform remove) vocabulary}} class="remove text">{{t "general.yes"}}</button>
-                    <button {{action "cancelRemoval"}} class="done text">{{t "general.cancel"}}</button>
-                  </div>
-                </div>
+        </thead>
+        <tbody>
+          {{#each (await sortedVocabularies) as |vocabulary|}}
+            <tr
+              class={{if (eq showRemovalConfirmationFor vocabulary) "confirm-removal" ""}}
+            >
+              <td class="text-left text-top" colspan="3">
+                <span class="clickable link" {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
+              </td>
+              <td class="text-left text-top" colspan="1">{{vocabulary.termCount}}</td>
+
+              <td class="text-left text-top" colspan="1">
+                <span
+                  class="clickable edit" {{action manageVocabulary vocabulary.id}}
+                >
+                  {{fa-icon "edit"}}
+                </span>
+                {{#if (and canDelete (eq vocabulary.termCount 0))}}
+                  {{fa-icon
+                    "trash"
+                    class="remove clickable"
+                    click=(action "confirmRemoval" vocabulary)
+                  }}
+                {{/if}}
               </td>
             </tr>
-          {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
+            {{#if (eq showRemovalConfirmationFor vocabulary)}}
+              <tr class="confirm-removal">
+                <td colspan="5">
+                  <div class="confirm-message">
+                    {{t "general.confirmVocabularyRemoval"}}<br>
+                    <div class="confirm-buttons">
+                      <button {{action (perform remove) vocabulary}} class="remove text">{{t "general.yes"}}</button>
+                      <button {{action "cancelRemoval"}} class="done text">{{t "general.cancel"}}</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
   {{else}}
     {{loading-spinner}}
   {{/if}}

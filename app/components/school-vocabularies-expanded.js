@@ -2,9 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
 import { isPresent } from '@ember/utils';
-const { Promise } = RSVP;
 const { notEmpty } = computed;
 
 export default Component.extend({
@@ -24,13 +22,10 @@ export default Component.extend({
   managedTerm: null,
   isManaging: notEmpty('managedVocabulary'),
   showCollapsible: computed('isManaging', 'school.vocabularies.length', function(){
-    return new Promise(resolve => {
-      const isManaging = this.get('isManaging');
-      this.get('school.vocabularies').then(vocabularies => {
-        resolve(vocabularies.get('length') && ! isManaging);
-      });
-    });
-
+    const isManaging = this.get('isManaging');
+    const school = this.get('school');
+    const competencyIds = school.hasMany('vocabularies').ids();
+    return competencyIds.length && ! isManaging;
   }),
   didReceiveAttrs(){
     this._super(...arguments);

@@ -24,9 +24,15 @@ test('it renders', function(assert) {
   vocabulary2.set('terms', resolve([term3]));
 
   const school = EmberObject.create({
-    vocabularies: resolve([vocabulary1, vocabulary2])
+    vocabularies: resolve([vocabulary1, vocabulary2]),
+    hasMany() {
+      return {
+        ids() {
+          return [1, 2];
+        }
+      };
+    }
   });
-
 
   this.set('school', school);
   this.on('click', parseInt);
