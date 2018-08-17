@@ -33,8 +33,8 @@ You will need the following things properly installed on your computer.
 
 ### Installation
 
-* `git clone git@github.com:ilios/frontend.git` this repository
-* `cd ilios-frontend`
+* `git clone git@github.com:ilios/frontend.git`
+* `cd frontend`
 * `yarn install`
 
 ### Running / Development
