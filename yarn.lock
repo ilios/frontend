@@ -6887,16 +6887,16 @@ ignore@^4.0.0, ignore@^4.0.2:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
-ilios-common@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-16.0.0.tgz#90f53d6425c01115bce00d8b6197ffc93bb6af3e"
+ilios-common@16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-16.1.0.tgz#a3aadf728c276da16a8ce4e7cccecf4c9ca98e69"
   dependencies:
     elemental-calendar "^0.1.0"
     ember-attacher "^0.13.5"
     ember-cli-babel "^6.6.0"
     ember-cli-clipboard "^0.9.0"
     ember-cli-google-fonts "^2.16.2"
-    ember-cli-htmlbars "^2.0.3"
+    ember-cli-htmlbars "^3.0.0"
     ember-cli-moment-shim "^3.1.0"
     ember-composable-helpers "^2.0.1"
     ember-concurrency "0.8.19"
