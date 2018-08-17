@@ -5,7 +5,9 @@
     <th class="text-center">{{t "general.learners"}}</th>
     <th colspan="2">{{t "general.learnerGroups"}}</th>
     <th colspan="2">{{t "general.instructors"}}</th>
-    <th class="text-center">{{t "general.actions"}}</th>
+    {{#if @canUpdate}}
+      <th class="text-center">{{t "general.actions"}}</th>
+    {{/if}}
   </tr>
 </thead>
 <tbody>

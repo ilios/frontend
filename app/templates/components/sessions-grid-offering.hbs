@@ -29,7 +29,7 @@
     </td>
   {{/if}}
   <td>
-    {{#if canUpdate}}
+    {{#if @canUpdate}}
       {{#editable-field
         value=@offering.room
         save=(perform changeRoom)
@@ -68,5 +68,9 @@
       30
     }}
   </td>
-  <td class="text-center link" {{action (toggle "isEditing" this)}}>{{fa-icon "pencil" title=(t "general.edit") ariaHidden=false}}</td>
+  {{#if @canUpdate}}
+    <td class="text-center">
+      {{fa-icon "pencil" class="link" title=(t "general.edit") click=(action (toggle "isEditing" this)) ariaHidden=false}}
+    </td>
+  {{/if}}
 {{/if}}

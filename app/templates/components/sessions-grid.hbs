@@ -39,13 +39,15 @@
       <span class="session-grid-offerings">{{obj.offeringCount}}</span>
       <span class="session-grid-status">{{publication-status item=obj showText=false}}</span>
       <span class="session-grid-actions" data-test-actions>
-        {{fa-icon
-          "trash"
-          class="clickable remove"
-          title=(t "general.remove")
-          ariaHidden=false
-          click=(action "confirmDelete" obj.session.id)
-        }}
+        {{#if obj.canUpdate}}
+          {{fa-icon
+            "trash"
+            class="clickable remove"
+            title=(t "general.remove")
+            ariaHidden=false
+            click=(action "confirmDelete" obj.session.id)
+          }}
+        {{/if}}
       </span>
     </div>
     {{#if (contains obj.session.id confirmDeleteSessionIds)}}

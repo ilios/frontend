@@ -18,7 +18,7 @@ export default {
     learners: text('td', { at: 2 }),
     learnerGroups: text('td', { at: 3 }),
     instructors: text('td', { at: 4 }),
-    edit: clickable('td:nth-of-type(6)'),
+    edit: clickable('td:nth-of-type(6) .link'),
     offeringForm,
   })
 };
