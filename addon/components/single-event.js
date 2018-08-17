@@ -26,7 +26,7 @@ export default Component.extend({
     return i18n.t('general.sessionIs', { type });
   }),
 
-  courseObjectives: computed('i18n.locale', 'event.courseObjectives.[]', 'event.competencies.[]', async function(){
+  courseObjectives: computed('i18n.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
     const i18n = this.get('i18n');
     const event = this.get('event');
     const objectives =  event.courseObjectives;
@@ -102,7 +102,7 @@ export default Component.extend({
     });
   }),
 
-  sessionObjectives: computed('i18n.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', async function(){
+  sessionObjectives: computed('i18n.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', function(){
     const i18n = this.get('i18n');
     const event = this.get('event');
     const objectives =  event.sessionObjectives;

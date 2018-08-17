@@ -1,4 +1,4 @@
-{{#if (and event (is-fulfilled courseObjectives) (is-fulfilled sessionObjectives))}}
+{{#if event}}
   <div class='single-event-summary'>
     <h1>
       {{#if recentlyUpdated}}
@@ -46,7 +46,7 @@
     </div>
     <div class='single-event-objective-list'>
       {{single-event-objective-list
-        objectives=(await sessionObjectives)
+        objectives=sessionObjectives
         groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
         listByPriorityPhrase=(t 'general.listByPriority')
         title=(t 'general.sessionObjectives')
@@ -63,7 +63,7 @@
     </div>
     <div class='single-event-objective-list'>
       {{single-event-objective-list
-        objectives=(await courseObjectives)
+        objectives=courseObjectives
         groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
         listByPriorityPhrase=(t 'general.listByPriority')
         title=(t 'general.courseObjectives')
@@ -71,5 +71,5 @@
     </div>
   </fieldset>
 {{else}}
-  {{pulse-loader}}
+  {{not-found}}
 {{/if}}
