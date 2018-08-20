@@ -23,15 +23,15 @@ module('Unit | Model | ProgramYear', function(hooks) {
     assert.expect(3);
     let model = run(() => this.owner.lookup('service:store').createRecord('program-year'));
     var store = model.store;
-    run(function(){
+    run(async () => {
       let program = store.createRecord('program', {id:99, duration:1});
       model.set('program', program);
       model.set('startYear', 2000);
-      assert.equal(model.get('classOfYear'), '2001');
+      assert.equal(await model.get('classOfYear'), '2001');
       program.set('duration', 5);
-      assert.equal(model.get('classOfYear'), '2005');
+      assert.equal(await model.get('classOfYear'), '2005');
       model.set('startYear', 2001);
-      assert.equal(model.get('classOfYear'), '2006');
+      assert.equal(await model.get('classOfYear'), '2006');
     });
   });
 });

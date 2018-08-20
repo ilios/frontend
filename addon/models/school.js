@@ -39,8 +39,9 @@ export default Model.extend({
     let cohorts = await this.get('cohorts');
     let cohortsForYear = await filter(cohorts.toArray(), async cohort => {
       const programYear = await cohort.get('programYear');
+      const classOfYear = await programYear.get('classOfYear');
       let start = parseInt(programYear.get('startYear'));
-      let end = parseInt(programYear.get('classOfYear'));
+      let end = parseInt(classOfYear);
       return (parseInt(year) >= start && parseInt(year) <= end);
     });
     return cohortsForYear;
