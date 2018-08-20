@@ -1,158 +1,121 @@
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, find, findAll, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | leadership search', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('leadership-search', 'Integration | Component | leadership search', {
-  integration: true
-});
+  test('it renders', async function(assert) {
+    this.set('nothing', parseInt);
+    this.set('existingUsers', []);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
 
-test('it renders', function(assert) {
-  this.set('nothing', parseInt);
-  this.set('existingUsers', []);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
+    const search = 'input[type="search"]';
 
-  const search = 'input[type="search"]';
-
-  assert.equal(this.$(search).length, 1);
-});
-
-
-test('less than 3 charecters triggers warning', function(assert) {
-  this.set('nothing', parseInt);
-  this.set('existingUsers', []);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
-  const search = 'input[type="search"]';
-  const results = 'ul';
-
-  this.$(search).val('ab').trigger('keyup');
-  return wait().then(()=>{
-    assert.equal(this.$(results).text().trim(), 'keep typing...');
+    assert.equal(findAll(search).length, 1);
   });
-});
 
-test('input triggers search', function(assert) {
-  let storeMock = Service.extend({
-    query(what, {q, limit}){
 
-      assert.equal('user', what);
-      assert.equal(100, limit);
-      assert.equal('search words', q);
-      return resolve([EmberObject.create({fullName: 'test person', email: 'testemail'})]);
-    }
+  test('less than 3 charecters triggers warning', async function(assert) {
+    this.set('nothing', parseInt);
+    this.set('existingUsers', []);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
+    const search = 'input[type="search"]';
+    const results = 'ul';
+
+    await fillIn(search, 'ab');
+    assert.equal(find(results).textContent.trim(), 'keep typing...');
+
   });
-  this.register('service:store', storeMock);
-  this.set('nothing', parseInt);
-  this.set('existingUsers', []);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
-  const search = 'input[type="search"]';
-  const results = 'ul li';
-  const resultsCount = `${results}:eq(0)`;
-  const firstResult = `${results}:eq(1)`;
 
-  this.$(search).val('search words').trigger('keyup');
+  test('input triggers search', async function (assert) {
+    this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      email: 'testemail'
+    });
+    this.set('nothing', parseInt);
+    this.set('existingUsers', []);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
+    const search = 'input[type="search"]';
+    const results = 'ul li';
+    const resultsCount = `${results}:nth-of-type(1)`;
+    const firstResult = `${results}:nth-of-type(2)`;
 
-  return wait().then(()=>{
-    assert.equal(this.$(resultsCount).text().trim(), '1 result');
-    assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
+    await fillIn(search, 'test person');
+    assert.equal(find(resultsCount).textContent.trim(), '1 result');
+    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
   });
-});
 
-test('no results displays messages', function(assert) {
-  let storeMock = Service.extend({
-    query(what, {q, limit}){
+  test('no results displays messages', async function(assert) {
+    this.set('nothing', parseInt);
+    this.set('existingUsers', []);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
+    const search = 'input[type="search"]';
+    const results = 'ul li';
+    const resultsCount = `${results}:nth-of-type(1)`;
 
-      assert.equal('user', what);
-      assert.equal(100, limit);
-      assert.equal('search words', q);
-      return resolve([]);
-    }
+    await fillIn(search, 'search words');
+    assert.equal(find(resultsCount).textContent.trim(), 'no results');
   });
-  this.register('service:store', storeMock);
-  this.set('nothing', parseInt);
-  this.set('existingUsers', []);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action nothing)}}`);
-  const search = 'input[type="search"]';
-  const results = 'ul li';
-  const resultsCount = `${results}:eq(0)`;
 
-  this.$(search).val('search words').trigger('keyup');
+  test('click user fires add user', async function(assert) {
+    this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      email: 'testemail'
+    });
+    this.set('select', user => {
+      assert.equal(1, user.id);
+    });
+    this.set('existingUsers', []);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action select)}}`);
+    const search = 'input[type="search"]';
+    const results = 'ul li';
+    const firstResult = `${results}:nth-of-type(2)`;
 
+    await fillIn(search, 'test');
+    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
+    await click(firstResult);
+  });
 
-  return wait().then(()=>{
-    assert.equal(this.$(resultsCount).text().trim(), 'no results');
-  });
-});
+  test('can not add users twice', async function(assert) {
+    assert.expect(6);
+    this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      email: 'testemail'
+    });
+    this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person2',
+      email: 'testemail2'
+    });
+    this.set('select', (user) => {
+      assert.equal(user.id, 2, 'only user2 should be sent here');
+    });
+    const user1 = run(() => this.owner.lookup('service:store').find('user', 1));
 
-test('click user fires add user', function(assert) {
-  let user1 = EmberObject.create({
-    fullName: 'test person',
-    email: 'testemail'
-  });
-  let storeMock = Service.extend({
-    query(){
-      return resolve([user1]);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('select', user => {
-    assert.equal(user1, user);
-  });
-  this.set('existingUsers', []);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action select)}}`);
-  const search = 'input[type="search"]';
-  const results = 'ul li';
-  const firstResult = `${results}:eq(1)`;
+    this.set('existingUsers', [user1]);
+    await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action select)}}`);
+    const search = 'input[type="search"]';
+    const results = 'ul li';
+    const resultsCount = `${results}:nth-of-type(1)`;
+    const firstResult = `${results}:nth-of-type(2)`;
+    const secondResult = `${results}:nth-of-type(3)`;
 
-  this.$(search).val('test').trigger('keyup');
+    await fillIn(search, 'test');
 
-  return wait().then(()=>{
-    assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
-    this.$(firstResult).click();
+    assert.equal(find(resultsCount).textContent.trim(), '2 results');
+    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
+    assert.notOk(find(firstResult).classList.contains('clickable'));
+    assert.equal(find(secondResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.person2testemail2');
+    assert.ok(find(secondResult).classList.contains('clickable'));
+    await click(firstResult);
+    await click(secondResult);
   });
-});
-
-test('can not add users twice', async function(assert) {
-  assert.expect(6);
-  let user1 = EmberObject.create({
-    id: 1,
-    fullName: 'test person',
-    email: 'testemail'
-  });
-  let user2 = EmberObject.create({
-    id: 2,
-    fullName: 'test person2',
-    email: 'testemail2'
-  });
-  let storeMock = Service.extend({
-    query(){
-      return resolve([user1, user2]);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('select', (user) => {
-    assert.equal(user, user2, 'only user2 should be sent here');
-  });
-  this.set('existingUsers', [user1]);
-  this.render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action select)}}`);
-  const search = 'input[type="search"]';
-  const results = 'ul li';
-  const resultsCount = `${results}:eq(0)`;
-  const firstResult = `${results}:eq(1)`;
-  const secondResult = `${results}:eq(2)`;
-
-  await this.$(search).val('test').trigger('keyup');
-  await wait();
-
-  assert.equal(this.$(resultsCount).text().trim(), '2 results');
-  assert.equal(this.$(firstResult).text().replace(/[\t\n\s]+/g, ""), 'testpersontestemail');
-  assert.notOk(this.$(firstResult).hasClass('clickable'));
-  assert.equal(this.$(secondResult).text().replace(/[\t\n\s]+/g, ""), 'testperson2testemail2');
-  assert.ok(this.$(secondResult).hasClass('clickable'));
-  await this.$(firstResult).click();
-  await this.$(secondResult).click();
 });

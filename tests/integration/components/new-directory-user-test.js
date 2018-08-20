@@ -1,25 +1,12 @@
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
-import { moduleForComponent, test } from 'ember-qunit';
+import { resolve } from 'rsvp';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import initializer from "ilios/instance-initializers/ember-i18n";
-
-const { resolve } = RSVP;
-
-const mockSchools = [
-  {id: 2, title: 'second', cohorts: resolve([])},
-  {id: 1, title: 'first', cohorts: resolve([])},
-  {id: 3, title: 'third', cohorts: resolve([])},
-];
-const mockUser = EmberObject.create({
-  school: resolve(EmberObject.create(mockSchools[0]))
-});
-
-const currentUserMock = Service.extend({
-  model: resolve(mockUser)
-});
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
 const permissionCheckerMock = Service.extend({
   async canCreateUser() {
@@ -27,292 +14,203 @@ const permissionCheckerMock = Service.extend({
   }
 });
 
+module('Integration | Component | new directory user', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('new-directory-user', 'Integration | Component | new directory user', {
-  integration: true,
-  setup(){
-    initializer.initialize(this);
-  },
-  beforeEach(){
-    this.register('service:current-user', currentUserMock);
-    this.inject.service('current-user', { as: 'current-user' });
-    this.register('service:permissionChecker', permissionCheckerMock);
-  }
-});
-
-test('it renders', function(assert) {
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-      return resolve([]);
-    },
-    findAll(what) {
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('nothing', () => {});
-
-  this.render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing)}}`);
-
-  return wait().then(() => {
-    let content = this.$().text().trim();
-    assert.notEqual(content.search(/Search directory for new users/), -1);
-  });
-});
-
-test('input into the search field fires action', function(assert) {
-  assert.expect(1);
-  let storeMock = Service.extend({
-    query(){
-      return resolve([]);
-    },
-    findAll(what) {
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    }
-  });
-  this.register('service:store', storeMock);
-  const searchTerm = 'search for me!';
-  this.set('nothing', parseInt);
-  this.set('setSearchTerms', (val)=>{
-    assert.equal(val, searchTerm, 'changes to search get sent as action');
-  });
-  this.render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action setSearchTerms) searchTerms=startingSearchTerms}}`);
-  const searchBox = '.new-directory-user-search-tools';
-  const searchInput = `${searchBox} input`;
-  this.$(searchInput).val(searchTerm).trigger('input');
-
-});
-
-test('initial search input fires search and fills input', function(assert) {
-  assert.expect(2);
-  const startingSearchTerms = 'start here';
-
-  let ajaxMock = Service.extend({
-    request(url){
-      assert.equal(url.trim(), `/application/directory/search?limit=51&searchTerms=${startingSearchTerms}`);
-      return resolve({
-        results: []
-      });
-    }
-  });
-  this.register('service:commonAjax', ajaxMock);
-  let storeMock = Service.extend({
-    query(){
-      return resolve([]);
-    },
-    findAll(what) {
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('nothing', parseInt);
-  this.set('startingSearchTerms', startingSearchTerms);
-  this.render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing) searchTerms=startingSearchTerms}}`);
-  const searchBox = '.new-directory-user-search-tools';
-  const searchInput = `${searchBox} input`;
-  assert.equal(this.$(searchInput).val(), startingSearchTerms, 'passed value is in the box');
-
-});
-
-test('create new user', function(assert) {
-  assert.expect(41);
-  let studentRole = EmberObject.create({
-    id: 4,
-    title: 'Student'
-  });
-  let user1 = EmberObject.create({
-    firstName: 'user1-first',
-    lastName: 'user1-last',
-    campusId: 'user1-campus',
-    email: 'user1@test.com',
-    telephoneNumber: 'user11234',
-    user: null,
-    username: 'user1-username',
-  });
-  let user2 = EmberObject.create({
-    firstName: 'user2-first',
-    lastName: 'user2-last',
-    campusId: 'user2-campus',
-    email: 'user2@test.com',
-    telephoneNumber: 'user21234',
-    user: 4136,
-    username: 'user2-username',
-  });
-  let user3 = EmberObject.create({
-    firstName: 'user3-first',
-    lastName: 'user3-last',
-    campusId: null,
-    email: null,
-    telephoneNumber: 'user31234',
-    user: null,
-    username: null,
-  });
-  let ajaxRequestCalled = 0;
-
-  let ajaxMock = Service.extend({
-    request(url){
-      ajaxRequestCalled++;
-      if (ajaxRequestCalled === 1){
-        assert.equal(url.trim(), '/application/directory/search?limit=51&searchTerms=searchterm', 'search for user request is correct');
-        return resolve({
-          results: [user1, user2, user3]
-        });
-      }
-      if (ajaxRequestCalled === 2){
-        assert.equal(url.trim(), '/application/config', 'config request is correct');
-        return resolve({config: {
-          locale: 'en',
-          type: 'ladp',
-          userSearchType: 'ldap',
-        }});
-      }
-
-    }
-  });
-  this.register('service:commonAjax', ajaxMock);
-  let createRecordCalled = 0;
-  let storeMock = Service.extend({
-    query(what, {filters}){
-      assert.equal('cohort', what, 'looking for a cohort');
-      assert.equal(filters.schools[0], 2, 'for school 2');
-      return resolve([]);
-    },
-    findAll(what) {
-      if (what === 'user-role') {
-        assert.equal(what, 'user-role', 'looking for user roles');
-        return resolve([studentRole]);
-      }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-      return resolve([]);
-    },
-    createRecord(what, properties){
-      createRecordCalled++;
-
-      if (createRecordCalled === 1) {
-        const {firstName, middleName, lastName, campusId, otherId, phone, email} = properties;
-        assert.equal(what, 'user', 'creating a user record');
-        assert.equal(firstName, user1.get('firstName'), 'record created with correct value for firstName');
-        assert.equal(middleName, null, 'record created with correct value for middleName');
-        assert.equal(lastName, user1.get('lastName'), 'record created with correct value for lastName');
-        assert.equal(campusId, user1.get('campusId'), 'record created with correct value for campusId');
-        assert.equal(otherId, null, 'record created with correct value for otherId');
-        assert.equal(phone, user1.get('telephoneNumber'), 'record created with correct value for phone');
-        assert.equal(email, user1.get('email'), 'record created with correct value for email');
-
-        return new EmberObject({
-          save(){
-            const roles = this.get('roles');
-            assert.equal(roles, null, 'Faculty get no roles');
-            assert.ok(true, 'save gets called');
-
-            return EmberObject.create({
-              id: '13'
-            });
-          }
-        });
-      }
-
-      if (createRecordCalled === 2) {
-        const {user, username, password} = properties;
-        assert.equal(what, 'authentication', 'creating an authentication record');
-        assert.equal(username, user1.get('username'), 'record has correct username');
-        assert.equal(password, null, 'record has no password');
-        assert.equal(user.get('id'), '13', 'we are linking to the expected user');
-
-        return new EmberObject({
-          save(){
-            assert.ok(true, 'save gets called');
-          }
-        });
-      }
-
-      assert.ok(false, 'create record called too many times');
-
-    },
-  });
-  this.register('service:store', storeMock);
-  let flashmessagesMock = Service.extend({
-    success(message){
-      assert.equal(message, 'general.saved', 'we display a saved message');
-    }
-  });
-  this.register('service:flashMessages', flashmessagesMock);
-
-  this.set('nothing', parseInt);
-  this.set('transitionToUser', (userId)=>{
-    assert.equal(userId, 13, 'after saving we transition to the right user');
-  });
-  this.render(hbs`{{new-directory-user
-    close=(action nothing)
-    setSearchTerms=(action nothing)
-    transitionToUser=(action transitionToUser)
-    searchTerms='searchterm'
-  }}`);
-
-  const results = '.new-directory-user-search-results';
-  const firstResultValues = `${results} tbody tr:eq(0) td`;
-  const secondResultValues = `${results} tbody tr:eq(1) td`;
-  const thirdResultValues = `${results} tbody tr:eq(2) td`;
-  const firstIcon = `${firstResultValues}:eq(0) i`;
-  const secondIcon = `${secondResultValues}:eq(0) i`;
-  const thirdIcon = `${thirdResultValues}:eq(0) i`;
-
-  const firstName = '.item:eq(0) span';
-  const lastName = '.item:eq(1) span';
-  const campusId = '.item:eq(2) span';
-  const email = '.item:eq(3) span';
-  const phone = '.item:eq(4) span';
-  const otherId = '.item:eq(5) span';
-  const username = '.item:eq(6) span';
-
-  const save = '.done';
-
-  return wait().then(()=>{
-    assert.ok(this.$(firstIcon).hasClass('fa-plus'), 'this user can be added');
-    assert.equal(this.$(firstResultValues).eq(1).text().trim(), user1.get('firstName') + ' ' + user1.get('lastName'), 'correct display for name');
-    assert.equal(this.$(firstResultValues).eq(2).text().trim(), user1.get('campusId'), 'correct display for campusId');
-    assert.equal(this.$(firstResultValues).eq(3).text().trim(), user1.get('email'), 'correct display for email');
-
-    assert.ok(this.$(secondIcon).hasClass('fa-sun-o'), 'correct display for things');
-    assert.equal(this.$(secondResultValues).eq(1).text().trim(), user2.get('firstName') + ' ' + user2.get('lastName'), 'correct display for name');
-    assert.equal(this.$(secondResultValues).eq(2).text().trim(), user2.get('campusId'), 'correct display for campusId');
-    assert.equal(this.$(secondResultValues).eq(3).text().trim(), user2.get('email'), 'correct display for email');
-
-    assert.ok(this.$(thirdIcon).hasClass('fa-ambulance'), 'correct display for things');
-    assert.equal(this.$(thirdResultValues).eq(1).text().trim(), user3.get('firstName') + ' ' + user3.get('lastName'), 'correct display for name');
-    assert.equal(this.$(thirdResultValues).eq(2).text().trim(), '', 'campus id is empty');
-    assert.equal(this.$(thirdResultValues).eq(3).text().trim(), '', 'email is empty');
-
-    this.$(firstIcon).click();
-
-    return wait().then(()=>{
-      assert.equal(this.$(firstName).text().trim(), user1.get('firstName'), 'firstName is correct in form');
-      assert.equal(this.$(lastName).text().trim(), user1.get('lastName'), 'lastName is correct in form');
-      assert.equal(this.$(campusId).text().trim(), user1.get('campusId'), 'campusId is correct in form');
-      assert.equal(this.$(email).text().trim(), user1.get('email'), 'email is correct in form');
-      assert.equal(this.$(phone).text().trim(), user1.get('telephoneNumber'), 'phone is correct in form');
-      assert.equal(this.$(otherId).text().trim(), '', 'otherId is blank in form');
-      assert.equal(this.$(username).text().trim(), user1.get('username'), 'username is correct in form');
-
-      this.$(save).click();
-
-      return wait();
+  hooks.beforeEach(async function () {
+    const schools = this.server.createList('school', 3);
+    const user = this.server.create('user', {
+      school: schools[0]
+    });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const currentUserMock = Service.extend({
+      model: resolve(userModel)
     });
 
+    this.owner.register('service:current-user', currentUserMock);
+    this['current-user'] = this.owner.lookup('service:current-user');
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+  });
+
+  test('it renders', async function(assert) {
+    this.set('nothing', () => {});
+
+    await render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing)}}`);
+    assert.ok(this.element.textContent.includes('Search directory for new users'));
+  });
+
+  test('input into the search field fires action', async function(assert) {
+    assert.expect(1);
+    const searchTerm = 'search for me!';
+    this.set('nothing', parseInt);
+    this.set('setSearchTerms', (val)=>{
+      assert.equal(val, searchTerm, 'changes to search get sent as action');
+    });
+    await render(
+      hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action setSearchTerms) searchTerms=startingSearchTerms}}`
+    );
+    const searchBox = '.new-directory-user-search-tools';
+    const searchInput = `${searchBox} input`;
+    await fillIn(searchInput, searchTerm);
+  });
+
+  test('initial search input fires search and fills input', async function(assert) {
+    assert.expect(2);
+    const startingSearchTerms = 'start here';
+
+    let ajaxMock = Service.extend({
+      request(url){
+        assert.equal(url.trim(), `/application/directory/search?limit=51&searchTerms=${startingSearchTerms}`);
+        return resolve({
+          results: []
+        });
+      }
+    });
+    this.owner.register('service:commonAjax', ajaxMock);
+    this.set('nothing', parseInt);
+    this.set('startingSearchTerms', startingSearchTerms);
+    await render(
+      hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing) searchTerms=startingSearchTerms}}`
+    );
+    const searchBox = '.new-directory-user-search-tools';
+    const searchInput = `${searchBox} input`;
+    assert.equal(this.$(searchInput).val(), startingSearchTerms, 'passed value is in the box');
+
+  });
+
+  test('create new user', async function(assert) {
+    assert.expect(32);
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student'
+    });
+    const user1Object = EmberObject.create('user', {
+      firstName: 'user1-first',
+      lastName: 'user1-last',
+      campusId: 'user1-campus',
+      email: 'user1@test.com',
+      telephoneNumber: 'user11234',
+      user: null,
+      username: 'user1-username',
+    });
+    const user2Object = EmberObject.create('user', {
+      firstName: 'user2-first',
+      lastName: 'user2-last',
+      campusId: 'user2-campus',
+      email: 'user2@test.com',
+      telephoneNumber: 'user21234',
+      user: 4136,
+      username: 'user2-username',
+    });
+    const user3Object = EmberObject.create('user', {
+      firstName: 'user3-first',
+      lastName: 'user3-last',
+      campusId: null,
+      email: null,
+      telephoneNumber: 'user31234',
+      user: null,
+      username: null,
+    });
+    this.server.create('user', user1Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
+    const user2 = this.server.create('user', user2Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
+    this.server.create('authentication', {
+      user: user2,
+      username: user2.username,
+    });
+    this.server.create('user', user3Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
+    let ajaxRequestCalled = 0;
+
+    const ajaxMock = Service.extend({
+      request(url){
+        ajaxRequestCalled++;
+        if (ajaxRequestCalled === 1){
+          assert.equal(url.trim(), '/application/directory/search?limit=51&searchTerms=searchterm', 'search for user request is correct');
+          return resolve({
+            results: [user1Object, user2Object, user3Object]
+          });
+        }
+        if (ajaxRequestCalled === 2){
+          assert.equal(url.trim(), '/application/config', 'config request is correct');
+          return resolve({config: {
+            locale: 'en',
+            type: 'ladp',
+            userSearchType: 'ldap',
+          }});
+        }
+
+      }
+    });
+    this.owner.register('service:commonAjax', ajaxMock);
+
+    this.set('nothing', parseInt);
+    this.set('transitionToUser', (userId)=>{
+      assert.equal(userId, 5, 'after saving we transition to the right user');
+    });
+    await render(hbs`{{new-directory-user
+      close=(action nothing)
+      setSearchTerms=(action nothing)
+      transitionToUser=(action transitionToUser)
+      searchTerms='searchterm'
+    }}`);
+
+    const results = '.new-directory-user-search-results';
+    const firstResultValues = `${results} tbody tr:nth-of-type(1) td`;
+    const secondResultValues = `${results} tbody tr:nth-of-type(2) td`;
+    const thirdResultValues = `${results} tbody tr:nth-of-type(3) td`;
+    const firstIcon = `${firstResultValues}:nth-of-type(1) i`;
+    const secondIcon = `${secondResultValues}:nth-of-type(1) i`;
+    const thirdIcon = `${thirdResultValues}:nth-of-type(1) i`;
+
+    const firstName = '[data-test-first-name] span';
+    const lastName = '[data-test-last-name] span';
+    const campusId = '[data-test-campus-id] span';
+    const email = '[data-test-email] span';
+    const phone = '[data-test-phone] span';
+    const otherId = '[data-test-other-id] input';
+    const username = '[data-test-username] span';
+
+    const save = '.done';
+
+    assert.ok(find(firstIcon).classList.contains('fa-plus'), 'this user can be added');
+    assert.equal(findAll(firstResultValues)[1].textContent.trim(), user1Object.get('firstName') + ' ' + user1Object.get('lastName'), 'correct display for name');
+    assert.equal(findAll(firstResultValues)[2].textContent.trim(), user1Object.get('campusId'), 'correct display for campusId');
+    assert.equal(findAll(firstResultValues)[3].textContent.trim(), user1Object.get('email'), 'correct display for email');
+
+    assert.ok(find(secondIcon).classList.contains('fa-sun-o'), 'correct display for things');
+    assert.equal(findAll(secondResultValues)[1].textContent.trim(), user2Object.get('firstName') + ' ' + user2Object.get('lastName'), 'correct display for name');
+    assert.equal(findAll(secondResultValues)[2].textContent.trim(), user2Object.get('campusId'), 'correct display for campusId');
+    assert.equal(findAll(secondResultValues)[3].textContent.trim(), user2Object.get('email'), 'correct display for email');
+
+    assert.ok(find(thirdIcon).classList.contains('fa-ambulance'), 'correct display for things');
+    assert.equal(findAll(thirdResultValues)[1].textContent.trim(), user3Object.get('firstName') + ' ' + user3Object.get('lastName'), 'correct display for name');
+    assert.equal(findAll(thirdResultValues)[2].textContent.trim(), '', 'campus id is empty');
+    assert.equal(findAll(thirdResultValues)[3].textContent.trim(), '', 'email is empty');
+
+    await click(firstIcon);
+
+    assert.equal(find(firstName).textContent.trim(), user1Object.get('firstName'), 'firstName is correct in form');
+    assert.equal(find(lastName).textContent.trim(), user1Object.get('lastName'), 'lastName is correct in form');
+    assert.equal(find(campusId).textContent.trim(), user1Object.get('campusId'), 'campusId is correct in form');
+    assert.equal(find(email).textContent.trim(), user1Object.get('email'), 'email is correct in form');
+    assert.equal(find(phone).textContent.trim(), user1Object.get('telephoneNumber'), 'phone is correct in form');
+    assert.equal(find(otherId).textContent.trim(), '', 'otherId is blank in form');
+    assert.equal(find(username).textContent.trim(), user1Object.get('username'), 'username is correct in form');
+
+    await click(save);
+
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', 5));
+    assert.equal(userModel.firstName, user1Object.get('firstName'), 'record created with correct value for firstName');
+    assert.equal(userModel.middleName, null, 'record created with correct value for middleName');
+    assert.equal(userModel.lastName, user1Object.get('lastName'), 'record created with correct value for lastName');
+    assert.equal(userModel.campusId, user1Object.get('campusId'), 'record created with correct value for campusId');
+    assert.equal(userModel.otherId, null, 'record created with correct value for otherId');
+    assert.equal(userModel.phone, user1Object.get('telephoneNumber'), 'record created with correct value for phone');
+    assert.equal(userModel.email, user1Object.get('email'), 'record created with correct value for email');
+
+    const authenticationModel = await run(() => this.owner.lookup('service:store').find('authentication', 2));
+    assert.equal(authenticationModel.username, user1Object.get('username'), 'record has correct username');
+    assert.equal(authenticationModel.password, null, 'record has no password');
+    assert.equal(authenticationModel.user.get('id'), '5', 'we are linking to the expected user');
   });
 });

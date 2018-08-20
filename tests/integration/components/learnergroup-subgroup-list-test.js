@@ -1,285 +1,196 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { resolve } from 'rsvp';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, fillIn, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | learnergroup subgroup list', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('learnergroup-subgroup-list', 'Integration | Component | learnergroup subgroup list', {
-  integration: true
-});
-
-test('it renders', function (assert) {
-  let subGroup1 = {
-    title: 'first',
-    users: [1,2],
-    children: [],
-    usersCount: 2,
-    childrenCount: 0,
-  };
-  let subGroup2 = {
-    title: 'second',
-    users: [],
-    children: [1,2],
-    usersCount: 0,
-    childrenCount: 2,
-  };
-  let parentGroup = {
-    children: resolve([subGroup1, subGroup2])
-  };
-
-  this.set('parentGroup', parentGroup);
-
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
-
-  assert.equal(this.$('th:eq(0)').text().trim(), 'Learner Group Title');
-  assert.equal(this.$('th:eq(1)').text().trim(), 'Members');
-  assert.equal(this.$('th:eq(2)').text().trim(), 'Subgroups');
-  assert.equal(this.$('th:eq(3)').text().trim(), 'Actions');
-
-  assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 2);
-  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 0);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'second');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 0);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 2);
-
-});
-
-test('can remove group', function(assert) {
-  let subGroup1 = {
-    title: 'first',
-    users: [1,2],
-    children: [],
-    destroyRecord(){
-      assert.ok(true);
-    }
-  };
-  let parentGroup = {
-    children: resolve([subGroup1])
-  };
-
-  this.set('parentGroup', parentGroup);
-
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
-
-  this.$('tbody td:eq(3) .remove').click();
-  this.$('tbody tr:eq(1) .remove').click();
-});
-
-test('removal confirmation', function(assert) {
-  let subGroup1 = {
-    title: 'first',
-    users: [1,2],
-    children: [],
-  };
-  let parentGroup = {
-    children: resolve([subGroup1])
-  };
-
-  this.set('parentGroup', parentGroup);
-
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
-
-  this.$('tbody td:eq(3) .remove').click();
-
-  assert.ok(this.$('tbody tr:eq(0)').hasClass('confirm-removal'));
-  assert.equal(this.$('tbody tr:eq(1)').text().trim().search(/Are you sure/), 0);
-
-});
-
-test('add new group', function(assert) {
-  let cohort = {a: 1};
-  let subGroup1 = {
-    title: 'first',
-    users: [1,2],
-    children: []
-  };
-  let parentGroup = {
-    children: resolve([subGroup1]),
-    cohort: resolve(cohort)
-  };
-
-  let storeMock = Service.extend({
-    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
-      assert.equal('learner-group', what);
-      assert.equal('new group', title);
-      assert.equal(cohort, groupCohort, 'cohort is correct');
-
-      let newGroup = {
-        title,
-        cohort: groupCohort,
-        parent: groupParent
-      };
-
-      return EmberObject.create({
-        save(){
-          return resolve(newGroup);
-        }
-      });
-    }
-  });
-  this.register('service:store', storeMock);
-
-  this.set('parentGroup', EmberObject.create(parentGroup));
-
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
-  assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'first');
-
-  this.$('.expand-button').click();
-
-  let newTitle = 'new group';
-  return wait().then(()=>{
-    this.$('input').val(newTitle);
-    this.$('input').trigger('input');
-    this.$('.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.saved-result').text().trim().replace(/[\t\n\s]+/g, ''),
-        (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
-      );
+  test('it renders', async function (assert) {
+    const users = this.server.createList('user', 2);
+    const parent = this.server.create('learner-group');
+    this.server.create('learner-group', {
+      title: 'first',
+      users,
+      parent
     });
+    const subGroup2 = this.server.create('learner-group', {
+      title: 'second',
+      parent
+    });
+    this.server.createList('learner-group', 2, { parent: subGroup2 });
+    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+
+    this.set('parentGroup', parentGroup);
+
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+
+    assert.equal(find('th').textContent.trim(), 'Learner Group Title');
+    assert.equal(find(findAll('th')[1]).textContent.trim(), 'Members');
+    assert.equal(find(findAll('th')[2]).textContent.trim(), 'Subgroups');
+    assert.equal(find(findAll('th')[3]).textContent.trim(), 'Actions');
+
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'first');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 2);
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 0);
+    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'second');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 0);
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 2);
+
   });
 
-});
+  test('can remove group', async function(assert) {
+    let subGroup1 = {
+      title: 'first',
+      users: [1,2],
+      children: [],
+      destroyRecord(){
+        assert.ok(true);
+      }
+    };
+    let parentGroup = {
+      children: resolve([subGroup1])
+    };
 
-test('add multiple new groups', async function(assert) {
-  assert.expect(7);
-  let cohort = {a: 1};
-  let subGroup1 = EmberObject.create({
-    title: 'group 1',
-    users: [1,2],
-    children: []
-  });
-  let parentGroup = EmberObject.create({
-    title: 'group',
-    children: resolve([subGroup1]),
-    cohort: resolve(cohort),
-    subgroupNumberingOffset: resolve(2)
-  });
+    this.set('parentGroup', parentGroup);
 
-  let storeMock = Service.extend({
-    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
-      assert.equal('learner-group', what);
-      assert.equal('group 2', title);
-      assert.equal(cohort, groupCohort);
-      assert.equal(groupParent, parentGroup);
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
 
-      let newGroup = {
-        title,
-        cohort: groupCohort,
-        parent: groupParent
-      };
-
-      return EmberObject.create({
-        save(){
-          parentGroup.set('children', resolve([subGroup1, newGroup]));
-          return resolve(newGroup);
-        }
-      });
-    }
-  });
-  this.register('service:store', storeMock);
-
-  let flashmessagesMock = Service.extend({
-    success(message){
-      assert.equal(message, 'general.savedSuccessfully');
-    }
-  });
-  this.register('service:flashMessages', flashmessagesMock);
-
-  this.set('parentGroup', parentGroup);
-
-  const groups = 'table tbody tr';
-  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
-  const secondGroupTitle = `${groups}:eq(1) td:eq(0)`;
-  const expandButton = '.expand-button';
-  const multiSelector = '.click-choice-buttons';
-  const multiGroupButton = `${multiSelector} button:eq(1)`;
-  const multiGroupCount = 'input';
-  const done = '.done';
-
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
-  assert.equal(this.$(firstGroupTitle).text().trim(), 'group 1');
-  this.$(expandButton).click();
-  await wait();
-  this.$(multiGroupButton).click();
-  await wait();
-
-  this.$(multiGroupCount).val(1).trigger('input');
-  await this.$(done).click();
-  await wait();
-  await wait();
-
-  assert.equal(this.$(secondGroupTitle).text().trim(), 'group 2');
-
-});
-
-test('truncates multiple group with long name', async function(assert) {
-  assert.expect(6);
-  let cohort = {a: 1};
-  const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
-  const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
-  let parentGroup = EmberObject.create({
-    title: longTitle,
-    children: resolve([]),
-    cohort: resolve(cohort),
-    subgroupNumberingOffset: resolve(1)
+    await click('tbody td:nth-of-type(4) .remove');
+    await click('tbody tr:nth-of-type(2) .remove');
   });
 
-  let storeMock = Service.extend({
-    createRecord(what, {title, cohort:groupCohort, parent:groupParent}){
-      assert.equal('learner-group', what);
-      assert.equal(title, expectedGroupTitle, 'correct truncated title');
-      assert.equal(cohort, groupCohort);
-      assert.equal(groupParent, parentGroup);
+  test('removal confirmation', async function(assert) {
+    let subGroup1 = {
+      title: 'first',
+      users: [1,2],
+      children: [],
+    };
+    let parentGroup = {
+      children: resolve([subGroup1])
+    };
 
-      let newGroup = {
-        title,
-        cohort: groupCohort,
-        parent: groupParent
-      };
+    this.set('parentGroup', parentGroup);
 
-      return EmberObject.create({
-        save(){
-          parentGroup.set('children', resolve([newGroup]));
-          return resolve(newGroup);
-        }
-      });
-    }
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canDelete=true}}`);
+
+    await click('tbody td:nth-of-type(4) .remove');
+
+    assert.ok(find('tbody tr').classList.contains('confirm-removal'));
+    assert.equal(find(findAll('tbody tr')[1]).textContent.trim().search(/Are you sure/), 0);
+
   });
-  this.register('service:store', storeMock);
 
-  let flashmessagesMock = Service.extend({
-    success(message){
-      assert.equal(message, 'general.savedSuccessfully');
-    }
+  test('add new group', async function (assert) {
+    const cohort = this.server.create('cohort');
+    const users = this.server.createList('user', 2);
+    const parent = this.server.create('learner-group', {
+      cohort
+    });
+    this.server.create('learner-group', {
+      title: 'first',
+      parent,
+      users
+    });
+
+    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+
+    this.set('parentGroup', parentGroup);
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'first');
+
+    await click('.expand-button');
+
+    let newTitle = 'new group';
+    await fillIn('input', newTitle);
+    await triggerEvent('input', 'input');
+    await click('.done');
+    assert.equal(find('.saved-result').textContent.trim().replace(/[\t\n\s]+/g, ''),
+      (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
+    );
+    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));
+    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
-  this.register('service:flashMessages', flashmessagesMock);
 
-  this.set('parentGroup', parentGroup);
+  test('add multiple new groups', async function(assert) {
+    assert.expect(4);
+    const cohort = this.server.create('cohort');
+    const users = this.server.createList('user', 2);
+    const parent = this.server.create('learner-group', {
+      title: 'group',
+      cohort
+    });
+    this.server.create('learner-group', {
+      title: 'group 1',
+      parent,
+      users
+    });
 
-  const groups = 'table tbody tr';
-  const firstGroupTitle = `${groups}:eq(0) td:eq(0)`;
-  const expandButton = '.expand-button';
-  const multiSelector = '.click-choice-buttons';
-  const multiGroupButton = `${multiSelector} button:eq(1)`;
-  const multiGroupCount = 'input';
-  const done = '.done';
+    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    this.set('parentGroup', parentGroup);
 
-  this.render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
-  this.$(expandButton).click();
-  await wait();
-  await this.$(multiGroupButton).click();
-  await wait();
+    const groups = 'table tbody tr';
+    const firstGroupTitle = `${groups}:nth-of-type(1) td:nth-of-type(1)`;
+    const secondGroupTitle = `${groups}:nth-of-type(2) td:nth-of-type(1)`;
+    const expandButton = '.expand-button';
+    const multiSelector = '.click-choice-buttons';
+    const multiGroupButton = `${multiSelector} button:nth-of-type(2)`;
+    const multiGroupCount = 'input';
+    const done = '.done';
 
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+    assert.equal(find(firstGroupTitle).textContent.trim(), 'group 1');
+    await click(expandButton);
+    await click(multiGroupButton);
 
-  this.$(multiGroupCount).val(1).trigger('input');
-  await this.$(done).click();
-  await wait();
-  await wait();
+    await fillIn(multiGroupCount, 1);
+    await await click(done);
 
-  assert.equal(this.$(firstGroupTitle).text().trim(), expectedGroupTitle);
+    assert.equal(find(secondGroupTitle).textContent.trim(), 'group 2');
+    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));
+    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
 
+  });
+
+  test('truncates multiple group with long name', async function(assert) {
+    assert.expect(4);
+    const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
+    const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
+
+    const cohort = this.server.create('cohort');
+    const parent = this.server.create('learner-group', {
+      title: longTitle,
+      cohort
+    });
+
+    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    this.set('parentGroup', parentGroup);
+
+    const groups = 'table tbody tr';
+    const firstGroupTitle = `${groups}:nth-of-type(1) td:nth-of-type(1)`;
+    const expandButton = '.expand-button';
+    const multiSelector = '.click-choice-buttons';
+    const multiGroupButton = `${multiSelector} button:nth-of-type(2)`;
+    const multiGroupCount = 'input';
+    const done = '.done';
+
+    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+    await click(expandButton);
+    await click(multiGroupButton);
+    await fillIn(multiGroupCount, 1);
+    await click(done);
+
+    assert.equal(find(firstGroupTitle).textContent.trim(), expectedGroupTitle);
+    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 2));
+    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
+    assert.equal(newGroup.title, expectedGroupTitle);
+  });
 });
