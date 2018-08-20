@@ -23,8 +23,9 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
   }),
-  classOfYear: computed('startYear', 'program.duration', function(){
-    return (parseInt(this.get('startYear'), 10) + parseInt(this.get('program.duration'), 10));
+  classOfYear: computed('startYear', 'program.duration', async function(){
+    const program = await this.get('program');
+    return (parseInt(this.startYear, 10) + parseInt(program.duration, 10));
   }),
   requiredPublicationIssues: computed('startYear', 'cohort', 'program', function(){
     return this.getRequiredPublicationIssues();
