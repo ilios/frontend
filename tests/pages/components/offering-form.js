@@ -9,7 +9,7 @@ import instructorSelectionManager from './instructor-selection-manager';
 
 
 export default {
-  scope: '.offering-form',
+  scope: '[data-test-offering-form]',
   startDate: datePicker('.start-date input'),
   startTime: {
     scope: '.start-time',

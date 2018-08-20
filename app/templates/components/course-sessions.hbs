@@ -2,7 +2,7 @@
   <div class="title">
     {{t "general.sessions"}} ({{sessionsCount}})
   </div>
-  <div class="actions">
+  <div class="actions" data-test-actions>
     {{#if canCreateSession}}
       {{expand-collapse-button
         value=showNewSessionForm
@@ -27,19 +27,39 @@
 {{/if}}
 
 {{#if saveSession.lastSuccessful.value}}
-  <div class="save-result">
+  <div class="save-result" data-test-new-saved-session>
     {{#link-to "session.index" course saveSession.lastSuccessful.value}}
       {{fa-icon "external-link-square"}} {{get saveSession.lastSuccessful.value "title"}}
     {{/link-to}}
     {{t "general.savedSuccessfully"}}
   </div>
 {{/if}}
-<div class="course-sessions-content">
-  {{session-table
-    sessions=(await sessionObjects)
+<div class="filter">
+  <input
+    value={{filterByDebounced}}
+    oninput={{action (perform changeFilterBy) value="target.value"}}
+    placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+    data-test-session-filter
+  >
+</div>
+<section>
+  {{sessions-grid-header
+    showExpandAll=(is-fulfilled sessionObjects)
     setSortBy=setSortBy
     sortBy=sortBy
-    setFilterBy=setFilterBy
-    filterBy=filterBy
+    allSessionsExpanded=(eq expandedSessionIds.length (get (await sessionsWithOfferings) "length"))
+    toggleExpandAll=(perform toggleExpandAll)
   }}
-</div>
+  {{#if (is-fulfilled sessionObjects)}}
+    {{sessions-grid
+      sessions=(await sessionObjects)
+      sortBy=sortBy
+      filterBy=filterBy
+      expandedSessionIds=expandedSessionIds
+      closeSession=(perform closeSession)
+      expandSession=(perform expandSession)
+    }}
+  {{else}}
+    {{sessions-grid-loading count=(has-many-length course "sessions")}}
+  {{/if}}
+</section>

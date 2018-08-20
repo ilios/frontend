@@ -158,13 +158,16 @@
 @import 'components/session-offerings';
 @import 'components/session-offerings-list';
 @import 'components/session-overview';
+@import 'components/sessions-grid';
+@import 'components/sessions-grid-header';
+@import 'components/sessions-grid-loading';
+@import 'components/sessions-grid-offering-table';
 @import 'components/pending-single-user-updates';
 @import 'components/pending-user-updates';
 @import 'components/program-details';
 @import 'components/programyear-objective-list-item-expanded';
 @import 'components/program-year-visualizations';
 @import 'components/session-publicationcheck';
-@import 'components/session-table';
 @import 'components/taxonomy-manager';
 @import 'components/time-picker';
 @import 'components/toggle-yesno';

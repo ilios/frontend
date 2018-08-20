@@ -31,6 +31,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   selectedSessionTypeId: null,
   isSaving: false,
 
+  'data-test-new-session': true,
+
   activeSessionTypes: computed('sessionTypes.[]', async function() {
     const sessionTypes = await this.get('sessionTypes');
     return sessionTypes.filterBy('active', true);

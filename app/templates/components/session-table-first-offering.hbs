@@ -1,7 +1,0 @@
-{{#if row.firstOfferingDate}}
-  {{#if row.isIlm}}
-    <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format row.firstOfferingDate "L"}}
-  {{else}}
-    {{moment-format row.firstOfferingDate "L LT"}}
-  {{/if}}
-{{/if}}

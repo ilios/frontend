@@ -1,7 +1,4 @@
-{{#if
-  (and isEditing (is-fulfilled offering.session.course.cohorts))
-  class="horizontal"
-}}
+{{#if (and isEditing (is-fulfilled offering.session.course.cohorts))}}
   {{offering-form
     showRoom=true
     showInstructors=true
@@ -62,6 +59,4 @@
       </div>
     </div>
   {{/if}}
-
-
 {{/if}}

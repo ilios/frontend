@@ -3,12 +3,12 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  tagName: 'th',
   sortedBy: false,
   sortedAscending: true,
   align: 'left',
   sortType: 'alpha',
-  classNameBindings: ['textDirection', ':sortable', ':clickable', 'hideFromSmallScreen'],
+  classNameBindings: ['textDirection', ':sortable', ':clickable', ':sortable-heading', 'hideFromSmallScreen'],
+  tagName: 'span',
   hideFromSmallScreen: false,
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
     const sortedBy = this.get('sortedBy');
@@ -28,7 +28,6 @@ export default Component.extend({
   textDirection: computed('align', function(){
     return 'text-' + this.get('align');
   }),
-  attributeBindings: ['colspan', 'title'],
-  colspan: 1,
+  attributeBindings: ['title'],
   title: ''
 });
