@@ -10,23 +10,23 @@
         toggle=(action (mut nonStudentMode))
       }}
     </div>
-    <div class="item">
+    <div class="item" data-test-first-name>
       <label>{{t "general.firstName"}}:</label>
       <span>{{firstName}}</span>
     </div>
-    <div class="item">
+    <div class="item" data-test-last-name>
       <label>{{t "general.lastName"}}:</label>
       <span>{{lastName}}</span>
     </div>
-    <div class="item">
+    <div class="item" data-test-campus-id>
       <label>{{t "general.campusId"}}:</label>
       <span>{{campusId}}</span>
     </div>
-    <div class="item">
+    <div class="item" data-test-email>
       <label>{{t "general.email"}}:</label>
       <span>{{email}}</span>
     </div>
-    <div class="item">
+    <div class="item" data-test-phone>
       <label>{{t "general.phone"}}:</label>
       <span>
         {{#if phone.length}}
@@ -36,7 +36,7 @@
         {{/if}}
       </span>
     </div>
-    <div class="item">
+    <div class="item" data-test-other-id>
       <label>{{t "general.otherId"}}:</label>
       <input
         type="text"
@@ -48,7 +48,7 @@
         <span class="validation-error-message">{{v-get this "otherId" "message"}}</span>
       {{/if}}
     </div>
-    <div class="item">
+    <div class="item" data-test-username>
       <label>{{t "general.username"}}:</label>
       {{#if (await allowCustomUserName)}}
         <input
@@ -68,7 +68,7 @@
     </div>
 
     {{#if (await allowCustomUserName)}}
-      <div class="item">
+      <div class="item" data-test-password>
         <label>{{t "general.password"}}:</label>
         <input
           type="text"
@@ -83,7 +83,7 @@
         {{/if}}
       </div>
     {{/if}}
-    <div class="item">
+    <div class="item" data-test-school>
       <label>{{t "general.primarySchool"}}:</label>
       {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
         <select onchange={{action "setSchool" value="target.value"}}>
@@ -102,7 +102,7 @@
       (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
       class="vertical"
     }}
-      <div class="item">
+      <div class="item" data-test-cohort>
         <label>{{t "general.primaryCohort"}}:</label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
           <select onchange={{action "setPrimaryCohort" value="target.value"}}>

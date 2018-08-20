@@ -1,141 +1,103 @@
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve, reject } = RSVP;
+module('Integration | Component | myreports list item', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('myreports-list-item', 'Integration | Component | myreports list item', {
-  integration: true
-});
+  test('custom title', async function(assert) {
+    assert.expect(3);
+    const report = this.server.create('report', {
+      title: 'Lorem Ipsum'
+    });
 
-test('custom title', function(assert) {
-  assert.expect(3);
-  const report = EmberObject.create({
-    'title': 'Lorem Ipsum'
-  });
-  this.set('report', report);
-  this.on('selectReport', (param) => {
-    assert.equal(param, report);
-  });
-  this.render(hbs`{{myreports-list-item report=report selectReport='selectReport'}}`);
-  return wait().then(()=>{
-    assert.equal(this.$().text().trim(), report.get('title'));
-    assert.equal(this.$('.clickable').length, 1);
-    this.$('.clickable').click();
-  });
-});
+    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    this.set('report', reportModel);
+    this.set('selectReport', (param) => {
+      assert.equal(param, reportModel);
+    });
+    await render(hbs`{{myreports-list-item report=report selectReport=(action selectReport)}}`);
 
-test('all competencies in all schools', function(assert) {
-  assert.expect(3);
-  const report = EmberObject.create({
-    'prepositionalObject': null,
-    'school': null,
-    'subject': 'competency',
-    'title': null,
-  });
-  const storeMock = Service.extend({});
-  this.register('service:store', storeMock);
-  this.set('report', report);
-  this.on('selectReport', (param) => {
-    assert.equal(param, report);
-  });
-  this.render(hbs`{{myreports-list-item report=report selectReport='selectReport'}}`);
-  return wait().then(()=>{
-    assert.equal(this.$().text().trim(), 'All Competencies in All Schools');
-    assert.equal(this.$('.clickable').length, 1);
-    this.$('.clickable').click();
-  });
-});
-
-test('all competencies in school X', function(assert) {
-  assert.expect(2);
-  const school = EmberObject.create({
-    'title': 'School of Schools'
-  });
-  const report = EmberObject.create({
-    'prepositionalObject': null,
-    'school': resolve(school),
-    'subject': 'competency',
-    'title': null,
-  });
-  const storeMock = Service.extend({});
-  this.register('service:store', storeMock);
-  this.set('report', report);
-  this.render(hbs`{{myreports-list-item report=report}}`);
-  return wait().then(()=>{
-    assert.equal(this.$().text().trim(), 'All Competencies in ' + school.get('title'));
-    assert.equal(this.$('.clickable').length, 1);
-  });
-});
-
-test('all competencies for user X in school Y', function(assert) {
-  assert.expect(4);
-  const school = EmberObject.create({
-    'title': 'School of Schools'
-  });
-  const pObject = EmberObject.create({
-    dasherize(){
-      return 'user';
-    }
-  });
-  const userRecord = EmberObject.create({
-    fullName: 'Chip Whitley',
-  });
-  const report = EmberObject.create({
-    'prepositionalObject': pObject,
-    'school': resolve(school),
-    'subject': 'competency',
-    'title': null,
-    'prepositionalObjectTableRowId': 1,
+    assert.equal(this.element.textContent.trim(), report.title);
+    assert.equal(findAll('.clickable').length, 1);
+    await click('.clickable');
   });
 
-  const storeMock = Service.extend({
-    findRecord(model, id) {
-      assert.equal(model, 'user');
-      assert.equal(id, 1);
-      return resolve(userRecord);
-    }
+  test('all competencies in all schools', async function(assert) {
+    assert.expect(3);
+    const report = this.server.create('report', {
+      subject: 'competency'
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    this.set('report', reportModel);
+    this.set('selectReport', (param) => {
+      assert.equal(param, reportModel);
+    });
+    await render(hbs`{{myreports-list-item report=report selectReport=(action selectReport)}}`);
+
+    assert.equal(this.element.textContent.trim(), 'All Competencies in All Schools');
+    assert.equal(findAll('.clickable').length, 1);
+    await click('.clickable');
   });
 
-  this.register('service:store', storeMock);
-  this.set('report', report);
-  this.render(hbs`{{myreports-list-item report=report}}`);
-  return wait().then(()=>{
-    assert.equal(this.$().text().trim(), 'All Competencies for ' + userRecord.get('fullName') +  ' in ' + school.get('title'));
-    assert.equal(this.$('.clickable').length, 1);
-  });
-});
+  test('all competencies in school X', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const report = this.server.create('report', {
+      school,
+      subject: 'competency',
+    });
 
-test('broken report', function(assert) {
-  assert.expect(2);
-  const school = EmberObject.create({
-    'title': 'School of Schools'
+    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{myreports-list-item report=report}}`);
+    assert.equal(this.element.textContent.trim(), 'All Competencies in ' + school.title);
+    assert.equal(findAll('.clickable').length, 1);
   });
-  const pObject = EmberObject.create({
-    dasherize(){
-      return 'user';
-    }
+
+  test('all competencies for user X in school Y', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const user = this.server.create('user', {
+      firstName: 'Chip',
+      lastName: 'Whitley',
+    });
+    const report = this.server.create('report', {
+      school,
+      prepositionalObject: 'user',
+      subject: 'competency',
+      prepositionalObjectTableRowId: user.id,
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    this.set('report', reportModel);
+    await render(hbs`{{myreports-list-item report=report}}`);
+
+    assert.equal(this.element.textContent.trim(), 'All Competencies for ' + userModel.get('fullName') +  ' in ' + school.title);
+    assert.equal(findAll('.clickable').length, 1);
   });
-  const report = EmberObject.create({
-    'prepositionalObject': pObject,
-    'school': resolve(school),
-    'subject': 'competency',
-    'title': null,
-    'prepositionalObjectTableRowId': 1,
-  });
-  const storeMock = Service.extend({
-    findRecord() {
-      return reject(new Error('not found'));
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('report', report);
-  this.render(hbs`{{myreports-list-item report=report}}`);
-  return wait().then(()=>{
-    assert.equal(this.$().text().trim(), 'This report is no longer available.');
-    assert.equal(this.$('.clickable').length, 0);
+
+  test('broken report', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const report = this.server.create('report', {
+      school,
+      prepositionalObject: 'user',
+      subject: 'competency',
+      prepositionalObjectTableRowId: 13,
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    this.set('report', reportModel);
+
+    await render(hbs`{{myreports-list-item report=report}}`);
+    assert.equal(this.element.textContent.trim(), 'This report is no longer available.');
+    assert.equal(findAll('.clickable').length, 0);
   });
 });
