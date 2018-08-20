@@ -14,67 +14,63 @@ module('Acceptance: Session - Offerings', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('program', { school: this.school });
-    this.server.create('programYear', { programId: 1});
-    this.server.create('cohort', {
-      programYearId: 1
-    });
-    this.server.create('course', {
-      cohortIds: [1],
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const course = this.server.create('course', {
+      cohorts: [cohort],
       school: this.school,
       directors: [this.user]
     });
     this.server.create('sessionType', {
       school: this.school
     });
-    this.server.createList('user', 8);
-    this.server.create('instructorGroup', {
-      userIds: [2, 3, 6, 7],
+    const users = this.server.createList('user', 8);
+    const instructorGroup1 = this.server.create('instructor-group', {
+      users: [users[0], users[1], users[4], users[5]],
       school: this.school,
     });
-    this.server.create('instructorGroup', {
-      userIds: [4, 5],
+    const instructorGroup2 = this.server.create('instructor-group', {
+      users: [users[2], users[3]],
       school: this.school
     });
-    this.server.create('learnerGroup', {
-      userIds: [2, 3],
-      cohortId: 1,
+    const learnerGroup1 = this.server.create('learner-group', {
+      users: [users[0], users[1]],
+      cohort,
       location: 'default 1',
       instructors: [this.user],
     });
-    this.server.create('learnerGroup', {
-      userIds: [4, 5],
-      cohortId: 1,
+    const learnerGroup2 = this.server.create('learner-group', {
+      users: [users[2], users[3]],
+      cohort,
       location: 'default 2',
-      instructorGroupIds: [1],
+      instructorGroups: [instructorGroup1],
     });
-    this.server.create('session', {
-      courseId: 1,
-    });
+    const session = this.server.create('session', { course });
 
     this.today = moment().hour(9);
     this.offering1 = this.server.create('offering', {
-      sessionId: 1,
-      instructorIds: [6, 7, 8, 9],
-      instructorGroupIds: [1, 2],
-      learnerGroupIds: [1, 2],
+      session,
+      instructors: [users[4], users[5], users[6], users[7]],
+      instructorGroups: [instructorGroup1, instructorGroup2],
+      learnerGroups: [learnerGroup1, learnerGroup2],
       startDate: this.today.format(),
       endDate: this.today.clone().add(1, 'hour').format(),
     });
 
     this.offering2 = this.server.create('offering', {
-      sessionId: 1,
-      instructorIds: [8, 9],
-      instructorGroupIds: [2],
-      learnerGroupIds: [2],
+      session,
+      instructors: [users[6], users[7]],
+      instructorGroups: [instructorGroup2],
+      learnerGroups: [learnerGroup2],
       startDate: this.today.clone().add(1, 'day').format(),
       endDate: this.today.clone().add(1, 'day').add(1, 'hour').format(),
     });
     this.offering3 = this.server.create('offering', {
-      sessionId: 1,
-      instructorGroupIds: [2],
-      learnerGroupIds: [2],
-      instructorIds: [],
+      session,
+      instructorGroups: [instructorGroup2],
+      learnerGroups: [learnerGroup2],
+      instructors: [],
       startDate: this.today.clone().add(2, 'days').format(),
       endDate: this.today.clone().add(3, 'days').add(1, 'hour').format(),
     });
@@ -124,7 +120,7 @@ module('Acceptance: Session - Offerings', function(hooks) {
     assert.equal(blocks(2).multiDay, expectedText);
   });
 
-  test('offering details', async function(assert) {
+  test('offering details', async function (assert) {
     await page.visit({ courseId: 1, sessionId: 1 });
     const blocks = page.offerings.dateBlocks;
     assert.equal(blocks(0).offerings(0).learnerGroups().count, 2);
