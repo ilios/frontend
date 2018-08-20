@@ -70,7 +70,7 @@ export default Model.extend({
    * @property allInstructors
    * @type {Ember.computed}
    */
-  allInstructors: computed('instructors.[]', 'instructorGroups.[]', async function(){
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function(){
     const instructorGroups = await this.get('instructorGroups');
     const instructors = await this.get('instructors');
     const instructorsInInstructorGroups = await all(instructorGroups.mapBy('users'));
