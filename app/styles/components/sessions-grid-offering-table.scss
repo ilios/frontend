@@ -52,8 +52,12 @@
   }
 
   .sessions-grid-offering {
+    transition: background-color .5s ease-out;
     &.even {
       background-color: darken($active-background-color, 10);
+    }
+    &.was-updated {
+      background-color: lighten($ilios-green, 30%);
     }
   }
 
