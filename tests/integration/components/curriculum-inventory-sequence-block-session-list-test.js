@@ -48,7 +48,7 @@ test('it renders', async function(assert) {
     offerings: resolve(offerings1),
     sessionType: resolve(sessionType1),
     isIndependentLearning: false,
-    maxSingleOfferingDuration: resolve(totalTime1)
+    maxDuration: resolve(totalTime1)
   });
 
   let session2 = EmberObject.create({
@@ -57,7 +57,7 @@ test('it renders', async function(assert) {
     offerings: resolve(offerings2),
     sessionType: resolve(sessionType2),
     isIndependentLearning: false,
-    totalSumOfferingsDuration: resolve(totalTime2)
+    totalSumDuration: resolve(totalTime2)
   });
 
   let session3 = EmberObject.create({
@@ -66,7 +66,7 @@ test('it renders', async function(assert) {
     offerings: resolve(offerings3),
     sessionType: resolve(sessionType3),
     isIndependentLearning: false,
-    maxSingleOfferingDuration: resolve(totalTime3)
+    maxDuration: resolve(totalTime3)
   });
 
   let session4 = EmberObject.create({
@@ -75,7 +75,7 @@ test('it renders', async function(assert) {
     offerings: resolve(offerings4),
     sessionType: resolve(sessionType4),
     isIndependentLearning: true,
-    totalSumOfferingsDuration: resolve(totalTime4)
+    totalSumDuration: resolve(totalTime4)
   });
 
   let sessions = [session1, session2, session3, session4];
@@ -152,7 +152,7 @@ test('sort by title', async function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -177,7 +177,7 @@ test('sort by session type', async function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
@@ -202,7 +202,7 @@ test('sort by offerings total', async function(assert) {
     title: 'Zeppelin',
     offerings: resolve([]),
     sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-    maxSingleOfferingDuration: resolve(0)
+    maxDuration: resolve(0)
   });
 
   let block = EmberObject.create({
