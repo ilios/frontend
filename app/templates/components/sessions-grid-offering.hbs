@@ -56,13 +56,13 @@
     {{/if}}
   </td>
   <td class="text-center">{{get (await @offering.allLearners) "length"}}</td>
-  <td colspan="2">
+  <td colspan="2" title={{join ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups)))}}>
     {{truncate
       (join ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups))))
       30
     }}
   </td>
-  <td colspan="2">
+  <td colspan="2" title={{join ", " (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))}}>
     {{truncate
       (join ", " (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors))))
       30
