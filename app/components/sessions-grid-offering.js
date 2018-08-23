@@ -17,12 +17,13 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   tagName: 'tr',
-  classNameBindings: [':sessions-grid-offering', 'firstRow', 'even'],
+  classNameBindings: [':sessions-grid-offering', 'firstRow', 'even', 'wasUpdated'],
   canUpdate: false,
   room: null,
   firstRow: false,
   even: false,
   isEditing: false,
+  wasUpdated: false,
   'data-test-sessions-grid-offering': true,
 
   didReceiveAttrs(){
@@ -59,6 +60,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
 
     yield offering.save();
-    scrollIntoView(this.element);
+    this.updateUi.perform();
   }).drop(),
+  updateUi: task(function* () {
+    yield timeout(10);
+    this.set('wasUpdated', true);
+    scrollIntoView(this.element);
+    yield timeout(4000);
+    this.set('wasUpdated', false);
+  }).restartable(),
 });
