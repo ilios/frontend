@@ -18,7 +18,10 @@
               {{#if cohort.title}}
                 {{cohort.title}}
               {{else}}
-                {{t "general.classOf" year = cohort.programYear.classOfYear}}
+                {{t
+                  "general.classOf"
+                  year=(await cohort.classOfYear)
+                }}
               {{/if}}
             </td>
             <td class="text-center">{{await cohort.currentLevel}}</td>
