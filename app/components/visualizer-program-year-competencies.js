@@ -20,7 +20,8 @@ export default Component.extend({
     const programYear = this.get('programYear');
     const cohort = await programYear.get('cohort');
     const title = cohort.get('title');
-    const classOfYear = i18n.t('classOfYear', { year: programYear.get('classOfYear') });
+    const year = await cohort.get('classOfYear');
+    const classOfYear = i18n.t('classOfYear', { year });
 
     return title ? title : classOfYear;
   }),

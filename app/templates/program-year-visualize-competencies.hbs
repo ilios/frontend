@@ -10,7 +10,7 @@
       {{#if (get (await model.cohort) "title")}}
         {{get (await model.cohort) "title"}}
       {{else}}
-        {{t "general.classOf" year=model.classOfYear}}
+        {{t "general.classOf" year=(await model.classOfYear)}}
       {{/if}}
     {{/link-to}}
   </h3>

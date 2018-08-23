@@ -52,7 +52,7 @@
                   {{#if (get (await programYearProxy.cohort) "title")}}
                     {{get (await programYearProxy.cohort) "title"}}
                   {{else}}
-                    {{t "general.classOf" year=(await programYearProxy.cohort.classOfYear)}}
+                    {{t "general.classOf" year=(await programYearProxy.content.classOfYear)}}
                   {{/if}}
                 </td>
 
