@@ -19,10 +19,12 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
   programYear: alias('subject'),
 
   authHeaders: computed('session.isAuthenticated', function(){
+    const session = this.get('session');
+    const { jwt } = session.data.authenticated;
     let headers = {};
-    this.get('session').authorize('authorizer:token', (headerName, headerValue) => {
-      headers[headerName] = headerValue;
-    });
+    if (jwt) {
+      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    }
 
     return headers;
   }),
