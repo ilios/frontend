@@ -33,6 +33,25 @@ module.exports = function(environment) {
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
       }
     },
+    fontawesome: {
+      enableExperimentalBuildTimeTransform: false,
+      defaultPrefix: 'fas',
+      icons: {
+        'free-solid-svg-icons': 'all',
+        'free-brands-svg-icons': [
+          'black-tie'
+        ],
+        // 'free-solid-svg-icons': [
+        //   'link',
+        //   'paragraph',
+        //   'file-pdf',
+        //   'file-powerpoint',
+        //   'file-video',
+        //   'file-audio',
+        //   'file',
+        // ]
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

@@ -18,16 +18,16 @@ export default Component.extend({
       return 'paragraph';
     } else {
       if(mimetype.search(/pdf/) !== -1){
-        return 'file-pdf-o';
+        return 'file-pdf';
       }
       if(mimetype.search(/ppt|keynote|pps|pptx|powerpoint/) !== -1){
-        return 'file-powerpoint-o';
+        return 'file-powerpoint';
       }
       if(mimetype.search(/mp4|mpg|mpeg|mov/) !== -1){
-        return 'file-movie-o';
+        return 'file-video';
       }
       if(mimetype.search(/wav|mp3|aac|flac/) !== -1){
-        return 'file-audio-o';
+        return 'file-audio';
       }
     }
     return 'file';

@@ -134,15 +134,15 @@ module('Integration | Component | dashboard week', function(hooks) {
     const firstDescription = `${firstEvent} .description`;
     const firstLearningMaterials = `${firstEvent} .learning-material`;
     const firstLm1 = `${firstLearningMaterials}:nth-of-type(1)`;
-    const firstLm1TypeIcon = `${firstLm1} i.fa-paragraph`;
+    const firstLm1TypeIcon = `${firstLm1} .fa-paragraph`;
     const firstLm2 = `${firstLearningMaterials}:nth-of-type(2)`;
     const firstLm2Link = `${firstLm2} a`;
-    const firstLm2TypeIcon = `${firstLm2} i.fa-link`;
+    const firstLm2TypeIcon = `${firstLm2} .fa-link`;
     const firstLm3 = `${firstLearningMaterials}:nth-of-type(3)`;
     const firstLm3Link = `${firstLm3} a:nth-of-type(1)`;
     const firstLm3DownloadLink = `${firstLm3} a:nth-of-type(2)`;
 
-    const firstLm3TypeIcon = `${firstLm3} i.fa-file-pdf-o`;
+    const firstLm3TypeIcon = `${firstLm3} .fa-file-pdf`;
 
     const firstInstructors = `${firstEvent} .instructors`;
 
@@ -153,7 +153,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     const secondLearningMaterials = `${secondEvent} .learning-material`;
     const secondLm1 = `${secondLearningMaterials}:nth-of-type(1)`;
     const secondLm1Link = `${secondLm1} a`;
-    const secondLm1TypeIcon = `${secondLm1} i.fa-file-powerpoint-o`;
+    const secondLm1TypeIcon = `${secondLm1} .fa-file-powerpoint`;
 
     const secondInstructors = `${secondEvent} .instructors`;
 

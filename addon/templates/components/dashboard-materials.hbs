@@ -16,7 +16,7 @@
           <tr>
             <td colspan="3">
               {{#if lmObject.isBlanked}}
-                <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
+                <span class="lm-type-icon">{{fa-icon 'clock' title=(t 'general.timedRelease')}}</span>
                 {{lmObject.title}}
               {{else}}
                 {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
