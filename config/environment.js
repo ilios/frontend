@@ -32,9 +32,6 @@ module.exports = function (environment) {
       extendedTimeout: 1000,
       types: [ 'success', 'warning', 'info', 'alert' ]
     },
-    'ember-simple-auth': {
-      authorizer: 'authorizer:token'
-    },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
       serverTokenRefreshEndpoint: '/auth/token',
