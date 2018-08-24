@@ -20,7 +20,7 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@fortawesome/ember-fontawesome": "0.1.4",
+    "@fortawesome/ember-fontawesome": "0.1.5",
     "@fortawesome/free-brands-svg-icons": "^5.1.0",
     "@fortawesome/free-regular-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",

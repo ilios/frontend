@@ -82,9 +82,9 @@
     ember-cli-babel "^6.12.0"
     ember-cli-htmlbars-inline-precompile "^1.0.0"
 
-"@fortawesome/ember-fontawesome@0.1.4":
-  version "0.1.4"
-  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.4.tgz#a3ff9fbb9724e834abde5e88ac35c3a826a87c31"
+"@fortawesome/ember-fontawesome@0.1.5":
+  version "0.1.5"
+  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.5.tgz#2354b205cd30bba91f5e54587a9ed0c79bd9d0de"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.0"
     broccoli-file-creator "^1.1.1"
