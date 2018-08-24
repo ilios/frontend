@@ -105,7 +105,7 @@
   <div class="item last">
     <label>{{t "general.primarySchool"}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
-      <select onchange={{action "setSchool" value="target.value"}}>
+      <select onchange={{action "setSchool" value="target.value"}} data-test-schools>
         {{#each (sort-by "title" (await schools)) as |school|}}
           <option
             value={{school.id}}
@@ -126,7 +126,7 @@
     <div class="item last">
       <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
-        <select onchange={{action "setPrimaryCohort" value="target.value"}}>
+        <select onchange={{action "setPrimaryCohort" value="target.value"}} data-test-cohorts>
           {{#each (sort-by "title" cohorts) as |cohort|}}
             <option
               value={{cohort.id}}
