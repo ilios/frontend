@@ -1,12 +1,12 @@
 import { inject as service } from '@ember/service';
 import { reads } from '@ember/object/computed';
 import DS from 'ember-data';
-import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
+import TokenAuthorizerMixin from 'ember-simple-auth-token/mixins/token-authorizer';
 import { pluralize } from 'ember-inflector';
 
 const { RESTAdapter } = DS;
 
-export default RESTAdapter.extend(DataAdapterMixin, {
+export default RESTAdapter.extend(TokenAuthorizerMixin, {
   iliosConfig: service(),
 
   host: reads('iliosConfig.apiHost'),
@@ -31,5 +31,4 @@ export default RESTAdapter.extend(DataAdapterMixin, {
   },
 
   sortQueryParams: false,
-  authorizer: 'authorizer:token'
 });
