@@ -3,7 +3,7 @@
     {{#each learningMaterials as |lm|}}
       <li class='single-event-learningmaterial-item'>
         {{#if lm.isBlanked}}
-          <span class="lm-type-icon">{{fa-icon 'clock-o fa-li' title=(t 'general.timedRelease')}}</span>
+          <span class="lm-type-icon">{{fa-icon 'clock' title=(t 'general.timedRelease')}}</span>
           <div class='single-event-learningmaterial-item-title'>
             {{lm.title}}
           </div>
@@ -46,7 +46,7 @@
 
           {{#if lm.publicNotes}}
             <div class='single-event-learningmaterial-item-notes'>
-              {{fa-icon 'pencil-square-o'}}<p>{{{lm.publicNotes}}}</p>
+              {{fa-icon 'pen-square'}}<p>{{{lm.publicNotes}}}</p>
             </div>
           {{/if}}
         {{/if}}

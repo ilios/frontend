@@ -37,15 +37,19 @@ module.exports = function(environment) {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
       icons: {
-        'free-solid-svg-icons': [
-          'link',
-          'paragraph',
-          'file-pdf',
-          'file-powerpoint',
-          'file-video',
-          'file-audio',
-          'file',
-        ]
+        'free-solid-svg-icons': 'all',
+        'free-brands-svg-icons': [
+          'black-tie'
+        ],
+        // 'free-solid-svg-icons': [
+        //   'link',
+        //   'paragraph',
+        //   'file-pdf',
+        //   'file-powerpoint',
+        //   'file-video',
+        //   'file-audio',
+        //   'file',
+        // ]
       }
     },
     EmberENV: {

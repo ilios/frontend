@@ -42,7 +42,7 @@ module('Integration | Component | weekly events', function(hooks) {
       toggleOpenWeek=(action nothing)
     }}`);
     const yearPickers = '.year';
-    const moveForward = `${yearPickers}:nth-of-type(1) i.fa-forward`;
+    const moveForward = `${yearPickers}:nth-of-type(1) .fa-forward`;
     const weeks = '.week-glance';
 
     click(moveForward);
@@ -70,7 +70,7 @@ module('Integration | Component | weekly events', function(hooks) {
       toggleOpenWeek=(action nothing)
     }}`);
     const yearPickers = '.year';
-    const moveBackward = `${yearPickers}:nth-of-type(1) i.fa-backward`;
+    const moveBackward = `${yearPickers}:nth-of-type(1) .fa-backward`;
     const weeks = '.week-glance';
 
     click(moveBackward);

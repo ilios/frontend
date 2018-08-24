@@ -193,18 +193,18 @@ module('Integration | Component | week glance', function(hooks) {
     const firstDescription = `${firstEvent} .description`;
     const firstLearningMaterials = `${firstEvent} .learning-material`;
     const firstLm1 = `${firstLearningMaterials}:eq(0)`;
-    const firstLm1TypeIcon = `${firstLm1} i.fa-paragraph`;
+    const firstLm1TypeIcon = `${firstLm1} .fa-paragraph`;
     const firstLm1Notes = `${firstLm1} .public-notes`;
     const firstLm2 = `${firstLearningMaterials}:eq(1)`;
-    const firstLm2TypeIcon = `${firstLm2} i.fa-link`;
+    const firstLm2TypeIcon = `${firstLm2} .fa-link`;
     const firstLm2Notes = `${firstLm2} .public-notes`;
     const firstLm2Link = `${firstLm2} a`;
     const firstLm3 = `${firstLearningMaterials}:eq(2)`;
     const firstLm3Link = `${firstLm3} a:eq(0)`;
-    const firstLm3TypeIcon = `${firstLm3} i.fa-file-pdf-o`;
+    const firstLm3TypeIcon = `${firstLm3} .fa-file-pdf`;
     const firstLm3DownloadLink = `${firstLm3} a:eq(1)`;
     const firstInstructors = `${firstEvent} .instructors`;
-    const firstAttributes = `${firstEvent} .session-attributes i`;
+    const firstAttributes = `${firstEvent} .session-attributes svg`;
     const secondEventTitle = `${secondEvent} .title`;
     const secondSessionType = `${secondEvent} .sessiontype`;
     const secondLocation = `${secondEvent} .location`;
@@ -212,7 +212,7 @@ module('Integration | Component | week glance', function(hooks) {
     const secondLearningMaterials = `${secondEvent} .learning-material`;
     const secondLm1 = `${secondLearningMaterials}:eq(0)`;
     const secondLm1Link = `${secondLm1} a`;
-    const secondLm1TypeIcon = `${secondLm1} i.fa-file-pdf-o`;
+    const secondLm1TypeIcon = `${secondLm1} .fa-file-pdf`;
     const secondLm1Notes = `${secondLm1} .public-notes`;
     const secondInstructors = `${secondEvent} .instructors`;
     const secondAttributes = `${secondEvent} .session-attributes i`;
@@ -250,7 +250,7 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(this.$(firstAttributes).length, 4, 'All attributes flags show up');
     assert.equal(this.element.querySelector('.fa-black-tie').getAttribute('title'), 'Whitecoats / special attire');
     assert.equal(this.element.querySelector('.fa-flask').getAttribute('title'), 'Special Equipment');
-    assert.equal(this.element.querySelector('.fa-calendar-check-o').getAttribute('title'), 'Attendance is required');
+    assert.equal(this.element.querySelector('.fa-calendar-check').getAttribute('title'), 'Attendance is required');
 
     assert.equal(this.$(secondEventTitle).text().trim(), 'Finding the Point in Life');
     assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');

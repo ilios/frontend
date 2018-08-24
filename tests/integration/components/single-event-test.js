@@ -136,7 +136,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     ).hasText(this.sessionLearningMaterials[0].description);
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
     $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
-    assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock-o', $sessionLm).length, 1, 'Timed release icon is visible');
+    assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock', $sessionLm).length, 1, 'Timed release icon is visible');
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
     let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:eq(0)';
     assert.ok(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0)`).text().trim().startsWith('Competency A (Domain A)'));

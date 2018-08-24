@@ -32,10 +32,10 @@
               </span>
             {{/if}}
             <span class='session-attributes'>
-              {{#if event.attireRequired}}{{fa-icon 'black-tie' ariaHidden=false title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
+              {{#if event.attireRequired}}{{fa-icon 'black-tie' prefix='fab' ariaHidden=false title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
               {{#if event.equipmentRequired}}{{fa-icon 'flask' ariaHidden=false title=(t 'general.specialEquipment')}}{{/if}}
-              {{#if event.attendanceRequired}}{{fa-icon 'calendar-check-o' ariaHidden=false title=(t 'general.attendanceIsRequired')}}{{/if}}
-              {{#if event.supplemental}}{{fa-icon 'calendar-minus-o' ariaHidden=false title=(t 'general.supplementalCurriculum')}}{{/if}}
+              {{#if event.attendanceRequired}}{{fa-icon 'calendar-check' ariaHidden=false title=(t 'general.attendanceIsRequired')}}{{/if}}
+              {{#if event.supplemental}}{{fa-icon 'calendar-minus' ariaHidden=false title=(t 'general.supplementalCurriculum')}}{{/if}}
             </span>
           </p>
           {{#if event.instructors.length}}
@@ -53,7 +53,7 @@
             {{#each event.learningMaterials as |lm|}}
               <li class='learning-material'>
                 {{#if lm.isBlanked}}
-                  <span class="lm-type-icon">{{fa-icon 'clock-o' title=(t 'general.timedRelease')}}</span>
+                  <span class="lm-type-icon">{{fa-icon 'clock' title=(t 'general.timedRelease')}}</span>
                   {{lm.title}}
                 {{else}}
                   {{lm-type-icon type=lm.type mimetype=lm.mimetype}}

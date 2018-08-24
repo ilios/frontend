@@ -60,10 +60,10 @@ module('Integration | Component | dashboard agenda', function(hooks) {
     return settled().then(()=>{
       assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie').length, 1);
       assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length, 1);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check-o').length, 1);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check').length, 1);
       assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie').length, 0);
       assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length, 0);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check-o').length, 0);
+      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check').length, 0);
     });
   });
 

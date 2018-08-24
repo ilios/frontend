@@ -29,7 +29,7 @@
                   {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event)}}
                 {{/if}}
               {{/each}}
-              <span {{action 'changeToDayView' day.date}} class=' clickable link month-more-events'>{{fa-icon 'ellipse-h'}} {{showMore}} {{fa-icon 'angle-double-down'}}</span>
+              <span {{action 'changeToDayView' day.date}} class=' clickable link month-more-events'>{{fa-icon 'ellipsis-h'}} {{showMore}} {{fa-icon 'angle-double-down'}}</span>
             {{else}}
               {{#each day.events as |event|}}
                 {{#if event.isMulti}}

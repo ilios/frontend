@@ -13,7 +13,7 @@ module('Integration | Component | toggle icons', function(hooks) {
     const firstRadio = 'input:nth-of-type(1)';
     const secondLabel = 'label:nth-of-type(2)';
     const secondRadio = 'input:nth-of-type(2)';
-    const icon = 'i:nth-of-type(1)';
+    const icon = 'svg:nth-of-type(1)';
 
     this.set('nothing', parseInt);
     await render(hbs`{{toggle-icons
@@ -88,7 +88,7 @@ module('Integration | Component | toggle icons', function(hooks) {
   test('clicking icon fires toggle action', async function(assert) {
     assert.expect(8);
 
-    const icon = 'i:nth-of-type(1)';
+    const icon = 'svg:nth-of-type(1)';
 
     this.set('firstOptionSelected', true);
     let called = 0;
