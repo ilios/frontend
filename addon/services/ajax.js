@@ -12,10 +12,12 @@ export default AjaxService.extend({
 
   headers: computed('session.isAuthenticated', 'session.data.authenticated.jwt', function(){
     const session = this.get('session');
+    const { jwt } = session.data.authenticated;
     let headers = {};
-    session.authorize('authorizer:token', (headerName, headerValue) => {
-      headers[headerName] = headerValue;
-    });
+
+    if (jwt) {
+      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    }
 
     return headers;
   }),

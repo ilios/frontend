@@ -33,8 +33,7 @@
     "ember-moment": "^7.4.1",
     "ember-one-way-select": "4.0.0",
     "ember-promise-helpers": "^1.0.6",
-    "ember-simple-auth": "^1.4.0",
-    "ember-simple-auth-token": "^3.0.0",
+    "ember-simple-auth-token": "4.0.4",
     "ember-truth-helpers": "^2.0.0",
     "liquid-fire": "^0.29.0"
   },
