@@ -29,7 +29,7 @@ module('Integration | Component | publish menu', function(hooks) {
       unpublish=(action nothing)
     }}`);
     const toggle = '.rl-dropdown-toggle';
-    const icon = `${toggle} i`;
+    const icon = `${toggle} svg`;
     const dropDownItems = '.rl-dropdown button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;
@@ -162,7 +162,7 @@ module('Integration | Component | publish menu', function(hooks) {
       unpublish=(action nothing)
     }}`);
     const toggle = '.rl-dropdown-toggle';
-    const icon = `${toggle} i`;
+    const icon = `${toggle} svg`;
     const dropDownItems = '.rl-dropdown button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;

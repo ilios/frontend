@@ -158,9 +158,9 @@ module('Integration | Component | new directory user', function(hooks) {
     const firstResultValues = `${results} tbody tr:nth-of-type(1) td`;
     const secondResultValues = `${results} tbody tr:nth-of-type(2) td`;
     const thirdResultValues = `${results} tbody tr:nth-of-type(3) td`;
-    const firstIcon = `${firstResultValues}:nth-of-type(1) i`;
-    const secondIcon = `${secondResultValues}:nth-of-type(1) i`;
-    const thirdIcon = `${thirdResultValues}:nth-of-type(1) i`;
+    const firstIcon = `${firstResultValues}:nth-of-type(1) svg`;
+    const secondIcon = `${secondResultValues}:nth-of-type(1) svg`;
+    const thirdIcon = `${thirdResultValues}:nth-of-type(1) svg`;
 
     const firstName = '[data-test-first-name] span';
     const lastName = '[data-test-last-name] span';
@@ -177,7 +177,7 @@ module('Integration | Component | new directory user', function(hooks) {
     assert.equal(findAll(firstResultValues)[2].textContent.trim(), user1Object.get('campusId'), 'correct display for campusId');
     assert.equal(findAll(firstResultValues)[3].textContent.trim(), user1Object.get('email'), 'correct display for email');
 
-    assert.ok(find(secondIcon).classList.contains('fa-sun-o'), 'correct display for things');
+    assert.ok(find(secondIcon).classList.contains('fa-sun'), 'correct display for things');
     assert.equal(findAll(secondResultValues)[1].textContent.trim(), user2Object.get('firstName') + ' ' + user2Object.get('lastName'), 'correct display for name');
     assert.equal(findAll(secondResultValues)[2].textContent.trim(), user2Object.get('campusId'), 'correct display for campusId');
     assert.equal(findAll(secondResultValues)[3].textContent.trim(), user2Object.get('email'), 'correct display for email');

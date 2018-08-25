@@ -7,14 +7,14 @@
   {{/each}}
   <form {{action (perform authenticate) on="submit"}}>
     <div class="item">
-      <label for={{concat elementId "-identification-input"}}>{{t "general.username"}}:</label>
+      <label for={{concat elementId "-username-input"}}>{{t "general.username"}}:</label>
       <input
-        id={{concat elementId "-identification-input"}}
+        id={{concat elementId "-username-input"}}
         type="text"
         autocorrect="off"
         autocapitalize="off"
-        value={{identification}}
-        oninput={{action (mut identification) value="target.value"}}
+        value={{username}}
+        oninput={{action (mut username) value="target.value"}}
       >
     </div>
     <div class="item">

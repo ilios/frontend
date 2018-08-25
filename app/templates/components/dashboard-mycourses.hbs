@@ -10,7 +10,7 @@
           {{#each (await listOfCourses) as |course|}}
             {{#if (await canEditCourses)}}
               <tr class="clickable">
-                <td>{{#link-to "course" course}}{{fa-icon "external-link-square"}} {{course.academicYear}}{{/link-to}}</td>
+                <td>{{#link-to "course" course}}{{fa-icon "external-link-square-alt"}} {{course.academicYear}}{{/link-to}}</td>
                 <td>
                   {{#link-to "course" course}}
                     {{course.title}}

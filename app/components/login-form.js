@@ -8,12 +8,12 @@ export default Component.extend({
   errors: null,
   noAccountExistsError: false,
   noAccountExistsAccount: null,
-  identification: null,
+  username: null,
   password: null,
   authenticate: task(function* () {
     try {
       this.set('errors', []);
-      const credentials = this.getProperties('identification', 'password');
+      const credentials = this.getProperties('username', 'password');
       const session = this.get('session');
       const authenticator = 'authenticator:ilios-jwt';
       yield session.authenticate(authenticator, credentials);

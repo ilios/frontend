@@ -76,7 +76,7 @@ module('Integration | Component | leadership manager', function(hooks) {
       addAdministrator=(action nothing)
     }}`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const icon = `${list}:nth-of-type(1) i`;
+    const icon = `${list}:nth-of-type(1) svg`;
 
     assert.equal(findAll(list).length, 1);
     assert.equal(findAll(list)[0].textContent.trim(), '0 guy M. Mc0son');
@@ -103,7 +103,7 @@ module('Integration | Component | leadership manager', function(hooks) {
       addAdministrator=(action nothing)
     }}`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const icon = `${list}:nth-of-type(1) i`;
+    const icon = `${list}:nth-of-type(1) svg`;
 
     assert.equal(findAll(list).length, 1);
     assert.equal(findAll(list)[0].textContent.trim(), '0 guy M. Mc0son');

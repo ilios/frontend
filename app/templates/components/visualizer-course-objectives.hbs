@@ -19,13 +19,13 @@
 {{else}}
   <div class="with-hours">
     <p>{{t "general.objectivesWithNoLink"}}</p>
-    <h4>{{fa-icon "meh-o" class="meh-o"}}</h4>
+    <h4>{{fa-icon "meh" class="meh-o"}}</h4>
   </div>
 {{/if}}
 
 {{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) "length") 0))}}
   <div class="zero-hours">
-    <h4>{{fa-icon "warning" class="warning"}} {{t "general.unusedObjectives"}}:</h4>
+    <h4>{{fa-icon "exclamation-triangle" class="warning"}} {{t "general.unusedObjectives"}}:</h4>
     <p>{{t "general.objectivesWithNoHours"}}</p>
     <ul>
       {{#each

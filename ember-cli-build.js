@@ -94,7 +94,7 @@ module.exports = function(defaults) {
     newVersion: {
       enabled: true,
       useAppVersion: true
-    },
+    }
   });
 
   app.import('node_modules/normalize.css/normalize.css');

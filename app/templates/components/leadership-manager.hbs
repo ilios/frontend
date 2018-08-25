@@ -12,7 +12,7 @@
           <ul>
             {{#each (sort-by "lastName" "firstName" directors) as |user|}}
               <li>
-                {{fa-icon "remove" class="clickable remove" click=(action removeDirector user)}}
+                {{fa-icon "times" class="clickable remove" click=(action removeDirector user)}}
                 {{#unless user.enabled}}
                   {{fa-icon "user-times" title=(t "general.disabled") class="disabled-user"}}
                 {{/unless}}
@@ -30,7 +30,7 @@
             {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
               <li>
                 {{fa-icon
-                  "remove"
+                  "times"
                   class="clickable remove"
                   click=(action removeAdministrator user)
                 }}

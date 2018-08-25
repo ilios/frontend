@@ -32,13 +32,13 @@ test('it renders', async function(assert) {
 
   const rows = 'table tbody tr';
   const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-  const attendanceEnabled = `${rows}:eq(0) td:eq(1) i`;
+  const attendanceEnabled = `${rows}:eq(0) td:eq(1) svg`;
   const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-  const supplementalEnabled = `${rows}:eq(1) td:eq(1) i`;
+  const supplementalEnabled = `${rows}:eq(1) td:eq(1) svg`;
   const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-  const specialAttireEnabled = `${rows}:eq(2) td:eq(1) i`;
+  const specialAttireEnabled = `${rows}:eq(2) td:eq(1) svg`;
   const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-  const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) i`;
+  const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) svg`;
 
   assert.equal(this.$(attendanceTitle).text().trim(), 'Attendance Required');
   assert.ok(this.$(attendanceEnabled).hasClass('no'));

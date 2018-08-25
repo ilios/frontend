@@ -10,7 +10,7 @@ test('it renders', function(assert) {
   const row = EmberObject.create({
     confirmDelete: false
   });
-  const deleteIcon = 'i.fa-trash';
+  const deleteIcon = '.fa-trash';
 
   this.set('row', row);
   this.set('extra', {editable: true});
@@ -22,7 +22,7 @@ test('it does not display an icon when it should not', function(assert) {
   const row = EmberObject.create({
     confirmDelete: true
   });
-  const deleteIcon = 'i.fa-trash';
+  const deleteIcon = '.fa-trash';
 
   this.set('row', row);
   this.set('extra', {editable: true});
@@ -47,7 +47,7 @@ test('clicking delete changes the row property', function(assert) {
     confirmDelete: false,
     expanded: false
   });
-  const deleteIcon = 'i.fa-trash';
+  const deleteIcon = '.fa-trash';
 
   this.set('row', row);
   this.set('extra', {editable: true});

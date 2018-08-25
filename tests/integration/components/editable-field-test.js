@@ -33,7 +33,7 @@ module('Integration | Component | editable field', function(hooks) {
   });
 
   test('it renders an edit icon when it looks empty', async function(assert) {
-    const icon = 'i.fa-edit';
+    const icon = '.fa-edit';
     this.set('value', '<p>&nbsp;</p>');
     await render(hbs`{{editable-field value=value}}`);
 

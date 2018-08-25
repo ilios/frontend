@@ -71,7 +71,7 @@
             <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">
               {{#if lmObject.isBlanked}}
-                <span class="lm-type-icon">{{fa-icon "clock-o" title=(t "general.timedRelease")}}</span>
+                <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
                 {{lmObject.title}}
                 <span class="timed-release-info">
                   ({{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate}})

@@ -27,8 +27,8 @@ export default create({
     validUploadedUsers: collection({
       itemScope: '[data-test-upload-data-valid-users] tbody tr',
       item: {
-        isValid: hasClass('fa-check', 'i', { scope: 'td:nth-of-type(1)'}),
-        hasWarning: hasClass('fa-exclamation-triangle', 'i', { scope: 'td:nth-of-type(1)'}),
+        isValid: hasClass('fa-check', 'svg', { scope: 'td:nth-of-type(1)'}),
+        hasWarning: hasClass('fa-exclamation-triangle', 'svg', { scope: 'td:nth-of-type(1)'}),
         firstName: text('td', { at: 1 }),
         lastName: text('td', { at: 2 }),
         campusId: text('td', { at: 3 }),

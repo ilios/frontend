@@ -65,9 +65,9 @@ module('Integration | Component | school competencies manager', function(hooks) 
     const domains = '.domain';
     const domain1Title = `${domains} .competency-title-editor:nth-of-type(1)`;
     const comp1Title = `${domains}:nth-of-type(1) li:nth-of-type(1)`;
-    const comp1Delete = `${domains}:nth-of-type(1) li:nth-of-type(1) i`;
+    const comp1Delete = `${domains}:nth-of-type(1) li:nth-of-type(1) svg`;
     const comp2Title = `${domains}:nth-of-type(1) li:nth-of-type(2)`;
-    const comp2Delete = `${domains}:nth-of-type(1) li:nth-of-type(2) i`;
+    const comp2Delete = `${domains}:nth-of-type(1) li:nth-of-type(2) svg`;
 
 
     assert.equal(find(title).textContent.trim(), 'New Domain');
@@ -98,7 +98,7 @@ module('Integration | Component | school competencies manager', function(hooks) 
     );
 
     const domains = '.domain';
-    const domain1Icon = `${domains} i`;
+    const domain1Icon = `${domains} svg`;
 
     await click(domain1Icon);
   });

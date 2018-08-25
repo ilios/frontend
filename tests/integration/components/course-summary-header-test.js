@@ -38,9 +38,9 @@ test('it renders', function (assert) {
   this.render(hbs`{{course-summary-header course=course}}`);
   const title = 'h2';
   const actions = '.course-summary-actions';
-  const materialsIcon = `${actions} i:eq(0)`;
-  const printIcon = `${actions} i:eq(1)`;
-  const rolloverIcon = `${actions} i:eq(2)`;
+  const materialsIcon = `${actions} svg:eq(0)`;
+  const printIcon = `${actions} svg:eq(1)`;
+  const rolloverIcon = `${actions} svg:eq(2)`;
   const blocks = '.course-summary-content .block';
   const start = `${blocks}:eq(0) span`;
   const externalId = `${blocks}:eq(1) span`;
@@ -85,7 +85,7 @@ test('no link to materials when that is the current route', function (assert) {
   });
   this.set('course', course);
   this.render(hbs`{{course-summary-header course=course}}`);
-  const actions = '.course-summary-actions i';
+  const actions = '.course-summary-actions svg';
   const printIcon = `${actions}:eq(0)`;
   const rolloverIcon = `${actions}:eq(1)`;
 
@@ -108,7 +108,7 @@ test('no link to rollover when that is the current route', function(assert) {
   });
   this.set('course', course);
   this.render(hbs`{{course-summary-header course=course}}`);
-  const actions = '.course-summary-actions i';
+  const actions = '.course-summary-actions svg';
   const materialsIcon = `${actions}:eq(0)`;
   const printIcon = `${actions}:eq(1)`;
 
@@ -140,7 +140,7 @@ test('no link to rollover when user cannot edit the course', function (assert) {
   });
   this.set('course', course);
   this.render(hbs`{{course-summary-header course=course}}`);
-  const actions = '.course-summary-actions i';
+  const actions = '.course-summary-actions svg';
   const materialsIcon = `${actions}:eq(0)`;
   const printIcon = `${actions}:eq(1)`;
 

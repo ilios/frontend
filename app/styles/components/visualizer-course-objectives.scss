@@ -9,19 +9,19 @@
     }
 
     @media phone {
-      .meh-o {
+      .meh {
         font-size: 15rem;
       }
     }
 
     @include for-tablet-and-up {
-      .meh-o {
+      .meh {
         font-size: 25rem;
       }
     }
 
     @include for-laptop-and-up {
-      .meh-o {
+      .meh {
         font-size: 30rem;
       }
     }

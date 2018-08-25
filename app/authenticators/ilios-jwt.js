@@ -30,11 +30,9 @@ export default JwtTokenAuthenticator.extend({
         response[this.tokenPropertyName] = token;
         response[this.tokenExpireName] = expiresAt;
 
-        resolve(this.getResponseData(response));
+        resolve(response);
       } else {
-        var data = this.getAuthenticateData(credentials);
-
-        this.makeRequest(this.serverTokenEndpoint, data, headers).then(response => {
+        this.makeRequest(this.serverTokenEndpoint, credentials, headers).then(response => {
           const token = get(response, this.tokenPropertyName);
           const tokenData = this.getTokenData(token);
           const expiresAt = get(tokenData, this.tokenExpireName);
@@ -42,7 +40,7 @@ export default JwtTokenAuthenticator.extend({
           this.scheduleAccessTokenRefresh(expiresAt, token);
           tokenExpireData[this.tokenExpireName] = expiresAt;
           response = merge(response, tokenExpireData);
-          resolve(this.getResponseData(response));
+          resolve(response);
         }, e => {
           let error = {
             'message': e.message,

@@ -19,7 +19,7 @@
     {{#if saved}}
       <div class="saved-result">
         {{#link-to "programYear.index" program savedProgramYear}}
-          {{fa-icon "external-link-square"}} {{savedProgramYear.academicYear}}
+          {{fa-icon "external-link-square-alt"}} {{savedProgramYear.academicYear}}
         {{/link-to}}
         {{t "general.savedSuccessfully"}}
       </div>
@@ -45,7 +45,7 @@
               <tr class={{if programYearProxy.showRemoveConfirmation "confirm-removal" ""}}>
                 <td class="text-left">
                   {{#link-to "programYear.index" program programYearProxy.content}}
-                    {{fa-icon "external-link-square"}} {{programYearProxy.academicYear}}
+                    {{fa-icon "external-link-square-alt"}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
                 <td class="text-left hide-from-small-screen">
@@ -60,28 +60,28 @@
                   {{#if programYearProxy.competencies.length}}
                     {{programYearProxy.competencies.length}}
                   {{else}}
-                    {{fa-icon "warning" class="warning"}}
+                    {{fa-icon "exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.objectives.length}}
                     {{programYearProxy.objectives.length}}
                   {{else}}
-                    {{fa-icon "warning" class="warning"}}
+                    {{fa-icon "exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.directors.length}}
                     {{programYearProxy.directors.length}}
                   {{else}}
-                    {{fa-icon "warning" class="warning"}}
+                    {{fa-icon "exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.terms.length}}
                     {{programYearProxy.terms.length}}
                   {{else}}
-                    {{fa-icon "warning" class="warning"}}
+                    {{fa-icon "exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
 

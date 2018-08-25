@@ -89,7 +89,7 @@ test('it renders', function(assert) {
     );
 
     assert.equal(this.$('.draggable-object:eq(1) .title').text().trim(), lm1.get('title'));
-    assert.equal(this.$('.draggable-object:eq(1) .lm-type-icon .fa-file-pdf-o').length, 1, 'Shows LM type icon.');
+    assert.equal(this.$('.draggable-object:eq(1) .lm-type-icon .fa-file-pdf').length, 1, 'Shows LM type icon.');
 
     assert.equal(
       this.$('.draggable-object:eq(1) .details').text().replace(/[\s\n\t]+/g, ''),

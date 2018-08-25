@@ -41,7 +41,7 @@ module('Integration | Component | sessions-grid', function(hooks) {
       expandSession=(action expandSession)
     }}`);
 
-    await click('[data-test-expand-collapse-control] .fa');
+    await click('[data-test-expand-collapse-control] svg');
   });
 
   test('clicking expand does not fire action when there are no offerings', async function (assert) {
@@ -65,6 +65,6 @@ module('Integration | Component | sessions-grid', function(hooks) {
       expandSession=(action expandSession)
     }}`);
 
-    await click('[data-test-expand-collapse-control] .fa');
+    await click('[data-test-expand-collapse-control] svg');
   });
 });

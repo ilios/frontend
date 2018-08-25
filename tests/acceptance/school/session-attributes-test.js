@@ -34,13 +34,13 @@ module('Acceptance: School - Session Attributes', function(hooks) {
 
     const rows = '.school-session-attributes-collapsed table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
     const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
     const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.ok(find(attendanceEnabled).classList.contains('no'));
@@ -76,13 +76,13 @@ module('Acceptance: School - Session Attributes', function(hooks) {
 
     const rows = '.school-session-attributes-expanded table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
     const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
     const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.ok(find(attendanceEnabled).classList.contains('no'));
@@ -126,10 +126,10 @@ module('Acceptance: School - Session Attributes', function(hooks) {
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
     const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
     const save = `.school-session-attributes-expanded .bigadd`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) i`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) i`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) i`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) i`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));

@@ -35,13 +35,13 @@ export default Component.extend({
     const isPublished = this.get('isPublished');
     const isScheduled = this.get('isScheduled');
     if (isScheduled) {
-      return 'clock-o';
+      return 'clock';
     }
     if (isPublished) {
       return 'star';
     }
 
-    return 'star-half-full';
+    return 'star-half-alt';
   }),
   publicationStatus: computed('isPublished', 'isScheduled', function(){
     const isPublished = this.get('isPublished');

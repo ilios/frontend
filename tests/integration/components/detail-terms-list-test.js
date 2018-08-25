@@ -147,7 +147,7 @@ test('remove term', async function(assert) {
   this.set('terms', selectedTerms);
   this.render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action 'remove') canEdit=true}}`);
   await wait();
-  assert.equal(this.$('li:eq(0) .fa-remove').length, 1);
+  assert.equal(this.$('li:eq(0) .fa-times').length, 1);
   this.$('li:eq(0)').click();
 });
 

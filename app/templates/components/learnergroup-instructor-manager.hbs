@@ -11,12 +11,12 @@
   <ul class="removable-list tag-list">
     {{#each (sort-by "lastName" instructors) as |user|}}
       <li {{action "removeInstructor" user}}>
-        {{user.fullName}} | {{fa-icon "remove"}}
+        {{user.fullName}} | {{fa-icon "times"}}
       </li>
     {{/each}}
     {{#each (sort-by "title" instructorGroups) as |instructorGroup|}}
       <li {{action "removeInstructorGroup" instructorGroup}}>
-        {{instructorGroup.title}} | {{fa-icon "remove"}}
+        {{instructorGroup.title}} | {{fa-icon "times"}}
       </li>
     {{/each}}
   </ul>

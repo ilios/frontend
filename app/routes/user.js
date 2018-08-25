@@ -9,7 +9,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   titleToken: 'general.admin',
   canUpdate: false,
-  canCreat: false,
+  canCreate: false,
   /**
   * Prefetch user relationship data to smooth loading
   **/

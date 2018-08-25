@@ -63,19 +63,19 @@ test('it renders', async function(assert) {
   const firstSessionType = `${rows}:eq(0)`;
   const firstTitle = `${firstSessionType} td:eq(0)`;
   const firstSessionCount = `${firstSessionType} td:eq(1)`;
-  const firstAssessment = `${firstSessionType} td:eq(2) i`;
+  const firstAssessment = `${firstSessionType} td:eq(2) svg`;
   const firstAssessmentOption = `${firstSessionType} td:eq(3)`;
   const firstColorBox = `${firstSessionType} td:eq(5) .box`;
   const secondSessionType = `${rows}:eq(1)`;
   const secondTitle = `${secondSessionType} td:eq(0)`;
   const secondSessionCount = `${secondSessionType} td:eq(1)`;
-  const secondAssessment = `${secondSessionType} td:eq(2) i`;
+  const secondAssessment = `${secondSessionType} td:eq(2) svg`;
   const secondAssessmentOption = `${secondSessionType} td:eq(3)`;
   const secondColorBox = `${secondSessionType} td:eq(5) .box`;
   const thirdSessionType = `${rows}:eq(2)`;
   const thirdTitle = `${thirdSessionType} td:eq(0)`;
   const thirdSessionCount = `${thirdSessionType} td:eq(1)`;
-  const thirdAssessment = `${thirdSessionType} td:eq(2) i`;
+  const thirdAssessment = `${thirdSessionType} td:eq(2) svg`;
   const thirdAssessmentOption = `${thirdSessionType} td:eq(3)`;
   const thirdColorBox = `${thirdSessionType} td:eq(5) .box`;
 

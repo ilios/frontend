@@ -7,7 +7,7 @@
         programYear
         title=(t "general.programYearVisualizations")
       }}
-        {{fa-icon "bar-chart"}}
+        {{fa-icon "chart-bar"}}
       {{/link-to}}
     {{/if}}
   </div>
@@ -18,7 +18,7 @@
     {{#if canUpdate}}
       <ul class="removable-directors">
         {{#each sortedDirectors as |user|}}
-          <li {{action "removeDirector" user}}>{{user.fullName}}{{fa-icon "remove" class="remove"}}</li>
+          <li {{action "removeDirector" user}}>{{user.fullName}}{{fa-icon "times" class="remove"}}</li>
         {{/each}}
       </ul>
     {{else}}

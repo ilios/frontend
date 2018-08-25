@@ -106,7 +106,7 @@
           title={{t "general.updateUserFromDirectory"}} {{action (perform directorySync)}}
         >
           {{fa-icon
-            (if (and (not syncComplete) directorySync.isRunning) "spinner" "refresh")
+            (if (and (not syncComplete) directorySync.isRunning) "spinner" "sync")
             spin=(if (and (not syncComplete) directorySync.isRunning) true false)
           }}
         </button>
