@@ -1,54 +1,44 @@
-import EmberObject from '@ember/object';
 import Service from '@ember/service';
-import RSVP from 'rsvp';
-import { moduleForComponent, test } from 'ember-qunit';
+import { resolve } from 'rsvp';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
-
-let storeMock;
 let currentUserMock;
 
-moduleForComponent('pending-updates-summary', 'Integration | Component | pending updates summary', {
-  integration: true,
-  beforeEach(){
-    storeMock = Service.extend({});
+module('Integration | Component | pending updates summary', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function() {
     currentUserMock = Service.extend({});
-    this.register('service:store', storeMock);
-    this.register('service:currentUser', currentUserMock);
-  }
-});
-
-test('it renders', async function(assert) {
-  const container = 'div';
-  let primarySchool = EmberObject.create({
-    id: 1,
-    title: 'school 0'
-  });
-  let secondarySchool = EmberObject.create({
-    id: 2,
-    title: 'school 1'
-  });
-  let user = EmberObject.create({
-    school: resolve(primarySchool)
-  });
-  currentUserMock.reopen({
-    model: resolve(user)
+    this.owner.register('service:currentUser', currentUserMock);
   });
 
-  storeMock.reopen({
-    query(what){
-      assert.equal('pending-user-update', what);
-      return resolve([1, 2, 3, 4, 5]);
+  test('it renders', async function (assert) {
+    const school = this.server.create('school');
+    this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    for (let i = 0; i < 5; i++) {
+      const user = this.server.create('user', { school });
+      this.server.create('pending-user-update', { user });
     }
+    this.server.logging = true;
+
+    currentUserMock.reopen({
+      model: resolve(userModel)
+    });
+
+    const schools = await run(() => this.owner.lookup('service:store').findAll('school'));
+    this.set('schools', schools);
+    await render(hbs`{{pending-updates-summary schools=schools}}`);
+
+    assert.ok(this.element.textContent.includes('Updates from the Campus Directory'));
+    assert.ok(this.element.textContent.includes('There are 5 users needing attention'));
+    assert.ok(this.element.querySelector('[data-test-pending-updates-summary]').classList.contains('alert'));
   });
-  this.set('schools', [primarySchool, secondarySchool]);
-  this.render(hbs`{{pending-updates-summary schools=schools}}`);
-
-  await wait();
-
-  assert.equal(this.$().text().trim().search(/Updates from the Campus Directory/), 0);
-  assert.notEqual(this.$().text().trim().search(/There are 5 users needing attention/), -1);
-  assert.ok(this.$(container).hasClass('alert'));
 });

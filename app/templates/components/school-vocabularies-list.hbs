@@ -60,9 +60,10 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await sortedVocabularies) as |vocabulary|}}
+          {{#each (await sortedVocabularies) as |vocabulary index|}}
             <tr
               class={{if (eq showRemovalConfirmationFor vocabulary) "confirm-removal" ""}}
+              data-test-vocabulary={{index}}
             >
               <td class="text-left text-top" colspan="3">
                 <span class="clickable link" {{action manageVocabulary vocabulary.id}}>{{vocabulary.title}}</span>
@@ -85,7 +86,7 @@
               </td>
             </tr>
             {{#if (eq showRemovalConfirmationFor vocabulary)}}
-              <tr class="confirm-removal">
+              <tr class="confirm-removal" data-test-confirm-removal={{index}}>
                 <td colspan="5">
                   <div class="confirm-message">
                     {{t "general.confirmVocabularyRemoval"}}<br>

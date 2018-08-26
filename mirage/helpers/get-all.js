@@ -2,7 +2,7 @@
 import getName from './get-name';
 import { Collection, Model } from 'ember-cli-mirage';
 
-export default function getAll(schema, request) {
+const getAll = function (schema, request) {
   //turn /api/programyears?limit=1 into 'programYears'
   const modelRegex = /\/api\/([a-z]+).*/i;
   const modelName = getName(request.url.match(modelRegex)[1]);
@@ -12,6 +12,11 @@ export default function getAll(schema, request) {
   }
 
   const all = schema[modelName].all();
+
+  return filterResults(all, modelName, request);
+};
+
+const filterResults = function (all, modelName, request) {
   const queryParams = extractQueryParams(request);
 
   const filteredByFilters = filterByFilterParams(all, queryParams.filterParams);
@@ -20,7 +25,7 @@ export default function getAll(schema, request) {
   const results = filteredByQueryTerms.slice(0, queryParams.limit);
 
   return results;
-}
+};
 
 /*
  * queryParams is kind of a mess and comes with values like filters[id]: [4,5,6]
@@ -169,3 +174,5 @@ const filterByQueryTerms = function(all, modelName, queryTerms){
 
   return results;
 };
+
+export { getAll, filterResults };

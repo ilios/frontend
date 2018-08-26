@@ -2,6 +2,7 @@ var models = [
   'aamcMethods',
   'aamcPcrs',
   'academicYears',
+  'assessmentOptions',
   'courseLearningMaterials',
   'courseClerkshipTypes',
   'curriculumInventoryAcademicLevels',

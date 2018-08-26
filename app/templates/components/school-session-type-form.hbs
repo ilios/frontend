@@ -1,6 +1,6 @@
 {{! template-lint-disable no-inline-styles }}
 <div class="form">
-  <div class="item">
+  <div class="item" data-test-title>
     <label>{{t "general.title"}}:</label>
     {{#if canEditTitle}}
       <input
@@ -17,7 +17,7 @@
     {{/if}}
   </div>
 
-  <div class="item">
+  <div class="item" data-test-aamc-method>
     <label>{{t "general.aamcMethod"}}</label>
     {{#if (is-fulfilled filteredAamcMethods)}}
       {{#if canEditAamcMethod}}
@@ -45,7 +45,7 @@
     {{/if}}
   </div>
 
-  <div class="item calendar-color">
+  <div class="item calendar-color" data-test-color>
     <label>{{t "general.color"}}:</label>
     {{#if canEditCalendarColor}}
       <input
@@ -67,7 +67,7 @@
     {{/if}}
   </div>
 
-  <div class="item">
+  <div class="item" data-test-assessment>
     <label>{{t "general.assessment"}}:</label>
     {{#if canEditAssessment}}
       {{toggle-yesno yes=assessment toggle=(action "updateAssessment")}}
@@ -83,7 +83,7 @@
   </div>
 
   {{#if (and assessment (is-fulfilled assessmentOptions))}}
-    <div class="item">
+    <div class="item" data-test-assessment-option>
       <label>{{t "general.assessmentOption"}}:</label>
       {{#if canEditAssessmentOption}}
         <select
@@ -104,7 +104,7 @@
     </div>
   {{/if}}
 
-  <div class="item">
+  <div class="item" data-test-active>
     <label>{{t "general.active"}}:</label>
     {{#if canEditActive}}
       {{toggle-yesno yes=isActive toggle=(action (mut isActive))}}

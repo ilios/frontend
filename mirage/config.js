@@ -1,5 +1,5 @@
 import moment from 'moment';
-import getAll from './helpers/get-all';
+import { getAll, filterResults } from './helpers/get-all';
 import parseJsonData from './helpers/parse-json-data';
 import Mirage from 'ember-cli-mirage';
 import ENV from 'ilios/config/environment';
@@ -29,6 +29,12 @@ export default function() {
   this.put('api/academicyears/:id', 'academicYear');
   this.del('api/academicyears/:id', 'academicYear');
   this.post('api/academicyears', 'academicYear');
+
+  this.get('api/assessmentoptions', getAll);
+  this.get('api/assessmentoptions/:id', 'assessmentOption');
+  this.put('api/assessmentoptions/:id', 'assessmentOption');
+  this.del('api/assessmentoptions/:id', 'assessmentOption');
+  this.post('api/assessmentoptions', 'assessmentOption');
 
   this.get('api/authentications', getAll);
   this.get('api/authentications/:id', 'authentication');
@@ -77,7 +83,24 @@ export default function() {
   this.del('api/courselearningmaterials/:id', 'courseLearningMaterial');
   this.post('api/courselearningmaterials', 'courseLearningMaterial');
 
-  this.get('api/courses', getAll);
+  this.get('api/courses', (schema, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const schoolKey = 'filters[school]';
+    if (keys.includes(schoolKey)) {
+      const schoolsFilter = params[schoolKey];
+      const courses = schema.courses.all().filter(course => {
+        const school = course.school;
+
+        return schoolsFilter.includes(school.id);
+      });
+
+      return filterResults(courses, 'courses', request);
+
+    } else {
+      return getAll(schema, request);
+    }
+  });
   this.get('api/courses/:id', 'course');
   this.put('api/courses/:id', 'course');
   this.del('api/courses/:id', 'course');
@@ -216,7 +239,24 @@ export default function() {
   this.del('api/offerings/:id', 'offering');
   this.post('api/offerings', 'offering');
 
-  this.get('api/pendinguserupdates', getAll);
+  this.get('api/pendinguserupdates', (schema, request) => {
+    const params = request.queryParams;
+    const keys = Object.keys(params);
+    const schoolKey = 'filters[schools]';
+    if (keys.includes(schoolKey)) {
+      const schoolsFilter = params[schoolKey];
+      const updates = schema.pendingUserUpdates.all().filter(update => {
+        const school = update.user.school;
+
+        return schoolsFilter.includes(school.id);
+      });
+
+      return updates;
+
+    } else {
+      return getAll(schema, request);
+    }
+  });
   this.get('api/pendinguserupdates/:id');
   this.put('api/pendinguserupdates/:id');
   this.del('api/pendinguserupdates/:id');

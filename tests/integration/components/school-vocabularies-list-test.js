@@ -1,233 +1,99 @@
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, findAll, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import initializer from "ilios/instance-initializers/ember-i18n";
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-moduleForComponent('school-vocabularies-list', 'Integration | Component | school vocabularies list', {
-  integration: true,
-  setup(){
-    initializer.initialize(this);
-  }
-});
+module('Integration | Component | school vocabularies list', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-test('it renders', async function(assert) {
-  assert.expect(4);
-  let term1 = EmberObject.create({
-    id: 1,
-    title: 'term1'
-  });
-  let term2 = EmberObject.create({
-    id: 2,
-    title: 'term2'
-  });
-  let term3 = EmberObject.create({
-    id: 3,
-    title: 'term3'
-  });
-  let  vocabulary1 =  EmberObject.create({
-    id: 1,
-    title: 'Vocabulary 1',
-    terms: resolve([term1, term2]),
-    termCount: 2,
-    isNew: false
-  });
-  term1.set('vocabulary', resolve(vocabulary1));
-  term2.set('vocabulary', resolve(vocabulary1));
-  let  vocabulary2 =  EmberObject.create({
-    id: 2,
-    title: 'Vocabulary 2',
-    terms: resolve([term3]),
-    termCount: 1,
-    isNew: false
-  });
-  term3.set('vocabulary', resolve(vocabulary2));
-  const school = EmberObject.create({
-    vocabularies: resolve([vocabulary1, vocabulary2])
-  });
-  vocabulary1.set('school', resolve(school));
-  vocabulary2.set('school', resolve(school));
+  test('it renders', async function(assert) {
+    assert.expect(4);
+    const school = this.server.create('school');
+    const vocabularies = this.server.createList('vocabulary', 2, { school });
+    this.server.createList('term', 2, { vocabulary: vocabularies[0] });
+    this.server.create('term', { vocabulary: vocabularies[1] });
+    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
 
-
-  this.on('edit', parseInt);
-  this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-
-  await wait();
-  assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'Vocabulary 1');
-  assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'Vocabulary 2');
-  assert.equal(this.$('tr:eq(1) td:eq(1)').text().trim(), '2');
-  assert.equal(this.$('tr:eq(2) td:eq(1)').text().trim(), '1');
-
-});
-
-test('can create new vocabulary', function(assert) {
-  assert.expect(5);
-  let storeMock = Service.extend({
-    createRecord(type, {title, school}){
-      assert.equal(type, 'vocabulary');
-      assert.equal(title, 'new vocab');
-      assert.equal(school, school);
-      return {
-        title,
-        school,
-        save(){
-          assert.ok(true);
-          return RSVP.resolve(this);
-        }
-      };
-    }
-  });
-  this.register('service:store', storeMock);
-
-
-  const school = EmberObject.create({
-    vocabularies: RSVP.resolve([])
+    this.set('edit', () => {});
+    this.set('school', schoolModel);
+    await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit)}}`);
+    assert.equal(find('[data-test-vocabulary="0"] td:nth-of-type(1)').textContent.trim(), 'Vocabulary 1');
+    assert.equal(find('[data-test-vocabulary="1"] td:nth-of-type(1)').textContent.trim(), 'Vocabulary 2');
+    assert.equal(find('[data-test-vocabulary="0"] td:nth-of-type(2)').textContent.trim(), '2');
+    assert.equal(find('[data-test-vocabulary="1"] td:nth-of-type(2)').textContent.trim(), '1');
   });
 
-  this.on('edit', parseInt);
-  this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canCreate=true}}`);
-  this.$('.expand-button').click();
-  this.$('input').val('new vocab').trigger('input');
-  return wait().then(() => {
-    this.$('.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.savedvocabulary').text().trim().search(/new vocab/), 0);
+  test('can create new vocabulary', async function(assert) {
+    assert.expect(4);
+    this.server.create('school');
+    const school = await run(() => this.owner.lookup('service:store').find('school', 1));
+
+    this.set('edit', () => {});
+    this.set('school', school);
+    await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canCreate=true}}`);
+    await click('.expand-button');
+    await fillIn('input', 'new vocab');
+    await click('.done');
+    assert.equal(find('.savedvocabulary').textContent.trim().search(/new vocab/), 0);
+
+    const vocabularies = await run(() => this.owner.lookup('service:store').findAll('vocabulary'));
+    assert.equal(vocabularies.length, 1);
+    assert.equal(vocabularies.objectAt(0).title, 'new vocab');
+    const vocabSchool = await vocabularies.objectAt(0).school;
+    assert.deepEqual(vocabSchool, school);
+  });
+
+  test('cannot delete vocabularies with terms', async function(assert) {
+    assert.expect(3);
+    const school = this.server.create('school');
+    const vocabularies = this.server.createList('vocabulary', 3, { school });
+    this.server.createList('term', 2, { vocabulary: vocabularies[0] });
+    this.server.create('term', { vocabulary: vocabularies[1] });
+    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
+
+    this.set('edit', () => {});
+    this.set('school', schoolModel);
+    await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canDelete=true}}`);
+    assert.equal(findAll('[data-test-vocabulary="0"] td:nth-of-type(3) svg').length, 1);
+    assert.equal(findAll('[data-test-vocabulary="1"] td:nth-of-type(3) svg').length, 1);
+    assert.equal(findAll('[data-test-vocabulary="2"] td:nth-of-type(3) svg').length, 2);
+
+  });
+
+  test('clicking delete removes the vocabulary', async function(assert) {
+    assert.expect(5);
+    const school = this.server.create('school');
+    this.server.create('vocabulary', { school });
+    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
+    this.set('edit', () => {});
+    this.set('school', schoolModel);
+    await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canDelete=true}}`);
+
+    assert.notOk(find('[data-test-vocabulary="0"]').classList.contains('confirm-removal'));
+    assert.equal(findAll('[data-test-vocabulary="0"] td:nth-of-type(3) .remove').length, 1);
+    await click('[data-test-vocabulary="0"] td:nth-of-type(3) .remove');
+    assert.equal(find(findAll('tr')[2]).textContent.trim().search(/Are you sure you want to delete this vocabulary/), 0);
+    assert.ok(find('[data-test-vocabulary="0"]').classList.contains('confirm-removal'));
+    await click('[data-test-confirm-removal="0"] .remove');
+    const vocabularies = await run(() => this.owner.lookup('service:store').findAll('vocabulary'));
+    assert.equal(vocabularies.length, 0);
+
+  });
+
+  test('clicking edit fires the action to manage the vocab', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const vocabularies = this.server.createList('vocabulary', 2, { school });
+    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
+
+    this.set('school', schoolModel);
+    this.set('edit', function(id){
+      assert.equal(id, vocabularies[0].id);
     });
+    await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit)}}`);
+    await click('[data-test-vocabulary="0"] svg');
   });
-
-});
-
-test('cannot delete vocabularies with terms', async function(assert) {
-  assert.expect(3);
-
-  let term1 = EmberObject.create({
-    id: 1,
-    title: 'term1'
-  });
-  let term2 = EmberObject.create({
-    id: 2,
-    title: 'term2'
-  });
-  let term3 = EmberObject.create({
-    id: 3,
-    title: 'term3'
-  });
-  let  vocabulary1 =  EmberObject.create({
-    id: 1,
-    title: 'Vocabulary 1',
-    terms: resolve([term1, term2]),
-    termCount: 2,
-    isNew: false
-  });
-  term1.set('vocabulary', resolve(vocabulary1));
-  term2.set('vocabulary', resolve(vocabulary1));
-
-  let  vocabulary2 =  EmberObject.create({
-    id: 2,
-    title: 'Vocabulary 2',
-    terms: resolve([term3]),
-    termCount: 1,
-    isNew: false
-  });
-
-  term3.set('vocabulary', resolve(vocabulary2));
-
-  let  vocabulary3 =  EmberObject.create({
-    id: 3,
-    title: 'Vocabulary 3',
-    terms: resolve([]),
-    termCount: 0,
-    isNew: false
-  });
-
-  const school = EmberObject.create({
-    vocabularies: resolve([vocabulary1, vocabulary2, vocabulary3])
-  });
-
-  vocabulary1.set('school', resolve(school));
-  vocabulary2.set('school', resolve(school));
-  vocabulary3.set('school', resolve(school));
-
-
-  this.on('edit', parseInt);
-  this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canDelete=true}}`);
-
-  await wait();
-  assert.equal(this.$('tr:eq(1) td:eq(2) svg').length, 1);
-  assert.equal(this.$('tr:eq(2) td:eq(2) svg').length, 1);
-  assert.equal(this.$('tr:eq(3) td:eq(2) svg').length, 2);
-
-});
-
-test('clicking delete removes the vocabulary', function(assert) {
-  assert.expect(5);
-  let  vocabulary = {
-    terms: [],
-    termCount: 0,
-    title: 'nothing important',
-    isNew: false,
-    destroyRecord(){
-      assert.ok(true);
-    },
-  };
-
-  let vocabularies = [vocabulary];
-
-  const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
-  });
-  this.on('edit', parseInt);
-  this.set('school', school);
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit') canDelete=true}}`);
-  return wait().then(() => {
-    assert.notOk(this.$('tr:eq(1)').hasClass('confirm-removal'));
-    assert.equal(this.$('tr:eq(1) td:eq(2) .remove').length, 1);
-    this.$('tr:eq(1) td:eq(2) .remove').click();
-
-    return wait().then(() => {
-      assert.equal(this.$('tr:eq(2)').text().trim().search(/Are you sure you want to delete this vocabulary/), 0);
-      assert.ok(this.$('tr:eq(1)').hasClass('confirm-removal'));
-      this.$('tr:eq(2) .remove').click();
-    });
-  });
-
-});
-
-test('clicking edit fires the action to manage the vocab', function(assert) {
-  assert.expect(1);
-  let vocabulary1 =  EmberObject.create({
-    id: 1,
-    title: 'Vocabulary 1',
-    isNew: false
-  });
-  let vocabulary2 =  EmberObject.create({
-    id: 2,
-    title: 'Vocabulary 2',
-    isNew: false
-  });
-
-  let vocabularies = [vocabulary1, vocabulary2];
-
-  const school = EmberObject.create({
-    vocabularies: RSVP.resolve(vocabularies)
-  });
-
-  vocabulary1.set('school', resolve(school));
-  vocabulary2.set('school', resolve(school));
-
-  this.set('school', school);
-  this.on('edit', function(id){
-    assert.equal(id, vocabulary1.id);
-  });
-  this.render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action 'edit')}}`);
-  return wait().then(() => {
-    this.$('tr:eq(1) svg').click();
-  });
-
 });

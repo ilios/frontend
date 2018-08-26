@@ -1,7 +1,7 @@
 <h3>{{t "general.newUser"}}</h3>
 
 <div class="new-user-form">
-  <div class="choose-form-type">
+  <div class="choose-form-type" data-test-user-type>
     <label>{{t "general.createNew"}}:</label>
     {{click-choice-buttons
       buttonContent1=(t "general.nonStudent")
@@ -10,7 +10,7 @@
       toggle=(action (mut nonStudentMode))
     }}
   </div>
-  <div class="item">
+  <div class="item" data-test-first-name>
     <label>{{t "general.firstName"}}:</label>
     <input
       type="text"
@@ -24,7 +24,7 @@
       <span class="message error">{{v-get this "firstName" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-middle-name>
     <label>{{t "general.middleName"}}:</label>
     <input
       type="text"
@@ -38,7 +38,7 @@
       <span class="message error">{{v-get this "middleName" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-last-name>
     <label>{{t "general.lastName"}}:</label>
     <input
       type="text"
@@ -52,7 +52,7 @@
       <span class="message error">{{v-get this "lastName" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-campus-id>
     <label>{{t "general.campusId"}}:</label>
     <input
       type="text"
@@ -66,7 +66,7 @@
       <span class="message error">{{v-get this "campusId" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-other-id>
     <label>{{t "general.otherId"}}:</label>
     <input
       type="text"
@@ -78,7 +78,7 @@
       <span class="message error">{{v-get this "otherId" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-email>
     <label>{{t "general.email"}}:</label>
     <input
       type="text"
@@ -90,7 +90,7 @@
       <span class="message error">{{v-get this "email" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-phone>
     <label>{{t "general.phone"}}:</label>
     <input
       type="text"
@@ -102,7 +102,7 @@
       <span class="message error">{{v-get this "phone" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-username>
     <label>{{t "general.username"}}:</label>
     <input
       type="text"
@@ -116,7 +116,7 @@
       <span class="message error">{{v-get this "username" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-password>
     <label>{{t "general.password"}}:</label>
     <input
       type="text"
@@ -130,7 +130,7 @@
       <span class="message error">{{v-get this "password" "message"}}</span>
     {{/if}}
   </div>
-  <div class="item">
+  <div class="item" data-test-school>
     <label>{{t "general.primarySchool"}}:</label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
@@ -148,7 +148,7 @@
     (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
     class="vertical"
   }}
-    <div class="item last">
+    <div class="item last" data-test-cohort>
       <label>{{t "general.primaryCohort"}}:</label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>

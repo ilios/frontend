@@ -1,244 +1,196 @@
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
-import { moduleForComponent, test } from 'ember-qunit';
+import { resolve } from 'rsvp';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import initializer from "ilios/instance-initializers/ember-i18n";
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | new user', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-const mockSchools = [
-  {id: 2, title: 'second', cohorts: resolve([])},
-  {id: 1, title: 'first', cohorts: resolve([])},
-  {id: 3, title: 'third', cohorts: resolve([])},
-];
-const mockUser = EmberObject.create({
-  school: resolve(EmberObject.create(mockSchools[0]))
-});
+  hooks.beforeEach(async function () {
+    this.schools = this.server.createList('school', 3);
+    this.server.create('user', {
+      school: this.schools[0],
+    });
+    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
 
-const currentUserMock = Service.extend({
-  model: resolve(mockUser),
-  async canCreateUser() {
-    return resolve(true);
-  }
-});
-
-const permissionCheckerMock = Service.extend({
-  async canCreateUser() {
-    return resolve(true);
-  }
-});
-
-moduleForComponent('new-user', 'Integration | Component | new user', {
-  integration: true,
-  setup(){
-    initializer.initialize(this);
-  },
-  beforeEach(){
-    this.register('service:current-user', currentUserMock);
-    this.register('service:permissionChecker', permissionCheckerMock);
-  }
-});
-
-
-test('it renders', function(assert) {
-  this.set('close', () => {});
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-      return resolve([]);
-    },
-    findAll() {
-      return resolve(mockSchools);
-    }
-  });
-  this.register('service:store', storeMock);
-
-  this.render(hbs`{{new-user close=(action close)}}`);
-
-  return wait().then(() => {
-    let content = this.$().text().trim();
-    assert.notEqual(content.search(/New User/), -1);
-    assert.notEqual(content.search(/First Name/), -1);
-    assert.notEqual(content.search(/Last Name/), -1);
-    assert.notEqual(content.search(/Middle Name/), -1);
-    assert.notEqual(content.search(/Campus ID/), -1);
-    assert.notEqual(content.search(/Other ID/), -1);
-    assert.notEqual(content.search(/Email/), -1);
-    assert.notEqual(content.search(/Phone/), -1);
-    assert.notEqual(content.search(/Username/), -1);
-    assert.notEqual(content.search(/Password/), -1);
-    assert.notEqual(content.search(/Primary School/), -1);
-
-    const schools = 'select:eq(0) option';
-    let options = this.$(schools);
-    assert.equal(options.length, mockSchools.length);
-    assert.equal(options.eq(0).text().trim(), 'first');
-    assert.equal(options.eq(1).text().trim(), 'second');
-    assert.equal(options.eq(2).text().trim(), 'third');
-  });
-});
-
-test('errors do not show up initially', function(assert) {
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-      return resolve([]);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('close', () => {
-    assert.ok(false); //shouldn't be called
-  });
-  this.render(hbs`{{new-user close=(action close)}}`);
-
-  return wait().then(() => {
-    assert.equal(this.$('.messagee').length, 0);
-
-  });
-});
-
-test('errors show up', function(assert) {
-  let storeMock = Service.extend({
-    query(what, {filters}){
-
-      assert.equal('cohort', what);
-      assert.equal(filters.schools[0], 2);
-      return resolve([]);
-    },
-    findAll() {
-      return resolve(mockSchools);
-    }
-  });
-  this.register('service:store', storeMock);
-  this.set('close', () => {
-    assert.ok(false); //shouldn't be called
-  });
-  this.render(hbs`{{new-user close=(action close)}}`);
-
-  return wait().then(() => {
-    this.$('.done').click();
-    return wait().then(() => {
-      let boxes = this.$('.item');
-      assert.ok(boxes.eq(0).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(2).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(5).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(7).text().search(/blank/) > -1);
-      assert.ok(boxes.eq(8).text().search(/blank/) > -1);
+    this.currentUserMock = Service.extend({
+      model: resolve(user),
+      async canCreateUser() {
+        return resolve(true);
+      }
     });
 
-  });
-});
-
-test('create new user', function(assert) {
-  assert.expect(19);
-  let studentRole = EmberObject.create({
-    id: 4,
-    title: 'Student'
-  });
-  let createRecordCalled = 0;
-  let storeMock = Service.extend({
-    query(what, {filters}){
-      assert.equal('cohort', what, 'we are lookign for cohorts');
-      assert.equal(filters.schools[0], 2, 'in the correct school');
-      return resolve([]);
-    },
-    findAll(what){
-      if (what === 'user-role') {
-        return resolve([studentRole]);
+    this.permissionCheckerMock = Service.extend({
+      async canCreateUser() {
+        return resolve(true);
       }
-      if (what === 'school') {
-        return resolve(mockSchools);
-      }
-    },
-    createRecord(what, properties){
-      createRecordCalled++;
-
-      if (createRecordCalled === 1) {
-        const {firstName, middleName, lastName, campusId, otherId, phone, email} = properties;
-        assert.equal(what, 'user', 'creating a user record');
-        assert.equal(firstName, 'first', 'with the correct firstName');
-        assert.equal(middleName, 'middle', 'with the correct middleName');
-        assert.equal(lastName, 'last', 'with the correct lastName');
-        assert.equal(campusId, 'campusid', 'with the correct campusId');
-        assert.equal(otherId, 'otherid', 'with the correct otherId');
-        assert.equal(phone, 'phone', 'with the correct phone');
-        assert.equal(email, 'test@test.com', 'with the correct email');
-
-        return new EmberObject({
-          save(){
-            const roles = this.get('roles');
-            assert.equal(roles, null, 'Faculty get no roles');
-            assert.ok(true, 'save gets called');
-
-            return EmberObject.create({
-              id: '13'
-            });
-          }
-        });
-      }
-
-      if (createRecordCalled === 2) {
-        const {user, username, password} = properties;
-        assert.equal(what, 'authentication', 'creating an authentication record');
-        assert.equal(username, 'user123', 'with the correct username');
-        assert.equal(password, 'password123', 'with the correct password');
-        assert.equal(user.get('id'), '13', 'with the correct userId');
-
-        return new EmberObject({
-          save(){
-            assert.ok(true, 'save gets called');
-          }
-        });
-      }
-
-      assert.ok(false, 'create record called too many times');
-
-    },
+    });
+    this.owner.register('service:current-user', this.currentUserMock);
+    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
-  this.register('service:store', storeMock);
-  let flashmessagesMock = Service.extend({
-    success(message){
-      assert.equal(message, 'general.saved', 'success message is displayed');
-    }
+
+
+  test('it renders', async function (assert) {
+    this.set('close', () => {});
+
+    await render(hbs`{{new-user close=(action close)}}`);
+
+    let content = this.element.textContent.trim();
+    assert.ok(content.includes('New User'));
+    assert.ok(content.includes('First Name'));
+    assert.ok(content.includes('Last Name'));
+    assert.ok(content.includes('Middle Name'));
+    assert.ok(content.includes('Campus ID'));
+    assert.ok(content.includes('Other ID'));
+    assert.ok(content.includes('Email'));
+    assert.ok(content.includes('Phone'));
+    assert.ok(content.includes('Username'));
+    assert.ok(content.includes('Password'));
+    assert.ok(content.includes('Primary School'));
+
+    const schools = 'select:nth-of-type(1) option';
+    let options = findAll(schools);
+    assert.equal(options.length, 3);
+    assert.equal(options[0].textContent.trim(), 'school 0');
+    assert.equal(options[1].textContent.trim(), 'school 1');
+    assert.equal(options[2].textContent.trim(), 'school 2');
   });
-  this.register('service:flashMessages', flashmessagesMock);
 
-  this.set('nothing', parseInt);
-  this.set('transitionToUser', (userId)=>{
-    assert.equal(userId, 13);
+  test('errors do not show up initially', async function(assert) {
+    this.set('close', () => {
+      assert.ok(false); //shouldn't be called
+    });
+    await render(hbs`{{new-user close=(action close)}}`);
+    assert.equal(findAll('.message').length, 0);
   });
-  this.render(hbs`{{new-user close=(action nothing) transitionToUser=(action transitionToUser)}}`);
-  const firstName = '.item:eq(0) input';
-  const middleName = '.item:eq(1) input';
-  const lastName = '.item:eq(2) input';
-  const campusId = '.item:eq(3) input';
-  const otherId = '.item:eq(4) input';
-  const email = '.item:eq(5) input';
-  const phone = '.item:eq(6) input';
-  const username = '.item:eq(7) input';
-  const password = '.item:eq(8) input';
 
-  return wait().then(() => {
-    this.$(firstName).val('first').trigger('input');
-    this.$(middleName).val('middle').trigger('input');
-    this.$(lastName).val('last').trigger('input');
-    this.$(campusId).val('campusid').trigger('input');
-    this.$(otherId).val('otherid').trigger('input');
-    this.$(phone).val('phone').trigger('input');
-    this.$(email).val('test@test.com').trigger('input');
-    this.$(username).val('user123').trigger('input');
-    this.$(password).val('password123').trigger('input');
+  test('errors show up', async function(assert) {
+    this.set('close', () => {
+      assert.ok(false); //shouldn't be called
+    });
+    await render(hbs`{{new-user close=(action close)}}`);
 
-    this.$('.done').click();
-    return wait();
+    await click('.done');
+    assert.equal(findAll('.message').length, 5);
+    let boxes = findAll('.item');
+    assert.ok(boxes[0].textContent.includes('blank'));
+    assert.ok(boxes[2].textContent.includes('blank'));
+    assert.ok(boxes[5].textContent.includes('blank'));
+    assert.ok(boxes[7].textContent.includes('blank'));
+    assert.ok(boxes[8].textContent.includes('blank'));
+  });
 
+  test('create new user', async function(assert) {
+    assert.expect(11);
+    let studentRole = this.server.create('user-role', {
+      id: 4,
+      title: 'Student'
+    });
+
+    this.set('nothing', () => {});
+    this.set('transitionToUser', (userId)=>{
+      assert.equal(userId, 2);
+    });
+    await render(hbs`{{new-user close=(action nothing) transitionToUser=(action transitionToUser)}}`);
+    const firstName = '[data-test-first-name] input';
+    const middleName = '[data-test-middle-name] input';
+    const lastName = '[data-test-last-name] input';
+    const campusId = '[data-test-campus-id] input';
+    const otherId = '[data-test-other-id] input';
+    const email = '[data-test-email] input';
+    const phone = '[data-test-phone] input';
+    const username = '[data-test-username] input';
+    const password = '[data-test-password] input';
+
+    await fillIn(firstName, 'first');
+    await fillIn(middleName, 'middle');
+    await fillIn(lastName, 'last');
+    await fillIn(campusId, 'campusid');
+    await fillIn(otherId, 'otherid');
+    await fillIn(phone, 'phone');
+    await fillIn(email, 'test@test.com');
+    await fillIn(username, 'user123');
+    await fillIn(password, 'password123');
+    await click('.done');
+
+    const newUser = await run(() => this.owner.lookup('service:store').find('user', 2));
+    assert.equal(newUser.firstName, 'first', 'with the correct firstName');
+    assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
+    assert.equal(newUser.lastName, 'last', 'with the correct lastName');
+    assert.equal(newUser.campusId, 'campusid', 'with the correct campusId');
+    assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
+    assert.equal(newUser.phone, 'phone', 'with the correct phone');
+    assert.equal(newUser.email, 'test@test.com', 'with the correct email');
+    const roles = await newUser.get('roles');
+    assert.notOk(roles.mapBy('id').includes(studentRole.id));
+
+    const authentication = await newUser.get('authentication');
+    assert.equal(authentication.username, 'user123', 'with the correct username');
+    assert.equal(authentication.password, 'password123', 'with the correct password');
+  });
+
+  test('create new student user', async function(assert) {
+    assert.expect(12);
+    let studentRole = this.server.create('user-role', {
+      id: 4,
+      title: 'Student'
+    });
+    const program = this.server.create('program', { school: this.schools[0] });
+    const programYear = this.server.create('programYear', {
+      program,
+      startYear: new Date().getFullYear()
+    });
+    const cohort = this.server.create('cohort', { programYear });
+
+    this.set('nothing', () => {});
+    this.set('transitionToUser', (userId)=>{
+      assert.equal(userId, 2);
+    });
+    await render(hbs`{{new-user close=(action nothing) transitionToUser=(action transitionToUser)}}`);
+    const student = '[data-test-user-type] [data-test-second-button]';
+    const firstName = '[data-test-first-name] input';
+    const middleName = '[data-test-middle-name] input';
+    const lastName = '[data-test-last-name] input';
+    const campusId = '[data-test-campus-id] input';
+    const otherId = '[data-test-other-id] input';
+    const email = '[data-test-email] input';
+    const phone = '[data-test-phone] input';
+    const username = '[data-test-username] input';
+    const password = '[data-test-password] input';
+
+    await click(student);
+    await fillIn(firstName, 'first');
+    await fillIn(middleName, 'middle');
+    await fillIn(lastName, 'last');
+    await fillIn(campusId, 'campusid');
+    await fillIn(otherId, 'otherid');
+    await fillIn(phone, 'phone');
+    await fillIn(email, 'test@test.com');
+    await fillIn(username, 'user123');
+    await fillIn(password, 'password123');
+
+    await click('.done');
+
+    const newUser = await run(() => this.owner.lookup('service:store').find('user', 2));
+    assert.equal(newUser.firstName, 'first', 'with the correct firstName');
+    assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
+    assert.equal(newUser.lastName, 'last', 'with the correct lastName');
+    assert.equal(newUser.campusId, 'campusid', 'with the correct campusId');
+    assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
+    assert.equal(newUser.phone, 'phone', 'with the correct phone');
+    assert.equal(newUser.email, 'test@test.com', 'with the correct email');
+    const roles = await newUser.get('roles');
+    assert.ok(roles.mapBy('id').includes(studentRole.id));
+    const primaryCohort = await newUser.get('primaryCohort');
+    assert.equal(primaryCohort.id, cohort.id);
+
+    const authentication = await newUser.get('authentication');
+    assert.equal(authentication.username, 'user123', 'with the correct username');
+    assert.equal(authentication.password, 'password123', 'with the correct password');
   });
 });

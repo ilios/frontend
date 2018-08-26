@@ -1,128 +1,119 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | user profile roles', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-let user;
-moduleForComponent('user-profile-roles', 'Integration | Component | user profile roles', {
-  integration: true,
-  beforeEach(){
-    user = EmberObject.create({
-      id: 6,
-      enabled: true,
-      userSyncIgnore: false,
-      root: false,
-      roles: resolve(userRoles),
-      performsNonLearnerFunction: resolve(false),
-      isLearner: resolve(false),
+  hooks.beforeEach(async function () {
+    this.formerStudentRole = this.server.create('user-role', {
+      title: 'Former Student'
     });
-  }
-});
-let formerStudentRole = EmberObject.create({
-  title: 'Former Student'
-});
-let studentRole = EmberObject.create({
-  title: 'Student'
-});
-
-let userRoles = [studentRole];
-
-test('it renders', function(assert) {
-  this.set('user', user);
-  this.render(hbs`{{user-profile-roles user=user}}`);
-  const student = '.item:eq(0) span';
-  const formerStudent = '.item:eq(1) span';
-  const enabled = '.item:eq(2) span';
-  const syncIgnored = '.item:eq(3) span';
-  const performsNonLearnerFunction = '.item:eq(4) span';
-  const learner = '.item:eq(5) span';
-  const root = '.item:eq(6) span';
-
-  return wait().then(()=>{
-    assert.equal(this.$(student).text().trim(), 'Yes', 'student shows status');
-    assert.equal(this.$(formerStudent).text().trim(), 'No', 'former student shows status');
-    assert.ok(this.$(formerStudent).hasClass('no'), 'former student has right class');
-    assert.equal(this.$(enabled).text().trim(), 'Yes', 'enabled shows status');
-    assert.ok(this.$(enabled).hasClass('yes'), 'enabled has right class');
-    assert.equal(this.$(syncIgnored).text().trim(), 'No', 'sync ignored shows status');
-    assert.ok(this.$(syncIgnored).hasClass('no'), 'sync ignored has right class');
-
-    assert.equal(this.$(performsNonLearnerFunction).text().trim(), 'No');
-    assert.ok(this.$(performsNonLearnerFunction).hasClass('no'));
-    assert.equal(this.$(learner).text().trim(), 'No');
-    assert.ok(this.$(learner).hasClass('no'));
-    assert.equal(this.$(root).text().trim(), 'No');
-    assert.ok(this.$(root).hasClass('no'));
-  });
-});
-
-// @link https://github.com/ilios/frontend/issues/3899
-test('check root flag', async function(assert) {
-  user.set('root', true);
-  this.set('user', user);
-  this.render(hbs`{{user-profile-roles user=user}}`);
-  const root = '.item:eq(6) span';
-
-  await wait();
-  assert.equal(this.$(root).text().trim(), 'Yes');
-  assert.ok(this.$(root).hasClass('yes'));
-});
-
-test('clicking manage sends the action', function(assert) {
-  assert.expect(1);
-  this.set('user', user);
-  this.set('click', (what) =>{
-    assert.ok(what, 'recieved boolean true value');
-  });
-  this.render(hbs`{{user-profile-roles user=user isManageable=true setIsManaging=(action click)}}`);
-  const manage = 'button.manage';
-  this.$(manage).click();
-});
-
-test('can edit user roles', function(assert) {
-  assert.expect(8);
-  let store = Service.extend({
-    findAll(){
-      return resolve([formerStudentRole, studentRole]);
-    }
-  });
-  this.register('service:store', store);
-
-  this.set('user', user);
-  this.set('nothing', parseInt);
-
-  user.set('save', ()=> {
-    assert.equal(user.get('enabled'), false, 'user is disabled');
-    assert.equal(user.get('userSyncIgnore'), true, 'user is sync ignored');
-
-    assert.ok(userRoles.includes(formerStudentRole));
-    assert.ok(userRoles.includes(studentRole));
-
-    return resolve(user);
+    this.studentRole = this.server.create('user-role', {
+      title: 'Student'
+    });
   });
 
-  this.render(hbs`{{user-profile-roles isManaging=true user=user setIsManaging=(action nothing)}}`);
-  let inputs = this.$('input');
-  const formerStudent = 'input:eq(0)';
-  const enabled = 'input:eq(1)';
-  const syncIgnored = 'input:eq(2)';
+  test('it renders', async function (assert) {
+    const user = this.server.create('user', {
+      root: false,
+      roles: [this.studentRole],
+    });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
 
-  return wait().then(()=>{
+    this.set('user', userModel);
+    await render(hbs`{{user-profile-roles user=user}}`);
+    const student = '[data-test-student] span';
+    const formerStudent = '[data-test-former-student] span';
+    const enabled = '[data-test-enabled] span';
+    const syncIgnored = '[data-test-exclude-from-sync] span';
+    const performsNonLearnerFunction = '[data-test-performs-non-learner-function] span';
+    const learner = '[data-test-learner] span';
+    const root = '[data-test-root] span';
+
+    assert.equal(find(student).textContent.trim(), 'Yes', 'student shows status');
+    assert.equal(find(formerStudent).textContent.trim(), 'No', 'former student shows status');
+    assert.ok(find(formerStudent).classList.contains('no'), 'former student has right class');
+    assert.equal(find(enabled).textContent.trim(), 'Yes', 'enabled shows status');
+    assert.ok(find(enabled).classList.contains('yes'), 'enabled has right class');
+    assert.equal(find(syncIgnored).textContent.trim(), 'No', 'sync ignored shows status');
+    assert.ok(find(syncIgnored).classList.contains('no'), 'sync ignored has right class');
+
+    assert.equal(find(performsNonLearnerFunction).textContent.trim(), 'No');
+    assert.ok(find(performsNonLearnerFunction).classList.contains('no'));
+    assert.equal(find(learner).textContent.trim(), 'No');
+    assert.ok(find(learner).classList.contains('no'));
+    assert.equal(find(root).textContent.trim(), 'No');
+    assert.ok(find(root).classList.contains('no'));
+  });
+
+  // @link https://github.com/ilios/frontend/issues/3899
+  test('check root flag', async function(assert) {
+    const user = this.server.create('user', {
+      root: true,
+      roles: [this.studentRole],
+    });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+
+    this.set('user', userModel);
+    await render(hbs`{{user-profile-roles user=user}}`);
+    const root = '[data-test-root] span';
+
+    assert.equal(find(root).textContent.trim(), 'Yes');
+    assert.ok(find(root).classList.contains('yes'));
+  });
+
+  test('clicking manage sends the action', async function(assert) {
+    assert.expect(1);
+    const user = this.server.create('user', {
+      root: true,
+      roles: [this.studentRole],
+    });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    this.set('user', userModel);
+    this.set('click', (what) =>{
+      assert.ok(what, 'recieved boolean true value');
+    });
+    await render(hbs`{{user-profile-roles user=user isManageable=true setIsManaging=(action click)}}`);
+    const manage = 'button.manage';
+    await click(manage);
+  });
+
+  test('can edit user roles', async function(assert) {
+    assert.expect(8);
+    const user = this.server.create('user', {
+      root: true,
+      roles: [this.studentRole],
+    });
+    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+
+    this.set('user', userModel);
+    this.set('nothing', parseInt);
+
+    await render(hbs`{{user-profile-roles isManaging=true user=user setIsManaging=(action nothing)}}`);
+    let inputs = findAll('input');
+    const formerStudent = '[data-test-former-student] input';
+    const enabled = '[data-test-enabled] input';
+    const syncIgnored = '[data-test-exclude-from-sync] input';
+
     assert.equal(inputs.length, 3);
-    assert.ok(this.$(formerStudent).not(':checked'));
-    assert.ok(this.$(enabled).is(':checked'));
-    assert.ok(this.$(syncIgnored).not(':checked'));
+    assert.notOk(find(formerStudent).checked);
+    assert.ok(find(enabled).checked);
+    assert.notOk(find(syncIgnored).checked);
 
-    this.$(formerStudent).click().change();
-    this.$(enabled).click().change();
-    this.$(syncIgnored).click().change();
+    await click(formerStudent);
+    await click(enabled);
+    await click(syncIgnored);
 
-    this.$('.bigadd').click();
+    await click('.bigadd');
 
-    return wait();
+    assert.ok(userModel.hasMany('roles').ids().includes(this.studentRole.id));
+    assert.ok(userModel.hasMany('roles').ids().includes(this.formerStudentRole.id));
+    assert.equal(userModel.get('enabled'), false, 'user is disabled');
+    assert.equal(userModel.get('userSyncIgnore'), true, 'user is sync ignored');
   });
 });

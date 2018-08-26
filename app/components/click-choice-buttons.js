@@ -16,7 +16,7 @@ export default Component.extend({
         toggle(true);
       }
     },
-    clickSecondButton(){
+    clickSecondButton() {
       const firstChoicePicked = this.get('firstChoicePicked');
       const toggle = this.get('toggle');
       if (firstChoicePicked) {
