@@ -34,6 +34,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     this.session3 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
+      instructionalNotes: "They're good dogs Brent",
     });
     this.session4 = this.server.create('session', {
       course,
@@ -69,6 +70,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(sessions.objectAt(0).termCount, '0');
     assert.equal(sessions.objectAt(0).firstOffering, today.format('L LT'));
     assert.equal(sessions.objectAt(0).offeringCount, '3');
+    assert.notOk(sessions.objectAt(0).hasInstructionalNotes);
 
     assert.equal(sessions.objectAt(1).title, 'session 1');
     assert.equal(sessions.objectAt(1).type, 'session type 0');
@@ -77,6 +79,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(sessions.objectAt(1).termCount, '0');
     assert.equal(sessions.objectAt(1).firstOffering, '');
     assert.equal(sessions.objectAt(1).offeringCount, '0');
+    assert.notOk(sessions.objectAt(1).hasInstructionalNotes);
 
     assert.equal(sessions.objectAt(2).title, 'session 2');
     assert.equal(sessions.objectAt(2).type, 'session type 0');
@@ -85,6 +88,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(sessions.objectAt(2).termCount, '0');
     assert.equal(sessions.objectAt(2).firstOffering, '');
     assert.equal(sessions.objectAt(2).offeringCount, '0');
+    assert.ok(sessions.objectAt(2).hasInstructionalNotes);
 
     assert.equal(sessions.objectAt(3).title, 'session3\\');
     assert.equal(sessions.objectAt(3).type, 'session type 0');
@@ -93,6 +97,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(sessions.objectAt(3).termCount, '0');
     assert.equal(sessions.objectAt(3).firstOffering, '');
     assert.equal(sessions.objectAt(3).offeringCount, '0');
+    assert.notOk(sessions.objectAt(3).hasInstructionalNotes);
   });
 
   test('expanded offering', async function (assert) {

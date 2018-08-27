@@ -3,6 +3,7 @@ import {
   clickable,
   collection,
   hasClass,
+  isPresent,
   text
 } from 'ember-cli-page-object';
 import offerings from 'ilios/tests/pages/components/sessions-grid-offering-table';
@@ -26,7 +27,7 @@ export default {
     noOfferings: text('[data-test-no-offerings]'),
     trash: clickable('[data-test-actions] .remove'),
     confirm: clickable('[data-test-confirm-removal] [data-test-yes]'),
-
+    hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
   }),
   expandedSessions: collection('[data-test-expanded-session]'),
 };
