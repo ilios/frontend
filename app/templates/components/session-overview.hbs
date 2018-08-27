@@ -271,6 +271,33 @@
         {{/if}}
       </span>
     </div>
+    <div data-test-instructional-notes>
+      <label>{{t "general.instructionalNotes"}}:</label>
+      <span>
+        {{#if editable}}
+          {{#editable-field
+            value=session.instructionalNotes
+            save=(perform saveInstructionalNotes)
+            close=(action "revertInstructionalNotesChanges")
+            renderHtml=true
+            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (is-in showErrorsFor "instructionalNotes"))
+            clickPrompt=(t "general.clickToEdit")
+          }}
+            {{html-editor
+              content=instructionalNotes
+              update=(action "changeInstructionalNotes")
+            }}
+            {{#if
+              (and (v-get this "instructionalNotes" "isInvalid") (is-in showErrorsFor "instructionalNotes"))
+            }}
+              <span class="validation-error-message">{{v-get this "instructionalNotes" "message"}}</span>
+            {{/if}}
+          {{/editable-field}}
+        {{else}}
+          {{{description}}}
+        {{/if}}
+      </span>
+    </div>
     {{#unless session.isIndependentLearning}}
       <br>
       <div class="sessionassociatedgroups">

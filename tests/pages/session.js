@@ -62,6 +62,15 @@ export default create({
       cancel: clickable('.cancel'),
       hasError: isVisible('.validation-error-message')
     },
+    instructionalNotes: {
+      scope: '[data-test-instructional-notes]',
+      value: text('span', { at: 0}),
+      edit: clickable('.editable'),
+      set: fillInFroalaEditor('.fr-box'),
+      save: clickable('.done'),
+      cancel: clickable('.cancel'),
+      hasError: isVisible('.validation-error-message')
+    },
     ilmHours: {
       scope: '.sessionilmhours',
       value: text('span', { at: 0}),
