@@ -86,6 +86,7 @@ module.exports = function (environment) {
         // //icons which are used dynamically and cannot be detected at build time
         // 'free-solid-svg-icons': [
         //   'ban',
+        //   'bold',
         //   'check',
         //   'clock',
         //   'cloud',
@@ -99,7 +100,10 @@ module.exports = function (environment) {
         //   'file-video',
         //   'file',
         //   'info-circle',
+        //   'italic',
         //   'link',
+        //   'list-ol',
+        //   'list-ul',
         //   'paragraph',
         //   'sort-alpha-down',
         //   'sort-alpha-up',
@@ -108,7 +112,9 @@ module.exports = function (environment) {
         //   'sort',
         //   'spinner',
         //   'star',
-        //   'star-half-alt'
+        //   'star-half-alt',
+        //   'subscript',
+        //   'superscript',
         // ],
       }
     },

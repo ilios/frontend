@@ -3,6 +3,8 @@ import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { dom } from '@fortawesome/fontawesome-svg-core';
+import { next } from '@ember/runloop';
 
 const defaultButtons = [
   'bold',
@@ -26,6 +28,15 @@ export default Component.extend({
     this._super(...arguments);
     $.FE.DT = true;
   },
+  /**
+   * Convert `<i>` tags from froala into SVG icons
+   * Uses: https://fontawesome.com/how-to-use/with-the-api/methods/dom-i2svg
+   */
+  didRender() {
+    next(() => {
+      dom.i2svg({node: this.element});
+    });
+  },
   options: computed('i18n.locale', function(){
     const i18n = this.get('i18n');
     const language = i18n.get('locale');
@@ -46,6 +57,7 @@ export default Component.extend({
       toolbarButtonsXS: defaultButtons,
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
+      iconsTemplate: 'font_awesome_5',
     };
   })
 
