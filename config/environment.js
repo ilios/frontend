@@ -82,6 +82,9 @@ module.exports = function (environment) {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
       icons: {
+        'pro-light-svg-icons': [
+          'clipboard-list',
+        ],
         'free-solid-svg-icons': 'all',
         // //icons which are used dynamically and cannot be detected at build time
         // 'free-solid-svg-icons': [

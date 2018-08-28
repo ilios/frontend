@@ -40,7 +40,8 @@
       <span class="session-grid-status" data-test-status>
         {{#if (and obj.canUpdate obj.instructionalNotes.length)}}
           {{fa-icon
-            "chalkboard-teacher"
+            "clipboard-list"
+            prefix="fal"
             class="instructional-notes"
             title=(t "general.instructionalNotes")
             ariaHidden=false
