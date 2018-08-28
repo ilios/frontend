@@ -4,7 +4,7 @@
 {{course-header course=course editable=editable}}
 {{course-overview course=course editable=editable}}
 {{#if (not showDetails)}}
-  <div {{action setShowDetails true}} class="detail-collapsed-control"><span>{{t "general.expandDetail"}}{{fa-icon "plus-square" class="expand-icon"}}</span></div>
+  <div {{action setShowDetails true}} class="detail-collapsed-control"><span>{{t "general.expandDetail"}}{{fa-icon "plus-square" class="expand-collapse-icon"}}</span></div>
 {{else}}
   {{course-editing
     course=course
@@ -20,5 +20,5 @@
     setCourseCompetencyDetails=(action setCourseCompetencyDetails)
     setCourseManageLeadership=(action setCourseManageLeadership)
   }}
-  <div {{action "collapse"}} class="detail-collapsed-control"><span class="is-expanded">{{t "general.collapseDetail"}}{{fa-icon "minus-square"}}</span></div>
+  <div {{action "collapse"}} class="detail-collapsed-control"><span class="is-expanded">{{t "general.collapseDetail"}}{{fa-icon "minus-square" class="expand-collapse-icon"}}</span></div>
 {{/if}}
