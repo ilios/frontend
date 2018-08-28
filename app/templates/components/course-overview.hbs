@@ -64,17 +64,14 @@
     <span>
       {{#if editable}}
         {{#editable-field
-          value=(if course.clerkshipType course.clerkshipType.title (t "general.notAClerkship"))
+          value=(await clerkshipTypeTitle)
           save=(action "changeClerkshipType")
           close=(action "revertClerkshipTypeChanges")
         }}
           <select onchange={{action "setCourseClerkshipType" value="target.value"}}>
-            <option value="null" selected={{is-empty selectedClerkshipType}}>{{t "general.notAClerkship"}}</option>
-            {{#each clerkshipTypeOptions as |clerkshipType|}}
-              <option
-                value={{clerkshipType.id}}
-                selected={{is-equal clerkshipType selectedClerkshipType}}
-              >
+            <option value="null" selected={{is-empty (await selectedClerkshipType)}}>{{t "general.notAClerkship"}}</option>
+            {{#each (sort-by "title" (await clerkshipTypeOptions)) as |clerkshipType|}}
+              <option value={{clerkshipType.id}} selected={{is-equal clerkshipType (await selectedClerkshipType)}}>
                 {{clerkshipType.title}}
               </option>
             {{/each}}

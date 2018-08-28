@@ -236,7 +236,7 @@ module('Acceptance: Course - Session List', function(hooks) {
     assert.equal(sessions.length, 4);
     await page.expandNewSessionForm();
     await page.newSession.title('xx new session');
-    await page.newSession.type('session type 1');
+    await page.newSession.type('2');
     await page.newSession.save();
 
     assert.equal(sessions.length, 5);

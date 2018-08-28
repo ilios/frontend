@@ -38,14 +38,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
   permissionChecker: service(),
+  i18n: service(),
   editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
   init(){
     this._super(...arguments);
-    this.get('store').findAll('course-clerkship-type').then(clerkshipTypes => {
-      this.set('clerkshipTypeOptions', clerkshipTypes.sortBy('title'));
-    });
 
     let levelOptions = [];
     for(let i=1;i<=5; i++){
@@ -81,17 +79,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['course-overview'],
   tagName: 'section',
   clerkshipTypeId: null,
-  clerkshipTypeOptions: null,
   manageDirectors: false,
   showDirectorManagerLoader: true,
   currentRoute: '',
-  selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', function() {
+  selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', async function() {
     const id = this.get('clerkshipTypeId');
+    const clerkshipTypeOptions = await this.get('clerkshipTypeOptions');
     if (isEmpty(id)) {
       return null;
     }
 
-    return this.get('clerkshipTypeOptions').findBy('id', id);
+    return clerkshipTypeOptions.findBy('id', id);
   }),
   directorsToPassToManager: task(function * () {
     const course = this.get('course');
@@ -114,6 +112,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return permissionChecker.canCreateCourse(school);
   }),
 
+  clerkshipTypeTitle: computed('selectedClerkshipType', async function () {
+    const selectedClerkshipType = await this.get('selectedClerkshipType');
+    const i18n = this.get('i18n');
+    if (!selectedClerkshipType) {
+      return i18n.t('general.notAClerkship');
+    }
+
+    return selectedClerkshipType.title;
+  }),
+
+  clerkshipTypeOptions: computed(async function () {
+    const store = this.get('store');
+    return store.findAll('course-clerkship-type');
+  }),
+
   actions: {
     saveDirectors(newDirectors){
       const course = this.get('course');
@@ -123,9 +136,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         return this.set('manageDirectors', false);
       });
     },
-    changeClerkshipType(){
+    async changeClerkshipType(){
       const course = this.get('course');
-      const selectedClerkshipType = this.get('selectedClerkshipType');
+      const selectedClerkshipType = await this.get('selectedClerkshipType');
       course.set('clerkshipType', selectedClerkshipType);
       return course.save();
     },

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { Promise, map } from 'rsvp';
+import { map } from 'rsvp';
 import { computed } from '@ember/object';
 
 export default Component.extend({
@@ -28,20 +28,16 @@ export default Component.extend({
       return set;
     }, {});
 
-    return await map(Object.keys(summaryBlocks), key => {
-      let cohort = summaryBlocks[key].cohort;
-      let count = summaryBlocks[key].count;
-      return new Promise(resolve => {
-        cohort.get('programYear').then(programYear => {
-          programYear.get('program').then(program => {
-            let title = [program.get('title'), cohort.get('title')].join(' ');
-            resolve({
-              title,
-              count
-            });
-          });
-        });
-      });
+    return await map(Object.keys(summaryBlocks), async key => {
+      const cohort = summaryBlocks[key].cohort;
+      const count = summaryBlocks[key].count;
+      const program = await cohort.get('program');
+      const title = [program.title, cohort.title].join(' ');
+
+      return {
+        title,
+        count
+      };
     });
   }),
 });
