@@ -16,7 +16,7 @@
 
     .session-grid-status {
       display: flex;
-      justify-content: right;
+      justify-content: flex-end;
 
       .instructional-notes {
         color: $ilios-green;
