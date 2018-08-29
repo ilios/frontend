@@ -25,13 +25,13 @@ module('Integration | Component | sessions-grid-offering-table', function(hooks)
     });
     this.server.createList('offering', 3, {
       session,
-      startDate: moment().add(1, 'hour').toDate(),
-      endDate: moment().add(110, 'minutes').toDate(),
+      startDate: moment().hour(8).add(1, 'hour').toDate(),
+      endDate: moment().hour(8).add(110, 'minutes').toDate(),
     });
     this.server.createList('offering', 3, {
       session,
-      startDate: moment().add(1, 'day').add(1, 'hour').toDate(),
-      endDate: moment().add(1, 'day').add(2, 'hour').toDate(),
+      startDate: moment().hour(8).add(1, 'day').add(1, 'hour').toDate(),
+      endDate: moment().hour(8).add(1, 'day').add(2, 'hour').toDate(),
     });
     const offerings = run(() => this.owner.lookup('service:store').findAll('offering'));
     this.set('offerings', offerings);
