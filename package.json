@@ -99,7 +99,7 @@
     "ember-service-worker-index": "^0.6.3",
     "ember-service-worker-update-notify": "^1.0.1",
     "ember-simple-charts": "0.16.0",
-    "ember-source": "~3.3.0",
+    "ember-source": "~3.4.0",
     "ember-test-selectors": "^1.0.0",
     "ember-tether": "1.0.0",
     "ember-truth-helpers": "^2.0.0",
