@@ -50,6 +50,7 @@ export default Component.extend({
         canUpdate,
         id: session.get('id'),
         title: session.get('title'),
+        instructionalNotes: session.get('instructionalNotes'),
         isPublished: session.get('isPublished'),
         isNotPublished: session.get('isNotPublished'),
         isScheduled: session.get('isScheduled'),

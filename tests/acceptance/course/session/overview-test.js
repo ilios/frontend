@@ -35,10 +35,12 @@ module('Acceptance: Session - Overview', function(hooks) {
       course: this.course,
       sessionType: this.sessionTypes[0],
       sessionDescription: this.sessionDescription,
+      instructionalNotes: 'session notes',
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.overview.sessionType.value, 'session type 0');
     assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    assert.equal(page.overview.instructionalNotes.value, 'session notes');
     assert.notOk(page.overview.ilmHours.isVisible);
   });
 
@@ -445,5 +447,87 @@ module('Acceptance: Session - Overview', function(hooks) {
     await page.overview.copy.visit();
     assert.equal(currentRouteName(), 'session.copy');
     assert.notOk(page.overview.copy.isVisible);
+  });
+
+  test('change instructionalNotes', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+      instructionalNotes: 'instructional note'
+    });
+    const newInstructionalNotes = 'some new thing';
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.instructionalNotes.value, 'instructional note');
+    await page.overview.instructionalNotes.edit();
+    await page.overview.instructionalNotes.set(newInstructionalNotes);
+    await page.overview.instructionalNotes.save();
+    assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
+    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
+  });
+
+  test('add instructionalNotes', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    const newInstructionalNotes = 'some new thing';
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
+    await page.overview.instructionalNotes.edit();
+    await page.overview.instructionalNotes.set(newInstructionalNotes);
+    await page.overview.instructionalNotes.save();
+    assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
+    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
+  });
+
+  test('empty instructionalNotes removes instructionalNotes', async function (assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
+    await page.overview.instructionalNotes.edit();
+    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.instructionalNotes.save();
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
+    assert.equal(this.server.db.sessions[0].instructionalNotes, null);
+  });
+
+  test('remove instructionalNotes', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+      instructionalNotes: 'instructional note'
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.instructionalNotes.value, 'instructional note');
+    await page.overview.instructionalNotes.edit();
+    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.instructionalNotes.save();
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
+  });
+
+  test('cancel editing empty instructionalNotes #3210', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
+    await page.overview.instructionalNotes.edit();
+    await page.overview.instructionalNotes.set('something useless this way types');
+    await page.overview.instructionalNotes.cancel();
+    assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });
 });

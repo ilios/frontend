@@ -37,6 +37,12 @@ const Validations = buildValidations({
       max: 65000
     }),
   ],
+  instructionalNotes: [
+    validator('length', {
+      min: 3,
+      max: 65000
+    }),
+  ],
 });
 
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
@@ -50,6 +56,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('title', this.get('session.title'));
+    this.set('instructionalNotes', this.get('session.instructionalNotes'));
     this.get('session.ilmSession').then(ilmSession => {
       if (ilmSession){
         this.set('hours', ilmSession.get('hours'));
@@ -69,6 +76,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   },
   session: null,
   title: null,
+  instructionalNotes: null,
   hours: null,
   dueDate: null,
   description: null,
@@ -159,6 +167,19 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     }
   }),
 
+  saveInstructionalNotes: task(function* () {
+    this.send('addErrorDisplayFor', 'instructionalNotes');
+    let { validations } = yield this.validate({ on: ['instructionalNotes'] });
+    if (validations.get('isInvalid')) {
+      return false;
+    }
+    this.send('removeErrorDisplayFor', 'instructionalNotes');
+    this.session.set('instructionalNotes', this.instructionalNotes);
+
+    yield this.session.save();
+    this.set('instructionalNotes', this.session.instructionalNotes);
+  }),
+
   actions: {
     saveIndependentLearning(value) {
       var session = this.get('session');
@@ -208,6 +229,9 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     revertTitleChanges(){
       const session = this.get('session');
       this.set('title', session.get('title'));
+    },
+    revertInstructionalNotesChanges(){
+      this.set('instructionalNotes', this.session.instructionalNotes);
     },
 
     setSessionType(id){
@@ -347,6 +371,18 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       }
 
       this.set('description', html);
+    },
+    changeInstructionalNotes(html){
+      this.send('addErrorDisplayFor', 'instructionalNotes');
+      let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+      let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
+      //if all we have is empty html then save null
+      if(strippedText.length === 0){
+        html = null;
+      }
+
+      this.set('instructionalNotes', html);
     },
   }
 });

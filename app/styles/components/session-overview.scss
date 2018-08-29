@@ -73,7 +73,8 @@
     margin: 1rem;
   }
 
-  .sessiondescription {
+  .sessiondescription,
+  .instructional-notes {
     @include ilios-browser-defaults;
     grid-column: 1 / -1;
     margin-top: 1em;

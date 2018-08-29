@@ -37,7 +37,18 @@
         {{/if}}
       </span>
       <span class="session-grid-offerings">{{obj.offeringCount}}</span>
-      <span class="session-grid-status">{{publication-status item=obj showText=false}}</span>
+      <span class="session-grid-status" data-test-status>
+        {{#if (and obj.canUpdate obj.instructionalNotes.length)}}
+          {{fa-icon
+            "clipboard-list"
+            prefix="fal"
+            class="instructional-notes"
+            title=(t "general.instructionalNotes")
+            ariaHidden=false
+          }}
+        {{/if}}
+        {{publication-status item=obj showText=false}}
+      </span>
       <span class="session-grid-actions" data-test-actions>
         {{#if obj.canUpdate}}
           {{fa-icon

@@ -16,11 +16,12 @@
   .session-grid-objectives,
   .session-grid-terms,
   .session-grid-offerings,
-  .session-grid-status,
-   {
+  {
     text-align: center;
   }
 
+  .session-grid-status,
+  .session-grid-status.sortable-heading,
   .session-grid-actions {
     padding-right: .5rem;
     text-align: right;

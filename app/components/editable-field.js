@@ -25,8 +25,10 @@ export default Component.extend({
 
   saveData: task(function * () {
     yield timeout(1);
-    yield this.get('save')();
-    this.set('isEditing', false);
+    const result = yield this.get('save')();
+    if (result !== false) {
+      this.set('isEditing', false);
+    }
   }).drop(),
 
   closeEditor: task(function * () {
