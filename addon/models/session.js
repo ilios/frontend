@@ -32,6 +32,14 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     async: true,
     inverse: 'administeredSessions'
   }),
+  postrequisite: belongsTo('session', {
+    inverse: 'prerequisites',
+    async: true
+  }),
+  prerequisites: hasMany('session', {
+    inverse: 'postrequisite',
+    async: true
+  }),
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
