@@ -1,198 +1,171 @@
-import { getOwner } from '@ember/application';
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
-import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import initializer from "ilios/instance-initializers/load-common-translations";
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | school session types expanded', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-let storeMock;
-const formative = EmberObject.create({
-  id: 1,
-  name: 'formative'
-});
-const summative = EmberObject.create({
-  id: 2,
-  name: 'summative'
-});
-const assessmentOptions = [formative, summative];
-
-moduleForComponent('school-session-types-expanded', 'Integration | Component | school session types expanded', {
-  integration: true,
-  setup(){
-    initializer.initialize(getOwner(this));
-  },
-  beforeEach(){
-    storeMock = Service.extend({
-      findAll(what){
-        if (what === 'assessment-option') {
-          return resolve(assessmentOptions);
-        }
-      }
+  hooks.beforeEach(async function () {
+    this.server.create('assessment-option', {
+      name: 'formative'
     });
-    this.register('service:store', storeMock);
-  }
-});
-
-const sessionType = EmberObject.create({
-  id: 1,
-  title: 'one',
-  calendarColor: '#ffffff',
-  assessment: true,
-  assessmentOption: resolve(null),
-});
-const school = EmberObject.create({
-  id: 1,
-  sessionTypes: resolve([sessionType])
-});
-
-test('it renders', async function(assert) {
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action nothing)
-    expand=(action nothing)
-    managedSessionTypeId=null
-    setSchoolManagedSessionType=(action nothing)
-  }}`);
-  await wait();
-
-  const title = '.title';
-  const table = 'table';
-  const sessionTypes = `${table} tbody tr`;
-
-  assert.equal(this.$(title).text().trim(), 'Session Types');
-  assert.equal(this.$(sessionTypes).length, 1);
-});
-
-test('it renders as manager', async function(assert) {
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action nothing)
-    expand=(action nothing)
-    managedSessionTypeId=1
-    setSchoolManagedSessionType=(action nothing)
-  }}`);
-  await wait();
-
-  const title = '.title';
-  const sessionTypeTitle = '.session-type-title';
-  const form = '.form';
-  const items = `${form} .item`;
-
-  assert.equal(this.$(title).text().trim(), 'Session Types');
-  assert.equal(this.$(sessionTypeTitle).text().trim(), 'one');
-  assert.equal(this.$(items).length, 6);
-});
-
-test('editing session type fires action', async function(assert) {
-  assert.expect(1);
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', id => {
-    assert.equal(id, 1);
+    this.summative = this.server.create('assessment-option', {
+      name: 'summative'
+    });
+    const sessionType = this.server.create('session-type', {
+      id: 1,
+      title: 'one',
+      calendarColor: '#ffffff',
+      assessment: true,
+    });
+    const school = this.server.create('school', {
+      id: 1,
+      sessionTypes: [sessionType]
+    });
+    this.school = await run(() => this.owner.lookup('service:store').find('school', school.id));
+    this.sessionType = await run(() => this.owner.lookup('service:store').find('session-type', sessionType.id));
   });
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action nothing)
-    expand=(action nothing)
-    managedSessionTypeId=null
-    setSchoolManagedSessionType=(action click)
-  }}`);
-  await wait();
 
-  const table = 'table';
-  const sessionTypes = `${table} tbody tr`;
-  const edit = `${sessionTypes}:eq(0) td:eq(6) .edit`;
+  test('it renders', async function(assert) {
+    this.set('school', this.school);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action nothing)
+      expand=(action nothing)
+      managedSessionTypeId=null
+      setSchoolManagedSessionType=(action nothing)
+    }}`);
 
-  this.$(edit).click();
-});
+    const title = '.title';
+    const table = 'table';
+    const sessionTypes = `${table} tbody tr`;
 
-test('clicking expand new session fires action', async function(assert) {
-  assert.expect(1);
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', isExpanded => {
-    assert.equal(isExpanded, true);
+    assert.equal(find(title).textContent.trim(), 'Session Types');
+    assert.equal(findAll(sessionTypes).length, 1);
   });
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action nothing)
-    expand=(action nothing)
-    managedSessionTypeId=null
-    setSchoolManagedSessionType=(action nothing)
-  setSchoolNewSessionType=(action click)
-  }}`);
-  await wait();
 
-  const edit = `.expand-collapse-button button`;
+  test('it renders as manager', async function(assert) {
+    this.set('school', this.school);
+    this.set('sessionType', this.sessionType);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action nothing)
+      expand=(action nothing)
+      managedSessionTypeId=sessionType.id
+      setSchoolManagedSessionType=(action nothing)
+    }}`);
 
-  this.$(edit).click();
-});
+    const title = '.title';
+    const sessionTypeTitle = '.session-type-title';
+    const form = '.form';
+    const items = `${form} .item`;
 
-test('close fires action', async function(assert) {
-  assert.expect(1);
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', id => {
-    assert.equal(id, null);
+    assert.equal(find(title).textContent.trim(), 'Session Types');
+    assert.equal(find(sessionTypeTitle).textContent.trim(), 'one');
+    assert.equal(findAll(items).length, 6);
   });
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action nothing)
-    expand=(action nothing)
-    managedSessionTypeId=1
-    setSchoolManagedSessionType=(action click)
-  }}`);
-  await wait();
 
-  const form = '.form';
-  const button = `${form} .cancel`;
+  test('editing session type fires action', async function(assert) {
+    assert.expect(1);
+    this.set('school', this.school);
+    this.set('nothing', () => {});
+    this.set('click', id => {
+      assert.equal(id, 1);
+    });
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action nothing)
+      expand=(action nothing)
+      managedSessionTypeId=null
+      setSchoolManagedSessionType=(action click)
+    }}`);
 
-  this.$(button).click();
-});
+    const table = 'table';
+    const sessionTypes = `${table} tbody tr`;
+    const edit = `${sessionTypes}:nth-of-type(1) td:nth-of-type(7) .edit`;
 
-test('collapse fires action', async function(assert) {
-  assert.expect(1);
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', () => {
-    assert.ok(true, 'action was fired');
+    await click(edit);
   });
-  this.render(hbs`{{school-session-types-expanded
-    school=school
-    canUpdate=true
-    canDelete=true
-    canCreate=true
-    collapse=(action click)
-    expand=(action nothing)
-    managedSessionTypeId=null
-    setSchoolManagedSessionType=(action nothing)
-  }}`);
-  await wait();
 
-  const title = '.title';
+  test('clicking expand new session fires action', async function(assert) {
+    assert.expect(1);
+    this.set('school', this.school);
+    this.set('nothing', () => {});
+    this.set('click', isExpanded => {
+      assert.equal(isExpanded, true);
+    });
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action nothing)
+      expand=(action nothing)
+      managedSessionTypeId=null
+      setSchoolManagedSessionType=(action nothing)
+      setSchoolNewSessionType=(action click)
+    }}`);
+    const edit = `.expand-collapse-button button`;
 
-  this.$(title).click();
+    this.$(edit).click();
+  });
+
+  test('close fires action', async function(assert) {
+    assert.expect(1);
+    this.set('school', this.school);
+    this.set('sessionType', this.sessionType);
+    this.set('nothing', () => {});
+    this.set('click', id => {
+      assert.equal(id, null);
+    });
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action nothing)
+      expand=(action nothing)
+      managedSessionTypeId=sessionType.id
+      setSchoolManagedSessionType=(action click)
+    }}`);
+    const form = '.form';
+    const button = `${form} .cancel`;
+    await click(button);
+  });
+
+  test('collapse fires action', async function(assert) {
+    assert.expect(1);
+    this.set('school', this.school);
+    this.set('nothing', () => {});
+    this.set('click', () => {
+      assert.ok(true, 'action was fired');
+    });
+    await render(hbs`{{school-session-types-expanded
+      school=school
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+      collapse=(action click)
+      expand=(action nothing)
+      managedSessionTypeId=null
+      setSchoolManagedSessionType=(action nothing)
+    }}`);
+    const title = '.title';
+    await click(title);
+  });
 });

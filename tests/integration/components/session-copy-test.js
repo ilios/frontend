@@ -1,461 +1,309 @@
 import Service from '@ember/service';
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import wait from 'ember-test-helpers/wait';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | session copy', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-moduleForComponent('session-copy', 'Integration | Component | session copy', {
-  integration: true
-});
+  test('it renders', async function (assert) {
+    const now = moment();
+    const thisYear = now.year();
+    const lastYear = thisYear - 1;
+    const nextYear = thisYear + 1;
 
-test('it renders', function(assert) {
-  const now = moment();
-  let thisYear = now.year();
-  let lastYear = thisYear - 1;
-  let nextYear = thisYear + 1;
-
-  let school = EmberObject.create({
-    id: 1
-  });
-
-  let course1 = EmberObject.create({
-    id: 1,
-    title: 'old course',
-    school: school
-  });
-
-  let course2 = EmberObject.create({
-    id: 1,
-    title: 'old course 2',
-    school: school
-  });
-
-  let session = EmberObject.create({
-    id: 1,
-    title: 'old session',
-    course: course1
-  });
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-      assert.equal(what, 'course');
-      assert.equal(filters.school, 1);
-      assert.equal(filters.year, lastYear);
-
-      return [course1, course2];
-    },
-    findAll(what){
-      assert.equal(what, 'academicYear');
-
-      return [lastYear, thisYear, nextYear].map(year => {
-        return EmberObject.create({
-          id: year,
-          title: year
-        });
+    [lastYear, thisYear, nextYear].forEach(year => {
+      this.server.create('academic-year', {
+        id: year,
+        title: year
       });
+    });
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course 1',
+      year: lastYear,
+      school,
+    });
+
+    const course2 = this.server.create('course', {
+      title: 'old course 2',
+      year: lastYear,
+      school,
+    });
+
+    const session = this.server.create('session', {
+      title: 'old session',
+      course
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+
+    await render(hbs`{{session-copy session=session}}`);
+
+    const yearSelect = '.year-select select';
+    const courseSelect = '.course-select select';
+    const save = '.done';
+
+    assert.equal(findAll(`${yearSelect} option`).length, 3);
+    for (let i = 1; i <= 2; i++){
+      assert.equal(find(`${yearSelect} option:nth-of-type(${i})`).textContent.trim(), `${lastYear + i - 1} - ${lastYear + i}`);
     }
-  });
-  this.register('service:store', storeMock);
-
-  let permissionCheckerMock = Service.extend({
-    canCreateSession() {
-      return true;
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-
-
-  this.set('session', session);
-
-  this.render(hbs`{{session-copy session=session}}`);
-
-  const yearSelect = '.year-select select';
-  const courseSelect = '.course-select select';
-  const save = '.done';
-
-  return wait().then(()=>{
-    assert.equal(this.$(`${yearSelect} option`).length, 3);
-    for (let i=0; i<2; i++){
-      assert.equal(this.$(`${yearSelect} option:eq(${i})`).text().trim(), `${lastYear + i} - ${lastYear + i + 1}`);
-    }
-    assert.equal(this.$(`${courseSelect} option`).length, 2);
-    assert.equal(this.$(`${courseSelect} option:eq(0)`).text().trim(), course1.get('title'));
-    assert.equal(this.$(`${courseSelect} option:eq(1)`).text().trim(), course2.get('title'));
-    assert.ok(this.$(save).not(':disabled'));
+    assert.equal(findAll(`${courseSelect} option`).length, 2);
+    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course.title);
+    assert.equal(find(`${courseSelect} option:nth-of-type(2)`).textContent.trim(), course2.title);
+    assert.notOk(find(save).enabled);
 
   });
 
-});
+  test('copy session', async function(assert) {
+    assert.expect(19);
 
-test('copy session', async function(assert) {
-  assert.expect(21);
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('academic-year', {
+      id: thisYear,
+      title: thisYear
+    });
 
-  let thisYear = parseInt(moment().format('YYYY'), 10);
-
-  let school = EmberObject.create({
-    id: 1
-  });
-
-  let course = EmberObject.create({
-    id: 1,
-    title: 'old course',
-    school: school
-  });
-  let lm = EmberObject.create();
-  let learningMaterial = EmberObject.create({
-    notes: 'soem notes',
-    required: false,
-    publicNotes: true,
-    learningMaterial: resolve(lm),
-    position: 3,
-  });
-  let objective = EmberObject.create({
-    title: 'session objective title',
-    parents: [EmberObject.create()],
-    position: 3,
-  });
-  let objectives = [objective];
-  let meshDescriptors = [EmberObject.create()];
-  let terms = [EmberObject.create()];
-
-  let session = EmberObject.create({
-    id: 1,
-    title: 'old session',
-    course,
-    attireRequired: true,
-    equipmentRequired: false,
-    supplemental: true,
-    sessionType: resolve(EmberObject.create()),
-    sessionDescription: resolve(EmberObject.create({
-      id: 13,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      year: thisYear,
+      school
+    });
+    const learningMaterial = this.server.create('learning-material');
+    const sessionLearningMaterial = this.server.create('session-learning-material', {
+      notes: 'some notes',
+      required: false,
+      publicNotes: true,
+      learningMaterial,
+      position: 3,
+    });
+    const parentObjective = this.server.create('objective');
+    const objective = this.server.create('objective', {
+      title: 'session objective title',
+      parents: [parentObjective],
+      position: 3,
+    });
+    const meshDescriptor = this.server.create('mesh-descriptor');
+    const term = this.server.create('term');
+    const sessionType = this.server.create('session-type');
+    const sessionDescription = this.server.create('session-description', {
       description: 'test description'
-    })),
-    objectives: resolve(objectives),
-    meshDescriptors: resolve(meshDescriptors),
-    terms: resolve(terms),
-    learningMaterials: resolve([learningMaterial]),
-  });
+    });
 
-  let storeMock = Service.extend({
-    query(){
-      return [course];
-    },
-    findAll(){
-      return [thisYear].map(year => {
-        return EmberObject.create({
-          id: year,
-          title: year
-        });
-      });
-    },
-    createRecord(what, props){
-      if (what === 'session') {
-        assert.equal(session.attireRequired, props.attireRequired);
-        assert.equal(session.equipmentRequired, props.equipmentRequired);
-        assert.equal(session.supplemental, props.supplemental);
-        assert.equal(session.title, props.title);
+    const session = this.server.create('session', {
+      title: 'old session',
+      course,
+      attireRequired: true,
+      equipmentRequired: false,
+      supplemental: true,
+      sessionType,
+      sessionDescription,
+      objectives: [objective],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
+      learningMaterials: [sessionLearningMaterial],
+    });
 
-        return EmberObject.create({
-          id: 14,
-          save(){
-            assert.equal(course, this.get('course'));
-            assert.equal(meshDescriptors, this.get('meshDescriptors'));
-            assert.equal(terms, this.get('terms'));
-          }
-        });
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
       }
-      if (what === 'sessionLearningMaterial') {
-        assert.equal(learningMaterial.get('notes'), props.notes);
-        assert.equal(learningMaterial.get('required'), props.required);
-        assert.equal(learningMaterial.get('publicNotes'), props.publicNotes);
-        assert.equal(learningMaterial.get('position'), props.position);
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 2);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
 
-        return EmberObject.create({
-          save(){
-            assert.equal(this.get('session.id'), 14);
-            assert.equal(this.get('learningMaterial.id'), lm.get('id'));
-          }
-        });
+    await click('.done');
+
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 2);
+    const newSession = sessions.findBy('id', '1');
+    assert.equal(session.attireRequired, newSession.attireRequired);
+    assert.equal(session.equipmentRequired, newSession.equipmentRequired);
+    assert.equal(session.supplemental, newSession.supplemental);
+    assert.equal(session.title, newSession.title);
+
+    const sessionLearningMaterials = await run(() => this.owner.lookup('service:store').findAll('session-learning-material'));
+    assert.equal(sessionLearningMaterials.length, 2);
+    const newSessionLm = sessionLearningMaterials.findBy('id', '1');
+    assert.equal(sessionLearningMaterial.notes, newSessionLm.notes);
+    assert.equal(sessionLearningMaterial.required, newSessionLm.required);
+    assert.equal(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
+    assert.equal(sessionLearningMaterial.position, newSessionLm.position);
+    assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
+    assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
+
+    const sessionDescriptions = await run(() => this.owner.lookup('service:store').findAll('session-description'));
+    assert.equal(sessionLearningMaterials.length, 2);
+    const newSessionDescription = sessionDescriptions.findBy('id', '1');
+    assert.equal(sessionDescription.description, newSessionDescription.description);
+    assert.equal(newSessionDescription.belongsTo('session').id(), newSession.id);
+
+    const objectives = await run(() => this.owner.lookup('service:store').findAll('objective'));
+    assert.equal(objectives.length, 3);
+    const newObjective = objectives.findBy('id', '3');
+    assert.equal(objective.title, newObjective.title);
+    assert.equal(objective.position, newObjective.position);
+  });
+
+  test('errors do not show up initially and save cannot be clicked', async function(assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      school,
+    });
+    const sessionType = this.server.create('session-type');
+
+    const session = this.server.create('session', {
+      course,
+      attireRequired: true,
+      equipmentRequired: false,
+      supplemental: true,
+      sessionType,
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
       }
-      if (what === 'sessionDescription') {
-        assert.equal('test description', props.description);
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
 
-        return EmberObject.create({
-          save(){
-            assert.equal(this.get('session.id'), 14);
-          }
-        });
+    await render(hbs`{{session-copy session=session}}`);
+    const save = '.done';
+    assert.equal(findAll('.validation-error-message').length, 0);
+    assert.ok(find(save).disabled);
+  });
+
+  test('changing the year looks for new matching courses', async function(assert) {
+    assert.expect(5);
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const nextYear = thisYear + 1;
+    this.server.create('academic-year', {
+      id: thisYear,
+    });
+    this.server.create('academic-year', {
+      id: nextYear,
+    });
+
+    const school = this.server.create('school');
+    const course1 = this.server.create('course', {
+      school,
+      year: thisYear
+    });
+    const course2 = this.server.create('course', {
+      school,
+      year: nextYear
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const session = this.server.create('session', {
+      course: course1,
+      attireRequired: true,
+      equipmentRequired: false,
+      supplemental: true,
+      sessionType,
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
       }
-      if (what === 'objective') {
-        assert.equal(objective.title, props.title);
-        assert.equal(objective.position, props.position);
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    await render(hbs`{{session-copy session=session}}`);
+    const yearSelect = '.year-select select';
+    const courseSelect = '.course-select select';
 
-        return EmberObject.create({
-          save(){
-            let sessions = this.get('sessions');
-            assert.equal(sessions.length, 1);
+    assert.equal(find(yearSelect).value, thisYear);
+    assert.equal(findAll(`${courseSelect} option`).length, 1);
+    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course1.title);
 
-            assert.equal(sessions[0].get('id'), 14);
-          }
-        });
+    await fillIn(yearSelect, nextYear);
+    assert.equal(findAll(`${courseSelect} option`).length, 1);
+    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course2.title);
+  });
+
+  test('copy session into the first course in a different year #2130', async function(assert) {
+    assert.expect(4);
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const nextYear = thisYear + 1;
+    this.server.create('academic-year', {
+      id: thisYear,
+    });
+    this.server.create('academic-year', {
+      id: nextYear,
+    });
+
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      school,
+      year: thisYear
+    });
+    this.server.create('course', {
+      school,
+      year: nextYear
+    });
+    const course3 = this.server.create('course', {
+      school,
+      title: 'alpha first',
+      year: nextYear
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const session = this.server.create('session', {
+      course,
+      attireRequired: true,
+      equipmentRequired: false,
+      supplemental: true,
+      sessionType,
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
       }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 2);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+    const yearSelect = '.year-select select';
+    const courseSelect = '.course-select select';
 
-      assert.ok(false, 'Unexpected call to createdRecord for a ' + what);
+    await fillIn(yearSelect, nextYear);
+    assert.equal(find(courseSelect).value, course3.id, 'first course is selected');
+    await click('.done');
 
-    }
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 2);
+    const newSession = sessions.findBy('id', '2');
+    assert.equal(newSession.belongsTo('course').id(), course3.id);
   });
-  this.register('service:store', storeMock);
-  let flashmessagesMock = Service.extend({
-    success(message){
-      assert.equal(message, 'general.copySuccess');
-    }
-  });
-  this.register('service:flashMessages', flashmessagesMock);
-  let permissionCheckerMock = Service.extend({
-    canCreateSession() {
-      return true;
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-
-  this.set('session', session);
-  this.set('visit', (newSession) => {
-    assert.equal(newSession.id, 14);
-  });
-  this.render(hbs`{{session-copy session=session visit=(action visit)}}`);
-
-  await wait();
-  await this.$('.done').click();
-  await wait();
-});
-
-test('errors do not show up initially and save cannot be clicked', function(assert) {
-  let storeMock = Service.extend({
-    query(){
-      return [];
-    },
-    findAll(){
-      return [];
-    }
-  });
-  this.register('service:store', storeMock);
-  let permissionCheckerMock = Service.extend({
-    canCreateSession() {
-      return true;
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-
-
-  let school = EmberObject.create({
-    id: 1
-  });
-
-  let course = EmberObject.create({
-    id: 1,
-    title: 'old course',
-    school: school
-  });
-
-  let session = EmberObject.create({
-    id: 1,
-    title: 'old session',
-    course
-  });
-
-  this.set('session', session);
-
-  this.render(hbs`{{session-copy session=session}}`);
-  const save = '.done';
-
-  return wait().then(() => {
-    assert.equal(this.$('.messagee').length, 0);
-    assert.ok(this.$(save).is(':disabled'));
-  });
-});
-
-test('changing the year looks for new matching courses', async function(assert) {
-  assert.expect(6);
-  let count = 0;
-  let thisYear = parseInt(moment().format('YYYY'), 10);
-  let nextYear = thisYear + 1;
-
-  let school = EmberObject.create({
-    id: 1
-  });
-
-  let course = EmberObject.create({
-    id: 1,
-    title: 'old course',
-    school: school
-  });
-
-  let session = EmberObject.create({
-    id: 1,
-    title: 'old session',
-    course
-  });
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-
-      assert.equal(what, 'course');
-      assert.equal(filters.school, 1);
-      switch(count){
-      case 0:
-        assert.equal(filters.year, thisYear);
-        break;
-      case 1:
-        assert.equal(filters.year, nextYear);
-        break;
-      default:
-        assert.ok(false, 'should not be called again');
-      }
-
-      count++;
-      return [];
-    },
-    findAll(){
-      return [thisYear, nextYear].map(year => {
-        return EmberObject.create({
-          id: year,
-          title: year
-        });
-      });
-    }
-  });
-  this.register('service:store', storeMock);
-  let permissionCheckerMock = Service.extend({
-    canCreateSession() {
-      return true;
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-  this.set('session', session);
-
-  this.render(hbs`{{session-copy session=session}}`);
-  const yearSelect = '.year-select select';
-
-  await wait();
-  this.$(yearSelect).val(nextYear).change();
-  await wait();
-});
-
-test('copy session into the first course in a different year #2130', async function(assert) {
-  assert.expect(9);
-
-  let thisYear = parseInt(moment().format('YYYY'), 10);
-  let nextYear = parseInt(moment().add(1, 'year').format('YYYY'), 10);
-
-  let school = EmberObject.create({
-    id: 1
-  });
-
-  let course = EmberObject.create({
-    id: 1,
-    title: 'old course',
-    school: school,
-    year: thisYear
-  });
-
-  let firstCourse = EmberObject.create({
-    id: 2,
-    title: 'old course',
-    school: school,
-    year: nextYear
-  });
-
-  let targetCourse = EmberObject.create({
-    id: 3,
-    title: 'alpha first',
-    school: school,
-    year: nextYear
-  });
-
-
-  let session = EmberObject.create({
-    id: 1,
-    title: 'old session',
-    course,
-    attireRequired: true,
-    equipmentRequired: false,
-    supplemental: true,
-    sessionType: resolve(EmberObject.create()),
-    sessionDescription: resolve(EmberObject.create()),
-    objectives: resolve([]),
-    meshDescriptors: resolve([]),
-    terms: resolve([]),
-    learningMaterials: resolve([]),
-  });
-
-  let storeMock = Service.extend({
-    query(what, {filters}){
-      assert.equal(what, 'course', 'we are searchign for courses');
-      assert.ok('school' in filters, 'filtered by school');
-      assert.ok('year' in filters, 'filtered by year');
-
-      const year = parseInt(filters.year, 10);
-      return [course, firstCourse, targetCourse].filter(c => c.get('year') === year);
-    },
-    findAll(){
-      return [thisYear, nextYear].map(year => {
-        return EmberObject.create({
-          id: year,
-          title: year
-        });
-      });
-    },
-    createRecord(what){
-      if (what === 'session') {
-        return EmberObject.create({
-          id: 14,
-          save(){
-            assert.equal(targetCourse.get('id'), this.get('course.id'), 'the correct course was selected');
-          }
-        });
-      }
-
-      if (what === 'sessionDescription') {
-        return EmberObject.create({
-          save(){
-          }
-        });
-      }
-
-      assert.ok(false, 'Unexpected call to createdRecord for a ' + what);
-
-    }
-  });
-  this.register('service:store', storeMock);
-  let permissionCheckerMock = Service.extend({
-    canCreateSession() {
-      return true;
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-  let flashmessagesMock = Service.extend({
-    success(){
-    }
-  });
-  this.register('service:flashMessages', flashmessagesMock);
-
-
-  this.set('session', session);
-  this.set('visit', (newSession) => {
-    assert.equal(newSession.id, 14);
-  });
-  this.render(hbs`{{session-copy session=session visit=(action visit)}}`);
-  const yearSelect = '.year-select select';
-  const courseSelect = '.course-select select';
-
-  await wait();
-  this.$(yearSelect).val(nextYear).change();
-  await wait();
-  assert.equal(this.$(courseSelect).val(), targetCourse.get('id'), 'first course is selected');
-  this.$('.done').click();
-  await wait();
 });

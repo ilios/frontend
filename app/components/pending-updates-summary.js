@@ -13,6 +13,7 @@ export default Component.extend({
     this._super(...arguments);
     this.set('sortSchoolsBy', ['title']);
   },
+  'data-test-pending-updates-summary': true,
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
   alert: gt('_updatesProxy.length', 0),
   schoolId: null,

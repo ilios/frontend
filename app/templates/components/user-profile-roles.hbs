@@ -12,7 +12,7 @@
   {{/if}}
 </div>
 <div class="form">
-  <div class="item">
+  <div class="item" data-test-student>
     <label>{{t "general.student"}}:</label>
     <span class="value {{if (await isStudent) "yes" "no"}}">
       {{#if (await isStudent)}}
@@ -22,7 +22,7 @@
       {{/if}}
     </span>
   </div>
-  <div class="item">
+  <div class="item" data-test-former-student>
     <label for="former-student">{{t "general.formerStudent"}}:</label>
     {{#unless isManaging}}
       <span class="value {{if (await isFormerStudent) "yes" "no"}}">
@@ -44,7 +44,7 @@
 
   <hr>
 
-  <div class="item">
+  <div class="item" data-test-enabled>
     <label for="is-enabled">{{t "general.accountEnabled"}}:</label>
     {{#unless isManaging}}
       <span class="value {{if (await isEnabled) "yes" "no"}}">
@@ -64,7 +64,7 @@
       >
     {{/unless}}
   </div>
-  <div class="item">
+  <div class="item" data-test-exclude-from-sync>
     <label for="exclude-from-sync" >{{t "general.excludeFromSync"}}:</label>
     {{#unless isManaging}}
       <span class="value {{if (await isUserSyncIgnored) "yes" "no"}}">
@@ -85,16 +85,16 @@
   </div>
 
   <hr>
-  <div class="item">
+  <div class="item" data-test-performs-non-learner-function>
     <label>{{t "general.performsNonLearnerFunctions"}}:</label>
     {{yes-no value=(await user.performsNonLearnerFunction)}}
   </div>
-  <div class="item">
+  <div class="item" data-test-learner>
     <label>{{t "general.learner"}}:</label>
     {{yes-no value=(await user.isLearner)}}
   </div>
   <hr>
-  <div class="item">
+  <div class="item" data-test-root>
     <label>{{t "general.root"}}:</label>
     {{yes-no value=(await user.root)}}
   </div>

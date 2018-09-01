@@ -1,918 +1,649 @@
-import { getOwner } from '@ember/application';
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import { moduleForComponent, test } from 'ember-qunit';
+import { resolve } from 'rsvp';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
-import initializer from "ilios/instance-initializers/load-common-translations";
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { run } from '@ember/runloop';
 
-const { resolve } = RSVP;
+module('Integration | Component | new curriculum inventory sequence block', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-let storeMock;
-moduleForComponent('new-curriculum-inventory-sequence-block', 'Integration | Component | new curriculum inventory sequence block', {
-  integration: true,
-  setup(){
-    initializer.initialize(getOwner(this));
-  },
-  beforeEach(){
-    storeMock = Service.extend({});
-    this.register('service:store', storeMock);
-  }
-});
+  test('it renders', async function(assert) {
+    assert.expect(69);
 
-test('it renders', function(assert) {
-  assert.expect(74);
-  let school = EmberObject.create({ id() { return 1; }});
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
-  }
-  let course1 = EmberObject.create({ title: 'Belial', id: 1 });
-  let course2 = EmberObject.create({ title: 'Behemoth', id: 2 });
-  let course3 = EmberObject.create({ title: 'Beelzebub', id: 3 });
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
 
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([ course2 ])
-  });
+    const course1 = this.server.create('course', { school, published: true, title: 'Belial', year: '2016' });
+    const course2 = this.server.create('course', { school, published: true, title: 'Behemoth', year: '2016' });
+    const course3 = this.server.create('course', { school, published: true, title: 'Beelzebub', year: '2016' });
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      published: true,
+      program,
+    });
+    this.server.create('curriculum-inventory-sequence-block', {
+      course: course2,
+      report
+    });
 
-  storeMock.reopen({
-    query(what, {filters}){
-      assert.equal(what, 'course', 'Store is queried for courses.');
-      assert.equal(filters.school.length, 1, 'One school id was passed.');
-      assert.equal(filters.school[0], school.id(), 'The correct school id was passed.');
-      assert.equal(filters.year, report.get('year'), 'The correct year was passed.');
-      assert.equal(filters.published, true, 'The correct published value was passed.');
-      return resolve([course1, course2, course3 ]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    assert.equal(this.$('h2.title').text().trim(), 'New Sequence Block', 'Component title shows.');
-    assert.equal(this.$('.title label').text().trim(), 'Title:', 'Title label is correct.');
-    assert.equal(this.$('.title input').val(), '', 'Title input is initially empty.');
-    assert.equal(this.$('.description label').text().trim(), 'Description:', 'Description label is correct.');
-    assert.equal(this.$('.description textarea').val(), '', 'Description input is initially empty.');
-    assert.equal(this.$('.course label').text().trim(), 'Course:', 'Course label is correct.');
-    assert.equal(this.$('.course option').length, 3, 'Course dropdown has correct number of options');
-    assert.equal(this.$('.course option:eq(0)').val(), '', 'First course option has no value.');
-    assert.equal(this.$('.course option:eq(0)').text().trim(), 'Select a Course', 'First course option is labeled correctly');
-    assert.equal(this.$(`.course option:eq(1)`).val(), course3.get('id'), 'Second course option has correct value');
-    assert.equal(this.$(`.course option:eq(1)`).text().trim(), course3.get('title'), 'Second course option is labeled correctly');
-    assert.equal(this.$(`.course option:eq(2)`).val(), course1.get('id'), 'Third course option has correct value');
-    assert.equal(this.$(`.course option:eq(2)`).text().trim(), course1.get('title'), 'Third course option is labeled correctly');
-    assert.equal(this.$(`.required label`).text().trim(), 'Required:', 'Required label is correct');
-    assert.equal(this.$(`.required option`).length, 3, 'There are three required options');
-    assert.equal(this.$(`.required option:eq(0)`).val(), '1', 'Required option value is correct.');
-    assert.equal(this.$(`.required option:eq(0)`).text().trim(), 'Required', 'Required option label is correct.');
-    assert.equal(this.$(`.required option:eq(1)`).val(), '2', 'Required option value is correct.');
-    assert.equal(this.$(`.required option:eq(1)`).text().trim(), 'Optional (elective)', 'Required option label is correct.');
-    assert.equal(this.$(`.required option:eq(2)`).val(), '3', 'Required option value is correct.');
-    assert.equal(this.$(`.required option:eq(2)`).text().trim(), 'Required In Track', 'Required option label is correct.');
-    assert.equal(this.$(`.track label`).text().trim(), 'Is Track?', 'Track label is correct');
-    assert.equal(this.$(`.track .toggle-yesno`).length, 1, 'Track switcher is visible.');
-    assert.equal(this.$(`.start-date label`).text().trim(), 'Start Date:', 'Start date label is correct.');
-    assert.equal(this.$(`.start-date input`).val(), '', 'Start date input is initially empty.');
-    assert.equal(this.$(`.end-date label`).text().trim(), 'End Date:', 'End date label is correct.');
-    assert.equal(this.$(`.end-date input`).val(), '', 'End date input is initially empty.');
-    assert.equal(this.$(`.duration label`).text().trim(), 'Duration (in Days):', 'Duration label is correct.');
-    assert.equal(this.$(`.duration input`).val(), '0', 'Duration input has initial value of zero.');
-    assert.equal(this.$(`.clear-dates button`).text().trim(), 'Clear Dates', 'Clear dates button is labeled correctly.');
-    assert.equal(this.$(`.minimum label`).text().trim(), 'Minimum:', 'Minimum label is correct.');
-    assert.equal(this.$(`.minimum input`).val(), '0', 'Minimum input is initially empty.');
-    assert.equal(this.$(`.maximum label`).text().trim(), 'Maximum:', 'Minimum label is correct.');
-    assert.equal(this.$(`.maximum input`).val(), '0', 'Maximum input is initially empty.');
-    assert.equal(this.$(`.academic-level label`).text().trim(), 'Academic Level:', 'Academic level label is correct.');
-    assert.equal(this.$(`.academic-level option`).length, academicLevels.length, 'Academic level dropdown has the correct number of options.');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    assert.equal(find('h2.title').textContent.trim(), 'New Sequence Block', 'Component title shows.');
+    assert.equal(find('.title label').textContent.trim(), 'Title:', 'Title label is correct.');
+    assert.equal(find('.title input').value, '', 'Title input is initially empty.');
+    assert.equal(find('.description label').textContent.trim(), 'Description:', 'Description label is correct.');
+    assert.equal(find('.description textarea').value, '', 'Description input is initially empty.');
+    assert.equal(find('.course label').textContent.trim(), 'Course:', 'Course label is correct.');
+    assert.equal(findAll('.course option').length, 3, 'Course dropdown has correct number of options');
+    assert.equal(find('.course option').value, '', 'First course option has no value.');
+    assert.equal(find('.course option').textContent.trim(), 'Select a Course', 'First course option is labeled correctly');
+    assert.equal(find(`.course option:nth-of-type(2)`).value, course3.id, 'Second course option has correct value');
+    assert.equal(find(`.course option:nth-of-type(2)`).textContent.trim(), course3.title, 'Second course option is labeled correctly');
+    assert.equal(find(`.course option:nth-of-type(3)`).value, course1.id, 'Third course option has correct value');
+    assert.equal(find(`.course option:nth-of-type(3)`).textContent.trim(), course1.title, 'Third course option is labeled correctly');
+    assert.equal(find(`.required label`).textContent.trim(), 'Required:', 'Required label is correct');
+    assert.equal(findAll(`.required option`).length, 3, 'There are three required options');
+    assert.equal(find(`.required option:nth-of-type(1)`).value, '1', 'Required option value is correct.');
+    assert.equal(find(`.required option:nth-of-type(1)`).textContent.trim(), 'Required', 'Required option label is correct.');
+    assert.equal(find(`.required option:nth-of-type(2)`).value, '2', 'Required option value is correct.');
+    assert.equal(find(`.required option:nth-of-type(2)`).textContent.trim(), 'Optional (elective)', 'Required option label is correct.');
+    assert.equal(find(`.required option:nth-of-type(3)`).value, '3', 'Required option value is correct.');
+    assert.equal(find(`.required option:nth-of-type(3)`).textContent.trim(), 'Required In Track', 'Required option label is correct.');
+    assert.equal(find(`.track label`).textContent.trim(), 'Is Track?', 'Track label is correct');
+    assert.equal(findAll(`.track .toggle-yesno`).length, 1, 'Track switcher is visible.');
+    assert.equal(find(`.start-date label`).textContent.trim(), 'Start Date:', 'Start date label is correct.');
+    assert.equal(find(`.start-date input`).value, '', 'Start date input is initially empty.');
+    assert.equal(find(`.end-date label`).textContent.trim(), 'End Date:', 'End date label is correct.');
+    assert.equal(find(`.end-date input`).value, '', 'End date input is initially empty.');
+    assert.equal(find(`.duration label`).textContent.trim(), 'Duration (in Days):', 'Duration label is correct.');
+    assert.equal(find(`.duration input`).value, '0', 'Duration input has initial value of zero.');
+    assert.equal(find(`.clear-dates button`).textContent.trim(), 'Clear Dates', 'Clear dates button is labeled correctly.');
+    assert.equal(find(`.minimum label`).textContent.trim(), 'Minimum:', 'Minimum label is correct.');
+    assert.equal(find(`.minimum input`).value, '0', 'Minimum input is initially empty.');
+    assert.equal(find(`.maximum label`).textContent.trim(), 'Maximum:', 'Minimum label is correct.');
+    assert.equal(find(`.maximum input`).value, '0', 'Maximum input is initially empty.');
+    assert.equal(find(`.academic-level label`).textContent.trim(), 'Academic Level:', 'Academic level label is correct.');
+    assert.equal(findAll(`.academic-level option`).length, academicLevels.length, 'Academic level dropdown has the correct number of options.');
     for (let i = 0; i < academicLevels.length; i++) {
       let level = academicLevels[i];
-      assert.equal(this.$(`.academic-level option:eq(${i})`).text().trim(), level.get('name'), 'Academic level option label is correct.');
-      assert.equal(this.$(`.academic-level option:eq(${i})`).val(), level.get('id'), 'Academic level option value is correct.');
+      assert.equal(find(`.academic-level option:nth-of-type(${i + 1})`).textContent.trim(), level.name, 'Academic level option label is correct.');
+      assert.equal(find(`.academic-level option:nth-of-type(${i + 1})`).value, level.id, 'Academic level option value is correct.');
     }
-    assert.equal(this.$(`.child-sequence-order label`).text().trim(), 'Child Sequence Order:', 'Child sequence order label is correct');
-    assert.equal(this.$(`.child-sequence-order option`).length, 3, 'There are three child sequence order options');
-    assert.equal(this.$(`.child-sequence-order option:eq(0)`).val(), '1', 'Child sequence order option value is correct.');
-    assert.equal(this.$(`.child-sequence-order option:eq(0)`).text().trim(), 'Ordered', 'Child sequence order option label is correct.');
-    assert.equal(this.$(`.child-sequence-order option:eq(1)`).val(), '2', 'Child sequence order option value is correct.');
-    assert.equal(this.$(`.child-sequence-order option:eq(1)`).text().trim(), 'Unordered', 'Child sequence order option label is correct.');
-    assert.equal(this.$(`.child-sequence-order option:eq(2)`).val(), '3', 'Child sequence order option value is correct.');
-    assert.equal(this.$(`.child-sequence-order option:eq(2)`).text().trim(), 'Parallel', 'Child sequence order option label is correct.');
-    assert.equal(this.$(`.order-in-sequence`).length, 0, 'Order-in-sequence input is not visible for top-level block creation');
-    assert.equal(this.$('button.done').length, 1, 'Done button is present.');
-    assert.equal(this.$('button.done').text().trim(), 'Done', 'Done button is labeled correctly.');
-    assert.equal(this.$('button.cancel').length, 1, 'Cancel button is present.');
-    assert.equal(this.$('button.cancel').text().trim(), 'Cancel', 'Cancel button is labeled correctly.');
-  });
-});
-
-test('order-in-sequence options are visible for ordered parent sequence block', function(assert) {
-  assert.expect(24);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
+    assert.equal(find(`.child-sequence-order label`).textContent.trim(), 'Child Sequence Order:', 'Child sequence order label is correct');
+    assert.equal(findAll(`.child-sequence-order option`).length, 3, 'There are three child sequence order options');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(1)`).value, '1', 'Child sequence order option value is correct.');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(1)`).textContent.trim(), 'Ordered', 'Child sequence order option label is correct.');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(2)`).value, '2', 'Child sequence order option value is correct.');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(2)`).textContent.trim(), 'Unordered', 'Child sequence order option label is correct.');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(3)`).value, '3', 'Child sequence order option value is correct.');
+    assert.equal(find(`.child-sequence-order option:nth-of-type(3)`).textContent.trim(), 'Parallel', 'Child sequence order option label is correct.');
+    assert.equal(findAll(`.order-in-sequence`).length, 0, 'Order-in-sequence input is not visible for top-level block creation');
+    assert.equal(findAll('button.done').length, 1, 'Done button is present.');
+    assert.equal(find('button.done').textContent.trim(), 'Done', 'Done button is labeled correctly.');
+    assert.equal(findAll('button.cancel').length, 1, 'Cancel button is present.');
+    assert.equal(find('button.cancel').textContent.trim(), 'Cancel', 'Cancel button is labeled correctly.');
   });
 
-  let siblings = [];
-  for (let i = 0; i < 10; i++) {
-    siblings.pushObject(EmberObject.create());
-  }
+  test('order-in-sequence options are visible for ordered parent sequence block', async function(assert) {
+    assert.expect(24);
+    const school = this.server.create('school');
 
-  let parentBlock = EmberObject.create({
-    isOrdered: true,
-    children: resolve(siblings)
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.set('parentBlock', parentBlock);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock}}`);
-  return wait().then(() => {
-    let numOptions = siblings.length + 1;
-    assert.equal(this.$(`.order-in-sequence label`).text().trim(), 'Order in Sequence:', 'Order in sequence label is correct');
-    assert.equal(this.$(`.order-in-sequence option`).length,  numOptions, 'Correct number of order in sequence options');
-    for (let i = 0; i < numOptions; i++) {
-      let orderInSequence = i + 1;
-      assert.equal(this.$(`.order-in-sequence option:eq(${i})`).val(), orderInSequence, 'Order in sequence option value is correct');
-      assert.equal(this.$(`.order-in-sequence option:eq(${i})`).text().trim(), orderInSequence, 'Order in sequence option label is correct');
-    }
-  });
-});
-
-test('selecting course reveals additional course info', function(assert) {
-  assert.expect(4);
-  let school = EmberObject.create({ id() { return 1; }});
-  let clerkshipType = EmberObject.create({
-    title: 'selective'
-  });
-  let course = EmberObject.create({
-    id: 1,
-    title: 'my fancy course',
-    startDate: moment('2016-05-01').toDate(),
-    endDate: moment('2017-03-22').toDate(),
-    level: 4,
-    clerkshipType
-  });
-
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-  storeMock.reopen({
-    query(){
-      return resolve([ course ]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    let courseOption = this.$('.course option:eq(1)');
-    this.$('.course select').val('1').trigger('change');
-    courseOption.prop('selected', true);
-    courseOption.trigger('input');
-    return wait().then(() => {
-      let details = this.$('.course .details').text().trim();
-      assert.ok(details.indexOf('Level: ' + course.get('level')) === 0);
-      assert.ok(details.indexOf('Start Date: ' + moment(course.get('startDate')).format('YYYY-MM-DD')) > 0);
-      assert.ok(details.indexOf('End Date: ' + moment(course.get('endDate')).format('YYYY-MM-DD')) > 0);
-      assert.ok(details.indexOf('Clerkship (' + course.get('clerkshipType').get('title') + ')') > 0);
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
+    const parent = this.server.create('curriculum-inventory-sequence-block', {
+      childSequenceOrder: 1,
+      report
+    });
+    this.server.createList('curriculum-inventory-sequence-block', 10, {
+      report,
+      parent
+    });
 
-test('save with defaults', function(assert) {
-  assert.expect(17);
-  let school = EmberObject.create({ id() { return 1; }});
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
-  }
-  let newTitle = 'new sequence block';
-  let newDescription = 'lorem ipsum';
-  let newStartDate = moment('2016-01-05');
-  let newEndDate = moment('2016-02-12');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const parentModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id));
 
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
+    this.set('report', reportModel);
+    this.set('parentBlock', parentModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock}}`);
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-    createRecord(what, data) {
-      assert.equal(what, 'curriculumInventorySequenceBlock');
-      assert.equal(data.title, newTitle, 'Given title gets passed.');
-      assert.equal(data.description, newDescription, 'Given description gets passed.');
-      assert.equal(data.parent, null, 'No parent gets passed for new top-level block.');
-      assert.equal(data.academicLevel, academicLevels[0], 'First academic level gets passed by default.');
-      assert.equal(data.required, 1, '"Required" is passed by default.');
-      assert.equal(data.track, false, 'FALSE is passed for "Is Track?" by default.');
-      assert.equal(data.orderInSequence, 0, 'order in sequence is zero for top-level blocks.');
-      assert.equal(data.childSequenceOrder, 1, 'Child sequence order defaults to "ordered".');
-      assert.equal(
-        moment(data.startDate).format('YYYY-MM-DD'),
-        newStartDate.format('YYYY-MM-DD'),
-        'Given start date gets passed.'
-      );
-      assert.equal(
-        moment(data.endDate).format('YYYY-MM-DD'),
-        newEndDate.format('YYYY-MM-DD'),
-        'Given end date gets passed.'
-      );
-      assert.equal(data.minimum, 0, 'Minimum defaults to zero.');
-      assert.equal(data.minimum, 0, 'Maximum defaults to zero');
-      assert.equal(data.course, null, 'No course gets selected/passed by default.');
-      assert.equal(data.duration, 0, 'Duration defaults to zero');
-      assert.equal(data.report, report, 'Given report gets passed.');
-      return EmberObject.create();
-    }
-  });
-  this.set('report', report);
-  this.set('saveBlock', (block) => {
-    assert.ok(block, 'Sequence block gets passed to saveBlock action.');
-    return resolve();
-  });
-
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-  this.$('.title input').val(newTitle).trigger('input');
-  this.$('.description textarea').val(newDescription).trigger('input');
-  let interactor = openDatepicker(this.$('.start-date input'));
-  interactor.selectDate(newStartDate.toDate());
-  interactor = openDatepicker(this.$('.end-date input'));
-  interactor.selectDate(newEndDate.toDate());
-  this.$('button.done').click();
-});
-
-test('save with non-defaults', function(assert) {
-  assert.expect(9);
-  let school = EmberObject.create({ id() { return 1; }});
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
-  }
-
-  let course = EmberObject.create({
-    id: 1,
-    title: 'Test Course'
-  });
-
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  let minimum = 10;
-  let maximum = 12;
-  let duration = 6;
-
-  storeMock.reopen({
-    query(){
-      return resolve([ course ]);
-    },
-    createRecord(what, data) {
-      assert.equal(data.academicLevel, academicLevels[1], 'Selected academic level gets passed.');
-      assert.equal(data.required, 3, 'Selected "Is required?" value gets passed.');
-      assert.equal(data.track, true, 'Selected "Is Track?" value gets passed.');
-      assert.equal(data.childSequenceOrder, 2, 'Selected child sequence order gets passed.');
-      assert.equal(data.minimum, minimum, 'Given minimum gets passed.');
-      assert.equal(data.maximum, maximum, 'Given maximum gets passed.');
-      assert.equal(data.course, course, 'Selected course gets passed.');
-      assert.equal(data.duration, duration, 'Given duration gets passed.');
-      return EmberObject.create();
-    }
-  });
-  this.set('report', report);
-  this.set('saveBlock', (block) => {
-    assert.ok(block, 'Sequence block gets passed to saveBlock action.');
-    return resolve();
-  });
-
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-  return wait().then(() => {
-    this.$('.title input').val('foo bar').trigger('input');
-    this.$('.description textarea').val('lorem ipsum').trigger('input');
-    this.$('.duration input').val(duration).trigger('input');
-    this.$('.minimum input').val(minimum).trigger('input');
-    this.$('.maximum input').val(maximum).trigger('input');
-    this.$('.course option:eq(1)').prop('selected', true).change();
-    this.$('.child-sequence-order option:eq(1)').prop('selected', true).change();
-    this.$('.required option:eq(2)').prop('selected', true).change();
-    this.$('.academic-level option:eq(1)').prop('selected', true).change();
-    this.$('.track .toggle-yesno').click();
-    this.$('button.done').click();
-  });
-});
-
-test('save nested block in ordered sequence', function(assert) {
-  assert.expect(3);
-  let school = EmberObject.create({ id() { return 1; }});
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i}` }));
-  }
-
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  let parentBlock = EmberObject.create({
-    isOrdered: true,
-    children: resolve([ EmberObject.create()])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-    createRecord(what, data) {
-      assert.equal(data.orderInSequence, 2, 'Selected order-in-sequence gets passed.');
-      assert.equal(data.parent, parentBlock, 'Parent gets passed.');
-      return EmberObject.create();
-    }
-  });
-  this.set('report', report);
-  this.set('parentBlock', parentBlock);
-
-  this.set('saveBlock', (block) => {
-    assert.ok(block, 'Sequence block gets passed to saveBlock action.');
-    return resolve();
-  });
-
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`);
-  this.$('.title input').val('Foo Bar').trigger('input');
-  this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-  this.$('.order-in-sequence option:eq(1)').prop('selected', true).change();
-  this.$('.duration input').val('19').trigger('input');
-  this.$('button.done').click();
-});
-
-test('cancel', function(assert) {
-  assert.expect(1);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
+    assert.equal(find(`.order-in-sequence label`).textContent.trim(), 'Order in Sequence:', 'Order in sequence label is correct');
+    assert.equal(findAll(`.order-in-sequence option`).length,  11, 'Correct number of order in sequence options');
+    for (let i = 1; i <= 11; i++) {
+      assert.equal(find(`.order-in-sequence option:nth-of-type(${i})`).value, i, 'Order in sequence option value is correct');
+      assert.equal(find(`.order-in-sequence option:nth-of-type(${i})`).textContent.trim(), i, 'Order in sequence option label is correct');
     }
   });
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
+  test('selecting course reveals additional course info', async function(assert) {
+    assert.expect(4);
+
+    const school = this.server.create('school');
+    const clerkshipType = this.server.create('course-clerkship-type');
+    const course = this.server.create('course', {
+      school,
+      year: '2016',
+      published: true,
+      title: 'my fancy course',
+      clerkshipType,
+    });
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.course select', course.id);
+
+    let details = find('.course .details').textContent.trim();
+    assert.ok(details.includes('Level: ' + course.level));
+    assert.ok(details.includes('Start Date: ' + moment(course.startDate).format('YYYY-MM-DD')));
+    assert.ok(details.includes('End Date: ' + moment(course.endDate).format('YYYY-MM-DD')));
+    assert.ok(details.includes('Clerkship (' + clerkshipType.title + ')'));
   });
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
+  test('save with defaults', async function(assert) {
+    assert.expect(17);
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+    });
+
+    let newTitle = 'new sequence block';
+    let newDescription = 'lorem ipsum';
+    let newStartDate = moment('2016-01-05');
+    let newEndDate = moment('2016-02-12');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+
+    this.set('report', reportModel);
+    this.set('saveBlock', (block) => {
+      assert.ok(block, 'Sequence block gets passed to saveBlock action.');
+      return resolve();
+    });
+
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await fillIn('.title input', newTitle);
+    await fillIn('.description textarea', newDescription);
+    let interactor = openDatepicker(find('.start-date input'));
+    interactor.selectDate(newStartDate.toDate());
+    interactor = openDatepicker(find('.end-date input'));
+    interactor.selectDate(newEndDate.toDate());
+    await click('button.done');
+
+    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    assert.equal(blocks.length, 1);
+    const newBlock = blocks.objectAt(0);
+    assert.equal(newBlock.title, newTitle, 'Given title gets passed.');
+    assert.equal(newBlock.description, newDescription, 'Given description gets passed.');
+    assert.equal(newBlock.belongsTo('parent').id(), null, 'No parent gets passed for new top-level block.');
+    assert.equal(newBlock.belongsTo('academicLevel').id(), academicLevels[0].id, 'First academic level gets passed by default.');
+    assert.equal(newBlock.required, 1, '"Required" is passed by default.');
+    assert.equal(newBlock.track, false, 'FALSE is passed for "Is Track?" by default.');
+    assert.equal(newBlock.orderInSequence, 0, 'order in sequence is zero for top-level blocks.');
+    assert.equal(newBlock.childSequenceOrder, 1, 'Child sequence order defaults to "ordered".');
+    assert.equal(
+      moment(newBlock.startDate).format('YYYY-MM-DD'),
+      newStartDate.format('YYYY-MM-DD'),
+      'Given start date gets passed.'
+    );
+    assert.equal(
+      moment(newBlock.endDate).format('YYYY-MM-DD'),
+      newEndDate.format('YYYY-MM-DD'),
+      'Given end date gets passed.'
+    );
+    assert.equal(newBlock.minimum, 0, 'Minimum defaults to zero.');
+    assert.equal(newBlock.minimum, 0, 'Maximum defaults to zero');
+    assert.equal(newBlock.belongsTo('course').id(), null, 'No course gets selected/passed by default.');
+    assert.equal(newBlock.duration, 0, 'Duration defaults to zero');
+    assert.equal(newBlock.belongsTo('report').id(), report.id, 'Given report gets passed.');
   });
 
-  let cancelAction = function(){
-    assert.ok(true, 'Cancel action was invoked.');
-  };
+  test('save with non-defaults', async function(assert) {
+    assert.expect(10);
+    const school = this.server.create('school');
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+    });
+    const course = this.server.create('course', {
+      year: '2016',
+      published: true,
+      school,
+    });
 
-  this.set('report', report);
-  this.set('cancelAction', cancelAction);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report cancel=(action cancelAction)}}`);
-  return wait().then(() => {
-    this.$('.buttons .cancel').click();
-  });
-});
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    let minimum = 10;
+    let maximum = 12;
+    let duration = 6;
 
-test('clear dates', function(assert) {
-  assert.expect(4);
-  const newStartDate = moment('2016-01-12');
-  const newEndDate = moment('2017-02-22');
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
+    this.set('report', reportModel);
+    this.set('saveBlock', (block) => {
+      assert.ok(block, 'Sequence block gets passed to saveBlock action.');
+      return resolve();
+    });
+
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+
+    await fillIn('.title input', 'foo bar');
+    await fillIn('.description textarea', 'lorem ipsum');
+    await fillIn('.duration input', duration);
+    await fillIn('.minimum input', minimum);
+    await fillIn('.maximum input', maximum);
+    await fillIn('.course select', course.id);
+    await fillIn('.child-sequence-order select', 2);
+    await fillIn('.required select', 3);
+    await fillIn('.academic-level select', 2);
+    await click('.track .toggle-yesno');
+    await click('button.done');
+
+    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    assert.equal(blocks.length, 1);
+    const newBlock = blocks.objectAt(0);
+    assert.equal(newBlock.belongsTo('academicLevel').id(), academicLevels[1].id, 'Selected academic level gets passed.');
+    assert.equal(newBlock.required, 3, 'Selected "Is required?" value gets passed.');
+    assert.equal(newBlock.track, true, 'Selected "Is Track?" value gets passed.');
+    assert.equal(newBlock.childSequenceOrder, 2, 'Selected child sequence order gets passed.');
+    assert.equal(newBlock.minimum, minimum, 'Given minimum gets passed.');
+    assert.equal(newBlock.maximum, maximum, 'Given maximum gets passed.');
+    assert.equal(newBlock.belongsTo('course').id(), course.id, 'Selected course gets passed.');
+    assert.equal(newBlock.duration, duration, 'Given duration gets passed.');
   });
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
+  test('save nested block in ordered sequence', async function(assert) {
+    assert.expect(4);
+    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels,
+      year: '2016',
+      program,
+    });
+    const parent = this.server.create('curriculum-inventory-sequence-block', {
+      childSequenceOrder: 1,
+      report
+    });
+    this.server.create('curriculum-inventory-sequence-block', {
+      report,
+      parent
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const parentModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id));
+
+    this.set('report', reportModel);
+    this.set('parentBlock', parentModel);
+
+    this.set('saveBlock', (block) => {
+      assert.ok(block, 'Sequence block gets passed to saveBlock action.');
+      return resolve();
+    });
+
+    await render(
+      hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`
+    );
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    await fillIn('.order-in-sequence select', '2');
+    await fillIn('.duration input', '19');
+    await click('button.done');
+
+    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    assert.equal(blocks.length, 3);
+    const newBlock = blocks.objectAt(2);
+    assert.equal(newBlock.orderInSequence, 2, 'Selected order-in-sequence gets passed.');
+    assert.equal(newBlock.belongsTo('parent').id(), parent.id, 'Parent gets passed.');
   });
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
+  test('cancel', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    this.set('cancelAction', () => {
+      assert.ok(true, 'Cancel action was invoked.');
+    });
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report cancel=(action cancelAction)}}`);
+    await click('.buttons .cancel');
   });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+
+  test('clear dates', async function(assert) {
+    assert.expect(4);
+    const newStartDate = moment('2016-01-12');
+    const newEndDate = moment('2017-02-22');
+
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
+    });
+
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(newEndDate.toDate());
-    assert.equal(newStartDate.format('M/D/YYYY'), startDateInput.val(), 'Start date is set');
-    assert.equal(newEndDate.format('M/D/YYYY'), endDateInput.val(), 'End date is set');
-    this.$('.clear-dates button').click();
-    return wait().then(() => {
-      assert.equal(startDateInput.val(), '', 'Start date input has been cleared.');
-      assert.equal(endDateInput.val(), '', 'End date input has been cleared.');
+    assert.equal(newStartDate.format('M/D/YYYY'), startDateInput.value, 'Start date is set');
+    assert.equal(newEndDate.format('M/D/YYYY'), endDateInput.value, 'End date is set');
+    await click('.clear-dates button');
+    assert.equal(startDateInput.value, '', 'Start date input has been cleared.');
+    assert.equal(endDateInput.value, '', 'End date input has been cleared.');
+  });
+
+  test('save fails when minimum is larger than maximum', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails when minimum is larger than maximum', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.maximum input').val('5').trigger('input');
-    this.$('.minimum input').val('10').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.maximum input', '5');
+    await fillIn('.minimum input', '10');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails when minimum is less than zero', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails when minimum is less than zero', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.minimum input').val('-1').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.minimum input', '-1');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails when minimum is empty', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails when minimum is empty', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.minimum input').val('').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.minimum input', '');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails when maximum is empty', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails when maximum is empty', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.maximum input').val('-1').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.maximum input', '-1');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save with date range and a zero duration', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save with date range and a zero duration', function(assert) {
-  assert.expect(1);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-    createRecord(what, data) {
-      assert.equal(data.duration, '0');
-      return EmberObject.create();
-    }
-  });
-  this.set('saveBlock', () => {
-    return resolve();
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    this.set('saveBlock', () => {
+      return resolve();
+    });
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    this.$('.duration input').val('0').trigger('input');
-    this.$('button.done').click();
-  });
-});
+    await fillIn('.duration input', '0');
+    await click('button.done');
 
-test('save with non-zero duration and no date range', function(assert) {
-  assert.expect(1);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
+    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    assert.equal(blocks.length, 1);
+    const newBlock = blocks.objectAt(0);
+    assert.equal(newBlock.duration, 0, 'correcrt duration.');
+
   });
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
+  test('save with non-zero duration and no date range', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
+    });
+    const duration = 10;
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    this.set('saveBlock', () => {
+      return resolve();
+    });
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    await fillIn('.duration input', duration);
+    await click('button.done');
+
+    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    assert.equal(blocks.length, 1);
+    const newBlock = blocks.objectAt(0);
+    assert.equal(newBlock.duration, duration, 'correct duration.');
   });
 
-  let duration = 10;
+  test('save fails if end-date is older than start-date', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
+    });
 
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-    createRecord(what, data) {
-      assert.equal(data.duration, duration);
-      return EmberObject.create();
-    }
-  });
-  this.set('saveBlock', () => {
-    return resolve();
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    this.$('.duration input').val(duration).trigger('input');
-    this.$('button.done').click();
-  });
-});
-
-test('save fails if end-date is older than start-date', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
     interactor.selectDate(moment('2011-12-30').toDate());
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails on missing duration', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails on missing duration', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.duration input').val('').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.duration input', '');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails on invalid duration', async function(assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails on invalid duration', function(assert) {
-  assert.expect(2);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
-    let endDateInput = this.$('.end-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
+    let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(this.$('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
-    this.$('.duration input').val('WRONG').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    await fillIn('.duration input', 'WRONG');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+  });
+
+  test('save fails if neither date range nor non-zero duration is provided', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails if neither date range nor non-zero duration is provided', function(assert) {
-  assert.expect(1);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 2, 'Validation errors show.');
   });
 
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    this.$('.duration text').val('Lorem Ipsum').trigger('input');
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 2, 'Validation errors show.');
+  test('save fails if start-date is given but no end-date is provided', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      year: '2016',
+      program,
     });
-  });
-});
 
-test('save fails if start-date is given but no end-date is provided', function(assert) {
-  assert.expect(1);
-  let school = EmberObject.create({ id() { return 1; }});
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
-    }
-  });
-
-  let report = EmberObject.create({
-    academicLevels: [],
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([])
-  });
-
-  storeMock.reopen({
-    query(){
-      return resolve([]);
-    },
-  });
-  this.set('report', report);
-  this.render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-  return wait().then(() => {
-    this.$('.title input').val('Foo Bar').trigger('input');
-    this.$('.description textarea').val('Lorem Ipsum').trigger('input');
-    this.$('.duration text').val('Lorem Ipsum').trigger('input');
-    let startDateInput = this.$('.start-date input');
+    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    this.set('report', reportModel);
+    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await fillIn('.title input', 'Foo Bar');
+    await fillIn('.description textarea', 'Lorem Ipsum');
+    let startDateInput = find('.start-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
-    this.$('button.done').click();
-    return wait().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 1, 'Validation errors show.');
-    });
-  });});
+    await click('button.done');
+    assert.equal(findAll('.validation-error-message').length, 1, 'Validation errors show.');
+  });
+});
