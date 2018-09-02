@@ -28,9 +28,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (sort-by sortBy (await proxiedReports)) as |report|}}
-      <tr class={{if report.showRemoveConfirmation "confirm-removal" ""}}>
-        <td class="text-left" colspan="4">
+    {{#each (sort-by sortBy (await proxiedReports)) as |report index|}}
+      <tr
+        class={{if report.showRemoveConfirmation "confirm-removal" ""}}
+        data-test-report={{index}}
+      >
+        <td class="text-left" colspan="4" data-test-name>
           {{#link-to "curriculumInventoryReport" report.content}}
             {{report.name}}
           {{/link-to}}
@@ -38,28 +41,32 @@
         <td {{action "edit" report}}
           class="text-center hide-from-small-screen"
           colspan="2"
+          data-test-program
         >
           {{report.program.title}}
         </td>
         <td {{action "edit" report}}
           class="text-center hide-from-small-screen"
           colspan="2"
+          data-test-year
         >
           {{report.yearLabel}}
         </td>
         <td {{action "edit" report}}
           class="text-center hide-from-small-screen"
           colspan="2"
+          data-test-start-date
         >
           {{moment-format report.startDate "L"}}
         </td>
         <td {{action "edit" report}}
           class="text-center hide-from-small-screen"
           colspan="2"
+          data-test-end-date
         >
           {{moment-format report.endDate "L"}}
         </td>
-        <td class="text-center" colspan="2" {{action "edit" report}}>
+        <td class="text-center" colspan="2" {{action "edit" report}} data-test-status>
           {{#if report.isFinalized}}{{fa-icon "lock"}}{{/if}}
           {{publication-status
             publishedLangKey="general.finalized"
@@ -68,7 +75,7 @@
             showIcon=false
           }}
         </td>
-        <td class="text-right report-actions" colspan="2">
+        <td class="text-right report-actions" colspan="2" data-test-actions>
           {{#link-to "curriculumInventoryReport" report.content}}
             {{fa-icon "edit"}}
           {{/link-to}}
@@ -88,7 +95,7 @@
         </td>
       </tr>
       {{#if report.showRemoveConfirmation}}
-        <tr class="confirm-removal">
+        <tr class="confirm-removal" data-test-confirm-removal={{index}}>
           <td colspan="16">
             <div class="confirm-message">
               {{t "general.reportConfirmRemove"}} <br>
