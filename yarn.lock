@@ -6980,9 +6980,9 @@ ignore@^4.0.0, ignore@^4.0.2:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
-ilios-common@19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-19.0.0.tgz#37366b08d75339a425e6ed6c8a875bee4b3d85a4"
+ilios-common@19.0.1:
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-19.0.1.tgz#d49ba26ecfca1872d40d9dd8de9986c1c0317cf5"
   dependencies:
     "@fortawesome/ember-fontawesome" "0.1.5"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
