@@ -10,7 +10,7 @@ $form-input-text-types: 'input[type="text"], input[type="password"], input[type=
   font-style: italic;
   min-width: 220px;
   overflow: show;
-  z-index: 100;
+  z-index: 5;
 
   #{$form-input-text-types} {
     background-position: right 4px bottom .75em;
