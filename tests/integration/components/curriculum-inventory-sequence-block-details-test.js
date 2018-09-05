@@ -1,102 +1,104 @@
-import { getOwner } from '@ember/application';
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
-import { moduleForComponent } from 'ember-qunit';
-import { test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import moment from 'moment';
 import tHelper from "ember-i18n/helper";
 
 const { resolve } = RSVP;
 
-moduleForComponent('curriculum-inventory-sequence-block-details', 'Integration | Component | curriculum inventory sequence block details', {
-  integration: true,
-  beforeEach: function() {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
-});
+module('Integration | Component | curriculum inventory sequence block details', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(7);
+  hooks.beforeEach(function() {
+    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.register('helper:t', tHelper);
+  });
 
-  let school = EmberObject.create({ id() { return 1; }});
+  test('it renders', async function(assert) {
+    assert.expect(7);
 
-  let academicLevels = [];
-  for (let i = 0; i < 10; i++) {
-    academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
-  }
+    let school = EmberObject.create({ id() { return 1; }});
 
-  let program = EmberObject.create({
-    belongsTo() {
-      return school;
+    let academicLevels = [];
+    for (let i = 0; i < 10; i++) {
+      academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
     }
-  });
 
-  let report = EmberObject.create({
-    academicLevels,
-    year: '2016',
-    program: resolve(program),
-    linkedCourses: resolve([]),
-    isFinalized: resolve(false)
-  });
+    let program = EmberObject.create({
+      belongsTo() {
+        return school;
+      }
+    });
 
-  let grandParentBlock = EmberObject.create({
-    id: 1,
-    title: 'Okely Dokely',
-  });
+    let report = EmberObject.create({
+      academicLevels,
+      year: '2016',
+      program: resolve(program),
+      linkedCourses: resolve([]),
+      isFinalized: resolve(false)
+    });
 
-  let parentBlock = EmberObject.create({
-    id: 2,
-    title: 'Foo',
-    parent: resolve(grandParentBlock)
-  });
+    let grandParentBlock = EmberObject.create({
+      id: 1,
+      title: 'Okely Dokely',
+    });
 
-  grandParentBlock.set('children', resolve([ parentBlock ]));
+    let parentBlock = EmberObject.create({
+      id: 2,
+      title: 'Foo',
+      parent: resolve(grandParentBlock)
+    });
 
-  let academicLevel = academicLevels[0];
+    grandParentBlock.set('children', resolve([ parentBlock ]));
 
-  let block = EmberObject.create({
-    id: 3,
-    description: 'lorem ipsum',
-    report: resolve(report),
-    parent: resolve(parentBlock),
-    sessions: resolve([]),
-    duration: 12,
-    startDate: moment('2015-01-02'),
-    endDate: moment('2015-04-30'),
-    childSequenceOrder: 1,
-    orderInSequence: 1,
-    course: resolve(null),
-    required: 2,
-    track: true,
-    minimum: 2,
-    maximum: 15,
-    academicLevel: resolve(academicLevel),
-    title: 'bar',
-    allParents: resolve([ parentBlock, grandParentBlock ])
-  });
+    let academicLevel = academicLevels[0];
 
-  parentBlock.set('children', resolve([ block ]));
+    let block = EmberObject.create({
+      id: 3,
+      description: 'lorem ipsum',
+      report: resolve(report),
+      parent: resolve(parentBlock),
+      sessions: resolve([]),
+      duration: 12,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
+      childSequenceOrder: 1,
+      orderInSequence: 1,
+      course: resolve(null),
+      required: 2,
+      track: true,
+      minimum: 2,
+      maximum: 15,
+      academicLevel: resolve(academicLevel),
+      title: 'bar',
+      allParents: resolve([ parentBlock, grandParentBlock ])
+    });
 
-  this.set('report', report);
-  this.set('sequenceBlock', block);
-  this.set('sortBy', 'title');
-  this.set('setSortSessionsBy', null);
+    parentBlock.set('children', resolve([ block ]));
 
-  this.render(hbs`{{curriculum-inventory-sequence-block-details sequenceBlock=sequenceBlock canUpdate=true sortSessionsBy=sortBy setSortSessionBy=(action (mut sortSessionsBy))}}
-`);
-  return wait().then(() => {
-    assert.equal(this.$('.curriculum-inventory-sequence-block-header .title').text().trim(),
-      block.get('title'), 'Block header is visible.');
-    assert.equal(this.$('.curriculum-inventory-sequence-block-overview .description .editinplace').text().trim(),
-      block.get('description'), 'Block overview is visible.');
-    assert.equal(this.$('.breadcrumbs span').length, 4, 'Breadcrumb has the right number of elements');
-    assert.equal(this.$('.breadcrumbs span:eq(0)').text().trim(), 'Curriculum Inventory Report');
-    assert.equal(this.$('.breadcrumbs span:eq(1)').text().trim(), grandParentBlock.get('title'));
-    assert.equal(this.$('.breadcrumbs span:eq(2)').text().trim(), parentBlock.get('title'));
-    assert.equal(this.$('.breadcrumbs span:eq(3)').text().trim(), block.get('title'));
+    this.set('report', report);
+    this.set('sequenceBlock', block);
+    this.set('sortBy', 'title');
+    this.set('setSortSessionsBy', null);
+
+    await render(
+      hbs`{{curriculum-inventory-sequence-block-details sequenceBlock=sequenceBlock canUpdate=true sortSessionsBy=sortBy setSortSessionBy=(action (mut sortSessionsBy))}}
+    `
+    );
+    return settled().then(() => {
+      assert.equal(this.$('.curriculum-inventory-sequence-block-header .title').text().trim(),
+        block.get('title'), 'Block header is visible.');
+      assert.equal(this.$('.curriculum-inventory-sequence-block-overview .description .editinplace').text().trim(),
+        block.get('description'), 'Block overview is visible.');
+      assert.equal(this.$('.breadcrumbs span').length, 4, 'Breadcrumb has the right number of elements');
+      assert.equal(this.$('.breadcrumbs span:eq(0)').text().trim(), 'Curriculum Inventory Report');
+      assert.equal(this.$('.breadcrumbs span:eq(1)').text().trim(), grandParentBlock.get('title'));
+      assert.equal(this.$('.breadcrumbs span:eq(2)').text().trim(), parentBlock.get('title'));
+      assert.equal(this.$('.breadcrumbs span:eq(3)').text().trim(), block.get('title'));
+    });
   });
 });
 
