@@ -4,12 +4,25 @@
     attachment="middle center"
     overlayClass="api-version-check-warning"
     containerClass="api-version-check-container"
+    wrapperClass="api-version-check-wrapper"
     tetherTarget="body"
     animatable=false
   }}
     <div class="content">
       <h1>{{t "general.apiVersionMismatch"}}</h1>
-      <p>{{t "general.apiVersionMismatchDetails"}}</p>
+      {{#if updateAvailable}}
+
+        <p>{{t "general.autoUpdatingSeconds" count=countdownToUpdate}}</p>
+        <button {{action (perform update)}}>
+          {{t "general.updateNow"}}
+        </button>
+      {{/if}}
+      {{#if updatePending}}
+        <p>{{t "general.updatePending"}}</p>
+      {{/if}}
+      {{#if unableToFindUpdate}}
+        <p>{{t "general.apiVersionMismatchDetails"}}</p>
+      {{/if}}
     </div>
   {{/modal-dialog}}
 {{/if}}
