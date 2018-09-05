@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -21,9 +21,9 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     this.set('instructorGroup', instructorGroup);
     await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
 
-    assert.equal(this.$('.school-title').text().trim(), 'medicine >');
-    assert.equal(this.$('[data-test-group-title]').text().trim(), 'lorem ipsum');
-    assert.equal(this.$('.info').text().replace(/\s/g,''), 'Members:3');
+    assert.equal(find('.school-title').textContent.trim(), 'medicine >');
+    assert.equal(find('[data-test-group-title]').textContent.trim(), 'lorem ipsum');
+    assert.equal(find('.info').textContent.replace(/\s/g,''), 'Members:3');
   });
 
   test('can change title', async function(assert) {
@@ -39,13 +39,13 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     this.set('instructorGroup', instructorGroup);
     await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup canUpdate=true}}`);
 
-    assert.equal(this.$('[data-test-group-title]').text().trim(), 'lorem ipsum');
-    this.$('.editable').click();
-    this.$('[data-test-group-title] input').val('new title');
-    this.$('[data-test-group-title] input').trigger('input');
-    this.$('[data-test-group-title] .done').click();
+    assert.equal(find('[data-test-group-title]').textContent.trim(), 'lorem ipsum');
+    await click('.editable');
+    await fillIn('[data-test-group-title] input', 'new title');
+    await triggerEvent('[data-test-group-title] input', 'input');
+    await click('[data-test-group-title] .done');
 
     await settled();
-    assert.equal(this.$('[data-test-group-title]').text().trim(), 'new title');
+    assert.equal(find('[data-test-group-title]').textContent.trim(), 'new title');
   });
 });

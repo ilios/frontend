@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
@@ -76,24 +76,24 @@ module('Integration | Component | learning materials sort manager', function(hoo
     await render(hbs`{{learning-materials-sort-manager subject=subject}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.draggable-object').length, 2);
-      assert.equal(this.$('.draggable-object:eq(0) .title').text().trim(), lm2.get('title'));
-      assert.equal(this.$('.draggable-object:eq(0) .lm-type-icon .fa-paragraph').length, 1, 'Shows LM type icon.');
+      assert.equal(findAll('.draggable-object').length, 2);
+      assert.equal(find('.draggable-object:eq(0) .title').textContent.trim(), lm2.get('title'));
+      assert.equal(findAll('.draggable-object:eq(0) .lm-type-icon .fa-paragraph').length, 1, 'Shows LM type icon.');
 
       assert.equal(
-        this.$('.draggable-object:eq(0) .details').text().replace(/[\s\n\t]+/g, ''),
+        find('.draggable-object:eq(0) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(/[\s\n\t]+/g, '')
       );
 
-      assert.equal(this.$('.draggable-object:eq(1) .title').text().trim(), lm1.get('title'));
-      assert.equal(this.$('.draggable-object:eq(1) .lm-type-icon .fa-file-pdf').length, 1, 'Shows LM type icon.');
+      assert.equal(find('.draggable-object:eq(1) .title').textContent.trim(), lm1.get('title'));
+      assert.equal(findAll('.draggable-object:eq(1) .lm-type-icon .fa-file-pdf').length, 1, 'Shows LM type icon.');
 
       assert.equal(
-        this.$('.draggable-object:eq(1) .details').text().replace(/[\s\n\t]+/g, ''),
+        find('.draggable-object:eq(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${lm1.type.capitalize()}, owned by ${owner1.fullName}, Status: ${status1.title}`.replace(/[\s\n\t]+/g, '')
       );
-      assert.equal(this.$('.actions .bigadd').length, 1);
-      assert.equal(this.$('.actions .bigcancel').length, 1);
+      assert.equal(findAll('.actions .bigadd').length, 1);
+      assert.equal(findAll('.actions .bigcancel').length, 1);
     });
   });
 
@@ -124,8 +124,8 @@ module('Integration | Component | learning materials sort manager', function(hoo
 
     await render(hbs`{{learning-materials-sort-manager subject=subject cancel=(action cancel)}}`);
 
-    return settled().then(() => {
-      this.$('.actions .bigcancel').click();
+    return settled().then(async () => {
+      await click('.actions .bigcancel');
     });
   });
 
@@ -162,8 +162,8 @@ module('Integration | Component | learning materials sort manager', function(hoo
 
     await render(hbs`{{learning-materials-sort-manager subject=subject save=(action save)}}`);
 
-    return settled().then(() => {
-      this.$('.actions .bigadd').click();
+    return settled().then(async () => {
+      await click('.actions .bigadd');
     });
   });
 

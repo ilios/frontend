@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -25,9 +25,9 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    assert.equal(this.$('td:eq(1)').text().trim(), 'fake title');
-    assert.equal(this.$('td:eq(2) button').text().trim(), 'Add New');
-    assert.equal(this.$('td:eq(3) button').text().trim(), 'Add New');
+    assert.equal(find(findAll('td')[1]).textContent.trim(), 'fake title');
+    assert.equal(find('td:eq(2) button').textContent.trim(), 'Add New');
+    assert.equal(find('td:eq(3) button').textContent.trim(), 'Add New');
   });
 
 
@@ -51,10 +51,10 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    this.$('td:eq(1) .editable').click();
+    await click('td:eq(1) .editable');
     this.$('td:eq(1) .fr-box').froalaEditor('html.set', 'new title');
     this.$('td:eq(1) .fr-box').froalaEditor('events.trigger', 'contentChanged');
-    this.$('td:eq(1) .done').click();
+    await click('td:eq(1) .done');
 
     await settled();
   });
@@ -78,7 +78,7 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    this.$('td:eq(2) button').click();
+    await click('td:eq(2) button');
 
   });
 
@@ -101,7 +101,7 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    this.$('td:eq(3) button').click();
+    await click('td:eq(3) button');
 
   });
 
@@ -124,7 +124,7 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    this.$('td:eq(0)').click();
+    await click(find('td'));
 
   });
 });

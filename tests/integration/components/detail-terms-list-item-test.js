@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -17,7 +17,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
-    assert.ok(this.$().text().trim().indexOf('Foo') !== -1);
+    assert.ok(find('*').textContent.trim().indexOf('Foo') !== -1);
 
   });
 
@@ -31,9 +31,9 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
-    assert.equal(this.$('.muted:eq(0)').text().trim(), 'Lorem »');
-    assert.equal(this.$('.muted:eq(1)').text().trim(), 'Ipsum »');
-    assert.ok(this.$().text().trim().indexOf('Foo') !== -1);
+    assert.equal(find('.muted').textContent.trim(), 'Lorem »');
+    assert.equal(find(findAll('.muted')[1]).textContent.trim(), 'Ipsum »');
+    assert.ok(find('*').textContent.trim().indexOf('Foo') !== -1);
   });
 
   test('remove', async function(assert) {
@@ -50,8 +50,8 @@ module('Integration | Component | detail terms list item', function(hooks) {
       assert.equal(term, val);
     });
     await render(hbs`{{detail-terms-list-item term=term canEdit=true remove=(action remove)}}`);
-    assert.equal(this.$('.fa-times').length, 1);
-    this.$('.fa-times').click();
+    assert.equal(findAll('.fa-times').length, 1);
+    await click('.fa-times');
   });
 
   test('inactive', async function(assert) {
@@ -64,8 +64,8 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`{{detail-terms-list-item term=term canEdit=true}}`);
-    assert.equal(this.$('.inactive').text().trim(), '(inactive)');
-    assert.equal(this.$('.fa-times').length, 1);
+    assert.equal(find('.inactive').textContent.trim(), '(inactive)');
+    assert.equal(findAll('.fa-times').length, 1);
   });
 
   test('read-only mode', async function(assert) {
@@ -78,7 +78,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
-    assert.equal(this.$('.inactive').length, 0);
-    assert.equal(this.$('.fa-times').length, 0);
+    assert.equal(findAll('.inactive').length, 0);
+    assert.equal(findAll('.fa-times').length, 0);
   });
 });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | pagedlist controls', function(hooks) {
@@ -13,6 +13,6 @@ module('Integration | Component | pagedlist controls', function(hooks) {
 
     await render(hbs`{{pagedlist-controls limit=4 offset=11 total=33}}`);
 
-    assert.equal(this.$().text().replace(/[\t\n\s]+/g, ""), 'Showing12-15of33102550PerPage');
+    assert.equal(find('*').textContent.replace(/[\t\n\s]+/g, ""), 'Showing12-15of33102550PerPage');
   });
 });

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -32,13 +32,13 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(this.$('.name').text().trim(), 'test name');
-    assert.equal(this.$('.is-student').text().trim(), 'Student');
+    assert.equal(find('.name').textContent.trim(), 'test name');
+    assert.equal(find('.is-student').textContent.trim(), 'Student');
 
-    assert.equal(this.$('[data-test-info] div:eq(0)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
-    assert.equal(this.$('[data-test-info] div:eq(1)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
-    assert.equal(this.$('[data-test-info] div:eq(2) li:eq(0)').text().trim(), 'a third cohort');
-    assert.equal(this.$('[data-test-info] div:eq(2) li:eq(1)').text().trim(), 'second cohort');
+    assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
+    assert.equal(find(findAll('[data-test-info] div')[1]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
+    assert.equal(find('[data-test-info] div:eq(2) li').textContent.trim(), 'a third cohort');
+    assert.equal(find(findAll('[data-test-info] div:eq(2) li')[1]).textContent.trim(), 'second cohort');
 
   });
 
@@ -60,13 +60,13 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(this.$('.name').text().trim(), 'test name');
-    assert.equal(this.$('.is-student').text().trim(), '');
+    assert.equal(find('.name').textContent.trim(), 'test name');
+    assert.equal(find('.is-student').textContent.trim(), '');
 
-    assert.equal(this.$('[data-test-info] div:eq(0)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
-    assert.equal(this.$('[data-test-info] div:eq(1)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
+    assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
+    assert.equal(find(findAll('[data-test-info] div')[1]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
 
-    assert.equal(this.$('[data-test-info] div:eq(2)').text().replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Secondary Cohorts:Unassigned');
+    assert.equal(find(findAll('[data-test-info] div')[2]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Secondary Cohorts:Unassigned');
   });
 
   test('generates token when asked with good expiration date', async function(assert) {
@@ -99,7 +99,7 @@ module('Integration | Component | my profile', function(hooks) {
     this.$(go).click();
 
     return settled().then(()=> {
-      assert.equal(this.$(newToken).val().trim(), 'new token');
+      assert.equal(find(newToken).value.trim(), 'new token');
     });
   });
 
@@ -126,12 +126,12 @@ module('Integration | Component | my profile', function(hooks) {
     await this.$(go).click();
     await settled();
 
-    assert.equal(this.$(newToken).val().trim(), 'new token');
-    assert.equal(this.$(newTokenForm).length, 0);
+    assert.equal(find(newToken).value.trim(), 'new token');
+    assert.equal(findAll(newTokenForm).length, 0);
     await this.$(cancel).click();
-    await this.$(newTokenButton).click();
+    await await click(newTokenButton);
     await settled();
-    assert.equal(this.$(newTokenForm).length, 1);
+    assert.equal(findAll(newTokenForm).length, 1);
   });
 
   test('clicking button fires show token event', async function(assert) {
@@ -146,7 +146,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action toggle) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    this.$(newTokenButton).click();
+    await click(newTokenButton);
   });
 
   test('Setting date changes request length', async function(assert) {
@@ -194,7 +194,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action toggle)}}`
     );
 
-    this.$(invalidateTokensButton).click();
+    await click(invalidateTokensButton);
   });
 
   test('invalidate tokens when asked', async function(assert) {

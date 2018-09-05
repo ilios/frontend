@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -50,11 +50,11 @@ module('Integration | Component | session objective list', function(hooks) {
       hbs`{{session-objective-list editable=true subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
     );
     return settled().then(() => {
-      assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
-      assert.equal(this.$('thead th:eq(0)').text().trim(), 'Description');
-      assert.equal(this.$('thead th:eq(1)').text().trim(), 'Parent Objectives');
-      assert.equal(this.$('thead th:eq(2)').text().trim(), 'MeSH Terms');
-      assert.equal(this.$('thead th:eq(3)').text().trim(), 'Actions');
+      assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
+      assert.equal(find('thead th').textContent.trim(), 'Description');
+      assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Parent Objectives');
+      assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'MeSH Terms');
+      assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Actions');
       for (let i = 0, n = objectives.length; i < n; i++) {
         let objective = objectives[i];
         assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), objective.get('title'));
@@ -100,8 +100,8 @@ module('Integration | Component | session objective list', function(hooks) {
     );
 
     return settled().then(() => {
-      assert.notOk(this.$('.sort-materials-btn').length, 'Sort button is not visible');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), objective.get('title'), 'Objective is visible');
+      assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
+      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), objective.get('title'), 'Objective is visible');
     });
   });
 });

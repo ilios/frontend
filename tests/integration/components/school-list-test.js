@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | school list', function(hooks) {
@@ -22,8 +22,8 @@ module('Integration | Component | school list', function(hooks) {
 
     this.set('schools', schools);
     await render(hbs`{{school-list schools=schools}}`);
-    assert.equal(this.$('tr:eq(1) td:eq(0)').text().trim(), 'school 0');
-    assert.equal(this.$('tr:eq(2) td:eq(0)').text().trim(), 'school 1');
+    assert.equal(find('tr:eq(1) td').textContent.trim(), 'school 0');
+    assert.equal(find('tr:eq(2) td').textContent.trim(), 'school 1');
   });
 
   test('create school button is visible to root', async function(assert) {
@@ -34,7 +34,7 @@ module('Integration | Component | school list', function(hooks) {
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
     await render(hbs`{{school-list schools=schools}}`);
-    assert.equal(this.$('.header .actions .expand-button').length, 1);
+    assert.equal(findAll('.header .actions .expand-button').length, 1);
   });
 
   test('create school button is not visible to non root users', async function(assert) {
@@ -45,6 +45,6 @@ module('Integration | Component | school list', function(hooks) {
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
     await render(hbs`{{school-list schools=schools}}`);
-    assert.equal(this.$('.header .actions .expand-button').length, 0);
+    assert.equal(findAll('.header .actions .expand-button').length, 0);
   });
 });

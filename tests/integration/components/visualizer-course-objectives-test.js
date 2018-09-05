@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | visualizer course objectives', function(hooks) {
@@ -14,6 +14,6 @@ module('Integration | Component | visualizer course objectives', function(hooks)
     this.set('course', course);
     await render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.equal(find('*').textContent.trim(), '');
   });
 });

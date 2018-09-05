@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -90,44 +90,44 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.equal(this.$('.actions .bigadd').length, 1, 'Save button is visible.');
-    assert.equal(this.$('.actions .bigcancel').length, 1, 'Cancel button is visible.');
+    assert.equal(findAll('.actions .bigadd').length, 1, 'Save button is visible.');
+    assert.equal(findAll('.actions .bigcancel').length, 1, 'Cancel button is visible.');
 
-    assert.equal(this.$('thead th:eq(0)').text().trim(), 'Count as one offering', 'Column header is labeled correctly.');
-    assert.equal(this.$('thead th:eq(1)').text().trim(), 'Exclude', 'Column header is labeled correctly.');
-    assert.equal(this.$('thead th:eq(2)').text().trim(), 'Session Title', 'Column header is labeled correctly.');
-    assert.equal(this.$('thead th:eq(3)').text().trim(), 'Session Type', 'Column header is labeled correctly.');
-    assert.equal(this.$('thead th:eq(4)').text().trim(), 'Total time', 'Column header is labeled correctly.');
-    assert.equal(this.$('thead th:eq(5)').text().trim(), 'Offerings', 'Column header is labeled correctly.');
+    assert.equal(find('thead th').textContent.trim(), 'Count as one offering', 'Column header is labeled correctly.');
+    assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Exclude', 'Column header is labeled correctly.');
+    assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'Session Title', 'Column header is labeled correctly.');
+    assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Session Type', 'Column header is labeled correctly.');
+    assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'Total time', 'Column header is labeled correctly.');
+    assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Offerings', 'Column header is labeled correctly.');
 
     assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
     assert.notOk(this.$('tbody tr:eq(0) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), session1.get('title'), 'Session title is shown.');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), sessionType1.get('title'), 'Session type is visible.');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), totalTime1, 'Total time is shown.');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(5)').text().trim(), offerings1.length, 'Number of offerings is shown.');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
 
     assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
     assert.notOk(this.$('tbody tr:eq(1) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), session2.get('title'), 'Title is visible.');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), sessionType2.get('title'), 'Session type is visible.');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), totalTime2, 'Total time is shown.');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(5)').text().trim(), offerings2.length, 'Number of offerings is shown.');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
 
     assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
     assert.notOk(this.$('tbody tr:eq(2) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(this.$('tbody tr:eq(2) td:eq(2)').text().trim(), session3.get('title'), 'Title is visible.');
-    assert.equal(this.$('tbody tr:eq(2) td:eq(3)').text().trim(), sessionType3.get('title'), 'Session type is visible.');
-    assert.equal(this.$('tbody tr:eq(2) td:eq(4)').text().trim(), totalTime3, 'Total time is shown.');
-    assert.equal(this.$('tbody tr:eq(2) td:eq(5)').text().trim(), offerings3.length, 'Number of offerings is shown.');
+    assert.equal(find(findAll('tbody tr:eq(2) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:eq(2) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:eq(2) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:eq(2) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
 
     assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
     assert.ok(this.$('tbody tr:eq(3) td:eq(1) input').is(':checked'), 'Excluded is checked.');
-    assert.ok(this.$('tbody tr:eq(3) td:eq(2)').text().trim().startsWith('(ILM)'), 'ILM is labeled as such.');
-    assert.ok(this.$('tbody tr:eq(3) td:eq(2)').text().trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.equal(this.$('tbody tr:eq(3) td:eq(3)').text().trim(), sessionType4.get('title'), 'Session type is visible.');
-    assert.equal(this.$('tbody tr:eq(3) td:eq(4)').text().trim(), totalTime4, 'Total time is shown.');
-    assert.equal(this.$('tbody tr:eq(3) td:eq(5)').text().trim(), offerings4.length, 'Number of offerings is shown.');
+    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILM is labeled as such.');
+    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:eq(3) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:eq(3) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:eq(3) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {
@@ -146,8 +146,8 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    assert.equal(this.$('thead tr').length, 1, 'Table header is visible,');
-    assert.equal(this.$('tbody tr').length, 0, 'but table body is empty.');
+    assert.equal(findAll('thead tr').length, 1, 'Table header is visible,');
+    assert.equal(findAll('tbody tr').length, 0, 'but table body is empty.');
   });
 
   test('sort by title', async function(assert) {
@@ -175,7 +175,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    this.$('thead th:eq(2)').click();
+    await click(findAll('thead th')[2]);
   });
 
   test('sort by session type', async function(assert) {
@@ -203,7 +203,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    this.$('thead th:eq(3)').click();
+    await click(findAll('thead th')[3]);
   });
 
   test('sort by offerings total', async function(assert) {
@@ -232,7 +232,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    this.$('thead th:eq(5)').click();
+    await click(findAll('thead th')[5]);
   });
 
   test('change count as one offering', async function(assert) {
@@ -261,11 +261,11 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
     this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('click');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalSumDuration);
     this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', true).trigger('click');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
   });
 
   test('change count as one offering for all sessions', async function(assert) {
@@ -303,16 +303,16 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`
     );
 
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), maxDuration);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalSumDuration);
 
     this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), maxDuration);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), maxDuration);
 
     this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), totalSumDuration);
-    assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalSumDuration);
   });
 
   test('save', async function(assert) {
@@ -368,7 +368,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
     this.$('tbody tr:eq(0) td:eq(1) input').prop('checked', true).trigger('click');
     this.$('tbody tr:eq(2) td:eq(1) input').prop('checked', false).trigger('click');
-    this.$('.actions .bigadd').click();
+    await click('.actions .bigadd');
   });
 
   test('cancel', async function(assert) {
@@ -398,7 +398,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action cancel)}}`
     );
-    this.$('.actions .bigcancel').click();
+    await click('.actions .bigcancel');
   });
 
 

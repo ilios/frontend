@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -64,41 +64,41 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(this.$('.title').text().trim(), 'Overview',
+      assert.equal(find('.title').textContent.trim(), 'Overview',
         'Component title is visible.'
       );
-      assert.equal(this.$('.report-overview-actions .rollover').length, 1,
+      assert.equal(findAll('.report-overview-actions .rollover').length, 1,
         'Rollover course button is visible.'
       );
-      assert.equal(this.$('.start-date label').text().trim(), 'Start:',
+      assert.equal(find('.start-date label').textContent.trim(), 'Start:',
         'Start date label is correct.'
       );
-      assert.equal(this.$('.start-date .editinplace').text().trim(),
+      assert.equal(find('.start-date .editinplace').textContent.trim(),
         moment(report.get('startDate')).format('L'), 'Start date is visible.'
       );
-      assert.equal(this.$('.end-date label').text().trim(), 'End:',
+      assert.equal(find('.end-date label').textContent.trim(), 'End:',
         'End date label is correct.'
       );
-      assert.equal(this.$('.end-date .editinplace').text().trim(),
+      assert.equal(find('.end-date .editinplace').textContent.trim(),
         moment(report.get('endDate')).format('L'), 'End date is visible.'
       );
-      assert.equal(this.$('.academic-year label').text().trim(), 'Academic Year:',
+      assert.equal(find('.academic-year label').textContent.trim(), 'Academic Year:',
         'Academic year label is correct.'
       );
-      assert.equal(this.$('.academic-year .editinplace').text().trim(),
+      assert.equal(find('.academic-year .editinplace').textContent.trim(),
         report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
       );
-      assert.equal(this.$('.program label').text().trim(), 'Program:',
+      assert.equal(find('.program label').textContent.trim(), 'Program:',
         'Program label is correct.'
       );
-      assert.equal(this.$('.program > span:eq(0)').text().trim(),
+      assert.equal(find('.program > span').textContent.trim(),
         `${program.get('title')} (${program.get('shortTitle')})`, 'Program is visible.'
       );
 
-      assert.equal(this.$('.description label').text().trim(), 'Description:',
+      assert.equal(find('.description label').textContent.trim(), 'Description:',
         'Description label is correct.'
       );
-      assert.equal(this.$('.description .editinplace').text().trim(),
+      assert.equal(find('.description .editinplace').textContent.trim(),
         report.get('description'), 'Description is visible.'
       );
     });
@@ -142,19 +142,19 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=false}}`);
     return settled().then(() => {
-      assert.equal(this.$('.start-date > span:eq(0)').text().trim(),
+      assert.equal(find('.start-date > span').textContent.trim(),
         moment(report.get('startDate')).format('L'), 'Start date is visible.'
       );
-      assert.equal(this.$('.end-date > span:eq(0)').text().trim(),
+      assert.equal(find('.end-date > span').textContent.trim(),
         moment(report.get('endDate')).format('L'), 'End date is visible.'
       );
-      assert.equal(this.$('.academic-year > span:eq(0)').text().trim(),
+      assert.equal(find('.academic-year > span').textContent.trim(),
         report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
       );
-      assert.equal(this.$('.program > span:eq(0)').text().trim(),
+      assert.equal(find('.program > span').textContent.trim(),
         `${program.get('title')} (${program.get('shortTitle')})`, 'Program is visible.'
       );
-      assert.equal(this.$('.description > span:eq(0)').text().trim(),
+      assert.equal(find('.description > span').textContent.trim(),
         report.get('description'), 'Description is visible.'
       );
     });
@@ -205,7 +205,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(this.$('.report-overview-actions .rollover').length, 0,
+      assert.equal(findAll('.report-overview-actions .rollover').length, 0,
         'Rollover course button is not visible.'
       );
     });
@@ -253,18 +253,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      this.$('.start-date .editinplace .editable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      await click('.start-date .editinplace .editable');
+      return settled().then(async () => {
         let interactor = openDatepicker(this.$('.start-date input'));
-        assert.equal(this.$('.start-date input').val(), moment(report.get('startDate')).format('L'),
+        assert.equal(find('.start-date input').value, moment(report.get('startDate')).format('L'),
           "The report's current start date is pre-selected in date picker."
         );
         let newVal = moment('2015-04-01');
         interactor.selectDate(newVal.toDate());
-        this.$('.start-date .actions .done').click();
+        await click('.start-date .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.start-date .editinplace').text().trim(), newVal.format('L'),
+          assert.equal(find('.start-date .editinplace').textContent.trim(), newVal.format('L'),
             'Edit link shown new start date post-update.'
           );
           assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
@@ -314,18 +314,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      this.$('.start-date .editinplace .editable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      await click('.start-date .editinplace .editable');
+      return settled().then(async () => {
         let interactor = openDatepicker(this.$('.start-date input'));
         let newVal = moment(report.get('endDate')).add(1, 'day');
         interactor.selectDate(newVal.toDate());
-        assert.equal(this.$('.start-date .validation-error-message').length, 0,
+        assert.equal(findAll('.start-date .validation-error-message').length, 0,
           'Initially, no validation error is visible.'
         );
-        this.$('.start-date .actions .done').click();
+        await click('.start-date .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.start-date .validation-error-message').length, 1,
+          assert.equal(findAll('.start-date .validation-error-message').length, 1,
             'Validation failed, error message is visible.'
           );
         });
@@ -375,18 +375,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      this.$('.end-date .editinplace .editable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      await click('.end-date .editinplace .editable');
+      return settled().then(async () => {
         let interactor = openDatepicker(this.$('.end-date input'));
-        assert.equal(this.$('.end-date input').val(), moment(report.get('endDate')).format('L'),
+        assert.equal(find('.end-date input').value, moment(report.get('endDate')).format('L'),
           "The report's current end date is pre-selected in date picker."
         );
         let newVal = moment('2016-05-01');
         interactor.selectDate(newVal.toDate());
-        this.$('.end-date .actions .done').click();
+        await click('.end-date .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.end-date .editinplace').text().trim(), newVal.format('L'),
+          assert.equal(find('.end-date .editinplace').textContent.trim(), newVal.format('L'),
             'Edit link shown new end date post-update.'
           );
           assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
@@ -436,18 +436,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      this.$('.end-date .editinplace .editable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      await click('.end-date .editinplace .editable');
+      return settled().then(async () => {
         let interactor = openDatepicker(this.$('.end-date input'));
         let newVal = moment(report.get('startDate')).subtract(1, 'day');
         interactor.selectDate(newVal.toDate());
-        assert.equal(this.$('.end-date .validation-error-message').length, 0,
+        assert.equal(findAll('.end-date .validation-error-message').length, 0,
           'Initially, no validation error is visible.'
         );
-        this.$('.end-date .actions .done').click();
+        await click('.end-date .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.end-date .validation-error-message').length, 1,
+          assert.equal(findAll('.end-date .validation-error-message').length, 1,
             'Validation failed, error message is visible.'
           );
         });
@@ -496,18 +496,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      this.$('.academic-year .editinplace .editable').click();
-      return settled().then(() => {
-        assert.equal(this.$('.academic-year option').length, 11, 'There should be ten options in year dropdown.');
-        assert.equal(this.$('.academic-year option:selected').val(), report.get('year'),
+    return settled().then(async () => {
+      await click('.academic-year .editinplace .editable');
+      return settled().then(async () => {
+        assert.equal(findAll('.academic-year option').length, 11, 'There should be ten options in year dropdown.');
+        assert.equal(find('.academic-year option:checked').value, report.get('year'),
           "The report's year should be selected."
         );
         const newVal = report.get('year') + 1;
-        this.$('.academic-year select').val(newVal).trigger('change');
-        this.$('.academic-year .actions .done').click();
+        await fillIn('.academic-year select', newVal);
+        await click('.academic-year .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.academic-year .editinplace').text().trim(), `${newVal} - ${newVal + 1}`,
+          assert.equal(find('.academic-year .editinplace').textContent.trim(), `${newVal} - ${newVal + 1}`,
             'New year is visible on edit-link.'
           );
           assert.equal(report.get('year'), newVal, 'Report year got updated with new value.');
@@ -556,10 +556,10 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(this.$('.academic-year > span:eq(0)').text().trim(),
+      assert.equal(find('.academic-year > span').textContent.trim(),
         report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
       );
-      assert.equal(this.$('.academic-year .editinplace').length, 0,
+      assert.equal(findAll('.academic-year .editinplace').length, 0,
         'Academic year is not editable in place.'
       );
     });
@@ -606,15 +606,15 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      assert.equal(this.$('.description .editinplace').text().trim(), 'Click to edit');
-      this.$('.description .editinplace .editable').click();
-      return settled().then(() => {
+    return settled().then(async () => {
+      assert.equal(find('.description .editinplace').textContent.trim(), 'Click to edit');
+      await click('.description .editinplace .editable');
+      return settled().then(async () => {
         const newDescription = 'Quidquid luce fuit, tenebris agit.';
-        this.$('.description textarea').val(newDescription).trigger('input');
-        this.$('.description .actions .done').click();
+        await fillIn('.description textarea', newDescription);
+        await click('.description .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.description .editinplace').text().trim(), newDescription);
+          assert.equal(find('.description .editinplace').textContent.trim(), newDescription);
           assert.equal(report.get('description'), newDescription);
         });
       });
@@ -659,18 +659,18 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
-    return settled().then(() => {
-      assert.equal(this.$('.description .editinplace').text().trim(), 'Click to edit');
-      this.$('.description .editinplace .editable').click();
-      return settled().then(() => {
-        assert.equal(this.$('.description .validation-error-message').length, 0,
+    return settled().then(async () => {
+      assert.equal(find('.description .editinplace').textContent.trim(), 'Click to edit');
+      await click('.description .editinplace .editable');
+      return settled().then(async () => {
+        assert.equal(findAll('.description .validation-error-message').length, 0,
           'Validation error is initially not shown.'
         );
         const newDescription = '0123456789'.repeat(5000);
-        this.$('.description textarea').val(newDescription).trigger('input');
-        this.$('.description .actions .done').click();
+        await fillIn('.description textarea', newDescription);
+        await click('.description .actions .done');
         return settled().then(() => {
-          assert.equal(this.$('.description .validation-error-message').length, 1, 'Validation error message is visible.');
+          assert.equal(findAll('.description .validation-error-message').length, 1, 'Validation error message is visible.');
         });
       });
     });

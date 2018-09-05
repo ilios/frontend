@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, click, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | competency title editor', function(hooks) {
@@ -15,7 +15,7 @@ module('Integration | Component | competency title editor', function(hooks) {
     this.set('competency', competency);
     await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
     return settled().then(()=>{
-      assert.equal(this.$('.validation-error-message').length, 0);
+      assert.equal(findAll('.validation-error-message').length, 0);
     });
   });
 
@@ -26,11 +26,11 @@ module('Integration | Component | competency title editor', function(hooks) {
     });
     this.set('competency', competency);
     await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
-    this.$('.content span:eq(0)').click();
-    this.$('input').val('').trigger('input');
-    this.$('button.done').click();
+    await click(find('.content span'));
+    await fillIn('input', '');
+    await click('button.done');
     return settled().then(()=>{
-      assert.equal(this.$('.validation-error-message').length, 1);
+      assert.equal(findAll('.validation-error-message').length, 1);
     });
   });
 });

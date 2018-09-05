@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
@@ -18,6 +18,6 @@ module('Integration | Component | new programyear', function(hooks) {
 
     await render(hbs`{{new-programyear save=(action nothing) cancel=(action nothing)}}`);
 
-    assert.ok(this.$('.title').text().search(/New Program Year/) === 0);
+    assert.ok(find('.title').textContent.search(/New Program Year/) === 0);
   });
 });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Column } from 'ember-light-table';
 
@@ -12,6 +12,6 @@ module('Integration | Component | Columns | translatable-table-column', function
 
     await render(hbs`{{light-table/columns/translatable-table-column column}}`);
 
-    assert.equal(this.$().text().trim(), 'Thursday');
+    assert.equal(find('*').textContent.trim(), 'Thursday');
   });
 });

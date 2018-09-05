@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -61,9 +61,9 @@ module('Integration | Component | programyear competencies', function(hooks) {
     const button = '.programyear-competencies-actions button';
     const list = '.programyear-competencies-content';
 
-    assert.equal(this.$(title).text().trim(), 'Competencies (2)');
-    assert.equal(this.$(button).text().trim(), 'Manage Competencies');
-    assert.equal(this.$(list).text().replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
+    assert.equal(find(title).textContent.trim(), 'Competencies (2)');
+    assert.equal(find(button).textContent.trim(), 'Manage Competencies');
+    assert.equal(find(list).textContent.replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
 
   });
 
@@ -84,7 +84,7 @@ module('Integration | Component | programyear competencies', function(hooks) {
     }}`);
     const button = '.programyear-competencies-actions button';
 
-    this.$(button).click();
+    await click(button);
   });
 
   test('clicking collapse fires action', async function(assert) {
@@ -103,6 +103,6 @@ module('Integration | Component | programyear competencies', function(hooks) {
     }}`);
     const title = '.title';
 
-    this.$(title).click();
+    await click(title);
   });
 });

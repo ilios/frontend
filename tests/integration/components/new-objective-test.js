@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | new objective', function(hooks) {
@@ -12,7 +12,7 @@ module('Integration | Component | new objective', function(hooks) {
     await render(hbs`{{new-objective cancel=(action cancel)}}`);
 
     return settled().then(() => {
-      let content = this.$().text().trim();
+      let content = find('*').textContent.trim();
       assert.notEqual(content.search(/New Objective/), -1);
       assert.notEqual(content.search(/Description/), -1);
     });
@@ -25,7 +25,7 @@ module('Integration | Component | new objective', function(hooks) {
     await render(hbs`{{new-objective cancel=(action cancel)}}`);
 
     return settled().then(() => {
-      assert.equal(this.$('.validation-error-message').length, 0);
+      assert.equal(findAll('.validation-error-message').length, 0);
 
     });
   });
@@ -36,8 +36,8 @@ module('Integration | Component | new objective', function(hooks) {
     });
     await render(hbs`{{new-objective cancel=(action cancel)}}`);
 
-    return settled().then(() => {
-      this.$('.done').click();
+    return settled().then(async () => {
+      await click('.done');
       return settled().then(() => {
         let boxes = this.$('.form-data');
         assert.ok(boxes.eq(0).text().search(/blank/) > -1);

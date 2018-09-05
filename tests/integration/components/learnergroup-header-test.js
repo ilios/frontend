@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -19,8 +19,8 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    assert.equal(this.$('h2').text().trim(), 'our group');
-    assert.equal(this.$('.breadcrumbs').text().replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
+    assert.equal(find('h2').textContent.trim(), 'our group');
+    assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
   });
 
   test('can change title', async function(assert) {
@@ -34,11 +34,11 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
-    assert.equal(this.$('h2').text().trim(), 'our group');
-    this.$('h2 .editable').click();
-    this.$('h2 input').val('new title');
-    this.$('h2 input').trigger('input');
-    this.$('h2 .done').click();
+    assert.equal(find('h2').textContent.trim(), 'our group');
+    await click('h2 .editable');
+    await fillIn('h2 input', 'new title');
+    await triggerEvent('h2 input', 'input');
+    await click('h2 .done');
     await settled();
   });
 
@@ -62,7 +62,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    assert.equal(this.$('header .info').text().trim(), 'Members:  1 / 2');
+    assert.equal(find('header .info').textContent.trim(), 'Members:  1 / 2');
   });
 
   test('validate title length', async function(assert) {
@@ -83,7 +83,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
-    assert.equal(this.$(title).text().trim(), 'our group', 'title is correct');
+    assert.equal(find(title).textContent.trim(), 'our group', 'title is correct');
     assert.equal(this.$(errors).length, 0, 'there are no errors');
     this.$(edit).click();
     const longTitle = 'x'.repeat(61);

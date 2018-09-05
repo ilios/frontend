@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 const { resolve } = RSVP;
 
@@ -62,7 +62,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     const firstAdministrator = `${administrators}:eq(0)`;
     const secondAdministrator = `${administrators}:eq(1)`;
 
-    assert.equal(this.$(title).text().trim(), 'Course Leadership');
+    assert.equal(find(title).textContent.trim(), 'Course Leadership');
     assert.equal(this.$(directors).length, 1);
     assert.equal(this.$(firstDirector).text().trim(), 'a b person');
     assert.equal(this.$(administrators).length, 2);
@@ -108,7 +108,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     }}`);
     const title = '.title';
 
-    this.$(title).click();
+    await click(title);
   });
 
   test('clicking manage fires action', async function(assert) {
@@ -149,6 +149,6 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     }}`);
     const manage = '.actions button';
 
-    this.$(manage).click();
+    await click(manage);
   });
 });

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -50,7 +50,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
     await render(hbs`{{dashboard-myreports}}`);
 
-    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
+    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Reports');
     return settled().then(()=> {
       for (let i = 0; i < 2; i++) {
         let tds = this.$(`[data-test-saved-reports] li:eq(${i})`);
@@ -70,7 +70,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     this.owner.register('service:reporting', reportingMockNoReports);
     this.owner.register('service:currentUser', currentUserMock);
     await render(hbs`{{dashboard-myreports}}`);
-    assert.equal(this.$('.dashboard-block-header').text().trim(), 'My Reports');
-    assert.equal(this.$('.dashboard-block-body').text().trim(), 'None');
+    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Reports');
+    assert.equal(find('.dashboard-block-body').textContent.trim(), 'None');
   });
 });

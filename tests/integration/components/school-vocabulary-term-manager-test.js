@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -73,10 +73,10 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.$(firstParent).text().trim(), 'first');
     assert.equal(this.$(secondParent).text().trim(), 'second');
     assert.equal(this.$(termCrumb).text().trim(), title);
-    assert.equal(this.$(termTitle).text().trim(), title);
-    assert.equal(this.$(termDescription).text().trim(), description);
-    assert.equal(this.$('.terms ul li:eq(0)').text().trim(), 'first child');
-    assert.equal(this.$('.terms ul li:eq(1)').text().trim(), 'second child (inactive)');
+    assert.equal(find(termTitle).textContent.trim(), title);
+    assert.equal(find(termDescription).textContent.trim(), description);
+    assert.equal(find('.terms ul li').textContent.trim(), 'first child');
+    assert.equal(find(findAll('.terms ul li')[1]).textContent.trim(), 'second child (inactive)');
   });
 
   test('activate inactive term', async function(assert) {

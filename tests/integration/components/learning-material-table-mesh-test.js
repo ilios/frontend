@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -31,7 +31,7 @@ module('Integration | Component | learning material table mesh', function(hooks)
     const descriptor1 = `${descriptors}:eq(0)`;
     const descriptor2 = `${descriptors}:eq(1)`;
     await render(hbs`{{learning-material-table-mesh row=row tableActions=tableActions extra=extra}}`);
-    assert.equal(this.$(descriptors).length, 2);
+    assert.equal(findAll(descriptors).length, 2);
     assert.equal(this.$(descriptor1).text().trim(), 'descriptor 1');
     assert.equal(this.$(descriptor2).text().trim(), 'descriptor 2');
   });
@@ -48,6 +48,6 @@ module('Integration | Component | learning material table mesh', function(hooks)
     });
     this.set('row', row);
     await render(hbs`{{learning-material-table-mesh row=row tableActions=tableActions extra=extra}}`);
-    assert.equal(this.$().text().trim(), 'None');
+    assert.equal(find('*').textContent.trim(), 'None');
   });
 });

@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | detail cohort list', function(hooks) {
@@ -51,19 +51,19 @@ module('Integration | Component | detail cohort list', function(hooks) {
     this.set('cohorts', cohorts);
     await render(hbs`{{detail-cohort-list cohorts=cohorts}}`);
     await settled();
-    assert.equal(this.$('th:eq(0)').text(), 'School');
-    assert.equal(this.$('th:eq(1)').text(), 'Program');
-    assert.equal(this.$('th:eq(2)').text(), 'Cohort');
-    assert.equal(this.$('th:eq(3)').text(), 'Level');
-    assert.equal(this.$('tbody tr').length, 2);
-    assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'School of Life');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'Professional Pie Eating');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'Aardvark');
-    assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), '1');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'Starfleet Academy');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Doctor of Rocket Surgery');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'Class of 2011');
-    assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), '2');
+    assert.equal(find('th').textContent, 'School');
+    assert.equal(find(findAll('th')[1]).textContent, 'Program');
+    assert.equal(find(findAll('th')[2]).textContent, 'Cohort');
+    assert.equal(find(findAll('th')[3]).textContent, 'Level');
+    assert.equal(findAll('tbody tr').length, 2);
+    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'School of Life');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 'Professional Pie Eating');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 'Aardvark');
+    assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), '1');
+    assert.equal(find('tbody tr:eq(1) td').textContent.trim(), 'Starfleet Academy');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 'Doctor of Rocket Surgery');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 'Class of 2011');
+    assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), '2');
   });
 });
 

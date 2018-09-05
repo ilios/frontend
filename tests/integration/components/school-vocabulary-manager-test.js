@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -33,7 +33,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     assert.equal(this.$(all).text().trim(), 'All Vocabularies');
     assert.equal(this.$(vocab).text().trim(), vocabulary.title);
-    assert.equal(this.$('.terms ul li:eq(0)').text().trim(), 'first (inactive)');
-    assert.equal(this.$('.terms ul li:eq(1)').text().trim(), 'second');
+    assert.equal(find('.terms ul li').textContent.trim(), 'first (inactive)');
+    assert.equal(find(findAll('.terms ul li')[1]).textContent.trim(), 'second');
   });
 });

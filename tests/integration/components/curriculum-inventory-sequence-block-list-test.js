@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -72,36 +72,36 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${blocks.length})`,
+      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (${blocks.length})`,
         'Component title is correct, and show the correct number of blocks.'
       );
-      assert.equal(this.$('.actions .expand-button').length, 1, 'Add new button is visible.');
+      assert.equal(findAll('.actions .expand-button').length, 1, 'Add new button is visible.');
 
-      assert.equal(this.$('thead th:eq(0)').text().trim(), 'Sequence Block', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(1)').text().trim(), 'Level', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(2)').text().trim(), 'Sequence #', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(3)').text().trim(), 'Start Date', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(4)').text().trim(), 'End Date', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(5)').text().trim(), 'Course', 'Table column header has correct label.');
-      assert.equal(this.$('thead th:eq(6)').text().trim(), 'Actions', 'Table column header has correct label.');
+      assert.equal(find('thead th').textContent.trim(), 'Sequence Block', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Level', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'Sequence #', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Start Date', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'End Date', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Course', 'Table column header has correct label.');
+      assert.equal(find(findAll('thead th')[6]).textContent.trim(), 'Actions', 'Table column header has correct label.');
 
-      assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), block2.get('title'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), academicLevel2.get('level'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(5)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), block2.get('title'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), academicLevel2.get('level'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), 'n/a');
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
 
-      assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), block1.get('title'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), academicLevel1.get('level'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(5)').text().trim(), course.get('title'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:eq(1) td').textContent.trim(), block1.get('title'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), academicLevel1.get('level'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), course.get('title'));
+      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
 
     });
   });
@@ -183,28 +183,28 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children) canUpdate=true remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(this.$('.title').text().trim(), `Sequence Blocks (${nestedBlocks.length})`,
+      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (${nestedBlocks.length})`,
         'Component title is correct, and show the correct number of nested blocks.'
       );
-      assert.equal(this.$('.actions .expand-button').length, 1, 'Add new button is visible.');
+      assert.equal(findAll('.actions .expand-button').length, 1, 'Add new button is visible.');
 
-      assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), block1.get('title'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), academicLevel1.get('level'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), block1.get('orderInSequence'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(3)').text().trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(4)').text().trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(5)').text().trim(), course.get('title'));
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), block1.get('title'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), academicLevel1.get('level'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), block1.get('orderInSequence'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), course.get('title'));
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
 
-      assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), block2.get('title'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), academicLevel2.get('level'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), block2.get('orderInSequence'));
-      assert.equal(this.$('tbody tr:eq(1) td:eq(3)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(4)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(5)').text().trim(), 'n/a');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(this.$('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:eq(1) td').textContent.trim(), block2.get('title'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), academicLevel2.get('level'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), block2.get('orderInSequence'));
+      assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), 'n/a');
+      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
 
     });
   });
@@ -247,9 +247,9 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=false remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(this.$('.actions .expand-button').length, 0, 'Add new button is not visible.');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(6) .remove').length, 0, 'Remove link is not visible.');
+      assert.equal(findAll('.actions .expand-button').length, 0, 'Add new button is not visible.');
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 0, 'Remove link is not visible.');
     });
   });
 
@@ -295,12 +295,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove=(action removeSequenceBlock)}}`
     );
-    await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
-    assert.equal(this.$('tbody tr:eq(1) .confirm-message').text().trim().indexOf('Are you sure you want to delete'), 0,
+    await await click('tbody tr:eq(0) td:eq(6) .remove');
+    assert.equal(find('tbody tr:eq(1) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
       'Confirmation message is visible.');
-    assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .remove').length, 1,'Delete button is visible.');
-    assert.equal(this.$('tbody tr:eq(1) .confirm-buttons .done').length, 1,'Cancel button is visible.');
-    await this.$('tbody tr:eq(1) .confirm-buttons .remove').click();
+    assert.equal(findAll('tbody tr:eq(1) .confirm-buttons .remove').length, 1,'Delete button is visible.');
+    assert.equal(findAll('tbody tr:eq(1) .confirm-buttons .done').length, 1,'Cancel button is visible.');
+    await await click('tbody tr:eq(1) .confirm-buttons .remove');
   });
 
   test('cancel delete', async function(assert){
@@ -341,12 +341,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report  sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true}}`
     );
-    await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
+    await await click('tbody tr:eq(0) td:eq(6) .remove');
     await settled();
-    assert.equal(this.$('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
-    await this.$('tbody tr:eq(1) .confirm-buttons .done').click();
+    assert.equal(findAll('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
+    await await click('tbody tr:eq(1) .confirm-buttons .done');
     await settled();
-    assert.equal(this.$('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
+    assert.equal(findAll('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
   });
 
 
@@ -377,11 +377,11 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(this.$('.title').text().trim(), `Sequence Blocks (0)`,
+      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (0)`,
         'Component title is correct, and show the correct number of blocks.'
       );
       assert.equal(
-        this.$('.default-message').text().trim(), 'There are no sequence blocks in this report.',
+        find('.default-message').textContent.trim(), 'There are no sequence blocks in this report.',
         'No blocks message is visible.'
       );
     });
@@ -428,11 +428,11 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children)}}`
     );
     return settled().then(() => {
-      assert.equal(this.$('.title').text().trim(), `Sequence Blocks (0)`,
+      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (0)`,
         'Component title is correct, and show the correct number of blocks.'
       );
       assert.equal(
-        this.$('.default-message').text().trim(), 'This sequence block has no nested sequence blocks.',
+        find('.default-message').textContent.trim(), 'This sequence block has no nested sequence blocks.',
         'No blocks message is visible.'
       );
     });

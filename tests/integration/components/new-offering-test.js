@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -19,6 +19,6 @@ module('Integration | Component | new offering', function(hooks) {
       close=(action nothing)
     }}`);
 
-    assert.equal(this.$('.new-offering-title:eq(0)').text().trim(), 'New Offering');
+    assert.equal(find('.new-offering-title').textContent.trim(), 'New Offering');
   });
 });

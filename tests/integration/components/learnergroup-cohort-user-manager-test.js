@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learnergroup cohort user manager', function(hooks) {
@@ -51,8 +51,8 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
 
-    assert.equal(this.$('.title').text().trim(), 'Cohort Members NOT assigned to top level group  (2)');
-    assert.equal(this.$(userList).length, 2);
+    assert.equal(find('.title').textContent.trim(), 'Cohort Members NOT assigned to top level group  (2)');
+    assert.equal(findAll(userList).length, 2);
     assert.equal(this.$(user1CheckBox).length, 1);
     assert.notOk(this.$(user1CheckBox).prop('checked'));
     assert.equal(this.$(user1FirstName).text().trim(), 'Jasper');
@@ -94,7 +94,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
 
-    assert.equal(this.$(userList).length, 2);
+    assert.equal(findAll(userList).length, 2);
     assert.equal(this.$(user1FirstName).text().trim(), 'Jackson');
     assert.equal(this.$(user2FirstName).text().trim(), 'Jasper');
   });
@@ -125,12 +125,12 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       addUsersToGroup=(action addMany)
     }}`);
 
-    assert.equal(this.$(button).length, 0);
+    assert.equal(findAll(button).length, 0);
     this.$(user1CheckBox).click();
-    assert.equal(this.$(button).text().trim(), 'Move learner to this group');
-    this.$(button).click();
+    assert.equal(find(button).textContent.trim(), 'Move learner to this group');
+    await click(button);
     await settled();
-    assert.equal(this.$(button).length, 0, 'button is hidden after save');
+    assert.equal(findAll(button).length, 0, 'button is hidden after save');
   });
 
   test('add single user', async function(assert) {
@@ -225,8 +225,8 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     this.$(checkAllBox).click();
     assert.ok(this.$(user1CheckBox).prop('checked'));
     assert.ok(this.$(user2CheckBox).prop('checked'));
-    assert.equal(this.$(button).text().trim(), 'Move 2 learners to this group');
-    return settled(this.$(button).click());
+    assert.equal(find(button).textContent.trim(), 'Move 2 learners to this group');
+    return settled(await click(button));
 
   });
 

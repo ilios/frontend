@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | click choice buttons', function(hooks) {
@@ -20,10 +20,10 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent1='Left Button'
       buttonContent2='Right Button'
     }}`);
-    assert.equal(this.$(firstButton).text().trim(), 'Left Button', 'first button has correct text');
-    assert.equal(this.$(secondButton).text().trim(), 'Right Button', 'second button has correct text');
-    assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-    assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+    assert.equal(find(firstButton).textContent.trim(), 'Left Button', 'first button has correct text');
+    assert.equal(find(secondButton).textContent.trim(), 'Right Button', 'second button has correct text');
+    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
+    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
   });
 
   test('click fires toggle action', async function(assert) {
@@ -51,18 +51,18 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent2='Right Button'
     }}`);
 
-    assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-    assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
+    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
 
-    this.$(secondButton).click();
+    await click(secondButton);
 
-    assert.notOk(this.$(firstButton).hasClass(activeClass), 'first button does not have active class');
-    assert.ok(this.$(secondButton).hasClass(activeClass), 'second button has active class');
+    assert.notOk(find(firstButton).classList.contains(activeClass), 'first button does not have active class');
+    assert.ok(find(secondButton).classList.contains(activeClass), 'second button has active class');
 
-    this.$(firstButton).click();
+    await click(firstButton);
 
-    assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-    assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
+    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
   });
 
   test('clicking selected futton does not fire toggle action', async function(assert) {
@@ -82,12 +82,12 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent2='Right Button'
     }}`);
 
-    assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-    assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
+    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
 
-    this.$(firstButton).click();
+    await click(firstButton);
 
-    assert.ok(this.$(firstButton).hasClass(activeClass), 'first button has active class');
-    assert.notOk(this.$(secondButton).hasClass(activeClass), 'second button does not have active class');
+    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
+    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
   });
 });

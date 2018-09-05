@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -36,11 +36,11 @@ module('Integration | Component | programyear objective list', function(hooks) {
       hbs`{{programyear-objective-list subject=subject manageCompetency=(action nothing) manageDescriptors=(action nothing) editable=true}}`
     );
     return settled().then(() => {
-      assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
-      assert.equal(this.$('button.download').length, 1, 'Download button shows.');
-      assert.equal(this.$('thead th:eq(1)').text().trim(), 'Description');
-      assert.equal(this.$('thead th:eq(2)').text().trim(), 'Competency');
-      assert.equal(this.$('thead th:eq(3)').text().trim(), 'MeSH Terms');
+      assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
+      assert.equal(findAll('button.download').length, 1, 'Download button shows.');
+      assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Description');
+      assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'Competency');
+      assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'MeSH Terms');
       for (let i = 0, n = objectives.length; i < n; i++) {
         let objective = objectives[i];
         assert.equal(this.$(`tbody tr:eq(${i}) td:eq(1)`).text().trim(), objective.get('title'));
@@ -79,8 +79,8 @@ module('Integration | Component | programyear objective list', function(hooks) {
     );
 
     return settled().then(() => {
-      assert.notOk(this.$('.sort-materials-btn').length, 'Sort button is not visible');
-      assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), objective.get('title'), 'Objective is visible');
+      assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
+      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), objective.get('title'), 'Objective is visible');
     });
   });
 });

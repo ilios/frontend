@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | collapsed stewards', function(hooks) {
@@ -76,7 +76,7 @@ module('Integration | Component | collapsed stewards', function(hooks) {
     const school2Departments = `${school2Row} td:eq(1)`;
 
     await settled();
-    assert.equal(this.$(title).text().trim(), 'Stewarding Schools and Departments (3)');
+    assert.equal(find(title).textContent.trim(), 'Stewarding Schools and Departments (3)');
     assert.equal(this.$(school1Title).text().trim(), 'school1');
     assert.equal(this.$(school2Title).text().trim(), 'school2');
     assert.equal(this.$(school1Departments).text().trim(), '2');
@@ -99,6 +99,6 @@ module('Integration | Component | collapsed stewards', function(hooks) {
     }}`);
     const title = '.title';
 
-    this.$(title).click();
+    await click(title);
   });
 });

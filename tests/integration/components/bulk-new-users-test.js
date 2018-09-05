@@ -287,10 +287,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate lastName', async function(assert) {
@@ -307,10 +307,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate middleName', async function(assert) {
@@ -327,11 +327,11 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate email address', async function(assert) {
@@ -348,10 +348,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(6)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(6)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate campusId', async function(assert) {
@@ -368,10 +368,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(7)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(7)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate otherId', async function(assert) {
@@ -388,10 +388,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('validate username', async function(assert) {
@@ -410,10 +410,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
-    assert.ok(this.$(badCheck).prop('disabled'));
-    assert.ok(this.$(BadBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.ok(find(badCheck).disabled);
+    assert.ok(find(BadBox).classList.contains('error'));
   });
 
   test('duplicate username errors on save', async function (assert) {
@@ -463,8 +463,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
   });
 
   test('password not required if username is blank', async function(assert) {
@@ -478,8 +478,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    assert.notOk(this.$(goodCheck).prop('disabled'));
-    assert.notOk(this.$(goodBox).hasClass('error'));
+    assert.notOk(find(goodCheck).disabled);
+    assert.notOk(find(goodBox).classList.contains('error'));
   });
 
   test('dont create authentication if username is not set', async function(assert) {

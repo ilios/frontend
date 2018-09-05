@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -77,8 +77,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
 
     return settled().then(()=>{
       assert.equal(this.$(defaultLocation).text().trim(), 'test location');
-      assert.equal(this.$(instructors).text().trim(), 'user5; user6');
-      assert.equal(this.$(courses).text().trim(), 'test course 1; test course 2');
+      assert.equal(find(instructors).textContent.trim(), 'user5; user6');
+      assert.equal(find(courses).textContent.trim(), 'test course 1; test course 2');
     });
   });
 
