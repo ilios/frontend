@@ -100,7 +100,7 @@ module('Integration | Component | taxonomy manager', function(hooks) {
 
     this.set('subject', subject);
     this.set('selectedTerms', selectedTerms);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{taxonomy-manager subject=subject selectedTerms=selectedTerms add='nothing' remove='nothing'}}`);
 

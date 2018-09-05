@@ -37,7 +37,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1, user2]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -45,9 +45,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='lastName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
 
@@ -80,7 +80,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1, user2]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -88,9 +88,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
 
@@ -109,10 +109,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1]);
-    this.actions.nothing = parseInt;
-    this.actions.addMany = ([user]) => {
+    this.set('nothing', () => {});
+    this.set('addMany', ([user]) => {
       assert.equal(user1, user);
-    };
+    });
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -120,9 +120,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'addMany')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action addMany)
     }}`);
 
     assert.equal(this.$(button).length, 0);
@@ -142,10 +142,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1]);
-    this.actions.nothing = parseInt;
-    this.actions.addOne = (user) => {
+    this.set('nothing', () => {});
+    this.set('addOne', user => {
       assert.equal(user1, user);
-    };
+    });
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -153,9 +153,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'addOne')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action addOne)
+      addUsersToGroup=(action nothing)
     }}`);
 
     return settled(this.$(action).click());
@@ -172,7 +172,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -180,9 +180,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
     this.$(user1CheckBox).click();
@@ -205,11 +205,11 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1, user2]);
-    this.actions.nothing = parseInt;
-    this.actions.addMany = ([userA, userB]) => {
+    this.set('nothing', () => {});
+    this.set('addMany', ([userA, userB]) => {
       assert.equal(user1, userA);
       assert.equal(user2, userB);
-    };
+    });
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -217,9 +217,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'addMany')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action addMany)
     }}`);
 
     this.$(checkAllBox).click();
@@ -244,7 +244,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1, user2]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -252,9 +252,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
     this.$(user1CheckBox).click();
@@ -282,7 +282,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -290,9 +290,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
     assert.equal(1, this.$(userCheckbox).length, 'Checkbox visible');
@@ -315,7 +315,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     });
 
     this.set('users', [user1]);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{learnergroup-cohort-user-manager
       users=users
@@ -323,9 +323,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       learnerGroupTitle='this group'
       topLevelGroupTitle='top level group'
       sortBy='firstName'
-      setSortBy=(action 'nothing')
-      addUserToGroup=(action 'nothing')
-      addUsersToGroup=(action 'nothing')
+      setSortBy=(action nothing)
+      addUserToGroup=(action nothing)
+      addUsersToGroup=(action nothing)
     }}`);
 
     assert.equal(0, this.$(userCheckbox).length, 'Checkbox not visible');

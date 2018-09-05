@@ -46,10 +46,10 @@ module('Integration | Component | detail terms list item', function(hooks) {
     });
 
     this.set('term', term);
-    this.actions.remove = (val) => {
+    this.set('remove', val => {
       assert.equal(term, val);
-    };
-    await render(hbs`{{detail-terms-list-item term=term canEdit=true remove=(action 'remove')}}`);
+    });
+    await render(hbs`{{detail-terms-list-item term=term canEdit=true remove=(action remove)}}`);
     assert.equal(this.$('.fa-times').length, 1);
     this.$('.fa-times').click();
   });

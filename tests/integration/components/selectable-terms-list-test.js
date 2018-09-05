@@ -56,7 +56,7 @@ module('Integration | Component | selectable terms list', function(hooks) {
     const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
     this.set('topLevelTerms', topLevelTerms);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );
@@ -121,7 +121,7 @@ module('Integration | Component | selectable terms list', function(hooks) {
     const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
     this.set('topLevelTerms', topLevelTerms);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );

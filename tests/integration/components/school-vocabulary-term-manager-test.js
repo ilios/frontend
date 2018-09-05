@@ -47,13 +47,13 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('term', term);
     this.set('vocabulary', vocabulary);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
       term=term
       vocabulary=vocabulary
-      manageTerm=(action 'nothing')
-      manageVocabulary=(action 'nothing')
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
       canUpdate=true
       canDelete=true
       canCreate=true
@@ -98,13 +98,13 @@ module('Integration | Component | school vocabulary term manager', function(hook
     });
     this.set('term', term);
     this.set('vocabulary', vocabulary);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
       term=term
       vocabulary=vocabulary
-      manageTerm=(action 'nothing')
-      manageVocabulary=(action 'nothing')
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
       canUpdate=true
       canDelete=true
       canCreate=true
@@ -138,13 +138,13 @@ module('Integration | Component | school vocabulary term manager', function(hook
     });
     this.set('term', term);
     this.set('vocabulary', vocabulary);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
       term=term
       vocabulary=vocabulary
-      manageTerm=(action 'nothing')
-      manageVocabulary=(action 'nothing')
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
       canUpdate=true
       canDelete=true
       canCreate=true

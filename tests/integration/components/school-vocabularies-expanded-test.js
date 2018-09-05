@@ -31,9 +31,9 @@ module('Integration | Component | school vocabularies expanded', function(hooks)
     });
 
     this.set('school', school);
-    this.actions.click = parseInt;
+    this.set('click', () => {});
     await render(
-      hbs`{{school-vocabularies-expanded school=school expand=(action 'click') collapse=(action 'click')}}`
+      hbs`{{school-vocabularies-expanded school=school expand=(action click) collapse=(action click)}}`
     );
     const title = '.title';
     return settled().then(() => {

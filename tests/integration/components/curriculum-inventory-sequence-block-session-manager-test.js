@@ -354,16 +354,16 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sessions', resolve([ session1, session2, session3 ]));
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
-    this.actions.save = function(sessions, excludedSessions){
+    this.set('save', (sessions, excludedSessions) => {
       assert.equal(sessions.length, 2);
       assert.ok(sessions.includes(session1));
       assert.ok(sessions.includes(session2));
       assert.equal(excludedSessions.length, 2);
       assert.ok(excludedSessions.includes(session1));
       assert.ok(excludedSessions.includes(session2));
-    };
+    });
     await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action 'save')}}`
+      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action save)}}`
     );
     this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
     this.$('tbody tr:eq(0) td:eq(1) input').prop('checked', true).trigger('click');
@@ -392,11 +392,11 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sessions', resolve([ session ]));
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
-    this.actions.cancel = function(){
+    this.set('cancel', () => {
       assert.ok(true, 'Cancel action fired.');
-    };
+    });
     await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action 'cancel')}}`
+      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action cancel)}}`
     );
     this.$('.actions .bigcancel').click();
   });

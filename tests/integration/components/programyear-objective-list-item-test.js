@@ -15,13 +15,13 @@ module('Integration | Component | programyear objective list item', function(hoo
       title: 'fake title'
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{programyear-objective-list-item
       objective=objective
-      manageDescriptors=(action 'nothing')
-      manageCompetency=(action 'nothing')
-      toggleExpand=(action 'nothing')
+      manageDescriptors=(action nothing)
+      manageCompetency=(action nothing)
+      toggleExpand=(action nothing)
       editable=true
     }}`);
 
@@ -40,14 +40,14 @@ module('Integration | Component | programyear objective list item', function(hoo
       }
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{programyear-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageDescriptors=(action 'nothing')
-      manageCompetency=(action 'nothing')
-      toggleExpand=(action 'nothing')
+      remove=(action nothing)
+      manageDescriptors=(action nothing)
+      manageCompetency=(action nothing)
+      toggleExpand=(action nothing)
       editable=true
     }}`);
 
@@ -64,17 +64,17 @@ module('Integration | Component | programyear objective list item', function(hoo
       title: 'fake title'
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', ()=>{
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{programyear-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageDescriptors=(action 'nothing')
-      manageCompetency=(action 'something')
-      toggleExpand=(action 'nothing')
+      remove=(action nothing)
+      manageDescriptors=(action nothing)
+      manageCompetency=(action something)
+      toggleExpand=(action nothing)
       editable=true
     }}`);
 
@@ -87,17 +87,17 @@ module('Integration | Component | programyear objective list item', function(hoo
       title: 'fake title'
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', ()=>{
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{programyear-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageDescriptors=(action 'something')
-      manageCompetency=(action 'nothing')
-      toggleExpand=(action 'nothing')
+      remove=(action nothing)
+      manageDescriptors=(action something)
+      manageCompetency=(action nothing)
+      toggleExpand=(action nothing)
       editable=true
     }}`);
 
@@ -110,17 +110,17 @@ module('Integration | Component | programyear objective list item', function(hoo
       title: 'fake title'
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', ()=>{
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{programyear-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageDescriptors=(action 'nothing')
-      manageCompetency=(action 'nothing')
-      toggleExpand=(action 'something')
+      remove=(action nothing)
+      manageDescriptors=(action nothing)
+      manageCompetency=(action nothing)
+      toggleExpand=(action something)
       editable=true
     }}`);
 

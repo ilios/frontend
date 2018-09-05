@@ -288,12 +288,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     });
 
     this.set('report', report);
-    this.actions.removeSequenceBlock = function(block) {
+    this.set('removeSequenceBlock', (block) => {
       assert.equal(block, block1, 'Remove action was invoked, and sequence block was passed.');
       report.set('toLevelSequenceBlocks', resolve([ block1 ])); // fake deletion.
-    };
+    });
     await render(
-      hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`
+      hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove=(action removeSequenceBlock)}}`
     );
     await this.$('tbody tr:eq(0) td:eq(6) .remove').click();
     assert.equal(this.$('tbody tr:eq(1) .confirm-message').text().trim().indexOf('Are you sure you want to delete'), 0,

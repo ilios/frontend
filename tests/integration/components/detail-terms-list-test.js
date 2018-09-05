@@ -139,13 +139,13 @@ module('Integration | Component | detail terms list', function(hooks) {
     });
 
     const selectedTerms = [ term1 ];
-    this.actions.remove = (val) => {
+    this.set('remove', val => {
       assert.equal(val, term1);
-    };
+    });
 
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
-    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action 'remove') canEdit=true}}`);
+    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action remove) canEdit=true}}`);
     await settled();
     assert.equal(this.$('li:eq(0) .fa-times').length, 1);
     this.$('li:eq(0)').click();

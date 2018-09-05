@@ -25,8 +25,8 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     });
 
     this.set('course', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
     return settled().then(() => {
       let content = this.$().text().trim();
       assert.equal(content.search(/Competencies \(2\)/), 0);
@@ -51,10 +51,10 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     });
 
     this.set('course', course);
-    this.actions.click = () => {
+    this.set('click', () => {
       assert.ok(true, 'Action was fired');
-    };
-    await render(hbs`{{collapsed-competencies subject=course expand=(action 'click')}}`);
+    });
+    await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
     return settled().then(() => {
       assert.equal(this.$().text().trim().search(/Competencies \(2\)/), 0);
       this.$('.title').click();

@@ -14,10 +14,10 @@ module('Integration | Component | search box', function(hooks) {
   });
 
   test('clicking search calls search', async function(assert) {
-    this.actions.search = function(value){
+    this.set('search', value => {
       assert.equal(value, '');
-    };
-    await render(hbs`{{search-box search=(action 'search')}}`);
+    });
+    await render(hbs`{{search-box search=(action search)}}`);
     const searchBoxIcon = '.search-icon';
     this.$(searchBoxIcon).click();
 
@@ -25,10 +25,10 @@ module('Integration | Component | search box', function(hooks) {
   });
 
   test('typing calls search', async function(assert) {
-    this.actions.search = function(value){
+    this.set('search', value => {
       assert.equal(value, 'typed it');
-    };
-    await render(hbs`{{search-box search=(action 'search')}}`);
+    });
+    await render(hbs`{{search-box search=(action search)}}`);
     run(() => {
       this.$('input').val('typed it');
       this.$('input').trigger('input');
@@ -39,11 +39,11 @@ module('Integration | Component | search box', function(hooks) {
   });
 
   test('escape calls clear', async function(assert) {
-    this.actions.clear = function(){
+    this.set('clear', () => {
       assert.ok(true);
-    };
-    this.actions.search = parseInt;
-    await render(hbs`{{search-box search=(action 'search') clear=(action 'clear')}}`);
+    });
+    this.set('nothing', () => { });
+    await render(hbs`{{search-box search=(action nothing) clear=(action clear)}}`);
     run(() => {
       this.$('input').val('typed it');
       this.$('input').trigger('change');

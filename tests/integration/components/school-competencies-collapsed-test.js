@@ -24,8 +24,8 @@ module('Integration | Component | school competencies collapsed', function(hooks
 
 
     this.set('school', school);
-    this.actions.click = parseInt;
-    await render(hbs`{{school-competencies-collapsed school=school expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{school-competencies-collapsed school=school expand=(action click)}}`);
     const title = '.title';
     const domains = 'table tbody tr';
     const domainTitle = `${domains}:eq(0) td:eq(0)`;

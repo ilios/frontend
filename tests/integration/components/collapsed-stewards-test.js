@@ -60,10 +60,10 @@ module('Integration | Component | collapsed stewards', function(hooks) {
 
 
     this.set('programYear', programYear);
-    this.actions.nothing = () => {};
+    this.set('nothing', () => { });
     await render(hbs`{{collapsed-stewards
       programYear=programYear
-      expand=(action 'nothing')
+      expand=(action nothing)
     }}`);
 
     const title = '.title';
@@ -90,12 +90,12 @@ module('Integration | Component | collapsed stewards', function(hooks) {
     });
     this.set('programYear', programYear);
 
-    this.actions.click = () => {
+    this.set('click', () => {
       assert.ok(true, 'Action was fired');
-    };
+    });
     await render(hbs`{{collapsed-stewards
       programYear=programYear
-      expand=(action 'click')
+      expand=(action click)
     }}`);
     const title = '.title';
 

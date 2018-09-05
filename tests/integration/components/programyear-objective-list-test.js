@@ -29,11 +29,11 @@ module('Integration | Component | programyear objective list', function(hooks) {
       sortedObjectives: resolve(objectives),
     });
 
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     this.set('subject', programYear);
 
     await render(
-      hbs`{{programyear-objective-list subject=subject manageCompetency=(action 'nothing') manageDescriptors=(action 'nothing') editable=true}}`
+      hbs`{{programyear-objective-list subject=subject manageCompetency=(action nothing) manageDescriptors=(action nothing) editable=true}}`
     );
     return settled().then(() => {
       assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
@@ -71,11 +71,11 @@ module('Integration | Component | programyear objective list', function(hooks) {
       sortedObjectives: resolve([ objective ]),
     });
 
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     this.set('subject', programYear);
 
     await render(
-      hbs`{{programyear-objective-list subject=subject manageCompetency=(action 'nothing') manageDescriptors=(action 'nothing')}}`
+      hbs`{{programyear-objective-list subject=subject manageCompetency=(action nothing) manageDescriptors=(action nothing)}}`
     );
 
     return settled().then(() => {

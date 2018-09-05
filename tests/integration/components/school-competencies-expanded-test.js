@@ -32,10 +32,9 @@ module('Integration | Component | school competencies expanded', function(hooks)
     });
 
     this.set('school', school);
-    this.actions.collapse = parseInt;
-    this.actions.expand = parseInt;
+    this.set('nothing', () => { });
     await render(
-      hbs`{{school-competencies-expanded school=school expand=(action 'expand') collapse=(action 'expand')}}`
+      hbs`{{school-competencies-expanded school=school expand=(action nothing) collapse=(action nothing)}}`
     );
 
     const title = '.title';

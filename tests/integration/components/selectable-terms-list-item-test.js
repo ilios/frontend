@@ -16,11 +16,11 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     const selectedTerms = [ term1 ];
     this.set('selectedTerms', selectedTerms);
     this.set('term', term1);
-    this.actions.remove = (term) => {
+    this.set('remove', term => {
       assert.equal(term, term1);
-    };
+    });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove='remove'}}`);
+    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove=remove}}`);
 
     assert.equal(this.$('.selected').length, 1);
     assert.equal(this.$('.actions .fa-times').length, 1);
@@ -36,11 +36,11 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     const selectedTerms = [];
     this.set('selectedTerms', selectedTerms);
     this.set('term', term1);
-    this.actions.add = (term) => {
+    this.set('add', term => {
       assert.equal(term, term1);
-    };
+    });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add='add'}}`);
+    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add=add}}`);
 
     assert.equal(this.$('.selected').length, 0);
     assert.equal(this.$('.actions .fa-plus').length, 1);

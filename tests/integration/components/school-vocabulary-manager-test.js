@@ -21,11 +21,11 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     });
 
     this.set('vocabulary', vocabulary);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(hbs`{{school-vocabulary-manager
       vocabulary=vocabulary
-      manageTerm=(action 'nothing')
-      manageVocabulary=(action 'nothing')
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
     }}`);
 
     const all = '.breadcrumbs span:eq(0)';

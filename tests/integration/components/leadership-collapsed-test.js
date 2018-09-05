@@ -12,12 +12,12 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
-    this.actions.click = parseInt;
+    this.set('click', () => {});
     await render(hbs`{{leadership-collapsed
       title=title
       directorsCount=directorsCount
       administratorsCount=administratorsCount
-      expand=(action 'click')
+      expand=(action click)
     }}`);
     const title = '.title';
     const table = 'table';
@@ -34,13 +34,13 @@ module('Integration | Component | leadership collapsed', function(hooks) {
   test('clicking the header expands the list', async function(assert) {
     assert.expect(1);
 
-    this.actions.click = () => {
+    this.set('click', () => {
       assert.ok(true, 'Action was fired');
-    };
+    });
     await render(hbs`{{leadership-collapsed
       directorsCount=0
       administratorsCount=0
-      expand=(action 'click')
+      expand=(action click)
     }}`);
     const title = '.title';
 
@@ -53,13 +53,13 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
-    this.actions.click = parseInt;
+    this.set('click', () => {});
     await render(hbs`{{leadership-collapsed
       title=title
       showDirectors=false
       directorsCount=directorsCount
       administratorsCount=administratorsCount
-      expand=(action 'click')
+      expand=(action click)
     }}`);
     const title = '.title';
     const table = 'table';
@@ -76,13 +76,13 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
-    this.actions.click = parseInt;
+    this.set('click', () => {});
     await render(hbs`{{leadership-collapsed
       title=title
       showAdministrators=false
       directorsCount=directorsCount
       administratorsCount=administratorsCount
-      expand=(action 'click')
+      expand=(action click)
     }}`);
     const title = '.title';
     const table = 'table';

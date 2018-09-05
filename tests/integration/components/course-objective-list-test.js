@@ -43,11 +43,11 @@ module('Integration | Component | course objective list', function(hooks) {
       sortedObjectives: resolve(objectives),
     });
 
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     this.set('subject', course);
 
     await render(
-      hbs`{{course-objective-list subject=subject manageParents=(action 'nothing') manageDescriptors=(action 'nothing')}}`
+      hbs`{{course-objective-list subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
     );
     return settled().then(() => {
       assert.ok(this.$('.sort-materials-btn').length, 'Sort Objectives button is visible');
@@ -92,11 +92,11 @@ module('Integration | Component | course objective list', function(hooks) {
       sortedObjectives: resolve([ objective ]),
     });
 
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     this.set('subject', course);
 
     await render(
-      hbs`{{course-objective-list subject=subject manageParents=(action 'nothing') manageDescriptors=(action 'nothing')}}`
+      hbs`{{course-objective-list subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
     );
 
     return settled().then(() => {

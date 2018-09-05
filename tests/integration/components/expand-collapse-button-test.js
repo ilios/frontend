@@ -10,10 +10,10 @@ module('Integration | Component | expand collapse button', function(hooks) {
     assert.expect(5);
 
     this.set('value', false);
-    this.actions.click = () => {
+    this.set('click', () => {
       assert.ok(true, 'button was clicked');
       this.set('value', !this.get('value'));
-    };
+    });
     await render(hbs`{{expand-collapse-button value=value action='click'}}`);
     assert.ok(this.$('svg').hasClass('fa-plus'));
 

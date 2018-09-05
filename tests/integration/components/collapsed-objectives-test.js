@@ -60,8 +60,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     this.set('subject', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives (3)');
@@ -82,11 +82,11 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     const course = EmberObject.create();
 
     this.set('subject', course);
-    this.actions.click = function() {
+    this.set('click', () => {
       assert.ok(true);
-    };
+    });
 
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives ()');
@@ -101,8 +101,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     this.set('subject', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
@@ -119,8 +119,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     this.set('subject', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
@@ -137,8 +137,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     this.set('subject', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives (1)');
@@ -155,8 +155,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     this.set('subject', course);
-    this.actions.click = parseInt;
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action 'click')}}`);
+    this.set('click', () => {});
+    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
     await settled();
 
     assert.equal(this.$('.title').text().trim(), 'Objectives (1)');

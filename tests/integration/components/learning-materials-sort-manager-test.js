@@ -118,11 +118,11 @@ module('Integration | Component | learning materials sort manager', function(hoo
       ]),
     });
     this.set('subject', subject);
-    this.actions.cancel = function(){
+    this.set('cancel', () => {
       assert.ok(true, 'Cancel action was invoked correctly.');
-    };
+    });
 
-    await render(hbs`{{learning-materials-sort-manager subject=subject cancel=(action 'cancel')}}`);
+    await render(hbs`{{learning-materials-sort-manager subject=subject cancel=(action cancel)}}`);
 
     return settled().then(() => {
       this.$('.actions .bigcancel').click();
@@ -154,13 +154,13 @@ module('Integration | Component | learning materials sort manager', function(hoo
       learningMaterials: resolve(clms),
     });
     this.set('subject', subject);
-    this.actions.save = function(data){
+    this.set('save', data => {
       assert.equal(data.length, clms.length);
       assert.ok(data.includes(clm1));
       assert.ok(data.includes(clm2));
-    };
+    });
 
-    await render(hbs`{{learning-materials-sort-manager subject=subject save=(action 'save')}}`);
+    await render(hbs`{{learning-materials-sort-manager subject=subject save=(action save)}}`);
 
     return settled().then(() => {
       this.$('.actions .bigadd').click();

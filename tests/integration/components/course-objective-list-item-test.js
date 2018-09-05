@@ -16,13 +16,13 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{course-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'nothing')
+      remove=(action nothing)
+      manageParents=(action nothing)
+      manageDescriptors=(action nothing)
     }}`);
 
     assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
@@ -36,14 +36,14 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{course-objective-list-item
       objective=objective
       showRemoveConfirmation=true
-      remove=(action 'nothing')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'nothing')
+      remove=(action nothing)
+      manageParents=(action nothing)
+      manageDescriptors=(action nothing)
     }}`);
 
     assert.ok(this.$('tr').hasClass('confirm-removal'));
@@ -58,13 +58,13 @@ module('Integration | Component | course objective list item', function(hooks) {
       }
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
 
     await render(hbs`{{course-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'nothing')
+      remove=(action nothing)
+      manageParents=(action nothing)
+      manageDescriptors=(action nothing)
     }}`);
 
     this.$('td:eq(0) .editable').click();
@@ -80,16 +80,16 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', () => {
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{course-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageParents=(action 'something')
-      manageDescriptors=(action 'nothing')
+      remove=(action nothing)
+      manageParents=(action something)
+      manageDescriptors=(action nothing)
     }}`);
 
     this.$('td:eq(1) button').click();
@@ -101,16 +101,16 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', () => {
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{course-objective-list-item
       objective=objective
-      remove=(action 'nothing')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'something')
+      remove=(action nothing)
+      manageParents=(action nothing)
+      manageDescriptors=(action something)
     }}`);
 
     this.$('td:eq(2) button').click();
@@ -122,16 +122,16 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
-    this.actions.something = ()=>{
+    this.set('nothing', () => {});
+    this.set('something', () => {
       assert.ok(true);
-    };
+    });
 
     await render(hbs`{{course-objective-list-item
       objective=objective
-      remove=(action 'something')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'nothing')
+      remove=(action something)
+      manageParents=(action nothing)
+      manageDescriptors=(action nothing)
     }}`);
 
     this.$('td:eq(3) svg').click();
@@ -143,13 +143,13 @@ module('Integration | Component | course objective list item', function(hooks) {
       title: 'fake title',
     });
     this.set('objective', objective);
-    this.actions.nothing = parseInt;
+    this.set('nothing', () => {});
     await render(hbs`{{course-objective-list-item
       objective=objective
       editable=false
-      remove=(action 'nothing')
-      manageParents=(action 'nothing')
-      manageDescriptors=(action 'nothing')
+      remove=(action nothing)
+      manageParents=(action nothing)
+      manageDescriptors=(action nothing)
     }}`);
 
     assert.equal(this.$('td:eq(0)').text().trim(), 'fake title');
