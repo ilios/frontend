@@ -63,6 +63,15 @@ module.exports = {
       "globals": {
         "$": true,
       },
+      rules: {
+        "no-restricted-globals": [
+          "error",
+          {
+            name: "find",
+            message: "You forgot to import `find`, and we are preventing accidental usage of `window.find`."
+          },
+        ]
+      }
     }
   ]
 };
