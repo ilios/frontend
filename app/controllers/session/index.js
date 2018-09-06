@@ -1,20 +1,4 @@
 import Controller from '@ember/controller';
+import IndexController from 'ilios-common/mixins/session/index-controller';
 
-export default Controller.extend({
-  queryParams: {
-    sessionObjectiveDetails: 'sessionObjectiveDetails',
-    sessionTaxonomyDetails: 'sessionTaxonomyDetails',
-    isManagingLearnerGroups: 'isManagingLearnerGroups',
-    sessionLearnergroupDetails: 'sessionLearnergroupDetails',
-    sessionLeadershipDetails: 'sessionLeadershipDetails',
-    sessionManageLeadership: 'sessionManageLeadership',
-    showNewOfferingForm: 'addOffering',
-  },
-  sessionObjectiveDetails: false,
-  sessionTaxonomyDetails: false,
-  isManagingLearnerGroups: false,
-  sessionLearnergroupDetails: false,
-  sessionLeadershipDetails: false,
-  sessionManageLeadership: false,
-  showNewOfferingForm: false,
-});
+export default Controller.extend(IndexController);
