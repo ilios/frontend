@@ -68,19 +68,19 @@ module('Integration | Component | collapsed stewards', function(hooks) {
 
     const title = '.title';
     const table = 'table';
-    const school1Row = `${table} tbody tr:eq(0)`;
-    const school2Row = `${table} tbody tr:eq(1)`;
-    const school1Title = `${school1Row} td:eq(0)`;
-    const school2Title = `${school2Row} td:eq(0)`;
-    const school1Departments = `${school1Row} td:eq(1)`;
-    const school2Departments = `${school2Row} td:eq(1)`;
+    const school1Row = `${table} tbody tr:nth-of-type(1)`;
+    const school2Row = `${table} tbody tr:nth-of-type(2)`;
+    const school1Title = `${school1Row} td:nth-of-type(1)`;
+    const school2Title = `${school2Row} td:nth-of-type(1)`;
+    const school1Departments = `${school1Row} td:nth-of-type(2)`;
+    const school2Departments = `${school2Row} td:nth-of-type(2)`;
 
     await settled();
     assert.equal(find(title).textContent.trim(), 'Stewarding Schools and Departments (3)');
-    assert.equal(this.$(school1Title).text().trim(), 'school1');
-    assert.equal(this.$(school2Title).text().trim(), 'school2');
-    assert.equal(this.$(school1Departments).text().trim(), '2');
-    assert.equal(this.$(school2Departments).text().trim(), '1');
+    assert.equal(find(school1Title).textContent.trim(), 'school1');
+    assert.equal(find(school2Title).textContent.trim(), 'school2');
+    assert.equal(find(school1Departments).textContent.trim(), '2');
+    assert.equal(find(school2Departments).textContent.trim(), '1');
   });
 
   test('clicking the header expands the list', async function(assert) {

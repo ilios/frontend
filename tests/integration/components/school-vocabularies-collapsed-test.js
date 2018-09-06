@@ -31,17 +31,17 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
 
     const title = '.title';
     const vocabularies = 'table tbody tr';
-    const vocabulary1Title = `${vocabularies}:eq(0) td:eq(0)`;
-    const vocabulary1Terms = `${vocabularies}:eq(0) td:eq(1)`;
-    const vocabulary2Title = `${vocabularies}:eq(1) td:eq(0)`;
-    const vocabulary2Terms = `${vocabularies}:eq(1) td:eq(1)`;
+    const vocabulary1Title = `${vocabularies}:nth-of-type(1) td:nth-of-type(1)`;
+    const vocabulary1Terms = `${vocabularies}:nth-of-type(1) td:nth-of-type(2)`;
+    const vocabulary2Title = `${vocabularies}:nth-of-type(2) td:nth-of-type(1)`;
+    const vocabulary2Terms = `${vocabularies}:nth-of-type(2) td:nth-of-type(2)`;
 
     await settled();
     assert.equal(find(title).textContent.trim(), 'Vocabularies (2)');
-    assert.equal(this.$(vocabulary1Title).text().trim(), 'Vocabulary 1');
-    assert.equal(this.$(vocabulary1Terms).text().trim(), 'There are 2 terms');
-    assert.equal(this.$(vocabulary2Title).text().trim(), 'Vocabulary 2');
-    assert.equal(this.$(vocabulary2Terms).text().trim(), 'There is 1 term');
+    assert.equal(find(vocabulary1Title).textContent.trim(), 'Vocabulary 1');
+    assert.equal(find(vocabulary1Terms).textContent.trim(), 'There are 2 terms');
+    assert.equal(find(vocabulary2Title).textContent.trim(), 'Vocabulary 2');
+    assert.equal(find(vocabulary2Terms).textContent.trim(), 'There is 1 term');
   });
 
   test('clicking the header expands the list', async function(assert) {

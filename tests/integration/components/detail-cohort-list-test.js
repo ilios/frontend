@@ -56,14 +56,14 @@ module('Integration | Component | detail cohort list', function(hooks) {
     assert.equal(find(findAll('th')[2]).textContent, 'Cohort');
     assert.equal(find(findAll('th')[3]).textContent, 'Level');
     assert.equal(findAll('tbody tr').length, 2);
-    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'School of Life');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 'Professional Pie Eating');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 'Aardvark');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), '1');
-    assert.equal(find('tbody tr:eq(1) td').textContent.trim(), 'Starfleet Academy');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 'Doctor of Rocket Surgery');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 'Class of 2011');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), '2');
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'School of Life');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'Professional Pie Eating');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'Aardvark');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), '1');
+    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'Starfleet Academy');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Doctor of Rocket Surgery');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'Class of 2011');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), '2');
   });
 });
 

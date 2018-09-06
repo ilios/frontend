@@ -26,9 +26,9 @@ module('Integration | Component | course objective list item', function(hooks) {
     }}`);
 
     assert.equal(find('td').textContent.trim(), 'fake title');
-    assert.equal(find('td:eq(1) button').textContent.trim(), 'Add New');
-    assert.equal(find('td:eq(2) button').textContent.trim(), 'Add New');
-    assert.equal(findAll('td:eq(3) svg').length, 1);
+    assert.equal(find('td:nth-of-type(2) button').textContent.trim(), 'Add New');
+    assert.equal(find('td:nth-of-type(3) button').textContent.trim(), 'Add New');
+    assert.equal(findAll('td:nth-of-type(4) svg').length, 1);
   });
 
   test('renders removable', async function(assert) {
@@ -67,10 +67,10 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    await click('td:eq(0) .editable');
-    this.$('td:eq(0) .fr-box').froalaEditor('html.set', 'new title');
-    this.$('td:eq(0) .fr-box').froalaEditor('events.trigger', 'contentChanged');
-    await click('td:eq(0) .done');
+    await click('td:nth-of-type(1) .editable');
+    find('td:nth-of-type(1) .fr-box').froalaEditor('html.set', 'new title');
+    find('td:nth-of-type(1) .fr-box').froalaEditor('events.trigger', 'contentChanged');
+    await click('td:nth-of-type(1) .done');
 
     await settled();
   });
@@ -92,7 +92,7 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    await click('td:eq(1) button');
+    await click('td:nth-of-type(2) button');
 
   });
 
@@ -113,7 +113,7 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action something)
     }}`);
 
-    await click('td:eq(2) button');
+    await click('td:nth-of-type(3) button');
 
   });
 
@@ -134,7 +134,7 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    await click('td:eq(3) svg');
+    await click('td:nth-of-type(4) svg');
 
   });
 
@@ -153,10 +153,10 @@ module('Integration | Component | course objective list item', function(hooks) {
     }}`);
 
     assert.equal(find('td').textContent.trim(), 'fake title');
-    assert.equal(findAll('td:eq(0) .editable').length, 0, 'No in-place editor in read-only mode');
-    assert.equal(findAll('td:eq(1) button').length, 0, 'No edit button for parent objectives in read-only mode.');
+    assert.equal(findAll('td:nth-of-type(1) .editable').length, 0, 'No in-place editor in read-only mode');
+    assert.equal(findAll('td:nth-of-type(2) button').length, 0, 'No edit button for parent objectives in read-only mode.');
     assert.equal(find(findAll('td')[2]).textContent.trim(), 'None');
-    assert.equal(findAll('td:eq(2) button').length, 0, 'No edit button for MeSH terms in read-only mode.');
+    assert.equal(findAll('td:nth-of-type(3) button').length, 0, 'No edit button for MeSH terms in read-only mode.');
     assert.equal(find(findAll('td')[3]).textContent.trim(), '', 'No actions available in read-only mode.');
   });
 });

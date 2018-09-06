@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -78,13 +78,13 @@ module('Integration | Component | user profile learnergroups', function(hooks) {
   test('it renders', async function(assert) {
     this.set('user', user);
     await render(hbs`{{user-profile-learnergroups user=user}}`);
-    const learnerGroups = 'ul:eq(0) li';
-    const firstLearnerGroup = `${learnerGroups}:eq(0)`;
-    const secondLearnerGroup = `${learnerGroups}:eq(1)`;
+    const learnerGroups = 'ul:nth-of-type(1) li';
+    const firstLearnerGroup = `${learnerGroups}:nth-of-type(1)`;
+    const secondLearnerGroup = `${learnerGroups}:nth-of-type(2)`;
 
     await settled();
-    assert.equal(this.$(learnerGroups).length, 2, 'correct number of learner groups');
-    assert.equal(this.$(firstLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOD:Program2Cohort2—LearnerGroup2', 'cohort first learner group');
-    assert.equal(this.$(secondLearnerGroup).text().trim().replace(/[\n\s]+/g, ""), 'SOM:Program1Cohort1—LearnerGroup1', 'cohort second learner group');
+    assert.equal(findAll(learnerGroups).length, 2, 'correct number of learner groups');
+    assert.equal(find(firstLearnerGroup).textContent.trim().replace(/[\n\s]+/g, ""), 'SOD:Program2Cohort2—LearnerGroup2', 'cohort first learner group');
+    assert.equal(find(secondLearnerGroup).textContent.trim().replace(/[\n\s]+/g, ""), 'SOM:Program1Cohort1—LearnerGroup1', 'cohort second learner group');
   });
 });

@@ -37,8 +37,8 @@ module('Integration | Component | my profile', function(hooks) {
 
     assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
     assert.equal(find(findAll('[data-test-info] div')[1]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
-    assert.equal(find('[data-test-info] div:eq(2) li').textContent.trim(), 'a third cohort');
-    assert.equal(find(findAll('[data-test-info] div:eq(2) li')[1]).textContent.trim(), 'second cohort');
+    assert.equal(find('[data-test-info] div:nth-of-type(3) li').textContent.trim(), 'a third cohort');
+    assert.equal(find(findAll('[data-test-info] div:nth-of-type(3) li')[1]).textContent.trim(), 'second cohort');
 
   });
 
@@ -71,7 +71,7 @@ module('Integration | Component | my profile', function(hooks) {
 
   test('generates token when asked with good expiration date', async function(assert) {
     assert.expect(5);
-    const go = '.bigadd:eq(0)';
+    const go = '.bigadd:nth-of-type(1)';
     const newToken = '.new-token-result input';
     let ajaxMock = Service.extend({
       request(url){
@@ -96,7 +96,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    this.$(go).click();
+    find(go).click();
 
     return settled().then(()=> {
       assert.equal(find(newToken).value.trim(), 'new token');
@@ -105,8 +105,8 @@ module('Integration | Component | my profile', function(hooks) {
 
   test('clear and reset from new token screen', async function(assert) {
     assert.expect(4);
-    const cancel = '.bigcancel:eq(0)';
-    const go = '.bigadd:eq(0)';
+    const cancel = '.bigcancel:nth-of-type(1)';
+    const go = '.bigadd:nth-of-type(1)';
     const newToken = '.new-token-result input';
     const newTokenButton = 'button.new-token';
     const newTokenForm = '.new-token-form';
@@ -123,12 +123,12 @@ module('Integration | Component | my profile', function(hooks) {
       assert.ok(true);
     });
     await render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
-    await this.$(go).click();
+    await find(go).click();
     await settled();
 
     assert.equal(find(newToken).value.trim(), 'new token');
     assert.equal(findAll(newTokenForm).length, 0);
-    await this.$(cancel).click();
+    await find(cancel).click();
     await await click(newTokenButton);
     await settled();
     assert.equal(findAll(newTokenForm).length, 1);
@@ -151,8 +151,8 @@ module('Integration | Component | my profile', function(hooks) {
 
   test('Setting date changes request length', async function(assert) {
     assert.expect(4);
-    const go = '.bigadd:eq(0)';
-    const datePicker = '.new-token-form input:eq(0)';
+    const go = '.bigadd:nth-of-type(1)';
+    const datePicker = '.new-token-form input:nth-of-type(1)';
     let ajaxMock = Service.extend({
       request(url){
         assert.ok(url.search(/\/auth\/token\?ttl=P41D/) === 0, `URL ${url} matches request pattern.`);
@@ -175,9 +175,9 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`
     );
     let m = moment().add(41, 'days');
-    let interactor = openDatepicker(this.$(datePicker));
+    let interactor = openDatepicker(find(datePicker));
     interactor.selectDate(m.toDate());
-    this.$(go).click();
+    find(go).click();
 
     return settled();
   });
@@ -199,7 +199,7 @@ module('Integration | Component | my profile', function(hooks) {
 
   test('invalidate tokens when asked', async function(assert) {
     assert.expect(5);
-    const go = '.done:eq(0)';
+    const go = '.done:nth-of-type(1)';
     let ajaxMock = Service.extend({
       request(url){
         assert.equal(url, '/auth/invalidatetokens');
@@ -232,7 +232,7 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile showInvalidateTokens=true toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    this.$(go).click();
+    find(go).click();
     return settled();
   });
 });

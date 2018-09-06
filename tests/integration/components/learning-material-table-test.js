@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -11,12 +11,12 @@ module('Integration | Component | learning material table', function(hooks) {
   test('it renders', async function(assert) {
     const table = 'table';
     const rows = `${table} tbody tr`;
-    const title = `${rows}:eq(0) td:eq(0)`;
-    const owner = `${rows}:eq(0) td:eq(1)`;
-    const required = `${rows}:eq(0) td:eq(2)`;
-    const notes = `${rows}:eq(0) td:eq(3)`;
-    const mesh = `${rows}:eq(0) td:eq(4)`;
-    const status = `${rows}:eq(0) td:eq(5)`;
+    const title = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const owner = `${rows}:nth-of-type(1) td:nth-of-type(2)`;
+    const required = `${rows}:nth-of-type(1) td:nth-of-type(3)`;
+    const notes = `${rows}:nth-of-type(1) td:nth-of-type(4)`;
+    const mesh = `${rows}:nth-of-type(1) td:nth-of-type(5)`;
+    const status = `${rows}:nth-of-type(1) td:nth-of-type(6)`;
 
     const learningMaterial = EmberObject.create({
       learningMaterial: EmberObject.create({
@@ -40,12 +40,12 @@ module('Integration | Component | learning material table', function(hooks) {
       editable=true
     }}`);
 
-    assert.equal(this.$(rows).length, 1);
-    assert.equal(this.$(title).text().trim(), 'test title');
-    assert.equal(this.$(owner).text().trim(), 'Jolly Green Champ');
-    assert.equal(this.$(required).text().trim(), 'Yes');
-    assert.equal(this.$(notes).text().trim(), 'Yes');
-    assert.equal(this.$(mesh).text().trim(), 'None');
-    assert.equal(this.$(status).text().trim(), 'Good');
+    assert.equal(findAll(rows).length, 1);
+    assert.equal(find(title).textContent.trim(), 'test title');
+    assert.equal(find(owner).textContent.trim(), 'Jolly Green Champ');
+    assert.equal(find(required).textContent.trim(), 'Yes');
+    assert.equal(find(notes).textContent.trim(), 'Yes');
+    assert.equal(find(mesh).textContent.trim(), 'None');
+    assert.equal(find(status).textContent.trim(), 'Good');
   });
 });

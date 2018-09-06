@@ -95,34 +95,34 @@ module('Integration | Component | curriculum inventory sequence block session li
     assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'Total time', 'Column header is labeled correctly.');
     assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Offerings', 'Column header is labeled correctly.');
 
-    assert.equal(find('tbody tr:eq(0) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type title is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type title is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:eq(1) td').textContent.trim(), 'No', 'All offerings are counted individually.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), 'Yes', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
+    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'No', 'All offerings are counted individually.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Yes', 'Excluded value is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:eq(2) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
+    assert.equal(find('tbody tr:nth-of-type(3) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:eq(3) td').textContent.trim(), 'No', 'All offerings are counted individually.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
-    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
-    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
+    assert.equal(find('tbody tr:nth-of-type(4) td').textContent.trim(), 'No', 'All offerings are counted individually.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
+    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
+    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {

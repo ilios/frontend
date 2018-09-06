@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -25,14 +25,14 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', [user2, user1]);
 
     await render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
-    const directors = 'table tbody tr:eq(0) td:eq(0) li';
-    const administrators = 'table tbody tr:eq(0) td:eq(1) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(this.$(directors).length, 1);
-    assert.equal(this.$(directors).eq(0).text().trim(), 'a b person');
-    assert.equal(this.$(administrators).length, 2);
-    assert.equal(this.$(administrators).eq(0).text().trim(), 'a b person');
-    assert.equal(this.$(administrators).eq(1).text().trim(), 'b a person');
+    assert.equal(findAll(directors).length, 1);
+    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators).length, 2);
+    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
+    assert.equal(find(administrators).eq(1).textContent.trim(), 'b a person');
   });
 
   test('it renders without directors', async function(assert) {
@@ -45,10 +45,10 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', [user1]);
 
     await render(hbs`{{leadership-list showDirectors=false administrators=administrators}}`);
-    const administrators = 'table tbody tr:eq(0) td:eq(0) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
-    assert.equal(this.$(administrators).length, 1);
-    assert.equal(this.$(administrators).eq(0).text().trim(), 'a b person');
+    assert.equal(findAll(administrators).length, 1);
+    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
   });
 
   test('it renders without administrators', async function(assert) {
@@ -61,10 +61,10 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('directors', [user1]);
 
     await render(hbs`{{leadership-list showAdministrators=false directors=directors}}`);
-    const directors = 'table tbody tr:eq(0) td:eq(0) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
-    assert.equal(this.$(directors).length, 1);
-    assert.equal(this.$(directors).eq(0).text().trim(), 'a b person');
+    assert.equal(findAll(directors).length, 1);
+    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
   });
 
   test('it renders without data', async function(assert) {
@@ -73,13 +73,13 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', []);
 
     await render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
-    const directors = 'table tbody tr:eq(0) td:eq(0) li';
-    const administrators = 'table tbody tr:eq(0) td:eq(1) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(this.$(directors).length, 1);
-    assert.equal(this.$(directors).eq(0).text().trim(), 'None');
-    assert.equal(this.$(administrators).length, 1);
-    assert.equal(this.$(administrators).eq(0).text().trim(), 'None');
+    assert.equal(findAll(directors).length, 1);
+    assert.equal(find(directors).eq(0).textContent.trim(), 'None');
+    assert.equal(findAll(administrators).length, 1);
+    assert.equal(find(administrators).eq(0).textContent.trim(), 'None');
   });
 
   test('disabled users are indicated with an icon', async function(assert) {
@@ -100,17 +100,17 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', [user2, user1]);
 
     await render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
-    const directors = 'table tbody tr:eq(0) td:eq(0) li';
-    const administrators = 'table tbody tr:eq(0) td:eq(1) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const disabledDirectors = `${directors} .fa-user-times`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
 
-    assert.equal(this.$(directors).length, 1);
-    assert.equal(this.$(disabledDirectors).length, 0);
-    assert.equal(this.$(directors).eq(0).text().trim(), 'a b person');
-    assert.equal(this.$(administrators).length, 2);
-    assert.equal(this.$(disabledAdministrators).length, 1);
-    assert.equal(this.$(administrators).eq(0).text().trim(), 'a b person');
-    assert.equal(this.$(administrators).eq(1).text().trim(), 'b a person');
+    assert.equal(findAll(directors).length, 1);
+    assert.equal(findAll(disabledDirectors).length, 0);
+    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators).length, 2);
+    assert.equal(findAll(disabledAdministrators).length, 1);
+    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
+    assert.equal(find(administrators).eq(1).textContent.trim(), 'b a person');
   });
 });

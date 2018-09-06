@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -48,14 +48,14 @@ module('Integration | Component | user profile calendar', function(hooks) {
     this.set('user', user);
     await render(hbs`{{user-profile-calendar user=user}}`);
     const events = '.ilios-calendar-event';
-    const firstEventTitle = `${events}:eq(0) .ilios-calendar-event-name`;
-    const secondEventTitle = `${events}:eq(1) .ilios-calendar-event-name`;
-    const thirdEventTitle = `${events}:eq(2) .ilios-calendar-event-name`;
+    const firstEventTitle = `${events}:nth-of-type(1) .ilios-calendar-event-name`;
+    const secondEventTitle = `${events}:nth-of-type(2) .ilios-calendar-event-name`;
+    const thirdEventTitle = `${events}:nth-of-type(3) .ilios-calendar-event-name`;
     await settled();
 
-    assert.equal(this.$(firstEventTitle).text().trim(), 'first');
-    assert.equal(this.$(secondEventTitle).text().trim(), 'second');
-    assert.equal(this.$(thirdEventTitle).text().trim(), 'third');
+    assert.equal(find(firstEventTitle).textContent.trim(), 'first');
+    assert.equal(find(secondEventTitle).textContent.trim(), 'second');
+    assert.equal(find(thirdEventTitle).textContent.trim(), 'third');
   });
 
   test('clicking forward goes to next week', async function(assert) {
@@ -94,8 +94,8 @@ module('Integration | Component | user profile calendar', function(hooks) {
     this.set('user', user);
     await render(hbs`{{user-profile-calendar user=user}}`);
     const picker = '.calendar-time-picker li';
-    const goForward = `${picker}:eq(2)`;
-    this.$(goForward).click();
+    const goForward = `${picker}:nth-of-type(3)`;
+    find(goForward).click();
     await settled();
   });
 
@@ -135,8 +135,8 @@ module('Integration | Component | user profile calendar', function(hooks) {
     this.set('user', user);
     await render(hbs`{{user-profile-calendar user=user}}`);
     const picker = '.calendar-time-picker li';
-    const goBack = `${picker}:eq(0)`;
-    this.$(goBack).click();
+    const goBack = `${picker}:nth-of-type(1)`;
+    find(goBack).click();
     await settled();
   });
 });

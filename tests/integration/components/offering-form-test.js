@@ -37,7 +37,7 @@ module('Integration | Component | offering form', function(hooks) {
     const error = `${item} .validation-error-message`;
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0);
+      assert.equal(findAll(error).length, 0);
     });
   });
 
@@ -49,13 +49,13 @@ module('Integration | Component | offering form', function(hooks) {
     const input = `${item} input`;
     const error = `${item} .validation-error-message`;
     const save = '.buttons .done';
-    this.$(input).val(padStart('a', 300, 'a'));
+    find(input).val(padStart('a', 300, 'a'));
 
-    this.$(input).trigger('input');
+    find(input).trigger('input');
     await click(save);
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 1);
+      assert.equal(findAll(error).length, 1);
     });
   });
 
@@ -77,23 +77,23 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true}}`);
 
-    const sunday = '.make-recurring-days label:eq(0)';
-    const monday = '.make-recurring-days label:eq(1)';
-    const tuesday = '.make-recurring-days label:eq(2)';
-    const wednesday = '.make-recurring-days label:eq(3)';
-    const thursday = '.make-recurring-days label:eq(4)';
-    const friday = '.make-recurring-days label:eq(5)';
-    const saturday = '.make-recurring-days label:eq(6)';
+    const sunday = '.make-recurring-days label:nth-of-type(1)';
+    const monday = '.make-recurring-days label:nth-of-type(2)';
+    const tuesday = '.make-recurring-days label:nth-of-type(3)';
+    const wednesday = '.make-recurring-days label:nth-of-type(4)';
+    const thursday = '.make-recurring-days label:nth-of-type(5)';
+    const friday = '.make-recurring-days label:nth-of-type(6)';
+    const saturday = '.make-recurring-days label:nth-of-type(7)';
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    assert.equal(this.$(sunday).text().trim(), 'Sunday');
-    assert.equal(this.$(monday).text().trim(), 'Monday');
-    assert.equal(this.$(tuesday).text().trim(), 'Tuesday');
-    assert.equal(this.$(wednesday).text().trim(), 'Wednesday');
-    assert.equal(this.$(thursday).text().trim(), 'Thursday');
-    assert.equal(this.$(friday).text().trim(), 'Friday');
-    assert.equal(this.$(saturday).text().trim(), 'Saturday');
+    assert.equal(find(sunday).textContent.trim(), 'Sunday');
+    assert.equal(find(monday).textContent.trim(), 'Monday');
+    assert.equal(find(tuesday).textContent.trim(), 'Tuesday');
+    assert.equal(find(wednesday).textContent.trim(), 'Wednesday');
+    assert.equal(find(thursday).textContent.trim(), 'Thursday');
+    assert.equal(find(friday).textContent.trim(), 'Friday');
+    assert.equal(find(saturday).textContent.trim(), 'Saturday');
 
   });
 
@@ -108,7 +108,7 @@ module('Integration | Component | offering form', function(hooks) {
     await click(toggle);
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0);
+      assert.equal(findAll(error).length, 0);
     });
   });
 
@@ -123,12 +123,12 @@ module('Integration | Component | offering form', function(hooks) {
 
     await click(toggle);
     const save = '.buttons .done';
-    this.$(input).val(0).trigger('input');
+    find(input).val(0).trigger('input');
 
     await click(save);
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 1);
+      assert.equal(findAll(error).length, 1);
     });
   });
 
@@ -141,7 +141,7 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    let checkbox = this.$(inputs).eq(dayToday);
+    let checkbox = find(inputs).eq(dayToday);
     assert.ok(checkbox.is(':checked'));
     assert.ok(checkbox.is(':disabled'));
   });
@@ -173,7 +173,7 @@ module('Integration | Component | offering form', function(hooks) {
     );
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(this.$(startDate));
+    let interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseStartDate.year(),
@@ -205,7 +205,7 @@ module('Integration | Component | offering form', function(hooks) {
     );
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(this.$(startDate));
+    let interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseEndDate.year(),
@@ -238,7 +238,7 @@ module('Integration | Component | offering form', function(hooks) {
     );
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(this.$(startDate));
+    let interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       today.year(),
@@ -320,11 +320,11 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true save=(action save)}}`);
 
     await click(toggle);
-    let interactor = openDatepicker(this.$(startDateInput));
+    let interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
 
-    this.$(inputs).eq(thursday).click().change();
-    this.$(inputs).eq(tuesday).click().change();
+    find(inputs).eq(thursday).click().change();
+    find(inputs).eq(tuesday).click().change();
 
     await click(save);
 
@@ -380,10 +380,10 @@ module('Integration | Component | offering form', function(hooks) {
 
     await click(toggle);
     await fillIn(weeks, 3);
-    let interactor = openDatepicker(this.$(startDateInput));
+    let interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
-    this.$(inputs).eq(thursday).click().change();
-    this.$(inputs).eq(tuesday).click().change();
+    find(inputs).eq(thursday).click().change();
+    find(inputs).eq(tuesday).click().change();
 
     await click(save);
 
@@ -398,7 +398,7 @@ module('Integration | Component | offering form', function(hooks) {
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     const newStartDate = moment().add(1, 'day').toDate();
-    let interactor = openDatepicker(this.$(startDate));
+    let interactor = openDatepicker(find(startDate));
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
     interactor.selectDate(newStartDate);
     assert.equal(moment(newStartDate).hour(9).minute(0).format(format), find(endDate).textContent.trim());
@@ -409,15 +409,15 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
-    const startHour = '.start-time select:eq(0)';
-    const startMinute = '.start-time select:eq(1)';
-    const startAmPm = '.start-time select:eq(2)';
+    const startHour = '.start-time select:nth-of-type(1)';
+    const startMinute = '.start-time select:nth-of-type(2)';
+    const startAmPm = '.start-time select:nth-of-type(3)';
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    this.$(startHour).val('2').change();
-    this.$(startMinute).val('15').change();
-    this.$(startAmPm).val('pm').change();
+    find(startHour).val('2').change();
+    find(startMinute).val('15').change();
+    find(startAmPm).val('pm').change();
 
     assert.equal(moment().hour(15).minute(15).format(format), find(endDate).textContent.trim());
 
@@ -448,18 +448,18 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
-    const startHour = '.start-time select:eq(0)';
-    const startMinute = '.start-time select:eq(1)';
-    const startAmPm = '.start-time select:eq(2)';
+    const startHour = '.start-time select:nth-of-type(1)';
+    const startMinute = '.start-time select:nth-of-type(2)';
+    const startAmPm = '.start-time select:nth-of-type(3)';
     const durationHour = '.offering-duration .hours input';
     const durationMinute = '.offering-duration .minutes input';
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    this.$(startHour).val('2').change();
-    this.$(startHour).val('2').change();
-    this.$(startMinute).val('10').change();
-    this.$(startAmPm).val('pm').change();
+    find(startHour).val('2').change();
+    find(startHour).val('2').change();
+    find(startMinute).val('10').change();
+    find(startAmPm).val('pm').change();
     await fillIn(durationHour, '2');
     await triggerEvent(durationHour, 'input');
 
@@ -481,7 +481,7 @@ module('Integration | Component | offering form', function(hooks) {
     const error = `${item} .validation-error-message`;
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0);
+      assert.equal(findAll(error).length, 0);
     });
   });
 
@@ -496,7 +496,7 @@ module('Integration | Component | offering form', function(hooks) {
     await click(save);
 
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 1);
+      assert.equal(findAll(error).length, 1);
     });
   });
 
@@ -524,7 +524,7 @@ module('Integration | Component | offering form', function(hooks) {
     assert.equal(find(durationHours).value, '1');
     assert.equal(find(durationMinutes).value, '0');
 
-    let interactor = openDatepicker(this.$(startDate));
+    let interactor = openDatepicker(find(startDate));
     return settled().then(()=> {
       assert.equal(
         interactor.selectedYear(),

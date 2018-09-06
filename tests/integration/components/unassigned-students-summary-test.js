@@ -59,10 +59,10 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
 
-    let options = this.$('option');
+    let options = find('option');
     assert.equal(options.length, 2);
-    assert.equal(options.eq(0).text().trim(), 'school 0');
-    assert.equal(options.eq(1).text().trim(), 'school 1');
+    assert.equal(options.eq(0).textContent.trim(), 'school 0');
+    assert.equal(options.eq(1).textContent.trim(), 'school 1');
 
     assert.equal(findAll('button').length, 1);
 
@@ -90,7 +90,7 @@ module('Integration | Component | unassigned students summary', function(hooks) 
       assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
       assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
 
-      assert.notOk(this.$('div').eq(0).hasClass('alert'));
+      assert.notOk(find('div').eq(0).hasClass('alert'));
       assert.equal(findAll('button').length, 0);
     });
   });

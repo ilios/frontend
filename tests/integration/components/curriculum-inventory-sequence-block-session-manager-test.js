@@ -100,34 +100,34 @@ module('Integration | Component | curriculum inventory sequence block session ma
     assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'Total time', 'Column header is labeled correctly.');
     assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Offerings', 'Column header is labeled correctly.');
 
-    assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.notOk(this.$('tbody tr:eq(0) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
+    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').is(':checked'), 'Excluded is not checked.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
 
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').is(':checked'), 'Excluded is not checked.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
 
-    assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.notOk(this.$('tbody tr:eq(2) td:eq(1) input').is(':checked'), 'Excluded is not checked.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(2) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
+    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').is(':checked'), 'Excluded is not checked.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
 
-    assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.ok(this.$('tbody tr:eq(3) td:eq(1) input').is(':checked'), 'Excluded is checked.');
-    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILM is labeled as such.');
-    assert.ok(find(findAll('tbody tr:eq(3) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:eq(3) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
+    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').is(':checked'), 'Excluded is checked.');
+    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILM is labeled as such.');
+    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
+    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {
@@ -261,11 +261,11 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
-    this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', false).trigger('click');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalSumDuration);
-    this.$('tbody tr:eq(0) td:eq(0) input').prop('checked', true).trigger('click');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
+    find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').prop('checked', false).trigger('click');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalSumDuration);
+    find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').prop('checked', true).trigger('click');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
   });
 
   test('change count as one offering for all sessions', async function(assert) {
@@ -303,16 +303,16 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`
     );
 
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
-    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalSumDuration);
 
-    this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), maxDuration);
-    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), maxDuration);
+    find('thead tr:nth-of-type(1) th:nth-of-type(1) input').prop('checked', true).trigger('click');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), maxDuration);
 
-    this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
-    assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), totalSumDuration);
-    assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), totalSumDuration);
+    find('thead tr:nth-of-type(1) th:nth-of-type(1) input').prop('checked', false).trigger('click');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalSumDuration);
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalSumDuration);
   });
 
   test('save', async function(assert) {
@@ -365,9 +365,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action save)}}`
     );
-    this.$('tbody tr:eq(1) td:eq(0) input').prop('checked', true).trigger('click');
-    this.$('tbody tr:eq(0) td:eq(1) input').prop('checked', true).trigger('click');
-    this.$('tbody tr:eq(2) td:eq(1) input').prop('checked', false).trigger('click');
+    find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').prop('checked', true).trigger('click');
+    find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').prop('checked', true).trigger('click');
+    find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').prop('checked', false).trigger('click');
     await click('.actions .bigadd');
   });
 
@@ -468,25 +468,25 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.notOk(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
 
-    this.$('thead tr:eq(0) th:eq(0) input').prop('checked', true).trigger('click');
-    assert.ok(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is checked.');
+    find('thead tr:nth-of-type(1) th:nth-of-type(1) input').prop('checked', true).trigger('click');
+    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is checked.');
 
-    this.$('thead tr:eq(0) th:eq(0) input').prop('checked', false).trigger('click');
-    assert.notOk(this.$('tbody tr:eq(0) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(2) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(3) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(4) td:eq(0) input').is(':checked'), 'Count offerings as one is un-checked.');
+    find('thead tr:nth-of-type(1) th:nth-of-type(1) input').prop('checked', false).trigger('click');
+    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').is(':checked'), 'Count offerings as one is un-checked.');
   });
 
 
@@ -556,25 +556,25 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.notOk(this.$('tbody tr:eq(0) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(2) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(3) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.ok(this.$('tbody tr:eq(4) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
 
-    this.$('thead tr:eq(0) th:eq(1) input').prop('checked', true).trigger('click');
-    assert.ok(this.$('tbody tr:eq(0) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(1) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(2) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(3) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
-    assert.ok(this.$('tbody tr:eq(4) td:eq(1) input').is(':checked'), 'Count offerings as one is checked.');
+    find('thead tr:nth-of-type(1) th:nth-of-type(2) input').prop('checked', true).trigger('click');
+    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
+    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is checked.');
 
-    this.$('thead tr:eq(0) th:eq(1) input').prop('checked', false).trigger('click');
-    assert.notOk(this.$('tbody tr:eq(0) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(1) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(2) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(3) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
-    assert.notOk(this.$('tbody tr:eq(4) td:eq(1) input').is(':checked'), 'Count offerings as one is un-checked.');
+    find('thead tr:nth-of-type(1) th:nth-of-type(2) input').prop('checked', false).trigger('click');
+    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
+    assert.notOk(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').is(':checked'), 'Count offerings as one is un-checked.');
   });
 });
 

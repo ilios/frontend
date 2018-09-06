@@ -21,14 +21,14 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     }}`);
     const title = '.title';
     const table = 'table';
-    const directorsRow = `${table} tbody tr:eq(0)`;
-    const administratorsRow = `${table} tbody tr:eq(1)`;
-    const directors = `${directorsRow} td:eq(1)`;
-    const administrators = `${administratorsRow} td:eq(1)`;
+    const directorsRow = `${table} tbody tr:nth-of-type(1)`;
+    const administratorsRow = `${table} tbody tr:nth-of-type(2)`;
+    const directors = `${directorsRow} td:nth-of-type(2)`;
+    const administrators = `${administratorsRow} td:nth-of-type(2)`;
 
     assert.equal(find(title).textContent.trim(), 'Test Title');
-    assert.equal(this.$(directors).text().trim(), 'There are 3 directors');
-    assert.equal(this.$(administrators).text().trim(), 'There is 1 administrator');
+    assert.equal(find(directors).textContent.trim(), 'There are 3 directors');
+    assert.equal(find(administrators).textContent.trim(), 'There is 1 administrator');
   });
 
   test('clicking the header expands the list', async function(assert) {
@@ -63,11 +63,11 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     }}`);
     const title = '.title';
     const table = 'table';
-    const administratorsRow = `${table} tbody tr:eq(0)`;
-    const administrators = `${administratorsRow} td:eq(1)`;
+    const administratorsRow = `${table} tbody tr:nth-of-type(1)`;
+    const administrators = `${administratorsRow} td:nth-of-type(2)`;
 
     assert.equal(find(title).textContent.trim(), 'Test Title');
-    assert.equal(this.$(administrators).text().trim(), 'There is 1 administrator');
+    assert.equal(find(administrators).textContent.trim(), 'There is 1 administrator');
   });
 
   test('it renders without administrators', async function(assert) {
@@ -86,10 +86,10 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     }}`);
     const title = '.title';
     const table = 'table';
-    const directorsRow = `${table} tbody tr:eq(0)`;
-    const directors = `${directorsRow} td:eq(1)`;
+    const directorsRow = `${table} tbody tr:nth-of-type(1)`;
+    const directors = `${directorsRow} td:nth-of-type(2)`;
 
     assert.equal(find(title).textContent.trim(), 'Test Title');
-    assert.equal(this.$(directors).text().trim(), 'There are 3 directors');
+    assert.equal(find(directors).textContent.trim(), 'There are 3 directors');
   });
 });

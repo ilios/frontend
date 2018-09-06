@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/string';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -60,46 +60,46 @@ module('Integration | Component | school session types list', function(hooks) {
     await settled();
 
     const rows = 'table tbody tr';
-    const firstSessionType = `${rows}:eq(0)`;
-    const firstTitle = `${firstSessionType} td:eq(0)`;
-    const firstSessionCount = `${firstSessionType} td:eq(1)`;
-    const firstAssessment = `${firstSessionType} td:eq(2) svg`;
-    const firstAssessmentOption = `${firstSessionType} td:eq(3)`;
-    const firstColorBox = `${firstSessionType} td:eq(5) .box`;
-    const secondSessionType = `${rows}:eq(1)`;
-    const secondTitle = `${secondSessionType} td:eq(0)`;
-    const secondSessionCount = `${secondSessionType} td:eq(1)`;
-    const secondAssessment = `${secondSessionType} td:eq(2) svg`;
-    const secondAssessmentOption = `${secondSessionType} td:eq(3)`;
-    const secondColorBox = `${secondSessionType} td:eq(5) .box`;
-    const thirdSessionType = `${rows}:eq(2)`;
-    const thirdTitle = `${thirdSessionType} td:eq(0)`;
-    const thirdSessionCount = `${thirdSessionType} td:eq(1)`;
-    const thirdAssessment = `${thirdSessionType} td:eq(2) svg`;
-    const thirdAssessmentOption = `${thirdSessionType} td:eq(3)`;
-    const thirdColorBox = `${thirdSessionType} td:eq(5) .box`;
+    const firstSessionType = `${rows}:nth-of-type(1)`;
+    const firstTitle = `${firstSessionType} td:nth-of-type(1)`;
+    const firstSessionCount = `${firstSessionType} td:nth-of-type(2)`;
+    const firstAssessment = `${firstSessionType} td:nth-of-type(3) svg`;
+    const firstAssessmentOption = `${firstSessionType} td:nth-of-type(4)`;
+    const firstColorBox = `${firstSessionType} td:nth-of-type(6) .box`;
+    const secondSessionType = `${rows}:nth-of-type(2)`;
+    const secondTitle = `${secondSessionType} td:nth-of-type(1)`;
+    const secondSessionCount = `${secondSessionType} td:nth-of-type(2)`;
+    const secondAssessment = `${secondSessionType} td:nth-of-type(3) svg`;
+    const secondAssessmentOption = `${secondSessionType} td:nth-of-type(4)`;
+    const secondColorBox = `${secondSessionType} td:nth-of-type(6) .box`;
+    const thirdSessionType = `${rows}:nth-of-type(3)`;
+    const thirdTitle = `${thirdSessionType} td:nth-of-type(1)`;
+    const thirdSessionCount = `${thirdSessionType} td:nth-of-type(2)`;
+    const thirdAssessment = `${thirdSessionType} td:nth-of-type(3) svg`;
+    const thirdAssessmentOption = `${thirdSessionType} td:nth-of-type(4)`;
+    const thirdColorBox = `${thirdSessionType} td:nth-of-type(6) .box`;
 
-    assert.equal(this.$(firstTitle).text().trim(), 'first');
-    assert.equal(this.$(firstSessionCount).text().trim(), '2');
-    assert.ok(this.$(firstAssessment).hasClass('no'));
-    assert.ok(this.$(firstAssessment).hasClass('fa-ban'));
-    assert.equal(this.$(firstAssessmentOption).text().trim(), '');
-    assert.equal(this.$(firstColorBox).css('background-color').trim(), ('rgb(204, 204, 204)'));
+    assert.equal(find(firstTitle).textContent.trim(), 'first');
+    assert.equal(find(firstSessionCount).textContent.trim(), '2');
+    assert.ok(find(firstAssessment).hasClass('no'));
+    assert.ok(find(firstAssessment).hasClass('fa-ban'));
+    assert.equal(find(firstAssessmentOption).textContent.trim(), '');
+    assert.equal(find(firstColorBox).css('background-color').trim(), ('rgb(204, 204, 204)'));
 
-    assert.equal(this.$(secondTitle).text().trim(), 'second');
-    assert.equal(this.$(secondSessionCount).text().trim(), '0');
-    assert.ok(this.$(secondAssessment).hasClass('yes'));
-    assert.ok(this.$(secondAssessment).hasClass('fa-check'));
-    assert.equal(this.$(secondAssessmentOption).text().trim(), 'formative');
-    assert.equal(this.$(secondColorBox).css('background-color').trim(), ('rgb(18, 52, 86)'));
+    assert.equal(find(secondTitle).textContent.trim(), 'second');
+    assert.equal(find(secondSessionCount).textContent.trim(), '0');
+    assert.ok(find(secondAssessment).hasClass('yes'));
+    assert.ok(find(secondAssessment).hasClass('fa-check'));
+    assert.equal(find(secondAssessmentOption).textContent.trim(), 'formative');
+    assert.equal(find(secondColorBox).css('background-color').trim(), ('rgb(18, 52, 86)'));
 
-    assert.ok(this.$(thirdTitle).text().trim().startsWith('not needed anymore'));
-    assert.ok(this.$(thirdTitle).text().trim().endsWith('(inactive)'));
-    assert.equal(this.$(thirdSessionCount).text().trim(), '2');
-    assert.ok(this.$(thirdAssessment).hasClass('no'));
-    assert.ok(this.$(thirdAssessment).hasClass('fa-ban'));
-    assert.equal(this.$(thirdAssessmentOption).text().trim(), '');
-    assert.equal(this.$(thirdColorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
+    assert.ok(find(thirdTitle).textContent.trim().startsWith('not needed anymore'));
+    assert.ok(find(thirdTitle).textContent.trim().endsWith('(inactive)'));
+    assert.equal(find(thirdSessionCount).textContent.trim(), '2');
+    assert.ok(find(thirdAssessment).hasClass('no'));
+    assert.ok(find(thirdAssessment).hasClass('fa-ban'));
+    assert.equal(find(thirdAssessmentOption).textContent.trim(), '');
+    assert.equal(find(thirdColorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
   });
 
   test('clicking edit fires action', async function(assert) {
@@ -124,9 +124,9 @@ module('Integration | Component | school session types list', function(hooks) {
 
     await settled();
     const rows = 'table tbody tr';
-    const edit = `${rows}:eq(0) td:eq(6) .fa-edit`;
+    const edit = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-edit`;
 
-    this.$(edit).click();
+    find(edit).click();
   });
 
   test('clicking title fires action', async function(assert) {
@@ -151,9 +151,9 @@ module('Integration | Component | school session types list', function(hooks) {
 
     await settled();
     const rows = 'table tbody tr';
-    const title = `${rows}:eq(0) td:eq(0) a`;
+    const title = `${rows}:nth-of-type(1) td:nth-of-type(1) a`;
 
-    this.$(title).click();
+    find(title).click();
   });
 
   test('session types without sessions can be deleted', async function(assert) {
@@ -197,15 +197,15 @@ module('Integration | Component | school session types list', function(hooks) {
 
     await settled();
     const rows = 'table tbody tr';
-    const linkedTitle = `${rows}:eq(0) td:eq(0)`;
-    const unlinkedTitle = `${rows}:eq(1) td:eq(0)`;
-    const linkedTrash = `${rows}:eq(0) td:eq(6) .fa-trash`;
-    const unlinkedTrash = `${rows}:eq(1) td:eq(6) .fa-trash`;
+    const linkedTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const unlinkedTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const linkedTrash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash`;
+    const unlinkedTrash = `${rows}:nth-of-type(2) td:nth-of-type(7) .fa-trash`;
 
-    assert.equal(this.$(linkedTitle).text().trim(), 'linked', 'linked is first');
-    assert.equal(this.$(unlinkedTitle).text().trim(), 'unlinked', 'unlinked is second');
-    assert.equal(this.$(linkedTrash).length, 0, 'linked has no trash can');
-    assert.equal(this.$(unlinkedTrash).length, 1, 'unlinked has a trash can');
+    assert.equal(find(linkedTitle).textContent.trim(), 'linked', 'linked is first');
+    assert.equal(find(unlinkedTitle).textContent.trim(), 'unlinked', 'unlinked is second');
+    assert.equal(findAll(linkedTrash).length, 0, 'linked has no trash can');
+    assert.equal(findAll(unlinkedTrash).length, 1, 'unlinked has a trash can');
   });
 
   test('clicking delete deletes the record', async function(assert) {
@@ -237,9 +237,9 @@ module('Integration | Component | school session types list', function(hooks) {
 
     await settled();
     const rows = 'table tbody tr';
-    const trash = `${rows}:eq(0) td:eq(6) .fa-trash`;
+    const trash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash`;
 
-    this.$(trash).click();
+    find(trash).click();
     await settled();
   });
 });

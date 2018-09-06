@@ -38,8 +38,8 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
 
   test('can remove groups', async function(assert) {
     assert.expect(5);
-    const group1 = 'li:eq(2)';
-    const group2 = 'li:eq(3)';
+    const group1 = 'li:nth-of-type(3)';
+    const group2 = 'li:nth-of-type(4)';
     const saveButton = 'button.bigadd';
     const learnerGroup = EmberObject.create({
       title: 'this group',
@@ -77,18 +77,18 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       close=(action nothing)
     }}`);
 
-    assert.equal(this.$(group1).text().trim(), 'test group |');
-    assert.equal(this.$(group2).text().trim(), 'test group 2 |');
+    assert.equal(find(group1).textContent.trim(), 'test group |');
+    assert.equal(find(group2).textContent.trim(), 'test group 2 |');
 
-    this.$(group1).click();
+    find(group1).click();
 
     return settled(await click(saveButton));
   });
 
   test('can remove users', async function(assert) {
     assert.expect(5);
-    const user1 = 'li:eq(0)';
-    const user2 = 'li:eq(1)';
+    const user1 = 'li:nth-of-type(1)';
+    const user2 = 'li:nth-of-type(2)';
     const saveButton = 'button.bigadd';
     const learnerGroup = EmberObject.create({
       title: 'this group',
@@ -126,10 +126,10 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       close=(action nothing)
     }}`);
 
-    assert.equal(this.$(user1).text().trim(), 'test person |');
-    assert.equal(this.$(user2).text().trim(), 'test person 2 |');
+    assert.equal(find(user1).textContent.trim(), 'test person |');
+    assert.equal(find(user2).textContent.trim(), 'test person 2 |');
 
-    this.$(user1).click();
+    find(user1).click();
 
     return settled(await click(saveButton));
   });

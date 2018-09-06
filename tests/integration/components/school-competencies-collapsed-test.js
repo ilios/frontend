@@ -28,12 +28,12 @@ module('Integration | Component | school competencies collapsed', function(hooks
     await render(hbs`{{school-competencies-collapsed school=school expand=(action click)}}`);
     const title = '.title';
     const domains = 'table tbody tr';
-    const domainTitle = `${domains}:eq(0) td:eq(0)`;
-    const children = `${domains}:eq(0) td:eq(1)`;
+    const domainTitle = `${domains}:nth-of-type(1) td:nth-of-type(1)`;
+    const children = `${domains}:nth-of-type(1) td:nth-of-type(2)`;
 
     await settled();
     assert.equal(find(title).textContent.trim(), 'Competencies (1/1)');
-    assert.equal(this.$(domainTitle).text().trim(), 'domain 0');
-    assert.equal(this.$(children).text().trim(), 'There is 1 competency');
+    assert.equal(find(domainTitle).textContent.trim(), 'domain 0');
+    assert.equal(find(children).textContent.trim(), 'There is 1 competency');
   });
 });

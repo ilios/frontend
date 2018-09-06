@@ -39,13 +39,13 @@ module('Integration | Component | school competencies expanded', function(hooks)
 
     const title = '.title';
     const domains = '[data-test-domains] > li';
-    const domainTitle = `${domains}:eq(0)`;
+    const domainTitle = `${domains}:nth-of-type(1)`;
 
     await settled();
     assert.equal(find(title).textContent.trim(), 'Competencies (1/2)');
     assert.equal(findAll(domains).length, 1);
-    assert.ok(this.$(domainTitle).text().includes('domain 0'));
-    assert.ok(this.$(domainTitle).text().includes('competency 0'));
-    assert.ok(this.$(domainTitle).text().includes('competency 1'));
+    assert.ok(find(domainTitle).text().includes('domain 0'));
+    assert.ok(find(domainTitle).text().includes('competency 0'));
+    assert.ok(find(domainTitle).text().includes('competency 1'));
   });
 });

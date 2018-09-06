@@ -29,8 +29,8 @@ module('Integration | Component | course director manager', function(hooks) {
     const fakeUser1 = EmberObject.create({fullName: 'test person 1'});
     const fakeUser2 = EmberObject.create({fullName: 'test person 2'});
 
-    const user1 = 'li:eq(0)';
-    const user2 = 'li:eq(1)';
+    const user1 = 'li:nth-of-type(1)';
+    const user2 = 'li:nth-of-type(2)';
     const saveButton = 'button.bigadd';
 
     this.set('nothing', parseInt);
@@ -46,10 +46,10 @@ module('Integration | Component | course director manager', function(hooks) {
       close=(action nothing)
     }}`);
 
-    assert.equal(this.$(user1).text().trim(), 'test person 1');
-    assert.equal(this.$(user2).text().trim(), 'test person 2');
+    assert.equal(find(user1).textContent.trim(), 'test person 1');
+    assert.equal(find(user2).textContent.trim(), 'test person 2');
 
-    this.$(user1).click();
+    find(user1).click();
 
     return settled(await click(saveButton));
   });

@@ -28,11 +28,11 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       manageVocabulary=(action nothing)
     }}`);
 
-    const all = '.breadcrumbs span:eq(0)';
-    const vocab = '.breadcrumbs span:eq(1)';
+    const all = '.breadcrumbs span:nth-of-type(1)';
+    const vocab = '.breadcrumbs span:nth-of-type(2)';
 
-    assert.equal(this.$(all).text().trim(), 'All Vocabularies');
-    assert.equal(this.$(vocab).text().trim(), vocabulary.title);
+    assert.equal(find(all).textContent.trim(), 'All Vocabularies');
+    assert.equal(find(vocab).textContent.trim(), vocabulary.title);
     assert.equal(find('.terms ul li').textContent.trim(), 'first (inactive)');
     assert.equal(find(findAll('.terms ul li')[1]).textContent.trim(), 'second');
   });

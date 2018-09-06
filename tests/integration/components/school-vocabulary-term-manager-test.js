@@ -59,20 +59,20 @@ module('Integration | Component | school vocabulary term manager', function(hook
       canCreate=true
     }}`);
 
-    const all = '.breadcrumbs span:eq(0)';
-    const vocab = '.breadcrumbs span:eq(1)';
-    const firstParent = '.breadcrumbs span:eq(3)';
-    const secondParent = '.breadcrumbs span:eq(2)';
-    const termCrumb = '.breadcrumbs span:eq(4)';
+    const all = '.breadcrumbs span:nth-of-type(1)';
+    const vocab = '.breadcrumbs span:nth-of-type(2)';
+    const firstParent = '.breadcrumbs span:nth-of-type(4)';
+    const secondParent = '.breadcrumbs span:nth-of-type(3)';
+    const termCrumb = '.breadcrumbs span:nth-of-type(5)';
 
     const termTitle = '.term-title .editinplace';
     const termDescription = '.term-description .editinplace';
 
-    assert.equal(this.$(all).text().trim(), 'All Vocabularies');
-    assert.equal(this.$(vocab).text().trim(), vocabulary.title);
-    assert.equal(this.$(firstParent).text().trim(), 'first');
-    assert.equal(this.$(secondParent).text().trim(), 'second');
-    assert.equal(this.$(termCrumb).text().trim(), title);
+    assert.equal(find(all).textContent.trim(), 'All Vocabularies');
+    assert.equal(find(vocab).textContent.trim(), vocabulary.title);
+    assert.equal(find(firstParent).textContent.trim(), 'first');
+    assert.equal(find(secondParent).textContent.trim(), 'second');
+    assert.equal(find(termCrumb).textContent.trim(), title);
     assert.equal(find(termTitle).textContent.trim(), title);
     assert.equal(find(termDescription).textContent.trim(), description);
     assert.equal(find('.terms ul li').textContent.trim(), 'first child');
@@ -112,11 +112,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.notOk(this.$(toggleValue).is(':checked'));
-    this.$(toggle).click();
+    assert.notOk(find(toggleValue).is(':checked'));
+    find(toggle).click();
     await settled();
     assert.ok(term.get('active'));
-    assert.ok(this.$(toggleValue).is(':checked'));
+    assert.ok(find(toggleValue).is(':checked'));
   });
 
   test('inactive active term', async function(assert) {
@@ -152,10 +152,10 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.ok(this.$(toggleValue).is(':checked'));
-    this.$(toggle).click();
+    assert.ok(find(toggleValue).is(':checked'));
+    find(toggle).click();
     await settled();
     assert.notOk(term.get('active'));
-    assert.notOk(this.$(toggleValue).is(':checked'));
+    assert.notOk(find(toggleValue).is(':checked'));
   });
 });

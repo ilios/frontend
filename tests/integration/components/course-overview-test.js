@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -35,13 +35,13 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
+    find(button).click();
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('a').trigger('input');
-      this.$(save).click();
+      assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+      find(input).val('a').trigger('input');
+      find(save).click();
       settled().then(() => {
-        assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
+        assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
       });
     });
   });
@@ -58,13 +58,13 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
+    find(button).click();
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('tooLong'.repeat(50)).trigger('input');
-      this.$(save).click();
+      assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+      find(input).val('tooLong'.repeat(50)).trigger('input');
+      find(save).click();
       settled().then(() => {
-        assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
+        assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
       });
     });
   });
@@ -92,13 +92,13 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
+    find(button).click();
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('legit').trigger('input');
-      this.$(save).click();
+      assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+      find(input).val('legit').trigger('input');
+      find(save).click();
       settled().then(() => {
-        assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');
+        assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
       });
     });
   });
@@ -126,13 +126,13 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
+    find(button).click();
     return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('').trigger('input');
-      this.$(save).click();
+      assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+      find(input).val('').trigger('input');
+      find(save).click();
       settled().then(() => {
-        assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');
+        assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
       });
     });
   });

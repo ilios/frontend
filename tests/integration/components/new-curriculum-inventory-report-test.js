@@ -43,7 +43,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       'Current year is selected by default.'
     );
     assert.equal(
-      this.$('[data-test-academic-year] option').filter(":selected").text().trim(),
+      this.$('[data-test-academic-year] option').filter(":selected").textContent.trim(),
       currentYearLabel,
       'Current year label is correct.'
     );
@@ -107,7 +107,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
     await fillIn('[data-test-name] input', 'new report');
     await fillIn('[data-test-description] textarea', 'lorem ipsum');
-    this.$('[data-test-academic-year] option:eq(0)').prop('selected', true).change();
+    this.$('[data-test-academic-year] option:nth-of-type(1)').prop('selected', true).change();
     await click('button.done');
   });
 

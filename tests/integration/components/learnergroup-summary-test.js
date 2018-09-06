@@ -71,12 +71,12 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       isBulkAssigning=false
     }}`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';
+    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
     const instructors = '.learnergroup-overview .defaultinstructors span';
     const courses = '.learnergroup-overview .associatedcourses div';
 
     return settled().then(()=>{
-      assert.equal(this.$(defaultLocation).text().trim(), 'test location');
+      assert.equal(find(defaultLocation).textContent.trim(), 'test location');
       assert.equal(find(instructors).textContent.trim(), 'user5; user6');
       assert.equal(find(courses).textContent.trim(), 'test course 1; test course 2');
     });
@@ -128,18 +128,18 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       isBulkAssigning=false
     }}`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:eq(0)';
+    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
     const editLocation = `${defaultLocation} .editable`;
     const input =  `${defaultLocation} input`;
     const save =  `${defaultLocation} .done`;
     return settled().then(()=>{
-      assert.equal(this.$(defaultLocation).text().trim(), 'test location');
-      this.$(editLocation).click();
+      assert.equal(find(defaultLocation).textContent.trim(), 'test location');
+      find(editLocation).click();
       return settled().then(()=> {
-        this.$(input).val('new location name').trigger('input');
-        this.$(save).click();
+        find(input).val('new location name').trigger('input');
+        find(save).click();
         return settled().then(()=> {
-          assert.equal(this.$(defaultLocation).text().trim(), 'new location name');
+          assert.equal(find(defaultLocation).textContent.trim(), 'new location name');
         });
       });
     });

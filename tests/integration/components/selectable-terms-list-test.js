@@ -62,15 +62,15 @@ module('Integration | Component | selectable terms list', function(hooks) {
     );
 
     assert.equal(findAll('li').length, 5);
-    assert.equal(find('li:eq(0) > div').textContent.trim(), 'First');
-    assert.equal(find('li:eq(1) > div').textContent.trim(), 'Alpha');
-    assert.equal(find('li:eq(2) > div').textContent.trim(), 'Beta');
-    assert.equal(find('li:eq(3) > div').textContent.trim(), 'Second');
-    assert.equal(find('li:eq(4) > div').textContent.trim(), 'Gamma');
+    assert.equal(find('li:nth-of-type(1) > div').textContent.trim(), 'First');
+    assert.equal(find('li:nth-of-type(2) > div').textContent.trim(), 'Alpha');
+    assert.equal(find('li:nth-of-type(3) > div').textContent.trim(), 'Beta');
+    assert.equal(find('li:nth-of-type(4) > div').textContent.trim(), 'Second');
+    assert.equal(find('li:nth-of-type(5) > div').textContent.trim(), 'Gamma');
 
     assert.equal(findAll('li.top-level').length, 2);
-    assert.equal(find('li.top-level:eq(0) > div').textContent.trim(), 'First');
-    assert.equal(find('li.top-level:eq(1) > div').textContent.trim(), 'Second');
+    assert.equal(find('li.top-level:nth-of-type(1) > div').textContent.trim(), 'First');
+    assert.equal(find('li.top-level:nth-of-type(2) > div').textContent.trim(), 'Second');
   });
 
   test('inactive terms are not rendered', async function(assert) {
@@ -127,10 +127,10 @@ module('Integration | Component | selectable terms list', function(hooks) {
     );
 
     assert.equal(findAll('li').length, 2);
-    assert.equal(find('li:eq(0) > div').textContent.trim(), 'First');
-    assert.equal(find('li:eq(1) > div').textContent.trim(), 'Alpha');
+    assert.equal(find('li:nth-of-type(1) > div').textContent.trim(), 'First');
+    assert.equal(find('li:nth-of-type(2) > div').textContent.trim(), 'Alpha');
 
     assert.equal(findAll('li.top-level').length, 1);
-    assert.equal(find('li.top-level:eq(0) > div').textContent.trim(), 'First');
+    assert.equal(find('li.top-level:nth-of-type(1) > div').textContent.trim(), 'First');
   });
 });

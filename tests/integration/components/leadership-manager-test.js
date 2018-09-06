@@ -29,10 +29,10 @@ module('Integration | Component | leadership manager', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
     assert.equal(findAll(directors).length, 1);
-    assert.equal(this.$(directors).eq(0).text().trim(), '0 guy M. Mc0son');
+    assert.equal(find(directors).eq(0).textContent.trim(), '0 guy M. Mc0son');
     assert.equal(findAll(administrators).length, 2);
-    assert.equal(this.$(administrators).eq(0).text().trim(), '0 guy M. Mc0son');
-    assert.equal(this.$(administrators).eq(1).text().trim(), '1 guy M. Mc1son');
+    assert.equal(find(administrators).eq(0).textContent.trim(), '0 guy M. Mc0son');
+    assert.equal(find(administrators).eq(1).textContent.trim(), '1 guy M. Mc1son');
   });
 
   test('it renders without data', async function(assert) {

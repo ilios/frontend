@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll } from '@ember/test-helpers';
+import { render, settled, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -91,10 +91,10 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-calendar learnerGroup=learnerGroup}}`);
     const events = '.ilios-calendar-event';
-    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] label:eq(0)';
+    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] label:nth-of-type(1)';
     await settled();
 
-    this.$(subgroupEventsToggle).click();
+    find(subgroupEventsToggle).click();
     await settled();
     assert.equal(findAll(events).length, 2);
   });

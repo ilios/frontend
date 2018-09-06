@@ -57,7 +57,7 @@ module('Integration | Component | session objective list', function(hooks) {
       assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Actions');
       for (let i = 0, n = objectives.length; i < n; i++) {
         let objective = objectives[i];
-        assert.equal(this.$(`tbody tr:eq(${i}) td:eq(0)`).text().trim(), objective.get('title'));
+        assert.equal(this.$(`tbody tr:eq(${i}) td:nth-of-type(1)`).textContent.trim(), objective.get('title'));
       }
     });
   });
@@ -72,7 +72,7 @@ module('Integration | Component | session objective list', function(hooks) {
     return settled().then(() => {
       let container = this.$('.session-objective-list');
       assert.equal(container.length, 1, 'Component container element exists.');
-      assert.equal(container.text().trim(), '', 'No content is shown.');
+      assert.equal(container.textContent.trim(), '', 'No content is shown.');
     });
   });
 
@@ -101,7 +101,7 @@ module('Integration | Component | session objective list', function(hooks) {
 
     return settled().then(() => {
       assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
-      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), objective.get('title'), 'Objective is visible');
+      assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), objective.get('title'), 'Objective is visible');
     });
   });
 });

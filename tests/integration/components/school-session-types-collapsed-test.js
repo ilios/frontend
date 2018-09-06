@@ -31,18 +31,18 @@ module('Integration | Component | school session types collapsed', function(hook
     await settled();
     const title = '.title';
     const table = 'table';
-    const assessmentMethodRow = `${table} tbody tr:eq(0)`;
-    const instructionalMethodRow = `${table} tbody tr:eq(1)`;
-    const assessmentTitle = `${assessmentMethodRow} td:eq(0)`;
-    const assessmentCount = `${assessmentMethodRow} td:eq(1)`;
-    const instructionalTitle = `${instructionalMethodRow} td:eq(0)`;
-    const instructionalCount = `${instructionalMethodRow} td:eq(1)`;
+    const assessmentMethodRow = `${table} tbody tr:nth-of-type(1)`;
+    const instructionalMethodRow = `${table} tbody tr:nth-of-type(2)`;
+    const assessmentTitle = `${assessmentMethodRow} td:nth-of-type(1)`;
+    const assessmentCount = `${assessmentMethodRow} td:nth-of-type(2)`;
+    const instructionalTitle = `${instructionalMethodRow} td:nth-of-type(1)`;
+    const instructionalCount = `${instructionalMethodRow} td:nth-of-type(2)`;
 
     assert.equal(find(title).textContent.trim(), 'Session Types');
-    assert.equal(this.$(assessmentTitle).text().trim(), 'Assessment Methods');
-    assert.equal(this.$(assessmentCount).text().trim(), '1');
-    assert.equal(this.$(instructionalTitle).text().trim(), 'Instructional Methods');
-    assert.equal(this.$(instructionalCount).text().trim(), '1');
+    assert.equal(find(assessmentTitle).textContent.trim(), 'Assessment Methods');
+    assert.equal(find(assessmentCount).textContent.trim(), '1');
+    assert.equal(find(instructionalTitle).textContent.trim(), 'Instructional Methods');
+    assert.equal(find(instructionalCount).textContent.trim(), '1');
 
   });
 });

@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
+import { render, settled, click, fillIn, find, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -84,13 +84,13 @@ module('Integration | Component | learnergroup header', function(hooks) {
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
     assert.equal(find(title).textContent.trim(), 'our group', 'title is correct');
-    assert.equal(this.$(errors).length, 0, 'there are no errors');
-    this.$(edit).click();
+    assert.equal(findAll(errors).length, 0, 'there are no errors');
+    find(edit).click();
     const longTitle = 'x'.repeat(61);
-    this.$(input).val(longTitle).trigger('input');
-    this.$(done).click();
+    find(input).val(longTitle).trigger('input');
+    find(done).click();
     await settled();
-    assert.equal(this.$(errors).length, 1, 'there is now an error');
-    assert.ok(this.$(errors).text().search(/too long/) > -1, 'it is the correct error');
+    assert.equal(findAll(errors).length, 1, 'there is now an error');
+    assert.ok(find(errors).text().search(/too long/) > -1, 'it is the correct error');
   });
 });

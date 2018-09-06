@@ -107,10 +107,10 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     await settled();
     assert.equal(findAll('.detail-terms-list').length, 2);
     assert.ok(find('.detail-terms-list').textContent.indexOf('Foo (Medicine)') !== -1);
-    assert.equal(find('.detail-terms-list:eq(0) .detail-terms-list-item').textContent.trim(), 'Alpha');
-    assert.equal(find(findAll('.detail-terms-list:eq(0) .detail-terms-list-item')[1]).textContent.trim(), 'Beta');
+    assert.equal(find('.detail-terms-list:nth-of-type(1) .detail-terms-list-item').textContent.trim(), 'Alpha');
+    assert.equal(find(findAll('.detail-terms-list:nth-of-type(1) .detail-terms-list-item')[1]).textContent.trim(), 'Beta');
     assert.ok(find(findAll('.detail-terms-list')[1]).textContent.indexOf('Bar (Medicine)') !== -1);
-    assert.equal(find('.detail-terms-list:eq(1) .detail-terms-list-item').textContent.trim(), 'Gamma');
+    assert.equal(find('.detail-terms-list:nth-of-type(2) .detail-terms-list-item').textContent.trim(), 'Gamma');
 
     assert.equal(findAll('.vocabulary-picker option').length, 1);
     assert.equal(find('.vocabulary-picker option').value, '1');

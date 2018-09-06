@@ -147,7 +147,7 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action remove) canEdit=true}}`);
     await settled();
-    assert.equal(findAll('li:eq(0) .fa-times').length, 1);
+    assert.equal(findAll('li:nth-of-type(1) .fa-times').length, 1);
     await click(find('li'));
   });
 

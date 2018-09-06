@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 const { resolve } = RSVP;
 
@@ -56,18 +56,18 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     }}`);
     const title = '.title';
     const table = 'table';
-    const directors = `${table} tbody tr:eq(0) td:eq(0) li`;
-    const firstDirector = `${directors}:eq(0)`;
-    const administrators = `${table} tbody tr:eq(0) td:eq(1) li`;
-    const firstAdministrator = `${administrators}:eq(0)`;
-    const secondAdministrator = `${administrators}:eq(1)`;
+    const directors = `${table} tbody tr:nth-of-type(1) td:nth-of-type(1) li`;
+    const firstDirector = `${directors}:nth-of-type(1)`;
+    const administrators = `${table} tbody tr:nth-of-type(1) td:nth-of-type(2) li`;
+    const firstAdministrator = `${administrators}:nth-of-type(1)`;
+    const secondAdministrator = `${administrators}:nth-of-type(2)`;
 
     assert.equal(find(title).textContent.trim(), 'Course Leadership');
-    assert.equal(this.$(directors).length, 1);
-    assert.equal(this.$(firstDirector).text().trim(), 'a b person');
-    assert.equal(this.$(administrators).length, 2);
-    assert.equal(this.$(firstAdministrator).text().trim(), 'a b person');
-    assert.equal(this.$(secondAdministrator).text().trim(), 'b a person');
+    assert.equal(findAll(directors).length, 1);
+    assert.equal(find(firstDirector).textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators).length, 2);
+    assert.equal(find(firstAdministrator).textContent.trim(), 'a b person');
+    assert.equal(find(secondAdministrator).textContent.trim(), 'b a person');
   });
 
   test('clicking the header collapses', async function(assert) {

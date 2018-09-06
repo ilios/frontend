@@ -85,23 +85,23 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Course', 'Table column header has correct label.');
       assert.equal(find(findAll('thead th')[6]).textContent.trim(), 'Actions', 'Table column header has correct label.');
 
-      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), block2.get('title'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), academicLevel2.get('level'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), 'n/a');
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), block2.get('title'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), academicLevel2.get('level'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), 'n/a');
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
 
-      assert.equal(find('tbody tr:eq(1) td').textContent.trim(), block1.get('title'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), academicLevel1.get('level'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), course.get('title'));
-      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), block1.get('title'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), academicLevel1.get('level'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), course.get('title'));
+      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
 
     });
   });
@@ -188,23 +188,23 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       );
       assert.equal(findAll('.actions .expand-button').length, 1, 'Add new button is visible.');
 
-      assert.equal(find('tbody tr:eq(0) td').textContent.trim(), block1.get('title'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[1]).textContent.trim(), academicLevel1.get('level'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[2]).textContent.trim(), block1.get('orderInSequence'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:eq(0) td')[5]).textContent.trim(), course.get('title'));
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), block1.get('title'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), academicLevel1.get('level'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), block1.get('orderInSequence'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), course.get('title'));
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
 
-      assert.equal(find('tbody tr:eq(1) td').textContent.trim(), block2.get('title'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[1]).textContent.trim(), academicLevel2.get('level'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[2]).textContent.trim(), block2.get('orderInSequence'));
-      assert.equal(find(findAll('tbody tr:eq(1) td')[3]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(1) td')[4]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:eq(1) td')[5]).textContent.trim(), 'n/a');
-      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:eq(1) td:eq(6) .remove').length, 1, 'Remove link is visible.');
+      assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), block2.get('title'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), academicLevel2.get('level'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), block2.get('orderInSequence'));
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), 'n/a');
+      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), 'n/a');
+      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
 
     });
   });
@@ -248,8 +248,8 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     );
     return settled().then(() => {
       assert.equal(findAll('.actions .expand-button').length, 0, 'Add new button is not visible.');
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:eq(0) td:eq(6) .remove').length, 0, 'Remove link is not visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
+      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 0, 'Remove link is not visible.');
     });
   });
 
@@ -295,12 +295,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove=(action removeSequenceBlock)}}`
     );
-    await await click('tbody tr:eq(0) td:eq(6) .remove');
-    assert.equal(find('tbody tr:eq(1) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
+    await await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
+    assert.equal(find('tbody tr:nth-of-type(2) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
       'Confirmation message is visible.');
-    assert.equal(findAll('tbody tr:eq(1) .confirm-buttons .remove').length, 1,'Delete button is visible.');
-    assert.equal(findAll('tbody tr:eq(1) .confirm-buttons .done').length, 1,'Cancel button is visible.');
-    await await click('tbody tr:eq(1) .confirm-buttons .remove');
+    assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .remove').length, 1,'Delete button is visible.');
+    assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .done').length, 1,'Cancel button is visible.');
+    await await click('tbody tr:nth-of-type(2) .confirm-buttons .remove');
   });
 
   test('cancel delete', async function(assert){
@@ -341,10 +341,10 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report  sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true}}`
     );
-    await await click('tbody tr:eq(0) td:eq(6) .remove');
+    await await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     await settled();
     assert.equal(findAll('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
-    await await click('tbody tr:eq(1) .confirm-buttons .done');
+    await await click('tbody tr:nth-of-type(2) .confirm-buttons .done');
     await settled();
     assert.equal(findAll('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
   });

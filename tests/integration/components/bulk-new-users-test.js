@@ -92,11 +92,11 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.notEqual(content.search(/Primary School/), -1);
 
     const schools = 'select:nth-of-type(1) option';
-    let options = this.$(schools);
+    let options = find(schools);
     assert.equal(options.length, 3);
-    assert.equal(options.eq(0).text().trim(), 'first');
-    assert.equal(options.eq(1).text().trim(), 'second');
-    assert.equal(options.eq(2).text().trim(), 'third');
+    assert.equal(options.eq(0).textContent.trim(), 'first');
+    assert.equal(options.eq(1).textContent.trim(), 'second');
+    assert.equal(options.eq(2).textContent.trim(), 'third');
   });
 
   test('select student mode display cohort', async function(assert) {

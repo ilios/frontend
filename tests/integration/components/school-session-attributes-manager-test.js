@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -25,26 +25,26 @@ module('Integration | Component | school session attributes manager', function(h
     }}`);
 
     const rows = 'table tbody tr';
-    const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-    const attendanceCheckbox = `${rows}:eq(0) td:eq(1) input`;
-    const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-    const supplementalCheckbox = `${rows}:eq(1) td:eq(1) input`;
-    const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-    const specialAttireCheckbox = `${rows}:eq(2) td:eq(1) input`;
-    const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-    const specialEquipmentCheckbox = `${rows}:eq(3) td:eq(1) input`;
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceCheckbox = `${rows}:nth-of-type(1) td:nth-of-type(2) input`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalCheckbox = `${rows}:nth-of-type(2) td:nth-of-type(2) input`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireCheckbox = `${rows}:nth-of-type(3) td:nth-of-type(2) input`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
 
-    assert.equal(this.$(attendanceTitle).text().trim(), 'Attendance Required');
-    assert.ok(this.$(attendanceCheckbox).not(':checked'));
+    assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
+    assert.ok(find(attendanceCheckbox).not(':checked'));
 
-    assert.equal(this.$(supplementalTitle).text().trim(), 'Supplemental Curriculum');
-    assert.ok(this.$(supplementalCheckbox).is(':checked'));
+    assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
+    assert.ok(find(supplementalCheckbox).is(':checked'));
 
-    assert.equal(this.$(specialAttireTitle).text().trim(), 'Special Attire Required');
-    assert.ok(this.$(specialAttireCheckbox).not(':checked'));
+    assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
+    assert.ok(find(specialAttireCheckbox).not(':checked'));
 
-    assert.equal(this.$(specialEquipmentTitle).text().trim(), 'Special Equipment Required');
-    assert.ok(this.$(specialEquipmentCheckbox).not(':checked'));
+    assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
+    assert.ok(find(specialEquipmentCheckbox).not(':checked'));
   });
 
   let selectTest = function(context, assert, name, position){
@@ -69,7 +69,7 @@ module('Integration | Component | school session attributes manager', function(h
     }}`);
 
     const rows = 'table tbody tr';
-    const checkbox = `${rows}:eq(${position}) td:eq(1) input`;
+    const checkbox = `${rows}:eq(${position}) td:nth-of-type(2) input`;
     assert.ok(context.$(checkbox).not(':checked'));
     context.$(checkbox).click();
     assert.ok(context.$(checkbox).is(':checked'));
@@ -113,7 +113,7 @@ module('Integration | Component | school session attributes manager', function(h
     }}`);
 
     const rows = 'table tbody tr';
-    const checkbox = `${rows}:eq(${position}) td:eq(1) input`;
+    const checkbox = `${rows}:eq(${position}) td:nth-of-type(2) input`;
     assert.ok(context.$(checkbox).is(':checked'));
     context.$(checkbox).click();
     assert.ok(context.$(checkbox).not(':checked'));

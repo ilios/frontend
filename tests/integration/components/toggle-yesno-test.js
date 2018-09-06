@@ -29,7 +29,7 @@ module('Integration | Component | toggle yesno', function(hooks) {
   test('click', async function(assert) {
     assert.expect(5);
     const state = 'input';
-    const element = 'span:eq(0)';
+    const element = 'span:nth-of-type(1)';
     this.set('value', true);
     this.set('toggle', (val) => {
       const value = this.get('value');
@@ -38,10 +38,10 @@ module('Integration | Component | toggle yesno', function(hooks) {
     });
     await render(hbs`{{toggle-yesno yes=value toggle=(action toggle)}}`);
     assert.ok(find(state).checked);
-    this.$(element).click();
+    find(element).click();
 
     assert.notOk(find(state).checked);
-    this.$(element).click();
+    find(element).click();
     assert.ok(find(state).checked);
   });
 });

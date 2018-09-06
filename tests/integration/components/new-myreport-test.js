@@ -30,63 +30,63 @@ module('Integration | Component | new myreport', function(hooks) {
     this.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
     const title = '.title';
-    const schools = 'select:eq(0)';
+    const schools = 'select:nth-of-type(1)';
     const schoolOptions = `${schools} option`;
-    const allSchools = `${schoolOptions}:eq(0)`;
-    const firstSchool = `${schoolOptions}:eq(1)`;
-    const secondSchool = `${schoolOptions}:eq(2)`;
-    const thirdSchool = `${schoolOptions}:eq(3)`;
+    const allSchools = `${schoolOptions}:nth-of-type(1)`;
+    const firstSchool = `${schoolOptions}:nth-of-type(2)`;
+    const secondSchool = `${schoolOptions}:nth-of-type(3)`;
+    const thirdSchool = `${schoolOptions}:nth-of-type(4)`;
 
-    const subjects = 'select:eq(1) option';
-    const firstSubject = `${subjects}:eq(0)`;
-    const secondSubject = `${subjects}:eq(1)`;
-    const thirdSubject = `${subjects}:eq(2)`;
-    const fourthSubject = `${subjects}:eq(3)`;
-    const fifthSubject = `${subjects}:eq(4)`;
-    const sixthSubject = `${subjects}:eq(5)`;
-    const seventhSubject = `${subjects}:eq(6)`;
-    const eighthSubject = `${subjects}:eq(7)`;
-    const ninthSubject = `${subjects}:eq(8)`;
-    const tenthSubject = `${subjects}:eq(9)`;
-    const eleventhSubject = `${subjects}:eq(10)`;
+    const subjects = 'select:nth-of-type(2) option';
+    const firstSubject = `${subjects}:nth-of-type(1)`;
+    const secondSubject = `${subjects}:nth-of-type(2)`;
+    const thirdSubject = `${subjects}:nth-of-type(3)`;
+    const fourthSubject = `${subjects}:nth-of-type(4)`;
+    const fifthSubject = `${subjects}:nth-of-type(5)`;
+    const sixthSubject = `${subjects}:nth-of-type(6)`;
+    const seventhSubject = `${subjects}:nth-of-type(7)`;
+    const eighthSubject = `${subjects}:nth-of-type(8)`;
+    const ninthSubject = `${subjects}:nth-of-type(9)`;
+    const tenthSubject = `${subjects}:nth-of-type(10)`;
+    const eleventhSubject = `${subjects}:nth-of-type(11)`;
 
     await settled();
     assert.equal(find(title).textContent, 'New Report');
-    assert.notEqual(this.$(allSchools).text().search(/All Schools/), -1);
-    assert.equal(this.$(allSchools).val(), "null");
-    assert.ok(this.$(allSchools).not(':selected'), 'all schools is not selected');
-    assert.notEqual(this.$(firstSchool).text().search(/first/), -1);
-    assert.equal(this.$(firstSchool).val(), 1);
-    assert.ok(this.$(firstSchool).not(':selected'), 'first school is not selected');
-    assert.notEqual(this.$(secondSchool).text().search(/second/), -1);
-    assert.equal(this.$(secondSchool).val(), 2);
-    assert.ok(this.$(secondSchool).is(':selected'), 'users primary school is selected');
-    assert.notEqual(this.$(thirdSchool).text().search(/third/), -1);
-    assert.equal(this.$(thirdSchool).val(), 3);
-    assert.ok(this.$(thirdSchool).not(':selected'), 'third school is not selected');
+    assert.notEqual(find(allSchools).text().search(/All Schools/), -1);
+    assert.equal(find(allSchools).val(), "null");
+    assert.ok(find(allSchools).not(':selected'), 'all schools is not selected');
+    assert.notEqual(find(firstSchool).text().search(/first/), -1);
+    assert.equal(find(firstSchool).val(), 1);
+    assert.ok(find(firstSchool).not(':selected'), 'first school is not selected');
+    assert.notEqual(find(secondSchool).text().search(/second/), -1);
+    assert.equal(find(secondSchool).val(), 2);
+    assert.ok(find(secondSchool).is(':selected'), 'users primary school is selected');
+    assert.notEqual(find(thirdSchool).text().search(/third/), -1);
+    assert.equal(find(thirdSchool).val(), 3);
+    assert.ok(find(thirdSchool).not(':selected'), 'third school is not selected');
 
-    assert.equal(this.$(firstSubject).text().trim(), 'Courses');
-    assert.equal(this.$(firstSubject).val(), 'course');
-    assert.equal(this.$(secondSubject).text().trim(), 'Sessions');
-    assert.equal(this.$(secondSubject).val(), 'session');
-    assert.equal(this.$(thirdSubject).text().trim(), 'Programs');
-    assert.equal(this.$(thirdSubject).val(), 'program');
-    assert.equal(this.$(fourthSubject).text().trim(), 'Program Years');
-    assert.equal(this.$(fourthSubject).val(), 'program year');
-    assert.equal(this.$(fifthSubject).text().trim(), 'Instructors');
-    assert.equal(this.$(fifthSubject).val(), 'instructor');
-    assert.equal(this.$(sixthSubject).text().trim(), 'Instructor Groups');
-    assert.equal(this.$(sixthSubject).val(), 'instructor group');
-    assert.equal(this.$(seventhSubject).text().trim(), 'Learning Materials');
-    assert.equal(this.$(seventhSubject).val(), 'learning material');
-    assert.equal(this.$(eighthSubject).text().trim(), 'Competencies');
-    assert.equal(this.$(eighthSubject).val(), 'competency');
-    assert.equal(this.$(ninthSubject).text().trim(), 'MeSH Terms');
-    assert.equal(this.$(ninthSubject).val(), 'mesh term');
-    assert.equal(this.$(tenthSubject).text().trim(), 'Terms');
-    assert.equal(this.$(tenthSubject).val(), 'term');
-    assert.equal(this.$(eleventhSubject).text().trim(), 'Session Types');
-    assert.equal(this.$(eleventhSubject).val(), 'session type');
+    assert.equal(find(firstSubject).textContent.trim(), 'Courses');
+    assert.equal(find(firstSubject).val(), 'course');
+    assert.equal(find(secondSubject).textContent.trim(), 'Sessions');
+    assert.equal(find(secondSubject).val(), 'session');
+    assert.equal(find(thirdSubject).textContent.trim(), 'Programs');
+    assert.equal(find(thirdSubject).val(), 'program');
+    assert.equal(find(fourthSubject).textContent.trim(), 'Program Years');
+    assert.equal(find(fourthSubject).val(), 'program year');
+    assert.equal(find(fifthSubject).textContent.trim(), 'Instructors');
+    assert.equal(find(fifthSubject).val(), 'instructor');
+    assert.equal(find(sixthSubject).textContent.trim(), 'Instructor Groups');
+    assert.equal(find(sixthSubject).val(), 'instructor group');
+    assert.equal(find(seventhSubject).textContent.trim(), 'Learning Materials');
+    assert.equal(find(seventhSubject).val(), 'learning material');
+    assert.equal(find(eighthSubject).textContent.trim(), 'Competencies');
+    assert.equal(find(eighthSubject).val(), 'competency');
+    assert.equal(find(ninthSubject).textContent.trim(), 'MeSH Terms');
+    assert.equal(find(ninthSubject).val(), 'mesh term');
+    assert.equal(find(tenthSubject).textContent.trim(), 'Terms');
+    assert.equal(find(tenthSubject).val(), 'term');
+    assert.equal(find(eleventhSubject).textContent.trim(), 'Session Types');
+    assert.equal(find(eleventhSubject).val(), 'session type');
   });
 
   let checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
@@ -103,12 +103,12 @@ module('Integration | Component | new myreport', function(hooks) {
     context.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
 
-    const schoolSelect = `select:eq(0)`;
-    const select = `select:eq(1)`;
+    const schoolSelect = `select:nth-of-type(1)`;
+    const select = `select:nth-of-type(2)`;
     const subjects = `${select} option`;
     const targetSubject = `${subjects}:eq(${subjectNum})`;
 
-    const objectsOptions = 'select:eq(2) option';
+    const objectsOptions = 'select:nth-of-type(3) option';
 
     await settled();
     context.$(schoolSelect).val(null).change();
@@ -117,7 +117,7 @@ module('Integration | Component | new myreport', function(hooks) {
     context.$(select).val(subjectVal).change();
     await settled();
 
-    assert.equal(context.$(`${objectsOptions}:eq(0)`).val(), '', 'first option is blank');
+    assert.equal(context.$(`${objectsOptions}:nth-of-type(1)`).val(), '', 'first option is blank');
     expectedObjects.forEach((val, i) => {
       assert.equal(context.$(`${objectsOptions}:eq(${i+1})`).val(), val, `${val} is object option`);
     });
@@ -249,33 +249,33 @@ module('Integration | Component | new myreport', function(hooks) {
       email: 'test@example.com',
     });
 
-    const schoolSelect = 'select:eq(0)';
-    const subjects = `select:eq(1) option`;
-    const objectSelect = 'select:eq(2)';
-    const targetSubject = `${subjects}:eq(0)`;
+    const schoolSelect = 'select:nth-of-type(1)';
+    const subjects = `select:nth-of-type(2) option`;
+    const objectSelect = 'select:nth-of-type(3)';
+    const targetSubject = `${subjects}:nth-of-type(1)`;
     const targetObject = `instructor`;
     const userSearch = '.user-search';
     const input = `${userSearch} input`;
     const results = `${userSearch} li`;
-    const firstResult = `${results}:eq(1)`;
+    const firstResult = `${results}:nth-of-type(2)`;
     const selectedUser = `.removable-list`;
 
     this.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
     await settled();
-    this.$(schoolSelect).val(null).change();
+    find(schoolSelect).val(null).change();
     await settled();
-    assert.equal(this.$(targetSubject).val(), 'course');
-    this.$(objectSelect).val(targetObject).change();
+    assert.equal(find(targetSubject).val(), 'course');
+    find(objectSelect).val(targetObject).change();
     await settled();
 
     assert.equal(findAll(userSearch).length, 1);
-    this.$(input).val('test').trigger('input');
+    find(input).val('test').trigger('input');
     await settled();
 
-    await this.$(firstResult).click();
+    await find(firstResult).click();
     await settled();
-    assert.equal(this.$(selectedUser).text().trim(), 'Test Person');
+    assert.equal(find(selectedUser).textContent.trim(), 'Test Person');
 
     await settled();
   });

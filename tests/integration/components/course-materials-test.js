@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, fillIn, triggerEvent } from '@ember/test-helpers';
+import { render, settled, fillIn, triggerEvent, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -33,15 +33,15 @@ module('Integration | Component | course materials', function(hooks) {
     this.set('course', course);
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const courseTable = 'table:eq(0)';
+    const courseTable = 'table:nth-of-type(1)';
     const courseMaterials = `${courseTable} tbody tr`;
-    const firstCourseLmTitle = `${courseMaterials}:eq(0) td:eq(0)`;
-    const firstCourseLmType = `${courseMaterials}:eq(0) td:eq(1)`;
-    const firstCourseLmAuthor = `${courseMaterials}:eq(0) td:eq(2)`;
+    const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
+    const firstCourseLmType = `${courseMaterials}:nth-of-type(1) td:nth-of-type(2)`;
+    const firstCourseLmAuthor = `${courseMaterials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(this.$(firstCourseLmTitle).text().trim(), 'title1');
-    assert.equal(this.$(firstCourseLmType).text().trim(), 'link');
-    assert.equal(this.$(firstCourseLmAuthor).text().trim(), 'author1');
+    assert.equal(find(firstCourseLmTitle).textContent.trim(), 'title1');
+    assert.equal(find(firstCourseLmType).textContent.trim(), 'link');
+    assert.equal(find(firstCourseLmAuthor).textContent.trim(), 'author1');
 
     return settled();
 
@@ -103,49 +103,49 @@ module('Integration | Component | course materials', function(hooks) {
     this.set('course', course);
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:eq(0) td:eq(0)`;
+    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
     const firstSessionLmLink = `${firstSessionLmTitle} a`;
-    const firstSessionLmType = `${sessionMaterials}:eq(0) td:eq(1)`;
-    const firstSessionLmAuthor = `${sessionMaterials}:eq(0) td:eq(2)`;
-    const firstSessionLmSessionTitle = `${sessionMaterials}:eq(0) td:eq(3)`;
-    const firstSessionLmFirstOffering = `${sessionMaterials}:eq(0) td:eq(4)`;
+    const firstSessionLmType = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(2)`;
+    const firstSessionLmAuthor = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(4)`;
+    const firstSessionLmFirstOffering = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(5)`;
 
-    const secondSessionLmTitle = `${sessionMaterials}:eq(1) td:eq(0)`;
+    const secondSessionLmTitle = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(1)`;
     const secondSessionLmLink = `${secondSessionLmTitle} a`;
-    const secondSessionLmType = `${sessionMaterials}:eq(1) td:eq(1)`;
-    const secondSessionLmAuthor = `${sessionMaterials}:eq(1) td:eq(2)`;
-    const secondSessionLmSessionTitle = `${sessionMaterials}:eq(1) td:eq(3)`;
-    const secondSessionLmsecondOffering = `${sessionMaterials}:eq(1) td:eq(4)`;
+    const secondSessionLmType = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(2)`;
+    const secondSessionLmAuthor = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(3)`;
+    const secondSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(4)`;
+    const secondSessionLmsecondOffering = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(5)`;
 
-    const thirdSessionLmTitle = `${sessionMaterials}:eq(2) td:eq(0)`;
+    const thirdSessionLmTitle = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(1)`;
     const thirdSessionLmLink = `${thirdSessionLmTitle} a`;
-    const thirdSessionLmType = `${sessionMaterials}:eq(2) td:eq(1)`;
-    const thirdSessionLmAuthor = `${sessionMaterials}:eq(2) td:eq(2)`;
-    const thirdSessionLmSessionTitle = `${sessionMaterials}:eq(2) td:eq(3)`;
-    const thirdSessionLmsecondOffering = `${sessionMaterials}:eq(2) td:eq(4)`;
+    const thirdSessionLmType = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(2)`;
+    const thirdSessionLmAuthor = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(3)`;
+    const thirdSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(4)`;
+    const thirdSessionLmsecondOffering = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(5)`;
 
-    assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title1');
-    assert.equal(this.$(firstSessionLmLink).prop('href').trim(), 'http://myhost.com/url1');
-    assert.equal(this.$(firstSessionLmType).text().trim(), 'link');
-    assert.equal(this.$(firstSessionLmAuthor).text().trim(), 'author1');
-    assert.equal(this.$(firstSessionLmSessionTitle).text().trim(), 'session1title');
-    assert.equal(this.$(firstSessionLmFirstOffering).text().trim(), '02/02/2020');
+    assert.equal(find(firstSessionLmTitle).textContent.trim(), 'title1');
+    assert.equal(find(firstSessionLmLink).prop('href').trim(), 'http://myhost.com/url1');
+    assert.equal(find(firstSessionLmType).textContent.trim(), 'link');
+    assert.equal(find(firstSessionLmAuthor).textContent.trim(), 'author1');
+    assert.equal(find(firstSessionLmSessionTitle).textContent.trim(), 'session1title');
+    assert.equal(find(firstSessionLmFirstOffering).textContent.trim(), '02/02/2020');
 
-    assert.equal(this.$(secondSessionLmTitle).text().trim(), 'title2');
-    assert.equal(this.$(secondSessionLmLink).prop('href').trim(), 'http://myhost.com/url2');
-    assert.equal(this.$(secondSessionLmType).text().trim(), 'file');
-    assert.equal(this.$(secondSessionLmAuthor).text().trim(), 'author2');
-    assert.equal(this.$(secondSessionLmSessionTitle).text().trim(), 'session1title');
-    assert.equal(this.$(secondSessionLmsecondOffering).text().trim(), '02/02/2020');
+    assert.equal(find(secondSessionLmTitle).textContent.trim(), 'title2');
+    assert.equal(find(secondSessionLmLink).prop('href').trim(), 'http://myhost.com/url2');
+    assert.equal(find(secondSessionLmType).textContent.trim(), 'file');
+    assert.equal(find(secondSessionLmAuthor).textContent.trim(), 'author2');
+    assert.equal(find(secondSessionLmSessionTitle).textContent.trim(), 'session1title');
+    assert.equal(find(secondSessionLmsecondOffering).textContent.trim(), '02/02/2020');
 
-    assert.equal(this.$(thirdSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
-    assert.equal(this.$(thirdSessionLmLink).length, 0);
-    assert.equal(this.$(thirdSessionLmType).text().trim(), 'citation');
-    assert.equal(this.$(thirdSessionLmAuthor).text().trim(), 'author3');
-    assert.equal(this.$(thirdSessionLmSessionTitle).text().trim(), 'session1title');
-    assert.equal(this.$(thirdSessionLmsecondOffering).text().trim(), '02/02/2020');
+    assert.equal(find(thirdSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(findAll(thirdSessionLmLink).length, 0);
+    assert.equal(find(thirdSessionLmType).textContent.trim(), 'citation');
+    assert.equal(find(thirdSessionLmAuthor).textContent.trim(), 'author3');
+    assert.equal(find(thirdSessionLmSessionTitle).textContent.trim(), 'session1title');
+    assert.equal(find(thirdSessionLmsecondOffering).textContent.trim(), '02/02/2020');
 
     return settled();
 
@@ -169,24 +169,24 @@ module('Integration | Component | course materials', function(hooks) {
 
     await render(hbs`{{course-materials setSortBy=(action setSortBy) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const headers = `${sessionTable} thead th`;
-    const title = `${headers}:eq(0)`;
-    const type = `${headers}:eq(1)`;
-    const author = `${headers}:eq(2)`;
-    const sessionTitle = `${headers}:eq(3)`;
-    const firstOffering = `${headers}:eq(4)`;
+    const title = `${headers}:nth-of-type(1)`;
+    const type = `${headers}:nth-of-type(2)`;
+    const author = `${headers}:nth-of-type(3)`;
+    const sessionTitle = `${headers}:nth-of-type(4)`;
+    const firstOffering = `${headers}:nth-of-type(5)`;
 
-    this.$(title).click();
-    this.$(title).click();
-    this.$(type).click();
-    this.$(type).click();
-    this.$(author).click();
-    this.$(author).click();
-    this.$(sessionTitle).click();
-    this.$(sessionTitle).click();
-    this.$(firstOffering).click();
-    this.$(firstOffering).click();
+    find(title).click();
+    find(title).click();
+    find(type).click();
+    find(type).click();
+    find(author).click();
+    find(author).click();
+    find(sessionTitle).click();
+    find(sessionTitle).click();
+    find(firstOffering).click();
+    find(firstOffering).click();
 
     return settled();
 
@@ -202,16 +202,16 @@ module('Integration | Component | course materials', function(hooks) {
 
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:eq(0) td:eq(0)`;
+    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
     const filter = '.filter-session-lms input';
 
-    assert.equal(this.$(sessionMaterials).length, 3);
+    assert.equal(findAll(sessionMaterials).length, 3);
     await fillIn(filter, 'title1');
     await triggerEvent(filter, 'input');
-    assert.equal(this.$(sessionMaterials).length, 1);
-    assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title1');
+    assert.equal(findAll(sessionMaterials).length, 1);
+    assert.equal(find(firstSessionLmTitle).textContent.trim(), 'title1');
 
     return settled();
 
@@ -227,16 +227,16 @@ module('Integration | Component | course materials', function(hooks) {
 
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:eq(0) td:eq(0)`;
+    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
     const filter = '.filter-session-lms input';
 
-    assert.equal(this.$(sessionMaterials).length, 3);
+    assert.equal(findAll(sessionMaterials).length, 3);
     await fillIn(filter, 'file');
     await triggerEvent(filter, 'input');
-    assert.equal(this.$(sessionMaterials).length, 1);
-    assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
+    assert.equal(findAll(sessionMaterials).length, 1);
+    assert.equal(find(firstSessionLmTitle).textContent.trim(), 'title2');
 
     return settled();
 
@@ -252,16 +252,16 @@ module('Integration | Component | course materials', function(hooks) {
 
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:eq(0) td:eq(0)`;
+    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
     const filter = '.filter-session-lms input';
 
-    assert.equal(this.$(sessionMaterials).length, 3);
+    assert.equal(findAll(sessionMaterials).length, 3);
     await fillIn(filter, 'author2');
     await triggerEvent(filter, 'input');
-    assert.equal(this.$(sessionMaterials).length, 1);
-    assert.equal(this.$(firstSessionLmTitle).text().trim(), 'title2');
+    assert.equal(findAll(sessionMaterials).length, 1);
+    assert.equal(find(firstSessionLmTitle).textContent.trim(), 'title2');
 
     return settled();
 
@@ -277,16 +277,16 @@ module('Integration | Component | course materials', function(hooks) {
 
     await render(hbs`{{course-materials setSortBy=(action nothing) sortBy=sortBy course=course}}`);
 
-    const sessionTable = 'table:eq(0)';
+    const sessionTable = 'table:nth-of-type(1)';
     const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:eq(0) td:eq(0)`;
+    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
     const filter = '.filter-session-lms input';
 
-    assert.equal(this.$(sessionMaterials).length, 3);
+    assert.equal(findAll(sessionMaterials).length, 3);
     await fillIn(filter, 'citationtext');
     await triggerEvent(filter, 'input');
-    assert.equal(this.$(sessionMaterials).length, 1);
-    assert.equal(this.$(firstSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(findAll(sessionMaterials).length, 1);
+    assert.equal(find(firstSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
 
     return settled();
 

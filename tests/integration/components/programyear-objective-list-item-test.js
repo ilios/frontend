@@ -26,8 +26,8 @@ module('Integration | Component | programyear objective list item', function(hoo
     }}`);
 
     assert.equal(find(findAll('td')[1]).textContent.trim(), 'fake title');
-    assert.equal(find('td:eq(2) button').textContent.trim(), 'Add New');
-    assert.equal(find('td:eq(3) button').textContent.trim(), 'Add New');
+    assert.equal(find('td:nth-of-type(3) button').textContent.trim(), 'Add New');
+    assert.equal(find('td:nth-of-type(4) button').textContent.trim(), 'Add New');
   });
 
 
@@ -51,10 +51,10 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    await click('td:eq(1) .editable');
-    this.$('td:eq(1) .fr-box').froalaEditor('html.set', 'new title');
-    this.$('td:eq(1) .fr-box').froalaEditor('events.trigger', 'contentChanged');
-    await click('td:eq(1) .done');
+    await click('td:nth-of-type(2) .editable');
+    find('td:nth-of-type(2) .fr-box').froalaEditor('html.set', 'new title');
+    find('td:nth-of-type(2) .fr-box').froalaEditor('events.trigger', 'contentChanged');
+    await click('td:nth-of-type(2) .done');
 
     await settled();
   });
@@ -78,7 +78,7 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    await click('td:eq(2) button');
+    await click('td:nth-of-type(3) button');
 
   });
 
@@ -101,7 +101,7 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    await click('td:eq(3) button');
+    await click('td:nth-of-type(4) button');
 
   });
 

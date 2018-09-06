@@ -122,7 +122,7 @@ module('Integration | Component | school session types expanded', function(hooks
     }}`);
     const edit = `.expand-collapse-button button`;
 
-    this.$(edit).click();
+    find(edit).click();
   });
 
   test('close fires action', async function(assert) {

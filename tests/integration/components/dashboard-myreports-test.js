@@ -54,7 +54,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     return settled().then(()=> {
       for (let i = 0; i < 2; i++) {
         let tds = this.$(`[data-test-saved-reports] li:eq(${i})`);
-        assert.equal(tds.eq(0).text().trim(), mockReports[i].get('title'));
+        assert.equal(tds.eq(0).textContent.trim(), mockReports[i].get('title'));
       }
       assert.equal(this.$(`[data-test-saved-reports] li`).length, 2);
     });
