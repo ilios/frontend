@@ -60,9 +60,6 @@ module.exports = {
     {
       files: ['tests/**/*.js'],
       excludedFiles: ['tests/dummy/**/*.js'],
-      "globals": {
-        "$": true,
-      },
       rules: {
         "no-restricted-globals": [
           "error",
