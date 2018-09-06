@@ -43,7 +43,7 @@ module('Integration | Component | programyear objective list', function(hooks) {
       assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'MeSH Terms');
       for (let i = 0, n = objectives.length; i < n; i++) {
         let objective = objectives[i];
-        assert.equal(this.$(`tbody tr:eq(${i}) td:nth-of-type(2)`).textContent.trim(), objective.get('title'));
+        assert.equal(find(`tbody tr:nth-of-type(${i + 1}) td:nth-of-type(2)`).textContent.trim(), objective.get('title'));
       }
     });
   });
@@ -55,11 +55,9 @@ module('Integration | Component | programyear objective list', function(hooks) {
     });
     this.set('subject', programYear);
     await render(hbs`{{programyear-objective-list subject=subject}}`);
-    return settled().then(() => {
-      let container = this.$('.programyear-objective-list');
-      assert.equal(container.length, 1, 'Component container element exists.');
-      assert.equal(container.textContent.trim(), '', 'No content is shown.');
-    });
+    let container = findAll('.programyear-objective-list');
+    assert.equal(container.length, 1, 'Component container element exists.');
+    assert.equal(container[0].textContent.trim(), '', 'No content is shown.');
   });
 
   test('no "sort objectives" button in list with one item', async function(assert) {

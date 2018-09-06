@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, fillIn, find, triggerEvent } from '@ember/test-helpers';
+import { render, click, findAll, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -19,8 +19,8 @@ module('Integration | Component | curriculum inventory report header', function(
     await render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
     assert.equal(find('.title').textContent.trim(), report.name, 'Report name shows.');
     assert.equal(findAll('.editable').length, 1, 'Report name is editable.');
-    assert.equal(this.$(`.actions .finalize`).length, 1, 'Finalize button shows.');
-    assert.equal(this.$(`.actions .download`).length, 1, 'Download button shows.');
+    assert.equal(findAll(`.actions .finalize`).length, 1, 'Finalize button shows.');
+    assert.equal(findAll(`.actions .download`).length, 1, 'Download button shows.');
   });
 
   test('non updatable reports render in read-only mode.', async function(assert) {
@@ -33,7 +33,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.equal(findAll('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
     assert.equal(findAll('.editable').length, 0, 'Report name is not editable.');
     assert.equal(findAll('.actions .download').length, 1, 'Download button shows.');
-    assert.equal(this.$(`.actions .finalize`).length, 0, 'Finalize button is not showing.');
+    assert.equal(findAll(`.actions .finalize`).length, 0, 'Finalize button is not showing.');
   });
 
   test('change name', async function(assert) {
@@ -55,9 +55,7 @@ module('Integration | Component | curriculum inventory report header', function(
     await fillIn('.editinplace input', newName);
     await triggerEvent('.editinplace input', 'input');
     await click('.editinplace .done');
-    return settled().then(() => {
-      assert.equal(find('.editinplace').textContent.trim(), newName);
-    });
+    assert.equal(find('.editinplace').textContent.trim(), newName);
   });
 
   test('change name fails on empty value', async function(assert) {
@@ -77,9 +75,7 @@ module('Integration | Component | curriculum inventory report header', function(
     await fillIn('.editinplace input', '');
     await triggerEvent('.editinplace input', 'input');
     await click('.editinplace .done');
-    return settled().then(() => {
-      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
-    });
+    assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
   });
 
   test('clicking on finalize button fires action', async function(assert) {
@@ -96,8 +92,6 @@ module('Integration | Component | curriculum inventory report header', function(
     await render(
       hbs`{{curriculum-inventory-report-header report=report canUpdate=true finalize=(action finalizeAction)}}`
     );
-    return settled().then(async () => {
-      await click('button.finalize');
-    });
+    await click('button.finalize');
   });
 });

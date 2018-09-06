@@ -4,7 +4,7 @@ import { resolve } from 'rsvp';
 import $ from 'jquery';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import ENV from 'ilios/config/environment';
 
@@ -20,6 +20,7 @@ module('Integration | Component | api version check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);
     await render(hbs`{{api-version-check}}`);
+    await settled();
     assert.equal($(warningOverlay).length, 0);
   });
 
@@ -30,6 +31,7 @@ module('Integration | Component | api version check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);
     await render(hbs`{{api-version-check}}`);
+    await settled();
     assert.equal($(warningOverlay).length, 1);
   });
 });

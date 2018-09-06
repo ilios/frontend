@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -27,13 +27,11 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     this.set('course', course);
     this.set('click', () => {});
     await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
-    return settled().then(() => {
-      let content = find('*').textContent.trim();
-      assert.equal(content.search(/Competencies \(2\)/), 0);
-      assert.notEqual(content.search(/School(\s+)Competencies/), -1);
-      assert.notEqual(content.search(/Medicine(\s+)1/), -1);
-      assert.notEqual(content.search(/Pharmacy(\s+)1/), -1);
-    });
+    let content = this.element.textContent.trim();
+    assert.equal(content.search(/Competencies \(2\)/), 0);
+    assert.notEqual(content.search(/School(\s+)Competencies/), -1);
+    assert.notEqual(content.search(/Medicine(\s+)1/), -1);
+    assert.notEqual(content.search(/Pharmacy(\s+)1/), -1);
   });
 
   test('clicking the header expands the list', async function(assert) {
@@ -56,7 +54,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     });
     await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
     return settled().then(async () => {
-      assert.equal(find('*').textContent.trim().search(/Competencies \(2\)/), 0);
+      assert.equal(this.element.textContent.trim().search(/Competencies \(2\)/), 0);
       await click('.title');
     });
   });

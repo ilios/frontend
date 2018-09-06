@@ -80,7 +80,7 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(find(group1).textContent.trim(), 'test group |');
     assert.equal(find(group2).textContent.trim(), 'test group 2 |');
 
-    find(group1).click();
+    await click(group1);
 
     return settled(await click(saveButton));
   });
@@ -129,7 +129,7 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(find(user1).textContent.trim(), 'test person |');
     assert.equal(find(user2).textContent.trim(), 'test person 2 |');
 
-    find(user1).click();
+    await click(user1);
 
     return settled(await click(saveButton));
   });

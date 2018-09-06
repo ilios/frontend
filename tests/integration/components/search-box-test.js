@@ -1,7 +1,6 @@
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
+import { render, click, findAll, fillIn, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search box', function(hooks) {
@@ -20,8 +19,6 @@ module('Integration | Component | search box', function(hooks) {
     await render(hbs`{{search-box search=(action search)}}`);
     const searchBoxIcon = '.search-icon';
     await click(searchBoxIcon);
-
-    return settled();
   });
 
   test('typing calls search', async function(assert) {
@@ -29,13 +26,7 @@ module('Integration | Component | search box', function(hooks) {
       assert.equal(value, 'typed it');
     });
     await render(hbs`{{search-box search=(action search)}}`);
-    run(async () => {
-      await fillIn('input', 'typed it');
-      await triggerEvent('input', 'input');
-      find('input').trigger('keyup', {which: 50});
-    });
-    //wait for debounce timer in component
-    return settled();
+    await fillIn('input', 'typed it');
   });
 
   test('escape calls clear', async function(assert) {
@@ -44,10 +35,7 @@ module('Integration | Component | search box', function(hooks) {
     });
     this.set('nothing', () => { });
     await render(hbs`{{search-box search=(action nothing) clear=(action clear)}}`);
-    run(async () => {
-      await fillIn('input', 'typed it');
-      await triggerEvent('input', 'change');
-      find('input').trigger($.Event('keyup', { keyCode: 27 }));
-    });
+    await fillIn('input', 'typed it');
+    await triggerKeyEvent('input', 'keyup', 27);
   });
 });

@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -29,10 +29,10 @@ module('Integration | Component | leadership list', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
     assert.equal(findAll(directors).length, 1);
-    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
     assert.equal(findAll(administrators).length, 2);
-    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
-    assert.equal(find(administrators).eq(1).textContent.trim(), 'b a person');
+    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators)[1].textContent.trim(), 'b a person');
   });
 
   test('it renders without directors', async function(assert) {
@@ -48,7 +48,7 @@ module('Integration | Component | leadership list', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
     assert.equal(findAll(administrators).length, 1);
-    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
   });
 
   test('it renders without administrators', async function(assert) {
@@ -64,7 +64,7 @@ module('Integration | Component | leadership list', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
     assert.equal(findAll(directors).length, 1);
-    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
   });
 
   test('it renders without data', async function(assert) {
@@ -77,9 +77,9 @@ module('Integration | Component | leadership list', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
     assert.equal(findAll(directors).length, 1);
-    assert.equal(find(directors).eq(0).textContent.trim(), 'None');
+    assert.equal(findAll(directors)[0].textContent.trim(), 'None');
     assert.equal(findAll(administrators).length, 1);
-    assert.equal(find(administrators).eq(0).textContent.trim(), 'None');
+    assert.equal(findAll(administrators)[0].textContent.trim(), 'None');
   });
 
   test('disabled users are indicated with an icon', async function(assert) {
@@ -107,10 +107,10 @@ module('Integration | Component | leadership list', function(hooks) {
 
     assert.equal(findAll(directors).length, 1);
     assert.equal(findAll(disabledDirectors).length, 0);
-    assert.equal(find(directors).eq(0).textContent.trim(), 'a b person');
+    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
     assert.equal(findAll(administrators).length, 2);
     assert.equal(findAll(disabledAdministrators).length, 1);
-    assert.equal(find(administrators).eq(0).textContent.trim(), 'a b person');
-    assert.equal(find(administrators).eq(1).textContent.trim(), 'b a person');
+    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
+    assert.equal(findAll(administrators)[1].textContent.trim(), 'b a person');
   });
 });

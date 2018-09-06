@@ -57,11 +57,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
-    await settled();
-    assert.equal(find('div > div').textContent.trim(), 'Topics (Medicine)');
+    assert.equal(find('[data-test-title]').textContent.trim(), 'Topics (Medicine)');
     assert.equal(findAll('li').length, 2);
     assert.equal(find('li').textContent.trim(), 'bar');
-    assert.equal(find(findAll('li')[1]).textContent.trim(), 'foo');
+    assert.equal(findAll('li')[1].textContent.trim(), 'foo');
   });
 
   test('empty list', async function(assert) {
@@ -114,7 +113,7 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
     await settled();
-    assert.equal(find('div > div').textContent.trim(), 'Topics (Medicine)');
+    assert.equal(find('[data-test-title]').textContent.trim(), 'Topics (Medicine)');
     assert.equal(findAll('li').length, 0);
   });
 
@@ -168,6 +167,6 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', []);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=true}}`);
     await settled();
-    assert.equal(find('div > div .inactive').textContent.trim(), '(inactive)');
+    assert.equal(find('[data-test-title] .inactive').textContent.trim(), '(inactive)');
   });
 });

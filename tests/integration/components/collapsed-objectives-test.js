@@ -62,18 +62,17 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('subject', course);
     this.set('click', () => {});
     await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
-    await settled();
 
     assert.equal(find('.title').textContent.trim(), 'Objectives (3)');
     assert.equal(findAll('table tr').length, 4);
-    assert.equal(find('tr:nth-of-type(2) td').textContent.trim(), 'There are 3 objectives');
-    assert.equal(find('tr:nth-of-type(3) td').textContent.trim(), '1 has a parent');
-    assert.equal(find('tr:nth-of-type(4) td').textContent.trim(), '1 has MeSH');
+    assert.equal(find('tr td').textContent.trim(), 'There are 3 objectives');
+    assert.equal(find('tr:nth-of-type(2) td').textContent.trim(), '1 has a parent');
+    assert.equal(find('tr:nth-of-type(3) td').textContent.trim(), '1 has MeSH');
 
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('fa-circle'), 'correct icon for parent objectives');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('maybe'), 'correct class for parent objectives');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('fa-circle'), 'correct icon for mesh links');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('maybe'), 'correct class for mesh links');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('fa-circle'), 'correct icon for parent objectives');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('maybe'), 'correct class for parent objectives');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('fa-circle'), 'correct icon for mesh links');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('maybe'), 'correct class for mesh links');
   });
 
   test('clicking expand icon opens full view', async function(assert) {
@@ -108,8 +107,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     assert.equal(find('.title').textContent.trim(), 'Objectives (1)');
     assert.equal(findAll('table tr').length, 4);
 
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('fa-circle'), 'has the correct icon');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('yes'), 'icon has the right class');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('fa-circle'), 'has the correct icon');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('yes'), 'icon has the right class');
   });
 
   test('icons no parents correctly', async function(assert) {
@@ -126,8 +125,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     assert.equal(find('.title').textContent.trim(), 'Objectives (1)');
     assert.equal(findAll('table tr').length, 4);
 
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('fa-ban'), 'has the correct icon');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(2) svg').classList.contains('no'), 'icon has the right class');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('fa-ban'), 'has the correct icon');
+    assert.ok(find('tr td:nth-of-type(2) svg').classList.contains('no'), 'icon has the right class');
   });
 
   test('icons all mesh correctly', async function(assert) {
@@ -144,8 +143,8 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     assert.equal(find('.title').textContent.trim(), 'Objectives (1)');
     assert.equal(findAll('table tr').length, 4);
 
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('fa-circle'), 'has the correct icon');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('yes'), 'icon has the right class');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('fa-circle'), 'has the correct icon');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('yes'), 'icon has the right class');
   });
 
   test('icons no mesh correctly', async function(assert) {
@@ -162,7 +161,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     assert.equal(find('.title').textContent.trim(), 'Objectives (1)');
     assert.equal(findAll('table tr').length, 4);
 
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('fa-ban'), 'has the correct icon');
-    assert.ok(find('tr:nth-of-type(2) td:nth-of-type(3) svg').classList.contains('no'), 'icon has the right class');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('fa-ban'), 'has the correct icon');
+    assert.ok(find('tr td:nth-of-type(3) svg').classList.contains('no'), 'icon has the right class');
   });
 });

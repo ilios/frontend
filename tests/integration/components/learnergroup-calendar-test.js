@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, findAll } from '@ember/test-helpers';
+import { render, settled, findAll, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -94,7 +94,7 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
     const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] label:nth-of-type(1)';
     await settled();
 
-    find(subgroupEventsToggle).click();
+    await click(subgroupEventsToggle);
     await settled();
     assert.equal(findAll(events).length, 2);
   });

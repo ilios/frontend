@@ -42,20 +42,20 @@ module('Integration | Component | school session attributes', function(hooks) {
     const classname = `.school-session-attributes-collapsed`;
 
     assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
-    assert.ok(find(attendanceEnabled).hasClass('no'));
-    assert.ok(find(attendanceEnabled).hasClass('fa-ban'));
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
     assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
-    assert.ok(find(supplementalEnabled).hasClass('yes'));
-    assert.ok(find(supplementalEnabled).hasClass('fa-check'));
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
     assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
-    assert.ok(find(specialAttireEnabled).hasClass('no'));
-    assert.ok(find(specialAttireEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
     assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
-    assert.ok(find(specialEquipmentEnabled).hasClass('no'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
 
     assert.equal(findAll(classname).length, 1);
   });
@@ -95,20 +95,20 @@ module('Integration | Component | school session attributes', function(hooks) {
     const classname = `.school-session-attributes-expanded`;
 
     assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
-    assert.ok(find(attendanceEnabled).hasClass('no'));
-    assert.ok(find(attendanceEnabled).hasClass('fa-ban'));
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
     assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
-    assert.ok(find(supplementalEnabled).hasClass('yes'));
-    assert.ok(find(supplementalEnabled).hasClass('fa-check'));
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
     assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
-    assert.ok(find(specialAttireEnabled).hasClass('no'));
-    assert.ok(find(specialAttireEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
     assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
-    assert.ok(find(specialEquipmentEnabled).hasClass('no'));
-    assert.ok(find(specialEquipmentEnabled).hasClass('fa-ban'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
     assert.equal(findAll(classname).length, 1);
   });
 
@@ -134,7 +134,7 @@ module('Integration | Component | school session attributes', function(hooks) {
     await settled();
 
     const title = '.title';
-    await await click(title);
+    await click(title);
   });
 
   test('clicking collapse fires action', async function(assert) {
@@ -160,6 +160,6 @@ module('Integration | Component | school session attributes', function(hooks) {
     await settled();
 
     const title = '.title';
-    await await click(title);
+    await click(title);
   });
 });

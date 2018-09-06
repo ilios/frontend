@@ -1,5 +1,5 @@
 {{#if (is-fulfilled sortedTerms)}}
-  <div>
+  <div data-test-title>
     <strong>{{vocabulary.title}}</strong> ({{vocabulary.school.title}})
     {{#if (and canEdit (not vocabulary.active))}}
       <span class="inactive">({{t "general.inactive"}})</span>

@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
 
@@ -33,7 +33,7 @@ module('Integration | Component | pending single user update', function(hooks) {
     await render(hbs`{{pending-single-user-update user=user}}`);
 
     return settled().then(() => {
-      assert.equal(find('*').textContent.trim().search(/The email address in the directory \(directory-email\) does not match the email in ilios \(user-email\)/), 0);
+      assert.equal(this.element.textContent.trim().search(/The email address in the directory \(directory-email\) does not match the email in ilios \(user-email\)/), 0);
     });
   });
 });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
@@ -16,6 +16,6 @@ module('Integration | Component | learningmaterial search', function(hooks) {
     assert.expect(1);
     await render(hbs`{{learningmaterial-search}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

@@ -95,8 +95,15 @@
                     checked={{or (is-in recurringDays obj.day) (eq (moment-format startDate "d") obj.day)}}
                     onclick={{action "toggleRecurringDay" obj.day}}
                     disabled={{eq (moment-format startDate "d") obj.day}}
+                    data-test-recurring-day-input={{i}}
                   >
-                  <label class="day-of-week clickable" for="make-recurring-day-input-{{i}}">{{t obj.t}}</label>
+                  <label
+                    class="day-of-week clickable"
+                    for="make-recurring-day-input-{{i}}"
+                    data-test-recurring-day-label={{i}}
+                  >
+                    {{t obj.t}}
+                  </label>
                 </div>
               {{/each}}
             </div>

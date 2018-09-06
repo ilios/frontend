@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, blur, triggerEvent } from '@ember/test-helpers';
+import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
 import moment from 'moment';
@@ -35,10 +35,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const item = '.room';
     const error = `${item} .validation-error-message`;
-
-    return settled().then(()=>{
-      assert.equal(findAll(error).length, 0);
-    });
+    assert.equal(findAll(error).length, 0);
   });
 
   test('room validation errors show up when typing', async function(assert) {
@@ -49,14 +46,9 @@ module('Integration | Component | offering form', function(hooks) {
     const input = `${item} input`;
     const error = `${item} .validation-error-message`;
     const save = '.buttons .done';
-    find(input).val(padStart('a', 300, 'a'));
-
-    find(input).trigger('input');
+    await fillIn(input, padStart('a', 300, 'a'));
     await click(save);
-
-    return settled().then(()=>{
-      assert.equal(findAll(error).length, 1);
-    });
+    assert.equal(findAll(error).length, 1);
   });
 
   test('recurring options does not show by default', async function(assert) {
@@ -77,13 +69,13 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true}}`);
 
-    const sunday = '.make-recurring-days label:nth-of-type(1)';
-    const monday = '.make-recurring-days label:nth-of-type(2)';
-    const tuesday = '.make-recurring-days label:nth-of-type(3)';
-    const wednesday = '.make-recurring-days label:nth-of-type(4)';
-    const thursday = '.make-recurring-days label:nth-of-type(5)';
-    const friday = '.make-recurring-days label:nth-of-type(6)';
-    const saturday = '.make-recurring-days label:nth-of-type(7)';
+    const sunday = '[data-test-recurring-day-label="0"]';
+    const monday = '[data-test-recurring-day-label="1"]';
+    const tuesday = '[data-test-recurring-day-label="2"]';
+    const wednesday = '[data-test-recurring-day-label="3"]';
+    const thursday = '[data-test-recurring-day-label="4"]';
+    const friday = '[data-test-recurring-day-label="5"]';
+    const saturday = '[data-test-recurring-day-label="6"]';
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
@@ -106,10 +98,7 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-
-    return settled().then(()=>{
-      assert.equal(findAll(error).length, 0);
-    });
+    assert.equal(findAll(error).length, 0);
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function(assert) {
@@ -123,13 +112,9 @@ module('Integration | Component | offering form', function(hooks) {
 
     await click(toggle);
     const save = '.buttons .done';
-    find(input).val(0).trigger('input');
-
+    await fillIn(input, 0);
     await click(save);
-
-    return settled().then(()=>{
-      assert.equal(findAll(error).length, 1);
-    });
+    assert.equal(findAll(error).length, 1);
   });
 
   test('recurring default day is disabled and checked', async function(assert) {
@@ -141,9 +126,9 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    let checkbox = find(inputs).eq(dayToday);
-    assert.ok(checkbox.is(':checked'));
-    assert.ok(checkbox.is(':disabled'));
+    let checkbox = findAll(inputs)[dayToday];
+    assert.ok(checkbox.checked);
+    assert.ok(checkbox.disabled);
   });
 
   test('instructor manager does not show by default', async function(assert) {
@@ -289,7 +274,6 @@ module('Integration | Component | offering form', function(hooks) {
     assert.expect(2);
     this.set('nothing', nothing);
 
-    const inputs = '.make-recurring-days input';
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
@@ -323,19 +307,15 @@ module('Integration | Component | offering form', function(hooks) {
     let interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
 
-    find(inputs).eq(thursday).click().change();
-    find(inputs).eq(tuesday).click().change();
-
+    await click(`[data-test-recurring-day-input="${thursday}"]`);
+    await click(`[data-test-recurring-day-input="${tuesday}"]`);
     await click(save);
-
-    return settled();
   });
 
   test('save recurring 3 weeks should get lots of days', async function(assert) {
     assert.expect(8);
     this.set('nothing', nothing);
 
-    const inputs = '.make-recurring-days input';
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
@@ -382,12 +362,10 @@ module('Integration | Component | offering form', function(hooks) {
     await fillIn(weeks, 3);
     let interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
-    find(inputs).eq(thursday).click().change();
-    find(inputs).eq(tuesday).click().change();
+    await click(`[data-test-recurring-day-input="${thursday}"]`);
+    await click(`[data-test-recurring-day-input="${tuesday}"]`);
 
     await click(save);
-
-    return settled();
   });
 
   test('changing start date changes end date', async function(assert) {
@@ -401,6 +379,7 @@ module('Integration | Component | offering form', function(hooks) {
     let interactor = openDatepicker(find(startDate));
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
     interactor.selectDate(newStartDate);
+    await settled();
     assert.equal(moment(newStartDate).hour(9).minute(0).format(format), find(endDate).textContent.trim());
 
   });
@@ -415,9 +394,9 @@ module('Integration | Component | offering form', function(hooks) {
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    find(startHour).val('2').change();
-    find(startMinute).val('15').change();
-    find(startAmPm).val('pm').change();
+    await fillIn(startHour, '2');
+    await fillIn(startMinute, '15');
+    await fillIn(startAmPm, 'pm');
 
     assert.equal(moment().hour(15).minute(15).format(format), find(endDate).textContent.trim());
 
@@ -433,14 +412,8 @@ module('Integration | Component | offering form', function(hooks) {
     const format = 'M/D/YYYY h:mm a';
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
     await fillIn(durationHour, '2');
-    await triggerEvent(durationHour, 'input');
-    return settled().then(async () => {
-      await fillIn(durationMinute, '15');
-      await triggerEvent(durationMinute, 'input');
-      return settled().then(()=>{
-        assert.equal(moment().hour(10).minute(15).format(format), find(endDate).textContent.trim());
-      });
-    });
+    await fillIn(durationMinute, '15');
+    assert.equal(moment().hour(10).minute(15).format(format), find(endDate).textContent.trim());
   });
 
   // @see https://github.com/ilios/frontend/issues/1903
@@ -456,21 +429,12 @@ module('Integration | Component | offering form', function(hooks) {
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    find(startHour).val('2').change();
-    find(startHour).val('2').change();
-    find(startMinute).val('10').change();
-    find(startAmPm).val('pm').change();
+    await fillIn(startHour, '2');
+    await fillIn(startMinute, '10');
+    await fillIn(startAmPm, 'pm');
     await fillIn(durationHour, '2');
-    await triggerEvent(durationHour, 'input');
-
-    return settled().then(async () => {
-      await fillIn(durationMinute, '50');
-      await blur(durationMinute);
-      await triggerEvent(durationMinute, 'input');
-      return settled().then(()=>{
-        assert.equal(moment().hour(17).minute(0).format(format), find(endDate).textContent.trim());
-      });
-    });
+    await fillIn(durationMinute, '50');
+    assert.equal(moment().hour(17).minute(0).format(format), find(endDate).textContent.trim());
   });
 
   test('learnerGroup validation errors do not show up initially', async function(assert) {

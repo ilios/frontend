@@ -2,8 +2,9 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click, findAll } from '@ember/test-helpers';
+import { render, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
 
 const { resolve } = RSVP;
 
@@ -31,7 +32,8 @@ module('Integration | Component | programyear objective list item', function(hoo
   });
 
 
-  test('can change title', async function(assert) {
+  test('can change title', async function (assert) {
+    assert.expect(1);
     let objective = EmberObject.create({
       title: 'fake title',
       save(){
@@ -52,11 +54,8 @@ module('Integration | Component | programyear objective list item', function(hoo
     }}`);
 
     await click('td:nth-of-type(2) .editable');
-    find('td:nth-of-type(2) .fr-box').froalaEditor('html.set', 'new title');
-    find('td:nth-of-type(2) .fr-box').froalaEditor('events.trigger', 'contentChanged');
+    await fillInFroalaEditor('td:nth-of-type(2) .froala-editor-container', 'new title');
     await click('td:nth-of-type(2) .done');
-
-    await settled();
   });
 
   test('can manage competency', async function(assert) {

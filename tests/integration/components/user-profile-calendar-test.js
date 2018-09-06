@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -95,7 +95,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
     await render(hbs`{{user-profile-calendar user=user}}`);
     const picker = '.calendar-time-picker li';
     const goForward = `${picker}:nth-of-type(3)`;
-    find(goForward).click();
+    await click(goForward);
     await settled();
   });
 
@@ -136,7 +136,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
     await render(hbs`{{user-profile-calendar user=user}}`);
     const picker = '.calendar-time-picker li';
     const goBack = `${picker}:nth-of-type(1)`;
-    find(goBack).click();
+    await click(goBack);
     await settled();
   });
 });

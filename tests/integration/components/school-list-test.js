@@ -22,8 +22,8 @@ module('Integration | Component | school list', function(hooks) {
 
     this.set('schools', schools);
     await render(hbs`{{school-list schools=schools}}`);
-    assert.equal(find('tr:nth-of-type(2) td').textContent.trim(), 'school 0');
-    assert.equal(find('tr:nth-of-type(3) td').textContent.trim(), 'school 1');
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'school 0');
+    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'school 1');
   });
 
   test('create school button is visible to root', async function(assert) {

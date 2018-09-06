@@ -295,12 +295,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove=(action removeSequenceBlock)}}`
     );
-    await await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     assert.equal(find('tbody tr:nth-of-type(2) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
       'Confirmation message is visible.');
     assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .remove').length, 1,'Delete button is visible.');
     assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .done').length, 1,'Cancel button is visible.');
-    await await click('tbody tr:nth-of-type(2) .confirm-buttons .remove');
+    await click('tbody tr:nth-of-type(2) .confirm-buttons .remove');
   });
 
   test('cancel delete', async function(assert){
@@ -341,10 +341,10 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await render(
       hbs`{{curriculum-inventory-sequence-block-list report=report  sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true}}`
     );
-    await await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     await settled();
     assert.equal(findAll('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
-    await await click('tbody tr:nth-of-type(2) .confirm-buttons .done');
+    await click('tbody tr:nth-of-type(2) .confirm-buttons .done');
     await settled();
     assert.equal(findAll('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
   });

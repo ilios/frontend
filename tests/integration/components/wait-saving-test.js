@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
@@ -18,6 +18,6 @@ module('Integration | Component | wait saving', function(hooks) {
     modalDialogService.set('destinationElementId', 'modal-testing-div');
     await render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
 
-    assert.equal(find('*').textContent.trim(), 'saving... one moment...');
+    assert.equal(this.element.textContent.trim(), 'saving... one moment...');
   });
 });

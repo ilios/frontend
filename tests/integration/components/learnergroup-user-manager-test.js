@@ -120,11 +120,11 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    assert.notEqual(find('.title').textContent.search(/Members of current group \(2\)/), -1);
-    assert.notEqual(find('.title').textContent.search(/All other members of top group \(0\)/), -1);
+    assert.ok(find('[data-test-group-members]').textContent.includes('Members of current group (2)'));
+    assert.ok(find('[data-test-all-other-members]').textContent.includes('All other members of top group (0)'));
     assert.equal(findAll(userList).length, 2);
     assert.equal(findAll(user1CheckBox).length, 1);
-    assert.notOk(find(user1CheckBox).prop('checked'));
+    assert.notOk(find(user1CheckBox).checked);
     assert.equal(find(user1FirstName).textContent.trim(), 'Jasper');
     assert.equal(find(user1LastName).textContent.trim(), 'Dog');
     assert.equal(find(user1CampusId).textContent.trim(), '1234');
@@ -213,8 +213,8 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     }}`);
 
     assert.equal(findAll(button).length, 0);
-    find(user1CheckBox).click();
-    assert.ok(find(user1CheckBox).prop('checked'));
+    await click(user1CheckBox);
+    assert.ok(find(user1CheckBox).checked);
     assert.equal(find(button).textContent.trim(), 'Move learner to this group');
     await click(button);
     await settled();
@@ -256,8 +256,8 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     }}`);
 
     assert.equal(findAll(button).length, 0);
-    find(user1CheckBox).click();
-    assert.ok(find(user1CheckBox).prop('checked'));
+    await click(user1CheckBox);
+    assert.ok(find(user1CheckBox).checked);
     assert.equal(find(button).textContent.trim(), 'Remove learner to this cohort');
     await click(button);
     await settled();
@@ -296,7 +296,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    return settled(find(action).click());
+    await click(action);
 
   });
 
@@ -332,7 +332,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    return settled(find(action).click());
+    await click(action);
 
   });
 
@@ -374,7 +374,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    find(user1CheckBox).click();
+    await click(user1CheckBox);
     assert.equal(findAll(action1).length, 0);
     assert.equal(findAll(action2).length, 0);
 
@@ -422,9 +422,9 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    find(checkAllBox).click();
-    assert.ok(find(user1CheckBox).prop('checked'));
-    assert.ok(find(user2CheckBox).prop('checked'));
+    await click(checkAllBox);
+    assert.ok(find(user1CheckBox).checked);
+    assert.ok(find(user2CheckBox).checked);
     assert.equal(find(button).textContent.trim(), 'Move 2 learners to this group');
     return settled(await click(button));
 
@@ -467,13 +467,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    find(user1CheckBox).click();
-    assert.ok(find(checkAllBox).prop('indeterminate'));
-    find(user2CheckBox).click();
-    assert.ok(find(checkAllBox).prop('checked'));
-    find(checkAllBox).click();
-    assert.notOk(find(user1CheckBox).prop('checked'));
-    assert.notOk(find(user2CheckBox).prop('checked'));
+    await click(user1CheckBox);
+    assert.ok(find(checkAllBox).indeterminate);
+    await click(user2CheckBox);
+    assert.ok(find(checkAllBox).checked);
+    await click(checkAllBox);
+    assert.notOk(find(user1CheckBox).checked);
+    assert.notOk(find(user2CheckBox).checked);
   });
 
   test('root users can manage disabled users', async function(assert) {

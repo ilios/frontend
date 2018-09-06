@@ -49,17 +49,15 @@ module('Integration | Component | session objective list', function(hooks) {
     await render(
       hbs`{{session-objective-list editable=true subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
     );
-    return settled().then(() => {
-      assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
-      assert.equal(find('thead th').textContent.trim(), 'Description');
-      assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Parent Objectives');
-      assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'MeSH Terms');
-      assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Actions');
-      for (let i = 0, n = objectives.length; i < n; i++) {
-        let objective = objectives[i];
-        assert.equal(this.$(`tbody tr:eq(${i}) td:nth-of-type(1)`).textContent.trim(), objective.get('title'));
-      }
-    });
+    assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
+    assert.equal(find('thead th').textContent.trim(), 'Description');
+    assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Parent Objectives');
+    assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'MeSH Terms');
+    assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Actions');
+    for (let i = 0, n = objectives.length; i < n; i++) {
+      let objective = objectives[i];
+      assert.equal(find(`tbody tr:nth-of-type(${i + 1}) td:nth-of-type(1)`).textContent.trim(), objective.get('title'));
+    }
   });
 
   test('empty list', async function(assert) {
@@ -69,11 +67,9 @@ module('Integration | Component | session objective list', function(hooks) {
     });
     this.set('subject', session);
     await render(hbs`{{session-objective-list subject=subject}}`);
-    return settled().then(() => {
-      let container = this.$('.session-objective-list');
-      assert.equal(container.length, 1, 'Component container element exists.');
-      assert.equal(container.textContent.trim(), '', 'No content is shown.');
-    });
+    let container = findAll('.session-objective-list');
+    assert.equal(container.length, 1, 'Component container element exists.');
+    assert.equal(container[0].textContent.trim(), '', 'No content is shown.');
   });
 
   test('no "sort objectives" button in list with one item', async function(assert) {

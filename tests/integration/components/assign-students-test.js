@@ -59,9 +59,9 @@ module('Integration | Component | assign students', function(hooks) {
       setLimit=(action setLimit)
     }}`);
 
-    let cohortOptions = find('select:nth-of-type(1) option');
+    let cohortOptions = findAll('select:nth-of-type(1) option');
     assert.equal(cohortOptions.length, 1);
-    assert.equal(find(cohortOptions).textContent.trim(), 'program title test cohort');
+    assert.equal(cohortOptions[0].textContent.trim(), 'program title test cohort');
 
     assert.equal(findAll('tbody tr').length, 2);
     assert.equal(findAll('tbody tr:nth-of-type(1) td')[1].textContent.trim(), 'test person');

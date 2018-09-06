@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { render, findAll, find, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -12,7 +12,7 @@ module('Integration | Component | new myreport', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(35);
+    assert.expect(33);
     this.server.create('school', { title: 'first' });
     const school2 = this.server.create('school', { title: 'second' });
     this.server.create('school', { title: 'third' });
@@ -30,63 +30,45 @@ module('Integration | Component | new myreport', function(hooks) {
     this.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
     const title = '.title';
-    const schools = 'select:nth-of-type(1)';
-    const schoolOptions = `${schools} option`;
-    const allSchools = `${schoolOptions}:nth-of-type(1)`;
-    const firstSchool = `${schoolOptions}:nth-of-type(2)`;
-    const secondSchool = `${schoolOptions}:nth-of-type(3)`;
-    const thirdSchool = `${schoolOptions}:nth-of-type(4)`;
+    const schools = '[data-test-school] select';
+    const subjects = '[data-test-subject] select';
 
-    const subjects = 'select:nth-of-type(2) option';
-    const firstSubject = `${subjects}:nth-of-type(1)`;
-    const secondSubject = `${subjects}:nth-of-type(2)`;
-    const thirdSubject = `${subjects}:nth-of-type(3)`;
-    const fourthSubject = `${subjects}:nth-of-type(4)`;
-    const fifthSubject = `${subjects}:nth-of-type(5)`;
-    const sixthSubject = `${subjects}:nth-of-type(6)`;
-    const seventhSubject = `${subjects}:nth-of-type(7)`;
-    const eighthSubject = `${subjects}:nth-of-type(8)`;
-    const ninthSubject = `${subjects}:nth-of-type(9)`;
-    const tenthSubject = `${subjects}:nth-of-type(10)`;
-    const eleventhSubject = `${subjects}:nth-of-type(11)`;
-
-    await settled();
+    const schoolSelect = find(schools);
     assert.equal(find(title).textContent, 'New Report');
-    assert.notEqual(find(allSchools).text().search(/All Schools/), -1);
-    assert.equal(find(allSchools).val(), "null");
-    assert.ok(find(allSchools).not(':selected'), 'all schools is not selected');
-    assert.notEqual(find(firstSchool).text().search(/first/), -1);
-    assert.equal(find(firstSchool).val(), 1);
-    assert.ok(find(firstSchool).not(':selected'), 'first school is not selected');
-    assert.notEqual(find(secondSchool).text().search(/second/), -1);
-    assert.equal(find(secondSchool).val(), 2);
-    assert.ok(find(secondSchool).is(':selected'), 'users primary school is selected');
-    assert.notEqual(find(thirdSchool).text().search(/third/), -1);
-    assert.equal(find(thirdSchool).val(), 3);
-    assert.ok(find(thirdSchool).not(':selected'), 'third school is not selected');
+    assert.ok(schoolSelect.options[0].value, "null");
+    assert.ok(schoolSelect.options[0].textContent.includes('All Schools'));
+    assert.ok(schoolSelect.options[1].value, "1");
+    assert.ok(schoolSelect.options[1].textContent.includes('first'));
+    assert.ok(schoolSelect.options[2].value, "2");
+    assert.ok(schoolSelect.options[2].textContent.includes('second'));
+    assert.ok(schoolSelect.options[3].value, "3");
+    assert.ok(schoolSelect.options[3].textContent.includes('third'));
+    assert.equal(schoolSelect.options[schoolSelect.selectedIndex].value, 2, 'primary school is selected');
 
-    assert.equal(find(firstSubject).textContent.trim(), 'Courses');
-    assert.equal(find(firstSubject).val(), 'course');
-    assert.equal(find(secondSubject).textContent.trim(), 'Sessions');
-    assert.equal(find(secondSubject).val(), 'session');
-    assert.equal(find(thirdSubject).textContent.trim(), 'Programs');
-    assert.equal(find(thirdSubject).val(), 'program');
-    assert.equal(find(fourthSubject).textContent.trim(), 'Program Years');
-    assert.equal(find(fourthSubject).val(), 'program year');
-    assert.equal(find(fifthSubject).textContent.trim(), 'Instructors');
-    assert.equal(find(fifthSubject).val(), 'instructor');
-    assert.equal(find(sixthSubject).textContent.trim(), 'Instructor Groups');
-    assert.equal(find(sixthSubject).val(), 'instructor group');
-    assert.equal(find(seventhSubject).textContent.trim(), 'Learning Materials');
-    assert.equal(find(seventhSubject).val(), 'learning material');
-    assert.equal(find(eighthSubject).textContent.trim(), 'Competencies');
-    assert.equal(find(eighthSubject).val(), 'competency');
-    assert.equal(find(ninthSubject).textContent.trim(), 'MeSH Terms');
-    assert.equal(find(ninthSubject).val(), 'mesh term');
-    assert.equal(find(tenthSubject).textContent.trim(), 'Terms');
-    assert.equal(find(tenthSubject).val(), 'term');
-    assert.equal(find(eleventhSubject).textContent.trim(), 'Session Types');
-    assert.equal(find(eleventhSubject).val(), 'session type');
+    const subjectSelect = find(subjects);
+    assert.ok(subjectSelect.options[0].value, "course");
+    assert.ok(subjectSelect.options[0].textContent.includes('Courses'));
+    assert.ok(subjectSelect.options[1].value, "session");
+    assert.ok(subjectSelect.options[1].textContent.includes('Sessions'));
+    assert.ok(subjectSelect.options[2].value, "program");
+    assert.ok(subjectSelect.options[2].textContent.includes('Programs'));
+    assert.ok(subjectSelect.options[3].value, "program year");
+    assert.ok(subjectSelect.options[3].textContent.includes('Program Years'));
+    assert.ok(subjectSelect.options[4].value, "instructor");
+    assert.ok(subjectSelect.options[4].textContent.includes('Instructors'));
+    assert.ok(subjectSelect.options[5].value, "instructor group");
+    assert.ok(subjectSelect.options[5].textContent.includes('Instructor Groups'));
+    assert.ok(subjectSelect.options[6].value, "learning material");
+    assert.ok(subjectSelect.options[6].textContent.includes('Learning Materials'));
+    assert.ok(subjectSelect.options[7].value, "competency");
+    assert.ok(subjectSelect.options[7].textContent.includes('Competencies'));
+    assert.ok(subjectSelect.options[8].value, "mesh term");
+    assert.ok(subjectSelect.options[8].textContent.includes('MeSH Terms'));
+    assert.ok(subjectSelect.options[9].value, "term");
+    assert.ok(subjectSelect.options[9].textContent.includes('Terms'));
+    assert.ok(subjectSelect.options[10].value, "session type");
+    assert.ok(subjectSelect.options[10].textContent.includes('Session Types'));
+    assert.equal(subjectSelect.options[subjectSelect.selectedIndex].value, 'course', 'courses is selected');
   });
 
   let checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
@@ -103,23 +85,17 @@ module('Integration | Component | new myreport', function(hooks) {
     context.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
 
-    const schoolSelect = `select:nth-of-type(1)`;
-    const select = `select:nth-of-type(2)`;
-    const subjects = `${select} option`;
-    const targetSubject = `${subjects}:eq(${subjectNum})`;
+    const subject = `[data-test-subject] select`;
+    const object = `[data-test-object] select`;
+    await fillIn('[data-test-school] select', 'null');
+    const subjectSelect = find(subject);
+    assert.equal(subjectSelect.options[subjectNum].value, subjectVal);
+    await fillIn(subjectSelect, subjectVal);
 
-    const objectsOptions = 'select:nth-of-type(3) option';
-
-    await settled();
-    context.$(schoolSelect).val(null).change();
-    await settled();
-    assert.equal(context.$(targetSubject).val(), subjectVal, `${subjectVal} is in the list where we expect it.`);
-    context.$(select).val(subjectVal).change();
-    await settled();
-
-    assert.equal(context.$(`${objectsOptions}:nth-of-type(1)`).val(), '', 'first option is blank');
+    const objectSelect = find(object);
+    assert.equal(objectSelect.options[0].value, '');
     expectedObjects.forEach((val, i) => {
-      assert.equal(context.$(`${objectsOptions}:eq(${i+1})`).val(), val, `${val} is object option`);
+      assert.equal(objectSelect.options[i + 1].value, val, `${val} is object option`);
     });
   };
 
@@ -249,11 +225,9 @@ module('Integration | Component | new myreport', function(hooks) {
       email: 'test@example.com',
     });
 
-    const schoolSelect = 'select:nth-of-type(1)';
-    const subjects = `select:nth-of-type(2) option`;
-    const objectSelect = 'select:nth-of-type(3)';
-    const targetSubject = `${subjects}:nth-of-type(1)`;
-    const targetObject = `instructor`;
+    const schoolSelect = '[data-test-school] select';
+    const subject = `[data-test-subject] select`;
+    const object = `[data-test-object] select`;
     const userSearch = '.user-search';
     const input = `${userSearch} input`;
     const results = `${userSearch} li`;
@@ -262,21 +236,13 @@ module('Integration | Component | new myreport', function(hooks) {
 
     this.set('close', ()=>{});
     await render(hbs`{{new-myreport close=(action close)}}`);
-    await settled();
-    find(schoolSelect).val(null).change();
-    await settled();
-    assert.equal(find(targetSubject).val(), 'course');
-    find(objectSelect).val(targetObject).change();
-    await settled();
-
+    await fillIn(schoolSelect, 'null');
+    const subjectSelect = find(subject);
+    assert.equal(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
+    await fillIn(object, 'instructor');
     assert.equal(findAll(userSearch).length, 1);
-    find(input).val('test').trigger('input');
-    await settled();
-
-    await find(firstResult).click();
-    await settled();
+    await fillIn(input, 'test');
+    await click(firstResult);
     assert.equal(find(selectedUser).textContent.trim(), 'Test Person');
-
-    await settled();
   });
 });

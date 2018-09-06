@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -59,13 +59,12 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
 
-    let options = find('option');
+    let options = findAll('option');
     assert.equal(options.length, 2);
-    assert.equal(options.eq(0).textContent.trim(), 'school 0');
-    assert.equal(options.eq(1).textContent.trim(), 'school 1');
+    assert.equal(options[0].textContent.trim(), 'school 0');
+    assert.equal(options[1].textContent.trim(), 'school 1');
 
     assert.equal(findAll('button').length, 1);
-
     assert.ok(find('div:nth-of-type(2)').classList.contains('alert'));
   });
 
@@ -85,13 +84,10 @@ module('Integration | Component | unassigned students summary', function(hooks) 
 
     this.set('schools', [primarySchool]);
     await render(hbs`{{unassigned-students-summary schools=schools}}`);
+    assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
+    assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
 
-    return settled().then(() => {
-      assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
-      assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
-
-      assert.notOk(find('div').eq(0).hasClass('alert'));
-      assert.equal(findAll('button').length, 0);
-    });
+    assert.notOk(find('div:nth-of-type(2)').classList.contains('alert'));
+    assert.equal(findAll('button').length, 0);
   });
 });

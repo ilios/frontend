@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learnergroup editor', function(hooks) {
@@ -12,7 +12,7 @@ module('Integration | Component | learnergroup editor', function(hooks) {
 
     await render(hbs`{{learnergroup-editor}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
@@ -21,6 +21,6 @@ module('Integration | Component | learnergroup editor', function(hooks) {
       {{/learnergroup-editor}}
     `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

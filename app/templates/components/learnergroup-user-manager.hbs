@@ -54,7 +54,7 @@
         </thead>
       </table>
       {{#if isEditing}}
-        <div class="title">
+        <div class="title" data-test-group-members>
           {{t "general.groupMembers"}} ({{usersInCurrentGroup.length}})
         </div>
       {{/if}}
@@ -111,7 +111,7 @@
       </table>
 
       {{#if isEditing}}
-        <div class="title">
+        <div class="title" data-test-all-other-members>
           {{t "general.allOtherMembers" topLevelGroupTitle=topLevelGroupTitle}} ({{usersNotInCurrentGroup.length}})
         </div>
         <table>

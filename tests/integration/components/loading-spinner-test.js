@@ -9,7 +9,7 @@ module('Integration | Component | loading-spinner', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{loading-spinner}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
     assert.ok(find('svg').classList.contains('fa-spinner'));
   });
 });

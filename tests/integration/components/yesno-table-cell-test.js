@@ -8,13 +8,13 @@ module('Integration | Component | yesno table cell', function(hooks) {
 
   test('it renders yes', async function(assert) {
     await render(hbs`{{yesno-table-cell value=true}}`);
-    assert.equal(find('*').textContent.trim(), 'Yes');
+    assert.equal(this.element.textContent.trim(), 'Yes');
     assert.ok(find('span').classList.contains('yes'));
   });
 
   test('it renders no', async function(assert) {
     await render(hbs`{{yesno-table-cell value=false}}`);
-    assert.equal(find('*').textContent.trim(), 'No');
+    assert.equal(this.element.textContent.trim(), 'No');
     assert.ok(find('span').classList.contains('no'));
   });
 });

@@ -40,9 +40,9 @@ module('Integration | Component | course summary header', function(hooks) {
     await render(hbs`{{course-summary-header course=course}}`);
     const title = 'h2';
     const actions = '.course-summary-actions';
-    const materialsIcon = `${actions} svg:nth-of-type(1)`;
-    const printIcon = `${actions} svg:nth-of-type(2)`;
-    const rolloverIcon = `${actions} svg:nth-of-type(3)`;
+    const materialsIcon = `${actions} a:nth-of-type(1) svg`;
+    const printIcon = `${actions} a:nth-of-type(2) svg`;
+    const rolloverIcon = `${actions} a:nth-of-type(3) svg`;
     const blocks = '.course-summary-content .block';
     const start = `${blocks}:nth-of-type(1) span`;
     const externalId = `${blocks}:nth-of-type(2) span`;
@@ -50,18 +50,15 @@ module('Integration | Component | course summary header', function(hooks) {
     const level = `${blocks}:nth-of-type(4) span`;
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1)`;
 
-
     assert.equal(find(title).textContent.trim(), 'title');
-    assert.ok(find(materialsIcon).hasClass('fa-archive'));
-    assert.ok(find(printIcon).hasClass('fa-print'));
-    assert.ok(find(rolloverIcon).hasClass('fa-random'));
+    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
+    assert.ok(find(printIcon).classList.contains('fa-print'));
+    assert.ok(find(rolloverIcon).classList.contains('fa-random'));
     assert.equal(find(start).textContent.trim(), moment(course.startDate).format('L'));
     assert.equal(find(externalId).textContent.trim(), 'abc');
     assert.equal(find(end).textContent.trim(), moment(course.endDate).format('L'));
     assert.equal(find(level).textContent.trim(), '3');
     assert.equal(find(status).textContent.trim(), 'Published');
-
-
   });
 
   test('no link to materials when that is the current route', async function(assert) {
@@ -87,13 +84,13 @@ module('Integration | Component | course summary header', function(hooks) {
     });
     this.set('course', course);
     await render(hbs`{{course-summary-header course=course}}`);
-    const actions = '.course-summary-actions svg';
-    const printIcon = `${actions}:nth-of-type(1)`;
-    const rolloverIcon = `${actions}:nth-of-type(2)`;
+    const actions = '.course-summary-actions a';
+    const printIcon = `${actions}:nth-of-type(1) svg`;
+    const rolloverIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).hasClass('fa-print'));
-    assert.ok(find(rolloverIcon).hasClass('fa-random'));
+    assert.ok(find(printIcon).classList.contains('fa-print'));
+    assert.ok(find(rolloverIcon).classList.contains('fa-random'));
   });
 
   test('no link to rollover when that is the current route', async function(assert) {
@@ -110,13 +107,13 @@ module('Integration | Component | course summary header', function(hooks) {
     });
     this.set('course', course);
     await render(hbs`{{course-summary-header course=course}}`);
-    const actions = '.course-summary-actions svg';
-    const materialsIcon = `${actions}:nth-of-type(1)`;
-    const printIcon = `${actions}:nth-of-type(2)`;
+    const actions = '.course-summary-actions a';
+    const materialsIcon = `${actions}:nth-of-type(1) svg`;
+    const printIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).hasClass('fa-print'));
-    assert.ok(find(materialsIcon).hasClass('fa-archive'));
+    assert.ok(find(printIcon).classList.contains('fa-print'));
+    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
   });
 
   test('no link to rollover when user cannot edit the course', async function(assert) {
@@ -142,12 +139,12 @@ module('Integration | Component | course summary header', function(hooks) {
     });
     this.set('course', course);
     await render(hbs`{{course-summary-header course=course}}`);
-    const actions = '.course-summary-actions svg';
-    const materialsIcon = `${actions}:nth-of-type(1)`;
-    const printIcon = `${actions}:nth-of-type(2)`;
+    const actions = '.course-summary-actions a';
+    const materialsIcon = `${actions}:nth-of-type(1) svg`;
+    const printIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).hasClass('fa-print'));
-    assert.ok(find(materialsIcon).hasClass('fa-archive'));
+    assert.ok(find(printIcon).classList.contains('fa-print'));
+    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
   });
 });

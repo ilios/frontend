@@ -49,7 +49,7 @@ module('Integration | Component | course director manager', function(hooks) {
     assert.equal(find(user1).textContent.trim(), 'test person 1');
     assert.equal(find(user2).textContent.trim(), 'test person 2');
 
-    find(user1).click();
+    await click(user1);
 
     return settled(await click(saveButton));
   });

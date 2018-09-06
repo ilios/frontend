@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import { render, click, find, findAll, fillIn, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -37,13 +37,14 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       'Academic year input is labeled correctly.'
     );
     assert.equal(findAll('[data-test-academic-year] option').length, 11, 'Academic year dropdown has eleven options.');
+    const select = find('[data-test-academic-year] select');
     assert.equal(
-      this.$('[data-test-academic-year] option').filter(":selected").val(),
+      select.options[select.selectedIndex].value,
       currentYear,
       'Current year is selected by default.'
     );
     assert.equal(
-      this.$('[data-test-academic-year] option').filter(":selected").textContent.trim(),
+      select.options[select.selectedIndex].textContent.trim(),
       currentYearLabel,
       'Current year label is correct.'
     );
@@ -84,9 +85,9 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     assert.expect(6);
 
     this.set('program', EmberObject.create());
+    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const expectedSelectedYear = currentYear - 5;
     this.set('saveReport', (report) => {
-      const currentYear = parseInt(moment().format('YYYY'), 10);
-      const expectedSelectedYear = currentYear - 5;
       assert.equal(report.get('name'), 'new report', 'Name gets passed.');
       assert.equal(report.get('description'), 'lorem ipsum', 'Description gets passed.');
       assert.equal(report.get('year'), expectedSelectedYear, 'Selected academic year gets passed.');
@@ -107,7 +108,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
     await fillIn('[data-test-name] input', 'new report');
     await fillIn('[data-test-description] textarea', 'lorem ipsum');
-    this.$('[data-test-academic-year] option:nth-of-type(1)').prop('selected', true).change();
+    await fillIn('[data-test-academic-year] select', expectedSelectedYear);
     await click('button.done');
   });
 
@@ -133,8 +134,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
 
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
     await fillIn('[data-test-name] input', 'new report');
-    // https://github.com/DockYard/ember-one-way-controls/blob/master/tests/integration/components/one-way-input-test.js
-    this.$('[data-test-name] input').trigger($.Event('keyup', { keyCode: 13 }));
+    await triggerKeyEvent('[data-test-name] input', 'keyup', 13);
   });
 
   test('validation errors do not show up initially', async function(assert) {

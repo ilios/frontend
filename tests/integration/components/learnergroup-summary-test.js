@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled, find, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -132,16 +132,10 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const editLocation = `${defaultLocation} .editable`;
     const input =  `${defaultLocation} input`;
     const save =  `${defaultLocation} .done`;
-    return settled().then(()=>{
-      assert.equal(find(defaultLocation).textContent.trim(), 'test location');
-      find(editLocation).click();
-      return settled().then(()=> {
-        find(input).val('new location name').trigger('input');
-        find(save).click();
-        return settled().then(()=> {
-          assert.equal(find(defaultLocation).textContent.trim(), 'new location name');
-        });
-      });
-    });
+    assert.equal(find(defaultLocation).textContent.trim(), 'test location');
+    await click(editLocation);
+    await fillIn(input, 'new location name');
+    await click(save);
+    assert.equal(find(defaultLocation).textContent.trim(), 'new location name');
   });
 });

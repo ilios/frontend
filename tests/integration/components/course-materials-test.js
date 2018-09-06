@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, fillIn, triggerEvent, find, findAll } from '@ember/test-helpers';
+import { click, render, settled, fillIn, triggerEvent, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -127,20 +127,20 @@ module('Integration | Component | course materials', function(hooks) {
     const thirdSessionLmsecondOffering = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(5)`;
 
     assert.equal(find(firstSessionLmTitle).textContent.trim(), 'title1');
-    assert.equal(find(firstSessionLmLink).prop('href').trim(), 'http://myhost.com/url1');
+    assert.equal(find(firstSessionLmLink).getAttribute('href').trim(), 'http://myhost.com/url1');
     assert.equal(find(firstSessionLmType).textContent.trim(), 'link');
     assert.equal(find(firstSessionLmAuthor).textContent.trim(), 'author1');
     assert.equal(find(firstSessionLmSessionTitle).textContent.trim(), 'session1title');
     assert.equal(find(firstSessionLmFirstOffering).textContent.trim(), '02/02/2020');
 
     assert.equal(find(secondSessionLmTitle).textContent.trim(), 'title2');
-    assert.equal(find(secondSessionLmLink).prop('href').trim(), 'http://myhost.com/url2');
+    assert.equal(find(secondSessionLmLink).getAttribute('href').trim(), 'http://myhost.com/url2');
     assert.equal(find(secondSessionLmType).textContent.trim(), 'file');
     assert.equal(find(secondSessionLmAuthor).textContent.trim(), 'author2');
     assert.equal(find(secondSessionLmSessionTitle).textContent.trim(), 'session1title');
     assert.equal(find(secondSessionLmsecondOffering).textContent.trim(), '02/02/2020');
 
-    assert.equal(find(thirdSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(find(thirdSessionLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
     assert.equal(findAll(thirdSessionLmLink).length, 0);
     assert.equal(find(thirdSessionLmType).textContent.trim(), 'citation');
     assert.equal(find(thirdSessionLmAuthor).textContent.trim(), 'author3');
@@ -177,16 +177,16 @@ module('Integration | Component | course materials', function(hooks) {
     const sessionTitle = `${headers}:nth-of-type(4)`;
     const firstOffering = `${headers}:nth-of-type(5)`;
 
-    find(title).click();
-    find(title).click();
-    find(type).click();
-    find(type).click();
-    find(author).click();
-    find(author).click();
-    find(sessionTitle).click();
-    find(sessionTitle).click();
-    find(firstOffering).click();
-    find(firstOffering).click();
+    await click(title);
+    await click(title);
+    await click(type);
+    await click(type);
+    await click(author);
+    await click(author);
+    await click(sessionTitle);
+    await click(sessionTitle);
+    await click(firstOffering);
+    await click(firstOffering);
 
     return settled();
 
@@ -286,7 +286,7 @@ module('Integration | Component | course materials', function(hooks) {
     await fillIn(filter, 'citationtext');
     await triggerEvent(filter, 'input');
     assert.equal(findAll(sessionMaterials).length, 1);
-    assert.equal(find(firstSessionLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(find(firstSessionLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
 
     return settled();
 

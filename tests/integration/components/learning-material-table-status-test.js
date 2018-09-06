@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learning material table status', function(hooks) {
@@ -17,7 +17,7 @@ module('Integration | Component | learning material table status', function(hook
     const icon = '.fa-clock';
     await render(hbs`{{learning-material-table-status value=value row=row}}`);
     assert.equal(findAll(icon).length, 0);
-    assert.equal(find('*').textContent.trim(), 'Final');
+    assert.equal(this.element.textContent.trim(), 'Final');
   });
 
   test('it renders with start date', async function(assert) {
@@ -30,7 +30,7 @@ module('Integration | Component | learning material table status', function(hook
     const icon = '.fa-clock';
     await render(hbs`{{learning-material-table-status value=value row=row}}`);
     assert.equal(findAll(icon).length, 1);
-    assert.equal(find('*').textContent.trim(), 'Final');
+    assert.equal(this.element.textContent.trim(), 'Final');
   });
 
   test('it renders with end date', async function(assert) {
@@ -43,7 +43,7 @@ module('Integration | Component | learning material table status', function(hook
     const icon = '.fa-clock';
     await render(hbs`{{learning-material-table-status value=value row=row}}`);
     assert.equal(findAll(icon).length, 1);
-    assert.equal(find('*').textContent.trim(), 'Final');
+    assert.equal(this.element.textContent.trim(), 'Final');
   });
 
   test('it renders with both start and end date', async function(assert) {
@@ -56,6 +56,6 @@ module('Integration | Component | learning material table status', function(hook
     const icon = '.fa-clock';
     await render(hbs`{{learning-material-table-status value=value row=row}}`);
     assert.equal(findAll(icon).length, 1);
-    assert.equal(find('*').textContent.trim(), 'Final');
+    assert.equal(this.element.textContent.trim(), 'Final');
   });
 });

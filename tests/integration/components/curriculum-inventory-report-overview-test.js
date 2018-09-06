@@ -256,7 +256,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(this.$('.start-date input'));
+        let interactor = openDatepicker(find('.start-date input'));
         assert.equal(find('.start-date input').value, moment(report.get('startDate')).format('L'),
           "The report's current start date is pre-selected in date picker."
         );
@@ -317,7 +317,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(this.$('.start-date input'));
+        let interactor = openDatepicker(find('.start-date input'));
         let newVal = moment(report.get('endDate')).add(1, 'day');
         interactor.selectDate(newVal.toDate());
         assert.equal(findAll('.start-date .validation-error-message').length, 0,
@@ -378,7 +378,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(this.$('.end-date input'));
+        let interactor = openDatepicker(find('.end-date input'));
         assert.equal(find('.end-date input').value, moment(report.get('endDate')).format('L'),
           "The report's current end date is pre-selected in date picker."
         );
@@ -439,7 +439,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(this.$('.end-date input'));
+        let interactor = openDatepicker(find('.end-date input'));
         let newVal = moment(report.get('startDate')).subtract(1, 'day');
         interactor.selectDate(newVal.toDate());
         assert.equal(findAll('.end-date .validation-error-message').length, 0,

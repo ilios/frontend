@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | school manager', function(hooks) {
@@ -20,6 +20,6 @@ module('Integration | Component | school manager', function(hooks) {
       setSchoolManagedSessionType=(action nothing)
     }}`);
 
-    assert.notEqual(find('*').textContent.search(/Back to Schools List/), -1);
+    assert.notEqual(this.element.textContent.search(/Back to Schools List/), -1);
   });
 });

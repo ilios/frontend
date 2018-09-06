@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { click, render, findAll, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -72,7 +72,7 @@ module('Integration | Component | my materials', function(hooks) {
       setFilter=(action nothing)
     }}`);
 
-    assert.equal(find('*').textContent.trim(), 'None');
+    assert.equal(this.element.textContent.trim(), 'None');
   });
 
   test('it renders with materials', async function(assert) {
@@ -139,24 +139,24 @@ module('Integration | Component | my materials', function(hooks) {
     const fifthCourse = `${courseListOptions}:nth-of-type(6)`;
 
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
-    assert.equal(find(firstLmLink).prop('href').trim(), 'http://myhost.com/url1?inline');
+    assert.equal(find(firstLmLink).getAttribute('href').trim(), 'http://myhost.com/url1?inline');
     assert.equal(findAll(firstLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(firstLmSessionTitle).textContent.trim(), 'session1title');
     assert.equal(find(firstLmCourseTitle).textContent.trim(), 'course1title');
     assert.equal(find(firstLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
     assert.equal(find(firstLmFirstOffering).textContent.trim(), '02/02/2003');
-    assert.equal(find(firstLmDownloadLink).prop('href').trim(), 'http://myhost.com/url1');
+    assert.equal(find(firstLmDownloadLink).getAttribute('href').trim(), 'http://myhost.com/url1');
 
 
     assert.equal(find(secondLmTitle).textContent.trim(), 'title2');
-    assert.equal(find(secondLmLink).prop('href').trim(), 'http://myhost.com/url2');
+    assert.equal(find(secondLmLink).getAttribute('href').trim(), 'http://myhost.com/url2');
     assert.equal(findAll(secondLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(secondLmSessionTitle).textContent.trim(), 'session2title');
     assert.equal(find(secondLmCourseTitle).textContent.trim(), 'course2title');
     assert.equal(find(secondLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
     assert.equal(find(secondLmFirstOffering).textContent.trim(), '02/02/2016');
 
-    assert.equal(find(thirdLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
     assert.equal(findAll(thirdLmLink).length, 0);
     assert.equal(findAll(thirdLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(thirdLmSessionTitle).textContent.trim(), 'session3title');
@@ -165,14 +165,14 @@ module('Integration | Component | my materials', function(hooks) {
     assert.equal(find(thirdLmFirstOffering).textContent.trim(), '02/02/2020');
 
     assert.equal(find(fourthLmTitle).textContent.trim(), 'title4');
-    assert.equal(find(fourthLmLink).prop('href').trim(), 'http://myhost.com/document.txt');
+    assert.equal(find(fourthLmLink).getAttribute('href').trim(), 'http://myhost.com/document.txt');
     assert.equal(findAll(fourthLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(fourthLmSessionTitle).textContent.trim(), 'session4title');
     assert.equal(find(fourthLmCourseTitle).textContent.trim(), 'course4title');
     assert.equal(find(fourthLmInstructor).textContent.trim(), 'Instructor3name, Instructor4name');
     assert.equal(find(fourthLmFirstOffering).textContent.trim(), '02/02/2030');
 
-    assert.ok(find(fifthLmTitle).text().includes('title5'));
+    assert.ok(find(fifthLmTitle).textContent.includes('title5'));
     assert.equal(findAll(fifthLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(fifthLmSessionTitle).textContent.trim(), 'session5title');
     assert.equal(find(fifthLmCourseTitle).textContent.trim(), 'course5title');
@@ -347,14 +347,14 @@ module('Integration | Component | my materials', function(hooks) {
     const sessionTitle = `${headers}:nth-of-type(1)`;
     const firstOffering = `${headers}:nth-of-type(5)`;
 
-    find(title).click();
-    find(title).click();
-    find(courseTitle).click();
-    find(courseTitle).click();
-    find(sessionTitle).click();
-    find(sessionTitle).click();
-    find(firstOffering).click();
-    find(firstOffering).click();
+    await click(title);
+    await click(title);
+    await click(courseTitle);
+    await click(courseTitle);
+    await click(sessionTitle);
+    await click(sessionTitle);
+    await click(firstOffering);
+    await click(firstOffering);
 
   });
 
@@ -384,15 +384,10 @@ module('Integration | Component | my materials', function(hooks) {
     }}`);
 
     const select = '.course-filter select';
-    const options = `${select} option`;
-    const allCourses = `${options}:nth-of-type(1)`;
-    const firstCourse = `${options}:nth-of-type(2)`;
-    const thirdCourse = `${options}:nth-of-type(4)`;
 
-    find(firstCourse).prop('selected', true).change();
-    find(thirdCourse).prop('selected', true).change();
-    find(allCourses).prop('selected', true).change();
-
+    await fillIn(select, '1');
+    await fillIn(select, '3');
+    await fillIn(select, '');
   });
 
   test('find with slash does not blow up on regex error', async function(assert) {

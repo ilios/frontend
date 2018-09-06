@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, findAll } from '@ember/test-helpers';
+import { render, settled, find, findAll, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -112,11 +112,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.notOk(find(toggleValue).is(':checked'));
-    find(toggle).click();
+    assert.notOk(find(toggleValue).checked);
+    await click(toggle);
     await settled();
     assert.ok(term.get('active'));
-    assert.ok(find(toggleValue).is(':checked'));
+    assert.ok(find(toggleValue).checked);
   });
 
   test('inactive active term', async function(assert) {
@@ -152,10 +152,10 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.ok(find(toggleValue).is(':checked'));
-    find(toggle).click();
+    assert.ok(find(toggleValue).checked);
+    await click(toggle);
     await settled();
     assert.notOk(term.get('active'));
-    assert.notOk(find(toggleValue).is(':checked'));
+    assert.notOk(find(toggleValue).checked);
   });
 });

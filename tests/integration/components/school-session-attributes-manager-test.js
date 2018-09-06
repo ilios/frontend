@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -35,19 +35,19 @@ module('Integration | Component | school session attributes manager', function(h
     const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
 
     assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
-    assert.ok(find(attendanceCheckbox).not(':checked'));
+    assert.notOk(find(attendanceCheckbox).checked);
 
     assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
-    assert.ok(find(supplementalCheckbox).is(':checked'));
+    assert.ok(find(supplementalCheckbox).checked);
 
     assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
-    assert.ok(find(specialAttireCheckbox).not(':checked'));
+    assert.notOk(find(specialAttireCheckbox).checked);
 
     assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
-    assert.ok(find(specialEquipmentCheckbox).not(':checked'));
+    assert.notOk(find(specialEquipmentCheckbox).checked);
   });
 
-  let selectTest = function(context, assert, name, position){
+  let selectTest = async function(context, assert, name, position){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', false);
@@ -59,7 +59,7 @@ module('Integration | Component | school session attributes manager', function(h
       context.set(sentName, true);
     });
     context.set('nothing', parseInt);
-    context.render(hbs`{{school-session-attributes-manager
+    await context.render(hbs`{{school-session-attributes-manager
       showSessionAttendanceRequired=showSessionAttendanceRequired
       showSessionSupplemental=showSessionSupplemental
       showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
@@ -69,41 +69,41 @@ module('Integration | Component | school session attributes manager', function(h
     }}`);
 
     const rows = 'table tbody tr';
-    const checkbox = `${rows}:eq(${position}) td:nth-of-type(2) input`;
-    assert.ok(context.$(checkbox).not(':checked'));
-    context.$(checkbox).click();
-    assert.ok(context.$(checkbox).is(':checked'));
+    const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
+    assert.notOk(find(checkbox).checked);
+    await click(checkbox);
+    assert.ok(find(checkbox).checked);
   };
 
-  test('select showSessionAttendanceRequired', function(assert) {
-    selectTest(this, assert, 'showSessionAttendanceRequired', 0);
+  test('select showSessionAttendanceRequired', async function(assert) {
+    await selectTest(this, assert, 'showSessionAttendanceRequired', 0);
   });
 
-  test('select showSessionSupplemental', function(assert) {
-    selectTest(this, assert, 'showSessionSupplemental', 1);
+  test('select showSessionSupplemental', async function(assert) {
+    await selectTest(this, assert, 'showSessionSupplemental', 1);
   });
 
-  test('select showSessionSpecialAttireRequired', function(assert) {
-    selectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
+  test('select showSessionSpecialAttireRequired', async function(assert) {
+    await selectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
   });
 
-  test('select showSessionSpecialEquipmentRequired', function(assert) {
-    selectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
+  test('select showSessionSpecialEquipmentRequired', async function(assert) {
+    await selectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
   });
 
-  let unSelectTest = function(context, assert, name, position){
+  let unSelectTest = async function(context, assert, name, position){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', true);
     context.set('showSessionSupplemental', true);
     context.set('showSessionSpecialAttireRequired', true);
     context.set('showSessionSpecialEquipmentRequired', true);
-    context.set('disable', (sentName) => {
+    await context.set('disable', (sentName) => {
       assert.equal(sentName, name);
       context.set(sentName, false);
     });
     context.set('nothing', parseInt);
-    context.render(hbs`{{school-session-attributes-manager
+    await context.render(hbs`{{school-session-attributes-manager
       showSessionAttendanceRequired=showSessionAttendanceRequired
       showSessionSupplemental=showSessionSupplemental
       showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
@@ -113,25 +113,25 @@ module('Integration | Component | school session attributes manager', function(h
     }}`);
 
     const rows = 'table tbody tr';
-    const checkbox = `${rows}:eq(${position}) td:nth-of-type(2) input`;
-    assert.ok(context.$(checkbox).is(':checked'));
-    context.$(checkbox).click();
-    assert.ok(context.$(checkbox).not(':checked'));
+    const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
+    assert.ok(find(checkbox).checked);
+    await click(checkbox);
+    assert.notOk(find(checkbox).checked);
   };
 
-  test('unSelect showSessionAttendanceRequired', function(assert) {
-    unSelectTest(this, assert, 'showSessionAttendanceRequired', 0);
+  test('unSelect showSessionAttendanceRequired', async function(assert) {
+    await unSelectTest(this, assert, 'showSessionAttendanceRequired', 0);
   });
 
-  test('unSelect showSessionSupplemental', function(assert) {
-    unSelectTest(this, assert, 'showSessionSupplemental', 1);
+  test('unSelect showSessionSupplemental', async function(assert) {
+    await unSelectTest(this, assert, 'showSessionSupplemental', 1);
   });
 
-  test('unSelect showSessionSpecialAttireRequired', function(assert) {
-    unSelectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
+  test('unSelect showSessionSpecialAttireRequired', async function(assert) {
+    await unSelectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
   });
 
-  test('unSelect showSessionSpecialEquipmentRequired', function(assert) {
-    unSelectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
+  test('unSelect showSessionSpecialEquipmentRequired', async function(assert) {
+    await unSelectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
   });
 });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | dashboard loading', function(hooks) {
@@ -9,6 +9,6 @@ module('Integration | Component | dashboard loading', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{dashboard-loading}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

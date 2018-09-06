@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
@@ -48,9 +48,7 @@ module('Integration | Component | offering editor learnergroups', function(hooks
       removeLearnerGroup=(action externalActionRemove)
     }}`);
 
-    await settled();
-
-    this.$('.selectable li:first').click();
-    this.$('.removable li:first').click();
+    await click('.selectable li:nth-of-type(1)');
+    await click('.removable li:nth-of-type(1)');
   });
 });

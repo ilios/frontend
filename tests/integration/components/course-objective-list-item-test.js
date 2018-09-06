@@ -2,9 +2,9 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll } from '@ember/test-helpers';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
+import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
 
 const { resolve } = RSVP;
 
@@ -68,11 +68,8 @@ module('Integration | Component | course objective list item', function(hooks) {
     }}`);
 
     await click('td:nth-of-type(1) .editable');
-    find('td:nth-of-type(1) .fr-box').froalaEditor('html.set', 'new title');
-    find('td:nth-of-type(1) .fr-box').froalaEditor('events.trigger', 'contentChanged');
+    await fillInFroalaEditor('td:nth-of-type(1) .froala-editor-container', 'new title');
     await click('td:nth-of-type(1) .done');
-
-    await settled();
   });
 
   test('can manage parents', async function(assert) {

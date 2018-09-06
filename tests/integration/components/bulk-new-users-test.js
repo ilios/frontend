@@ -92,11 +92,11 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.notEqual(content.search(/Primary School/), -1);
 
     const schools = 'select:nth-of-type(1) option';
-    let options = find(schools);
+    let options = findAll(schools);
     assert.equal(options.length, 3);
-    assert.equal(options.eq(0).textContent.trim(), 'first');
-    assert.equal(options.eq(1).textContent.trim(), 'second');
-    assert.equal(options.eq(2).textContent.trim(), 'third');
+    assert.equal(options[0].textContent.trim(), 'first');
+    assert.equal(options[1].textContent.trim(), 'second');
+    assert.equal(options[2].textContent.trim(), 'third');
   });
 
   test('select student mode display cohort', async function(assert) {
@@ -429,7 +429,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
     this.server.create('authentication', { user, username: 'jasper' });
-    await await click('.done');
+    await click('.done');
     await settled();
     assert.ok(findAll('.saving-authentication-errors').length, 1);
     assert.equal(find('.saving-authentication-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');
@@ -446,7 +446,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
     ];
     await triggerUpload(users, find('input[type=file]'));
-    await await click('.done');
+    await click('.done');
     await settled();
     assert.ok(findAll('.saving-user-errors').length, 1);
     assert.equal(find('.saving-user-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');

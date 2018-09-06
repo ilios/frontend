@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -61,16 +61,18 @@ module('Integration | Component | selectable terms list', function(hooks) {
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );
 
-    assert.equal(findAll('li').length, 5);
-    assert.equal(find('li:nth-of-type(1) > div').textContent.trim(), 'First');
-    assert.equal(find('li:nth-of-type(2) > div').textContent.trim(), 'Alpha');
-    assert.equal(find('li:nth-of-type(3) > div').textContent.trim(), 'Beta');
-    assert.equal(find('li:nth-of-type(4) > div').textContent.trim(), 'Second');
-    assert.equal(find('li:nth-of-type(5) > div').textContent.trim(), 'Gamma');
+    const items = findAll('li');
+    assert.equal(items.length, 5);
+    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
+    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
+    assert.equal(items[2].textContent.replace(/[\t\n\s]+/g, ""), 'Beta');
+    assert.equal(items[3].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
+    assert.equal(items[4].textContent.replace(/[\t\n\s]+/g, ""), 'Gamma');
 
-    assert.equal(findAll('li.top-level').length, 2);
-    assert.equal(find('li.top-level:nth-of-type(1) > div').textContent.trim(), 'First');
-    assert.equal(find('li.top-level:nth-of-type(2) > div').textContent.trim(), 'Second');
+    const topLevelItems = findAll('li.top-level');
+    assert.equal(topLevelItems.length, 2);
+    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
+    assert.equal(topLevelItems[1].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
   });
 
   test('inactive terms are not rendered', async function(assert) {
@@ -126,11 +128,13 @@ module('Integration | Component | selectable terms list', function(hooks) {
       hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
     );
 
-    assert.equal(findAll('li').length, 2);
-    assert.equal(find('li:nth-of-type(1) > div').textContent.trim(), 'First');
-    assert.equal(find('li:nth-of-type(2) > div').textContent.trim(), 'Alpha');
+    const items = findAll('li');
+    assert.equal(items.length, 2);
+    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
+    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
 
-    assert.equal(findAll('li.top-level').length, 1);
-    assert.equal(find('li.top-level:nth-of-type(1) > div').textContent.trim(), 'First');
+    const topLevelItems = findAll('li.top-level');
+    assert.equal(topLevelItems.length, 1);
+    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
   });
 });

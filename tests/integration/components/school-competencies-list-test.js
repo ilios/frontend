@@ -26,9 +26,9 @@ module('Integration | Component | school competencies list', function(hooks) {
 
     await settled();
     assert.equal(findAll(domains).length, 1);
-    assert.ok(find(domainTitle).text().includes('domain 0'));
-    assert.ok(find(domainTitle).text().includes('competency 0'));
-    assert.ok(find(domainTitle).text().includes('competency 1'));
+    assert.ok(find(domainTitle).textContent.includes('domain 0'));
+    assert.ok(find(domainTitle).textContent.includes('competency 0'));
+    assert.ok(find(domainTitle).textContent.includes('competency 1'));
 
   });
 });

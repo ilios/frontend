@@ -44,8 +44,8 @@ module('Integration | Component | school competencies expanded', function(hooks)
     await settled();
     assert.equal(find(title).textContent.trim(), 'Competencies (1/2)');
     assert.equal(findAll(domains).length, 1);
-    assert.ok(find(domainTitle).text().includes('domain 0'));
-    assert.ok(find(domainTitle).text().includes('competency 0'));
-    assert.ok(find(domainTitle).text().includes('competency 1'));
+    assert.ok(find(domainTitle).textContent.includes('domain 0'));
+    assert.ok(find(domainTitle).textContent.includes('competency 0'));
+    assert.ok(find(domainTitle).textContent.includes('competency 1'));
   });
 });

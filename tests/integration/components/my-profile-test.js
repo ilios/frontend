@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll } from '@ember/test-helpers';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -36,9 +36,9 @@ module('Integration | Component | my profile', function(hooks) {
     assert.equal(find('.is-student').textContent.trim(), 'Student');
 
     assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
-    assert.equal(find(findAll('[data-test-info] div')[1]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
+    assert.equal(findAll('[data-test-info] div')[1].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
     assert.equal(find('[data-test-info] div:nth-of-type(3) li').textContent.trim(), 'a third cohort');
-    assert.equal(find(findAll('[data-test-info] div:nth-of-type(3) li')[1]).textContent.trim(), 'second cohort');
+    assert.equal(findAll('[data-test-info] div:nth-of-type(3) li')[1].textContent.trim(), 'second cohort');
 
   });
 
@@ -61,12 +61,12 @@ module('Integration | Component | my profile', function(hooks) {
     );
 
     assert.equal(find('.name').textContent.trim(), 'test name');
-    assert.equal(find('.is-student').textContent.trim(), '');
+    assert.equal(findAll('.is-student').length, 0);
 
-    assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
-    assert.equal(find(findAll('[data-test-info] div')[1]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
+    assert.equal(findAll('[data-test-info] div')[0].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
+    assert.equal(findAll('[data-test-info] div')[1].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
 
-    assert.equal(find(findAll('[data-test-info] div')[2]).textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Secondary Cohorts:Unassigned');
+    assert.equal(findAll('[data-test-info] div')[2].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Secondary Cohorts:Unassigned');
   });
 
   test('generates token when asked with good expiration date', async function(assert) {
@@ -96,19 +96,15 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    find(go).click();
-
-    return settled().then(()=> {
-      assert.equal(find(newToken).value.trim(), 'new token');
-    });
+    await click(go);
+    assert.equal(find(newToken).value.trim(), 'new token');
   });
 
   test('clear and reset from new token screen', async function(assert) {
-    assert.expect(4);
-    const cancel = '.bigcancel:nth-of-type(1)';
-    const go = '.bigadd:nth-of-type(1)';
+    assert.expect(3);
+    const cancel = '[data-test-result-reset]';
+    const go = '[data-test-new-token-create]';
     const newToken = '.new-token-result input';
-    const newTokenButton = 'button.new-token';
     const newTokenForm = '.new-token-form';
     let ajaxMock = Service.extend({
       request(){
@@ -119,23 +115,19 @@ module('Integration | Component | my profile', function(hooks) {
     });
     this.owner.register('service:commonAjax', ajaxMock);
     this.ajax = this.owner.lookup('service:ajax');
-    this.set('toggle', ()=> {
+    this.set('toggle', () => {
       assert.ok(true);
     });
     await render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
-    await find(go).click();
-    await settled();
+    await click(go);
 
     assert.equal(find(newToken).value.trim(), 'new token');
     assert.equal(findAll(newTokenForm).length, 0);
-    await find(cancel).click();
-    await await click(newTokenButton);
-    await settled();
-    assert.equal(findAll(newTokenForm).length, 1);
+    await click(cancel);
   });
 
   test('clicking button fires show token event', async function(assert) {
-    const newTokenButton = 'button.new-token';
+    const newTokenButton = '[data-test-show-create-new-token]';
 
     assert.expect(1);
     this.set('toggle', ()=> {
@@ -177,9 +169,7 @@ module('Integration | Component | my profile', function(hooks) {
     let m = moment().add(41, 'days');
     let interactor = openDatepicker(find(datePicker));
     interactor.selectDate(m.toDate());
-    find(go).click();
-
-    return settled();
+    await click(go);
   });
 
   test('clicking button fires invalidate tokens event', async function(assert) {
@@ -198,7 +188,7 @@ module('Integration | Component | my profile', function(hooks) {
   });
 
   test('invalidate tokens when asked', async function(assert) {
-    assert.expect(5);
+    assert.expect(4);
     const go = '.done:nth-of-type(1)';
     let ajaxMock = Service.extend({
       request(url){
@@ -219,20 +209,12 @@ module('Integration | Component | my profile', function(hooks) {
     });
     this.owner.register('service:session', sessionMock);
     this.session = this.owner.lookup('service:session');
-
-    let flashMock = Service.extend({
-      success(what){
-        assert.equal(what, 'general.successfullyInvalidatedTokens');
-      }
-    });
-    this.owner.register('service:flashMessages', flashMock);
     this.flashMessages = this.owner.lookup('service:flashMessages');
     this.set('nothing', parseInt);
     await render(
       hbs`{{my-profile showInvalidateTokens=true toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    find(go).click();
-    return settled();
+    await click(go);
   });
 });

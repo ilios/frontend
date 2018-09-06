@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/string';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, findAll } from '@ember/test-helpers';
+import { render, settled, find, findAll, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -57,8 +57,6 @@ module('Integration | Component | school session types list', function(hooks) {
       manageSessionType=(action nothing)
     }}`);
 
-    await settled();
-
     const rows = 'table tbody tr';
     const firstSessionType = `${rows}:nth-of-type(1)`;
     const firstTitle = `${firstSessionType} td:nth-of-type(1)`;
@@ -81,25 +79,25 @@ module('Integration | Component | school session types list', function(hooks) {
 
     assert.equal(find(firstTitle).textContent.trim(), 'first');
     assert.equal(find(firstSessionCount).textContent.trim(), '2');
-    assert.ok(find(firstAssessment).hasClass('no'));
-    assert.ok(find(firstAssessment).hasClass('fa-ban'));
+    assert.ok(find(firstAssessment).classList.contains('no'));
+    assert.ok(find(firstAssessment).classList.contains('fa-ban'));
     assert.equal(find(firstAssessmentOption).textContent.trim(), '');
-    assert.equal(find(firstColorBox).css('background-color').trim(), ('rgb(204, 204, 204)'));
+    assert.equal(find(firstColorBox).style.getPropertyValue('background-color').trim(), ('rgb(204, 204, 204)'));
 
     assert.equal(find(secondTitle).textContent.trim(), 'second');
     assert.equal(find(secondSessionCount).textContent.trim(), '0');
-    assert.ok(find(secondAssessment).hasClass('yes'));
-    assert.ok(find(secondAssessment).hasClass('fa-check'));
+    assert.ok(find(secondAssessment).classList.contains('yes'));
+    assert.ok(find(secondAssessment).classList.contains('fa-check'));
     assert.equal(find(secondAssessmentOption).textContent.trim(), 'formative');
-    assert.equal(find(secondColorBox).css('background-color').trim(), ('rgb(18, 52, 86)'));
+    assert.equal(find(secondColorBox).style.getPropertyValue('background-color').trim(), ('rgb(18, 52, 86)'));
 
     assert.ok(find(thirdTitle).textContent.trim().startsWith('not needed anymore'));
     assert.ok(find(thirdTitle).textContent.trim().endsWith('(inactive)'));
     assert.equal(find(thirdSessionCount).textContent.trim(), '2');
-    assert.ok(find(thirdAssessment).hasClass('no'));
-    assert.ok(find(thirdAssessment).hasClass('fa-ban'));
+    assert.ok(find(thirdAssessment).classList.contains('no'));
+    assert.ok(find(thirdAssessment).classList.contains('fa-ban'));
     assert.equal(find(thirdAssessmentOption).textContent.trim(), '');
-    assert.equal(find(thirdColorBox).css('background-color').trim(), ('rgb(255, 255, 255)'));
+    assert.equal(find(thirdColorBox).style.getPropertyValue('background-color').trim(), ('rgb(255, 255, 255)'));
   });
 
   test('clicking edit fires action', async function(assert) {
@@ -126,7 +124,7 @@ module('Integration | Component | school session types list', function(hooks) {
     const rows = 'table tbody tr';
     const edit = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-edit`;
 
-    find(edit).click();
+    await click(edit);
   });
 
   test('clicking title fires action', async function(assert) {
@@ -153,7 +151,7 @@ module('Integration | Component | school session types list', function(hooks) {
     const rows = 'table tbody tr';
     const title = `${rows}:nth-of-type(1) td:nth-of-type(1) a`;
 
-    find(title).click();
+    await click(title);
   });
 
   test('session types without sessions can be deleted', async function(assert) {
@@ -239,7 +237,7 @@ module('Integration | Component | school session types list', function(hooks) {
     const rows = 'table tbody tr';
     const trash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash`;
 
-    find(trash).click();
+    await click(trash);
     await settled();
   });
 });

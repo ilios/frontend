@@ -48,6 +48,6 @@ module('Integration | Component | learning material table mesh', function(hooks)
     });
     this.set('row', row);
     await render(hbs`{{learning-material-table-mesh row=row tableActions=tableActions extra=extra}}`);
-    assert.equal(find('*').textContent.trim(), 'None');
+    assert.equal(this.element.textContent.trim(), 'None');
   });
 });

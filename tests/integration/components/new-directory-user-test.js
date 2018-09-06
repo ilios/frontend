@@ -75,7 +75,7 @@ module('Integration | Component | new directory user', function(hooks) {
     );
     const searchBox = '.new-directory-user-search-tools';
     const searchInput = `${searchBox} input`;
-    assert.equal(find(searchInput).val(), startingSearchTerms, 'passed value is in the box');
+    assert.equal(find(searchInput).value, startingSearchTerms, 'passed value is in the box');
 
   });
 

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -51,13 +51,11 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     await render(hbs`{{dashboard-myreports}}`);
 
     assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Reports');
-    return settled().then(()=> {
-      for (let i = 0; i < 2; i++) {
-        let tds = this.$(`[data-test-saved-reports] li:eq(${i})`);
-        assert.equal(tds.eq(0).textContent.trim(), mockReports[i].get('title'));
-      }
-      assert.equal(this.$(`[data-test-saved-reports] li`).length, 2);
-    });
+    for (let i = 0; i < 2; i++) {
+      let tds = findAll(`[data-test-saved-reports] li:nth-of-type(${i + 1})`);
+      assert.equal(tds[0].textContent.trim(), mockReports[i].get('title'));
+    }
+    assert.equal(findAll(`[data-test-saved-reports] li`).length, 2);
   });
 
   test('display none when no reports', async function(assert) {

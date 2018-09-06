@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learning material table notes', function(hooks) {
@@ -14,7 +14,7 @@ module('Integration | Component | learning material table notes', function(hooks
     const icon = '.fa-eye';
     this.set('row', row);
     await render(hbs`{{learning-material-table-notes value=true row=row}}`);
-    assert.equal(find('*').textContent.trim(), 'Yes');
+    assert.equal(this.element.textContent.trim(), 'Yes');
     assert.equal(findAll(icon).length, 1);
   });
 
@@ -25,7 +25,7 @@ module('Integration | Component | learning material table notes', function(hooks
     const icon = '.fa-eye';
     this.set('row', row);
     await render(hbs`{{learning-material-table-notes value=true row=row}}`);
-    assert.equal(find('*').textContent.trim(), 'Yes');
+    assert.equal(this.element.textContent.trim(), 'Yes');
     assert.equal(findAll(icon).length, 0);
   });
 
@@ -36,7 +36,7 @@ module('Integration | Component | learning material table notes', function(hooks
     const icon = '.fa-eye';
     this.set('row', row);
     await render(hbs`{{learning-material-table-notes value=null row=row}}`);
-    assert.equal(find('*').textContent.trim(), 'No');
+    assert.equal(this.element.textContent.trim(), 'No');
     assert.equal(findAll(icon).length, 0);
   });
 });

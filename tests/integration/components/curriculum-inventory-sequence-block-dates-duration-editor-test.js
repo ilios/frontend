@@ -55,9 +55,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    let interactor = openDatepicker(this.$('.start-date input'));
+    let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
-    interactor = openDatepicker(this.$('.end-date input'));
+    interactor = openDatepicker(find('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
     await fillIn('.duration input', newDuration);
     await triggerEvent('.duration input', 'input');
@@ -80,9 +80,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    let interactor = openDatepicker(this.$('.start-date input'));
+    let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
-    interactor = openDatepicker(this.$('.end-date input'));
+    interactor = openDatepicker(find('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
     await fillIn('.duration input', newDuration);
     await triggerEvent('.duration input', 'input');
@@ -140,9 +140,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
     assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
-    let interactor = openDatepicker(this.$('.start-date input'));
+    let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
-    interactor = openDatepicker(this.$('.end-date input'));
+    interactor = openDatepicker(find('.end-date input'));
     interactor.selectDate(newEndDate.toDate());
     await click('.buttons .done');
     return settled().then(() => {
@@ -228,7 +228,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
     assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
-    let interactor = openDatepicker(this.$('.start-date input'));
+    let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(new Date());
     await click('.buttons .done');
     return settled().then(() => {

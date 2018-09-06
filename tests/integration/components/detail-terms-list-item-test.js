@@ -17,7 +17,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
-    assert.ok(find('*').textContent.trim().indexOf('Foo') !== -1);
+    assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
 
   });
 
@@ -33,7 +33,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
     await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
     assert.equal(find('.muted').textContent.trim(), 'Lorem »');
     assert.equal(find(findAll('.muted')[1]).textContent.trim(), 'Ipsum »');
-    assert.ok(find('*').textContent.trim().indexOf('Foo') !== -1);
+    assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
   });
 
   test('remove', async function(assert) {

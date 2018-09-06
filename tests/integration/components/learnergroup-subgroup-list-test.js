@@ -150,7 +150,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     await click(multiGroupButton);
 
     await fillIn(multiGroupCount, 1);
-    await await click(done);
+    await click(done);
 
     assert.equal(find(secondGroupTitle).textContent.trim(), 'group 2');
     const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));

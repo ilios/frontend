@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { render, settled, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -52,10 +52,10 @@ module('Integration | Component | publish all sessions', function(hooks) {
     await render(hbs`{{publish-all-sessions sessions=sessions}}`);
     await settled();
 
-    assert.ok(find('*').textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
-    assert.ok(find('*').textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
-    assert.ok(find('*').textContent.search(/Sessions Requiring Review \(1\)/) !== -1);
-    assert.ok(find('*').textContent.search(/Publish 1, schedule 1, and ignore 1 sessions/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(1\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Publish 1, schedule 1, and ignore 1 sessions/) !== -1);
   });
 
   test('it renders empty', async function(assert) {
@@ -69,9 +69,9 @@ module('Integration | Component | publish all sessions', function(hooks) {
     await render(hbs`{{publish-all-sessions sessions=sessions}}`);
     await settled();
 
-    assert.ok(find('*').textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
-    assert.ok(find('*').textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
-    assert.ok(find('*').textContent.search(/Sessions Requiring Review \(0\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(0\)/) !== -1);
     assert.equal(findAll(reviewButtons).length, 0, 'If there are no reviewable sessions do not display buttons to act on them #1173');
     assert.equal(findAll(reviewTable).length, 0, 'If there are no reviewable sessions do not display a table to list them #1173');
 

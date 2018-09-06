@@ -85,12 +85,12 @@ module('Integration | Component | learnergroup header', function(hooks) {
 
     assert.equal(find(title).textContent.trim(), 'our group', 'title is correct');
     assert.equal(findAll(errors).length, 0, 'there are no errors');
-    find(edit).click();
+    await click(edit);
     const longTitle = 'x'.repeat(61);
-    find(input).val(longTitle).trigger('input');
-    find(done).click();
+    await fillIn(input, longTitle);
+    await click(done);
     await settled();
     assert.equal(findAll(errors).length, 1, 'there is now an error');
-    assert.ok(find(errors).text().search(/too long/) > -1, 'it is the correct error');
+    assert.ok(find(errors).textContent.search(/too long/) > -1, 'it is the correct error');
   });
 });

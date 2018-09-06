@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | sortable th', function(hooks) {
@@ -13,7 +13,7 @@ module('Integration | Component | sortable th', function(hooks) {
 
     await render(hbs`{{sortable-th}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:" + EOL +
     await render(hbs`
@@ -22,6 +22,6 @@ module('Integration | Component | sortable th', function(hooks) {
       {{/sortable-th}}
     `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

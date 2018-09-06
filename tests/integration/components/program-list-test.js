@@ -144,7 +144,7 @@ module('Integration | Component | program list', function(hooks) {
     await settled();
     assert.equal(findAll('tbody tr').length, 2);
     assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
-    await await click('tbody tr:nth-of-type(2) .done');
+    await click('tbody tr:nth-of-type(2) .done');
     await settled();
     assert.equal(findAll('tbody tr').length, 1);
   });
