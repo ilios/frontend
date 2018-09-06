@@ -1,20 +1,4 @@
 import Controller from '@ember/controller';
+import CourseController from 'ilios-common/mixins/course-controller';
 
-export default Controller.extend({
-  queryParams: [
-    'details',
-    'courseLeadershipDetails',
-    'courseObjectiveDetails',
-    'courseTaxonomyDetails',
-    'courseCompetencyDetails',
-    'courseManageLeadership',
-  ],
-
-  details: false,
-  editable: false,
-  courseLeadershipDetails: false,
-  courseObjectiveDetails: false,
-  courseTaxonomyDetails: false,
-  courseCompetencyDetails: false,
-  courseManageLeadership: false,
-});
+export default Controller.extend(CourseController);

@@ -1,9 +1,4 @@
 import Controller from '@ember/controller';
+import CopyController from 'ilios-common/mixins/session/copy-controller';
 
-export default Controller.extend({
-  actions: {
-    loadSession(newSession){
-      this.transitionToRoute('session', newSession.get('course'), newSession);
-    }
-  }
-});
+export default Controller.extend(CopyController);

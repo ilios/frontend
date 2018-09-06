@@ -1,9 +1,4 @@
 import Controller from '@ember/controller';
+import RolloverController from 'ilios-common/mixins/course/rollover-controller';
 
-export default Controller.extend({
-  actions: {
-    loadCourse(newCourse){
-      this.transitionToRoute('course', newCourse);
-    }
-  }
-});
+export default Controller.extend(RolloverController);
