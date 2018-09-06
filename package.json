@@ -44,7 +44,7 @@
     "ember-source": "~3.2.0",
     "ember-tether": "^1.0.0",
     "eslint-plugin-ember": "^5.0.0",
-    "ilios-common": "19.0.1",
+    "ilios-common": "19.0.2",
     "loader.js": "^4.2.3",
     "qunit-dom": "^0.7.1"
   },
