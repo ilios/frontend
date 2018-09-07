@@ -2,55 +2,55 @@
   <div>
     {{#attach-tooltip
       lazyRender=true
-      placement='left'
+      placement="left"
       interactive=true
-      animation='shift'
-      class='ilios-calendar-event-tooltip'
+      animation="shift"
+      class="ilios-calendar-event-tooltip"
     }}
       {{{tooltipContent}}}
     {{/attach-tooltip}}
     {{#if recentlyUpdated}}
-      {{fa-icon 'exclamation-circle' class="recently-updated-icon" title=(t 'general.newUpdates')}}
+      {{fa-icon "exclamation-circle" class="recently-updated-icon" title=(t "general.newUpdates")}}
     {{/if}}
 
     {{#unless isMonth}}
       {{#if (not event.isPublished)}}
-        {{fa-icon 'file-signature'}}
+        {{fa-icon "file-signature"}}
       {{else if event.isScheduled}}
-        {{fa-icon 'clock'}}
+        {{fa-icon "clock"}}
       {{/if}}
     {{/unless}}
-    <span class='ilios-calendar-event-time'>
+    <span class="ilios-calendar-event-time">
       {{#if isIlm}}
-        <span class='ilios-calendar-event-start'>
-          {{t 'general.ilmDue'}}: {{moment-format event.startDate 'h:mma'}}
+        <span class="ilios-calendar-event-start">
+          {{t "general.ilmDue"}}: {{moment-format event.startDate "h:mma"}}
         </span>
       {{else}}
-        <span class='ilios-calendar-event-start'>
-          {{moment-format event.startDate 'h:mma'}}
+        <span class="ilios-calendar-event-start">
+          {{moment-format event.startDate "h:mma"}}
         </span>
-        <span class='ilios-calendar-event-end'>
-          - {{moment-format event.endDate 'h:mma'}}
+        <span class="ilios-calendar-event-end">
+          - {{moment-format event.endDate "h:mma"}}
         </span>
       {{/if}}
     </span>
 
     {{#unless event.isMulti}}
-      <span class='ilios-calendar-event-location'>
+      <span class="ilios-calendar-event-location">
         {{#if event.location.length}}
           {{event.location}}:
         {{/if}}
       </span>
     {{/unless}}
 
-    <span class='ilios-calendar-event-name'>
-      {{event.name}}{{#if event.isMulti}}, <em>{{t 'general.multiple'}}</em>{{/if}}
+    <span class="ilios-calendar-event-name">
+      {{event.name}}{{#if event.isMulti}}, <em>{{t "general.multiple"}}</em>{{/if}}
     </span>
     {{! list instructors in day view, if available }}
     {{#if isDay}}
       {{#if event.instructors}}
         <span class="ilios-calendar-event-instructors">
-          {{t 'general.taughtBy'}}
+          {{t "general.taughtBy"}}
           {{formattedInstructors}}
         </span>
       {{/if}}

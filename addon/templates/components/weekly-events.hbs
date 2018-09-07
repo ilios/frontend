@@ -1,5 +1,5 @@
-<div class='year'>
-  <h2>{{fa-icon 'backward' click=(action 'decrementYear')}} {{year}} {{fa-icon 'forward' click=(action 'incrementYear')}}</h2>
+<div class="year">
+  <h2>{{fa-icon "backward" click=(action "decrementYear")}} {{year}} {{fa-icon "forward" click=(action "incrementYear")}}</h2>
 </div>
 {{#each weeksInYear as |week|}}
   {{week-glance
@@ -10,6 +10,6 @@
     toggleCollapsed=(action toggleOpenWeek week)
   }}
 {{/each}}
-<div class='year'>
-  <h2>{{fa-icon 'backward' click=(action 'decrementYear')}} {{year}} {{fa-icon 'forward' click=(action 'incrementYear')}}</h2>
+<div class="year">
+  <h2>{{fa-icon "backward" click=(action "decrementYear")}} {{year}} {{fa-icon "forward" click=(action "incrementYear")}}</h2>
 </div>

@@ -1,31 +1,31 @@
 {{#if event}}
   {{#attach-tooltip
     lazyRender=true
-    placement='left'
+    placement="left"
     interactive=true
-    animation='shift'
-    class='ilios-calendar-event-tooltip'
+    animation="shift"
+    class="ilios-calendar-event-tooltip"
   }}
     {{{tooltipContent}}}
   {{/attach-tooltip}}
   {{#if recentlyUpdated}}
-    {{fa-icon 'exclamation' class="recently-updated-icon" title=(t 'general.newUpdates')}}
+    {{fa-icon "exclamation" class="recently-updated-icon" title=(t "general.newUpdates")}}
   {{/if}}
 
-  <span class='ilios-calendar-event-time'>
-    <span class='ilios-calendar-event-start'>
-      {{moment-format event.startDate 'h:mma'}}
+  <span class="ilios-calendar-event-time">
+    <span class="ilios-calendar-event-start">
+      {{moment-format event.startDate "h:mma"}}
     </span>
-    <span class='ilios-calendar-event-end'>
-      - {{moment-format event.endDate 'h:mma'}}
+    <span class="ilios-calendar-event-end">
+      - {{moment-format event.endDate "h:mma"}}
     </span>
   </span>
   {{#unless event.isMulti }}
-    <span class='ilios-calendar-event-location'>
+    <span class="ilios-calendar-event-location">
       {{event.location}}:
     </span>
   {{/unless}}
-  <span class='ilios-calendar-event-name'>
-    {{event.name}}{{#if event.isMulti}}, <em>{{t 'general.multiple'}}</em>{{/if}}
+  <span class="ilios-calendar-event-name">
+    {{event.name}}{{#if event.isMulti}}, <em>{{t "general.multiple"}}</em>{{/if}}
   </span>
 {{/if}}

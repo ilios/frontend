@@ -1,72 +1,72 @@
 {{#if event}}
-  <div class='single-event-summary'>
+  <div class="single-event-summary">
     <h1>
       {{#if recentlyUpdated}}
-        {{fa-icon 'exclamation-circle' class="recently-updated-icon-event" title=(t 'general.newUpdates')}}
+        {{fa-icon "exclamation-circle" class="recently-updated-icon-event" title=(t "general.newUpdates")}}
       {{/if}}
       {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
-    <div class='single-event-offered-at'>{{t 'general.offeredAt' date=(moment-format event.startDate 'dddd, MMMM Do YYYY, h:mm a')}}</div>
-    <div class='single-event-location'>{{event.location}}</div>
+    <div class="single-event-offered-at">{{t "general.offeredAt" date=(moment-format event.startDate "dddd, MMMM Do YYYY, h:mm a")}}</div>
+    <div class="single-event-location">{{event.location}}</div>
     {{#if taughtBy}}
-      <div class='single-event-instructors'>{{taughtBy}}</div>
+      <div class="single-event-instructors">{{taughtBy}}</div>
     {{/if}}
-    <div class='single-event-session-is'>{{sessionIs}}</div>
+    <div class="single-event-session-is">{{sessionIs}}</div>
     {{#if event.equipmentRequired}}
-      <div class='single-event-equipment-required'>
-        {{{t 'general.specialEquipmentIs_Required_'}}} {{fa-icon 'flask' title=(t 'general.specialEquipment')}}
+      <div class="single-event-equipment-required">
+        {{{t "general.specialEquipmentIs_Required_"}}} {{fa-icon "flask" title=(t "general.specialEquipment")}}
       </div>
     {{/if}}
     {{#if event.attireRequired}}
-      <div class='single-event-attire-required'>
-        {{{t 'general.specialAttireIs_Required_'}}} {{fa-icon 'black-tie' prefix='fab' title=(t 'general.whitecoatsSlashSpecialAttire')}}
+      <div class="single-event-attire-required">
+        {{{t "general.specialAttireIs_Required_"}}} {{fa-icon "black-tie" prefix="fab" title=(t "general.whitecoatsSlashSpecialAttire")}}
       </div>
     {{/if}}
     {{#if event.attendanceRequired}}
-      <div class='single-event-attendance-required'>
-        {{{t 'general.attendanceIs_Required_'}}} {{fa-icon 'calendar-check' title=(t 'general.attendanceIsRequired')}}
+      <div class="single-event-attendance-required">
+        {{{t "general.attendanceIs_Required_"}}} {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
       </div>
     {{/if}}
     {{#if event.supplemental}}
-      <div class='single-event-supplemental'>
-        <strong>{{t 'general.supplementalCurriculum'}}</strong> {{fa-icon 'calendar-minus' title=(t 'general.supplementalCurriculum')}}
+      <div class="single-event-supplemental">
+        <strong>{{t "general.supplementalCurriculum"}}</strong> {{fa-icon "calendar-minus" title=(t "general.supplementalCurriculum")}}
       </div>
     {{/if}}
-    {{#if (gt (get event.sessionDescription 'length') 0)}}
+    {{#if (gt (get event.sessionDescription "length") 0)}}
       {{{event.sessionDescription}}}<br>
     {{/if}}
   </div>
 
   <fieldset>
-    <div class='single-event-learningmaterial-list'>
-      <h2>{{t 'general.sessionLearningMaterials'}}</h2>
+    <div class="single-event-learningmaterial-list">
+      <h2>{{t "general.sessionLearningMaterials"}}</h2>
       {{single-event-learningmaterial-list
         learningMaterials=sessionLearningMaterials
       }}
     </div>
-    <div class='single-event-objective-list'>
+    <div class="single-event-objective-list">
       {{single-event-objective-list
         objectives=sessionObjectives
-        groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
-        listByPriorityPhrase=(t 'general.listByPriority')
-        title=(t 'general.sessionObjectives')
+        groupByCompetenciesPhrase=(t "general.groupByCompetencies")
+        listByPriorityPhrase=(t "general.listByPriority")
+        title=(t "general.sessionObjectives")
       }}
     </div>
   </fieldset>
 
   <fieldset>
-    <div class='single-event-learningmaterial-list'>
-      <h2>{{t 'general.courseLearningMaterials'}}</h2>
+    <div class="single-event-learningmaterial-list">
+      <h2>{{t "general.courseLearningMaterials"}}</h2>
       {{single-event-learningmaterial-list
         learningMaterials=courseLearningMaterials
       }}
     </div>
-    <div class='single-event-objective-list'>
+    <div class="single-event-objective-list">
       {{single-event-objective-list
         objectives=courseObjectives
-        groupByCompetenciesPhrase=(t 'general.groupByCompetencies')
-        listByPriorityPhrase=(t 'general.listByPriority')
-        title=(t 'general.courseObjectives')
+        groupByCompetenciesPhrase=(t "general.groupByCompetencies")
+        listByPriorityPhrase=(t "general.listByPriority")
+        title=(t "general.courseObjectives")
       }}
     </div>
   </fieldset>
