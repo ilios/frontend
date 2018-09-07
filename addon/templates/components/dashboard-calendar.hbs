@@ -1,58 +1,72 @@
-<section class='calendar-controls'>
-  <div class='calendar-options-control togglemyschedule'>
+<section class="calendar-controls">
+  <div class="calendar-options-control togglemyschedule">
     {{toggle-buttons
       firstOptionSelected=mySchedule
-      firstLabel=(t 'general.mySchedule')
-      secondLabel=(t 'general.allEvents')
+      firstLabel=(t "general.mySchedule")
+      secondLabel=(t "general.allEvents")
       toggle=toggleMySchedule
     }}
   </div>
 
-  <div class='calendar-options-control showfilters'>
+  <div class="calendar-options-control showfilters">
     {{toggle-buttons
       firstOptionSelected=(not showFilters)
-      firstLabel=(t 'general.hideFilters')
-      secondLabel=(t 'general.showFilters')
+      firstLabel=(t "general.hideFilters")
+      secondLabel=(t "general.showFilters")
       toggle=toggleShowFilters
     }}
   </div>
 
   {{#if showFilters}}
-    <div class='calendar-options-control togglecoursefilters'>
+    <div class="calendar-options-control togglecoursefilters">
       {{toggle-buttons
         firstOptionSelected=courseFilters
-        firstLabel=(t 'general.courseOrType')
-        secondLabel=(t 'general.detail')
+        firstLabel=(t "general.courseOrType")
+        secondLabel=(t "general.detail")
         toggle=toggleCourseFilters
       }}
     </div>
 
     {{#if showClearFilters}}
-      <span id='calendar-clear-filters' class="calendar-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearFilters'}}</span>
+      <span {{action "clearFilters"}}
+        id="calendar-clear-filters"
+        class="calendar-clear-filters"
+      >
+        {{t "general.clearFilters"}}
+      </span>
     {{/if}}
   {{/if}}
 
   {{#unless mySchedule}}
-    <div class='calendar-options-control calendar-school-picker'>
-      {{fa-icon 'university'}}
+    <div class="calendar-options-control calendar-school-picker">
+      {{fa-icon "university"}}
       {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action changeSchool value="target.value"}}>
-          {{#each (sort-by 'title' (await allSchools)) as |school|}}
-            <option value="{{school.id}}" selected={{is-equal school (await bestSelectedSchool)}}>
+          {{#each (sort-by "title" (await allSchools)) as |school|}}
+            <option
+              value={{school.id}}
+              selected={{is-equal school (await bestSelectedSchool)}}
+            >
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{get (await bestSelectedSchool) 'title'}}
+        {{get (await bestSelectedSchool) "title"}}
       {{/if}}
     </div>
   {{/unless}}
   {{#if showFilters}}
-    <div id='calendar-year-picker' class='calendar-options-control calendar-year-picker'>
+    <div
+      id="calendar-year-picker"
+      class="calendar-options-control calendar-year-picker"
+    >
       <select onchange={{action changeAcademicYear value="target.value"}}>
         {{#each (await academicYears) as |year|}}
-          <option value="{{year.title}}" selected={{is-equal year (await bestSelectedAcademicYear)}}>
+          <option
+            value={{year.title}}
+            selected={{is-equal year (await bestSelectedAcademicYear)}}
+          >
             {{year.academicYearTitle}}
           </option>
         {{/each}}
@@ -60,17 +74,24 @@
     </div>
   {{/if}}
 
-  <div class='calendar-filters'>
-    {{#liquid-if showFilters class='vertical'}}
-      {{#liquid-if courseFilters class='crossFade'}}
-        <div id='calendar-coursefilter' class='calendar-filter-list large-filter-list coursefilter'>
-          <h5>{{get (await bestSelectedAcademicYear) 'academicYearTitle'}} {{t 'general.courses'}}</h5>
+  <div class="calendar-filters">
+    {{#liquid-if showFilters class="vertical"}}
+      {{#liquid-if courseFilters class="crossFade"}}
+        <div
+          id="calendar-coursefilter"
+          class="calendar-filter-list large-filter-list coursefilter"
+        >
+          <h5>{{get (await bestSelectedAcademicYear) "academicYearTitle"}} {{t "general.courses"}}</h5>
           {{#if (is-fulfilled courses)}}
             <ul>
               {{#each (await courses) as |course|}}
-                <li class='clickable'>
-                  <input {{action 'toggleCourse' course on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCourses course}}>
-                  <span {{action 'toggleCourse' course}} class="list-indentation">
+                <li class="clickable">
+                  <input {{action "toggleCourse" course on="change"}}
+                    class="checkbox"
+                    type="checkbox"
+                    checked={{is-in selectedCourses course}}
+                  >
+                  <span {{action "toggleCourse" course}} class="list-indentation">
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
@@ -84,14 +105,21 @@
           {{/if}}
         </div>
 
-        <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          <h5>{{t 'general.sessionTypes'}}</h5>
+        <div
+          id="calendar-sessiontypefilter"
+          class="calendar-filter-list sessiontypefilter"
+        >
+          <h5>{{t "general.sessionTypes"}}</h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
-                <li class='clickable'>
-                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}}>
-                  <span {{action 'toggleSessionType' type}} class="list-indentation">{{type.title}}</span>
+                <li class="clickable">
+                  <input {{action "toggleSessionType" type on="change"}}
+                    class="checkbox"
+                    type="checkbox"
+                    checked={{is-in selectedSessionTypes type}}
+                  >
+                  <span {{action "toggleSessionType" type}} class="list-indentation">{{type.title}}</span>
                 </li>
               {{/each}}
             </ul>
@@ -100,8 +128,8 @@
           {{/if}}
         </div>
 
-        <div class='calendar-filter-list vocabularyfilter'>
-          <h5>{{t 'general.terms'}}</h5>
+        <div class="calendar-filter-list vocabularyfilter">
+          <h5>{{t "general.terms"}}</h5>
           {{#if (is-fulfilled vocabularies)}}
             <ul>
               {{#each (await vocabularies) as |vocabulary|}}
@@ -109,7 +137,7 @@
                 {{selected-term-tree
                   terms=(await vocabulary.topLevelTerms)
                   selectedTerms=selectedTerms
-                  toggle=(action 'toggleTerm')
+                  toggle=(action "toggleTerm")
                 }}
               {{/each}}
             </ul>
@@ -118,14 +146,21 @@
           {{/if}}
         </div>
       {{else}}
-        <div id='calendar-sessiontypefilter' class='calendar-filter-list sessiontypefilter'>
-          <h5>{{t 'general.sessionTypes'}}</h5>
+        <div
+          id="calendar-sessiontypefilter"
+          class="calendar-filter-list sessiontypefilter"
+        >
+          <h5>{{t "general.sessionTypes"}}</h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
-                <li class='clickable' {{action 'toggleSessionType' type}}>
-                  <input {{action 'toggleSessionType' type on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedSessionTypes type}}>
-                  <span {{action 'toggleSessionType' type}} class="list-indentation">{{type.title}}</span>
+                <li class="clickable" {{action "toggleSessionType" type}}>
+                  <input {{action "toggleSessionType" type on="change"}}
+                    class="checkbox"
+                    type="checkbox"
+                    checked={{is-in selectedSessionTypes type}}
+                  >
+                  <span {{action "toggleSessionType" type}} class="list-indentation">{{type.title}}</span>
                 </li>
               {{/each}}
             </ul>
@@ -133,31 +168,45 @@
             {{fa-icon "spinner" spin=true}}
           {{/if}}
         </div>
-        <div id='calendar-courselevelfilter' class='calendar-filter-list small-filter-list courselevelfilter'>
-          <h5>{{t 'general.courseLevels'}}</h5>
+        <div
+          id="calendar-courselevelfilter"
+          class="calendar-filter-list small-filter-list courselevelfilter"
+        >
+          <h5>{{t "general.courseLevels"}}</h5>
           <ul>
             {{#each courseLevels as |level|}}
-              <li class='clickable'>
-                <input {{action 'toggleCourseLevel' level on='change'}} class='checkbox' type='checkbox' checked={{contains level selectedCourseLevels}}>
-                <span {{action 'toggleCourseLevel' level}} class="list-indentation">{{level}}</span>
+              <li class="clickable">
+                <input {{action "toggleCourseLevel" level on="change"}}
+                  class="checkbox"
+                  type="checkbox"
+                  checked={{contains level selectedCourseLevels}}
+                >
+                <span {{action "toggleCourseLevel" level}} class="list-indentation">{{level}}</span>
               </li>
             {{/each}}
           </ul>
         </div>
-        <div id='calendar-cohortfilter' class='calendar-filter-list large-filter-list cohortfilter'>
-          <h5>{{get (await bestSelectedAcademicYear) 'academicYearTitle'}} {{t 'general.programAndCohort'}}</h5>
+        <div
+          id="calendar-cohortfilter"
+          class="calendar-filter-list large-filter-list cohortfilter"
+        >
+          <h5>{{get (await bestSelectedAcademicYear) "academicYearTitle"}} {{t "general.programAndCohort"}}</h5>
           {{#if (is-fulfilled cohorts)}}
             <ul>
               {{#each (await cohorts) as |cohort|}}
-                <li class='clickable'>
-                  <input {{action 'toggleCohort' cohort on='change'}} class='checkbox' type='checkbox' checked={{is-in selectedCohorts cohort}}>
-                  <span {{action 'toggleCohort' cohort}} class="list-indentation">
+                <li class="clickable">
+                  <input {{action "toggleCohort" cohort on="change"}}
+                    class="checkbox"
+                    type="checkbox"
+                    checked={{is-in selectedCohorts cohort}}
+                  >
+                  <span {{action "toggleCohort" cohort}} class="list-indentation">
                     {{#if cohort.title}}
                       {{cohort.title}}
                     {{else}}
-                      {{t 'general.classOf' year=(await cohort.classOfYear)}}
+                      {{t "general.classOf" year=(await cohort.classOfYear)}}
                     {{/if}}
-                    {{get (await cohort.programYear.program) 'title'}}
+                    {{get (await cohort.programYear.program) "title"}}
                   </span>
                 </li>
               {{/each}}
@@ -173,17 +222,22 @@
 
 {{#if (gt activeFilters.length 0)}}
   <section class="filters-list">
-    <header class="filters-header">{{t 'general.activeFilters'}}:</header>
+    <header class="filters-header">{{t "general.activeFilters"}}:</header>
     <div class="filter-tags">
       {{#each (await filterTags) as |tag|}}
-        <span class="filter-tag {{tag.class}}" {{action 'removeFilter' tag.filter}}>{{tag.name}} {{fa-icon 'times'}}</span>
+        <span class="filter-tag {{tag.class}}" {{action "removeFilter" tag.filter}}>{{tag.name}} {{fa-icon "times"}}</span>
       {{/each}}
-      <span id='calendar-clear-filters' class="filters-clear-filters" {{action 'clearFilters'}}>{{t 'general.clearFilters'}}</span>
+      <span {{action "clearFilters"}}
+        id="calendar-clear-filters"
+        class="filters-clear-filters"
+      >
+        {{t "general.clearFilters"}}
+      </span>
     </div>
   </section>
 {{/if}}
 
-<section class='fullwidth ilios-calendar-container'>
+<section class="fullwidth ilios-calendar-container">
   {{ilios-calendar
     calendarEventsPromise=filteredEvents
     selectedDate=calendarDate

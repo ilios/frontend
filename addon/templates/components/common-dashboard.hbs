@@ -2,7 +2,7 @@
   show=show
   change=setShow
 }}
-{{#if (eq show 'calendar')}}
+{{#if (eq show "calendar")}}
   {{dashboard-calendar
     selectedDate=selectedDate
     selectedView=selectedView
@@ -20,10 +20,10 @@
     courseFilters=courseFilters
     toggleCourseFilters=toggleCourseFilters
   }}
-{{else if (eq show 'materials')}}
+{{else if (eq show "materials")}}
   {{dashboard-materials}}
-{{else if (eq show 'agenda')}}
+{{else if (eq show "agenda")}}
   {{dashboard-agenda}}
-{{else if (eq show 'week')}}
+{{else if (eq show "week")}}
   {{dashboard-week}}
 {{/if}}

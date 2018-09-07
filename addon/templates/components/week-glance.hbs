@@ -1,77 +1,104 @@
-<h3 class='{{if collapsible "clickable collapsible"}} {{if collapsed "collapsed" "expanded"}}' {{action (optional toggleCollapsed) collapsed}}>
+<h3 {{action (optional toggleCollapsed) collapsed}}
+  class="{{if collapsible "clickable collapsible"}} {{if collapsed "collapsed" "expanded"}}"
+>
   {{title}}
   {{#if showFullTitle}}
-    {{t 'general.weekAtAGlance'}}
+    {{t "general.weekAtAGlance"}}
   {{/if}}
 </h3>
-{{#liquid-unless collapsed class='vertical'}}
+{{#liquid-unless collapsed class="vertical"}}
   {{#if (is-fulfilled publishedWeekEvents)}}
-    {{#if (gt (get (await publishedWeekEvents) 'length') 0)}}
+    {{#if (gt (get (await publishedWeekEvents) "length") 0)}}
       {{#each (await publishedWeekEvents) as |event|}}
-        <div class='event'>
+        <div class="event">
           <h4>
-            <span class='title'>
-              {{#link-to 'events' event.slug}}
+            <span class="title">
+              {{#link-to "events" event.slug}}
                 {{event.name}}
               {{/link-to}}
             </span>
-            <span class='date'>
+            <span class="date">
               {{#if event.ilmSession}}
-                <span class='ilm-due'>{{t 'general.dueBy'}}</span>
+                <span class="ilm-due">{{t "general.dueBy"}}</span>
               {{/if}}
-              {{moment-format event.startDate 'dddd h:mma'}}
+              {{moment-format event.startDate "dddd h:mma"}}
             </span>
           </h4>
           <p>
-            <span class='sessiontype'>
+            <span class="sessiontype">
               {{event.sessionTypeTitle}}
             </span>
             {{#if event.location}}
-              <span class='location'>
+              <span class="location">
                 - {{event.location}}
               </span>
             {{/if}}
-            <span class='session-attributes'>
-              {{#if event.attireRequired}}{{fa-icon 'black-tie' prefix='fab' ariaHidden=false title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
-              {{#if event.equipmentRequired}}{{fa-icon 'flask' ariaHidden=false title=(t 'general.specialEquipment')}}{{/if}}
-              {{#if event.attendanceRequired}}{{fa-icon 'calendar-check' ariaHidden=false title=(t 'general.attendanceIsRequired')}}{{/if}}
-              {{#if event.supplemental}}{{fa-icon 'calendar-minus' ariaHidden=false title=(t 'general.supplementalCurriculum')}}{{/if}}
+            <span class="session-attributes">
+              {{#if event.attireRequired}}
+                {{fa-icon
+                  "black-tie"
+                  prefix="fab"
+                  ariaHidden=false
+                  title=(t "general.whitecoatsSlashSpecialAttire")
+                }}
+              {{/if}}
+              {{#if event.equipmentRequired}}
+                {{fa-icon
+                  "flask"
+                  ariaHidden=false
+                  title=(t "general.specialEquipment")
+                }}
+              {{/if}}
+              {{#if event.attendanceRequired}}
+                {{fa-icon
+                  "calendar-check"
+                  ariaHidden=false
+                  title=(t "general.attendanceIsRequired")
+                }}
+              {{/if}}
+              {{#if event.supplemental}}
+                {{fa-icon
+                  "calendar-minus"
+                  ariaHidden=false
+                  title=(t "general.supplementalCurriculum")
+                }}
+              {{/if}}
             </span>
           </p>
           {{#if event.instructors.length}}
-            <div class='instructors'>
-              <label>{{t 'general.instructors'}}:</label>
-              {{join ', ' (sort-by (action 'sortString') event.instructors)}}
+            <div class="instructors">
+              <label>{{t "general.instructors"}}:</label>
+              {{join ", " (sort-by (action "sortString") event.instructors)}}
             </div>
           {{/if}}
           {{#if event.sessionDescription.length}}
-            <p class='description'>
+            <p class="description">
               {{big-text text=event.sessionDescription length=50}}
             </p>
           {{/if}}
-          <ul class='learning-materials'>
+          <ul class="learning-materials">
             {{#each event.learningMaterials as |lm|}}
-              <li class='learning-material'>
+              <li class="learning-material">
                 {{#if lm.isBlanked}}
-                  <span class="lm-type-icon">{{fa-icon 'clock' title=(t 'general.timedRelease')}}</span>
+                  <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
                   {{lm.title}}
                 {{else}}
                   {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
                   {{#if lm.absoluteFileUri}}
-                    {{#if (eq lm.mimetype 'application/pdf')}}
+                    {{#if (eq lm.mimetype "application/pdf")}}
                       <a href="{{lm.absoluteFileUri}}?inline">
                         {{lm.title}}
                       </a>
-                      <a href="{{lm.absoluteFileUri}}" target="_blank" rel="noopener">
-                        {{fa-icon 'download' title=(t 'general.download')}}
+                      <a href={{lm.absoluteFileUri}} target="_blank" rel="noopener">
+                        {{fa-icon "download" title=(t "general.download")}}
                       </a>
                     {{else}}
-                      <a href="{{lm.absoluteFileUri}}" target="_blank" rel="noopener">
+                      <a href={{lm.absoluteFileUri}} target="_blank" rel="noopener">
                         {{lm.title}}
                       </a>
                     {{/if}}
                   {{else if lm.link}}
-                    <a href={{lm.link}} target='_blank' rel='noopener'>{{lm.title}}</a>
+                    <a href={{lm.link}} target="_blank" rel="noopener">{{lm.title}}</a>
                   {{else}}
                     {{lm.title}}
                     <ul>
@@ -79,11 +106,15 @@
                     </ul>
                   {{/if}}
                   {{#if lm.publicNotes}}
-                    <p class='public-notes'>{{big-text text=lm.publicNotes length=50}}</p>
+                    <p class="public-notes">{{big-text text=lm.publicNotes length=50}}</p>
                   {{/if}}
                 {{/if}}
                 <span class="timed-release-info">
-                  {{timed-release-schedule startDate=lm.startDate endDate=lm.endDate showNoSchedule=false}}
+                  {{timed-release-schedule
+                    startDate=lm.startDate
+                    endDate=lm.endDate
+                    showNoSchedule=false
+                  }}
                 </span>
               </li>
             {{/each}}
@@ -91,9 +122,9 @@
         </div>
       {{/each}}
     {{else}}
-      <p>{{t 'general.none'}}</p>
+      <p>{{t "general.none"}}</p>
     {{/if}}
   {{else}}
-    <p>{{fa-icon 'spinner' spin=true}} {{t 'general.loadingEvents'}}</p>
+    <p>{{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}</p>
   {{/if}}
 {{/liquid-unless}}

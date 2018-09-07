@@ -3,7 +3,7 @@
     <div class="cell">
     </div>
     <div class="cell title">
-      {{moment-format date 'MMMM YYYY'}}
+      {{moment-format date "MMMM YYYY"}}
     </div>
   </div>
   <div class="row">
@@ -17,25 +17,41 @@
     <div class="week">
       {{#each week.days as |day|}}
         <div class="day">
-          <span class='clickable' {{action 'changeToDayView' day.date}}>
-            {{moment-format day.date 'D'}}
+          <span class="clickable" {{action "changeToDayView" day.date}}>
+            {{moment-format day.date "D"}}
           </span>
           <div class="events">
             {{#if (gt day.events.length 2)}}
               {{#each (slice 0 2 day.events) as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate)}}
+                  {{ilios-calendar-event-month
+                    event=event
+                    selectEvent=(action "changeToDayView" event.startDate)
+                  }}
                 {{else}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event)}}
+                  {{ilios-calendar-event-month
+                    event=event
+                    selectEvent=(action selectEvent event)
+                  }}
                 {{/if}}
               {{/each}}
-              <span {{action 'changeToDayView' day.date}} class=' clickable link month-more-events'>{{fa-icon 'ellipsis-h'}} {{showMore}} {{fa-icon 'angle-double-down'}}</span>
+              <span {{action "changeToDayView" day.date}}
+                class="clickable link month-more-events"
+              >
+                {{fa-icon "ellipsis-h"}} {{showMore}} {{fa-icon "angle-double-down"}}
+              </span>
             {{else}}
               {{#each day.events as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action 'changeToDayView' event.startDate)}}
+                  {{ilios-calendar-event-month
+                    event=event
+                    selectEvent=(action "changeToDayView" event.startDate)
+                  }}
                 {{else}}
-                  {{ilios-calendar-event-month event=event selectEvent=(action selectEvent event)}}
+                  {{ilios-calendar-event-month
+                    event=event
+                    selectEvent=(action selectEvent event)
+                  }}
                 {{/if}}
               {{/each}}
             {{/if}}

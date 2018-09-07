@@ -1,11 +1,13 @@
 <h2>
   {{title}}
   {{#if showDisplayModeToggle}}
-    <button class={{if groupByCompetencies "active"}} {{action (toggle 'groupByCompetencies' this)}}>
+    <button {{action (toggle "groupByCompetencies" this)}}
+      class={{if groupByCompetencies "active"}}
+    >
       {{#if groupByCompetencies}}
-        {{fa-icon 'indent' title=listByPriorityPhrase}}
+        {{fa-icon "indent" title=listByPriorityPhrase}}
       {{else}}
-        {{fa-icon 'list' title=groupByCompetenciesPhrase}}
+        {{fa-icon "list" title=groupByCompetenciesPhrase}}
       {{/if}}
     </button>
   {{/if}}
@@ -13,7 +15,7 @@
 
 {{#if groupByCompetencies}}
   {{#if domains.length}}
-    <ul class='tree'>
+    <ul class="tree">
       {{#each domains as |domain|}}
         <li>
           {{domain.title}}
@@ -26,17 +28,17 @@
       {{/each}}
     </ul>
   {{else}}
-    <li class="no-content">{{t 'general.none'}}</li>
+    <li class="no-content">{{t "general.none"}}</li>
   {{/if}}
 {{else}}
-  <ul class='list-in-order'>
+  <ul class="list-in-order">
     {{#each objectives as |objective|}}
       <li>
         {{objective.title}}
         <span class="details">{{objective.domain}}</span>
       </li>
     {{else}}
-      <li class="no-content">{{t 'general.none'}}</li>
+      <li class="no-content">{{t "general.none"}}</li>
     {{/each}}
   </ul>
 {{/if}}

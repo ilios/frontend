@@ -2,10 +2,10 @@
 <p>
   <span>
     {{#copy-button clipboardText=url success=(perform textCopied)}}
-      {{fa-icon 'copy'}} {{t 'general.copyIcsFeedUrl'}}
+      {{fa-icon "copy"}} {{t "general.copyIcsFeedUrl"}}
     {{/copy-button}}
     {{#if showCopySuccessMessage}}
-      <span class='yes'>{{t 'general.copiedSuccessfully'}}</span>
+      <span class="yes">{{t "general.copiedSuccessfully"}}</span>
     {{/if}}
   </span>
 </p>

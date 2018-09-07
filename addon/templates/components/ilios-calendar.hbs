@@ -1,21 +1,28 @@
-<ul class='inline calendar-view-picker'>
-  <li class='clickable highlight {{if showIcsFeed "on"}}' {{action (toggle 'showIcsFeed' this)}}>{{fa-icon 'rss-square'}}</li>
-  <li class='clickable' {{action changeView 'day'}}>{{t 'general.day'}}</li>
-  <li class='clickable' {{action changeView 'week'}}>{{t 'general.week'}}</li>
-  <li class='clickable' {{action changeView 'month'}}>{{t 'general.month'}}</li>
+<ul class="inline calendar-view-picker">
+  <li
+    class="clickable highlight {{if showIcsFeed "on"}}" {{action (toggle "showIcsFeed" this)}}
+  >
+    {{fa-icon "rss-square"}}
+  </li>
+  <li class="clickable" {{action changeView "day"}}>{{t "general.day"}}</li>
+  <li class="clickable" {{action changeView "week"}}>{{t "general.week"}}</li>
+  <li class="clickable" {{action changeView "month"}}>{{t "general.month"}}</li>
 </ul>
 
-<ul class='inline calendar-time-picker'>
-  <li class='clickable' {{action 'goBack'}}>{{fa-icon 'backward'}}</li>
-  <li class='clickable' {{action 'gotoToday'}}>{{t 'general.today'}}</li>
-  <li class='clickable' {{action 'goForward'}}>{{fa-icon 'forward'}}</li>
+<ul class="inline calendar-time-picker">
+  <li class="clickable" {{action "goBack"}}>{{fa-icon "backward"}}</li>
+  <li class="clickable" {{action "gotoToday"}}>{{t "general.today"}}</li>
+  <li class="clickable" {{action "goForward"}}>{{fa-icon "forward"}}</li>
 </ul>
-<div class='ilios-calendar-calendar'>
+<div class="ilios-calendar-calendar">
   {{#if showIcsFeed}}
     {{ics-feed url=icsFeedUrl instructions=icsInstructions refresh=refreshIcsFeed}}
   {{/if}}
-  <h1 class="{{if (is-fulfilled compiledCalendarEvents) 'loaded'}}">{{fa-icon 'spinner' spin=true}} {{t 'general.loadingEvents'}}...</h1>
-  {{component (concat "ilios-calendar-" selectedView)
+  <h1 class={{if (is-fulfilled compiledCalendarEvents) "loaded"}}>
+    {{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}...
+  </h1>
+  {{component
+    (concat "ilios-calendar-" selectedView)
     calendarEvents=(sort-by (action "sortEvents") (await compiledCalendarEvents))
     date=selectedDate
     selectEvent=selectEvent

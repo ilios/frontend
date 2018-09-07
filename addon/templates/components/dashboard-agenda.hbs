@@ -1,58 +1,74 @@
-<h3>{{t 'general.upcomingActivities' days=daysInAdvance}}</h3>
+<h3>{{t "general.upcomingActivities" days=daysInAdvance}}</h3>
 {{#if (is-fulfilled weeksEvents)}}
-  {{#if (gt (get (await weeksEvents) 'length') 0)}}
+  {{#if (gt (get (await weeksEvents) "length") 0)}}
     <table>
       <tbody>
         {{#each (await weeksEvents) as |event|}}
           {{#if event.isBlanked}}
             <tr>
-              <td colspan=4 class='event-date'>
+              <td colspan="4" class="event-date">
                 {{#if event.ilmSession}}
-                  <span class='ilm-due'>{{t 'general.dueBy'}}</span>
+                  <span class="ilm-due">{{t "general.dueBy"}}</span>
                 {{/if}}
-                {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
+                {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"}}
               </td>
-              <td colspan=4>
+              <td colspan="4">
                 {{#if event.ilmSession}}
-                  <strong>{{t 'general.ilm'}}: </strong>
+                  <strong>{{t "general.ilm"}}: </strong>
                 {{/if}}
                 {{event.name}}
               </td>
-              <td colspan=2>{{event.location}}</td>
-              <td colspan=1>
-                {{#if event.attireRequired}}{{fa-icon 'black-tie' prefix='fab' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
-                {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
-                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check' title=(t 'general.attendanceIsRequired')}}{{/if}}
-                {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
-                  {{fa-icon 'exclamation-circle' title=(t 'general.newUpdates')}}
+              <td colspan="2">{{event.location}}</td>
+              <td colspan="1">
+                {{#if event.attireRequired}}
+                  {{fa-icon
+                    "black-tie"
+                    prefix="fab"
+                    title=(t "general.whitecoatsSlashSpecialAttire")
+                  }}
+                {{/if}}
+                {{#if event.equipmentRequired}}{{fa-icon "flask" title=(t "general.specialEquipment")}}{{/if}}
+                {{#if event.attendanceRequired}}
+                  {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
+                {{/if}}
+                {{#if (is-same-or-after event.lastModified sixDaysAgo precision="day")}}
+                  {{fa-icon "exclamation-circle" title=(t "general.newUpdates")}}
                 {{/if}}
               </td>
             </tr>
           {{/if}}
           {{#unless event.isBlanked}}
             <tr>
-              <td colspan=4 class='event-date'>
-                {{#link-to 'events' event.slug}}
-                  {{fa-icon 'external-link-square-alt'}}
+              <td colspan="4" class="event-date">
+                {{#link-to "events" event.slug}}
+                  {{fa-icon "external-link-square-alt"}}
                   {{#if event.ilmSession}}
-                    <span class='ilm-due'>{{t 'general.dueBy'}}: </span>
+                    <span class="ilm-due">{{t "general.dueBy"}}: </span>
                   {{/if}}
-                  {{moment-format event.startDate 'dddd, MMMM Do, YYYY h:mma'}}
+                  {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"}}
                 {{/link-to}}
               </td>
-              <td colspan=4>
+              <td colspan="4">
                 {{#if event.ilmSession}}
-                  <strong>{{t 'general.ilm'}}: </strong>
+                  <strong>{{t "general.ilm"}}: </strong>
                 {{/if}}
                 {{event.name}}
               </td>
-              <td colspan=2>{{#link-to 'events' event.slug}}{{event.location}}{{/link-to}}</td>
-              <td colspan=1>
-                {{#if event.attireRequired}}{{fa-icon 'black-tie' prefix='fab' title=(t 'general.whitecoatsSlashSpecialAttire')}}{{/if}}
-                {{#if event.equipmentRequired}}{{fa-icon 'flask' title=(t 'general.specialEquipment')}}{{/if}}
-                {{#if event.attendanceRequired}}{{fa-icon 'calendar-check' title=(t 'general.attendanceIsRequired')}}{{/if}}
-                {{#if (is-same-or-after event.lastModified sixDaysAgo precision='day')}}
-                  {{fa-icon 'exclamation-circle' title=(t 'general.newUpdates')}}
+              <td colspan="2">{{#link-to "events" event.slug}}{{event.location}}{{/link-to}}</td>
+              <td colspan="1">
+                {{#if event.attireRequired}}
+                  {{fa-icon
+                    "black-tie"
+                    prefix="fab"
+                    title=(t "general.whitecoatsSlashSpecialAttire")
+                  }}
+                {{/if}}
+                {{#if event.equipmentRequired}}{{fa-icon "flask" title=(t "general.specialEquipment")}}{{/if}}
+                {{#if event.attendanceRequired}}
+                  {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
+                {{/if}}
+                {{#if (is-same-or-after event.lastModified sixDaysAgo precision="day")}}
+                  {{fa-icon "exclamation-circle" title=(t "general.newUpdates")}}
                 {{/if}}
               </td>
             </tr>
@@ -61,8 +77,8 @@
       </tbody>
     </table>
   {{else}}
-    <p>{{t 'general.none'}}</p>
+    <p>{{t "general.none"}}</p>
   {{/if}}
 {{else}}
-  <p>{{fa-icon 'spinner' spin=true}} {{t 'general.loadingEvents'}}</p>
+  <p>{{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}</p>
 {{/if}}
