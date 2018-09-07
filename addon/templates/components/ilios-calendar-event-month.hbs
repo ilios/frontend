@@ -9,7 +9,11 @@
     {{{tooltipContent}}}
   {{/attach-tooltip}}
   {{#if recentlyUpdated}}
-    {{fa-icon "exclamation" class="recently-updated-icon" title=(t "general.newUpdates")}}
+    {{fa-icon
+      "exclamation"
+      class="recently-updated-icon"
+      title=(t "general.newUpdates")
+    }}
   {{/if}}
 
   <span class="ilios-calendar-event-time">

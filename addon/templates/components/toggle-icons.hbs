@@ -18,8 +18,18 @@
 </div>
 <div class="icons">
   {{#if firstOptionSelected}}
-    {{fa-icon firstIcon class="first" title=secondLabel click=(action "secondChoice")}}
+    {{fa-icon
+      firstIcon
+      class="first"
+      title=secondLabel
+      click=(action "secondChoice")
+    }}
   {{else}}
-    {{fa-icon secondIcon class="second" title=firstLabel click=(action "firstChoice")}}
+    {{fa-icon
+      secondIcon
+      class="second"
+      title=firstLabel
+      click=(action "firstChoice")
+    }}
   {{/if}}
 </div>

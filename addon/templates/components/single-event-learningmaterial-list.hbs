@@ -16,15 +16,15 @@
             {{#if lm.absoluteFileUri}}
               {{#if (eq lm.mimetype "application/pdf")}}
                 <a href="{{lm.absoluteFileUri}}?inline">{{lm.title}}</a>
-                <a target="_blank" href="{{lm.absoluteFileUri}}" rel="noopener">{{fa-icon "download" title=(t "general.download")}}</a>
+                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">{{fa-icon "download" title=(t "general.download")}}</a>
               {{else}}
-                <a target="_blank" href="{{lm.absoluteFileUri}}" rel="noopener">{{lm.title}}</a>
+                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">{{lm.title}}</a>
               {{/if}}
               <span class="single-event-learningmaterial-filesize">
                 {{#if lm.filesize}} ({{filesize lm.filesize}}){{/if}}
               </span>
             {{else if lm.link}}
-              <a target="_blank" href="{{lm.link}}" rel="noopener">{{lm.title}}</a>
+              <a target="_blank" href={{lm.link}} rel="noopener">{{lm.title}}</a>
             {{else}}
               {{lm.title}}
             {{/if}}
@@ -35,7 +35,11 @@
             </div>
           {{/if}}
           <div class="single-event-learningmaterial-item-timing-info">
-            {{timed-release-schedule startDate=lm.startDate endDate=lm.endDate showNoSchedule=false}}
+            {{timed-release-schedule
+              startDate=lm.startDate
+              endDate=lm.endDate
+              showNoSchedule=false
+            }}
           </div>
 
           {{#if lm.description}}

@@ -2,11 +2,20 @@
   <div class="single-event-summary">
     <h1>
       {{#if recentlyUpdated}}
-        {{fa-icon "exclamation-circle" class="recently-updated-icon-event" title=(t "general.newUpdates")}}
+        {{fa-icon
+          "exclamation-circle"
+          class="recently-updated-icon-event"
+          title=(t "general.newUpdates")
+        }}
       {{/if}}
       {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
-    <div class="single-event-offered-at">{{t "general.offeredAt" date=(moment-format event.startDate "dddd, MMMM Do YYYY, h:mm a")}}</div>
+    <div class="single-event-offered-at">
+      {{t
+        "general.offeredAt"
+        date=(moment-format event.startDate "dddd, MMMM Do YYYY, h:mm a")
+      }}
+    </div>
     <div class="single-event-location">{{event.location}}</div>
     {{#if taughtBy}}
       <div class="single-event-instructors">{{taughtBy}}</div>
@@ -19,7 +28,12 @@
     {{/if}}
     {{#if event.attireRequired}}
       <div class="single-event-attire-required">
-        {{{t "general.specialAttireIs_Required_"}}} {{fa-icon "black-tie" prefix="fab" title=(t "general.whitecoatsSlashSpecialAttire")}}
+        {{{t "general.specialAttireIs_Required_"}}}
+        {{fa-icon
+          "black-tie"
+          prefix="fab"
+          title=(t "general.whitecoatsSlashSpecialAttire")
+        }}
       </div>
     {{/if}}
     {{#if event.attendanceRequired}}

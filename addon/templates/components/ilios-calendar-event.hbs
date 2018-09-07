@@ -10,7 +10,11 @@
       {{{tooltipContent}}}
     {{/attach-tooltip}}
     {{#if recentlyUpdated}}
-      {{fa-icon "exclamation-circle" class="recently-updated-icon" title=(t "general.newUpdates")}}
+      {{fa-icon
+        "exclamation-circle"
+        class="recently-updated-icon"
+        title=(t "general.newUpdates")
+      }}
     {{/if}}
 
     {{#unless isMonth}}

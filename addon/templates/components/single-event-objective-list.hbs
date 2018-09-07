@@ -1,7 +1,9 @@
 <h2>
   {{title}}
   {{#if showDisplayModeToggle}}
-    <button class={{if groupByCompetencies "active"}} {{action (toggle "groupByCompetencies" this)}}>
+    <button {{action (toggle "groupByCompetencies" this)}}
+      class={{if groupByCompetencies "active"}}
+    >
       {{#if groupByCompetencies}}
         {{fa-icon "indent" title=listByPriorityPhrase}}
       {{else}}

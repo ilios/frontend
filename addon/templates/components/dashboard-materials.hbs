@@ -25,7 +25,7 @@
                     <a href="{{lmObject.absoluteFileUri}}?inline">
                       {{lmObject.title}}
                     </a>
-                    <a href="{{lmObject.absoluteFileUri}}" target="_blank" rel="noopener">
+                    <a href={{lmObject.absoluteFileUri}} target="_blank" rel="noopener">
                       {{fa-icon "download" title=(t "general.download")}}
                     </a>
                   {{else}}
@@ -39,12 +39,24 @@
                 {{/if}}
               {{/if}}
               <span class="timed-release-info">
-                {{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate showNoSchedule=false}}
+                {{timed-release-schedule
+                  startDate=lmObject.startDate
+                  endDate=lmObject.endDate
+                  showNoSchedule=false
+                }}
               </span>
             </td>
             <td colspan="3">{{lmObject.courseTitle}}</td>
             <td colspan="3">{{lmObject.sessionTitle}}</td>
-            <td colspan="1" class="hide-from-small-screen">{{big-text length=25 text=(join ", " (sort-by (action "sortString") lmObject.instructors))}}</td>
+            <td
+              colspan="1"
+              class="hide-from-small-screen"
+            >
+              {{big-text
+                length=25
+                text=(join ", " (sort-by (action "sortString") lmObject.instructors))
+              }}
+            </td>
             <td>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate "L"}}

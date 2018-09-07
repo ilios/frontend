@@ -9,7 +9,9 @@
   <div class="row week-titles">
     <div class="cell"></div>
     {{#each days as |day|}}
-      <div class="cell title {{if areDaysSelectable "clickable"}}" {{action "changeToDayView" day.date}}>
+      <div
+        class="cell title {{if areDaysSelectable "clickable"}}" {{action "changeToDayView" day.date}}
+      >
         {{moment-format day.date "ddd M/D"}}
       </div>
     {{/each}}
@@ -25,9 +27,17 @@
         <li class="event-column">
           {{#each day.events as |event|}}
             {{#if event.isMulti}}
-              {{ilios-calendar-event event=event selectEvent=(action "changeToDayView" event.startDate) clickable=areEventsSelectable}}
+              {{ilios-calendar-event
+                event=event
+                selectEvent=(action "changeToDayView" event.startDate)
+                clickable=areEventsSelectable
+              }}
             {{else}}
-              {{ilios-calendar-event event=event selectEvent=(action "selectEvent" event) clickable=areEventsSelectable}}
+              {{ilios-calendar-event
+                event=event
+                selectEvent=(action "selectEvent" event)
+                clickable=areEventsSelectable
+              }}
             {{/if}}
           {{/each}}
         </li>
@@ -42,4 +52,8 @@
   </div>
 {{/el-weekly-calendar}}
 
-{{ilios-calendar-multiday-events events=multiDayEventsList selectEvent=(action "selectEvent") areEventsSelectable=areDaysSelectable}}
+{{ilios-calendar-multiday-events
+  events=multiDayEventsList
+  selectEvent=(action "selectEvent")
+  areEventsSelectable=areDaysSelectable
+}}
