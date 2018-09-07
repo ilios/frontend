@@ -29,6 +29,7 @@ install:
 
 script:
   - yarn lint:style
+  - yarn lint:hbs
   - yarn lint:js
   - yarn test
 
