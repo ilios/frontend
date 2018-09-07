@@ -1,12 +1,14 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('course-loading', 'Integration | Component | course loading', {
-  integration: true
-});
+module('Integration | Component | course loading', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  this.render(hbs`{{course-loading}}`);
+  test('it renders', async function(assert) {
+    await render(hbs`{{course-loading}}`);
 
-  assert.equal(this.$().text().trim(), 'Back to Courses List');
+    assert.equal(this.element.textContent.trim(), 'Back to Courses List');
+  });
 });

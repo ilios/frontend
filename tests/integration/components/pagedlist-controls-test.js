@@ -1,16 +1,18 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('pagedlist-controls', 'Integration | Component | pagedlist controls', {
-  integration: true
-});
+module('Integration | Component | pagedlist controls', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
+  test('it renders', async function(assert) {
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
 
-  this.render(hbs`{{pagedlist-controls limit=4 offset=11 total=33}}`);
+    await render(hbs`{{pagedlist-controls limit=4 offset=11 total=33}}`);
 
-  assert.equal(this.$().text().replace(/[\t\n\s]+/g, ""), 'Showing12-15of33102550PerPage');
+    assert.equal(this.element.textContent.replace(/[\t\n\s]+/g, ""), 'Showing12-15of33102550PerPage');
+  });
 });

@@ -1,221 +1,222 @@
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled, findAll, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import { resolve } from 'rsvp';
 
-moduleForComponent('program-list', 'Integration | Component | program list', {
-  integration: true
-});
+module('Integration | Component | program list', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', async function(assert){
-  assert.expect(14);
-  const program1 = EmberObject.create({
-    id: 1,
-    // KLUDGE!
-    // see the comment on ProgramProxy::isDeletable() in the component file.
-    hasMany() {
-      return {
-        ids() {
-          return [ 1 ];
-        }
-      };
-    },
-    title: 'Aardvark',
-    school: {
-      title: 'Medicine',
-    },
-    publishedAsTbd: true,
-  });
-  const program2 = EmberObject.create({
-    id: 2,
-    hasMany() {
-      return {
-        ids() {
-          return [];
-        }
-      };
-    },
-    title: 'Zeppelin',
-    school: {
-      title: 'Dentistry'
-    },
-    isPublished: true,
-  });
-  const permissionCheckerMock = Service.extend({
-    canDeleteProgram() {
-      return resolve(true);
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
+  test('it renders', async function(assert){
+    assert.expect(14);
+    const program1 = EmberObject.create({
+      id: 1,
+      // KLUDGE!
+      // see the comment on ProgramProxy::isDeletable() in the component file.
+      hasMany() {
+        return {
+          ids() {
+            return [ 1 ];
+          }
+        };
+      },
+      title: 'Aardvark',
+      school: {
+        title: 'Medicine',
+      },
+      publishedAsTbd: true,
+    });
+    const program2 = EmberObject.create({
+      id: 2,
+      hasMany() {
+        return {
+          ids() {
+            return [];
+          }
+        };
+      },
+      title: 'Zeppelin',
+      school: {
+        title: 'Dentistry'
+      },
+      isPublished: true,
+    });
+    const permissionCheckerMock = Service.extend({
+      canDeleteProgram() {
+        return resolve(true);
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-  this.set('programs', [ program1, program2 ]);
-  this.render(hbs`{{program-list programs=programs}}`);
-  await wait();
-  assert.equal(this.$('thead tr:eq(0) th:eq(0)').text(), 'Program Title');
-  assert.equal(this.$('thead tr:eq(0) th:eq(1)').text(), 'School');
-  assert.equal(this.$('thead tr:eq(0) th:eq(2)').text(), 'Status');
-  assert.equal(this.$('thead tr:eq(0) th:eq(3)').text(), 'Actions');
+    this.set('programs', [ program1, program2 ]);
+    await render(hbs`{{program-list programs=programs}}`);
+    await settled();
+    assert.equal(find('thead tr:nth-of-type(1) th').textContent, 'Program Title');
+    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[1]).textContent, 'School');
+    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[2]).textContent, 'Status');
+    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[3]).textContent, 'Actions');
 
-  assert.equal(this.$('tbody tr:eq(0) td:eq(0)').text().trim(), 'Aardvark');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(1)').text().trim(), 'Medicine');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(2)').text().trim(), 'Scheduled');
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3) a .fa-edit').length, 1);
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
+    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'Aardvark');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'Medicine');
+    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'Scheduled');
+    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) a .fa-edit').length, 1);
+    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').length, 1);
 
-  assert.equal(this.$('tbody tr:eq(1) td:eq(0)').text().trim(), 'Zeppelin');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(1)').text().trim(), 'Dentistry');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(2)').text().trim(), 'Published');
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3) a .fa-edit').length, 1);
-  assert.equal(this.$('tbody tr:eq(1) td:eq(3) .remove .fa-trash').length, 1);
-});
-
-test('empty list', async function(assert){
-  assert.expect(2);
-  this.set('programs', []);
-  this.render(hbs`{{program-list programs=programs}}`);
-  await wait();
-  assert.equal(this.$('tbody').length, 1);
-  assert.equal(this.$('tbody tr').length, 0);
-});
-
-test('edit', async function(assert){
-  assert.expect(1);
-  const program1 = EmberObject.create({
-    id: 1,
-    school: {
-      title: 'Foo'
-    },
-    title: 'Bar',
-    isPublished: true,
-    hasMany() {
-      return {
-        ids() {
-          return [];
-        }
-      };
-    },
+    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'Zeppelin');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Dentistry');
+    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'Published');
+    assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(4) a .fa-edit').length, 1);
+    assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(4) .remove .fa-trash').length, 1);
   });
 
-  this.set('programs', [ program1 ]);
-  this.set('editAction', program => {
-    assert.equal(program, program1 );
+  test('empty list', async function(assert){
+    assert.expect(2);
+    this.set('programs', []);
+    await render(hbs`{{program-list programs=programs}}`);
+    await settled();
+    assert.equal(findAll('tbody').length, 1);
+    assert.equal(findAll('tbody tr').length, 0);
   });
 
-  this.render(hbs`{{program-list programs=programs edit=editAction}}`);
-  await wait();
-  this.$('tbody tr:eq(0) td:eq(1)').click();
-});
+  test('edit', async function(assert){
+    assert.expect(1);
+    const program1 = EmberObject.create({
+      id: 1,
+      school: {
+        title: 'Foo'
+      },
+      title: 'Bar',
+      isPublished: true,
+      hasMany() {
+        return {
+          ids() {
+            return [];
+          }
+        };
+      },
+    });
 
-test('remove and cancel', async function(assert){
-  assert.expect(5);
-  const program1 = EmberObject.create({
-    id: 1,
-    school: {
-      title: 'Foo'
-    },
-    title: 'Bar',
-    isPublished: true,
-    hasMany() {
-      return {
-        ids() {
-          return [];
-        }
-      };
-    },
+    this.set('programs', [ program1 ]);
+    this.set('editAction', program => {
+      assert.equal(program, program1 );
+    });
+
+    await render(hbs`{{program-list programs=programs edit=editAction}}`);
+    await settled();
+    await click(findAll('tbody tr:nth-of-type(1) td')[1]);
   });
-  const permissionCheckerMock = Service.extend({
-    canDeleteProgram(program) {
+
+  test('remove and cancel', async function(assert){
+    assert.expect(5);
+    const program1 = EmberObject.create({
+      id: 1,
+      school: {
+        title: 'Foo'
+      },
+      title: 'Bar',
+      isPublished: true,
+      hasMany() {
+        return {
+          ids() {
+            return [];
+          }
+        };
+      },
+    });
+    const permissionCheckerMock = Service.extend({
+      canDeleteProgram(program) {
+        assert.equal(program, program1);
+        return resolve(true);
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+
+    this.set('programs', [ program1 ]);
+    this.set('removeAction', () => {
+      assert.ok(false, 'This function should never be called.');
+    });
+    await render(hbs`{{program-list programs=programs remove=removeAction}}`);
+    await settled();
+    assert.equal(findAll('tbody tr').length, 1);
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await settled();
+    assert.equal(findAll('tbody tr').length, 2);
+    assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
+    await click('tbody tr:nth-of-type(2) .done');
+    await settled();
+    assert.equal(findAll('tbody tr').length, 1);
+  });
+
+  test('remove and confirm', async function(assert){
+    assert.expect(5);
+    const program1 = EmberObject.create({
+      id: 1,
+      school: {
+        title: 'Foo'
+      },
+      title: 'Bar',
+      isPublished: true,
+      hasMany() {
+        return {
+          ids() {
+            return [];
+          }
+        };
+      },
+    });
+    const permissionCheckerMock = Service.extend({
+      canDeleteProgram(program) {
+        assert.equal(program, program1);
+        return resolve(true);
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+
+    this.set('programs', [ program1 ]);
+    this.set('removeAction', (program) => {
       assert.equal(program, program1);
-      return resolve(true);
-    }
+    });
+    await render(hbs`{{program-list programs=programs remove=removeAction}}`);
+    await settled();
+    assert.equal(findAll('tbody tr').length, 1);
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await settled();
+    assert.equal(findAll('tbody tr').length, 2);
+    assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
+    await click('tbody tr:nth-of-type(2) .remove');
   });
-  this.register('service:permissionChecker', permissionCheckerMock);
 
-  this.set('programs', [ program1 ]);
-  this.set('removeAction', () => {
-    assert.ok(false, 'This function should never be called.');
-  });
-  this.render(hbs`{{program-list programs=programs remove=removeAction}}`);
-  await wait();
-  assert.equal(this.$('tbody tr').length, 1);
-  this.$('tbody tr:eq(0) td:eq(3) .remove').click();
-  await wait();
-  assert.equal(this.$('tbody tr').length, 2);
-  assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-  await this.$('tbody tr:eq(1) .done').click();
-  await wait();
-  assert.equal(this.$('tbody tr').length, 1);
-});
+  test('trash is disabled for unprivileged users', async function(assert){
+    assert.expect(3);
+    const program1 = EmberObject.create({
+      id: 1,
+      school: {
+        title: 'Foo'
+      },
+      title: 'Bar',
+      isPublished: true,
+      hasMany() {
+        return {
+          ids() {
+            return [];
+          }
+        };
+      },
+    });
+    const permissionCheckerMock = Service.extend({
+      canDeleteProgram(program) {
+        assert.equal(program, program1);
+        return resolve(false);
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-test('remove and confirm', async function(assert){
-  assert.expect(5);
-  const program1 = EmberObject.create({
-    id: 1,
-    school: {
-      title: 'Foo'
-    },
-    title: 'Bar',
-    isPublished: true,
-    hasMany() {
-      return {
-        ids() {
-          return [];
-        }
-      };
-    },
+    this.set('programs', [ program1 ]);
+    await render(hbs`{{program-list programs=programs}}`);
+    await settled();
+    assert.equal(findAll('tbody tr').length, 1);
+    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').length, 1);
   });
-  const permissionCheckerMock = Service.extend({
-    canDeleteProgram(program) {
-      assert.equal(program, program1);
-      return resolve(true);
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-
-  this.set('programs', [ program1 ]);
-  this.set('removeAction', (program) => {
-    assert.equal(program, program1);
-  });
-  this.render(hbs`{{program-list programs=programs remove=removeAction}}`);
-  await wait();
-  assert.equal(this.$('tbody tr').length, 1);
-  this.$('tbody tr:eq(0) td:eq(3) .remove').click();
-  await wait();
-  assert.equal(this.$('tbody tr').length, 2);
-  assert.ok(this.$('tbody tr:eq(1) td:eq(0)').text().includes('Are you sure you want to delete this program?'));
-  this.$('tbody tr:eq(1) .remove').click();
-});
-
-test('trash is disabled for unprivileged users', async function(assert){
-  assert.expect(3);
-  const program1 = EmberObject.create({
-    id: 1,
-    school: {
-      title: 'Foo'
-    },
-    title: 'Bar',
-    isPublished: true,
-    hasMany() {
-      return {
-        ids() {
-          return [];
-        }
-      };
-    },
-  });
-  const permissionCheckerMock = Service.extend({
-    canDeleteProgram(program) {
-      assert.equal(program, program1);
-      return resolve(false);
-    }
-  });
-  this.register('service:permissionChecker', permissionCheckerMock);
-
-  this.set('programs', [ program1 ]);
-  this.render(hbs`{{program-list programs=programs}}`);
-  await wait();
-  assert.equal(this.$('tbody tr').length, 1);
-  assert.equal(this.$('tbody tr:eq(0) td:eq(3) .fa-trash.disabled').length, 1);
 });

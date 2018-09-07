@@ -1,168 +1,165 @@
-import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
-import initializer from "ilios/instance-initializers/load-common-translations";
 
-moduleForComponent('school-session-attributes', 'Integration | Component | school session attributes', {
-  integration: true,
-  setup(){
-    initializer.initialize(getOwner(this));
-  },
-});
 
-test('it renders collapsed', async function(assert) {
-  assert.expect(13);
-  const school = EmberObject.create({
-    async getConfigValue(name){
-      if (name === 'showSessionSupplemental') {
-        return true;
-      }
+module('Integration | Component | school session attributes', function(hooks) {
+  setupRenderingTest(hooks);
 
-      return false;
-    },
+  test('it renders collapsed', async function(assert) {
+    assert.expect(13);
+    const school = EmberObject.create({
+      async getConfigValue(name){
+        if (name === 'showSessionSupplemental') {
+          return true;
+        }
+
+        return false;
+      },
+    });
+
+    this.set('school', school);
+    this.set('nothing', parseInt);
+    await render(hbs`{{school-session-attributes
+      school=school
+      manage=(action nothing)
+      collapse=(action nothing)
+      expand=(action nothing)
+    }}`);
+    await settled();
+
+    const rows = 'table tbody tr';
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
+    const classname = `.school-session-attributes-collapsed`;
+
+    assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
+
+    assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
+
+    assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
+
+    assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
+
+    assert.equal(findAll(classname).length, 1);
   });
 
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-attributes
-    school=school
-    manage=(action nothing)
-    collapse=(action nothing)
-    expand=(action nothing)
-  }}`);
-  await wait();
+  test('it renders expanded', async function(assert) {
+    assert.expect(13);
+    const school = EmberObject.create({
+      async getConfigValue(name){
+        if (name === 'showSessionSupplemental') {
+          return true;
+        }
 
-  const rows = 'table tbody tr';
-  const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-  const attendanceEnabled = `${rows}:eq(0) td:eq(1) svg`;
-  const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-  const supplementalEnabled = `${rows}:eq(1) td:eq(1) svg`;
-  const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-  const specialAttireEnabled = `${rows}:eq(2) td:eq(1) svg`;
-  const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-  const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) svg`;
-  const classname = `.school-session-attributes-collapsed`;
+        return false;
+      },
+    });
 
-  assert.equal(this.$(attendanceTitle).text().trim(), 'Attendance Required');
-  assert.ok(this.$(attendanceEnabled).hasClass('no'));
-  assert.ok(this.$(attendanceEnabled).hasClass('fa-ban'));
+    this.set('school', school);
+    this.set('nothing', parseInt);
+    await render(hbs`{{school-session-attributes
+      school=school
+      details=true
+      manage=(action nothing)
+      collapse=(action nothing)
+      expand=(action nothing)
+    }}`);
+    await settled();
 
-  assert.equal(this.$(supplementalTitle).text().trim(), 'Supplemental Curriculum');
-  assert.ok(this.$(supplementalEnabled).hasClass('yes'));
-  assert.ok(this.$(supplementalEnabled).hasClass('fa-check'));
+    const rows = 'table tbody tr';
+    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
+    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
+    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
+    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
+    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
+    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
+    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
+    const classname = `.school-session-attributes-expanded`;
 
-  assert.equal(this.$(specialAttireTitle).text().trim(), 'Special Attire Required');
-  assert.ok(this.$(specialAttireEnabled).hasClass('no'));
-  assert.ok(this.$(specialAttireEnabled).hasClass('fa-ban'));
+    assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
+    assert.ok(find(attendanceEnabled).classList.contains('no'));
+    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
 
-  assert.equal(this.$(specialEquipmentTitle).text().trim(), 'Special Equipment Required');
-  assert.ok(this.$(specialEquipmentEnabled).hasClass('no'));
-  assert.ok(this.$(specialEquipmentEnabled).hasClass('fa-ban'));
+    assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
+    assert.ok(find(supplementalEnabled).classList.contains('yes'));
+    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
 
-  assert.equal(this.$(classname).length, 1);
-});
+    assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
+    assert.ok(find(specialAttireEnabled).classList.contains('no'));
+    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
 
-test('it renders expanded', async function(assert) {
-  assert.expect(13);
-  const school = EmberObject.create({
-    async getConfigValue(name){
-      if (name === 'showSessionSupplemental') {
-        return true;
-      }
-
-      return false;
-    },
+    assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
+    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
+    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
+    assert.equal(findAll(classname).length, 1);
   });
 
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.render(hbs`{{school-session-attributes
-    school=school
-    details=true
-    manage=(action nothing)
-    collapse=(action nothing)
-    expand=(action nothing)
-  }}`);
-  await wait();
+  test('clicking expand fires action', async function(assert) {
+    assert.expect(1);
+    const school = EmberObject.create({
+      async getConfigValue(){
+        return false;
+      },
+    });
 
-  const rows = 'table tbody tr';
-  const attendanceTitle = `${rows}:eq(0) td:eq(0)`;
-  const attendanceEnabled = `${rows}:eq(0) td:eq(1) svg`;
-  const supplementalTitle = `${rows}:eq(1) td:eq(0)`;
-  const supplementalEnabled = `${rows}:eq(1) td:eq(1) svg`;
-  const specialAttireTitle = `${rows}:eq(2) td:eq(0)`;
-  const specialAttireEnabled = `${rows}:eq(2) td:eq(1) svg`;
-  const specialEquipmentTitle = `${rows}:eq(3) td:eq(0)`;
-  const specialEquipmentEnabled = `${rows}:eq(3) td:eq(1) svg`;
-  const classname = `.school-session-attributes-expanded`;
+    this.set('school', school);
+    this.set('nothing', parseInt);
+    this.set('click', () => {
+      assert.ok(true, 'action fired');
+    });
+    await render(hbs`{{school-session-attributes
+      school=school
+      manage=(action nothing)
+      collapse=(action nothing)
+      expand=(action click)
+    }}`);
+    await settled();
 
-  assert.equal(this.$(attendanceTitle).text().trim(), 'Attendance Required');
-  assert.ok(this.$(attendanceEnabled).hasClass('no'));
-  assert.ok(this.$(attendanceEnabled).hasClass('fa-ban'));
-
-  assert.equal(this.$(supplementalTitle).text().trim(), 'Supplemental Curriculum');
-  assert.ok(this.$(supplementalEnabled).hasClass('yes'));
-  assert.ok(this.$(supplementalEnabled).hasClass('fa-check'));
-
-  assert.equal(this.$(specialAttireTitle).text().trim(), 'Special Attire Required');
-  assert.ok(this.$(specialAttireEnabled).hasClass('no'));
-  assert.ok(this.$(specialAttireEnabled).hasClass('fa-ban'));
-
-  assert.equal(this.$(specialEquipmentTitle).text().trim(), 'Special Equipment Required');
-  assert.ok(this.$(specialEquipmentEnabled).hasClass('no'));
-  assert.ok(this.$(specialEquipmentEnabled).hasClass('fa-ban'));
-  assert.equal(this.$(classname).length, 1);
-});
-
-test('clicking expand fires action', async function(assert) {
-  assert.expect(1);
-  const school = EmberObject.create({
-    async getConfigValue(){
-      return false;
-    },
+    const title = '.title';
+    await click(title);
   });
 
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', () => {
-    assert.ok(true, 'action fired');
+  test('clicking collapse fires action', async function(assert) {
+    assert.expect(1);
+    const school = EmberObject.create({
+      async getConfigValue(){
+        return false;
+      },
+    });
+
+    this.set('school', school);
+    this.set('nothing', parseInt);
+    this.set('click', () => {
+      assert.ok(true, 'action fired');
+    });
+    await render(hbs`{{school-session-attributes
+      school=school
+      details=true
+      manage=(action nothing)
+      collapse=(action click)
+      expand=(action nothing)
+    }}`);
+    await settled();
+
+    const title = '.title';
+    await click(title);
   });
-  this.render(hbs`{{school-session-attributes
-    school=school
-    manage=(action nothing)
-    collapse=(action nothing)
-    expand=(action click)
-  }}`);
-  await wait();
-
-  const title = '.title';
-  await this.$(title).click();
-});
-
-test('clicking collapse fires action', async function(assert) {
-  assert.expect(1);
-  const school = EmberObject.create({
-    async getConfigValue(){
-      return false;
-    },
-  });
-
-  this.set('school', school);
-  this.set('nothing', parseInt);
-  this.set('click', () => {
-    assert.ok(true, 'action fired');
-  });
-  this.render(hbs`{{school-session-attributes
-    school=school
-    details=true
-    manage=(action nothing)
-    collapse=(action click)
-    expand=(action nothing)
-  }}`);
-  await wait();
-
-  const title = '.title';
-  await this.$(title).click();
 });

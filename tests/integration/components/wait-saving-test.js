@@ -1,21 +1,23 @@
-import { getOwner } from '@ember/application';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
 
-moduleForComponent('wait-saving', 'Integration | Component | wait saving', {
-  integration: true,
-  beforeEach: function() {
-    getOwner(this).lookup('service:i18n').set('locale', 'en');
-    this.register('helper:t', tHelper);
-  }
-});
+module('Integration | Component | wait saving', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(1);
-  let modalDialogService = getOwner(this).lookup('service:modal-dialog');
-  modalDialogService.set('destinationElementId', 'modal-testing-div');
-  this.render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
+  hooks.beforeEach(function() {
+    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.register('helper:t', tHelper);
+  });
 
-  assert.equal(this.$().text().trim(), 'saving... one moment...');
+  test('it renders', async function(assert) {
+    assert.expect(1);
+    let modalDialogService = this.owner.lookup('service:modal-dialog');
+    modalDialogService.set('destinationElementId', 'modal-testing-div');
+    await render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
+
+    assert.equal(this.element.textContent.trim(), 'saving... one moment...');
+  });
 });

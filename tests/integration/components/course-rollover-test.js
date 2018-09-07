@@ -72,7 +72,7 @@ module('Integration | Component | course rollover', function(hooks) {
     });
     await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
     this.server.logging = true;
-    await await click('.done');
+    await click('.done');
   });
 
   test('rollover course with new title', async function(assert) {
@@ -109,7 +109,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const input = `${title} input`;
     await fillIn(input, newTitle);
     await settled();
-    await await click('.done');
+    await click('.done');
     await settled();
   });
 

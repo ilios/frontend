@@ -57,7 +57,13 @@
   <h3>{{t "general.manageAPITokens"}}</h3>
   <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
-    <button class="new-token done text" onclick={{action toggleShowCreateNewToken}}>{{t "general.createNew"}}</button>
+    <button
+      class="new-token done text"
+      onclick={{action toggleShowCreateNewToken}}
+      data-test-show-create-new-token
+    >
+      {{t "general.createNew"}}
+    </button>
     <button
       class="invalidate-tokens cancel text"
       onclick={{action toggleShowInvalidateTokens}}
@@ -75,6 +81,7 @@
           {{/copy-button}}
           <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
             class="bigcancel"
+            data-test-result-reset
           >
             {{fa-icon "times"}}
           </button>
@@ -90,7 +97,10 @@
             format="YYYY-MM-DD"
             onSelection=(action "selectExpiresAtDate")
           }}
-          <button class="bigadd" {{action (perform createNewToken)}}>
+          <button {{action (perform createNewToken)}} 
+            class="bigadd"
+            data-test-new-token-create
+          >
             {{#if createNewToken.isRunning}}
               {{loading-spinner}}
             {{else}}

@@ -1,53 +1,41 @@
-import { run } from '@ember/runloop';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, findAll, fillIn, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-import wait from 'ember-test-helpers/wait';
+module('Integration | Component | search box', function(hooks) {
+  setupRenderingTest(hooks);
 
-moduleForComponent('search-box', 'Integration | Component | search box', {
-  integration: true
-});
+  test('it renders', async function(assert) {
+    await render(hbs`{{search-box}}`);
 
-test('it renders', function(assert) {
-  this.render(hbs`{{search-box}}`);
-
-  assert.equal(this.$('input[type=search]').length, 1);
-});
-
-test('clicking search calls search', function(assert) {
-  this.on('search', function(value){
-    assert.equal(value, '');
+    assert.equal(findAll('input[type=search]').length, 1);
   });
-  this.render(hbs`{{search-box search=(action 'search')}}`);
-  const searchBoxIcon = '.search-icon';
-  this.$(searchBoxIcon).click();
 
-  return wait();
-});
+  test('clicking search calls search', async function(assert) {
+    this.set('search', value => {
+      assert.equal(value, '');
+    });
+    await render(hbs`{{search-box search=(action search)}}`);
+    const searchBoxIcon = '.search-icon';
+    await click(searchBoxIcon);
+  });
 
-test('typing calls search', function(assert) {
-  this.on('search', function(value){
-    assert.equal(value, 'typed it');
+  test('typing calls search', async function(assert) {
+    this.set('search', value => {
+      assert.equal(value, 'typed it');
+    });
+    await render(hbs`{{search-box search=(action search)}}`);
+    await fillIn('input', 'typed it');
   });
-  this.render(hbs`{{search-box search=(action 'search')}}`);
-  run(() => {
-    this.$('input').val('typed it');
-    this.$('input').trigger('input');
-    this.$('input').trigger('keyup', {which: 50});
-  });
-  //wait for debounce timer in component
-  return wait();
-});
 
-test('escape calls clear', function(assert) {
-  this.on('clear', function(){
-    assert.ok(true);
-  });
-  this.on('search', parseInt);
-  this.render(hbs`{{search-box search=(action 'search') clear=(action 'clear')}}`);
-  run(() => {
-    this.$('input').val('typed it');
-    this.$('input').trigger('change');
-    this.$('input').trigger($.Event('keyup', { keyCode: 27 }));
+  test('escape calls clear', async function(assert) {
+    this.set('clear', () => {
+      assert.ok(true);
+    });
+    this.set('nothing', () => { });
+    await render(hbs`{{search-box search=(action nothing) clear=(action clear)}}`);
+    await fillIn('input', 'typed it');
+    await triggerKeyEvent('input', 'keyup', 27);
   });
 });

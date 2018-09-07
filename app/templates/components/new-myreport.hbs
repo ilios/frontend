@@ -1,7 +1,7 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="title">{{t "general.newReport"}}</div>
 <div class="new-myreport-content" data-test-new-report>
-  <p>
+  <p data-test-title>
     <label>{{t "general.reportTitle"}}:</label>
     <input
       type="text"
@@ -15,7 +15,7 @@
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>
     {{/if}}
   </p>
-  <p>
+  <p data-test-school>
     <label>{{t "general.for"}}</label>
     {{#if (is-fulfilled currentSchool)}}
       <select
@@ -36,7 +36,7 @@
       </select>
     {{/if}}
   </p>
-  <p>
+  <p data-test-subject>
     <label>{{t "general.all"}}</label>
     <select
       onchange={{action "changeSubject" value="target.value"}}
@@ -52,7 +52,7 @@
       {{/each}}
     </select>
   </p>
-  <p>
+  <p data-test-object>
     <label>{{t "general.associatedWith"}}</label>
     <select
       onchange={{action "changePrepositionalObject" value="target.value"}}

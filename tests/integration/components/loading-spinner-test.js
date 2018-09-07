@@ -1,13 +1,15 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('Integration | Component | loading-spinner', {
-  integration: true
-});
+module('Integration | Component | loading-spinner', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  this.render(hbs`{{loading-spinner}}`);
+  test('it renders', async function(assert) {
+    await render(hbs`{{loading-spinner}}`);
 
-  assert.equal(this.$().text().trim(), '');
-  assert.ok(this.$('svg').hasClass('fa-spinner'));
+    assert.equal(this.element.textContent.trim(), '');
+    assert.ok(find('svg').classList.contains('fa-spinner'));
+  });
 });

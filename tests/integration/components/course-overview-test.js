@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { click, render, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -35,15 +35,11 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
-    return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('a').trigger('input');
-      this.$(save).click();
-      settled().then(() => {
-        assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
-      });
-    });
+    await click(button);
+    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    await fillIn(input, 'a');
+    await click(save);
+    assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
   });
 
   test('course external id validation fails if value is too long', async function(assert) {
@@ -58,15 +54,11 @@ module('Integration | Component | course overview', function(hooks) {
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
-    return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('tooLong'.repeat(50)).trigger('input');
-      this.$(save).click();
-      settled().then(() => {
-        assert.equal(this.$(error).length, 1, 'Validation failed, error message shows.');
-      });
-    });
+    await click(button);
+    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    await fillIn(input, 'tooLong'.repeat(50));
+    await click(save);
+    assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
   });
 
   test('course external id validation passes on changed value within boundaries', async function(assert) {
@@ -85,22 +77,18 @@ module('Integration | Component | course overview', function(hooks) {
       }
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course}}`);
+    await render(hbs`{{course-overview course=course editable=true}}`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
-    return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('legit').trigger('input');
-      this.$(save).click();
-      settled().then(() => {
-        assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');
-      });
-    });
+    await click(button);
+    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    await fillIn(input, 'legit');
+    await click(save);
+    assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
   });
 
   test('course external id validation passes on empty value', async function(assert) {
@@ -119,21 +107,17 @@ module('Integration | Component | course overview', function(hooks) {
       }
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course}}`);
+    await render(hbs`{{course-overview course=course editable=true}}`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
     const button = `${item} .clickable`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
-    this.$(button).click();
-    return settled().then(()=>{
-      assert.equal(this.$(error).length, 0, 'No validation errors shown initially.');
-      this.$(input).val('').trigger('input');
-      this.$(save).click();
-      settled().then(() => {
-        assert.equal(this.$(error).length, 0, 'No validation errors, no messages shown.');
-      });
-    });
+    await click(button);
+    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    await fillIn(input, '');
+    await click(save);
+    assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
   });
 });

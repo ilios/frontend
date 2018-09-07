@@ -1,17 +1,19 @@
 import EmberObject from '@ember/object';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('visualizer-course-objectives', 'Integration | Component | visualizer course objectives', {
-  integration: true
-});
+module('Integration | Component | visualizer course objectives', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  const course = EmberObject.create({
-    title: 'test'
+  test('it renders', async function(assert) {
+    const course = EmberObject.create({
+      title: 'test'
+    });
+    this.set('course', course);
+    await render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
+
+    assert.equal(this.element.textContent.trim(), '');
   });
-  this.set('course', course);
-  this.render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
-
-  assert.equal(this.$().text().trim(), '');
 });
