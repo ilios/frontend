@@ -12,8 +12,6 @@
 
 `ember install ilios-common`
 
-
-
 ### For Developers:
 
 #### Installation
