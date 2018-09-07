@@ -56,9 +56,9 @@
     <button {{action (perform save)}}
       class="done text"
       disabled={{if
-                 (or save.isRunning (not (await bestSelectedYear)) (not (await bestSelectedCourse)))
-                 true
-               }}
+        (or save.isRunning (not (await bestSelectedYear)) (not (await bestSelectedCourse)))
+        true
+      }}
     >
       {{#if save.isRunning}}
         {{loading-spinner}}

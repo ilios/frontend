@@ -9,9 +9,9 @@
       oninput={{action (mut title) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       class={{if
-              (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
-              "has-error"
-            }}
+        (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+        "has-error"
+      }}
       data-test-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
