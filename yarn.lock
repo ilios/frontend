@@ -5102,7 +5102,7 @@ ember-cli-sass@8.0.1:
     broccoli-sass-source-maps "^4.0.0"
     ember-cli-version-checker "^2.1.0"
 
-ember-cli-sass@^7.1.2, ember-cli-sass@^7.2.0:
+ember-cli-sass@^7.2.0:
   version "7.2.0"
   resolved "http://registry.npmjs.org/ember-cli-sass/-/ember-cli-sass-7.2.0.tgz#293d1a94c43c1fdbb3835378e43d255e8ad5c961"
   dependencies:
@@ -5346,7 +5346,7 @@ ember-concurrency@0.8.19:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
-ember-concurrency@^0.8.12:
+ember-concurrency@0.8.20, ember-concurrency@^0.8.12:
   version "0.8.20"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.20.tgz#2c4f84ed3eb86cd0c7be9c2d21dd23f560757ac7"
   dependencies:
@@ -5922,15 +5922,15 @@ ember-simple-auth@^1.6.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.16.0.tgz#0ce39c5a266008b3e100abf3b4092a329a7b980f"
+ember-simple-charts@0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.17.0.tgz#e15c0ddf7bd25f2cdd7781894be01a2168eb6543"
   dependencies:
     d3 "^5.4.0"
     ember-cli-babel "^6.8.1"
     ember-cli-htmlbars "^2.0.1"
-    ember-cli-sass "^7.1.2"
-    ember-concurrency "0.8.19"
+    ember-cli-sass "8.0.1"
+    ember-concurrency "0.8.20"
     ember-d3 "0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-resize-aware "^1.0.0"
