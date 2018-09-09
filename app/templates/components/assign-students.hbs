@@ -20,11 +20,11 @@
     <button {{action (perform save)}}
       class="done text"
       disabled={{or
-                 isSaving
-                 (is-pending bestSelectedCohort)
-                 (lt cohorts.length 1)
-                 (eq selectedUserIds.length 0)
-               }}
+        isSaving
+        (is-pending bestSelectedCohort)
+        (lt cohorts.length 1)
+        (eq selectedUserIds.length 0)
+      }}
     >
       {{#if isSaving}}
         {{loading-spinner}}
@@ -46,9 +46,9 @@
             type="checkbox"
             checked={{eq selectedUserIds.length filteredStudents.length}}
             indeterminate={{and
-                            (gt selectedUserIds.length 0)
-                            (lt selectedUserIds.length filteredStudents.length)
-                          }}
+              (gt selectedUserIds.length 0)
+              (lt selectedUserIds.length filteredStudents.length)
+            }}
           >
           {{t "general.all"}}
         </th>

@@ -111,7 +111,7 @@
     "normalize.css": "^8.0.0",
     "papaparse": "^4.5.0",
     "pre-commit": "^1.2.2",
-    "qunit-dom": "^0.7.1",
+    "qunit-dom": "^0.8.0",
     "sass": "^1.13.2",
     "scroll-into-view": "^1.9.3",
     "stylelint": "^9.1.3",

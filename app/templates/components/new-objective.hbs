@@ -18,9 +18,9 @@
   <div class="buttons">
     <button {{action "save"}}
       disabled={{or
-                 isSaving
-                 (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
-               }}
+        isSaving
+        (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      }}
       class="done text"
     >
       {{#if isSaving}}

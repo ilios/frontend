@@ -12,9 +12,9 @@
       type="text"
       value={{title}}
       oninput={{pipe
-                (action "changeTitle" value="target.value")
-                (action "addErrorDisplayFor" "title")
-              }}
+        (action "changeTitle" value="target.value")
+        (action "addErrorDisplayFor" "title")
+      }}
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.courseTitlePlaceholder"}}
@@ -103,12 +103,12 @@
   <div class="buttons">
     <button {{action (perform save)}}
       disabled={{if
-                 (or isSaving
-                   (not selectedYear)
-                   (contains selectedYear loadUnavailableYears.lastSuccessful.value)
-                 )
-                 true
-               }}
+        (or isSaving
+          (not selectedYear)
+          (contains selectedYear loadUnavailableYears.lastSuccessful.value)
+        )
+        true
+      }}
       class="done text"
     >
       {{#if isSaving}}

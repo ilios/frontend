@@ -41,9 +41,9 @@
             oninput={{action (perform updateDurationHours) value="target.value"}}
             onkeyup={{action "addErrorDisplayFor" "durationHours"}}
             class={{if
-                    (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
-                    "has-error"
-                  }}
+              (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
+              "has-error"
+            }}
           >
           {{#if
             (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
@@ -59,9 +59,9 @@
             oninput={{action (perform updateDurationMinutes) value="target.value"}}
             onkeyup={{action "addErrorDisplayFor" "durationMinutes"}}
             class={{if
-                    (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
-                    "has-error"
-                  }}
+              (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
+              "has-error"
+            }}
           >
           {{#if
             (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
@@ -115,9 +115,9 @@
                 oninput={{action (mut numberOfWeeks) value="target.value"}}
                 onkeyup={{action "addErrorDisplayFor" "numberOfWeeks"}}
                 class={{concat
-                        "make-recurring-input "
-                        (if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks")) "has-error")
-                      }}
+                  "make-recurring-input "
+                  (if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks")) "has-error")
+                }}
               >
               <label class="make-recurring-input-label">{{t "general.weeks"}}</label>
               {{#if
