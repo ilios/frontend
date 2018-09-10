@@ -28,8 +28,8 @@ export default Mixin.create({
         ilmMinutes
       };
     });
-    const offeringMinutes = minutes.mapBy('offeringMinutes').reduce((total, minutes) => total + minutes, 0);
-    const ilmMinutes = minutes.mapBy('ilmMinutes').reduce((total, minutes) => total + minutes, 0);
+    const offeringMinutes = minutes.mapBy('offeringMinutes').reduce((total, mins) => total + mins, 0);
+    const ilmMinutes = minutes.mapBy('ilmMinutes').reduce((total, mins) => total + mins, 0);
 
     return { course, user, offeringMinutes, ilmMinutes };
   },
