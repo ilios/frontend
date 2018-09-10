@@ -4,7 +4,7 @@
 
 {{curriculum-inventory-report-details
   report=model
-  canUpdate=canUpdate
+  canUpdate=(and canUpdate (not model.isFinalized))
   leadershipDetails=leadershipDetails
   setLeadershipDetails=(action (mut leadershipDetails))
   manageLeadership=manageLeadership
