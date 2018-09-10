@@ -1,6 +1,6 @@
 import Mixin from '@ember/object/mixin';
-import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
 export default Mixin.create({
   permissionChecker: service(),
