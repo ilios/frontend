@@ -9,6 +9,11 @@
     flex-direction: row;
   }
 
+  button:disabled {
+    cursor: default;
+    background-color: $darker-grey;
+  }
+
   .title {
     display: flex;
     flex-direction: column;
