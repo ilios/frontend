@@ -1,7 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import RSVP from 'rsvp';
-
-const { Promise, all, map } = RSVP;
+import { all } from 'rsvp';
 
 export default Mixin.create({
   titleToken: 'general.coursesAndSessions',
@@ -12,27 +10,12 @@ export default Mixin.create({
     ]);
 
   },
-  loadCourseLearningMaterials(course){
-    return new Promise(resolve => {
-      course.get('learningMaterials').then(courseLearningMaterials => {
-        all(courseLearningMaterials.getEach('learningMaterial')).then(()=> {
-          resolve();
-        });
-      });
-    });
+  async loadCourseLearningMaterials(course){
+    const courseLearningMaterials = await course.get('learningMaterials');
+    return all(courseLearningMaterials.mapBy('learningMaterial'));
   },
-  loadSessionLearningMaterials(course){
-    return new Promise(resolve => {
-      course.get('sessions').then(sessions => {
-        map(sessions.toArray(), session => {
-          return all([
-            session.get('learningMaterials'),
-            session.get('firstOfferingDate')
-          ]);
-        }).then(()=>{
-          resolve();
-        });
-      });
-    });
+  async loadSessionLearningMaterials(course){
+    const sessions = await course.get('sessions');
+    return all([sessions.mapBy('learningMaterials'), sessions.mapBy('firstOfferingDate')]);
   }
 });
