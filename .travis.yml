@@ -5,7 +5,7 @@ sudo: false
 dist: trusty
 
 addons:
-  chrome: stable
+  chrome: beta
 
 cache:
   yarn: true
