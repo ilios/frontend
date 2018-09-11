@@ -138,5 +138,8 @@
     "lint:js",
     "lint:style"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ember-exam": "^1.0.0"
+  }
 }

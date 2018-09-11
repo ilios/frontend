@@ -14,6 +14,7 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
+    - SW_DISABLED=true
     - CC_TEST_REPORTER_ID=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
     - COVERAGE=true
     - PERCY_TOKEN=d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e
@@ -30,7 +31,7 @@ install:
 script:
   - yarn lint:style
   - yarn lint:js
-  - yarn test
+  - ember exam --split=$SPLIT --partition=$PARTITION --filter=$FILTER --parallel=$PARALLEL
 
 jobs:
   include:
@@ -40,7 +41,15 @@ jobs:
         - greenkeeper-lockfile-update
         - greenkeeper-lockfile-upload
     - stage: test
-      env: SW_DISABLED=true
+      env: PARTITION=false FILTER='!acceptance' SPLIT=2 PARALLEL=true
+    - stage: test
+      env: PARTITION=1 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=2 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=3 FILTER='acceptance' SPLIT=4 PARALLEL=false
+    - stage: test
+      env: PARTITION=4 FILTER='acceptance' SPLIT=4 PARALLEL=false
       before_script:
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         - chmod +x ./cc-test-reporter
