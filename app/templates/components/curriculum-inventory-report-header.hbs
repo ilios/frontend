@@ -37,7 +37,10 @@
       {{t "general.download"}}
     </button>
   </a>
-  {{#if canUpdate}}
-    <button {{action "finalize"}} class="finalize">{{t "general.finalize"}}</button>
-  {{/if}}
+  <button {{action "finalize"}}
+    class="finalize"
+    disabled={{not canUpdate}}
+  >
+    {{t "general.finalize"}}
+  </button>
 </div>

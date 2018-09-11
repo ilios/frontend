@@ -91,8 +91,8 @@ module('Integration | Component | curriculum inventory report details', function
     assert.equal(findAll('.curriculum-inventory-report-header .title .fa-lock').length, 1,
       'Lock icon is visible next to title post-finalization.'
     );
-    assert.equal(findAll('.curriculum-inventory-report-header .finalize').length, 0,
-      'Finalize button is not visible post-finalization.'
+    assert.equal(findAll('.curriculum-inventory-report-header .finalize:disabled').length, 1,
+      'Finalize button has been disabled post-finalization.'
     );
   });
 

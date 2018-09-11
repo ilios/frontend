@@ -33,7 +33,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.equal(findAll('.title .fa-lock').length, 1, 'Lock icon is showing in title.');
     assert.equal(findAll('.editable').length, 0, 'Report name is not editable.');
     assert.equal(findAll('.actions .download').length, 1, 'Download button shows.');
-    assert.equal(findAll(`.actions .finalize`).length, 0, 'Finalize button is not showing.');
+    assert.equal(findAll(`.actions .finalize:disabled`).length, 1, 'Finalize button is disabled.');
   });
 
   test('change name', async function(assert) {
