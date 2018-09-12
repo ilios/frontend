@@ -73,6 +73,7 @@
     "ember-cp-validations": "^3.3.1",
     "ember-data": "3.4.0",
     "ember-drag-drop": "0.5.1",
+    "ember-exam": "^1.0.0",
     "ember-export-application-global": "^2.0.0",
     "ember-froala-editor": "2.8.4",
     "ember-i18n-cp-validations": "3.1.0",
