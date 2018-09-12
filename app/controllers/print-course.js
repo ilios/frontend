@@ -1,9 +1,4 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import PrintCourseController from 'ilios-common/mixins/print-course-controller';
 
-export default Controller.extend({
-  currentUser: service(),
-  queryParams: ['unpublished'],
-  unpublished: false,
-  canViewUnpublished: false,
-});
+export default Controller.extend(PrintCourseController);

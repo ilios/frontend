@@ -1,12 +1,4 @@
 import Controller from '@ember/controller';
+import IndexController from 'ilios-common/mixins/course/index-controller';
 
-export default Controller.extend({
-  queryParams: {
-    sortSessionsBy: 'sortBy',
-    filterSessionsBy: 'filterBy',
-  },
-  sortSessionsBy: 'title',
-  filterSessionsBy: '',
-  canCreateSession: false,
-  canUpdateCourse: false,
-});
+export default Controller.extend(IndexController);
