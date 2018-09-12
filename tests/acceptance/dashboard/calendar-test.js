@@ -597,7 +597,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await click(course);
     await click(term);
 
-    assert.equal(find(clearFilter).textContent, 'Clear Filters', 'clear filter button is active');
+    assert.equal(find(clearFilter).textContent.trim(), 'Clear Filters', 'clear filter button is active');
     assert.ok(find(sessiontype).checked, 'filter is checked');
     assert.ok(find(course).checked, 'filter is checked');
     assert.ok(find(term).checked, 'filter is checked');
@@ -624,7 +624,7 @@ module('Acceptance: Dashboard Calendar', function(hooks) {
     await click(courselevel);
     await click(cohort);
 
-    assert.equal(find(clearFilter).textContent, 'Clear Filters', 'clear filter button is active');
+    assert.equal(find(clearFilter).textContent.trim(), 'Clear Filters', 'clear filter button is active');
     assert.ok(find(sessiontype).checked, 'filter is checked');
     assert.ok(find(courselevel).checked, 'filter is checked');
     assert.ok(find(cohort).checked, 'filter is checked');
