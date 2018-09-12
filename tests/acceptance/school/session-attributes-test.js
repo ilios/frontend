@@ -9,7 +9,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
 const url = '/schools/1';
-module('Acceptance: School - Session Attributes', function(hooks) {
+module('Acceptance | School - Session Attributes', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

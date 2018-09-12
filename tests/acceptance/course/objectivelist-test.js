@@ -8,7 +8,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/course';
 
-module('Acceptance: Course - Objective List', function(hooks) {
+module('Acceptance | Course - Objective List', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

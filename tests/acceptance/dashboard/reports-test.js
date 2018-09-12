@@ -9,7 +9,7 @@ import page from 'ilios/tests/pages/dashboard';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: Dashboard Reports', function(hooks) {
+module('Acceptance | Dashboard Reports', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

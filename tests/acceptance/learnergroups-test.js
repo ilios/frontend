@@ -13,7 +13,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
-module('Acceptance: Learner Groups', function(hooks) {
+module('Acceptance | Learner Groups', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

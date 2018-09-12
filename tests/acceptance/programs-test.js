@@ -10,7 +10,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import { percySnapshot } from 'ember-percy';
 
-module('Acceptance: Programs', function(hooks) {
+module('Acceptance | Programs', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

@@ -11,7 +11,7 @@ import page from 'ilios/tests/pages/session';
 
 const today = moment();
 
-module('Acceptance: Session - Learning Materials', function(hooks) {
+module('Acceptance | Session - Learning Materials', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

@@ -9,7 +9,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 const url = '/courses/1/sessions/1/publicationcheck';
-module('Acceptance: Session - Publication Check', function(hooks) {
+module('Acceptance | Session - Publication Check', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

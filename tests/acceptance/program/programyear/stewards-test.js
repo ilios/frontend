@@ -10,7 +10,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 const url = '/programs/1/programyears/1?pyStewardDetails=true';
 
-module('Acceptance: Program Year - Stewards', function(hooks) {
+module('Acceptance | Program Year - Stewards', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

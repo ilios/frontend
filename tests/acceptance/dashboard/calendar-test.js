@@ -11,7 +11,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import { map } from 'rsvp';
 
-module('Acceptance: Dashboard Calendar', function(hooks) {
+module('Acceptance | Dashboard Calendar', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

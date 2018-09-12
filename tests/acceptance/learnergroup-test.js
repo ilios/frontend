@@ -9,7 +9,7 @@ import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import page from '../pages/learner-group';
 import { percySnapshot } from 'ember-percy';
 
-module('Acceptance: Learnergroup', function(hooks) {
+module('Acceptance | Learnergroup', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

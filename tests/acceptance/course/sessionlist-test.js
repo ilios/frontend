@@ -12,7 +12,7 @@ import page from 'ilios/tests/pages/sessions';
 
 moment.locale('en');
 let today = moment().hour(8);
-module('Acceptance: Course - Session List', function(hooks) {
+module('Acceptance | Course - Session List', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
