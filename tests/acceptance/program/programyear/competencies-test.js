@@ -10,7 +10,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 const url = '/programs/1/programyears/1?pyCompetencyDetails=true';
 
-module('Acceptance: Program Year - Competencies', function(hooks) {
+module('Acceptance | Program Year - Competencies', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

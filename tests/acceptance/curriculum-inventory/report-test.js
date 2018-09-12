@@ -8,7 +8,7 @@ import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 
 const url = '/curriculum-inventory-reports/1';
 
-module('Acceptance: Curriculum Inventory: Report', function(hooks) {
+module('Acceptance | Curriculum Inventory: Report', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

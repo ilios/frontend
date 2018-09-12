@@ -13,7 +13,7 @@ let url = '/';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: API Version Check', function(hooks) {
+module('Acceptance | API Version Check', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

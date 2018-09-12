@@ -11,7 +11,7 @@ import { currentRouteName } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/course';
 
-module('Acceptance: Course - Overview', function(hooks) {
+module('Acceptance | Course - Overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

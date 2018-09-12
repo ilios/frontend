@@ -10,7 +10,7 @@ import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: Session - Publish', function(hooks) {
+module('Acceptance | Session - Publish', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

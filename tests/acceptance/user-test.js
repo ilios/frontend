@@ -7,7 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/user';
 import { percySnapshot } from 'ember-percy';
 
-module('Acceptance: User', function(hooks) {
+module('Acceptance | User', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

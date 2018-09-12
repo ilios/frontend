@@ -11,7 +11,7 @@ import page from 'ilios/tests/pages/course';
 
 const today = moment();
 
-module('Acceptance: Course - Learning Materials', function(hooks) {
+module('Acceptance | Course - Learning Materials', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

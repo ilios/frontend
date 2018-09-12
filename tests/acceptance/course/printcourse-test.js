@@ -9,7 +9,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: Course - Print Course', function(hooks) {
+module('Acceptance | Course - Print Course', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

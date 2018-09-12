@@ -11,7 +11,7 @@ import { percySnapshot } from 'ember-percy';
 
 let url = '/instructorgroups/1';
 
-module('Acceptance: Instructor Group Details', function(hooks) {
+module('Acceptance | Instructor Group Details', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

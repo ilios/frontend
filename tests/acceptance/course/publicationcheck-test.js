@@ -8,7 +8,7 @@ import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance: Course - Publication Check', function(hooks) {
+module('Acceptance | Course - Publication Check', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
