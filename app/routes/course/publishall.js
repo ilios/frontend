@@ -1,12 +1,5 @@
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import PublishallRouteMixin from 'ilios-common/mixins/course/index-route';
 
-
-export default  Route.extend({
-  flashMessages: service(),
-  actions: {
-    returnToList(){
-      this.transitionTo('course.index', this.modelFor('course'));
-    }
-  }
+export default Route.extend(PublishallRouteMixin, {
 });
