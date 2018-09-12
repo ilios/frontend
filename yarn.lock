@@ -5162,6 +5162,16 @@ ember-cli-server-variables@2.2.0:
     ember-cli-babel "^6.6.0"
     lodash "^4.7.0"
 
+ember-cli-shims@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-shims/-/ember-cli-shims-1.2.0.tgz#0f53aff0aab80b5f29da3a9731bac56169dd941f"
+  dependencies:
+    broccoli-file-creator "^1.1.1"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-version-checker "^2.0.0"
+    ember-rfc176-data "^0.3.1"
+    silent-error "^1.0.1"
+
 ember-cli-sri@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ember-cli-sri/-/ember-cli-sri-2.1.1.tgz#971620934a4b9183cf7923cc03e178b83aa907fd"
@@ -5840,6 +5850,10 @@ ember-responsive@^2.0.4:
 ember-rfc176-data@^0.3.3, ember-rfc176-data@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.5.tgz#f630e550572c81a5e5c7220f864c0f06eee9e977"
+
+ember-rfc176-data@^0.3.1:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.4.tgz#566fd3b7192d02a9a0bfe7e22bbaa4d3a1682e4a"
 
 ember-rl-dropdown@0.10.2:
   version "0.10.2"
