@@ -85,7 +85,7 @@ module('Integration | Component | new directory user', function(hooks) {
       id: 4,
       title: 'Student'
     });
-    const user1Object = EmberObject.create('user', {
+    const user1Object = EmberObject.create({
       firstName: 'user1-first',
       lastName: 'user1-last',
       campusId: 'user1-campus',
@@ -94,7 +94,7 @@ module('Integration | Component | new directory user', function(hooks) {
       user: null,
       username: 'user1-username',
     });
-    const user2Object = EmberObject.create('user', {
+    const user2Object = EmberObject.create({
       firstName: 'user2-first',
       lastName: 'user2-last',
       campusId: 'user2-campus',
@@ -103,7 +103,7 @@ module('Integration | Component | new directory user', function(hooks) {
       user: 4136,
       username: 'user2-username',
     });
-    const user3Object = EmberObject.create('user', {
+    const user3Object = EmberObject.create({
       firstName: 'user3-first',
       lastName: 'user3-last',
       campusId: null,
@@ -116,7 +116,7 @@ module('Integration | Component | new directory user', function(hooks) {
     const user2 = this.server.create('user', user2Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
     this.server.create('authentication', {
       user: user2,
-      username: user2.username,
+      username: user2Object.username,
     });
     this.server.create('user', user3Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
     let ajaxRequestCalled = 0;
@@ -208,7 +208,7 @@ module('Integration | Component | new directory user', function(hooks) {
     assert.equal(userModel.phone, user1Object.get('telephoneNumber'), 'record created with correct value for phone');
     assert.equal(userModel.email, user1Object.get('email'), 'record created with correct value for email');
 
-    const authenticationModel = await run(() => this.owner.lookup('service:store').find('authentication', 2));
+    const authenticationModel = await userModel.get('authentication');
     assert.equal(authenticationModel.username, user1Object.get('username'), 'record has correct username');
     assert.equal(authenticationModel.password, null, 'record has no password');
     assert.equal(authenticationModel.user.get('id'), '5', 'we are linking to the expected user');
