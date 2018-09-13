@@ -1,9 +1,9 @@
-<label>Token: </label>
+<label>{{t "general.token"}}: </label>
 <input
   type="text"
   value={{jwt}}
   oninput={{action (mut jwt) value="target.value"}}
 >
-<button {{action "login"}}>Login</button>
+<button {{action "login"}}>{{t "general.login"}}</button>
 
 <p>{{error}}</p>
