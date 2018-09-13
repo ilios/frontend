@@ -75,17 +75,13 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     this.set('user', this.user);
     this.set('nothing', parseInt);
 
-    this.server.put('api/users/:id', ({ db }, request) => {
+    this.server.put('api/users/:id', (schema, request) => {
       let attrs = JSON.parse(request.requestBody);
       assert.equal(attrs.user.primaryCohort, this.cohort2.id, 'user has correct primary cohort');
 
       assert.ok(!attrs.user.cohorts.includes(this.cohort1.id), 'cohort1 has been removed');
       assert.ok(attrs.user.cohorts.includes(this.cohort2.id), 'cohort2 is still present');
       assert.ok(attrs.user.cohorts.includes(this.cohort4.id), 'cohort4 has been added');
-
-      const user = db.users.update(attrs);
-
-      return resolve(user);
     });
 
     await render(hbs`{{user-profile-cohorts isManaging=true user=user setIsManaging=(action nothing)}}`);
