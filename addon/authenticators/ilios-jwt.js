@@ -1,4 +1,4 @@
-import { merge } from '@ember/polyfills';
+import { assign } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
@@ -38,7 +38,7 @@ export default JwtTokenAuthenticator.extend({
       const tokenExpireData = {};
       this.scheduleAccessTokenRefresh(expiresAt, token);
       tokenExpireData[this.tokenExpireName] = expiresAt;
-      response = merge(response, tokenExpireData);
+      response = assign(response, tokenExpireData);
       return response;
     } catch (e) {
       throw {
