@@ -57,8 +57,10 @@ module('Integration | Component | toggle icons', function(hooks) {
     await render(hbs`{{toggle-icons
       toggle=(action toggle)
       firstOptionSelected=firstOptionSelected
-      firstLabel='Left'
-      secondLabel='Right'
+      firstLabel='First'
+      firstIcon='user'
+      secondLabel='Second'
+      secondIcon='expand'
     }}`);
 
     await click(second);
@@ -77,8 +79,10 @@ module('Integration | Component | toggle icons', function(hooks) {
     await render(hbs`{{toggle-icons
       toggle=(action toggle)
       firstOptionSelected=firstOptionSelected
-      firstLabel='Left'
-      secondLabel='Right'
+      firstLabel='First'
+      firstIcon='user'
+      secondLabel='Second'
+      secondIcon='expand'
     }}`);
 
     await click(first);
