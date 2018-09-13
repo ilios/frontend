@@ -31,6 +31,7 @@
       <span {{action "clearFilters"}}
         id="calendar-clear-filters"
         class="calendar-clear-filters"
+        role="button"
       >
         {{t "general.clearFilters"}}
       </span>
@@ -91,7 +92,7 @@
                     type="checkbox"
                     checked={{is-in selectedCourses course}}
                   >
-                  <span {{action "toggleCourse" course}} class="list-indentation">
+                  <span {{action "toggleCourse" course}} class="list-indentation" role="button">
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
@@ -119,7 +120,12 @@
                     type="checkbox"
                     checked={{is-in selectedSessionTypes type}}
                   >
-                  <span {{action "toggleSessionType" type}} class="list-indentation">{{type.title}}</span>
+                  <span {{action "toggleSessionType" type}}
+                    class="list-indentation"
+                    role="button"
+                  >
+                    {{type.title}}
+                  </span>
                 </li>
               {{/each}}
             </ul>
@@ -154,13 +160,18 @@
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
-                <li class="clickable" {{action "toggleSessionType" type}}>
+                <li class="clickable">
                   <input {{action "toggleSessionType" type on="change"}}
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in selectedSessionTypes type}}
                   >
-                  <span {{action "toggleSessionType" type}} class="list-indentation">{{type.title}}</span>
+                  <span {{action "toggleSessionType" type}}
+                    class="list-indentation"
+                    role="button"
+                  >
+                    {{type.title}}
+                  </span>
                 </li>
               {{/each}}
             </ul>
@@ -181,7 +192,12 @@
                   type="checkbox"
                   checked={{contains level selectedCourseLevels}}
                 >
-                <span {{action "toggleCourseLevel" level}} class="list-indentation">{{level}}</span>
+                <span {{action "toggleCourseLevel" level}}
+                  class="list-indentation"
+                  role="button"
+                >
+                  {{level}}
+                </span>
               </li>
             {{/each}}
           </ul>
@@ -200,7 +216,7 @@
                     type="checkbox"
                     checked={{is-in selectedCohorts cohort}}
                   >
-                  <span {{action "toggleCohort" cohort}} class="list-indentation">
+                  <span {{action "toggleCohort" cohort}} class="list-indentation" role="button">
                     {{#if cohort.title}}
                       {{cohort.title}}
                     {{else}}
@@ -225,11 +241,17 @@
     <header class="filters-header">{{t "general.activeFilters"}}:</header>
     <div class="filter-tags">
       {{#each (await filterTags) as |tag|}}
-        <span class="filter-tag {{tag.class}}" {{action "removeFilter" tag.filter}}>{{tag.name}} {{fa-icon "times"}}</span>
+        <span {{action "removeFilter" tag.filter}}
+          class="filter-tag {{tag.class}}"
+          role="button"
+        >
+          {{tag.name}} {{fa-icon "times"}}
+        </span>
       {{/each}}
       <span {{action "clearFilters"}}
         id="calendar-clear-filters"
         class="filters-clear-filters"
+        role="button"
       >
         {{t "general.clearFilters"}}
       </span>

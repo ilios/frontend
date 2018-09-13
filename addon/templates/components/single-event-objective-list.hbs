@@ -21,6 +21,7 @@
           {{domain.title}}
           <ul>
             {{#each domain.objectives as |title|}}
+              {{! template-lint-disable no-triple-curlies }}
               <li>{{{title}}}</li>
             {{/each}}
           </ul>

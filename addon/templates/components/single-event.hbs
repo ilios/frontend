@@ -23,11 +23,13 @@
     <div class="single-event-session-is">{{sessionIs}}</div>
     {{#if event.equipmentRequired}}
       <div class="single-event-equipment-required">
+        {{! template-lint-disable no-triple-curlies }}
         {{{t "general.specialEquipmentIs_Required_"}}} {{fa-icon "flask" title=(t "general.specialEquipment")}}
       </div>
     {{/if}}
     {{#if event.attireRequired}}
       <div class="single-event-attire-required">
+        {{! template-lint-disable no-triple-curlies }}
         {{{t "general.specialAttireIs_Required_"}}}
         {{fa-icon
           "black-tie"
@@ -38,6 +40,7 @@
     {{/if}}
     {{#if event.attendanceRequired}}
       <div class="single-event-attendance-required">
+        {{! template-lint-disable no-triple-curlies }}
         {{{t "general.attendanceIs_Required_"}}} {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
       </div>
     {{/if}}
@@ -47,6 +50,7 @@
       </div>
     {{/if}}
     {{#if (gt (get event.sessionDescription "length") 0)}}
+      {{! template-lint-disable no-triple-curlies }}
       {{{event.sessionDescription}}}<br>
     {{/if}}
   </div>
