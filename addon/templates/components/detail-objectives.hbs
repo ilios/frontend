@@ -1,0 +1,101 @@
+<div class="detail-objectives-header">
+  {{#if isManaging}}
+    <div class="title">
+      {{#if isManagingParents}}
+        <span class="specific-title">
+          {{objectiveParentTitle}}
+        </span>
+      {{/if}}
+      {{#if isManagingDescriptors}}
+        <span class="specific-title">
+          {{t "general.objectiveDescriptorTitle"}}
+        </span>
+      {{/if}}
+      {{#if isManagingCompetency}}
+        <span class="specific-title">
+          {{t "general.objectiveCompetencyManagerTitle"}}
+        </span>
+      {{/if}}
+    </div>
+  {{else}}
+    <div {{action "collapse"}}
+      class="title {{if showCollapsible "clickable collapsible"}}"
+    >
+      {{t "general.objectives"}} ({{subject.objectives.length}})
+    </div>
+  {{/if}}
+  <div class="detail-objectives-actions">
+    {{#if isManaging class="horizontal"}}
+      <button class="bigadd" {{action "save"}}>{{fa-icon "check"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+    {{else}}
+      {{#if editable}}
+        {{#if isCourse}}
+          {{#link-to "course-visualize-objectives" subject}}
+            {{visualizer-course-objectives course=subject width=20 height=20 isIcon=true}}
+          {{/link-to}}
+        {{/if}}
+        {{expand-collapse-button
+          value=newObjectiveEditorOn
+          action="toggleNewObjectiveEditor"
+        }}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+<div class="detail-objectives-content">
+  {{#if newObjectiveEditorOn class="vertical"}}
+    {{new-objective
+      save=(action "saveNewObjective")
+      cancel=(action "toggleNewObjectiveEditor")
+    }}
+  {{/if}}
+  {{#unless isManaging class="horizontal"}}
+    {{#if isCourse}}
+      {{course-objective-list
+        subject=subject
+        editable=editable
+        manageParents=(action "manageParents")
+        manageDescriptors=(action "manageDescriptors")
+      }}
+    {{/if}}
+    {{#if isSession}}
+      {{session-objective-list
+        subject=subject
+        editable=editable
+        manageParents=(action "manageParents")
+        manageDescriptors=(action "manageDescriptors")
+      }}
+    {{/if}}
+    {{#if isProgramYear}}
+      {{programyear-objective-list
+        subject=subject
+        editable=editable
+        manageDescriptors=(action "manageDescriptors")
+        manageCompetency=(action "manageCompetency")
+      }}
+    {{/if}}
+  {{else}}
+    {{#if isManagingParents}}
+      {{#if isCourse}}
+        {{course-objective-manager
+          courseObjective=mangeParentsObjective
+        }}
+      {{/if}}
+      {{#if isSession}}
+        {{session-objective-manager
+          sessionObjective=mangeParentsObjective
+        }}
+      {{/if}}
+    {{/if}}
+    {{#if isManagingDescriptors}}
+      {{objective-manage-descriptors
+        objective=manageDescriptorsObjective
+        editable=editable
+      }}
+    {{/if}}
+    {{#if isManagingCompetency}}
+      {{objective-manage-competency objective=manageCompetencyObjective}}
+    {{/if}}
+  {{/unless}}
+</div>

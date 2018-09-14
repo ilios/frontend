@@ -1,0 +1,25 @@
+.new-session {
+  border: 1px solid $header-grey;
+  margin: .5rem;
+  padding: 1rem;
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .new-session-content {
+    @include ilios-form;
+
+    .item {
+      @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+      }
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<ul class="selected-cohorts">
+  {{#each (sort-by "title" selectedCohorts) as |cohort|}}
+    <li {{action "remove" cohort}}>
+      {{cohort.programYear.program.school.title}} |
+      {{cohort.programYear.program.title}} |
+      {{cohort.title}} | {{fa-icon "times" class="remove"}}
+    </li>
+  {{/each}}
+</ul>
+<ul class="selectable-cohorts">
+  {{#if (is-fulfilled sortedAvailableCohorts)}}
+    {{#each (await sortedAvailableCohorts) as |cohort|}}
+      <li {{action "add" cohort}}>
+        {{cohort.programYear.program.school.title}} |
+        {{cohort.programYear.program.title}} |
+        {{cohort.title}}
+      </li>
+    {{/each}}
+  {{else}}
+    <li>{{loading-spinner}}</li>
+  {{/if}}
+</ul>

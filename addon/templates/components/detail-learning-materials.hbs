@@ -1,0 +1,77 @@
+<div class="detail-learningmaterials-header">
+  <div class="title">
+    {{#if isManaging}}
+      <span class="specific-title">
+        {{t "general.learningMaterialManageTitle"}}
+      </span>
+    {{else}}
+      {{t "general.learningMaterials"}} ({{get (await subject.learningMaterials) "length"}})
+    {{/if}}
+  </div>
+  {{#if displaySearchBox}}
+    {{learningmaterial-search
+      add="addLearningMaterial"
+      currentMaterials=parentMaterials
+    }}
+  {{/if}}
+  <div class="detail-learningmaterials-actions">
+    {{#if displayAddNewForm}}
+      <button class="collapse-button" {{action (mut displayAddNewForm) false}}>{{fa-icon "minus"}}</button>
+    {{else if (and editable (not isSorting) (not isManaging))}}
+      {{#action-menu
+        title=(t "general.add")
+        icon=false
+        classNames="blend-button right-edge"
+      }}
+        <li {{action "addNewLearningMaterial" "file"}}>{{t "general.file"}}</li>
+        <li {{action "addNewLearningMaterial" "link"}}>{{t "general.link"}}</li>
+        <li {{action "addNewLearningMaterial" "citation"}}>{{t "general.citation"}}</li>
+      {{/action-menu}}
+    {{/if}}
+  </div>
+</div>
+
+<div class="detail-learningmaterials-content">
+  {{#if isManaging}}
+    {{learningmaterial-manager
+      learningMaterial=managingMaterial
+      isCourse=isCourse
+      editable=editable
+      closeManager=(action (mut managingMaterial) null)
+      learningMaterialStatuses=(await learningMaterialStatuses)
+    }}
+  {{else if isSorting}}
+    {{learning-materials-sort-manager
+      save=(action "saveSortOrder")
+      cancel=(action (mut isSorting) false)
+      subject=subject
+    }}
+  {{else}}
+    {{#if displayAddNewForm}}
+      {{new-learningmaterial
+        type=type
+        learningMaterialStatuses=(await learningMaterialStatuses)
+        learningMaterialUserRoles=(await learningMaterialUserRoles)
+        save=(action "saveNewLearningMaterial")
+        cancel=(action (mut displayAddNewForm) false)
+      }}
+    {{else if (get (await subject.learningMaterials) "length")}}
+      {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
+        <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t "general.sortMaterials"}}</button>
+      {{/if}}
+      {{learning-material-table
+        learningMaterials=(await subject.learningMaterials)
+        editable=editable
+        manageMaterial=(action (mut managingMaterial))
+        remove=(action "remove")
+      }}
+    {{/if}}
+  {{/if}}
+</div>
+{{#if isSaving class="crossFade"}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=totalMaterialsToSave
+    currentProgress=currentMaterialsSaved
+  }}
+{{/if}}

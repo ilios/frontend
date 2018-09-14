@@ -1,0 +1,36 @@
+.course-summary-header {
+  @include ilios-overview($ilios-orange);
+
+  .course-summary-header-top {
+    @include ilios-overview-header;
+
+    h2 {
+      @include ilios-overview-title;
+      @include ilios-heading-h3;
+    }
+
+    .course-summary-actions {
+      @include ilios-overview-actions;
+      margin-top: 0;
+      text-align: right;
+
+      a {
+        color: $header-blue;
+        font-size: 1.2rem;
+        margin-right: .5rem;
+      }
+    }
+  }
+
+
+
+  .course-summary-content {
+    @include ilios-overview-content;
+
+    .block {
+      @include ilios-overview-block;
+    }
+  }
+
+
+}

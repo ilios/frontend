@@ -1,0 +1,94 @@
+{{! template-lint-disable attribute-indentation }}
+<span data-test-expand-all
+  {{action (perform expandAll)}}
+  class="expand-collapse-control"
+  data-test-expand-collapse-all
+>
+  {{#if @showExpandAll}}
+    {{#if isExpanding}}
+      {{loading-spinner}}
+    {{else if @allSessionsExpanded}}
+      {{fa-icon "caret-down" class="clickable"}}
+    {{else}}
+      {{fa-icon "caret-right" class="clickable"}}
+    {{/if}}
+  {{/if}}
+</span>
+{{#sortable-heading
+  click=(action "setSortBy" "title")
+  sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.title")
+  class="session-grid-title"
+}}
+  {{t "general.title"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  click=(action "setSortBy" "sessionTypeTitle")
+  sortedBy=(or (eq sortBy "sessionTypeTitle") (eq sortBy "sessionTypeTitle:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.type")
+  class="session-grid-type"
+}}
+  {{t "general.type"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType="numeric"
+  click=(action "setSortBy" "learnerGroupCount")
+  sortedBy=(or (eq sortBy "learnerGroupCount") (eq sortBy "learnerGroupCount:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.groups")
+  class="session-grid-groups"
+}}
+  {{t "general.groups"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType="numeric"
+  click=(action "setSortBy" "objectiveCount")
+  sortedBy=(or (eq sortBy "objectiveCount") (eq sortBy "objectiveCount:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.objectives")
+  class="session-grid-objectives"
+}}
+  {{t "general.objectives"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType="numeric"
+  click=(action "setSortBy" "termCount")
+  sortedBy=(or (eq sortBy "termCount") (eq sortBy "termCount:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.terms")
+  class="session-grid-terms"
+}}
+  {{t "general.terms"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType="numeric"
+  click=(action "setSortBy" "firstOfferingDate")
+  sortedBy=(or (eq sortBy "firstOfferingDate") (eq sortBy "firstOfferingDate:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.firstOffering")
+  class="session-grid-first-offering"
+}}
+  {{t "general.firstOffering"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  sortType="numeric"
+  click=(action "setSortBy" "offeringCount")
+  sortedBy=(or (eq sortBy "offeringCount") (eq sortBy "offeringCount:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.offerings")
+  class="session-grid-offerings"
+}}
+  {{t "general.offerings"}}
+{{/sortable-heading}}
+{{#sortable-heading
+  click=(action "setSortBy" "status")
+  sortedBy=(or (eq sortBy "status") (eq sortBy "status:desc"))
+  sortedAscending=sortedAscending
+  title=(t "general.status")
+  class="session-grid-status"
+}}
+  {{t "general.status"}}
+{{/sortable-heading}}
+<span class="session-grid-actions"></span>

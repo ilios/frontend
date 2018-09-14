@@ -1,0 +1,49 @@
+@mixin ilios-overview ($bottom-border-color) {
+  border-bottom: 1px dotted $bottom-border-color;
+  display: block;
+  padding: .8rem;
+
+  label {
+    @include ilios-label;
+    margin: 0 .5rem 0 0;
+  }
+}
+
+@mixin ilios-overview-block () {
+  align-items: flex-end;
+  display: flex;
+  min-height: 1.5rem;
+}
+
+@mixin ilios-overview-header () {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+@mixin ilios-overview-title () {
+  color: $text-blue;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@mixin ilios-overview-actions () {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-around;
+  margin-right: .5rem;
+  text-align: right;
+  vertical-align: middle;
+}
+
+@mixin ilios-overview-content () {
+  align-items: center;
+  display: grid;
+  padding-top: 1rem;
+
+  @include for-tablet-and-up {
+    grid-row-gap: .5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}

@@ -1,0 +1,217 @@
+{{#if loaded}}
+  <div class="toggle-offering-calendar">
+    {{toggle-buttons
+      firstOptionSelected=(not showOfferingCalendar)
+      firstLabel=(t "general.hideCalendar")
+      secondLabel=(t "general.showCalendar")
+      toggle=(toggle "showOfferingCalendar" this)
+    }}
+  </div>
+  {{#if showOfferingCalendar}}
+    {{offering-calendar
+      startDate=startDate
+      endDate=endDate
+      learnerGroups=learnerGroups
+      session=session
+    }}
+  {{/if}}
+
+  <div class="form">
+    <div class="item start-date">
+      <label>{{t "general.startDate"}}:</label>
+      {{pikaday-input
+        value=startDate
+        onSelection=(action "updateStartDate")
+        format="M/D/YYYY"
+      }}
+    </div>
+
+    <div class="item start-time">
+      <label>{{t "general.startTime"}}: <span class="timezone">({{browser-timezone}})</span></label>
+      {{time-picker date=startDate action="updateStartTime"}}
+    </div>
+
+    <div class="item offering-duration">
+      <label>{{t "general.duration"}}:</label>
+      <div class="duration-inputs">
+        <div class="hours">
+          <input
+            type="text"
+            value={{durationHours}}
+            oninput={{action (perform updateDurationHours) value="target.value"}}
+            onkeyup={{action "addErrorDisplayFor" "durationHours"}}
+            class={{if
+              (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
+              "has-error"
+            }}
+          >
+          {{#if
+            (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
+          }}
+            <span class="validation-error-message">{{v-get this "durationHours" "message"}}</span>
+          {{/if}}
+          <label>{{t "general.hours"}}</label>
+        </div>
+        <div class="minutes">
+          <input
+            type="text"
+            value={{durationMinutes}}
+            oninput={{action (perform updateDurationMinutes) value="target.value"}}
+            onkeyup={{action "addErrorDisplayFor" "durationMinutes"}}
+            class={{if
+              (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
+              "has-error"
+            }}
+          >
+          {{#if
+            (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
+          }}
+            <span class="validation-error-message">{{v-get this "durationMinutes" "message"}}</span>
+          {{/if}}
+          <label>{{t "general.minutes"}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="item end-date-time">
+      <label>{{t "general.end"}}:</label>
+      {{#if endDate}}
+        <div class="text">{{moment-format endDate "M/D/YYYY h:mm a"}}</div>
+      {{/if}}
+    </div>
+
+    {{#if showMakeRecurring}}
+      <div class="item make-recurring">
+        <label>{{t "general.makeRecurring"}}</label>
+        {{toggle-yesno yes=makeRecurring toggle=(toggle-action "makeRecurring" this)}}
+        {{#if makeRecurring}}
+          <div class="make-recurring-options">
+            <div class="make-recurring-days">
+              {{#each recurringDayOptions as |obj i|}}
+                <div>
+                  <input
+                    id="make-recurring-day-input-{{i}}"
+                    type="checkbox"
+                    checked={{or (is-in recurringDays obj.day) (eq (moment-format startDate "d") obj.day)}}
+                    onclick={{action "toggleRecurringDay" obj.day}}
+                    disabled={{eq (moment-format startDate "d") obj.day}}
+                    data-test-recurring-day-input={{i}}
+                  >
+                  <label
+                    class="day-of-week clickable"
+                    for="make-recurring-day-input-{{i}}"
+                    data-test-recurring-day-label={{i}}
+                  >
+                    {{t obj.t}}
+                  </label>
+                </div>
+              {{/each}}
+            </div>
+
+            <div class="make-recurring-input-container">
+              <input
+                type="text"
+                value={{numberOfWeeks}}
+                oninput={{action (mut numberOfWeeks) value="target.value"}}
+                onkeyup={{action "addErrorDisplayFor" "numberOfWeeks"}}
+                class={{concat
+                  "make-recurring-input "
+                  (if (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks")) "has-error")
+                }}
+              >
+              <label class="make-recurring-input-label">{{t "general.weeks"}}</label>
+              {{#if
+                (and (v-get this "numberOfWeeks" "isInvalid") (is-in showErrorsFor "numberOfWeeks"))
+              }}
+                <span class="validation-error-message">{{v-get this "numberOfWeeks" "message"}}</span>
+              {{/if}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#if showRoom}}
+      <div class="item room">
+        <label>
+          {{t "general.location"}}:
+          {{#unless offering}}
+            {{t "general.defaultLocationNotLoaded"}}
+          {{/unless}}
+        </label>
+        <input
+          type="text"
+          value={{room}}
+          oninput={{action (mut room) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "room"}}
+        >
+        {{#if (and (v-get this "room" "isInvalid") (is-in showErrorsFor "room"))}}
+          <span class="validation-error-message">{{v-get this "room" "message"}}</span>
+        {{/if}}
+
+      </div>
+    {{/if}}
+
+
+    {{#if showInstructors}}
+      <div class="instructors item">
+        <label>
+          {{t "general.instructors"}}:
+          {{#unless offering}}
+            {{t "general.defaultInstructorsNotLoaded"}}
+          {{/unless}}
+        </label>
+        {{instructor-selection-manager
+          addInstructor="addInstructor"
+          addInstructorGroup="addInstructorGroup"
+          removeInstructor="removeInstructor"
+          removeInstructorGroup="removeInstructorGroup"
+          availableInstructorGroups=(await availableInstructorGroups)
+          instructorGroups=instructorGroups
+          instructors=instructors
+        }}
+      </div>
+    {{/if}}
+
+    <div class="learner-groups item">
+      <label>{{t "general.learnerGroups"}}:</label>
+      {{#if cohorts.length}}
+        {{learnergroup-selection-manager
+          learnerGroups=learnerGroups
+          cohorts=cohorts
+          add=(action "addLearnerGroup")
+          remove=(action "removeLearnerGroup")
+        }}
+      {{else}}
+        <p>{{t "general.noAvailableLearnerGroups"}}</p>
+      {{/if}}
+      {{#if
+        (and (v-get this "learnerGroups" "isInvalid") (is-in showErrorsFor "learnerGroups"))
+      }}
+        <p class="validation-error-message">{{v-get this "learnerGroups" "message"}}</p>
+      {{/if}}
+    </div>
+
+    <div class="buttons">
+      <button {{action (perform validateThenSaveOffering)}}
+        class="done text"
+        disabled={{or saveOffering.isRunning}}
+      >
+        {{#if saveOffering.isRunning}}
+          {{loading-spinner}}
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button class="cancel text" {{action close}}>{{t "general.cancel"}}</button>
+    </div>
+  </div>
+{{/if}}
+
+{{#if saveOffering.isRunning}}
+  {{wait-saving
+    showProgress=true
+    totalProgress=offeringsToSave
+    currentProgress=savedOfferings
+  }}
+{{/if}}

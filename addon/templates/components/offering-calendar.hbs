@@ -1,0 +1,23 @@
+<h2 class="offering-calendar-title">{{t "general.calendar"}}</h2>
+<p class="offering-calendar-filter-options">
+  <span class="filter">
+    {{toggle-yesno
+      yes=showLearnerGroupEvents
+      toggle=(action (mut showLearnerGroupEvents))
+    }}
+    <label onclick={{toggle "showLearnerGroupEvents" this}}>{{t "general.showLearnerGroupEvents"}}</label>
+  </span>
+  <span class="filter">
+    {{toggle-yesno yes=showSessionEvents toggle=(action (mut showSessionEvents))}}
+    <label onclick={{toggle "showSessionEvents" this}}>{{t "general.showSessionEvents" sessionTitle=session.title}}</label>
+  </span>
+</p>
+<div class="ilios-calendar">
+  {{ilios-calendar-week
+    calendarEvents=(await calendarEvents)
+    date=startDate
+    areEventsSelectable=false
+    areDaysSelectable=false
+  }}
+</div>
+<span class="loding-indicator {{if (is-fulfilled calendarEvents) "loaded"}}">{{loading-spinner}} {{t "general.loadingEvents"}}...</span>

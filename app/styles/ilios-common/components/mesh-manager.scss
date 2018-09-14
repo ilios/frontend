@@ -1,0 +1,63 @@
+.mesh-manager {
+  .deprecated {
+    color: $ilios-red;
+    font-weight: bolder;
+  }
+
+  .results,
+  .mesh-search-results {
+    @include ilios-list-reset;
+  }
+
+  .mesh-search-results {
+    @include ilios-selectable-list;
+
+    background-color: $white;
+    border: 1px solid $base-link-color;
+    height: 10rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    width: 80%;
+
+    .descriptor-name {
+      display: block;
+      font-weight: bold;
+    }
+
+    .descriptor-id {
+      display: block;
+      font-size: smaller;
+    }
+
+    .mesh-concepts {
+      color: inherit;
+      list-style: disc inside;
+
+      .truncated::after {
+        content: ' \2026';
+      }
+    }
+  }
+
+  .selected-terms {
+    @include ilios-tag-list;
+    margin-bottom: 2rem;
+
+    li {
+      display: flex;
+
+      .remove {
+        margin-left: .5em;
+      }
+    }
+
+
+    .term-title {
+      font-weight: bold;
+    }
+
+    .term-details {
+      font-style: italic;
+    }
+  }
+}

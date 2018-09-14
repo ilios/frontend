@@ -1,0 +1,44 @@
+.learnergroup-selection-manager {
+
+  .available-learner-groups {
+    display: grid;
+
+    @include for-laptop-and-up {
+      grid-gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include for-desktop-and-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .search-box {
+    grid-column: 2 / -1;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .cohort-learner-groups {
+    border: 1px solid $ilios-blue;
+
+    h5 {
+      margin-bottom: .5rem;
+      padding: .5rem;
+    }
+
+    & > ul {
+      @include ilios-list-tree;
+      background-color: $white;
+      height: 15rem;
+      margin-bottom: 1rem;
+      overflow-y: scroll;
+      padding: .5rem 0;
+
+      ul {
+        padding: 0;
+      }
+    }
+  }
+}

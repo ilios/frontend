@@ -1,0 +1,58 @@
+{{search-box
+  placeholder=(t "general.searchPlaceholder")
+  liveSearch=true
+  search=(action "search")
+  clear=(action "clear")
+}}
+
+{{#if searching}}
+  <ul class="lm-search-results">
+    <li>{{t "general.currentlySearchingPrompt"}}</li>
+  </ul>
+{{else}}
+  {{#if searchResults.length}}
+    <ul class="lm-search-results">
+      {{#each searchResults as |learningMaterial|}}
+        <li {{action (perform addLearningMaterial learningMaterial)}}
+          class={{if (contains learningMaterial (await currentMaterials)) "disabled" ""}}
+        >
+          <h4 class="learning-material-title">
+            {{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}}
+            <span data-test-title>{{learningMaterial.title}}</span>
+          </h4>
+          <span class="learning-material-description">{{{learningMaterial.description}}}</span>
+          {{#if learningMaterial.status.title}}
+            <span class="learning-material-status">{{learningMaterial.status.title}}</span>
+          {{/if}}
+          <ul class="learning-material-properties">
+            <li>{{t "general.owner"}}: {{learningMaterial.owningUser.fullName}}</li>
+            {{#if learningMaterial.originalAuthor}}
+              <li>{{t "general.contentAuthor"}}: {{learningMaterial.originalAuthor}}</li>
+            {{/if}}
+            <li>{{t "general.uploadDate"}}: {{moment-format learningMaterial.uploadDate "M-D-YYYY"}}</li>
+          </ul>
+        </li>
+      {{/each}}
+      {{#if hasMoreSearchResults}}
+        <li>
+          <button {{action (perform searchMore)}}
+            disabled={{if searchMore.isRunning true}}
+          >
+            {{fa-icon
+              (if searchMore.isRunning "spinner")
+              spin=(if searchMore.isRunning true false)
+            }}
+            {{t "general.showMore" }}
+          </button>
+        </li>
+      {{/if}}
+    </ul>
+  {{else}}
+    {{#if searchReturned}}
+      <ul class="lm-search-results">
+        <li>{{t "general.noSearchResultsPrompt"}}</li>
+      </ul>
+    {{/if}}
+  {{/if}}
+{{/if}}
+

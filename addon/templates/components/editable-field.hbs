@@ -1,0 +1,34 @@
+<span class="content">
+  {{#unless isEditing}}
+    <span onclick={{perform edit}} class="editable">
+      {{#if value}}
+        {{#if looksEmpty}}
+          {{fa-icon "edit"}}
+        {{else}}
+          {{big-text text=value renderHtml=renderHtml}}
+        {{/if}}
+      {{else}}
+        {{clickPrompt}}
+      {{/if}}
+    </span>
+  {{else}}
+    <span class="editor">
+      {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
+      <span class="actions">
+        <button {{action (perform saveData)}}
+          disabled={{isSaveDisabled}}
+          class="done"
+          title={{t "general.save"}}
+        >
+          {{fa-icon (if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
+        </button>
+        <button {{action (perform closeEditor)}}
+          class="cancel"
+          title={{t "general.cancel"}}
+        >
+          {{fa-icon "times"}}
+        </button>
+      </span>
+    </span>
+  {{/unless}}
+</span>

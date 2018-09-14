@@ -1,0 +1,11 @@
+<button class="button rl-dropdown-toggle" {{action "toggleDropdown"}}>
+  {{#if icon}}
+    {{fa-icon icon}}
+  {{/if}}
+  <span>{{title}}</span>
+</button>
+<ul class="rl-dropdown dropdown-menu" {{action "toggleDropdown"}}>
+  {{#if dropdownExpanded}}
+    {{yield}}
+  {{/if}}
+</ul>

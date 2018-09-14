@@ -1,0 +1,18 @@
+.course-objective-manager {
+  .course-objective-title {
+    @include ilios-browser-defaults;
+    margin-bottom: 1rem;
+  }
+
+  .parent-picker {
+    @include ilios-list-reset;
+  }
+
+  label {
+    font-size: .85rem;
+
+    .choose-cohort-title {
+      font-weight: bold;
+    }
+  }
+}

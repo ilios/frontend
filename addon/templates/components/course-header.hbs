@@ -1,0 +1,58 @@
+{{! template-lint-disable attribute-indentation }}
+<span class="title">
+  {{#if course.locked}}{{fa-icon "lock"}}{{/if}}
+  {{#if editable}}
+    {{#if course}}
+      {{#editable-field
+        value=courseTitle
+        save=(action "changeTitle")
+        close=(action "revertTitleChanges")
+        saveOnEnter=true
+        closeOnEscape=true
+      as |isSaving|
+      }}
+        <input
+          type="text"
+          value={{courseTitle}}
+          disabled={{isSaving}}
+          oninput={{action (mut courseTitle) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "courseTitle"}}
+        >
+        {{#if
+          (and (v-get this "courseTitle" "isInvalid") (is-in showErrorsFor "courseTitle"))
+        }}
+          <span class="validation-error-message">{{v-get this "courseTitle" "message"}}</span>
+        {{/if}}
+      {{/editable-field}}
+    {{/if}}
+  {{else}}
+    {{#if course}}
+      <h2>{{course.title}}</h2>
+    {{/if}}
+  {{/if}}
+  <h4>{{course.academicYear}}</h4>
+</span>
+<span class ="course-publication">
+  {{#if editable}}
+    {{publish-menu
+      title=menuTitle
+      icon=menuIcon
+      publicationStatus=publicationStatus
+      showAsIs=showAsIs
+      showPublish=showPublish
+      showReview=showReview
+      showTbd=showTbd
+      showUnPublish=showUnPublish
+      reviewRoute="course.publicationCheck"
+      reviewObject=course
+      publishTranslation="general.publishCourse"
+      unPublishTranslation="general.unPublishCourse"
+      publish=(action "publish")
+      publishAsTbd=(action "publishAsTbd")
+      unpublish=(action "unpublish")
+    }}
+
+  {{else}}
+    {{publication-status item=course}}
+  {{/if}}
+</span>

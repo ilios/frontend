@@ -1,0 +1,65 @@
+@mixin user-search-results () {
+
+  background: $white;
+  border: 1px solid $background-grey;
+  border-radius: $base-border-radius;
+  box-shadow: 0 2px 2px transparentize($black, .8);
+  color: $base-font-color;
+  max-height: 23rem;
+  overflow-y: scroll;
+  position: absolute;
+  transition: all .2s ease-in-out;
+  width: 100%;
+  z-index: 100;
+
+  &.hidden {
+    display: none;
+  }
+
+  li {
+    border-bottom: 1px solid $base-border-color;
+    padding-left: 1rem;
+
+    &.inactive {
+      color: darken($header-grey, 20);
+      font-style: italic;
+    }
+
+    &.summary {
+      color: $ilios-green;
+    }
+
+    a,
+    &.clickable {
+      display: block;
+      padding: .1rem;
+      width: 100%;
+
+      &:hover {
+        background-color: lighten($base-link-color, 50);
+      }
+    }
+
+    .name,
+    .email {
+      color: $ilios-blue;
+      display: block;
+      width: 100%;
+
+      @include for-laptop-and-up {
+        display: inline;
+      }
+    }
+
+    .name i {
+      font-size: .8rem;
+    }
+
+    .email {
+      color: $medium-grey;
+      font-style: italic;
+    }
+  }
+
+
+}

@@ -37,13 +37,21 @@
     "ember-cli-moment-shim": "^3.1.0",
     "ember-composable-helpers": "^2.0.1",
     "ember-concurrency": "0.8.20",
+    "ember-cp-validations": "^3.3.1",
+    "ember-drag-drop": "^0.5.1",
+    "ember-file-upload": "^2.5.0",
+    "ember-froala-editor": "^2.8.4",
     "ember-i18n": "^5.0.1",
+    "ember-i18n-cp-validations": "^3.1.0",
+    "ember-light-table": "^1.13.2",
     "ember-moment": "^7.4.1",
     "ember-one-way-select": "4.0.0",
+    "ember-pikaday": "^2.2.4",
     "ember-promise-helpers": "^1.0.6",
+    "ember-rl-dropdown": "^0.10.2",
     "ember-simple-auth-token": "4.0.4",
     "ember-truth-helpers": "^2.0.0",
-    "liquid-fire": "^0.29.0"
+    "liquid-fire": "^0.29.5"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",

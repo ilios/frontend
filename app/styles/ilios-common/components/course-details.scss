@@ -1,0 +1,38 @@
+.course-details {
+  $collapse-control-shadow-grey: #e2e2e2;
+  $collapse-control-shadow-black: rgba(0, 0, 0, .34);
+
+  background-color: $background-grey;
+  border-color: $header-grey;
+  border-style: solid;
+  border-top: 0;
+  border-width: 0 2px 2px;
+
+  .detail-collapsed-control {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    span {
+      background-color: $ilios-orange;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      box-shadow: 0 2px $collapse-control-shadow-grey, inset 0 1px 2px $collapse-control-shadow-black;
+      color: $white;
+      cursor: pointer;
+      padding: .25rem 4rem;
+
+      .expand-collapse-icon {
+        margin-left: .5rem;
+      }
+    }
+  }
+
+  .back-to-courses-list {
+    margin: .5rem 0;
+  }
+
+  table {
+    @include ilios-table-colors;
+  }
+}
