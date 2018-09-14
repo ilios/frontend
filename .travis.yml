@@ -40,12 +40,16 @@ jobs:
 
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
-    - stage: "Additional Tests"
-    - env: EMBER_TRY_SCENARIO=ember-lts-2.18
-    - env: EMBER_TRY_SCENARIO=ember-release
-    - env: EMBER_TRY_SCENARIO=ember-beta
-    - env: EMBER_TRY_SCENARIO=ember-canary
-    - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
+    - stage: "Additional Tests - Ember LTS 2.18"
+      env: EMBER_TRY_SCENARIO=ember-lts-2.18
+    - stage: "Additional Tests - Ember Release"
+      env: EMBER_TRY_SCENARIO=ember-release
+    - stage: "Additional Tests - Ember Beta"
+      env: EMBER_TRY_SCENARIO=ember-beta
+    - stage: "Additional Tests - Ember Canary"
+      env: EMBER_TRY_SCENARIO=ember-canary
+    - stage: "Additional Tests - Ember Default with jQuery"
+      env: EMBER_TRY_SCENARIO=ember-default-with-jquery
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
