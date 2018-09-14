@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ilios-common',
+  name: require('./package').name,
 
   included: function() {
     this._super.included.apply(this, arguments);

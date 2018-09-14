@@ -1,18 +1,19 @@
 <ul class="inline calendar-view-picker">
-  <li
-    class="clickable highlight {{if showIcsFeed "on"}}" {{action (toggle "showIcsFeed" this)}}
+  <li {{action (toggle "showIcsFeed" this)}}
+    class="clickable highlight {{if showIcsFeed "on"}}"
+    role="button"
   >
     {{fa-icon "rss-square"}}
   </li>
-  <li class="clickable" {{action changeView "day"}}>{{t "general.day"}}</li>
-  <li class="clickable" {{action changeView "week"}}>{{t "general.week"}}</li>
-  <li class="clickable" {{action changeView "month"}}>{{t "general.month"}}</li>
+  <li class="clickable" {{action changeView "day"}} role="button">{{t "general.day"}}</li>
+  <li class="clickable" {{action changeView "week"}} role="button">{{t "general.week"}}</li>
+  <li class="clickable" {{action changeView "month"}} role="button">{{t "general.month"}}</li>
 </ul>
 
 <ul class="inline calendar-time-picker">
-  <li class="clickable" {{action "goBack"}}>{{fa-icon "backward"}}</li>
-  <li class="clickable" {{action "gotoToday"}}>{{t "general.today"}}</li>
-  <li class="clickable" {{action "goForward"}}>{{fa-icon "forward"}}</li>
+  <li class="clickable" {{action "goBack"}} role="button">{{fa-icon "backward"}}</li>
+  <li class="clickable" {{action "gotoToday"}} role="button">{{t "general.today"}}</li>
+  <li class="clickable" {{action "goForward"}} role="button">{{fa-icon "forward"}}</li>
 </ul>
 <div class="ilios-calendar-calendar">
   {{#if showIcsFeed}}

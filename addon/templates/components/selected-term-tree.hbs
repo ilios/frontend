@@ -5,7 +5,7 @@
       type="checkbox"
       checked={{is-in selectedTerms term}}
     >
-    <span {{action toggle term}} class="list-indentation">{{term.title}}</span>
+    <span {{action toggle term}} class="list-indentation" role="button">{{term.title}}</span>
     {{#if (gt (get (await term.children) "length") 0)}}
       {{selected-term-tree
         terms=(await term.children)

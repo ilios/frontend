@@ -9,8 +9,9 @@
   <div class="row week-titles">
     <div class="cell"></div>
     {{#each days as |day|}}
-      <div
-        class="cell title {{if areDaysSelectable "clickable"}}" {{action "changeToDayView" day.date}}
+      <div {{action "changeToDayView" day.date}}
+        class="cell title {{if areDaysSelectable "clickable"}}"
+        role="button"
       >
         {{moment-format day.date "ddd M/D"}}
       </div>

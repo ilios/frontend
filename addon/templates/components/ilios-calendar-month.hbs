@@ -17,7 +17,7 @@
     <div class="week">
       {{#each week.days as |day|}}
         <div class="day">
-          <span class="clickable" {{action "changeToDayView" day.date}}>
+          <span {{action "changeToDayView" day.date}} class="clickable" role="button">
             {{moment-format day.date "D"}}
           </span>
           <div class="events">
@@ -37,6 +37,7 @@
               {{/each}}
               <span {{action "changeToDayView" day.date}}
                 class="clickable link month-more-events"
+                role="button"
               >
                 {{fa-icon "ellipsis-h"}} {{showMore}} {{fa-icon "angle-double-down"}}
               </span>

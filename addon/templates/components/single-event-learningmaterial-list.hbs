@@ -44,12 +44,14 @@
 
           {{#if lm.description}}
             <div class="single-event-learningmaterial-item-description">
+              {{! template-lint-disable no-triple-curlies }}
               {{{lm.description}}}
             </div>
           {{/if}}
 
           {{#if lm.publicNotes}}
             <div class="single-event-learningmaterial-item-notes">
+              {{! template-lint-disable no-triple-curlies }}
               {{fa-icon "pen-square"}}<p>{{{lm.publicNotes}}}</p>
             </div>
           {{/if}}
