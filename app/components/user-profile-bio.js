@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 
 const { Promise, all } = RSVP;

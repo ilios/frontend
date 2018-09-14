@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
-import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
+import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import { task } from 'ember-concurrency';
 import FileSaverMixin from 'ember-cli-file-saver/mixins/file-saver';
 

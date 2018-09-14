@@ -2,7 +2,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
 const Validations = buildValidations({
   minimum: [

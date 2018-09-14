@@ -2,7 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { cleanQuery } from '../utils/query-utils';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;

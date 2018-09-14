@@ -3,7 +3,7 @@ import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import moment from 'moment';
 
 const { Promise, filter } = RSVP;

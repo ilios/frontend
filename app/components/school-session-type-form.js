@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
-import ValidationErrorDisplay from 'ilios/mixins/validation-error-display';
+import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
