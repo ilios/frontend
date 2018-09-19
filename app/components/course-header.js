@@ -34,8 +34,8 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
 
   actions: {
     changeTitle() {
-      const course = this.get('course');
-      const newTitle = this.get('courseTitle');
+      const course = this.course;
+      const newTitle = this.courseTitle;
       this.send('addErrorDisplayFor', 'courseTitle');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -54,7 +54,7 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
       });
     },
     revertTitleChanges(){
-      const course = this.get('course');
+      const course = this.course;
       this.set('courseTitle', course.get('title'));
     },
   }

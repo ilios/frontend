@@ -10,11 +10,11 @@ import layout from '../templates/components/mesh-manager';
 const ProxiedDescriptors = ObjectProxy.extend({
   terms: null,
   isActive: computed('content', 'terms.[]', function () {
-    const terms = this.get('terms');
+    const terms = this.terms;
     if (isEmpty(terms)) {
       return true;
     }
-    return !this.get('terms').includes(this.get('content'));
+    return !this.terms.includes(this.content);
   })
 });
 
@@ -41,7 +41,7 @@ export default Component.extend({
   searchReturned: false,
   sortTerms: null,
   sortedTerms: computed('terms.@each.name', function(){
-    var terms = this.get('terms');
+    var terms = this.terms;
     if(!terms || terms.length === 0){
       return [];
     }
@@ -50,12 +50,12 @@ export default Component.extend({
   tagName: 'section',
 
   searchMore: task(function * () {
-    var terms = this.get('terms');
-    var query = this.get('query');
-    const descriptors = yield this.get('store').query('mesh-descriptor', {
+    var terms = this.terms;
+    var query = this.query;
+    const descriptors = yield this.store.query('mesh-descriptor', {
       q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage')
+      limit: this.searchResultsPerPage + 1,
+      offset: this.searchPage * this.searchResultsPerPage
     });
     let results = descriptors.map(function(descriptor){
       return ProxiedDescriptors.create({
@@ -63,12 +63,12 @@ export default Component.extend({
         terms: terms
       });
     });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
+    this.set('searchPage', this.searchPage + 1);
+    this.set('hasMoreSearchResults', (results.length > this.searchResultsPerPage));
+    if (this.hasMoreSearchResults) {
       results.pop();
     }
-    this.get('searchResults').pushObjects(results);
+    this.searchResults.pushObjects(results);
   }).drop(),
 
 
@@ -77,10 +77,10 @@ export default Component.extend({
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
-      var terms = this.get('terms');
-      this.get('store').query('mesh-descriptor', {
+      var terms = this.terms;
+      this.store.query('mesh-descriptor', {
         q: query,
-        limit: this.get('searchResultsPerPage') + 1
+        limit: this.searchResultsPerPage + 1
       }).then(descriptors => {
         let results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
@@ -91,8 +91,8 @@ export default Component.extend({
         this.set('searchReturned', true);
         this.set('searching', false);
         this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
-        if (this.get('hasMoreSearchResults')) {
+        this.set('hasMoreSearchResults', (results.length > this.searchResultsPerPage));
+        if (this.hasMoreSearchResults) {
           results.pop();
         }
         this.set('searchResults', results);
@@ -108,13 +108,13 @@ export default Component.extend({
       this.set('query', '');
     },
     add(term) {
-      const editable = this.get('editable');
+      const editable = this.editable;
       if (editable) {
         this.sendAction('add', term.get('content'));
       }
     },
     remove(term) {
-      const editable = this.get('editable');
+      const editable = this.editable;
       if (editable) {
         this.sendAction('remove', term);
       }

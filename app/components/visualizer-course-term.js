@@ -16,8 +16,8 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   data: computed('course.sessions.[]', 'term', async function(){
-    const course = this.get('course');
-    const term = this.get('term');
+    const course = this.course;
+    const term = this.term;
     const courseSessions = await course.get('sessions');
     const termSessionIds = term.hasMany('sessions').ids();
 
@@ -65,13 +65,13 @@ export default Component.extend({
   }),
   barHover: task(function* (obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipContent', null);
       return;
     }
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const { label, data, meta } = obj;
 
     const title = htmlSafe(`${label} ${data} ${i18n.t('general.minutes')}`);

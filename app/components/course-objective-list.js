@@ -21,10 +21,10 @@ export default Component.extend(SortableObjectiveList, {
       objective.save();
     },
     cancelRemove(objective){
-      this.get('objectivesForRemovalConfirmation').removeObject(objective.get('id'));
+      this.objectivesForRemovalConfirmation.removeObject(objective.get('id'));
     },
     confirmRemoval(objective){
-      this.get('objectivesForRemovalConfirmation').pushObject(objective.get('id'));
+      this.objectivesForRemovalConfirmation.pushObject(objective.get('id'));
     },
   }
 });

@@ -2,7 +2,14 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, fillIn, find, findAll, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  fillIn,
+  find,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -19,7 +26,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    assert.equal(find('h2').textContent.trim(), 'our group');
+    assert.dom('h2').hasText('our group');
     assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
   });
 
@@ -34,7 +41,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
-    assert.equal(find('h2').textContent.trim(), 'our group');
+    assert.dom('h2').hasText('our group');
     await click('h2 .editable');
     await fillIn('h2 input', 'new title');
     await triggerEvent('h2 input', 'input');
@@ -62,7 +69,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
 
-    assert.equal(find('header .info').textContent.trim(), 'Members:  1 / 2');
+    assert.dom('header .info').hasText('Members: 1 / 2');
   });
 
   test('validate title length', async function(assert) {
@@ -83,14 +90,14 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
 
-    assert.equal(find(title).textContent.trim(), 'our group', 'title is correct');
-    assert.equal(findAll(errors).length, 0, 'there are no errors');
+    assert.dom(title).hasText('our group', 'title is correct');
+    assert.dom(errors).doesNotExist('there are no errors');
     await click(edit);
     const longTitle = 'x'.repeat(61);
     await fillIn(input, longTitle);
     await click(done);
     await settled();
-    assert.equal(findAll(errors).length, 1, 'there is now an error');
+    assert.dom(errors).exists({ count: 1 }, 'there is now an error');
     assert.ok(find(errors).textContent.search(/too long/) > -1, 'it is the correct error');
   });
 });

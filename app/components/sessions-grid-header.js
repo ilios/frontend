@@ -8,12 +8,12 @@ export default Component.extend({
   isExpanding: false,
   'data-test-sessions-grid-header': true,
   sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
     setSortBy(what){
-      const sortBy = this.get('sortBy');
+      const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }

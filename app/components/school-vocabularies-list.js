@@ -27,7 +27,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newVocabulary: null,
 
   sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function(){
-    const school = this.get('school');
+    const school = this.school;
     if (! isPresent(school)) {
       resolve([]);
     }
@@ -43,8 +43,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.send('addErrorDisplayFor', 'newVocabularyTitle');
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
-      const school = this.get('school');
-      const vocabulary = this.get('store').createRecord('vocabulary', {title, school, active: true});
+      const school = this.school;
+      const vocabulary = this.store.createRecord('vocabulary', {title, school, active: true});
       const savedVocabulary = yield vocabulary.save();
       const vocabularies = yield school.get('vocabularies');
       vocabularies.pushObject(savedVocabulary);
@@ -56,11 +56,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }).drop(),
 
   remove: task(function * (vocabulary){
-    const school = this.get('school');
+    const school = this.school;
     const vocabularies = yield school.get('vocabularies');
     vocabularies.removeObject(vocabulary);
     yield vocabulary.destroyRecord();
-    const newVocabulary = this.get('newVocabulary');
+    const newVocabulary = this.newVocabulary;
     if (newVocabulary === vocabulary) {
       this.set('newVocabulary', null);
     }
@@ -75,7 +75,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if (13 === keyCode) {
-      this.get('saveNew').perform(this.get('newVocabularyTitle'));
+      this.saveNew.perform(this.newVocabularyTitle);
       return;
     }
 
@@ -87,7 +87,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     toggleShowNewVocabularyForm(){
       this.set('newVocabularyTitle', null);
-      this.set('showNewVocabularyForm', !this.get('showNewVocabularyForm'));
+      this.set('showNewVocabularyForm', !this.showNewVocabularyForm);
     },
     confirmRemoval(vocabulary){
       this.set('showRemovalConfirmationFor', vocabulary);

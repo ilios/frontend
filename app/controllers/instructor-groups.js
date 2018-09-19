@@ -24,11 +24,11 @@ export default Controller.extend({
   deletedInstructorGroup: null,
 
   instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function(){
-    let schoolId = this.get('selectedSchool').get('id');
+    let schoolId = this.selectedSchool.get('id');
     if(isEmpty(schoolId)) {
       resolve([]);
     }
-    return await this.get('store').query('instructor-group', {
+    return await this.store.query('instructor-group', {
       filters: {
         school: schoolId
       }
@@ -44,11 +44,11 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
   filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function(){
-    const titleFilter = this.get('titleFilter');
+    const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter ;
     const cleanTitle = escapeRegExp(title);
     let exp = new RegExp(cleanTitle, 'gi');
-    const instructorGroups = await this.get('instructorGroups');
+    const instructorGroups = await this.instructorGroups;
     let filteredInstructorGroups;
     if(isEmpty(title)){
       filteredInstructorGroups = instructorGroups;
@@ -63,7 +63,7 @@ export default Controller.extend({
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
-    const schoolId = this.get('schoolId');
+    const schoolId = this.schoolId;
     if(isPresent(schoolId)){
       let school =  schools.findBy('id', schoolId);
       if(school){
@@ -74,23 +74,23 @@ export default Controller.extend({
     return primarySchool;
   }),
   canCreate: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateInstructorGroup(selectedSchool);
   }),
   canDelete: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = this.selectedSchool;
     return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);
   }),
   actions: {
     async removeInstructorGroup(instructorGroup) {
-      const school = this.get('selectedSchool');
+      const school = this.selectedSchool;
       const instructorGroups = await school.get('instructorGroups');
       instructorGroups.removeObject(instructorGroup);
       await instructorGroup.destroyRecord();
       this.set('deletedInstructorGroup', instructorGroup);
-      const newInstructorGroup = this.get('newInstructorGroup');
+      const newInstructorGroup = this.newInstructorGroup;
       if (newInstructorGroup === instructorGroup) {
         this.set('newInstructorGroup', null);
       }
@@ -100,7 +100,7 @@ export default Controller.extend({
       const savedInstructorGroup = await newInstructorGroup.save();
       this.set('showNewInstructorGroupForm', false);
       this.set('newInstructorGroup', savedInstructorGroup);
-      const school = await this.get('selectedSchool');
+      const school = await this.selectedSchool;
       const instructorGroups = await school.get('instructorGroups');
       instructorGroups.pushObject(savedInstructorGroup);
       return savedInstructorGroup;
@@ -110,7 +110,7 @@ export default Controller.extend({
       this.set('schoolId', schoolId);
     },
     toggleNewInstructorGroupForm() {
-      this.set('showNewInstructorGroupForm', !this.get('showNewInstructorGroupForm'));
+      this.set('showNewInstructorGroupForm', !this.showNewInstructorGroupForm);
     }
   },
 });

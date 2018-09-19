@@ -27,7 +27,7 @@ export default Component.extend({
   actions: {
     collapse(){
       this.get('course.competencies').then(competencies => {
-        const collapse = this.get('collapse');
+        const collapse = this.collapse;
         if (competencies.length) {
           collapse();
         }

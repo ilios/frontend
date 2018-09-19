@@ -12,11 +12,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
     let defer = RSVP.defer();
     let model = {};
     this.get('currentUser.model').then(currentUser=>{
-      this.get('store').findAll('school').then(schools => {
+      this.store.findAll('school').then(schools => {
         model.schools = schools;
         currentUser.get('school').then(primarySchool => {
           model.primarySchool = primarySchool;
-          this.get('store').findAll('academic-year').then(years => {
+          this.store.findAll('academic-year').then(years => {
             model.years = years.toArray();
 
             defer.resolve(model);

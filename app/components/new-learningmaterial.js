@@ -72,7 +72,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   iliosConfig: service(),
   host: reads('iliosConfig.apiHost'),
   uploadPath: computed('host', function () {
-    return this.get('host') + '/upload';
+    return this.host + '/upload';
   }),
 
   isFile: equal('type', 'file'),
@@ -99,12 +99,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   fileUploadErrorMessage: false,
 
   selectedStatus: computed('learningMaterialStatuses.[]', 'statusId', function () {
-    const learningMaterialStatuses = this.get('learningMaterialStatuses');
+    const learningMaterialStatuses = this.learningMaterialStatuses;
     if (!learningMaterialStatuses) {
       return;
     }
 
-    const statusId = this.get('statusId');
+    const statusId = this.statusId;
     if (statusId) {
       return learningMaterialStatuses.findBy('id', statusId);
     }
@@ -113,12 +113,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   selectedUserRole: computed('learningMaterialUserRoles.[]', 'userRoleId', function () {
-    const learningMaterialUserRoles = this.get('learningMaterialUserRoles');
+    const learningMaterialUserRoles = this.learningMaterialUserRoles;
     if (!learningMaterialUserRoles) {
       return;
     }
 
-    const userRoleId = this.get('userRoleId');
+    const userRoleId = this.userRoleId;
     if (userRoleId) {
       return learningMaterialUserRoles.findBy('id', userRoleId);
     }
@@ -133,15 +133,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (validations.get('isInvalid')) {
       return;
     }
-    const store = this.get('store');
-    const save = this.get('save');
-    const currentUser = this.get('currentUser');
-    const title = this.get('title');
-    const type = this.get('type');
-    const status = this.get('selectedStatus');
-    const userRole = this.get('selectedUserRole');
-    const description = this.get('description');
-    const originalAuthor = this.get('originalAuthor');
+    const store = this.store;
+    const save = this.save;
+    const currentUser = this.currentUser;
+    const title = this.title;
+    const type = this.type;
+    const status = this.selectedStatus;
+    const userRole = this.selectedUserRole;
+    const description = this.description;
+    const originalAuthor = this.originalAuthor;
     const owningUser = yield currentUser.get('model');
 
     let learningMaterial = store.createRecord('learningMaterial', {
@@ -154,20 +154,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
     switch(type){
     case 'file': {
-      const copyrightPermission = this.get('copyrightPermission');
-      const copyrightRationale = this.get('copyrightRationale');
-      const filename = this.get('filename');
-      const fileHash = this.get('fileHash');
+      const copyrightPermission = this.copyrightPermission;
+      const copyrightRationale = this.copyrightRationale;
+      const filename = this.filename;
+      const fileHash = this.fileHash;
       learningMaterial.setProperties({copyrightRationale, copyrightPermission, filename, fileHash});
       break;
     }
     case 'link': {
-      const link = this.get('link');
+      const link = this.link;
       learningMaterial.setProperties({link});
       break;
     }
     case 'citation': {
-      const citation = this.get('citation');
+      const citation = this.citation;
       learningMaterial.setProperties({citation});
       break;
     }

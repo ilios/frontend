@@ -43,7 +43,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplayFor', 'numSubGroups');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          const num = this.get('numSubGroups');
+          const num = this.numSubGroups;
           this.sendAction('generateNewLearnerGroups', num);
         }
       });

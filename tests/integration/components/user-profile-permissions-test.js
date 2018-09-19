@@ -27,7 +27,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     this.set('user', user);
     await render(hbs`{{user-profile-permissions user=user}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
 
     await this.pauseTest();
   });

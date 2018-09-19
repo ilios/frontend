@@ -13,19 +13,19 @@ export default Component.extend({
   course: null,
 
   showRollover: computed('course', 'currentUser', 'routing.currentRouteName', async function () {
-    const routing = this.get('routing');
+    const routing = this.routing;
     if (routing.get('currentRouteName') === 'course.rollover') {
       return false;
     }
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('course');
+    const permissionChecker = this.permissionChecker;
+    const course = this.course;
     const school = await course.get('school');
     return permissionChecker.canCreateCourse(school);
   }),
 
   showMaterials: computed('routing.currentRouteName', function(){
     return new Promise(resolve => {
-      const routing = this.get('routing');
+      const routing = this.routing;
       resolve(routing.get('currentRouteName') !== 'course-materials');
     });
   }),

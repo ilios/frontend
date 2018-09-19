@@ -17,11 +17,11 @@ export default Component.extend({
     'publicationStatus'
   ],
   textKey: computed('publishedLangKey', 'scheduledLangKey',  'notPublishedLangKey', 'isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
-    const publishedLangKey = this.get('publishedLangKey');
-    const scheduledLangKey = this.get('scheduledLangKey');
-    const notPublishedLangKey = this.get('notPublishedLangKey');
+    const isPublished = this.isPublished;
+    const isScheduled = this.isScheduled;
+    const publishedLangKey = this.publishedLangKey;
+    const scheduledLangKey = this.scheduledLangKey;
+    const notPublishedLangKey = this.notPublishedLangKey;
     if (isScheduled) {
       return scheduledLangKey;
     }
@@ -32,8 +32,8 @@ export default Component.extend({
     return notPublishedLangKey;
   }),
   iconKey: computed('isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
+    const isPublished = this.isPublished;
+    const isScheduled = this.isScheduled;
     if (isScheduled) {
       return 'clock';
     }
@@ -44,8 +44,8 @@ export default Component.extend({
     return 'star-half-alt';
   }),
   publicationStatus: computed('isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
+    const isPublished = this.isPublished;
+    const isScheduled = this.isScheduled;
     if(isScheduled){
       return 'scheduled';
     } else if (isPublished){

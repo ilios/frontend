@@ -15,21 +15,21 @@ export default Component.extend(DomMixin, {
   didInsertElement() {
     this._super(...arguments);
     if (!navigator.onLine) {
-      this.get('changeConnectionState').perform(false);
+      this.changeConnectionState.perform(false);
     }
     this.addEventListener(window, 'online', () => {
-      this.get('changeConnectionState').perform(true);
+      this.changeConnectionState.perform(true);
     });
     this.addEventListener(window, 'offline', () => {
-      this.get('changeConnectionState').perform(false);
+      this.changeConnectionState.perform(false);
     });
   },
   ariaHidden: computed('isOnline', function () {
-    const isOnline = this.get('isOnline');
+    const isOnline = this.isOnline;
     return isOnline?'true':false;
   }),
   ariaRole: computed('isOnline', function () {
-    const isOnline = this.get('isOnline');
+    const isOnline = this.isOnline;
     return isOnline?false:'alert';
   }),
   changeConnectionState: task(function * (isOnline) {
@@ -37,7 +37,7 @@ export default Component.extend(DomMixin, {
     this.set('multiplier', 1);
     this.set('stopAttemptingToReconnect', false);
     this.set('isOnline', isOnline);
-    const reconnect = this.get('reconnect');
+    const reconnect = this.reconnect;
     if (!isOnline) {
       yield reconnect.perform();
     } else {
@@ -46,9 +46,9 @@ export default Component.extend(DomMixin, {
   }).restartable(),
   reconnect: task(function* (force) {
     if (navigator.onLine) {
-      this.get('changeConnectionState').perform(true);
+      this.changeConnectionState.perform(true);
     }
-    const timer = this.get('timer');
+    const timer = this.timer;
     if (force) {
       this.set('unableToReconnect', true);
       this.set('timer', 5);
@@ -58,18 +58,18 @@ export default Component.extend(DomMixin, {
       this.set('unableToReconnect', false);
       this.set('timer', timer - 1);
     } else {
-      const stopAttemptingToReconnect = this.get('stopAttemptingToReconnect');
+      const stopAttemptingToReconnect = this.stopAttemptingToReconnect;
       if (!stopAttemptingToReconnect) {
         this.set('unableToReconnect', true);
         yield timeout(2000);
       }
-      const multiplier = this.get('multiplier');
+      const multiplier = this.multiplier;
       const newMultiplier = multiplier < 8?multiplier * 2:10;
       this.set('multiplier', newMultiplier);
       this.set('timer', 5 * newMultiplier);
     }
 
     yield timeout(1000);
-    this.get('reconnect').perform();
+    this.reconnect.perform();
   }).restartable(),
 });

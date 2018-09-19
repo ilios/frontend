@@ -36,7 +36,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const sequenceBlock = this.get('sequenceBlock');
+    const sequenceBlock = this.sequenceBlock;
     const minimum =  sequenceBlock.get('minimum');
     const maximum = sequenceBlock.get('maximum');
     this.setProperties({ minimum, maximum });
@@ -66,8 +66,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplaysFor', ['minimum', 'maximum']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          const min = this.get('minimum');
-          const max = this.get('maximum');
+          const min = this.minimum;
+          const max = this.maximum;
           this.sendAction('save', min, max);
         } else {
           this.set('isSaving', false);

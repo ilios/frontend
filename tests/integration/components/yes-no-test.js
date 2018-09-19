@@ -8,13 +8,13 @@ module('Integration | Component | yes-no', function(hooks) {
 
   test('it renders yes', async function (assert) {
     await render(hbs`{{yes-no value=true}}`);
-    assert.equal(this.element.textContent.trim(), 'Yes');
-    assert.ok(this.element.querySelector('span').classList.contains('yes'));
+    assert.dom(this.element).hasText('Yes');
+    assert.dom(this.element.querySelector('span')).hasClass('yes');
   });
 
   test('it renders no', async function (assert) {
     await render(hbs`{{yes-no value=false}}`);
-    assert.equal(this.element.textContent.trim(), 'No');
-    assert.ok(this.element.querySelector('span').classList.contains('no'));
+    assert.dom(this.element).hasText('No');
+    assert.dom(this.element.querySelector('span')).hasClass('no');
   });
 });

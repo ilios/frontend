@@ -11,7 +11,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
    * Prefetch related data to limit network requests
   */
   async afterModel(model) {
-    const store = this.get('store');
+    const store = this.store;
     const cohort = await model.get('cohort');
     const courses = cohort.hasMany('courses').ids();
 

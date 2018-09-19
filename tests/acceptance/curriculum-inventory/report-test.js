@@ -1,4 +1,8 @@
-import { click, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import {
+  click,
+  currentRouteName,
+  visit
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -30,11 +34,11 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
 
     await visit(url);
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.equal(findAll(newBlockForm).length, 0);
-    assert.equal(findAll(newFormTitle).length, 0);
+    assert.dom(newBlockForm).doesNotExist();
+    assert.dom(newFormTitle).doesNotExist();
     await click(addSequenceBlock);
-    assert.equal(findAll(newBlockForm).length, 1);
-    assert.equal(findAll(newFormTitle).length, 1);
+    assert.dom(newBlockForm).exists({ count: 1 });
+    assert.dom(newFormTitle).exists({ count: 1 });
     assert.equal(await getElementText(newFormTitle), getText('New Sequence Block'));
   });
 
@@ -56,7 +60,7 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.equal(findAll(rollover).length, 0);
+    assert.dom(rollover).doesNotExist();
   });
 
   test('rollover visible to privileged users', async function (assert) {
@@ -77,7 +81,7 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.equal(findAll(rollover).length, 1);
+    assert.dom(rollover).exists({ count: 1 });
   });
 
   test('rollover hidden on rollover route', async function(assert) {
@@ -98,6 +102,6 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     const rollover = `${container} a.rollover`;
 
     assert.equal(currentRouteName(), 'curriculumInventoryReport.rollover');
-    assert.equal(findAll(rollover).length, 0);
+    assert.dom(rollover).doesNotExist();
   });
 });

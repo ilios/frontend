@@ -1,6 +1,13 @@
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll,
+  fillIn,
+  triggerEvent
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -14,12 +21,12 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     });
     this.set('sequenceBlock', block);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=sequenceBlock}}`);
-    assert.equal(find('.minimum label').textContent.trim(), 'Minimum:', 'Minimum is labeled correctly.');
-    assert.equal(find('.minimum input').value, block.minimum, 'Minimum input has correct value.');
-    assert.equal(find('.maximum label').textContent.trim(), 'Maximum:', 'Maximum input is labeled correctly.');
-    assert.equal(find('.maximum input').value, block.maximum, 'Maximum input has correct value.');
-    assert.equal(findAll('.buttons .done').length, 1, 'Done button is present.');
-    assert.equal(findAll('.buttons .cancel').length, 1, 'Cancel button is present.');
+    assert.dom('.minimum label').hasText('Minimum:', 'Minimum is labeled correctly.');
+    assert.dom('.minimum input').hasValue(block.minimum, 'Minimum input has correct value.');
+    assert.dom('.maximum label').hasText('Maximum:', 'Maximum input is labeled correctly.');
+    assert.dom('.maximum input').hasValue(block.maximum, 'Maximum input has correct value.');
+    assert.dom('.buttons .done').exists({ count: 1 }, 'Done button is present.');
+    assert.dom('.buttons .cancel').exists({ count: 1 }, 'Cancel button is present.');
   });
 
   test('save', async function(assert) {
@@ -68,7 +75,7 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '100');
     await triggerEvent('.minimum input', 'input');
     await fillIn('.maximum input', '50');
@@ -88,7 +95,7 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '-1');
     await triggerEvent('.minimum input', 'input');
     await fillIn('.maximum input', '50');
@@ -108,7 +115,7 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '');
     await triggerEvent('.minimum input', 'input');
     await fillIn('.maximum input', '50');
@@ -128,7 +135,7 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('block', block);
     this.set('saveAction', saveAction);
     await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor sequenceBlock=block save=saveAction}}`);
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '0');
     await triggerEvent('.minimum input', 'input');
     await fillIn('.maximum input', '');

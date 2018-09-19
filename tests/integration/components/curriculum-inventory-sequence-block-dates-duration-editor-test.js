@@ -1,6 +1,14 @@
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find,
+  findAll,
+  fillIn,
+  triggerEvent
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -17,22 +25,20 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     });
     this.set('sequenceBlock', block);
     await render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=sequenceBlock}}`);
-    assert.equal(find('.start-date label').textContent.trim(), 'Start:', 'Start date is labeled correctly.');
-    assert.equal(
-      find('.start-date input').value,
+    assert.dom('.start-date label').hasText('Start:', 'Start date is labeled correctly.');
+    assert.dom('.start-date input').hasValue(
       moment(block.startDate).format('M/D/YYYY'),
       'Start date input has correct value.'
     );
-    assert.equal(find('.end-date label').textContent.trim(), 'End:', 'End date input is labeled correctly.');
-    assert.equal(
-      find('.end-date input').value,
+    assert.dom('.end-date label').hasText('End:', 'End date input is labeled correctly.');
+    assert.dom('.end-date input').hasValue(
       moment(block.endDate).format('M/D/YYYY'),
       'End date input has correct value.'
     );
-    assert.equal(find('.duration label').textContent.trim(), 'Duration (in Days):', 'Duration input is labeled correctly.');
-    assert.equal(find('.duration input').value, block.duration, 'Duration input has correct value.');
-    assert.equal(findAll('.buttons .done').length, 1, 'Done button is present.');
-    assert.equal(findAll('.buttons .cancel').length, 1, 'Cancel button is present.');
+    assert.dom('.duration label').hasText('Duration (in Days):', 'Duration input is labeled correctly.');
+    assert.dom('.duration input').hasValue(block.duration, 'Duration input has correct value.');
+    assert.dom('.buttons .done').exists({ count: 1 }, 'Done button is present.');
+    assert.dom('.buttons .cancel').exists({ count: 1 }, 'Cancel button is present.');
   });
 
   test('save', async function(assert) {
@@ -139,7 +145,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(find('.end-date input'));
@@ -165,7 +171,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.duration input', '');
     await triggerEvent('.duration input', 'input');
     await click('.buttons .done');
@@ -189,7 +195,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.duration input', '-10');
     await triggerEvent('.duration input', 'input');
     await click('.buttons .done');
@@ -209,7 +215,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await click('.buttons .done');
     return settled().then(() => {
       assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
@@ -227,7 +233,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     await render(
       hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
     );
-    assert.equal(findAll('.validation-error-message').length, 0, 'No initial validation errors.');
+    assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(new Date());
     await click('.buttons .done');

@@ -12,6 +12,6 @@ module('Integration | Component | Columns | translatable-table-column', function
 
     await render(hbs`{{light-table/columns/translatable-table-column column}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Thursday');
+    assert.dom(this.element).hasText('Thursday');
   });
 });

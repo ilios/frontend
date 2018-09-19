@@ -8,7 +8,7 @@ export default Component.extend({
   classNames: ['toggle-yesno'],
   'data-test-toggle-yesno': true,
   click(){
-    const yes = this.get('yes');
-    this.get('toggle')(!yes);
+    const yes = this.yes;
+    this.toggle(!yes);
   }
 });

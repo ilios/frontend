@@ -14,7 +14,7 @@ let IliosUploader = Uploader.extend({
   iliosHeaders: null,
   ajaxSettings: computed('iliosHeaders.[]', function() {
     return {
-      headers: this.get('iliosHeaders')
+      headers: this.iliosHeaders
     };
   }),
 
@@ -26,7 +26,7 @@ export default FileField.extend({
   i18n: service(),
   url: '',
   headers: computed('session.isAuthenticated', function () {
-    const session = this.get('session');
+    const session = this.session;
     const { jwt } = session.data.authenticated;
     let headers = {};
     if (jwt) {
@@ -41,30 +41,30 @@ export default FileField.extend({
       return;
     }
     const file = files[0];
-    const iliosConfig = this.get('iliosConfig');
+    const iliosConfig = this.iliosConfig;
     iliosConfig.get('maxUploadSize').then(maxUploadSize => {
       if (file.size > maxUploadSize) {
-        const i18n = this.get('i18n');
+        const i18n = this.i18n;
         const maxSize = readableFileSize(maxUploadSize);
-        this.get('setErrorMessage')(i18n.t('general.fileSizeError', {maxSize}));
+        this.setErrorMessage(i18n.t('general.fileSizeError', {maxSize}));
       } else {
-        this.get('startUploading')();
-        const uploadUrl = this.get('url');
+        this.startUploading();
+        const uploadUrl = this.url;
         const uploader = IliosUploader.create({
           url: uploadUrl,
-          iliosHeaders: this.get('headers')
+          iliosHeaders: this.headers
         });
 
 
         uploader.on('didUpload', (e) => {
-          this.get('finishedUploading')(e);
+          this.finishedUploading(e);
         });
 
         uploader.on('progress', (e) => {
-          this.get('setUploadPercentage')(e.percent);
+          this.setUploadPercentage(e.percent);
         });
 
-        return this.get('upload').perform(uploader, file, 0);
+        return this.upload.perform(uploader, file, 0);
       }
 
     });
@@ -76,12 +76,12 @@ export default FileField.extend({
       let data = yield uploader.upload(file);
       return data;
     } catch (error) {
-      this.get('setUploadPercentage')(0);
+      this.setUploadPercentage(0);
       yield timeout(attempt * 1000);
       if (attempt < MAXIMUM_UPLOAD_ATTEMPTS) {
-        this.get('upload').perform(uploader, file, attempt+1);
+        this.upload.perform(uploader, file, attempt+1);
       } else {
-        const i18n = this.get('i18n');
+        const i18n = this.i18n;
         throw new Error(i18n.t('general.fileUploadError'));
       }
     }

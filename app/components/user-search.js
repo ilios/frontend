@@ -12,11 +12,11 @@ let userProxy = ObjectProxy.extend({
   isUser: true,
   currentlyActiveUsers: null,
   isActive: computed('content', 'currentlyActiveUsers.[]', function(){
-    let user = this.get('content');
+    let user = this.content;
     if(!user.get('enabled')){
       return false;
     }
-    return !this.get('currentlyActiveUsers').includes(user);
+    return !this.currentlyActiveUsers.includes(user);
   }),
   sortTerm: oneWay('content.fullName'),
 });
@@ -24,7 +24,7 @@ let instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
   isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
-    return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
+    return !this.currentlyActiveInstructorGroups.includes(this.content);
   }),
   sortTerm: oneWay('content.title'),
 });
@@ -55,13 +55,13 @@ export default Component.extend({
       q: searchTerms,
       limit: 100
     };
-    if (this.get('roles')) {
+    if (this.roles) {
       query.filters = {
-        roles: this.get('roles').split(',')
+        roles: this.roles.split(',')
       };
     }
-    let users = yield this.get('store').query('user', query);
-    const currentlyActiveUsers = this.get('currentlyActiveUsers') === null?[]:this.get('currentlyActiveUsers');
+    let users = yield this.store.query('user', query);
+    const currentlyActiveUsers = this.currentlyActiveUsers === null?[]:this.currentlyActiveUsers;
     let results = users.map(user => {
       return userProxy.create({
         content: user,
@@ -69,14 +69,14 @@ export default Component.extend({
       });
     });
 
-    let availableInstructorGroups = yield this.get('availableInstructorGroups');
+    let availableInstructorGroups = yield this.availableInstructorGroups;
     if(! isEmpty(availableInstructorGroups)){
       let exp = new RegExp(searchTerms, 'gi');
 
       let filteredGroups = availableInstructorGroups.filter(group => {
         return group.get('title') && group.get('title').match(exp);
       });
-      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
+      const currentlyActiveInstructorGroups = isEmpty(this.currentlyActiveInstructorGroups)?[]:this.currentlyActiveInstructorGroups;
       let instructorGroupProxies = filteredGroups.map(group => {
         return instructorGroupProxy.create({
           content: group,
@@ -86,7 +86,7 @@ export default Component.extend({
 
       results.pushObjects(instructorGroupProxies);
     }
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const locale = i18n.get('locale');
     results.sort((a, b) => {
       const sortTermA = a.get('sortTerm');
@@ -101,7 +101,7 @@ export default Component.extend({
     addUser(user) {
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
+      const currentlyActiveUsers = isEmpty(this.currentlyActiveUsers)?[]:this.currentlyActiveUsers;
       if(!currentlyActiveUsers.includes(user)){
         this.sendAction('addUser', user);
       }
@@ -109,7 +109,7 @@ export default Component.extend({
     addInstructorGroup(group) {
       //don't send actions to the calling component if the user is already in the list
       //prevents a complicated if/else on the template.
-      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
+      const currentlyActiveInstructorGroups = isEmpty(this.currentlyActiveInstructorGroups)?[]:this.currentlyActiveInstructorGroups;
       if(!currentlyActiveInstructorGroups.includes(group)){
         this.sendAction('addInstructorGroup', group);
       }

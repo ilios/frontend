@@ -29,8 +29,8 @@ export default Component.extend({
    */
   allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', function(){
     return new Promise(resolve => {
-      this.get('overridableSessions').then(overridableSessions => {
-        resolve(this.get('sessionsToOverride').get('length') === overridableSessions.length);
+      this.overridableSessions.then(overridableSessions => {
+        resolve(this.sessionsToOverride.get('length') === overridableSessions.length);
       });
     });
   }),
@@ -42,7 +42,7 @@ export default Component.extend({
    */
   publishableSessions: computed('sessions.@each.allPublicationIssuesLength', function(){
     return new Promise(resolve => {
-      this.get('sessions').then(sessions=>{
+      this.sessions.then(sessions=>{
         let filteredSessions = sessions.filter(session => {
           return session.get('allPublicationIssuesLength') === 0;
         });
@@ -58,7 +58,7 @@ export default Component.extend({
    */
   unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', function(){
     return new Promise(resolve => {
-      this.get('sessions').then(sessions=>{
+      this.sessions.then(sessions=>{
         let filteredSessions = sessions.filter(session => {
           return session.get('requiredPublicationIssues').get('length') > 0;
         });
@@ -74,7 +74,7 @@ export default Component.extend({
    */
   overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
     return new Promise(resolve => {
-      this.get('sessions').then(sessions=>{
+      this.sessions.then(sessions=>{
         let filteredSessions = sessions.filter(session => {
           return (
             session.get('requiredPublicationIssues').get('length') === 0 &&
@@ -93,7 +93,7 @@ export default Component.extend({
    */
   publishCount: computed('publishableSessions.[]','sessionsToOverride.length', function() {
     return new Promise(resolve => {
-      this.get('publishableSessions').then(publishableSessions => {
+      this.publishableSessions.then(publishableSessions => {
         resolve(publishableSessions.length + parseInt(this.get('sessionsToOverride.length'), 10));
       });
     });
@@ -106,7 +106,7 @@ export default Component.extend({
    */
   scheduleCount: computed('overridableSessions.[]', 'sessionsToOverride.length', function() {
     return new Promise(resolve => {
-      this.get('overridableSessions').then(overridableSessions => {
+      this.overridableSessions.then(overridableSessions => {
         resolve(overridableSessions.length - parseInt(this.get('sessionsToOverride.length'), 10));
       });
     });
@@ -119,7 +119,7 @@ export default Component.extend({
    */
   ignoreCount: computed('unPublishableSessions.[]', function() {
     return new Promise(resolve => {
-      this.get('unPublishableSessions').then(unPublishableSessions => {
+      this.unPublishableSessions.then(unPublishableSessions => {
         resolve(unPublishableSessions.length);
       });
     });
@@ -127,39 +127,39 @@ export default Component.extend({
 
   actions: {
     toggleSession(session){
-      if(this.get('sessionsToOverride').includes(session)){
-        this.get('sessionsToOverride').removeObject(session);
+      if(this.sessionsToOverride.includes(session)){
+        this.sessionsToOverride.removeObject(session);
       } else{
-        this.get('sessionsToOverride').pushObject(session);
+        this.sessionsToOverride.pushObject(session);
       }
     },
     publishAllAsIs(){
-      this.get('overridableSessions').then(overridableSessions => {
+      this.overridableSessions.then(overridableSessions => {
         overridableSessions.forEach(session => {
-          if (!this.get('sessionsToOverride').includes(session)) {
-            this.get('sessionsToOverride').pushObject(session);
+          if (!this.sessionsToOverride.includes(session)) {
+            this.sessionsToOverride.pushObject(session);
           }
         });
       });
     },
     publishNoneAsIs(){
-      this.get('overridableSessions').then(overridableSessions => {
+      this.overridableSessions.then(overridableSessions => {
         overridableSessions.forEach(session => {
-          if(this.get('sessionsToOverride').includes(session)){
-            this.get('sessionsToOverride').removeObject(session);
+          if(this.sessionsToOverride.includes(session)){
+            this.sessionsToOverride.removeObject(session);
           }
         });
       });
     },
     save(){
       this.set('isSaving', true);
-      let asIsSessions = this.get('sessionsToOverride');
+      let asIsSessions = this.sessionsToOverride;
       let sessionsToSave = [];
       let promises = [];
 
       promises.pushObject(
         new Promise(resolve => {
-          this.get('overridableSessions').then(overridableSessions => {
+          this.overridableSessions.then(overridableSessions => {
             overridableSessions.forEach(session => {
               session.set('publishedAsTbd', !asIsSessions.includes(session));
               session.set('published', true);
@@ -172,7 +172,7 @@ export default Component.extend({
 
       promises.pushObject(
         new Promise(resolve => {
-          this.get('publishableSessions').then(publishableSessions => {
+          this.publishableSessions.then(publishableSessions => {
             publishableSessions.forEach(session => {
               session.set('published', true);
               sessionsToSave.pushObject(session);
@@ -191,12 +191,12 @@ export default Component.extend({
 
           all(chunk.invoke('save')).then(() => {
             if (sessions.length){
-              this.set('currentSessionsSaved', this.get('currentSessionsSaved') + chunk.length);
+              this.set('currentSessionsSaved', this.currentSessionsSaved + chunk.length);
               saveSomeSessions(sessions);
             } else {
               this.set('isSaving', false);
               this.sendAction('saved');
-              this.get('flashMessages').success('general.savedSuccessfully');
+              this.flashMessages.success('general.savedSuccessfully');
             }
           });
         };
@@ -205,10 +205,10 @@ export default Component.extend({
     },
 
     togglePublishableCollapsed(){
-      this.set('publishableCollapsed', !this.get('publishableCollapsed'));
+      this.set('publishableCollapsed', !this.publishableCollapsed);
     },
     toggleUnPublishableCollapsed(){
-      this.set('unPublishableCollapsed', !this.get('unPublishableCollapsed'));
+      this.set('unPublishableCollapsed', !this.unPublishableCollapsed);
     }
   }
 });

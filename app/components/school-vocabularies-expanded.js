@@ -22,15 +22,15 @@ export default Component.extend({
   managedTerm: null,
   isManaging: notEmpty('managedVocabulary'),
   showCollapsible: computed('isManaging', 'school.vocabularies.length', function(){
-    const isManaging = this.get('isManaging');
-    const school = this.get('school');
+    const isManaging = this.isManaging;
+    const school = this.school;
     const competencyIds = school.hasMany('vocabularies').ids();
     return competencyIds.length && ! isManaging;
   }),
   didReceiveAttrs(){
     this._super(...arguments);
-    const managedVocabularyId = this.get('managedVocabularyId');
-    const managedTermId = this.get('managedTermId');
+    const managedVocabularyId = this.managedVocabularyId;
+    const managedTermId = this.managedTermId;
     if(isPresent(managedVocabularyId)){
       this.get('school.vocabularies').then(vocabularies => {
         let managedVocabulary = vocabularies.findBy('id', managedVocabularyId);
@@ -50,9 +50,9 @@ export default Component.extend({
   },
   actions: {
     collapse(){
-      const collapse = this.get('collapse');
-      const setSchoolManagedVocabulary = this.get('setSchoolManagedVocabulary');
-      const setSchoolManagedVocabularyTerm = this.get('setSchoolManagedVocabularyTerm');
+      const collapse = this.collapse;
+      const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
+      const setSchoolManagedVocabularyTerm = this.setSchoolManagedVocabularyTerm;
       this.get('school.vocabularies').then(vocabularies => {
         if(vocabularies.get('length')){
           collapse();
@@ -62,7 +62,7 @@ export default Component.extend({
       });
     },
     cancel(){
-      const setSchoolManagedVocabulary = this.get('setSchoolManagedVocabulary');
+      const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
       setSchoolManagedVocabulary(null);
       this.set('bufferedTerms', []);
     },

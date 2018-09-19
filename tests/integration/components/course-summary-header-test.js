@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { resolve } from 'rsvp';
@@ -50,15 +50,15 @@ module('Integration | Component | course summary header', function(hooks) {
     const level = `${blocks}:nth-of-type(4) span`;
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1)`;
 
-    assert.equal(find(title).textContent.trim(), 'title');
-    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
-    assert.ok(find(printIcon).classList.contains('fa-print'));
-    assert.ok(find(rolloverIcon).classList.contains('fa-random'));
-    assert.equal(find(start).textContent.trim(), moment(course.startDate).format('L'));
-    assert.equal(find(externalId).textContent.trim(), 'abc');
-    assert.equal(find(end).textContent.trim(), moment(course.endDate).format('L'));
-    assert.equal(find(level).textContent.trim(), '3');
-    assert.equal(find(status).textContent.trim(), 'Published');
+    assert.dom(title).hasText('title');
+    assert.dom(materialsIcon).hasClass('fa-archive');
+    assert.dom(printIcon).hasClass('fa-print');
+    assert.dom(rolloverIcon).hasClass('fa-random');
+    assert.dom(start).hasText(moment(course.startDate).format('L'));
+    assert.dom(externalId).hasText('abc');
+    assert.dom(end).hasText(moment(course.endDate).format('L'));
+    assert.dom(level).hasText('3');
+    assert.dom(status).hasText('Published');
   });
 
   test('no link to materials when that is the current route', async function(assert) {
@@ -89,8 +89,8 @@ module('Integration | Component | course summary header', function(hooks) {
     const rolloverIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).classList.contains('fa-print'));
-    assert.ok(find(rolloverIcon).classList.contains('fa-random'));
+    assert.dom(printIcon).hasClass('fa-print');
+    assert.dom(rolloverIcon).hasClass('fa-random');
   });
 
   test('no link to rollover when that is the current route', async function(assert) {
@@ -112,8 +112,8 @@ module('Integration | Component | course summary header', function(hooks) {
     const printIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).classList.contains('fa-print'));
-    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
+    assert.dom(printIcon).hasClass('fa-print');
+    assert.dom(materialsIcon).hasClass('fa-archive');
   });
 
   test('no link to rollover when user cannot edit the course', async function(assert) {
@@ -144,7 +144,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const printIcon = `${actions}:nth-of-type(2) svg`;
 
     assert.ok(findAll(actions).length, 2);
-    assert.ok(find(printIcon).classList.contains('fa-print'));
-    assert.ok(find(materialsIcon).classList.contains('fa-archive'));
+    assert.dom(printIcon).hasClass('fa-print');
+    assert.dom(materialsIcon).hasClass('fa-archive');
   });
 });

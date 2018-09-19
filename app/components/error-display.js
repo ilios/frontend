@@ -19,7 +19,7 @@ export default Component.extend({
   },
 
   is404: computed('errors.[]', function(){
-    const errors = this.get('errors');
+    const errors = this.errors;
     if (isPresent(errors)) {
       const firstError = errors.get('firstObject');
       if (isPresent(firstError)) {
@@ -32,7 +32,7 @@ export default Component.extend({
 
   actions: {
     toggleDetails() {
-      this.set('showDetails', !this.get('showDetails'));
+      this.set('showDetails', !this.showDetails);
     },
     refresh() {
       window.location.reload();

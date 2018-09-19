@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 const { resolve } = RSVP;
 
@@ -53,10 +53,10 @@ module('Integration | Component | session leadership expanded', function(hooks) 
     const firstAdministrator = `${administrators}:nth-of-type(1)`;
     const secondAdministrator = `${administrators}:nth-of-type(2)`;
 
-    assert.equal(find(title).textContent.trim(), 'Session Administration');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(find(firstAdministrator).textContent.trim(), 'a b person');
-    assert.equal(find(secondAdministrator).textContent.trim(), 'b a person');
+    assert.dom(title).hasText('Session Administration');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(firstAdministrator).hasText('a b person');
+    assert.dom(secondAdministrator).hasText('b a person');
   });
 
   test('clicking the header collapses', async function(assert) {

@@ -1,4 +1,11 @@
-import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  find,
+  findAll,
+  currentRouteName,
+  visit
+} from '@ember/test-helpers';
 import {
   module,
   test
@@ -60,17 +67,17 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.equal(searchResults.length, 7);
     assert.equal(await getElementText(searchResults[0]), getText('6 Results'));
     assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
-    assert.ok(searchResults[1].classList.contains('active'));
+    assert.dom(searchResults[1]).hasClass('active');
     assert.equal(await getElementText(searchResults[2]), getText('1 guy M. Mc1son user@example.edu'));
-    assert.ok(searchResults[2].classList.contains('inactive'));
+    assert.dom(searchResults[2]).hasClass('inactive');
     assert.equal(await getElementText(searchResults[3]), getText('2 guy M. Mc2son user@example.edu'));
-    assert.ok(searchResults[3].classList.contains('inactive'));
+    assert.dom(searchResults[3]).hasClass('inactive');
     assert.equal(await getElementText(searchResults[4]), getText('3 guy M. Mc3son user@example.edu'));
-    assert.ok(searchResults[4].classList.contains('inactive'));
+    assert.dom(searchResults[4]).hasClass('inactive');
     assert.equal(await getElementText(searchResults[5]), getText('4 guy M. Mc4son user@example.edu'));
-    assert.ok(searchResults[5].classList.contains('active'));
+    assert.dom(searchResults[5]).hasClass('active');
     assert.equal(await getElementText(searchResults[6]), getText('5 guy M. Mc5son user@example.edu'));
-    assert.ok(searchResults[6].classList.contains('active'));
+    assert.dom(searchResults[6]).hasClass('active');
   });
 
   test('add director', async function(assert) {
@@ -126,12 +133,12 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     await visit('/programs/1/programyears/2');
 
     assert.equal(currentRouteName(), 'programYear.index');
-    assert.equal(findAll(directors).length, 0, 'no directors initially');
+    assert.dom(directors).doesNotExist('no directors initially');
     await fillIn(input, 'guy');
-    assert.notOk(find(firstResult).classList.contains('inactive'), 'the first user is active now');
+    assert.dom(firstResult).hasNoClass('inactive', 'the first user is active now');
     await click(firstResult);
-    assert.equal(findAll(directors).length, 1, 'director is selected');
-    assert.ok(find(firstResult).classList.contains('inactive'), 'the first user is now marked as inactive');
+    assert.dom(directors).exists({ count: 1 }, 'director is selected');
+    assert.dom(firstResult).hasClass('inactive', 'the first user is now marked as inactive');
 
   });
 });

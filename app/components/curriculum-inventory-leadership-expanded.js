@@ -9,7 +9,7 @@ export default Component.extend({
   'data-test-curriculum-inventory-leadership-expanded': true,
   didReceiveAttrs(){
     this._super(...arguments);
-    const report = this.get('report');
+    const report = this.report;
     if (report) {
       report.get('administrators').then(administrators => {
         this.set('administrators', administrators.toArray());
@@ -26,12 +26,12 @@ export default Component.extend({
   },
   save: task(function * (){
     yield timeout(10);
-    const administrators = this.get('administrators');
-    let report = this.get('report');
+    const administrators = this.administrators;
+    let report = this.report;
     report.setProperties({administrators});
-    this.get('expand')();
+    this.expand();
     yield report.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
   }),
   add(where, user){
     let arr = this.get(where).toArray();

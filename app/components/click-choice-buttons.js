@@ -10,15 +10,15 @@ export default Component.extend({
 
   actions: {
     clickFirstButton(){
-      const firstChoicePicked = this.get('firstChoicePicked');
-      const toggle = this.get('toggle');
+      const firstChoicePicked = this.firstChoicePicked;
+      const toggle = this.toggle;
       if (!firstChoicePicked) {
         toggle(true);
       }
     },
     clickSecondButton() {
-      const firstChoicePicked = this.get('firstChoicePicked');
-      const toggle = this.get('toggle');
+      const firstChoicePicked = this.firstChoicePicked;
+      const toggle = this.toggle;
       if (firstChoicePicked) {
         toggle(false);
       }

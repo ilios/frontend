@@ -6,6 +6,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   titleToken: 'general.schools',
   model(){
-    return this.get('store').findAll('school');
+    return this.store.findAll('school');
   },
 });

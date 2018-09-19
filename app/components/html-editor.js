@@ -38,7 +38,7 @@ export default Component.extend({
     });
   },
   options: computed('i18n.locale', function(){
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const language = i18n.get('locale');
 
     return {

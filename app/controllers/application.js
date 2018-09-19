@@ -32,9 +32,9 @@ export default Controller.extend({
   titleTokens: alias('headData.titleTokens'),
 
   translatedTitle: computed('i18n.locale', 'title', 'titleTokens.[]', function(){
-    const title = this.get('title');
-    const tokens = this.get('titleTokens');
-    const i18n = this.get('i18n');
+    const title = this.title;
+    const tokens = this.titleTokens;
+    const i18n = this.i18n;
     if (isPresent(title)) {
       return title;
     }
@@ -52,7 +52,7 @@ export default Controller.extend({
   errors: null,
 
   addError(error) {
-    this.get('errors').pushObject(error);
+    this.errors.pushObject(error);
     this.set('showErrorDisplay', true);
   },
   actions: {

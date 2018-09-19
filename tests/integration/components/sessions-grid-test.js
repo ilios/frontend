@@ -18,7 +18,7 @@ module('Integration | Component | sessions-grid', function(hooks) {
       setSortBy=(action setSortBy)
     }}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 
   test('clicking expand fires action', async function (assert) {

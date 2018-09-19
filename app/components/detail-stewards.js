@@ -21,14 +21,14 @@ export default Component.extend({
   editable: true,
 
   showCollapsible: computed('isManaging', 'programYear.stewards.[]', function () {
-    const isManaging = this.get('isManaging');
-    const programYear = this.get('programYear');
+    const isManaging = this.isManaging;
+    const programYear = this.programYear;
     const stewardIds = programYear.hasMany('stewards').ids();
     return !isManaging && stewardIds.get('length');
   }),
 
   stewardsBySchool: computed('programYear.stewards.[]', async function(){
-    const programYear = this.get('programYear');
+    const programYear = this.programYear;
     if (isEmpty(programYear)) {
       return [];
     }
@@ -65,8 +65,8 @@ export default Component.extend({
 
   save: task( function * (){
     yield timeout(10);
-    const programYear = this.get('programYear');
-    const bufferStewards = this.get('bufferStewards');
+    const programYear = this.programYear;
+    const bufferStewards = this.bufferStewards;
     let stewards = yield programYear.get('stewards');
     let stewardsToRemove = stewards.filter(steward => !bufferStewards.includes(steward));
     let stewardsToAdd = bufferStewards.filter(steward => !stewards.includes(steward));
@@ -79,17 +79,17 @@ export default Component.extend({
 
   manage: task( function * (){
     yield timeout(10);
-    this.get('expand')();
+    this.expand();
     const stewards = yield this.get('programYear.stewards');
     this.set('bufferStewards', stewards.toArray());
     this.set('isManaging', true);
   }),
   actions: {
     collapse(){
-      const programYear = this.get('programYear');
+      const programYear = this.programYear;
       const stewardIds = programYear.hasMany('stewards').ids();
       if (stewardIds.get('length')) {
-        this.get('collapse')();
+        this.collapse();
       }
     },
     cancel() {
@@ -98,13 +98,13 @@ export default Component.extend({
     },
     addStewardToBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.get('bufferStewards').toArray();
+      let bufferStewards = this.bufferStewards.toArray();
       bufferStewards.pushObject(steward);
       this.set('bufferStewards', bufferStewards);
     },
     removeStewardFromBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.get('bufferStewards').toArray();
+      let bufferStewards = this.bufferStewards.toArray();
       bufferStewards.removeObject(steward);
       this.set('bufferStewards', bufferStewards);
     },

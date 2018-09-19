@@ -56,8 +56,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('directorsToPassToManager').perform();
-    const course = this.get('course');
+    this.directorsToPassToManager.perform();
+    const course = this.course;
     this.set('externalId', course.get('externalId'));
     this.set('startDate', course.get('startDate'));
     this.set('endDate', course.get('endDate'));
@@ -83,8 +83,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   showDirectorManagerLoader: true,
   currentRoute: '',
   selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', async function() {
-    const id = this.get('clerkshipTypeId');
-    const clerkshipTypeOptions = await this.get('clerkshipTypeOptions');
+    const id = this.clerkshipTypeId;
+    const clerkshipTypeOptions = await this.clerkshipTypeOptions;
     if (isEmpty(id)) {
       return null;
     }
@@ -92,7 +92,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return clerkshipTypeOptions.findBy('id', id);
   }),
   directorsToPassToManager: task(function * () {
-    const course = this.get('course');
+    const course = this.course;
 
     let users = yield course.get('directors');
 
@@ -101,20 +101,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }).restartable(),
 
   showRollover: computed('course', 'routing.currentRouteName', async function () {
-    const routing = this.get('routing');
+    const routing = this.routing;
     if (routing.get('currentRouteName') === 'course.rollover') {
       return false;
     }
 
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('course');
+    const permissionChecker = this.permissionChecker;
+    const course = this.course;
     const school = await course.get('school');
     return permissionChecker.canCreateCourse(school);
   }),
 
   clerkshipTypeTitle: computed('selectedClerkshipType', async function () {
-    const selectedClerkshipType = await this.get('selectedClerkshipType');
-    const i18n = this.get('i18n');
+    const selectedClerkshipType = await this.selectedClerkshipType;
+    const i18n = this.i18n;
     if (!selectedClerkshipType) {
       return i18n.t('general.notAClerkship');
     }
@@ -123,22 +123,22 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   clerkshipTypeOptions: computed(async function () {
-    const store = this.get('store');
+    const store = this.store;
     return store.findAll('course-clerkship-type');
   }),
 
   actions: {
     saveDirectors(newDirectors){
-      const course = this.get('course');
+      const course = this.course;
       course.set('directors', newDirectors.toArray());
       return course.save().then(()=>{
-        this.get('directorsToPassToManager').perform();
+        this.directorsToPassToManager.perform();
         return this.set('manageDirectors', false);
       });
     },
     async changeClerkshipType(){
-      const course = this.get('course');
-      const selectedClerkshipType = await this.get('selectedClerkshipType');
+      const course = this.course;
+      const selectedClerkshipType = await this.selectedClerkshipType;
       course.set('clerkshipType', selectedClerkshipType);
       return course.save();
     },
@@ -152,7 +152,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     revertClerkshipTypeChanges(){
-      const course = this.get('course');
+      const course = this.course;
       course.get('clerkshipType').then(clerkshipType => {
         if (isEmpty(clerkshipType)) {
           this.set('clerkshipTypeId', null);
@@ -162,8 +162,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     changeStartDate(){
-      const newDate = this.get('startDate');
-      const course = this.get('course');
+      const newDate = this.startDate;
+      const course = this.course;
       this.send('addErrorDisplayFor', 'startDate');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -182,12 +182,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertStartDateChanges(){
-      const course = this.get('course');
+      const course = this.course;
       this.set('startDate', course.get('startDate'));
     },
     changeEndDate(){
-      const newDate = this.get('endDate');
-      const course = this.get('course');
+      const newDate = this.endDate;
+      const course = this.course;
       this.send('addErrorDisplayFor', 'endDate');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -206,12 +206,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertEndDateChanges(){
-      const course = this.get('course');
+      const course = this.course;
       this.set('endDate', course.get('endDate'));
     },
     changeExternalId() {
-      const newExternalId = this.get('externalId');
-      const course = this.get('course');
+      const newExternalId = this.externalId;
+      const course = this.course;
       this.send('addErrorDisplayFor', 'externalId');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -230,17 +230,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertExternalIdChanges(){
-      const course = this.get('course');
+      const course = this.course;
       this.set('externalId', course.get('externalId'));
     },
 
     changeLevel(){
-      this.get('course').set('level', this.get('level'));
-      this.get('course').save();
+      this.course.set('level', this.level);
+      this.course.save();
     },
 
     revertLevelChanges(){
-      this.set('level', this.get('course').get('level'));
+      this.set('level', this.course.get('level'));
     },
   }
 });

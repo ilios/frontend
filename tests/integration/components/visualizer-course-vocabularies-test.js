@@ -12,6 +12,6 @@ module('Integration | Component | visualizer-course-vocabularies', function(hook
 
     await render(hbs`{{visualizer-course-vocabularies}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

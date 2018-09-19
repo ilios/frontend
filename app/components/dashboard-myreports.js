@@ -24,11 +24,11 @@ export default Component.extend(ReportTitleMixin, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.get('loadAttr').perform();
+    this.loadAttr.perform();
   },
 
   loadAttr: task(function * () {
-    const user = yield this.get('currentUser').get('model');
+    const user = yield this.currentUser.get('model');
     this.set('user', user);
   }),
 
@@ -39,27 +39,27 @@ export default Component.extend(ReportTitleMixin, {
    */
   sortedReports: computed('user.reports.[]', function(){
     return new Promise(resolve => {
-      this.get('user').get('reports').then(reports => {
+      this.user.get('reports').then(reports => {
         resolve(reports.sortBy('title'));
       });
     });
   }),
   reportResultsList: computed('selectedReport', 'selectedYear', function(){
-    const report = this.get('selectedReport');
-    const year = this.get('selectedYear');
+    const report = this.selectedReport;
+    const year = this.selectedYear;
     if(!report){
       return resolve([]);
     }
-    return this.get('reporting').getResults(report, year);
+    return this.reporting.getResults(report, year);
   }),
   allAcademicYears: computed(async function () {
-    const store = this.get('store');
+    const store = this.store;
     const years = await store.findAll('academic-year');
 
     return years;
   }),
   showAcademicYearFilter: computed('selectedReport', function(){
-    const report = this.get('selectedReport');
+    const report = this.selectedReport;
     if(!report){
       return false;
     }
@@ -69,14 +69,14 @@ export default Component.extend(ReportTitleMixin, {
     return prepositionalObject != 'course' && ['course', 'session'].includes(subject);
   }),
   selectedReportTitle: computed('selectedReport', async function(){
-    const report = this.get('selectedReport');
+    const report = this.selectedReport;
     return this.getReportTitle(report);
   }),
   downloadReport: task(function* () {
-    const report = this.get('selectedReport');
+    const report = this.selectedReport;
     const title = yield this.getReportTitle(report);
-    const year = this.get('selectedYear');
-    const data = yield this.get('reporting').getArrayResults(report, year);
+    const year = this.selectedYear;
+    const data = yield this.reporting.getArrayResults(report, year);
     this.set('finishedBuildingReport', true);
     const csv = PapaParse.unparse(data);
     createDownloadFile(`${title}.csv`, csv, 'text/csv');
@@ -85,7 +85,7 @@ export default Component.extend(ReportTitleMixin, {
   }).drop(),
   actions: {
     toggleEditor() {
-      this.set('myReportEditorOn', !this.get('myReportEditorOn'));
+      this.set('myReportEditorOn', !this.myReportEditorOn);
     },
     closeEditor() {
       this.set('myReportEditorOn', false);

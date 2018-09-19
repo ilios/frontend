@@ -12,8 +12,8 @@ const CourseProxy = ObjectProxy.extend({
   i18n: null,
   isSaving: false,
   status: computed('content.isPublished', 'content.isScheduled', function(){
-    const i18n = this.get('i18n');
-    let course = this.get('content');
+    const i18n = this.i18n;
+    let course = this.content;
     let translation = 'general.';
     if (course.get('isScheduled')) {
       translation += 'scheduled';
@@ -27,8 +27,8 @@ const CourseProxy = ObjectProxy.extend({
     return i18n.t(translation).string;
   }),
   userCanDelete: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('content');
+    const permissionChecker = this.permissionChecker;
+    const course = this.content;
     if (course.get('isPublishedOrScheduled')) {
       return false;
     } else if (course.hasMany('descendants').ids().length > 0) {
@@ -37,13 +37,13 @@ const CourseProxy = ObjectProxy.extend({
     return permissionChecker.canDeleteCourse(course);
   }),
   userCanLock: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('content');
+    const permissionChecker = this.permissionChecker;
+    const course = this.content;
     return permissionChecker.canUpdateCourse(course);
   }),
   userCanUnLock: computed('content', 'content.locked', 'content.archived', async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('content');
+    const permissionChecker = this.permissionChecker;
+    const course = this.content;
     return permissionChecker.canUnlockCourse(course);
   }),
 });
@@ -53,8 +53,8 @@ export default Component.extend({
   permissionChecker: service(),
   courses: null,
   proxiedCourses: computed('courses.[]', function(){
-    const i18n = this.get('i18n');
-    const courses = this.get('courses');
+    const i18n = this.i18n;
+    const courses = this.courses;
     if (!courses) {
       return [];
     }
@@ -62,19 +62,19 @@ export default Component.extend({
       return CourseProxy.create({
         content: course,
         i18n,
-        currentUser: this.get('currentUser'),
-        permissionChecker: this.get('permissionChecker')
+        currentUser: this.currentUser,
+        permissionChecker: this.permissionChecker
       });
     });
   }),
   sortBy: 'title',
   sortedCourses: computed('proxiedCourses.[]', 'sortBy', 'sortedAscending', function(){
-    let sortBy = this.get('sortBy');
+    let sortBy = this.sortBy;
     if (-1 !== sortBy.indexOf(':')) {
       sortBy = sortBy.split(':', 1)[0];
     }
-    let sortedAscending = this.get('sortedAscending');
-    const courses = this.get('proxiedCourses');
+    let sortedAscending = this.sortedAscending;
+    const courses = this.proxiedCourses;
     let sortedCourses = courses.sortBy(sortBy);
     if (!sortedAscending) {
       sortedCourses = sortedCourses.slice().reverse();
@@ -84,7 +84,7 @@ export default Component.extend({
   }),
 
   sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
@@ -101,7 +101,7 @@ export default Component.extend({
       courseProxy.get('userCanUnLock').then(permission => {
         if (permission) {
           courseProxy.set('isSaving', true);
-          this.get('unlock')(courseProxy.get('content')).then(()=>{
+          this.unlock(courseProxy.get('content')).then(()=>{
             courseProxy.set('isSaving', false);
           });
         }
@@ -111,18 +111,18 @@ export default Component.extend({
       courseProxy.get('userCanLock').then(permission => {
         if (permission) {
           courseProxy.set('isSaving', true);
-          this.get('lock')(courseProxy.get('content')).then(()=>{
+          this.lock(courseProxy.get('content')).then(()=>{
             courseProxy.set('isSaving', false);
           });
         }
       });
     },
     sortBy(what){
-      const sortBy = this.get('sortBy');
+      const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
-      this.get('setSortBy')(what);
+      this.setSortBy(what);
     },
   }
 });

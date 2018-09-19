@@ -23,13 +23,13 @@ export default Component.extend({
   'data-test-user-profile-roles': true,
 
   save: task(function * (){
-    const store = this.get('store');
-    const user = this.get('user');
+    const store = this.store;
+    const user = this.user;
 
-    const isStudent = yield this.get('isStudent');
-    const isFormerStudent = yield this.get('isFormerStudent');
-    const isEnabled = yield this.get('isEnabled');
-    const isUserSyncIgnored = yield this.get('isUserSyncIgnored');
+    const isStudent = yield this.isStudent;
+    const isFormerStudent = yield this.isFormerStudent;
+    const isEnabled = yield this.isEnabled;
+    const isUserSyncIgnored = yield this.isUserSyncIgnored;
 
     let roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('title', 'Student');
@@ -52,7 +52,7 @@ export default Component.extend({
     }
 
     yield user.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
     this.set('hasSavedRecently', true);
     yield timeout(500);
     this.set('hasSavedRecently', false);
@@ -60,7 +60,7 @@ export default Component.extend({
   }).drop(),
 
   roleTitles: computed('user.roles.[]', async function(){
-    const user = this.get('user');
+    const user = this.user;
     if (isEmpty(user)) {
       return [];
     }
@@ -69,24 +69,24 @@ export default Component.extend({
   }),
 
   isStudent: computed('roleTitles.[]', 'isStudentFlipped', async function(){
-    const flipped = this.get('isStudentFlipped');
-    const roleTitles = await this.get('roleTitles');
+    const flipped = this.isStudentFlipped;
+    const roleTitles = await this.roleTitles;
 
     const originallyYes = roleTitles.includes('student');
     return (originallyYes && !flipped) || (!originallyYes && flipped);
   }),
 
   isFormerStudent: computed('roleTitles.[]', 'isFormerStudentFlipped', async function(){
-    const flipped = this.get('isFormerStudentFlipped');
-    const roleTitles = await this.get('roleTitles');
+    const flipped = this.isFormerStudentFlipped;
+    const roleTitles = await this.roleTitles;
 
     const originallyYes = roleTitles.includes('former student');
     return (originallyYes && !flipped) || (!originallyYes && flipped);
   }),
 
   isEnabled: computed('user.enabled', 'isEnabledFlipped', function(){
-    const flipped = this.get('isEnabledFlipped');
-    const user = this.get('user');
+    const flipped = this.isEnabledFlipped;
+    const user = this.user;
     if (isEmpty(user)) {
       return false;
     }
@@ -95,8 +95,8 @@ export default Component.extend({
   }),
 
   isUserSyncIgnored: computed('user.userSyncIgnore', 'isUserSyncIgnoredFlipped', function(){
-    const flipped = this.get('isUserSyncIgnoredFlipped');
-    const user = this.get('user');
+    const flipped = this.isUserSyncIgnoredFlipped;
+    const user = this.user;
     if (isEmpty(user)) {
       return false;
     }
@@ -110,7 +110,7 @@ export default Component.extend({
       this.set('isFormerStudentFlipped', false);
       this.set('isEnabledFlipped', false);
       this.set('isUserSyncIgnoredFlipped', false);
-      this.get('setIsManaging')(false);
+      this.setIsManaging(false);
     }
   }
 

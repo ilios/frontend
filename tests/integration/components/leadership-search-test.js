@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll, click, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -16,7 +21,7 @@ module('Integration | Component | leadership search', function(hooks) {
 
     const search = 'input[type="search"]';
 
-    assert.equal(findAll(search).length, 1);
+    assert.dom(search).exists({ count: 1 });
   });
 
 
@@ -28,7 +33,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const results = 'ul';
 
     await fillIn(search, 'ab');
-    assert.equal(find(results).textContent.trim(), 'keep typing...');
+    assert.dom(results).hasText('keep typing...');
 
   });
 
@@ -47,7 +52,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const firstResult = `${results}:nth-of-type(2)`;
 
     await fillIn(search, 'test person');
-    assert.equal(find(resultsCount).textContent.trim(), '1 result');
+    assert.dom(resultsCount).hasText('1 result');
     assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
   });
 
@@ -60,7 +65,7 @@ module('Integration | Component | leadership search', function(hooks) {
     const resultsCount = `${results}:nth-of-type(1)`;
 
     await fillIn(search, 'search words');
-    assert.equal(find(resultsCount).textContent.trim(), 'no results');
+    assert.dom(resultsCount).hasText('no results');
   });
 
   test('click user fires add user', async function(assert) {
@@ -110,11 +115,11 @@ module('Integration | Component | leadership search', function(hooks) {
 
     await fillIn(search, 'test');
 
-    assert.equal(find(resultsCount).textContent.trim(), '2 results');
+    assert.dom(resultsCount).hasText('2 results');
     assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
-    assert.notOk(find(firstResult).classList.contains('clickable'));
+    assert.dom(firstResult).hasNoClass('clickable');
     assert.equal(find(secondResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.person2testemail2');
-    assert.ok(find(secondResult).classList.contains('clickable'));
+    assert.dom(secondResult).hasClass('clickable');
     await click(firstResult);
     await click(secondResult);
   });

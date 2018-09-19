@@ -40,13 +40,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       years.push(lastYear + i);
     }
     this.set('years', years);
-    const course = this.get('course');
+    const course = this.course;
     if (isPresent(course)) {
       this.set('title', course.get('title'));
     }
 
-    this.get('loadUnavailableYears').perform();
-    this.get('changeSelectedYear').perform(lastYear);
+    this.loadUnavailableYears.perform();
+    this.changeSelectedYear.perform(lastYear);
   },
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
@@ -70,7 +70,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('save').perform();
+      this.save.perform();
     }
   },
 
@@ -84,14 +84,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isSaving', false);
       return;
     }
-    const commonAjax = this.get('commonAjax');
+    const commonAjax = this.commonAjax;
     const courseId = this.get('course.id');
-    const expandAdvancedOptions = this.get('expandAdvancedOptions');
-    const year = this.get('selectedYear');
-    const newCourseTitle = this.get('title');
-    const selectedCohortIds = this.get('selectedCohorts').mapBy('id');
-    let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
-    let skipOfferings = this.get('skipOfferings');
+    const expandAdvancedOptions = this.expandAdvancedOptions;
+    const year = this.selectedYear;
+    const newCourseTitle = this.title;
+    const selectedCohortIds = this.selectedCohorts.mapBy('id');
+    let newStartDate = moment(this.startDate).format('YYYY-MM-DD');
+    let skipOfferings = this.skipOfferings;
 
     let data = {
       year,
@@ -106,8 +106,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (selectedCohortIds) {
       data.newCohorts = selectedCohortIds;
     }
-    const host = this.get('host') ? this.get('host') : '';
-    const namespace = this.get('namespace');
+    const host = this.host ? this.host : '';
+    const namespace = this.namespace;
 
     let url = host + '/' + namespace + `/courses/${courseId}/rollover`;
     const newCoursesObj = yield commonAjax.request(url, {
@@ -115,19 +115,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       data
     });
 
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
+    const flashMessages = this.flashMessages;
+    const store = this.store;
     flashMessages.success('general.courseRolloverSuccess');
     store.pushPayload(newCoursesObj);
     let newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
 
-    return this.get('visit')(newCourse);
+    return this.visit(newCourse);
   }).drop(),
 
   loadUnavailableYears: task(function * (){
     yield timeout(250); //debounce title changes
-    const title = this.get('title');
-    const store = this.get('store');
+    const title = this.title;
+    const store = this.store;
     let existingCoursesWithTitle = yield store.query('course', {
       filters: {title}
     });
@@ -169,15 +169,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   actions: {
     changeTitle(newTitle){
       this.set('title', newTitle);
-      this.get('loadUnavailableYears').perform();
+      this.loadUnavailableYears.perform();
     },
     addCohort(cohort) {
-      let selectedCohorts = this.get('selectedCohorts');
+      let selectedCohorts = this.selectedCohorts;
       selectedCohorts.pushObject(cohort);
       this.set('selectedCohorts', selectedCohorts);
     },
     removeCohort(cohort){
-      let selectedCohorts = this.get('selectedCohorts');
+      let selectedCohorts = this.selectedCohorts;
       selectedCohorts.removeObject(cohort);
       this.set('selectedCohorts', selectedCohorts);
     },

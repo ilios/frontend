@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
 
@@ -25,10 +25,10 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    assert.equal(find('td').textContent.trim(), 'fake title');
-    assert.equal(find('td:nth-of-type(2) button').textContent.trim(), 'Add New');
-    assert.equal(find('td:nth-of-type(3) button').textContent.trim(), 'Add New');
-    assert.equal(findAll('td:nth-of-type(4) svg').length, 1);
+    assert.dom('td').hasText('fake title');
+    assert.dom('td:nth-of-type(2) button').hasText('Add New');
+    assert.dom('td:nth-of-type(3) button').hasText('Add New');
+    assert.dom('td:nth-of-type(4) svg').exists({ count: 1 });
   });
 
   test('renders removable', async function(assert) {
@@ -46,7 +46,7 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    assert.ok(find('tr').classList.contains('confirm-removal'));
+    assert.dom('tr').hasClass('confirm-removal');
   });
 
   test('can change title', async function(assert) {
@@ -149,11 +149,11 @@ module('Integration | Component | course objective list item', function(hooks) {
       manageDescriptors=(action nothing)
     }}`);
 
-    assert.equal(find('td').textContent.trim(), 'fake title');
-    assert.equal(findAll('td:nth-of-type(1) .editable').length, 0, 'No in-place editor in read-only mode');
-    assert.equal(findAll('td:nth-of-type(2) button').length, 0, 'No edit button for parent objectives in read-only mode.');
-    assert.equal(find(findAll('td')[2]).textContent.trim(), 'None');
-    assert.equal(findAll('td:nth-of-type(3) button').length, 0, 'No edit button for MeSH terms in read-only mode.');
-    assert.equal(find(findAll('td')[3]).textContent.trim(), '', 'No actions available in read-only mode.');
+    assert.dom('td').hasText('fake title');
+    assert.dom('td:nth-of-type(1) .editable').doesNotExist('No in-place editor in read-only mode');
+    assert.dom('td:nth-of-type(2) button').doesNotExist('No edit button for parent objectives in read-only mode.');
+    assert.dom(findAll('td')[2]).hasText('None');
+    assert.dom('td:nth-of-type(3) button').doesNotExist('No edit button for MeSH terms in read-only mode.');
+    assert.dom(findAll('td')[3]).hasText('', 'No actions available in read-only mode.');
   });
 });

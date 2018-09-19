@@ -23,7 +23,7 @@ export default Component.extend({
 
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('loadCohorts').perform();
+    this.loadCohorts.perform();
   },
   students: null,
   school: null,
@@ -37,8 +37,8 @@ export default Component.extend({
 
   bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function(){
     return new Promise(resolve => {
-      const primaryCohortId = this.get('primaryCohortId');
-      const cohorts = this.get('cohorts');
+      const primaryCohortId = this.primaryCohortId;
+      const cohorts = this.cohorts;
       if (primaryCohortId) {
         let currentCohort = cohorts.find(cohort => cohort.id === primaryCohortId);
         if (currentCohort) {
@@ -51,11 +51,11 @@ export default Component.extend({
   }),
 
   filteredStudents: computed('savedUserIds.[]', 'students.[]', 'offset', 'limit', function(){
-    const limit = this.get('limit');
-    const offset = this.get('offset');
+    const limit = this.limit;
+    const offset = this.offset;
     const end = limit + offset;
-    const savedUserIds = this.get('savedUserIds');
-    let students = this.get('students');
+    const savedUserIds = this.savedUserIds;
+    let students = this.students;
 
     if (isEmpty(students)) {
       return [];
@@ -67,8 +67,8 @@ export default Component.extend({
 
   cohorts: reads('loadCohorts.lastSuccessful.value'),
   loadCohorts: task(function * () {
-    let school = this.get('school');
-    let cohorts = yield this.get('store').query('cohort', {
+    let school = this.school;
+    let cohorts = yield this.store.query('cohort', {
       filters: {
         schools: [school.get('id')],
       },
@@ -108,9 +108,9 @@ export default Component.extend({
   save: task(function * () {
     this.set('savedUserIds', []);
     this.set('isSaving', true);
-    let ids = this.get('selectedUserIds');
-    let cohort = yield this.get('bestSelectedCohort');
-    let students = this.get('students');
+    let ids = this.selectedUserIds;
+    let cohort = yield this.bestSelectedCohort;
+    let students = this.students;
     let studentsToModify = students.filter(user => {
       return ids.includes(user.get('id'));
     });
@@ -122,12 +122,12 @@ export default Component.extend({
     while (studentsToModify.get('length') > 0){
       let parts = studentsToModify.splice(0, 3);
       yield RSVP.all(parts.invoke('save'));
-      this.get('savedUserIds').pushObjects(parts.mapBy('id'));
+      this.savedUserIds.pushObjects(parts.mapBy('id'));
     }
     this.set('isSaving', false);
     this.set('selectedUserIds', []);
 
-    this.get('flashMessages').success('general.savedSuccessfully');
+    this.flashMessages.success('general.savedSuccessfully');
 
   }).drop(),
 
@@ -143,17 +143,17 @@ export default Component.extend({
       const currentlySelected = this.get('selectedUserIds.length');
       const totalDisplayed = this.get('filteredStudents.length');
       if (currentlySelected < totalDisplayed) {
-        let users = this.get('filteredStudents');
+        let users = this.filteredStudents;
         this.set('selectedUserIds', users.mapBy('id'));
       } else {
         this.set('selectedUserIds', []);
       }
     },
     toggleUserSelection(userId){
-      if (this.get('selectedUserIds').includes(userId)) {
-        this.get('selectedUserIds').removeObject(userId);
+      if (this.selectedUserIds.includes(userId)) {
+        this.selectedUserIds.removeObject(userId);
       } else {
-        this.get('selectedUserIds').pushObject(userId);
+        this.selectedUserIds.pushObject(userId);
       }
     }
   }

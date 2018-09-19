@@ -28,8 +28,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['instructorgroup-header'],
   actions: {
     changeTitle(){
-      const group = this.get('instructorGroup');
-      const newTitle = this.get('title');
+      const group = this.instructorGroup;
+      const newTitle = this.title;
       this.send('addErrorDisplayFor', 'title');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -49,7 +49,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     revertTitleChanges(){
-      const group = this.get('instructorGroup');
+      const group = this.instructorGroup;
       this.set('title', group.get('title'));
     },
   }

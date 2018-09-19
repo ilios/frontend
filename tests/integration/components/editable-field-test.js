@@ -1,6 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  triggerKeyEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | editable field', function(hooks) {
@@ -9,13 +13,13 @@ module('Integration | Component | editable field', function(hooks) {
   test('it renders value', async function(assert) {
     await render(hbs`{{editable-field value='woot!'}}`);
 
-    assert.equal(this.element.textContent.trim(), 'woot!');
+    assert.dom(this.element).hasText('woot!');
   });
 
   test('it renders clickPrompt', async function(assert) {
     await render(hbs`{{editable-field clickPrompt='click me!'}}`);
 
-    assert.equal(this.element.textContent.trim(), 'click me!');
+    assert.dom(this.element).hasText('click me!');
   });
 
   test('it renders content', async function(assert) {
@@ -25,9 +29,9 @@ module('Integration | Component | editable field', function(hooks) {
        {{/editable-field}}
    `);
 
-    assert.equal(this.element.textContent.trim(), 'text');
+    assert.dom(this.element).hasText('text');
     await click('.editable');
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom(this.element).hasText('template block text');
 
 
   });
@@ -37,8 +41,8 @@ module('Integration | Component | editable field', function(hooks) {
     this.set('value', '<p>&nbsp;</p>');
     await render(hbs`{{editable-field value=value}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
-    assert.equal(findAll(icon).length, 1);
+    assert.dom(this.element).hasText('');
+    assert.dom(icon).exists({ count: 1 });
   });
 
   test('save on enter', async function(assert) {

@@ -14,8 +14,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   * Prefetch user relationship data to smooth loading
   **/
   async afterModel(user){
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
     const obj = await hash({
       cohorts: user.get('cohorts'),
       learnerGroups: user.get('learnerGroups'),
@@ -35,7 +35,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canUpdate', this.get('canUpdate'));
-    controller.set('canCreate', this.get('canCreate'));
+    controller.set('canUpdate', this.canUpdate);
+    controller.set('canCreate', this.canCreate);
   },
 });

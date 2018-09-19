@@ -9,7 +9,7 @@ export default Component.extend({
   'data-test-program-leadership-expanded': true,
   didReceiveAttrs(){
     this._super(...arguments);
-    const program = this.get('program');
+    const program = this.program;
     if (program) {
       program.get('directors').then(directors => {
         this.set('directors', directors.toArray());
@@ -26,12 +26,12 @@ export default Component.extend({
   },
   save: task(function * (){
     yield timeout(10);
-    const directors = this.get('directors');
-    let program = this.get('program');
+    const directors = this.directors;
+    let program = this.program;
     program.setProperties({directors});
-    this.get('expand')();
+    this.expand();
     yield program.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
   }),
   add(where, user){
     let arr = this.get(where).toArray();

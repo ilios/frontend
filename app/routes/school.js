@@ -35,23 +35,23 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canUpdateSchool', this.get('canUpdateSchool'));
-    controller.set('canUpdateCompetency', this.get('canUpdateCompetency'));
-    controller.set('canDeleteCompetency', this.get('canDeleteCompetency'));
-    controller.set('canCreateCompetency', this.get('canCreateCompetency'));
-    controller.set('canUpdateVocabulary', this.get('canUpdateVocabulary'));
-    controller.set('canDeleteVocabulary', this.get('canDeleteVocabulary'));
-    controller.set('canCreateVocabulary', this.get('canCreateVocabulary'));
-    controller.set('canUpdateTerm', this.get('canUpdateTerm'));
-    controller.set('canDeleteTerm', this.get('canDeleteTerm'));
-    controller.set('canCreateTerm', this.get('canCreateTerm'));
-    controller.set('canUpdateSessionType', this.get('canUpdateSessionType'));
-    controller.set('canDeleteSessionType', this.get('canDeleteSessionType'));
-    controller.set('canCreateSessionType', this.get('canCreateSessionType'));
-    controller.set('canUpdateSchoolConfig', this.get('canUpdateSchoolConfig'));
+    controller.set('canUpdateSchool', this.canUpdateSchool);
+    controller.set('canUpdateCompetency', this.canUpdateCompetency);
+    controller.set('canDeleteCompetency', this.canDeleteCompetency);
+    controller.set('canCreateCompetency', this.canCreateCompetency);
+    controller.set('canUpdateVocabulary', this.canUpdateVocabulary);
+    controller.set('canDeleteVocabulary', this.canDeleteVocabulary);
+    controller.set('canCreateVocabulary', this.canCreateVocabulary);
+    controller.set('canUpdateTerm', this.canUpdateTerm);
+    controller.set('canDeleteTerm', this.canDeleteTerm);
+    controller.set('canCreateTerm', this.canCreateTerm);
+    controller.set('canUpdateSessionType', this.canUpdateSessionType);
+    controller.set('canDeleteSessionType', this.canDeleteSessionType);
+    controller.set('canCreateSessionType', this.canCreateSessionType);
+    controller.set('canUpdateSchoolConfig', this.canUpdateSchoolConfig);
   },
   async loadPermissions(school) {
-    const permissionChecker = this.get('permissionChecker');
+    const permissionChecker = this.permissionChecker;
 
     const canUpdateSchool = await permissionChecker.canUpdateSchool(school);
     const canUpdateCompetency = await permissionChecker.canUpdateCompetencyInSchool(school);

@@ -14,9 +14,9 @@ export default Component.extend({
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const sequenceBlock = this.get('sequenceBlock');
-    const sessions = this.get('sessions');
-    this.get('loadAttr').perform(sequenceBlock, sessions);
+    const sequenceBlock = this.sequenceBlock;
+    const sessions = this.sessions;
+    this.loadAttr.perform(sequenceBlock, sessions);
   },
 
   loadAttr: task(function * (sequenceBlock, sessions) {
@@ -30,17 +30,17 @@ export default Component.extend({
   }),
 
   sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
 
   actions: {
     sortBy(what){
-      const sortBy = this.get('sortBy');
+      const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
-      this.get('setSortBy')(what);
+      this.setSortBy(what);
     },
   }
 });

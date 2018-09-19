@@ -1,7 +1,14 @@
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, fillIn, findAll, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  find,
+  fillIn,
+  findAll,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -29,17 +36,17 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
 
-    assert.equal(find('th').textContent.trim(), 'Learner Group Title');
-    assert.equal(find(findAll('th')[1]).textContent.trim(), 'Members');
-    assert.equal(find(findAll('th')[2]).textContent.trim(), 'Subgroups');
-    assert.equal(find(findAll('th')[3]).textContent.trim(), 'Actions');
+    assert.dom('th').hasText('Learner Group Title');
+    assert.dom(findAll('th')[1]).hasText('Members');
+    assert.dom(findAll('th')[2]).hasText('Subgroups');
+    assert.dom(findAll('th')[3]).hasText('Actions');
 
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'first');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 2);
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 0);
-    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'second');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 0);
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 2);
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('first');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText(2);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(0);
+    assert.dom('tbody tr:nth-of-type(2) td').hasText('second');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText(0);
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(2);
 
   });
 
@@ -80,7 +87,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await click('tbody td:nth-of-type(4) .remove');
 
-    assert.ok(find('tbody tr').classList.contains('confirm-removal'));
+    assert.dom('tbody tr').hasClass('confirm-removal');
     assert.equal(find(findAll('tbody tr')[1]).textContent.trim().search(/Are you sure/), 0);
 
   });
@@ -102,7 +109,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     this.set('parentGroup', parentGroup);
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
 
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'first');
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('first');
 
     await click('.expand-button');
 
@@ -145,14 +152,14 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const done = '.done';
 
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
-    assert.equal(find(firstGroupTitle).textContent.trim(), 'group 1');
+    assert.dom(firstGroupTitle).hasText('group 1');
     await click(expandButton);
     await click(multiGroupButton);
 
     await fillIn(multiGroupCount, 1);
     await click(done);
 
-    assert.equal(find(secondGroupTitle).textContent.trim(), 'group 2');
+    assert.dom(secondGroupTitle).hasText('group 2');
     const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
@@ -187,7 +194,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     await fillIn(multiGroupCount, 1);
     await click(done);
 
-    assert.equal(find(firstGroupTitle).textContent.trim(), expectedGroupTitle);
+    assert.dom(firstGroupTitle).hasText(expectedGroupTitle);
     const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 2));
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);

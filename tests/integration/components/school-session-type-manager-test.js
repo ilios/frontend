@@ -46,8 +46,8 @@ module('Integration | Component | school session type manager', function(hooks) 
 
     assert.equal(find(titleInput).value.trim(), 'one');
     assert.equal(find(colorInput).value.trim(), '#ffffff');
-    assert.ok(find(assessmentInput).checked);
-    assert.equal(find(assessmentOptionSelect).value, '2');
+    assert.dom(assessmentInput).isChecked();
+    assert.dom(assessmentOptionSelect).hasValue('2');
   });
 
   test('close fires action', async function(assert) {

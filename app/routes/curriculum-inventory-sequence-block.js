@@ -10,7 +10,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   canUpdate: false,
   titleToken: 'general.curriculumInventoryReports',
   async afterModel(model) {
-    const permissionChecker = this.get('permissionChecker');
+    const permissionChecker = this.permissionChecker;
 
     const report = await model.get('report');
     const canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
@@ -24,6 +24,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canUpdate', this.get('canUpdate'));
+    controller.set('canUpdate', this.canUpdate);
   },
 });

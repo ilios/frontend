@@ -13,7 +13,7 @@ export default Component.extend({
   'data-test-ilios-course-details': true,
   actions: {
     collapse() {
-      this.get('setShowDetails')(false);
+      this.setShowDetails(false);
       //when the button is clicked to collapse, animate the focus to the top of the page
       scrollTo("body");
     },

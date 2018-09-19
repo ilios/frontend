@@ -12,7 +12,7 @@ export default Component.extend({
 
   recentlyUpdated: computed('lastModified', {
     get() {
-      const lastModified = this.get('lastModified');
+      const lastModified = this.lastModified;
       if (isEmpty(lastModified)) {
         return false;
       }

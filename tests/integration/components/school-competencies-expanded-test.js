@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -42,8 +42,8 @@ module('Integration | Component | school competencies expanded', function(hooks)
     const domainTitle = `${domains}:nth-of-type(1)`;
 
     await settled();
-    assert.equal(find(title).textContent.trim(), 'Competencies (1/2)');
-    assert.equal(findAll(domains).length, 1);
+    assert.dom(title).hasText('Competencies (1/2)');
+    assert.dom(domains).exists({ count: 1 });
     assert.ok(find(domainTitle).textContent.includes('domain 0'));
     assert.ok(find(domainTitle).textContent.includes('competency 0'));
     assert.ok(find(domainTitle).textContent.includes('competency 1'));

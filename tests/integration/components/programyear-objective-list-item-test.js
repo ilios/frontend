@@ -26,9 +26,9 @@ module('Integration | Component | programyear objective list item', function(hoo
       editable=true
     }}`);
 
-    assert.equal(find(findAll('td')[1]).textContent.trim(), 'fake title');
-    assert.equal(find('td:nth-of-type(3) button').textContent.trim(), 'Add New');
-    assert.equal(find('td:nth-of-type(4) button').textContent.trim(), 'Add New');
+    assert.dom(findAll('td')[1]).hasText('fake title');
+    assert.dom('td:nth-of-type(3) button').hasText('Add New');
+    assert.dom('td:nth-of-type(4) button').hasText('Add New');
   });
 
 

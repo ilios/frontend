@@ -11,8 +11,8 @@ export default Component.extend(ReportTitleMixin, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    const report = this.get('report');
-    this.get('loadTitle').perform(report);
+    const report = this.report;
+    this.loadTitle.perform(report);
   },
 
   loadTitle: task(function * (report) {

@@ -32,8 +32,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   publishTarget: alias('sequenceBlock'),
   actions: {
     changeTitle(){
-      const block = this.get('sequenceBlock');
-      const newTitle = this.get('blockTitle');
+      const block = this.sequenceBlock;
+      const newTitle = this.blockTitle;
       this.send('addErrorDisplayFor', 'blockTitle');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -53,7 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     revertTitleChanges(){
-      const block = this.get('sequenceBlock');
+      const block = this.sequenceBlock;
       this.set('blockTitle', block.get('title'));
     },
   }

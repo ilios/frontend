@@ -1,6 +1,12 @@
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  findAll,
+  find,
+  fillIn,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | manage users summary', function(hooks) {
@@ -11,8 +17,8 @@ module('Integration | Component | manage users summary', function(hooks) {
 
     assert.ok(find('h2').textContent.trim().startsWith('Ilios Users'));
     assert.ok(find('h2').textContent.includes('View All'));
-    assert.equal(find('a').textContent.trim(), 'View All');
-    assert.equal(findAll('a')[2].textContent.trim(), 'Upload Multiple Users');
+    assert.dom('a').hasText('View All');
+    assert.dom(findAll('a')[2]).hasText('Upload Multiple Users');
   });
 
   /**
@@ -37,7 +43,7 @@ module('Integration | Component | manage users summary', function(hooks) {
     await fillIn(userSearch, '12');
     await triggerEvent(userSearch, 'keyup');
 
-    assert.equal(findAll(results).length, 1);
-    assert.equal(find(results).textContent.trim(), 'keep typing...');
+    assert.dom(results).exists({ count: 1 });
+    assert.dom(results).hasText('keep typing...');
   });
 });

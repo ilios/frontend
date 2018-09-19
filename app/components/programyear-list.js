@@ -23,7 +23,7 @@ export default Component.extend({
   canCreate: false,
 
   sortedContent: computed('programYears.[]', async function() {
-    const programYears = await this.get('programYears');
+    const programYears = await this.programYears;
     if (isEmpty(programYears)) {
       return [];
     }
@@ -31,9 +31,9 @@ export default Component.extend({
   }),
 
   proxiedProgramYears: computed('sortedContent.[]', async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const currentUser = this.get('currentUser');
-    const programYears = await this.get('sortedContent');
+    const permissionChecker = this.permissionChecker;
+    const currentUser = this.currentUser;
+    const programYears = await this.sortedContent;
     return programYears.map(programYear => {
       return ProgramYearProxy.create({
         content: programYear,
@@ -55,7 +55,7 @@ export default Component.extend({
       }
 
       return years.filter((year) => {
-        return !this.get('existingStartYears').includes(year.toString());
+        return !this.existingStartYears.includes(year.toString());
       }).map((startYear) => {
         return { label: `${startYear} - ${startYear + 1}`, value: startYear };
       });
@@ -75,14 +75,14 @@ export default Component.extend({
   },
 
   incrementSavedItems(){
-    this.set('savedItems', this.get('savedItems') + 1);
+    this.set('savedItems', this.savedItems + 1);
   },
 
   save: task(function * (startYear){
-    const programYears = yield this.get('sortedContent');
+    const programYears = yield this.sortedContent;
     const latestProgramYear = programYears.get('lastObject');
-    const program = this.get('program');
-    const store = this.get('store');
+    const program = this.program;
+    const store = this.store;
     let itemsToSave = 0;
     this.resetSaveItems();
 
@@ -140,7 +140,7 @@ export default Component.extend({
 
   actions: {
     toggleEditor() {
-      if (this.get('editorOn')) {
+      if (this.editorOn) {
         this.send('cancel');
       } else {
         this.setProperties({ editorOn: true, saved: false });
@@ -170,7 +170,7 @@ export default Component.extend({
           run(()=>{
             programYearProxy.set('isSaving', true);
           });
-          this.get('unlock')(programYearProxy.get('content')).then(()=>{
+          this.unlock(programYearProxy.get('content')).then(()=>{
             programYearProxy.set('isSaving', false);
           });
         }
@@ -182,7 +182,7 @@ export default Component.extend({
           run(()=>{
             programYearProxy.set('isSaving', true);
           });
-          this.get('lock')(programYearProxy.get('content')).then(()=>{
+          this.lock(programYearProxy.get('content')).then(()=>{
             programYearProxy.set('isSaving', false);
           });
         }
@@ -199,8 +199,8 @@ const ProgramYearProxy = ObjectProxy.extend({
   showRemoveConfirmation: false,
   isSaving: false,
   userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function(){
-    const programYear = this.get('content');
-    const permissionChecker = this.get('permissionChecker');
+    const programYear = this.content;
+    const permissionChecker = this.permissionChecker;
     if (programYear.get('isPublishedOrScheduled')) {
       return false;
     }
@@ -212,13 +212,13 @@ const ProgramYearProxy = ObjectProxy.extend({
     return permissionChecker.canDeleteProgramYear(programYear);
   }),
   userCanLock: computed('content', 'currentUser.model.programYears.[]', async function(){
-    const programYear = this.get('content');
-    const permissionChecker = this.get('permissionChecker');
+    const programYear = this.content;
+    const permissionChecker = this.permissionChecker;
     return permissionChecker.canUpdateProgramYear(programYear);
   }),
   userCanUnLock: computed('content', 'currentUser.model.programYears.[]', async function(){
-    const programYear = this.get('content');
-    const permissionChecker = this.get('permissionChecker');
+    const programYear = this.content;
+    const permissionChecker = this.permissionChecker;
     return permissionChecker.canUnlockProgramYear(programYear);
   }),
 });

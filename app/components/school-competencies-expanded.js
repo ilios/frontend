@@ -16,33 +16,33 @@ export default Component.extend({
   canCreate: false,
   bufferedCompetencies: null,
   competencies: computed('school.competencies.[]', async function(){
-    const school = this.get('school');
+    const school = this.school;
     const competencies = await school.get('competencies');
 
     return competencies;
   }),
   domains: computed('school.competencies.[]', async function(){
-    const competencies = await this.get('competencies');
+    const competencies = await this.competencies;
     const domains = competencies.filterBy('isDomain');
 
     return domains;
   }),
   childCompetencies: computed('school.competencies.[]', async function(){
-    const competencies = await this.get('competencies');
+    const competencies = await this.competencies;
     const childCompetencies = competencies.filterBy('isNotDomain');
 
     return childCompetencies;
   }),
   showCollapsible: computed('isManaging', 'school.competencies.length', function(){
-    const isManaging = this.get('isManaging');
-    const school = this.get('school');
+    const isManaging = this.isManaging;
+    const school = this.school;
     const competencyIds = school.hasMany('competencies').ids();
     return competencyIds.length && ! isManaging;
   }),
   didReceiveAttrs(){
     this._super(...arguments);
-    if (this.get('isManaging') && isEmpty(this.get('bufferedCompetencies'))) {
-      const school = this.get('school');
+    if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
+      const school = this.school;
       school.get('competencies').then(competencies => {
         this.set('bufferedCompetencies', competencies.toArray());
       });
@@ -51,7 +51,7 @@ export default Component.extend({
   },
   actions: {
     collapse(){
-      const collapse = this.get('collapse');
+      const collapse = this.collapse;
       this.get('school.competencies').then(competencies => {
         if(competencies.length){
           collapse();
@@ -59,30 +59,30 @@ export default Component.extend({
       });
     },
     addCompetencyToBuffer(domain, title){
-      let competency = this.get('store').createRecord('competency', {title, active: true});
+      let competency = this.store.createRecord('competency', {title, active: true});
       if (isPresent(domain)) {
         competency.set('parent', domain);
         domain.get('children').then(children => {
           children.pushObject(competency);
-          this.get('bufferedCompetencies').pushObject(competency);
+          this.bufferedCompetencies.pushObject(competency);
         });
       } else {
-        this.get('bufferedCompetencies').pushObject(competency);
+        this.bufferedCompetencies.pushObject(competency);
       }
     },
     removeCompetencyFromBuffer(competency){
-      let buffer = this.get('bufferedCompetencies');
+      let buffer = this.bufferedCompetencies;
       if (buffer.includes(competency)) {
         buffer.removeObject(competency);
       }
     },
     save(){
       this.set('isSaving', true);
-      let school = this.get('school');
+      let school = this.school;
       school.get('competencies').then(schoolCompetencies => {
         let promises = [];
         let domainsToRemove = [];
-        let bufferedCompetencies = this.get('bufferedCompetencies');
+        let bufferedCompetencies = this.bufferedCompetencies;
         schoolCompetencies.filter(competency => {
           return !bufferedCompetencies.includes(competency);
         }).forEach(competency => {
@@ -112,12 +112,12 @@ export default Component.extend({
       });
     },
     cancel(){
-      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
+      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       this.set('bufferedCompetencies', []);
       setSchoolManageCompetencies(false);
     },
     manage(){
-      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
+      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       this.get('school.competencies').then(competencies => {
         this.set('bufferedCompetencies', competencies.toArray());
         setSchoolManageCompetencies(true);

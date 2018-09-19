@@ -21,7 +21,7 @@ export default Component.extend({
   },
   actions: {
     save() {
-      const  session = this.get('session');
+      const  session = this.session;
       session.save();
     },
   }

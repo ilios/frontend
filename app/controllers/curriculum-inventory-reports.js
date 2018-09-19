@@ -41,15 +41,15 @@ export default Controller.extend({
    */
   selectedSchool: computed('model.[]', 'schoolId', function(){
     return new Promise(resolve => {
-      let schools = this.get('model');
-      const schoolId = this.get('schoolId');
+      let schools = this.model;
+      const schoolId = this.schoolId;
       if(isPresent(schoolId)){
         let school = schools.findBy('id', schoolId);
         if(school){
           resolve(school);
         }
       } else {
-        this.get('currentUser').get('model').then(user => {
+        this.currentUser.get('model').then(user => {
           user.get('school').then(school => {
             resolve(school);
           });
@@ -66,11 +66,11 @@ export default Controller.extend({
    */
   programs: computed('selectedSchool', function(){
     return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
+      this.selectedSchool.then(school => {
         if(isEmpty(school)){
           resolve([]);
         } else {
-          this.get('store').query('program', {
+          this.store.query('program', {
             filters: {
               school: school.get('id'),
               published: true
@@ -92,9 +92,9 @@ export default Controller.extend({
    */
   selectedProgram: computed('programs.[]', 'programId', function(){
     return new Promise(resolve => {
-      this.get('programs').then(programs => {
+      this.programs.then(programs => {
         let program;
-        let programId = this.get('programId');
+        let programId = this.programId;
         if(isPresent(programId)){
           program = programs.findBy('id', programId);
         }
@@ -113,14 +113,14 @@ export default Controller.extend({
   }),
 
   canCreate: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = await this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = await this.selectedSchool;
     return permissionChecker.canCreateCurriculumInventoryReport(selectedSchool);
   }),
 
   actions: {
     changeSelectedProgram(programId) {
-      this.get('programs').then(programs => {
+      this.programs.then(programs => {
         let program = programs.findBy('id', programId);
         program.get('school').then(school => {
           this.set('schoolId', school.get('id'));
@@ -141,7 +141,7 @@ export default Controller.extend({
     },
 
     removeCurriculumInventoryReport(report) {
-      this.get('selectedProgram').then(program => {
+      this.selectedProgram.then(program => {
         program.get('curriculumInventoryReports').then(reports => {
           reports.removeObject(report);
           report.destroyRecord();
@@ -150,14 +150,14 @@ export default Controller.extend({
     },
 
     toggleNewCurriculumInventoryReportForm() {
-      this.set('showNewCurriculumInventoryReportForm', !this.get('showNewCurriculumInventoryReportForm'));
+      this.set('showNewCurriculumInventoryReportForm', !this.showNewCurriculumInventoryReportForm);
     },
 
     saveNewCurriculumInventoryReport(newReport) {
       return new Promise(resolve => {
         newReport.save().then(savedReport => {
           this.set('newReport', savedReport);
-          this.get('selectedProgram').then(program => {
+          this.selectedProgram.then(program => {
             program.get('curriculumInventoryReports').then(reports => {
               reports.pushObject(savedReport);
               this.set('showNewCurriculumInventoryReportForm', false);

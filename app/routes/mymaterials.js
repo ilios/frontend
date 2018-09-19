@@ -16,11 +16,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
   model(){
-    const commonAjax = this.get('commonAjax');
-    const host = this.get('host');
-    const namespace = this.get('namespace');
+    const commonAjax = this.commonAjax;
+    const host = this.host;
+    const namespace = this.namespace;
     return new Promise(resolve => {
-      this.get('currentUser').get('model').then(user => {
+      this.currentUser.get('model').then(user => {
         const userId = user.get('id');
         let url = `${host}/${namespace}/usermaterials/${userId}`;
         commonAjax.request(url).then(data => {

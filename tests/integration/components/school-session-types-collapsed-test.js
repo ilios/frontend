@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -38,11 +38,11 @@ module('Integration | Component | school session types collapsed', function(hook
     const instructionalTitle = `${instructionalMethodRow} td:nth-of-type(1)`;
     const instructionalCount = `${instructionalMethodRow} td:nth-of-type(2)`;
 
-    assert.equal(find(title).textContent.trim(), 'Session Types');
-    assert.equal(find(assessmentTitle).textContent.trim(), 'Assessment Methods');
-    assert.equal(find(assessmentCount).textContent.trim(), '1');
-    assert.equal(find(instructionalTitle).textContent.trim(), 'Instructional Methods');
-    assert.equal(find(instructionalCount).textContent.trim(), '1');
+    assert.dom(title).hasText('Session Types');
+    assert.dom(assessmentTitle).hasText('Assessment Methods');
+    assert.dom(assessmentCount).hasText('1');
+    assert.dom(instructionalTitle).hasText('Instructional Methods');
+    assert.dom(instructionalCount).hasText('1');
 
   });
 });

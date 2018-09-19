@@ -1,4 +1,11 @@
-import { click, fillIn, findAll, currentURL, find, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  findAll,
+  currentURL,
+  find,
+  visit
+} from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import moment from 'moment';
@@ -114,7 +121,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     function getCellData(row, cell) {
       return find(`${table} tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
     }
-    assert.equal(findAll(`${table} tr`).length, 7, 'all subgroups are displayed.');
+    assert.dom(`${table} tr`).exists({ count: 7 }, 'all subgroups are displayed.');
     for (let i = 0; i < 5; i++) {
       assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
     }
@@ -126,7 +133,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     await click(multiGroupsButton);
     await fillIn(input, '2');
     await click(done);
-    assert.equal(findAll(`${table} tr`).length, 9, 'all subgroups are still displayed.');
+    assert.dom(`${table} tr`).exists({ count: 9 }, 'all subgroups are still displayed.');
     assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
     assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
   });
@@ -322,8 +329,8 @@ module('Acceptance | Learnergroup', function(hooks) {
     assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
     await click(firstLink);
     assert.equal(currentURL(), '/learnergroups/1');
-    assert.equal(findAll(members).length, 5, 'lists members');
-    assert.equal(findAll(cohortMembers).length, 5, 'lists cohort non members');
+    assert.dom(members).exists({ count: 5 }, 'lists members');
+    assert.dom(cohortMembers).exists({ count: 5 }, 'lists cohort non members');
   });
 
   test('learner group calendar', async function(assert) {
@@ -346,10 +353,10 @@ module('Acceptance | Learnergroup', function(hooks) {
     const event = '.event';
 
     await visit('/learnergroups/1');
-    assert.equal(findAll(event).length, 0);
+    assert.dom(event).doesNotExist();
     await click(calendarToggle);
     percySnapshot(assert);
-    assert.equal(findAll(event).length, 1);
+    assert.dom(event).exists({ count: 1 });
   });
 
   test('learner group calendar with subgroup events', async function(assert) {
@@ -383,12 +390,12 @@ module('Acceptance | Learnergroup', function(hooks) {
     const event = '.event';
 
     await visit('/learnergroups/1');
-    assert.equal(findAll(event).length, 0);
+    assert.dom(event).doesNotExist();
     await click(calendarToggle);
-    assert.equal(findAll(event).length, 1);
+    assert.dom(event).exists({ count: 1 });
     await click(subgroupEventsToggle);
     percySnapshot(assert);
-    assert.equal(findAll(event).length, 2);
+    assert.dom(event).exists({ count: 2 });
   });
 
 
@@ -422,9 +429,9 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     await visit('/learnergroups/2');
     assert.equal(currentURL(), '/learnergroups/2');
-    assert.equal(findAll(members).length, 1, 'lists members');
+    assert.dom(members).exists({ count: 1 }, 'lists members');
     await click(manage);
-    assert.equal(findAll(membersOfGroup).length, 1, 'displays all group members');
-    assert.equal(findAll(membersOfTree).length, 2, 'lists all tree members');
+    assert.dom(membersOfGroup).exists({ count: 1 }, 'displays all group members');
+    assert.dom(membersOfTree).exists({ count: 2 }, 'lists all tree members');
   });
 });

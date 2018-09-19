@@ -17,7 +17,7 @@ export default Component.extend({
     this.loadAttributes.perform();
   },
   loadAttributes: task(function* () {
-    const iliosConfig = this.get('iliosConfig');
+    const iliosConfig = this.iliosConfig;
     const serverApiVersion = yield iliosConfig.get('apiVersion');
     const versionMismatch = serverApiVersion !== apiVersion;
     if (versionMismatch && 'serviceWorker' in navigator) {

@@ -16,6 +16,6 @@ module('Integration | Component | learningmaterial search', function(hooks) {
     assert.expect(1);
     await render(hbs`{{learningmaterial-search}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

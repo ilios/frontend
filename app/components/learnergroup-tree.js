@@ -15,7 +15,7 @@ export default Component.extend({
   tagName: 'li',
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('updateIsVisible').perform();
+    this.updateIsVisible.perform();
   },
   classNameBindings: ['hasChildren:strong:em', 'selectable::disabled'],
   isVisible: false,
@@ -27,7 +27,7 @@ export default Component.extend({
    * which have not been selected
   **/
   hasUnSelectedChildren(children){
-    const selectedGroups = this.get('selectedGroups');
+    const selectedGroups = this.selectedGroups;
     return new Promise(resolve => {
       filter(children.toArray(), (child => {
         if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
@@ -48,9 +48,9 @@ export default Component.extend({
    * If the group is not already picked then display
   **/
   updateIsVisible: task(function * () {
-    const selectedGroups = this.get('selectedGroups');
-    const learnerGroup = this.get('learnerGroup');
-    const filterString = this.get('filter');
+    const selectedGroups = this.selectedGroups;
+    const learnerGroup = this.learnerGroup;
+    const filterString = this.filter;
     const exp = new RegExp(filterString, 'gi');
 
     let children = yield learnerGroup.get('children');

@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
@@ -33,12 +38,12 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{collapsed-learnergroups subject=subject expand=(action nothing)}}`);
     await settled();
-    assert.equal(find('.title').textContent.trim(), 'Learner Groups (4)');
-    assert.equal(findAll('table tr').length, 3);
-    assert.equal(findAll('tr:nth-of-type(1) td')[0].textContent.trim(), 'program 0 cohort 0');
-    assert.equal(findAll('tr:nth-of-type(2) td')[0].textContent.trim(), 'program 1 cohort 1');
-    assert.equal(findAll('tr:nth-of-type(1) td')[1].textContent.trim(), '3');
-    assert.equal(findAll('tr:nth-of-type(2) td')[1].textContent.trim(), '1');
+    assert.dom('.title').hasText('Learner Groups (4)');
+    assert.dom('table tr').exists({ count: 3 });
+    assert.dom(findAll('tr:nth-of-type(1) td')[0]).hasText('program 0 cohort 0');
+    assert.dom(findAll('tr:nth-of-type(2) td')[0]).hasText('program 1 cohort 1');
+    assert.dom(findAll('tr:nth-of-type(1) td')[1]).hasText('3');
+    assert.dom(findAll('tr:nth-of-type(2) td')[1]).hasText('1');
 
   });
 
@@ -56,7 +61,7 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
 
     await render(hbs`{{collapsed-learnergroups subject=subject expand=(action click)}}`);
 
-    assert.equal(find('.title').textContent.trim(), 'Learner Groups (0)');
+    assert.dom('.title').hasText('Learner Groups (0)');
     await click('.title');
   });
 });

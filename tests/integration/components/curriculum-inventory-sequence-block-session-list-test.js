@@ -88,41 +88,41 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
     await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    assert.equal(find('thead th').textContent.trim(), 'Count as one offering', 'Column header is labeled correctly.');
-    assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Exclude', 'Column header is labeled correctly.');
-    assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'Session Title', 'Column header is labeled correctly.');
-    assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Session Type', 'Column header is labeled correctly.');
-    assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'Total time', 'Column header is labeled correctly.');
-    assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Offerings', 'Column header is labeled correctly.');
+    assert.dom('thead th').hasText('Count as one offering', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[1]).hasText('Exclude', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[2]).hasText('Session Title', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[3]).hasText('Session Type', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[4]).hasText('Total time', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[5]).hasText('Offerings', 'Column header is labeled correctly.');
 
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), session1.get('title'), 'Session title is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), sessionType1.get('title'), 'Session type title is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalTime1, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), offerings1.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('Yes', 'All offerings in session are counted as one.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('No', 'Excluded value is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(session1.get('title'), 'Session title is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText(sessionType1.get('title'), 'Session type title is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalTime1, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText(offerings1.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'No', 'All offerings are counted individually.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Yes', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), session2.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalTime2, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), offerings2.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(2) td').hasText('No', 'All offerings are counted individually.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Yes', 'Excluded value is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(session2.get('title'), 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText(sessionType2.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalTime2, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText(offerings2.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:nth-of-type(3) td').textContent.trim(), 'Yes', 'All offerings in session are counted as one.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[2]).textContent.trim(), session3.get('title'), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[3]).textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[4]).textContent.trim(), totalTime3, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(3) td')[5]).textContent.trim(), offerings3.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(3) td').hasText('Yes', 'All offerings in session are counted as one.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[1]).hasText('No', 'Excluded value is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[2]).hasText(session3.get('title'), 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[3]).hasText(sessionType3.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[4]).hasText(totalTime3, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[5]).hasText(offerings3.length, 'Number of offerings is shown.');
 
-    assert.equal(find('tbody tr:nth-of-type(4) td').textContent.trim(), 'No', 'All offerings are counted individually.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[1]).textContent.trim(), 'No', 'Excluded value is shown.');
+    assert.dom('tbody tr:nth-of-type(4) td').hasText('No', 'All offerings are counted individually.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[1]).hasText('No', 'Excluded value is shown.');
     assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
     assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[3]).textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[4]).textContent.trim(), totalTime4, 'Total time is shown.');
-    assert.equal(find(findAll('tbody tr:nth-of-type(4) td')[5]).textContent.trim(), offerings4.length, 'Number of offerings is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[3]).hasText(sessionType4.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[4]).hasText(totalTime4, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[5]).hasText(offerings4.length, 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {
@@ -138,8 +138,8 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
     await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
-    assert.equal(findAll('thead tr').length, 1, 'Table header is visible,');
-    assert.equal(findAll('tbody tr').length, 0, 'but table body is empty.');
+    assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
+    assert.dom('tbody tr').doesNotExist('but table body is empty.');
   });
 
   test('sort by title', async function(assert) {

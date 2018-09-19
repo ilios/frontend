@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -48,8 +48,8 @@ module('Integration | Component | school session types expanded', function(hooks
     const table = 'table';
     const sessionTypes = `${table} tbody tr`;
 
-    assert.equal(find(title).textContent.trim(), 'Session Types');
-    assert.equal(findAll(sessionTypes).length, 1);
+    assert.dom(title).hasText('Session Types');
+    assert.dom(sessionTypes).exists({ count: 1 });
   });
 
   test('it renders as manager', async function(assert) {
@@ -72,9 +72,9 @@ module('Integration | Component | school session types expanded', function(hooks
     const form = '.form';
     const items = `${form} .item`;
 
-    assert.equal(find(title).textContent.trim(), 'Session Types');
-    assert.equal(find(sessionTypeTitle).textContent.trim(), 'one');
-    assert.equal(findAll(items).length, 6);
+    assert.dom(title).hasText('Session Types');
+    assert.dom(sessionTypeTitle).hasText('one');
+    assert.dom(items).exists({ count: 6 });
   });
 
   test('editing session type fires action', async function(assert) {

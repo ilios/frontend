@@ -22,14 +22,14 @@ export default Component.extend({
   },
 
   showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
-    const isManaging = this.get('isManaging');
+    const isManaging = this.isManaging;
     const terms = this.get('subject.terms');
     return !isManaging && terms.get('length');
   }),
 
   actions: {
     manage() {
-      const expand = this.get('expand');
+      const expand = this.expand;
       expand();
       this.get('subject.terms').then(terms => {
         this.set('bufferedTerms', terms.toArray());
@@ -37,7 +37,7 @@ export default Component.extend({
       });
     },
     collapse(){
-      const collapse = this.get('collapse');
+      const collapse = this.collapse;
       this.get('subject.terms').then(terms => {
         if (terms.get('length')) {
           collapse();
@@ -46,10 +46,10 @@ export default Component.extend({
     },
     save(){
       this.set('isSaving', true);
-      let subject = this.get('subject');
+      let subject = this.subject;
       subject.get('terms').then(termsList => {
         termsList.clear();
-        this.get('bufferedTerms').forEach(term=>{
+        this.bufferedTerms.forEach(term=>{
           termsList.pushObject(term);
         });
         subject.save().then(()=>{
@@ -64,10 +64,10 @@ export default Component.extend({
       this.set('isManaging', false);
     },
     addTermToBuffer(term) {
-      this.get('bufferedTerms').addObject(term);
+      this.bufferedTerms.addObject(term);
     },
     removeTermFromBuffer(term) {
-      this.get('bufferedTerms').removeObject(term);
+      this.bufferedTerms.removeObject(term);
     }
   }
 });

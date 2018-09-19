@@ -39,7 +39,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
 
-    const report = this.get('report');
+    const report = this.report;
     const description = report.get('description');
     const currentYear = new Date().getFullYear();
     const year = report.get('year');
@@ -67,17 +67,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   yearLabel: computed('year', function() {
-    const year = this.get('year');
+    const year = this.year;
     return year + ' - ' + (parseInt(year, 10) + 1);
   }),
 
   showRollover: computed('report.program', 'currentUser', 'routing.currentRouteName', async function () {
-    const routing = this.get('routing');
+    const routing = this.routing;
     if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
       return false;
     }
-    const permissionChecker = this.get('permissionChecker');
-    const report = this.get('report');
+    const permissionChecker = this.permissionChecker;
+    const report = this.report;
     const program = await report.get('program');
     const school = await program.get('school');
     return await permissionChecker.canCreateCurriculumInventoryReport(school);
@@ -93,8 +93,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   canUpdate: false,
   actions: {
     changeStartDate(){
-      const newDate = this.get('startDate');
-      const report = this.get('report');
+      const newDate = this.startDate;
+      const report = this.report;
       this.send('addErrorDisplayFor', 'startDate');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -113,12 +113,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertStartDateChanges(){
-      const report = this.get('report');
+      const report = this.report;
       this.set('startDate', report.get('startDate'));
     },
     changeEndDate(){
-      const newDate = this.get('endDate');
-      const report = this.get('report');
+      const newDate = this.endDate;
+      const report = this.report;
       this.send('addErrorDisplayFor', 'endDate');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -137,21 +137,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertEndDateChanges(){
-      const report = this.get('report');
+      const report = this.report;
       this.set('endDate', report.get('endDate'));
     },
     changeYear() {
-      let report = this.get('report');
-      let year = this.get('year');
+      let report = this.report;
+      let year = this.year;
       report.set('year', year);
       report.save();
     },
     revertYearChanges(){
-      this.set('year', this.get('report').get('year'));
+      this.set('year', this.report.get('year'));
     },
     changeDescription() {
-      const report = this.get('report');
-      const newDescription = this.get('description');
+      const report = this.report;
+      const newDescription = this.description;
       this.send('addErrorDisplayFor', 'description');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -170,7 +170,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertDescriptionChanges(){
-      const report = this.get('report');
+      const report = this.report;
       this.set('description', report.get('description'));
     },
   }

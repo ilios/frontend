@@ -28,13 +28,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const offering = this.get('offering');
+    const offering = this.offering;
     this.set('room', offering.room);
   },
 
   actions: {
     revertRoomChanges(){
-      const offering = this.get('offering');
+      const offering = this.offering;
       this.set('room', offering.get('room'));
     },
     close() {
@@ -45,8 +45,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   changeRoom: task(function * (){
     yield timeout(10);
     this.send('addErrorDisplayFor', 'room');
-    const offering = this.get('offering');
-    const room = this.get('room');
+    const offering = this.offering;
+    const room = this.room;
     const { validations } = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
@@ -56,7 +56,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     yield offering.save();
   }).drop(),
   save: task(function * (startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-    const offering = this.get('offering');
+    const offering = this.offering;
     offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
 
     yield offering.save();

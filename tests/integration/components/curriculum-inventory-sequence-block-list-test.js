@@ -1,7 +1,13 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll,
+  find
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -72,36 +78,37 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (${blocks.length})`,
+      assert.dom('.title').hasText(
+        `Sequence Blocks (${blocks.length})`,
         'Component title is correct, and show the correct number of blocks.'
       );
-      assert.equal(findAll('.actions .expand-button').length, 1, 'Add new button is visible.');
+      assert.dom('.actions .expand-button').exists({ count: 1 }, 'Add new button is visible.');
 
-      assert.equal(find('thead th').textContent.trim(), 'Sequence Block', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[1]).textContent.trim(), 'Level', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[2]).textContent.trim(), 'Sequence #', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[3]).textContent.trim(), 'Start Date', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[4]).textContent.trim(), 'End Date', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[5]).textContent.trim(), 'Course', 'Table column header has correct label.');
-      assert.equal(find(findAll('thead th')[6]).textContent.trim(), 'Actions', 'Table column header has correct label.');
+      assert.dom('thead th').hasText('Sequence Block', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[1]).hasText('Level', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[2]).hasText('Sequence #', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[3]).hasText('Start Date', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[4]).hasText('End Date', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[5]).hasText('Course', 'Table column header has correct label.');
+      assert.dom(findAll('thead th')[6]).hasText('Actions', 'Table column header has correct label.');
 
-      assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), block2.get('title'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), academicLevel2.get('level'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), 'n/a');
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
+      assert.dom('tbody tr:nth-of-type(1) td').hasText(block2.get('title'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText(academicLevel2.get('level'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText('n/a');
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').exists({ count: 1 }, 'Remove link is visible.');
 
-      assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), block1.get('title'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), academicLevel1.get('level'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), course.get('title'));
-      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
+      assert.dom('tbody tr:nth-of-type(2) td').hasText(block1.get('title'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText(academicLevel1.get('level'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText(moment(block1.get('startDate')).format('L'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(moment(block1.get('endDate')).format('L'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText(course.get('title'));
+      assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
+      assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').exists({ count: 1 }, 'Remove link is visible.');
 
     });
   });
@@ -183,28 +190,29 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children) canUpdate=true remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (${nestedBlocks.length})`,
+      assert.dom('.title').hasText(
+        `Sequence Blocks (${nestedBlocks.length})`,
         'Component title is correct, and show the correct number of nested blocks.'
       );
-      assert.equal(findAll('.actions .expand-button').length, 1, 'Add new button is visible.');
+      assert.dom('.actions .expand-button').exists({ count: 1 }, 'Add new button is visible.');
 
-      assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), block1.get('title'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), academicLevel1.get('level'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), block1.get('orderInSequence'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), moment(block1.get('startDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), moment(block1.get('endDate')).format('L'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[5]).textContent.trim(), course.get('title'));
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
+      assert.dom('tbody tr:nth-of-type(1) td').hasText(block1.get('title'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText(academicLevel1.get('level'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(block1.get('orderInSequence'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText(moment(block1.get('startDate')).format('L'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(moment(block1.get('endDate')).format('L'));
+      assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText(course.get('title'));
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').exists({ count: 1 }, 'Remove link is visible.');
 
-      assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), block2.get('title'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), academicLevel2.get('level'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), block2.get('orderInSequence'));
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), 'n/a');
-      assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[5]).textContent.trim(), 'n/a');
-      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').length, 1, 'Remove link is visible.');
+      assert.dom('tbody tr:nth-of-type(2) td').hasText(block2.get('title'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText(academicLevel2.get('level'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(block2.get('orderInSequence'));
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText('n/a');
+      assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText('n/a');
+      assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
+      assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7) .remove').exists({ count: 1 }, 'Remove link is visible.');
 
     });
   });
@@ -247,9 +255,9 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=false remove='removeSequenceBlock'}}`
     );
     return settled().then(() => {
-      assert.equal(findAll('.actions .expand-button').length, 0, 'Add new button is not visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').length, 1, 'Edit link is visible.');
-      assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').length, 0, 'Remove link is not visible.');
+      assert.dom('.actions .expand-button').doesNotExist('Add new button is not visible.');
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
+      assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove').doesNotExist('Remove link is not visible.');
     });
   });
 
@@ -298,8 +306,8 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     assert.equal(find('tbody tr:nth-of-type(2) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
       'Confirmation message is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .remove').length, 1,'Delete button is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) .confirm-buttons .done').length, 1,'Cancel button is visible.');
+    assert.dom('tbody tr:nth-of-type(2) .confirm-buttons .remove').exists({ count: 1 }, 'Delete button is visible.');
+    assert.dom('tbody tr:nth-of-type(2) .confirm-buttons .done').exists({ count: 1 }, 'Cancel button is visible.');
     await click('tbody tr:nth-of-type(2) .confirm-buttons .remove');
   });
 
@@ -343,10 +351,10 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     );
     await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     await settled();
-    assert.equal(findAll('tbody .confirm-message').length, 1,'Confirmation dialog is visible.');
+    assert.dom('tbody .confirm-message').exists({ count: 1 }, 'Confirmation dialog is visible.');
     await click('tbody tr:nth-of-type(2) .confirm-buttons .done');
     await settled();
-    assert.equal(findAll('tbody .confirm-message').length, 0,'Confirmation dialog is not visible after cancelling.');
+    assert.dom('tbody .confirm-message').doesNotExist('Confirmation dialog is not visible after cancelling.');
   });
 
 
@@ -377,11 +385,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     this.set('report', report);
     await render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (0)`,
+      assert.dom('.title').hasText(
+        `Sequence Blocks (0)`,
         'Component title is correct, and show the correct number of blocks.'
       );
-      assert.equal(
-        find('.default-message').textContent.trim(), 'There are no sequence blocks in this report.',
+      assert.dom('.default-message').hasText(
+        'There are no sequence blocks in this report.',
         'No blocks message is visible.'
       );
     });
@@ -428,11 +437,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children)}}`
     );
     return settled().then(() => {
-      assert.equal(find('.title').textContent.trim(), `Sequence Blocks (0)`,
+      assert.dom('.title').hasText(
+        `Sequence Blocks (0)`,
         'Component title is correct, and show the correct number of blocks.'
       );
-      assert.equal(
-        find('.default-message').textContent.trim(), 'This sequence block has no nested sequence blocks.',
+      assert.dom('.default-message').hasText(
+        'This sequence block has no nested sequence blocks.',
         'No blocks message is visible.'
       );
     });

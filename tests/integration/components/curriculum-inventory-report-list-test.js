@@ -2,7 +2,7 @@ import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, findAll, find } from '@ember/test-helpers';
+import { click, render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -44,78 +44,36 @@ module('Integration | Component | curriculum inventory report list', function(ho
 
     this.set('program', programModel);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
-    assert.equal(findAll('th').length, 7, 'Table header has seven columns.');
-    assert.equal(find('th').textContent.trim(), 'Report Name', 'First column table header is labeled correctly');
-    assert.equal(findAll('th')[1].textContent.trim(), 'Program', 'Second column table header is labeled correctly');
-    assert.equal(findAll('th')[2].textContent.trim(), 'Academic Year', 'Third column table header is labeled correctly');
-    assert.equal(findAll('th')[3].textContent.trim(), 'Start Date', 'Fourth column table header is labeled correctly');
-    assert.equal(findAll('th')[4].textContent.trim(), 'End Date', 'Fifth column table header is labeled correctly');
-    assert.equal(findAll('th')[5].textContent.trim(), 'Status', 'Sixth column table header is labeled correctly');
-    assert.equal(findAll('th')[6].textContent.trim(), 'Actions', 'Seventh column table header is labeled correctly');
+    assert.dom('th').exists({ count: 7 }, 'Table header has seven columns.');
+    assert.dom('th').hasText('Report Name', 'First column table header is labeled correctly');
+    assert.dom(findAll('th')[1]).hasText('Program', 'Second column table header is labeled correctly');
+    assert.dom(findAll('th')[2]).hasText('Academic Year', 'Third column table header is labeled correctly');
+    assert.dom(findAll('th')[3]).hasText('Start Date', 'Fourth column table header is labeled correctly');
+    assert.dom(findAll('th')[4]).hasText('End Date', 'Fifth column table header is labeled correctly');
+    assert.dom(findAll('th')[5]).hasText('Status', 'Sixth column table header is labeled correctly');
+    assert.dom(findAll('th')[6]).hasText('Actions', 'Seventh column table header is labeled correctly');
     assert.equal(findAll('tbody tr').length, reports.length, 'All reports are shown in list.');
 
-    assert.equal(findAll('tbody tr').length, 2);
-    assert.equal(find(`[data-test-report="0"] [data-test-name]`).textContent.trim(), report1.name, 'Report name shows.');
-    assert.equal(
-      find(`[data-test-report="0"] [data-test-program]`).textContent.trim(),
-      program.title,
-      'Program title shows.'
-    );
-    assert.equal(
-      find(`[data-test-report="0"] [data-test-year]`).textContent.trim(),
-      '2017 - 2018',
-      'Academic year shows.'
-    );
-    assert.equal(find(`[data-test-report="0"] [data-test-start-date]`).textContent.trim(),
-      moment(report1.startDate).format('L'),
-      'Start date shows.'
-    );
-    assert.equal(find(`[data-test-report="0"] [data-test-end-date]`).textContent.trim(),
-      moment(report1.endDate).format('L'),
-      'End date shows.'
-    );
-    assert.equal(find(`[data-test-report="0"] [data-test-status]`).textContent.trim(),
-      'Draft',
-      'Status shows.'
-    );
-    assert.equal(findAll(`[data-test-report="0"] [data-test-actions] .fa-edit`).length, 1, 'Edit button shows.');
-    assert.equal(findAll(`[data-test-report="0"] [data-test-actions] .fa-download`).length, 1, 'Download button shows.');
-    assert.equal(
-      findAll(`[data-test-report="0"] [data-test-actions] .fa-trash`).length,
-      1,
-      'Delete button shows for reports in draft.'
-    );
+    assert.dom('tbody tr').exists({ count: 2 });
+    assert.dom(`[data-test-report="0"] [data-test-name]`).hasText(report1.name, 'Report name shows.');
+    assert.dom(`[data-test-report="0"] [data-test-program]`).hasText(program.title, 'Program title shows.');
+    assert.dom(`[data-test-report="0"] [data-test-year]`).hasText('2017 - 2018', 'Academic year shows.');
+    assert.dom(`[data-test-report="0"] [data-test-start-date]`).hasText(moment(report1.startDate).format('L'), 'Start date shows.');
+    assert.dom(`[data-test-report="0"] [data-test-end-date]`).hasText(moment(report1.endDate).format('L'), 'End date shows.');
+    assert.dom(`[data-test-report="0"] [data-test-status]`).hasText('Draft', 'Status shows.');
+    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
+    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
+    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-trash`).exists({ count: 1 }, 'Delete button shows for reports in draft.');
 
-    assert.equal(find(`[data-test-report="1"] [data-test-name]`).textContent.trim(), report2.name, 'Report name shows.');
-    assert.equal(
-      find(`[data-test-report="1"] [data-test-program]`).textContent.trim(),
-      program.title,
-      'Program title shows.'
-    );
-    assert.equal(
-      find(`[data-test-report="1"] [data-test-year]`).textContent.trim(),
-      '2016 - 2017',
-      'Academic year shows.'
-    );
-    assert.equal(find(`[data-test-report="1"] [data-test-start-date]`).textContent.trim(),
-      moment(report2.startDate).format('L'),
-      'Start date shows.'
-    );
-    assert.equal(find(`[data-test-report="1"] [data-test-end-date]`).textContent.trim(),
-      moment(report2.endDate).format('L'),
-      'End date shows.'
-    );
-    assert.equal(find(`[data-test-report="1"] [data-test-status]`).textContent.trim(),
-      'Finalized',
-      'Status shows.'
-    );
-    assert.equal(findAll(`[data-test-report="1"] [data-test-actions] .fa-edit`).length, 1, 'Edit button shows.');
-    assert.equal(findAll(`[data-test-report="1"] [data-test-actions] .fa-download`).length, 1, 'Download button shows.');
-    assert.equal(
-      findAll(`[data-test-report="1"] [data-test-actions] .fa-trash`).length,
-      0,
-      'Delete button is not visible for finalized reports.'
-    );
+    assert.dom(`[data-test-report="1"] [data-test-name]`).hasText(report2.name, 'Report name shows.');
+    assert.dom(`[data-test-report="1"] [data-test-program]`).hasText(program.title, 'Program title shows.');
+    assert.dom(`[data-test-report="1"] [data-test-year]`).hasText('2016 - 2017', 'Academic year shows.');
+    assert.dom(`[data-test-report="1"] [data-test-start-date]`).hasText(moment(report2.startDate).format('L'), 'Start date shows.');
+    assert.dom(`[data-test-report="1"] [data-test-end-date]`).hasText(moment(report2.endDate).format('L'), 'End date shows.');
+    assert.dom(`[data-test-report="1"] [data-test-status]`).hasText('Finalized', 'Status shows.');
+    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
+    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
+    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash`).doesNotExist('Delete button is not visible for finalized reports.');
   });
 
   test('empty list', async function (assert) {
@@ -125,9 +83,9 @@ module('Integration | Component | curriculum inventory report list', function(ho
 
     this.set('program', programModel);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
-    assert.equal(findAll('thead tr').length, 1, 'Table header shows.');
-    assert.equal(findAll('tbody').length, 1, 'Table body shows.');
-    assert.equal(findAll('tbody tr').length, 0, 'Table body is empty.');
+    assert.dom('thead tr').exists({ count: 1 }, 'Table header shows.');
+    assert.dom('tbody').exists({ count: 1 }, 'Table body shows.');
+    assert.dom('tbody tr').doesNotExist('Table body is empty.');
   });
 
   test('delete and confirm', async function(assert) {
@@ -152,9 +110,9 @@ module('Integration | Component | curriculum inventory report list', function(ho
       assert.equal(report.id, obj.id, 'Report is passed to remove action.');
     });
     await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
-    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
+    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
     await click('[data-test-report="0"] .remove');
-    assert.equal(findAll('.confirm-removal').length, 2, 'Confirm dialog shows.');
+    assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
     await click('[data-test-confirm-removal="0"] .remove');
   });
 
@@ -179,11 +137,11 @@ module('Integration | Component | curriculum inventory report list', function(ho
       assert.ok(false, 'Remove action should not have been invoked.');
     });
     await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
-    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is initially not visible.');
+    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
     await click('[data-test-report="0"] .remove');
-    assert.equal(findAll('.confirm-removal').length, 2, 'Confirm dialog shows.');
+    assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
     await click('[data-test-confirm-removal="0"] .done');
-    assert.equal(findAll('.confirm-removal').length, 0, 'Confirm dialog is invisible again.');
+    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is invisible again.');
   });
 
   test('sorting', async function(assert) {

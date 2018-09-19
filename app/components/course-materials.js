@@ -18,7 +18,7 @@ export default Component.extend(SortableTable, {
   typesWithUrl: null,
   filter: '',
   sessionLearningMaterials: computed('course.sessions.[]', function(){
-    const course = this.get('course');
+    const course = this.course;
     return new Promise(resolve => {
       course.get('sessions').then(sessions => {
         map(sessions.toArray(), session => {
@@ -35,7 +35,7 @@ export default Component.extend(SortableTable, {
   }),
   sessionLearningMaterialObjects: computed('sessionLearningMaterials.[]', function(){
     return new Promise(resolve =>{
-      this.get('sessionLearningMaterials').then(slms => {
+      this.sessionLearningMaterials.then(slms => {
         map(slms.toArray(), sessionLearningMaterial => {
           return new Promise(resolve =>{
             sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
@@ -64,8 +64,8 @@ export default Component.extend(SortableTable, {
   }),
   filteredSessionLearningMaterialObjects: computed('filter', 'sessionLearningMaterialObjects.[]', function(){
     return new Promise(resolve => {
-      this.get('sessionLearningMaterialObjects').then(objs => {
-        const filter = this.get('filter');
+      this.sessionLearningMaterialObjects.then(objs => {
+        const filter = this.filter;
         if (isEmpty(filter)) {
           resolve(objs);
         } else {
@@ -85,7 +85,7 @@ export default Component.extend(SortableTable, {
     });
   }),
   sessions: computed('course.sessions.[]', function(){
-    const course = this.get('course');
+    const course = this.course;
     return new Promise(resolve => {
       course.get('sessions').then(sessions => {
         map(sessions.toArray(), session => {
@@ -102,7 +102,7 @@ export default Component.extend(SortableTable, {
   }),
   courseLearningMaterialObjects: computed('course.learningMaterials.[]', function(){
     return new Promise(resolve =>{
-      const course = this.get('course');
+      const course = this.course;
       course.get('learningMaterials').then(clms => {
         map(clms.toArray(), courseLearningMaterial => {
           return new Promise(resolve =>{

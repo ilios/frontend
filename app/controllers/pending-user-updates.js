@@ -21,7 +21,7 @@ export default Controller.extend({
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
   selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
     let schools = this.get('model.schools');
-    const schoolId = this.get('school');
+    const schoolId = this.school;
     if(isPresent(schoolId)){
       const school = schools.findBy('id', schoolId);
       if(school){
@@ -36,8 +36,8 @@ export default Controller.extend({
 
   allUpdates: computed('selectedSchool', function(){
     return new Promise(resolve => {
-      let school = this.get('selectedSchool');
-      this.get('store').query('pending-user-update', {
+      let school = this.selectedSchool;
+      this.store.query('pending-user-update', {
         filters: {
           schools: [school.get('id')]
         }
@@ -51,16 +51,16 @@ export default Controller.extend({
   }),
 
   displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', function(){
-    const limit = this.get('limit');
-    const offset = this.get('offset');
+    const limit = this.limit;
+    const offset = this.offset;
     const end = limit + offset;
-    const filter = this.get('filter');
+    const filter = this.filter;
     const exp = new RegExp(filter, 'gi');
 
     return new Promise(resolve => {
-      this.get('allUpdates').then(allUpdates => {
+      this.allUpdates.then(allUpdates => {
         let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
-          return !this.get('deletedUpdates').includes(update) &&
+          return !this.deletedUpdates.includes(update) &&
             (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
         });
         resolve(sortedUpdates);
@@ -73,30 +73,30 @@ export default Controller.extend({
       this.set('school', schoolId);
     },
     updateEmailAddress(update){
-      this.get('updatesBeingSaved').pushObject(update);
+      this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('email', update.get('value'));
         user.save().then(() => {
           update.deleteRecord();
           update.save().then(() => {
-            this.get('deletedUpdates').pushObject(update);
-            this.get('updatesBeingSaved').removeObject(update);
-            this.get('flashMessages').success('general.savedSuccessfully');
+            this.deletedUpdates.pushObject(update);
+            this.updatesBeingSaved.removeObject(update);
+            this.flashMessages.success('general.savedSuccessfully');
           });
         });
       });
     },
     disableUser(update){
-      this.get('updatesBeingSaved').pushObject(update);
+      this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('enabled', false);
         user.save().then(() => {
           user.get('pendingUserUpdates').then(updates => {
             updates.invoke('deleteRecord');
             RSVP.all(updates.invoke('save')).then(() => {
-              this.get('deletedUpdates').pushObject(update);
-              this.get('updatesBeingSaved').removeObject(update);
-              this.get('flashMessages').success('general.savedSuccessfully');
+              this.deletedUpdates.pushObject(update);
+              this.updatesBeingSaved.removeObject(update);
+              this.flashMessages.success('general.savedSuccessfully');
             });
           });
         });
@@ -104,16 +104,16 @@ export default Controller.extend({
 
     },
     excludeFromSync(update){
-      this.get('updatesBeingSaved').pushObject(update);
+      this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('userSyncIgnore', true);
         user.save().then(() => {
           user.get('pendingUserUpdates').then(updates => {
             updates.invoke('deleteRecord');
             RSVP.all(updates.invoke('save')).then(() => {
-              this.get('deletedUpdates').pushObject(update);
-              this.get('updatesBeingSaved').removeObject(update);
-              this.get('flashMessages').success('general.savedSuccessfully');
+              this.deletedUpdates.pushObject(update);
+              this.updatesBeingSaved.removeObject(update);
+              this.flashMessages.success('general.savedSuccessfully');
             });
           });
         });

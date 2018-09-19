@@ -21,8 +21,8 @@ export default Component.extend({
   'data-test-leadership-search': true,
 
   searchForUsers: task(function * (query) {
-    const i18n = this.get('i18n');
-    const store = this.get('store');
+    const i18n = this.i18n;
+    const store = this.store;
     this.set('searchValue', query);
 
     let q = cleanQuery(query);
@@ -69,12 +69,12 @@ export default Component.extend({
   }).restartable(),
 
   clickUser: task(function * (user) {
-    const existingUserIds = this.get('existingUserIds');
+    const existingUserIds = this.existingUserIds;
     if (existingUserIds.includes(user.get('id'))) {
       return;
     }
     this.set('searchValue', null);
-    yield this.get('searchForUsers').perform(null);
-    this.get('selectUser')(user);
+    yield this.searchForUsers.perform(null);
+    this.selectUser(user);
   }).drop(),
 });

@@ -28,14 +28,14 @@ export default Component.extend({
   isSaving: null,
 
   isInOrderedSequence: computed('parent', function () {
-    const parent = this.get('parent');
+    const parent = this.parent;
     return isPresent(parent) && parent.get('isOrdered');
   }),
 
   sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', function() {
     return new Promise(resolve => {
-      const parent = this.get('parent');
-      const sequenceBlocks = this.get('sequenceBlocks');
+      const parent = this.parent;
+      const sequenceBlocks = this.sequenceBlocks;
       if (isPresent(parent) && parent.get('isOrdered')) {
         let sortedBlocks = [];
         sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
@@ -87,7 +87,7 @@ export default Component.extend({
       proxy.set('showRemoveConfirmation', true);
     },
     toggleEditor() {
-      if (this.get('editorOn')) {
+      if (this.editorOn) {
         this.set('editorOn', false);
       } else {
         this.setProperties({ editorOn: true, saved: false });
@@ -98,10 +98,10 @@ export default Component.extend({
     },
     save(block) {
       this.set('isSaving', true);
-      const report = this.get('report');
-      const parent = this.get('parent');
+      const report = this.report;
+      const parent = this.parent;
       return block.save().then((savedBlock) => {
-        if (! this.get('isDestroyed')) {
+        if (! this.isDestroyed) {
           this.setProperties({saved: true, savedBlock, isSaving: false, editorOn: false});
         }
         report.reload().then(() => {

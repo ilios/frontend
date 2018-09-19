@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -53,9 +53,9 @@ module('Integration | Component | user profile calendar', function(hooks) {
     const thirdEventTitle = `${events}:nth-of-type(3) .ilios-calendar-event-name`;
     await settled();
 
-    assert.equal(find(firstEventTitle).textContent.trim(), 'first');
-    assert.equal(find(secondEventTitle).textContent.trim(), 'second');
-    assert.equal(find(thirdEventTitle).textContent.trim(), 'third');
+    assert.dom(firstEventTitle).hasText('first');
+    assert.dom(secondEventTitle).hasText('second');
+    assert.dom(thirdEventTitle).hasText('third');
   });
 
   test('clicking forward goes to next week', async function(assert) {

@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -72,8 +72,12 @@ module('Integration | Component | publish all sessions', function(hooks) {
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Requiring Review \(0\)/) !== -1);
-    assert.equal(findAll(reviewButtons).length, 0, 'If there are no reviewable sessions do not display buttons to act on them #1173');
-    assert.equal(findAll(reviewTable).length, 0, 'If there are no reviewable sessions do not display a table to list them #1173');
+    assert.dom(reviewButtons).doesNotExist(
+      'If there are no reviewable sessions do not display buttons to act on them #1173'
+    );
+    assert.dom(reviewTable).doesNotExist(
+      'If there are no reviewable sessions do not display a table to list them #1173'
+    );
 
   });
 });

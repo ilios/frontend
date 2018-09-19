@@ -7,7 +7,7 @@ export default Component.extend({
   layout: layout,
   objective: null,
   objectiveDescriptors: computed('objective', 'objective.meshDescriptors.[]', function(){
-    var objective = this.get('objective');
+    var objective = this.objective;
     if(!objective){
       return [];
     }
@@ -15,11 +15,11 @@ export default Component.extend({
   }),
   actions: {
     add(descriptor) {
-      var objective = this.get('objective');
+      var objective = this.objective;
       objective.get('meshDescriptors').addObject(descriptor);
     },
     remove(descriptor) {
-      var objective = this.get('objective');
+      var objective = this.objective;
       objective.get('meshDescriptors').removeObject(descriptor);
     }
   }

@@ -1,4 +1,12 @@
-import { click, fillIn, find, findAll, currentURL, currentRouteName, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  find,
+  findAll,
+  currentURL,
+  currentRouteName,
+  visit
+} from '@ember/test-helpers';
 import { isPresent, isEmpty } from '@ember/utils';
 import {
   module,
@@ -206,7 +214,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     });
     assert.expect(15);
     await visit('/learnergroups');
-    assert.equal(findAll('.list tbody tr').length, 3);
+    assert.dom('.list tbody tr').exists({ count: 3 });
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText(regularLearnergroup.title));
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))), getText(firstLearnergroup.title));
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(3) td'))), getText(secondLearnergroup.title));
@@ -383,8 +391,8 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
     await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
-    assert.ok(find('.list tbody tr').classList.contains('confirm-removal'));
-    assert.ok(find(findAll('.list tbody tr')[1]).classList.contains('confirm-removal'));
+    assert.dom('.list tbody tr').hasClass('confirm-removal');
+    assert.dom(findAll('.list tbody tr')[1]).hasClass('confirm-removal');
     assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
   });
 
@@ -473,7 +481,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const expandNewButton = '.actions .expand-button';
 
     assert.equal(currentRouteName(), 'learnerGroups');
-    assert.equal(findAll(expandNewButton).length, 0);
+    assert.dom(expandNewButton).doesNotExist();
   });
 
   test('title filter escapes regex', async function (assert) {
@@ -498,12 +506,12 @@ module('Acceptance | Learner Groups', function(hooks) {
     const filter = '.titlefilter input';
     await visit('/learnergroups');
 
-    assert.equal(findAll(groups).length, 1);
+    assert.dom(groups).exists({ count: 1 });
     assert.equal(await getElementText(firstGroupTitle), 'yes\\no');
     await fillIn(filter, '\\');
-    assert.equal(findAll(groups).length, 1);
+    assert.dom(groups).exists({ count: 1 });
     assert.equal(await getElementText(firstGroupTitle), 'yes\\no');
-    assert.equal(find(filter).value, '\\');
+    assert.dom(filter).hasValue('\\');
   });
 
   test('copy learnergroup without learners', async function (assert) {

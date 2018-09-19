@@ -28,7 +28,7 @@ const competencyGroup = EmberObject.extend({
 const objectiveProxy = ObjectProxy.extend({
   courseObjective: null,
   selected: computed('content', 'courseObjective.parents.[]', function(){
-    return this.get('courseObjective.parents').includes(this.get('content'));
+    return this.get('courseObjective.parents').includes(this.content);
   }),
 });
 
@@ -39,7 +39,7 @@ const cohortProxy = EmberObject.extend({
   title: null,
   objectivesByCompetency: computed('objectives.[]', function(){
     return new Promise(resolve => {
-      let objectives = this.get('objectives');
+      let objectives = this.objectives;
       let competencies = [];
       let promises = [];
       objectives.forEach(objective => {
@@ -81,7 +81,7 @@ const cohortProxy = EmberObject.extend({
 
   }),
   allowMultipleParents: computed('cohort.school', async function () {
-    const cohort = this.get('cohort');
+    const cohort = this.cohort;
     const school = await cohort.get('school');
     return await school.getConfigValue('allowMultipleCourseObjectiveParents');
   }),
@@ -95,11 +95,11 @@ export default Component.extend({
   'data-test-course-objective-manager': true,
 
   didReceiveAttrs(){
-    this.get('loadAttr').perform();
+    this.loadAttr.perform();
   },
 
   loadAttr: task(function * () {
-    let cohorts = yield this.get('cohorts');
+    let cohorts = yield this.cohorts;
     let firstCohort = cohorts.get('firstObject');
     if(firstCohort != null){
       this.set('selectedCohort', firstCohort);
@@ -112,7 +112,7 @@ export default Component.extend({
    * @public
    */
   cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', async function() {
-    const courseObjective = this.get('courseObjective');
+    const courseObjective = this.courseObjective;
     if (! courseObjective) {
       return [];
     }
@@ -132,7 +132,7 @@ export default Component.extend({
       const programTitle = program.get('title');
       let cohortTitle = cohort.get('title');
       if (isEmpty(cohortTitle)) {
-        const i18n = this.get('i18n');
+        const i18n = this.i18n;
         const classOfYear = await cohort.get('classOfYear');
         cohortTitle = i18n.t('general.classOf', {year: classOfYear});
       }
@@ -156,9 +156,9 @@ export default Component.extend({
    */
   currentCohort: computed('selectedCohort', 'cohorts.[]', function(){
     return new Promise(resolve => {
-      let selectedCohort = this.get('selectedCohort');
+      let selectedCohort = this.selectedCohort;
       if (selectedCohort){
-        this.get('cohorts').then(cohorts => {
+        this.cohorts.then(cohorts => {
           let matchingGroups = cohorts.filterBy('id', selectedCohort.get('id'));
           let currentCohort = null;
           if(matchingGroups.length > 0){
@@ -173,7 +173,7 @@ export default Component.extend({
   }),
 
   addParent: task(function* (parentProxy) {
-    const courseObjective = this.get('courseObjective');
+    const courseObjective = this.courseObjective;
     const newParent = parentProxy.get('content');
 
     const programYears = yield newParent.get('programYears');
@@ -201,14 +201,14 @@ export default Component.extend({
 
   actions: {
     setSelectedCohort(cohortId){
-      this.get('cohorts').then(cohorts => {
+      this.cohorts.then(cohorts => {
         let selectedCohort = cohorts.findBy('id', cohortId);
         this.set('selectedCohort', selectedCohort);
       });
     },
     removeParent(parentProxy){
       let removingParent = parentProxy.get('content');
-      let courseObjective = this.get('courseObjective');
+      let courseObjective = this.courseObjective;
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
     },

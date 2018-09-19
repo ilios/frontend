@@ -1,7 +1,13 @@
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  find,
+  findAll,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -37,60 +43,60 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
-    assert.equal(find('h2.title').textContent.trim(), 'New Sequence Block', 'Component title shows.');
-    assert.equal(find('.title label').textContent.trim(), 'Title:', 'Title label is correct.');
-    assert.equal(find('.title input').value, '', 'Title input is initially empty.');
-    assert.equal(find('.description label').textContent.trim(), 'Description:', 'Description label is correct.');
-    assert.equal(find('.description textarea').value, '', 'Description input is initially empty.');
-    assert.equal(find('.course label').textContent.trim(), 'Course:', 'Course label is correct.');
-    assert.equal(findAll('.course option').length, 3, 'Course dropdown has correct number of options');
-    assert.equal(find('.course option').value, '', 'First course option has no value.');
-    assert.equal(find('.course option').textContent.trim(), 'Select a Course', 'First course option is labeled correctly');
-    assert.equal(find(`.course option:nth-of-type(2)`).value, course3.id, 'Second course option has correct value');
-    assert.equal(find(`.course option:nth-of-type(2)`).textContent.trim(), course3.title, 'Second course option is labeled correctly');
-    assert.equal(find(`.course option:nth-of-type(3)`).value, course1.id, 'Third course option has correct value');
-    assert.equal(find(`.course option:nth-of-type(3)`).textContent.trim(), course1.title, 'Third course option is labeled correctly');
-    assert.equal(find(`.required label`).textContent.trim(), 'Required:', 'Required label is correct');
-    assert.equal(findAll(`.required option`).length, 3, 'There are three required options');
-    assert.equal(find(`.required option:nth-of-type(1)`).value, '1', 'Required option value is correct.');
-    assert.equal(find(`.required option:nth-of-type(1)`).textContent.trim(), 'Required', 'Required option label is correct.');
-    assert.equal(find(`.required option:nth-of-type(2)`).value, '2', 'Required option value is correct.');
-    assert.equal(find(`.required option:nth-of-type(2)`).textContent.trim(), 'Optional (elective)', 'Required option label is correct.');
-    assert.equal(find(`.required option:nth-of-type(3)`).value, '3', 'Required option value is correct.');
-    assert.equal(find(`.required option:nth-of-type(3)`).textContent.trim(), 'Required In Track', 'Required option label is correct.');
-    assert.equal(find(`.track label`).textContent.trim(), 'Is Track?', 'Track label is correct');
-    assert.equal(findAll(`.track .toggle-yesno`).length, 1, 'Track switcher is visible.');
-    assert.equal(find(`.start-date label`).textContent.trim(), 'Start Date:', 'Start date label is correct.');
-    assert.equal(find(`.start-date input`).value, '', 'Start date input is initially empty.');
-    assert.equal(find(`.end-date label`).textContent.trim(), 'End Date:', 'End date label is correct.');
-    assert.equal(find(`.end-date input`).value, '', 'End date input is initially empty.');
-    assert.equal(find(`.duration label`).textContent.trim(), 'Duration (in Days):', 'Duration label is correct.');
-    assert.equal(find(`.duration input`).value, '0', 'Duration input has initial value of zero.');
-    assert.equal(find(`.clear-dates button`).textContent.trim(), 'Clear Dates', 'Clear dates button is labeled correctly.');
-    assert.equal(find(`.minimum label`).textContent.trim(), 'Minimum:', 'Minimum label is correct.');
-    assert.equal(find(`.minimum input`).value, '0', 'Minimum input is initially empty.');
-    assert.equal(find(`.maximum label`).textContent.trim(), 'Maximum:', 'Minimum label is correct.');
-    assert.equal(find(`.maximum input`).value, '0', 'Maximum input is initially empty.');
-    assert.equal(find(`.academic-level label`).textContent.trim(), 'Academic Level:', 'Academic level label is correct.');
+    assert.dom('h2.title').hasText('New Sequence Block', 'Component title shows.');
+    assert.dom('.title label').hasText('Title:', 'Title label is correct.');
+    assert.dom('.title input').hasValue('', 'Title input is initially empty.');
+    assert.dom('.description label').hasText('Description:', 'Description label is correct.');
+    assert.dom('.description textarea').hasValue('', 'Description input is initially empty.');
+    assert.dom('.course label').hasText('Course:', 'Course label is correct.');
+    assert.dom('.course option').exists({ count: 3 }, 'Course dropdown has correct number of options');
+    assert.dom('.course option').hasValue('', 'First course option has no value.');
+    assert.dom('.course option').hasText('Select a Course', 'First course option is labeled correctly');
+    assert.dom(`.course option:nth-of-type(2)`).hasValue(course3.id, 'Second course option has correct value');
+    assert.dom(`.course option:nth-of-type(2)`).hasText(course3.title, 'Second course option is labeled correctly');
+    assert.dom(`.course option:nth-of-type(3)`).hasValue(course1.id, 'Third course option has correct value');
+    assert.dom(`.course option:nth-of-type(3)`).hasText(course1.title, 'Third course option is labeled correctly');
+    assert.dom(`.required label`).hasText('Required:', 'Required label is correct');
+    assert.dom(`.required option`).exists({ count: 3 }, 'There are three required options');
+    assert.dom(`.required option:nth-of-type(1)`).hasValue('1', 'Required option value is correct.');
+    assert.dom(`.required option:nth-of-type(1)`).hasText('Required', 'Required option label is correct.');
+    assert.dom(`.required option:nth-of-type(2)`).hasValue('2', 'Required option value is correct.');
+    assert.dom(`.required option:nth-of-type(2)`).hasText('Optional (elective)', 'Required option label is correct.');
+    assert.dom(`.required option:nth-of-type(3)`).hasValue('3', 'Required option value is correct.');
+    assert.dom(`.required option:nth-of-type(3)`).hasText('Required In Track', 'Required option label is correct.');
+    assert.dom(`.track label`).hasText('Is Track?', 'Track label is correct');
+    assert.dom(`.track .toggle-yesno`).exists({ count: 1 }, 'Track switcher is visible.');
+    assert.dom(`.start-date label`).hasText('Start Date:', 'Start date label is correct.');
+    assert.dom(`.start-date input`).hasValue('', 'Start date input is initially empty.');
+    assert.dom(`.end-date label`).hasText('End Date:', 'End date label is correct.');
+    assert.dom(`.end-date input`).hasValue('', 'End date input is initially empty.');
+    assert.dom(`.duration label`).hasText('Duration (in Days):', 'Duration label is correct.');
+    assert.dom(`.duration input`).hasValue('0', 'Duration input has initial value of zero.');
+    assert.dom(`.clear-dates button`).hasText('Clear Dates', 'Clear dates button is labeled correctly.');
+    assert.dom(`.minimum label`).hasText('Minimum:', 'Minimum label is correct.');
+    assert.dom(`.minimum input`).hasValue('0', 'Minimum input is initially empty.');
+    assert.dom(`.maximum label`).hasText('Maximum:', 'Minimum label is correct.');
+    assert.dom(`.maximum input`).hasValue('0', 'Maximum input is initially empty.');
+    assert.dom(`.academic-level label`).hasText('Academic Level:', 'Academic level label is correct.');
     assert.equal(findAll(`.academic-level option`).length, academicLevels.length, 'Academic level dropdown has the correct number of options.');
     for (let i = 0; i < academicLevels.length; i++) {
       let level = academicLevels[i];
-      assert.equal(find(`.academic-level option:nth-of-type(${i + 1})`).textContent.trim(), level.name, 'Academic level option label is correct.');
-      assert.equal(find(`.academic-level option:nth-of-type(${i + 1})`).value, level.id, 'Academic level option value is correct.');
+      assert.dom(`.academic-level option:nth-of-type(${i + 1})`).hasText(level.name, 'Academic level option label is correct.');
+      assert.dom(`.academic-level option:nth-of-type(${i + 1})`).hasValue(level.id, 'Academic level option value is correct.');
     }
-    assert.equal(find(`.child-sequence-order label`).textContent.trim(), 'Child Sequence Order:', 'Child sequence order label is correct');
-    assert.equal(findAll(`.child-sequence-order option`).length, 3, 'There are three child sequence order options');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(1)`).value, '1', 'Child sequence order option value is correct.');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(1)`).textContent.trim(), 'Ordered', 'Child sequence order option label is correct.');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(2)`).value, '2', 'Child sequence order option value is correct.');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(2)`).textContent.trim(), 'Unordered', 'Child sequence order option label is correct.');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(3)`).value, '3', 'Child sequence order option value is correct.');
-    assert.equal(find(`.child-sequence-order option:nth-of-type(3)`).textContent.trim(), 'Parallel', 'Child sequence order option label is correct.');
-    assert.equal(findAll(`.order-in-sequence`).length, 0, 'Order-in-sequence input is not visible for top-level block creation');
-    assert.equal(findAll('button.done').length, 1, 'Done button is present.');
-    assert.equal(find('button.done').textContent.trim(), 'Done', 'Done button is labeled correctly.');
-    assert.equal(findAll('button.cancel').length, 1, 'Cancel button is present.');
-    assert.equal(find('button.cancel').textContent.trim(), 'Cancel', 'Cancel button is labeled correctly.');
+    assert.dom(`.child-sequence-order label`).hasText('Child Sequence Order:', 'Child sequence order label is correct');
+    assert.dom(`.child-sequence-order option`).exists({ count: 3 }, 'There are three child sequence order options');
+    assert.dom(`.child-sequence-order option:nth-of-type(1)`).hasValue('1', 'Child sequence order option value is correct.');
+    assert.dom(`.child-sequence-order option:nth-of-type(1)`).hasText('Ordered', 'Child sequence order option label is correct.');
+    assert.dom(`.child-sequence-order option:nth-of-type(2)`).hasValue('2', 'Child sequence order option value is correct.');
+    assert.dom(`.child-sequence-order option:nth-of-type(2)`).hasText('Unordered', 'Child sequence order option label is correct.');
+    assert.dom(`.child-sequence-order option:nth-of-type(3)`).hasValue('3', 'Child sequence order option value is correct.');
+    assert.dom(`.child-sequence-order option:nth-of-type(3)`).hasText('Parallel', 'Child sequence order option label is correct.');
+    assert.dom(`.order-in-sequence`).doesNotExist('Order-in-sequence input is not visible for top-level block creation');
+    assert.dom('button.done').exists({ count: 1 }, 'Done button is present.');
+    assert.dom('button.done').hasText('Done', 'Done button is labeled correctly.');
+    assert.dom('button.cancel').exists({ count: 1 }, 'Cancel button is present.');
+    assert.dom('button.cancel').hasText('Cancel', 'Cancel button is labeled correctly.');
   });
 
   test('order-in-sequence options are visible for ordered parent sequence block', async function(assert) {
@@ -118,11 +124,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('parentBlock', parentModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock}}`);
 
-    assert.equal(find(`.order-in-sequence label`).textContent.trim(), 'Order in Sequence:', 'Order in sequence label is correct');
-    assert.equal(findAll(`.order-in-sequence option`).length,  11, 'Correct number of order in sequence options');
+    assert.dom(`.order-in-sequence label`).hasText('Order in Sequence:', 'Order in sequence label is correct');
+    assert.dom(`.order-in-sequence option`).exists({ count: 11 }, 'Correct number of order in sequence options');
     for (let i = 1; i <= 11; i++) {
-      assert.equal(find(`.order-in-sequence option:nth-of-type(${i})`).value, i, 'Order in sequence option value is correct');
-      assert.equal(find(`.order-in-sequence option:nth-of-type(${i})`).textContent.trim(), i, 'Order in sequence option label is correct');
+      assert.dom(`.order-in-sequence option:nth-of-type(${i})`).hasValue(i, 'Order in sequence option value is correct');
+      assert.dom(`.order-in-sequence option:nth-of-type(${i})`).hasText(i, 'Order in sequence option label is correct');
     }
   });
 
@@ -385,11 +391,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.maximum input', '5');
     await fillIn('.minimum input', '10');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails when minimum is less than zero', async function(assert) {
@@ -412,10 +418,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.minimum input', '-1');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails when minimum is empty', async function(assert) {
@@ -438,10 +444,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.minimum input', '');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails when maximum is empty', async function(assert) {
@@ -464,10 +470,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.maximum input', '-1');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save with date range and a zero duration', async function(assert) {
@@ -550,10 +556,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     interactor.selectDate(moment('2011-12-30').toDate());
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails on missing duration', async function(assert) {
@@ -576,10 +582,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.duration input', '');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails on invalid duration', async function(assert) {
@@ -602,10 +608,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
     interactor.selectDate(moment('2016-12-30').toDate());
-    assert.equal(findAll('.validation-error-message').length, 0, 'Initially, no validation error is shown.');
+    assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.duration input', 'WRONG');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
 
   test('save fails if neither date range nor non-zero duration is provided', async function(assert) {
@@ -623,7 +629,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 2, 'Validation errors show.');
+    assert.dom('.validation-error-message').exists({ count: 2 }, 'Validation errors show.');
   });
 
   test('save fails if start-date is given but no end-date is provided', async function(assert) {
@@ -644,6 +650,6 @@ module('Integration | Component | new curriculum inventory sequence block', func
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     await click('button.done');
-    assert.equal(findAll('.validation-error-message').length, 1, 'Validation errors show.');
+    assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation errors show.');
   });
 });

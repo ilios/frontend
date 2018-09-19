@@ -61,8 +61,8 @@ module('Integration | Component | programyear competencies', function(hooks) {
     const button = '.programyear-competencies-actions button';
     const list = '.programyear-competencies-content';
 
-    assert.equal(find(title).textContent.trim(), 'Competencies (2)');
-    assert.equal(find(button).textContent.trim(), 'Manage Competencies');
+    assert.dom(title).hasText('Competencies (2)');
+    assert.dom(button).hasText('Manage Competencies');
     assert.equal(find(list).textContent.replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
 
   });

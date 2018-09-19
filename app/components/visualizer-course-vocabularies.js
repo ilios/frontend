@@ -15,7 +15,7 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   data: computed('course.sessions.[]', async function () {
-    const course = this.get('course');
+    const course = this.course;
     const sessions = await course.get('sessions');
     const dataMap = await map(sessions.toArray(), async session => {
       const terms = await session.get('terms');
@@ -56,9 +56,9 @@ export default Component.extend({
   }),
   actions: {
     donutClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
+      const course = this.course;
+      const isIcon = this.isIcon;
+      const router = this.router;
       if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
         return;
       }
@@ -68,8 +68,8 @@ export default Component.extend({
   },
   donutHover: task(function* (obj) {
     yield timeout(100);
-    const i18n = this.get('i18n');
-    const isIcon = this.get('isIcon');
+    const i18n = this.i18n;
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipContent', null);

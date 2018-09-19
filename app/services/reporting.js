@@ -12,7 +12,7 @@ export default Service.extend({
   i18n: service(),
   reportsList: computed('currentUser.model.reports.[]', function(){
     return new Promise(resolve => {
-      this.get('currentUser').get('model').then( user => {
+      this.currentUser.get('model').then( user => {
         if(isEmpty(user)){
           resolve([]);
         } else {
@@ -25,7 +25,7 @@ export default Service.extend({
   }),
 
   async findResults(report){
-    const store = this.get('store');
+    const store = this.store;
     const subject = report.get('subject');
     const object = report.get('prepositionalObject');
     const objectId = report.get('prepositionalObjectTableRowId');
@@ -101,17 +101,17 @@ export default Service.extend({
   },
 
   canViewCourses: computed('currentUser.performsNonLearnerFunction', async function(){
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     return currentUser.get('performsNonLearnerFunction');
   }),
 
   canViewPrograms: computed('currentUser.performsNonLearnerFunction', async function(){
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     return currentUser.get('performsNonLearnerFunction');
   }),
 
   async coursesResults(results, year){
-    const canView = await this.get('canViewCourses');
+    const canView = await this.canViewCourses;
     let mappedResults = results.map(course => {
       let rhett = {
         course
@@ -132,7 +132,7 @@ export default Service.extend({
     return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
   },
   async coursesArrayResults(results, year) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let filteredResults = results.filter( course => {
       const academicYear = course.get('year');
       return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
@@ -149,7 +149,7 @@ export default Service.extend({
     return [[i18n.t('general.courses'), i18n.t('general.academicYear'), i18n.t('general.externalId')]].concat(mappedResults);
   },
   async sessionsResults(results, year){
-    const canView = await this.get('canViewCourses');
+    const canView = await this.canViewCourses;
     let mappedResults = await map(results.toArray(), async item => {
       const course = await item.get('course');
       let rhett = { course };
@@ -166,7 +166,7 @@ export default Service.extend({
     return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
   },
   async sessionsArrayResults(results, year) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let filteredResults = await filter(results.toArray(), async session => {
       const course = await session.get('course');
       const academicYear = course.get('year');
@@ -190,7 +190,7 @@ export default Service.extend({
     ]].concat(mappedResults);
   },
   async programsResults(results){
-    const canView = await this.get('canViewPrograms');
+    const canView = await this.canViewPrograms;
     const mappedResults = await map(results.toArray(), async item => {
       let rhett = {};
       const school = await item.get('school');
@@ -205,7 +205,7 @@ export default Service.extend({
     return mappedResults;
   },
   async programsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let sortedResults = results.sortBy('title');
     let mappedResults = await map(sortedResults.toArray(), async program => {
       const school = await program.get('school');
@@ -218,7 +218,7 @@ export default Service.extend({
     return [[i18n.t('general.program'), i18n.t('general.school')]].concat(mappedResults);
   },
   async programYearsResults(results){
-    const canView = await this.get('canViewPrograms');
+    const canView = await this.canViewPrograms;
     const mappedResults = await map(results.toArray(), async item => {
       let rhett = {};
       const program = await item.get('program');
@@ -237,7 +237,7 @@ export default Service.extend({
     return mappedResults;
   },
   async programYearsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const resultsWithClassOfYear = await map(results, async programYear => {
       const classOfYear = await programYear.get('classOfYear');
       return {
@@ -267,7 +267,7 @@ export default Service.extend({
     return resolve(mappedResults);
   },
   async instructorsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let arr = await this.instructorsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
@@ -282,7 +282,7 @@ export default Service.extend({
     return resolve(mappedResults);
   },
   async valueResults(results, translationKey) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let arr = await this.titleResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
@@ -321,7 +321,7 @@ export default Service.extend({
     return resolve(mappedResults);
   },
   async meshTermsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let arr = await this.meshTermsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
@@ -336,7 +336,7 @@ export default Service.extend({
     });
   },
   async termsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     let arr = await this.termsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);

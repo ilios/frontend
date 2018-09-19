@@ -51,9 +51,9 @@ export default Component.extend(NewUser, Validations, {
   init(){
     this._super(...arguments);
     this.set('searchResults', []);
-    const searchTerms = this.get('searchTerms');
+    const searchTerms = this.searchTerms;
     if (isPresent(searchTerms)) {
-      this.get('findUsersInDirectory').perform(searchTerms);
+      this.findUsersInDirectory.perform(searchTerms);
     }
   },
   classNames: ['new-directory-user'],
@@ -79,7 +79,7 @@ export default Component.extend(NewUser, Validations, {
     if (!isEmpty(searchTerms)) {
       this.set('isSearching', true);
       let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const commonAjax = this.get('commonAjax');
+      const commonAjax = this.commonAjax;
       let data = yield commonAjax.request(url);
       let mappedResults = data.results.map(result => {
         result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
@@ -98,7 +98,7 @@ export default Component.extend(NewUser, Validations, {
 
     if ('text' === target.type) {
       if (13 === keyCode) {
-        this.get('save').perform();
+        this.save.perform();
         return;
       }
 
@@ -110,7 +110,7 @@ export default Component.extend(NewUser, Validations, {
 
     if ('search' === target.type) {
       if (13 === keyCode) {
-        this.get('findUsersInDirectory').perform(this.get('searchTerms'));
+        this.findUsersInDirectory.perform(this.searchTerms);
         return;
       }
 

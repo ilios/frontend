@@ -3,7 +3,11 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, find, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 let user;
@@ -61,16 +65,16 @@ module('Integration | Component | user profile bio', function(hooks) {
     const phone = `${fields}:nth-of-type(7) span`;
     const username = `${fields}:nth-of-type(8) span`;
 
-    assert.equal(find(primarySchool).textContent.trim(), 'Primary School: ' + school.title, 'primary school is correct');
-    assert.equal(findAll(fields).length, 8);
-    assert.equal(find(firstName).textContent.trim(), 'Test Person', 'first name is displayed');
-    assert.equal(find(middleName).textContent.trim(), 'Name', 'middle name is displayed');
-    assert.equal(find(lastName).textContent.trim(), 'Thing', 'last name is displayed');
-    assert.equal(find(campusId).textContent.trim(), 'idC', 'campus Id is displayed');
-    assert.equal(find(otherId).textContent.trim(), 'idO', 'other id is displayed');
-    assert.equal(find(email).textContent.trim(), 'test@test.com', 'email is displayed');
-    assert.equal(find(phone).textContent.trim(), 'x1234', 'phone is displayed');
-    assert.equal(find(username).textContent.trim(), 'test-username', 'username is displayed');
+    assert.dom(primarySchool).hasText('Primary School: ' + school.title, 'primary school is correct');
+    assert.dom(fields).exists({ count: 8 });
+    assert.dom(firstName).hasText('Test Person', 'first name is displayed');
+    assert.dom(middleName).hasText('Name', 'middle name is displayed');
+    assert.dom(lastName).hasText('Thing', 'last name is displayed');
+    assert.dom(campusId).hasText('idC', 'campus Id is displayed');
+    assert.dom(otherId).hasText('idO', 'other id is displayed');
+    assert.dom(email).hasText('test@test.com', 'email is displayed');
+    assert.dom(phone).hasText('x1234', 'phone is displayed');
+    assert.dom(username).hasText('test-username', 'username is displayed');
   });
 
   test('it renders for non ldap user search', async function(assert) {
@@ -92,16 +96,16 @@ module('Integration | Component | user profile bio', function(hooks) {
     const username = `${fields}:nth-of-type(8) span`;
     const password = `${fields}:nth-of-type(9) span`;
 
-    assert.equal(findAll(fields).length, 9);
-    assert.equal(find(firstName).textContent.trim(), 'Test Person', 'first name is displayed');
-    assert.equal(find(middleName).textContent.trim(), 'Name', 'middle name is displayed');
-    assert.equal(find(lastName).textContent.trim(), 'Thing', 'last name is displayed');
-    assert.equal(find(campusId).textContent.trim(), 'idC', 'campus Id is displayed');
-    assert.equal(find(otherId).textContent.trim(), 'idO', 'other id is displayed');
-    assert.equal(find(email).textContent.trim(), 'test@test.com', 'email is displayed');
-    assert.equal(find(phone).textContent.trim(), 'x1234', 'phone is displayed');
-    assert.equal(find(username).textContent.trim(), 'test-username', 'username is displayed');
-    assert.equal(find(password).textContent.trim(), '*********', 'password placeholder is displayed');
+    assert.dom(fields).exists({ count: 9 });
+    assert.dom(firstName).hasText('Test Person', 'first name is displayed');
+    assert.dom(middleName).hasText('Name', 'middle name is displayed');
+    assert.dom(lastName).hasText('Thing', 'last name is displayed');
+    assert.dom(campusId).hasText('idC', 'campus Id is displayed');
+    assert.dom(otherId).hasText('idO', 'other id is displayed');
+    assert.dom(email).hasText('test@test.com', 'email is displayed');
+    assert.dom(phone).hasText('x1234', 'phone is displayed');
+    assert.dom(username).hasText('test-username', 'username is displayed');
+    assert.dom(password).hasText('*********', 'password placeholder is displayed');
   });
 
   test('clicking manage sends the action', async function(assert) {
@@ -170,16 +174,16 @@ module('Integration | Component | user profile bio', function(hooks) {
     const phone = `[data-test-phone-input]`;
     const username = `[data-test-username-input]`;
 
-    assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
-    assert.equal(find(firstName).value, 'Test Person', 'firstname is set');
-    assert.equal(find(middleName).value, 'Name', 'middlename is set');
-    assert.equal(find(lastName).value, 'Thing', 'lastname is set');
-    assert.equal(find(campusId).value, 'idC', 'campuId is set');
-    assert.equal(find(otherId).value, 'idO', 'otherId is set');
-    assert.equal(find(email).value, 'test@test.com', 'email is set');
-    assert.equal(find(phone).value, 'x1234', 'phone is set');
-    assert.equal(find(username).value, 'test-username', 'username is set');
-    assert.ok(find(username).disabled, 'username is disabled');
+    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
+    assert.dom(middleName).hasValue('Name', 'middlename is set');
+    assert.dom(lastName).hasValue('Thing', 'lastname is set');
+    assert.dom(campusId).hasValue('idC', 'campuId is set');
+    assert.dom(otherId).hasValue('idO', 'otherId is set');
+    assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(phone).hasValue('x1234', 'phone is set');
+    assert.dom(username).hasValue('test-username', 'username is set');
+    assert.dom(username).isDisabled('username is disabled');
     await fillIn(firstName, 'new first');
     await fillIn(middleName, 'new middle');
     await fillIn(lastName, 'new last');
@@ -228,16 +232,16 @@ module('Integration | Component | user profile bio', function(hooks) {
     const username = `[data-test-username-input]`;
     const activatePasswordField = '.activate-password-field';
 
-    assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
-    assert.equal(find(firstName).value, 'Test Person', 'firstname is set');
-    assert.equal(find(middleName).value, 'Name', 'middlename is set');
-    assert.equal(find(lastName).value, 'Thing', 'lastname is set');
-    assert.equal(find(campusId).value, 'idC', 'campuId is set');
-    assert.equal(find(otherId).value, 'idO', 'otherId is set');
-    assert.equal(find(email).value, 'test@test.com', 'email is set');
-    assert.equal(find(phone).value, 'x1234', 'phone is set');
-    assert.equal(find(username).value, 'test-username', 'username is set');
-    assert.equal(find(activatePasswordField).textContent.trim(), 'Click here to reset password.');
+    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
+    assert.dom(middleName).hasValue('Name', 'middlename is set');
+    assert.dom(lastName).hasValue('Thing', 'lastname is set');
+    assert.dom(campusId).hasValue('idC', 'campuId is set');
+    assert.dom(otherId).hasValue('idO', 'otherId is set');
+    assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(phone).hasValue('x1234', 'phone is set');
+    assert.dom(username).hasValue('test-username', 'username is set');
+    assert.dom(activatePasswordField).hasText('Click here to reset password.');
     await fillIn(firstName, 'new first');
     await fillIn(middleName, 'new middle');
     await fillIn(lastName, 'new last');
@@ -287,19 +291,19 @@ module('Integration | Component | user profile bio', function(hooks) {
     const password = `[data-test-password-input]`;
     const activatePasswordField = '.activate-password-field';
 
-    assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
-    assert.equal(find(firstName).value, 'Test Person', 'firstname is set');
-    assert.equal(find(middleName).value, 'Name', 'middlename is set');
-    assert.equal(find(lastName).value, 'Thing', 'lastname is set');
-    assert.equal(find(campusId).value, 'idC', 'campuId is set');
-    assert.equal(find(otherId).value, 'idO', 'otherId is set');
-    assert.equal(find(email).value, 'test@test.com', 'email is set');
-    assert.equal(find(phone).value, 'x1234', 'phone is set');
-    assert.equal(find(username).value, 'test-username', 'username is set');
+    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
+    assert.dom(middleName).hasValue('Name', 'middlename is set');
+    assert.dom(lastName).hasValue('Thing', 'lastname is set');
+    assert.dom(campusId).hasValue('idC', 'campuId is set');
+    assert.dom(otherId).hasValue('idO', 'otherId is set');
+    assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(phone).hasValue('x1234', 'phone is set');
+    assert.dom(username).hasValue('test-username', 'username is set');
     await click(activatePasswordField);
 
-    assert.equal(findAll(inputs).length, 9, 'password input has been added');
-    assert.equal(find(password).value, '', 'password is set');
+    assert.dom(inputs).exists({ count: 9 }, 'password input has been added');
+    assert.dom(password).hasValue('', 'password is set');
     await fillIn(firstName, 'new first');
     await fillIn(middleName, 'new middle');
     await fillIn(lastName, 'new last');
@@ -331,15 +335,15 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     const cancelPasswordField = '.cancel-password-field';
 
-    assert.equal(findAll(inputs).length, 8, 'correct number of inputs');
+    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
     await click(activatePasswordField);
 
-    assert.equal(findAll(inputs).length, 9, 'password input has been added');
-    assert.equal(find(password).value, '', 'password is blank');
+    assert.dom(inputs).exists({ count: 9 }, 'password input has been added');
+    assert.dom(password).hasValue('', 'password is blank');
     await fillIn(password, 'new-password');
     await click(cancelPasswordField);
     await click(activatePasswordField);
-    assert.equal(find(password).value, '', 'password is blank again');
+    assert.dom(password).hasValue('', 'password is blank again');
   });
 
   test('password strength 0 display', async function(assert) {
@@ -357,9 +361,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345');
-    assert.equal(find(passwordStrengthMeter).value, 0, 'meter is intially at 0');
-    assert.equal(find(passwordStrengthText).textContent.trim(), 'Try Harder', 'try harder is displayed for level 0 password');
-    assert.ok(find(passwordStrengthText).classList.contains('strength-0'), 'correct strength is applied to the meter');
+    assert.dom(passwordStrengthMeter).hasValue(0, 'meter is intially at 0');
+    assert.dom(passwordStrengthText).hasText('Try Harder', 'try harder is displayed for level 0 password');
+    assert.dom(passwordStrengthText).hasClass('strength-0', 'correct strength is applied to the meter');
   });
 
   test('password strength 1 display', async function(assert) {
@@ -377,9 +381,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab');
-    assert.equal(find(passwordStrengthMeter).value, 1, 'meter is intially at 1');
-    assert.equal(find(passwordStrengthText).textContent.trim(), 'Bad', 'bad is displayed for level 1 password');
-    assert.ok(find(passwordStrengthText).classList.contains('strength-1'), 'correct strength is applied to the meter');
+    assert.dom(passwordStrengthMeter).hasValue(1, 'meter is intially at 1');
+    assert.dom(passwordStrengthText).hasText('Bad', 'bad is displayed for level 1 password');
+    assert.dom(passwordStrengthText).hasClass('strength-1', 'correct strength is applied to the meter');
 
   });
 
@@ -398,9 +402,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab13&');
-    assert.equal(find(passwordStrengthMeter).value, 2, 'meter is intially at 2');
-    assert.equal(find(passwordStrengthText).textContent.trim(), 'Weak', 'weak is displayed for level 2 password');
-    assert.ok(find(passwordStrengthText).classList.contains('strength-2'), 'correct strength is applied to the meter');
+    assert.dom(passwordStrengthMeter).hasValue(2, 'meter is intially at 2');
+    assert.dom(passwordStrengthText).hasText('Weak', 'weak is displayed for level 2 password');
+    assert.dom(passwordStrengthText).hasClass('strength-2', 'correct strength is applied to the meter');
 
   });
 
@@ -419,9 +423,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab13&!!');
-    assert.equal(find(passwordStrengthMeter).value, 3, 'meter is intially at 3');
-    assert.equal(find(passwordStrengthText).textContent.trim(), 'Good', 'good is displayed for level 3 password');
-    assert.ok(find(passwordStrengthText).classList.contains('strength-3'), 'correct strength is applied to the meter');
+    assert.dom(passwordStrengthMeter).hasValue(3, 'meter is intially at 3');
+    assert.dom(passwordStrengthText).hasText('Good', 'good is displayed for level 3 password');
+    assert.dom(passwordStrengthText).hasClass('strength-3', 'correct strength is applied to the meter');
 
   });
 
@@ -440,9 +444,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab14&HHtB');
-    assert.equal(find(passwordStrengthMeter).value, 4, 'meter is intially at 4');
-    assert.equal(find(passwordStrengthText).textContent.trim(), 'Strong', 'strong is displayed for level 4 password');
-    assert.ok(find(passwordStrengthText).classList.contains('strength-4'), 'correct strength is applied to the meter');
+    assert.dom(passwordStrengthMeter).hasValue(4, 'meter is intially at 4');
+    assert.dom(passwordStrengthText).hasText('Strong', 'strong is displayed for level 4 password');
+    assert.dom(passwordStrengthText).hasClass('strength-4', 'correct strength is applied to the meter');
   });
 
 
@@ -492,32 +496,32 @@ module('Integration | Component | user profile bio', function(hooks) {
     const syncBUtton = 'button.directory-sync';
 
 
-    assert.equal(findAll(items).length, 8, 'correct number of inputs');
-    assert.equal(find(firstNameInput).value, 'Test Person', 'firstname is set');
-    assert.equal(find(middleNameInput).value, 'Name', 'middlename is set');
-    assert.equal(find(lastNameInput).value, 'Thing', 'lastname is set');
-    assert.equal(find(campusIdInput).value, 'idC', 'campuId is set');
-    assert.equal(find(otherIdInput).value, 'idO', 'otherId is set');
-    assert.equal(find(emailInput).value, 'test@test.com', 'email is set');
-    assert.equal(find(phoneInput).value, 'x1234', 'phone is set');
-    assert.equal(find(usernameInput).value, 'test-username', 'username is set');
+    assert.dom(items).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(firstNameInput).hasValue('Test Person', 'firstname is set');
+    assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
+    assert.dom(lastNameInput).hasValue('Thing', 'lastname is set');
+    assert.dom(campusIdInput).hasValue('idC', 'campuId is set');
+    assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
+    assert.dom(emailInput).hasValue('test@test.com', 'email is set');
+    assert.dom(phoneInput).hasValue('x1234', 'phone is set');
+    assert.dom(usernameInput).hasValue('test-username', 'username is set');
     await click(syncBUtton);
 
-    assert.equal(find(firstNameInput).value, 'new-first-name', 'firstname is updated');
-    assert.equal(find(middleNameInput).value, 'Name', 'middlename is set');
-    assert.equal(find(lastNameInput).value, 'new-last-name', 'lastname is updated');
-    assert.equal(find(campusIdInput).value, 'new-campus-id', 'campuId is updated');
-    assert.equal(find(otherIdInput).value, 'idO', 'otherId is set');
-    assert.equal(find(emailInput).value, 'new-email', 'email is updated');
-    assert.equal(find(phoneInput).value, 'new-phone', 'phone is updated');
-    assert.equal(find(usernameInput).value, 'new-username', 'username is updated');
+    assert.dom(firstNameInput).hasValue('new-first-name', 'firstname is updated');
+    assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
+    assert.dom(lastNameInput).hasValue('new-last-name', 'lastname is updated');
+    assert.dom(campusIdInput).hasValue('new-campus-id', 'campuId is updated');
+    assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
+    assert.dom(emailInput).hasValue('new-email', 'email is updated');
+    assert.dom(phoneInput).hasValue('new-phone', 'phone is updated');
+    assert.dom(usernameInput).hasValue('new-username', 'username is updated');
 
-    assert.ok(find(firstName).classList.contains('synced-from-directory'), 'firstName has updated class applied');
-    assert.ok(find(lastName).classList.contains('synced-from-directory'), 'lastName has updated class applied');
-    assert.ok(find(phone).classList.contains('synced-from-directory'), 'phone has updated class applied');
-    assert.ok(find(email).classList.contains('synced-from-directory'), 'email has updated class applied');
-    assert.ok(find(campusId).classList.contains('synced-from-directory'), 'campusId has updated class applied');
-    assert.ok(find(username).classList.contains('synced-from-directory'), 'username has updated class applied');
+    assert.dom(firstName).hasClass('synced-from-directory', 'firstName has updated class applied');
+    assert.dom(lastName).hasClass('synced-from-directory', 'lastName has updated class applied');
+    assert.dom(phone).hasClass('synced-from-directory', 'phone has updated class applied');
+    assert.dom(email).hasClass('synced-from-directory', 'email has updated class applied');
+    assert.dom(campusId).hasClass('synced-from-directory', 'campusId has updated class applied');
+    assert.dom(username).hasClass('synced-from-directory', 'username has updated class applied');
 
   });
 });

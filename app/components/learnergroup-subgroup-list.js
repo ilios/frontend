@@ -31,8 +31,8 @@ export default Component.extend({
   },
   copyGroup: task(function * (withLearners, learnerGroup) {
     this.set('saved', false);
-    const store = this.get('store');
-    const i18n = this.get('i18n');
+    const store = this.store;
+    const i18n = this.i18n;
     const cohort = yield learnerGroup.get('cohort');
     const parentGroup = yield learnerGroup.get('parent');
     const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
@@ -51,7 +51,7 @@ export default Component.extend({
   actions: {
     saveNewLearnerGroup(title) {
       return new Promise (resolve => {
-        const { store, parentGroup } = this.getProperties('store', 'parentGroup');
+        const { store, parentGroup } = this;
 
         parentGroup.get('cohort').then((cohort) => {
           let newLearnerGroup = store.createRecord('learner-group', { title, parent: parentGroup, cohort });
@@ -67,7 +67,7 @@ export default Component.extend({
 
     },
     generateNewLearnerGroups(num) {
-      const { store, parentGroup } = this.getProperties('store', 'parentGroup');
+      const { store, parentGroup } = this;
 
       this.set('totalGroupsToSave', num);
       this.set('currentGroupsSaved', 0);
@@ -94,12 +94,12 @@ export default Component.extend({
 
               RSVP.all(chunk.invoke('save')).then(() => {
                 if (groupsToSave.length){
-                  this.set('currentGroupsSaved', this.get('currentGroupsSaved') + chunk.length);
+                  this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
                   saveSomeGroups(groupsToSave);
                 } else {
                   this.set('isSaving', false);
                   this.set('showNewLearnerGroupForm', false);
-                  this.get('flashMessages').success('general.savedSuccessfully');
+                  this.flashMessages.success('general.savedSuccessfully');
                   resolve();
                 }
               });

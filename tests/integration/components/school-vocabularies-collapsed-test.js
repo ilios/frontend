@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -37,11 +37,11 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     const vocabulary2Terms = `${vocabularies}:nth-of-type(2) td:nth-of-type(2)`;
 
     await settled();
-    assert.equal(find(title).textContent.trim(), 'Vocabularies (2)');
-    assert.equal(find(vocabulary1Title).textContent.trim(), 'Vocabulary 1');
-    assert.equal(find(vocabulary1Terms).textContent.trim(), 'There are 2 terms');
-    assert.equal(find(vocabulary2Title).textContent.trim(), 'Vocabulary 2');
-    assert.equal(find(vocabulary2Terms).textContent.trim(), 'There is 1 term');
+    assert.dom(title).hasText('Vocabularies (2)');
+    assert.dom(vocabulary1Title).hasText('Vocabulary 1');
+    assert.dom(vocabulary1Terms).hasText('There are 2 terms');
+    assert.dom(vocabulary2Title).hasText('Vocabulary 2');
+    assert.dom(vocabulary2Terms).hasText('There is 1 term');
   });
 
   test('clicking the header expands the list', async function(assert) {
@@ -59,7 +59,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     await render(hbs`{{school-vocabularies-collapsed school=school expand=(action click)}}`);
 
     await settled();
-    assert.equal(find(title).textContent.trim(), 'Vocabularies (1)');
+    assert.dom(title).hasText('Vocabularies (1)');
     await click(title);
   });
 });

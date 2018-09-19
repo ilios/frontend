@@ -4,7 +4,15 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn, blur } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find,
+  findAll,
+  fillIn,
+  blur
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
@@ -29,9 +37,9 @@ module('Integration | Component | course rollover', function(hooks) {
 
     return settled().then(()=>{
       for (let i=0; i<6; i++){
-        assert.equal(find(`${yearSelect} option:nth-of-type(${i+1})`).textContent.trim(), `${lastYear + i} - ${lastYear + 1 + i}`);
+        assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
       }
-      assert.equal(findAll(title).length, 1);
+      assert.dom(title).exists({ count: 1 });
       assert.equal(find(title).value.trim(), course.get('title'));
     });
 
@@ -372,9 +380,9 @@ module('Integration | Component | course rollover', function(hooks) {
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
 
     await click(title);
-    assert.ok(find(offerings).checked);
+    assert.dom(offerings).isChecked();
     await click(offerings);
-    assert.notOk(find(offerings).checked);
+    assert.dom(offerings).isNotChecked();
     await click('.done');
   });
 
@@ -385,7 +393,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('course', course);
 
     await render(hbs`{{course-rollover course=course}}`);
-    assert.equal(findAll('.validation-error-message').length, 0);
+    assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('errors show up', async function(assert) {
@@ -400,7 +408,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const input = `${title} input`;
 
     await fillIn(input, '');
-    assert.equal(findAll('.validation-error-message').length, 1);
+    assert.dom('.validation-error-message').exists({ count: 1 });
     assert.ok(find('.validation-error-message').textContent.includes('blank'));
   });
 

@@ -15,12 +15,12 @@ export default Component.extend({
   canUpdate: false,
   didReceiveAttrs(){
     this._super(...arguments);
-    const isManaging = this.get('isManaging');
+    const isManaging = this.isManaging;
     if (isManaging) {
-      const showSessionAttendanceRequired = this.get('showSessionAttendanceRequired');
-      const showSessionSupplemental = this.get('showSessionSupplemental');
-      const showSessionSpecialAttireRequired = this.get('showSessionSpecialAttireRequired');
-      const showSessionSpecialEquipmentRequired = this.get('showSessionSpecialEquipmentRequired');
+      const showSessionAttendanceRequired = this.showSessionAttendanceRequired;
+      const showSessionSupplemental = this.showSessionSupplemental;
+      const showSessionSpecialAttireRequired = this.showSessionSpecialAttireRequired;
+      const showSessionSpecialEquipmentRequired = this.showSessionSpecialEquipmentRequired;
 
       this.set('bufferedShowSessionAttendanceRequired', showSessionAttendanceRequired);
       this.set('bufferedShowSessionSupplemental', showSessionSupplemental);
@@ -33,10 +33,10 @@ export default Component.extend({
   bufferedShowSessionSpecialAttireRequired: false,
   bufferedShowSessionSpecialEquipmentRequired: false,
   save: task(function * (){
-    const bufferedShowSessionAttendanceRequired = this.get('bufferedShowSessionAttendanceRequired');
-    const bufferedShowSessionSupplemental = this.get('bufferedShowSessionSupplemental');
-    const bufferedShowSessionSpecialAttireRequired = this.get('bufferedShowSessionSpecialAttireRequired');
-    const bufferedShowSessionSpecialEquipmentRequired = this.get('bufferedShowSessionSpecialEquipmentRequired');
+    const bufferedShowSessionAttendanceRequired = this.bufferedShowSessionAttendanceRequired;
+    const bufferedShowSessionSupplemental = this.bufferedShowSessionSupplemental;
+    const bufferedShowSessionSpecialAttireRequired = this.bufferedShowSessionSpecialAttireRequired;
+    const bufferedShowSessionSpecialEquipmentRequired = this.bufferedShowSessionSpecialEquipmentRequired;
 
     const showSessionAttendanceRequired = isEmpty(bufferedShowSessionAttendanceRequired)?false:bufferedShowSessionAttendanceRequired;
     const showSessionSupplemental = isEmpty(bufferedShowSessionSupplemental)?false:bufferedShowSessionSupplemental;
@@ -50,11 +50,11 @@ export default Component.extend({
       showSessionSpecialEquipmentRequired
     });
 
-    yield this.get('saveAll')(values);
+    yield this.saveAll(values);
   }),
   actions: {
     cancel(){
-      this.get('manage')(false);
+      this.manage(false);
       this.set('bufferedShowSessionAttendanceRequired', false);
       this.set('bufferedShowSessionSupplemental', false);
       this.set('bufferedShowSessionSpecialAttireRequired', false);

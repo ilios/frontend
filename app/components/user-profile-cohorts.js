@@ -13,9 +13,9 @@ export default Component.extend({
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const user = this.get('user');
+    const user = this.user;
     if (isPresent(user)) {
-      this.get('setup').perform(user);
+      this.setup.perform(user);
     }
   },
 
@@ -33,9 +33,9 @@ export default Component.extend({
 
   setup: task(function * (user){
     this.set('finishedSetup', false);
-    const store = this.get('store');
-    const currentUser = this.get('currentUser');
-    const permissionChecker = this.get('permissionChecker');
+    const store = this.store;
+    const currentUser = this.currentUser;
+    const permissionChecker = this.permissionChecker;
 
     const cohorts = yield user.get('cohorts');
     const selectedCohorts = cohorts.toArray();
@@ -63,13 +63,13 @@ export default Component.extend({
   }),
 
   save: task(function * (){
-    const finishedSetup = this.get('finishedSetup');
+    const finishedSetup = this.finishedSetup;
     if (!finishedSetup) {
       return;
     }
-    const user = this.get('user');
-    const selectedCohorts = this.get('selectedCohorts');
-    const primaryCohort = this.get('primaryCohort');
+    const user = this.user;
+    const selectedCohorts = this.selectedCohorts;
+    const primaryCohort = this.primaryCohort;
 
     user.set('primaryCohort', primaryCohort);
 
@@ -78,7 +78,7 @@ export default Component.extend({
     userCohorts.pushObjects(selectedCohorts);
 
     yield user.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
     this.set('hasSavedRecently', true);
     yield timeout(500);
     this.set('hasSavedRecently', false);
@@ -86,21 +86,21 @@ export default Component.extend({
   }).drop(),
 
   selectedSchool: computed('selectedSchoolId', 'schools.[]', function(){
-    const selectedSchoolId = this.get('selectedSchoolId');
-    const schools = this.get('schools');
+    const selectedSchoolId = this.selectedSchoolId;
+    const schools = this.schools;
     return schools.findBy('id', selectedSchoolId);
   }),
 
   assignableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function () {
-    const cohorts = await this.get('allCohorts');
-    const selectedCohorts = this.get('selectedCohorts') || [];
+    const cohorts = await this.allCohorts;
+    const selectedCohorts = this.selectedCohorts || [];
 
     return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
   }),
 
   assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', async function(){
-    const selectedSchool = this.get('selectedSchool');
-    const assignableCohorts = await this.get('assignableCohorts');
+    const selectedSchool = this.selectedSchool;
+    const assignableCohorts = await this.assignableCohorts;
 
     return filter(assignableCohorts, async cohort => {
       const school = await cohort.get('school');
@@ -109,8 +109,8 @@ export default Component.extend({
   }),
 
   secondaryCohorts: computed('primaryCohort', 'selectedCohorts.[]', function(){
-    const primaryCohort = this.get('primaryCohort');
-    const selectedCohorts = this.get('selectedCohorts');
+    const primaryCohort = this.primaryCohort;
+    const selectedCohorts = this.selectedCohorts;
     if (isEmpty(primaryCohort)) {
       return selectedCohorts;
     }
@@ -122,10 +122,10 @@ export default Component.extend({
 
   actions: {
     removeSelectedCohort(cohort){
-      this.get('selectedCohorts').removeObject(cohort);
+      this.selectedCohorts.removeObject(cohort);
     },
     addSelectedCohort(cohort){
-      this.get('selectedCohorts').pushObject(cohort);
+      this.selectedCohorts.pushObject(cohort);
     },
   }
 });

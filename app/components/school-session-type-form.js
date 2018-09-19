@@ -63,30 +63,30 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return;
     }
 
-    const title = this.get('title');
-    const calendarColor = this.get('calendarColor');
-    const assessment = this.get('assessment');
-    const aamcMethod = yield this.get('selectedAamcMethod');
-    const assessmentOption = yield this.get('selectedAssessmentOption');
-    const isActive = this.get('isActive');
-    const save = this.get('save');
+    const title = this.title;
+    const calendarColor = this.calendarColor;
+    const assessment = this.assessment;
+    const aamcMethod = yield this.selectedAamcMethod;
+    const assessmentOption = yield this.selectedAssessmentOption;
+    const isActive = this.isActive;
+    const save = this.save;
 
     yield save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive);
     this.send('clearErrorDisplay');
   }),
   assessmentOptions: computed(async function(){
-    const store = this.get('store');
+    const store = this.store;
     return await store.findAll('assessment-option');
   }),
   allAamcMethods: computed(async function(){
-    const store = this.get('store');
+    const store = this.store;
     const aamcMethods = await store.findAll('aamc-method');
 
     return aamcMethods;
   }),
   filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', async function(){
-    const assessment = this.get('assessment');
-    const aamcMethods = await this.get('allAamcMethods');
+    const assessment = this.assessment;
+    const aamcMethods = await this.allAamcMethods;
     const filteredAamcMethods = aamcMethods.filter(aamcMethod => {
       const id = aamcMethod.get('id');
       if (assessment) {
@@ -99,8 +99,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return filteredAamcMethods;
   }),
   selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function(){
-    const filteredAamcMethods = await this.get('filteredAamcMethods');
-    const selectedAamcMethodId = this.get('selectedAamcMethodId');
+    const filteredAamcMethods = await this.filteredAamcMethods;
+    const selectedAamcMethodId = this.selectedAamcMethodId;
     if(isPresent(selectedAamcMethodId)){
       const selectedAamcMethod = filteredAamcMethods.findBy('id', selectedAamcMethodId);
       if (selectedAamcMethod) {
@@ -111,9 +111,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return null;
   }),
   selectedAssessmentOption: computed('assessmentOptions.[]', 'selectedAssessmentOptionId', 'assessment', async function(){
-    const assessment = this.get('assessment');
-    const selectedAssessmentOptionId = this.get('selectedAssessmentOptionId');
-    const assessmentOptions = await this.get('assessmentOptions');
+    const assessment = this.assessment;
+    const selectedAssessmentOptionId = this.selectedAssessmentOptionId;
+    const assessmentOptions = await this.assessmentOptions;
     let assessmentOption = null;
 
     if (assessment) {
@@ -132,7 +132,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('saveSessionType').perform();
+      this.saveSessionType.perform();
       return;
     }
 

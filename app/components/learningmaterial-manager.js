@@ -56,7 +56,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const setup = this.get('setup');
+    const setup = this.setup;
     setup.perform();
   },
   isFile: equal('type', 'file'),
@@ -64,7 +64,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isCitation: equal('type', 'citation'),
 
   canEditTitle: computed('learningMaterial.learningMaterial.courseLearningMaterials.[]', 'learningMaterial.learningMaterial.sessionLearningMaterials.[]', async function() {
-    const learningMaterial = this.get('learningMaterial');
+    const learningMaterial = this.learningMaterial;
     const parent = await learningMaterial.get('learningMaterial');
     const cLmIds = parent.hasMany('courseLearningMaterials').ids();
     const sLmIds = parent.hasMany('sessionLearningMaterials').ids();
@@ -73,10 +73,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   setup: task(function * (){
-    const learningMaterial = this.get('learningMaterial');
+    const learningMaterial = this.learningMaterial;
     if (!learningMaterial) {
       yield timeout(10000);
-      const setup = this.get('setup');
+      const setup = this.setup;
       yield setup.perform();
     }
     this.setProperties(learningMaterial.getProperties(
@@ -132,14 +132,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       statusId,
       terms,
       closeManager,
-    } = this.getProperties('learningMaterial', 'title', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
+    } = this;
     learningMaterial.set('publicNotes', publicNotes);
     learningMaterial.set('required', required);
     learningMaterial.set('notes', notes);
     learningMaterial.set('startDate', startDate);
     learningMaterial.set('endDate', endDate);
 
-    const statues = yield this.get('learningMaterialStatuses');
+    const statues = yield this.learningMaterialStatuses;
     let status = statues.findBy('id', statusId);
 
     const parent = yield learningMaterial.get('learningMaterial');
@@ -152,8 +152,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     closeManager();
   }),
   currentStatus: computed('statusId', 'learningMaterialStatuses.[]', async function () {
-    const statusId = this.get('statusId');
-    const learningMaterialStatuses = await this.get('learningMaterialStatuses');
+    const statusId = this.statusId;
+    const learningMaterialStatuses = await this.learningMaterialStatuses;
     return learningMaterialStatuses.findBy('id', statusId);
   }),
   actions: {
@@ -188,11 +188,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set(which, now);
     },
     addTerm(term) {
-      const terms = this.get('terms');
+      const terms = this.terms;
       terms.pushObject(term);
     },
     removeTerm(term) {
-      const terms = this.get('terms');
+      const terms = this.terms;
       terms.removeObject(term);
     },
   }

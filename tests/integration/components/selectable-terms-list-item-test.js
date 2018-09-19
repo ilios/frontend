@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 
@@ -22,8 +22,8 @@ module('Integration | Component | selectable terms list item', function(hooks) {
 
     await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove=remove}}`);
 
-    assert.equal(findAll('.selected').length, 1);
-    assert.equal(findAll('.actions .fa-times').length, 1);
+    assert.dom('.selected').exists({ count: 1 });
+    assert.dom('.actions .fa-times').exists({ count: 1 });
     await click('.fa-times');
   });
 
@@ -42,8 +42,8 @@ module('Integration | Component | selectable terms list item', function(hooks) {
 
     await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add=add}}`);
 
-    assert.equal(findAll('.selected').length, 0);
-    assert.equal(findAll('.actions .fa-plus').length, 1);
+    assert.dom('.selected').doesNotExist();
+    assert.dom('.actions .fa-plus').exists({ count: 1 });
     await click('.fa-plus');
   });
 });

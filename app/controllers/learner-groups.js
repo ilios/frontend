@@ -42,11 +42,11 @@ export default Controller.extend({
   }),
 
   programs: computed('selectedSchool', async function(){
-    const school = await this.get('selectedSchool');
+    const school = await this.selectedSchool;
     if(isEmpty(school)){
       return [];
     }
-    return await this.get('store').query('program', {
+    return await this.store.query('program', {
       filters: {
         school: school.get('id'),
         published: true
@@ -55,16 +55,16 @@ export default Controller.extend({
   }),
 
   sortedPrograms: computed('programs', async function(){
-    const programs = await this.get('programs');
+    const programs = await this.programs;
     return programs.sortBy('title');
   }),
 
   programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function(){
-    const program = await this.get('selectedProgram');
+    const program = await this.selectedProgram;
     if(isEmpty(program)){
       return [];
     }
-    return await this.get('store').query('programYear', {
+    return await this.store.query('programYear', {
       filters: {
         program: program.get('id'),
         published: true
@@ -73,12 +73,12 @@ export default Controller.extend({
   }),
 
   sortedProgramYears: computed('programYears.[]', async function() {
-    const programYears = await this.get('programYears');
+    const programYears = await this.programYears;
     return programYears.sortBy('startYear').reverse();
   }),
 
   learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function(){
-    const programYear = await this.get('selectedProgramYear');
+    const programYear = await this.selectedProgramYear;
     if(isEmpty(programYear)) {
       return [];
     }
@@ -87,10 +87,10 @@ export default Controller.extend({
   }),
 
   filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function(){
-    const titleFilter = this.get('titleFilter');
+    const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter;
     const cleanTitle = escapeRegExp(title);
-    const learnerGroups = await this.get('learnerGroups');
+    const learnerGroups = await this.learnerGroups;
     const exp = new RegExp(cleanTitle, 'gi');
     let filteredGroups;
     if (isEmpty(cleanTitle)) {
@@ -105,7 +105,7 @@ export default Controller.extend({
 
   selectedSchool: computed('model.schools.[]', 'schoolId', async function(){
     let schools = await this.get('model.schools');
-    const schoolId = this.get('schoolId');
+    const schoolId = this.schoolId;
     if(isPresent(schoolId)){
       const school = schools.findBy('id', schoolId);
       if(school){
@@ -113,14 +113,14 @@ export default Controller.extend({
       }
     }
 
-    const user = await this.get('currentUser').get('model');
+    const user = await this.currentUser.get('model');
     return await user.get('school');
   }),
 
   selectedProgram: computed('programs.[]', 'programId', async function(){
-    const programs = await this.get('programs');
+    const programs = await this.programs;
     let program;
-    const programId = this.get('programId');
+    const programId = this.programId;
     if(isPresent(programId)){
       program = programs.findBy('id', programId);
     }
@@ -137,9 +137,9 @@ export default Controller.extend({
   }),
 
   selectedProgramYear: computed('programYears.[]', 'programYearId', async function(){
-    const programYears = await this.get('programYears');
+    const programYears = await this.programYears;
     let programYear;
-    const programYearId = this.get('programYearId');
+    const programYearId = this.programYearId;
     if(isPresent(programYearId)){
       programYear = programYears.findBy('id', programYearId);
     }
@@ -150,8 +150,8 @@ export default Controller.extend({
   }),
 
   copyGroup: task(function * (withLearners, learnerGroup) {
-    const store = this.get('store');
-    const i18n = this.get('i18n');
+    const store = this.store;
+    const i18n = this.i18n;
     const cohort = yield learnerGroup.get('cohort');
     const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners);
     this.set('totalGroupsToSave', newGroups.length);
@@ -166,14 +166,14 @@ export default Controller.extend({
   }),
 
   canCreate: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = await this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = await this.selectedSchool;
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
   canDelete: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = await this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = await this.selectedSchool;
     return permissionChecker.canDeleteLearnerGroupInSchool(selectedSchool);
   }),
 
@@ -183,7 +183,7 @@ export default Controller.extend({
     },
 
     async removeLearnerGroup(learnerGroup) {
-      const programYear = await this.get('selectedProgramYear');
+      const programYear = await this.selectedProgramYear;
       const cohort = await programYear.get('cohort');
       const learnerGroups = await cohort.get('learnerGroups');
       const descendants = await learnerGroup.get('allDescendants');
@@ -193,19 +193,19 @@ export default Controller.extend({
       learnerGroups.removeObject(learnerGroup);
       await learnerGroup.destroyRecord();
       this.set('deletedGroup', learnerGroup);
-      const newGroup = this.get('newGroup');
+      const newGroup = this.newGroup;
       if (newGroup === learnerGroup) {
         this.set('newGroup', null);
       }
     },
 
     toggleNewLearnerGroupForm() {
-      this.set('showNewLearnerGroupForm', !this.get('showNewLearnerGroupForm'));
+      this.set('showNewLearnerGroupForm', !this.showNewLearnerGroupForm);
     },
 
     async saveNewLearnerGroup(title, fillWithCohort) {
-      const store = this.get('store');
-      const selectedProgramYear = await this.get('selectedProgramYear');
+      const store = this.store;
+      const selectedProgramYear = await this.selectedProgramYear;
       const cohort = await selectedProgramYear.get('cohort');
       const newLearnerGroup = store.createRecord('learner-group', { title, cohort });
       if (fillWithCohort) {
@@ -226,7 +226,7 @@ export default Controller.extend({
     },
 
     async changeSelectedProgram(programId) {
-      const programs = await this.get('programs');
+      const programs = await this.programs;
       const program = programs.findBy('id', programId);
       const school = await program.get('school');
       this.set('schoolId', school.get('id'));
@@ -236,7 +236,7 @@ export default Controller.extend({
     },
 
     async changeSelectedProgramYear(programYearId) {
-      const programYears = await this.get('programYears');
+      const programYears = await this.programYears;
       const programYear = programYears.findBy('id', programYearId);
       const program = await programYear.get('program');
       const school = await program.get('school');

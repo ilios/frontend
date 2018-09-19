@@ -5,7 +5,7 @@ export default Route.extend({
   session: service(),
   titleToken: 'general.logout',
   beforeModel(){
-    const session = this.get('session');
+    const session = this.session;
     if(session.isAuthenticated){
       return session.invalidate();
     }

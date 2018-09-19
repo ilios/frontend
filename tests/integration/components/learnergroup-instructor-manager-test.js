@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -32,8 +37,8 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       close=(action nothing)
     }}`);
 
-    assert.equal(find('li').textContent.trim(), 'test person |');
-    assert.equal(find(findAll('li')[1]).textContent.trim(), 'test group |');
+    assert.dom('li').hasText('test person |');
+    assert.dom(findAll('li')[1]).hasText('test group |');
   });
 
   test('can remove groups', async function(assert) {
@@ -77,8 +82,8 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       close=(action nothing)
     }}`);
 
-    assert.equal(find(group1).textContent.trim(), 'test group |');
-    assert.equal(find(group2).textContent.trim(), 'test group 2 |');
+    assert.dom(group1).hasText('test group |');
+    assert.dom(group2).hasText('test group 2 |');
 
     await click(group1);
 
@@ -126,8 +131,8 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       close=(action nothing)
     }}`);
 
-    assert.equal(find(user1).textContent.trim(), 'test person |');
-    assert.equal(find(user2).textContent.trim(), 'test person 2 |');
+    assert.dom(user1).hasText('test person |');
+    assert.dom(user2).hasText('test person 2 |');
 
     await click(user1);
 

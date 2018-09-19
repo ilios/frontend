@@ -5,7 +5,7 @@ export default Component.extend({
   classNames: ['learning-material-table-actions'],
   actions: {
     clickTrash() {
-      const row = this.get('row');
+      const row = this.row;
       row.set('expanded', true);
       row.set('confirmDelete', true);
     }

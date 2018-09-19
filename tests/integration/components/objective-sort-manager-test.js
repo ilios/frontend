@@ -1,7 +1,12 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import tHelper from "ember-i18n/helper";
@@ -37,11 +42,11 @@ module('Integration | Component | objective sort manager', function(hooks) {
     await render(hbs`{{objective-sort-manager subject=subject}}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.draggable-object').length, 2);
-      assert.equal(find('.draggable-object').textContent.trim(), objective2.get('title'));
-      assert.equal(find(findAll('.draggable-object')[1]).textContent.trim(), objective1.get('title'));
-      assert.equal(findAll('.actions .bigadd').length, 1);
-      assert.equal(findAll('.actions .bigcancel').length, 1);
+      assert.dom('.draggable-object').exists({ count: 2 });
+      assert.dom('.draggable-object').hasText(objective2.get('title'));
+      assert.dom(findAll('.draggable-object')[1]).hasText(objective1.get('title'));
+      assert.dom('.actions .bigadd').exists({ count: 1 });
+      assert.dom('.actions .bigcancel').exists({ count: 1 });
     });
   });
 

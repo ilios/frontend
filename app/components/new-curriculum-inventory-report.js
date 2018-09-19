@@ -65,16 +65,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplayFor', 'name');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let year = parseInt(this.get('selectedYear').get('id'), 10);
-          let report = this.get('store').createRecord('curriculumInventoryReport', {
-            name: this.get('name'),
-            program: this.get('currentProgram'),
+          let year = parseInt(this.selectedYear.get('id'), 10);
+          let report = this.store.createRecord('curriculumInventoryReport', {
+            name: this.name,
+            program: this.currentProgram,
             year: year,
             startDate: new Date(year, 6, 1),
             endDate: new Date(year +  1, 5, 30),
-            description: this.get('description')
+            description: this.description
           });
-          this.get('save')(report).finally(()=>{
+          this.save(report).finally(()=>{
             this.set('isSaving', false);
           });
         } else {

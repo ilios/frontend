@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import {
   triggerSuccess
@@ -69,11 +69,11 @@ module('Integration | Component | user profile ics', function(hooks) {
     const button = 'button.copy-btn';
     const successMessage = '.yes';
 
-    assert.equal(findAll(successMessage).length, 0);
-    assert.equal(findAll(button).length, 1);
+    assert.dom(successMessage).doesNotExist();
+    assert.dom(button).exists({ count: 1 });
     await triggerSuccess(this, '.copy-btn');
-    assert.equal(findAll(successMessage).length, 1);
-    assert.equal(find(successMessage).textContent.trim(), 'Copied Successfully');
+    assert.dom(successMessage).exists({ count: 1 });
+    assert.dom(successMessage).hasText('Copied Successfully');
 
   });
 });
