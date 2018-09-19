@@ -7,7 +7,7 @@ export default Component.extend({
   classNames: ['sessions-grid-offering-table'],
   'data-test-sessions-grid-offering-table': true,
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', function() {
-    let offerings = this.get('offerings');
+    let offerings = this.offerings;
     if (!offerings) {
       return [];
     }

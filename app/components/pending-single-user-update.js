@@ -13,26 +13,26 @@ export default Component.extend({
   actions: {
     updateEmailAddress(update){
       this.set('isSaving', true);
-      let user = this.get('user');
+      let user = this.user;
       user.set('email', update.get('value'));
       user.save().then(() => {
         update.deleteRecord();
         update.save().then(() => {
           this.set('isSaving', false);
-          this.get('flashMessages').success('general.savedSuccessfully');
+          this.flashMessages.success('general.savedSuccessfully');
         });
       });
     },
     disableUser(){
       this.set('isSaving', true);
-      let user = this.get('user');
+      let user = this.user;
       user.set('enabled', false);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {
           updates.invoke('deleteRecord');
           RSVP.all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
-            this.get('flashMessages').success('general.savedSuccessfully');
+            this.flashMessages.success('general.savedSuccessfully');
           });
         });
       });
@@ -40,14 +40,14 @@ export default Component.extend({
     },
     excludeFromSync(){
       this.set('isSaving', true);
-      let user = this.get('user');
+      let user = this.user;
       user.set('userSyncIgnore', true);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {
           updates.invoke('deleteRecord');
           RSVP.all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
-            this.get('flashMessages').success('general.savedSuccessfully');
+            this.flashMessages.success('general.savedSuccessfully');
           });
         });
       });

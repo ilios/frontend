@@ -8,11 +8,11 @@ export default Component.extend({
   init(){
     this._super(...arguments);
     this.set('selectedCompetencies', []);
-    this.get('loadSelectedCompetencies').perform();
+    this.loadSelectedCompetencies.perform();
   },
   didUpdateAttrs(){
     this._super(...arguments);
-    this.get('loadSelectedCompetencies').perform();
+    this.loadSelectedCompetencies.perform();
   },
   programYear: null,
   isManaging: null,
@@ -22,7 +22,7 @@ export default Component.extend({
   selectedCompetencies: null,
 
   loadSelectedCompetencies: task(function * (){
-    const programYear = this.get('programYear');
+    const programYear = this.programYear;
     if (programYear){
       let selectedCompetencies = yield programYear.get('competencies');
       this.set('selectedCompetencies', selectedCompetencies.toArray());
@@ -33,22 +33,22 @@ export default Component.extend({
 
   save: task(function * () {
     yield timeout(10);
-    let programYear = this.get('programYear');
-    let selectedCompetencies = this.get('selectedCompetencies');
+    let programYear = this.programYear;
+    let selectedCompetencies = this.selectedCompetencies;
     programYear.set('competencies', selectedCompetencies);
     try {
       yield programYear.save();
     } finally {
-      this.get('flashMessages').success('general.savedSuccessfully');
-      this.get('setIsManaging')(false);
-      this.get('expand')();
+      this.flashMessages.success('general.savedSuccessfully');
+      this.setIsManaging(false);
+      this.expand();
     }
 
   }).drop(),
 
   competencies: computed('programYear.program.school.competencies.[]', function(){
     return new Promise(resolve => {
-      const programYear = this.get('programYear');
+      const programYear = this.programYear;
       programYear.get('program').then(program => {
         program.get('school').then(school => {
           school.get('competencies').then(competencies => {
@@ -61,7 +61,7 @@ export default Component.extend({
 
   domains: computed('competencies.[]', function(){
     return new Promise(resolve => {
-      this.get('competencies').then(competencies => {
+      this.competencies.then(competencies => {
         all(competencies.mapBy('domain')).then(domains => {
           resolve(domains.uniq());
         });
@@ -70,9 +70,9 @@ export default Component.extend({
   }),
 
   competenciesWithSelectedChildren: computed('competencies.[]', 'selectedCompetencies.[]', function(){
-    const selectedCompetencies = this.get('selectedCompetencies');
+    const selectedCompetencies = this.selectedCompetencies;
     return new Promise(resolve => {
-      this.get('competencies').then(competencies => {
+      this.competencies.then(competencies => {
         filter(competencies.toArray(), (competency => {
           return new Promise(resolve => {
             competency.get('treeChildren').then(children => {
@@ -89,11 +89,11 @@ export default Component.extend({
 
   actions: {
     cancel() {
-      this.get('loadSelectedCompetencies').perform();
-      this.get('setIsManaging')(false);
+      this.loadSelectedCompetencies.perform();
+      this.setIsManaging(false);
     },
     addCompetencyToBuffer(competency) {
-      let selectedCompetencies = this.get('selectedCompetencies').toArray();
+      let selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.addObject(competency);
       competency.get('children').then(children => {
         selectedCompetencies.addObjects(children.toArray());
@@ -101,7 +101,7 @@ export default Component.extend({
       this.set('selectedCompetencies', selectedCompetencies);
     },
     removeCompetencyFromBuffer(competency) {
-      let selectedCompetencies = this.get('selectedCompetencies').toArray();
+      let selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.removeObject(competency);
       competency.get('children').then(children => {
         selectedCompetencies.removeObjects(children.toArray());
@@ -111,7 +111,7 @@ export default Component.extend({
     collapse(){
       this.get('programYear.competencies').then(competencies => {
         if (competencies.get('length')) {
-          this.get('collapse')();
+          this.collapse();
         }
       });
     },

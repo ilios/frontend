@@ -8,7 +8,7 @@ export default Component.extend({
   courseCompetencyDetails: false,
   actions: {
     save() {
-      const course = this.get('course');
+      const course = this.course;
       course.save();
     },
   }

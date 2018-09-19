@@ -2,7 +2,13 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -64,43 +70,25 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(find('.title').textContent.trim(), 'Overview',
-        'Component title is visible.'
+      assert.dom('.title').hasText('Overview', 'Component title is visible.');
+      assert.dom('.report-overview-actions .rollover').exists({ count: 1 }, 'Rollover course button is visible.');
+      assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
+      assert.dom('.start-date .editinplace').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
+      assert.dom('.end-date label').hasText('End:', 'End date label is correct.');
+      assert.dom('.end-date .editinplace').hasText(moment(report.get('endDate')).format('L'), 'End date is visible.');
+      assert.dom('.academic-year label').hasText('Academic Year:', 'Academic year label is correct.');
+      assert.dom('.academic-year .editinplace').hasText(
+        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
+        'Academic year is visible.'
       );
-      assert.equal(findAll('.report-overview-actions .rollover').length, 1,
-        'Rollover course button is visible.'
-      );
-      assert.equal(find('.start-date label').textContent.trim(), 'Start:',
-        'Start date label is correct.'
-      );
-      assert.equal(find('.start-date .editinplace').textContent.trim(),
-        moment(report.get('startDate')).format('L'), 'Start date is visible.'
-      );
-      assert.equal(find('.end-date label').textContent.trim(), 'End:',
-        'End date label is correct.'
-      );
-      assert.equal(find('.end-date .editinplace').textContent.trim(),
-        moment(report.get('endDate')).format('L'), 'End date is visible.'
-      );
-      assert.equal(find('.academic-year label').textContent.trim(), 'Academic Year:',
-        'Academic year label is correct.'
-      );
-      assert.equal(find('.academic-year .editinplace').textContent.trim(),
-        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
-      );
-      assert.equal(find('.program label').textContent.trim(), 'Program:',
-        'Program label is correct.'
-      );
-      assert.equal(find('.program > span').textContent.trim(),
-        `${program.get('title')} (${program.get('shortTitle')})`, 'Program is visible.'
+      assert.dom('.program label').hasText('Program:', 'Program label is correct.');
+      assert.dom('.program > span').hasText(
+        `${program.get('title')} (${program.get('shortTitle')})`,
+        'Program is visible.'
       );
 
-      assert.equal(find('.description label').textContent.trim(), 'Description:',
-        'Description label is correct.'
-      );
-      assert.equal(find('.description .editinplace').textContent.trim(),
-        report.get('description'), 'Description is visible.'
-      );
+      assert.dom('.description label').hasText('Description:', 'Description label is correct.');
+      assert.dom('.description .editinplace').hasText(report.get('description'), 'Description is visible.');
     });
   });
 
@@ -142,21 +130,17 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=false}}`);
     return settled().then(() => {
-      assert.equal(find('.start-date > span').textContent.trim(),
-        moment(report.get('startDate')).format('L'), 'Start date is visible.'
+      assert.dom('.start-date > span').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
+      assert.dom('.end-date > span').hasText(moment(report.get('endDate')).format('L'), 'End date is visible.');
+      assert.dom('.academic-year > span').hasText(
+        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
+        'Academic year is visible.'
       );
-      assert.equal(find('.end-date > span').textContent.trim(),
-        moment(report.get('endDate')).format('L'), 'End date is visible.'
+      assert.dom('.program > span').hasText(
+        `${program.get('title')} (${program.get('shortTitle')})`,
+        'Program is visible.'
       );
-      assert.equal(find('.academic-year > span').textContent.trim(),
-        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
-      );
-      assert.equal(find('.program > span').textContent.trim(),
-        `${program.get('title')} (${program.get('shortTitle')})`, 'Program is visible.'
-      );
-      assert.equal(find('.description > span').textContent.trim(),
-        report.get('description'), 'Description is visible.'
-      );
+      assert.dom('.description > span').hasText(report.get('description'), 'Description is visible.');
     });
   });
 
@@ -205,9 +189,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(findAll('.report-overview-actions .rollover').length, 0,
-        'Rollover course button is not visible.'
-      );
+      assert.dom('.report-overview-actions .rollover').doesNotExist('Rollover course button is not visible.');
     });
   });
 
@@ -257,16 +239,15 @@ module('Integration | Component | curriculum inventory report overview', functio
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
         let interactor = openDatepicker(find('.start-date input'));
-        assert.equal(find('.start-date input').value, moment(report.get('startDate')).format('L'),
+        assert.dom('.start-date input').hasValue(
+          moment(report.get('startDate')).format('L'),
           "The report's current start date is pre-selected in date picker."
         );
         let newVal = moment('2015-04-01');
         interactor.selectDate(newVal.toDate());
         await click('.start-date .actions .done');
         return settled().then(() => {
-          assert.equal(find('.start-date .editinplace').textContent.trim(), newVal.format('L'),
-            'Edit link shown new start date post-update.'
-          );
+          assert.dom('.start-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new start date post-update.');
           assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
             "The report's start date was updated."
           );
@@ -320,14 +301,10 @@ module('Integration | Component | curriculum inventory report overview', functio
         let interactor = openDatepicker(find('.start-date input'));
         let newVal = moment(report.get('endDate')).add(1, 'day');
         interactor.selectDate(newVal.toDate());
-        assert.equal(findAll('.start-date .validation-error-message').length, 0,
-          'Initially, no validation error is visible.'
-        );
+        assert.dom('.start-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
         await click('.start-date .actions .done');
         return settled().then(() => {
-          assert.equal(findAll('.start-date .validation-error-message').length, 1,
-            'Validation failed, error message is visible.'
-          );
+          assert.dom('.start-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
         });
       });
     });
@@ -379,16 +356,15 @@ module('Integration | Component | curriculum inventory report overview', functio
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
         let interactor = openDatepicker(find('.end-date input'));
-        assert.equal(find('.end-date input').value, moment(report.get('endDate')).format('L'),
+        assert.dom('.end-date input').hasValue(
+          moment(report.get('endDate')).format('L'),
           "The report's current end date is pre-selected in date picker."
         );
         let newVal = moment('2016-05-01');
         interactor.selectDate(newVal.toDate());
         await click('.end-date .actions .done');
         return settled().then(() => {
-          assert.equal(find('.end-date .editinplace').textContent.trim(), newVal.format('L'),
-            'Edit link shown new end date post-update.'
-          );
+          assert.dom('.end-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new end date post-update.');
           assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
             "The report's end date was updated."
           );
@@ -442,14 +418,10 @@ module('Integration | Component | curriculum inventory report overview', functio
         let interactor = openDatepicker(find('.end-date input'));
         let newVal = moment(report.get('startDate')).subtract(1, 'day');
         interactor.selectDate(newVal.toDate());
-        assert.equal(findAll('.end-date .validation-error-message').length, 0,
-          'Initially, no validation error is visible.'
-        );
+        assert.dom('.end-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
         await click('.end-date .actions .done');
         return settled().then(() => {
-          assert.equal(findAll('.end-date .validation-error-message').length, 1,
-            'Validation failed, error message is visible.'
-          );
+          assert.dom('.end-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
         });
       });
     });
@@ -499,17 +471,13 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.academic-year .editinplace .editable');
       return settled().then(async () => {
-        assert.equal(findAll('.academic-year option').length, 11, 'There should be ten options in year dropdown.');
-        assert.equal(find('.academic-year option:checked').value, report.get('year'),
-          "The report's year should be selected."
-        );
+        assert.dom('.academic-year option').exists({ count: 11 }, 'There should be ten options in year dropdown.');
+        assert.dom('.academic-year option:checked').hasValue(report.get('year'), "The report's year should be selected.");
         const newVal = report.get('year') + 1;
         await fillIn('.academic-year select', newVal);
         await click('.academic-year .actions .done');
         return settled().then(() => {
-          assert.equal(find('.academic-year .editinplace').textContent.trim(), `${newVal} - ${newVal + 1}`,
-            'New year is visible on edit-link.'
-          );
+          assert.dom('.academic-year .editinplace').hasText(`${newVal} - ${newVal + 1}`, 'New year is visible on edit-link.');
           assert.equal(report.get('year'), newVal, 'Report year got updated with new value.');
         });
       });
@@ -556,12 +524,11 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(() => {
-      assert.equal(find('.academic-year > span').textContent.trim(),
-        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1), 'Academic year is visible.'
+      assert.dom('.academic-year > span').hasText(
+        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
+        'Academic year is visible.'
       );
-      assert.equal(findAll('.academic-year .editinplace').length, 0,
-        'Academic year is not editable in place.'
-      );
+      assert.dom('.academic-year .editinplace').doesNotExist('Academic year is not editable in place.');
     });
   });
 
@@ -607,14 +574,14 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(async () => {
-      assert.equal(find('.description .editinplace').textContent.trim(), 'Click to edit');
+      assert.dom('.description .editinplace').hasText('Click to edit');
       await click('.description .editinplace .editable');
       return settled().then(async () => {
         const newDescription = 'Quidquid luce fuit, tenebris agit.';
         await fillIn('.description textarea', newDescription);
         await click('.description .actions .done');
         return settled().then(() => {
-          assert.equal(find('.description .editinplace').textContent.trim(), newDescription);
+          assert.dom('.description .editinplace').hasText(newDescription);
           assert.equal(report.get('description'), newDescription);
         });
       });
@@ -660,17 +627,15 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
     return settled().then(async () => {
-      assert.equal(find('.description .editinplace').textContent.trim(), 'Click to edit');
+      assert.dom('.description .editinplace').hasText('Click to edit');
       await click('.description .editinplace .editable');
       return settled().then(async () => {
-        assert.equal(findAll('.description .validation-error-message').length, 0,
-          'Validation error is initially not shown.'
-        );
+        assert.dom('.description .validation-error-message').doesNotExist('Validation error is initially not shown.');
         const newDescription = '0123456789'.repeat(5000);
         await fillIn('.description textarea', newDescription);
         await click('.description .actions .done');
         return settled().then(() => {
-          assert.equal(findAll('.description .validation-error-message').length, 1, 'Validation error message is visible.');
+          assert.dom('.description .validation-error-message').exists({ count: 1 }, 'Validation error message is visible.');
         });
       });
     });

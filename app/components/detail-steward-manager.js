@@ -22,27 +22,27 @@ export default Component.extend({
    */
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('getStewardsBySchool').perform();
-    this.get('getAvailableSchools').perform();
+    this.getStewardsBySchool.perform();
+    this.getAvailableSchools.perform();
   },
   getStewardsBySchool: task(function *(){
-    const stewardsBySchool =  yield this.get('stewardsBySchool');
+    const stewardsBySchool =  yield this.stewardsBySchool;
     this.set('stewardsBySchoolLoaded', true);
     return stewardsBySchool;
   }),
   getAvailableSchools: task(function *(){
-    const availableSchools =  yield this.get('availableSchools');
+    const availableSchools =  yield this.availableSchools;
     this.set('availableSchoolsLoaded', true);
     return availableSchools;
   }),
 
   allSchools: computed(async function(){
-    const store = this.get('store');
+    const store = this.store;
     return await store.findAll('school');
   }),
 
   selectedDepartments: computed('stewards.[]', async function(){
-    const stewards = this.get('stewards');
+    const stewards = this.stewards;
     const selectedDepartments = await map(stewards.toArray(), async steward => {
       return await steward.get('department');
     });
@@ -53,7 +53,7 @@ export default Component.extend({
   }),
 
   selectedSchools: computed('stewards.[]', async function(){
-    const stewards = this.get('stewards');
+    const stewards = this.stewards;
     const selectedDepartments = await map(stewards.toArray(), async steward => {
       return await steward.get('school');
     });
@@ -64,7 +64,7 @@ export default Component.extend({
   }),
 
   stewardsBySchool: computed('stewards.[]', async function(){
-    const stewards = this.get('stewards');
+    const stewards = this.stewards;
     const stewardObjects = await map(stewards.toArray(), async steward => {
       const school = await steward.get('school');
       const department = await steward.get('department');
@@ -89,9 +89,9 @@ export default Component.extend({
   }),
 
   availableSchools: computed('selectedDepartments.[]', 'selectedSchools.[]', 'allSchools.[]', async function(){
-    const allSchools = await this.get('allSchools');
-    const selectedDepartments = await this.get('selectedDepartments');
-    const selectedSchools = await this.get('selectedSchools');
+    const allSchools = await this.allSchools;
+    const selectedDepartments = await this.selectedDepartments;
+    const selectedSchools = await this.selectedSchools;
 
     const selectedDepartmentIds = selectedDepartments.mapBy('id');
     const selectedSchoolIds = selectedSchools.mapBy('id');
@@ -118,12 +118,12 @@ export default Component.extend({
 
   }),
   addSchool: task(function * (school){
-    const store = this.get('store');
-    const selectedDepartments = yield this.get('selectedDepartments');
+    const store = this.store;
+    const selectedDepartments = yield this.selectedDepartments;
     const steward = store.createRecord('program-year-steward', {
       school
     });
-    this.get('add')(steward);
+    this.add(steward);
     const departments = yield school.get('departments');
     const newDepartments = departments.filter(department => {
       return !selectedDepartments.includes(department);
@@ -133,34 +133,34 @@ export default Component.extend({
         school,
         department
       });
-      this.get('add')(newSteward);
+      this.add(newSteward);
     });
   }),
   addDepartment: task(function * (school, department){
-    const store = this.get('store');
-    const selectedDepartments = yield this.get('selectedDepartments');
+    const store = this.store;
+    const selectedDepartments = yield this.selectedDepartments;
     if (!selectedDepartments.includes(department)) {
       const steward = store.createRecord('program-year-steward', {
         school,
         department
       });
-      this.get('add')(steward);
+      this.add(steward);
     }
   }),
   removeDepartment: task(function * (school, department){
-    const stewards = this.get('stewards');
+    const stewards = this.stewards;
     const stewardToRemove = stewards.find(steward => {
       return department.get('id') === steward.belongsTo('department').id();
     });
-    yield this.get('remove')(stewardToRemove);
+    yield this.remove(stewardToRemove);
   }),
   removeSchool: task(function * (school){
-    const stewards = this.get('stewards');
+    const stewards = this.stewards;
     const stewardsToRemove = stewards.filter(steward => {
       return school.get('id') === steward.belongsTo('school').id();
     });
     for (let i = 0; i < stewardsToRemove.length; i++) {
-      yield this.get('remove')(stewardsToRemove[i]);
+      yield this.remove(stewardsToRemove[i]);
     }
   }),
 });

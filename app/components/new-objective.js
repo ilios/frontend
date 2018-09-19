@@ -27,7 +27,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           this.send('removeErrorDisplayFor', 'title');
-          return this.get('save')(this.get('title')).finally(() =>{
+          return this.save(this.title).finally(() =>{
             this.set('title', null);
           });
         }

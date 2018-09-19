@@ -12,6 +12,6 @@ module('Integration | Component | visualizer-course-session-type', function(hook
 
     await render(hbs`{{visualizer-course-session-type}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

@@ -16,6 +16,6 @@ module('Integration | Component | learnergroup tree', function(hooks) {
 
     await render(hbs`{{learnergroup-tree learnerGroup=learnerGroup add=(action nothing)}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

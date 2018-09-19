@@ -18,7 +18,7 @@ export default Component.extend({
    * @public
    */
   trees: computed('learnerGroups.[]', async function(){
-    const learnerGroups = this.get('learnerGroups');
+    const learnerGroups = this.learnerGroups;
 
     if (isEmpty(learnerGroups)) {
       return [];
@@ -48,7 +48,7 @@ export default Component.extend({
   }),
 
   lowestLeaves: computed('learnerGroups.[]', function(){
-    const learnerGroups = this.get('learnerGroups').toArray();
+    const learnerGroups = this.learnerGroups.toArray();
     const ids = learnerGroups.mapBy('id');
     return new Promise(resolve => {
       if (isEmpty(learnerGroups)) {

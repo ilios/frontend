@@ -17,14 +17,14 @@ module('Integration | Component | error display', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{error-display errors=errors clearErrors=(action nothing)}}`);
 
-    assert.equal(find('.error-detail-action').textContent.trim(), 'Hide Details');
+    assert.dom('.error-detail-action').hasText('Hide Details');
 
     let iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-](\d{2}):(\d{2})/);
     assert.ok(find('.timestamp').textContent.trim().match(iso8601), 'Current datetime is visible');
 
     await click('.error-detail-action');
 
-    assert.equal(find('.error-detail-action').textContent.trim(), 'Show Details');
+    assert.dom('.error-detail-action').hasText('Show Details');
   });
 
   test('clicking clear button fires action', async function(assert) {

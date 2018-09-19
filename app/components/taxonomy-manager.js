@@ -72,7 +72,7 @@ export default Component.extend({
    * @public
    */
   assignableVocabularies: computed('nonEmptyVocabularies.[]', async function(){
-    const vocabularies = await this.get('nonEmptyVocabularies');
+    const vocabularies = await this.nonEmptyVocabularies;
     return vocabularies.toArray().filter(vocab => {
       return vocab.get('active');
     });
@@ -87,12 +87,12 @@ export default Component.extend({
    * @public
    */
   listableVocabularies: computed('nonEmptyVocabularies.[]', 'selectedTerms.[]', async function() {
-    const vocabularies = await this.get('nonEmptyVocabularies');
+    const vocabularies = await this.nonEmptyVocabularies;
     return vocabularies.toArray().filter(vocab => {
       if (vocab.get('active')) {
         return true;
       }
-      const terms = this.get('selectedTerms');
+      const terms = this.selectedTerms;
       const vocabId = vocab.get('id');
       let hasTerms = false;
       terms.forEach(term => {
@@ -113,10 +113,10 @@ export default Component.extend({
    * @public
    */
   selectedVocabulary: computed('assignableVocabularies.[]', 'vocabId', async function(){
-    const vocabs = await this.get('assignableVocabularies');
-    if(isPresent(this.get('vocabId'))){
+    const vocabs = await this.assignableVocabularies;
+    if(isPresent(this.vocabId)){
       let vocab = vocabs.find(v => {
-        return v.get('id') === this.get('vocabId');
+        return v.get('id') === this.vocabId;
       });
       if(vocab){
         return vocab;
@@ -131,7 +131,7 @@ export default Component.extend({
    * @public
    */
   topLevelTerms: computed('selectedVocabulary', async function() {
-    const vocabulary = await this.get('selectedVocabulary');
+    const vocabulary = await this.selectedVocabulary;
     return vocabulary.get('topLevelTerms');
   }),
 
@@ -141,8 +141,8 @@ export default Component.extend({
    * @public
    */
   filteredTerms: computed('topLevelTerms.[]', 'termFilter', async function() {
-    const termFilter = this.get('termFilter');
-    const topLevelTerms = await this.get('topLevelTerms');
+    const termFilter = this.termFilter;
+    const topLevelTerms = await this.topLevelTerms;
     if (isEmpty(termFilter)) {
       return topLevelTerms;
     }

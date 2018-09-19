@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -36,10 +41,10 @@ module('Integration | Component | course overview', function(hooks) {
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
-    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    assert.dom(error).doesNotExist('No validation errors shown initially.');
     await fillIn(input, 'a');
     await click(save);
-    assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
+    assert.dom(error).exists({ count: 1 }, 'Validation failed, error message shows.');
   });
 
   test('course external id validation fails if value is too long', async function(assert) {
@@ -55,10 +60,10 @@ module('Integration | Component | course overview', function(hooks) {
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
-    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    assert.dom(error).doesNotExist('No validation errors shown initially.');
     await fillIn(input, 'tooLong'.repeat(50));
     await click(save);
-    assert.equal(findAll(error).length, 1, 'Validation failed, error message shows.');
+    assert.dom(error).exists({ count: 1 }, 'Validation failed, error message shows.');
   });
 
   test('course external id validation passes on changed value within boundaries', async function(assert) {
@@ -85,10 +90,10 @@ module('Integration | Component | course overview', function(hooks) {
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
-    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    assert.dom(error).doesNotExist('No validation errors shown initially.');
     await fillIn(input, 'legit');
     await click(save);
-    assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
+    assert.dom(error).doesNotExist('No validation errors, no messages shown.');
   });
 
   test('course external id validation passes on empty value', async function(assert) {
@@ -115,9 +120,9 @@ module('Integration | Component | course overview', function(hooks) {
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
-    assert.equal(findAll(error).length, 0, 'No validation errors shown initially.');
+    assert.dom(error).doesNotExist('No validation errors shown initially.');
     await fillIn(input, '');
     await click(save);
-    assert.equal(findAll(error).length, 0, 'No validation errors, no messages shown.');
+    assert.dom(error).doesNotExist('No validation errors, no messages shown.');
   });
 });

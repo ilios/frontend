@@ -11,9 +11,9 @@ export default Component.extend({
   classNameBindings: ['textDirection', ':sortable', ':clickable', 'hideFromSmallScreen'],
   hideFromSmallScreen: false,
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
-    const sortedBy = this.get('sortedBy');
-    const sortedAscending = this.get('sortedAscending');
-    const sortType = this.get('sortType');
+    const sortedBy = this.sortedBy;
+    const sortedAscending = this.sortedAscending;
+    const sortType = this.sortType;
 
     if(sortedBy){
       if(sortedAscending){
@@ -26,7 +26,7 @@ export default Component.extend({
     }
   }),
   textDirection: computed('align', function(){
-    return 'text-' + this.get('align');
+    return 'text-' + this.align;
   }),
   attributeBindings: ['colspan', 'title'],
   colspan: 1,

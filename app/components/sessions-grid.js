@@ -10,8 +10,8 @@ export default Component.extend({
   confirmDeleteSessionIds: null,
 
   filteredSessions: computed('sessions.[]', 'filterBy', function(){
-    const sessions = this.get('sessions');
-    const filterBy = this.get('filterBy');
+    const sessions = this.sessions;
+    const filterBy = this.filterBy;
     if (isEmpty(sessions)) {
       return [];
     }
@@ -38,8 +38,8 @@ export default Component.extend({
   }),
 
   sortedSessions: computed('filteredSessions.[]', 'sortInfo', function(){
-    const sessions = this.get('filteredSessions');
-    const sortInfo = this.get('sortInfo');
+    const sessions = this.filteredSessions;
+    const sortInfo = this.sortInfo;
 
     if (sortInfo.descending) {
       return sessions.sortBy(sortInfo.column).reverse();
@@ -49,7 +49,7 @@ export default Component.extend({
   }),
 
   sortInfo: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     const parts = sortBy.split(':');
     const column = parts[0];
     const descending = parts.length > 1 && parts[1] === 'desc';

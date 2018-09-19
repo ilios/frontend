@@ -48,7 +48,7 @@ export default Component.extend({
    */
   sortedTerms: computed('filteredTerms.[]', function() {
     return new Promise(resolve => {
-      let terms = this.get('filteredTerms');
+      let terms = this.filteredTerms;
       let promises = [];
       let proxies = [];
       terms.forEach(term => {
@@ -77,11 +77,11 @@ export default Component.extend({
    * @protected
    */
   filteredTerms: computed('terms.[]', 'vocabulary', function () {
-    let terms = this.get('terms');
+    let terms = this.terms;
     if (isEmpty(terms)) {
       return [];
     }
-    let vocab = this.get('vocabulary');
+    let vocab = this.vocabulary;
     let filteredTerms = [];
     terms.forEach((term) => {
       if (term.get('vocabulary.id') === vocab.get('id')) {
@@ -93,7 +93,7 @@ export default Component.extend({
 
   actions: {
     remove(term) {
-      if (this.get('canEdit')) {
+      if (this.canEdit) {
         this.sendAction('remove', term);
       }
     }

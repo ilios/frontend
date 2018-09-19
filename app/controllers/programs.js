@@ -31,12 +31,12 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
   filteredPrograms: computed('titleFilter', 'programs.[]', async function() {
-    const titleFilter = this.get('titleFilter');
+    const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter ;
     const cleanTitle = escapeRegExp(title);
     let exp = new RegExp(cleanTitle, 'gi');
 
-    const programs = await this.get('programs');
+    const programs = await this.programs;
     let filteredPrograms;
     if(isEmpty(cleanTitle)){
       filteredPrograms = programs;
@@ -51,8 +51,8 @@ export default Controller.extend({
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
-    if(isPresent(this.get('schoolId'))){
-      const schoolId = this.get('schoolId');
+    if(isPresent(this.schoolId)){
+      const schoolId = this.schoolId;
       const school = schools.findBy('id', schoolId);
       if(school){
         return school;
@@ -63,12 +63,12 @@ export default Controller.extend({
   }),
 
   programs: computed('selectedSchool', 'deletedProgram', 'newProgram', async function() {
-    let schoolId = this.get('selectedSchool').get('id');
+    let schoolId = this.selectedSchool.get('id');
     if(isEmpty(schoolId)) {
       return resolve([]);
     }
 
-    return await this.get('store').query('program', {
+    return await this.store.query('program', {
       filters: {
         school: schoolId
       }
@@ -76,8 +76,8 @@ export default Controller.extend({
   }),
 
   canCreate: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateProgram(selectedSchool);
   }),
 
@@ -88,7 +88,7 @@ export default Controller.extend({
 
   actions: {
     toggleEditor() {
-      if (this.get('showNewProgramForm')) {
+      if (this.showNewProgramForm) {
         this.set('showNewProgramForm', false);
       } else {
         this.setProperties({ showNewProgramForm: true, newProgram: null });
@@ -100,19 +100,19 @@ export default Controller.extend({
     },
 
     async removeProgram(program) {
-      const school = await this.get('selectedSchool');
+      const school = await this.selectedSchool;
       const programs = await school.get('programs');
       programs.removeObject(program);
       await program.destroyRecord();
       this.set('deletedProgram', program);
-      const newProgram = this.get('newProgram');
+      const newProgram = this.newProgram;
       if (newProgram === program) {
         this.set('newProgram', null);
       }
     },
 
     async saveNewProgram(newProgram){
-      const school = await this.get('selectedSchool');
+      const school = await this.selectedSchool;
       const duration = 4;
       newProgram.setProperties({school, duration});
       const savedProgram = await newProgram.save();

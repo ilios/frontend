@@ -4,7 +4,13 @@ import {
   test
 } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import { click, find, findAll, settled, visit } from '@ember/test-helpers';
+import {
+  click,
+  find,
+  findAll,
+  settled,
+  visit
+} from '@ember/test-helpers';
 import $ from 'jquery';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -71,7 +77,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
   test('list editable', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
+    assert.dom('.programyear-objective-list tbody tr').exists({ count: 3 });
 
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('objective 0'));
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('competency 1 (competency 0)'));
@@ -88,7 +94,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
 
   test('list not editable', async function(assert) {
     await visit(url);
-    assert.equal(findAll('.programyear-objective-list tbody tr').length, 3);
+    assert.dom('.programyear-objective-list tbody tr').exists({ count: 3 });
 
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('objective 0'));
     assert.equal(await getElementText('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3)'), getText('competency 1 (competency 0)'));
@@ -127,8 +133,8 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(await getElementText(find('.objective-manage-competency .parent-picker')), getText('competency0 competency1 competency2 competency3 competency4'));
     let items = findAll('.parent-picker .clickable');
     assert.equal(items.length, 4);
-    assert.ok(find('.parent-picker h5').classList.contains('selected'));
-    assert.ok(find(items[0]).classList.contains('selected'));
+    assert.dom('.parent-picker h5').hasClass('selected');
+    assert.dom(items[0]).hasClass('selected');
     assert.ok(!find(items[1]).classList.contains('selected'));
     assert.ok(!findAll('.parent-picker h5')[1].classList.contains('selected'));
     assert.ok(!findAll('.parent-picker h5')[2].classList.contains('selected'));
@@ -137,7 +143,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     items = findAll('.parent-picker .clickable');
     assert.ok(!find(items[0]).classList.contains('selected'));
     assert.ok(!find(items[1]).classList.contains('selected'));
-    assert.ok(find(items[2]).classList.contains('selected'));
+    assert.dom(items[2]).hasClass('selected');
     assert.ok(!find(items[3]).classList.contains('selected'));
   });
 
@@ -217,7 +223,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await settled();
 
     assert.equal(await getElementText(errorMessage), getText('This field cannot be blank'));
-    assert.ok(find(save).disabled);
+    assert.dom(save).isDisabled();
   });
 
   test('expand objective and view links', async function(assert) {

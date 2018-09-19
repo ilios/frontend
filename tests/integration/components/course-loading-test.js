@@ -9,6 +9,6 @@ module('Integration | Component | course loading', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{course-loading}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Back to Courses List');
+    assert.dom(this.element).hasText('Back to Courses List');
   });
 });

@@ -12,6 +12,6 @@ module('Integration | Component | visualizer-program-year-competencies', functio
 
     await render(hbs`{{visualizer-program-year-competencies}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

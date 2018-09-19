@@ -1,7 +1,12 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 let Competency = EmberObject.extend({
@@ -70,14 +75,14 @@ module('Integration | Component | school competencies manager', function(hooks) 
     const comp2Delete = `${domains}:nth-of-type(1) li:nth-of-type(2) svg`;
 
 
-    assert.equal(find(title).textContent.trim(), 'New Domain');
-    assert.equal(findAll(input).length, 2);
+    assert.dom(title).hasText('New Domain');
+    assert.dom(input).exists({ count: 2 });
     assert.equal(find(input).getAttribute('placeholder'), 'Title');
-    assert.equal(find(domain1Title).textContent.trim(), 'domain1');
+    assert.dom(domain1Title).hasText('domain1');
     assert.equal(find(comp1Title).textContent.replace(/[\t\n\s]+/g, ""), 'competency1(3)');
     assert.equal(find(comp2Title).textContent.replace(/[\t\n\s]+/g, ""), 'competency2');
-    assert.equal(findAll(comp1Delete).length, 0);
-    assert.equal(findAll(comp2Delete).length, 1);
+    assert.dom(comp1Delete).doesNotExist();
+    assert.dom(comp2Delete).exists({ count: 1 });
   });
 
   test('delete fires delete', async function(assert) {

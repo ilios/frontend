@@ -11,7 +11,7 @@ export default Component.extend({
   'data-test-user-menu': true,
   actions: {
     toggleMenu() {
-      const isOpen = this.get('isOpen');
+      const isOpen = this.isOpen;
       if (isOpen) {
         this.set('isOpen', false);
       } else {

@@ -20,7 +20,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
-    const competency = this.get('competency');
+    const competency = this.competency;
     if (isPresent(competency)) {
       this.set('title', competency.get('title'));
     }
@@ -38,8 +38,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       if (validations.get('isInvalid')) {
         reject();
       } else {
-        const competency = this.get('competency');
-        const title = this.get('title');
+        const competency = this.competency;
+        const title = this.title;
         if (isPresent(competency)) {
           competency.set('title', title);
         }
@@ -52,7 +52,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     revert() {
       this.set('title', null);
-      const competency = this.get('competency');
+      const competency = this.competency;
       if (isPresent(competency)) {
         this.set('title', competency.get('title'));
       }

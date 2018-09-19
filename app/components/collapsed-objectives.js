@@ -8,13 +8,13 @@ export default Component.extend({
   subject: null,
 
   objectives: computed('subject.objectives.[]', async function(){
-    const subject = this.get('subject');
+    const subject = this.subject;
     const objectives = await subject.get('objectives');
 
     return objectives;
   }),
   objectivesWithParents: computed('objectives.[]', async function(){
-    const objectives = await this.get('objectives');
+    const objectives = await this.objectives;
     const objectivesWithParents = objectives.filter(objective => {
       const parentIds = objective.hasMany('parents').ids();
 
@@ -24,7 +24,7 @@ export default Component.extend({
     return objectivesWithParents;
   }),
   objectivesWithMesh: computed('objectives.[]', async function(){
-    const objectives = await this.get('objectives');
+    const objectives = await this.objectives;
     const objectivesWithMesh = objectives.filter(objective => {
       const meshDescriptorIds = objective.hasMany('meshDescriptors').ids();
 

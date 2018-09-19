@@ -12,8 +12,8 @@ export default Component.extend({
   'data-test-search-box': true,
   searchTask: task(function * () {
     yield timeout(DEBOUNCE_TIMEOUT);
-    const value = this.get('value');
-    yield this.get('search')(value);
+    const value = this.value;
+    yield this.search(value);
   }).restartable(),
 
   keyUp(event) {
@@ -25,7 +25,7 @@ export default Component.extend({
     }
 
     if (13 === keyCode) {
-      this.get('searchTask').perform();
+      this.searchTask.perform();
       return;
     }
 
@@ -35,15 +35,15 @@ export default Component.extend({
   },
   actions: {
     update(value){
-      const liveSearch = this.get('liveSearch');
+      const liveSearch = this.liveSearch;
       this.set('value', value);
       if (liveSearch) {
-        this.get('searchTask').perform();
+        this.searchTask.perform();
       }
     },
     clear() {
       this.set('value', '');
-      const clear = this.get('clear');
+      const clear = this.clear;
       if (isPresent(clear)) {
         clear();
       }

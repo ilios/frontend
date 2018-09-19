@@ -11,6 +11,6 @@ module('Integration | Component | sessions-grid-offering', function(hooks) {
     this.set('offering', offering);
     await render(hbs`{{sessions-grid-offering offering=offering}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

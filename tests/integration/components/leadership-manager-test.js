@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  fillIn,
+  click,
+  findAll,
+  find
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -28,11 +34,11 @@ module('Integration | Component | leadership manager', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(directors)[0].textContent.trim(), '0 guy M. Mc0son');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(findAll(administrators)[0].textContent.trim(), '0 guy M. Mc0son');
-    assert.equal(findAll(administrators)[1].textContent.trim(), '1 guy M. Mc1son');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(findAll(directors)[0]).hasText('0 guy M. Mc0son');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(findAll(administrators)[0]).hasText('0 guy M. Mc0son');
+    assert.dom(findAll(administrators)[1]).hasText('1 guy M. Mc1son');
   });
 
   test('it renders without data', async function(assert) {
@@ -52,8 +58,8 @@ module('Integration | Component | leadership manager', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(findAll(directors).length, 0);
-    assert.equal(findAll(administrators).length, 0);
+    assert.dom(directors).doesNotExist();
+    assert.dom(administrators).doesNotExist();
   });
 
   test('remove director', async function(assert) {
@@ -78,8 +84,8 @@ module('Integration | Component | leadership manager', function(hooks) {
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const icon = `${list}:nth-of-type(1) svg`;
 
-    assert.equal(findAll(list).length, 1);
-    assert.equal(findAll(list)[0].textContent.trim(), '0 guy M. Mc0son');
+    assert.dom(list).exists({ count: 1 });
+    assert.dom(findAll(list)[0]).hasText('0 guy M. Mc0son');
     await click(icon);
   });
 
@@ -105,8 +111,8 @@ module('Integration | Component | leadership manager', function(hooks) {
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const icon = `${list}:nth-of-type(1) svg`;
 
-    assert.equal(findAll(list).length, 1);
-    assert.equal(findAll(list)[0].textContent.trim(), '0 guy M. Mc0son');
+    assert.dom(list).exists({ count: 1 });
+    assert.dom(findAll(list)[0]).hasText('0 guy M. Mc0son');
     await click(icon);
   });
 
@@ -135,14 +141,14 @@ module('Integration | Component | leadership manager', function(hooks) {
     const directorSearch = '[data-test-director-search] input';
     const firstResult = '[data-test-result-index="1"]';
 
-    assert.equal(findAll(directorsList).length, 0);
-    assert.equal(findAll(administratorsList).length, 1);
+    assert.dom(directorsList).doesNotExist();
+    assert.dom(administratorsList).exists({ count: 1 });
     await fillIn(directorSearch, 'user');
 
     assert.ok(find(firstResult).textContent.includes('0 guy'));
     await click(firstResult);
-    assert.equal(findAll(directorsList).length, 1);
-    assert.equal(findAll(administratorsList).length, 1);
+    assert.dom(directorsList).exists({ count: 1 });
+    assert.dom(administratorsList).exists({ count: 1 });
   });
 
   test('add administrator', async function(assert) {
@@ -170,15 +176,15 @@ module('Integration | Component | leadership manager', function(hooks) {
     const administratorSearch = '[data-test-administrator-search] input';
     const firstResult = '[data-test-result-index="1"]';
 
-    assert.equal(findAll(directorsList).length, 1);
-    assert.equal(findAll(administratorsList).length, 0);
+    assert.dom(directorsList).exists({ count: 1 });
+    assert.dom(administratorsList).doesNotExist();
 
     await fillIn(administratorSearch, 'user');
 
     assert.ok(find(firstResult).textContent.includes('0 guy'));
     await click(firstResult);
-    assert.equal(findAll(directorsList).length, 1);
-    assert.equal(findAll(administratorsList).length, 1);
+    assert.dom(directorsList).exists({ count: 1 });
+    assert.dom(administratorsList).exists({ count: 1 });
   });
 
   test('disabled users are indicated with an icon', async function(assert) {
@@ -208,12 +214,12 @@ module('Integration | Component | leadership manager', function(hooks) {
     const disabledDirectors = `${directors} .fa-user-times`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(disabledDirectors).length, 0);
-    assert.equal(findAll(directors)[0].textContent.trim(), '0 guy M. Mc0son');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(findAll(disabledAdministrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), '0 guy M. Mc0son');
-    assert.equal(findAll(administrators)[1].textContent.trim(), '1 guy M. Mc1son');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(disabledDirectors).doesNotExist();
+    assert.dom(findAll(directors)[0]).hasText('0 guy M. Mc0son');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(disabledAdministrators).exists({ count: 1 });
+    assert.dom(findAll(administrators)[0]).hasText('0 guy M. Mc0son');
+    assert.dom(findAll(administrators)[1]).hasText('1 guy M. Mc1son');
   });
 });

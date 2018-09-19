@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -59,15 +64,15 @@ module('Integration | Component | school session type form', function(hooks) {
     const isActive = '[data-test-active]';
     const isActiveInput = `${isActive} input`;
 
-    assert.equal(find(titleInput).value, 'one', 'title is correct');
-    assert.equal(find(aamcMethodSelect).value, '', 'corrrect aamc method is selected');
-    assert.equal(findAll(aamcMethodOptions).length, 2, 'right number of aamcMethod options');
-    assert.equal(find(firstAamcMethodOption).value, '', 'first aamcMethod is blank');
-    assert.equal(find(secondAamcMethodOption).value, 'AM001', 'second aamcMethod is filtered correctly');
-    assert.equal(find(colorInput).value, '#ffffff', 'color is correct');
-    assert.ok(find(assessmentInput).checked, 'assessment is selected');
-    assert.ok(find(isActiveInput).checked, 'active is selected');
-    assert.equal(find(assessmentOptionSelect).value, '2', 'correct assessment option is selected');
+    assert.dom(titleInput).hasValue('one', 'title is correct');
+    assert.dom(aamcMethodSelect).hasValue('', 'corrrect aamc method is selected');
+    assert.dom(aamcMethodOptions).exists({ count: 2 }, 'right number of aamcMethod options');
+    assert.dom(firstAamcMethodOption).hasValue('', 'first aamcMethod is blank');
+    assert.dom(secondAamcMethodOption).hasValue('AM001', 'second aamcMethod is filtered correctly');
+    assert.dom(colorInput).hasValue('#ffffff', 'color is correct');
+    assert.dom(assessmentInput).isChecked('assessment is selected');
+    assert.dom(isActiveInput).isChecked('active is selected');
+    assert.dom(assessmentOptionSelect).hasValue('2', 'correct assessment option is selected');
   });
 
   test('changing assessment changes available aamcMethods', async function (assert) {
@@ -115,17 +120,17 @@ module('Integration | Component | school session type form', function(hooks) {
     const assessment = '[data-test-assessment]';
     const assessmentInput = `${assessment} .toggle-yesno`;
 
-    assert.equal(find(aamcMethodSelect).value, '');
-    assert.equal(findAll(aamcMethodOptions).length, 2);
-    assert.equal(find(firstAamcMethodOption).value, '');
-    assert.equal(find(secondAamcMethodOption).value, 'AM001');
+    assert.dom(aamcMethodSelect).hasValue('');
+    assert.dom(aamcMethodOptions).exists({ count: 2 });
+    assert.dom(firstAamcMethodOption).hasValue('');
+    assert.dom(secondAamcMethodOption).hasValue('AM001');
 
     await click(assessmentInput);
 
-    assert.equal(find(aamcMethodSelect).value, '');
-    assert.equal(findAll(aamcMethodOptions).length, 2);
-    assert.equal(find(firstAamcMethodOption).value, '');
-    assert.equal(find(secondAamcMethodOption).value, 'IM001');
+    assert.dom(aamcMethodSelect).hasValue('');
+    assert.dom(aamcMethodOptions).exists({ count: 2 });
+    assert.dom(firstAamcMethodOption).hasValue('');
+    assert.dom(secondAamcMethodOption).hasValue('IM001');
   });
 
   test('assessment option hidden when assessment is false', async function(assert) {
@@ -146,11 +151,11 @@ module('Integration | Component | school session type form', function(hooks) {
     const assessment = '[data-test-assessment]';
     const assessmentOption = '[data-test-assessment-option]';
 
-    assert.equal(findAll(title).length, 1);
-    assert.equal(findAll(color).length, 1);
-    assert.equal(findAll(assessment).length, 1);
-    assert.notOk(find(assessment).checked);
-    assert.equal(findAll(assessmentOption).length, 0);
+    assert.dom(title).exists({ count: 1 });
+    assert.dom(color).exists({ count: 1 });
+    assert.dom(assessment).exists({ count: 1 });
+    assert.dom(assessment).isNotChecked();
+    assert.dom(assessmentOption).doesNotExist();
   });
 
   test('cancel fires action', async function(assert) {
@@ -248,16 +253,16 @@ module('Integration | Component | school session type form', function(hooks) {
     const isActiveControl = `${isActive} .toggle-yesno`;
     const button = '.done';
 
-    assert.ok(find(isActiveInput).checked, 'active is selected');
+    assert.dom(isActiveInput).isChecked('active is selected');
 
     fillIn(titleInput, 'new title');
     fillIn(aamcMethodSelect, aamcMethodModel.id);
     fillIn(colorInput, '#a1b2c3');
     fillIn(assessmentOptionSelect, '1');
 
-    assert.ok(find(isActiveInput).checked, 'active is selected');
+    assert.dom(isActiveInput).isChecked('active is selected');
     await click(isActiveControl);
-    assert.notOk(find(isActiveInput).checked, 'active is not selected');
+    assert.dom(isActiveInput).isNotChecked('active is not selected');
     await click(button);
   });
 
@@ -308,19 +313,19 @@ module('Integration | Component | school session type form', function(hooks) {
     const activeInput = `${active} input`;
     const activeValue = `${active} .value`;
 
-    assert.equal(findAll(titleInput).length, 0);
-    assert.equal(findAll(aamcMethodSelect).length, 0);
-    assert.equal(findAll(colorInput).length, 0);
-    assert.equal(findAll(assessmentInput).length, 0);
-    assert.equal(findAll(assessmentOptionSelect).length, 0);
-    assert.equal(findAll(activeInput).length, 0);
+    assert.dom(titleInput).doesNotExist();
+    assert.dom(aamcMethodSelect).doesNotExist();
+    assert.dom(colorInput).doesNotExist();
+    assert.dom(assessmentInput).doesNotExist();
+    assert.dom(assessmentOptionSelect).doesNotExist();
+    assert.dom(activeInput).doesNotExist();
 
-    assert.equal(find(titleValue).textContent.trim(), 'one');
-    assert.equal(find(aamcMethodValue).textContent.trim(), 'lorem ipsum');
-    assert.equal(find(colorValue).textContent.trim(), '#ffffff');
+    assert.dom(titleValue).hasText('one');
+    assert.dom(aamcMethodValue).hasText('lorem ipsum');
+    assert.dom(colorValue).hasText('#ffffff');
     assert.equal(find(colorBox).style.backgroundColor.trim(), ('rgb(255, 255, 255)'));
-    assert.equal(find(assessmentValue).textContent.trim(), 'Yes');
-    assert.equal(find(assessmentOptionValue).textContent.trim(), 'formative');
-    assert.equal(find(activeValue).textContent.trim(), 'Yes');
+    assert.dom(assessmentValue).hasText('Yes');
+    assert.dom(assessmentOptionValue).hasText('formative');
+    assert.dom(activeValue).hasText('Yes');
   });
 });

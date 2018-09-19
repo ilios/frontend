@@ -3,7 +3,13 @@ import Service from '@ember/service';
 import { run } from "@ember/runloop";
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -54,8 +60,8 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     await settled();
 
     assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
-    assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
-    assert.equal(find(secondaryCohorts).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
+    assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
+    assert.dom(secondaryCohorts).hasText('school 1 program 1 cohort 1', 'cohort correct');
   });
 
   test('clicking manage sends the action', async function(assert) {
@@ -94,17 +100,17 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) .add`;
 
     assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
-    assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
-    assert.equal(find(secondaryCohorts).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
+    assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
+    assert.dom(secondaryCohorts).hasText('school 1 program 1 cohort 1', 'cohort correct');
 
-    assert.equal(find(schoolPicker).value, '1', 'correct school selected');
-    assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-    assert.equal(find(assignableCohorts).textContent.trim(), 'program 0 cohort 2', 'cohort correct');
+    assert.dom(schoolPicker).hasValue('1', 'correct school selected');
+    assert.dom(assignableCohorts).exists({ count: 1 }, 'correct number of assignable cohorts');
+    assert.dom(assignableCohorts).hasText('program 0 cohort 2', 'cohort correct');
 
     await fillIn(schoolPicker, '2');
 
-    assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-    assert.equal(find(assignableCohorts).textContent.trim(), 'program 1 cohort 3', 'cohort correct');
+    assert.dom(assignableCohorts).exists({ count: 1 }, 'correct number of assignable cohorts');
+    assert.dom(assignableCohorts).hasText('program 1 cohort 3', 'cohort correct');
 
     await click(promoteFirstSecondaryCohort);
     await click(removeFirstSecondaryCohort);

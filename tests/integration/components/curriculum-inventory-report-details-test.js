@@ -1,5 +1,10 @@
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -40,12 +45,8 @@ module('Integration | Component | curriculum inventory report details', function
     }}`);
 
     return settled().then(() => {
-      assert.equal(find('.curriculum-inventory-report-header .title').textContent.trim(), report.get('name'),
-        'Report name is visible in header.'
-      );
-      assert.equal(find('.curriculum-inventory-report-overview .description .editable').textContent.trim(), report.get('description'),
-        'Report description is visible in overview.'
-      );
+      assert.dom('.curriculum-inventory-report-header .title').hasText(report.get('name'), 'Report name is visible in header.');
+      assert.dom('.curriculum-inventory-report-overview .description .editable').hasText(report.get('description'), 'Report description is visible in overview.');
     });
   });
 
@@ -78,22 +79,18 @@ module('Integration | Component | curriculum inventory report details', function
       setManageLeadership=(action nothing)
     }}`);
 
-    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is initially not visible.');
+    assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
     await click('.curriculum-inventory-report-header .finalize');
-    assert.equal(findAll('.confirm-finalize').length, 1, 'Confirmation dialog is visible.');
+    assert.dom('.confirm-finalize').exists({ count: 1 }, 'Confirmation dialog is visible.');
     assert.ok(
       find('.confirm-finalize .confirm-message').textContent.trim().indexOf('By finalizing this report') === 0,
       'Finalize confirmation message is visible'
     );
     await click('.confirm-finalize .confirm-buttons .finalize');
     this.set('canUpdate', false);
-    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-finalization.');
-    assert.equal(findAll('.curriculum-inventory-report-header .title .fa-lock').length, 1,
-      'Lock icon is visible next to title post-finalization.'
-    );
-    assert.equal(findAll('.curriculum-inventory-report-header .finalize:disabled').length, 1,
-      'Finalize button has been disabled post-finalization.'
-    );
+    assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is not visible post-finalization.');
+    assert.dom('.curriculum-inventory-report-header .title .fa-lock').exists({ count: 1 }, 'Lock icon is visible next to title post-finalization.');
+    assert.dom('.curriculum-inventory-report-header .finalize').isDisabled('Finalize button has been disabled post-finalization.');
   });
 
   test('start finalizing report, then cancel', async function(assert){
@@ -127,12 +124,8 @@ module('Integration | Component | curriculum inventory report details', function
 
     await click('.curriculum-inventory-report-header .finalize');
     await click('.confirm-finalize .confirm-buttons .done');
-    assert.equal(findAll('.confirm-finalize').length, 0, 'Confirmation dialog is not visible post-cancellation.');
-    assert.equal(findAll('.curriculum-inventory-report-header .title .fa-lock').length, 0,
-      'Lock icon is not visible post-cancellation.'
-    );
-    assert.equal(findAll('.curriculum-inventory-report-header .finalize').length, 1,
-      'Finalize button is visible post-cancellation.'
-    );
+    assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is not visible post-cancellation.');
+    assert.dom('.curriculum-inventory-report-header .title .fa-lock').doesNotExist('Lock icon is not visible post-cancellation.');
+    assert.dom('.curriculum-inventory-report-header .finalize').exists({ count: 1 }, 'Finalize button is visible post-cancellation.');
   });
 });

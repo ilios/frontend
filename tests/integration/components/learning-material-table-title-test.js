@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learning material table title', function(hooks) {
@@ -18,7 +18,7 @@ module('Integration | Component | learning material table title', function(hooks
     this.set('row', row);
     await render(hbs`{{learning-material-table-title value='test' row=row}}`);
 
-    assert.equal(this.element.textContent.trim(), 'test');
-    assert.ok(find(i).classList.contains('fa-file-pdf'));
+    assert.dom(this.element).hasText('test');
+    assert.dom(i).hasClass('fa-file-pdf');
   });
 });

@@ -13,7 +13,7 @@ module('helper:browser-timezone', function(hooks) {
 
     await render(hbs`{{browser-timezone}}`);
 
-    assert.equal(this.element.textContent.trim(), moment.tz.guess());
+    assert.dom(this.element).hasText(moment.tz.guess());
   });
 });
 

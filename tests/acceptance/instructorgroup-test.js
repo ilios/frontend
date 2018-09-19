@@ -1,4 +1,12 @@
-import { currentRouteName, find, visit, click, fillIn, currentURL, findAll } from '@ember/test-helpers';
+import {
+  currentRouteName,
+  find,
+  visit,
+  click,
+  fillIn,
+  currentURL,
+  findAll
+} from '@ember/test-helpers';
 import {
   module,
   test
@@ -93,15 +101,15 @@ module('Acceptance | Instructor Group Details', function(hooks) {
     percySnapshot(assert);
     assert.equal(await getElementText(searchResults[0]), getText('5 Results'));
     assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
-    assert.ok(searchResults[1].classList.contains('active'));
+    assert.dom(searchResults[1]).hasClass('active');
     assert.equal(await getElementText(searchResults[2]), getText('1 guy M. Mc1son user@example.edu'));
     assert.ok(!searchResults[2].classList.contains('active'));
     assert.equal(await getElementText(searchResults[3]), getText('2 guy M. Mc2son user@example.edu'));
     assert.ok(!searchResults[3].classList.contains('active'));
     assert.equal(await getElementText(searchResults[4]), getText('3 guy M. Mc3son user@example.edu'));
-    assert.ok(searchResults[4].classList.contains('active'));
+    assert.dom(searchResults[4]).hasClass('active');
     assert.equal(await getElementText(searchResults[5]), getText('4 guy M. Mc4son user@example.edu'));
-    assert.ok(searchResults[5].classList.contains('active'));
+    assert.dom(searchResults[5]).hasClass('active');
   });
 
   test('add instructor', async function(assert) {

@@ -16,7 +16,7 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   data: computed('course.sessions.[]', async function () {
-    const course = this.get('course');
+    const course = this.course;
     const sessions = await course.get('sessions');
     const dataMap = await map(sessions.toArray(), async session => {
       const sessionType = await session.get('sessionType');
@@ -63,7 +63,7 @@ export default Component.extend({
     return mappedSessionTypesWithLabel;
   }),
   sortedData: computed('data.[]', async function () {
-    const data = await this.get('data');
+    const data = await this.data;
     data.sort((first, second) => {
       return first.data - second.data;
     });
@@ -72,9 +72,9 @@ export default Component.extend({
   }),
   actions: {
     barClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
+      const course = this.course;
+      const isIcon = this.isIcon;
+      const router = this.router;
       if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
         return;
       }
@@ -84,13 +84,13 @@ export default Component.extend({
   },
   barHover: task(function* (obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipContent', null);
       return;
     }
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const { label, data, meta } = obj;
 
     const title = htmlSafe(`${label} ${data} ${i18n.t('general.minutes')}`);

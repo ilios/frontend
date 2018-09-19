@@ -19,14 +19,14 @@ export default Component.extend({
 
   didReceiveAttrs(){
     this._super(...arguments);
-    this.get('searchForUsers').perform();
+    this.searchForUsers.perform();
   },
 
   searchForUsers: task(function * (){
-    const query = this.get('query');
+    const query = this.query;
     const q = cleanQuery(query);
     yield timeout(DEBOUNCE_TIMEOUT);
-    const { store, offset, limit } = this.getProperties('store', 'offset', 'limit');
+    const { store, offset, limit } = this;
     return yield store.query('user', {
       limit, q, offset,
       'order_by[lastName]': 'ASC',
@@ -36,7 +36,7 @@ export default Component.extend({
   }).cancelOn('deactivate').restartable(),
 
   newUserComponent: computed('iliosConfig.userSearchType', async function(){
-    const iliosConfig = this.get('iliosConfig');
+    const iliosConfig = this.iliosConfig;
     const userSearchType = await iliosConfig.get('userSearchType');
 
     return userSearchType === 'ldap'?'new-directory-user':'new-user';
@@ -47,7 +47,7 @@ export default Component.extend({
       if (offset < 0) {
         offset = 0;
       }
-      this.get('setOffset')(offset);
+      this.setOffset(offset);
     },
   }
 });

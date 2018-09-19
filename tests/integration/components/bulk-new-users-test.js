@@ -4,7 +4,14 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll,
+  find,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import Response from 'ember-cli-mirage/response';
@@ -94,9 +101,9 @@ module('Integration | Component | bulk new users', function(hooks) {
     const schools = 'select:nth-of-type(1) option';
     let options = findAll(schools);
     assert.equal(options.length, 3);
-    assert.equal(options[0].textContent.trim(), 'first');
-    assert.equal(options[1].textContent.trim(), 'second');
-    assert.equal(options[2].textContent.trim(), 'third');
+    assert.dom(options[0]).hasText('first');
+    assert.dom(options[1]).hasText('second');
+    assert.dom(options[2]).hasText('third');
   });
 
   test('select student mode display cohort', async function(assert) {
@@ -113,15 +120,15 @@ module('Integration | Component | bulk new users', function(hooks) {
     const schools = '[data-test-schools] option';
     let options = findAll(schools);
     assert.equal(options.length, 3);
-    assert.equal(options[0].textContent.trim(), 'first');
-    assert.equal(options[1].textContent.trim(), 'second');
-    assert.equal(options[2].textContent.trim(), 'third');
+    assert.dom(options[0]).hasText('first');
+    assert.dom(options[1]).hasText('second');
+    assert.dom(options[2]).hasText('third');
 
     const cohorts = '[data-test-cohorts] option';
     options = findAll(cohorts);
     assert.equal(options.length, 2);
-    assert.equal(options[0].textContent.trim(), 'Program first');
-    assert.equal(options[1].textContent.trim(), 'Program second');
+    assert.dom(options[0]).hasText('Program first');
+    assert.dom(options[1]).hasText('Program second');
   });
 
   test('parses file into table', async function (assert) {
@@ -134,28 +141,28 @@ module('Integration | Component | bulk new users', function(hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    assert.equal(findAll('table tbody tr').length, 2);
-    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked);
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(2)').textContent.trim(), 'jasper');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(3)').textContent.trim(), 'johnson');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(4)').textContent.trim(), '');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(5)').textContent.trim(), '1234567890');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(6)').textContent.trim(), 'jasper.johnson@example.com');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(7)').textContent.trim(), '123Campus');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(8)').textContent.trim(), '123Other');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(9)').textContent.trim(), 'jasper');
-    assert.equal(find('tbody tr:nth-of-type(1) td:nth-of-type(10)').textContent.trim(), '123Test');
+    assert.dom('table tbody tr').exists({ count: 2 });
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4)').hasText('');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(5)').hasText('1234567890');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(6)').hasText('jasper.johnson@example.com');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7)').hasText('123Campus');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(8)').hasText('123Other');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(9)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(10)').hasText('123Test');
 
-    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked);
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(2)').textContent.trim(), 'jackson');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(3)').textContent.trim(), 'johnson');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(4)').textContent.trim(), 'middle');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(5)').textContent.trim(), '12345');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(6)').textContent.trim(), 'jj@example.com');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(7)').textContent.trim(), '1234Campus');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(8)').textContent.trim(), '1234Other');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(9)').textContent.trim(), 'jck');
-    assert.equal(find('tbody tr:nth-of-type(2) td:nth-of-type(10)').textContent.trim(), '1234Test');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2)').hasText('jackson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4)').hasText('middle');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(5)').hasText('12345');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(6)').hasText('jj@example.com');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7)').hasText('1234Campus');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(8)').hasText('1234Other');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(9)').hasText('jck');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(10)').hasText('1234Test');
   });
 
   test('saves valid faculty users', async function(assert) {
@@ -287,10 +294,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate lastName', async function(assert) {
@@ -307,10 +314,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate middleName', async function(assert) {
@@ -327,11 +334,11 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate email address', async function(assert) {
@@ -348,10 +355,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(6)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(6)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate campusId', async function(assert) {
@@ -368,10 +375,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(7)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(7)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate otherId', async function(assert) {
@@ -388,10 +395,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('validate username', async function(assert) {
@@ -410,10 +417,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
-    assert.ok(find(badCheck).disabled);
-    assert.ok(find(BadBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('duplicate username errors on save', async function (assert) {
@@ -432,7 +439,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     await click('.done');
     await settled();
     assert.ok(findAll('.saving-authentication-errors').length, 1);
-    assert.equal(find('.saving-authentication-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');
+    assert.dom('.saving-authentication-errors li').hasText('johnson, jasper (jasper.johnson@example.com)');
   });
 
   test('error saving user', async function (assert) {
@@ -449,7 +456,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     await click('.done');
     await settled();
     assert.ok(findAll('.saving-user-errors').length, 1);
-    assert.equal(find('.saving-user-errors li').textContent.trim(), 'johnson, jasper (jasper.johnson@example.com)');
+    assert.dom('.saving-user-errors li').hasText('johnson, jasper (jasper.johnson@example.com)');
   });
 
   test('username not required', async function(assert) {
@@ -463,8 +470,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
   });
 
   test('password not required if username is blank', async function(assert) {
@@ -478,8 +485,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
     const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    assert.notOk(find(goodCheck).disabled);
-    assert.notOk(find(goodBox).classList.contains('error'));
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
   });
 
   test('dont create authentication if username is not set', async function(assert) {
@@ -509,6 +516,6 @@ module('Integration | Component | bulk new users', function(hooks) {
     await triggerUpload(users, find('input[type=file]'));
 
     const rows = 'tbody tr';
-    assert.equal(findAll(rows).length, 1);
+    assert.dom(rows).exists({ count: 1 });
   });
 });

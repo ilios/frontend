@@ -8,13 +8,13 @@ export default Mixin.create({
   showErrorsFor: [],
   actions: {
     addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
+      this.showErrorsFor.pushObject(field);
     },
     addErrorDisplaysFor(fields){
-      this.get('showErrorsFor').pushObjects(fields);
+      this.showErrorsFor.pushObjects(fields);
     },
     removeErrorDisplayFor(field){
-      this.get('showErrorsFor').removeObject(field);
+      this.showErrorsFor.removeObject(field);
     },
     clearErrorDisplay(){
       this.set('showErrorsFor', []);

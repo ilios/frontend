@@ -9,14 +9,14 @@ export default Component.extend({
   classNameBindings: [':selectable-terms-list-item', 'isSelected:selected'],
 
   isSelected: computed('term', 'selectedTerms.[]', function() {
-    let term = this.get('term');
-    let selectedTerms = this.get('selectedTerms');
+    let term = this.term;
+    let selectedTerms = this.selectedTerms;
     return selectedTerms.includes(term);
   }),
 
   click() {
-    let term = this.get('term');
-    if (this.get('isSelected')) {
+    let term = this.term;
+    if (this.isSelected) {
       this.sendAction('remove', term);
     } else {
       this.sendAction('add', term);

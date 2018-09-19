@@ -17,8 +17,8 @@ export default Component.extend({
   canCreate: false,
   searchValue: null,
   searchForUsers: task(function * (query) {
-    const i18n = this.get('i18n');
-    const store = this.get('store');
+    const i18n = this.i18n;
+    const store = this.store;
 
     let q = cleanQuery(query);
     if (isBlank(q)) {
@@ -64,9 +64,9 @@ export default Component.extend({
   }).restartable(),
 
   clickUser: task(function * (user) {
-    const routing = this.get('routing');
+    const routing = this.routing;
     this.set('searchValue', null);
-    yield this.get('searchForUsers').perform(null);
+    yield this.searchForUsers.perform(null);
     //private routing API requires putting the model we are passing inside of an array
     //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
     routing.transitionTo('user', [user]);

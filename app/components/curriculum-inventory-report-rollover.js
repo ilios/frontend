@@ -26,7 +26,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   iliosConfig: service(),
   didReceiveAttrs(){
     this._super(...arguments);
-    const report = this.get('report');
+    const report = this.report;
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const reportYear = parseInt(report.get('year'), 10);
     const startYear = Math.min(thisYear, reportYear);
@@ -65,18 +65,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isSaving', false);
       return;
     }
-    const commonAjax = this.get('commonAjax');
+    const commonAjax = this.commonAjax;
     const reportId = this.get('report.id');
-    const year = this.get('selectedYear').get('id');
-    const description = this.get('description');
-    const name = this.get('name');
+    const year = this.selectedYear.get('id');
+    const description = this.description;
+    const name = this.name;
     let data = {
       name,
       description,
       year,
     };
-    const host = this.get('host') ? this.get('host') : '';
-    const namespace = this.get('namespace');
+    const host = this.host ? this.host : '';
+    const namespace = this.namespace;
 
     let url = host + '/' + namespace + `/curriculuminventoryreports/${reportId}/rollover`;
     const newReportObj = yield commonAjax.request(url, {
@@ -84,13 +84,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       data
     });
 
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
+    const flashMessages = this.flashMessages;
+    const store = this.store;
     flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
     store.pushPayload(newReportObj);
     let newReport = store.peekRecord('curriculum-inventory-report', newReportObj.curriculumInventoryReports[0].id);
 
-    return this.get('visit')(newReport);
+    return this.visit(newReport);
   }).drop(),
 
   keyUp(event) {
@@ -102,7 +102,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('save').perform();
+      this.save.perform();
     }
   },
 

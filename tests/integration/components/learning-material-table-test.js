@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -40,12 +40,12 @@ module('Integration | Component | learning material table', function(hooks) {
       editable=true
     }}`);
 
-    assert.equal(findAll(rows).length, 1);
-    assert.equal(find(title).textContent.trim(), 'test title');
-    assert.equal(find(owner).textContent.trim(), 'Jolly Green Champ');
-    assert.equal(find(required).textContent.trim(), 'Yes');
-    assert.equal(find(notes).textContent.trim(), 'Yes');
-    assert.equal(find(mesh).textContent.trim(), 'None');
-    assert.equal(find(status).textContent.trim(), 'Good');
+    assert.dom(rows).exists({ count: 1 });
+    assert.dom(title).hasText('test title');
+    assert.dom(owner).hasText('Jolly Green Champ');
+    assert.dom(required).hasText('Yes');
+    assert.dom(notes).hasText('Yes');
+    assert.dom(mesh).hasText('None');
+    assert.dom(status).hasText('Good');
   });
 });

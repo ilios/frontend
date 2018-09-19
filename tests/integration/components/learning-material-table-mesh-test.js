@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -31,9 +31,9 @@ module('Integration | Component | learning material table mesh', function(hooks)
     const descriptor1 = `${descriptors}:nth-of-type(1)`;
     const descriptor2 = `${descriptors}:nth-of-type(2)`;
     await render(hbs`{{learning-material-table-mesh row=row tableActions=tableActions extra=extra}}`);
-    assert.equal(findAll(descriptors).length, 2);
-    assert.equal(find(descriptor1).textContent.trim(), 'descriptor 1');
-    assert.equal(find(descriptor2).textContent.trim(), 'descriptor 2');
+    assert.dom(descriptors).exists({ count: 2 });
+    assert.dom(descriptor1).hasText('descriptor 1');
+    assert.dom(descriptor2).hasText('descriptor 2');
   });
 
   test('it renders with no descriptor', async function(assert) {
@@ -48,6 +48,6 @@ module('Integration | Component | learning material table mesh', function(hooks)
     });
     this.set('row', row);
     await render(hbs`{{learning-material-table-mesh row=row tableActions=tableActions extra=extra}}`);
-    assert.equal(this.element.textContent.trim(), 'None');
+    assert.dom(this.element).hasText('None');
   });
 });

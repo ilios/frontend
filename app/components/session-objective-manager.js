@@ -8,7 +8,7 @@ const { Promise } = RSVP;
 const objectiveProxy = ObjectProxy.extend({
   sessionObjective: null,
   selected: computed('content', 'sessionObjective.parents.[]', function(){
-    return this.get('sessionObjective.parents').includes(this.get('content'));
+    return this.get('sessionObjective.parents').includes(this.content);
   }),
 });
 
@@ -18,7 +18,7 @@ export default Component.extend({
   'data-test-session-objective-manager': true,
   course: computed('sessionObjective.courses.[]', function(){
     return new Promise(resolve => {
-      let sessionObjective = this.get('sessionObjective');
+      let sessionObjective = this.sessionObjective;
       if(!sessionObjective){
         resolve(null);
         return;
@@ -34,12 +34,12 @@ export default Component.extend({
 
   proxiedObjectives: computed('course', 'course.sortedObjectives.[]', function(){
     return new Promise(resolve => {
-      let sessionObjective = this.get('sessionObjective');
+      let sessionObjective = this.sessionObjective;
       if(!sessionObjective){
         resolve([]);
         return;
       }
-      this.get('course').then(course => {
+      this.course.then(course => {
         if(!course){
           resolve([]);
           return;
@@ -59,7 +59,7 @@ export default Component.extend({
 
   showObjectiveList: computed('proxiedObjectives.[]', function() {
     return new Promise(resolve => {
-      this.get('proxiedObjectives').then(objectives => {
+      this.proxiedObjectives.then(objectives => {
         resolve(objectives.length > 0);
       });
     });
@@ -68,13 +68,13 @@ export default Component.extend({
   actions: {
     addParent(parentProxy) {
       let newParent = parentProxy.get('content');
-      let sessionObjective = this.get('sessionObjective');
+      let sessionObjective = this.sessionObjective;
       sessionObjective.get('parents').addObject(newParent);
       newParent.get('children').addObject(sessionObjective);
     },
     removeParent(parentProxy) {
       let removingParent = parentProxy.get('content');
-      let sessionObjective = this.get('sessionObjective');
+      let sessionObjective = this.sessionObjective;
       sessionObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(sessionObjective);
     }

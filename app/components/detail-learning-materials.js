@@ -29,10 +29,10 @@ export default Component.extend({
   'data-test-detail-learning-materials': true,
 
   displaySearchBox: computed('isManaging', 'displayAddNewForm', 'isSorting', function(){
-    const isManaging = this.get('isManaging');
-    const displayAddNewForm = this.get('displayAddNewForm');
-    const editable = this.get('editable');
-    const isSorting = this.get('isSorting');
+    const isManaging = this.isManaging;
+    const displayAddNewForm = this.displayAddNewForm;
+    const editable = this.editable;
+    const isSorting = this.isSorting;
 
     return (!isManaging && !displayAddNewForm && !isSorting && editable);
   }),
@@ -47,7 +47,7 @@ export default Component.extend({
   }),
 
   hasMoreThanOneLearningMaterial: computed('subject.learningMaterials.[]', async function () {
-    const subject = this.get('subject');
+    const subject = this.subject;
     const learningMaterials = await subject.get('learningMaterials');
 
     return learningMaterials.length > 1;
@@ -57,17 +57,17 @@ export default Component.extend({
     let chunk = arr.splice(0, 5);
     return all(chunk.invoke('save')).then(() => {
       if (arr.length){
-        this.set('currentMaterialsSaved', this.get('currentMaterialsSaved') + chunk.length);
+        this.set('currentMaterialsSaved', this.currentMaterialsSaved + chunk.length);
         return this.saveSomeMaterials(arr);
       }
     });
   },
   learningMaterialStatuses: computed(async function () {
-    const store = this.get('store');
+    const store = this.store;
     return await store.findAll('learning-material-status');
   }),
   learningMaterialUserRoles: computed(async function () {
-    const store = this.get('store');
+    const store = this.store;
     return await store.findAll('learning-material-user-role');
   }),
 
@@ -77,9 +77,9 @@ export default Component.extend({
     },
 
     async saveNewLearningMaterial(lm) {
-      const store = this.get('store');
-      const isCourse = this.get('isCourse');
-      const subject = this.get('subject');
+      const store = this.store;
+      const isCourse = this.isCourse;
+      const subject = this.subject;
       const savedLm = await lm.save();
       const learningMaterials = await subject.get('learningMaterials');
 
@@ -114,12 +114,12 @@ export default Component.extend({
     },
 
     async addLearningMaterial(parentLearningMaterial) {
-      const store = this.get('store');
+      const store = this.store;
       let newLearningMaterial;
       let lmCollectionType;
-      let subject = this.get('subject');
+      let subject = this.subject;
 
-      if(this.get('isCourse')){
+      if(this.isCourse){
         newLearningMaterial = store.createRecord('course-learning-material', {
           course: subject,
           learningMaterial: parentLearningMaterial,
@@ -128,7 +128,7 @@ export default Component.extend({
         lmCollectionType = 'courseLearningMaterials';
 
       }
-      if(this.get('isSession')){
+      if(this.isSession){
         newLearningMaterial = store.createRecord('session-learning-material', {
           session: subject,
           learningMaterial: parentLearningMaterial,

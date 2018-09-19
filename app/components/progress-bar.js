@@ -7,7 +7,7 @@ export default Component.extend({
   classNames: ['progress-bar'],
   percentage: 0,
   widthStyle: computed('percentage', function(){
-    const percentage = this.get('percentage');
+    const percentage = this.percentage;
     const str = `width: ${percentage}%`;
 
     return htmlSafe(str);

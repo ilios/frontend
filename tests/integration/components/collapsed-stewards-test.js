@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | collapsed stewards', function(hooks) {
@@ -76,11 +76,11 @@ module('Integration | Component | collapsed stewards', function(hooks) {
     const school2Departments = `${school2Row} td:nth-of-type(2)`;
 
     await settled();
-    assert.equal(find(title).textContent.trim(), 'Stewarding Schools and Departments (3)');
-    assert.equal(find(school1Title).textContent.trim(), 'school1');
-    assert.equal(find(school2Title).textContent.trim(), 'school2');
-    assert.equal(find(school1Departments).textContent.trim(), '2');
-    assert.equal(find(school2Departments).textContent.trim(), '1');
+    assert.dom(title).hasText('Stewarding Schools and Departments (3)');
+    assert.dom(school1Title).hasText('school1');
+    assert.dom(school2Title).hasText('school2');
+    assert.dom(school1Departments).hasText('2');
+    assert.dom(school2Departments).hasText('1');
   });
 
   test('clicking the header expands the list', async function(assert) {

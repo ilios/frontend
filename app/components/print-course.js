@@ -34,7 +34,7 @@ export default Component.extend(SortableByPosition, {
   sortedSessionProxies: computed('course.sessions.[]', 'includeUnpublishedSessions', function(){
     return new Promise(resolve => {
 
-      const course = this.get('course');
+      const course = this.course;
       if(!course){
         resolve([]);
         return;
@@ -49,19 +49,19 @@ export default Component.extend(SortableByPosition, {
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
           return new Promise(resolve => {
-            let session = this.get('content').get('id');
-            this.get('store').query('sessionLearningMaterial', {
+            let session = this.content.get('id');
+            this.store.query('sessionLearningMaterial', {
               filters: {
                 session
               }
             }).then(learningMaterials => {
-              resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+              resolve(learningMaterials.toArray().sort(this.positionSortingCallback));
             });
           });
         })
       });
       course.get('sessions').then(sessions => {
-        if (!this.get('includeUnpublishedSessions')) {
+        if (!this.includeUnpublishedSessions) {
           sessions = sessions.filterBy('isPublishedOrScheduled');
         }
         let proxiedSessions = sessions.map(function(session){
@@ -77,13 +77,13 @@ export default Component.extend(SortableByPosition, {
 
   courseLearningMaterials: computed('course', function(){
     return new Promise(resolve => {
-      let course = this.get('course').get('id');
-      this.get('store').query('courseLearningMaterial', {
+      let course = this.course.get('id');
+      this.store.query('courseLearningMaterial', {
         filters: {
           course
         }
       }).then(learningMaterials => {
-        resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+        resolve(learningMaterials.toArray().sort(this.positionSortingCallback));
       });
     });
   })

@@ -15,22 +15,22 @@ export default Component.extend({
   'data-test-offering-manager': true,
 
   userCanDelete: computed('editable', 'offering.session.course', 'offering.allInstructors.[]', 'currentUser.model.directedCourses.[]', async function(){
-    const offering = this.get('offering');
+    const offering = this.offering;
     if (isEmpty(offering)) {
       return false;
     }
-    return this.get('editable');
+    return this.editable;
   }),
 
   actions: {
     save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-      const offering = this.get('offering');
+      const offering = this.offering;
       offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
 
       return offering.save();
     },
     remove() {
-      this.sendAction('remove', this.get('offering'));
+      this.sendAction('remove', this.offering);
     },
     cancelRemove() {
       this.set('showRemoveConfirmation', false);

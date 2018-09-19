@@ -10,14 +10,14 @@ export default Component.extend(SortableByPosition, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let subject = this.get('subject');
-    this.get('loadAttr').perform(subject);
+    let subject = this.subject;
+    this.loadAttr.perform(subject);
 
   },
 
   loadAttr: task(function * (subject) {
     let learningMaterials = yield subject.get('learningMaterials');
-    this.set('sortableObjectList', learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+    this.set('sortableObjectList', learningMaterials.toArray().sort(this.positionSortingCallback));
   }),
 
   actions: {
@@ -25,7 +25,7 @@ export default Component.extend(SortableByPosition, {
       this.sendAction('cancel');
     },
     save() {
-      this.sendAction('save', this.get('sortableObjectList'));
+      this.sendAction('save', this.sortableObjectList);
     }
   }
 });

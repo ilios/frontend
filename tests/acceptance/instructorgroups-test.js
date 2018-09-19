@@ -1,4 +1,12 @@
-import { click, fillIn, find, findAll, currentURL, currentRouteName, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  find,
+  findAll,
+  currentURL,
+  currentRouteName,
+  visit
+} from '@ember/test-helpers';
 import {
   module,
   test
@@ -137,9 +145,9 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.actions button');
-      assert.equal(findAll('.new-instructorgroup').length, 1);
+      assert.dom('.new-instructorgroup').exists({ count: 1 });
       await click('.new-instructorgroup .cancel');
-      assert.equal(findAll('.new-instructorgroup').length, 0);
+      assert.dom('.new-instructorgroup').doesNotExist();
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
     });
@@ -170,7 +178,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
       await click('.confirm-buttons .done');
-      assert.equal(findAll('.list tbody tr').length, 1);
+      assert.dom('.list tbody tr').exists({ count: 1 });
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
     });
 
@@ -187,8 +195,8 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
-      assert.ok(find('.list tbody tr').classList.contains('confirm-removal'));
-      assert.ok(find(findAll('.list tbody tr')[1]).classList.contains('confirm-removal'));
+      assert.dom('.list tbody tr').hasClass('confirm-removal');
+      assert.dom(findAll('.list tbody tr')[1]).hasClass('confirm-removal');
       assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'));
     });
 
@@ -225,10 +233,10 @@ module('Acceptance | Instructor Groups', function(hooks) {
       const filter = '.titlefilter input';
       await visit('/instructorgroups');
 
-      assert.equal(findAll(groups).length, 1);
+      assert.dom(groups).exists({ count: 1 });
       assert.equal(await getElementText(firstGroupTitle), 'yes\\no');
       await fillIn(filter, '\\');
-      assert.equal(findAll(groups).length, 1);
+      assert.dom(groups).exists({ count: 1 });
       assert.equal(await getElementText(firstGroupTitle), 'yes\\no');
     });
 
@@ -247,10 +255,10 @@ module('Acceptance | Instructor Groups', function(hooks) {
       this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
       this.server.create('offering', { session: session2, instructorGroups: [group2] });
       await visit('/instructorgroups');
-      assert.equal(findAll('.list tbody tr').length, 2);
+      assert.dom('.list tbody tr').exists({ count: 2 });
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
-      assert.equal(findAll('.list tbody tr:nth-of-type(0) td:nth-of-type(4) .remove').length, 0);
-      assert.equal(findAll('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove').length, 0);
+      assert.dom('.list tbody tr:nth-of-type(0) td:nth-of-type(4) .remove').doesNotExist();
+      assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove').doesNotExist();
     });
 
   });
@@ -270,6 +278,6 @@ module('Acceptance | Instructor Groups', function(hooks) {
     assert.equal(schoolOptions.length, 2);
     assert.equal(await getElementText(schoolOptions[0]), 'school0');
     assert.equal(await getElementText(schoolOptions[1]), 'school1');
-    assert.equal(find(schoolSelect).value, '2');
+    assert.dom(schoolSelect).hasValue('2');
   });
 });

@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | curriculum inventory leadership expanded', function(hooks) {
@@ -52,10 +52,10 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
     const firstAdministrator = `${administrators}:nth-of-type(1)`;
     const secondAdministrator = `${administrators}:nth-of-type(2)`;
 
-    assert.equal(find(title).textContent.trim(), 'Curriculum Inventory Report Leadership');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(find(firstAdministrator).textContent.trim(), 'a b person');
-    assert.equal(find(secondAdministrator).textContent.trim(), 'b a person');
+    assert.dom(title).hasText('Curriculum Inventory Report Leadership');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(firstAdministrator).hasText('a b person');
+    assert.dom(secondAdministrator).hasText('b a person');
   });
 
   test('clicking the header collapses', async function(assert) {

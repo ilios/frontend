@@ -17,7 +17,7 @@ export default Component.extend({
   tooltipTitle: null,
   filter: '',
   data: computed('course.sessions.@each.{offerings,instructors,instructorGroups,ilmSessions}', async function () {
-    const course = this.get('course');
+    const course = this.course;
     const sessions = await course.get('sessions');
     const dataMap = await map(sessions.toArray(), async session => {
       const instructors = await session.get('allInstructors');
@@ -67,8 +67,8 @@ export default Component.extend({
     return mappedInstructorsWithLabel;
   }),
   filteredData: computed('data.[]', 'filter', async function(){
-    const data = await this.get('data');
-    const filter = this.get('filter');
+    const data = await this.data;
+    const filter = this.filter;
     if (!filter) {
       return data;
     }
@@ -77,7 +77,7 @@ export default Component.extend({
     return data.filter(({ label }) => label.match(exp));
   }),
   sortedData: computed('filteredData.[]', async function () {
-    const data = await this.get('filteredData');
+    const data = await this.filteredData;
     data.sort((first, second) => {
       return first.data - second.data;
     });
@@ -86,9 +86,9 @@ export default Component.extend({
   }),
   actions: {
     barClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
+      const course = this.course;
+      const isIcon = this.isIcon;
+      const router = this.router;
       if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
         return;
       }
@@ -98,8 +98,8 @@ export default Component.extend({
   },
   barHover: task(function* (obj) {
     yield timeout(100);
-    const i18n = this.get('i18n');
-    const isIcon = this.get('isIcon');
+    const i18n = this.i18n;
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipContent', null);

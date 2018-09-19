@@ -25,7 +25,7 @@ export default Component.extend({
   }),
 
   validUsers: computed('data.[]', function () {
-    const data = this.get('data');
+    const data = this.data;
     if (!data) {
       return [];
     }
@@ -33,7 +33,7 @@ export default Component.extend({
   }),
 
   invalidUsers: computed('data.[]', function () {
-    const data = this.get('data');
+    const data = this.data;
     if (!data) {
       return [];
     }
@@ -41,8 +41,8 @@ export default Component.extend({
   }),
 
   matchedGroups: computed('data.[]', async function () {
-    const data = this.get('data');
-    const learnerGroup = this.get('learnerGroup');
+    const data = this.data;
+    const learnerGroup = this.learnerGroup;
     if (!data) {
       return [];
     }
@@ -69,7 +69,7 @@ export default Component.extend({
       // Check for the various File API support.
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         if (files.length > 0) {
-          await this.get('parseFile').perform(files[0]);
+          await this.parseFile.perform(files[0]);
         }
       } else {
         throw new Error('This browser is not supported');
@@ -78,9 +78,9 @@ export default Component.extend({
   },
 
   parseFile: task(function* (file) {
-    const store = this.get('store');
-    const i18n = this.get('i18n');
-    const learnerGroup = this.get('learnerGroup');
+    const store = this.store;
+    const i18n = this.i18n;
+    const learnerGroup = this.learnerGroup;
     const cohort = yield learnerGroup.get('cohort');
     const proposedUsers = yield this.getFileContents(file);
     const data = yield map(proposedUsers, async ({firstName, lastName, campusId, subGroupName }) => {
@@ -182,10 +182,10 @@ export default Component.extend({
   },
   continue: task(function* () {
     yield timeout(10);
-    const validUsers = this.get('validUsers');
-    const matchedGroups = yield this.get('matchedGroups');
-    const sendValidUsers = this.get('sendValidUsers');
-    const sendMatchedGroups = this.get('sendMatchedGroups');
+    const validUsers = this.validUsers;
+    const matchedGroups = yield this.matchedGroups;
+    const sendValidUsers = this.sendValidUsers;
+    const sendMatchedGroups = this.sendMatchedGroups;
     sendValidUsers(validUsers);
     sendMatchedGroups(matchedGroups);
   }),

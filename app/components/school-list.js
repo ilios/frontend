@@ -63,7 +63,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   },
   actions: {
     toggleNewSchoolForm(){
-      this.set('showNewSchoolForm', !this.get('showNewSchoolForm'));
+      this.set('showNewSchoolForm', !this.showNewSchoolForm);
     },
     hideNewSchoolForm(){
       this.set('showNewSchoolForm', false);
@@ -75,11 +75,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.send('addErrorDisplayFor', 'iliosAdministratorEmail');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          const title = this.get('title');
-          const iliosAdministratorEmail = this.get('iliosAdministratorEmail');
-          let newSchool = this.get('store').createRecord('school', {title, iliosAdministratorEmail});
+          const title = this.title;
+          const iliosAdministratorEmail = this.iliosAdministratorEmail;
+          let newSchool = this.store.createRecord('school', {title, iliosAdministratorEmail});
           newSchool.save().then(school => {
-            this.get('newSchools').pushObject(school);
+            this.newSchools.pushObject(school);
           }).finally(() => {
             this.send('clearErrorDisplay');
             this.set('title', null);

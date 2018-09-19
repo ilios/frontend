@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, find } from '@ember/test-helpers';
+import { render, settled, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | detail cohort list', function(hooks) {
@@ -51,19 +51,19 @@ module('Integration | Component | detail cohort list', function(hooks) {
     this.set('cohorts', cohorts);
     await render(hbs`{{detail-cohort-list cohorts=cohorts}}`);
     await settled();
-    assert.equal(find('th').textContent, 'School');
-    assert.equal(find(findAll('th')[1]).textContent, 'Program');
-    assert.equal(find(findAll('th')[2]).textContent, 'Cohort');
-    assert.equal(find(findAll('th')[3]).textContent, 'Level');
-    assert.equal(findAll('tbody tr').length, 2);
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'School of Life');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'Professional Pie Eating');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'Aardvark');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[3]).textContent.trim(), '1');
-    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'Starfleet Academy');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Doctor of Rocket Surgery');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'Class of 2011');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[3]).textContent.trim(), '2');
+    assert.dom('th').hasText('School');
+    assert.dom(findAll('th')[1]).hasText('Program');
+    assert.dom(findAll('th')[2]).hasText('Cohort');
+    assert.dom(findAll('th')[3]).hasText('Level');
+    assert.dom('tbody tr').exists({ count: 2 });
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('School of Life');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Professional Pie Eating');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Aardvark');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText('1');
+    assert.dom('tbody tr:nth-of-type(2) td').hasText('Starfleet Academy');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Doctor of Rocket Surgery');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Class of 2011');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText('2');
   });
 });
 

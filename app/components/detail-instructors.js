@@ -56,14 +56,14 @@ export default Component.extend({
       var ilmSession = this.get('ilmSession.content');
 
       let instructorGroups = ilmSession.get('instructorGroups');
-      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
+      let removableInstructorGroups = instructorGroups.filter(group => !this.instructorGroupBuffer.includes(group));
       instructorGroups.clear();
       removableInstructorGroups.forEach(group => {
         group.get('ilmSessions').then(ilmSessions => {
           ilmSessions.removeObject(ilmSession);
         });
       });
-      this.get('instructorGroupBuffer').forEach(function(group){
+      this.instructorGroupBuffer.forEach(function(group){
         instructorGroups.pushObject(group);
         group.get('ilmSessions').then(ilmSessions => {
           ilmSessions.pushObject(ilmSession);
@@ -72,14 +72,14 @@ export default Component.extend({
       });
 
       let instructors = ilmSession.get('instructors');
-      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').includes(user));
+      let removableInstructors = instructors.filter(user => !this.instructorBuffer.includes(user));
       instructors.clear();
       removableInstructors.forEach(user => {
         user.get('instructorIlmSessions').then(ilmSessions => {
           ilmSessions.removeObject(ilmSession);
         });
       });
-      this.get('instructorBuffer').forEach(function(user){
+      this.instructorBuffer.forEach(function(user){
         instructors.pushObject(user);
         user.get('instructorIlmSessions').then(ilmSessions => {
           ilmSessions.pushObject(ilmSession);
@@ -98,16 +98,16 @@ export default Component.extend({
       this.set('isManaging', false);
     },
     addInstructorGroupToBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').pushObject(instructorGroup);
+      this.instructorGroupBuffer.pushObject(instructorGroup);
     },
     addInstructorToBuffer(instructor){
-      this.get('instructorBuffer').pushObject(instructor);
+      this.instructorBuffer.pushObject(instructor);
     },
     removeInstructorGroupFromBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').removeObject(instructorGroup);
+      this.instructorGroupBuffer.removeObject(instructorGroup);
     },
     removeInstructorFromBuffer(instructor){
-      this.get('instructorBuffer').removeObject(instructor);
+      this.instructorBuffer.removeObject(instructor);
     },
   }
 });

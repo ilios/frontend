@@ -24,9 +24,9 @@ export default Component.extend({
     },
     save(){
       this.set('isSaving', true);
-      const course = this.get('course');
+      const course = this.course;
       course.get('cohorts').then(cohortList => {
-        let bufferedCohorts = this.get('bufferedCohorts');
+        let bufferedCohorts = this.bufferedCohorts;
         let removedCohorts = cohortList.filter(cohort => {
           return !bufferedCohorts.includes(cohort);
         });
@@ -56,10 +56,10 @@ export default Component.extend({
       this.set('isManaging', false);
     },
     addCohortToBuffer(cohort){
-      this.get('bufferedCohorts').pushObject(cohort);
+      this.bufferedCohorts.pushObject(cohort);
     },
     removeCohortFromBuffer(cohort){
-      this.get('bufferedCohorts').removeObject(cohort);
+      this.bufferedCohorts.removeObject(cohort);
     },
   }
 });

@@ -9,7 +9,7 @@ export default Component.extend({
   'data-test-session-leadership-expanded': true,
   didReceiveAttrs(){
     this._super(...arguments);
-    const session = this.get('session');
+    const session = this.session;
     if (session) {
       session.get('administrators').then(administrators => {
         this.set('administrators', administrators.toArray());
@@ -26,12 +26,12 @@ export default Component.extend({
   },
   save: task(function * (){
     yield timeout(10);
-    const administrators = this.get('administrators');
-    let session = this.get('session');
+    const administrators = this.administrators;
+    let session = this.session;
     session.setProperties({administrators});
-    this.get('expand')();
+    this.expand();
     yield session.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
   }),
   add(where, user){
     let arr = this.get(where).toArray();

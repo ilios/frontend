@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click, findAll } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  find,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -57,10 +63,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
-    assert.equal(find('[data-test-title]').textContent.trim(), 'Topics (Medicine)');
-    assert.equal(findAll('li').length, 2);
-    assert.equal(find('li').textContent.trim(), 'bar');
-    assert.equal(findAll('li')[1].textContent.trim(), 'foo');
+    assert.dom('[data-test-title]').hasText('Topics (Medicine)');
+    assert.dom('li').exists({ count: 2 });
+    assert.dom('li').hasText('bar');
+    assert.dom(findAll('li')[1]).hasText('foo');
   });
 
   test('empty list', async function(assert) {
@@ -113,8 +119,8 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
     await settled();
-    assert.equal(find('[data-test-title]').textContent.trim(), 'Topics (Medicine)');
-    assert.equal(findAll('li').length, 0);
+    assert.dom('[data-test-title]').hasText('Topics (Medicine)');
+    assert.dom('li').doesNotExist();
   });
 
   test('remove term', async function(assert) {
@@ -146,7 +152,7 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', selectedTerms);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action remove) canEdit=true}}`);
     await settled();
-    assert.equal(findAll('li:nth-of-type(1) .fa-times').length, 1);
+    assert.dom('li:nth-of-type(1) .fa-times').exists({ count: 1 });
     await click(find('li'));
   });
 
@@ -167,6 +173,6 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.set('terms', []);
     await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=true}}`);
     await settled();
-    assert.equal(find('[data-test-title] .inactive').textContent.trim(), '(inactive)');
+    assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 });

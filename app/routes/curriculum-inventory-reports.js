@@ -8,7 +8,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   titleToken: 'general.curriculumInventoryReports',
 
   async model() {
-    const store = this.get('store');
+    const store = this.store;
     return store.findAll('school');
   },
 });

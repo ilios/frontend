@@ -11,8 +11,8 @@ export default Component.extend({
   smallGroupMode: true,
   actions: {
     save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-      const store = this.get('store');
-      const session = this.get('session');
+      const store = this.store;
+      const session = this.session;
       let offering = store.createRecord('offering');
       offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors, session});
 

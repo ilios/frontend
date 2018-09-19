@@ -28,11 +28,11 @@ module('Integration | Component | leadership list', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
-    assert.equal(findAll(administrators)[1].textContent.trim(), 'b a person');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(findAll(directors)[0]).hasText('a b person');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(findAll(administrators)[0]).hasText('a b person');
+    assert.dom(findAll(administrators)[1]).hasText('b a person');
   });
 
   test('it renders without directors', async function(assert) {
@@ -47,8 +47,8 @@ module('Integration | Component | leadership list', function(hooks) {
     await render(hbs`{{leadership-list showDirectors=false administrators=administrators}}`);
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
-    assert.equal(findAll(administrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
+    assert.dom(administrators).exists({ count: 1 });
+    assert.dom(findAll(administrators)[0]).hasText('a b person');
   });
 
   test('it renders without administrators', async function(assert) {
@@ -63,8 +63,8 @@ module('Integration | Component | leadership list', function(hooks) {
     await render(hbs`{{leadership-list showAdministrators=false directors=directors}}`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(findAll(directors)[0]).hasText('a b person');
   });
 
   test('it renders without data', async function(assert) {
@@ -76,10 +76,10 @@ module('Integration | Component | leadership list', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(directors)[0].textContent.trim(), 'None');
-    assert.equal(findAll(administrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), 'None');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(findAll(directors)[0]).hasText('None');
+    assert.dom(administrators).exists({ count: 1 });
+    assert.dom(findAll(administrators)[0]).hasText('None');
   });
 
   test('disabled users are indicated with an icon', async function(assert) {
@@ -105,12 +105,12 @@ module('Integration | Component | leadership list', function(hooks) {
     const disabledDirectors = `${directors} .fa-user-times`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
 
-    assert.equal(findAll(directors).length, 1);
-    assert.equal(findAll(disabledDirectors).length, 0);
-    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
-    assert.equal(findAll(administrators).length, 2);
-    assert.equal(findAll(disabledAdministrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
-    assert.equal(findAll(administrators)[1].textContent.trim(), 'b a person');
+    assert.dom(directors).exists({ count: 1 });
+    assert.dom(disabledDirectors).doesNotExist();
+    assert.dom(findAll(directors)[0]).hasText('a b person');
+    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(disabledAdministrators).exists({ count: 1 });
+    assert.dom(findAll(administrators)[0]).hasText('a b person');
+    assert.dom(findAll(administrators)[1]).hasText('b a person');
   });
 });

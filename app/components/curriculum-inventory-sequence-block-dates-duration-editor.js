@@ -53,7 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const sequenceBlock = this.get('sequenceBlock');
+    const sequenceBlock = this.sequenceBlock;
     const startDate =  sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
     const duration = sequenceBlock.get('duration');
@@ -91,9 +91,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplaysFor', ['duration', 'startDate', 'endDate']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          const startDate = this.get('startDate');
-          const endDate = this.get('endDate');
-          const duration = this.get('duration');
+          const startDate = this.startDate;
+          const endDate = this.endDate;
+          const duration = this.duration;
           this.sendAction('save', startDate, endDate, duration);
         } else {
           this.set('isSaving', false);

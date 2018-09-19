@@ -2,7 +2,14 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  fillIn,
+  find,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -21,8 +28,8 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     this.set('instructorGroup', instructorGroup);
     await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
 
-    assert.equal(find('.school-title').textContent.trim(), 'medicine >');
-    assert.equal(find('[data-test-group-title]').textContent.trim(), 'lorem ipsum');
+    assert.dom('.school-title').hasText('medicine >');
+    assert.dom('[data-test-group-title]').hasText('lorem ipsum');
     assert.equal(find('.info').textContent.replace(/\s/g,''), 'Members:3');
   });
 
@@ -39,13 +46,13 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     this.set('instructorGroup', instructorGroup);
     await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup canUpdate=true}}`);
 
-    assert.equal(find('[data-test-group-title]').textContent.trim(), 'lorem ipsum');
+    assert.dom('[data-test-group-title]').hasText('lorem ipsum');
     await click('.editable');
     await fillIn('[data-test-group-title] input', 'new title');
     await triggerEvent('[data-test-group-title] input', 'input');
     await click('[data-test-group-title] .done');
 
     await settled();
-    assert.equal(find('[data-test-group-title]').textContent.trim(), 'new title');
+    assert.dom('[data-test-group-title]').hasText('new title');
   });
 });

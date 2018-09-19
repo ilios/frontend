@@ -17,7 +17,7 @@ export default Component.extend({
    * @public
    */
   sortedCohorts: computed('cohorts.[]', async function(){
-    const cohorts = this.get('cohorts');
+    const cohorts = this.cohorts;
     if (isEmpty(cohorts)) {
       return [];
     }
@@ -26,7 +26,7 @@ export default Component.extend({
       const schoolTitle = school.get('title');
       let displayTitle = cohort.get('title');
       if (isEmpty(displayTitle)) {
-        const i18n = this.get('i18n');
+        const i18n = this.i18n;
         const classOfYear = await cohort.get('classOfYear');
         displayTitle = i18n.t('general.classOf', {year: classOfYear});
       }

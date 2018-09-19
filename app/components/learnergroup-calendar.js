@@ -11,8 +11,8 @@ export default Component.extend({
   showSubgroupEvents: false,
 
   offerings: computed('learnerGroup.offerings.[]', 'learnerGroup.allDescendants.[]', 'showSubgroupEvents', async function () {
-    const learnerGroup = this.get('learnerGroup');
-    const showSubgroupEvents = this.get('showSubgroupEvents');
+    const learnerGroup = this.learnerGroup;
+    const showSubgroupEvents = this.showSubgroupEvents;
     if (!learnerGroup) {
       return [];
     }
@@ -30,7 +30,7 @@ export default Component.extend({
   }),
 
   calendarEvents: computed('offerings.[]', async function () {
-    const offerings = await this.get('offerings');
+    const offerings = await this.offerings;
     const events = await map(offerings.toArray(), async offering => {
       const session = await offering.get('session');
       const course = await session.get('course');
@@ -56,12 +56,12 @@ export default Component.extend({
 
   actions: {
     goForward(){
-      const selectedDate = this.get('selectedDate');
+      const selectedDate = this.selectedDate;
       let newDate = moment(selectedDate).add(1, 'week').toDate();
       this.set('selectedDate', newDate);
     },
     goBack(){
-      const selectedDate = this.get('selectedDate');
+      const selectedDate = this.selectedDate;
       let newDate = moment(selectedDate).subtract(1, 'week').toDate();
       this.set('selectedDate', newDate);
     },

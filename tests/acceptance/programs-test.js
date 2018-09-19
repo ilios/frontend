@@ -1,4 +1,12 @@
-import { click, fillIn, find, findAll, currentURL, currentRouteName, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  find,
+  findAll,
+  currentURL,
+  currentRouteName,
+  visit
+} from '@ember/test-helpers';
 import {
   module,
   test
@@ -93,7 +101,7 @@ module('Acceptance | Programs', function(hooks) {
         return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
       }
 
-      assert.equal(find(savedLink).textContent.trim(), 'Test Title', 'link is visisble');
+      assert.dom(savedLink).hasText('Test Title', 'link is visisble');
       assert.equal(getContent(0), 'Test Title', 'program is correct');
       assert.equal(getContent(1), 'school 0', 'school is correct');
     });
@@ -110,7 +118,7 @@ module('Acceptance | Programs', function(hooks) {
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
       percySnapshot(assert);
       await click('.confirm-buttons .remove');
-      assert.equal(findAll('.flash-messages').length, 1);
+      assert.dom('.flash-messages').exists({ count: 1 });
       assert.equal(0, findAll('.list tbody tr').length);
     });
 
@@ -161,10 +169,10 @@ module('Acceptance | Programs', function(hooks) {
       const filter = '.titlefilter input';
       await visit('/programs');
 
-      assert.equal(findAll(programs).length, 1);
+      assert.dom(programs).exists({ count: 1 });
       assert.equal(await getElementText(firstProgramTitle), 'yes\\no');
       await fillIn(filter, '\\');
-      assert.equal(findAll(programs).length, 1);
+      assert.dom(programs).exists({ count: 1 });
       assert.equal(await getElementText(firstProgramTitle), 'yes\\no');
     });
 
@@ -184,6 +192,6 @@ module('Acceptance | Programs', function(hooks) {
     assert.equal(schoolOptions.length, 2);
     assert.equal(await getElementText(schoolOptions[0]), 'school0');
     assert.equal(await getElementText(schoolOptions[1]), 'school1');
-    assert.equal(find(schoolSelect).value, '2');
+    assert.dom(schoolSelect).hasValue('2');
   });
 });

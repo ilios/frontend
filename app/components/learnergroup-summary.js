@@ -42,7 +42,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentGroupsSaved: 0,
   didReceiveAttrs(){
     this._super(...arguments);
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     if (isPresent(learnerGroup)) {
       this.set('location', learnerGroup.get('location'));
       this.set('learnerGroupId', learnerGroup.get('id'));
@@ -53,12 +53,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       learnerGroup.get('topLevelGroup').then(topLevelGroup => {
         this.set('topLevelGroupTitle', topLevelGroup.get('title'));
       });
-      this.get('createUsersToPassToManager').perform();
-      this.get('createUsersToPassToCohortManager').perform();
+      this.createUsersToPassToManager.perform();
+      this.createUsersToPassToCohortManager.perform();
     }
   },
   treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     return new Promise(resolve => {
       learnerGroup.get('topLevelGroup').then(topLevelGroup => {
         let treeGroups = [];
@@ -71,24 +71,24 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
   addUserToGroup: task(function * (user) {
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
     let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     let groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
-    yield this.get('createUsersToPassToManager').perform();
-    yield this.get('createUsersToPassToCohortManager').perform();
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
   }).enqueue(),
   removeUserToCohort: task(function * (user) {
-    const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
+    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
     let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
-    yield this.get('createUsersToPassToManager').perform();
-    yield this.get('createUsersToPassToCohortManager').perform();
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
   }).enqueue(),
   addUsersToGroup: task(function * (users) {
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
     let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
@@ -99,11 +99,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(addGroups);
     }
     yield all(groupsToSave.uniq().invoke('save'));
-    yield this.get('createUsersToPassToManager').perform();
-    yield this.get('createUsersToPassToCohortManager').perform();
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
   }).enqueue(),
   removeUsersToCohort: task(function * (users) {
-    const topLevelGroup = yield this.get('learnerGroup').get('topLevelGroup');
+    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
     let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       let user = users[i];
@@ -111,12 +111,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       groupsToSave.pushObjects(removeGroups);
     }
     yield all(groupsToSave.uniq().invoke('save'));
-    yield this.get('createUsersToPassToManager').perform();
-    yield this.get('createUsersToPassToCohortManager').perform();
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
   }).enqueue(),
   createUsersToPassToManager: task(function * () {
-    const isEditing = this.get('isEditing');
-    const learnerGroup = this.get('learnerGroup');
+    const isEditing = this.isEditing;
+    const learnerGroup = this.learnerGroup;
     let users;
     if (isEditing) {
       let topLevelGroup = yield learnerGroup.get('topLevelGroup');
@@ -124,7 +124,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     } else {
       users = yield learnerGroup.get('usersOnlyAtThisLevel');
     }
-    const treeGroups = yield this.get('treeGroups');
+    const treeGroups = yield this.treeGroups;
     return yield map(users.toArray(), async user => {
       let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
       return ObjectProxy.create({
@@ -136,7 +136,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
   createUsersToPassToCohortManager: task(function * () {
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     const cohort = yield learnerGroup.get('cohort');
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
     const currentUsers = yield topLevelGroup.get('allDescendantUsers');
@@ -150,8 +150,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
   actions: {
     changeLocation() {
-      const newLocation = this.get('location');
-      const learnerGroup = this.get('learnerGroup');
+      const newLocation = this.location;
+      const learnerGroup = this.learnerGroup;
       this.send('addErrorDisplayFor', 'location');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -170,19 +170,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     revertLocationChanges(){
-      const learnerGroup = this.get('learnerGroup');
+      const learnerGroup = this.learnerGroup;
       this.set('location', learnerGroup.get('location'));
     },
     saveInstructors(newInstructors, newInstructorGroups){
-      const learnerGroup = this.get('learnerGroup');
+      const learnerGroup = this.learnerGroup;
       learnerGroup.set('instructors', newInstructors.toArray());
       learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
       this.set('manageInstructors', false);
       return learnerGroup.save();
     },
     manageInstructors() {
-      const canUpdate = this.get('canUpdate');
-      const manageInstructors = this.get('manageInstructors');
+      const canUpdate = this.canUpdate;
+      const manageInstructors = this.manageInstructors;
       if (canUpdate) {
         this.set('manageInstructors', !manageInstructors);
       }

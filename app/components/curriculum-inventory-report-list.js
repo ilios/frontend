@@ -15,8 +15,8 @@ const ReportProxy = ObjectProxy.extend({
   isScheduled: false,
   isNotPublished: not('isPublished'),
   userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const report = this.get('content');
+    const permissionChecker = this.permissionChecker;
+    const report = this.content;
     if (report.get('isFinalized')) {
       return false;
     }
@@ -36,10 +36,10 @@ export default Component.extend({
    * @public
    */
   proxiedReports: computed('program.curriculumInventoryReports.[]', async function () {
-    const currentUser = this.get('currentUser');
-    const i18n = this.get('i18n');
-    const permissionChecker = this.get('permissionChecker');
-    const program = this.get('program');
+    const currentUser = this.currentUser;
+    const i18n = this.i18n;
+    const permissionChecker = this.permissionChecker;
+    const program = this.program;
 
     const reports = await program.get('curriculumInventoryReports');
     return reports.map(report => {
@@ -54,7 +54,7 @@ export default Component.extend({
 
   sortBy: 'title',
   sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
   actions: {
@@ -71,11 +71,11 @@ export default Component.extend({
       proxy.set('showRemoveConfirmation', true);
     },
     sortBy(what){
-      const sortBy = this.get('sortBy');
+      const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
-      this.get('setSortBy')(what);
+      this.setSortBy(what);
     },
   }
 });

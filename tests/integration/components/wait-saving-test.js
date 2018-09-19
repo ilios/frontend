@@ -18,6 +18,6 @@ module('Integration | Component | wait saving', function(hooks) {
     modalDialogService.set('destinationElementId', 'modal-testing-div');
     await render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
 
-    assert.equal(this.element.textContent.trim(), 'saving... one moment...');
+    assert.dom(this.element).hasText('saving... one moment...');
   });
 });

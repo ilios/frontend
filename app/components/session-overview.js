@@ -91,9 +91,9 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   'data-test-session-overview': true,
 
   filteredSessionTypes: computed('sessionTypes.[]', function() {
-    const selectedSessionType = this.get('sessionType');
+    const selectedSessionType = this.sessionType;
     const selectedSessionTypeId = isEmpty(selectedSessionType) ? -1 : selectedSessionType.get('id');
-    return this.get('sessionTypes').filter(sessionType => {
+    return this.sessionTypes.filter(sessionType => {
       return (sessionType.get('active') || sessionType.get('id') === selectedSessionTypeId);
     });
   }),
@@ -104,14 +104,14 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
    * end we do need to check every course in the school.
    */
   showCopy: computed('currentUser', 'routing.currentRouteName', async function () {
-    const currentUser = this.get('currentUser');
-    const permissionChecker = this.get('permissionChecker');
-    const routing = this.get('routing');
+    const currentUser = this.currentUser;
+    const permissionChecker = this.permissionChecker;
+    const routing = this.routing;
     if (routing.get('currentRouteName') === 'session.copy') {
       return false;
     }
 
-    const session = this.get('session');
+    const session = this.session;
     const course = await session.get('course');
     if (await permissionChecker.canCreateSession(course)) {
       return true;
@@ -135,30 +135,30 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   }),
 
   school: computed('session.course.school', async function(){
-    const session = this.get('session');
+    const session = this.session;
     const course = await session.get('course');
     return await course.get('school');
   }),
 
   showAttendanceRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
+    const school = await this.school;
     return await school.getConfigValue('showSessionAttendanceRequired');
   }),
   showSupplemental: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
+    const school = await this.school;
     return await school.getConfigValue('showSessionSupplemental');
   }),
   showSpecialAttireRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
+    const school = await this.school;
     return await school.getConfigValue('showSessionSpecialAttireRequired');
   }),
   showSpecialEquipmentRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
+    const school = await this.school;
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
 
   revertDescriptionChanges: task(function * (){
-    const session = this.get('session');
+    const session = this.session;
     const sessionDescription = yield session.get('sessionDescription');
     if (sessionDescription) {
       this.set('description', sessionDescription.get('description'));
@@ -182,7 +182,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
   actions: {
     saveIndependentLearning(value) {
-      var session = this.get('session');
+      var session = this.session;
       if(!value){
         session.get('ilmSession').then(function(ilmSession){
           session.set('ilmSession', null);
@@ -195,7 +195,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         const dueDate = moment().add(6, 'weeks').toDate();
         this.set('hours', hours);
 
-        var ilmSession = this.get('store').createRecord('ilm-session', {
+        var ilmSession = this.store.createRecord('ilm-session', {
           session,
           hours,
           dueDate
@@ -207,8 +207,8 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       }
     },
     changeTitle(){
-      const title = this.get('title');
-      const session = this.get('session');
+      const title = this.title;
+      const session = this.session;
       this.send('addErrorDisplayFor', 'title');
       return new Promise((resolve, reject) => {
         this.validate({ on: ['title'] }).then(({validations}) => {
@@ -227,7 +227,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       });
     },
     revertTitleChanges(){
-      const session = this.get('session');
+      const session = this.session;
       this.set('title', session.get('title'));
     },
     revertInstructionalNotesChanges(){
@@ -235,41 +235,41 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     },
 
     setSessionType(id){
-      let type = this.get('sessionTypes').findBy('id', id);
+      let type = this.sessionTypes.findBy('id', id);
       this.set('sessionType', type);
     },
 
     changeSessionType() {
-      let session = this.get('session');
-      let type = this.get('sessionType');
+      let session = this.session;
+      let type = this.sessionType;
       session.set('sessionType', type);
       session.save();
     },
 
     revertSessionTypeChanges() {
-      this.get('session').get('sessionType').then(sessionType => {
+      this.session.get('sessionType').then(sessionType => {
         this.set('sessionType', sessionType);
       });
     },
     changeSupplemental(value) {
-      this.get('session').set('supplemental', value);
-      this.get('session').save();
+      this.session.set('supplemental', value);
+      this.session.save();
     },
     changeSpecialEquipment(value) {
-      this.get('session').set('equipmentRequired', value);
-      this.get('session').save();
+      this.session.set('equipmentRequired', value);
+      this.session.save();
     },
     changeSpecialAttire(value) {
-      this.get('session').set('attireRequired', value);
-      this.get('session').save();
+      this.session.set('attireRequired', value);
+      this.session.save();
     },
     changeAttendanceRequired(value) {
-      this.get('session').set('attendanceRequired', value);
-      this.get('session').save();
+      this.session.set('attendanceRequired', value);
+      this.session.save();
     },
     changeIlmHours() {
-      const newHours = this.get('hours');
-      const session = this.get('session');
+      const newHours = this.hours;
+      const session = this.session;
       this.send('addErrorDisplayFor', 'hours');
       return new Promise((resolve, reject) => {
         this.validate({ on: ['hours'] }).then(({validations}) => {
@@ -290,15 +290,15 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       });
     },
     revertIlmHoursChanges(){
-      this.get('session').get('ilmSession').then(ilmSession => {
+      this.session.get('ilmSession').then(ilmSession => {
         if (ilmSession) {
           this.set('hours', ilmSession.get('hours'));
         }
       });
     },
     changeIlmDueDate() {
-      const newDueDate = this.get('dueDate');
-      const session = this.get('session');
+      const newDueDate = this.dueDate;
+      const session = this.session;
       this.send('addErrorDisplayFor', 'dueDate');
       return new Promise((resolve, reject) => {
         this.validate({ on: ['dueDate'] }).then(({validations}) => {
@@ -319,16 +319,16 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       });
     },
     revertIlmDueDateChanges(){
-      this.get('session').get('ilmSession').then(ilmSession => {
+      this.session.get('ilmSession').then(ilmSession => {
         if (ilmSession) {
           this.set('dueDate', ilmSession.get('dueDate'));
         }
       });
     },
     saveDescription() {
-      const session = this.get('session');
-      const store = this.get('store');
-      const newDescription = this.get('description');
+      const session = this.session;
+      const store = this.store;
+      const newDescription = this.description;
 
       this.send('addErrorDisplayFor', 'description');
       return new Promise((resolve, reject) => {

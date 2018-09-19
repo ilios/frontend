@@ -15,7 +15,7 @@ export default Component.extend({
   closeOnEscape: false,
   clickPrompt: null,
   looksEmpty: computed('value', function(){
-    let value = this.get('value') || '';
+    let value = this.value || '';
     let text = value.toString();
     let noTagsText = text.replace(/(<([^>]+)>)/ig,"");
     let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
@@ -25,7 +25,7 @@ export default Component.extend({
 
   saveData: task(function * () {
     yield timeout(1);
-    const result = yield this.get('save')();
+    const result = yield this.save();
     if (result !== false) {
       this.set('isEditing', false);
     }
@@ -33,7 +33,7 @@ export default Component.extend({
 
   closeEditor: task(function * () {
     yield timeout(1);
-    yield this.get('close')();
+    yield this.close();
     this.set('isEditing', false);
   }).drop(),
 
@@ -54,10 +54,10 @@ export default Component.extend({
       return;
     }
 
-    if (13 === keyCode && this.get('saveOnEnter')) {
-      this.get('saveData').perform();
-    } else if(27 === keyCode && this.get('closeOnEscape')) {
-      this.get('closeEditor').perform();
+    if (13 === keyCode && this.saveOnEnter) {
+      this.saveData.perform();
+    } else if(27 === keyCode && this.closeOnEscape) {
+      this.closeEditor.perform();
     }
   }
 });

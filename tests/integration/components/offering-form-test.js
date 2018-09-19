@@ -2,7 +2,14 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find,
+  findAll,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
 import moment from 'moment';
@@ -19,14 +26,14 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
-    assert.equal(findAll('.room').length, 0);
+    assert.dom('.room').doesNotExist();
   });
 
   test('room input shows up when requested', async function(assert) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing) showRoom=true}}`);
 
-    assert.equal(findAll('.room').length, 1);
+    assert.dom('.room').exists({ count: 1 });
   });
 
   test('room validation errors do not show up initially', async function(assert) {
@@ -35,7 +42,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const item = '.room';
     const error = `${item} .validation-error-message`;
-    assert.equal(findAll(error).length, 0);
+    assert.dom(error).doesNotExist();
   });
 
   test('room validation errors show up when typing', async function(assert) {
@@ -48,21 +55,21 @@ module('Integration | Component | offering form', function(hooks) {
     const save = '.buttons .done';
     await fillIn(input, padStart('a', 300, 'a'));
     await click(save);
-    assert.equal(findAll(error).length, 1);
+    assert.dom(error).exists({ count: 1 });
   });
 
   test('recurring options does not show by default', async function(assert) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
-    assert.equal(findAll('.make-recurring').length, 0);
+    assert.dom('.make-recurring').doesNotExist();
   });
 
   test('recurring options shows up when requested', async function(assert) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing) showMakeRecurring=true}}`);
 
-    assert.equal(findAll('.make-recurring').length, 1);
+    assert.dom('.make-recurring').exists({ count: 1 });
   });
 
   test('recurring options has all the days of the week', async function(assert) {
@@ -79,13 +86,13 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    assert.equal(find(sunday).textContent.trim(), 'Sunday');
-    assert.equal(find(monday).textContent.trim(), 'Monday');
-    assert.equal(find(tuesday).textContent.trim(), 'Tuesday');
-    assert.equal(find(wednesday).textContent.trim(), 'Wednesday');
-    assert.equal(find(thursday).textContent.trim(), 'Thursday');
-    assert.equal(find(friday).textContent.trim(), 'Friday');
-    assert.equal(find(saturday).textContent.trim(), 'Saturday');
+    assert.dom(sunday).hasText('Sunday');
+    assert.dom(monday).hasText('Monday');
+    assert.dom(tuesday).hasText('Tuesday');
+    assert.dom(wednesday).hasText('Wednesday');
+    assert.dom(thursday).hasText('Thursday');
+    assert.dom(friday).hasText('Friday');
+    assert.dom(saturday).hasText('Saturday');
 
   });
 
@@ -98,7 +105,7 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    assert.equal(findAll(error).length, 0);
+    assert.dom(error).doesNotExist();
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function(assert) {
@@ -114,7 +121,7 @@ module('Integration | Component | offering form', function(hooks) {
     const save = '.buttons .done';
     await fillIn(input, 0);
     await click(save);
-    assert.equal(findAll(error).length, 1);
+    assert.dom(error).exists({ count: 1 });
   });
 
   test('recurring default day is disabled and checked', async function(assert) {
@@ -135,14 +142,14 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
-    assert.equal(findAll('.instructors').length, 0);
+    assert.dom('.instructors').doesNotExist();
   });
 
   test('instructor manager shows up when requested', async function(assert) {
     this.set('nothing', nothing);
     await render(hbs`{{offering-form close=(action nothing) showInstructors=true}}`);
 
-    assert.equal(findAll('.instructors').length, 1);
+    assert.dom('.instructors').exists({ count: 1 });
   });
 
   test('before course startDate default initial startDate falls on course start date', async function(assert) {
@@ -445,7 +452,7 @@ module('Integration | Component | offering form', function(hooks) {
     const error = `${item} .validation-error-message`;
 
     return settled().then(()=>{
-      assert.equal(findAll(error).length, 0);
+      assert.dom(error).doesNotExist();
     });
   });
 
@@ -460,7 +467,7 @@ module('Integration | Component | offering form', function(hooks) {
     await click(save);
 
     return settled().then(()=>{
-      assert.equal(findAll(error).length, 1);
+      assert.dom(error).exists({ count: 1 });
     });
   });
 
@@ -484,9 +491,9 @@ module('Integration | Component | offering form', function(hooks) {
     const durationHours = '.offering-duration .hours input';
     const durationMinutes = '.offering-duration .minutes input';
 
-    assert.equal(find(room).value, 'emerald bay');
-    assert.equal(find(durationHours).value, '1');
-    assert.equal(find(durationMinutes).value, '0');
+    assert.dom(room).hasValue('emerald bay');
+    assert.dom(durationHours).hasValue('1');
+    assert.dom(durationMinutes).hasValue('0');
 
     let interactor = openDatepicker(find(startDate));
     return settled().then(()=> {

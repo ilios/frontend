@@ -18,7 +18,7 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
-    const course = this.get('course');
+    const course = this.course;
     const sessions = await course.get('sessions');
     const sessionCourseObjectiveMap = await map(sessions.toArray(), async session => {
       const hours = await session.get('totalSumDuration');
@@ -49,8 +49,8 @@ export default Component.extend({
   }),
 
   condensedObjectiveData: computed('objectiveData.[]', async function (){
-    const course = this.get('course');
-    const sessionCourseObjectiveMap  = await this.get('objectiveData');
+    const course = this.course;
+    const sessionCourseObjectiveMap  = await this.objectiveData;
     const courseObjectives = await course.get('objectives');
     let mappedObjectives = courseObjectives.map(courseObjective => {
       const minutes = sessionCourseObjectiveMap.map(obj => {
@@ -84,22 +84,22 @@ export default Component.extend({
   }),
 
   objectiveWithMinutes: computed('condensedObjectiveData.[]', async function(){
-    const condensedObjectiveData = await this.get('condensedObjectiveData');
+    const condensedObjectiveData = await this.condensedObjectiveData;
     const objectiveWithMinutes = condensedObjectiveData.filter(obj => obj.data !== 0);
 
     return objectiveWithMinutes;
   }),
 
   objectiveWithoutMinutes: computed('condensedObjectiveData.[]', async function(){
-    const condensedObjectiveData = await this.get('condensedObjectiveData');
+    const condensedObjectiveData = await this.condensedObjectiveData;
     const objectiveWithoutMinutes = condensedObjectiveData.filterBy('data', 0);
 
     return objectiveWithoutMinutes;
   }),
 
   async getTooltipData(obj){
-    const i18n = this.get('i18n');
-    const isIcon = this.get('isIcon');
+    const i18n = this.i18n;
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
     }

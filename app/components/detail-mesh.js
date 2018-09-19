@@ -29,22 +29,22 @@ export default Component.extend({
   actions: {
     manage() {
       var self = this;
-      this.get('terms').then(function(terms){
+      this.terms.then(function(terms){
         self.set('bufferTerms', terms.toArray());
         self.set('isManaging', true);
       });
     },
     save() {
-      let subject = this.get('subject');
+      let subject = this.subject;
       let terms = subject.get('meshDescriptors');
       let promises = [];
       terms.clear();
-      terms.addObjects(this.get('bufferTerms'));
-      this.get('bufferTerms').forEach((term)=>{
-        if(this.get('isCourse')){
+      terms.addObjects(this.bufferTerms);
+      this.bufferTerms.forEach((term)=>{
+        if(this.isCourse){
           term.get('courses').addObject(subject);
         }
-        if(this.get('isSession')){
+        if(this.isSession){
           term.get('sessions').addObject(subject);
         }
       });
@@ -58,10 +58,10 @@ export default Component.extend({
       this.set('isManaging', false);
     },
     addTermToBuffer(term) {
-      this.get('bufferTerms').addObject(term);
+      this.bufferTerms.addObject(term);
     },
     removeTermFromBuffer(term) {
-      this.get('bufferTerms').removeObject(term);
+      this.bufferTerms.removeObject(term);
     }
   }
 });

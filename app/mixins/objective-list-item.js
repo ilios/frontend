@@ -19,7 +19,7 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    this.set('title', this.get('objective').get('title'));
+    this.set('title', this.objective.get('title'));
   },
   tagName: 'tr',
   classNameBindings: ['showRemoveConfirmation:confirm-removal'],
@@ -33,8 +33,8 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
   actions: {
     saveTitleChanges() {
       this.send('addErrorDisplayFor', 'title');
-      const title = this.get('title');
-      const objective = this.get('objective');
+      const title = this.title;
+      const objective = this.objective;
 
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -51,7 +51,7 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
       });
     },
     revertTitleChanges() {
-      const objective = this.get('objective');
+      const objective = this.objective;
       this.set('title', objective.get('title'));
     },
     changeTitle(contents){

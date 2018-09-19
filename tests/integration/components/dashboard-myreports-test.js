@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -50,12 +50,12 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
     await render(hbs`{{dashboard-myreports}}`);
 
-    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Reports');
+    assert.dom('.dashboard-block-header').hasText('My Reports');
     for (let i = 0; i < 2; i++) {
       let tds = findAll(`[data-test-saved-reports] li:nth-of-type(${i + 1})`);
-      assert.equal(tds[0].textContent.trim(), mockReports[i].get('title'));
+      assert.dom(tds[0]).hasText(mockReports[i].get('title'));
     }
-    assert.equal(findAll(`[data-test-saved-reports] li`).length, 2);
+    assert.dom(`[data-test-saved-reports] li`).exists({ count: 2 });
   });
 
   test('display none when no reports', async function(assert) {
@@ -68,7 +68,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     this.owner.register('service:reporting', reportingMockNoReports);
     this.owner.register('service:currentUser', currentUserMock);
     await render(hbs`{{dashboard-myreports}}`);
-    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Reports');
-    assert.equal(find('.dashboard-block-body').textContent.trim(), 'None');
+    assert.dom('.dashboard-block-header').hasText('My Reports');
+    assert.dom('.dashboard-block-body').hasText('None');
   });
 });

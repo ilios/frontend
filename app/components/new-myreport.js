@@ -25,8 +25,8 @@ const PrepositionObject = EmberObject.extend({
   type: null,
   value: oneWay('model.id'),
   label: computed('model', 'type', function () {
-    const type = this.get('type');
-    const model = this.get('model');
+    const type = this.type;
+    const model = this.model;
     return new Promise(resolve => {
       switch (type) {
       case 'mesh term':
@@ -46,15 +46,15 @@ const PrepositionObject = EmberObject.extend({
     });
   }),
   active: computed('model', 'type', function() {
-    const type = this.get('type');
+    const type = this.type;
     if (['session type', 'term'].includes(type)) {
-      return this.get('model').get('active');
+      return this.model.get('active');
     }
     return true;
   }),
   academicYear: computed('model', 'type', async function () {
-    const type = this.get('type');
-    const model = this.get('model');
+    const type = this.type;
+    const model = this.model;
     if (type === 'course') {
       return parseInt(model.get('year'), 10);
     }
@@ -84,37 +84,37 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   subjectList: computed('i18n.locale', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.courses')},
-      {value: 'session', label: this.get('i18n').t('general.sessions')},
-      {value: 'program', label: this.get('i18n').t('general.programs')},
-      {value: 'program year', label: this.get('i18n').t('general.programYears')},
-      {value: 'instructor', label: this.get('i18n').t('general.instructors')},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups')},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterials')},
-      {value: 'competency', label: this.get('i18n').t('general.competencies')},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerms')},
-      {value: 'term', label: this.get('i18n').t('general.terms')},
-      {value: 'session type', label: this.get('i18n').t('general.sessionTypes')},
+      {value: 'course', label: this.i18n.t('general.courses')},
+      {value: 'session', label: this.i18n.t('general.sessions')},
+      {value: 'program', label: this.i18n.t('general.programs')},
+      {value: 'program year', label: this.i18n.t('general.programYears')},
+      {value: 'instructor', label: this.i18n.t('general.instructors')},
+      {value: 'instructor group', label: this.i18n.t('general.instructorGroups')},
+      {value: 'learning material', label: this.i18n.t('general.learningMaterials')},
+      {value: 'competency', label: this.i18n.t('general.competencies')},
+      {value: 'mesh term', label: this.i18n.t('general.meshTerms')},
+      {value: 'term', label: this.i18n.t('general.terms')},
+      {value: 'session type', label: this.i18n.t('general.sessionTypes')},
     ];
 
     return list;
   }),
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
-      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'program year', label: this.get('i18n').t('general.programYear'), subjects: ['term']},
-      {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
-      {value: 'competency', label: this.get('i18n').t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
-      {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'term', label: this.get('i18n').t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
+      {value: 'course', label: this.i18n.t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
+      {value: 'session', label: this.i18n.t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'program year', label: this.i18n.t('general.programYear'), subjects: ['term']},
+      {value: 'program', label: this.i18n.t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'instructor', label: this.i18n.t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
+      {value: 'instructor group', label: this.i18n.t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
+      {value: 'learning material', label: this.i18n.t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
+      {value: 'competency', label: this.i18n.t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'mesh term', label: this.i18n.t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
+      {value: 'session type', label: this.i18n.t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'term', label: this.i18n.t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
     ];
 
-    const subject = this.get('currentSubject');
+    const subject = this.currentSubject;
 
     return list.filter(item =>item.subjects.includes(subject));
   }),
@@ -126,14 +126,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @public
    */
   prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', async function(){
-    const type = this.get('currentPrepositionalObject');
+    const type = this.currentPrepositionalObject;
     if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
       return [];
     }
 
     let model = type.dasherize();
-    const store = this.get('store');
-    const school = await this.get('currentSchool');
+    const store = this.store;
+    const school = await this.currentSchool;
     let query = {
       filters: {}
     };
@@ -179,9 +179,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @public
    */
   filteredPrepositionalObjectIdList: computed('prepositionalObjectIdList.[]', 'selectedYear', async function () {
-    const selectedYear = this.get('selectedYear')?parseInt(this.get('selectedYear'), 10): null;
-    const objects = await this.get('prepositionalObjectIdList');
-    const type = this.get('currentPrepositionalObject');
+    const selectedYear = this.selectedYear?parseInt(this.selectedYear, 10): null;
+    const objects = await this.prepositionalObjectIdList;
+    const type = this.currentPrepositionalObject;
 
     return objects.filter(obj => {
       if (isEmpty(selectedYear) || !['course', 'session'].includes(type)) {
@@ -193,8 +193,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function(){
-    const currentSubjectValue = this.get('currentSubject');
-    let currentSubject = this.get('subjectList').find(subject => {
+    const currentSubjectValue = this.currentSubject;
+    let currentSubject = this.subjectList.find(subject => {
       return subject.value === currentSubjectValue;
     });
 
@@ -202,20 +202,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
   selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
     if(
-      this.get('currentPrepositionalObject') === 'instructor' &&
-      this.get('currentPrepositionalObjectId')
+      this.currentPrepositionalObject === 'instructor' &&
+      this.currentPrepositionalObjectId
     ){
-      return this.get('store').peekRecord('user', this.get('currentPrepositionalObjectId'));
+      return this.store.peekRecord('user', this.currentPrepositionalObjectId);
     } else {
       return null;
     }
   }),
   selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
     if(
-      this.get('currentPrepositionalObject') === 'mesh term' &&
-      this.get('currentPrepositionalObjectId')
+      this.currentPrepositionalObject === 'mesh term' &&
+      this.currentPrepositionalObjectId
     ){
-      return this.get('store').peekRecord('mesh-descriptor', this.get('currentPrepositionalObjectId'));
+      return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
     } else {
       return null;
     }
@@ -227,15 +227,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @public
    */
   schoolList: computed(async function(){
-    const store = this.get('store');
+    const store = this.store;
 
     const schools = await store.findAll('school');
     return schools.sortBy('title');
   }),
 
   currentSchool: computed('currentUser.model.school', 'selectedSchool', async function(){
-    const selectedSchool = this.get('selectedSchool');
-    const schoolChanged = this.get('schoolChanged');
+    const selectedSchool = this.selectedSchool;
+    const schoolChanged = this.schoolChanged;
     if (isPresent(selectedSchool)) {
       return selectedSchool;
     }
@@ -245,7 +245,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return null;
     }
 
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     const user = await currentUser.get('model');
     const school = await user.get('school');
 
@@ -253,7 +253,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   allAcademicYears: computed(async function () {
-    const store = this.get('store');
+    const store = this.store;
     const years = await store.findAll('academic-year');
 
     return years;
@@ -266,16 +266,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (validations.get('isInvalid')) {
       return;
     }
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
-    const subject = this.get('currentSubject');
-    const currentUser = this.get('currentUser');
+    const flashMessages = this.flashMessages;
+    const store = this.store;
+    const subject = this.currentSubject;
+    const currentUser = this.currentUser;
     const user = yield currentUser.get('model');
-    const title = this.get('title');
-    const prepositionalObject = this.get('currentPrepositionalObject');
-    const school = yield this.get('currentSchool');
-    const object = this.get('currentPrepositionalObject');
-    const prepositionalObjectTableRowId = this.get('currentPrepositionalObjectId');
+    const title = this.title;
+    const prepositionalObject = this.currentPrepositionalObject;
+    const school = yield this.currentSchool;
+    const object = this.currentPrepositionalObject;
+    const prepositionalObjectTableRowId = this.currentPrepositionalObjectId;
     if (isPresent(subject) && isEmpty(object)) {
       if (subject === 'instructor') {
         flashMessages.alert('general.reportMissingObjectForInstructor');
@@ -308,18 +308,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
     yield report.save();
     this.send('clearErrorDisplay', 'title');
-    this.get('close')();
+    this.close();
   }),
 
   changeSchool: task(function * (schoolId) {
-    const schoolList = yield this.get('schoolList');
+    const schoolList = yield this.schoolList;
     const school = schoolList.findBy('id', schoolId);
     this.set('selectedSchool', school);
     this.set('schoolChanged', true);
   }),
 
   resetCurrentPrepositionalObjectId: task(function* () {
-    const list = yield this.get('filteredPrepositionalObjectIdList');
+    const list = yield this.filteredPrepositionalObjectIdList;
     const first = list.get('firstObject');
     if(first){
       this.set('currentPrepositionalObjectId', first.value);
@@ -348,12 +348,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
       this.set('currentPrepositionalObjectId', null);
-      this.get('resetCurrentPrepositionalObjectId').perform();
+      this.resetCurrentPrepositionalObjectId.perform();
     },
     changeSelectedYear(year){
       this.set('selectedYear', year);
       this.set('currentPrepositionalObjectId', null);
-      this.get('resetCurrentPrepositionalObjectId').perform();
+      this.resetCurrentPrepositionalObjectId.perform();
     },
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);

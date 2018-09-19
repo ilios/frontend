@@ -9,9 +9,9 @@ export default Route.extend({
   permissionChecker: service(),
   titleToken: 'general.admin',
   async model(){
-    const currentUser = this.get('currentUser');
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
+    const currentUser = this.currentUser;
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
     const allSchools = await store.findAll('school');
     const schools = await filter(allSchools.toArray(), async school => {
       return permissionChecker.canUpdateUserInSchool(school);

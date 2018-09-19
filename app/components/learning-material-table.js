@@ -10,19 +10,19 @@ export default Component.extend(SortableByPosition, {
   learningMaterials: null,
 
   table: computed('sortedLearningMaterials.[]', 'columns.[]', function () {
-    const columns = this.get('columns');
-    const sortedLearningMaterials = this.get('sortedLearningMaterials');
+    const columns = this.columns;
+    const sortedLearningMaterials = this.sortedLearningMaterials;
     const table = new Table(columns, sortedLearningMaterials);
 
     return table;
   }),
 
   sortedLearningMaterials: computed('learningMaterials.[]', 'learningMaterials.@each.position', function () {
-    const learningMaterials = this.get('learningMaterials');
+    const learningMaterials = this.learningMaterials;
     if (!learningMaterials) {
       return [];
     }
-    let sortedMaterials = learningMaterials.toArray().sort(this.get('positionSortingCallback'));
+    let sortedMaterials = learningMaterials.toArray().sort(this.positionSortingCallback);
 
     return sortedMaterials;
   }),
@@ -95,7 +95,7 @@ export default Component.extend(SortableByPosition, {
   }),
 
   removeLearningMaterial: task(function * (learningMaterial) {
-    const remove = this.get('remove');
+    const remove = this.remove;
     yield remove(learningMaterial);
   }).drop(),
 

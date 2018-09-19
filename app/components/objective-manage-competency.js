@@ -10,7 +10,7 @@ export default Component.extend({
 
   schoolCompetencies: computed('programYear.program.school.competencies.[]', function(){
     return new Promise(resolve => {
-      this.get('programYear').then(programYear => {
+      this.programYear.then(programYear => {
         programYear.get('program').then(program => {
           program.get('school').then(school => {
             school.get('competencies').then(competencies => {
@@ -24,7 +24,7 @@ export default Component.extend({
 
   programYear: computed('objective.programYears.[]', function(){
     return new Promise(resolve => {
-      const objective = this.get('objective');
+      const objective = this.objective;
       objective.get('programYears').then(programYears => {
         if (programYears.length) {
           let programYear = programYears.get('firstObject');
@@ -38,7 +38,7 @@ export default Component.extend({
 
   competencies: computed('programYear.competencies.[]', function(){
     return new Promise(resolve => {
-      this.get('programYear').then(programYear => {
+      this.programYear.then(programYear => {
         programYear.get('competencies').then(competencies => {
           resolve(competencies);
         });
@@ -48,10 +48,10 @@ export default Component.extend({
 
   competenciesWithSelectedChildren: computed('schoolCompetencies.[]', 'objective.competency', function(){
     return new Promise(resolve => {
-      const objective = this.get('objective');
+      const objective = this.objective;
       objective.get('competency').then(selectedCompetency => {
         if (selectedCompetency) {
-          this.get('schoolCompetencies').then(competencies => {
+          this.schoolCompetencies.then(competencies => {
             filter(competencies.toArray(), (competency => {
               return new Promise(resolve => {
                 competency.get('treeChildren').then(children => {
@@ -73,7 +73,7 @@ export default Component.extend({
 
   domains: computed('competencies.[]', function(){
     return new Promise(resolve => {
-      this.get('competencies').then(competencies => {
+      this.competencies.then(competencies => {
         all(competencies.mapBy('domain')).then(domains => {
           resolve(domains.uniq());
         });
@@ -83,8 +83,8 @@ export default Component.extend({
 
   domainsWithNoChildren: computed('domains.[]', function(){
     return new Promise(resolve => {
-      this.get('competencies').then(competencies => {
-        this.get('domains').then(domains => {
+      this.competencies.then(competencies => {
+        this.domains.then(domains => {
           filter(domains.toArray(), (domain => {
             return new Promise(resolve => {
               domain.get('children').then(children => {
@@ -101,10 +101,10 @@ export default Component.extend({
   }),
   actions: {
     changeCompetency(competency) {
-      this.get('objective').set('competency', competency);
+      this.objective.set('competency', competency);
     },
     removeCurrentCompetency() {
-      this.get('objective').set('competency', null);
+      this.objective.set('competency', null);
     }
   }
 });

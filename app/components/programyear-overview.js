@@ -20,7 +20,7 @@ export default Component.extend({
   sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
   actions: {
     addDirector(user) {
-      let programYear = this.get('programYear');
+      let programYear = this.programYear;
       programYear.get('directors').then(directors => {
         directors.addObject(user);
         user.get('programYears').addObject(programYear);
@@ -28,7 +28,7 @@ export default Component.extend({
       });
     },
     removeDirector(user) {
-      let programYear = this.get('programYear');
+      let programYear = this.programYear;
       programYear.get('directors').then(directors => {
         directors.removeObject(user);
         user.get('programYears').removeObject(programYear);

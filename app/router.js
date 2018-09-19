@@ -20,13 +20,13 @@ const Router = EmberRouter.extend({
       tokens = [tokens];
     }
 
-    this.get('headData').set('titleTokens', tokens);
+    this.headData.set('titleTokens', tokens);
   },
 
   didTransition() {
     this._super(...arguments);
-    const iliosMetrics = this.get('iliosMetrics');
-    const page = this.get('url');
+    const iliosMetrics = this.iliosMetrics;
+    const page = this.url;
     const title = this.getWithDefault('currentRouteName', 'unknown');
 
     iliosMetrics.track(page, title);

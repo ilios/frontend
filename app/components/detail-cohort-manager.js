@@ -18,10 +18,10 @@ export default Component.extend({
   selectedCohorts: null,
 
   allCohorts: computed('school', async function () {
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
     const allCohorts = await store.findAll('cohort');
-    const courseSchool = this.get('school');
+    const courseSchool = this.school;
 
     return filter(allCohorts.toArray(), async cohort => {
       const cohortSchool = await cohort.get('school');
@@ -46,8 +46,8 @@ export default Component.extend({
    * @protected
    */
   availableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function(){
-    const cohorts = await this.get('allCohorts');
-    const selectedCohorts = this.get('selectedCohorts') || [];
+    const cohorts = await this.allCohorts;
+    const selectedCohorts = this.selectedCohorts || [];
 
     return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
   }),
@@ -64,7 +64,7 @@ export default Component.extend({
    * @public
    */
   sortedAvailableCohorts: computed('availableCohorts.[]', async function () {
-    const availableCohorts = await this.get('availableCohorts');
+    const availableCohorts = await this.availableCohorts;
     const objects = await map(availableCohorts, async cohort => {
       const programYear = await cohort.get('programYear');
       const program = await programYear.get('program');

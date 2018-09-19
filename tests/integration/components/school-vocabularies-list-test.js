@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, find, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  findAll,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -20,10 +26,10 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.set('edit', () => {});
     this.set('school', schoolModel);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit)}}`);
-    assert.equal(find('[data-test-vocabulary="0"] td:nth-of-type(1)').textContent.trim(), 'Vocabulary 1');
-    assert.equal(find('[data-test-vocabulary="1"] td:nth-of-type(1)').textContent.trim(), 'Vocabulary 2');
-    assert.equal(find('[data-test-vocabulary="0"] td:nth-of-type(2)').textContent.trim(), '2');
-    assert.equal(find('[data-test-vocabulary="1"] td:nth-of-type(2)').textContent.trim(), '1');
+    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(1)').hasText('Vocabulary 1');
+    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(1)').hasText('Vocabulary 2');
+    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(2)').hasText('2');
+    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(2)').hasText('1');
   });
 
   test('can create new vocabulary', async function(assert) {
@@ -57,9 +63,9 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.set('edit', () => {});
     this.set('school', schoolModel);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canDelete=true}}`);
-    assert.equal(findAll('[data-test-vocabulary="0"] td:nth-of-type(3) svg').length, 1);
-    assert.equal(findAll('[data-test-vocabulary="1"] td:nth-of-type(3) svg').length, 1);
-    assert.equal(findAll('[data-test-vocabulary="2"] td:nth-of-type(3) svg').length, 2);
+    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) svg').exists({ count: 1 });
+    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(3) svg').exists({ count: 1 });
+    assert.dom('[data-test-vocabulary="2"] td:nth-of-type(3) svg').exists({ count: 2 });
 
   });
 
@@ -72,11 +78,11 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.set('school', schoolModel);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canDelete=true}}`);
 
-    assert.notOk(find('[data-test-vocabulary="0"]').classList.contains('confirm-removal'));
-    assert.equal(findAll('[data-test-vocabulary="0"] td:nth-of-type(3) .remove').length, 1);
+    assert.dom('[data-test-vocabulary="0"]').hasNoClass('confirm-removal');
+    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) .remove').exists({ count: 1 });
     await click('[data-test-vocabulary="0"] td:nth-of-type(3) .remove');
     assert.equal(find(findAll('tr')[2]).textContent.trim().search(/Are you sure you want to delete this vocabulary/), 0);
-    assert.ok(find('[data-test-vocabulary="0"]').classList.contains('confirm-removal'));
+    assert.dom('[data-test-vocabulary="0"]').hasClass('confirm-removal');
     await click('[data-test-confirm-removal="0"] .remove');
     const vocabularies = await run(() => this.owner.lookup('service:store').findAll('vocabulary'));
     assert.equal(vocabularies.length, 0);

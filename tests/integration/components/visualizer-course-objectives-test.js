@@ -14,6 +14,6 @@ module('Integration | Component | visualizer course objectives', function(hooks)
     this.set('course', course);
     await render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

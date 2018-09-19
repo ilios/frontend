@@ -7,8 +7,8 @@ export default Component.extend({
   totalProgress: null,
   currentProgress: null,
   progress: computed('totalProgress', 'currentProgress', function(){
-    const total = this.get('totalProgress') || 1;
-    const current = this.get('currentProgress') || 0;
+    const total = this.totalProgress || 1;
+    const current = this.currentProgress || 0;
 
     return Math.floor(current / total * 100);
   })

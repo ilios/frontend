@@ -34,15 +34,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   'data-test-new-session': true,
 
   activeSessionTypes: computed('sessionTypes.[]', async function() {
-    const sessionTypes = await this.get('sessionTypes');
+    const sessionTypes = await this.sessionTypes;
     return sessionTypes.filterBy('active', true);
   }),
 
   selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', function(){
     return new Promise(resolve => {
       let selectedSessionType;
-      this.get('sessionTypes').then(sessionTypes => {
-        const selectedSessionTypeId = this.get('selectedSessionTypeId');
+      this.sessionTypes.then(sessionTypes => {
+        const selectedSessionTypeId = this.selectedSessionTypeId;
         if(isPresent(selectedSessionTypeId)){
           selectedSessionType = sessionTypes.find(sessionType => {
             return parseInt(sessionType.get('id'), 10) === parseInt(selectedSessionTypeId, 10);
@@ -65,13 +65,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   saveNewSession: task(function * () {
-    const save = this.get('save');
+    const save = this.save;
     this.send('addErrorDisplayFor', 'title');
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
-      const sessionType = yield this.get('selectedSessionType');
-      let session = this.get('store').createRecord('session', {
-        title: this.get('title'),
+      const sessionType = yield this.selectedSessionType;
+      let session = this.store.createRecord('session', {
+        title: this.title,
         sessionType
       });
       yield save(session);
@@ -88,7 +88,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('saveNewSession').perform();
+      this.saveNewSession.perform();
       return;
     }
 

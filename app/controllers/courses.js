@@ -35,15 +35,15 @@ export default Controller.extend({
   newCourse: null,
   deletedCourse: null,
   courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function(){
-    const selectedSchool = this.get('selectedSchool');
-    const selectedYear = this.get('selectedYear');
+    const selectedSchool = this.selectedSchool;
+    const selectedYear = this.selectedYear;
     if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
       return [];
     }
 
     let schoolId = selectedSchool.get('id');
     let yearTitle = selectedYear.get('title');
-    return await this.get('store').query('course', {
+    return await this.store.query('course', {
       filters: {
         school: schoolId,
         year: yearTitle,
@@ -61,7 +61,7 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
   allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function(){
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     const user = await currentUser.get('model');
     return await user.get('allRelatedCourses');
   }),
@@ -72,12 +72,12 @@ export default Controller.extend({
     'userCoursesOnly',
     'allRelatedCourses.[]',
     async function(){
-      const titleFilter = this.get('titleFilter');
+      const titleFilter = this.titleFilter;
       const title = isBlank(titleFilter) ? '' : titleFilter ;
       const cleanTitle = escapeRegExp(title);
-      let filterMyCourses = this.get('userCoursesOnly');
+      let filterMyCourses = this.userCoursesOnly;
       let exp = new RegExp(cleanTitle, 'gi');
-      const courses = await this.get('courses');
+      const courses = await this.courses;
       let filteredCourses;
       if (isEmpty(cleanTitle)) {
         filteredCourses = courses.sortBy('title');
@@ -88,7 +88,7 @@ export default Controller.extend({
         }).sortBy('title');
       }
       if (filterMyCourses) {
-        const allRelatedCourses = await this.get('allRelatedCourses');
+        const allRelatedCourses = await this.allRelatedCourses;
         filteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
       }
       return filteredCourses;
@@ -97,7 +97,7 @@ export default Controller.extend({
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
-    const schoolId = this.get('schoolId');
+    const schoolId = this.schoolId;
     if(isPresent(schoolId)){
       let school = schools.findBy('id', schoolId);
       if(school){
@@ -109,8 +109,8 @@ export default Controller.extend({
   }),
   selectedYear: computed('model.years.[]', 'yearTitle', function(){
     let years = this.get('model.years');
-    if(isPresent(this.get('yearTitle'))){
-      return years.find(year => year.get('title') === parseInt(this.get('yearTitle'), 10));
+    if(isPresent(this.yearTitle)){
+      return years.find(year => year.get('title') === parseInt(this.yearTitle, 10));
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);
@@ -125,19 +125,19 @@ export default Controller.extend({
     return defaultYear;
   }),
   canCreateCourse: computed('selectedSchool', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const selectedSchool = this.get('selectedSchool');
+    const permissionChecker = this.permissionChecker;
+    const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateCourse(selectedSchool);
   }),
 
   actions: {
     async removeCourse(course){
-      const school = await this.get('selectedSchool');
+      const school = await this.selectedSchool;
       const courses = school.get('courses');
       courses.removeObject(course);
       await course.destroyRecord();
       this.set('deletedCourse', course);
-      let newCourse = this.get('newCourse');
+      let newCourse = this.newCourse;
       if (newCourse === course) {
         this.set('newCourse', null);
       }
@@ -147,7 +147,7 @@ export default Controller.extend({
       const savedCourse = await newCourse.save();
       this.set('showNewCourseForm', false);
       this.set('newCourse', savedCourse);
-      const school = await this.get('selectedSchool');
+      const school = await this.selectedSchool;
       const courses = await school.get('courses');
       courses.pushObject(savedCourse);
       return savedCourse;
@@ -159,7 +159,7 @@ export default Controller.extend({
       this.set('schoolId', schoolId);
     },
     toggleNewCourseForm() {
-      this.set('showNewCourseForm', !this.get('showNewCourseForm'));
+      this.set('showNewCourseForm', !this.showNewCourseForm);
     },
     lockCourse(course) {
       course.set('locked', true);

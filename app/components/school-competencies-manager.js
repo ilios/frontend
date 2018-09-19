@@ -10,7 +10,7 @@ export default Component.extend({
   canDelete: false,
   canCreate: false,
   domains: computed('competencies.[]', function(){
-    let competencies = this.get('competencies');
+    let competencies = this.competencies;
     if(isEmpty(competencies)){
       return [];
     }

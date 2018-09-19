@@ -6,6 +6,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   titleToken: 'general.myProfile',
   model(){
-    return this.get('currentUser').get('model');
+    return this.currentUser.get('model');
   }
 });

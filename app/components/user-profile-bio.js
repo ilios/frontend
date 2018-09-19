@@ -91,9 +91,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const user = this.get('user');
-    const isManaging = this.get('isManaging');
-    const manageTask = this.get('manage');
+    const user = this.user;
+    const isManaging = this.isManaging;
+    const manageTask = this.manage;
     if (user && isManaging && !manageTask.get('lastSuccessfull')){
       manageTask.perform();
     }
@@ -122,7 +122,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   'data-test-user-profile-bio': true,
 
   manage: task(function * (){
-    const user = this.get('user');
+    const user = this.user;
     this.setProperties(user.getProperties(
       'firstName',
       'middleName',
@@ -138,20 +138,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('password', '');
     }
 
-    this.get('setIsManaging')(true);
+    this.setIsManaging(true);
 
     return true;
   }),
 
   save: task(function * (){
     yield timeout(10);
-    const store = this.get('store');
-    const canEditUsernameAndPassword = yield this.get('canEditUsernameAndPassword');
-    const changeUserPassword = yield this.get('changeUserPassword');
+    const store = this.store;
+    const canEditUsernameAndPassword = yield this.canEditUsernameAndPassword;
+    const changeUserPassword = yield this.changeUserPassword;
     this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
     let {validations} = yield this.validate();
     if (validations.get('isValid')) {
-      const user = this.get('user');
+      const user = this.user;
 
       user.setProperties(this.getProperties(
         'firstName',
@@ -169,13 +169,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         });
       }
       //always set and send the username in case it was updated in the sync
-      let username = this.get('username');
+      let username = this.username;
       if (isEmpty(username)) {
         username = null;
       }
       auth.set('username', username);
       if (canEditUsernameAndPassword && changeUserPassword) {
-        auth.set('password', this.get('password'));
+        auth.set('password', this.password);
       }
       yield auth.save();
       yield user.save();
@@ -183,7 +183,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       yield all(pendingUpdates.invoke('destroyRecord'));
 
       this.send('clearErrorDisplay');
-      this.get('cancel').perform();
+      this.cancel.perform();
       this.set('hasSavedRecently', true);
       yield timeout(500);
       this.set('hasSavedRecently', false);
@@ -198,39 +198,39 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('syncComplete', false);
     const userId = this.get('user.id');
     let url = `/application/directory/find/${userId}`;
-    const commonAjax = this.get('commonAjax');
+    const commonAjax = this.commonAjax;
     try {
       let data = yield commonAjax.request(url);
       let userData = data.result;
-      const firstName = this.get('firstName');
-      const lastName = this.get('lastName');
-      const email = this.get('email');
-      const username = this.get('username');
-      const phone = this.get('phone');
-      const campusId = this.get('campusId');
+      const firstName = this.firstName;
+      const lastName = this.lastName;
+      const email = this.email;
+      const username = this.username;
+      const phone = this.phone;
+      const campusId = this.campusId;
       if (userData.firstName !== firstName) {
         this.set('firstName', userData.firstName);
-        this.get('updatedFieldsFromSync').pushObject('firstName');
+        this.updatedFieldsFromSync.pushObject('firstName');
       }
       if (userData.lastName !== lastName) {
         this.set('lastName', userData.lastName);
-        this.get('updatedFieldsFromSync').pushObject('lastName');
+        this.updatedFieldsFromSync.pushObject('lastName');
       }
       if (userData.email !== email) {
         this.set('email', userData.email);
-        this.get('updatedFieldsFromSync').pushObject('email');
+        this.updatedFieldsFromSync.pushObject('email');
       }
       if (userData.campusId !== campusId) {
         this.set('campusId', userData.campusId);
-        this.get('updatedFieldsFromSync').pushObject('campusId');
+        this.updatedFieldsFromSync.pushObject('campusId');
       }
       if (userData.phone !== phone) {
         this.set('phone', userData.phone);
-        this.get('updatedFieldsFromSync').pushObject('phone');
+        this.updatedFieldsFromSync.pushObject('phone');
       }
       if (userData.username !== username) {
         this.set('username', userData.username);
-        this.get('updatedFieldsFromSync').pushObject('username');
+        this.updatedFieldsFromSync.pushObject('username');
       }
     } catch (e) {
       this.set('showSyncErrorMessage', true);
@@ -247,7 +247,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     yield timeout(1);
     this.set('hasSavedRecently', false);
     this.set('updatedFieldsFromSync', []);
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
     this.set('changeUserPassword', false);
 
     this.set('firstName', null);
@@ -278,14 +278,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   passwordStrengthScore: computed('password', async function () {
-    const passwordStrength = this.get('passwordStrength');
-    const password = isEmpty(this.get('password'))?'':this.get('password');
+    const passwordStrength = this.passwordStrength;
+    const password = isEmpty(this.password)?'':this.password;
     const obj = await passwordStrength.strength(password);
     return obj.score;
   }),
 
   usernameMissing: computed('user.authentication', function(){
-    const user = this.get('user');
+    const user = this.user;
     return new Promise(resolve => {
       user.get('authentication').then(authentication => {
         resolve(isEmpty(authentication) || isEmpty(authentication.get('username')));
@@ -302,13 +302,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('save').perform();
+      this.save.perform();
       return;
     }
 
     if(27 === keyCode) {
       if ('text' === target.type) {
-        this.get('cancel').perform();
+        this.cancel.perform();
       } else {
         this.send('cancelChangeUserPassword');
       }

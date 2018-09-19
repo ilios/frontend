@@ -10,7 +10,7 @@ export default Component.extend({
   classNames: ['collapsed-stewards'],
   programYear: null,
   schoolData: computed('programYear.stewards.[]', async function(){
-    const programYear = this.get('programYear');
+    const programYear = this.programYear;
     if (isEmpty(programYear)) {
       return [];
     }

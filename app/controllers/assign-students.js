@@ -16,8 +16,8 @@ export default Controller.extend({
   school: null,
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
-    if(isPresent(this.get('school'))){
-      let school =  this.get('model.schools').findBy('id', this.get('school'));
+    if(isPresent(this.school)){
+      let school =  this.get('model.schools').findBy('id', this.school);
       if(school){
         return school;
       }
@@ -27,8 +27,8 @@ export default Controller.extend({
 
   unassignedStudents: computed('selectedSchool', 'filter', function(){
     return new Promise(resolve => {
-      let school = this.get('selectedSchool');
-      this.get('store').query('user', {
+      let school = this.selectedSchool;
+      this.store.query('user', {
         filters: {
           roles: [4],
           school: school.get('id'),
@@ -36,7 +36,7 @@ export default Controller.extend({
           enabled: true
         }
       }).then(students => {
-        const filter = this.get('filter');
+        const filter = this.filter;
         if (!isBlank(filter)) {
           const exp = new RegExp(filter, 'gi');
           students = students.filter(user => {

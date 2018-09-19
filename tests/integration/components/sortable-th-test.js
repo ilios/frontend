@@ -13,7 +13,7 @@ module('Integration | Component | sortable th', function(hooks) {
 
     await render(hbs`{{sortable-th}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
 
     // Template block usage:" + EOL +
     await render(hbs`
@@ -22,6 +22,6 @@ module('Integration | Component | sortable th', function(hooks) {
       {{/sortable-th}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom(this.element).hasText('template block text');
   });
 });

@@ -22,7 +22,7 @@ export default Component.extend({
    * @public
    */
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', async function() {
-    let offerings = await this.get('offerings');
+    let offerings = await this.offerings;
     if (isEmpty(offerings)) {
       return [];
     }
@@ -46,7 +46,7 @@ export default Component.extend({
 
   actions: {
     removeOffering(offering) {
-      let session = this.get('session');
+      let session = this.session;
       session.get('offerings').then(offerings => {
         offerings.removeObject(offering);
         offering.deleteRecord();

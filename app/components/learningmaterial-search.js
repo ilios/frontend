@@ -23,22 +23,22 @@ export default Component.extend({
   searchReturned: false,
 
   searchMore: task(function * () {
-    const query = this.get('query');
-    const results  = yield this.get('store').query('learningMaterial', {
+    const query = this.query;
+    const results  = yield this.store.query('learningMaterial', {
       q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage'),
+      limit: this.searchResultsPerPage + 1,
+      offset: this.searchPage * this.searchResultsPerPage,
       'order_by[title]': 'ASC',
     });
     let lms = results.map(lm => {
       return lm;
     });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
+    this.set('searchPage', this.searchPage + 1);
+    this.set('hasMoreSearchResults', (lms.length > this.searchResultsPerPage));
+    if (this.hasMoreSearchResults) {
       lms.pop();
     }
-    this.get('searchResults').pushObjects(lms);
+    this.searchResults.pushObjects(lms);
   }).drop(),
 
   addLearningMaterial: task(function * (lm) {
@@ -58,9 +58,9 @@ export default Component.extend({
       this.set('searchReturned', false);
       this.set('searching', true);
       this.set('query', query);
-      this.get('store').query('learningMaterial', {
+      this.store.query('learningMaterial', {
         q: query,
-        limit: this.get('searchResultsPerPage') + 1,
+        limit: this.searchResultsPerPage + 1,
         'order_by[title]': 'ASC',
       }).then(results => {
         let lms = results.map(lm => {
@@ -69,8 +69,8 @@ export default Component.extend({
         this.set('searchReturned', true);
         this.set('searching', false);
         this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-        if (this.get('hasMoreSearchResults')) {
+        this.set('hasMoreSearchResults', (lms.length > this.searchResultsPerPage));
+        if (this.hasMoreSearchResults) {
           lms.pop();
         }
         this.set('searchResults', lms);

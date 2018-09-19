@@ -20,7 +20,7 @@ export default Component.extend({
   showLearnerGroupEvents: true,
   showSessionEvents: true,
   learnerGroupEvents: computed('learnerGroups.[]', async function () {
-    const learnerGroups = this.get('learnerGroups');
+    const learnerGroups = this.learnerGroups;
     if (!learnerGroups) {
       return [];
     }
@@ -53,7 +53,7 @@ export default Component.extend({
   }),
 
   sessionEvents: computed('session', async function () {
-    const session = this.get('session');
+    const session = this.session;
     if (!session) {
       return [];
     }
@@ -77,13 +77,13 @@ export default Component.extend({
   }),
 
   currentEvent: computed('startDate', 'endDate', 'location', 'session', async function () {
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
-    const session = this.get('session');
+    const startDate = this.startDate;
+    const endDate = this.endDate;
+    const session = this.session;
     if (!session) {
       return null;
     }
-    const loc = this.get('location');
+    const loc = this.location;
     const sessionType = await session.get('sessionType');
     const course = await session.get('course');
     return {
@@ -105,19 +105,19 @@ export default Component.extend({
     'showLearnerGroupEvents',
     'showSessionEvents',
     async function () {
-      const currentEvent = await this.get('currentEvent');
-      const showLearnerGroupEvents = await this.get('showLearnerGroupEvents');
-      const showSessionEvents = await this.get('showSessionEvents');
+      const currentEvent = await this.currentEvent;
+      const showLearnerGroupEvents = await this.showLearnerGroupEvents;
+      const showSessionEvents = await this.showSessionEvents;
       if(!currentEvent) {
         return [];
       }
       let events = [];
       if (showLearnerGroupEvents) {
-        const learnerGroupEvents = await this.get('learnerGroupEvents');
+        const learnerGroupEvents = await this.learnerGroupEvents;
         events.pushObjects(learnerGroupEvents);
       }
       if (showSessionEvents) {
-        const sessionEvents = await this.get('sessionEvents');
+        const sessionEvents = await this.sessionEvents;
         events.pushObjects(sessionEvents);
       }
       const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;

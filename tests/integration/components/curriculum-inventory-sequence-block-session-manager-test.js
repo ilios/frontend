@@ -1,7 +1,7 @@
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, click, find } from '@ember/test-helpers';
+import { render, findAll, click } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -90,44 +90,44 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.equal(findAll('.actions .bigadd').length, 1, 'Save button is visible.');
-    assert.equal(findAll('.actions .bigcancel').length, 1, 'Cancel button is visible.');
+    assert.dom('.actions .bigadd').exists({ count: 1 }, 'Save button is visible.');
+    assert.dom('.actions .bigcancel').exists({ count: 1 }, 'Cancel button is visible.');
 
-    assert.equal(find('thead th').textContent.trim(), 'Count as one offering', 'Column header is labeled correctly.');
-    assert.equal(findAll('thead th')[1].textContent.trim(), 'Exclude', 'Column header is labeled correctly.');
-    assert.equal(findAll('thead th')[2].textContent.trim(), 'Session Title', 'Column header is labeled correctly.');
-    assert.equal(findAll('thead th')[3].textContent.trim(), 'Session Type', 'Column header is labeled correctly.');
-    assert.equal(findAll('thead th')[4].textContent.trim(), 'Total time', 'Column header is labeled correctly.');
-    assert.equal(findAll('thead th')[5].textContent.trim(), 'Offerings', 'Column header is labeled correctly.');
+    assert.dom('thead th').hasText('Count as one offering', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[1]).hasText('Exclude', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[2]).hasText('Session Title', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[3]).hasText('Session Type', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[4]).hasText('Total time', 'Column header is labeled correctly.');
+    assert.dom(findAll('thead th')[5]).hasText('Offerings', 'Column header is labeled correctly.');
 
-    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').checked, 'Excluded is not checked.');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[2].textContent.trim(), session1.get('title'), 'Session title is shown.');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[3].textContent.trim(), sessionType1.get('title'), 'Session type is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[4].textContent.trim(), totalTime1, 'Total time is shown.');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[5].textContent.trim(), offerings1.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input').isNotChecked('Excluded is not checked.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(session1.get('title'), 'Session title is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText(sessionType1.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalTime1, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText(offerings1.length, 'Number of offerings is shown.');
 
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').checked, 'Excluded is not checked.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td')[2].textContent.trim(), session2.get('title'), 'Title is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td')[3].textContent.trim(), sessionType2.get('title'), 'Session type is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td')[4].textContent.trim(), totalTime2, 'Total time is shown.');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td')[5].textContent.trim(), offerings2.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input').isNotChecked('Excluded is not checked.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(session2.get('title'), 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText(sessionType2.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalTime2, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText(offerings2.length, 'Number of offerings is shown.');
 
-    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').checked, 'Excluded is not checked.');
-    assert.equal(findAll('tbody tr:nth-of-type(3) td')[2].textContent.trim(), session3.get('title'), 'Title is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(3) td')[3].textContent.trim(), sessionType3.get('title'), 'Session type is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(3) td')[4].textContent.trim(), totalTime3, 'Total time is shown.');
-    assert.equal(findAll('tbody tr:nth-of-type(3) td')[5].textContent.trim(), offerings3.length, 'Number of offerings is shown.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input').isNotChecked('Excluded is not checked.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[2]).hasText(session3.get('title'), 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[3]).hasText(sessionType3.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[4]).hasText(totalTime3, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[5]).hasText(offerings3.length, 'Number of offerings is shown.');
 
-    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').checked, 'Excluded is checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input').isChecked('Excluded is checked.');
     assert.ok(findAll('tbody tr:nth-of-type(4) td')[2].textContent.trim().startsWith('(ILM)'), 'ILM is labeled as such.');
     assert.ok(findAll('tbody tr:nth-of-type(4) td')[2].textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(4) td')[3].textContent.trim(), sessionType4.get('title'), 'Session type is visible.');
-    assert.equal(findAll('tbody tr:nth-of-type(4) td')[4].textContent.trim(), totalTime4, 'Total time is shown.');
-    assert.equal(findAll('tbody tr:nth-of-type(4) td')[5].textContent.trim(), offerings4.length, 'Number of offerings is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[3]).hasText(sessionType4.get('title'), 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[4]).hasText(totalTime4, 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[5]).hasText(offerings4.length, 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {
@@ -146,8 +146,8 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    assert.equal(findAll('thead tr').length, 1, 'Table header is visible,');
-    assert.equal(findAll('tbody tr').length, 0, 'but table body is empty.');
+    assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
+    assert.dom('tbody tr').doesNotExist('but table body is empty.');
   });
 
   test('sort by title', async function(assert) {
@@ -261,11 +261,11 @@ module('Integration | Component | curriculum inventory sequence block session ma
     await render(
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[4].textContent.trim(), maxDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
     await click('tbody tr:nth-of-type(1) td:nth-of-type(1) input');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[4].textContent.trim(), totalSumDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalSumDuration);
     await click('tbody tr:nth-of-type(1) td:nth-of-type(1) input');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[4].textContent.trim(), maxDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
   });
 
   test('change count as one offering for all sessions', async function(assert) {
@@ -303,16 +303,16 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`
     );
 
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalSumDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalSumDuration);
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), maxDuration);
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), maxDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(maxDuration);
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[4]).textContent.trim(), totalSumDuration);
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[4]).textContent.trim(), totalSumDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalSumDuration);
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalSumDuration);
   });
 
   test('save', async function(assert) {
@@ -468,25 +468,25 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').checked, 'Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input').isChecked('Count offerings as one is checked.');
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(5) td:nth-of-type(1) input').checked, 'Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
   });
 
 
@@ -556,25 +556,25 @@ module('Integration | Component | curriculum inventory sequence block session ma
       hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
     );
 
-    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(2) input');
-    assert.ok(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
-    assert.ok(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').checked, 'Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input').isChecked('Count offerings as one is checked.');
 
     await click('thead tr:nth-of-type(1) th:nth-of-type(2) input');
-    assert.notOk(find('tbody tr:nth-of-type(1) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(2) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(3) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(4) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
-    assert.notOk(find('tbody tr:nth-of-type(5) td:nth-of-type(2) input').checked, 'Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
+    assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
   });
 });
 

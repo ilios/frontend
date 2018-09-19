@@ -21,7 +21,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['learnergroup-header'],
   didReceiveAttrs(){
     this._super(...arguments);
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     if (learnerGroup) {
       this.set('title', learnerGroup.get('title'));
     }
@@ -29,8 +29,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   title: null,
 
   changeTitle: task(function * () {
-    const learnerGroup = this.get('learnerGroup');
-    const newTitle = this.get('title');
+    const learnerGroup = this.learnerGroup;
+    const newTitle = this.title;
     this.send('addErrorDisplayFor', 'title');
     const {validations} = yield this.validate();
     if (validations.get('isValid')) {
@@ -45,7 +45,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   actions: {
     revertTitleChanges(){
-      const learnerGroup = this.get('learnerGroup');
+      const learnerGroup = this.learnerGroup;
       this.set('title', learnerGroup.get('title'));
     },
   }

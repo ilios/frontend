@@ -16,12 +16,12 @@ export default Component.extend({
   }),
   locales: computed('i18n.locales.[]', function() {
     return this.get('i18n.locales').uniq().map(locale => {
-      return { id: locale, text: this.get('i18n').t('general.language.' + locale) };
+      return { id: locale, text: this.i18n.t('general.language.' + locale) };
     });
   }),
   actions: {
     toggleMenu() {
-      const isOpen = this.get('isOpen');
+      const isOpen = this.isOpen;
       if (isOpen) {
         this.set('isOpen', false);
       } else {
@@ -30,8 +30,8 @@ export default Component.extend({
     },
     changeLocale(id) {
       this.set('isOpen', false);
-      this.get('i18n').set('locale', id);
-      this.get('moment').setLocale(id);
+      this.i18n.set('locale', id);
+      this.moment.setLocale(id);
       window.document.querySelector('html').setAttribute('lang', id);
     }
   },

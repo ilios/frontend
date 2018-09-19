@@ -15,7 +15,7 @@ export default Component.extend({
         reg.waiting.postMessage('skipWaiting');
       }
     }
-    const reload = this.get('reload');
+    const reload = this.reload;
     if (reload) {
       reload();
     }

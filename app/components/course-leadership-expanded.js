@@ -11,8 +11,8 @@ export default Component.extend({
   isManaging: false,
   'data-test-course-leadership-expanded': true,
   isCollapsible: computed('isManaging', 'course.directors.length', 'course.administrators.length', function(){
-    const course = this.get('course');
-    const isManaging = this.get('isManaging');
+    const course = this.course;
+    const isManaging = this.isManaging;
     const administratorIds = course.hasMany('administrators').ids();
     const directorIds = course.hasMany('directors').ids();
 
@@ -21,7 +21,7 @@ export default Component.extend({
   }),
   didReceiveAttrs(){
     this._super(...arguments);
-    const course = this.get('course');
+    const course = this.course;
     if (course) {
       course.get('directors').then(directors => {
         this.set('directors', directors.toArray());
@@ -47,13 +47,13 @@ export default Component.extend({
   },
   save: task(function * (){
     yield timeout(10);
-    const directors = this.get('directors');
-    const administrators = this.get('administrators');
-    let course = this.get('course');
+    const directors = this.directors;
+    const administrators = this.administrators;
+    let course = this.course;
     course.setProperties({directors, administrators});
-    this.get('expand')();
+    this.expand();
     yield course.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
   }),
   add(where, user){
     let arr = this.get(where).toArray();

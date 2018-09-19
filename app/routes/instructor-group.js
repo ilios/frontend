@@ -7,12 +7,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
   titleToken: 'general.instructorGroups',
   canUpdate: false,
   async afterModel(instructorGroup) {
-    const permissionChecker = this.get('permissionChecker');
+    const permissionChecker = this.permissionChecker;
     const canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
     this.set('canUpdate', canUpdate);
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canUpdate', this.get('canUpdate'));
+    controller.set('canUpdate', this.canUpdate);
   }
 });

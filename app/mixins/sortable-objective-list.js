@@ -17,7 +17,7 @@ export default Mixin.create(SortableByPosition, {
 
   hasMoreThanOneObjective: computed('objectives.[]', function(){
     return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
+      this.objectives.then(objectives => {
         resolve(objectives.length > 1);
       });
     });
@@ -27,7 +27,7 @@ export default Mixin.create(SortableByPosition, {
     let chunk = arr.splice(0, 5);
     return all(chunk.invoke('save')).then(() => {
       if (arr.length){
-        this.set('currentObjectivesSaved', this.get('currentObjectivesSaved') + chunk.length);
+        this.set('currentObjectivesSaved', this.currentObjectivesSaved + chunk.length);
         return this.saveSomeObjectives(arr);
       }
     });

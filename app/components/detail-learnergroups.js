@@ -7,11 +7,11 @@ export default Component.extend({
   init(){
     this._super(...arguments);
     this.set('learnerGroups', []);
-    this.get('loadLearnerGroups').perform();
+    this.loadLearnerGroups.perform();
   },
   didUpdateAttrs(){
     this._super(...arguments);
-    this.get('loadLearnerGroups').perform();
+    this.loadLearnerGroups.perform();
   },
   classNames: ['detail-learnergroups'],
   tagName: 'div',
@@ -22,7 +22,7 @@ export default Component.extend({
   learnerGroups: null,
   'data-test-detail-learner-groups': true,
   loadLearnerGroups: task(function * (){
-    const subject = this.get('subject');
+    const subject = this.subject;
     if (subject){
       let learnerGroups = yield subject.get('learnerGroups');
       this.set('learnerGroups', learnerGroups.toArray());
@@ -32,28 +32,28 @@ export default Component.extend({
   }).restartable(),
   save: task(function * (){
     yield timeout(10);
-    let subject = this.get('subject');
-    let learnerGroups = this.get('learnerGroups');
+    let subject = this.subject;
+    let learnerGroups = this.learnerGroups;
     subject.set('learnerGroups', learnerGroups);
     try {
       yield subject.save();
     } finally {
-      this.get('setIsManaging')(false);
-      this.get('expand')();
+      this.setIsManaging(false);
+      this.expand();
     }
   }),
   collapsible: computed('isManaging', 'learnerGroups.length', function(){
-    const isManaging = this.get('isManaging');
-    const learnerGroups = this.get('learnerGroups');
+    const isManaging = this.isManaging;
+    const learnerGroups = this.learnerGroups;
     return learnerGroups.get('length') && ! isManaging;
   }),
   actions: {
     cancel(){
-      this.get('loadLearnerGroups').perform();
-      this.get('setIsManaging')(false);
+      this.loadLearnerGroups.perform();
+      this.setIsManaging(false);
     },
     addLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      let learnerGroups = this.learnerGroups.toArray();
       learnerGroups.addObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.addObjects(descendants);
@@ -62,7 +62,7 @@ export default Component.extend({
       this.set('learnerGroups', learnerGroups);
     },
     removeLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      let learnerGroups = this.learnerGroups.toArray();
       learnerGroups.removeObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.removeObjects(descendants);

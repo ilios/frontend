@@ -9,7 +9,10 @@ import {
   value
 } from 'ember-cli-page-object';
 import meshManager from './mesh-manager';
-import { fillInFroalaEditor, froalaEditorValue } from 'ilios/tests/helpers/froala-editor';
+import {
+  fillInFroalaEditor,
+  froalaEditorValue
+} from 'ilios/tests/helpers/froala-editor';
 import { datePicker } from 'ilios/tests/helpers/date-picker';
 
 export default {

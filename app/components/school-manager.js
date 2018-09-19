@@ -45,8 +45,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   actions: {
     changeTitle() {
-      const school = this.get('school');
-      const newTitle = this.get('title');
+      const school = this.school;
+      const newTitle = this.title;
       this.send('addErrorDisplayFor', 'title');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -56,7 +56,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             school.save().then((newSchool) => {
               this.set('title', newSchool.get('title'));
               this.set('school', newSchool);
-              this.get('flashMessages').success('general.savedSuccessfully');
+              this.flashMessages.success('general.savedSuccessfully');
               resolve();
             });
           } else {
@@ -66,7 +66,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       });
     },
     revertTitleChanges(){
-      const school = this.get('school');
+      const school = this.school;
       this.set('title', school.get('title'));
     },
   }

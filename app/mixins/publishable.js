@@ -11,8 +11,8 @@ export default Mixin.create({
   i18n: service(),
   showCheckLink: true,
   menuTitle: computed('i18n.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
-    const publishTarget = this.get('publishTarget');
-    const i18n = this.get('i18n');
+    const publishTarget = this.publishTarget;
+    const i18n = this.i18n;
     if(publishTarget.get('publishedAsTbd')){
       return i18n.t('general.scheduled');
     }
@@ -45,7 +45,7 @@ export default Mixin.create({
     }
   ),
   showReview: computed('publishTarget.allPublicationIssuesLength', 'showCheckLink', function(){
-    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.get('showCheckLink');
+    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.showCheckLink;
   }),
   showPublish: computed(
     'publishTarget.isPublished',
@@ -69,27 +69,27 @@ export default Mixin.create({
   }),
   actions: {
     unpublish() {
-      let publishTarget = this.get('publishTarget');
+      let publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', false);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.unPublishedSuccessfully');
+        this.flashMessages.success('general.unPublishedSuccessfully');
       });
     },
     publishAsTbd() {
-      let publishTarget = this.get('publishTarget');
+      let publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', true);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.scheduledSuccessfully');
+        this.flashMessages.success('general.scheduledSuccessfully');
       });
     },
     publish() {
-      let publishTarget = this.get('publishTarget');
+      let publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.publishedSuccessfully');
+        this.flashMessages.success('general.publishedSuccessfully');
       });
     },
   }

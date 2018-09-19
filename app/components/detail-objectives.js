@@ -41,15 +41,15 @@ export default Component.extend({
   'data-test-detail-objectives': true,
 
   showCollapsible: computed('isManaging', 'objectives', function(){
-    const isManaging = this.get('isManaging');
-    const objectives = this.get('objectives');
+    const isManaging = this.isManaging;
+    const objectives = this.objectives;
     return objectives.get('length') && ! isManaging;
   }),
 
   objectiveParentTitle: computed('isCourse', 'isSession', 'isProgramYear', {
     get() {
-      const i18n = this.get('i18n');
-      const isCourse = this.get('isCourse');
+      const i18n = this.i18n;
+      const isCourse = this.isCourse;
 
       return isCourse ? i18n.t('general.objectiveParentTitleSingular') : i18n.t('general.objectiveParentTitle');
     }
@@ -77,10 +77,10 @@ export default Component.extend({
       });
     },
     save() {
-      if(this.get('isManagingParents')){
-        let objective = this.get('mangeParentsObjective');
+      if(this.isManagingParents){
+        let objective = this.mangeParentsObjective;
         objective.get('parents').then(newParents => {
-          let oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
+          let oldParents = this.initialStateForManageParentsObjective.filter(parent => {
             return !newParents.includes(parent);
           });
           oldParents.forEach(parent => {
@@ -92,10 +92,10 @@ export default Component.extend({
           });
         });
       }
-      if(this.get('isManagingDescriptors')){
-        let objective = this.get('manageDescriptorsObjective');
+      if(this.isManagingDescriptors){
+        let objective = this.manageDescriptorsObjective;
         objective.get('meshDescriptors').then(newDescriptors => {
-          let oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
+          let oldDescriptors = this.initialStateForManageMeshObjective.filter(descriptor => {
             return !newDescriptors.includes(descriptor);
           });
           oldDescriptors.forEach(descriptor => {
@@ -110,10 +110,10 @@ export default Component.extend({
           });
         });
       }
-      if(this.get('isManagingCompetency')){
-        let objective = this.get('manageCompetencyObjective');
+      if(this.isManagingCompetency){
+        let objective = this.manageCompetencyObjective;
         objective.get('competency').then(newCompetency => {
-          let oldCompetency = this.get('initialStateForManageCompetencyObjective');
+          let oldCompetency = this.initialStateForManageCompetencyObjective;
           if(oldCompetency){
             oldCompetency.get('objectives').removeObject(objective);
           }
@@ -129,34 +129,34 @@ export default Component.extend({
     },
     cancel() {
       var self = this;
-      if(this.get('isManagingParents')){
-        let objective = this.get('mangeParentsObjective');
+      if(this.isManagingParents){
+        let objective = this.mangeParentsObjective;
         let parents = objective.get('parents');
         parents.clear();
-        parents.addObjects(this.get('initialStateForManageParentsObjective'));
+        parents.addObjects(this.initialStateForManageParentsObjective);
         self.set('mangeParentsObjective', null);
       }
 
-      if(this.get('isManagingDescriptors')){
-        let objective = this.get('manageDescriptorsObjective');
+      if(this.isManagingDescriptors){
+        let objective = this.manageDescriptorsObjective;
         let descriptors = objective.get('meshDescriptors');
         descriptors.clear();
-        descriptors.addObjects(this.get('initialStateForManageMeshObjective'));
+        descriptors.addObjects(this.initialStateForManageMeshObjective);
         self.set('manageDescriptorsObjective', null);
         scrollTo("#objective-" + objective.get('id'));
       }
 
-      if(this.get('isManagingCompetency')){
-        let objective = this.get('manageCompetencyObjective');
-        objective.set('competency', this.get('initialStateForManageCompetencyObjective'));
+      if(this.isManagingCompetency){
+        let objective = this.manageCompetencyObjective;
+        objective.set('competency', this.initialStateForManageCompetencyObjective);
         self.set('manageCompetencyObjective', null);
         scrollTo("#objective-" + objective.get('id'));
       }
     },
     saveNewObjective(title) {
       return new Promise(resolve => {
-        let newObjective = this.get('store').createRecord('objective');
-        let subject = this.get('subject');
+        let newObjective = this.store.createRecord('objective');
+        let subject = this.subject;
         newObjective.set('title', title);
         subject.get('objectives').then(objectives => {
           let position = 0;
@@ -164,33 +164,33 @@ export default Component.extend({
             position = objectives.toArray().sortBy('position').reverse()[0].get('position') + 1;
           }
           newObjective.set('position', position);
-          if(this.get('isCourse')){
+          if(this.isCourse){
             newObjective.get('courses').addObject(subject);
           }
-          if(this.get('isSession')){
+          if(this.isSession){
             newObjective.get('sessions').addObject(subject);
           }
-          if(this.get('isProgramYear')){
+          if(this.isProgramYear){
             newObjective.get('programYears').addObject(subject);
           }
           newObjective.save().then(savedObjective => {
             this.set('newObjectiveEditorOn', false);
-            this.get('flashMessages').success('general.newObjectiveSaved');
+            this.flashMessages.success('general.newObjectiveSaved');
             resolve(savedObjective);
           });
         });
       });
     },
     toggleNewObjectiveEditor() {
-      const expand = this.get('expand');
+      const expand = this.expand;
       //force expand the objective component
       //otherwise adding the first new objective will cause it to close
       expand();
-      this.set('newObjectiveEditorOn', !this.get('newObjectiveEditorOn'));
+      this.set('newObjectiveEditorOn', !this.newObjectiveEditorOn);
     },
     collapse() {
-      const collapse = this.get('collapse');
-      this.get('objectives').then(objectives => {
+      const collapse = this.collapse;
+      this.objectives.then(objectives => {
         if(objectives.length){
           collapse();
         }

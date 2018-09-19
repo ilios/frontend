@@ -12,6 +12,6 @@ module('Integration | Component | visualizer session type terms', function(hooks
 
     await render(hbs`{{visualizer-session-type-terms}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

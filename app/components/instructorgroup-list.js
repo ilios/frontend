@@ -8,7 +8,7 @@ export default Component.extend({
   canDelete: false,
 
   proxiedInstructorGroups: computed('instructorGroups.[]', function(){
-    const instructorGroups = this.get('instructorGroups');
+    const instructorGroups = this.instructorGroups;
     if (!instructorGroups) {
       return [];
     }

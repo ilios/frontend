@@ -1,7 +1,12 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -57,13 +62,13 @@ module('Integration | Component | session copy', function(hooks) {
     const courseSelect = '.course-select select';
     const save = '.done';
 
-    assert.equal(findAll(`${yearSelect} option`).length, 3);
+    assert.dom(`${yearSelect} option`).exists({ count: 3 });
     for (let i = 1; i <= 2; i++){
-      assert.equal(find(`${yearSelect} option:nth-of-type(${i})`).textContent.trim(), `${lastYear + i - 1} - ${lastYear + i}`);
+      assert.dom(`${yearSelect} option:nth-of-type(${i})`).hasText(`${lastYear + i - 1} - ${lastYear + i}`);
     }
-    assert.equal(findAll(`${courseSelect} option`).length, 2);
-    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course.title);
-    assert.equal(find(`${courseSelect} option:nth-of-type(2)`).textContent.trim(), course2.title);
+    assert.dom(`${courseSelect} option`).exists({ count: 2 });
+    assert.dom(`${courseSelect} option:nth-of-type(1)`).hasText(course.title);
+    assert.dom(`${courseSelect} option:nth-of-type(2)`).hasText(course2.title);
     assert.notOk(find(save).enabled);
 
   });
@@ -190,8 +195,8 @@ module('Integration | Component | session copy', function(hooks) {
 
     await render(hbs`{{session-copy session=session}}`);
     const save = '.done';
-    assert.equal(findAll('.validation-error-message').length, 0);
-    assert.ok(find(save).disabled);
+    assert.dom('.validation-error-message').doesNotExist();
+    assert.dom(save).isDisabled();
   });
 
   test('changing the year looks for new matching courses', async function(assert) {
@@ -237,13 +242,13 @@ module('Integration | Component | session copy', function(hooks) {
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
-    assert.equal(find(yearSelect).value, thisYear);
-    assert.equal(findAll(`${courseSelect} option`).length, 1);
-    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course1.title);
+    assert.dom(yearSelect).hasValue(thisYear);
+    assert.dom(`${courseSelect} option`).exists({ count: 1 });
+    assert.dom(`${courseSelect} option:nth-of-type(1)`).hasText(course1.title);
 
     await fillIn(yearSelect, nextYear);
-    assert.equal(findAll(`${courseSelect} option`).length, 1);
-    assert.equal(find(`${courseSelect} option:nth-of-type(1)`).textContent.trim(), course2.title);
+    assert.dom(`${courseSelect} option`).exists({ count: 1 });
+    assert.dom(`${courseSelect} option:nth-of-type(1)`).hasText(course2.title);
   });
 
   test('copy session into the first course in a different year #2130', async function(assert) {
@@ -298,7 +303,7 @@ module('Integration | Component | session copy', function(hooks) {
     const courseSelect = '.course-select select';
 
     await fillIn(yearSelect, nextYear);
-    assert.equal(find(courseSelect).value, course3.id, 'first course is selected');
+    assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
     await click('.done');
 
     const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));

@@ -39,6 +39,6 @@ module('Integration | Component | pending updates summary', function(hooks) {
 
     assert.ok(this.element.textContent.includes('Updates from the Campus Directory'));
     assert.ok(this.element.textContent.includes('There are 5 users needing attention'));
-    assert.ok(this.element.querySelector('[data-test-pending-updates-summary]').classList.contains('alert'));
+    assert.dom(this.element.querySelector('[data-test-pending-updates-summary]')).hasClass('alert');
   });
 });

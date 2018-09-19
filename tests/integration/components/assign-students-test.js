@@ -2,7 +2,13 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click, findAll } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  find,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -61,11 +67,11 @@ module('Integration | Component | assign students', function(hooks) {
 
     let cohortOptions = findAll('select:nth-of-type(1) option');
     assert.equal(cohortOptions.length, 1);
-    assert.equal(cohortOptions[0].textContent.trim(), 'program title test cohort');
+    assert.dom(cohortOptions[0]).hasText('program title test cohort');
 
-    assert.equal(findAll('tbody tr').length, 2);
-    assert.equal(findAll('tbody tr:nth-of-type(1) td')[1].textContent.trim(), 'test person');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td')[1].textContent.trim(), 'second person');
+    assert.dom('tbody tr').exists({ count: 2 });
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('test person');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('second person');
   });
 
   test('check all checks all', async function(assert) {
@@ -98,9 +104,9 @@ module('Integration | Component | assign students', function(hooks) {
     const checkAll = 'thead tr:nth-of-type(1) input';
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
 
-    assert.notOk(find(firstStudent).checked);
+    assert.dom(firstStudent).isNotChecked();
     await click(checkAll);
-    assert.ok(find(firstStudent).checked);
+    assert.dom(firstStudent).isChecked();
 
   });
 
@@ -141,16 +147,16 @@ module('Integration | Component | assign students', function(hooks) {
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
 
-    assert.notOk(find(checkAll).checked, 'check all is not initially checked');
+    assert.dom(checkAll).isNotChecked('check all is not initially checked');
     assert.notOk(find(checkAll).indeterminate, 'check all is not initially indeterminate');
-    assert.notOk(find(firstStudent).checked, 'first student is not initiall checked');
-    assert.notOk(find(secondStudent).checked, 'second student is not initiall checked');
+    assert.dom(firstStudent).isNotChecked('first student is not initiall checked');
+    assert.dom(secondStudent).isNotChecked('second student is not initiall checked');
 
     await click(firstStudent);
     assert.ok(find(checkAll).indeterminate, 'check all is indeterminate with one student checked');
     await click(secondStudent);
     await settled();
-    assert.ok(find(checkAll).checked, 'check all is checked with both students checked');
+    assert.dom(checkAll).isChecked('check all is checked with both students checked');
   });
 
   test('when some are selected check all checks all', async function(assert) {
@@ -190,14 +196,14 @@ module('Integration | Component | assign students', function(hooks) {
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
 
-    assert.notOk(find(checkAll).checked, 'check all is not initially checked');
-    assert.notOk(find(firstStudent).checked, 'first student is not initiall checked');
-    assert.notOk(find(secondStudent).checked, 'second student is not initiall checked');
+    assert.dom(checkAll).isNotChecked('check all is not initially checked');
+    assert.dom(firstStudent).isNotChecked('first student is not initiall checked');
+    assert.dom(secondStudent).isNotChecked('second student is not initiall checked');
 
     await click(firstStudent);
     await click(checkAll);
-    assert.ok(find(firstStudent).checked, 'first student still checked after checkall clicked');
-    assert.ok(find(secondStudent).checked, 'second student checked after checkall clicked');
+    assert.dom(firstStudent).isChecked('first student still checked after checkall clicked');
+    assert.dom(secondStudent).isChecked('second student checked after checkall clicked');
   });
 
   test('save sets primary cohort', async function(assert) {

@@ -34,11 +34,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (validations.get('isInvalid')) {
       return;
     }
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
+    const flashMessages = this.flashMessages;
+    const store = this.store;
 
-    let sessionToCopy = this.get('session');
-    let newCourse = yield this.get('bestSelectedCourse');
+    let sessionToCopy = this.session;
+    let newCourse = yield this.bestSelectedCourse;
     let toSave = [];
 
     let session = store.createRecord(
@@ -97,13 +97,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       yield objective.save();
     }
     flashMessages.success('general.copySuccess');
-    return this.get('visit')(session);
+    return this.visit(session);
   }).drop(),
 
   years: computed(async function () {
     const now = moment();
     const thisYear = now.year();
-    const store = this.get('store');
+    const store = this.store;
 
     let years = await store.findAll('academicYear');
     let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
@@ -112,23 +112,23 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   bestSelectedYear: computed('years.[]', 'selectedYear', async function () {
-    const selectedYear = this.get('selectedYear');
+    const selectedYear = this.selectedYear;
     if (selectedYear) {
       return selectedYear;
     }
 
-    const years = await this.get('years');
+    const years = await this.years;
     return years.get('firstObject');
   }),
 
   courses: computed('selectedYear', 'session.course.school', async function(){
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
-    const session = this.get('session');
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
+    const session = this.session;
     if (!session) {
       return [];
     }
-    const selectedYear = await this.get('bestSelectedYear');
+    const selectedYear = await this.bestSelectedYear;
     const course = await session.get('course');
     const school = await course.get('school');
     const courses = await store.query('course', {
@@ -146,8 +146,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   bestSelectedCourse: computed('courses.[]', 'selectedCourseId', async function () {
-    const courses = await this.get('courses');
-    const selectedCourseId = this.get('selectedCourseId');
+    const courses = await this.courses;
+    const selectedCourseId = this.selectedCourseId;
     if (selectedCourseId) {
       const course = courses.findBy('id', selectedCourseId);
       if (course) {

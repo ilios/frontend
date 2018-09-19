@@ -23,7 +23,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     return this.attemptSSOAuth();
   },
   async attemptSSOAuth(){
-    const iliosConfig = this.get('iliosConfig');
+    const iliosConfig = this.iliosConfig;
     const type = await iliosConfig.get('authenticationType');
     if(type === 'form' || type === 'ldap'){
       return;
@@ -37,8 +37,8 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     }
   },
   async casLogin() {
-    const iliosConfig = this.get('iliosConfig');
-    const commonAjax = this.get('commonAjax');
+    const iliosConfig = this.iliosConfig;
+    const commonAjax = this.commonAjax;
 
     let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
     let loginUrl = `/auth/login?service=${currentUrl}`;
@@ -69,12 +69,12 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     }
     if(response.status === 'success'){
       let authenticator = 'authenticator:ilios-jwt';
-      this.get('session').authenticate(authenticator, {jwt: response.jwt});
+      this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   },
   async shibbolethAuth(){
-    const iliosConfig = this.get('iliosConfig');
-    const commonAjax = this.get('commonAjax');
+    const iliosConfig = this.iliosConfig;
+    const commonAjax = this.commonAjax;
     const loginUrl = '/auth/login';
     const response = await commonAjax.request(loginUrl);
     const status = response.status;
@@ -96,11 +96,11 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     }
     if(status === 'success'){
       let authenticator = 'authenticator:ilios-jwt';
-      this.get('session').authenticate(authenticator, {jwt: response.jwt});
+      this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   },
   setupController(controller) {
-    controller.set('noAccountExistsError', this.get('noAccountExistsError'));
-    controller.set('noAccountExistsAccount', this.get('noAccountExistsAccount'));
+    controller.set('noAccountExistsError', this.noAccountExistsError);
+    controller.set('noAccountExistsAccount', this.noAccountExistsAccount);
   },
 });

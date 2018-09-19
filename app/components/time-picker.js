@@ -25,7 +25,7 @@ export default Component.extend({
   actions: {
     changeHour(string) {
       let hour = parseInt(string, 10);
-      const ampm = this.get('ampm');
+      const ampm = this.ampm;
 
       if (ampm === 'pm') {
         hour += 12;
@@ -40,8 +40,8 @@ export default Component.extend({
     },
 
     changeAmPm(value) {
-      const currentValue = this.get('ampm');
-      const hour = moment(this.get('date')).hours();
+      const currentValue = this.ampm;
+      const hour = moment(this.date).hours();
 
       if (value != currentValue) {
         if (value === 'am') {

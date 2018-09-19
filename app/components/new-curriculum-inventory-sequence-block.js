@@ -106,9 +106,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const report = this.get('report');
-    const parent = this.get('parent');
-    this.get('loadAttr').perform(report, parent);
+    const report = this.report;
+    const parent = this.parent;
+    this.loadAttr.perform(report, parent);
   },
 
   loadAttr: task(function * (report, parent) {
@@ -131,7 +131,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(parent)) {
       academicLevel = yield parent.get('academicLevel');
     }
-    const i18n = this.get('i18n');
+    const i18n = this.i18n;
     const childSequenceOrderOptions = [
       EmberObject.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
       EmberObject.create({ 'id' : 2, 'title': i18n.t('general.unordered') }),
@@ -167,11 +167,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @public
    */
   linkableCourses: computed('report.year', 'report.linkedCourses.[]', async function(){
-    const report = this.get('report');
+    const report = this.report;
     const program = await report.get('program');
     const schoolId = program.belongsTo('school').id();
     const linkedCourses = await report.get('linkedCourses');
-    const allLinkableCourses = await this.get('store').query('course', {
+    const allLinkableCourses = await this.store.query('course', {
       filters: {
         school: [schoolId],
         published: true,
@@ -208,31 +208,31 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let block = this.get('store').createRecord('curriculumInventorySequenceBlock', {
-            title: this.get('title'),
-            description: this.get('description'),
-            parent: this.get('parent'),
-            academicLevel: this.get('academicLevel'),
-            required: this.get('required').get('id'),
-            track: this.get('track'),
-            orderInSequence: this.get('orderInSequence'),
-            childSequenceOrder: this.get('childSequenceOrder').get('id'),
-            startDate: this.get('startDate'),
-            endDate: this.get('endDate'),
-            minimum: this.get('minimum'),
-            maximum: this.get('maximum'),
-            course: this.get('course'),
-            duration: this.get('duration') || 0,
-            report: this.get('report')
+          let block = this.store.createRecord('curriculumInventorySequenceBlock', {
+            title: this.title,
+            description: this.description,
+            parent: this.parent,
+            academicLevel: this.academicLevel,
+            required: this.required.get('id'),
+            track: this.track,
+            orderInSequence: this.orderInSequence,
+            childSequenceOrder: this.childSequenceOrder.get('id'),
+            startDate: this.startDate,
+            endDate: this.endDate,
+            minimum: this.minimum,
+            maximum: this.maximum,
+            course: this.course,
+            duration: this.duration || 0,
+            report: this.report
           });
-          this.get('save')(block).finally(()=> {
-            const parent = this.get('parent');
+          this.save(block).finally(()=> {
+            const parent = this.parent;
             if (parent) {
               parent.get('children').then(children => {
                 children.pushObject(block);
               });
             }
-            if (! this.get('isDestroyed')) {
+            if (! this.isDestroyed) {
               this.set('isSaving', false);
             }
           });

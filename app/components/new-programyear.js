@@ -10,8 +10,8 @@ export default Component.extend({
   availableAcademicYears: null,
 
   selectedYear: computed('year', 'availableAcademicYears.[]', function () {
-    const year = this.get('year');
-    const availableAcademicYears = this.get('availableAcademicYears');
+    const year = this.year;
+    const availableAcademicYears = this.availableAcademicYears;
     if (!year) {
       return availableAcademicYears.firstObject;
     }
@@ -20,8 +20,8 @@ export default Component.extend({
   }),
 
   saveNewYear: task(function * (){
-    const selectedYear = this.get('selectedYear');
+    const selectedYear = this.selectedYear;
     const startYear = parseInt(selectedYear.value, 10);
-    yield this.get('save')(startYear);
+    yield this.save(startYear);
   }).drop(),
 });

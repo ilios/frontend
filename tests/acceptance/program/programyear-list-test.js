@@ -1,4 +1,11 @@
-import { click, fillIn, find, currentRouteName, findAll, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  find,
+  currentRouteName,
+  findAll,
+  visit
+} from '@ember/test-helpers';
 import { isPresent, isEmpty } from '@ember/utils';
 import moment from 'moment';
 import {
@@ -135,7 +142,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     for(let i =2; i< 6; i++){
       let icon = find(`.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(${i+1}) svg`);
       assert.ok(icon);
-      assert.ok(icon.classList.contains('fa-exclamation-triangle'));
+      assert.dom(icon).hasClass('fa-exclamation-triangle');
     }
   });
 
@@ -217,14 +224,14 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await fillIn(selectField, thisYear);
     await click(saveButton);
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
-    assert.equal(getTableDataText(0, 0).textContent.trim(), academicYear, 'academic year shown');
+    assert.dom(getTableDataText(0, 0)).hasText(academicYear, 'academic year shown');
     const classOfYear = `Class of ${(thisYear + 4).toString()}`;
-    assert.equal(getTableDataText(0, 1).textContent.trim(), classOfYear, 'cohort class year shown');
-    assert.ok(getTableDataText(0, 2, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
-    assert.ok(getTableDataText(0, 3, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
-    assert.ok(getTableDataText(0, 4, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
-    assert.ok(getTableDataText(0, 5, 'svg').classList.contains('fa-exclamation-triangle'), 'warning label shown');
-    assert.equal(getTableDataText(0, 6, 'span').textContent.trim(), 'Not Published', 'unpublished shown');
+    assert.dom(getTableDataText(0, 1)).hasText(classOfYear, 'cohort class year shown');
+    assert.dom(getTableDataText(0, 2, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
+    assert.dom(getTableDataText(0, 3, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
+    assert.dom(getTableDataText(0, 4, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
+    assert.dom(getTableDataText(0, 5, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
+    assert.dom(getTableDataText(0, 6, 'span')).hasText('Not Published', 'unpublished shown');
   });
 
   test('can add a program-year (with pre-existing program-year)', async function(assert) {
@@ -274,26 +281,26 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await visit(url);
     const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
 
-    assert.equal(getTableDataText(0, 0).textContent.trim(), academicYear, 'academic year shown');
-    assert.equal(getTableDataText(0, 1).textContent.trim(), 'cohort 0', 'cohort class year shown');
-    assert.equal(getTableDataText(0, 2).textContent.trim(), '3');
-    assert.equal(getTableDataText(0, 3).textContent.trim(), '3');
-    assert.equal(getTableDataText(0, 4).textContent.trim(), '3');
-    assert.equal(getTableDataText(0, 5).textContent.trim(), '3');
-    assert.equal(getTableDataText(0, 6, 'span').textContent.trim(), 'Not Published', 'unpublished shown');
+    assert.dom(getTableDataText(0, 0)).hasText(academicYear, 'academic year shown');
+    assert.dom(getTableDataText(0, 1)).hasText('cohort 0', 'cohort class year shown');
+    assert.dom(getTableDataText(0, 2)).hasText('3');
+    assert.dom(getTableDataText(0, 3)).hasText('3');
+    assert.dom(getTableDataText(0, 4)).hasText('3');
+    assert.dom(getTableDataText(0, 5)).hasText('3');
+    assert.dom(getTableDataText(0, 6, 'span')).hasText('Not Published', 'unpublished shown');
 
     await click(expandButton);
-    fillIn(selectField, thisYear + 1);
+    await fillIn(selectField, thisYear + 1);
     await click(saveButton);
     const academicYear2 = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
-    assert.equal(getTableDataText(1, 0).textContent.trim(), academicYear2, 'academic year shown');
+    assert.dom(getTableDataText(1, 0)).hasText(academicYear2, 'academic year shown');
     const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
-    assert.equal(getTableDataText(1, 1).textContent.trim(), cohortClassYear, 'cohort class year shown');
-    assert.equal(getTableDataText(1, 2).textContent.trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 3).textContent.trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 4).textContent.trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 5).textContent.trim(), '3', 'copied correctly from latest program-year');
-    assert.equal(getTableDataText(1, 6, 'span').textContent.trim(), 'Not Published', 'unpublished shown');
+    assert.dom(getTableDataText(1, 1)).hasText(cohortClassYear, 'cohort class year shown');
+    assert.dom(getTableDataText(1, 2)).hasText('3', 'copied correctly from latest program-year');
+    assert.dom(getTableDataText(1, 3)).hasText('3', 'copied correctly from latest program-year');
+    assert.dom(getTableDataText(1, 4)).hasText('3', 'copied correctly from latest program-year');
+    assert.dom(getTableDataText(1, 5)).hasText('3', 'copied correctly from latest program-year');
+    assert.dom(getTableDataText(1, 6, 'span')).hasText('Not Published', 'unpublished shown');
   });
 
   test('privileged users can lock and unlock program-year', async function(assert) {
@@ -323,14 +330,14 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
 
     await visit(url);
-    assert.ok(find(firstProgramYearLockedIcon).classList.contains('fa-lock'), 'first program year is locked');
-    assert.ok(find(firstProgramYearLockedIcon).classList.contains('clickable'), 'first program year is clickable');
-    assert.ok(find(secondProgramYearLockedIcon).classList.contains('fa-unlock'), 'second program year is unlocked');
-    assert.ok(find(secondProgramYearLockedIcon).classList.contains('clickable'), 'second program year is clickable');
+    assert.dom(firstProgramYearLockedIcon).hasClass('fa-lock', 'first program year is locked');
+    assert.dom(firstProgramYearLockedIcon).hasClass('clickable', 'first program year is clickable');
+    assert.dom(secondProgramYearLockedIcon).hasClass('fa-unlock', 'second program year is unlocked');
+    assert.dom(secondProgramYearLockedIcon).hasClass('clickable', 'second program year is clickable');
     await click(firstProgramYearLockedIcon);
     await click(secondProgramYearLockedIcon);
-    assert.ok(find(firstProgramYearLockedIcon).classList.contains('fa-unlock'), 'first program year is now unlocked');
-    assert.ok(find(secondProgramYearLockedIcon).classList.contains('fa-lock'), 'second program year is now locked');
+    assert.dom(firstProgramYearLockedIcon).hasClass('fa-unlock', 'first program year is now unlocked');
+    assert.dom(secondProgramYearLockedIcon).hasClass('fa-lock', 'second program year is now locked');
   });
 
   test('delete-button is not visible for program years with populated cohorts', async function(assert) {

@@ -1,7 +1,12 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, findAll, find, fillIn } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -72,7 +77,7 @@ module('Integration | Component | my materials', function(hooks) {
       setFilter=(action nothing)
     }}`);
 
-    assert.equal(this.element.textContent.trim(), 'None');
+    assert.dom(this.element).hasText('None');
   });
 
   test('it renders with materials', async function(assert) {
@@ -138,54 +143,54 @@ module('Integration | Component | my materials', function(hooks) {
     const fourthCourse = `${courseListOptions}:nth-of-type(5)`;
     const fifthCourse = `${courseListOptions}:nth-of-type(6)`;
 
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(firstLmTitle).hasText('title1');
     assert.equal(find(firstLmLink).getAttribute('href').trim(), 'http://myhost.com/url1?inline');
-    assert.equal(findAll(firstLmTypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(firstLmSessionTitle).textContent.trim(), 'session1title');
-    assert.equal(find(firstLmCourseTitle).textContent.trim(), 'course1title');
-    assert.equal(find(firstLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
-    assert.equal(find(firstLmFirstOffering).textContent.trim(), '02/02/2003');
+    assert.dom(firstLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(firstLmSessionTitle).hasText('session1title');
+    assert.dom(firstLmCourseTitle).hasText('course1title');
+    assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
+    assert.dom(firstLmFirstOffering).hasText('02/02/2003');
     assert.equal(find(firstLmDownloadLink).getAttribute('href').trim(), 'http://myhost.com/url1');
 
 
-    assert.equal(find(secondLmTitle).textContent.trim(), 'title2');
+    assert.dom(secondLmTitle).hasText('title2');
     assert.equal(find(secondLmLink).getAttribute('href').trim(), 'http://myhost.com/url2');
-    assert.equal(findAll(secondLmTypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(secondLmSessionTitle).textContent.trim(), 'session2title');
-    assert.equal(find(secondLmCourseTitle).textContent.trim(), 'course2title');
-    assert.equal(find(secondLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
-    assert.equal(find(secondLmFirstOffering).textContent.trim(), '02/02/2016');
+    assert.dom(secondLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(secondLmSessionTitle).hasText('session2title');
+    assert.dom(secondLmCourseTitle).hasText('course2title');
+    assert.dom(secondLmInstructor).hasText('Instructor1name, Instructor2name');
+    assert.dom(secondLmFirstOffering).hasText('02/02/2016');
 
     assert.equal(find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
-    assert.equal(findAll(thirdLmLink).length, 0);
-    assert.equal(findAll(thirdLmTypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(thirdLmSessionTitle).textContent.trim(), 'session3title');
-    assert.equal(find(thirdLmCourseTitle).textContent.trim(), 'course3title');
-    assert.equal(find(thirdLmInstructor).textContent.trim(), '');
-    assert.equal(find(thirdLmFirstOffering).textContent.trim(), '02/02/2020');
+    assert.dom(thirdLmLink).doesNotExist();
+    assert.dom(thirdLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(thirdLmSessionTitle).hasText('session3title');
+    assert.dom(thirdLmCourseTitle).hasText('course3title');
+    assert.dom(thirdLmInstructor).hasText('');
+    assert.dom(thirdLmFirstOffering).hasText('02/02/2020');
 
-    assert.equal(find(fourthLmTitle).textContent.trim(), 'title4');
+    assert.dom(fourthLmTitle).hasText('title4');
     assert.equal(find(fourthLmLink).getAttribute('href').trim(), 'http://myhost.com/document.txt');
-    assert.equal(findAll(fourthLmTypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(fourthLmSessionTitle).textContent.trim(), 'session4title');
-    assert.equal(find(fourthLmCourseTitle).textContent.trim(), 'course4title');
-    assert.equal(find(fourthLmInstructor).textContent.trim(), 'Instructor3name, Instructor4name');
-    assert.equal(find(fourthLmFirstOffering).textContent.trim(), '02/02/2030');
+    assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(fourthLmSessionTitle).hasText('session4title');
+    assert.dom(fourthLmCourseTitle).hasText('course4title');
+    assert.dom(fourthLmInstructor).hasText('Instructor3name, Instructor4name');
+    assert.dom(fourthLmFirstOffering).hasText('02/02/2030');
 
     assert.ok(find(fifthLmTitle).textContent.includes('title5'));
-    assert.equal(findAll(fifthLmTypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(fifthLmSessionTitle).textContent.trim(), 'session5title');
-    assert.equal(find(fifthLmCourseTitle).textContent.trim(), 'course5title');
-    assert.equal(find(fifthLmInstructor).textContent.trim(), '');
-    assert.equal(find(fifthLmFirstOffering).textContent.trim(), '02/02/2040');
+    assert.dom(fifthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(fifthLmSessionTitle).hasText('session5title');
+    assert.dom(fifthLmCourseTitle).hasText('course5title');
+    assert.dom(fifthLmInstructor).hasText('');
+    assert.dom(fifthLmFirstOffering).hasText('02/02/2040');
 
-    assert.equal(findAll(courseListOptions).length, 6);
-    assert.equal(find(allCourses).textContent.trim(), 'All Courses');
-    assert.equal(find(firstCourse).textContent.trim(), 'course1title');
-    assert.equal(find(secondCourse).textContent.trim(), 'course2title');
-    assert.equal(find(thirdCourse).textContent.trim(), 'course3title');
-    assert.equal(find(fourthCourse).textContent.trim(), 'course4title');
-    assert.equal(find(fifthCourse).textContent.trim(), 'course5title');
+    assert.dom(courseListOptions).exists({ count: 6 });
+    assert.dom(allCourses).hasText('All Courses');
+    assert.dom(firstCourse).hasText('course1title');
+    assert.dom(secondCourse).hasText('course2title');
+    assert.dom(thirdCourse).hasText('course3title');
+    assert.dom(fourthCourse).hasText('course4title');
+    assert.dom(fifthCourse).hasText('course5title');
   });
 
   test('filter by title', async function(assert) {
@@ -204,13 +209,13 @@ module('Integration | Component | my materials', function(hooks) {
     const materials = `${table} tbody tr`;
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('filter', 'title2');
 
-    assert.equal(findAll(materials).length, 1);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title2');
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by instructor', async function(assert) {
@@ -230,14 +235,14 @@ module('Integration | Component | my materials', function(hooks) {
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
     const secondLmTitle = `${materials}:nth-of-type(2) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('filter', 'instructor1name');
 
-    assert.equal(findAll(materials).length, 2);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
-    assert.equal(find(secondLmTitle).textContent.trim(), 'title2');
+    assert.dom(materials).exists({ count: 2 });
+    assert.dom(firstLmTitle).hasText('title1');
+    assert.dom(secondLmTitle).hasText('title2');
   });
 
   test('filter by session title', async function(assert) {
@@ -256,13 +261,13 @@ module('Integration | Component | my materials', function(hooks) {
     const materials = `${table} tbody tr`;
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('filter', 'session2');
 
-    assert.equal(findAll(materials).length, 1);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title2');
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by course title', async function(assert) {
@@ -281,13 +286,13 @@ module('Integration | Component | my materials', function(hooks) {
     const materials = `${table} tbody tr`;
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('filter', 'course2');
 
-    assert.equal(findAll(materials).length, 1);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title2');
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by course', async function(assert) {
@@ -306,13 +311,13 @@ module('Integration | Component | my materials', function(hooks) {
     const materials = `${table} tbody tr`;
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('courseIdFilter', '2');
 
-    assert.equal(findAll(materials).length, 1);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title2');
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('clicking sort fires action', async function(assert) {
@@ -406,11 +411,11 @@ module('Integration | Component | my materials', function(hooks) {
     const materials = `${table} tbody tr`;
     const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
 
-    assert.equal(findAll(materials).length, 5);
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
+    assert.dom(materials).exists({ count: 5 });
+    assert.dom(firstLmTitle).hasText('title1');
 
     this.set('filter', "course2\\");
 
-    assert.equal(findAll(materials).length, 0);
+    assert.dom(materials).doesNotExist();
   });
 });

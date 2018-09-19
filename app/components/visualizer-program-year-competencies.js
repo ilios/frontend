@@ -16,8 +16,8 @@ export default Component.extend({
   tooltipSessions: null,
   tooltipTitle: null,
   programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function(){
-    const i18n = this.get('i18n');
-    const programYear = this.get('programYear');
+    const i18n = this.i18n;
+    const programYear = this.programYear;
     const cohort = await programYear.get('cohort');
     const title = cohort.get('title');
     const year = await cohort.get('classOfYear');
@@ -26,7 +26,7 @@ export default Component.extend({
     return title ? title : classOfYear;
   }),
   objectiveObjects: computed('programYear.objectives.[]', async function () {
-    const programYear = this.get('programYear');
+    const programYear = this.programYear;
     const buildTree = async function (parent) {
       const children = await parent.get('children');
       const childrenTree = await map(children.toArray(), buildTree);
@@ -62,8 +62,8 @@ export default Component.extend({
     return objectiveObjects;
   }),
   competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function () {
-    const programYear = this.get('programYear');
-    const objectiveObjects = await this.get('objectiveObjects');
+    const programYear = this.programYear;
+    const objectiveObjects = await this.objectiveObjects;
     const competencies = await programYear.get('competencies');
     const competencyObjects = await map(competencies.toArray(), async competency => {
       const domain = await competency.get('domain');
@@ -81,9 +81,9 @@ export default Component.extend({
     return competencyObjects;
   }),
   domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function () {
-    const programYear = this.get('programYear');
+    const programYear = this.programYear;
     const competencies = await programYear.get('competencies');
-    const competencyObjects = await this.get('competencyObjects');
+    const competencyObjects = await this.competencyObjects;
     const domains = await map(competencies.toArray(), async competency => competency.get('domain'));
 
     const domainObjects = domains.uniq().map(domain => {
@@ -112,8 +112,8 @@ export default Component.extend({
   }),
 
   data: computed('domainObjects.[]', async function () {
-    const name = await this.get('programYearName');
-    const children = await this.get('domainObjects');
+    const name = await this.programYearName;
+    const children = await this.domainObjects;
 
     return {
       name,
@@ -123,7 +123,7 @@ export default Component.extend({
   }),
   nodeHover: task(function* (obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipCourses', null);
