@@ -1,13 +1,13 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="objectivetitle course-objective-title">{{{courseObjective.title}}}</div>
 {{#unless loadAttr.isRunning}}
-  {{#liquid-if (get (await cohorts) "length")  class="horizontal"}}
+  {{#liquid-if (get (await cohortProxies) "length")  class="horizontal"}}
     <label class="group-picker">
       <span class="choose-cohort-title">{{t "general.chooseCohortTitle"}}:</span>
-      {{#if (gt (get (await cohorts) "length") 1)}}
+      {{#if (gt (get (await cohortProxies) "length") 1)}}
         {{one-way-select
           value=(get (await selectedCohort) "id")
-          options=(await cohorts)
+          options=(await cohortProxies)
           optionTargetPath="id"
           optionLabelPath="title"
           update=(action "setSelectedCohort")
@@ -17,7 +17,7 @@
       {{/if}}
     </label>
     <ul class="parent-picker">
-      {{#if (await currentCohort) class="vertical"}}
+      {{#if (await currentCohort)}}
         {{#each
           (await (get (await currentCohort) "objectivesByCompetency"))
           as |competency|

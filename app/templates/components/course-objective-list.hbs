@@ -1,12 +1,12 @@
 {{#if (is-fulfilled objectives)}}
   {{#if isSorting}}
     {{objective-sort-manager
-      subject=course
+      subject=subject
       save=(action "saveSortOrder")
       cancel=(action "cancelSorting")
     }}
   {{else}}
-    {{#if (get (await objectives) "length")}}
+    {{#if (get (await subject.objectives) "length")}}
       {{#if (and editable (await hasMoreThanOneObjective))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t "general.sortObjectives"}}</button>
       {{/if}}
@@ -24,7 +24,7 @@
             {{course-objective-list-item
               objective=objective
               editable=editable
-              course=course
+              course=subject
               showRemoveConfirmation=(is-in objectivesForRemovalConfirmation objective.id)
               remove=(action "confirmRemoval")
               manageParents=manageParents

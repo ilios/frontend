@@ -4,10 +4,9 @@ import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import RSVP from 'rsvp';
+import { all, map, Promise } from 'rsvp';
 import { task } from 'ember-concurrency';
 
-const { all, map, Promise } = RSVP;
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
 const competencyGroup = EmberObject.extend({
@@ -106,28 +105,44 @@ export default Component.extend({
     }
   }),
 
+  course: computed('courseObjective.courses.[]', async function () {
+    const courseObjective = this.get('courseObjective');
+    if (! courseObjective) {
+      return [];
+    }
+
+    const courses = await courseObjective.get('courses');
+    return courses.get('firstObject');
+  }),
+
+  cohorts: computed('course.cohorts.[]', async function () {
+    const course = await this.get('course');
+    return course.get('cohorts');
+  }),
+
+  programs: computed('cohorts.programYear.program', async function () {
+    const cohorts = await this.get('cohorts');
+    return all(cohorts.mapBy('program'));
+  }),
+
+
   /**
    * @property cohorts
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('courseObjective.courses.[]','courseObjective.courses.@each.cohorts', async function() {
+  cohortProxies: computed('cohorts.[]', 'programs.[]', async function() {
     const courseObjective = this.get('courseObjective');
-    if (! courseObjective) {
-      return [];
-    }
-    const courses = await courseObjective.get('courses');
-    const course = courses.get('firstObject');
-    const cohorts = await course.get('cohorts');
+    const cohorts = await this.get('cohorts');
     const cohortProxies = await map(cohorts.toArray(), async cohort => {
-      const objectives = await cohort.get('objectives');
+      const programYear = await cohort.get('programYear');
+      const objectives = await programYear.get('objectives');
       let objectiveProxies = objectives.map(objective => {
         return objectiveProxy.create({
           content: objective,
           courseObjective,
         });
       });
-      const programYear = await cohort.get('programYear');
       const program = await programYear.get('program');
       const programTitle = program.get('title');
       let cohortTitle = cohort.get('title');
@@ -136,7 +151,7 @@ export default Component.extend({
         const classOfYear = await cohort.get('classOfYear');
         cohortTitle = i18n.t('general.classOf', {year: classOfYear});
       }
-      const title = programTitle + ' ' + cohortTitle;
+      const title = `${programTitle} ${cohortTitle}`;
 
       return cohortProxy.create({
         id: cohort.get('id'),
@@ -154,11 +169,11 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  currentCohort: computed('selectedCohort', 'cohorts.[]', function(){
+  currentCohort: computed('selectedCohort', 'cohortProxies.[]', function(){
     return new Promise(resolve => {
       let selectedCohort = this.get('selectedCohort');
       if (selectedCohort){
-        this.get('cohorts').then(cohorts => {
+        this.get('cohortProxies').then(cohorts => {
           let matchingGroups = cohorts.filterBy('id', selectedCohort.get('id'));
           let currentCohort = null;
           if(matchingGroups.length > 0){
