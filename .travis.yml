@@ -5,7 +5,7 @@ sudo: false
 dist: trusty
 
 addons:
-  chrome: stable
+  firefox: latest
 
 cache:
   yarn: true
@@ -18,6 +18,7 @@ env:
     - COVERAGE=true
     - PERCY_TOKEN=d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e
     - PERCY_PROJECT=ilios/frontend
+    - MOZ_HEADLESS=1
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
