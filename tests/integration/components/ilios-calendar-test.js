@@ -26,6 +26,6 @@ module('Integration | Component | ilios calendar', function(hooks) {
       selectEvent=(action nothing)
     }}`);
 
-    assert.ok(this.element.textContent.trim().search(/Wednesday, September 30th 2015/) !== -1);
+    assert.ok(this.element.textContent.includes('Wednesday, September 30th 2015'));
   });
 });

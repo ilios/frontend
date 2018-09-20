@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -158,36 +158,34 @@ module('Integration | Component | dashboard week', function(hooks) {
     const secondInstructors = `${secondEvent} .instructors`;
 
 
-    await settled();
-
     const expectedTitle = getTitle();
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
     assert.dom(this.element.querySelector(allWeeks)).hasText('Last Week / Next Week / All Weeks');
     assert.equal(this.element.querySelectorAll(events).length, 2, 'Blank events are not shown');
 
-    assert.equal(this.$(firstEventTitle).text().trim(), 'Learn to Learn');
-    assert.equal(this.$(firstSessionType).text().trim(), 'Lecture');
-    assert.equal(this.$(firstLocation).text().trim(), '- Room 123');
-    assert.equal(this.$(firstDescription).text().trim(), 'Best Session For Sure');
-    assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationLMcitationtext');
-    assert.equal(this.$(firstLm1TypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(firstLm2).text().trim(), 'Link LM');
-    assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');
-    assert.equal(this.$(firstLm2TypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(firstLm3).text().trim(), 'File LM');
-    assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1?inline');
-    assert.equal(this.$(firstLm3DownloadLink).attr('href'), 'http://myhost.com/url1');
-    assert.equal(this.$(firstLm3TypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
+    assert.equal(find(firstEventTitle).textContent.trim(), 'Learn to Learn');
+    assert.equal(find(firstSessionType).textContent.trim(), 'Lecture');
+    assert.equal(find(firstLocation).textContent.trim(), '- Room 123');
+    assert.equal(find(firstDescription).textContent.trim(), 'Best Session For Sure');
+    assert.equal(find(firstLm1).textContent.replace(/[\t\n\s]+/g, ""), 'CitationCitationLMcitationtext');
+    assert.equal(findAll(firstLm1TypeIcon).length, 1, 'LM type icon is present');
+    assert.ok(find(firstLm2).textContent.includes('Link LM'));
+    assert.equal(find(firstLm2Link).href, 'http://myhost.com/url2');
+    assert.equal(findAll(firstLm2TypeIcon).length, 1, 'LM type icon is present');
+    assert.ok(find(firstLm3).textContent.includes('File LM'));
+    assert.equal(find(firstLm3Link).href, 'http://myhost.com/url1?inline');
+    assert.equal(find(firstLm3DownloadLink).href, 'http://myhost.com/url1');
+    assert.equal(findAll(firstLm3TypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(findAll(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
 
-    assert.equal(this.$(secondEventTitle).text().trim(), 'Finding the Point in Life');
-    assert.equal(this.$(secondSessionType).text().trim(), 'Independent Learning');
-    assert.equal(this.$(secondLocation).text().trim(), '- Room 456');
-    assert.equal(this.$(secondDescription).text().trim(), '', 'Emtpy Description is Empty');
-    assert.equal(this.$(secondLm1).text().trim(), 'Great Slides');
-    assert.equal(this.$(secondLm1Link).attr('href'), 'http://myhost.com/url1');
-    assert.equal(this.$(secondLm1TypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(secondInstructors).text().replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
+    assert.equal(find(secondEventTitle).textContent.trim(), 'Finding the Point in Life');
+    assert.equal(find(secondSessionType).textContent.trim(), 'Independent Learning');
+    assert.equal(find(secondLocation).textContent.trim(), '- Room 456');
+    assert.equal(findAll(secondDescription).length, 0, 'Empty Description is Empty');
+    assert.ok(find(secondLm1).textContent.includes('Great Slides'));
+    assert.equal(find(secondLm1Link).href, 'http://myhost.com/url1');
+    assert.equal(findAll(secondLm1TypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(secondInstructors).textContent.replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
   });
 
   test('it renders blank', async function(assert) {
@@ -199,8 +197,6 @@ module('Integration | Component | dashboard week', function(hooks) {
     const title = 'h3';
     const body = 'p';
     const expectedTitle = getTitle();
-
-    await settled();
 
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
     assert.dom(this.element.querySelector(body)).hasText('None');

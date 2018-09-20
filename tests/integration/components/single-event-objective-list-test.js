@@ -32,7 +32,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     }}`);
 
 
-    assert.dom(this.element.querySelector('h2')).hasText(courseObjectivesPhrase, 'Title is visible');
+    assert.ok(this.element.querySelector('h2').textContent.includes(courseObjectivesPhrase), 'Title is visible');
     assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is visible');
     assert.notOk(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is not visible');
     assert.equal(this.element.querySelector('ul.tree>li').textContent.trim().search(/^annoying things/), 0);

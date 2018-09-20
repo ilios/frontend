@@ -17,17 +17,17 @@ module('Integration | Component | ilios calendar single event learningmaterial l
     await render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
 
 
-    assert.equal(this.element.querySelector('li:nth-of-type(1)').textContent.trim().search(/^first one/), 0);
+    assert.ok(this.element.querySelector('li:nth-of-type(1)').textContent.includes('first one'));
     assert.equal(this.element.querySelectorAll('li:nth-of-type(1) .fa-file-pdf').length, 1, 'LM type icon is present.');
     assert.equal(this.element.querySelector('li:nth-of-type(1) a').getAttribute('href').trim(), 'http://firstlink?inline');
     assert.equal(this.element.querySelector('li:nth-of-type(1) a:nth-of-type(1)').getAttribute('href').trim(), 'http://firstlink?inline');
     assert.equal(this.element.querySelectorAll('li:nth-of-type(1) a:nth-of-type(2) .fa-download').length, 1);
 
-    assert.equal(this.element.querySelector('li:nth-of-type(2)').textContent.trim().search(/^second one/), 0);
+    assert.ok(this.element.querySelector('li:nth-of-type(2)').textContent.includes('second one'));
     assert.equal(this.element.querySelectorAll('li:nth-of-type(2) .fa-file-audio').length, 1, 'LM type icon is present.');
     assert.equal(this.element.querySelector('li:nth-of-type(2) a').getAttribute('href').trim(), 'http://secondlink');
 
-    assert.equal(this.element.querySelector('li:nth-of-type(3)').textContent.trim().search(/^third one/), 0);
+    assert.ok(this.element.querySelector('li:nth-of-type(3)').textContent.includes('third one'));
     assert.equal(this.element.querySelectorAll('li:nth-of-type(3) .fa-clock').length, 1, 'LM type icon is present.');
   });
 
