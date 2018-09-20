@@ -42,7 +42,7 @@
     }}
   {{/if}}
   {{detail-instructors
-    ilmSession=session.ilmSession
+    ilmSession=(await session.ilmSession)
     editable=editable
   }}
 {{/if}}

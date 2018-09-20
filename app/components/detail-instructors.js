@@ -53,7 +53,7 @@ export default Component.extend({
       });
     },
     save() {
-      var ilmSession = this.get('ilmSession.content');
+      var ilmSession = this.get('ilmSession');
 
       let instructorGroups = ilmSession.get('instructorGroups');
       let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
