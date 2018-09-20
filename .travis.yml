@@ -16,8 +16,6 @@ env:
     - JOBS=1
     - CC_TEST_REPORTER_ID=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
     - COVERAGE=true
-    - PERCY_TOKEN=d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e
-    - PERCY_PROJECT=ilios/frontend
     - MOZ_HEADLESS=1
 
 before_install:
