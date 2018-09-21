@@ -1,6 +1,4 @@
 import { visit } from '@ember/test-helpers';
-/* eslint ember/no-global-jquery: 0 */
-import $ from 'jquery';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -32,7 +30,7 @@ module('Acceptance | API Version Check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
 
     await visit(url);
-    assert.equal($(warningOverlay).length, 0);
+    assert.equal(document.querySelectorAll(warningOverlay).length, 0);
   });
 
   test('Warning shows up when api versions do not match', async function(assert) {
@@ -47,6 +45,6 @@ module('Acceptance | API Version Check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
 
     await visit(url);
-    assert.equal($(warningOverlay).length, 1);
+    assert.equal(document.querySelectorAll(warningOverlay).length, 1);
   });
 });
