@@ -2555,18 +2555,6 @@ broccoli-kitchen-sink-helpers@^0.3.1:
     glob "^5.0.10"
     mkdirp "^0.5.1"
 
-broccoli-lint-eslint@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/broccoli-lint-eslint/-/broccoli-lint-eslint-4.2.1.tgz#f780dc083a7357a9746a9cfa8f76feb092777477"
-  dependencies:
-    aot-test-generators "^0.1.0"
-    broccoli-concat "^3.2.2"
-    broccoli-persistent-filter "^1.4.3"
-    eslint "^4.0.0"
-    json-stable-stringify "^1.0.1"
-    lodash.defaultsdeep "^4.6.0"
-    md5-hex "^2.0.0"
-
 broccoli-merge-trees@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-1.1.1.tgz#1e283d18c686da922bb91a80d7aac0d161388e21"
@@ -4897,15 +4885,6 @@ ember-cli-document-title@0.4.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-cli-eslint@^4.2.1:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-eslint/-/ember-cli-eslint-4.2.3.tgz#2844d3f5e8184f19b2d7132ba99eb0b370b55598"
-  dependencies:
-    broccoli-lint-eslint "^4.2.1"
-    ember-cli-version-checker "^2.1.0"
-    rsvp "^4.6.1"
-    walk-sync "^0.3.0"
-
 ember-cli-file-saver@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ember-cli-file-saver/-/ember-cli-file-saver-1.2.2.tgz#05df61c65066731fa03cfe2d13cb73ef0f0c4e5c"
@@ -6259,7 +6238,7 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@^4.0.0:
+eslint@^4.19.1:
   version "4.19.1"
   resolved "http://registry.npmjs.org/eslint/-/eslint-4.19.1.tgz#32d1d653e1d90408854bfb296f076ec7e186a300"
   dependencies:
@@ -11091,7 +11070,7 @@ rsvp@^3.0.14, rsvp@^3.0.17, rsvp@^3.0.18, rsvp@^3.0.21, rsvp@^3.0.6, rsvp@^3.1.0
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
 
-rsvp@^4.6.1, rsvp@^4.7.0, rsvp@^4.8.2, rsvp@^4.8.3:
+rsvp@^4.7.0, rsvp@^4.8.2, rsvp@^4.8.3:
   version "4.8.4"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.4.tgz#b50e6b34583f3dd89329a2f23a8a2be072845911"
 
