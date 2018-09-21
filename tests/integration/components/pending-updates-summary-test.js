@@ -27,7 +27,6 @@ module('Integration | Component | pending updates summary', function(hooks) {
       const user = this.server.create('user', { school });
       this.server.create('pending-user-update', { user });
     }
-    this.server.logging = true;
 
     currentUserMock.reopen({
       model: resolve(userModel)
