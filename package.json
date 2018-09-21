@@ -13,6 +13,7 @@
     "build": "ember build",
     "lint:js": "eslint .",
     "lint:style": "stylelint app/styles",
+    "lint:hbs": "ember-template-lint app/templates",
     "start": "ember serve",
     "test": "ember test"
   },
@@ -64,7 +65,6 @@
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-string-helpers": "^1.5.0",
-    "ember-cli-template-lint": "1.0.0-beta.2",
     "ember-cli-uglify": "^2.0.0",
     "ember-click-outside": "^1.0.0",
     "ember-composable-helpers": "^2.0.2",
@@ -98,6 +98,7 @@
     "ember-service-worker-update-notify": "^1.0.1",
     "ember-simple-charts": "0.17.0",
     "ember-source": "~3.4.0",
+    "ember-template-lint": "^1.0.0-beta.5",
     "ember-test-selectors": "^1.0.0",
     "ember-tether": "1.0.0",
     "ember-truth-helpers": "^2.0.0",
@@ -134,8 +135,9 @@
     ]
   },
   "pre-commit": [
-    "lint:js",
-    "lint:style"
+    "lint:hbs",
+    "lint:style",
+    "lint:js"
   ],
   "private": true
 }
