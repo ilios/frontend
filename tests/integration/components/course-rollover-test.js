@@ -71,7 +71,6 @@ module('Integration | Component | course rollover', function(hooks) {
       assert.equal(newCourse.id, 14);
     });
     await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
-    this.server.logging = true;
     await click('.done');
   });
 
