@@ -14,6 +14,7 @@ module('Integration | Component | toggle icons', function(hooks) {
     const secondLabel = 'label:nth-of-type(2)';
     const secondRadio = 'input:nth-of-type(2)';
     const icon = 'svg:nth-of-type(1)';
+    const iconTitle = `${icon} title`;
 
     this.set('nothing', parseInt);
     await render(hbs`{{toggle-icons
@@ -34,7 +35,7 @@ module('Integration | Component | toggle icons', function(hooks) {
 
     assert.dom(icon).exists({ count: 1 });
     assert.dom(icon).hasClass('fa-user', 'correct icon is visible');
-    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
+    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
   });
 
   test('clicking radio fires toggle action', async function(assert) {
@@ -93,6 +94,7 @@ module('Integration | Component | toggle icons', function(hooks) {
     assert.expect(8);
 
     const icon = 'svg:nth-of-type(1)';
+    const iconTitle = `${icon} title`;
 
     this.set('firstOptionSelected', true);
     let called = 0;
@@ -115,12 +117,12 @@ module('Integration | Component | toggle icons', function(hooks) {
     }}`);
 
     assert.dom(icon).hasClass('fa-user');
-    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
+    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
     await click(icon);
     assert.dom(icon).hasClass('fa-expand');
-    assert.equal(find(icon).getAttribute('title').trim(), 'First', 'Title text is correct');
+    assert.equal(find(iconTitle).textContent.trim(), 'First', 'Title text is correct');
     await click(icon);
     assert.dom(icon).hasClass('fa-user');
-    assert.equal(find(icon).getAttribute('title').trim(), 'Second', 'Title text is correct');
+    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
   });
 });

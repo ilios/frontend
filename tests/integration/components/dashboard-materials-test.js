@@ -1,13 +1,11 @@
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { find, findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-
-const { resolve } = RSVP;
 
 let lm1, lm2, lm3, lm4, lm5, userMaterials;
 let today = moment();
@@ -103,90 +101,89 @@ module('Integration | Component | dashboard materials', function(hooks) {
     await render(hbs`{{dashboard-materials}}`);
 
     const title = 'h3';
-    const table = 'table:eq(0)';
+    const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
 
-    const firstLmTitle = `${materials}:eq(0) td:eq(0)`;
-    const firstLmLink = `${firstLmTitle} a:eq(0)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(1)`;
+    const firstLmLink = `${firstLmTitle} a:nth-of-type(1)`;
     const firstLmTypeIcon = `${firstLmTitle} .fa-file-pdf`;
-    const firstLmCourseTitle = `${materials}:eq(0) td:eq(1)`;
-    const firstLmSessionTitle = `${materials}:eq(0) td:eq(2)`;
-    const firstLmInstructor = `${materials}:eq(0) td:eq(3)`;
-    const firstLmFirstOffering = `${materials}:eq(0) td:eq(4)`;
-    const firstLmDownloadLink = `${firstLmTitle} a:eq(1)`;
+    const firstLmCourseTitle = `${materials}:nth-of-type(1) td:nth-of-type(2)`;
+    const firstLmSessionTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmInstructor = `${materials}:nth-of-type(1) td:nth-of-type(4)`;
+    const firstLmFirstOffering = `${materials}:nth-of-type(1) td:nth-of-type(5)`;
+    const firstLmDownloadLink = `${firstLmTitle} a:nth-of-type(2)`;
 
-    const secondLmTitle = `${materials}:eq(1) td:eq(0)`;
+    const secondLmTitle = `${materials}:nth-of-type(2) td:nth-of-type(1)`;
     const secondLmLink = `${secondLmTitle} a`;
     const secondLmTypeIcon = `${secondLmTitle} .fa-paragraph`;
-    const secondLmCourseTitle = `${materials}:eq(1) td:eq(1)`;
-    const secondLmSessionTitle = `${materials}:eq(1) td:eq(2)`;
-    const secondLmInstructor = `${materials}:eq(1) td:eq(3)`;
-    const secondLmFirstOffering = `${materials}:eq(1) td:eq(4)`;
+    const secondLmCourseTitle = `${materials}:nth-of-type(2) td:nth-of-type(2)`;
+    const secondLmSessionTitle = `${materials}:nth-of-type(2) td:nth-of-type(3)`;
+    const secondLmInstructor = `${materials}:nth-of-type(2) td:nth-of-type(4)`;
+    const secondLmFirstOffering = `${materials}:nth-of-type(2) td:nth-of-type(5)`;
 
-    const thirdLmTitle = `${materials}:eq(2) td:eq(0)`;
+    const thirdLmTitle = `${materials}:nth-of-type(3) td:nth-of-type(1)`;
     const thirdLmLink = `${thirdLmTitle} a`;
     const thirdLmTypeIcon = `${thirdLmTitle} .fa-link`;
-    const thirdLmCourseTitle = `${materials}:eq(2) td:eq(1)`;
-    const thirdLmSessionTitle = `${materials}:eq(2) td:eq(2)`;
-    const thirdLmInstructor = `${materials}:eq(2) td:eq(3)`;
-    const thirdLmFirstOffering = `${materials}:eq(2) td:eq(4)`;
+    const thirdLmCourseTitle = `${materials}:nth-of-type(3) td:nth-of-type(2)`;
+    const thirdLmSessionTitle = `${materials}:nth-of-type(3) td:nth-of-type(3)`;
+    const thirdLmInstructor = `${materials}:nth-of-type(3) td:nth-of-type(4)`;
+    const thirdLmFirstOffering = `${materials}:nth-of-type(3) td:nth-of-type(5)`;
 
-    const fourthLmTitle = `${materials}:eq(3) td:eq(0)`;
-    const fourthLmLink = `${fourthLmTitle} a:eq(0)`;
+    const fourthLmTitle = `${materials}:nth-of-type(4) td:nth-of-type(1)`;
+    const fourthLmLink = `${fourthLmTitle} a:nth-of-type(1)`;
     const fourthLmTypeIcon = `${fourthLmTitle} .fa-file`;
-    const fourthLmCourseTitle = `${materials}:eq(3) td:eq(1)`;
-    const fourthLmSessionTitle = `${materials}:eq(3) td:eq(2)`;
-    const fourthLmInstructor = `${materials}:eq(3) td:eq(3)`;
-    const fourthLmFirstOffering = `${materials}:eq(3) td:eq(4)`;
+    const fourthLmCourseTitle = `${materials}:nth-of-type(4) td:nth-of-type(2)`;
+    const fourthLmSessionTitle = `${materials}:nth-of-type(4) td:nth-of-type(3)`;
+    const fourthLmInstructor = `${materials}:nth-of-type(4) td:nth-of-type(4)`;
+    const fourthLmFirstOffering = `${materials}:nth-of-type(4) td:nth-of-type(5)`;
 
-    const fifthLmTitle = `${materials}:eq(4) td:eq(0)`;
+    const fifthLmTitle = `${materials}:nth-of-type(5) td:nth-of-type(1)`;
     const fifthLmTypeIcon = `${fifthLmTitle} .fa-clock`;
-    const fifthLmCourseTitle = `${materials}:eq(4) td:eq(1)`;
-    const fifthLmSessionTitle = `${materials}:eq(4) td:eq(2)`;
-    const fifthLmInstructor = `${materials}:eq(4) td:eq(3)`;
-    const fifthFirstOffering = `${materials}:eq(4) td:eq(4)`;
+    const fifthLmCourseTitle = `${materials}:nth-of-type(5) td:nth-of-type(2)`;
+    const fifthLmSessionTitle = `${materials}:nth-of-type(5) td:nth-of-type(3)`;
+    const fifthLmInstructor = `${materials}:nth-of-type(5) td:nth-of-type(4)`;
+    const fifthFirstOffering = `${materials}:nth-of-type(5) td:nth-of-type(5)`;
 
-    await settled();
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
 
-    assert.equal(this.$(firstLmTitle).text().trim(), 'title1');
-    assert.equal(this.$(firstLmLink).prop('href').trim(), 'http://myhost.com/url1?inline');
-    assert.equal(this.$(firstLmTypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(firstLmSessionTitle).text().trim(), 'session1title');
-    assert.equal(this.$(firstLmCourseTitle).text().trim(), 'course1title');
-    assert.equal(this.$(firstLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
-    assert.equal(this.$(firstLmFirstOffering).text().trim(), today.format('L'));
-    assert.equal(this.$(firstLmDownloadLink).prop('href').trim(), 'http://myhost.com/url1');
+    assert.ok(find(firstLmTitle).textContent.includes('title1'));
+    assert.equal(find(firstLmLink).href, 'http://myhost.com/url1?inline');
+    assert.equal(findAll(firstLmTypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(firstLmSessionTitle).textContent.trim(), 'session1title');
+    assert.equal(find(firstLmCourseTitle).textContent.trim(), 'course1title');
+    assert.equal(find(firstLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
+    assert.equal(find(firstLmFirstOffering).textContent.trim(), today.format('L'));
+    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
-    assert.equal(this.$(secondLmTitle).text().replace(/[\t\n\s]+/g, ""), 'title3citationtext');
-    assert.equal(this.$(secondLmLink).length, 0);
-    assert.equal(this.$(secondLmTypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(secondLmSessionTitle).text().trim(), 'session3title');
-    assert.equal(this.$(secondLmCourseTitle).text().trim(), 'course3title');
-    assert.equal(this.$(secondLmInstructor).text().trim(), '');
-    assert.equal(this.$(secondLmFirstOffering).text().trim(), today.format('L'));
+    assert.equal(find(secondLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'Citationtitle3citationtext');
+    assert.equal(findAll(secondLmLink).length, 0);
+    assert.equal(findAll(secondLmTypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(secondLmSessionTitle).textContent.trim(), 'session3title');
+    assert.equal(find(secondLmCourseTitle).textContent.trim(), 'course3title');
+    assert.equal(find(secondLmInstructor).textContent.trim(), '');
+    assert.equal(find(secondLmFirstOffering).textContent.trim(), today.format('L'));
 
-    assert.equal(this.$(thirdLmTitle).text().trim(), 'title2');
-    assert.equal(this.$(thirdLmLink).prop('href').trim(), 'http://myhost.com/url2');
-    assert.equal(this.$(thirdLmTypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(thirdLmSessionTitle).text().trim(), 'session2title');
-    assert.equal(this.$(thirdLmCourseTitle).text().trim(), 'course2title');
-    assert.equal(this.$(thirdLmInstructor).text().trim(), 'Instructor1name, Instructor2name');
-    assert.equal(this.$(thirdLmFirstOffering).text().trim(), tomorrow.format('L'));
+    assert.ok(find(thirdLmTitle).textContent.includes('title2'));
+    assert.equal(find(thirdLmLink).href.trim(), 'http://myhost.com/url2');
+    assert.equal(findAll(thirdLmTypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(thirdLmSessionTitle).textContent.trim(), 'session2title');
+    assert.equal(find(thirdLmCourseTitle).textContent.trim(), 'course2title');
+    assert.equal(find(thirdLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
+    assert.equal(find(thirdLmFirstOffering).textContent.trim(), tomorrow.format('L'));
 
-    assert.equal(this.$(fourthLmLink).prop('href').trim(), 'http://myhost.com/document.txt');
-    assert.equal(this.$(fourthLmTypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(fourthLmSessionTitle).text().trim(), 'session4title');
-    assert.equal(this.$(fourthLmCourseTitle).text().trim(), 'course4title');
-    assert.equal(this.$(fourthLmInstructor).text().trim(), 'Instructor3name, Instructor4name');
-    assert.equal(this.$(fourthLmFirstOffering).text().trim(), tomorrow.format('L'));
+    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
+    assert.equal(findAll(fourthLmTypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(fourthLmSessionTitle).textContent.trim(), 'session4title');
+    assert.equal(find(fourthLmCourseTitle).textContent.trim(), 'course4title');
+    assert.equal(find(fourthLmInstructor).textContent.trim(), 'Instructor3name, Instructor4name');
+    assert.equal(find(fourthLmFirstOffering).textContent.trim(), tomorrow.format('L'));
 
-    assert.equal(this.$(fifthLmTitle).text().trim(), 'title5');
-    assert.equal(this.$(fifthLmTypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(this.$(fifthLmSessionTitle).text().trim(), 'session5title');
-    assert.equal(this.$(fifthLmCourseTitle).text().trim(), 'course5title');
-    assert.equal(this.$(fifthLmInstructor).text().trim(), '');
-    assert.equal(this.$(fifthFirstOffering).text().trim(), tomorrow.format('L'));
+    assert.ok(find(fifthLmTitle).textContent.includes('title5'));
+    assert.equal(findAll(fifthLmTypeIcon).length, 1, 'LM type icon is present');
+    assert.equal(find(fifthLmSessionTitle).textContent.trim(), 'session5title');
+    assert.equal(find(fifthLmCourseTitle).textContent.trim(), 'course5title');
+    assert.equal(find(fifthLmInstructor).textContent.trim(), '');
+    assert.equal(find(fifthFirstOffering).textContent.trim(), tomorrow.format('L'));
   });
 
   test('it renders blank', async function(assert) {
@@ -221,7 +218,6 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const body = 'p';
 
     await render(hbs`{{dashboard-materials}}`);
-    await settled();
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });
