@@ -85,26 +85,28 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     });
 
     await render(hbs`{{user-profile-cohorts isManaging=true user=user setIsManaging=(action nothing)}}`);
-    const primaryCohort = '[data-test-primary-cohort]';
+    const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
+    const firstSecondaryCohortTitle = `${secondaryCohorts}:nth-of-type(1) [data-test-title]`;
     const schoolPicker = '[data-test-school]';
     const assignableCohorts = '[data-test-assignable-cohorts] li';
+    const firstAssignableCohortTitle = `${assignableCohorts}:nth-of-type(1) [data-test-title]`;
     const promoteFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .add`;
     const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .remove`;
     const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) .add`;
 
-    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
+    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'school 0 program 0 cohort 0', 'primary cohort correct');
     assert.equal(findAll(secondaryCohorts).length, 1, 'correct number of secondary cohorts');
-    assert.equal(find(secondaryCohorts).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
+    assert.equal(find(firstSecondaryCohortTitle).textContent.trim(), 'school 1 program 1 cohort 1', 'cohort correct');
 
     assert.equal(find(schoolPicker).value, '1', 'correct school selected');
     assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-    assert.equal(find(assignableCohorts).textContent.trim(), 'program 0 cohort 2', 'cohort correct');
+    assert.equal(find(firstAssignableCohortTitle).textContent.trim(), 'program 0 cohort 2', 'cohort correct');
 
     await fillIn(schoolPicker, '2');
 
     assert.equal(findAll(assignableCohorts).length, 1, 'correct number of assignable cohorts');
-    assert.equal(find(assignableCohorts).textContent.trim(), 'program 1 cohort 3', 'cohort correct');
+    assert.equal(find(firstAssignableCohortTitle).textContent.trim(), 'program 1 cohort 3', 'cohort correct');
 
     await click(promoteFirstSecondaryCohort);
     await click(removeFirstSecondaryCohort);

@@ -17,11 +17,13 @@ module('Integration | Component | school leadership expanded', function(hooks) {
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
+      enabled: true,
     });
     let user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
+      enabled: true,
     });
     let school = EmberObject.create({
       directors: resolve([user1]),

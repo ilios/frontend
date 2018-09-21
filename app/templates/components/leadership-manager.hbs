@@ -16,7 +16,7 @@
                 {{#unless user.enabled}}
                   {{fa-icon "user-times" title=(t "general.disabled") class="disabled-user"}}
                 {{/unless}}
-                {{user.fullName}}
+                <span data-test-name>{{user.fullName}}</span>
               </li>
             {{else}}
               {{t "general.none"}}
@@ -37,7 +37,7 @@
                 {{#unless user.enabled}}
                   {{fa-icon "user-times" title=(t "general.disabled") class="disabled-user"}}
                 {{/unless}}
-                {{user.fullName}}
+                <span data-test-name>{{user.fullName}}</span>
               </li>
             {{else}}
               {{t "general.none"}}

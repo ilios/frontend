@@ -18,7 +18,7 @@ module('Integration | Component | learning material table title', function(hooks
     this.set('row', row);
     await render(hbs`{{learning-material-table-title value='test' row=row}}`);
 
-    assert.equal(this.element.textContent.trim(), 'test');
+    assert.equal(find('[data-test-title]').textContent.trim(), 'test');
     assert.ok(find(i).classList.contains('fa-file-pdf'));
   });
 });

@@ -89,46 +89,46 @@ module('Integration | Component | my materials', function(hooks) {
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
 
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title]`;
     const firstLmLink = `${firstLmTitle} a:nth-of-type(1)`;
     const firstLmTypeIcon = `${firstLmTitle} .fa-file-pdf`;
-    const firstLmCourseTitle = `${materials}:nth-of-type(1) td:nth-of-type(2)`;
-    const firstLmSessionTitle = `${materials}:nth-of-type(1) td:nth-of-type(1)`;
-    const firstLmInstructor = `${materials}:nth-of-type(1) td:nth-of-type(4)`;
-    const firstLmFirstOffering = `${materials}:nth-of-type(1) td:nth-of-type(5)`;
+    const firstLmCourseTitle = `${materials}:nth-of-type(1) [data-test-course-title]`;
+    const firstLmSessionTitle = `${materials}:nth-of-type(1) [data-test-session-title]`;
+    const firstLmInstructor = `${materials}:nth-of-type(1) [data-test-instructor]`;
+    const firstLmFirstOffering = `${materials}:nth-of-type(1) [data-test-date]`;
     const firstLmDownloadLink = `${firstLmTitle} a:nth-of-type(2)`;
 
-    const secondLmTitle = `${materials}:nth-of-type(2) td:nth-of-type(3)`;
+    const secondLmTitle = `${materials}:nth-of-type(2) [data-test-title]`;
     const secondLmLink = `${secondLmTitle} a`;
     const secondLmTypeIcon = `${secondLmTitle} .fa-link`;
 
-    const secondLmCourseTitle = `${materials}:nth-of-type(2) td:nth-of-type(2)`;
-    const secondLmSessionTitle = `${materials}:nth-of-type(2) td:nth-of-type(1)`;
-    const secondLmInstructor = `${materials}:nth-of-type(2) td:nth-of-type(4)`;
-    const secondLmFirstOffering = `${materials}:nth-of-type(2) td:nth-of-type(5)`;
+    const secondLmCourseTitle = `${materials}:nth-of-type(2) [data-test-course-title]`;
+    const secondLmSessionTitle = `${materials}:nth-of-type(2) [data-test-session-title]`;
+    const secondLmInstructor = `${materials}:nth-of-type(2) [data-test-instructor]`;
+    const secondLmFirstOffering = `${materials}:nth-of-type(2) [data-test-date]`;
 
-    const thirdLmTitle = `${materials}:nth-of-type(3) td:nth-of-type(3)`;
+    const thirdLmTitle = `${materials}:nth-of-type(3) [data-test-title]`;
     const thirdLmLink = `${thirdLmTitle} a`;
     const thirdLmTypeIcon = `${thirdLmTitle} .fa-paragraph`;
-    const thirdLmCourseTitle = `${materials}:nth-of-type(3) td:nth-of-type(2)`;
-    const thirdLmSessionTitle = `${materials}:nth-of-type(3) td:nth-of-type(1)`;
-    const thirdLmInstructor = `${materials}:nth-of-type(3) td:nth-of-type(4)`;
-    const thirdLmFirstOffering = `${materials}:nth-of-type(3) td:nth-of-type(5)`;
+    const thirdLmCourseTitle = `${materials}:nth-of-type(3) [data-test-course-title]`;
+    const thirdLmSessionTitle = `${materials}:nth-of-type(3) [data-test-session-title]`;
+    const thirdLmInstructor = `${materials}:nth-of-type(3) [data-test-instructor]`;
+    const thirdLmFirstOffering = `${materials}:nth-of-type(3) [data-test-date]`;
 
-    const fourthLmTitle = `${materials}:nth-of-type(4) td:nth-of-type(3)`;
+    const fourthLmTitle = `${materials}:nth-of-type(4) [data-test-title]`;
     const fourthLmLink = `${fourthLmTitle} a`;
     const fourthLmTypeIcon = `${fourthLmTitle} .fa-file`;
-    const fourthLmCourseTitle = `${materials}:nth-of-type(4) td:nth-of-type(2)`;
-    const fourthLmSessionTitle = `${materials}:nth-of-type(4) td:nth-of-type(1)`;
-    const fourthLmInstructor = `${materials}:nth-of-type(4) td:nth-of-type(4)`;
-    const fourthLmFirstOffering = `${materials}:nth-of-type(4) td:nth-of-type(5)`;
+    const fourthLmCourseTitle = `${materials}:nth-of-type(4) [data-test-course-title]`;
+    const fourthLmSessionTitle = `${materials}:nth-of-type(4) [data-test-session-title]`;
+    const fourthLmInstructor = `${materials}:nth-of-type(4) [data-test-instructor]`;
+    const fourthLmFirstOffering = `${materials}:nth-of-type(4) [data-test-date]`;
 
-    const fifthLmTitle = `${materials}:nth-of-type(5) td:nth-of-type(3)`;
+    const fifthLmTitle = `${materials}:nth-of-type(5) [data-test-title]`;
     const fifthLmTypeIcon = `${fifthLmTitle} .fa-clock`;
-    const fifthLmCourseTitle = `${materials}:nth-of-type(5) td:nth-of-type(2)`;
-    const fifthLmSessionTitle = `${materials}:nth-of-type(5) td:nth-of-type(1)`;
-    const fifthLmInstructor = `${materials}:nth-of-type(5) td:nth-of-type(4)`;
-    const fifthLmFirstOffering = `${materials}:nth-of-type(5) td:nth-of-type(5)`;
+    const fifthLmCourseTitle = `${materials}:nth-of-type(5) [data-test-course-title]`;
+    const fifthLmSessionTitle = `${materials}:nth-of-type(5) [data-test-session-title]`;
+    const fifthLmInstructor = `${materials}:nth-of-type(5) [data-test-instructor]`;
+    const fifthLmFirstOffering = `${materials}:nth-of-type(5) [data-test-date]`;
 
     const courseListOptions = '.course-filter option';
     const allCourses = `${courseListOptions}:nth-of-type(1)`;
@@ -138,25 +138,25 @@ module('Integration | Component | my materials', function(hooks) {
     const fourthCourse = `${courseListOptions}:nth-of-type(5)`;
     const fifthCourse = `${courseListOptions}:nth-of-type(6)`;
 
-    assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
-    assert.equal(find(firstLmLink).getAttribute('href').trim(), 'http://myhost.com/url1?inline');
+    assert.equal(find(firstLmLink).textContent.trim(), 'title1');
+    assert.equal(find(firstLmLink).href.trim(), 'http://myhost.com/url1?inline');
     assert.equal(findAll(firstLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(firstLmSessionTitle).textContent.trim(), 'session1title');
     assert.equal(find(firstLmCourseTitle).textContent.trim(), 'course1title');
     assert.equal(find(firstLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
     assert.equal(find(firstLmFirstOffering).textContent.trim(), '02/02/2003');
-    assert.equal(find(firstLmDownloadLink).getAttribute('href').trim(), 'http://myhost.com/url1');
+    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
 
-    assert.equal(find(secondLmTitle).textContent.trim(), 'title2');
-    assert.equal(find(secondLmLink).getAttribute('href').trim(), 'http://myhost.com/url2');
+    assert.equal(find(secondLmLink).textContent.trim(), 'title2');
+    assert.equal(find(secondLmLink).href.trim(), 'http://myhost.com/url2');
     assert.equal(findAll(secondLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(secondLmSessionTitle).textContent.trim(), 'session2title');
     assert.equal(find(secondLmCourseTitle).textContent.trim(), 'course2title');
     assert.equal(find(secondLmInstructor).textContent.trim(), 'Instructor1name, Instructor2name');
     assert.equal(find(secondLmFirstOffering).textContent.trim(), '02/02/2016');
 
-    assert.equal(find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
+    assert.equal(find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'Citationtitle3citationtext');
     assert.equal(findAll(thirdLmLink).length, 0);
     assert.equal(findAll(thirdLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(thirdLmSessionTitle).textContent.trim(), 'session3title');
@@ -164,8 +164,8 @@ module('Integration | Component | my materials', function(hooks) {
     assert.equal(find(thirdLmInstructor).textContent.trim(), '');
     assert.equal(find(thirdLmFirstOffering).textContent.trim(), '02/02/2020');
 
-    assert.equal(find(fourthLmTitle).textContent.trim(), 'title4');
-    assert.equal(find(fourthLmLink).getAttribute('href').trim(), 'http://myhost.com/document.txt');
+    assert.equal(find(fourthLmLink).textContent.trim(), 'title4');
+    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
     assert.equal(findAll(fourthLmTypeIcon).length, 1, 'LM type icon is present.');
     assert.equal(find(fourthLmSessionTitle).textContent.trim(), 'session4title');
     assert.equal(find(fourthLmCourseTitle).textContent.trim(), 'course4title');
@@ -202,7 +202,7 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
@@ -227,8 +227,8 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
-    const secondLmTitle = `${materials}:nth-of-type(2) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
+    const secondLmTitle = `${materials}:nth-of-type(2) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
@@ -254,7 +254,7 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
@@ -279,7 +279,7 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
@@ -304,7 +304,7 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');
@@ -404,7 +404,7 @@ module('Integration | Component | my materials', function(hooks) {
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
-    const firstLmTitle = `${materials}:nth-of-type(1) td:nth-of-type(3)`;
+    const firstLmTitle = `${materials}:nth-of-type(1) [data-test-title] a`;
 
     assert.equal(findAll(materials).length, 5);
     assert.equal(find(firstLmTitle).textContent.trim(), 'title1');

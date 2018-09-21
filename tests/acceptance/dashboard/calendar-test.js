@@ -89,13 +89,15 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       name: 'start of month',
       startDate: startOfMonth.format(),
-      endDate: startOfMonth.clone().add(1, 'hour').format()
+      endDate: startOfMonth.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'end of month',
       startDate: endOfMonth.format(),
-      endDate: endOfMonth.clone().add(1, 'hour').format()
+      endDate: endOfMonth.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=calendar&view=month');
     assert.equal(currentRouteName(), 'dashboard');
@@ -115,13 +117,15 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       name: 'start of week',
       startDate: startOfWeek.format(),
-      endDate: startOfWeek.clone().add(1, 'hour').format()
+      endDate: startOfWeek.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'end of week',
       startDate: endOfWeek.format(),
-      endDate: endOfWeek.clone().add(1, 'hour').format()
+      endDate: endOfWeek.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=calendar');
     assert.equal(currentRouteName(), 'dashboard');
@@ -141,19 +145,22 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'tomorow',
       startDate: tomorow.format(),
-      endDate: tomorow.clone().add(1, 'hour').format()
+      endDate: tomorow.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'yesterday',
       startDate: yesterday.format(),
-      endDate: yesterday.clone().add(1, 'hour').format()
+      endDate: yesterday.clone().add(1, 'hour').format(),
+      lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=calendar&view=day');
     assert.equal(currentRouteName(), 'dashboard');

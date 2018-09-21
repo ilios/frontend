@@ -11,7 +11,7 @@ module('Integration | Component | learning material table', function(hooks) {
   test('it renders', async function(assert) {
     const table = 'table';
     const rows = `${table} tbody tr`;
-    const title = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
+    const title = `${rows}:nth-of-type(1) td:nth-of-type(1) [data-test-title]`;
     const owner = `${rows}:nth-of-type(1) td:nth-of-type(2)`;
     const required = `${rows}:nth-of-type(1) td:nth-of-type(3)`;
     const notes = `${rows}:nth-of-type(1) td:nth-of-type(4)`;

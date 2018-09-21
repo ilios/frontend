@@ -23,7 +23,7 @@
                 type=(get (await item.learningMaterial) "type")
                 mimetype=(get (await item.learningMaterial) "mimetype")
               }}
-              {{get (await item.learningMaterial) "title"}}
+              <span data-test-title>{{get (await item.learningMaterial) "title"}}</span>
             </span>
             <span class="details">
               {{capitalize item.learningMaterial.type}},
