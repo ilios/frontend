@@ -7,7 +7,6 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
-import { percySnapshot } from 'ember-percy';
 
 let url = '/instructorgroups/1';
 
@@ -53,7 +52,6 @@ module('Acceptance | Instructor Group Details', function(hooks) {
 
   test('check fields', async function(assert) {
     await visit(url);
-    percySnapshot(assert);
     assert.equal(currentRouteName(), 'instructorGroup');
     assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')), getText('school 0 > '));
     assert.equal(await getElementText(find('[data-test-group-title]')), getText('instructor group 0'));
@@ -90,7 +88,6 @@ module('Acceptance | Instructor Group Details', function(hooks) {
     await fillIn(search, 'guy');
     let searchResults = findAll(results);
     assert.equal(searchResults.length, 6);
-    percySnapshot(assert);
     assert.equal(await getElementText(searchResults[0]), getText('5 Results'));
     assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
     assert.ok(searchResults[1].classList.contains('active'));

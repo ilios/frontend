@@ -8,7 +8,6 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
-import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | FourOhFour', function(hooks) {
   setupApplicationTest(hooks);
@@ -27,7 +26,6 @@ module('Acceptance | FourOhFour', function(hooks) {
   test('visiting /nothing', async function(assert) {
     await visit('/nothing');
 
-    percySnapshot(assert);
     assert.equal(currentRouteName(), 'fourOhFour');
   });
 });

@@ -68,15 +68,6 @@ module.exports = function (environment) {
         turnAuditOff: process.env.SKIP_A11Y || false,
         visualNoiseLevel: 1,
       },
-      percy: {
-        breakpointsConfig: {
-          mobile: 375,
-          tablet: 768,
-          laptop: 1280,
-          desktop: 1920 // percy doesn't support anything this wide yet, included for reference
-        },
-        defaultBreakpoints: ['mobile', 'laptop']
-      }
     },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,

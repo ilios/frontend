@@ -8,7 +8,6 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
-import { percySnapshot } from 'ember-percy';
 
 module('Acceptance | Instructor Groups', function(hooks) {
   setupApplicationTest(hooks);
@@ -52,7 +51,6 @@ module('Acceptance | Instructor Groups', function(hooks) {
 
       assert.expect(7);
       await visit('/instructorgroups');
-      percySnapshot(assert);
       assert.equal(2, findAll('.list tbody tr').length);
       assert.equal(await getElementText('.list tbody tr:nth-of-type(1) td:nth-of-type(1)'),getText(firstInstructorgroup.title));
       assert.equal(await getElementText('.list tbody tr:nth-of-type(1) td:nth-of-type(2)'), 5);
@@ -121,10 +119,8 @@ module('Acceptance | Instructor Groups', function(hooks) {
       let newTitle = 'new test tile';
       await click('.actions button');
       await fillIn('.newinstructorgroup-title input', newTitle);
-      percySnapshot(assert);
       await click('.new-instructorgroup .done');
       assert.equal(await getElementText(find('.saved-result')), getText(newTitle + 'Saved Successfully'));
-      percySnapshot('add new instructorgroup saved');
     });
 
     test('cancel adding new instructorgroup', async function(assert) {
@@ -154,7 +150,6 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
-      percySnapshot(assert);
       await click('.confirm-buttons .remove');
       assert.equal(0, findAll('.list tbody tr').length);
     });
