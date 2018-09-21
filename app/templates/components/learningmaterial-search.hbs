@@ -16,7 +16,10 @@
         <li {{action (perform addLearningMaterial learningMaterial)}}
           class={{if (contains learningMaterial (await currentMaterials)) "disabled" ""}}
         >
-          <h4 class="learning-material-title">{{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}} {{learningMaterial.title}}</h4>
+          <h4 class="learning-material-title">
+            {{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}}
+            <span data-test-title>{{learningMaterial.title}}</span>
+          </h4>
           <span class="learning-material-description">{{{learningMaterial.description}}}</span>
           {{#if learningMaterial.status.title}}
             <span class="learning-material-status">{{learningMaterial.status.title}}</span>

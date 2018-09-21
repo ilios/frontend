@@ -35,7 +35,9 @@
             click=(action (mut primaryCohort) null)
           }}
         {{/if}}
-        {{get (await primaryCohort.school) "title"}} <strong>{{get (await primaryCohort.program) "title"}}</strong> {{primaryCohort.title}}
+        <span data-test-title>
+          {{get (await primaryCohort.school) "title"}} <strong>{{get (await primaryCohort.program) "title"}}</strong> {{primaryCohort.title}}
+        </span>
       {{/if}}
     {{else}}
       {{t "general.none"}}
@@ -66,7 +68,9 @@
                   click=(action "removeSelectedCohort" cohort)
                 }}
               {{/if}}
-              {{get (await cohort.school) "title"}} <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
+              <span data-test-title>
+                {{get (await cohort.school) "title"}} <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
+              </span>
             {{/if}}
           </li>
         {{/each}}
@@ -114,7 +118,9 @@
                   title=(t "general.addCohort")
                   click=(action "addSelectedCohort" cohort)
                 }}
-                <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
+                <span data-test-title>
+                  <strong>{{get (await cohort.program) "title"}}</strong> {{cohort.title}}
+                </span>
               </li>
             {{/each}}
           </ul>

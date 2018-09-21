@@ -651,9 +651,9 @@
     ember-cli-babel "^6.12.0"
     ember-cli-htmlbars-inline-precompile "^1.0.0"
 
-"@fortawesome/ember-fontawesome@0.1.5":
-  version "0.1.5"
-  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.5.tgz#2354b205cd30bba91f5e54587a9ed0c79bd9d0de"
+"@fortawesome/ember-fontawesome@0.1.7":
+  version "0.1.7"
+  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.7.tgz#c8c6c16faae795e6f51d7a267465f02d3f0309fa"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.0"
     broccoli-file-creator "^1.1.1"
@@ -7530,11 +7530,11 @@ ignore@^4.0.0, ignore@^4.0.2:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
-ilios-common@19.1.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-19.1.0.tgz#e7e5da8914877ed3259ac0daac16f6b90742fa8b"
+ilios-common@19.2.0:
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-19.2.0.tgz#b934d73784c0188324700f1b785c6abf9cb84f1b"
   dependencies:
-    "@fortawesome/ember-fontawesome" "0.1.5"
+    "@fortawesome/ember-fontawesome" "0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
     "@fortawesome/free-regular-svg-icons" "^5.1.0"
     "@fortawesome/free-solid-svg-icons" "^5.1.0"
@@ -7543,7 +7543,7 @@ ilios-common@19.1.0:
     "@fortawesome/pro-solid-svg-icons" "^5.1.0"
     elemental-calendar "^0.1.0"
     ember-attacher "^0.13.5"
-    ember-cli-babel "^7.1.0"
+    ember-cli-babel "^6.16.0"
     ember-cli-clipboard "^0.9.0"
     ember-cli-google-fonts "^2.16.2"
     ember-cli-htmlbars "^3.0.0"

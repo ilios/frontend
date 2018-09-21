@@ -25,8 +25,8 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', [user2, user1]);
 
     await render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
 
     assert.equal(findAll(directors).length, 1);
     assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
@@ -45,7 +45,7 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('administrators', [user1]);
 
     await render(hbs`{{leadership-list showDirectors=false administrators=administrators}}`);
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
 
     assert.equal(findAll(administrators).length, 1);
     assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
@@ -61,7 +61,7 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('directors', [user1]);
 
     await render(hbs`{{leadership-list showAdministrators=false directors=directors}}`);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
 
     assert.equal(findAll(directors).length, 1);
     assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
@@ -102,15 +102,17 @@ module('Integration | Component | leadership list', function(hooks) {
     await render(hbs`{{leadership-list directors=directors administrators=administrators}}`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const directorNames = `${directors} [data-test-name]`;
     const disabledDirectors = `${directors} .fa-user-times`;
+    const administratorNames = `${administrators} [data-test-name]`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
 
     assert.equal(findAll(directors).length, 1);
     assert.equal(findAll(disabledDirectors).length, 0);
-    assert.equal(findAll(directors)[0].textContent.trim(), 'a b person');
+    assert.equal(findAll(directorNames)[0].textContent.trim(), 'a b person');
     assert.equal(findAll(administrators).length, 2);
     assert.equal(findAll(disabledAdministrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), 'a b person');
-    assert.equal(findAll(administrators)[1].textContent.trim(), 'b a person');
+    assert.equal(findAll(administratorNames)[0].textContent.trim(), 'a b person');
+    assert.equal(findAll(administratorNames)[1].textContent.trim(), 'b a person');
   });
 });

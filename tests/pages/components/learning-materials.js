@@ -26,7 +26,7 @@ export default {
     scope: '.detail-learningmaterials-content table',
     itemScope: 'tbody tr',
     item: {
-      title: text('td', { at: 0 }),
+      title: text('td [data-test-title]', { at: 0 }),
       owner: text('td', { at: 1 }),
       required: text('td', { at: 2 }),
       notes: text('td', { at: 3 }),
@@ -41,7 +41,7 @@ export default {
     scope: '.lm-search-results',
     itemScope: '> li',
     item: {
-      title: text('h4'),
+      title: text('[data-test-title]'),
       description: text('learning-material-description'),
       hasFileIcon: isVisible('.fa-file'),
       properties: collection({
@@ -78,9 +78,9 @@ export default {
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
     uploadDate: text('.upload-date'),
-    downloadText: text('.downloadurl'),
+    downloadText: text('.downloadurl a'),
     downloadUrl: attribute('href', '.downloadurl a'),
-    link: text('.link'),
+    link: text('.link a'),
     citation: text('.citation'),
     hasCopyrightPermission: isVisible('.copyrightpermission'),
     hasCopyrightRationale: isVisible('.copyrightrationale'),

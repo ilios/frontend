@@ -207,13 +207,15 @@ module('Integration | Component | leadership manager', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const disabledDirectors = `${directors} .fa-user-times`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
+    const firstAdministratorName = `${administrators}:nth-of-type(1) [data-test-name]`;
+    const secondAdministratorName = `${administrators}:nth-of-type(2) [data-test-name]`;
 
     assert.equal(findAll(directors).length, 1);
     assert.equal(findAll(disabledDirectors).length, 0);
     assert.equal(findAll(directors)[0].textContent.trim(), '0 guy M. Mc0son');
     assert.equal(findAll(administrators).length, 2);
     assert.equal(findAll(disabledAdministrators).length, 1);
-    assert.equal(findAll(administrators)[0].textContent.trim(), '0 guy M. Mc0son');
-    assert.equal(findAll(administrators)[1].textContent.trim(), '1 guy M. Mc1son');
+    assert.equal(find(firstAdministratorName).textContent.trim(), '0 guy M. Mc0son');
+    assert.equal(find(secondAdministratorName).textContent.trim(), '1 guy M. Mc1son');
   });
 });

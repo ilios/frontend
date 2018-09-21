@@ -16,11 +16,13 @@ module('Integration | Component | program leadership expanded', function(hooks) 
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
+      enabled: true,
     });
     let user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
+      enabled: true,
     });
     let program = EmberObject.create({
       directors: resolve([user1, user2]),

@@ -16,11 +16,13 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
+      enabled: true,
     });
     let user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
+      enabled: true,
     });
     let report = EmberObject.create({
       administrators: resolve([user1, user2]),

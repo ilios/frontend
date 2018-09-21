@@ -48,7 +48,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const externalId = `${blocks}:nth-of-type(2) span`;
     const end = `${blocks}:nth-of-type(3) span`;
     const level = `${blocks}:nth-of-type(4) span`;
-    const status = `${blocks}:nth-of-type(5) span:nth-of-type(1)`;
+    const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-text]`;
 
     assert.equal(find(title).textContent.trim(), 'title');
     assert.ok(find(materialsIcon).classList.contains('fa-archive'));

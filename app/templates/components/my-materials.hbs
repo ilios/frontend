@@ -67,9 +67,9 @@
       <tbody>
         {{#each (sort-by sortBy filteredMaterials) as |lmObject|}}
           <tr>
-            <td colspan="3">{{lmObject.sessionTitle}}</td>
-            <td colspan="3">{{lmObject.courseTitle}}</td>
-            <td colspan="3">
+            <td colspan="3" data-test-session-title>{{lmObject.sessionTitle}}</td>
+            <td colspan="3" data-test-course-title>{{lmObject.courseTitle}}</td>
+            <td colspan="3" data-test-title>
               {{#if lmObject.isBlanked}}
                 <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
                 {{lmObject.title}}
@@ -93,13 +93,13 @@
                 {{/if}}
               {{/if}}
             </td>
-            <td colspan="1">
+            <td colspan="1" data-test-instructor>
               {{big-text
                 length=25
                 text=(join ", " (sort-by (action "sortString") lmObject.instructors))
               }}
             </td>
-            <td>
+            <td data-test-date>
               {{#if lmObject.firstOfferingDate}}
                 {{moment-format lmObject.firstOfferingDate "L"}}
               {{else}}

@@ -77,7 +77,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
 
     return settled().then(() => {
       assert.equal(findAll('.draggable-object').length, 2);
-      assert.equal(find('.draggable-object:nth-of-type(1) .title').textContent.trim(), lm2.get('title'));
+      assert.equal(find('.draggable-object:nth-of-type(1) [data-test-title]').textContent.trim(), lm2.get('title'));
       assert.equal(findAll('.draggable-object:nth-of-type(1) .lm-type-icon .fa-paragraph').length, 1, 'Shows LM type icon.');
 
       assert.equal(
@@ -85,7 +85,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
         `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(/[\s\n\t]+/g, '')
       );
 
-      assert.equal(find('.draggable-object:nth-of-type(2) .title').textContent.trim(), lm1.get('title'));
+      assert.equal(find('.draggable-object:nth-of-type(2) [data-test-title]').textContent.trim(), lm1.get('title'));
       assert.equal(findAll('.draggable-object:nth-of-type(2) .lm-type-icon .fa-file-pdf').length, 1, 'Shows LM type icon.');
 
       assert.equal(
