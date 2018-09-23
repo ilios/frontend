@@ -21,7 +21,9 @@ module('Integration | Component | sessions-grid-offering-table', function(hooks)
   test('it renders', async function (assert) {
     const session = this.server.create('session');
     this.server.createList('offering', 3, {
-      session
+      session,
+      startDate: moment().hour(8).toDate(),
+      endDate: moment().hour(8).add(1, 'hour').toDate(),
     });
     this.server.createList('offering', 3, {
       session,
