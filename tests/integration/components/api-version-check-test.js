@@ -2,10 +2,9 @@ import Service from '@ember/service';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import ENV from 'ilios/config/environment';
-import { schedule } from '@ember/runloop';
 
 const { apiVersion } = ENV.APP;
 
@@ -19,10 +18,9 @@ module('Integration | Component | api version check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);
     await render(hbs`{{api-version-check}}`);
-    await schedule('afterRender', () => {
-      assert.equal(document.querySelectorAll(warningOverlay).length, 0);
-    });
+    await waitFor('[data-test-load-finished]');
     await settled();
+    assert.equal(document.querySelectorAll(warningOverlay).length, 0);
   });
 
   test('shows warning on mismatch', async function(assert) {
@@ -32,9 +30,8 @@ module('Integration | Component | api version check', function(hooks) {
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);
     await render(hbs`{{api-version-check}}`);
-    await schedule('afterRender', () => {
-      assert.equal(document.querySelectorAll(warningOverlay).length, 1);
-    });
+    await waitFor('[data-test-load-finished]');
     await settled();
+    assert.equal(document.querySelectorAll(warningOverlay).length, 1);
   });
 });

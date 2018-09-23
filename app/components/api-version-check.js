@@ -2,6 +2,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import ENV from 'ilios/config/environment';
 import { task, timeout } from 'ember-concurrency';
+import { readOnly } from '@ember/object/computed';
 
 const { apiVersion } = ENV.APP;
 
@@ -12,6 +13,7 @@ export default Component.extend({
   countdownToUpdate: null,
   updatePending: false,
   unableToFindUpdate: false,
+  'data-test-load-finished': readOnly('loadAttributes.lastSuccessful.value'),
 
   didInsertElement() {
     this.loadAttributes.perform();
@@ -34,6 +36,7 @@ export default Component.extend({
       }
     }
     this.set('versionMismatch', versionMismatch);
+    return true; //always return true to update data-test-load-finished property
   }).drop(),
   countdown: task(function* () {
     this.set('updateAvailable', true);
