@@ -4,7 +4,7 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find, triggerEvent } from '@ember/test-helpers';
+import { render, settled, click, findAll, find, triggerEvent, waitUntil } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import Response from 'ember-cli-mirage/response';
@@ -485,6 +485,8 @@ module('Integration | Component | bulk new users', function(hooks) {
   test('dont create authentication if username is not set', async function(assert) {
     assert.expect(2);
     this.set('nothing', parseInt);
+    const proposedNewUsers = '[data-test-proposed-new-users]';
+    const waitSaving = '[data-test-wait-saving]';
     await render(hbs`{{bulk-new-users close=(action nothing)}}`);
 
     let users = [
@@ -492,6 +494,9 @@ module('Integration | Component | bulk new users', function(hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
     await click('.done');
+    await waitUntil(() => {
+      return findAll(proposedNewUsers).length === 0 && findAll(waitSaving).length === 0;
+    });
     await settled();
     assert.equal(this.server.db.users[0].firstName, 'jasper');
     assert.equal(this.server.db.users[0].authenticationId, null);
