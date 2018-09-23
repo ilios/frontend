@@ -60,7 +60,7 @@
   {{#if parseFile.isRunning}}
     <div class="file-is-loading">{{loading-spinner}}</div>
   {{else if (gte proposedUsers.length 1)}}
-    <div  class="proposed-new-users">
+    <div class="proposed-new-users" data-test-proposed-new-users>
       <table>
         <thead>
           <tr>
