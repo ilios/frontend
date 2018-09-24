@@ -1,6 +1,8 @@
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
 import { settled } from '@ember/test-helpers';
-import { run } from '@ember/runloop';
+import $ from 'jquery';
+
+import { fillInFroalaEditor as froalaHelper } from 'ember-froala-editor/test-support';
 
 export function fillInFroalaEditor(selector, options = {}) {
   return {
@@ -8,20 +10,9 @@ export function fillInFroalaEditor(selector, options = {}) {
 
     get() {
       return async function (html) {
-        const $editor = findElementWithAssert(this, selector, options);
-        
-        // Convert SafeStrings to regular string
-        html = (
-          html && typeof html.toString === 'function' ?
-            html.toString() :
-            ''
-        );
-
-        // Apply html via Froala Editor method and trigger a change event
-        run(() => {
-          $editor.froalaEditor('html.set', html);
-          $editor.froalaEditor('undo.saveStep');
-        });
+        const element = findElementWithAssert(this, selector, options);
+        const $editor = $(element);
+        froalaHelper($editor, html);
 
         return settled();
       };
@@ -34,8 +25,9 @@ export function froalaEditorValue(selector, options = {}) {
     isDescriptor: true,
 
     get() {
-      const editor = findElementWithAssert(this, selector, options);
-      return editor.froalaEditor('html.get');
+      const element = findElementWithAssert(this, selector, options);
+      const $editor = $(element);
+      return $editor.froalaEditor('html.get');
     }
   };
 }
