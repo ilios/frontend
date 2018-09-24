@@ -1,9 +1,6 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import SortableObjectiveList from 'ilios/mixins/sortable-objective-list';
-
-const { alias } = computed;
 
 export default Component.extend(SortableObjectiveList, {
   init(){
@@ -13,7 +10,6 @@ export default Component.extend(SortableObjectiveList, {
   classNames: ['course-objective-list'],
   objectivesForRemovalConfirmation: null,
   editable: true,
-  course: alias('subject'),
 
   actions: {
     remove(objective){

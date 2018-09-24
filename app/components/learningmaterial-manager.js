@@ -63,11 +63,22 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isLink: equal('type', 'link'),
   isCitation: equal('type', 'citation'),
 
-  canEditTitle: computed('learningMaterial.learningMaterial.courseLearningMaterials.[]', 'learningMaterial.learningMaterial.sessionLearningMaterials.[]', async function() {
+  parentMaterial: computed('learningMaterial.learningMaterial', async function () {
     const learningMaterial = this.get('learningMaterial');
-    const parent = await learningMaterial.get('learningMaterial');
-    const cLmIds = parent.hasMany('courseLearningMaterials').ids();
-    const sLmIds = parent.hasMany('sessionLearningMaterials').ids();
+    return learningMaterial.get('learningMaterial');
+  }),
+  courseLearningMaterialIds: computed('parentMaterial.courseLearningMaterials.[]', async function () {
+    const parentMaterial = await this.get('parentMaterial');
+    return parentMaterial.hasMany('courseLearningMaterials').ids();
+  }),
+  sessionLearningMaterialIds: computed('parentMaterial.sessionLearningMaterials.[]', async function () {
+    const parentMaterial = await this.get('parentMaterial');
+    return parentMaterial.hasMany('sessionLearningMaterials').ids();
+  }),
+
+  canEditTitle: computed('courseLearningMaterialIds.[]', 'sessionLearningMaterialIds.[]', async function() {
+    const cLmIds = await this.get('courseLearningMaterialIds');
+    const sLmIds = await this.get('sessionLearningMaterialIds');
 
     return cLmIds.length + sLmIds.length === 1;
   }),

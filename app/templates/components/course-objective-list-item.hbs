@@ -21,7 +21,7 @@
 </td>
 <td class="text-left text-top" colspan="2">
   {{#if objective.hasParents}}
-    {{#each objective.parents as |parent|}}
+    {{#each (await objective.parents) as |parent|}}
       {{#if course.hasMultipleCohorts}}
         <strong>
           {{get (await parent.firstProgram) "title"}}
