@@ -72,7 +72,7 @@
     "ember-data": "3.4.2",
     "ember-drag-drop": "0.5.1",
     "ember-export-application-global": "^2.0.0",
-    "ember-froala-editor": "2.8.4",
+    "ember-froala-editor": "2.8.5",
     "ember-i18n-cp-validations": "3.1.0",
     "ember-inflector": "^3.0.0",
     "ember-lifeline": "^3.0.0",

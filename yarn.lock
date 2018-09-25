@@ -5438,13 +5438,13 @@ ember-factory-for-polyfill@^1.3.1:
     node-fetch "^2.0.0-alpha.9"
     rollup-plugin-babel "^3.0.7"
 
-ember-froala-editor@2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.8.4.tgz#6ec535abe1b683a8fe071b98dc3f08b62979ead9"
+ember-froala-editor@2.8.5:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.8.5.tgz#36f74a6b38dfc0ca07ce2ee6be8469997bae8e98"
   dependencies:
-    ember-cli-babel "^6.6.0"
-    ember-cli-htmlbars "^2.0.1"
-    ember-cli-version-checker "^2.0.0"
+    ember-cli-babel "^6.16.0"
+    ember-cli-htmlbars "^3.0.0"
+    ember-cli-version-checker "^2.1.2"
     froala-editor "^2.6.3"
 
 ember-get-config@^0.2.2, ember-get-config@^0.2.3, ember-get-config@^0.2.4:
