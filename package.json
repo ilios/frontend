@@ -46,7 +46,7 @@
     "ember-cli-deploy-json-config": "1.0.1",
     "ember-cli-deploy-revision-data": "1.0.0",
     "ember-cli-deploy-s3-index": "1.0.1",
-    "ember-cli-deprecation-workflow": "0.2.5",
+    "ember-cli-deprecation-workflow": "1.0.0",
     "ember-cli-document-title": "0.4.0",
     "ember-cli-file-saver": "^1.2.2",
     "ember-cli-flash": "1.6.6",
