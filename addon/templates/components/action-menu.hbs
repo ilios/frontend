@@ -4,7 +4,7 @@
   {{/if}}
   <span>{{title}}</span>
 </button>
-<ul class="rl-dropdown dropdown-menu" {{action "toggleDropdown"}}>
+<ul {{action "toggleDropdown"}} class="rl-dropdown dropdown-menu" role="button">
   {{#if dropdownExpanded}}
     {{yield}}
   {{/if}}

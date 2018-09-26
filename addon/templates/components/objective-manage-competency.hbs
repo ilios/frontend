@@ -1,16 +1,28 @@
 {{! template-lint-disable attribute-indentation }}
-<div class="objectivetitle">{{{objective.title}}}</div>
+<div class="objectivetitle">
+  {{! template-lint-disable no-triple-curlies }}
+  {{{objective.title}}}
+</div>
 
 {{#if (gt (get (await competencies) "length") 0)}}
   <ul class="parent-picker">
     {{#each (sort-by "title" (await domains)) as |domain|}}
       {{#if (contains domain.id (map-by "id" (await domainsWithNoChildren)))}}
-        <li {{action (if (eq domain.id objective.competency.id) "removeCurrentCompetency" "changeCompetency") domain}} class="competency-title clickable {{if (eq domain.id objective.competency.id) "selected"}}">
+        <li
+          class="competency-title clickable {{if (eq domain.id objective.competency.id) "selected"}}"
+        >
           <h5>
             {{#if (eq domain.id objective.competency.id)}}
-              <input type="checkbox" checked>
+              <input {{action "removeCurrentCompetency" domain}}
+                type="checkbox"
+                checked
+                role="button"
+              >
             {{else}}
-              <input type="checkbox">
+              <input {{action "changeCompetency" domain}}
+                type="checkbox"
+                role="button"
+              >
             {{/if}}
             {{domain.title}}
           </h5>
@@ -23,11 +35,16 @@
           <ul>
             {{#each (sort-by "title" (await domain.children)) as |competency|}}
               {{#if (contains competency.id (map-by "id" (await competencies)))}}
-                <li {{action (if (eq competency.id objective.competency.id) "removeCurrentCompetency" "changeCompetency") competency}} class="competency-title clickable {{if (eq competency.id objective.competency.id) "selected"}}">
+                <li class="competency-title clickable {{if (eq competency.id objective.competency.id) "selected"}}">
                   {{#if (eq competency.id objective.competency.id)}}
-                    <input type="checkbox" checked>
+                    <input {{action "removeCurrentCompetency" competency}}
+                      type="checkbox"
+                      checked
+                    >
                   {{else}}
-                    <input type="checkbox">
+                    <input {{action "changeCompetency" competency}}
+                      type="checkbox"
+                    >
                   {{/if}}
                   {{competency.title}}
                 </li>

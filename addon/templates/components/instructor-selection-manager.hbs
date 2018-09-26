@@ -2,7 +2,7 @@
   <h4>{{t "general.instructorGroups"}}</h4>
   <ul data-test-instructor-groups>
     {{#each (sort-by "title" (await instructorGroups)) as |instructorGroup|}}
-      <li {{action "removeInstructorGroup" instructorGroup}}>
+      <li {{action "removeInstructorGroup" instructorGroup}} role="button">
         {{fa-icon "users"}} {{instructorGroup.title}} {{fa-icon "times" class="remove"}}
       </li>
     {{/each}}
@@ -13,7 +13,7 @@
   <h4>{{t "general.instructors"}}</h4>
   <ul data-test-instructors>
     {{#each (sort-by "fullName" (await instructors)) as |user|}}
-      <li {{action "removeInstructor" user}}>
+      <li {{action "removeInstructor" user}} role="button">
         {{user.fullName}} {{fa-icon "times" class="remove"}}
       </li>
     {{/each}}

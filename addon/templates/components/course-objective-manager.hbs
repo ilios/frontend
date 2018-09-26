@@ -1,5 +1,8 @@
 {{! template-lint-disable attribute-indentation }}
-<div class="objectivetitle course-objective-title">{{{courseObjective.title}}}</div>
+<div class="objectivetitle course-objective-title">
+  {{! template-lint-disable no-triple-curlies }}
+  {{{courseObjective.title}}}
+</div>
 {{#unless loadAttr.isRunning}}
   {{#liquid-if (get (await cohortProxies) "length")  class="horizontal"}}
     <label class="group-picker">
@@ -29,8 +32,8 @@
             <ul>
               {{#each (await competency.objectives) as |objective|}}
                 {{#if objective.selected}}
-                  <li class="selected clickable" {{action "removeParent" objective}}>
-                    <input
+                  <li class="selected">
+                    <input {{action "removeParent" objective}}
                       type={{if
                              (await (get (await currentCohort) "allowMultipleParents"))
                              "checkbox"
@@ -38,18 +41,22 @@
                            }}
                       checked="checked"
                     >
-                    {{objective.textTitle}}
+                    <span {{action "removeParent" objective}} class="clickable" role="button">
+                      {{objective.textTitle}}
+                    </span>
                   </li>
                 {{else}}
-                  <li class="clickable" {{action (perform addParent objective)}}>
-                    <input
+                  <li>
+                    <input {{action (perform addParent objective)}}
                       type={{if
                              (await (get (await currentCohort) "allowMultipleParents"))
                              "checkbox"
                              "radio"
                            }}
                     >
-                    {{objective.textTitle}}
+                    <span {{action (perform addParent objective)}} class="clickable" role="button">
+                      {{objective.textTitle}}
+                    </span>
                   </li>
                 {{/if}}
               {{/each}}

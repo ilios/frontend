@@ -1,4 +1,4 @@
-<div class="title" {{action (action expand)}}>
+<div {{action (action expand)}} class="title" role="button">
   {{t "general.terms"}} ({{subject.terms.length}})
 </div>
 {{#if (is-pending subject.associatedVocabularies)}}

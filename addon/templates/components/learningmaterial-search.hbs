@@ -15,12 +15,16 @@
       {{#each searchResults as |learningMaterial|}}
         <li {{action (perform addLearningMaterial learningMaterial)}}
           class={{if (contains learningMaterial (await currentMaterials)) "disabled" ""}}
+          role="button"
         >
           <h4 class="learning-material-title">
             {{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}}
             <span data-test-title>{{learningMaterial.title}}</span>
           </h4>
-          <span class="learning-material-description">{{{learningMaterial.description}}}</span>
+          <span class="learning-material-description">
+            {{! template-lint-disable no-triple-curlies }}
+            {{{learningMaterial.description}}}
+          </span>
           {{#if learningMaterial.status.title}}
             <span class="learning-material-status">{{learningMaterial.status.title}}</span>
           {{/if}}

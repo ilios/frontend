@@ -1,4 +1,7 @@
-<div class="objectivetitle">{{{sessionObjective.title}}}</div>
+<div class="objectivetitle">
+  {{! template-lint-disable no-triple-curlies}}
+  {{{sessionObjective.title}}}
+</div>
 
 {{#if (await showObjectiveList) class="vertical"}}
   <div class="parent-picker">
@@ -6,12 +9,18 @@
     <ul>
       {{#each (await proxiedObjectives) as |objective|}}
         {{#if objective.selected}}
-          <li class="selected clickable" {{action "removeParent" objective}}>
+          <li {{action "removeParent" objective}}
+            class="selected clickable"
+            role="button"
+          >
             {{input type="checkbox" checked=true}}
             {{objective.textTitle}}
           </li>
         {{else}}
-          <li class="clickable" {{action "addParent" objective}}>
+          <li {{action "addParent" objective}}
+            class="clickable"
+            role="button"
+          >
             {{input type="checkbox" checked=false}}
             {{objective.textTitle}}
           </li>

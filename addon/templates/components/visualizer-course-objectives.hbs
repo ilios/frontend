@@ -32,6 +32,7 @@
         (sort-by "meta.courseObjective.title" (await objectiveWithoutMinutes))
         as |obj|
       }}
+        {{! template-lint-disable no-triple-curlies}}
         <li>{{{obj.meta.courseObjective.title}}}</li>
       {{/each}}
     </ul>

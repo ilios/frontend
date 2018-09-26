@@ -1,5 +1,6 @@
 <div {{action "collapse"}}
   class="title {{if (await showCollapsible) "clickable collapsible"}}"
+  role="button"
 >
   {{t "general.competencies"}} ({{get (await course.competencies) "length"}})
 </div>

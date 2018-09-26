@@ -3,7 +3,10 @@
 {{/if}}
 <ul class="selected-terms">
   {{#each sortedTerms as |term|}}
-    <li class={{if editable "clickable"}} {{action "remove" term}}>
+    <li {{action "remove" term}}
+      class={{if editable "clickable"}}
+      role="button"
+    >
       <span class="term-title">{{term.name}}</span>
       <span class="term-details">
         {{term.id}}
@@ -41,6 +44,7 @@
       {{#each searchResults as |term|}}
         <li {{action "add" term}}
           class={{unless term.isActive "disabled" ""}}
+          role="button"
           data-test-search-result
         >
           <span class="descriptor-name" data-test-name>{{term.name}}</span>

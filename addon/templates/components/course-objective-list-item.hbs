@@ -16,6 +16,7 @@
       {{/if}}
     {{/editable-field}}
   {{else}}
+    {{! template-lint-disable no-triple-curlies }}
     {{{objective.title}}}
   {{/if}}
 </td>
@@ -40,6 +41,7 @@
         <span {{action manageParents objective}}
           class="clickable link"
           data-test-parent
+          role="button"
         >
           {{parent.textTitle}}
         </span>
@@ -65,6 +67,7 @@
       {{#if editable}}
         <li {{action manageDescriptors objective}}
           class="clickable link"
+          role="button"
           data-test-term
         >
           {{descriptor.name}}
@@ -85,7 +88,7 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if editable}}
-    <span class="clickable remove" {{action remove objective}}>{{fa-icon "trash"}}</span>
+    <span {{action remove objective}} class="clickable remove" role="button">{{fa-icon "trash"}}</span>
   {{else}}
     {{fa-icon "trash" class="disabled"}}
   {{/if}}

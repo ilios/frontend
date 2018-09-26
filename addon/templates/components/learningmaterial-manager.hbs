@@ -47,7 +47,10 @@
         update=(action (mut notes))
       }}
     {{else}}
-      <span>{{{notes}}}</span>
+      <span>
+        {{! template-lint-disable no-triple-curlies }}
+        {{{notes}}}
+      </span>
     {{/if}}
   </div>
   <div class="item publicnotes">
@@ -76,7 +79,10 @@
   </div>
   <div class="item">
     <label>{{t "general.description"}}:</label>
-    <span class="description">{{{ description }}}</span>
+    <span class="description">
+      {{! template-lint-disable no-triple-curlies }}
+      {{{ description }}}
+    </span>
   </div>
   {{#if copyrightPermission}}
     <div class="item">
