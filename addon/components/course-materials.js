@@ -1,12 +1,10 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
 import SortableTable from 'ilios/mixins/sortable-table';
 import layout from '../templates/components/course-materials';
-
-const { Promise, map } = RSVP;
 
 export default Component.extend(SortableTable, {
   init(){
@@ -21,7 +19,7 @@ export default Component.extend(SortableTable, {
   filter: '',
   sessionLearningMaterials: computed('course.sessions.[]', function(){
     const course = this.get('course');
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       course.get('sessions').then(sessions => {
         map(sessions.toArray(), session => {
           return session.get('learningMaterials');
@@ -36,10 +34,10 @@ export default Component.extend(SortableTable, {
     });
   }),
   sessionLearningMaterialObjects: computed('sessionLearningMaterials.[]', function(){
-    return new Promise(resolve =>{
+    return new RSVPPromise(resolve =>{
       this.get('sessionLearningMaterials').then(slms => {
         map(slms.toArray(), sessionLearningMaterial => {
-          return new Promise(resolve =>{
+          return new RSVPPromise(resolve =>{
             sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
               sessionLearningMaterial.get('session').then(session => {
                 session.get('firstOfferingDate').then(firstOfferingDate => {
@@ -65,7 +63,7 @@ export default Component.extend(SortableTable, {
     });
   }),
   filteredSessionLearningMaterialObjects: computed('filter', 'sessionLearningMaterialObjects.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('sessionLearningMaterialObjects').then(objs => {
         const filter = this.get('filter');
         if (isEmpty(filter)) {
@@ -88,7 +86,7 @@ export default Component.extend(SortableTable, {
   }),
   sessions: computed('course.sessions.[]', function(){
     const course = this.get('course');
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       course.get('sessions').then(sessions => {
         map(sessions.toArray(), session => {
           return session.get('learningMaterials');
@@ -103,11 +101,11 @@ export default Component.extend(SortableTable, {
     });
   }),
   courseLearningMaterialObjects: computed('course.learningMaterials.[]', function(){
-    return new Promise(resolve =>{
+    return new RSVPPromise(resolve =>{
       const course = this.get('course');
       course.get('learningMaterials').then(clms => {
         map(clms.toArray(), courseLearningMaterial => {
-          return new Promise(resolve =>{
+          return new RSVPPromise(resolve =>{
             courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
               let obj = EmberObject.create({
                 title: learningMaterial.get('title'),

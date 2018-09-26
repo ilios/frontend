@@ -3,12 +3,10 @@ import { sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise} from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import layout from '../templates/components/print-course';
-
-const { Promise } = RSVP;
 
 export default Component.extend(SortableByPosition, {
   layout,
@@ -34,7 +32,7 @@ export default Component.extend(SortableByPosition, {
    * @public
    */
   sortedSessionProxies: computed('course.sessions.[]', 'includeUnpublishedSessions', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
 
       const course = this.get('course');
       if(!course){
@@ -50,7 +48,7 @@ export default Component.extend(SortableByPosition, {
         sortTitle: null,
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
-          return new Promise(resolve => {
+          return new RSVPPromise(resolve => {
             let session = this.get('content').get('id');
             this.get('store').query('sessionLearningMaterial', {
               filters: {
@@ -78,7 +76,7 @@ export default Component.extend(SortableByPosition, {
   }),
 
   courseLearningMaterials: computed('course', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       let course = this.get('course').get('id');
       this.get('store').query('courseLearningMaterial', {
         filters: {

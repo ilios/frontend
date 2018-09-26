@@ -2,9 +2,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import RSVP from 'rsvp';
 import layout from '../templates/components/session-objective-manager';
-const { Promise } = RSVP;
 
 const objectiveProxy = ObjectProxy.extend({
   sessionObjective: null,
@@ -18,53 +16,37 @@ export default Component.extend({
   classNames: ['objective-manager'],
   sessionObjective: null,
   'data-test-session-objective-manager': true,
-  course: computed('sessionObjective.courses.[]', function(){
-    return new Promise(resolve => {
-      let sessionObjective = this.get('sessionObjective');
-      if(!sessionObjective){
-        resolve(null);
-        return;
-      }
-      sessionObjective.get('sessions').then(function(sessions){
-        let session =  sessions.get('firstObject');
-        session.get('course').then(function(course){
-          resolve(course);
-        });
+  course: computed('sessionObjective.courses.[]', async function(){
+    const sessionObjective = this.get('sessionObjective');
+    if(!sessionObjective){
+      return null;
+    }
+    const sessions = await sessionObjective.get('sessions');
+    const session =  sessions.get('firstObject');
+    return (await session.get('course'));
+  }),
+
+  proxiedObjectives: computed('course', 'course.sortedObjectives.[]', async function(){
+    const sessionObjective = this.get('sessionObjective');
+    if(!sessionObjective){
+      return [];
+    }
+    const course = await this.get('course');
+    if(! course){
+      return [];
+    }
+    const objectives = await course.get('sortedObjectives');
+    return objectives.map(objective => {
+      return objectiveProxy.create({
+        content: objective,
+        sessionObjective: sessionObjective,
       });
     });
   }),
 
-  proxiedObjectives: computed('course', 'course.sortedObjectives.[]', function(){
-    return new Promise(resolve => {
-      let sessionObjective = this.get('sessionObjective');
-      if(!sessionObjective){
-        resolve([]);
-        return;
-      }
-      this.get('course').then(course => {
-        if(!course){
-          resolve([]);
-          return;
-        }
-        course.get('sortedObjectives').then(objectives => {
-          let objectiveProxies = objectives.map(objective => {
-            return objectiveProxy.create({
-              content: objective,
-              sessionObjective: sessionObjective,
-            });
-          });
-          resolve(objectiveProxies);
-        });
-      });
-    });
-  }),
-
-  showObjectiveList: computed('proxiedObjectives.[]', function() {
-    return new Promise(resolve => {
-      this.get('proxiedObjectives').then(objectives => {
-        resolve(objectives.length > 0);
-      });
-    });
+  showObjectiveList: computed('proxiedObjectives.[]', async function() {
+    const objectives = await this.get('proxiedObjectives');
+    return (objectives.length > 0);
   }),
 
   actions: {

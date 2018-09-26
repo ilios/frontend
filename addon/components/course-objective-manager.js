@@ -4,7 +4,7 @@ import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import { all, map, Promise } from 'rsvp';
+import { all, map, Promise as RSVPPromise } from 'rsvp';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/course-objective-manager';
 
@@ -38,7 +38,7 @@ const cohortProxy = EmberObject.extend({
   id: oneWay('cohort.id'),
   title: null,
   objectivesByCompetency: computed('objectives.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       let objectives = this.get('objectives');
       let competencies = [];
       let promises = [];
@@ -172,7 +172,7 @@ export default Component.extend({
    * @public
    */
   currentCohort: computed('selectedCohort', 'cohortProxies.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       let selectedCohort = this.get('selectedCohort');
       if (selectedCohort){
         this.get('cohortProxies').then(cohorts => {

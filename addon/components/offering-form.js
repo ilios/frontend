@@ -2,7 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise, map, filter, hash } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
 import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
@@ -10,7 +10,6 @@ import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display
 import { task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/offering-form';
 
-const { Promise, map, filter, hash } = RSVP;
 const { not } = computed;
 
 const Validations = buildValidations({
@@ -112,7 +111,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   loaded: false,
   'data-test-offering-form': true,
   associatedSchools: computed('cohorts.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       const cohorts = this.get('cohorts');
       if (isEmpty(cohorts)) {
         resolve([]);
@@ -128,7 +127,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     });
   }),
   availableInstructorGroups: computed('associatedSchools.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('associatedSchools').then(associatedSchools => {
         map(associatedSchools, school => {
           return school.get('instructorGroups');
@@ -349,9 +348,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups');
     const ids = learnerGroups.mapBy('id');
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       filter(learnerGroups, group => {
-        return new Promise(resolve => {
+        return new RSVPPromise(resolve => {
           group.get('allDescendants').then(children => {
             let selectedChildren = children.filter(child => ids.includes(child.get('id')));
             resolve(selectedChildren.length === 0);

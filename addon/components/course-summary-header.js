@@ -1,12 +1,9 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import { computed } from '@ember/object';
 import layout from '../templates/components/course-summary-header';
-
-const { Promise } = RSVP;
-
 
 export default Component.extend({
   layout,
@@ -28,7 +25,7 @@ export default Component.extend({
   }),
 
   showMaterials: computed('routing.currentRouteName', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       const routing = this.get('routing');
       resolve(routing.get('currentRouteName') !== 'course-materials');
     });

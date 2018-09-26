@@ -4,10 +4,9 @@ import layout from '../templates/components/detail-objectives';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import scrollTo from 'ilios-common/utils/scroll-to';
 
-const { Promise } = RSVP;
 const { or, notEmpty, alias } = computed;
 
 export default Component.extend({
@@ -156,7 +155,7 @@ export default Component.extend({
       }
     },
     saveNewObjective(title) {
-      return new Promise(resolve => {
+      return new RSVPPromise(resolve => {
         let newObjective = this.get('store').createRecord('objective');
         let subject = this.get('subject');
         newObjective.set('title', title);

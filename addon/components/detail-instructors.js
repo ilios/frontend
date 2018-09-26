@@ -2,10 +2,8 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP, { all } from 'rsvp';
+import { all, Promise as RSVPPromise } from 'rsvp';
 import layout from '../templates/components/detail-instructors';
-
-const { Promise } = RSVP;
 
 export default Component.extend({
   layout,
@@ -29,7 +27,7 @@ export default Component.extend({
   }),
 
   availableInstructorGroups: computed('currentUser.model', function() {
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('currentUser.model').then(model => {
         model.get('school').then(school => {
           school.get('instructorGroups').then(instructorGroups => {

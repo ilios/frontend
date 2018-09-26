@@ -2,7 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import Publishable from 'ilios-common/mixins/publishable';
@@ -12,7 +12,6 @@ import { task } from 'ember-concurrency';
 import layout from '../templates/components/session-overview';
 
 const { oneWay, sort } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -120,15 +119,15 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     }
     const user = await currentUser.get('model');
     const allRelatedCourses = await user.get('allRelatedCourses');
-    for (let course of allRelatedCourses) {
-      if (await permissionChecker.canCreateSession(course)) {
+    for (let relatedCourse of allRelatedCourses) {
+      if (await permissionChecker.canCreateSession(relatedCourse)) {
         return true;
       }
     }
     const school = await course.get('school');
     const schoolCourses = school.get('courses');
-    for (let course of schoolCourses) {
-      if (await permissionChecker.canCreateSession(course)) {
+    for (let schoolCourse of schoolCourses) {
+      if (await permissionChecker.canCreateSession(schoolCourse)) {
         return true;
       }
     }
@@ -212,7 +211,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       const title = this.get('title');
       const session = this.get('session');
       this.send('addErrorDisplayFor', 'title');
-      return new Promise((resolve, reject) => {
+      return new RSVPPromise((resolve, reject) => {
         this.validate({ on: ['title'] }).then(({validations}) => {
           if (validations.get('isValid')) {
             this.send('removeErrorDisplayFor', 'title');

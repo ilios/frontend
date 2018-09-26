@@ -2,8 +2,7 @@
 import Component from '@ember/component';
 import layout from '../templates/components/collapsed-competencies';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-const { all, Promise } = RSVP;
+import { all, Promise as RSVPPromise } from 'rsvp';
 
 export default Component.extend({
   layout,
@@ -26,7 +25,7 @@ export default Component.extend({
    * @public
    */
   summary: computed('subject.competencies.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('subject.competencies').then(competencies => {
         let promises = [];
         let schools = [];

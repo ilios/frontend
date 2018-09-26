@@ -1,10 +1,8 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import  { Promise as RSVPPromise, all, filter} from 'rsvp';
 import { computed } from '@ember/object';
 import layout from '../templates/components/objective-manage-competency';
-
-const { Promise, all, filter} = RSVP;
 
 export default Component.extend({
   layout,
@@ -12,7 +10,7 @@ export default Component.extend({
   classNames: ['objective-manager', 'objective-manage-competency'],
 
   schoolCompetencies: computed('programYear.program.school.competencies.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('programYear').then(programYear => {
         programYear.get('program').then(program => {
           program.get('school').then(school => {
@@ -26,7 +24,7 @@ export default Component.extend({
   }),
 
   programYear: computed('objective.programYears.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       const objective = this.get('objective');
       objective.get('programYears').then(programYears => {
         if (programYears.length) {
@@ -40,7 +38,7 @@ export default Component.extend({
   }),
 
   competencies: computed('programYear.competencies.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('programYear').then(programYear => {
         programYear.get('competencies').then(competencies => {
           resolve(competencies);
@@ -50,13 +48,13 @@ export default Component.extend({
   }),
 
   competenciesWithSelectedChildren: computed('schoolCompetencies.[]', 'objective.competency', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       const objective = this.get('objective');
       objective.get('competency').then(selectedCompetency => {
         if (selectedCompetency) {
           this.get('schoolCompetencies').then(competencies => {
             filter(competencies.toArray(), (competency => {
-              return new Promise(resolve => {
+              return new RSVPPromise(resolve => {
                 competency.get('treeChildren').then(children => {
                   const selectedCompetencyId = selectedCompetency.get('id');
                   const selectedChildren = children.filterBy('id', selectedCompetencyId);
@@ -75,7 +73,7 @@ export default Component.extend({
   }),
 
   domains: computed('competencies.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('competencies').then(competencies => {
         all(competencies.mapBy('domain')).then(domains => {
           resolve(domains.uniq());
@@ -85,11 +83,11 @@ export default Component.extend({
   }),
 
   domainsWithNoChildren: computed('domains.[]', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('competencies').then(competencies => {
         this.get('domains').then(domains => {
           filter(domains.toArray(), (domain => {
-            return new Promise(resolve => {
+            return new RSVPPromise(resolve => {
               domain.get('children').then(children => {
                 let availableChildren = children.filter(child => competencies.includes(child));
                 resolve(availableChildren.length === 0);

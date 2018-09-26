@@ -2,11 +2,10 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import {all, Promise as RSVPPromise} from 'rsvp';
 import layout from '../templates/components/publish-all-sessions';
 
 const { equal } = computed;
-const { all, Promise } = RSVP;
 
 export default Component.extend({
   layout,
@@ -30,12 +29,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', function(){
-    return new Promise(resolve => {
-      this.get('overridableSessions').then(overridableSessions => {
-        resolve(this.get('sessionsToOverride').get('length') === overridableSessions.length);
-      });
-    });
+  allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', async function(){
+    const overridableSessions = await this.get('overridableSessions');
+    return (this.get('sessionsToOverride').get('length') === overridableSessions.length);
   }),
 
   /**
@@ -43,14 +39,10 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  publishableSessions: computed('sessions.@each.allPublicationIssuesLength', function(){
-    return new Promise(resolve => {
-      this.get('sessions').then(sessions=>{
-        let filteredSessions = sessions.filter(session => {
-          return session.get('allPublicationIssuesLength') === 0;
-        });
-        resolve(filteredSessions);
-      });
+  publishableSessions: computed('sessions.@each.allPublicationIssuesLength', async function(){
+    const sessions = await this.get('sessions');
+    return sessions.filter(session => {
+      return (session.get('allPublicationIssuesLength') === 0);
     });
   }),
 
@@ -59,14 +51,10 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', function(){
-    return new Promise(resolve => {
-      this.get('sessions').then(sessions=>{
-        let filteredSessions = sessions.filter(session => {
-          return session.get('requiredPublicationIssues').get('length') > 0;
-        });
-        resolve(filteredSessions);
-      });
+  unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', async function(){
+    const sessions = await this.get('sessions');
+    return sessions.filter(session => {
+      return (session.get('requiredPublicationIssues').get('length') > 0);
     });
   }),
 
@@ -76,7 +64,7 @@ export default Component.extend({
    * @public
    */
   overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('sessions').then(sessions=>{
         let filteredSessions = sessions.filter(session => {
           return (
@@ -95,7 +83,7 @@ export default Component.extend({
    * @public
    */
   publishCount: computed('publishableSessions.[]','sessionsToOverride.length', function() {
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('publishableSessions').then(publishableSessions => {
         resolve(publishableSessions.length + parseInt(this.get('sessionsToOverride.length'), 10));
       });
@@ -108,7 +96,7 @@ export default Component.extend({
    * @public
    */
   scheduleCount: computed('overridableSessions.[]', 'sessionsToOverride.length', function() {
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('overridableSessions').then(overridableSessions => {
         resolve(overridableSessions.length - parseInt(this.get('sessionsToOverride.length'), 10));
       });
@@ -121,7 +109,7 @@ export default Component.extend({
    * @public
    */
   ignoreCount: computed('unPublishableSessions.[]', function() {
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       this.get('unPublishableSessions').then(unPublishableSessions => {
         resolve(unPublishableSessions.length);
       });
@@ -161,7 +149,7 @@ export default Component.extend({
       let promises = [];
 
       promises.pushObject(
-        new Promise(resolve => {
+        new RSVPPromise(resolve => {
           this.get('overridableSessions').then(overridableSessions => {
             overridableSessions.forEach(session => {
               session.set('publishedAsTbd', !asIsSessions.includes(session));
@@ -174,7 +162,7 @@ export default Component.extend({
       );
 
       promises.pushObject(
-        new Promise(resolve => {
+        new RSVPPromise(resolve => {
           this.get('publishableSessions').then(publishableSessions => {
             publishableSessions.forEach(session => {
               session.set('published', true);

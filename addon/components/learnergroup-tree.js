@@ -1,13 +1,12 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise, filter } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/learnergroup-tree';
 
 const { gt } = computed;
-const { Promise, filter } = RSVP;
 
 export default Component.extend({
   layout,
@@ -30,7 +29,7 @@ export default Component.extend({
   **/
   hasUnSelectedChildren(children){
     const selectedGroups = this.get('selectedGroups');
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       filter(children.toArray(), (child => {
         if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
           return true;

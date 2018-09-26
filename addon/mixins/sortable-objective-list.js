@@ -4,7 +4,7 @@ import RSVP from 'rsvp';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { alias } = computed;
-const { all, Promise } = RSVP;
+const { all } = RSVP;
 
 export default Mixin.create(SortableByPosition, {
   subject: null,
@@ -15,12 +15,9 @@ export default Mixin.create(SortableByPosition, {
 
   objectives: alias('subject.sortedObjectives'),
 
-  hasMoreThanOneObjective: computed('objectives.[]', function(){
-    return new Promise(resolve => {
-      this.get('objectives').then(objectives => {
-        resolve(objectives.length > 1);
-      });
-    });
+  hasMoreThanOneObjective: computed('objectives.[]', async function(){
+    const objectives = await this.get('objectives');
+    return objectives.length > 1;
   }),
 
   saveSomeObjectives(arr){

@@ -2,10 +2,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
+import { all, Promise as RSVPPromise }  from 'rsvp';
 import layout from '../templates/components/detail-terms-list';
-
-const { all, Promise } = RSVP;
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
@@ -49,7 +47,7 @@ export default Component.extend({
    * @public
    */
   sortedTerms: computed('filteredTerms.[]', function() {
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       let terms = this.get('filteredTerms');
       let promises = [];
       let proxies = [];

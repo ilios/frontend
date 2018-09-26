@@ -3,13 +3,11 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent, isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise} from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/new-session';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -41,7 +39,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', function(){
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       let selectedSessionType;
       this.get('sessionTypes').then(sessionTypes => {
         const selectedSessionTypeId = this.get('selectedSessionTypeId');

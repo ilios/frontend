@@ -140,8 +140,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
     });
 
-    const filteredCourses = await filter(courses.toArray(), async course => {
-      return permissionChecker.canCreateSession(course);
+    const filteredCourses = await filter(courses.toArray(), async co => {
+      return permissionChecker.canCreateSession(co);
     });
 
     return filteredCourses.sortBy('title');

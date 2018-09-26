@@ -3,14 +3,13 @@ import { inject as service } from '@ember/service';
 import layout from '../templates/components/course-overview';
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
 const { reads } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   externalId: [
@@ -167,7 +166,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const newDate = this.get('startDate');
       const course = this.get('course');
       this.send('addErrorDisplayFor', 'startDate');
-      return new Promise((resolve, reject) => {
+      return new RSVPPromise((resolve, reject) => {
         this.validate().then(({validations}) => {
           if (validations.get('isValid')) {
             this.send('removeErrorDisplayFor', 'startDate');
@@ -191,7 +190,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const newDate = this.get('endDate');
       const course = this.get('course');
       this.send('addErrorDisplayFor', 'endDate');
-      return new Promise((resolve, reject) => {
+      return new RSVPPromise((resolve, reject) => {
         this.validate().then(({validations}) => {
           if (validations.get('isValid')) {
             this.send('removeErrorDisplayFor', 'endDate');
@@ -215,7 +214,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const newExternalId = this.get('externalId');
       const course = this.get('course');
       this.send('addErrorDisplayFor', 'externalId');
-      return new Promise((resolve, reject) => {
+      return new RSVPPromise((resolve, reject) => {
         this.validate().then(({validations}) => {
           if (validations.get('isValid')) {
             this.send('removeErrorDisplayFor', 'externalId');

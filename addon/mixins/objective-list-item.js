@@ -1,9 +1,7 @@
 import Mixin from '@ember/object/mixin';
-import RSVP from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -36,7 +34,7 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
       const title = this.get('title');
       const objective = this.get('objective');
 
-      return new Promise((resolve, reject) => {
+      return new RSVPPromise((resolve, reject) => {
         this.validate().then(({validations}) => {
           if (validations.get('isValid')) {
             objective.set('title', title);

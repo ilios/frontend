@@ -1,11 +1,9 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { all, Promise as RSVPPromise, filter, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/detail-learnergroups-list';
-
-const { all, Promise, filter, map } = RSVP;
 
 export default Component.extend({
   layout,
@@ -53,12 +51,12 @@ export default Component.extend({
   lowestLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups').toArray();
     const ids = learnerGroups.mapBy('id');
-    return new Promise(resolve => {
+    return new RSVPPromise(resolve => {
       if (isEmpty(learnerGroups)) {
         return resolve([]);
       }
       filter(learnerGroups, group => {
-        return new Promise(resolve => {
+        return new RSVPPromise(resolve => {
           group.get('allDescendants').then(children => {
             let selectedChildren = children.filter(child => ids.includes(child.get('id')));
             resolve(selectedChildren.length === 0);
