@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import ObjectiveListItemMixin from 'ilios/mixins/objective-list-item';
+import ObjectiveListItemMixin from 'ilios-common/mixins/objective-list-item';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | objective list item', function() {

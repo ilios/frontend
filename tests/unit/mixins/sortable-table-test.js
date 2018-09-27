@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import SortableTableMixin from 'ilios/mixins/sortable-table';
+import SortableTableMixin from 'ilios-common/mixins/sortable-table';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | sortable table', function() {

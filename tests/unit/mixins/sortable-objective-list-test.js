@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import SortableObjectiveListMixin from 'ilios/mixins/sortable-objective-list';
+import SortableObjectiveListMixin from 'ilios-common/mixins/sortable-objective-list';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | sortable objective list', function() {
