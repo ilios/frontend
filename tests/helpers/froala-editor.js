@@ -1,8 +1,7 @@
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
 import { settled } from '@ember/test-helpers';
 import $ from 'jquery';
-
-import { fillInFroalaEditor as froalaHelper } from 'ember-froala-editor/test-support';
+import { run } from '@ember/runloop';
 
 export function fillInFroalaEditor(selector, options = {}) {
   return {
@@ -12,7 +11,12 @@ export function fillInFroalaEditor(selector, options = {}) {
       return async function (html) {
         const element = findElementWithAssert(this, selector, options);
         const $editor = $(element);
-        froalaHelper($editor, html);
+
+        // Apply html via Froala Editor method and trigger a change event
+        run(() => {
+          $editor.froalaEditor('html.set', `${html}`);
+          $editor.froalaEditor('undo.saveStep');
+        });
 
         return settled();
       };
