@@ -8,9 +8,6 @@
 
     {{content-for "head"}}
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ilios.css">
-
     <!-- Ilios variables set  by the web server -->
     {{content-for 'server-variables'}}
 
@@ -19,6 +16,8 @@
   <body>
     {{content-for "body"}}
 
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ilios.css">
     <script defer src="{{rootURL}}assets/vendor.js"></script>
     <script defer src="{{rootURL}}assets/ilios.js"></script>
 
