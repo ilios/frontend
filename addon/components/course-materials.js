@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
-import SortableTable from 'ilios/mixins/sortable-table';
+import SortableTable from 'ilios-common/mixins/sortable-table';
 import layout from '../templates/components/course-materials';
 
 export default Component.extend(SortableTable, {
