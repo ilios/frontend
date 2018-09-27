@@ -13,7 +13,7 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function(type, registry) {
-    // KLUDGE!
+    // ACHTUNG!
     // check if v-get helper is already registered.
     // if not, add it.
     // this is necessary in order to make this helper available to
@@ -39,5 +39,9 @@ module.exports = {
         }
       });
     }
+  },
+
+  isDevelopingAddon: function() {
+    return true;
   }
 };
