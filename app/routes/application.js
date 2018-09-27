@@ -59,8 +59,12 @@ export default Route.extend(ApplicationRouteMixin, {
 
   activate() {
     if ('serviceWorker' in navigator) {
-      const event = navigator.serviceWorker.addEventListener('controllerchange', () => {
-        window.location.reload();
+      const { controller: currentController } = navigator.serviceWorker;
+      const event = navigator.serviceWorker.addEventListener('controllerchange', async () => {
+        // only reload the page if there was a previously active controller
+        if (currentController) {
+          window.location.reload();
+        }
       });
       this.set('event', event);
     }
