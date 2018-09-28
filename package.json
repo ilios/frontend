@@ -56,7 +56,7 @@
     "ember-cli-head": "0.4.1",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
-    "ember-cli-image-transformer": "^2.0.0",
+    "ember-cli-image-transformer": "^2.1.0",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-mirage": "0.4.9",
     "ember-cli-new-version": "^1.3.0",
