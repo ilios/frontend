@@ -30,6 +30,7 @@
     "@fortawesome/pro-solid-svg-icons": "^5.1.0",
     "elemental-calendar": "^0.1.0",
     "ember-attacher": "^0.13.5",
+    "ember-auto-import": "^1.2.13",
     "ember-cli-babel": "^6.16.0",
     "ember-cli-clipboard": "^0.9.0",
     "ember-cli-google-fonts": "^2.16.2",
