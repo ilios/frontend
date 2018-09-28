@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
-import layout from '../templates/components/sessions-grid-offerings-table';
+import layout from '../templates/components/sessions-grid-offering-table';
 
 export default Component.extend({
   layout,
