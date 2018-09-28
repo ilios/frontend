@@ -1,0 +1,22 @@
+.search-box {
+  display: block;
+  position: relative;
+
+  input[type='search'] {
+    @include ilios-input;
+
+    &.search-input {
+      padding-left: 1.5rem;
+    }
+  }
+
+  .search-icon {
+    color: $base-link-color;
+    display: inline-block;
+    left: 0;
+    margin-right: 2px;
+    padding-left: 6px;
+    position: absolute;
+    top: .2rem;
+  }
+}

@@ -1,0 +1,56 @@
+@mixin sort-manager () {
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: .5rem;
+    }
+
+    .bigadd {
+      background-color: $ilios-green;
+      color: $white;
+    }
+
+    .bigcancel {
+      background-color: $ilios-red;
+      color: $white;
+    }
+  }
+
+  .content {
+    padding-top: .5rem;
+  }
+
+  .draggable-object {
+    background-color: $header-grey;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: .3rem;
+    margin-top: 10px;
+    padding: .2rem .4rem .2rem .6rem;
+    vertical-align: middle;
+
+    .fa {
+      vertical-align: top;
+    }
+  }
+
+  .sortable-objects {
+    padding: 1rem;
+  }
+
+  .draggable-object-content {
+    display: inline-block;
+
+    .details {
+      font-size: smaller;
+    }
+
+    .title {
+      display: inline-block;
+    }
+  }
+}
+
+

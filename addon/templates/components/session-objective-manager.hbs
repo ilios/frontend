@@ -1,0 +1,37 @@
+<div class="objectivetitle">
+  {{! template-lint-disable no-triple-curlies}}
+  {{{sessionObjective.title}}}
+</div>
+
+{{#if (await showObjectiveList) class="vertical"}}
+  <div class="parent-picker">
+    <h5>{{get (await course) "title"}}</h5>
+    <ul>
+      {{#each (await proxiedObjectives) as |objective|}}
+        {{#if objective.selected}}
+          <li {{action "removeParent" objective}}
+            class="selected clickable"
+            role="button"
+          >
+            {{input type="checkbox" checked=true}}
+            {{objective.textTitle}}
+          </li>
+        {{else}}
+          <li {{action "addParent" objective}}
+            class="clickable"
+            role="button"
+          >
+            {{input type="checkbox" checked=false}}
+            {{objective.textTitle}}
+          </li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+{{else}}
+  <div class="no-group">
+    <p>
+      {{t "general.missingCourseObjectivesMessage"}}
+    </p>
+  </div>
+{{/if}}

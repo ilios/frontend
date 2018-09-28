@@ -1,0 +1,73 @@
+{{#link-to "session" session}}{{t "general.backToTitle" title=session.title}}{{/link-to}}
+
+<div class="rollover-form">
+  <h3 class="title">{{t "general.copySession"}}</h3>
+
+  <p class="rollover-summary">{{t "general.copySessionSummary"}}</p>
+
+  <div class="item year-select">
+    <label>{{t "general.year"}}:</label>
+    {{#if (is-fulfilled years)}}
+      <select onchange={{action "changeSelectedYear" value="target.value"}}>
+        {{#each (await years) as |year|}}
+          <option value={{year}} selected={{is-equal year (await bestSelectedYear)}}>
+            {{year}} - {{inc year}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{loading-spinner}}
+    {{/if}}
+    {{#if
+      (and (v-get this "selectedYear" "isInvalid") (is-in showErrorsFor "selectedYear"))
+    }}
+      <span class="validation-error-message">{{v-get this "selectedYear" "message"}}</span>
+    {{/if}}
+  </div>
+
+  <div class="item course-select">
+    <label>{{t "general.targetCourse"}}:</label>
+    {{#if (is-fulfilled courses)}}
+      {{#if (get (await courses) "length")}}
+        <select onchange={{action (mut selectedCourseId) value="target.value"}}>
+          {{#each (sort-by "title" (await courses)) as |course|}}
+            <option
+              value={{course.id}}
+              selected={{is-equal course.id (get (await bestSelectedCourse) "id")}}
+            >
+              {{course.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    {{else}}
+      {{loading-spinner}}
+    {{/if}}
+    {{#if
+      (and (v-get this "selectedCourse" "isInvalid") (is-in showErrorsFor "selectedCourse"))
+    }}
+      <span class="validation-error-message">{{v-get this "selectedCourse" "message"}}</span>
+    {{/if}}
+  </div>
+
+  <div class="buttons">
+    <button {{action (perform save)}}
+      class="done text"
+      disabled={{if
+        (or save.isRunning (not (await bestSelectedYear)) (not (await bestSelectedCourse)))
+        true
+      }}
+    >
+      {{#if save.isRunning}}
+        {{loading-spinner}}
+      {{else}}
+        {{t "general.done"}}
+      {{/if}}
+    </button>
+    {{#link-to "session" session}}
+      <button class="cancel text">{{t "general.cancel"}}</button>
+    {{/link-to}}
+  </div>
+</div>

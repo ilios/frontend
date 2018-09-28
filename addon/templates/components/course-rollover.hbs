@@ -1,0 +1,124 @@
+{{#link-to "course" course}}{{t "general.backToTitle" title=course.title}}{{/link-to}}
+
+
+<div class="rollover-form">
+  <h3 class="title">{{t "general.courseRollover"}}</h3>
+
+  <p class="rollover-summary">{{t "general.courseRolloverSummary"}}</p>
+
+  <div class="item title">
+    <label>{{t "general.title"}}:</label>
+    <input
+      type="text"
+      value={{title}}
+      oninput={{pipe
+        (action "changeTitle" value="target.value")
+        (action "addErrorDisplayFor" "title")
+      }}
+      disabled={{isSaving}}
+      onkeyup={{action "addErrorDisplayFor" "title"}}
+      placeholder={{t "general.courseTitlePlaceholder"}}
+    >
+    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+    {{/if}}
+  </div>
+
+  <div class="item year-select">
+    <label>{{t "general.year"}}:</label>
+    {{#if loadUnavailableYears.isRunning}}
+      {{loading-spinner}}
+    {{else}}
+      <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
+        {{#each years as |year|}}
+          <option
+            disabled={{contains year loadUnavailableYears.lastSuccessful.value}}
+            value={{year}}
+            selected={{is-equal year selectedYear}}
+          >
+            {{year}} - {{inc year}}
+            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
+              ({{t "general.courseRolloverYearUnavailable"}})
+            {{/if}}
+          </option>
+        {{/each}}
+      </select>
+    {{/if}}
+    {{#if
+      (and (v-get this "selectedYear" "isInvalid") (is-in showErrorsFor "selectedYear"))
+    }}
+      <span class="validation-error-message">{{v-get this "selectedYear" "message"}}</span>
+    {{/if}}
+  </div>
+
+  <span
+    onclick={{toggle-action "expandAdvancedOptions" this}}
+    class="advanced-options-title {{if expandAdvancedOptions "expanded" "collapsed"}}"
+  >
+    {{t "general.advancedOptions"}}
+  </span>
+  <div class="advanced-options">
+    {{#liquid-if expandAdvancedOptions class="vertical"}}
+      <div class="item">
+        <label>
+          {{t "general.startDate"}}:<br>
+          <small>({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})</small>
+        </label>
+        {{pikaday-input
+          size=10
+          value=startDate
+          minDate=course.startDate
+          format="YYYY-MM-DD"
+          onSelection=(action (mut startDate))
+          options=(hash disableDayFn=disableDayFn course=course)
+        }}
+
+      </div>
+
+      <div class="included">
+        <span class="title">{{t "general.include"}}:</span>
+        <div class="include">
+          <input
+            type="checkbox"
+            checked={{not skipOfferings}}
+            onclick={{toggle "skipOfferings" this}}
+            data-test-skip-offerings
+          >
+          <span>{{t "general.offerings"}}</span>
+        </div>
+      </div>
+
+      <div class="cohorts">
+        <span class="title">{{t "general.selectCohortsToAttach"}}:</span>
+        {{detail-cohort-manager
+          selectedCohorts=selectedCohorts
+          school=(await course.school)
+          add="addCohort"
+          remove="removeCohort"
+        }}
+      </div>
+    {{/liquid-if}}
+  </div>
+
+  <div class="buttons">
+    <button {{action (perform save)}}
+      disabled={{if
+        (or isSaving
+          (not selectedYear)
+          (contains selectedYear loadUnavailableYears.lastSuccessful.value)
+        )
+        true
+      }}
+      class="done text"
+    >
+      {{#if isSaving}}
+        {{loading-spinner}}
+      {{else}}
+        {{t "general.done"}}
+      {{/if}}
+    </button>
+    {{#link-to "course" course}}
+      <button class="cancel text">{{t "general.cancel"}}</button>
+    {{/link-to}}
+  </div>
+</div>

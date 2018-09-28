@@ -1,0 +1,41 @@
+<div class="title">
+  {{t "general.missingItems"}} ({{course.allPublicationIssuesLength}})
+</div>
+<div class="course-publicationcheck-content">
+  <table>
+    <thead>
+      <tr>
+        <th>{{t "general.courseTitle"}}</th>
+        <th>{{t "general.cohorts"}}</th>
+        <th>{{t "general.terms"}}</th>
+        <th>{{t "general.objectives"}}</th>
+        <th>{{t "general.meshTerms"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{course.title}}</td>
+        {{#if course.cohorts.length}}
+          <td class="yes">{{t "general.yes"}} ({{course.cohorts.length}})</td>
+        {{else}}
+          <td class="no">{{t "general.no"}}</td>
+        {{/if}}
+        {{#if course.terms.length}}
+          <td class="yes">{{t "general.yes"}} ({{course.terms.length}})</td>
+        {{else}}
+          <td class="no">{{t "general.no"}}</td>
+        {{/if}}
+        {{#if course.objectives.length}}
+          <td class="yes">{{t "general.yes"}} ({{course.objectives.length}})</td>
+        {{else}}
+          <td class="no">{{t "general.no"}}</td>
+        {{/if}}
+        {{#if course.meshDescriptors.length}}
+          <td class="yes">{{t "general.yes"}} ({{course.meshDescriptors.length}})</td>
+        {{else}}
+          <td class="no">{{t "general.no"}}</td>
+        {{/if}}
+      </tr>
+    </tbody>
+  </table>
+</div>

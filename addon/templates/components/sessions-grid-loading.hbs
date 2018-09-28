@@ -1,0 +1,15 @@
+{{! template-lint-disable no-unused-block-params }}
+{{#each (repeat @count) as |empty|}}
+  <div data-test-row>
+    <span class="expand-collapse-control"></span>
+    <span class="session-grid-title">{{truncate (repeat (random 3 10) "ilios rocks") 100}}</span>
+    <span class="session-grid-type">{{repeat (random 1 3) "loading "}}</span>
+    <span class="session-grid-groups">{{random 1 99}}</span>
+    <span class="session-grid-objectives">{{random 1 99}}</span>
+    <span class="session-grid-terms">{{random 1 99}}</span>
+    <span class="session-grid-first-offering">{{moment "2005-06-24" "L LT"}}</span>
+    <span class="session-grid-offerings">{{random 1 99}}</span>
+    <span class="session-grid-status">{{fa-icon "star-half-alt"}}</span>
+    <span class="session-grid-actions"></span>
+  </div>
+{{/each}}

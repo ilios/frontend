@@ -1,0 +1,38 @@
+{{#unless loadAttr.isRunning}}
+  <div class="actions">
+    <button class="bigadd" {{action "save"}}>{{fa-icon "check"}}</button>
+    <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+  </div>
+  <div class="content">
+    {{#sortable-objects
+      sortableObjectList=sortableObjectList
+      enableSort=true
+      useSwap=true
+      sortingScope="sortingGroup"
+    }}
+      {{#each sortableObjectList as |item|}}
+        {{#draggable-object
+          content=item
+          isSortable=true
+          sortingScope="sortingGroup"
+        }}
+          {{fa-icon "arrows-alt"}}
+          <span class="draggable-object-content">
+            <span class="title">
+              {{lm-type-icon
+                type=(get (await item.learningMaterial) "type")
+                mimetype=(get (await item.learningMaterial) "mimetype")
+              }}
+              <span data-test-title>{{get (await item.learningMaterial) "title"}}</span>
+            </span>
+            <span class="details">
+              {{capitalize item.learningMaterial.type}},
+              {{t "general.ownedBy" owner=item.learningMaterial.owningUser.fullName}},
+              {{t "general.status"}}: {{item.learningMaterial.status.title}}
+            </span>
+          </span>
+        {{/draggable-object}}
+      {{/each}}
+    {{/sortable-objects}}
+  </div>
+{{/unless}}

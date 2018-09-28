@@ -1,0 +1,58 @@
+{{search-box
+  placeholder=placeholder
+  search=(perform search)
+  clear=(perform search)
+}}
+{{#if search.isRunning}}
+  <ul class="results">
+    <li>{{t "general.currentlySearchingPrompt"}}</li>
+  </ul>
+{{/if}}
+{{#if (and search.isIdle showMoreInputPrompt)}}
+  <ul class="results">
+    <li>{{t "general.moreInputRequiredPrompt"}}</li>
+  </ul>
+{{/if}}
+{{#if (and search.isIdle (gt search.lastSuccessful.value.length 0))}}
+  <ul class="results">
+    <li class="results-count">{{search.lastSuccessful.value.length}} {{t "general.results"}}</li>
+    {{#each search.lastSuccessful.value as |proxy|}}
+      {{#if proxy.isUser}}
+        {{#if proxy.isActive}}
+          <li {{action "addUser" proxy.content}}
+            class="active"
+            role="button"
+            data-test-result
+          >
+            <div class="name">{{proxy.fullName}}</div>
+            <div class="email">{{proxy.email}}</div>
+          </li>
+        {{else}}
+          <li class="inactive" data-test-result>
+            <div class="name">{{proxy.fullName}}</div>
+            <div class="email">{{proxy.email}}</div>
+          </li>
+        {{/if}}
+      {{/if}}
+      {{#if proxy.isInstructorGroup}}
+        {{#if proxy.isActive}}
+          <li {{action "addInstructorGroup" proxy.content}}
+            class="active"
+            role="button"
+            data-test-result
+          >
+            {{proxy.title}}
+          </li>
+        {{else}}
+          <li class="inactive" data-test-result>
+            {{proxy.title}}
+          </li>
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  </ul>
+{{else if searchReturned}}
+  <ul class="results">
+    <li>{{t "general.noSearchResultsPrompt"}}</li>
+  </ul>
+{{/if}}

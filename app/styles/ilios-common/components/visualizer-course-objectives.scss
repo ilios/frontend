@@ -1,0 +1,69 @@
+.visualizer-course-objectives {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+
+  .with-hours {
+    p {
+      margin-top: .5rem;
+    }
+
+    @media phone {
+      .meh {
+        font-size: 15rem;
+      }
+    }
+
+    @include for-tablet-and-up {
+      .meh {
+        font-size: 25rem;
+      }
+    }
+
+    @include for-laptop-and-up {
+      .meh {
+        font-size: 30rem;
+      }
+    }
+  }
+
+  .zero-hours {
+    p {
+      margin-top: .5rem;
+    }
+
+    h4 {
+      @include ilios-heading-h4;
+    }
+
+    li {
+      list-style-type: disc;
+      margin-left: 1rem;
+      padding-bottom: .5rem;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  &.not-icon {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: auto;
+    width: auto;
+
+    .simple-chart {
+      height: 80vh;
+    }
+
+    .simple-chart-tooltip {
+      .title {
+        p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+}

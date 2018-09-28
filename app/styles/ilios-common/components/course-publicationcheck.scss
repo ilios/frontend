@@ -1,0 +1,11 @@
+.course-publicationcheck {
+  @include detail-container($ilios-orange);
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .course-publicationcheck-content {
+    @include detail-container-content;
+  }
+}

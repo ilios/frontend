@@ -1,0 +1,53 @@
+.course-sessions {
+  @include detail-container($ilios-orange);
+  margin: .5rem 1rem 0 .5rem;
+
+  .course-sessions-header {
+    @include detail-container-header;
+  }
+
+  .title {
+    @include detail-container-title;
+  }
+
+  .actions {
+    @include detail-container-actions;
+  }
+
+  .save-result {
+    border: 1px solid $ilios-green;
+    margin: 1rem;
+    padding: .75rem;
+  }
+
+  .filter {
+    display: block;
+    margin: 1rem 0 .5rem 0;
+    text-align: right;
+    width: 100%;
+
+    input {
+      width: 90%;
+      @include for-tablet-and-up {
+        width: 300px;
+      }
+    }
+  }
+
+  .course-sessions-table {
+    @include ilios-table-colors;
+
+    border-collapse: collapse;
+    margin-top: .25rem;
+    width: 100%;
+
+    td {
+      padding: 0;
+    }
+
+    th:nth-of-type(1),
+    td:nth-of-type(1) {
+      padding: 0 .25rem;
+    }
+  }
+}

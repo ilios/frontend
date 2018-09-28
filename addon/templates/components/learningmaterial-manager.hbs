@@ -1,0 +1,250 @@
+{{#if setup.isRunning}}
+  {{loading-spinner class="loading"}}
+{{else}}
+  <div class="item displayname">
+    <label>{{t "general.displayName"}}:</label>
+    {{#if (and editable (await canEditTitle))}}
+      <input
+        type="text"
+        value={{title}}
+        oninput={{action (mut title) value="target.value"}}
+      >
+    {{else}}
+      <span>{{title}}</span>
+    {{/if}}
+  </div>
+  <div class="item status">
+    <label>{{t "general.status"}}:</label>
+    {{#if editable}}
+      {{one-way-select
+        value=statusId
+        options=(await learningMaterialStatuses)
+        optionTargetPath="id"
+        optionLabelPath="title"
+        update=(action (mut statusId))
+      }}
+    {{else}}
+      {{get (await currentStatus) "title"}}
+    {{/if}}
+  </div>
+  <div class="item required">
+    <label>{{t "general.required"}}:</label>
+    {{#if editable}}
+      {{toggle-yesno yes=required toggle=(action (mut required))}}
+    {{else}}
+      {{#if required}}
+        <span class="add">{{t "general.yes"}}</span>
+      {{else}}
+        <span class="remove">{{t "general.no"}}</span>
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="item notes">
+    <label>{{t "general.instructionalNotes"}}:</label>
+    {{#if editable}}
+      {{html-editor
+        content=notes
+        update=(action (mut notes))
+      }}
+    {{else}}
+      <span>
+        {{! template-lint-disable no-triple-curlies }}
+        {{{notes}}}
+      </span>
+    {{/if}}
+  </div>
+  <div class="item publicnotes">
+    <label>{{t "general.showNotesToStudents"}}:</label>
+    {{#if editable}}
+      {{toggle-yesno yes=publicNotes toggle=(action (mut publicNotes))}}
+    {{else}}
+      {{#if publicNotes}}
+        <span class="add">{{t "general.yes"}}</span>
+      {{else}}
+        <span class="remove">{{t "general.no"}}</span>
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="item">
+    <label>{{t "general.owner"}}:</label>
+    <span class="owninguser">{{owningUserName}}</span>
+  </div>
+  <div class="item">
+    <label>{{t "general.contentAuthor"}}:</label>
+    <span class="originalauthor">{{originalAuthor}}</span>
+  </div>
+  <div class="item">
+    <label>{{t "general.userRole"}}:</label>
+    <span class="userrole">{{userRoleTitle}}</span>
+  </div>
+  <div class="item">
+    <label>{{t "general.description"}}:</label>
+    <span class="description">
+      {{! template-lint-disable no-triple-curlies }}
+      {{{ description }}}
+    </span>
+  </div>
+  {{#if copyrightPermission}}
+    <div class="item">
+      <label>{{t "general.copyrightPermission"}}:</label>
+      {{#if copyrightPermission}}
+        <span class="copyrightpermission add">{{t "general.yes"}}</span>
+      {{else}}
+        <span class="copyrightpermission remove">{{t "general.no"}}</span>
+      {{/if}}
+    </div>
+  {{/if}}
+  {{#if copyrightRationale}}
+    <div class="item">
+      <label>{{t "general.copyrightRationale"}}:</label>
+      <span class="copyrightrationale">{{copyrightRationale}}</span>
+    </div>
+  {{/if}}
+  {{#if isCitation}}
+    <div class="item">
+      <label>{{t "general.citation"}}:</label>
+      <span class="citation">{{citation}}</span>
+    </div>
+  {{/if}}
+  {{#if isLink}}
+    <div class="item weblink">
+      <label>{{t "general.link"}}:</label>
+      <span class="link">
+        <a href={{link}} target="_blank" rel="noopener">{{link}}</a>
+        {{#copy-button clipboardText=link}}
+          {{fa-icon "copy" title=(t "general.copyLink")}}
+        {{/copy-button}}
+      </span>
+    </div>
+  {{/if}}
+  {{#if isFile}}
+    <div class="item filename">
+      <label>{{t "general.file"}}:</label>
+      <span class="downloadurl">
+        {{#if (eq mimetype "application/pdf")}}
+          <a href="{{absoluteFileUri}}?inline">
+            {{filename}}
+          </a>
+          <a href={{absoluteFileUri}} target="_blank" rel="noopener">
+            {{fa-icon "download" title=(t "general.download")}}
+          </a>
+        {{else}}
+          <a href={{absoluteFileUri}} target="_blank" rel="noopener">
+            {{filename}}
+          </a>
+        {{/if}}
+        {{#copy-button clipboardText=absoluteFileUri}}
+          {{fa-icon "copy" title=(t "general.copyLink")}}
+        {{/copy-button}}
+      </span>
+    </div>
+  {{/if}}
+  <div class="item">
+    <label>{{t "general.uploadDate"}}:</label>
+    <span class="upload-date">{{moment-format uploadDate "M-D-YYYY"}}</span>
+  </div>
+
+  <label>{{t "general.timedRelease"}}:</label>
+  {{timed-release-schedule startDate=startDate endDate=endDate}}
+
+  <div class="timed-release">
+
+    {{#if startDate}}
+      <div class="item start-date">
+        <label>{{t "general.startDate"}}:</label>
+        {{#if editable}}
+          {{pikaday-input
+            value=startDate
+            onSelection=(action "updateDate" "startDate")
+            format="M/D/YYYY"
+          }}
+        {{else}}
+          {{moment-format startDate "L"}}
+        {{/if}}
+      </div>
+
+      <div class="item start-time">
+        <label>{{t "general.startTime"}}:</label>
+        {{#if editable}}
+          {{time-picker date=startDate action=(action "updateTime" "startDate")}}
+        {{else}}
+          {{moment-format startDate "h:mm a"}}
+        {{/if}}
+      </div>
+      {{#if editable}}
+        <button class="remove-date" {{action (mut startDate null)}}>{{t "general.timedReleaseClearStartDate"}}</button>
+      {{/if}}
+    {{else if editable}}
+      <p>
+        <button {{action "addDate" "startDate"}}
+          class="add-date"
+          data-test-add-start-date
+        >
+          {{t "general.timedReleaseAddStartDate"}}
+        </button>
+      </p>
+    {{/if}}
+
+    {{#if endDate}}
+      <div class="item end-date">
+        <label>{{t "general.endDate"}}:</label>
+        {{#if editable}}
+          {{pikaday-input
+            value=endDate
+            onSelection=(action "updateDate" "endDate")
+            format="M/D/YYYY"
+          }}
+        {{else}}
+          {{moment-format endDate "L"}}
+        {{/if}}
+      </div>
+
+      <div class="item end-time">
+        <label>{{t "general.endTime"}}:</label>
+        {{#if editable}}
+          {{time-picker date=endDate action=(action "updateTime" "endDate")}}
+        {{else}}
+          {{moment-format endDate "h:mm a"}}
+        {{/if}}
+      </div>
+      {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
+        <span
+          class="validation-error-message"
+          data-test-end-date-validation-error-message
+        >
+          {{v-get this "endDate" "message"}}
+        </span>
+      {{/if}}
+      {{#if editable}}
+        <button class="remove-date" {{action (mut endDate null)}}>{{t "general.timedReleaseClearEndDate"}}</button>
+      {{/if}}
+    {{else if editable}}
+      <p><button class="add-date" {{action "addDate" "endDate"}} data-test-add-end-date>{{t "general.timedReleaseAddEndDate"}}</button></p>
+    {{/if}}
+
+
+  </div>
+
+  {{mesh-manager
+    terms=terms
+    editable=editable
+    add="addTerm"
+    remove="removeTerm"
+    targetItemTitle=title
+  }}
+
+  <div class="buttons">
+    {{#if editable}}
+      <button class="done" {{action (perform save)}} disabled={{save.isRunning}}>
+        {{#if save.isRunning}}
+          {{loading-spinner}}
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button class="cancel" {{action (action closeManager)}}>{{t "general.cancel"}}</button>
+    {{else}}
+      <button {{action (action closeManager)}}>{{t "general.close"}}</button>
+    {{/if}}
+  </div>
+{{/if}}

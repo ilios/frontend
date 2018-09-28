@@ -1,0 +1,89 @@
+.offering-form {
+  .toggle-offering-calendar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .form {
+    @include ilios-form;
+    grid-template-columns: 1fr;
+    margin-top: 1em;
+
+    @include for-laptop-and-up {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .start-date {
+      input {
+        min-width: initial;
+        width: auto;
+      }
+    }
+
+    .start-time {
+      select {
+        min-width: initial;
+        width: 5rem;
+      }
+    }
+
+    .offering-duration {
+      .duration-inputs {
+        display: flex;
+        flex-direction: column;
+
+        @include for-laptop-and-up {
+          flex-direction: row;
+        }
+      }
+    }
+
+    .hours,
+    .minutes,
+    .make-recurring-input-container {
+      align-items: center;
+      display: flex;
+
+      input {
+        margin-right: .5rem;
+        min-width: 5rem;
+        width: 5rem;
+      }
+
+      label {
+        margin-top: 0;
+        width: auto;
+      }
+    }
+
+    .make-recurring-days {
+      margin: .5rem 0;
+
+      div {
+        align-items: center;
+        display: flex;
+
+        label {
+          margin-top: 0;
+          width: auto;
+        }
+      }
+    }
+
+    .instructors,
+    .learner-groups {
+      grid-column: 1 / -1;
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+    }
+  }
+}
+
+
+.timezone {
+  color: $darker-grey;
+  font-size: .8rem;
+  margin-left: 1rem;
+}

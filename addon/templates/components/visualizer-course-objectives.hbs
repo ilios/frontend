@@ -1,0 +1,40 @@
+{{! template-lint-disable attribute-indentation }}
+{{#if (or true isIcon (gt (get (await objectiveWithMinutes) "length") 0))}}
+  {{#simple-chart
+    name="donut"
+    isIcon=isIcon
+    data=(await objectiveWithMinutes)
+    hover=(perform donutHover)
+    leave=(perform donutHover)
+
+    as |chart|
+  }}
+    {{#if tooltipContent}}
+      {{#chart.tooltip title=tooltipTitle}}
+        {{tooltipContent}}
+      {{/chart.tooltip}}
+    {{/if}}
+  {{/simple-chart}}
+
+{{else}}
+  <div class="with-hours">
+    <p>{{t "general.objectivesWithNoLink"}}</p>
+    <h4>{{fa-icon "meh" class="meh-o"}}</h4>
+  </div>
+{{/if}}
+
+{{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) "length") 0))}}
+  <div class="zero-hours">
+    <h4>{{fa-icon "exclamation-triangle" class="warning"}} {{t "general.unusedObjectives"}}:</h4>
+    <p>{{t "general.objectivesWithNoHours"}}</p>
+    <ul>
+      {{#each
+        (sort-by "meta.courseObjective.title" (await objectiveWithoutMinutes))
+        as |obj|
+      }}
+        {{! template-lint-disable no-triple-curlies}}
+        <li>{{{obj.meta.courseObjective.title}}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/unless}}

@@ -1,0 +1,39 @@
+{{#if selectedTerms}}
+  <div class="selected-terms">
+    {{#each (await listableVocabularies) as |vocab| }}
+      {{detail-terms-list
+        vocabulary=vocab
+        terms=selectedTerms
+        canEdit=true
+        remove="remove"
+      }}
+    {{/each}}
+  </div>
+{{/if}}
+{{#if (get (await assignableVocabularies) "length")}}
+  <div class="vocabulary-picker">
+    <div>
+      <label>{{t "general.selectVocabulary"}}:</label>
+      <select onchange={{action "changeSelectedVocabulary" value="target.value"}}>
+        {{#each (await assignableVocabularies) as |vocab|}}
+          <option value={{vocab.id}}>{{vocab.title}} ({{vocab.school.title}})</option>
+        {{/each}}
+      </select>
+    </div>
+    <input
+      type="search"
+      value={{termFilter}}
+      placeholder={{t "general.filterPlaceholder"}}
+      oninput={{perform setTermFilter value="target.value"}}
+    >
+  </div>
+
+  <div class="terms-picker tag-tree">
+    {{selectable-terms-list
+      selectedTerms=selectedTerms
+      terms=(await filteredTerms)
+      add="add"
+      remove="remove"
+    }}
+  </div>
+{{/if}}

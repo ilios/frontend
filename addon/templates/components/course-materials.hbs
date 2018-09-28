@@ -1,0 +1,118 @@
+{{! template-lint-disable attribute-indentation }}
+<div class="material-list">
+  <h3>{{t "general.courseLearningMaterials"}} ({{get (await course.learningMaterials) "length"}})</h3>
+  {{#if (gt (get (await course.learningMaterials) "length") 0)}}
+    <table>
+      <thead>
+        <tr>
+          <th colspan="4">{{t "general.title"}}</th>
+          <th>{{t "general.type"}}</th>
+          <th>{{t "general.author"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (await courseLearningMaterialObjects) as |lmObject|}}
+          <tr>
+            <td colspan="4">
+              {{#if (contains lmObject.type typesWithUrl)}}
+                <a href={{lmObject.url}} target="_blank" rel="noopener">{{lmObject.title}}</a>
+              {{else}}
+                {{lmObject.title}}<br>
+                <small>{{lmObject.citation}}</small>
+              {{/if}}
+            </td>
+            <td>{{lmObject.type}}</td>
+            <td>{{lmObject.author}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+</div>
+
+<div class="material-list">
+  <h3 class="session-material-title">{{t "general.sessionLearningMaterials"}} ({{get (await sessionLearningMaterials) "length"}})</h3>
+  {{#if (gt (get (await sessionLearningMaterials) "length") 0)}}
+    <span class="filter-session-lms">
+      <input
+        value={{filter}}
+        oninput={{action (mut filter) value="target.value"}}
+        placeholder={{t "general.filterPlaceholder"}}
+      >
+    </span>
+    <table>
+      <thead>
+        <tr>
+          {{#sortable-th
+            colspan=3
+            click=(action "sortBy" "title")
+            sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
+            sortedAscending=sortedAscending
+          }}
+            {{t "general.title"}}
+          {{/sortable-th}}
+          {{#sortable-th
+            colspan=1
+            click=(action "sortBy" "type")
+            sortedBy=(or (eq sortBy "type") (eq sortBy "type:desc"))
+            sortedAscending=sortedAscending
+          }}
+            {{t "general.type"}}
+          {{/sortable-th}}
+          {{#sortable-th
+            colspan=1
+            click=(action "sortBy" "author")
+            sortedBy=(or (eq sortBy "author") (eq sortBy "author:desc"))
+            sortedAscending=sortedAscending
+          }}
+            {{t "general.author"}}
+          {{/sortable-th}}
+          {{#sortable-th
+            colspan=3
+            click=(action "sortBy" "sessionTitle")
+            sortedBy=(or (eq sortBy "sessionTitle") (eq sortBy "sessionTitle:desc"))
+            sortedAscending=sortedAscending
+          }}
+            {{t "general.session"}}
+          {{/sortable-th}}
+          {{#sortable-th
+            colspan=1
+            click=(action "sortBy" "firstOfferingDate")
+            sortedBy=(or (eq sortBy "firstOfferingDate") (eq sortBy "firstOfferingDate:desc"))
+            sortedAscending=sortedAscending
+            sortType="numeric"
+          }}
+            {{t "general.firstOffering"}}
+          {{/sortable-th}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each
+          (sort-by sortBy (await filteredSessionLearningMaterialObjects))
+          as |lmObject|
+        }}
+          <tr>
+            <td colspan="3">
+              {{#if (contains lmObject.type typesWithUrl)}}
+                <a href={{lmObject.url}} target="_blank" rel="noopener">{{lmObject.title}}</a>
+              {{else}}
+                {{lmObject.title}}<br>
+                <small>{{lmObject.citation}}</small>
+              {{/if}}
+            </td>
+            <td>{{lmObject.type}}</td>
+            <td>{{lmObject.author}}</td>
+            <td colspan="3">{{lmObject.sessionTitle}}</td>
+            <td>
+              {{#if lmObject.firstOfferingDate}}
+                {{moment-format lmObject.firstOfferingDate "L"}}
+              {{else}}
+                {{t "general.none"}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+</div>

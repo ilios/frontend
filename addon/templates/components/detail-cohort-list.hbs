@@ -1,0 +1,37 @@
+{{#if (is-fulfilled sortedCohorts)}}
+  {{#if (get (await sortedCohorts) "length")}}
+    <table>
+      <thead>
+        <tr>
+          <th class="text-left">{{t "general.school"}}</th>
+          <th class="text-left">{{t "general.program"}}</th>
+          <th class="text-center">{{t "general.cohort"}}</th>
+          <th class="text-center">{{t "general.level"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (await sortedCohorts) as |cohort|}}
+          <tr>
+            <td class="text-left">{{cohort.programYear.program.school.title}}</td>
+            <td class="text-left">{{cohort.programYear.program.title}}</td>
+            <td class="text-center">
+              {{#if cohort.title}}
+                {{cohort.title}}
+              {{else}}
+                {{t
+                  "general.classOf"
+                  year=(await cohort.classOfYear)
+                }}
+              {{/if}}
+            </td>
+            <td class="text-center">{{await cohort.currentLevel}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    {{t "general.noCohorts"}}
+  {{/if}}
+{{else}}
+  {{loading-spinner}}
+{{/if}}

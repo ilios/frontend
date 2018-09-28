@@ -1,0 +1,89 @@
+{{#if targetItemTitle}}
+  <h2>{{t "general.selectMeshFor" title=targetItemTitle}}</h2>
+{{/if}}
+<ul class="selected-terms">
+  {{#each sortedTerms as |term|}}
+    <li {{action "remove" term}}
+      class={{if editable "clickable"}}
+      role="button"
+    >
+      <span class="term-title">{{term.name}}</span>
+      <span class="term-details">
+        {{term.id}}
+        {{#if term.deleted}}
+          - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+        {{else}}
+          {{#if term.trees}}
+            - {{term.trees.lastObject.treeNumber}}
+          {{/if}}
+        {{/if}}
+      </span>
+      {{#if editable}}
+        {{fa-icon "times" class="remove"}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>
+
+{{#if editable}}
+  {{search-box
+    placeholder=(t "general.meshSearchPlaceholder")
+    liveSearch=false
+    search=(action "search")
+    clear=(action "clear")
+  }}
+{{/if}}
+
+{{#if searching}}
+  <ul class="results">
+    <li>{{t "general.currentlySearchingPrompt"}}</li>
+  </ul>
+{{else}}
+  {{#if searchResults.length}}
+    <ul class="mesh-search-results" data-test-search-results>
+      {{#each searchResults as |term|}}
+        <li {{action "add" term}}
+          class={{unless term.isActive "disabled" ""}}
+          role="button"
+          data-test-search-result
+        >
+          <span class="descriptor-name" data-test-name>{{term.name}}</span>
+          <span class="descriptor-id">
+            {{term.id}}
+            {{#if term.trees }}
+              - {{term.trees.lastObject.treeNumber}}
+            {{/if}}
+          </span>
+          <ul class="mesh-concepts">
+            {{#each term.concepts as |concept| }}
+              {{#if concept.scopeNote }}
+                <li
+                  class="{{unless term.isActive "disabled"}} {{if concept.hasTruncatedScopeNote "truncated"}}"
+                >
+                  {{concept.truncatedScopeNote}}
+                </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+    {{#if hasMoreSearchResults}}
+      <button {{action (perform searchMore)}}
+        disabled={{if searchMore.isRunning true}}
+      >
+        {{fa-icon
+          (if searchMore.isRunning "spinner")
+          spin=(if searchMore.isRunning true false)
+        }}
+        {{t "general.showMore" }}
+      </button>
+    {{/if}}
+  {{else}}
+    {{#if searchReturned}}
+      <ul class="results">
+        <li>{{t "general.noSearchResultsPrompt"}}</li>
+      </ul>
+    {{/if}}
+  {{/if}}
+{{/if}}
