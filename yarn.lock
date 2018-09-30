@@ -6198,10 +6198,10 @@ ember-native-dom-helpers@^0.5.10, ember-native-dom-helpers@^0.5.3:
     broccoli-funnel "^1.1.0"
     ember-cli-babel "^6.6.0"
 
-ember-noscript@^2.0.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/ember-noscript/-/ember-noscript-2.6.0.tgz#14c1eea9a5486c3f4d12e4296b48deefc64af45a"
-  integrity sha512-O4Z2OWW1Me3P8KzBIjBbgNybcV1mRAFZHE84ZPYr0Tv/fFbNthZ6CTmwerPeghnhpF/HeM1nVyqYyDRvGqBsoQ==
+ember-noscript@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/ember-noscript/-/ember-noscript-2.7.0.tgz#768afe2f0e1e019b41567cc897017a13533bf001"
+  integrity sha512-NNY8YvVcIzZ0LXUCjMZmlk+nuNKMADiyIk1VVuHXySj/s2830GxRX3wkrPAGCOMW3uKjaL7toSaZh9eB32m+JA==
 
 ember-one-way-select@4.0.0:
   version "4.0.0"
