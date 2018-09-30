@@ -219,7 +219,7 @@
             (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))
           }}
             <span class="message error">{{v-get this "password" "message"}}</span>
-          {{else if (gt password.length 0)}}
+          {{else if (and (gt password.length 0) (is-fulfilled passwordStrengthScore))}}
             <span
               class="password-strength {{concat "strength-" (await passwordStrengthScore)}}"
               data-test-password-strength-text

@@ -3,7 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, find, fillIn } from '@ember/test-helpers';
+import { render, click, findAll, find, fillIn, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 let user;
@@ -12,6 +12,10 @@ let school;
 
 module('Integration | Component | user profile bio', function(hooks) {
   setupRenderingTest(hooks);
+
+  hooks.before(async function () {
+    await import('zxcvbn');
+  });
 
   hooks.beforeEach(function() {
     authentication = EmberObject.create({
@@ -347,8 +351,6 @@ module('Integration | Component | user profile bio', function(hooks) {
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
-    const passwordStrength = this.owner.lookup('service:passwordStrength');
-    await passwordStrength.load();
 
     await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
@@ -357,7 +359,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345');
-    assert.equal(find(passwordStrengthMeter).value, 0, 'meter is intially at 0');
+    await waitFor('[data-test-password-strength-text]');
+    assert.equal(find(passwordStrengthMeter).value, 0, 'meter is initially at 0');
     assert.equal(find(passwordStrengthText).textContent.trim(), 'Try Harder', 'try harder is displayed for level 0 password');
     assert.ok(find(passwordStrengthText).classList.contains('strength-0'), 'correct strength is applied to the meter');
   });
@@ -367,8 +370,6 @@ module('Integration | Component | user profile bio', function(hooks) {
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
-    const passwordStrength = this.owner.lookup('service:passwordStrength');
-    await passwordStrength.load();
 
     await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
@@ -377,7 +378,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab');
-    assert.equal(find(passwordStrengthMeter).value, 1, 'meter is intially at 1');
+    await waitFor('[data-test-password-strength-text]');
+    assert.equal(find(passwordStrengthMeter).value, 1, 'meter is initially at 1');
     assert.equal(find(passwordStrengthText).textContent.trim(), 'Bad', 'bad is displayed for level 1 password');
     assert.ok(find(passwordStrengthText).classList.contains('strength-1'), 'correct strength is applied to the meter');
 
@@ -388,8 +390,6 @@ module('Integration | Component | user profile bio', function(hooks) {
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
-    const passwordStrength = this.owner.lookup('service:passwordStrength');
-    await passwordStrength.load();
 
     await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
@@ -398,7 +398,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab13&');
-    assert.equal(find(passwordStrengthMeter).value, 2, 'meter is intially at 2');
+    await waitFor('[data-test-password-strength-text]');
+    assert.equal(find(passwordStrengthMeter).value, 2, 'meter is initially at 2');
     assert.equal(find(passwordStrengthText).textContent.trim(), 'Weak', 'weak is displayed for level 2 password');
     assert.ok(find(passwordStrengthText).classList.contains('strength-2'), 'correct strength is applied to the meter');
 
@@ -409,8 +410,6 @@ module('Integration | Component | user profile bio', function(hooks) {
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
-    const passwordStrength = this.owner.lookup('service:passwordStrength');
-    await passwordStrength.load();
 
     await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
@@ -419,7 +418,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab13&!!');
-    assert.equal(find(passwordStrengthMeter).value, 3, 'meter is intially at 3');
+    await waitFor('[data-test-password-strength-text]');
+    assert.equal(find(passwordStrengthMeter).value, 3, 'meter is initially at 3');
     assert.equal(find(passwordStrengthText).textContent.trim(), 'Good', 'good is displayed for level 3 password');
     assert.ok(find(passwordStrengthText).classList.contains('strength-3'), 'correct strength is applied to the meter');
 
@@ -430,8 +430,6 @@ module('Integration | Component | user profile bio', function(hooks) {
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
-    const passwordStrength = this.owner.lookup('service:passwordStrength');
-    await passwordStrength.load();
 
     await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
@@ -440,7 +438,8 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     await click(activatePasswordField);
     await fillIn(passwordInput, '12345ab14&HHtB');
-    assert.equal(find(passwordStrengthMeter).value, 4, 'meter is intially at 4');
+    await waitFor('[data-test-password-strength-text]');
+    assert.equal(find(passwordStrengthMeter).value, 4, 'meter is initially at 4');
     assert.equal(find(passwordStrengthText).textContent.trim(), 'Strong', 'strong is displayed for level 4 password');
     assert.ok(find(passwordStrengthText).classList.contains('strength-4'), 'correct strength is applied to the meter');
   });
