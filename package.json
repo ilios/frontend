@@ -47,7 +47,7 @@
     "ember-light-table": "^1.13.2",
     "ember-moment": "^7.4.1",
     "ember-one-way-select": "4.0.0",
-    "ember-pikaday": "jrjohnson/ember-pikaday",
+    "ember-pikaday": "2.2.6",
     "ember-promise-helpers": "^1.0.6",
     "ember-rl-dropdown": "^0.10.2",
     "ember-simple-auth-token": "4.0.4",
