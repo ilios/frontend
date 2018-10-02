@@ -9,22 +9,21 @@
     {{#each (sort-by "title" (await domains)) as |domain|}}
       {{#if (contains domain.id (map-by "id" (await domainsWithNoChildren)))}}
         <li
-          class="competency-title clickable {{if (eq domain.id objective.competency.id) "selected"}}"
+          class="competency-title {{if (eq domain.id objective.competency.id) "selected"}}"
         >
           <h5>
             {{#if (eq domain.id objective.competency.id)}}
               <input {{action "removeCurrentCompetency" domain}}
                 type="checkbox"
                 checked
-                role="button"
               >
+              <span {{action "removeCurrentCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
             {{else}}
               <input {{action "changeCompetency" domain}}
                 type="checkbox"
-                role="button"
               >
+              <span {{action "changeCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
             {{/if}}
-            {{domain.title}}
           </h5>
         </li>
       {{else}}
@@ -35,18 +34,19 @@
           <ul>
             {{#each (sort-by "title" (await domain.children)) as |competency|}}
               {{#if (contains competency.id (map-by "id" (await competencies)))}}
-                <li class="competency-title clickable {{if (eq competency.id objective.competency.id) "selected"}}">
+                <li class="competency-title {{if (eq competency.id objective.competency.id) "selected"}}">
                   {{#if (eq competency.id objective.competency.id)}}
                     <input {{action "removeCurrentCompetency" competency}}
                       type="checkbox"
                       checked
                     >
+                    <span {{action "removeCurrentCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
                   {{else}}
                     <input {{action "changeCompetency" competency}}
                       type="checkbox"
                     >
+                    <span {{action "changeCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
                   {{/if}}
-                  {{competency.title}}
                 </li>
               {{/if}}
             {{/each}}
