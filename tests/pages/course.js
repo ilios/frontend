@@ -130,7 +130,7 @@ export default create({
             title: text(),
             selected: hasClass('selected'),
             notSelected: notHasClass('selected'),
-            add: clickable()
+            add: clickable('input')
           }
         }),
       }
