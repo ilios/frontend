@@ -1,4 +1,5 @@
 'use strict';
+/* eslint camelcase: 0 */
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
@@ -94,7 +95,14 @@ module.exports = function(defaults) {
     newVersion: {
       enabled: true,
       useAppVersion: true
-    }
+    },
+    'ember-cli-uglify': {
+      uglify: {
+        compress: {
+          collapse_vars: false
+        }
+      }
+    },
   });
 
   app.import('node_modules/normalize.css/normalize.css');
