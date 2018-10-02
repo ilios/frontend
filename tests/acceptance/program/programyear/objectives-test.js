@@ -125,7 +125,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(await getElementText(find('.specific-title')), 'SelectParentCompetencyforObjective');
     assert.equal(await getElementText(find('.objective-manage-competency .objectivetitle')), getText('objective 0'));
     assert.equal(await getElementText(find('.objective-manage-competency .parent-picker')), getText('competency0 competency1 competency2 competency3 competency4'));
-    let items = findAll('.parent-picker .clickable');
+    let items = findAll('.parent-picker li.competency-title');
     assert.equal(items.length, 4);
     assert.ok(find('.parent-picker h5').classList.contains('selected'));
     assert.ok(find(items[0]).classList.contains('selected'));
@@ -133,8 +133,8 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(!findAll('.parent-picker h5')[1].classList.contains('selected'));
     assert.ok(!findAll('.parent-picker h5')[2].classList.contains('selected'));
 
-    await click(findAll('.objective-manage-competency .parent-picker .clickable input')[2]);
-    items = findAll('.parent-picker .clickable');
+    await click(findAll('.objective-manage-competency .parent-picker .clickable')[2]);
+    items = findAll('.parent-picker li.competency-title');
     assert.ok(!find(items[0]).classList.contains('selected'));
     assert.ok(!find(items[1]).classList.contains('selected'));
     assert.ok(find(items[2]).classList.contains('selected'));
