@@ -3336,7 +3336,7 @@ ember-cli-mirage@^0.4.3:
     pretender "^1.6.1"
     route-recognizer "^0.2.3"
 
-ember-cli-moment-shim@^3.1.0:
+ember-cli-moment-shim@^3.1.0, ember-cli-moment-shim@^3.6.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.7.1.tgz#3ad691c5027c1f38a4890fe47d74b5224cc98e32"
   dependencies:
@@ -3912,12 +3912,13 @@ ember-one-way-select@4.0.0:
     ember-cli-htmlbars "^2.0.1"
     ember-invoke-action "^1.5.0"
 
-ember-pikaday@jrjohnson/ember-pikaday:
-  version "2.2.4"
-  resolved "https://codeload.github.com/jrjohnson/ember-pikaday/tar.gz/e367b56a242fd1cafb1940788bcac2308b31fa53"
+ember-pikaday@2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-2.2.6.tgz#c3dd878af716262fc808f57fbdcc362697008a4c"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^1.1.1"
+    ember-cli-moment-shim "^3.6.0"
     ember-cli-node-assets "^0.2.2"
     fastboot-transform "^0.1.1"
     pikaday "^1.5.1"
