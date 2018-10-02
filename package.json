@@ -104,5 +104,23 @@
     "blueprints/",
     "config/",
     "vendor/"
-  ]
+  ],
+  "greenkeeper": {
+    "ignore": [
+      "ember-cli-babel",
+      "ember-cli-dependency-checker",
+      "ember-cli-htmlbars-inline-precompile",
+      "ember-cli-htmlbars",
+      "ember-cli-inject-live-reload",
+      "ember-cli-qunit",
+      "ember-cli-sri",
+      "ember-cli-uglify",
+      "ember-export-application-global",
+      "ember-load-initializers",
+      "ember-maybe-import-regenerator",
+      "ember-resolver",
+      "loader.js",
+      "qunit-dom"
+    ]
+  }
 }
