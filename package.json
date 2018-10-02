@@ -73,6 +73,7 @@
     "ember-composable-helpers": "^2.0.2",
     "ember-data": "3.4.2",
     "ember-export-application-global": "^2.0.0",
+    "ember-froala-editor": "^2.8.5",
     "ember-inflector": "^3.0.0",
     "ember-lifeline": "^3.0.0",
     "ember-link-action": "^0.1.0",
