@@ -5855,7 +5855,7 @@ ember-file-upload@^2.5.0:
     ember-cli-babel "^6.12.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-froala-editor@^2.8.4, ember-froala-editor@^2.8.5:
+ember-froala-editor@^2.8.5:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.8.5.tgz#36f74a6b38dfc0ca07ce2ee6be8469997bae8e98"
   integrity sha512-TXLA1+q0KgNfY1azFOKgxI6eVkXfu5uj69MrfJj0iA8bIjw24KBV02WzFD3y+883BEtjrEmwTqVsUHZrWaW7HQ==
@@ -8091,9 +8091,9 @@ ignore@^4.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ilios-common@ilios/common:
+ilios-common@ilios/common#master:
   version "19.2.0"
-  resolved "https://codeload.github.com/ilios/common/tar.gz/5628b7a52f30d50355cd598038a26d347c4fa116"
+  resolved "https://codeload.github.com/ilios/common/tar.gz/1c82ca6d8e7ef47a2bdac63081e0c75f53413d6b"
   dependencies:
     "@fortawesome/ember-fontawesome" "^0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
@@ -8115,7 +8115,6 @@ ilios-common@ilios/common:
     ember-cp-validations "^3.3.1"
     ember-drag-drop "^0.5.1"
     ember-file-upload "^2.5.0"
-    ember-froala-editor "^2.8.4"
     ember-i18n "^5.0.1"
     ember-i18n-cp-validations "^3.1.0"
     ember-light-table "^1.13.2"
