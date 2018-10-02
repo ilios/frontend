@@ -16,15 +16,13 @@
               <input {{action "removeCurrentCompetency" domain}}
                 type="checkbox"
                 checked
-                role="button"
               >
-              <span {{action "removeCurrentCompetency" domain}} class="clickable">{{domain.title}}</span>
+              <span {{action "removeCurrentCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
             {{else}}
               <input {{action "changeCompetency" domain}}
                 type="checkbox"
-                role="button"
               >
-              <span {{action "changeCompetency" domain}} class="clickable">{{domain.title}}</span>
+              <span {{action "changeCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
             {{/if}}
           </h5>
         </li>
@@ -42,12 +40,12 @@
                       type="checkbox"
                       checked
                     >
-                    <span {{action "removeCurrentCompetency" competency}} class="clickable">{{competency.title}}</span>
+                    <span {{action "removeCurrentCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
                   {{else}}
                     <input {{action "changeCompetency" competency}}
                       type="checkbox"
                     >
-                    <span {{action "changeCompetency" competency}} class="clickable">{{competency.title}}</span>
+                    <span {{action "changeCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
                   {{/if}}
                 </li>
               {{/if}}
