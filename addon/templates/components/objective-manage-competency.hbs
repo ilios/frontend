@@ -18,13 +18,14 @@
                 checked
                 role="button"
               >
+              <span {{action "removeCurrentCompetency" domain}}>{{domain.title}}</span>
             {{else}}
               <input {{action "changeCompetency" domain}}
                 type="checkbox"
                 role="button"
               >
+              <span {{action "changeCompetency" domain}}>{{domain.title}}</span>
             {{/if}}
-            {{domain.title}}
           </h5>
         </li>
       {{else}}
@@ -41,12 +42,13 @@
                       type="checkbox"
                       checked
                     >
+                    <span {{action "removeCurrentCompetency" competency}}>{{competency.title}}</span>
                   {{else}}
                     <input {{action "changeCompetency" competency}}
                       type="checkbox"
                     >
+                    <span {{action "changeCompetency" competency}}>{{competency.title}}</span>
                   {{/if}}
-                  {{competency.title}}
                 </li>
               {{/if}}
             {{/each}}
