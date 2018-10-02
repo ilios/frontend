@@ -133,7 +133,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(!findAll('.parent-picker h5')[1].classList.contains('selected'));
     assert.ok(!findAll('.parent-picker h5')[2].classList.contains('selected'));
 
-    await click(findAll('.objective-manage-competency .parent-picker .clickable')[2]);
+    await click(findAll('.objective-manage-competency .parent-picker .clickable input')[2]);
     items = findAll('.parent-picker .clickable');
     assert.ok(!find(items[0]).classList.contains('selected'));
     assert.ok(!find(items[1]).classList.contains('selected'));
