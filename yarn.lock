@@ -5071,7 +5071,7 @@ ember-concurrency@0.8.20:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
-ember-concurrency@^0.8.12:
+ember-concurrency@0.8.21, ember-concurrency@^0.8.12:
   version "0.8.21"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.21.tgz#23263e00455d32bb7f5b1b344376143019796ac6"
   dependencies:
@@ -7219,9 +7219,9 @@ ignore@^4.0.0:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
-ilios-common@stopfstedt/common#fix_objective_competency_manager:
+ilios-common@ilios/common:
   version "19.2.0"
-  resolved "https://codeload.github.com/stopfstedt/common/tar.gz/becd483fa973d531b59326944b81f06e82f6e0cc"
+  resolved "https://codeload.github.com/ilios/common/tar.gz/4ede5faf608404ceaaa91fbc804984ad8e898e60"
   dependencies:
     "@fortawesome/ember-fontawesome" "0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
@@ -7239,7 +7239,7 @@ ilios-common@stopfstedt/common#fix_objective_competency_manager:
     ember-cli-htmlbars "^3.0.0"
     ember-cli-moment-shim "^3.1.0"
     ember-composable-helpers "^2.0.1"
-    ember-concurrency "0.8.20"
+    ember-concurrency "0.8.21"
     ember-cp-validations "^3.3.1"
     ember-drag-drop "^0.5.1"
     ember-file-upload "^2.5.0"
