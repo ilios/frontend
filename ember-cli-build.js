@@ -8,11 +8,6 @@ module.exports = function(defaults) {
     dotEnv: {
       clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST']
     },
-    'ember-froala-editor': {
-      languages: ['fr','es'],
-      plugins: ['lists', 'code_view', 'link'],
-      themes: 'gray'
-    },
   });
 
   /*
