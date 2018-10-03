@@ -2,7 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import moment from 'moment';
 
 moduleForComponent('recently-updated-display', 'Unit | Component | recently updated display', {
-  unit: true
+  unit: true,
+  needs: ['service:concurrent-axe'],
 });
 
 test('`recentlyUpdated` computed property works', function(assert) {

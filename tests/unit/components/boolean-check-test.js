@@ -1,7 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('boolean-check', 'Unit | Component | boolean check ', {
-  unit: true
+  unit: true,
+  needs: ['service:concurrent-axe'],
 });
 
 test('default properties are correct', function(assert) {
