@@ -3245,10 +3245,15 @@ caniuse-db@^1.0.30000820:
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000888.tgz#38081675206f8856b648c1cd793a28a2c5762448"
   integrity sha512-bp7cHptv4AQZFtkyzYk2bJN5E8CSYklm6K3bJ/fGUa52oxydzBKK4uYlZ+A0lNIiThRFJMoXU2TacG9ve2KpXw==
 
-caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000884, caniuse-lite@^1.0.30000888:
+caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000884, caniuse-lite@^1.0.30000888:
   version "1.0.30000888"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000888.tgz#22edb50d91dd70612b5898e3b36f460600c6492f"
   integrity sha512-vftg+5p/lPsQGpnhSo/yBuYL36ai/cyjLvU3dOPJY1kkKrekLWIy8SLm+wzjX0hpCUdFTasC4/ZT7uqw4rKOnQ==
+
+caniuse-lite@^1.0.30000844:
+  version "1.0.30000889"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000889.tgz#53e266c83e725ad3bd2e4a3ea76d5031a8aa4c3e"
+  integrity sha512-MFxcQ6x/LEEoaIhO7Zdb7Eg8YyNONN+WBnS5ERJ0li2yRw51+i4xXUNxnLaveTb/4ZoJqsWKEmlomhG2pYzlQA==
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -5666,11 +5671,11 @@ ember-compatibility-helpers@^0.1.2:
     semver "^5.4.1"
 
 ember-compatibility-helpers@^1.0.0, ember-compatibility-helpers@^1.0.2:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-compatibility-helpers/-/ember-compatibility-helpers-1.1.0.tgz#434d5bfd63883d26dea36853766dc95999e3962e"
-  integrity sha512-uO1zG1b1zr+1Gyiah9y+smOscvoVY7neq30psb+zihRzSa2Msfvelu+IxatVig9e54J6YyAeapwGfjIh2RU01A==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-compatibility-helpers/-/ember-compatibility-helpers-1.1.1.tgz#3772fc94732c5aec4f1445e1d3027bde698e52a1"
+  integrity sha512-55YmsIxdnpblagzCk4nsn3PryOuCy9VBOzSZp+aO9wSq1OyAX9xKDKeEh/4ay1/fNd0G9ZKQzMU50NBFNo7sJw==
   dependencies:
-    babel-plugin-debug-macros "^0.2.0-beta.6"
+    babel-plugin-debug-macros "^0.1.11"
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
 
@@ -8093,7 +8098,7 @@ ignore@^4.0.0:
 
 ilios-common@ilios/common#master:
   version "19.2.0"
-  resolved "https://codeload.github.com/ilios/common/tar.gz/1c82ca6d8e7ef47a2bdac63081e0c75f53413d6b"
+  resolved "https://codeload.github.com/ilios/common/tar.gz/7b5c7b4134fba20f337bb7597626b9b81c723763"
   dependencies:
     "@fortawesome/ember-fontawesome" "^0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
