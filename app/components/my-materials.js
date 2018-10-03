@@ -2,7 +2,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import SortableTable from 'ilios/mixins/sortable-table';
+import SortableTable from 'ilios-common/mixins/sortable-table';
 import escapeRegExp from '../utils/escape-reg-exp';
 
 export default Component.extend(SortableTable, {

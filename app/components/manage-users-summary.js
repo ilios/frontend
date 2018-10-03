@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import { cleanQuery } from 'ilios/utils/query-utils';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
