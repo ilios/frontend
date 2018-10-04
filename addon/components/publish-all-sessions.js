@@ -186,7 +186,7 @@ export default Component.extend({
               saveSomeSessions(sessions);
             } else {
               this.set('isSaving', false);
-              this.sendAction('saved');
+              this.saved();
               this.get('flashMessages').success('general.savedSuccessfully');
             }
           });
