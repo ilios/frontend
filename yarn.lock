@@ -8096,10 +8096,10 @@ ignore@^4.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ilios-common@20.0.0:
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.0.0.tgz#1309a6b69ebf3551de06c346c8c30a7ff449ac2c"
-  integrity sha512-YfMfuPnXSRTBRol//2Di/CfItEJzoYghT6Z/mgL9xoRJKoalw1PeIG6lOvh9TiVS7QA48ovIrqp1BqeYWFjz1A==
+ilios-common@20.1.0:
+  version "20.1.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.1.0.tgz#29c78e300772e9864a69d00fa00dada899cec18c"
+  integrity sha512-F5J3+ow2dYla0MIccEvSUsqFIUksQEFS93NR/bkAUBpNvP4zKOqQ/FIOiKfnJLr2XO04TzAiN/+JS/aDudlXxw==
   dependencies:
     "@fortawesome/ember-fontawesome" "^0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
