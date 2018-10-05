@@ -53,5 +53,27 @@
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
-  }
+  },
+  "greenkeeper": {
+    "ignore": [
+      "ember-cli-babel",
+      "ember-cli-app-version",
+      "ember-cli-dependency-checker",
+      "ember-cli-htmlbars-inline-precompile",
+      "ember-cli-htmlbars",
+      "ember-cli-inject-live-reload",
+      "ember-cli-qunit",
+      "ember-cli-sri",
+      "ember-cli-uglify",
+      "ember-data",
+      "ember-export-application-global",
+      "ember-load-initializers",
+      "ember-maybe-import-regenerator",
+      "ember-resolver",
+      "ember-source",
+      "loader.js",
+      "qunit-dom"
+    ]
+  },
+  "private": true
 }
