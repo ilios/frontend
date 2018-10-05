@@ -28,6 +28,7 @@ install:
 before_script: greenkeeper-lockfile-update
 
 script:
+  - yarn lint:hbs
   - yarn lint:js
   - yarn test
 
