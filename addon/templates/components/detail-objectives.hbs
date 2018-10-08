@@ -18,9 +18,10 @@
       {{/if}}
     </div>
   {{else}}
-    <div {{action "collapse"}}
+    <div
       class="title {{if showCollapsible "clickable collapsible"}}"
       role="button"
+      {{action "collapse"}}
     >
       {{t "general.objectives"}} ({{subject.objectives.length}})
     </div>

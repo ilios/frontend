@@ -1,7 +1,8 @@
 <ul class="inline calendar-view-picker">
-  <li {{action (toggle "showIcsFeed" this)}}
+  <li
     class="clickable highlight {{if showIcsFeed "on"}}"
     role="button"
+    {{action (toggle "showIcsFeed" this)}}
   >
     {{fa-icon "rss-square"}}
   </li>

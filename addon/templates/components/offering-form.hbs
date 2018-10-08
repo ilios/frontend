@@ -193,9 +193,10 @@
     </div>
 
     <div class="buttons">
-      <button {{action (perform validateThenSaveOffering)}}
+      <button
         class="done text"
         disabled={{or saveOffering.isRunning}}
+        {{action (perform validateThenSaveOffering)}}
       >
         {{#if saveOffering.isRunning}}
           {{loading-spinner}}

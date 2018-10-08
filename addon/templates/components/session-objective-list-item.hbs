@@ -24,10 +24,11 @@
   {{#if objective.hasParents}}
     {{#each objective.parents as |parent|}}
       {{#if editable}}
-        <span {{action manageParents objective}}
+        <span
           class="clickable link"
           data-test-parent
           role="button"
+          {{action manageParents objective}}
         >
           {{parent.textTitle}}
         </span>
@@ -50,10 +51,11 @@
   <ul class="mesh-descriptor-list">
     {{#each (sort-by "name" (await objective.meshDescriptors)) as |descriptor|}}
       {{#if editable}}
-        <li {{action manageDescriptors objective}}
+        <li
           class="clickable link"
           role="button"
           data-test-term
+          {{action manageDescriptors objective}}
         >
           {{descriptor.name}}
         </li>
@@ -73,9 +75,10 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if editable}}
-    <span {{action remove objective}}
+    <span
       class="clickable remove"
       role="button"
+      {{action remove objective}}
     >
       {{fa-icon "trash"}}
     </span>

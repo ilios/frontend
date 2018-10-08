@@ -1,6 +1,7 @@
-<h3 {{action (optional toggleCollapsed) collapsed}}
+<h3
   class="{{if collapsible "clickable collapsible"}} {{if collapsed "collapsed" "expanded"}}"
   role="button"
+  {{action (optional toggleCollapsed) collapsed}}
 >
   {{title}}
   {{#if showFullTitle}}

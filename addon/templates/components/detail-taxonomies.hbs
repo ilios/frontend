@@ -4,9 +4,10 @@
       <span class="detail-specific-title">{{t "general.termsManageTitle"}}</span>
     </div>
   {{else}}
-    <div {{action "collapse"}}
+    <div
       class="title {{if showCollapsible "clickable collapsible"}}"
       role="button"
+      {{action "collapse"}}
     >
       {{t "general.terms"}} ({{subject.terms.length}})
     </div>

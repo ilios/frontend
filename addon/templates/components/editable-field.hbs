@@ -15,16 +15,18 @@
     <span class="editor">
       {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
       <span class="actions">
-        <button {{action (perform saveData)}}
+        <button
           disabled={{isSaveDisabled}}
           class="done"
           title={{t "general.save"}}
+          {{action (perform saveData)}}
         >
           {{fa-icon (if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
         </button>
-        <button {{action (perform closeEditor)}}
+        <button
           class="cancel"
           title={{t "general.cancel"}}
+          {{action (perform closeEditor)}}
         >
           {{fa-icon "times"}}
         </button>
