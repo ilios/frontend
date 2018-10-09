@@ -9,17 +9,19 @@
     <ul>
       {{#each (await proxiedObjectives) as |objective|}}
         {{#if objective.selected}}
-          <li {{action "removeParent" objective}}
+          <li
             class="selected clickable"
             role="button"
+            {{action "removeParent" objective}}
           >
             {{input type="checkbox" checked=true}}
             {{objective.textTitle}}
           </li>
         {{else}}
-          <li {{action "addParent" objective}}
+          <li
             class="clickable"
             role="button"
+            {{action "addParent" objective}}
           >
             {{input type="checkbox" checked=false}}
             {{objective.textTitle}}

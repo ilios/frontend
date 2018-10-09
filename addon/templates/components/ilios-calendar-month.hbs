@@ -35,9 +35,10 @@
                   }}
                 {{/if}}
               {{/each}}
-              <span {{action "changeToDayView" day.date}}
+              <span
                 class="clickable link month-more-events"
                 role="button"
+                {{action "changeToDayView" day.date}}
               >
                 {{fa-icon "ellipsis-h"}} {{showMore}} {{fa-icon "angle-double-down"}}
               </span>

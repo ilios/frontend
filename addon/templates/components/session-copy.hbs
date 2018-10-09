@@ -53,12 +53,13 @@
   </div>
 
   <div class="buttons">
-    <button {{action (perform save)}}
+    <button
       class="done text"
       disabled={{if
         (or save.isRunning (not (await bestSelectedYear)) (not (await bestSelectedCourse)))
         true
       }}
+      {{action (perform save)}}
     >
       {{#if save.isRunning}}
         {{loading-spinner}}

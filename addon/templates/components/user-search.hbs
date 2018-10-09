@@ -19,10 +19,11 @@
     {{#each search.lastSuccessful.value as |proxy|}}
       {{#if proxy.isUser}}
         {{#if proxy.isActive}}
-          <li {{action "addUser" proxy.content}}
+          <li
             class="active"
             role="button"
             data-test-result
+            {{action "addUser" proxy.content}}
           >
             <div class="name">{{proxy.fullName}}</div>
             <div class="email">{{proxy.email}}</div>
@@ -36,10 +37,11 @@
       {{/if}}
       {{#if proxy.isInstructorGroup}}
         {{#if proxy.isActive}}
-          <li {{action "addInstructorGroup" proxy.content}}
+          <li
             class="active"
             role="button"
             data-test-result
+            {{action "addInstructorGroup" proxy.content}}
           >
             {{proxy.title}}
           </li>

@@ -13,9 +13,10 @@
   {{#if searchResults.length}}
     <ul class="lm-search-results">
       {{#each searchResults as |learningMaterial|}}
-        <li {{action (perform addLearningMaterial learningMaterial)}}
+        <li
           class={{if (contains learningMaterial (await currentMaterials)) "disabled" ""}}
           role="button"
+          {{action (perform addLearningMaterial learningMaterial)}}
         >
           <h4 class="learning-material-title">
             {{lm-type-icon type=learningMaterial.type mimetype=learningMaterial.mimetype}}
@@ -39,8 +40,9 @@
       {{/each}}
       {{#if hasMoreSearchResults}}
         <li>
-          <button {{action (perform searchMore)}}
+          <button
             disabled={{if searchMore.isRunning true}}
+            {{action (perform searchMore)}}
           >
             {{fa-icon
               (if searchMore.isRunning "spinner")

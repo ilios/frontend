@@ -10,8 +10,9 @@
     </button>
   </li>
   <li>
-    <button {{action change "materials"}}
+    <button
       class={{if (eq show "materials") "active"}}
+      {{action change "materials"}}
     >
       {{t "general.materials"}}
     </button>

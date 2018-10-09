@@ -7,9 +7,10 @@
 {{/liquid-if}}
 
 <section class="publish-all-sessions-unpublishable">
-  <div {{action "toggleUnPublishableCollapsed"}}
+  <div
     class="title {{if unPublishableCollapsed "collapsed" "collapsible"}}"
     role="button"
+    {{action "toggleUnPublishableCollapsed"}}
   >
     {{t "general.incompleteSessions"}} ({{get (await unPublishableSessions) "length"}})
   </div>
@@ -58,9 +59,10 @@
 </section>
 
 <section class="publish-all-sessions-publishable">
-  <div {{action "togglePublishableCollapsed"}}
+  <div
     class="title {{if publishableCollapsed "collapsed" "collapsible"}}"
     role="button"
+    {{action "togglePublishableCollapsed"}}
   >
     {{t "general.completeSessions"}} ({{get (await publishableSessions) "length"}})
   </div>
@@ -142,9 +144,10 @@
                       checked={{is-in sessionsToOverride session}}
                       onclick={{action "toggleSession" session}}
                     >
-                    <span {{action "toggleSession" session}}
+                    <span
                       class="clickable"
                       role="button"
+                      {{action "toggleSession" session}}
                     >
                       {{t "general.publishAsIs"}}
                     </span>
@@ -155,9 +158,10 @@
                       checked={{not-in sessionsToOverride session}}
                       onclick={{action "toggleSession" session}}
                     >
-                    <span {{action "toggleSession" session}}
+                    <span
                       class="clickable"
                       role="button"
+                      {{action "toggleSession" session}}
                     >
                       {{t "general.markAsScheduled"}}
                     </span>

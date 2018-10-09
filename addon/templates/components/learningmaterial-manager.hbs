@@ -176,9 +176,10 @@
       {{/if}}
     {{else if editable}}
       <p>
-        <button {{action "addDate" "startDate"}}
+        <button
           class="add-date"
           data-test-add-start-date
+          {{action "addDate" "startDate"}}
         >
           {{t "general.timedReleaseAddStartDate"}}
         </button>

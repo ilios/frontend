@@ -101,7 +101,7 @@
   </div>
 
   <div class="buttons">
-    <button {{action (perform save)}}
+    <button
       disabled={{if
         (or isSaving
           (not selectedYear)
@@ -110,6 +110,7 @@
         true
       }}
       class="done text"
+      {{action (perform save)}}
     >
       {{#if isSaving}}
         {{loading-spinner}}

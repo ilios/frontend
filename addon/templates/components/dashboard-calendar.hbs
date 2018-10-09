@@ -28,10 +28,11 @@
     </div>
 
     {{#if showClearFilters}}
-      <span {{action "clearFilters"}}
+      <span
         id="calendar-clear-filters"
         class="calendar-clear-filters"
         role="button"
+        {{action "clearFilters"}}
       >
         {{t "general.clearFilters"}}
       </span>
@@ -87,10 +88,11 @@
             <ul>
               {{#each (await courses) as |course|}}
                 <li class="clickable">
-                  <input {{action "toggleCourse" course on="change"}}
+                  <input
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in selectedCourses course}}
+                    {{action "toggleCourse" course on="change"}}
                   >
                   <span {{action "toggleCourse" course}} class="list-indentation" role="button">
                     {{course.title}}
@@ -115,14 +117,16 @@
             <ul>
               {{#each (await sessionTypes) as |type|}}
                 <li class="clickable">
-                  <input {{action "toggleSessionType" type on="change"}}
+                  <input
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in selectedSessionTypes type}}
+                    {{action "toggleSessionType" type on="change"}}
                   >
-                  <span {{action "toggleSessionType" type}}
+                  <span
                     class="list-indentation"
                     role="button"
+                    {{action "toggleSessionType" type}}
                   >
                     {{type.title}}
                   </span>
@@ -161,14 +165,16 @@
             <ul>
               {{#each (await sessionTypes) as |type|}}
                 <li class="clickable">
-                  <input {{action "toggleSessionType" type on="change"}}
+                  <input
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in selectedSessionTypes type}}
+                    {{action "toggleSessionType" type on="change"}}
                   >
-                  <span {{action "toggleSessionType" type}}
+                  <span
                     class="list-indentation"
                     role="button"
+                    {{action "toggleSessionType" type}}
                   >
                     {{type.title}}
                   </span>
@@ -187,14 +193,16 @@
           <ul>
             {{#each courseLevels as |level|}}
               <li class="clickable">
-                <input {{action "toggleCourseLevel" level on="change"}}
+                <input
                   class="checkbox"
                   type="checkbox"
                   checked={{contains level selectedCourseLevels}}
+                  {{action "toggleCourseLevel" level on="change"}}
                 >
-                <span {{action "toggleCourseLevel" level}}
+                <span
                   class="list-indentation"
                   role="button"
+                  {{action "toggleCourseLevel" level}}
                 >
                   {{level}}
                 </span>
@@ -211,10 +219,11 @@
             <ul>
               {{#each (await cohorts) as |cohort|}}
                 <li class="clickable">
-                  <input {{action "toggleCohort" cohort on="change"}}
+                  <input
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in selectedCohorts cohort}}
+                    {{action "toggleCohort" cohort on="change"}}
                   >
                   <span {{action "toggleCohort" cohort}} class="list-indentation" role="button">
                     {{#if cohort.title}}
@@ -241,17 +250,19 @@
     <header class="filters-header">{{t "general.activeFilters"}}:</header>
     <div class="filter-tags">
       {{#each (await filterTags) as |tag|}}
-        <span {{action "removeFilter" tag.filter}}
+        <span
           class="filter-tag {{tag.class}}"
           role="button"
+          {{action "removeFilter" tag.filter}}
         >
           {{tag.name}} {{fa-icon "times"}}
         </span>
       {{/each}}
-      <span {{action "clearFilters"}}
+      <span
         id="calendar-clear-filters"
         class="filters-clear-filters"
         role="button"
+        {{action "clearFilters"}}
       >
         {{t "general.clearFilters"}}
       </span>
