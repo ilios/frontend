@@ -15,7 +15,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(async function() {
     const duration = 4;
     this.server.create('school', { title: 'first' });
     const school = this.server.create('school', { title: 'second' });
@@ -28,12 +28,10 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.create('cohort', {id: 2, title: 'second', programYear: py1});
     this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
 
-    const mockSchool = EmberObject.create(this.server.db.schools[1], {
-      cohorts: resolve(this.server.db.cohorts.map(c => EmberObject.create(c)))
-    });
+    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
 
     const mockUser = EmberObject.create({
-      school: resolve(mockSchool)
+      school: resolve(schoolModel)
     });
 
     const currentUserMock = Service.extend({

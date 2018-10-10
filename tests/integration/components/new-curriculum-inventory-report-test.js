@@ -1,24 +1,23 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
+import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, find, findAll, fillIn, triggerKeyEvent } from '@ember/test-helpers';
+import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | new curriculum inventory report', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(20);
 
-    const program = EmberObject.create({
-      id: 1,
-      title: 'Doctor of Medicine'
-    });
-    this.set('program', program);
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
 
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
 
@@ -84,7 +83,10 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('save', async function(assert) {
     assert.expect(6);
 
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const expectedSelectedYear = currentYear - 5;
     this.set('saveReport', (report) => {
@@ -115,7 +117,10 @@ module('Integration | Component | new curriculum inventory report', function(hoo
 
   test('cancel', async function(assert) {
     assert.expect(1);
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     this.set('cancelReport', () => {
       assert.ok(true, 'Cancel action got invoked.');
     });
@@ -126,7 +131,10 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('pressing enter in name input field fires save action', async function(assert) {
     assert.expect(1);
 
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     this.set('saveReport', () => {
       assert.ok(true, 'Save action got invoked.');
       return resolve(true);
@@ -139,14 +147,20 @@ module('Integration | Component | new curriculum inventory report', function(hoo
 
   test('validation errors do not show up initially', async function(assert) {
     assert.expect(1);
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
     assert.equal(findAll('.validation-error-message').length, 0);
   });
 
   test('validation errors show up when saving with empty report name', async function(assert) {
     assert.expect(1);
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
     await click('button.done');
     assert.equal(findAll('.validation-error-message').length, 1);
@@ -154,7 +168,10 @@ module('Integration | Component | new curriculum inventory report', function(hoo
 
   test('validation errors show up when saving with a too long report name', async function(assert) {
     assert.expect(1);
-    this.set('program', EmberObject.create());
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+
+    this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
     await fillIn('[data-test-name] input', '0123456789'.repeat(7));
     await click('button.done');
