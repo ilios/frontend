@@ -85,7 +85,7 @@
                   <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
                   {{lm.title}}
                 {{else}}
-                  {{lm-type-icon type=lm.type mimetype=lm.mimetype}}
+                  {{lm-type-icon type=(lm-type lm) mimetype=lm.mimetype}}
                   {{#if lm.absoluteFileUri}}
                     {{#if (eq lm.mimetype "application/pdf")}}
                       <a href="{{lm.absoluteFileUri}}?inline">
