@@ -38,6 +38,7 @@ const mockEvents = [
       {
         title: 'File LM',
         type: 'file',
+        filename: 'This is a PDF',
         mimetype: 'application/pdf',
         required: true,
         absoluteFileUri: 'http://myhost.com/url1',
@@ -61,6 +62,7 @@ const mockEvents = [
         title: 'Great Slides',
         required: true,
         type: 'file',
+        filename: 'This is another PDF',
         mimetype: 'application/pdf',
         absoluteFileUri: 'http://myhost.com/url1',
         publicNotes: 'slide notes',
@@ -170,7 +172,7 @@ module('Integration | Component | week glance', function(hooks) {
   };
 
   test('it renders with events', async function(assert) {
-    assert.expect(37);
+    assert.expect(40);
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
     this.set('today', today);
@@ -194,14 +196,17 @@ module('Integration | Component | week glance', function(hooks) {
     const firstLearningMaterials = `${firstEvent} .learning-material`;
     const firstLm1 = `${firstLearningMaterials}:eq(0)`;
     const firstLm1TypeIcon = `${firstLm1} .fa-paragraph`;
+    const firstLm1IconTitle = `${firstLm1TypeIcon} title`;
     const firstLm1Notes = `${firstLm1} .public-notes`;
     const firstLm2 = `${firstLearningMaterials}:eq(1)`;
     const firstLm2TypeIcon = `${firstLm2} .fa-link`;
+    const firstLm2IconTitle = `${firstLm2TypeIcon} title`;
     const firstLm2Notes = `${firstLm2} .public-notes`;
     const firstLm2Link = `${firstLm2} a`;
     const firstLm3 = `${firstLearningMaterials}:eq(2)`;
     const firstLm3Link = `${firstLm3} a:eq(0)`;
     const firstLm3TypeIcon = `${firstLm3} .fa-file-pdf`;
+    const firstLm3IconTitle = `${firstLm3TypeIcon} title`;
     const firstLm3DownloadLink = `${firstLm3} a:eq(1)`;
     const firstInstructors = `${firstEvent} .instructors`;
     const firstAttributes = `${firstEvent} .session-attributes svg`;
@@ -237,13 +242,16 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(this.$(firstDescription).text().trim(), 'Best Session For SureLorem ipsum dolor sit amet, c');
     assert.equal(this.$(firstLm1).text().replace(/[\t\n\s]+/g, ""), 'CitationCitationLMcitationtextThisiscool.');
     assert.equal(this.$(firstLm1TypeIcon).length, 1, 'LM type icon is present.');
+    assert.equal(this.$(firstLm1IconTitle).text().trim(), 'Citation', 'LM type icon has correct title.');
     assert.equal(this.$(firstLm1Notes).text().replace(/[\t\n\s]+/g, ""), 'Thisiscool.');
     assert.ok(this.$(firstLm2).text().includes('Link LM'));
     assert.equal(this.$(firstLm2TypeIcon).length, 1, 'LM type icon is present.');
+    assert.equal(this.$(firstLm2IconTitle).text().trim(), 'Web Link', 'LM type icon has correct title.');
     assert.equal(this.$(firstLm2Notes).length, 0);
     assert.equal(this.$(firstLm2Link).attr('href'), 'http://myhost.com/url2');
     assert.ok(this.$(firstLm3).text().includes('File LM'));
     assert.equal(this.$(firstLm3TypeIcon).length, 1, 'LM type icon is present.');
+    assert.equal(this.$(firstLm3IconTitle).text().trim(), 'File', 'LM type icon has correct title.');
     assert.equal(this.$(firstLm3Link).attr('href'), 'http://myhost.com/url1?inline');
     assert.equal(this.$(firstLm3DownloadLink).attr('href'), 'http://myhost.com/url1');
     assert.equal(this.$(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
