@@ -70,7 +70,7 @@
     "ember-cli-uglify": "^2.1.0",
     "ember-click-outside": "^1.0.0",
     "ember-composable-helpers": "^2.0.2",
-    "ember-data": "3.4.2",
+    "ember-data": "3.5.0",
     "ember-export-application-global": "^2.0.0",
     "ember-froala-editor": "^2.8.5",
     "ember-inflector": "^3.0.0",
