@@ -2,8 +2,9 @@
   {{#if isManaging}}
     <div class="title">{{t "general.competencies"}}</div>
   {{else}}
-    <div {{action "collapse"}}
+    <div
       class="title {{if showCollapsible "collapsible clickable"}}"
+      {{action "collapse"}}
     >
       {{t "general.competencies"}} ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
     </div>

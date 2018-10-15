@@ -40,9 +40,10 @@
       </tbody>
     </table>
 
-    <button {{action (perform save)}}
+    <button
       disabled={{save.isRunning}}
       data-test-finalize-users-submit
+      {{action (perform save)}}
     >
       {{#if save.isRunning}}
         {{loading-spinner}}

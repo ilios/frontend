@@ -121,9 +121,10 @@
 
   <div class="buttons">
     {{#if canUpdate}}
-      <button {{action (perform saveSessionType)}}
+      <button
         class="done text"
         disabled={{saveSessionType.isRunning}}
+        {{action (perform saveSessionType)}}
       >
         {{#if saveSessionType.isRunning}}
           {{loading-spinner}}
