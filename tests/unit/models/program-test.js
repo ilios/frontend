@@ -37,40 +37,36 @@ module('Unit | Model | Program', function(hooks) {
 
   test('cohorts', async function(assert){
     assert.expect(3);
-    const model = run(() => this.owner.lookup('service:store').createRecord('program'));
     const store = this.owner.lookup('service:store');
-    run( async () => {
-      const cohort1 = store.createRecord('cohort', { id: 1 });
-      const programYear1 = store.createRecord('program-year', { id: 1, cohort: cohort1 });
-      const cohort2 = store.createRecord('cohort', { id: 2 });
-      const programYear2 = store.createRecord('program-year', { id: 2, cohort: cohort2 });
-      model.get('programYears').pushObjects([ programYear1, programYear2 ]);
-      const cohorts = await model.get('cohorts');
-      assert.equal(cohorts.length, 2);
-      assert.ok(cohorts.includes(cohort1));
-      assert.ok(cohorts.includes(cohort2));
-    });
+    const model = run(() => store.createRecord('program'));
+    const cohort1 = run(() => store.createRecord('cohort'));
+    const programYear1 = run(() => store.createRecord('program-year', {cohort: cohort1 }));
+    const cohort2 = run(() => store.createRecord('cohort'));
+    const programYear2 = run(() => store.createRecord('program-year', {cohort: cohort2 }));
+    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const cohorts = await model.get('cohorts');
+    assert.equal(cohorts.length, 2);
+    assert.ok(cohorts.includes(cohort1));
+    assert.ok(cohorts.includes(cohort2));
   });
 
   test('courses', async function(assert){
     assert.expect(4);
-    const model = run(() => this.owner.lookup('service:store').createRecord('program'));
     const store = this.owner.lookup('service:store');
-    run( async () => {
-      const course1 = store.createRecord('course', { id: 1 });
-      const course2 = store.createRecord('course', { id: 2 });
-      const course3 = store.createRecord('course', { id: 3 });
-      const cohort1 = store.createRecord('cohort', { id: 1, courses: [ course1, course2 ] });
-      const programYear1 = store.createRecord('program-year', { id: 1, cohort: cohort1 });
-      const cohort2 = store.createRecord('cohort', { id: 2, courses: [ course1, course3 ]});
-      const programYear2 = store.createRecord('program-year', { id: 2, cohort: cohort2 });
-      model.get('programYears').pushObjects([ programYear1, programYear2 ]);
-      const courses = await model.get('courses');
-      assert.equal(courses.length, 3);
-      assert.ok(courses.includes(course1));
-      assert.ok(courses.includes(course2));
-      assert.ok(courses.includes(course3));
-    });
+    const model = run(() => store.createRecord('program'));
+    const course1 =  run(() => store.createRecord('course'));
+    const course2 =  run(() => store.createRecord('course'));
+    const course3 =  run(() => store.createRecord('course'));
+    const cohort1 =  run(() => store.createRecord('cohort', {courses: [ course1, course2 ] }));
+    const programYear1 =  run(() => store.createRecord('program-year', {cohort: cohort1 }));
+    const cohort2 =  run(() => store.createRecord('cohort', {courses: [ course1, course3 ]}));
+    const programYear2 =  run(() => store.createRecord('program-year', {cohort: cohort2 }));
+    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const courses = await model.get('courses');
+    assert.equal(courses.length, 3);
+    assert.ok(courses.includes(course1));
+    assert.ok(courses.includes(course2));
+    assert.ok(courses.includes(course3));
   });
 
   //

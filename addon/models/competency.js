@@ -21,8 +21,7 @@ export default Model.extend({
   programYears: hasMany('program-year', {async: true}),
   isNotDomain: not('isDomain'),
   isDomain: computed('parent', function(){
-    const parentId = this.belongsTo('parent').id();
-    return !parentId;
+    return !this.belongsTo('parent').id();
   }),
 
   domain: computed('parent', 'parent.domain', async function() {
