@@ -6,6 +6,13 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | expand collapse button', function(hooks) {
   setupRenderingTest(hooks);
 
+
+  test('renders with default value false', async function(assert) {
+    assert.expect(1);
+    await render(hbs`{{expand-collapse-button}}`);
+    assert.ok(find('svg').classList.contains('fa-plus'));
+  });
+
   test('clicking changes the icon and sends the action', async function(assert) {
     assert.expect(5);
 
