@@ -1,7 +1,8 @@
 <div class="actions">
   {{#if isManaging}}
     <button
-      class="bigadd" {{action (perform save)}}
+      class="bigadd"
+      {{action (perform save)}}
     >
       {{fa-icon
         (if save.isRunning "spinner" "check")
@@ -10,7 +11,8 @@
     </button>
     <button
       disabled={{save.isRunning}}
-      class="bigcancel" {{action (perform cancel)}}
+      class="bigcancel"
+      {{action (perform cancel)}}
     >
       {{fa-icon "undo"}}
     </button>
@@ -103,7 +105,8 @@
         >
         <button
           class="directory-sync {{if syncComplete "directory-sync-complete"}}"
-          title={{t "general.updateUserFromDirectory"}} {{action (perform directorySync)}}
+          title={{t "general.updateUserFromDirectory"}}
+          {{action (perform directorySync)}}
         >
           {{fa-icon
             (if (and (not syncComplete) directorySync.isRunning) "spinner" "sync")

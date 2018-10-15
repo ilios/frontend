@@ -1,6 +1,7 @@
 <div class="school-session-types-header">
-  <div {{action "collapse"}}
+  <div
     class="title {{if (await isCollapsible) "collapsible clickable"}}"
+    {{action "collapse"}}
   >
     {{t "general.sessionTypes"}}
   </div>

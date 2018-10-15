@@ -38,31 +38,35 @@
             {{report.name}}
           {{/link-to}}
         </td>
-        <td {{action "edit" report}}
+        <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-program
+          {{action "edit" report}}
         >
           {{report.program.title}}
         </td>
-        <td {{action "edit" report}}
+        <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-year
+          {{action "edit" report}}
         >
           {{report.yearLabel}}
         </td>
-        <td {{action "edit" report}}
+        <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-start-date
+          {{action "edit" report}}
         >
           {{moment-format report.startDate "L"}}
         </td>
-        <td {{action "edit" report}}
+        <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-end-date
+          {{action "edit" report}}
         >
           {{moment-format report.endDate "L"}}
         </td>
