@@ -1,5 +1,6 @@
-<div {{action "collapse"}}
+<div
   class="title {{if showCollapsible "collapsible clickable"}}"
+  {{action "collapse"}}
 >
   {{t "general.vocabularies"}} ({{get (await school.vocabularies) "length"}})
 </div>

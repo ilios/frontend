@@ -19,7 +19,9 @@
           <button {{action (toggle "showBulkNewUserForm" this)}}>{{t "general.createBulk"}}</button>
         {{/if}}
       {{else}}
-        <button {{action (if showNewUserForm (toggle "showNewUserForm" this) (toggle "showBulkNewUserForm" this))}}>
+        <button
+          {{action (if showNewUserForm (toggle "showNewUserForm" this) (toggle "showBulkNewUserForm" this))}}
+        >
           {{fa-icon "minus"}}
         </button>
       {{/unless}}

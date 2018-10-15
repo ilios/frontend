@@ -6,8 +6,9 @@
       </span>
     </div>
   {{else}}
-    <div {{action "collapse"}}
+    <div
       class="title {{if programYear.competencies.length "clickable collapsible"}}"
+      {{action "collapse"}}
     >
       {{t "general.competencies"}} ({{get (await programYear.competencies) "length"}})
     </div>

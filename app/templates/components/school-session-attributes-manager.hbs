@@ -10,9 +10,10 @@
       <td>{{t "general.attendanceRequired"}}</td>
       <td>
         {{#if showSessionAttendanceRequired}}
-          <input {{action disable "showSessionAttendanceRequired"}}
+          <input
             type="checkbox"
             checked
+            {{action disable "showSessionAttendanceRequired"}}
           >
         {{else}}
           <input type="checkbox" {{action enable "showSessionAttendanceRequired"}}>
@@ -33,9 +34,10 @@
       <td>{{t "general.specialAttireRequired"}}</td>
       <td>
         {{#if showSessionSpecialAttireRequired}}
-          <input {{action disable "showSessionSpecialAttireRequired"}}
+          <input
             type="checkbox"
             checked
+            {{action disable "showSessionSpecialAttireRequired"}}
           >
         {{else}}
           <input type="checkbox" {{action enable "showSessionSpecialAttireRequired"}}>
@@ -46,9 +48,10 @@
       <td>{{t "general.specialEquipmentRequired"}}</td>
       <td>
         {{#if showSessionSpecialEquipmentRequired}}
-          <input {{action disable "showSessionSpecialEquipmentRequired"}}
+          <input
             type="checkbox"
             checked
+            {{action disable "showSessionSpecialEquipmentRequired"}}
           >
         {{else}}
           <input type="checkbox" {{action enable "showSessionSpecialEquipmentRequired"}}>

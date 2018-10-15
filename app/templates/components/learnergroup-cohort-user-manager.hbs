@@ -83,8 +83,9 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0)}}
-  <button {{action (perform addSelectedUsers)}}
+  <button
     class="done text"
+    {{action (perform addSelectedUsers)}}
   >
     {{t
       "general.moveToGroup"

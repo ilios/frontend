@@ -17,7 +17,7 @@
         </option>
       {{/each}}
     </select>
-    <button {{action (perform save)}}
+    <button
       class="done text"
       disabled={{or
         isSaving
@@ -25,6 +25,7 @@
         (lt cohorts.length 1)
         (eq selectedUserIds.length 0)
       }}
+      {{action (perform save)}}
     >
       {{#if isSaving}}
         {{loading-spinner}}
@@ -60,9 +61,10 @@
     <tbody>
       {{#each filteredStudents as |user|}}
         <tr class={{if (is-in selectedUserIds user.id) "highlighted" ""}}>
-          <td {{action "toggleUserSelection" user.id}}
+          <td
             class="text-left clickable"
             colspan="1"
+            {{action "toggleUserSelection" user.id}}
           >
             {{#if (is-in selectedUserIds user.id)}}
               <input type="checkbox" checked>
