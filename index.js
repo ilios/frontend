@@ -14,8 +14,7 @@ module.exports = {
 
   setupPreprocessorRegistry: function(type, registry) {
     // ACHTUNG!
-    // check if v-get helper is already registered.
-    // if not, add it.
+    // check if v-get helper is already registered. if it's not, then add it.
     // this is necessary in order to make this helper available to
     // applications that include ilios-common and that use its components that make use of cp-validations.
     // @link https://github.com/offirgolan/ember-cp-validations/issues/334
