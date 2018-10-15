@@ -68,7 +68,6 @@
     "ember-cli-flash": "^1.6.6",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
-    "ember-cli-mirage": "^0.4.3",
     "ember-cli-sass": "8.0.1",
     "ember-cli-sass-lint": "^1.0.5",
     "ember-cli-server-variables": "^2.1.0",
