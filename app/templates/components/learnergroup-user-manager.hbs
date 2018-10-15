@@ -170,8 +170,9 @@
   </div>
   {{#if (gt selectedUsers.length 0) class="vertical"}}
     <p class="fullwidth">
-      <button {{action (perform addSelectedUsers)}}
+      <button
         class="done text"
+        {{action (perform addSelectedUsers)}}
       >
         {{t
           "general.moveToGroup"
@@ -179,8 +180,9 @@
           count=selectedUsers.length
         }}
       </button>
-      <button {{action (perform removeSelectedUsers)}}
+      <button
         class="cancel text"
+        {{action (perform removeSelectedUsers)}}
       >
         {{t
           "general.removeLearnerToCohort"

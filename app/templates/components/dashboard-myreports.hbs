@@ -4,8 +4,9 @@
     <div class="dashboard-block-actions">
       {{#liquid-if selectedReport class="crossFade"}}
         <button {{action "selectReport" null}}>{{t "general.allReports"}}</button>
-        <button {{action (perform downloadReport)}}
+        <button
           disabled={{downloadReport.isRunning}}
+          {{action (perform downloadReport)}}
         >
           {{#if finishedBuildingReport}}
             {{fa-icon "check"}}

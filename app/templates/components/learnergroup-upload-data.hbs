@@ -103,9 +103,10 @@
 {{/if}}
 
 {{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
-  <button {{action (perform continue)}}
+  <button
     disabled={{continue.isRunning}}
     data-test-upload-data-confirm
+    {{action (perform continue)}}
   >
     {{#if continue.isRunning}}
       {{loading-spinner}}

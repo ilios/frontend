@@ -1,9 +1,10 @@
-<button {{action "toggleMenu"}}
+<button
   aria-label={{get (await currentUser.model) "fullName"}}
   class="toggle"
   aria-haspopup="true"
   aria-expanded={{if isOpen "true" "false"}}
   data-test-toggle
+  {{action "toggleMenu"}}
 >
   {{fa-icon "user"}} <span>{{get (await currentUser.model) "fullName"}}</span>
 </button>

@@ -4,7 +4,8 @@
     <button
       disabled={{refreshKey.isRunning}}
       title={{t "general.refreshIcsFeedKey"}}
-      class="refresh-key" {{action (perform refreshKey)}}
+      class="refresh-key"
+      {{action (perform refreshKey)}}
     >
       {{fa-icon
         (if refreshKey.isRunning "spinner" "sync")
@@ -13,14 +14,16 @@
     </button>
     <button
       disabled={{refreshKey.isRunning}}
-      class="bigcancel" {{action setIsManaging false}}
+      class="bigcancel"
+      {{action setIsManaging false}}
     >
       {{fa-icon "undo"}}
     </button>
   {{else if isManageable}}
     <button
-      class="manage" {{action setIsManaging true}}
+      class="manage"
       title={{t "general.refreshIcsFeedKey"}}
+      {{action setIsManaging true}}
     >
       {{fa-icon "edit"}}
     </button>

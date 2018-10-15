@@ -79,9 +79,10 @@
           {{#copy-button success="tokenCopied" clipboardText=generatedJwt}}
             {{fa-icon "copy"}}
           {{/copy-button}}
-          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+          <button
             class="bigcancel"
             data-test-result-reset
+            {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
             {{fa-icon "times"}}
           </button>
@@ -97,9 +98,10 @@
             format="YYYY-MM-DD"
             onSelection=(action "selectExpiresAtDate")
           }}
-          <button {{action (perform createNewToken)}} 
+          <button
             class="bigadd"
             data-test-new-token-create
+            {{action (perform createNewToken)}}
           >
             {{#if createNewToken.isRunning}}
               {{loading-spinner}}
@@ -107,8 +109,9 @@
               {{fa-icon "check"}}
             {{/if}}
           </button>
-          <button {{action (pipe toggleShowCreateNewToken (action "reset"))}}
+          <button
             class="bigcancel"
+            {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
             {{fa-icon "times"}}
           </button>
