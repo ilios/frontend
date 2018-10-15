@@ -77,7 +77,6 @@
     "ember-link-action": "^0.1.0",
     "ember-load": "0.0.12",
     "ember-load-initializers": "^1.1.0",
-    "ember-math-helpers": "^2.5.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.12.1",
     "ember-noscript": "^2.0.0",
