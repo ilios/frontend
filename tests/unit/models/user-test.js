@@ -73,232 +73,220 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all learner group courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1
-      });
-      let offering1 = store.createRecord('offering', {
-        session: session1
-      });
-      let offering2 = store.createRecord('offering', {
-        session: session1
-      });
-      store.createRecord('learnerGroup', {
-        offerings: [offering1, offering2],
-        users: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session2 = store.createRecord('session', {
-        course: course2
-      });
-      let offering3 = store.createRecord('offering', {
-        session: session2
-      });
-      store.createRecord('learnerGroup', {
-        offerings: [offering3],
-        users: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1
+    }));
+    let offering1 = run(() => store.createRecord('offering', {
+      session: session1
+    }));
+    let offering2 = run(() => store.createRecord('offering', {
+      session: session1
+    }));
+    run(() => store.createRecord('learnerGroup', {
+      offerings: [offering1, offering2],
+      users: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session2 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    let offering3 = run(() => store.createRecord('offering', {
+      session: session2
+    }));
+    run(() => store.createRecord('learnerGroup', {
+      offerings: [offering3],
+      users: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
   test('gets all instructor group courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1
-      });
-      let offering1 = store.createRecord('offering', {
-        session: session1
-      });
-      let offering2 = store.createRecord('offering', {
-        session: session1
-      });
-      store.createRecord('instructorGroup', {
-        offerings: [offering1, offering2],
-        users: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session2 = store.createRecord('session', {
-        course: course2
-      });
-      let offering3 = store.createRecord('offering', {
-        session: session2
-      });
-      store.createRecord('instructorGroup', {
-        offerings: [offering3],
-        users: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1
+    }));
+    let offering1 = run(() => store.createRecord('offering', {
+      session: session1
+    }));
+    let offering2 = run(() => store.createRecord('offering', {
+      session: session1
+    }));
+    run(() => store.createRecord('instructorGroup', {
+      offerings: [offering1, offering2],
+      users: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session2 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    let offering3 = run(() => store.createRecord('offering', {
+      session: session2
+    }));
+    run(() => store.createRecord('instructorGroup', {
+      offerings: [offering3],
+      users: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
   test('gets all instructed offering courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1
-      });
-      store.createRecord('offering', {
-        session: session1,
-        instructors: [model]
-      });
-      store.createRecord('offering', {
-        session: session1,
-        instructors: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session2 = store.createRecord('session', {
-        course: course2
-      });
-      store.createRecord('offering', {
-        session: session2,
-        instructors: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1
+    }));
+    run(() => store.createRecord('offering', {
+      session: session1,
+      instructors: [model]
+    }));
+    run(() => store.createRecord('offering', {
+      session: session1,
+      instructors: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session2 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    run(() => store.createRecord('offering', {
+      session: session2,
+      instructors: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
   test('gets all learner offering courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1
-      });
-      store.createRecord('offering', {
-        session: session1,
-        learners: [model]
-      });
-      store.createRecord('offering', {
-        session: session1,
-        learners: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session2 = store.createRecord('session', {
-        course: course2
-      });
-      store.createRecord('offering', {
-        session: session2,
-        learners: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1
+    }));
+    run(() => store.createRecord('offering', {
+      session: session1,
+      learners: [model]
+    }));
+    run(() => store.createRecord('offering', {
+      session: session1,
+      learners: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session2 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    run(() => store.createRecord('offering', {
+      session: session2,
+      learners: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
   test('gets all learner group ILMSession courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1,
-      });
-      let ilm1 = store.createRecord('ilmSession', {
-        session: session1
-      });
-      let ilm2 = store.createRecord('ilmSession', {
-        session: session1
-      });
-      store.createRecord('learnerGroup', {
-        ilmSessions: [ilm1, ilm2],
-        users: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session2 = store.createRecord('session', {
-        course: course2
-      });
-      let ilm3 = store.createRecord('ilmSession', {
-        session: session2
-      });
-      store.createRecord('learnerGroup', {
-        ilmSessions: [ilm3],
-        users: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1,
+    }));
+    let ilm1 = run(() => store.createRecord('ilmSession', {
+      session: session1
+    }));
+    let ilm2 = run(() => store.createRecord('ilmSession', {
+      session: session1
+    }));
+    run(() => store.createRecord('learnerGroup', {
+      ilmSessions: [ilm1, ilm2],
+      users: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session2 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    let ilm3 = run(() => store.createRecord('ilmSession', {
+      session: session2
+    }));
+    run(() => store.createRecord('learnerGroup', {
+      ilmSessions: [ilm3],
+      users: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
   test('gets all instructor group ILMSession courses', async function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
-    run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
-      let session1 = store.createRecord('session', {
-        course: course1,
-      });
-      let session2 = store.createRecord('session', {
-        course: course1,
-      });
-      let ilm1 = store.createRecord('ilmSession', {
-        id: 1,
-        session: session1
-      });
-      let ilm2 = store.createRecord('ilmSession', {
-        id: 2,
-        session: session2
-      });
-      store.createRecord('instructorGroup', {
-        ilmSessions: [ilm1, ilm2],
-        users: [model]
-      });
-      let course2 = store.createRecord('course', {id: 2});
-      let session3 = store.createRecord('session', {
-        course: course2
-      });
-      let ilm3 = store.createRecord('ilmSession', {
-        id: 3,
-        session: session3
-      });
-      store.createRecord('instructorGroup', {
-        ilmSessions: [ilm3],
-        users: [model]
-      });
+    let model = run(() => store.createRecord('user'));
+    let course1 = run(() => store.createRecord('course'));
+    let session1 = run(() => store.createRecord('session', {
+      course: course1,
+    }));
+    let session2 = run(() => store.createRecord('session', {
+      course: course1,
+    }));
+    let ilm1 = run(() => store.createRecord('ilmSession', {
+      id: 1,
+      session: session1
+    }));
+    let ilm2 = run(() => store.createRecord('ilmSession', {
+      id: 2,
+      session: session2
+    }));
+    run(() => store.createRecord('instructorGroup', {
+      ilmSessions: [ilm1, ilm2],
+      users: [model]
+    }));
+    let course2 = run(() => store.createRecord('course'));
+    let session3 = run(() => store.createRecord('session', {
+      course: course2
+    }));
+    let ilm3 = run(() => store.createRecord('ilmSession', {
+      id: 3,
+      session: session3
+    }));
+    run(() => store.createRecord('instructorGroup', {
+      ilmSessions: [ilm3],
+      users: [model]
+    }));
 
-      let courses = [course1, course2];
-      const allRelatedCourses = await model.get('allRelatedCourses');
-      assert.equal(allRelatedCourses.length, courses.length);
-      courses.forEach(course => {
-        assert.ok(allRelatedCourses.includes(course));
-      });
+    let courses = [course1, course2];
+    const allRelatedCourses = await model.get('allRelatedCourses');
+    assert.equal(allRelatedCourses.length, courses.length);
+    courses.forEach(course => {
+      assert.ok(allRelatedCourses.includes(course));
     });
   });
 
@@ -306,7 +294,7 @@ module('Unit | Model | User', function(hooks) {
     let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
     run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
+      let course1 = store.createRecord('course');
       let session1 = store.createRecord('session', {
         course: course1
       });
@@ -314,7 +302,7 @@ module('Unit | Model | User', function(hooks) {
         session: session1,
         learners: [model]
       });
-      let course2 = store.createRecord('course', {id: 2});
+      let course2 = store.createRecord('course');
       let session2 = store.createRecord('session', {
         course: course2
       });
@@ -525,7 +513,7 @@ module('Unit | Model | User', function(hooks) {
     let model = run(() => this.owner.lookup('service:store').createRecord('user'));
     let store = this.owner.lookup('service:store');
     run( async () => {
-      let course1 = store.createRecord('course', {id: 1});
+      let course1 = store.createRecord('course');
       let session1 = store.createRecord('session', {
         course: course1
       });
@@ -533,7 +521,7 @@ module('Unit | Model | User', function(hooks) {
         session: session1,
         instructors: [model]
       });
-      let course2 = store.createRecord('course', {id: 2});
+      let course2 = store.createRecord('course');
       let session2 = store.createRecord('session', {
         course: course2
       });
@@ -610,7 +598,7 @@ module('Unit | Model | User', function(hooks) {
     const model = run(() => this.owner.lookup('service:store').createRecord('user'));
     const store = this.owner.lookup('service:store');
     run( async () => {
-      const learnerGroup = store.createRecord('learnerGroup', {id: 1});
+      const learnerGroup = store.createRecord('learnerGroup');
       const learnerGroup2 = store.createRecord('learnerGroup', {id: 2, parent: learnerGroup});
       const learnerGroup3 = store.createRecord('learnerGroup', {id: 3, parent: learnerGroup2});
       const tree = [ learnerGroup, learnerGroup2, learnerGroup3 ];

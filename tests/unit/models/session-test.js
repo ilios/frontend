@@ -192,16 +192,13 @@ module('Unit | Model | Session', function(hooks) {
     });
   });
 
-  test('isIndependentLearning', function(assert) {
+  test('isIndependentLearning', async function(assert) {
     assert.expect(2);
-    const model = run(() => this.owner.lookup('service:store').createRecord('session'));
-    const store = model.store;
-    run(() => {
-      assert.notOk(model.get('isIndependentLearning'));
-      const ilmSession = store.createRecord('ilmSession', { id: 1 });
-      model.set('ilmSession', ilmSession);
-      assert.ok(model.get('isIndependentLearning'));
-    });
+    const store = this.owner.lookup('service:store');
+    const model = run(() => store.createRecord('session'));
+    assert.notOk(model.get('isIndependentLearning'));
+    await run(() => store.createRecord('ilmSession', {id: 1, session: model}));
+    assert.ok(model.get('isIndependentLearning'));
   });
 
 

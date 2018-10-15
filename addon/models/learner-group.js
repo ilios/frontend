@@ -144,16 +144,17 @@ export default Model.extend({
     return title;
   }),
 
-  allParentTitles: computed('isTopLevelGroup', 'parent.{title,allParentTitles}', async function(){
+  allParentTitles: computed('isTopLevelGroup', 'parent.allParentTitles.[]', 'parent.title', async function(){
     const titles = [];
-    if(!this.get('isTopLevelGroup')){
-      const parent = await this.get('parent');
+    const parent = await this.get('parent');
+    if (parent) {
       const allParentTitles = await parent.get('allParentTitles');
       if(!isEmpty(allParentTitles)){
         titles.pushObjects(allParentTitles);
       }
       titles.pushObject(parent.get('title'));
     }
+
     return titles;
   }),
 
@@ -227,7 +228,7 @@ export default Model.extend({
   }),
 
   isTopLevelGroup: computed('parent', function(){
-    return isEmpty(this.belongsTo('parent').id());
+    return !this.belongsTo('parent').id();
   }),
 
   allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function(){

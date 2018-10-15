@@ -46,7 +46,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   assignableVocabularies: alias('course.assignableVocabularies'),
 
   isIndependentLearning: computed('ilmSession', function () {
-    return !isEmpty(this.belongsTo('ilmSession').id());
+    return !!this.belongsTo('ilmSession').id();
   }),
 
   /**
