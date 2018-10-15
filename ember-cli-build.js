@@ -1,4 +1,5 @@
 'use strict';
+/* eslint camelcase: 0 */
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
@@ -8,6 +9,13 @@ module.exports = function(defaults) {
     dotEnv: {
       clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST']
     },
+    'ember-cli-uglify': {
+      uglify: {
+        compress: {
+          collapse_vars: false
+        }
+      }
+    },
   });
 
   /*
@@ -16,6 +24,5 @@ module.exports = function(defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
-
   return app.toTree();
 };
