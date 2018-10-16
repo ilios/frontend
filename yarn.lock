@@ -5809,6 +5809,15 @@ ember-macro-helpers@^1.0.0:
     ember-cli-test-info "^1.0.0"
     ember-weakmap "^3.0.0"
 
+ember-math-helpers@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/ember-math-helpers/-/ember-math-helpers-2.7.1.tgz#19c1e676d74e6166a57c4d0b52b72cdf10263a49"
+  integrity sha512-FKXP9Ammi1e29cN3W1aDOCUfh4P2vZIQBkuTr3+4IMPl1SbHpOjszmMUpK3B4R4fjGy1xnDR/Wvvao8iIwA6YQ==
+  dependencies:
+    broccoli-funnel "^2.0.0"
+    ember-cli-babel "^6.16.0"
+    ember-cli-htmlbars "^3.0.0"
+
 ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
@@ -7776,10 +7785,10 @@ ignore@^4.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ilios-common@20.1.0:
-  version "20.1.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.1.0.tgz#29c78e300772e9864a69d00fa00dada899cec18c"
-  integrity sha512-F5J3+ow2dYla0MIccEvSUsqFIUksQEFS93NR/bkAUBpNvP4zKOqQ/FIOiKfnJLr2XO04TzAiN/+JS/aDudlXxw==
+ilios-common@20.2.0:
+  version "20.2.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.2.0.tgz#e8b56d085ba7d7145dd0bee465ca123faf83e11a"
+  integrity sha512-40L2Gc7fRxXIhmW6mnVDHCyMtV0iPkbO9xYu1T9IPRmQZEew4j4aw3ZhmR4Kj/XnasfVbdeI7jBw1AHhFML1Ww==
   dependencies:
     "@fortawesome/ember-fontawesome" "^0.1.7"
     "@fortawesome/free-brands-svg-icons" "^5.1.0"
@@ -7804,12 +7813,14 @@ ilios-common@20.1.0:
     ember-i18n "^5.0.1"
     ember-i18n-cp-validations "^3.1.0"
     ember-light-table "^1.13.2"
+    ember-math-helpers "^2.7.1"
     ember-moment "^7.4.1"
     ember-one-way-select "^4.0.0"
     ember-pikaday "^2.2.6"
     ember-promise-helpers "^1.0.6"
     ember-rl-dropdown "^0.10.2"
     ember-simple-auth-token "^4.0.4"
+    ember-simple-charts "^0.17.0"
     ember-truth-helpers "^2.0.0"
     liquid-fire "^0.29.5"
     scroll-into-view "^1.9.3"
