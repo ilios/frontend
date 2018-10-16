@@ -53,4 +53,14 @@ module.exports = {
     }
     return MergeTrees(trees);
   },
+
+  treeForAddonTestSupport(tree) {
+    // intentionally not calling _super here
+    // so that can have our `import`'s be
+    // import { ... } from 'ilios-common';
+
+    return this.preprocessJs(tree, '/', this.name, {
+      registry: this.registry,
+    });
+  },
 };
