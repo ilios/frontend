@@ -1,7 +1,6 @@
-import setupMirage from 'ilios-common/mirage/setup';
+import setupMirage from './setup';
 
 export default function () {
-  this.timing = 100;
   this.namespace = '/';
   setupMirage(this);
 }
