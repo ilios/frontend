@@ -28,6 +28,8 @@
     "@fortawesome/pro-light-svg-icons": "^5.1.0",
     "@fortawesome/pro-regular-svg-icons": "^5.1.0",
     "@fortawesome/pro-solid-svg-icons": "^5.1.0",
+    "broccoli-funnel": "^2.0.1",
+    "broccoli-merge-trees": "^3.0.1",
     "elemental-calendar": "^0.1.0",
     "ember-attacher": "^0.13.5",
     "ember-auto-import": "^1.2.13",
