@@ -25,7 +25,7 @@ module.exports = {
     'no-shadow': [2, {
       builtinGlobals: true,
       allow: ['event', 'i', 'name', 'parent', 'resolve', 'self', 'select', 'scrollTo', 'status', 'wait', 'find']
-    },], /* Prevent shadowing globals like Object*/
+    }], /* Prevent shadowing globals like Object*/
     'ember/new-module-imports': 2,
     'ember/no-old-shims': 2,
     'ember/closure-actions': 0,
@@ -46,6 +46,7 @@ module.exports = {
     // node files
     {
       files: [
+        '.eslintrc.js',
         '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
