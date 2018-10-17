@@ -38,8 +38,8 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
         this.validate().then(({validations}) => {
           if (validations.get('isValid')) {
             objective.set('title', title);
+            this.send('removeErrorDisplayFor', 'title');
             objective.save().then(()=> {
-              this.send('removeErrorDisplayFor', 'title');
               resolve();
             });
           } else {
