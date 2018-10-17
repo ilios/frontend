@@ -4,6 +4,7 @@ import layout from '../templates/components/detail-learning-materials';
 import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
 import RSVP from 'rsvp';
 const { notEmpty, not } = computed;
 const { all, map } = RSVP;
@@ -37,6 +38,22 @@ export default Component.extend({
     const isSorting = this.get('isSorting');
 
     return (!isManaging && !displayAddNewForm && !isSorting && editable);
+  }),
+
+  proxyMaterials: computed('subject.learningMaterials.@each.{position}', function(){
+    return new Promise(resolve => {
+      let materialProxy = ObjectProxy.extend({
+        confirmRemoval: false,
+      });
+      this.get('subject').get('learningMaterials').then(materials => {
+        let sortedMaterials = materials.toArray().sort(this.positionSortingCallback);
+        resolve(sortedMaterials.map(material => {
+          return materialProxy.create({
+            content: material
+          });
+        }));
+      });
+    });
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', async function () {
@@ -74,8 +91,14 @@ export default Component.extend({
   }),
 
   actions: {
-    addNewLearningMaterial(type){
-      this.setProperties({ type, displayAddNewForm: true });
+    confirmRemoval(lmProxy) {
+      lmProxy.set('showRemoveConfirmation', true);
+    },
+    cancelRemove(lmProxy) {
+      lmProxy.set('showRemoveConfirmation', false);
+    },
+    addNewLearningMaterial(type) {
+      this.setProperties({type, displayAddNewForm: true});
     },
 
     async saveNewLearningMaterial(lm) {
@@ -87,20 +110,20 @@ export default Component.extend({
 
       let lmSubject;
       let position = 0;
-      if (! isEmpty(learningMaterials)) {
+      if (!isEmpty(learningMaterials)) {
         position = learningMaterials.toArray().sortBy('position').reverse()[0].get('position') + 1;
       }
       if (isCourse) {
-        lmSubject = store.createRecord('course-learning-material', { course: subject, position });
+        lmSubject = store.createRecord('course-learning-material', {course: subject, position});
       } else {
-        lmSubject = store.createRecord('session-learning-material', { session: subject, position });
+        lmSubject = store.createRecord('session-learning-material', {session: subject, position});
       }
       lmSubject.set('learningMaterial', savedLm);
       await lmSubject.save();
       this.set('displayAddNewForm', false);
     },
 
-    saveSortOrder(learningMaterials){
+    saveSortOrder(learningMaterials) {
       this.set('isSaving', true);
       for (let i = 0, n = learningMaterials.length; i < n; i++) {
         let lm = learningMaterials[i];
@@ -121,7 +144,7 @@ export default Component.extend({
       let lmCollectionType;
       let subject = this.get('subject');
 
-      if(this.get('isCourse')){
+      if (this.get('isCourse')) {
         newLearningMaterial = store.createRecord('course-learning-material', {
           course: subject,
           learningMaterial: parentLearningMaterial,
@@ -130,7 +153,7 @@ export default Component.extend({
         lmCollectionType = 'courseLearningMaterials';
 
       }
-      if(this.get('isSession')){
+      if (this.get('isSession')) {
         newLearningMaterial = store.createRecord('session-learning-material', {
           session: subject,
           learningMaterial: parentLearningMaterial,
@@ -150,7 +173,9 @@ export default Component.extend({
 
       return savedLearningMaterial;
     },
-    async remove(subjectLearningMaterial){
+
+    async remove(lmProxy) {
+      const subjectLearningMaterial = lmProxy.get('content');
       subjectLearningMaterial.deleteRecord();
       return subjectLearningMaterial.save();
     },
