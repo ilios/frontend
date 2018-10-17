@@ -92,6 +92,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV.serverVariables.defaults['api-name-space'] = 'api';
+    ENV.serverVariables.defaults['api-host'] = '';
   }
 
   if (environment === 'production') {
