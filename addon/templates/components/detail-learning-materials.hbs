@@ -63,7 +63,6 @@
         <thead>
           <tr>
             <th class="text-left" colspan="3">{{t "general.displayName"}}</th>
-            <th class="text-center" colspan="2">{{t "general.type"}}</th>
             <th class="text-center" colspan="2">{{t "general.owner"}}</th>
             <th class="text-center" colspan="2">{{t "general.required"}}</th>
             <th class="text-center" colspan="2">{{t "general.notes"}}</th>
@@ -87,7 +86,6 @@
                 }}
                 {{lmProxy.learningMaterial.title}}
               </td>
-              <td class="text-center" colspan="2">{{lmProxy.learningMaterial.type}}</td>
               <td class="text-center" colspan="2">{{lmProxy.learningMaterial.owningUser.fullName}}</td>
               <td class="text-center" colspan="2">
                 {{#if lmProxy.required}}
@@ -134,7 +132,7 @@
             </tr>
             {{#if lmProxy.showRemoveConfirmation}}
               <tr class="confirm-removal">
-                <td colspan="16">
+                <td colspan="14">
                   <div class="confirm-message">
                     {{t "general.confirmRemoval"}}<br>
                     <div class="confirm-buttons">
