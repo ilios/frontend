@@ -44,8 +44,6 @@ jobs:
       env: EMBER_TRY_SCENARIO=ember-release
     - stage: "Additional Tests - Ember Beta"
       env: EMBER_TRY_SCENARIO=ember-beta
-    - stage: "Additional Tests - Ember Canary"
-      env: EMBER_TRY_SCENARIO=ember-canary
     - stage: "Additional Tests - Ember Default with jQuery"
       env: EMBER_TRY_SCENARIO=ember-default-with-jquery
 
