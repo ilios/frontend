@@ -53,7 +53,6 @@
     "ember-one-way-select": "^4.0.0",
     "ember-pikaday": "^2.2.6",
     "ember-promise-helpers": "^1.0.6",
-    "ember-responsive": "^3.0.0-beta.3",
     "ember-rl-dropdown": "^0.10.2",
     "ember-simple-auth-token": "^4.0.4",
     "ember-simple-charts": "^0.17.0",
