@@ -59,8 +59,10 @@ module.exports = {
     // so that can have our `import`'s be
     // import { ... } from 'ilios-common';
 
-    return this.preprocessJs(tree, '/', this.name, {
-      registry: this.registry,
-    });
+    if (tree) {
+      return this.preprocessJs(tree, '/', this.name, {
+        registry: this.registry,
+      });
+    }
   },
 };
