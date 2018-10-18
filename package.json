@@ -109,6 +109,8 @@
     "index.js",
     "ember-cli-build.js",
     "addon/",
+    "addon-mirage-support/",
+    "addon-test-support/",
     "app/",
     "blueprints/",
     "config/",
