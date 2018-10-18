@@ -39,8 +39,8 @@
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-mirage": "^0.4.9",
     "ember-cli-moment-shim": "^3.1.0",
-    "ember-cli-string-helpers": "^1.9.0",
     "ember-cli-page-object": "1.15.0-beta.3",
+    "ember-cli-string-helpers": "^1.9.0",
     "ember-composable-helpers": "^2.0.1",
     "ember-concurrency": "^0.8.21",
     "ember-cp-validations": "^3.3.1",
@@ -63,6 +63,7 @@
     "scroll-into-view": "^1.9.3"
   },
   "devDependencies": {
+    "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv": "^6.0.0",
