@@ -117,6 +117,10 @@
               </td>
               <td class="text-center" colspan="2">
                 {{lmProxy.learningMaterial.status.title}}
+                <span data-test-status>{{value}}</span>
+                {{#if (or lmProxy.startDate lmProxy.endDate)}}
+                  {{fa-icon "clock" title=(t "general.timedRelease")}}
+                {{/if}}
               </td>
               <td class="text-left text-center" colspan="1">
                 {{#if editable}}
