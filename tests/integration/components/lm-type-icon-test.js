@@ -48,7 +48,7 @@ module('Integration | Component | lm type icon', function(hooks) {
       let icon = fixtures[i].icon;
       this.set('lm', lm);
       await render(hbs`{{lm-type-icon type=lm.type mimetype=lm.mimetype}}`);
-      assert.equal(this.$(`.${icon}`).length, 1, `Correct type icon is used for ${lm.mimetype}`);
+      assert.equal(this.element.querySelectorAll(`.${icon}`).length, 1, `Correct type icon is used for ${lm.mimetype}`);
     }
   });
 

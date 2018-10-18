@@ -1,0 +1,21 @@
+<div class="backtolink backtosessionlink" data-test-back-to-sessions>{{#link-to "course" (await model.course)}}{{t "general.backToSessionList"}}{{/link-to}}</div>
+{{session-details
+  session=model
+  editable=canUpdate
+  programs=(await model.course)
+  sessionTypes=(await model.course.school.sessionTypes)
+  sessionObjectiveDetails=sessionObjectiveDetails
+  sessionTaxonomyDetails=sessionTaxonomyDetails
+  setSessionObjectiveDetails=(action (mut sessionObjectiveDetails))
+  setSessionTaxonomyDetails=(action (mut sessionTaxonomyDetails))
+  isManagingLearnerGroups=isManagingLearnerGroups
+  setIsManagingLearnerGroups=(action (mut isManagingLearnerGroups))
+  sessionLearnergroupDetails=sessionLearnergroupDetails
+  setSessionLearnergroupDetails=(action (mut sessionLearnergroupDetails))
+  showNewOfferingForm=showNewOfferingForm
+  toggleShowNewOfferingForm=(toggle-action "showNewOfferingForm" this)
+  sessionLeadershipDetails=sessionLeadershipDetails
+  setSessionLeadershipDetails=(action (mut sessionLeadershipDetails))
+  sessionManageLeadership=sessionManageLeadership
+  setSessionManageLeadership=(action (mut sessionManageLeadership))
+}}

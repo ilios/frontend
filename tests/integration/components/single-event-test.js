@@ -127,28 +127,28 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(this.element.querySelector('.single-event-instructors').textContent.includes('Taught By Great Teacher'), 'instructors are displayed');
     assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('This session is "test type"'), 'session type is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test description'), 'session description is displayed');
-    let $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
+    let sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
     assert.dom(
-      this.element.querySelector('.single-event-learningmaterial-item-notes', $sessionLm)
+      this.element.querySelector('.single-event-learningmaterial-item-notes', sessionLm)
     ).hasText(this.sessionLearningMaterials[0].publicNotes);
     assert.dom(
-      this.element.querySelector('.single-event-learningmaterial-item-description', $sessionLm)
+      this.element.querySelector('.single-event-learningmaterial-item-description', sessionLm)
     ).hasText(this.sessionLearningMaterials[0].description);
-    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
-    $sessionLm = this.$('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
-    assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock', $sessionLm).length, 1, 'Timed release icon is visible');
-    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', $sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
-    let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:eq(0)';
-    assert.ok(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0)`).text().trim().startsWith('Competency A (Domain A)'));
-    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0) li:eq(0)`).text().trim(), 'Session Objective B');
-    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(0) li:eq(1)`).text().trim(), 'Session Objective A');
-    assert.ok(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(1)`).text().trim().startsWith('Domain B (Domain B)'));
-    assert.equal(this.$(`${sessionObjectivesSelector} ul.tree > li:eq(1) li:eq(0)`).text().trim(), 'Session Objective C');
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
+    assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock', sessionLm).length, 1, 'Timed release icon is visible');
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
+    assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Competency A (Domain A)'));
+    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).textContent.trim(), 'Session Objective B');
+    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).textContent.trim(), 'Session Objective A');
+    assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2)`).textContent.trim().startsWith('Domain B (Domain B)'));
+    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`).textContent.trim(), 'Session Objective C');
 
-    let courseObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:eq(1)';
-    assert.ok(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0)`).text().trim().startsWith('Domain A (Domain A)'));
-    assert.equal(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0) li:eq(0)`).text().trim(), 'Course Objective B');
-    assert.equal(this.$(`${courseObjectivesSelector} ul.tree > li:eq(0) li:eq(1)`).text().trim(), 'Course Objective A');
-    assert.ok(this.$(`${courseObjectivesSelector} ul.tree > li:eq(1)`).text().trim().startsWith('Domain B (Domain B)'));
+    let courseObjectivesSelector = '[data-test-course-objectives]';
+    assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Domain A (Domain A)'));
+    assert.equal(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).textContent.trim(), 'Course Objective B');
+    assert.equal(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).textContent.trim(), 'Course Objective A');
+    assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`).textContent.trim().startsWith('Domain B (Domain B)'));
   });
 });

@@ -26,11 +26,11 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondIcon='expand'
     }}`);
     assert.dom(firstLabel).hasText('First', 'first label has correct text');
-    assert.ok(this.$(firstRadio).is(':checked'), 'first radio is checked');
+    assert.ok(find(firstRadio).checked, 'first radio is checked');
     assert.equal(find(firstLabel).getAttribute('for'), find(firstRadio).id, 'first label is linked to radio correctly');
 
     assert.dom(secondLabel).hasText('Second', 'second label has correct text');
-    assert.notOk(this.$(secondRadio).is(':checked'), 'second radio is not checked');
+    assert.notOk(find(secondRadio).checked, 'second radio is not checked');
     assert.equal(find(secondLabel).getAttribute('for'), find(secondRadio).id, 'second label is linked to radio correctly');
 
     assert.dom(icon).exists({ count: 1 });

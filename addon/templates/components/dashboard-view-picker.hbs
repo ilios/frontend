@@ -1,24 +1,37 @@
 <ul>
   <li>
-    <button {{action change "week"}} class={{if (eq show "week") "active"}}>
+    <button
+      class={{if (eq show "week") "active"}}
+      data-test-glance
+      {{action change "week"}}
+    >
       {{t "general.weekAtAGlance"}}
     </button>
   </li>
   <li>
-    <button {{action change "agenda"}} class={{if (eq show "agenda") "active"}}>
+    <button
+      class={{if (eq show "agenda") "active"}}
+      data-test-activities
+      {{action change "agenda"}}
+    >
       {{t "general.activities"}}
     </button>
   </li>
   <li>
     <button
       class={{if (eq show "materials") "active"}}
+      data-test-materials
       {{action change "materials"}}
     >
       {{t "general.materials"}}
     </button>
   </li>
   <li>
-    <button {{action change "calendar"}} class={{if (eq show "calendar") "active"}}>
+    <button
+      class={{if (eq show "calendar") "active"}}
+      data-test-calendar
+      {{action change "calendar"}}
+    >
       {{t "general.calendar"}}
     </button>
   </li>

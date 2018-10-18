@@ -1,71 +1,68 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | dashbaord view picker', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    const buttons = 'button';
-    const week = `${buttons}:eq(0)`;
-    const activities = `${buttons}:eq(1)`;
-    const materials = `${buttons}:eq(2)`;
-    const calendar = `${buttons}:eq(3)`;
+    const week = '[data-test-glance]';
+    const activities = '[data-test-activities';
+    const materials = '[data-test-materials]';
+    const calendar = '[data-test-calendar]';
 
     this.set('nothing', parseInt);
     this.set('show', 'week');
     await render(hbs`{{dashboard-view-picker show=show change=(action nothing)}}`);
 
-    assert.equal(this.$(week).text().trim(), 'Week at a Glance');
-    assert.ok(this.$(week).hasClass('active'));
-    assert.equal(this.$(activities).text().trim(), 'Activities');
-    assert.notOk(this.$(activities).hasClass('active'));
-    assert.equal(this.$(materials).text().trim(), 'Materials');
-    assert.notOk(this.$(materials).hasClass('active'));
-    assert.equal(this.$(calendar).text().trim(), 'Calendar');
-    assert.notOk(this.$(calendar).hasClass('active'));
+    assert.equal(find(week).textContent.trim(), 'Week at a Glance');
+    assert.ok(find(week).classList.contains('active'));
+    assert.equal(find(activities).textContent.trim(), 'Activities');
+    assert.notOk(find(activities).classList.contains('active'));
+    assert.equal(find(materials).textContent.trim(), 'Materials');
+    assert.notOk(find(materials).classList.contains('active'));
+    assert.equal(find(calendar).textContent.trim(), 'Calendar');
+    assert.notOk(find(calendar).classList.contains('active'));
   });
 
   test('changing show changes active button', async function(assert) {
-    const buttons = 'button';
-    const week = `${buttons}:eq(0)`;
-    const activities = `${buttons}:eq(1)`;
-    const materials = `${buttons}:eq(2)`;
-    const calendar = `${buttons}:eq(3)`;
+    const week = '[data-test-glance]';
+    const activities = '[data-test-activities';
+    const materials = '[data-test-materials]';
+    const calendar = '[data-test-calendar]';
 
     this.set('nothing', parseInt);
     this.set('show', 'week');
     await render(hbs`{{dashboard-view-picker show=show change=(action nothing)}}`);
 
-    assert.ok(this.$(week).hasClass('active'));
-    assert.notOk(this.$(activities).hasClass('active'));
-    assert.notOk(this.$(materials).hasClass('active'));
-    assert.notOk(this.$(calendar).hasClass('active'));
+    assert.ok(find(week).classList.contains('active'));
+    assert.notOk(find(activities).classList.contains('active'));
+    assert.notOk(find(materials).classList.contains('active'));
+    assert.notOk(find(calendar).classList.contains('active'));
 
     this.set('show', 'agenda');
-    assert.notOk(this.$(week).hasClass('agenda'));
-    assert.ok(this.$(activities).hasClass('active'));
-    assert.notOk(this.$(materials).hasClass('active'));
-    assert.notOk(this.$(calendar).hasClass('active'));
+    assert.notOk(find(week).classList.contains('agenda'));
+    assert.ok(find(activities).classList.contains('active'));
+    assert.notOk(find(materials).classList.contains('active'));
+    assert.notOk(find(calendar).classList.contains('active'));
 
     this.set('show', 'materials');
-    assert.notOk(this.$(week).hasClass('agenda'));
-    assert.notOk(this.$(activities).hasClass('active'));
-    assert.ok(this.$(materials).hasClass('active'));
-    assert.notOk(this.$(calendar).hasClass('active'));
+    assert.notOk(find(week).classList.contains('agenda'));
+    assert.notOk(find(activities).classList.contains('active'));
+    assert.ok(find(materials).classList.contains('active'));
+    assert.notOk(find(calendar).classList.contains('active'));
 
     this.set('show', 'calendar');
-    assert.notOk(this.$(week).hasClass('agenda'));
-    assert.notOk(this.$(activities).hasClass('active'));
-    assert.notOk(this.$(materials).hasClass('active'));
-    assert.ok(this.$(calendar).hasClass('active'));
+    assert.notOk(find(week).classList.contains('agenda'));
+    assert.notOk(find(activities).classList.contains('active'));
+    assert.notOk(find(materials).classList.contains('active'));
+    assert.ok(find(calendar).classList.contains('active'));
   });
 
   test('clicking week fires action', async function(assert) {
     assert.expect(2);
-    const buttons = 'button';
-    const week = `${buttons}:eq(0)`;
+    const week = '[data-test-glance]';
 
     this.set('click', what => {
       assert.equal(what, 'week');
@@ -73,14 +70,13 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(this.$(week).hasClass('active'));
-    this.$(week).click();
+    assert.notOk(find(week).classList.contains('active'));
+    find(week).click();
   });
 
   test('clicking activities fires action', async function(assert) {
     assert.expect(2);
-    const buttons = 'button';
-    const activities = `${buttons}:eq(1)`;
+    const activities = '[data-test-activities';
 
     this.set('click', what => {
       assert.equal(what, 'agenda');
@@ -88,14 +84,13 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'materials');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(this.$(activities).hasClass('active'));
-    this.$(activities).click();
+    assert.notOk(find(activities).classList.contains('active'));
+    find(activities).click();
   });
 
   test('clicking materials fires action', async function(assert) {
     assert.expect(2);
-    const buttons = 'button';
-    const materials = `${buttons}:eq(2)`;
+    const materials = '[data-test-materials]';
 
     this.set('click', what => {
       assert.equal(what, 'materials');
@@ -103,14 +98,13 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(this.$(materials).hasClass('active'));
-    this.$(materials).click();
+    assert.notOk(find(materials).classList.contains('active'));
+    find(materials).click();
   });
 
   test('clicking activities fires action', async function(assert) {
     assert.expect(2);
-    const buttons = 'button';
-    const calendar = `${buttons}:eq(3)`;
+    const calendar = '[data-test-calendar]';
 
     this.set('click', what => {
       assert.equal(what, 'calendar');
@@ -118,7 +112,7 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(this.$(calendar).hasClass('active'));
-    this.$(calendar).click();
+    assert.notOk(find(calendar).classList.contains('active'));
+    find(calendar).click();
   });
 });

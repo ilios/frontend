@@ -1,5 +1,9 @@
 'use strict';
 
+const Funnel = require('broccoli-funnel');
+const MergeTrees = require('broccoli-merge-trees');
+const path = require('path');
+
 module.exports = {
   name: require('./package').name,
 
@@ -38,5 +42,25 @@ module.exports = {
         }
       });
     }
+  },
+
+  treeForApp(appTree) {
+    const trees = [appTree];
+    if (this.app.env && ['test', 'development'].includes(this.app.env)) {
+      const mirageDir = path.join(__dirname, 'addon-mirage-support');
+      const mirageTree = new Funnel(mirageDir, { destDir: 'mirage' });
+      trees.push(mirageTree);
+    }
+    return MergeTrees(trees);
+  },
+
+  treeForAddonTestSupport(tree) {
+    // intentionally not calling _super here
+    // so that can have our `import`'s be
+    // import { ... } from 'ilios-common';
+
+    return this.preprocessJs(tree, '/', this.name, {
+      registry: this.registry,
+    });
   },
 };
