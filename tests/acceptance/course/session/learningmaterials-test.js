@@ -115,7 +115,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.current().count, 4);
 
-      assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+      assert.ok(page.learningMaterials.current(0).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(0).title.endsWith('learning material 0'));
       assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(0).required, 'No');
       assert.equal(page.learningMaterials.current(0).notes, 'No');
@@ -123,7 +124,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current(0).mesh, 'descriptor 1 descriptor 2');
       assert.equal(page.learningMaterials.current(0).status, 'status 0');
 
-      assert.equal(page.learningMaterials.current(1).title, 'learning material 1');
+      assert.ok(page.learningMaterials.current(1).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(1).title.endsWith('learning material 1'));
       assert.equal(page.learningMaterials.current(1).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(1).required, 'No');
       assert.equal(page.learningMaterials.current(1).notes, 'No');
@@ -132,7 +134,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current(1).status, 'status 0');
       assert.equal(page.learningMaterials.current(1).status, 'status 0');
 
-      assert.equal(page.learningMaterials.current(2).title, 'learning material 2');
+      assert.ok(page.learningMaterials.current(2).title.startsWith('Web Link'));
+      assert.ok(page.learningMaterials.current(2).title.endsWith('learning material 2'));
       assert.equal(page.learningMaterials.current(2).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(2).required, 'Yes');
       assert.equal(page.learningMaterials.current(2).notes, 'No');
@@ -141,7 +144,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current(2).status, 'status 0');
       assert.equal(page.learningMaterials.current(2).status, 'status 0');
 
-      assert.equal(page.learningMaterials.current(3).title, 'learning material 3');
+      assert.ok(page.learningMaterials.current(3).title.startsWith('Citation'));
+      assert.ok(page.learningMaterials.current(3).title.endsWith('learning material 3'));
       assert.equal(page.learningMaterials.current(3).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(3).required, 'Yes');
       assert.equal(page.learningMaterials.current(3).notes, 'Yes');
@@ -174,7 +178,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       await page.learningMaterials.newLearningMaterial.save();
 
       assert.equal(page.learningMaterials.current().count, 5);
-      assert.equal(page.learningMaterials.current(4).title, testTitle);
+      assert.ok(page.learningMaterials.current(4).title.startsWith('Web Link'));
+      assert.ok(page.learningMaterials.current(4).title.endsWith(testTitle));
     });
 
     test('create new citation learning material', async function (assert) {
@@ -201,7 +206,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       await page.learningMaterials.newLearningMaterial.save();
 
       assert.equal(page.learningMaterials.current().count, 5);
-      assert.equal(page.learningMaterials.current(4).title, testTitle);
+      assert.ok(page.learningMaterials.current(4).title.startsWith('Citation'));
+      assert.ok(page.learningMaterials.current(4).title.endsWith(testTitle));
     });
 
     test('can only add one learning-material at a time', async function (assert) {
@@ -327,7 +333,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.learningMaterials.manager.save();
 
-      assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+      assert.ok(page.learningMaterials.current(0).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(0).title.endsWith('learning material 0'));
       assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(0).required, 'Yes');
       assert.notOk(page.learningMaterials.current(0).isNotePublic);
@@ -353,7 +360,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.learningMaterials.manager.cancel();
 
-      assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+      assert.ok(page.learningMaterials.current(0).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(0).title.endsWith('learning material 0'));
       assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(0).required, 'No');
       assert.equal(page.learningMaterials.current(0).notes, 'No');
@@ -559,7 +567,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.learningMaterials.manager.save();
 
-      assert.equal(page.learningMaterials.current(0).title, newTitle);
+      assert.ok(page.learningMaterials.current(0).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(0).title.endsWith(newTitle));
 
       await page.learningMaterials.current(0).details();
       assert.equal(page.learningMaterials.manager.name.value, newTitle);
@@ -604,8 +613,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(currentRouteName(), 'session.index');
 
       assert.equal(page.learningMaterials.current().count, 1);
-
-      assert.equal(page.learningMaterials.current(0).title, 'learning material 0');
+      assert.ok(page.learningMaterials.current(0).title.startsWith('File'));
+      assert.ok(page.learningMaterials.current(0).title.endsWith('learning material 0'));
       assert.equal(page.learningMaterials.current(0).owner, '0 guy M. Mc0son');
       assert.equal(page.learningMaterials.current(0).required, 'No');
       assert.equal(page.learningMaterials.current(0).notes, 'No');
