@@ -5,9 +5,9 @@ import {
   visitable
 } from 'ember-cli-page-object';
 
-import leadershipCollapsed from 'ilios/tests/pages/components/leadership-collapsed';
-import leadershipList from 'ilios/tests/pages/components/leadership-list';
-import leadershipManager from 'ilios/tests/pages/components/leadership-manager';
+import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
+import leadershipList from 'ilios-common/page-objects/components/leadership-list';
+import leadershipManager from 'ilios-common/page-objects/components/leadership-manager';
 
 export default create({
   scope: '[data-test-curriculum-inventory-report-details]',

@@ -8,7 +8,7 @@ import { click, find, findAll, settled, visit } from '@ember/test-helpers';
 import $ from 'jquery';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { getElementText, getText } from 'ilios-common';
 const url = '/programs/1/programyears/1?pyObjectiveDetails=true';
 
 module('Acceptance | Program Year - Objectives', function(hooks) {

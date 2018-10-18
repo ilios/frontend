@@ -6,7 +6,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
 import moment from 'moment';
 import { create } from 'ember-cli-page-object';
-import table from 'ilios/tests/pages/components/sessions-grid-offering-table';
+import table from 'ilios-common/page-objects/components/sessions-grid-offering-table';
 
 const page = create({ table });
 
