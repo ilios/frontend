@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | selected term tree', function(hooks) {
@@ -32,21 +32,21 @@ module('Integration | Component | selected term tree', function(hooks) {
       selectedTerms=selectedTerms
       toggle=(action toggle)
     }}`);
-    const topTerms = 'ul:eq(0) > li';
-    const firstTopTerm = `${topTerms}:eq(0)`;
+    const topTerms = 'ul:nth-of-type(1) > li';
+    const firstTopTerm = `${topTerms}:nth-of-type(1)`;
     const firstTopTermCheckbox = `${firstTopTerm} input`;
-    const secondTopTerm = `${topTerms}:eq(1)`;
+    const secondTopTerm = `${topTerms}:nth-of-type(2)`;
     const firstTopTermChildren = `${firstTopTerm} ul > li`;
     const secondTopTermChildren = `${secondTopTerm} ul > li`;
-    const secondTopTermFirstChildCheckbox = `${secondTopTermChildren}:eq(0) input`;
+    const secondTopTermFirstChildCheckbox = `${secondTopTermChildren}:nth-of-type(1) input`;
 
 
-    assert.equal(this.$(firstTopTerm).text().trim(), 'top 1');
-    assert.notOk(this.$(firstTopTermCheckbox).is('checked'));
-    assert.equal(this.$(secondTopTerm).text().replace(/\s/g, ''), 'top2top2child1');
-    assert.equal(this.$(firstTopTermChildren).text().trim(), '');
-    assert.equal(this.$(secondTopTermChildren).text().trim(), 'top 2 child 1');
-    assert.ok(this.$(secondTopTermFirstChildCheckbox).is(':checked'));
+    assert.equal(find(firstTopTerm).textContent.trim(), 'top 1');
+    assert.notOk(find(firstTopTermCheckbox).checked);
+    assert.equal(find(secondTopTerm).textContent.replace(/\s/g, ''), 'top2top2child1');
+    assert.equal(findAll(firstTopTermChildren).length, 0);
+    assert.equal(find(secondTopTermChildren).textContent.trim(), 'top 2 child 1');
+    assert.ok(find(secondTopTermFirstChildCheckbox).checked);
   });
 
   test('clicking checkbox fires toggle', async function(assert) {
@@ -61,11 +61,11 @@ module('Integration | Component | selected term tree', function(hooks) {
       selectedTerms=selectedTerms
       toggle=(action toggle)
     }}`);
-    const topTerms = 'ul:eq(0) > li';
-    const secondTopTerm = `${topTerms}:eq(1)`;
-    const secondTermCheckbox = `${secondTopTerm} input:eq(0)`;
+    const topTerms = 'ul:nth-of-type(1) > li';
+    const secondTopTerm = `${topTerms}:nth-of-type(2)`;
+    const secondTermCheckbox = `${secondTopTerm} input:nth-of-type(1)`;
 
-    this.$(secondTermCheckbox).click();
+    await click(secondTermCheckbox);
   });
 
   test('clicking title fires toggle', async function(assert) {
@@ -80,10 +80,10 @@ module('Integration | Component | selected term tree', function(hooks) {
       selectedTerms=selectedTerms
       toggle=(action toggle)
     }}`);
-    const topTerms = 'ul:eq(0) > li';
-    const secondTopTerm = `${topTerms}:eq(1)`;
-    const secondTermCheckbox = `${secondTopTerm} span:eq(0)`;
+    const topTerms = 'ul:nth-of-type(1) > li';
+    const secondTopTerm = `${topTerms}:nth-of-type(2)`;
+    const secondTermCheckbox = `${secondTopTerm} span:nth-of-type(1)`;
 
-    this.$(secondTermCheckbox).click();
+    await click(secondTermCheckbox);
   });
 });

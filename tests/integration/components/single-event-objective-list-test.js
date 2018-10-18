@@ -45,8 +45,8 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.notOk(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is not visible');
     assert.ok(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is visible');
     for(let i = 0, n = objectives.length; i < n; i++) {
-      assert.equal(0, this.$(`.list-in-order li:nth-of-type(${i + 1})`).text().trim().indexOf(objectives[i].title), 'Objective title is visible');
-      assert.equal(this.$(`.list-in-order li:nth-of-type(${i + 1}) .details`).text().trim(), objectives[i].domain, 'Domain is visible.');
+      assert.equal(0, this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1})`).textContent.trim().indexOf(objectives[i].title), 'Objective title is visible');
+      assert.equal(this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1}) .details`).textContent.trim(), objectives[i].domain, 'Domain is visible.');
     }
   });
 
