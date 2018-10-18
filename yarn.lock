@@ -3844,6 +3844,16 @@ ember-cli-dependency-checker@^3.0.0:
     resolve "^1.5.0"
     semver "^5.3.0"
 
+ember-cli-deprecation-workflow@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-1.0.0.tgz#9afae3a5769d85b32325b9da5f045ace5b3719a8"
+  integrity sha512-Xps9KAQM9Y6S8Z5JdCuAYyaQRYRsRQ4xuOT9X5dENN5mwSdvs3975kQx9Ws+4Pwti3QCrF9OihTgHXWqxN4Mpw==
+  dependencies:
+    broccoli-funnel "^2.0.1"
+    broccoli-merge-trees "^3.0.1"
+    broccoli-plugin "^1.3.1"
+    ember-debug-handlers-polyfill "^1.1.1"
+
 ember-cli-eslint@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/ember-cli-eslint/-/ember-cli-eslint-4.2.3.tgz#2844d3f5e8184f19b2d7132ba99eb0b370b55598"
@@ -4340,6 +4350,11 @@ ember-data@^3.5.0:
     semver "^5.5.0"
     silent-error "^1.1.0"
 
+ember-debug-handlers-polyfill@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-debug-handlers-polyfill/-/ember-debug-handlers-polyfill-1.1.1.tgz#e9ae0a720271a834221179202367421b580002ef"
+  integrity sha512-lO7FBAqJjzbL+IjnWhVfQITypPOJmXdZngZR/Vdn513W4g/Q6Sjicao/mDzeDCb48Y70C4Facwk0LjdIpSZkRg==
+
 ember-drag-drop@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.5.1.tgz#23b36f5f4da27abe658a47227d669ed80eecf0ef"
@@ -4788,6 +4803,14 @@ ember-template-lint@^1.0.0-beta.6:
     minimatch "^3.0.4"
     resolve "^1.1.3"
     strip-bom "^3.0.0"
+
+ember-test-selectors@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-1.0.0.tgz#a2f8cd86f4fb4c320004a2bf0e4c450d41668a21"
+  integrity sha1-ovjNhvT7TDIABKK/DkxFDUFmiiE=
+  dependencies:
+    ember-cli-babel "^6.8.2"
+    ember-cli-version-checker "^2.0.0"
 
 ember-tether@1.0.0:
   version "1.0.0"
