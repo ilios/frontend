@@ -59,12 +59,97 @@
       {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
         <button class="sort-materials-btn" {{action (mut isSorting) true}}>{{t "general.sortMaterials"}}</button>
       {{/if}}
-      {{learning-material-table
-        learningMaterials=(await subject.learningMaterials)
-        editable=editable
-        manageMaterial=(action (mut managingMaterial))
-        remove=(action "remove")
-      }}
+      <table>
+        <thead>
+          <tr>
+            <th class="text-left" colspan="3">{{t "general.displayName"}}</th>
+            <th class="text-center" colspan="2">{{t "general.owner"}}</th>
+            <th class="text-center" colspan="2">{{t "general.required"}}</th>
+            <th class="text-center" colspan="2">{{t "general.notes"}}</th>
+            <th class="text-center" colspan="2">{{t "general.mesh"}}</th>
+            <th class="text-center" colspan="2">{{t "general.status"}}</th>
+            <th class="text-left" colspan="1">{{t "general.actions"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await proxyMaterials) as |lmProxy|}}
+            <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
+              <td
+                class="text-left clickable link"
+                colspan="3"
+                role="button"
+                {{action (mut managingMaterial) lmProxy.content}}
+              >
+                {{lm-type-icon
+                  type=lmProxy.learningMaterial.type
+                  mimetype=lmProxy.learningMaterial.mimetype
+                }}
+                {{lmProxy.learningMaterial.title}}
+              </td>
+              <td class="text-center" colspan="2">{{lmProxy.learningMaterial.owningUser.fullName}}</td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.required}}
+                  <span class="add">{{t "general.yes"}}</span>
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.notes}}
+                  <span class="add">{{t "general.yes"}}</span>
+                  {{#if lmProxy.publicNotes}}
+                    {{fa-icon "eye"}}
+                  {{/if}}
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.meshDescriptors.length}}
+                  <ul>
+                    {{#each (sort-by "name" (await lmProxy.meshDescriptors)) as |descriptor|}}
+                      <li>{{descriptor.name}}</li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  {{t "general.none"}}
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{lmProxy.learningMaterial.status.title}}
+                <span data-test-status>{{value}}</span>
+                {{#if (or lmProxy.startDate lmProxy.endDate)}}
+                  {{fa-icon "clock" title=(t "general.timedRelease")}}
+                {{/if}}
+              </td>
+              <td class="text-left text-center" colspan="1">
+                {{#if editable}}
+                  <span
+                    class="clickable remove"
+                    role="button"
+                    {{action "confirmRemoval" lmProxy}}
+                  >
+                    {{fa-icon "trash"}}
+                  </span>
+                {{/if}}
+              </td>
+            </tr>
+            {{#if lmProxy.showRemoveConfirmation}}
+              <tr class="confirm-removal">
+                <td colspan="14">
+                  <div class="confirm-message">
+                    {{t "general.confirmRemoval"}}<br>
+                    <div class="confirm-buttons">
+                      <button {{action "remove" lmProxy}} class="remove text">{{t "general.yes"}}</button>
+                      <button {{action "cancelRemove" lmProxy}} class="done text">{{t "general.cancel"}}</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
     {{/if}}
   {{/if}}
 </div>
