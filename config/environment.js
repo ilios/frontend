@@ -151,6 +151,9 @@ module.exports = function (environment) {
     };
 
     ENV.IliosFeatures.programYearVisualizations = true;
+
+    //put ember concurrency tasks into debug mode to make errors much easier to spot
+    ENV.EmberENV.DEBUG_TASKS = true;
   }
 
   if (environment === 'test') {
