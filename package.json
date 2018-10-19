@@ -81,7 +81,7 @@
     "ember-metrics": "0.12.1",
     "ember-noscript": "^2.0.0",
     "ember-pad": "1.2.3",
-    "ember-qunit": "^3.4.1",
+    "ember-qunit": "^3.5.3",
     "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^5.0.1",
     "ember-responsive": "^2.0.4",
