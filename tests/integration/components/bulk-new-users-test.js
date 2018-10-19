@@ -4,7 +4,7 @@ import EmberObject from '@ember/object';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find, triggerEvent, waitUntil } from '@ember/test-helpers';
+import { render, settled, click, findAll, find, triggerEvent, waitUntil, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import Response from 'ember-cli-mirage/response';
@@ -76,7 +76,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       'change',
       [file]
     );
-    return settled();
+    await waitFor('[data-test-proposed-new-users]');
   };
 
   test('it renders', async function(assert) {
