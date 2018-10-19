@@ -26,7 +26,7 @@ export default {
     scope: '.detail-learningmaterials-content table',
     itemScope: 'tbody tr',
     item: {
-      title: text('td [data-test-title]', { at: 0 }),
+      title: text('td', { at: 0 }),
       owner: text('td', { at: 1 }),
       required: text('td', { at: 2 }),
       notes: text('td', { at: 3 }),
