@@ -5938,10 +5938,10 @@ ember-qunit-nice-errors@^1.2.0:
     ember-cli-babel "^6.6.0"
     recast "^0.13.0"
 
-ember-qunit@^3.4.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.1.tgz#c0e6e1a7b194113d9cf760e00923d51b7761146a"
-  integrity sha512-ZF5aJALQymO3l6IXncqPsBRHpamvdPa1HIcWrDDFD1idvWHJoyiuITU2t4cn1+e8T57KOZ5QfSRs9qpa76jnJg==
+ember-qunit@^3.5.3:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.3.tgz#bfd0bff8298c78c77e870cca43fe0826e78a0d09"
+  integrity sha512-FmXsI1bGsZ5th25x4KEle2fLCVURTptsQODfBt+Pg8tk9rX7y79cqny91PrhtkhE+giZ8p029tnq94SdpJ4ojg==
   dependencies:
     "@ember/test-helpers" "^0.7.26"
     broccoli-funnel "^2.0.1"
