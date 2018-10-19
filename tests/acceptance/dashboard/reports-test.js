@@ -4,7 +4,7 @@ import {
   test
 } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-import page from 'ilios/tests/pages/dashboard';
+import page from 'ilios-common/page-objects/dashboard';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios/tests/helpers/custom-helpers';
+import { getElementText, getText } from 'ilios-common';
 import page from '../pages/learner-group';
 
 module('Acceptance | Learnergroup', function(hooks) {
