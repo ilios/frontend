@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('dashboard');
   this.route('login');
   this.route('events', {path: 'events/:slug'});
   this.route('logout');
