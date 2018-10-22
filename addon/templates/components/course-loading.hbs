@@ -1,6 +1,8 @@
-<div class="back-to-courses-list">
-  {{#link-to "courses"}}{{t "general.backToCourses"}}{{/link-to}}
-</div>
+{{#if (has-route "courses")}}
+  <div class="back-to-courses-list">
+    {{#link-to "courses"}}{{t "general.backToCourses"}}{{/link-to}}
+  </div>
+{{/if}}
 <div class="box">
   <div></div>
 </div>
