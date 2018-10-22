@@ -19,7 +19,7 @@ export default Component.extend({
   collapsible: true,
   collapsed: true,
   showFullTitle: false,
-
+  'data-test-week-glance': true,
   midnightAtTheStartOfThisWeek: computed('intl.locale', 'year', 'week', 'startOfWeek', function(){
     this.get('intl'); //we need to use the service so the CP will re-fire
     const year = this.get('year');
@@ -75,9 +75,14 @@ export default Component.extend({
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
   }),
-  actions: {
-    sortString(a, b){
-      return a.localeCompare(b);
-    }
-  }
+
+  ilmEvents: computed('publishedWeekEvents', async function () {
+    const events = await this.get('publishedWeekEvents');
+    return events.filter(ev => ('ilmSession' in ev));
+  }),
+
+  offeringEvents: computed('publishedWeekEvents', async function () {
+    const events = await this.get('publishedWeekEvents');
+    return events.filter(ev => ('offering' in ev));
+  }),
 });

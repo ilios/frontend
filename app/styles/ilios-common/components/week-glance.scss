@@ -22,6 +22,17 @@
     }
   }
 
+  .ilm-events {
+    border: 1px solid $ilios-blue;
+    margin-bottom: 2rem;
+    padding-bottom: .5rem;
+    padding-left: .5rem;
+
+    .event {
+      margin-left: .5rem;
+    }
+  }
+
   .event {
     line-height: 1.5;
     margin-bottom: 1em;

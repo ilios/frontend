@@ -115,6 +115,7 @@ general:
   include: Include
   incompleteSessions: "Sessions Incomplete: cannot publish"
   independentLearning: "Independent Learning"
+  independentLearningActivities: "Independent Learning Activities"
   instructionalNotes: "Instructional Notes"
   instructorGroups: "Instructor Groups"
   instructors: Instructors

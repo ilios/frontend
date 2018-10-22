@@ -115,6 +115,7 @@ general:
   include: Incluir
   incompleteSessions: "Sesiónes Incompletas: No se pueden publicar"
   independentLearning: "Aprendizaje Independiente"
+  independentLearningActivities: "Aprendizaje Independiente Actividades"
   instructionalNotes: "Notes para la Instrucción"
   instructorGroups: "Grupos de Instructores"
   instructors: Instructores

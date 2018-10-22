@@ -9,6 +9,7 @@ export default Component.extend({
   mimetype: null,
   tagName: 'span',
   classNames: ['lm-type-icon'],
+  'data-test-lm-type-icon': true,
   icon: computed('type', 'mimetype', function() {
     let type = this.get('type');
     let mimetype = this.get('mimetype') || '';
