@@ -4641,10 +4641,10 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-ember-a11y-testing@^0.5.2:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/ember-a11y-testing/-/ember-a11y-testing-0.5.3.tgz#a59ca319915f4171940c206870faaa06cbbbb8dd"
-  integrity sha512-5US61Z4Y51oh6+FHTYfYqD+fpMAMsxGJZTmWbWJFTE1e5QnddwejsES2BHymD+38zKZHhhOodj5guiIKWSKXgw==
+ember-a11y-testing@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/ember-a11y-testing/-/ember-a11y-testing-0.5.4.tgz#874d0053c75214edc9a0c75ff381ad6705cd6150"
+  integrity sha512-JzTVjKJTKRcblswd8JYr/bzKSajRJ5U7uM/7lvYjaC5uepG6LdJPNfltNb20IZhYOWmwKFgQB8vbgCjyLgMW7Q==
   dependencies:
     axe-core "^3.1.2"
     broccoli-funnel "^2.0.1"
