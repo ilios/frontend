@@ -1,11 +1,9 @@
 import Helper from '@ember/component/helper';
-import { inject as service } from '@ember/service';
+import { getOwner } from '@ember/application';
 
 export default Helper.extend({
-  routing: service('-routing'),
-
   compute([value]) {
-    const routing = this.get('routing');
-    return routing.hasRoute(value);
+    // @link https://stackoverflow.com/a/52655828/307333
+    return (typeof getOwner(this).lookup(`route:${value}`) !== 'undefined');
   },
 });
