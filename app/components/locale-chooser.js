@@ -33,7 +33,7 @@ export default Component.extend({
     },
     changeLocale(id) {
       this.set('isOpen', false);
-      this.get('intl').set('locale', id);
+      this.get('intl').setLocale(id);
       this.get('moment').setLocale(id);
       window.document.querySelector('html').setAttribute('lang', id);
     }
