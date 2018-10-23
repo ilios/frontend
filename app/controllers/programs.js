@@ -11,7 +11,7 @@ const { gt } = computed;
 
 export default Controller.extend({
   currentUser: service(),
-  i18n: service(),
+  intl: service(),
   permissionChecker: service(),
 
   queryParams: {
@@ -82,7 +82,6 @@ export default Controller.extend({
   }),
 
   showNewProgramForm: false,
-
   deletedProgram: null,
   newProgram: null,
 

@@ -11,9 +11,10 @@ import escapeRegExp from '../utils/escape-reg-exp';
 const { gt, sort } = computed;
 
 export default Controller.extend({
-  i18n: service(),
+  intl: service(),
   currentUser: service(),
   permissionChecker: service(),
+
   queryParams: {
     schoolId: 'school',
     yearTitle: 'year',
@@ -22,6 +23,7 @@ export default Controller.extend({
     sortCoursesBy: 'sortBy',
 
   },
+
   schoolId: null,
   yearTitle: null,
   titleFilter: null,
@@ -34,6 +36,7 @@ export default Controller.extend({
   sortedYears: sort('model.years', 'sortYearsBy'),
   newCourse: null,
   deletedCourse: null,
+
   courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function(){
     const selectedSchool = this.get('selectedSchool');
     const selectedYear = this.get('selectedYear');
@@ -94,6 +97,7 @@ export default Controller.extend({
       return filteredCourses;
     }
   ),
+
   selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
@@ -107,6 +111,7 @@ export default Controller.extend({
 
     return primarySchool;
   }),
+
   selectedYear: computed('model.years.[]', 'yearTitle', function(){
     let years = this.get('model.years');
     if(isPresent(this.get('yearTitle'))){
@@ -124,6 +129,7 @@ export default Controller.extend({
 
     return defaultYear;
   }),
+
   canCreateCourse: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
@@ -169,5 +175,5 @@ export default Controller.extend({
       course.set('locked', false);
       return course.save();
     },
-  },
+  }
 });

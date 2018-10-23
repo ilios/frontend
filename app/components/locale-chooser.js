@@ -4,21 +4,24 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  i18n: service(),
+  intl: service(),
   moment: service(),
   classNameBindings: [':locale-chooser', 'isOpen'],
   isOpen: false,
   ariaRole: 'menubar',
   'data-test-locale-chooser': true,
+
   locale: computed('locales.[]', 'i18n.locale', function () {
     const locale = this.get('i18n.locale');
     return this.locales.findBy('id', locale);
   }),
+
   locales: computed('i18n.locales.[]', function() {
     return this.get('i18n.locales').uniq().map(locale => {
-      return { id: locale, text: this.get('i18n').t('general.language.' + locale) };
+      return { id: locale, text: this.get('intl').t('general.language.' + locale) };
     });
   }),
+
   actions: {
     toggleMenu() {
       const isOpen = this.get('isOpen');
@@ -30,17 +33,19 @@ export default Component.extend({
     },
     changeLocale(id) {
       this.set('isOpen', false);
-      this.get('i18n').set('locale', id);
+      this.get('intl').set('locale', id);
       this.get('moment').setLocale(id);
       window.document.querySelector('html').setAttribute('lang', id);
     }
   },
+
   openMenuAndSelectTheCurrentLocale() {
     this.set('isOpen', true);
     schedule('afterRender', () => {
       this.element.querySelector(`.menu button[lang="${this.locale.id}"]`).focus();
     });
   },
+
   keyDown({ originalEvent }) {
     switch (originalEvent.key) {
     case 'ArrowDown':
@@ -72,5 +77,5 @@ export default Component.extend({
     }
 
     return true;
-  },
+  }
 });

@@ -69,7 +69,7 @@ const PrepositionObject = EmberObject.extend({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  i18n: service(),
+  intl: service(),
   currentUser: service(),
   flashMessages: service(),
   classNames: ['new-myreport', 'mesh-manager'],
@@ -84,34 +84,35 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   subjectList: computed('i18n.locale', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.courses')},
-      {value: 'session', label: this.get('i18n').t('general.sessions')},
-      {value: 'program', label: this.get('i18n').t('general.programs')},
-      {value: 'program year', label: this.get('i18n').t('general.programYears')},
-      {value: 'instructor', label: this.get('i18n').t('general.instructors')},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroups')},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterials')},
-      {value: 'competency', label: this.get('i18n').t('general.competencies')},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerms')},
-      {value: 'term', label: this.get('i18n').t('general.terms')},
-      {value: 'session type', label: this.get('i18n').t('general.sessionTypes')},
+      {value: 'course', label: this.get('intl').t('general.courses')},
+      {value: 'session', label: this.get('intl').t('general.sessions')},
+      {value: 'program', label: this.get('intl').t('general.programs')},
+      {value: 'program year', label: this.get('intl').t('general.programYears')},
+      {value: 'instructor', label: this.get('intl').t('general.instructors')},
+      {value: 'instructor group', label: this.get('intl').t('general.instructorGroups')},
+      {value: 'learning material', label: this.get('intl').t('general.learningMaterials')},
+      {value: 'competency', label: this.get('intl').t('general.competencies')},
+      {value: 'mesh term', label: this.get('intl').t('general.meshTerms')},
+      {value: 'term', label: this.get('intl').t('general.terms')},
+      {value: 'session type', label: this.get('intl').t('general.sessionTypes')},
     ];
 
     return list;
   }),
+
   prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
     let list = [
-      {value: 'course', label: this.get('i18n').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
-      {value: 'session', label: this.get('i18n').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'program year', label: this.get('i18n').t('general.programYear'), subjects: ['term']},
-      {value: 'program', label: this.get('i18n').t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'instructor', label: this.get('i18n').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
-      {value: 'instructor group', label: this.get('i18n').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
-      {value: 'learning material', label: this.get('i18n').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
-      {value: 'competency', label: this.get('i18n').t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'mesh term', label: this.get('i18n').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
-      {value: 'session type', label: this.get('i18n').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'term', label: this.get('i18n').t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
+      {value: 'course', label: this.get('intl').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
+      {value: 'session', label: this.get('intl').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'program year', label: this.get('intl').t('general.programYear'), subjects: ['term']},
+      {value: 'program', label: this.get('intl').t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'instructor', label: this.get('intl').t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
+      {value: 'instructor group', label: this.get('intl').t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
+      {value: 'learning material', label: this.get('intl').t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
+      {value: 'competency', label: this.get('intl').t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
+      {value: 'mesh term', label: this.get('intl').t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
+      {value: 'session type', label: this.get('intl').t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
+      {value: 'term', label: this.get('intl').t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
     ];
 
     const subject = this.get('currentSubject');
@@ -200,6 +201,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     return currentSubject.label;
   }),
+
   selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
     if(
       this.get('currentPrepositionalObject') === 'instructor' &&
@@ -210,6 +212,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return null;
     }
   }),
+
   selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
     if(
       this.get('currentPrepositionalObject') === 'mesh term' &&
@@ -220,6 +223,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return null;
     }
   }),
+
   /**
    * All schools, sorted by title.
    * @property schoolList

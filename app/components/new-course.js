@@ -45,13 +45,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('selectedYear', thisYear);
     }
   },
+
   classNames: ['new-course'],
-
-  i18n: service(),
+  intl: service(),
   store: service(),
-
   years: null,
-
   currentYear: null,
   currentSchool: null,
   title: null,

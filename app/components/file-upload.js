@@ -23,8 +23,9 @@ let IliosUploader = Uploader.extend({
 export default FileField.extend({
   session: service(),
   iliosConfig: service(),
-  i18n: service(),
+  intl: service(),
   url: '',
+
   headers: computed('session.isAuthenticated', function () {
     const session = this.get('session');
     const { jwt } = session.data.authenticated;
@@ -44,9 +45,9 @@ export default FileField.extend({
     const iliosConfig = this.get('iliosConfig');
     iliosConfig.get('maxUploadSize').then(maxUploadSize => {
       if (file.size > maxUploadSize) {
-        const i18n = this.get('i18n');
+        const intl = this.get('intl');
         const maxSize = readableFileSize(maxUploadSize);
-        this.get('setErrorMessage')(i18n.t('general.fileSizeError', {maxSize}));
+        this.get('setErrorMessage')(intl.t('general.fileSizeError', {maxSize}));
       } else {
         this.get('startUploading')();
         const uploadUrl = this.get('url');
@@ -81,10 +82,9 @@ export default FileField.extend({
       if (attempt < MAXIMUM_UPLOAD_ATTEMPTS) {
         this.get('upload').perform(uploader, file, attempt+1);
       } else {
-        const i18n = this.get('i18n');
-        throw new Error(i18n.t('general.fileUploadError'));
+        const intl = this.get('intl');
+        throw new Error(intl.t('general.fileUploadError'));
       }
     }
-  }).restartable(),
-
+  }).restartable()
 });

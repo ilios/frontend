@@ -9,7 +9,7 @@ const { Promise } = RSVP;
 const { gt, oneWay, sort } = computed;
 
 export default Controller.extend({
-  i18n: service(),
+  intl: service(),
   currentUser: service(),
   permissionChecker: service(),
 
@@ -20,17 +20,13 @@ export default Controller.extend({
   },
 
   schools: oneWay('model'),
-
   programId: null,
   schoolId: null,
-
   sortReportsBy: 'name',
   sortByTitle:['title'],
-
   newReport: null,
   sortedSchools: sort('model', 'sortByTitle'),
   hasMoreThanOneSchool: gt('model.length', 1),
-
   showNewCurriculumInventoryForm: false,
 
   /**

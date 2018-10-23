@@ -9,7 +9,8 @@ const { filter, Promise, resolve, map } = RSVP;
 export default Service.extend({
   store: service(),
   currentUser: service(),
-  i18n: service(),
+  intl: service(),
+
   reportsList: computed('currentUser.model.reports.[]', function(){
     return new Promise(resolve => {
       this.get('currentUser').get('model').then( user => {
@@ -36,6 +37,7 @@ export default Service.extend({
       this.getQuery(subject, object, objectId, school)
     );
   },
+
   async getResults(report, year){
     const subject = report.get('subject');
 
@@ -45,6 +47,7 @@ export default Service.extend({
 
     return mappedResults.sortBy('value');
   },
+
   async getArrayResults(report, year){
     const subject = report.get('subject');
 
@@ -64,6 +67,7 @@ export default Service.extend({
 
     return model;
   },
+
   getQuery(subject, object, objectId, school){
     let query = {
       filters: {}
@@ -131,8 +135,9 @@ export default Service.extend({
 
     return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
   },
+
   async coursesArrayResults(results, year) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let filteredResults = results.filter( course => {
       const academicYear = course.get('year');
       return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
@@ -146,8 +151,9 @@ export default Service.extend({
       ];
     });
 
-    return [[i18n.t('general.courses'), i18n.t('general.academicYear'), i18n.t('general.externalId')]].concat(mappedResults);
+    return [[intl.t('general.courses'), intl.t('general.academicYear'), intl.t('general.externalId')]].concat(mappedResults);
   },
+
   async sessionsResults(results, year){
     const canView = await this.get('canViewCourses');
     let mappedResults = await map(results.toArray(), async item => {
@@ -165,8 +171,9 @@ export default Service.extend({
 
     return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
   },
+
   async sessionsArrayResults(results, year) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let filteredResults = await filter(results.toArray(), async session => {
       const course = await session.get('course');
       const academicYear = course.get('year');
@@ -182,13 +189,14 @@ export default Service.extend({
     });
 
     return [[
-      i18n.t('general.session'),
-      i18n.t('general.course'),
-      i18n.t('general.academicYear'),
-      i18n.t('general.description'),
-      i18n.t('general.objectives')
+      intl.t('general.session'),
+      intl.t('general.course'),
+      intl.t('general.academicYear'),
+      intl.t('general.description'),
+      intl.t('general.objectives')
     ]].concat(mappedResults);
   },
+
   async programsResults(results){
     const canView = await this.get('canViewPrograms');
     const mappedResults = await map(results.toArray(), async item => {
@@ -204,8 +212,9 @@ export default Service.extend({
 
     return mappedResults;
   },
+
   async programsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let sortedResults = results.sortBy('title');
     let mappedResults = await map(sortedResults.toArray(), async program => {
       const school = await program.get('school');
@@ -215,8 +224,9 @@ export default Service.extend({
       ];
     });
 
-    return [[i18n.t('general.program'), i18n.t('general.school')]].concat(mappedResults);
+    return [[intl.t('general.program'), intl.t('general.school')]].concat(mappedResults);
   },
+
   async programYearsResults(results){
     const canView = await this.get('canViewPrograms');
     const mappedResults = await map(results.toArray(), async item => {
@@ -236,8 +246,9 @@ export default Service.extend({
 
     return mappedResults;
   },
+
   async programYearsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const resultsWithClassOfYear = await map(results, async programYear => {
       const classOfYear = await programYear.get('classOfYear');
       return {
@@ -256,8 +267,9 @@ export default Service.extend({
       ];
     });
 
-    return [[i18n.t('general.year'), i18n.t('general.program'), i18n.t('general.school')]].concat(mappedResults);
+    return [[intl.t('general.year'), intl.t('general.program'), intl.t('general.school')]].concat(mappedResults);
   },
+
   instructorsResults(results){
     let mappedResults = results.map( result => {
       return {
@@ -266,13 +278,15 @@ export default Service.extend({
     });
     return resolve(mappedResults);
   },
+
   async instructorsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let arr = await this.instructorsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
-    return [[i18n.t('general.instructors')]].concat(mappedResults);
+    return [[intl.t('general.instructors')]].concat(mappedResults);
   },
+
   titleResults(results){
     let mappedResults = results.map( result => {
       return {
@@ -281,37 +295,47 @@ export default Service.extend({
     });
     return resolve(mappedResults);
   },
+
   async valueResults(results, translationKey) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let arr = await this.titleResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
-    return [[i18n.t(translationKey)]].concat(mappedResults);
+    return [[intl.t(translationKey)]].concat(mappedResults);
   },
+
   instructorGroupsResults(results){
     return this.titleResults(results);
   },
+
   async instructorGroupsArrayResults(results) {
     return this.valueResults(results, 'general.instructorGroups');
   },
+
   learningMaterialsResults(results){
     return this.titleResults(results);
   },
+
   async learningMaterialsArrayResults(results) {
     return this.valueResults(results, 'general.learningMaterials');
   },
+
   competenciesResults(results){
     return this.titleResults(results);
   },
+
   async competenciesArrayResults(results) {
     return this.valueResults(results, 'general.competencies');
   },
+
   sessionTypesResults(results){
     return this.titleResults(results);
   },
+
   async sessionTypesArrayResults(results) {
     return this.valueResults(results, 'general.sessionTypes');
   },
+
   meshTermsResults(results){
     let mappedResults = results.map( result => {
       return {
@@ -320,13 +344,15 @@ export default Service.extend({
     });
     return resolve(mappedResults);
   },
+
   async meshTermsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let arr = await this.meshTermsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
-    return [[i18n.t('general.meshTerms')]].concat(mappedResults);
+    return [[intl.t('general.meshTerms')]].concat(mappedResults);
   },
+
   async termsResults(results){
     return map(results.toArray(), async term => {
       const vocabulary = await term.get('vocabulary');
@@ -335,11 +361,12 @@ export default Service.extend({
       return {value};
     });
   },
+
   async termsArrayResults(results) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let arr = await this.termsResults(results);
     let sortedResults = arr.sortBy('value');
     let mappedResults = sortedResults.map(obj => [obj.value]);
-    return [[i18n.t('general.vocabulary')]].concat(mappedResults);
-  },
+    return [[intl.t('general.vocabulary')]].concat(mappedResults);
+  }
 });

@@ -2,7 +2,7 @@ import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 
 export default Mixin.create({
-  i18n: service(),
+  intl: service(),
   store: service(),
   report: null,
 
@@ -11,14 +11,14 @@ export default Mixin.create({
     if (title) {
       return title;
     }
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const store = this.get('store');
     const subject = report.get('subject');
-    const subjectTranslation = i18n.t(this.subjectTranslations[subject]);
+    const subjectTranslation = intl.t(this.subjectTranslations[subject]);
     const prepositionalObject = report.get('prepositionalObject');
 
     const school = await report.get('school');
-    const schoolTitle = school?school.get('title'):i18n.t('general.allSchools');
+    const schoolTitle = school?school.get('title'):intl.t('general.allSchools');
 
     if (prepositionalObject) {
       let model = prepositionalObject.dasherize();
@@ -46,18 +46,19 @@ export default Mixin.create({
         object = record.get('title');
       }
 
-      return i18n.t('general.reportDisplayTitleWithObject', {
+      return intl.t('general.reportDisplayTitleWithObject', {
         subject: subjectTranslation,
         object,
         school: schoolTitle
       });
     }
 
-    return i18n.t('general.reportDisplayTitleWithoutObject', {
+    return intl.t('general.reportDisplayTitleWithoutObject', {
       subject: subjectTranslation,
       school: schoolTitle
     });
   },
+
   subjectTranslations: {
     'course': 'general.courses',
     'session': 'general.sessions',
@@ -70,5 +71,5 @@ export default Mixin.create({
     'mesh term': 'general.meshTerms',
     'term': 'general.terms',
     'session type': 'general.sessionTypes',
-  },
+  }
 });

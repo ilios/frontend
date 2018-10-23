@@ -8,23 +8,25 @@ import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  i18n: service(),
+  intl: service(),
   programYear: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-program-year-competencies'],
   tooltipCourses: null,
   tooltipSessions: null,
   tooltipTitle: null,
+
   programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function(){
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const programYear = this.get('programYear');
     const cohort = await programYear.get('cohort');
     const title = cohort.get('title');
     const year = await cohort.get('classOfYear');
-    const classOfYear = i18n.t('classOfYear', { year });
+    const classOfYear = intl.t('classOfYear', { year });
 
     return title ? title : classOfYear;
   }),
+
   objectiveObjects: computed('programYear.objectives.[]', async function () {
     const programYear = this.get('programYear');
     const buildTree = async function (parent) {
@@ -61,6 +63,7 @@ export default Component.extend({
 
     return objectiveObjects;
   }),
+
   competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function () {
     const programYear = this.get('programYear');
     const objectiveObjects = await this.get('objectiveObjects');
@@ -80,6 +83,7 @@ export default Component.extend({
 
     return competencyObjects;
   }),
+
   domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function () {
     const programYear = this.get('programYear');
     const competencies = await programYear.get('competencies');
@@ -121,6 +125,7 @@ export default Component.extend({
       meta: {}
     };
   }),
+
   nodeHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.get('isIcon');

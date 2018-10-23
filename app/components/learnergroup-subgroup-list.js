@@ -12,7 +12,7 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   store: service(),
-  i18n: service(),
+  intl: service(),
   flashMessages: service(),
   parentGroup: null,
   canCreate: false,
@@ -29,15 +29,16 @@ export default Component.extend({
     this.set('saved', false);
     this.set('savedGroup', null);
   },
+
   copyGroup: task(function * (withLearners, learnerGroup) {
     this.set('saved', false);
     const store = this.get('store');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const cohort = yield learnerGroup.get('cohort');
     const parentGroup = yield learnerGroup.get('parent');
     const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
     // indicate that the top group is a copy
-    newGroups[0].set('title', newGroups[0].get('title') + ` (${i18n.t('general.copy')})`);
+    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
     this.set('totalGroupsToSave', newGroups.length);
     // save groups one at a time because we need to save in this order so parents are saved before children
     for (let i = 0; i < newGroups.length; i++) {

@@ -71,7 +71,8 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  i18n: service(),
+  intl: service(),
+
   init(){
     this._super(...arguments);
     this.set('orderInSequenceOptions', []);
@@ -79,6 +80,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.set('childSequenceOrderOptions', []);
     this.set('requiredOptions', []);
   },
+
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
   title: null,
@@ -131,16 +133,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(parent)) {
       academicLevel = yield parent.get('academicLevel');
     }
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const childSequenceOrderOptions = [
-      EmberObject.create({ 'id' : 1, 'title': i18n.t('general.ordered') }),
-      EmberObject.create({ 'id' : 2, 'title': i18n.t('general.unordered') }),
-      EmberObject.create({ 'id' : 3, 'title': i18n.t('general.parallel') })
+      EmberObject.create({ 'id' : 1, 'title': intl.t('general.ordered') }),
+      EmberObject.create({ 'id' : 2, 'title': intl.t('general.unordered') }),
+      EmberObject.create({ 'id' : 3, 'title': intl.t('general.parallel') })
     ];
     const requiredOptions = [
-      EmberObject.create({ 'id' : 1, 'title': i18n.t('general.required') }),
-      EmberObject.create({ 'id' : 2, 'title': i18n.t('general.optionalElective') }),
-      EmberObject.create({ 'id' : 3, 'title': i18n.t('general.requiredInTrack') })
+      EmberObject.create({ 'id' : 1, 'title': intl.t('general.required') }),
+      EmberObject.create({ 'id' : 2, 'title': intl.t('general.optionalElective') }),
+      EmberObject.create({ 'id' : 3, 'title': intl.t('general.requiredInTrack') })
     ];
     const required = requiredOptions[0];
     const childSequenceOrder = childSequenceOrderOptions[0];

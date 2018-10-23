@@ -9,7 +9,7 @@ import PapaParse from 'papaparse';
 export default Component.extend({
   store: service(),
   iliosConfig: service(),
-  i18n: service(),
+  intl: service(),
   classNames: ['learnergroup-upload-data'],
   file: null,
   data: null,
@@ -79,7 +79,7 @@ export default Component.extend({
 
   parseFile: task(function* (file) {
     const store = this.get('store');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const learnerGroup = this.get('learnerGroup');
     const cohort = yield learnerGroup.get('cohort');
     const proposedUsers = yield this.getFileContents(file);
@@ -87,13 +87,13 @@ export default Component.extend({
       const errors = [];
       const warnings = [];
       if (isEmpty(firstName)) {
-        errors.push(i18n.t('errors.required', {description: i18n.t('general.firstName')}));
+        errors.push(intl.t('errors.required', {description: intl.t('general.firstName')}));
       }
       if (isEmpty(lastName)) {
-        errors.push(i18n.t('errors.required', {description: i18n.t('general.lastName')}));
+        errors.push(intl.t('errors.required', {description: intl.t('general.lastName')}));
       }
       if (isEmpty(campusId)) {
-        errors.push(i18n.t('errors.required', {description: i18n.t('general.campusId')}));
+        errors.push(intl.t('errors.required', {description: intl.t('general.campusId')}));
       }
       let userRecord = null;
       if (errors.length === 0) {
@@ -104,21 +104,21 @@ export default Component.extend({
           }
         });
         if (users.get('length') === 0) {
-          errors.push(i18n.t('general.couldNotFindUserCampusId', {campusId}));
+          errors.push(intl.t('general.couldNotFindUserCampusId', {campusId}));
         } else if (users.get('length') > 1) {
-          errors.push(i18n.t('general.multipleUsersFoundWithCampusId', {campusId}));
+          errors.push(intl.t('general.multipleUsersFoundWithCampusId', {campusId}));
         } else {
           const user = users.get('firstObject');
           const cohorts = await user.get('cohorts');
           const cohortIds = cohorts.mapBy('id');
           if (!cohortIds.includes(cohort.get('id'))) {
-            errors.push(i18n.t('general.userNotInGroupCohort', {cohortTitle: cohort.get('title')}));
+            errors.push(intl.t('general.userNotInGroupCohort', {cohortTitle: cohort.get('title')}));
           }
           if (user.get('firstName') != firstName) {
-            warnings.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.firstName'), record: user.get('firstName')}));
+            warnings.push(intl.t('general.doesNotMatchUserRecord', {description: intl.t('general.firstName'), record: user.get('firstName')}));
           }
           if (user.get('lastName') != lastName) {
-            warnings.push(i18n.t('general.doesNotMatchUserRecord', {description: i18n.t('general.lastName'), record: user.get('lastName')}));
+            warnings.push(intl.t('general.doesNotMatchUserRecord', {description: intl.t('general.lastName'), record: user.get('lastName')}));
           }
           userRecord = user;
         }
@@ -180,6 +180,7 @@ export default Component.extend({
       });
     });
   },
+
   continue: task(function* () {
     yield timeout(10);
     const validUsers = this.get('validUsers');
@@ -188,5 +189,5 @@ export default Component.extend({
     const sendMatchedGroups = this.get('sendMatchedGroups');
     sendValidUsers(validUsers);
     sendMatchedGroups(matchedGroups);
-  }),
+  })
 });
