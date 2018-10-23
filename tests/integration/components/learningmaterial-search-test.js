@@ -8,7 +8,7 @@ module('Integration | Component | learningmaterial search', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.lookup('service:intl').set('locale', 'en');
+    this.owner.lookup('service:intl').setLocale('en');
     this.owner.register('helper:t', tHelper);
   });
 
