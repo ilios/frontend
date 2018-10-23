@@ -70,7 +70,7 @@ module('Unit | Model | Program', function(hooks) {
   });
 
   //
-  // @todo need to remove i18n from cohort model it blows up this test
+  // @todo need to remove intl from cohort model it blows up this test
   // test('check course count', function(assert) {
   //   assert.expect(2);
   //   let program = this.subject();
