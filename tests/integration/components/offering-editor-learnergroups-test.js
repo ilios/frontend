@@ -3,13 +3,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
+import tHelper from "ember-intl/helper";
 
 module('Integration | Component | offering editor learnergroups', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.lookup('service:intl').set('locale', 'en');
     this.owner.register('helper:t', tHelper);
   });
 

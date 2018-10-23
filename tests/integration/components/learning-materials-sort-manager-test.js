@@ -4,14 +4,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-i18n/helper";
+import tHelper from "ember-intl/helper";
 const { resolve } = RSVP;
 
 module('Integration | Component | learning materials sort manager', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.lookup('service:intl').set('locale', 'en');
     this.owner.register('helper:t', tHelper);
   });
 

@@ -5,7 +5,7 @@ import { render, settled, findAll, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import tHelper from "ember-intl/helper";
 
 const { resolve } = RSVP;
 
@@ -13,7 +13,7 @@ module('Integration | Component | curriculum inventory sequence block details', 
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.lookup('service:intl').set('locale', 'en');
     this.owner.register('helper:t', tHelper);
   });
 

@@ -6,7 +6,7 @@ import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpe
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import tHelper from "ember-intl/helper";
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 const {resolve} = RSVP;
@@ -15,7 +15,7 @@ module('Integration | Component | curriculum inventory report overview', functio
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.lookup('service:intl').set('locale', 'en');
     this.owner.register('helper:t', tHelper);
   });
 

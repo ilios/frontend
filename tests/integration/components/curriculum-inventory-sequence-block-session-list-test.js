@@ -11,7 +11,7 @@ module('Integration | Component | curriculum inventory sequence block session li
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.owner.lookup('service:i18n').set('locale', 'en');
+    this.owner.lookup('service:intl').set('locale', 'en');
   });
 
   test('it renders', async function(assert) {
