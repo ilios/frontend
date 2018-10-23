@@ -6,11 +6,11 @@ import Component from '@ember/component';
 import { map, filter } from 'rsvp';
 import { computed } from '@ember/object';
 
-import { translationMacro as t } from "ember-i18n";
+import { translationMacro as t } from "ember-intl";
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   store: service(),
   permissionChecker: service(),
   tagName: 'section',

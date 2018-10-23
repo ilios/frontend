@@ -12,7 +12,7 @@ const { map, filter } = RSVP;
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],
@@ -100,7 +100,7 @@ export default Component.extend({
   }),
 
   async getTooltipData(obj){
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
@@ -113,7 +113,7 @@ export default Component.extend({
       objectiveTitle += `(${competency})`;
     }
 
-    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${i18n.t('general.minutes')}`);
+    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${intl.t('general.minutes')}`);
     const sessionTitles = meta.sessionObjectives.mapBy('sessionTitle');
     const content = sessionTitles.join(', ');
 

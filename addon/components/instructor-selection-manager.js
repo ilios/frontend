@@ -1,12 +1,12 @@
 /* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { translationMacro as t } from "ember-i18n";
+import { translationMacro as t } from "ember-intl";
 import layout from '../templates/components/instructor-selection-manager';
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   instructors: null,
   availableInstructorGroups: null,
   classNames: ['instructor-selection-manager'],

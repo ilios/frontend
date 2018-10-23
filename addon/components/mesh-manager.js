@@ -21,7 +21,7 @@ const ProxiedDescriptors = ObjectProxy.extend({
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   init(){
     this._super(...arguments);
     this.set('searchResults', []);

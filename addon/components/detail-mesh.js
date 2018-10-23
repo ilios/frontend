@@ -4,12 +4,12 @@ import layout from '../templates/components/detail-mesh';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { translationMacro as t } from "ember-i18n";
+import { translationMacro as t } from "ember-intl";
 
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   init() {
     this._super(...arguments);
     this.set('sortTerms', ['title']);

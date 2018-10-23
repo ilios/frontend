@@ -9,7 +9,7 @@ const { map } = RSVP;
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   classNames: ['detail-cohort-list'],
   cohorts: null,
   /**
@@ -28,9 +28,9 @@ export default Component.extend({
       const schoolTitle = school.get('title');
       let displayTitle = cohort.get('title');
       if (isEmpty(displayTitle)) {
-        const i18n = this.get('i18n');
+        const intl = this.get('intl');
         const classOfYear = await cohort.get('classOfYear');
-        displayTitle = i18n.t('general.classOf', {year: classOfYear});
+        displayTitle = intl.t('general.classOf', {year: classOfYear});
       }
 
       return EmberObject.create({

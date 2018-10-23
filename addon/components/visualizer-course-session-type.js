@@ -10,7 +10,7 @@ import layout from '../templates/components/visualizer-course-session-type';
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   course: null,
   sessionType: null,
   isIcon: false,
@@ -90,10 +90,10 @@ export default Component.extend({
       this.set('tooltipContent', null);
       return;
     }
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const { label, data, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${i18n.t('general.minutes')}`);
+    const title = htmlSafe(`${label} ${data} ${intl.t('general.minutes')}`);
     const sessions = meta.sessions.uniq().sort().join(', ');
 
 

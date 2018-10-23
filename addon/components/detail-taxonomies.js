@@ -7,7 +7,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   flashMessages: service(),
   subject: null,
   bufferedTerms: null,

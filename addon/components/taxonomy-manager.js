@@ -13,7 +13,7 @@ const { sort } = computed;
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   flashMessages: service(),
   init() {
     this._super(...arguments);

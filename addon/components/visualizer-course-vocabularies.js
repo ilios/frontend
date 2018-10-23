@@ -10,7 +10,7 @@ import layout from '../templates/components/visualizer-course-vocabularies';
 export default Component.extend({
   layout,
   router: service(),
-  i18n: service(),
+  intl: service(),
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabularies'],
@@ -70,7 +70,7 @@ export default Component.extend({
   },
   donutHover: task(function* (obj) {
     yield timeout(100);
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const isIcon = this.get('isIcon');
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
@@ -81,6 +81,6 @@ export default Component.extend({
 
     const title = htmlSafe(meta.vocabulary.get('title'));
     this.set('tooltipTitle', title);
-    this.set('tooltipContent', i18n.t('general.clickForMore'));
+    this.set('tooltipContent', intl.t('general.clickForMore'));
   }).restartable(),
 });

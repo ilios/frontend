@@ -8,7 +8,7 @@ import layout from '../templates/components/course-sessions';
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   permissionChecker: service(),
   tagName: 'section',
   classNames: ['course-sessions'],
@@ -38,7 +38,7 @@ export default Component.extend({
     });
   }),
   sessionObjects: computed('course', 'sessions.[]', async function(){
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const permissionChecker = this.get('permissionChecker');
     const course = this.get('course');
     const sessions = await this.get('sessions');
@@ -84,14 +84,14 @@ export default Component.extend({
       }
       const learnerGroupCount = offeringLearerGroupCount + ilmLearnerGroupCount;
       sessionObject.learnerGroupCount = learnerGroupCount;
-      let status = i18n.t('general.notPublished');
+      let status = intl.t('general.notPublished');
       if(session.get('isPublished')){
         sessionObject.isPublished = true;
-        status = i18n.t('general.published');
+        status = intl.t('general.published');
       }
       if(session.get('publishedAsTbd')){
         sessionObject.publishedAsTbd = true;
-        status = i18n.t('general.scheduled');
+        status = intl.t('general.scheduled');
       }
       sessionObject.status = status.toString();
       sessionObject.searchString = sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;

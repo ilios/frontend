@@ -15,7 +15,7 @@ const MIN_INPUT = 3;
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   classNames: ['leadership-search'],
   existingUsers: null,
   searchValue: null,
@@ -23,7 +23,7 @@ export default Component.extend({
   'data-test-leadership-search': true,
 
   searchForUsers: task(function * (query) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const store = this.get('store');
     this.set('searchValue', query);
 
@@ -36,7 +36,7 @@ export default Component.extend({
     if (q.length < MIN_INPUT) {
       return [{
         type: 'text',
-        text: i18n.t('general.moreInputRequiredPrompt')
+        text: intl.t('general.moreInputRequiredPrompt')
       }];
     }
     yield timeout(DEBOUNCE_MS);
@@ -50,7 +50,7 @@ export default Component.extend({
     if (searchResults.length === 0) {
       return [{
         type: 'text',
-        text: i18n.t('general.noSearchResultsPrompt')
+        text: intl.t('general.noSearchResultsPrompt')
       }];
     }
     let mappedResults = searchResults.map(user => {
@@ -62,7 +62,7 @@ export default Component.extend({
     let results = [
       {
         type: 'summary',
-        text: i18n.t('general.resultsCount', {count: mappedResults.length})
+        text: intl.t('general.resultsCount', {count: mappedResults.length})
       }
     ];
     results.pushObjects(mappedResults);

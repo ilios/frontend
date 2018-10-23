@@ -5,13 +5,13 @@ import layout from '../templates/components/back-link';
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   tagName: 'a',
   classNames: ['back-link'],
   attributeBindings: ['title'],
-  title: computed('i18n.service', function(){
-    const i18n = this.get('i18n');
-    return i18n.t('general.returnToPreviousPage');
+  title: computed('intl.service', function(){
+    const intl = this.get('intl');
+    return intl.t('general.returnToPreviousPage');
   }),
   click(){
     window.history.back();

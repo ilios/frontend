@@ -3,14 +3,14 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../templates/components/session-offerings';
-import { translationMacro as t } from "ember-i18n";
+import { translationMacro as t } from "ember-intl";
 
 const { alias, oneWay } = computed;
 
 export default Component.extend({
   saving: false,
   store: service(),
-  i18n: service(),
+  intl: service(),
   layout,
   tagName: 'section',
   classNames: ['session-offerings'],

@@ -8,18 +8,18 @@ export default Mixin.create({
   currentUser: service(),
   flashMessages: service(),
   store: service(),
-  i18n: service(),
+  intl: service(),
   showCheckLink: true,
-  menuTitle: computed('i18n.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
+  menuTitle: computed('intl.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     const publishTarget = this.get('publishTarget');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     if(publishTarget.get('publishedAsTbd')){
-      return i18n.t('general.scheduled');
+      return intl.t('general.scheduled');
     }
     if(publishTarget.get('isPublished')){
-      return i18n.t('general.published');
+      return intl.t('general.published');
     }
-    return i18n.t('general.notPublished');
+    return intl.t('general.notPublished');
   }),
   menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
     if(this.get('publishTarget.publishedAsTbd')){

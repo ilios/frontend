@@ -32,7 +32,7 @@ let instructorGroupProxy = ObjectProxy.extend({
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   classNames: ['user-search'],
   'data-test-user-search': true,
   showMoreInputPrompt: false,
@@ -87,8 +87,8 @@ export default Component.extend({
 
       results.pushObjects(instructorGroupProxies);
     }
-    const i18n = this.get('i18n');
-    const locale = i18n.get('locale');
+    const intl = this.get('intl');
+    const locale = intl.get('locale');
     results.sort((a, b) => {
       const sortTermA = a.get('sortTerm');
       const sortTermB = b.get('sortTerm');

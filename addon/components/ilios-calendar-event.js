@@ -15,7 +15,7 @@ const { Utils } = Handlebars;
 const { escapeExpression } = Utils;
 
 export default CalendarEvent.extend(TooltipContent, {
-  i18n: service(),
+  intl: service(),
   layout,
   event: null,
   timeFormat: 'h:mma',
@@ -34,7 +34,7 @@ export default CalendarEvent.extend(TooltipContent, {
   clickable: or('isIlm', 'isOffering'),
 
   formattedInstructors: computed('event.instructors.[]', function() {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     let instructors = this.get('event.instructors');
     if (! isArray(instructors) || ! instructors.length) {
       return '';
@@ -42,7 +42,7 @@ export default CalendarEvent.extend(TooltipContent, {
     if (3 > instructors.length) {
       return instructors.join(', ');
     } else {
-      return instructors.slice(0, 2).join(', ') + ' ' + i18n.t('general.etAl');
+      return instructors.slice(0, 2).join(', ') + ' ' + intl.t('general.etAl');
     }
   }),
 
