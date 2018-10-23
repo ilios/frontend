@@ -42,8 +42,11 @@ jobs:
     # as well as latest stable release (bonus points to beta/canary)
     - stage: "Additional Tests - Ember Release"
       env: EMBER_TRY_SCENARIO=ember-release
-    - stage: "Additional Tests - Ember Beta"
-      env: EMBER_TRY_SCENARIO=ember-beta
+    ######
+    # temporarily disabled tests against ember beta. see https://github.com/ilios/common/issues/360 [ST 2018/10/23]
+    ######
+    #- stage: "Additional Tests - Ember Beta"
+    #  env: EMBER_TRY_SCENARIO=ember-beta
     - stage: "Additional Tests - Ember Default with jQuery"
       env: EMBER_TRY_SCENARIO=ember-default-with-jquery
 
