@@ -82,7 +82,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
   selectedYear: null,
 
-  subjectList: computed('i18n.locale', function(){
+  subjectList: computed('intl.locale', function(){
     let list = [
       {value: 'course', label: this.get('intl').t('general.courses')},
       {value: 'session', label: this.get('intl').t('general.sessions')},
@@ -100,7 +100,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return list;
   }),
 
-  prepositionalObjectList: computed('i18n.locale', 'currentSubject', function(){
+  prepositionalObjectList: computed('intl.locale', 'currentSubject', function(){
     let list = [
       {value: 'course', label: this.get('intl').t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
       {value: 'session', label: this.get('intl').t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},

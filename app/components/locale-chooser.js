@@ -11,13 +11,13 @@ export default Component.extend({
   ariaRole: 'menubar',
   'data-test-locale-chooser': true,
 
-  locale: computed('locales.[]', 'i18n.locale', function () {
-    const locale = this.get('i18n.locale');
+  locale: computed('locales.[]', 'intl.locale', function () {
+    const locale = this.get('intl.locale');
     return this.locales.findBy('id', locale);
   }),
 
-  locales: computed('i18n.locales.[]', function() {
-    return this.get('i18n.locales').uniq().map(locale => {
+  locales: computed('intl.locales.[]', function() {
+    return this.get('intl.locales').uniq().map(locale => {
       return { id: locale, text: this.get('intl').t('general.language.' + locale) };
     });
   }),
