@@ -4593,6 +4593,13 @@ ember-one-way-select@^4.0.0:
     ember-cli-htmlbars "^2.0.1"
     ember-invoke-action "^1.5.0"
 
+ember-pad@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/ember-pad/-/ember-pad-1.2.3.tgz#e75b0f580348e6447cda3ddfb0a415024f09ca83"
+  integrity sha512-Dpaqv40nDCIHoxp2YEpxz7RcQaYHS0L8fs91sGG7YkCUHsNjSBcyrABighnofWMBCcaJD7f9mx+fZPdGjdJjxA==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-pikaday@^2.2.6:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ember-pikaday/-/ember-pikaday-2.3.0.tgz#0fd0e6ee23b2159f187740bdcf8c8836603d8754"
