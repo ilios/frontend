@@ -152,8 +152,8 @@ general:
   isTrack: "Is Track"
   language:
     en-us: "English (en)"
-    es-es: "Español (es)"
-    fr-fr: "Français (fr)"
+    es: "Español (es)"
+    fr: "Français (fr)"
   lastName: "Last Name"
   learner: Learner
   learnerAssignments: "{groupTitle} Learner Assignments"

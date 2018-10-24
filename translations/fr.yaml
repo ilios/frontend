@@ -152,8 +152,8 @@ general:
   isTrack: "Est une piste"
   language:
     en-us: "English (en)"
-    es-es: "Español (es)"
-    fr-fr: "Français (fr)"
+    es: "Español (es)"
+    fr: "Français (fr)"
   lastName: "Nom de famille"
   learner: Apprenant
   learnerAssignments: "{groupTitle} affectations d'étudiant"
