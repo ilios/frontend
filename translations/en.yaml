@@ -6,7 +6,7 @@ general:
   addNew: "Add New"
   administratorCount:
     one: "There is 1 administrator"
-    other: "There are {{count}} administrators"
+    other: "There are {count} administrators"
   administrators: Administrators
   advancedOptions: "Advanced Options"
   allEvents: "All Events"
@@ -21,12 +21,12 @@ general:
   back: Back
   backToCourses: "Back to Courses List"
   backToDashboard: "Back to Dashboard"
-  backToTitle: "Back to {{title}}"
+  backToTitle: "Back to {title}"
   calendar: Calendar
   cancel: Cancel
   chooseCohortTitle: "Select Parent For"
   citation: Citation
-  classOf: "Class of {{year}}"
+  classOf: "Class of {year}"
   clearFilters: "Clear Filters"
   clerkshipType: "Clerkship Type"
   clickForMore: "Click for more information"
@@ -40,7 +40,7 @@ general:
   completeSessions: "Sessions Complete: ready to publish"
   confirmObjectiveRemoval: "Are you sure you want to delete this objective?"
   confirmRemoval: "Are you sure you want to remove this learning material?"
-  confirmRemove: "Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone."
+  confirmRemove: "Are you sure you want to delete this offering with {learnerGroupCount} learner groups? This action cannot be undone."
   confirmSessionRemoval: "Are you sure you want to delete this session?"
   contentAuthor: "Content Author"
   copiedSuccessfully: "Copied Successfully"
@@ -78,7 +78,7 @@ general:
   detail: Detail
   directorCount:
     one: "There is 1 director"
-    other: "There are {{count}} directors"
+    other: "There are {count} directors"
   directors: Directors
   disabled: disabled
   displayName: "Display Name"
@@ -89,10 +89,10 @@ general:
   duration: Duration
   durationHours:
     one: "1 hour"
-    other: "{{count}} hours"
+    other: "{count} hours"
   durationMinutes:
     one: "1 minute"
-    other: "{{count}} minutes"
+    other: "{count} minutes"
   edit: Edit
   end: End
   endDate: "End Date"
@@ -145,7 +145,7 @@ general:
   mesh: MeSH
   meshCount:
     one: "1 has MeSH"
-    other: "{{count}} have MeSH"
+    other: "{count} have MeSH"
   meshManageTitle: "Manage MeSH"
   meshSearchPlaceholder: "Search MeSH"
   meshTerms: "MeSH Terms"
@@ -182,30 +182,30 @@ general:
   objectiveCompetencyManagerTitle: "Select Parent Competency for Objective"
   objectiveCount:
     one: "There is 1 objective"
-    other: "There are {{count}} objectives"
+    other: "There are {count} objectives"
   objectiveDescriptorTitle: "Select MeSH Descriptors for Objective"
   objectiveParentTitle: "Select Parent Objectives"
   objectiveParentTitleSingular: "Select Parent Objective"
   objectives: Objectives
   objectivesWithNoHours: "The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data."
   objectivesWithNoLink: "No Course Objectives Currently Linked to Instructional Time."
-  offeredAt: "On {{date}}"
+  offeredAt: "On {date}"
   offering: Offering
   offerings: Offerings
   overview: Overview
-  ownedBy: "owned by {{owner}}"
+  ownedBy: "owned by {owner}"
   owner: Owner
   parentCount:
     one: "1 has a parent"
-    other: "{{count}} have parents"
+    other: "{count} have parents"
   parentObjectives: "Parent Objectives"
   printSummary: "Print Summary"
   program: Program
   programAndCohort: "Program/Cohort"
   programCohorts: "Program Cohorts"
   publicationStatus: "Publication Status"
-  publishAllConfirmation: "Publish {{publishCount}}, schedule {{scheduleCount}}, and ignore {{ignoreCount}} sessions"
-  publishAllSessions: "Publish {{sessionCount}} sessions"
+  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
+  publishAllSessions: "Publish {sessionCount} sessions"
   publishAsIs: "Publish As-is"
   publishCourse: "Publish Course"
   published: Published
@@ -217,9 +217,9 @@ general:
   results: Results
   resultsCount:
     one: "1 result"
-    other: "{{count}} results"
+    other: "{count} results"
   returnToPreviousPage: "Return to Previous Page"
-  reviewMissingItems: "Review {{count}} Missing Items"
+  reviewMissingItems: "Review {count} Missing Items"
   reviewSessions: "Sessions Requiring Review"
   saturday: Saturday
   save: Save
@@ -231,11 +231,11 @@ general:
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
   selectedLearnerGroups: "Selected Learner Groups"
-  selectMeshFor: "Select MeSH for: {{title}}"
+  selectMeshFor: "Select MeSH for: {title}"
   selectVocabulary: "Select Vocabulary"
   session: Session
   sessionAdministration: "Session Administration"
-  sessionIs: "This session is \"{{type}}\""
+  sessionIs: "This session is \"{type}\""
   sessionLearningMaterials: "Session Learning Materials"
   sessionObjectives: "Session Objectives"
   sessions: Sessions
@@ -248,7 +248,7 @@ general:
   showLearnerGroupEvents: "Show all events for assigned learner groups"
   showMore: "Show more"
   showNotesToStudents: "Show Notes to Students"
-  showSessionEvents: "Show all other <em>{{sessionTitle}}</em> events"
+  showSessionEvents: "Show all other <em>{sessionTitle}</em> events"
   smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above."
   smallGroups: "Small Groups"
   sortMaterials: "Sort Materials"
@@ -267,7 +267,7 @@ general:
   sunday: Sunday
   supplementalCurriculum: "Supplemental Curriculum"
   targetCourse: "Target Course"
-  taughtBy: "Taught By {{instructors}}"
+  taughtBy: "Taught By {instructors}"
   terms: Terms
   termsManageTitle: "Manage Terms"
   thursday: Thursday
@@ -278,9 +278,9 @@ general:
   timedReleaseClearEndDate: "Clear End Date"
   timedReleaseClearStartDate: "Clear Start Date"
   timedReleaseNoSchedule: "Available immediately when published"
-  timedReleaseOnlyEndDate: "Available until {{endDate}}"
-  timedReleaseOnlyStartDate: "Available: {{startDate}}"
-  timedReleaseStartAndEndDate: "Available: {{startDate}} and available until {{endDate}}"
+  timedReleaseOnlyEndDate: "Available until {endDate}"
+  timedReleaseOnlyStartDate: "Available: {startDate}"
+  timedReleaseStartAndEndDate: "Available: {startDate} and available until {endDate}"
   title: Title
   today: Today
   token: Token
@@ -291,8 +291,8 @@ general:
   unPublishedSuccessfully: "UnPublished Successfully"
   unPublishSession: "UnPublish Session"
   unusedObjectives: "Unused Objectives"
-  upcomingActivities: "My Activities for the next {{days}} days"
-  upcomingMaterials: "My Learning Materials for the next {{days}} days"
+  upcomingActivities: "My Activities for the next {days} days"
+  upcomingMaterials: "My Learning Materials for the next {days} days"
   uploadDate: "Upload date"
   url: URL
   userRole: "User Role"
@@ -302,45 +302,45 @@ general:
   wednesday: Wednesday
   week: Week
   weekAtAGlance: "Week at a Glance"
-  weekOf: "Week of {{date}}"
+  weekOf: "Week of {date}"
   weeks: Weeks
   when: When
   whitecoatsSlashSpecialAttire: "Whitecoats / special attire"
   year: Year
   yes: Yes
 errors:
-  accepted: "{{description}} must be accepted"
-  after: "{{description}} must be after {{after}}"
-  before: "{{description}} must be before {{before}}"
-  blank: "{{description}} can not be blank"
-  collection: "{{description}} must be a collection"
-  confirmation: "{{description}} does not match {{on}}"
-  date: "{{description}} must be a valid date"
+  accepted: "{description} must be accepted"
+  after: "{description} must be after {after}"
+  before: "{description} must be before {before}"
+  blank: "{description} can not be blank"
+  collection: "{description} must be a collection"
+  confirmation: "{description} does not match {on}"
+  date: "{description} must be a valid date"
   description: "This field"
-  email: "{{description}} must be a valid email address"
-  empty: "{{description}} can not be empty"
-  equalTo: "{{description}} must be equal to {{is}}"
-  even: "{{description}} must be even"
-  exclusion: "{{description}} is a duplicate"
-  greaterThan: "{{description}} must be greater than {{gt}}"
-  greaterThanOrEqualTo: "{{description}} must be greater than or equal to {{gte}}"
-  inclusion: "{{description}} is not included in the list"
-  invalid: "{{description}} is invalid"
-  lessThan: "{{description}} must be less than {{lt}}"
-  lessThanOrEqualTo: "{{description}} must be less than or equal to {{lte}}"
-  notANumber: "{{description}} must be a number"
-  notAnInteger: "{{description}} must be an integer"
-  odd: "{{description}} must be odd"
-  onOrAfter: "{{description}} must be on or after {{onOrAfter}}"
-  onOrBefore: "{{description}} must be on or before {{onOrBefore}}"
-  otherThan: "{{description}} must be other than {{value}}"
-  phone: "{{description}} must be a valid phone number"
-  positive: "{{description}} must be positive"
-  present: "{{description}} must be blank"
-  required: "{{description}} is required"
-  singular: "{{description}} can not be a collection"
-  tooLong: "{{description}} is too long (maximum is {{max}} characters)"
-  tooShort: "{{description}} is too short (minimum is {{min}} characters)"
-  url: "{{description}} must be a valid url"
-  wrongDateFormat: "{{description}} must be in the format of {{format}}"
-  wrongLength: "{{description}} is the wrong length (should be {{is}} characters)"
+  email: "{description} must be a valid email address"
+  empty: "{description} can not be empty"
+  equalTo: "{description} must be equal to {is}"
+  even: "{description} must be even"
+  exclusion: "{description} is a duplicate"
+  greaterThan: "{description} must be greater than {gt}"
+  greaterThanOrEqualTo: "{description} must be greater than or equal to {gte}"
+  inclusion: "{description} is not included in the list"
+  invalid: "{description} is invalid"
+  lessThan: "{description} must be less than {lt}"
+  lessThanOrEqualTo: "{description} must be less than or equal to {lte}"
+  notANumber: "{description} must be a number"
+  notAnInteger: "{description} must be an integer"
+  odd: "{description} must be odd"
+  onOrAfter: "{description} must be on or after {onOrAfter}"
+  onOrBefore: "{description} must be on or before {onOrBefore}"
+  otherThan: "{description} must be other than {value}"
+  phone: "{description} must be a valid phone number"
+  positive: "{description} must be positive"
+  present: "{description} must be blank"
+  required: "{description} is required"
+  singular: "{description} can not be a collection"
+  tooLong: "{description} is too long (maximum is {max} characters)"
+  tooShort: "{description} is too short (minimum is {min} characters)"
+  url: "{description} must be a valid url"
+  wrongDateFormat: "{description} must be in the format of {format}"
+  wrongLength: "{description} is the wrong length (should be {is} characters)"

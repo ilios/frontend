@@ -6,7 +6,7 @@ general:
   addNew: "Agregue Nuevo"
   administratorCount:
     one: "Hay 1 administrador"
-    other: "Hay {{count}} administradores"
+    other: "Hay {count} administradores"
   administrators: Administradores
   advancedOptions: "Opciones Avanzadas"
   allEvents: "Todos los Eventos"
@@ -21,12 +21,12 @@ general:
   back: Volver
   backToCourses: "Atrás a la Lista de Cursos"
   backToDashboard: "Detrás a Tablero"
-  backToTitle: "Atrás a {{title}}"
+  backToTitle: "Atrás a {title}"
   calendar: Calendario
   cancel: Cancelar
   chooseCohortTitle: "Seleccione Matriz Para"
   citation: "Citación"
-  classOf: "Clase de {{year}}"
+  classOf: "Clase de {year}"
   clearFilters: "Borrar Filtros"
   clerkshipType: "Tipo de Rotación"
   clickForMore: "Haga clic para más información"
@@ -40,7 +40,7 @@ general:
   completeSessions: "Sesiónes Completas: Listo a Publicar"
   confirmObjectiveRemoval: "¿Está seguro que desea eliminar este objetivo?"
   confirmRemoval: "¿Está seguro que desea eliminar este material de aprendizaje?"
-  confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {{learnerGroupCount}} grupos de aprendedores? Esta acción no se puede deshacer."
+  confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
   confirmSessionRemoval: "¿Está seguro que desea eliminar este sessión?"
   contentAuthor: "Autor del Contenido"
   copiedSuccessfully: "Copiado con Éxito"
@@ -78,7 +78,7 @@ general:
   detail: Detalle
   directorCount:
     one: "Hay 1 director"
-    other: "Hay {{count}} directores"
+    other: "Hay {count} directores"
   directors: Directores
   disabled: desactivado
   displayName: "Nombre de Mostrar"
@@ -89,10 +89,10 @@ general:
   duration: "Duración"
   durationHours:
     one: "un hora"
-    other: "{{count}} horas"
+    other: "{count} horas"
   durationMinutes:
     one: "1 minuto"
-    other: "{{count}} minutos"
+    other: "{count} minutos"
   edit: Editar
   end: Termino
   endDate: "Fecha de Cumplir"
@@ -145,7 +145,7 @@ general:
   mesh: MeSH
   meshCount:
     one: "1 tiene MeSH"
-    other: "{{count}} tienen MeSH"
+    other: "{count} tienen MeSH"
   meshManageTitle: "Administrar MeSH"
   meshSearchPlaceholder: "Buscar MeSH"
   meshTerms: "Terminos de MeSH"
@@ -182,30 +182,30 @@ general:
   objectiveCompetencyManagerTitle: "Seleccione Competencia Principal para Objetivo"
   objectiveCount:
     one: "Hay 1 objetivo"
-    other: "Hay {{count}} objetivos"
+    other: "Hay {count} objetivos"
   objectiveDescriptorTitle: "Seleccione Descriptores de MeSH para Objetivo"
   objectiveParentTitle: "Seleccione Objetivos Principales"
   objectiveParentTitleSingular: "Seleccione Objetivo Principale"
   objectives: Objetivos
   objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
   objectivesWithNoLink: "No hay objetivos del curso actualmente vinculados a tiempo de instrucción."
-  offeredAt: "en {{date}}"
+  offeredAt: "en {date}"
   offering: Ofrecimiento
   offerings: Ofrecimientos
   overview: "Visión Amplia"
-  ownedBy: "propiedad de {{owner}}"
+  ownedBy: "propiedad de {owner}"
   owner: "Dueño"
   parentCount:
     one: "1 tiene un Principal objetivo"
-    other: "{{count}} tienen Objetivos Principales"
+    other: "{count} tienen Objetivos Principales"
   parentObjectives: "Objetivos de Matriz"
   printSummary: "Sumario Printado"
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"
   programCohorts: "Clases de La Graduación"
   publicationStatus: "Estado de Publicación"
-  publishAllConfirmation: "Publique {{publishCount}}, Programe {{scheduleCount}}, y ignore {{ignoreCount}} sesiónes"
-  publishAllSessions: "Publique {{sessionCount}} sesiónes"
+  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
+  publishAllSessions: "Publique {sessionCount} sesiónes"
   publishAsIs: "Publique Como Es"
   publishCourse: "Publique Curso"
   published: Publicado
@@ -217,9 +217,9 @@ general:
   results: Resultados
   resultsCount:
     one: "1 resultado"
-    other: "{{count}} resultados"
+    other: "{count} resultados"
   returnToPreviousPage: "Volver a la Página Anterior"
-  reviewMissingItems: "Revisar {{count}} Artículos Faltantes"
+  reviewMissingItems: "Revisar {count} Artículos Faltantes"
   reviewSessions: "Sesiónes a Revisar"
   saturday: "Sábado"
   save: Guardar
@@ -231,11 +231,11 @@ general:
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
   selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
-  selectMeshFor: "Seleccione MeSH para: {{title}}"
+  selectMeshFor: "Seleccione MeSH para: {title}"
   selectVocabulary: "Seleccione un Vocabulario"
   session: "Sessión"
   sessionAdministration: "Administración de la Sesión"
-  sessionIs: "Esta sesión es \"{{type}}\""
+  sessionIs: "Esta sesión es \"{type}\""
   sessionLearningMaterials: "Materiales de Aprendizaje de la Sesión"
   sessionObjectives: "Objetivos de la Sesión"
   sessions: Sesiones
@@ -248,7 +248,7 @@ general:
   showLearnerGroupEvents: "Mostrar todos los eventos para grupos de alumnos asignados"
   showMore: "Mostrar más"
   showNotesToStudents: "Mostrar Notas a Los Estudiantes"
-  showSessionEvents: "Mostrar todos los <em>{{sessionTitle}}</em> eventos"
+  showSessionEvents: "Mostrar todos los <em>{sessionTitle}</em> eventos"
   smallGroupMessage: "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de 'ofrecimiento' de arriba."
   smallGroups: "Grupos Pequeños"
   sortMaterials: "Clasificar los materiales"
@@ -267,7 +267,7 @@ general:
   sunday: Domingo
   supplementalCurriculum: "Plan de Estudios No Requerido"
   targetCourse: "Curso de Destino"
-  taughtBy: "Ènsenada Por {{instructors}}"
+  taughtBy: "Ènsenada Por {instructors}"
   terms: "Términos"
   termsManageTitle: "Maneje Términos"
   thursday: Jueves
@@ -278,9 +278,9 @@ general:
   timedReleaseClearEndDate: "Quitar Fecha de Finalización de Lanzamiento "
   timedReleaseClearStartDate: "Quitar Fecha de Inicio de Lanzamiento "
   timedReleaseNoSchedule: "Disponible inmediatamente cuando publicado "
-  timedReleaseOnlyEndDate: "Disponible antes de {{endDate}}"
-  timedReleaseOnlyStartDate: " Disponible después de {{startDate}}"
-  timedReleaseStartAndEndDate: " Disponible a partir de {{startDate}} hasta {{endDate}}"
+  timedReleaseOnlyEndDate: "Disponible antes de {endDate}"
+  timedReleaseOnlyStartDate: " Disponible después de {startDate}"
+  timedReleaseStartAndEndDate: " Disponible a partir de {startDate} hasta {endDate}"
   title: Titulo
   today: Hoy
   token: Token
@@ -291,8 +291,8 @@ general:
   unPublishedSuccessfully: "No Publicado con Éxito"
   unPublishSession: "No Publique La Sesión"
   unusedObjectives: "Objetivos no Utilizados"
-  upcomingActivities: "Mis Actividades para los próximos {{days}} días"
-  upcomingMaterials: "Mis Materiales de Aprendizaje para los próximos {{days}} días"
+  upcomingActivities: "Mis Actividades para los próximos {days} días"
+  upcomingMaterials: "Mis Materiales de Aprendizaje para los próximos {days} días"
   uploadDate: "Fecha de carga"
   url: URL
   userRole: "Función de Usuario"
@@ -302,45 +302,45 @@ general:
   wednesday: "Miércoles"
   week: Semana
   weekAtAGlance: "Semana de un vistazo"
-  weekOf: "Semana de {{date}}"
+  weekOf: "Semana de {date}"
   weeks: Semanas
   when: Cuando
   whitecoatsSlashSpecialAttire: "Abrigos blancos / vestimenta especial"
   year: "Año"
   yes: "Sí"
 errors:
-  accepted: "{{description}} debe ser aceptado"
-  after: "{{description}} necesita estar después de {{after}}"
-  before: "{{description}} necesita estar antes de {{before}}"
-  blank: "{{description}} no puede estar en blanco"
-  collection: "{{description}} necesita ser una colección"
-  confirmation: "{{description}} no coincide con {{on}}"
-  date: "{{description}} necesita estar una fecha válida"
+  accepted: "{description} debe ser aceptado"
+  after: "{description} necesita estar después de {after}"
+  before: "{description} necesita estar antes de {before}"
+  blank: "{description} no puede estar en blanco"
+  collection: "{description} necesita ser una colección"
+  confirmation: "{description} no coincide con {on}"
+  date: "{description} necesita estar una fecha válida"
   description: "Este campo"
-  email: "{{description}} debe ser una dirección válida de correo electrónico"
-  empty: "{{description}} no puede estar vacío"
-  equalTo: "{{description}} debe ser igual a {{is}}"
-  even: "{{description}} debe ser número par"
-  exclusion: "{{description}} es reservado"
-  greaterThan: "{{description}} debe ser mayor que {{gt}}"
-  greaterThanOrEqualTo: "{{description}} debe ser mayor que o igual a {{gte}}"
-  inclusion: "{{description}} no está incluido en la lista"
-  invalid: "{{description}} es inválido"
-  lessThan: "{{description}} debe ser menos que {{lt}}"
-  lessThanOrEqualTo: "{{description}} debe ser menos que o igual a {{lte}}"
-  notANumber: "{{description}} no es un número"
-  notAnInteger: "{{description}} debe ser un numero entero"
-  odd: "{{description}} debe ser número impar"
-  onOrAfter: "{{description}} debe estar en o después de {{onOrAfter}}"
-  onOrBefore: "{{description}} debe estar en o antes de {{onOrBefore}}"
-  otherThan: "{{description}} Debe ser otra cosa que {{value}}"
-  phone: "{{description}} debe ser un número de teléfono válido"
-  positive: "{{description}} debe ser un número positivo"
-  present: "{{description}} debe estar en blanco"
-  required: "{{description}} se requiere"
-  singular: "{{description}} no se puede ser una colección"
-  tooLong: "{{description}} es demasiado largo (el máximo es {{max}} caracteres)"
-  tooShort: "{{description}} es demasiado corto (el mínimo es {{min}} caracteres)"
-  url: "{{description}} debe ser una dirección URL válida"
-  wrongDateFormat: "{{description}} necesita ser en el formato de {{format}}"
-  wrongLength: "{{description}} es la longitud incorrecta (debe ser {{is}} caracteres)"
+  email: "{description} debe ser una dirección válida de correo electrónico"
+  empty: "{description} no puede estar vacío"
+  equalTo: "{description} debe ser igual a {is}"
+  even: "{description} debe ser número par"
+  exclusion: "{description} es reservado"
+  greaterThan: "{description} debe ser mayor que {gt}"
+  greaterThanOrEqualTo: "{description} debe ser mayor que o igual a {gte}"
+  inclusion: "{description} no está incluido en la lista"
+  invalid: "{description} es inválido"
+  lessThan: "{description} debe ser menos que {lt}"
+  lessThanOrEqualTo: "{description} debe ser menos que o igual a {lte}"
+  notANumber: "{description} no es un número"
+  notAnInteger: "{description} debe ser un numero entero"
+  odd: "{description} debe ser número impar"
+  onOrAfter: "{description} debe estar en o después de {onOrAfter}"
+  onOrBefore: "{description} debe estar en o antes de {onOrBefore}"
+  otherThan: "{description} Debe ser otra cosa que {value}"
+  phone: "{description} debe ser un número de teléfono válido"
+  positive: "{description} debe ser un número positivo"
+  present: "{description} debe estar en blanco"
+  required: "{description} se requiere"
+  singular: "{description} no se puede ser una colección"
+  tooLong: "{description} es demasiado largo (el máximo es {max} caracteres)"
+  tooShort: "{description} es demasiado corto (el mínimo es {min} caracteres)"
+  url: "{description} debe ser una dirección URL válida"
+  wrongDateFormat: "{description} necesita ser en el formato de {format}"
+  wrongLength: "{description} es la longitud incorrecta (debe ser {is} caracteres)"

@@ -6,7 +6,7 @@ general:
   addNew: "Ajouté Neuf"
   administratorCount:
     one: "Il y a un administrateur"
-    other: "Il y a {{count}} administrateurs"
+    other: "Il y a {count} administrateurs"
   administrators: Administrateurs
   advancedOptions: "Options avancées"
   allEvents: "Tous les Événements"
@@ -21,12 +21,12 @@ general:
   back: Retour
   backToCourses: "Retour à liste"
   backToDashboard: "Retour à tableau de bord"
-  backToTitle: "Retour à {{title}}"
+  backToTitle: "Retour à {title}"
   calendar: Calendrier
   cancel: Annul
   chooseCohortTitle: "Choisi objectif mère pour"
   citation: Citation
-  classOf: "Classe de {{year}}"
+  classOf: "Classe de {year}"
   clearFilters: "Effacerez les Filtres"
   clerkshipType: "Genre de Stage"
   clickForMore: "Cliquez ici pour en savoir plus"
@@ -40,7 +40,7 @@ general:
   completeSessions: "Séances complète: prêt à publier"
   confirmObjectiveRemoval: "Êtes vous sûr de vouloir supprimer cet objectif?"
   confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matière d’étude?"
-  confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {{learnerGroupCount}} groupes d'apprenants?  Ça action ne peut pas être défait."
+  confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: "Êtes vous sûr de vouloir supprimer cette séance?"
   contentAuthor: Auteur
   copiedSuccessfully: "Copié avec succès"
@@ -78,7 +78,7 @@ general:
   detail: "Détail"
   directorCount:
     one: "Il y a un directeur"
-    other: "Il  y a {{count}} directeurs"
+    other: "Il  y a {count} directeurs"
   directors: Directeurs
   disabled: "désactivée"
   displayName: "Nom d’Affichage"
@@ -89,10 +89,10 @@ general:
   duration: "Durée"
   durationHours:
     one: "une heure"
-    other: "{{count}} heures"
+    other: "{count} heures"
   durationMinutes:
     one: "une minute"
-    other: "{{count}} minutes"
+    other: "{count} minutes"
   edit: Edite
   end: "Terminé"
   endDate: "Jour Terminé"
@@ -145,7 +145,7 @@ general:
   mesh: MeSH
   meshCount:
     one: "1 a des MeSH"
-    other: "{{count}} ont MeSH"
+    other: "{count} ont MeSH"
   meshManageTitle: "Manager MeSH"
   meshSearchPlaceholder: "Rechercher MeSH"
   meshTerms: "Termes de MeSH"
@@ -182,30 +182,30 @@ general:
   objectiveCompetencyManagerTitle: "Sélectionner Compétence Mère pour Objectif"
   objectiveCount:
     one: "Il y a 1 objectif"
-    other: "Il y a {{count}} objectifs"
+    other: "Il y a {count} objectifs"
   objectiveDescriptorTitle: "Choisi MeSH pour l'objectif"
   objectiveParentTitle: "Choisi Objectifs mères"
   objectiveParentTitleSingular: "Choisi Objectif mère"
   objectives: Objectifs
   objectivesWithNoHours: "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée."
   objectivesWithNoLink: "Nul objectifs de course actuellement lié au temps dénseignment."
-  offeredAt: "À {{date}}"
+  offeredAt: "À {date}"
   offering: Offre
   offerings: Offres
   overview: "Conception Général"
-  ownedBy: "Possédé par {{owner}}"
+  ownedBy: "Possédé par {owner}"
   owner: "Propriétaire"
   parentCount:
     one: "1 a un objectif mère"
-    other: "{{count}} ont des objectifs mères"
+    other: "{count} ont des objectifs mères"
   parentObjectives: "Objectifs Mères"
   printSummary: "Empreinte Résumé"
   program: "Diplôme"
   programAndCohort: "Diplôme et Cohortes"
   programCohorts: Cohortes
   publicationStatus: "Statut de Publication"
-  publishAllConfirmation: "Publier {{publishCount}}, réserver {{scheduleCount}}, et ignorer des {{ignoreCount}} séances"
-  publishAllSessions: "Publier {{count}} des séances"
+  publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
+  publishAllSessions: "Publier {count} des séances"
   publishAsIs: "Publier \"as-is\""
   publishCourse: "Publier Cours"
   published: Publier
@@ -217,9 +217,9 @@ general:
   results: Resultats
   resultsCount:
     one: "1 résultat"
-    other: "{{count}} résultats"
+    other: "{count} résultats"
   returnToPreviousPage: "Retour à la page précédente"
-  reviewMissingItems: "Examiner {{count}} objets manquants"
+  reviewMissingItems: "Examiner {count} objets manquants"
   reviewSessions: "Séances à faire réviser"
   saturday: Samedi
   save: Enregistrer
@@ -231,11 +231,11 @@ general:
   searchPlaceholder: "Trouver matières d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
   selectedLearnerGroups: "Groupes d’Étudiants Selectionées"
-  selectMeshFor: "Sélectionnez MeSH pour: {{title}}"
+  selectMeshFor: "Sélectionnez MeSH pour: {title}"
   selectVocabulary: "Choisi Vocabulaire"
   session: "Séance"
   sessionAdministration: "Administration de Séance"
-  sessionIs: "Cette séance est `{{type}}`"
+  sessionIs: "Cette séance est `{type}`"
   sessionLearningMaterials: "Matières d’Étude de la Séance"
   sessionObjectives: "Objectifs de la Séance"
   sessions: "Séances"
@@ -248,7 +248,7 @@ general:
   showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
   showMore: "Afficher plus"
   showNotesToStudents: "Afficher notes aux étudiantes"
-  showSessionEvents: "Montrez tous les autres <em>{{sessionTitle}}</em> événements"
+  showSessionEvents: "Montrez tous les autres <em>{sessionTitle}</em> événements"
   smallGroupMessage: "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de \"small groups\". Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton \"offre\" au-dessus."
   smallGroups: "Groupes Particulaires"
   sortMaterials: "Trier les matériaux"
@@ -267,7 +267,7 @@ general:
   sunday: Dimanche
   supplementalCurriculum: "Supplemental Curriculum"
   targetCourse: "Cours Cible"
-  taughtBy: "Dispensé à {{instructors}}"
+  taughtBy: "Dispensé à {instructors}"
   terms: Termes
   termsManageTitle: "Manager des Termes"
   thursday: Jeudi
@@ -278,9 +278,9 @@ general:
   timedReleaseClearEndDate: "Supprimer la date limite"
   timedReleaseClearStartDate: "Supprimer la date de début"
   timedReleaseNoSchedule: "Disponible immédiatement quand publié"
-  timedReleaseOnlyEndDate: "Disponible avant {{endDate}}"
-  timedReleaseOnlyStartDate: "Disponible après {{startDate}}"
-  timedReleaseStartAndEndDate: "Disponible de {{startDate}} jusqu'à {{endDate}}"
+  timedReleaseOnlyEndDate: "Disponible avant {endDate}"
+  timedReleaseOnlyStartDate: "Disponible après {startDate}"
+  timedReleaseStartAndEndDate: "Disponible de {startDate} jusqu'à {endDate}"
   title: "Tître"
   today: "Aujourd'hui"
   token: Token
@@ -291,8 +291,8 @@ general:
   unPublishedSuccessfully: "Faire à Dépublier réussi"
   unPublishSession: "Faire à Dépublier Session"
   unusedObjectives: "Objectifs non Utilisés"
-  upcomingActivities: "Mes Activités pendant les {{days}} prochains jours"
-  upcomingMaterials: "Mes Matières d'Étude pendant les {{days}} prochains jours"
+  upcomingActivities: "Mes Activités pendant les {days} prochains jours"
+  upcomingMaterials: "Mes Matières d'Étude pendant les {days} prochains jours"
   uploadDate: "Date de dépôt"
   url: URL
   userRole: "Rôle d'utilisateur"
@@ -302,45 +302,45 @@ general:
   wednesday: Mercredi
   week: Semaine
   weekAtAGlance: "Semaine d'un coup d'œil"
-  weekOf: "Semaine de {{date}}"
+  weekOf: "Semaine de {date}"
   weeks: Semaines
   when: Quand
   whitecoatsSlashSpecialAttire: "Blouses blanches / vêtements particuliers"
   year: "Année"
   yes: Oui
 errors:
-  accepted: "{{description}} doit être accepté"
-  after: "{{description}} doit être après {{after}}"
-  before: "{{description}} doit être avant {{before}}"
-  blank: "{{description}} ne doit pas être blanc"
-  collection: "{{description}} doit être un collection"
-  confirmation: "{{description}} ne correspond pas de {{on}}"
-  date: "{{description}} doit être une date valide"
+  accepted: "{description} doit être accepté"
+  after: "{description} doit être après {after}"
+  before: "{description} doit être avant {before}"
+  blank: "{description} ne doit pas être blanc"
+  collection: "{description} doit être un collection"
+  confirmation: "{description} ne correspond pas de {on}"
+  date: "{description} doit être une date valide"
   description: "Ce champ"
-  email: "{{description}} doit être une e-mail valide"
-  empty: "{{description}} ne doit pas être vide"
-  equalTo: "{{description}} doit être égale à {{is}}"
-  even: "{{description}} doit être une chiffre pair"
-  exclusion: "{{description}}est reservé"
-  greaterThan: "{{description}} doit être supérieure à {{gt}}"
-  greaterThanOrEqualTo: "{{description}} doit être supérieure ou ègale à {{gte}}"
-  inclusion: "{{description}} ne figure pas dans la liste"
-  invalid: "{{description}} est invalide"
-  lessThan: "{{description}} doit être inférieure à {{lt}}"
-  lessThanOrEqualTo: "{{description}} doit être supérieure ou inférieure à {{lte}}"
-  notANumber: "{{description}} doit contenir une valeur numérique"
-  notAnInteger: "{{description}} doit être un entier"
-  odd: "{{description}} doit étre une chiffre impair"
-  onOrAfter: "{{description}} doit être sur ou après {{onOrAfter}}"
-  onOrBefore: "{{description}} doit être en ou avant {{onOrBefore}}"
-  otherThan: "{{description}} doit être une valeur autre de {{value}}"
-  phone: "{{description}} doit être une téléphone valide"
-  positive: "{{description}} doit être une chiffre positif"
-  present: "{{description}} doit rester vide"
-  required: "{{description}} est obligatoire"
-  singular: "{{description}} ne doit pas être un collection"
-  tooLong: "{{description}} est trop long (maximum de {{max}} caractères)"
-  tooShort: "{{description}} est trop court (minimum de {{min}} caractères)"
-  url: "{{description}} doit être une URL valide"
-  wrongDateFormat: "{{description}} doit être en format de {{format}}"
-  wrongLength: "{{description}} n’est pas à la bonne longueur (soit ainsi {{is}} caractères)"
+  email: "{description} doit être une e-mail valide"
+  empty: "{description} ne doit pas être vide"
+  equalTo: "{description} doit être égale à {is}"
+  even: "{description} doit être une chiffre pair"
+  exclusion: "{description}est reservé"
+  greaterThan: "{description} doit être supérieure à {gt}"
+  greaterThanOrEqualTo: "{description} doit être supérieure ou ègale à {gte}"
+  inclusion: "{description} ne figure pas dans la liste"
+  invalid: "{description} est invalide"
+  lessThan: "{description} doit être inférieure à {lt}"
+  lessThanOrEqualTo: "{description} doit être supérieure ou inférieure à {lte}"
+  notANumber: "{description} doit contenir une valeur numérique"
+  notAnInteger: "{description} doit être un entier"
+  odd: "{description} doit étre une chiffre impair"
+  onOrAfter: "{description} doit être sur ou après {onOrAfter}"
+  onOrBefore: "{description} doit être en ou avant {onOrBefore}"
+  otherThan: "{description} doit être une valeur autre de {value}"
+  phone: "{description} doit être une téléphone valide"
+  positive: "{description} doit être une chiffre positif"
+  present: "{description} doit rester vide"
+  required: "{description} est obligatoire"
+  singular: "{description} ne doit pas être un collection"
+  tooLong: "{description} est trop long (maximum de {max} caractères)"
+  tooShort: "{description} est trop court (minimum de {min} caractères)"
+  url: "{description} doit être une URL valide"
+  wrongDateFormat: "{description} doit être en format de {format}"
+  wrongLength: "{description} n’est pas à la bonne longueur (soit ainsi {is} caractères)"
