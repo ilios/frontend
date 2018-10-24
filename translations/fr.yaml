@@ -258,7 +258,7 @@ general:
   pendingUserUpdates:
     filterBy: "Filtre par nom d’utilisateur"
     missingFromDirectory: "Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization."
-    emailMismatch: "L’address email dans le répertoire ({update.value}) ne correspond pas à ce email dans ilios ({update.user.email})."
+    emailMismatch: "L’address email dans le répertoire ({value}) ne correspond pas à ce email dans ilios ({email})."
     updateIlios: "Mettre à jour Ilios"
   people: Peuples
   performsNonLearnerFunctions: "Acquitte de Fonctions Non-Apprenant"
