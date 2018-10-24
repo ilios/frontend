@@ -4,7 +4,7 @@ general:
   activities: Activities
   add: Add
   addNew: "Add New"
-  administratorCount: "There {count, plural, =1 {is 1 administrator} other {# administrators}}"
+  administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
   administrators: Administrators
   advancedOptions: "Advanced Options"
   allEvents: "All Events"
