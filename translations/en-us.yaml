@@ -151,9 +151,9 @@ general:
   isSelective: "Is Selective"
   isTrack: "Is Track"
   language:
-    en: "English (en)"
-    es: "Español (es)"
-    fr: "Français (fr)"
+    en-us: "English (en)"
+    es-es: "Español (es)"
+    fr-fr: "Français (fr)"
   lastName: "Last Name"
   learner: Learner
   learnerAssignments: "{groupTitle} Learner Assignments"

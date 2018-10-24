@@ -151,9 +151,9 @@ general:
   isSelective: "Es selectivo"
   isTrack: "Es la Pista"
   language:
-    en: "English (en)"
-    es: "Español (es)"
-    fr: "Français (fr)"
+    en-us: "English (en)"
+    es-es: "Español (es)"
+    fr-fr: "Français (fr)"
   lastName: Apellido
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
