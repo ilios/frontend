@@ -74,7 +74,7 @@ general:
   deprecatedAbbreviation: "depr."
   description: Description
   detail: Detail
-  directorCount: "There {count, plural, =1 {is 1 director} other {# are directors}}"
+  directorCount: "There {count, plural, =1 {is 1 director} other {are # directors}}"
   directors: Directors
   disabled: disabled
   displayName: "Display Name"
