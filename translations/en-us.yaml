@@ -4,9 +4,7 @@ general:
   activities: Activities
   add: Add
   addNew: "Add New"
-  administratorCount:
-    one: "There is 1 administrator"
-    other: "There are {count} administrators"
+  administratorCount: "There {count, plural, =1 {is 1 administrator} other {# administrators}}"
   administrators: Administrators
   advancedOptions: "Advanced Options"
   allEvents: "All Events"
@@ -76,9 +74,7 @@ general:
   deprecatedAbbreviation: "depr."
   description: Description
   detail: Detail
-  directorCount:
-    one: "There is 1 director"
-    other: "There are {count} directors"
+  directorCount: "There {count, plural, =1 {is 1 director} other {# directors}}"
   directors: Directors
   disabled: disabled
   displayName: "Display Name"
@@ -87,12 +83,8 @@ general:
   dueBy: "Due By"
   dueThisDay: "Due this day"
   duration: Duration
-  durationHours:
-    one: "1 hour"
-    other: "{count} hours"
-  durationMinutes:
-    one: "1 minute"
-    other: "{count} minutes"
+  durationHours: "{count, plural, =1 {1 hour} other {# hours}}"
+  durationMinutes: "{count, plural, =1 {1 minute} other {# minutes}}"
   edit: Edit
   end: End
   endDate: "End Date"
@@ -143,9 +135,7 @@ general:
   markAsScheduled: "Mark as Scheduled"
   materials: Materials
   mesh: MeSH
-  meshCount:
-    one: "1 has MeSH"
-    other: "{count} have MeSH"
+  meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
   meshManageTitle: "Manage MeSH"
   meshSearchPlaceholder: "Search MeSH"
   meshTerms: "MeSH Terms"
@@ -180,9 +170,7 @@ general:
   notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."
   notPublished: "Not Published"
   objectiveCompetencyManagerTitle: "Select Parent Competency for Objective"
-  objectiveCount:
-    one: "There is 1 objective"
-    other: "There are {count} objectives"
+  objectiveCount: "There {count, plural, =1 {is 1 objective} other {are # objectives}}"
   objectiveDescriptorTitle: "Select MeSH Descriptors for Objective"
   objectiveParentTitle: "Select Parent Objectives"
   objectiveParentTitleSingular: "Select Parent Objective"
@@ -195,9 +183,7 @@ general:
   overview: Overview
   ownedBy: "owned by {owner}"
   owner: Owner
-  parentCount:
-    one: "1 has a parent"
-    other: "{count} have parents"
+  parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
   parentObjectives: "Parent Objectives"
   printSummary: "Print Summary"
   program: Program
@@ -215,9 +201,7 @@ general:
   removeAll: "Remove All"
   required: Required
   results: Results
-  resultsCount:
-    one: "1 result"
-    other: "{count} results"
+  resultsCount: "{count, plural, =1 {1 result} other {# results}}"
   returnToPreviousPage: "Return to Previous Page"
   reviewMissingItems: "Review {count} Missing Items"
   reviewSessions: "Sessions Requiring Review"

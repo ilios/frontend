@@ -4,9 +4,7 @@ general:
   activities: Actividades
   add: Agregue
   addNew: "Agregue Nuevo"
-  administratorCount:
-    one: "Hay 1 administrador"
-    other: "Hay {count} administradores"
+  administratorCount: "Hay {count, plural, =1 {1 administrador} other {# administradores}}"
   administrators: Administradores
   advancedOptions: "Opciones Avanzadas"
   allEvents: "Todos los Eventos"
@@ -76,9 +74,7 @@ general:
   deprecatedAbbreviation: "obs."
   description: "Descripción"
   detail: Detalle
-  directorCount:
-    one: "Hay 1 director"
-    other: "Hay {count} directores"
+  directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
   directors: Directores
   disabled: desactivado
   displayName: "Nombre de Mostrar"
@@ -87,12 +83,8 @@ general:
   dueBy: "Debido Por"
   dueThisDay: "Debido por esta fecha"
   duration: "Duración"
-  durationHours:
-    one: "un hora"
-    other: "{count} horas"
-  durationMinutes:
-    one: "1 minuto"
-    other: "{count} minutos"
+  durationHours: "{count, plural, =1 {un hora} other {# horas}}"
+  durationMinutes: "{count, plural, =1 {1 minudo} other {# minudos}}"
   edit: Editar
   end: Termino
   endDate: "Fecha de Cumplir"
@@ -143,9 +135,7 @@ general:
   markAsScheduled: "Marque Como Programado"
   materials: Materiales
   mesh: MeSH
-  meshCount:
-    one: "1 tiene MeSH"
-    other: "{count} tienen MeSH"
+  meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
   meshManageTitle: "Administrar MeSH"
   meshSearchPlaceholder: "Buscar MeSH"
   meshTerms: "Terminos de MeSH"
@@ -180,9 +170,7 @@ general:
   notFoundMessage: "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
   notPublished: "No Publicado"
   objectiveCompetencyManagerTitle: "Seleccione Competencia Principal para Objetivo"
-  objectiveCount:
-    one: "Hay 1 objetivo"
-    other: "Hay {count} objetivos"
+  objectiveCount: "Hay {count, plural, =1 {1 objectivo} other {# objectivos}}"
   objectiveDescriptorTitle: "Seleccione Descriptores de MeSH para Objetivo"
   objectiveParentTitle: "Seleccione Objetivos Principales"
   objectiveParentTitleSingular: "Seleccione Objetivo Principale"
@@ -195,9 +183,7 @@ general:
   overview: "Visión Amplia"
   ownedBy: "propiedad de {owner}"
   owner: "Dueño"
-  parentCount:
-    one: "1 tiene un Principal objetivo"
-    other: "{count} tienen Objetivos Principales"
+  parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentObjectives: "Objetivos de Matriz"
   printSummary: "Sumario Printado"
   program: Programa
@@ -215,9 +201,7 @@ general:
   removeAll: "Quitar Todos"
   required: Requerido
   results: Resultados
-  resultsCount:
-    one: "1 resultado"
-    other: "{count} resultados"
+  resultsCount: "{count, plural, =1 {1 resultado} other {# resultados}}"
   returnToPreviousPage: "Volver a la Página Anterior"
   reviewMissingItems: "Revisar {count} Artículos Faltantes"
   reviewSessions: "Sesiónes a Revisar"

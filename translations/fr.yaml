@@ -4,9 +4,7 @@ general:
   activities: "Activités"
   add: "Ajouté"
   addNew: "Ajouté Neuf"
-  administratorCount:
-    one: "Il y a un administrateur"
-    other: "Il y a {count} administrateurs"
+  administratorCount:  "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
   administrators: Administrateurs
   advancedOptions: "Options avancées"
   allEvents: "Tous les Événements"
@@ -76,9 +74,7 @@ general:
   deprecatedAbbreviation: "obs."
   description: Description
   detail: "Détail"
-  directorCount:
-    one: "Il y a un directeur"
-    other: "Il  y a {count} directeurs"
+  directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
   directors: Directeurs
   disabled: "désactivée"
   displayName: "Nom d’Affichage"
@@ -87,12 +83,8 @@ general:
   dueBy: Avant
   dueThisDay: "Dû ce jour-là"
   duration: "Durée"
-  durationHours:
-    one: "une heure"
-    other: "{count} heures"
-  durationMinutes:
-    one: "une minute"
-    other: "{count} minutes"
+  durationHours:  "{count, plural, =1 {1 une heure} other {# heures}}"
+  durationMinutes:  "{count, plural, =1 {1 une minute} other {# minutes}}"
   edit: Edite
   end: "Terminé"
   endDate: "Jour Terminé"
@@ -143,9 +135,7 @@ general:
   markAsScheduled: "Faire à prévu"
   materials: "Matières"
   mesh: MeSH
-  meshCount:
-    one: "1 a des MeSH"
-    other: "{count} ont MeSH"
+  meshCount:  "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
   meshManageTitle: "Manager MeSH"
   meshSearchPlaceholder: "Rechercher MeSH"
   meshTerms: "Termes de MeSH"
@@ -180,9 +170,7 @@ general:
   notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
   notPublished: "Non Publier"
   objectiveCompetencyManagerTitle: "Sélectionner Compétence Mère pour Objectif"
-  objectiveCount:
-    one: "Il y a 1 objectif"
-    other: "Il y a {count} objectifs"
+  objectiveCount:  "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
   objectiveDescriptorTitle: "Choisi MeSH pour l'objectif"
   objectiveParentTitle: "Choisi Objectifs mères"
   objectiveParentTitleSingular: "Choisi Objectif mère"
@@ -195,9 +183,7 @@ general:
   overview: "Conception Général"
   ownedBy: "Possédé par {owner}"
   owner: "Propriétaire"
-  parentCount:
-    one: "1 a un objectif mère"
-    other: "{count} ont des objectifs mères"
+  parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
   parentObjectives: "Objectifs Mères"
   printSummary: "Empreinte Résumé"
   program: "Diplôme"
@@ -215,9 +201,7 @@ general:
   removeAll: "Supprimer Tous"
   required: Requis
   results: Resultats
-  resultsCount:
-    one: "1 résultat"
-    other: "{count} résultats"
+  resultsCount: "{count, plural, =1 {1 résultat} other {# résultats}}"
   returnToPreviousPage: "Retour à la page précédente"
   reviewMissingItems: "Examiner {count} objets manquants"
   reviewSessions: "Séances à faire réviser"
