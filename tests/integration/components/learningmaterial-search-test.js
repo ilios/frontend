@@ -2,15 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import tHelper from "ember-intl/helper";
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | learningmaterial search', function(hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function() {
-    this.owner.lookup('service:intl').setLocale('en');
-    this.owner.register('helper:t', tHelper);
-  });
+  setupIntl(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(1);
