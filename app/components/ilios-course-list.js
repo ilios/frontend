@@ -25,7 +25,7 @@ const CourseProxy = ObjectProxy.extend({
 
     }
 
-    return intl.t(translation).string;
+    return intl.t(translation);
   }),
 
   userCanDelete: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
