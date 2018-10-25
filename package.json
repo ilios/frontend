@@ -115,6 +115,7 @@
     "app/",
     "blueprints/",
     "config/",
+    "translations/",
     "vendor/"
   ],
   "pre-commit": [
