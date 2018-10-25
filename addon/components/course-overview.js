@@ -39,7 +39,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   routing: service('-routing'),
   permissionChecker: service(),
-  i18n: service(),
+  intl: service(),
   editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
@@ -115,9 +115,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   clerkshipTypeTitle: computed('selectedClerkshipType', async function () {
     const selectedClerkshipType = await this.get('selectedClerkshipType');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     if (!selectedClerkshipType) {
-      return i18n.t('general.notAClerkship');
+      return intl.t('general.notAClerkship');
     }
 
     return selectedClerkshipType.title;

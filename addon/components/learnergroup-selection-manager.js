@@ -5,7 +5,7 @@ import layout from '../templates/components/learnergroup-selection-manager';
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   classNames: ['learnergroup-selection-manager'],
   filter: '',
   cohorts: null,

@@ -26,7 +26,7 @@ export default Component.extend({
   schoolEvents: service(),
   currentUser: service(),
   store: service(),
-  i18n: service(),
+  intl: service(),
   iliosConfig: service(),
   classNames: ['dashboard-calendar'],
   selectedSchool: null,
@@ -39,20 +39,20 @@ export default Component.extend({
   selectedAcademicYear: null,
   selectedTerms: null,
 
-  dayTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.day');
+  dayTranslation: computed('intl.locale', function(){
+    return this.get('intl').t('general.day');
   }),
-  weekTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.week');
+  weekTranslation: computed('intl.locale', function(){
+    return this.get('intl').t('general.week');
   }),
-  monthTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.month');
+  monthTranslation: computed('intl.locale', function(){
+    return this.get('intl').t('general.month');
   }),
-  loadingEventsTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.loadingEvents');
+  loadingEventsTranslation: computed('intl.locale', function(){
+    return this.get('intl').t('general.loadingEvents');
   }),
-  icsInstructionsTranslation: computed('i18n.locale', function(){
-    return this.get('i18n').t('general.icsInstructions');
+  icsInstructionsTranslation: computed('intl.locale', function(){
+    return this.get('intl').t('general.icsInstructions');
   }),
   fromTimeStamp: computed('selectedDate', 'selectedView', function(){
     return moment(this.get('selectedDate')).startOf(this.get('selectedView')).subtract(this.get('skew'), 'days').unix();
@@ -91,9 +91,9 @@ export default Component.extend({
     const cohortProxies = await map(cohorts.toArray(), async cohort => {
       let displayTitle = cohort.get('title');
       if (isEmpty(displayTitle)) {
-        const i18n = this.get('i18n');
+        const intl = this.get('intl');
         const classOfYear = await cohort.get('classOfYear');
-        displayTitle = i18n.t('general.classOf', { year: classOfYear });
+        displayTitle = intl.t('general.classOf', { year: classOfYear });
       }
 
       return EmberObject.create({
@@ -187,10 +187,10 @@ export default Component.extend({
         case 'cohort': {
           hash.class = 'tag-cohort';
           let displayTitle = filter.get('title');
-          const i18n = this.get('i18n');
+          const intl = this.get('intl');
           const classOfYear = await filter.get('classOfYear');
           if (isEmpty(displayTitle)) {
-            displayTitle = i18n.t('general.classOf', {year: classOfYear});
+            displayTitle = intl.t('general.classOf', {year: classOfYear});
           }
           const program = await filter.get('programYear.program');
           hash.name = `${displayTitle} ${program.get('title')}`;

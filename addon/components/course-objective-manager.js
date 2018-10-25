@@ -89,7 +89,7 @@ const cohortProxy = EmberObject.extend({
 
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,
@@ -149,9 +149,9 @@ export default Component.extend({
       const programTitle = program.get('title');
       let cohortTitle = cohort.get('title');
       if (isEmpty(cohortTitle)) {
-        const i18n = this.get('i18n');
+        const intl = this.get('intl');
         const classOfYear = await cohort.get('classOfYear');
-        cohortTitle = i18n.t('general.classOf', {year: classOfYear});
+        cohortTitle = intl.t('general.classOf', {year: classOfYear});
       }
       const title = `${programTitle} ${cohortTitle}`;
 

@@ -8,26 +8,26 @@ import moment from 'moment';
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   event: null,
   classNames: ['single-event'],
 
-  taughtBy: computed('i18n.locale', 'event.instructors', function(){
+  taughtBy: computed('intl.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
     if (isEmpty(instructors)) {
       return '';
     }
-    return this.get('i18n').t('general.taughtBy', {instructors});
+    return this.get('intl').t('general.taughtBy', {instructors});
   }),
 
-  sessionIs: computed('event.sessionType', 'i18n.locale', function(){
-    const i18n = this.get('i18n');
+  sessionIs: computed('event.sessionType', 'intl.locale', function(){
+    const intl = this.get('intl');
     const type = this.get('event.sessionTypeTitle');
-    return i18n.t('general.sessionIs', { type });
+    return intl.t('general.sessionIs', { type });
   }),
 
-  courseObjectives: computed('i18n.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
-    const i18n = this.get('i18n');
+  courseObjectives: computed('intl.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
+    const intl = this.get('intl');
     const event = this.get('event');
     const objectives =  event.courseObjectives;
     const competencies = event.competencies;
@@ -39,7 +39,7 @@ export default Component.extend({
         return {
           id: objective.id,
           title,
-          domain: i18n.t('general.noAssociatedCompetencies'),
+          domain: intl.t('general.noAssociatedCompetencies'),
           position
         };
       }
@@ -77,7 +77,7 @@ export default Component.extend({
     return lms;
   }),
 
-  courseLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
+  courseLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
       let pos1 = lm1.position || 0;
@@ -102,8 +102,8 @@ export default Component.extend({
     });
   }),
 
-  sessionObjectives: computed('i18n.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', function(){
-    const i18n = this.get('i18n');
+  sessionObjectives: computed('intl.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', function(){
+    const intl = this.get('intl');
     const event = this.get('event');
     const objectives =  event.sessionObjectives;
     const competencies = event.competencies;
@@ -115,7 +115,7 @@ export default Component.extend({
         return {
           id: objective.id,
           title,
-          domain: i18n.t('general.noAssociatedCompetencies'),
+          domain: intl.t('general.noAssociatedCompetencies'),
           position
         };
       }
@@ -135,7 +135,7 @@ export default Component.extend({
     }).sort(this.positionSortingCallback);
   }),
 
-  sessionLearningMaterials: computed('i18n.locale', 'typedLearningMaterials', function() {
+  sessionLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
       let pos1 = lm1.position || 0;

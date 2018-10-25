@@ -12,7 +12,7 @@ const { or, notEmpty, alias } = computed;
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   flashMessages: service(),
   init() {
     this._super(...arguments);
@@ -49,10 +49,10 @@ export default Component.extend({
 
   objectiveParentTitle: computed('isCourse', 'isSession', 'isProgramYear', {
     get() {
-      const i18n = this.get('i18n');
+      const intl = this.get('intl');
       const isCourse = this.get('isCourse');
 
-      return isCourse ? i18n.t('general.objectiveParentTitleSingular') : i18n.t('general.objectiveParentTitle');
+      return isCourse ? intl.t('general.objectiveParentTitleSingular') : intl.t('general.objectiveParentTitle');
     }
   }),
 

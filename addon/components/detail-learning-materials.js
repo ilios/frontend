@@ -14,7 +14,7 @@ export default Component.extend(SortableByPosition, {
   layout,
   currentUser: service(),
   store: service(),
-  i18n: service(),
+  intl: service(),
   tagName: 'section',
   classNameBindings: [':detail-learningmaterials', 'displaySearchBox'],
   subject: null,

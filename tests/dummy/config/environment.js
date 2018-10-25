@@ -14,7 +14,7 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
-    i18n: {
+    intl: {
       defaultLocale: 'en'
     },
     'ember-simple-auth-token': {

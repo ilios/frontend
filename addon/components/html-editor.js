@@ -19,7 +19,7 @@ const defaultButtons = [
 ];
 export default Component.extend({
   layout,
-  i18n: service(),
+  intl: service(),
   content: '',
 
   /**
@@ -39,9 +39,9 @@ export default Component.extend({
       dom.i2svg({node: this.element});
     });
   },
-  options: computed('i18n.locale', function(){
-    const i18n = this.get('i18n');
-    const language = i18n.get('locale');
+  options: computed('intl.locale', function(){
+    const intl = this.get('intl');
+    const language = intl.get('locale');
 
     return {
       key   : '3A9A5C4A3gC3E3C3E3B7A4A2F4B2D2zHMDUGENKACTMXQL==',

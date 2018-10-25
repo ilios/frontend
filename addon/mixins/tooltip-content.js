@@ -5,9 +5,9 @@ import { isBlank } from '@ember/utils';
 import moment from 'moment';
 
 export default Mixin.create({
-  i18n: service(),
+  intl: service(),
   tooltipContent: computed('event', function() {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     if (this.get('event') == null) {
       return '';
     }
@@ -43,14 +43,14 @@ export default Mixin.create({
     const name = this.get('event.name');
     const startTime = moment(this.get('event.startDate')).format(this.get('timeFormat'));
     const endTime = moment(this.get('event.endDate')).format(this.get('timeFormat'));
-    const dueThisDay = i18n.t('general.dueThisDay');
+    const dueThisDay = intl.t('general.dueThisDay');
     const instructors = this.get('event.instructors') || [];
     const courseTitle = this.get('event.courseTitle');
     const isMulti = this.get('event.isMulti');
-    const taughtByPhrase = i18n.t('general.taughtBy');
-    const multiplePhrase = i18n.t('general.multiple');
-    const courseTitlePhrase = i18n.t('general.course');
-    const etAlPhrase = i18n.t('general.etAl');
+    const taughtByPhrase = intl.t('general.taughtBy');
+    const multiplePhrase = intl.t('general.multiple');
+    const courseTitlePhrase = intl.t('general.course');
+    const etAlPhrase = intl.t('general.etAl');
     let contents = '';
 
     if (this.get('isIlm')) {

@@ -8,7 +8,7 @@ import layout from '../templates/components/learningmaterial-search';
 export default Component.extend({
   layout,
   store: service(),
-  i18n: service(),
+  intl: service(),
   init(){
     this._super(...arguments);
     this.set('searchResults', []);
