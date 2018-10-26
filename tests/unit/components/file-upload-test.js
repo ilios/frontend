@@ -1,7 +1,16 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('file-upload', 'Unit | Component | file upload ', {
-  needs: ['service:session', 'service:iliosConfig', 'service:i18n', 'service:concurrent-axe'],
+  needs: [
+    'service:session',
+    'service:iliosConfig',
+    'service:concurrent-axe',
+    'service:intl', // required
+    `cldr:en`, // required (or language(s) of the locale(s) you plan to test against)
+    `translation:en-us`, // required (or language(s) of the locale(s) you plan to test against)
+    'util:intl/missing-message', // required
+    'helper:t',
+  ],
   unit: true
 });
 

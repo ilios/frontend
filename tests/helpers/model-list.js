@@ -51,5 +51,5 @@ export default [
   'model:user-role',
   'model:user',
   'model:vocabulary',
-  'service:i18n',
+  'service:intl',
 ];

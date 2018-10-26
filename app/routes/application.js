@@ -7,7 +7,7 @@ import config from 'ilios/config/environment';
 
 export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
-  i18n: service(),
+  intl: service(),
   moment: service(),
   currentUser: service(),
   session: service(),
@@ -37,10 +37,11 @@ export default Route.extend(ApplicationRouteMixin, {
       });
     }
   },
+
   beforeModel() {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const moment = this.get('moment');
-    const locale = i18n.get('locale');
+    const locale = intl.get('locale');
     moment.setLocale(locale);
     window.document.querySelector('html').setAttribute('lang', locale);
   },
@@ -79,6 +80,7 @@ export default Route.extend(ApplicationRouteMixin, {
       }
     });
   },
+
   deactivate() {
     const event = this.get('event');
     if (event && 'serviceWorker' in navigator) {

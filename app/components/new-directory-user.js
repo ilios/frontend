@@ -44,7 +44,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(NewUser, Validations, {
-  i18n: service(),
+  intl: service(),
   commonAjax: service(),
   iliosConfig: service(),
 
@@ -56,8 +56,8 @@ export default Component.extend(NewUser, Validations, {
       this.get('findUsersInDirectory').perform(searchTerms);
     }
   },
-  classNames: ['new-directory-user'],
 
+  classNames: ['new-directory-user'],
   searchResults: null,
   selectedUser: false,
   isSearching: false,

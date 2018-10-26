@@ -6,12 +6,16 @@
       <div class="update">
         <div class="explanation">
           <h2>{{fa-icon "exclamation-triangle" class="no"}}</h2>
-          {{t
-            (concat "general.pendingUserUpdates." update.type)
-            update=update
-          }}
+          {{#if (eq update.type "emailMismatch")}}
+            {{t
+              "general.pendingUserUpdates.emailMismatch"
+              value=update.value
+              email=update.user.email
+            }}
+          {{else}}
+            {{t (concat "general.pendingUserUpdates." update.type)}}
+          {{/if}}
         </div>
-
         <div class="actions">
           {{#if (eq update.type "emailMismatch")}}
             <span class="clickable link" onclick={{action "updateEmailAddress" update}}>

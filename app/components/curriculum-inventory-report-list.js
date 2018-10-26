@@ -10,10 +10,11 @@ const ReportProxy = ObjectProxy.extend({
   currentUser: null,
   permissionChecker: null,
   showRemoveConfirmation: false,
-  i18n: null,
+  intl: null,
   isPublished: alias('isFinalized'),
   isScheduled: false,
   isNotPublished: not('isPublished'),
+
   userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function(){
     const permissionChecker = this.get('permissionChecker');
     const report = this.get('content');
@@ -21,12 +22,12 @@ const ReportProxy = ObjectProxy.extend({
       return false;
     }
     return permissionChecker.canDeleteCurriculumInventoryReport(report);
-  }),
+  })
 });
 
 export default Component.extend({
   currentUser: service(),
-  i18n: service(),
+  intl: service(),
   permissionChecker: service(),
   program: null,
 
@@ -37,7 +38,7 @@ export default Component.extend({
    */
   proxiedReports: computed('program.curriculumInventoryReports.[]', async function () {
     const currentUser = this.get('currentUser');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const permissionChecker = this.get('permissionChecker');
     const program = this.get('program');
 
@@ -45,18 +46,20 @@ export default Component.extend({
     return reports.map(report => {
       return ReportProxy.create({
         content: report,
-        i18n,
+        intl,
         currentUser,
-        permissionChecker,
+        permissionChecker
       });
     });
   }),
 
   sortBy: 'title',
+
   sortedAscending: computed('sortBy', function(){
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
   }),
+
   actions: {
     edit(proxy) {
       this.sendAction('edit', proxy.get('content'));

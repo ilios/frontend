@@ -10,13 +10,15 @@ import escapeRegExp from '../utils/escape-reg-exp';
 const { gt } = computed;
 
 export default Controller.extend({
-  i18n: service(),
+  intl: service(),
   currentUser: service(),
   permissionChecker: service(),
+
   queryParams: {
     schoolId: 'school',
     titleFilter: 'filter'
   },
+
   schoolId: null,
   titleFilter: null,
   showNewInstructorGroupForm: false,
@@ -73,16 +75,19 @@ export default Controller.extend({
 
     return primarySchool;
   }),
+
   canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
     return permissionChecker.canCreateInstructorGroup(selectedSchool);
   }),
+
   canDelete: computed('selectedSchool', async function () {
     const permissionChecker = this.get('permissionChecker');
     const selectedSchool = this.get('selectedSchool');
     return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);
   }),
+
   actions: {
     async removeInstructorGroup(instructorGroup) {
       const school = this.get('selectedSchool');
@@ -112,5 +117,5 @@ export default Controller.extend({
     toggleNewInstructorGroupForm() {
       this.set('showNewInstructorGroupForm', !this.get('showNewInstructorGroupForm'));
     }
-  },
+  }
 });

@@ -84,10 +84,10 @@ export default Component.extend(NewUser, {
     this.set('savingUserErrors', []);
     this.set('savingAuthenticationErrors', []);
   },
-  i18n: service(),
+
+  intl: service(),
   flashMessages: service(),
   iliosConfig: service(),
-
   classNames: ['bulk-new-users'],
   file: null,
   selectedUsers: null,
@@ -119,9 +119,9 @@ export default Component.extend(NewUser, {
     return new Promise(resolve => {
       let allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
-        const i18n = this.get('i18n');
+        const intl = this.get('intl');
         this.set('fileUploadError', true);
-        throw new Error(i18n.t('general.fileTypeError', {fileType: file.type}));
+        throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
       }
 
       let ProposedUser = EmberObject.extend(getOwner(this).ownerInjection(), UserValidations, {
@@ -152,6 +152,7 @@ export default Component.extend(NewUser, {
       });
     });
   },
+
   parseFile: task(function * (file) {
     let proposedUsers = yield this.getFileContents(file);
     let existingUsernames = yield this.existingUsernames();
@@ -253,6 +254,7 @@ export default Component.extend(NewUser, {
     this.set('proposedUsers', []);
 
   }).drop(),
+
   sampleData: computed(function(){
     const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
 
@@ -261,6 +263,7 @@ export default Component.extend(NewUser, {
 
     return encoded;
   }),
+
   actions: {
     updateSelectedFile(files){
       // Check for the various File API support.
@@ -269,8 +272,8 @@ export default Component.extend(NewUser, {
           this.get('parseFile').perform(files[0]);
         }
       } else {
-        const i18n = this.get('i18n');
-        throw new Error(i18n.t('general.unsupportedBrowserFailure'));
+        const intl = this.get('intl');
+        throw new Error(intl.t('general.unsupportedBrowserFailure'));
       }
     },
     toggleUserSelection(obj){

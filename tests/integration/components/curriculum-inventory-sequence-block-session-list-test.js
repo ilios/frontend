@@ -4,15 +4,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { findAll, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { setupIntl } from 'ember-intl/test-support';
 
 const { resolve } = RSVP;
 
 module('Integration | Component | curriculum inventory sequence block session list', function(hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.lookup('service:i18n').set('locale', 'en');
-  });
+  setupIntl(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(31);

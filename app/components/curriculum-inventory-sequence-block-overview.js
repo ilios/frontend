@@ -9,7 +9,7 @@ import { task } from 'ember-concurrency';
 const { Promise } = RSVP;
 
 export default Component.extend({
-  i18n: service(),
+  intl: service(),
   store: service(),
   classNames: ['curriculum-inventory-sequence-block-overview'],
   tagName: 'section',
@@ -39,6 +39,7 @@ export default Component.extend({
     this._super(...arguments);
     this.set('orderInSequenceOptions', []);
   },
+
   didReceiveAttrs(){
     this._super(...arguments);
     const sequenceBlock = this.get('sequenceBlock');
@@ -90,28 +91,28 @@ export default Component.extend({
   }),
 
   requiredLabel: computed('required', function(){
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const required = this.get('required');
     switch(required) {
     case '1':
-      return i18n.t('general.required');
+      return intl.t('general.required');
     case '2':
-      return i18n.t('general.optionalElective');
+      return intl.t('general.optionalElective');
     case '3':
-      return i18n.t('general.requiredInTrack');
+      return intl.t('general.requiredInTrack');
     }
   }),
 
   childSequenceOrderLabel: computed('childSequenceOrder', function(){
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const childSequenceOrder = this.get('childSequenceOrder');
     switch(childSequenceOrder) {
     case '1':
-      return i18n.t('general.ordered');
+      return intl.t('general.ordered');
     case '2':
-      return i18n.t('general.unordered');
+      return intl.t('general.unordered');
     case '3':
-      return i18n.t('general.parallel');
+      return intl.t('general.parallel');
     }
   }),
 

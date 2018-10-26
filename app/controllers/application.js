@@ -11,11 +11,9 @@ const { apiVersion } = ENV.APP;
 export default Controller.extend({
   currentUser: service(),
   session: service(),
-  i18n: service(),
+  intl: service(),
   headData: service(),
-
   titleTokenKeys: null,
-
   currentlyLoading: false,
   apiVersion,
 
@@ -31,16 +29,16 @@ export default Controller.extend({
   title: alias('headData.title'),
   titleTokens: alias('headData.titleTokens'),
 
-  translatedTitle: computed('i18n.locale', 'title', 'titleTokens.[]', function(){
+  translatedTitle: computed('intl.locale', 'title', 'titleTokens.[]', function(){
     const title = this.get('title');
     const tokens = this.get('titleTokens');
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     if (isPresent(title)) {
       return title;
     }
 
     if (isPresent(tokens)) {
-      let translatedTokens = tokens.map(key => i18n.t(key));
+      let translatedTokens = tokens.map(key => intl.t(key));
       return translatedTokens.join(' ');
     }
 
@@ -55,6 +53,7 @@ export default Controller.extend({
     this.get('errors').pushObject(error);
     this.set('showErrorDisplay', true);
   },
+
   actions: {
     clearErrors(){
       this.set('errors', []);

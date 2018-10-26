@@ -9,15 +9,16 @@ const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 export default Component.extend({
   iliosConfig: service(),
-  i18n: service(),
+  intl: service(),
   store: service(),
   routing: service('-routing'),
   tagName: 'section',
   classNames: ['manage-users-summary', 'large-component'],
   canCreate: false,
   searchValue: null,
+
   searchForUsers: task(function * (query) {
-    const i18n = this.get('i18n');
+    const intl = this.get('intl');
     const store = this.get('store');
 
     let q = cleanQuery(query);
@@ -30,7 +31,7 @@ export default Component.extend({
     if (q.length < MIN_INPUT) {
       return [{
         type: 'text',
-        text: i18n.t('general.moreInputRequiredPrompt')
+        text: intl.t('general.moreInputRequiredPrompt')
       }];
     }
 
@@ -43,7 +44,7 @@ export default Component.extend({
     if (searchResults.length === 0) {
       return [{
         type: 'text',
-        text: i18n.t('general.noSearchResultsPrompt')
+        text: intl.t('general.noSearchResultsPrompt')
       }];
     }
     let mappedResults = searchResults.map(user => {
@@ -55,7 +56,7 @@ export default Component.extend({
     let results = [
       {
         type: 'summary',
-        text: i18n.t('general.resultsCount', {count: mappedResults.length})
+        text: intl.t('general.resultsCount', {count: mappedResults.length})
       }
     ];
     results.pushObjects(mappedResults);
@@ -70,5 +71,5 @@ export default Component.extend({
     //private routing API requires putting the model we are passing inside of an array
     //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
     routing.transitionTo('user', [user]);
-  }).drop(),
+  }).drop()
 });

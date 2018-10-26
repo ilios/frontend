@@ -6,18 +6,14 @@ import { render, settled, click, find, findAll, fillIn } from '@ember/test-helpe
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import tHelper from "ember-i18n/helper";
+import { setupIntl } from 'ember-intl/test-support';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 const {resolve} = RSVP;
 
 module('Integration | Component | curriculum inventory report overview', function(hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.lookup('service:i18n').set('locale', 'en');
-    this.owner.register('helper:t', tHelper);
-  });
+  setupIntl(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(12);

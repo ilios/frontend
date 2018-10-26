@@ -3,12 +3,13 @@ import { schedule } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  i18n: service(),
+  intl: service(),
   currentUser: service(),
   tagName: 'nav',
   classNameBindings: [':user-menu', 'isOpen'],
   isOpen: false,
   'data-test-user-menu': true,
+
   actions: {
     toggleMenu() {
       const isOpen = this.get('isOpen');
@@ -19,12 +20,14 @@ export default Component.extend({
       }
     },
   },
+
   openMenuAndSelectTheFirstItem() {
     this.set('isOpen', true);
     schedule('afterRender', () => {
       this.element.querySelector('.menu li:nth-of-type(1) a').focus();
     });
   },
+
   keyDown({ originalEvent }) {
     let button = originalEvent.target.tagName.toLowerCase() === 'button' ? originalEvent.target : null;
     let item;
@@ -62,5 +65,5 @@ export default Component.extend({
     }
 
     return true;
-  },
+  }
 });
