@@ -2,7 +2,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('error-display', 'Unit | Component | error display ', {
   unit: true,
-  needs: ['service:concurrent-axe'],
 });
 
 test('properties have default values', function(assert) {
