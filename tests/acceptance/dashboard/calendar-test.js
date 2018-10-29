@@ -1,4 +1,4 @@
-import { click, fillIn, findAll, find, currentURL, currentRouteName, visit } from '@ember/test-helpers';
+import { click, fillIn, findAll, find, currentURL, currentRouteName, visit, triggerEvent } from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import {
@@ -10,6 +10,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 import { map } from 'rsvp';
+import { isVisible } from 'ember-attacher';
 
 module('Acceptance | Dashboard Calendar', function(hooks) {
   setupApplicationTest(hooks);
@@ -819,5 +820,18 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(filter);
     assert.equal(findAll(filters).length, 0);
     assert.equal(findAll('div.event').length, 2);
+  });
+
+  test('test tooltip', async function(assert) {
+    let today = moment().hour(8);
+    this.server.create('userevent', {
+      user: parseInt(this.user.id, 10),
+      startDate: today.format(),
+      endDate: today.clone().add(1, 'hour').format(),
+      offering: this.offering1.id,
+    });
+    await visit('/dashboard?show=calendar');
+    await triggerEvent('[data-test-ilios-calendar-event]>div', 'mouseenter');
+    assert.ok(isVisible('.ilios-calendar-event-tooltip'), 'Now shown');
   });
 });
