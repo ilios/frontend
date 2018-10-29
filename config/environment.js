@@ -21,8 +21,8 @@ module.exports = function (environment) {
       'default-src':  ["'none'"],
       'script-src':   ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
       'font-src':     ["'self'", 'fonts.gstatic.com'],
-      'connect-src':  ["'self'", 'www.google-analytics.com'],
-      'img-src':      ["'self'", 'data:', 'www.google-analytics.com', 'cdnjs.cloudflare.com/ajax/libs/browser-logos/'],
+      'connect-src':  ["'self'", 'www.google-analytics.com', 'sentry.io'],
+      'img-src':      ["'self'", 'data:', 'www.google-analytics.com', 'cdnjs.cloudflare.com/ajax/libs/browser-logos/', 'sentry.io'],
       'style-src':    ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
       'media-src':    ["'self'"],
       'manifest-src': ["'self'"],
@@ -114,6 +114,10 @@ module.exports = function (environment) {
         //   'superscript',
         // ],
       }
+    },
+    sentry: {
+      dsn: 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608',
+      development: environment !== 'production',
     },
     EmberENV: {
       FEATURES: {

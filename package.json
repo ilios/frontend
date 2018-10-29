@@ -63,6 +63,7 @@
     "ember-cli-page-object": "1.15.0-beta.3",
     "ember-cli-password-strength": "2.0.0",
     "ember-cli-sass": "8.0.1",
+    "ember-cli-sentry": "^4.0.0",
     "ember-cli-server-variables": "2.2.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^2.1.0",
