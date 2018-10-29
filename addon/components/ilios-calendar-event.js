@@ -28,6 +28,7 @@ export default CalendarEvent.extend(TooltipContent, {
     'clickable:clickable',
     'isIlm'
   ],
+  'data-test-ilios-calendar-event': true,
 
   isIlm: notEmpty('event.ilmSession'),
   isOffering: notEmpty('event.offering'),
