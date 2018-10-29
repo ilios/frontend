@@ -19,15 +19,15 @@ export default Mixin.create({
       return contents;
     };
 
-    let addInstructorsToContents = function(contents, instructors, taughtByPhrase, etAlPhrase) {
+    let addInstructorsToContents = function(contents, instructors, etAlPhrase) {
       if (! instructors.length) {
         return contents;
       }
 
       if (3 > instructors.length) {
-        contents = contents + `<br />${taughtByPhrase} ` + instructors.join(', ');
+        contents = contents + '<br /> ' + intl.t('general.taughtBy', { instructors: instructors.join(', ') });
       } else {
-        contents = contents + `<br />${taughtByPhrase} ` + instructors.slice(0, 2).join(', ') + ` ${etAlPhrase}`;
+        contents = contents + '<br /> ' + intl.t('general.taughtBy', { instructors: instructors.slice(0, 2).join(', ') }) + ` ${etAlPhrase}`;
       }
       return contents;
     };
@@ -47,7 +47,6 @@ export default Mixin.create({
     const instructors = this.get('event.instructors') || [];
     const courseTitle = this.get('event.courseTitle');
     const isMulti = this.get('event.isMulti');
-    const taughtByPhrase = intl.t('general.taughtBy');
     const multiplePhrase = intl.t('general.multiple');
     const courseTitlePhrase = intl.t('general.course');
     const etAlPhrase = intl.t('general.etAl');
@@ -59,7 +58,7 @@ export default Mixin.create({
       }
       contents = contents + `ILM - ${dueThisDay}<br />${name}`;
       if (! isMulti) {
-        contents = addInstructorsToContents(contents, instructors, taughtByPhrase, etAlPhrase);
+        contents = addInstructorsToContents(contents, instructors, etAlPhrase);
       }
       contents = addCourseTitleToContents(contents, courseTitle, courseTitlePhrase);
       if (isMulti) {
@@ -71,7 +70,7 @@ export default Mixin.create({
       }
       contents = contents + `${startTime} - ${endTime}<br />${name}`;
       if (! isMulti) {
-        contents = addInstructorsToContents(contents, instructors, taughtByPhrase, etAlPhrase);
+        contents = addInstructorsToContents(contents, instructors, etAlPhrase);
       }
       contents = addCourseTitleToContents(contents, courseTitle, courseTitlePhrase);
       if (isMulti) {

@@ -55,8 +55,7 @@
     {{#if isDay}}
       {{#if event.instructors}}
         <span class="ilios-calendar-event-instructors">
-          {{t "general.taughtBy"}}
-          {{formattedInstructors}}
+          {{t "general.taughtBy" instructors=formattedInstructors}}
         </span>
       {{/if}}
       {{#if event.courseTitle}}
