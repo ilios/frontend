@@ -17,8 +17,10 @@ general:
   author: Author
   availableLearnerGroups: "Available Learner Groups"
   back: Back
+  backToCourse: "Back to Course"
   backToCourses: "Back to Courses List"
   backToDashboard: "Back to Dashboard"
+  backToSessionList: "Back to Session List"
   backToTitle: "Back to {title}"
   calendar: Calendar
   cancel: Cancel
@@ -175,11 +177,13 @@ general:
   objectiveParentTitle: "Select Parent Objectives"
   objectiveParentTitleSingular: "Select Parent Objective"
   objectives: Objectives
+  objectivesTotalInstructionalTime: "Objectives: Total Instructional Time"
   objectivesWithNoHours: "The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data."
   objectivesWithNoLink: "No Course Objectives Currently Linked to Instructional Time."
   offeredAt: "On {date}"
   offering: Offering
   offerings: Offerings
+  otherVisualizations: "Other Visualizations"
   overview: Overview
   ownedBy: "owned by {owner}"
   owner: Owner
@@ -227,6 +231,7 @@ general:
   sessionTitleFilterPlaceholder: "Filter by title, type, or status"
   sessionType: "Session Type"
   sessionTypes: "Session Types"
+  sessionTypesFor: "Session Types for {subject}"
   showCalendar: "Show Calendar"
   showFilters: "Show Filters"
   showLearnerGroupEvents: "Show all events for assigned learner groups"
@@ -268,6 +273,8 @@ general:
   title: Title
   today: Today
   token: Token
+  totalIlmTime: "Total ILM Time {minutes} Minutes"
+  totalInstructionalTime: "Total Instructional Time {minutes} Minutes"
   tuesday: Tuesday
   type: Type
   universalLocator: "Universal Locator"
@@ -281,7 +288,9 @@ general:
   url: URL
   userRole: "User Role"
   view: View
+  vocabularies: Vocabularies
   vocabulary: Vocabulary
+  vocabularyTermsFor: "Vocabulary Terms for {subject}"
   waitSaving: "saving... one moment..."
   wednesday: Wednesday
   week: Week

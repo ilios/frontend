@@ -17,8 +17,10 @@ general:
   author: Autor
   availableLearnerGroups: "Grupos de Aprendedores Disponibles"
   back: Volver
+  backToCourse: "Volver al Curso"
   backToCourses: "Atrás a la Lista de Cursos"
   backToDashboard: "Detrás a Tablero"
+  backToSessionList: "Atrás a La Lista de Sesiones"
   backToTitle: "Atrás a {title}"
   calendar: Calendario
   cancel: Cancelar
@@ -175,11 +177,13 @@ general:
   objectiveParentTitle: "Seleccione Objetivos Principales"
   objectiveParentTitleSingular: "Seleccione Objetivo Principale"
   objectives: Objetivos
+  objectivesTotalInstructionalTime: "Objetivos: Tiempo de Instrucción Total"
   objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
   objectivesWithNoLink: "No hay objetivos del curso actualmente vinculados a tiempo de instrucción."
   offeredAt: "en {date}"
   offering: Ofrecimiento
   offerings: Ofrecimientos
+  otherVisualizations: "Otras Visualizaciones"
   overview: "Visión Amplia"
   ownedBy: "propiedad de {owner}"
   owner: "Dueño"
@@ -227,6 +231,7 @@ general:
   sessionTitleFilterPlaceholder: "Aplicar un Filtro por titulo, tipo, o estado de la publicación"
   sessionType: "Tipo de Sesión"
   sessionTypes: "Tipos de Sesiones"
+  sessionTypesFor: "Tipos de Sesiones para {subject}"
   showCalendar: "Muestre Calendario"
   showFilters: "Enseñe Filtros"
   showLearnerGroupEvents: "Mostrar todos los eventos para grupos de alumnos asignados"
@@ -268,6 +273,8 @@ general:
   title: Titulo
   today: Hoy
   token: Token
+  totalIlmTime: " Tiempo de ILM {minutes} Minutos"
+  totalInstructionalTime: "Tiempo de Instrucción Total {minutes} Minutos"
   tuesday: Martes
   type: Tipo
   universalLocator: "Localizador universal de"
@@ -281,7 +288,9 @@ general:
   url: URL
   userRole: "Función de Usuario"
   view: Vista
+  vocabularies: Vocabularios
   vocabulary: Vocabulario
+  vocabularyTermsFor: "Términos del Vocabulario para {subject}"
   waitSaving: "Salvando... un momento..."
   wednesday: "Miércoles"
   week: Semana
