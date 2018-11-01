@@ -246,6 +246,24 @@ export default Service.extend({
     }
     return this.canUpdateProgram(program);
   },
+  async canLockProgramYear(programYear) {
+    const currentUser = await this.get('currentUser');
+    const permissionMatrix = this.get('permissionMatrix');
+    const program = await programYear.get('program');
+    const school = await program.get('school');
+    if (await this.canDoInSchool(school, 'CAN_LOCK_ALL_PROGRAM_YEARS')) {
+      return true;
+    }
+    const capability = 'CAN_LOCK_THEIR_PROGRAM_YEARS';
+    const rolesToCheck = await permissionMatrix.getPermittedRoles(school, capability);
+    const rolesInProgramYear = await currentUser.getRolesInProgramYear(programYear, rolesToCheck);
+    if (await permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
+      return true;
+    }
+
+    return this.canUpdateProgram(program);
+  },
+
   async canUnlockProgramYear(programYear) {
     const currentUser = await this.get('currentUser');
     const permissionMatrix = this.get('permissionMatrix');

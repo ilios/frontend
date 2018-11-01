@@ -61,6 +61,14 @@ export default Service.extend({
         'CAN_UNLOCK_THEIR_PROGRAM_YEARS': [
           'PROGRAM_DIRECTOR',
         ],
+        'CAN_LOCK_ALL_PROGRAM_YEARS': [
+          'SCHOOL_ADMINISTRATOR',
+          'SCHOOL_DIRECTOR',
+          'PROGRAM_DIRECTOR',
+        ],
+        'CAN_LOCK_THEIR_PROGRAM_YEARS': [
+          'PROGRAM_DIRECTOR',
+        ],
         'CAN_UNARCHIVE_ALL_PROGRAM_YEARS': [
           'SCHOOL_ADMINISTRATOR',
           'SCHOOL_DIRECTOR',
