@@ -5336,13 +5336,13 @@ ember-cli-sri@^2.1.1:
   dependencies:
     broccoli-sri-hash "^2.1.0"
 
-ember-cli-string-helpers@^1.9.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-string-helpers/-/ember-cli-string-helpers-1.10.0.tgz#6ee6c18d15759acb0905aa0153fe9e031a382fa4"
-  integrity sha512-z2eNT7BsTNSxp3qNrv7KAxjPwdLC1kIYCck9CERg0RM5vBGy2vK6ozZE3U6nWrtth1xO4PrYkgISwhSgN8NMeg==
+ember-cli-string-helpers@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-string-helpers/-/ember-cli-string-helpers-2.0.0.tgz#80167028a8540edb1bedb516cd889169324553ab"
+  integrity sha512-mLN/41tsLED4xnM5ISP5H0eQWKUjqSGzKaoI5R2R9EuWhQV6GdWHuXqsF0iUg91mspZan+05SIs62yrxKX6CtA==
   dependencies:
     broccoli-funnel "^1.0.1"
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^6.16.0"
 
 ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
@@ -7774,10 +7774,10 @@ ignore@^4.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ilios-common@20.5.2:
-  version "20.5.2"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.5.2.tgz#ec3e312d5a419ff567c6840322976d06354dd0bf"
-  integrity sha512-Qgndo07PcSJ2bDAhAqf9k2GKekRu4pXr1oBeRAm8sfu62H1fietpGnnnagoP53RqlRqmAqjZHnDmwaiTMZNXGQ==
+ilios-common@20.6.0:
+  version "20.6.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.6.0.tgz#a052ae0d3306d867fb32ce663a031c7668a4e680"
+  integrity sha512-gHX01L1JhZE8R65lbepw1dgzs8y6d3aMJkL09ZcO49njvhVJg5TIL4lUhSuUt19hWu+mZu9T2qWXTMLU8ua9PQ==
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
     "@fortawesome/ember-fontawesome" "^0.1.7"
@@ -7799,7 +7799,7 @@ ilios-common@20.5.2:
     ember-cli-mirage "^0.4.9"
     ember-cli-moment-shim "^3.1.0"
     ember-cli-page-object "1.15.0-beta.3"
-    ember-cli-string-helpers "^1.9.0"
+    ember-cli-string-helpers "^2.0.0"
     ember-composable-helpers "^2.0.1"
     ember-concurrency "^0.8.21"
     ember-cp-validations "^3.3.1"
