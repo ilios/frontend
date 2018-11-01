@@ -77,6 +77,9 @@ module.exports = function (environment) {
           'clipboard-list',
         ],
         'free-solid-svg-icons': 'all',
+        'free-brands-svg-icons': [
+          'black-tie',
+        ],
         // //icons which are used dynamically and cannot be detected at build time
         // 'free-solid-svg-icons': [
         //   'ban',
