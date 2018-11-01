@@ -17,7 +17,6 @@ module('Integration | Component | my materials', function(hooks) {
       courseTitle: 'course1title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: new Date(2003, 1, 2, 12),
-      type: 'file',
       mimetype: 'application/pdf'
     });
     let lm2 = EmberObject.create({
@@ -28,7 +27,6 @@ module('Integration | Component | my materials', function(hooks) {
       courseTitle: 'course2title',
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: new Date(2016, 1, 2, 12),
-      type: 'link',
     });
     let lm3 = EmberObject.create({
       title: 'title3',
@@ -37,7 +35,6 @@ module('Integration | Component | my materials', function(hooks) {
       course: '3',
       courseTitle: 'course3title',
       firstOfferingDate: new Date(2020, 1, 2, 12),
-      type: 'citation'
     });
     let lm4 = EmberObject.create({
       title: 'title4',
@@ -47,7 +44,6 @@ module('Integration | Component | my materials', function(hooks) {
       courseTitle: 'course4title',
       instructors: ['Instructor3name', 'Instructor4name'],
       firstOfferingDate: new Date(2030, 1, 2, 12),
-      type: 'file',
       mimetype: 'plain/text'
     });
     let lm5 = EmberObject.create({
