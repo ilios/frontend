@@ -77,7 +77,7 @@
                   {{timed-release-schedule startDate=lmObject.startDate endDate=lmObject.endDate}}
                 </span>
               {{else}}
-                {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
+                {{lm-type-icon type=(lm-type lmObject) mimetype=lmObject.mimetype}}
                 {{#if lmObject.absoluteFileUri}}
                   {{#if (eq lmObject.mimetype "application/pdf")}}
                     <a href="{{lmObject.absoluteFileUri}}?inline">{{lmObject.title}}</a>
