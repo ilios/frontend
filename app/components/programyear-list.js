@@ -214,7 +214,7 @@ const ProgramYearProxy = ObjectProxy.extend({
   userCanLock: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.get('content');
     const permissionChecker = this.get('permissionChecker');
-    return permissionChecker.canUpdateProgramYear(programYear);
+    return permissionChecker.canLockProgramYear(programYear);
   }),
   userCanUnLock: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.get('content');
