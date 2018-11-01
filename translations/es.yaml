@@ -31,7 +31,6 @@ general:
   availableCohorts: "Clases de La Graduación Disponibles"
   backToAdminDashboard: "Atrás a Panel de Control"
   backToCalendar: "Atrás a Calendario"
-  backToCourse: "Volver al Curso"
   backToDetails: "Atrás a Las Detalles de la Sesión"
   backToInstructorGroups: "Atrás a la Lista de Grupos de Instructores"
   backToPrograms: "Atrás a Programas"
@@ -40,7 +39,6 @@ general:
   backToReport: "Atrás a Reporte"
   backToReports: "Atrás a Reportes"
   backToSchools: "Atrás a la Lista de Escuelas"
-  backToSessionList: "Atrás a La Lista de Sesiones"
   bad: Malo
   badCredentials: "Incorrecta contraseña o nombre de usuario"
   calendarOff: "Calendario Apagado"
@@ -238,7 +236,6 @@ general:
   objective: Objetivo
   objectiveMap: "Mapa de Objetivos"
   objectiveParentsTitle: "Seleccione Objetivos Matrices"
-  objectivesTotalInstructionalTime: "Objetivos: Tiempo de Instrucción Total"
   objectiveTitle: "Objetivos de la Sesión"
   off: Apagado
   on: Encendido
@@ -249,7 +246,6 @@ general:
   orderInSequence: "Orden en la Secuencia"
   other: Otro
   otherId: "Otro ID"
-  otherVisualizations: "Otras Visualizaciones"
   pagedResultsCount: "Mostrando {start} - {end} de {total}"
   parallel: Paralelo
   password: "Contraseña"
@@ -326,7 +322,6 @@ general:
   sequenceNumber: "No. de Secuencia"
   sessionAttributes: "Atributos de la Sesión"
   sessionTitlePlaceholder: "Entre en un titulo para esta sesión"
-  sessionTypesFor: "Tipos de Sesiones para {subject}"
   showSubgroupEvents: "Mostrar eventos para todos los grupos subordinados"
   singleDay: "Un Solo Día"
   singleGroup: "Solo grupo"
@@ -348,8 +343,6 @@ general:
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "La búsqueda ha devuelto más de {count} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales."
   totalErrors: "{count, plural, =1 {Hay un error} other {Hay # errores}}"
-  totalIlmTime: " Tiempo de ILM {minutes} Minutos"
-  totalInstructionalTime: "Tiempo de Instrucción Total {minutes} Minutos"
   totalTime: "Horas Totales"
   transitionErrorMessage: "Lo sentimos! No le podemos conseguir donde pidió ir..."
   tryHarder: "Esforzarse Más"
@@ -380,8 +373,6 @@ general:
   validUntil: "¿Cuándo debe este símbolo (token) deje de funcionar??"
   validUsers: "Usuarios Válidos"
   viewAll: "Ver Todos"
-  vocabularies: Vocabularios
-  vocabularyTermsFor: "Términos del Vocabulario para {subject}"
   weak: "Débil"
   whichIs: "cuál es"
   write: Escribir

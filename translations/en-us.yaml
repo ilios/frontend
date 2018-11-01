@@ -31,7 +31,6 @@ general:
   availableCohorts: "Available Cohorts"
   backToAdminDashboard: "Back to Admin Dashboard"
   backToCalendar: "Back to Calendar"
-  backToCourse: "Back to Course"
   backToDetails: "Back to Session Details"
   backToInstructorGroups: "Back to Instructor Groups List"
   backToPrograms: "Back to Programs"
@@ -40,7 +39,6 @@ general:
   backToReport: "Back to Report"
   backToReports: "Back to Reports"
   backToSchools: "Back to Schools List"
-  backToSessionList: "Back to Session List"
   bad: Bad
   badCredentials: "Incorrect username or password"
   calendarOff: "Calendar Off"
@@ -238,7 +236,6 @@ general:
   objective: Objective
   objectiveMap: "Objective Map"
   objectiveParentsTitle: "Select Parent Objectives"
-  objectivesTotalInstructionalTime: "Objectives: Total Instructional Time"
   objectiveTitle: "Session Objective"
   off: Off
   on: On
@@ -249,7 +246,6 @@ general:
   orderInSequence: "Order in Sequence"
   other: Other
   otherId: "Other ID"
-  otherVisualizations: "Other Visualizations"
   pagedResultsCount: "Showing {start} - {end} of {total}"
   parallel: Parallel
   password: Password
@@ -326,7 +322,6 @@ general:
   sequenceNumber: "Sequence #"
   sessionAttributes: "Session Attributes"
   sessionTitlePlaceholder: "Enter a title for this session"
-  sessionTypesFor: "Session Types for {subject}"
   showSubgroupEvents: "Show events for all subgroups"
   singleDay: "Single Day"
   singleGroup: "Single Group"
@@ -348,8 +343,6 @@ general:
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "Search returned more than {count} results.  To see better results try your search again with more terms."
   totalErrors: "{count, plural, =1 {There is an error} other {There are # errors}}"
-  totalIlmTime: "Total ILM Time {minutes} Minutes"
-  totalInstructionalTime: "Total Instructional Time {minutes} Minutes"
   totalTime: "Total time"
   transitionErrorMessage: "Sorry, we can’t get you where you asked to go: something seems to be broken..."
   tryHarder: "Try Harder"
@@ -380,8 +373,6 @@ general:
   validUntil: "When should this token stop working?"
   validUsers: "Valid Users"
   viewAll: "View All"
-  vocabularies: Vocabularies
-  vocabularyTermsFor: "Vocabulary Terms for {subject}"
   weak: Weak
   whichIs: "which is"
   write: Write

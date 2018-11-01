@@ -31,7 +31,6 @@ general:
   availableCohorts: "Cohortes Disponsibles"
   backToAdminDashboard: "Rétour au Page Admin"
   backToCalendar: "Retour au Calendrier"
-  backToCourse: "Retour au Cours"
   backToDetails: "Retour à détails de la Séance"
   backToInstructorGroups: "Retourner à liste des groupes des instructeurs"
   backToPrograms: "Retour à Diplôme"
@@ -40,7 +39,6 @@ general:
   backToReport: "Retour à rapport"
   backToReports: "Retour à rapports"
   backToSchools: "Retour à liste d'écoles"
-  backToSessionList: "Retour à Liste du Séances"
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   calendarOff: "Calendrier Éteindé"
@@ -238,7 +236,6 @@ general:
   objective: Objectif
   objectiveMap: "Tableau Objectifs"
   objectiveParentsTitle: "Affichez objectifs mères"
-  objectivesTotalInstructionalTime: "Objectifs: Totalité du Temps d'Enseignement"
   objectiveTitle: "Objectif de Séance"
   off: "Éteindre"
   on: Allumer
@@ -249,7 +246,6 @@ general:
   orderInSequence: "Ordre dans séquence"
   other: Autre
   otherId: "Autre ID"
-  otherVisualizations: "Autres Visualisations"
   pagedResultsCount: "Montrant {start} - {end} de {total}"
   parallel: "Parallèle"
   password: "Mot de passe"
@@ -326,7 +322,6 @@ general:
   sequenceNumber: "No. de séquence"
   sessionAttributes: "Attributs de Séance"
   sessionTitlePlaceholder: "Ajoutez un titre pour ce session"
-  sessionTypesFor: "Types de Séance par {subject}"
   showSubgroupEvents: "Afficher les événements pour tous les sous-groupes"
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
@@ -348,8 +343,6 @@ general:
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "Votre recherche présente plus que les {count} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes."
   totalErrors: "{count, plural, =1 {Il y a une erreur} other {Il y a # erreurs}}"
-  totalIlmTime: "Durée totale par ILM {minutes} Minutes"
-  totalInstructionalTime: "Durée d'enseignement totale {minutes} Minutes"
   totalTime: "Heures Totales"
   transitionErrorMessage: "Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé."
   tryHarder: "Faire un effort"
@@ -380,8 +373,6 @@ general:
   validUntil: "Quand ce jeton devrais arrêter de travailler?"
   validUsers: "utilisateurs valides"
   viewAll: "Voir Tous"
-  vocabularies: Vocabulaires
-  vocabularyTermsFor: "Termes Vocabulaire par {subject}"
   weak: Faible
   whichIs: "qui est"
   write: "Écriture"
