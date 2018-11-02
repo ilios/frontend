@@ -12,6 +12,7 @@ module('Integration | Component | my materials', function(hooks) {
     let lm1 = EmberObject.create({
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
+      filename: 'url1',
       sessionTitle: 'session1title',
       course: '1',
       courseTitle: 'course1title',
@@ -39,6 +40,7 @@ module('Integration | Component | my materials', function(hooks) {
     let lm4 = EmberObject.create({
       title: 'title4',
       absoluteFileUri: 'http://myhost.com/document.txt',
+      filename: 'document.txt',
       sessionTitle: 'session4title',
       course: '4',
       courseTitle: 'course4title',
@@ -49,6 +51,8 @@ module('Integration | Component | my materials', function(hooks) {
     let lm5 = EmberObject.create({
       title: 'title5',
       sessionTitle: 'session5title',
+      absoluteFileUri: 'http://myhost.com/someothertextdocument.txt',
+      filename: 'someothertextdocument.txt',
       course: '5',
       courseTitle: 'course5title',
       firstOfferingDate: new Date(2040, 1, 2, 12),
