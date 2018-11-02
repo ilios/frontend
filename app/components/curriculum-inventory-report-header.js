@@ -77,7 +77,7 @@ export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisp
     },
 
     finalize() {
-      this.sendAction('finalize');
+      this.finalize();
     }
   }
 });

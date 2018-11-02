@@ -97,7 +97,7 @@ export default Component.extend({
 
   actions: {
     remove(courseProxy) {
-      this.sendAction('remove', courseProxy.get('content'));
+      this.remove(courseProxy.get('content'));
     },
     cancelRemove(courseProxy) {
       courseProxy.set('showRemoveConfirmation', false);

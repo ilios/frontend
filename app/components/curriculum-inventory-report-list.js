@@ -62,10 +62,10 @@ export default Component.extend({
 
   actions: {
     edit(proxy) {
-      this.sendAction('edit', proxy.get('content'));
+      this.edit(proxy.get('content'));
     },
     remove(proxy) {
-      this.sendAction('remove', proxy.get('content'));
+      this.remove(proxy.get('content'));
     },
     cancelRemove(proxy) {
       proxy.set('showRemoveConfirmation', false);

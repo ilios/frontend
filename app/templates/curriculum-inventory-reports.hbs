@@ -77,8 +77,8 @@
     <div class="list">
       {{#if (is-fulfilled reports)}}
         {{curriculum-inventory-report-list
-          edit="editCurriculumInventoryReport"
-          remove="removeCurriculumInventoryReport"
+          edit=(action "editCurriculumInventoryReport")
+          remove=(action "removeCurriculumInventoryReport")
           sortBy=sortReportsBy
           program=(await selectedProgram)
           setSortBy=(action (mut sortReportsBy))

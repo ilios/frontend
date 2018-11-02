@@ -34,7 +34,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if(27 === keyCode) {
-      this.sendAction('cancel');
+      this.cancel();
     }
   },
 
@@ -44,7 +44,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           const num = this.get('numSubGroups');
-          this.sendAction('generateNewLearnerGroups', num);
+          this.generateNewLearnerGroups(num);
         }
       });
     },

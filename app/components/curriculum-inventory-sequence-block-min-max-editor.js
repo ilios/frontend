@@ -68,14 +68,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         if (validations.get('isValid')) {
           const min = this.get('minimum');
           const max = this.get('maximum');
-          this.sendAction('save', min, max);
+          this.save(min, max);
         } else {
           this.set('isSaving', false);
         }
       });
     },
     cancel(){
-      this.sendAction('cancel');
+      this.cancel();
     }
   }
 });

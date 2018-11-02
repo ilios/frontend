@@ -41,12 +41,12 @@ export default Component.extend({
   actions: {
     addLearnerGroup(group) {
       const cohortId = this.get('cohort.id');
-      this.sendAction('addLearnerGroup', group, cohortId);
+      this.addLearnerGroup(group, cohortId);
     },
 
     removeLearnerGroup(group) {
       const cohortId = this.get('cohort.id');
-      this.sendAction('removeLearnerGroup', group, cohortId);
+      this.removeLearnerGroup(group, cohortId);
     }
   }
 });

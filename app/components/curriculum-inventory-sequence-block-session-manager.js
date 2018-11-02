@@ -173,7 +173,7 @@ export default Component.extend({
       this.get('setSortBy')(what);
     },
     close() {
-      this.sendAction('cancel');
+      this.cancel();
     }
   }
 });

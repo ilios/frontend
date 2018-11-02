@@ -339,7 +339,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if(27 === keyCode) {
-      this.sendAction('close');
+      this.close();
     }
   },
 
@@ -369,7 +369,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('currentPrepositionalObjectId', term.get('id'));
     },
     closeEditor(){
-      this.sendAction('close');
+      this.close();
     }
   }
 });

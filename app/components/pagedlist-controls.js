@@ -50,12 +50,12 @@ export default Component.extend({
     goForward(){
       const offset = this.get('offset');
       const limit = this.get('limit');
-      this.sendAction('setOffset', offset+limit);
+      this.setOffset(offset+limit);
     },
     goBack(){
       const offset = this.get('offset');
       const limit = this.get('limit');
-      this.sendAction('setOffset', offset-limit);
+      this.setOffset(offset-limit);
     },
     setOffset(offset){
       const limit = this.get('limit');
@@ -68,11 +68,11 @@ export default Component.extend({
         offset = largestOffset;
       }
 
-      this.sendAction('setOffset', offset);
+      this.setOffset(offset);
     },
     setLimit(limit){
-      this.sendAction('setLimit', parseInt(limit, 10));
-      this.sendAction('setOffset', 0);
+      this.setLimit(parseInt(limit, 10));
+      this.setOffset(0);
     }
   }
 });

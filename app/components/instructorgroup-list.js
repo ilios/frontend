@@ -21,11 +21,8 @@ export default Component.extend({
   }),
 
   actions: {
-    edit(instructorGroupProxy) {
-      this.sendAction('edit', instructorGroupProxy.get('content'));
-    },
     remove(instructorGroupProxy) {
-      this.sendAction('remove', instructorGroupProxy.get('content'));
+      this.remove(instructorGroupProxy.get('content'));
     },
     cancelRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', false);

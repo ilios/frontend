@@ -21,7 +21,7 @@
     }}
   {{else}}
     {{new-learnergroup-multiple
-      generateNewLearnerGroups="generateNewLearnerGroups"
+      generateNewLearnerGroups=(action "generateNewLearnerGroups")
       cancel=cancel
     }}
   {{/if}}

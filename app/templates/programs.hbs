@@ -57,8 +57,8 @@
       {{#if (is-fulfilled filteredCourses)}}
         {{program-list
           programs=(await filteredPrograms)
-          edit="editProgram"
-          remove="removeProgram"
+          edit=(action "editProgram")
+          remove=(action "removeProgram")
         }}
       {{else}}
         {{pulse-loader}}
