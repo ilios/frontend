@@ -5051,10 +5051,10 @@ ember-cli-deploy@1.0.2:
     rsvp "^3.3.3"
     silent-error "^1.0.0"
 
-ember-cli-deprecation-workflow@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-1.0.0.tgz#9afae3a5769d85b32325b9da5f045ace5b3719a8"
-  integrity sha512-Xps9KAQM9Y6S8Z5JdCuAYyaQRYRsRQ4xuOT9X5dENN5mwSdvs3975kQx9Ws+4Pwti3QCrF9OihTgHXWqxN4Mpw==
+ember-cli-deprecation-workflow@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-1.0.1.tgz#3305a6879af7f074216a54963d92491c411ce7e0"
+  integrity sha512-tns8l4FLz8zmhmNRH7ywihs4XNTTuQysl+POYTpiyjb4zPNKv0cUJBCT/MklYFWBCo/5DcVzabhLODJZcScUfg==
   dependencies:
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.1"
