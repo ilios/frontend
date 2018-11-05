@@ -45,10 +45,11 @@ module.exports = function (environment) {
     },
     serverVariables: {
       tagPrefix: 'iliosconfig',
-      vars: ['api-host', 'api-name-space'],
+      vars: ['api-host', 'api-name-space', 'error-capture-enabled'],
       defaults: {
         'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v1',
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
+        'error-capture-enabled': process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
       }
     },
     'ember-metrics': {
