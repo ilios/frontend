@@ -72,4 +72,14 @@ export default Service.extend({
     }
     return '';
   }),
+
+  errorCaptureEnabled: computed('serverVariables.errorCaptureEnabled', function(){
+    const serverVariables = this.get('serverVariables');
+    const errorCaptureEnabled = serverVariables.get('errorCaptureEnabled');
+    if (typeof errorCaptureEnabled === 'boolean') {
+      return errorCaptureEnabled;
+    }
+
+    return errorCaptureEnabled === 'true';
+  }),
 });
