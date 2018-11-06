@@ -29,6 +29,7 @@
     "@fortawesome/pro-light-svg-icons": "^5.1.0",
     "@fortawesome/pro-regular-svg-icons": "^5.1.0",
     "@fortawesome/pro-solid-svg-icons": "^5.1.0",
+    "broccoli-file-creator": "^2.1.1",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.1",
     "elemental-calendar": "^0.1.0",
