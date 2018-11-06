@@ -16,6 +16,11 @@ module.exports = function(defaults) {
         }
       }
     },
+    'ember-froala-editor': {
+      languages: ['fr','es'],
+      plugins: ['lists', 'code_view', 'link'],
+      themes: 'gray'
+    },
   });
 
   /*
