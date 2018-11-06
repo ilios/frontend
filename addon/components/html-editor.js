@@ -60,6 +60,7 @@ export default Component.extend({
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
       iconsTemplate: 'font_awesome_5',
+      listAdvancedTypes: false,
     };
   })
 
