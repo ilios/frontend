@@ -3,6 +3,7 @@
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const path = require('path');
+const WriteFile = require('broccoli-file-creator');
 
 module.exports = {
   name: require('./package').name,
@@ -49,6 +50,11 @@ module.exports = {
     if (this.app.env && ['test', 'development'].includes(this.app.env)) {
       const mirageDir = path.join(__dirname, 'addon-mirage-support');
       const mirageTree = new Funnel(mirageDir, { destDir: 'mirage' });
+      trees.push(mirageTree);
+    } else {
+      //add a noop export for production builds
+      const noopTree = WriteFile('setup.js', 'export default function(){};');
+      const mirageTree = new Funnel(noopTree, { destDir: 'mirage' });
       trees.push(mirageTree);
     }
     return MergeTrees(trees);
