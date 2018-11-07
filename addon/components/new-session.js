@@ -75,7 +75,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         sessionType
       });
       yield save(session);
-      this.sendAction('cancel');
+      this.cancel();
     }
   }),
 
@@ -93,7 +93,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if(27 === keyCode) {
-      this.sendAction('cancel');
+      this.cancel();
     }
   },
 });

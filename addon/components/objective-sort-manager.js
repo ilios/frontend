@@ -24,10 +24,10 @@ export default Component.extend(SortableByPosition, {
 
   actions: {
     cancel(){
-      this.sendAction('cancel');
+      this.cancel();
     },
     save() {
-      this.sendAction('save', this.get('sortableObjectList'));
+      this.save(this.get('sortableObjectList'));
     }
   }
 });

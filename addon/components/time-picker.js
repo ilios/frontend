@@ -33,12 +33,12 @@ export default Component.extend({
         hour += 12;
       }
 
-      this.sendAction('action', hour, 'hour');
+      this.action(hour, 'hour');
     },
 
     changeMinute(string) {
       const minute = parseInt(string, 10);
-      this.sendAction('action', minute, 'minute');
+      this.action(minute, 'minute');
     },
 
     changeAmPm(value) {
@@ -47,9 +47,9 @@ export default Component.extend({
 
       if (value != currentValue) {
         if (value === 'am') {
-          this.sendAction('action', hour - 12, 'hour');
+          this.action(hour - 12, 'hour');
         } else {
-          this.sendAction('action', hour + 12, 'hour');
+          this.action(hour + 12, 'hour');
         }
       }
     }

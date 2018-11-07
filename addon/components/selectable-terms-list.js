@@ -10,11 +10,11 @@ export default Component.extend({
   terms: null,
   actions: {
     add(term) {
-      this.sendAction('add', term);
+      this.add(term);
 
     },
     remove(term) {
-      this.sendAction('remove', term);
+      this.remove(term);
     }
   }
 });

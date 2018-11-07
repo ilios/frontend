@@ -19,9 +19,9 @@ export default Component.extend({
   click() {
     let term = this.get('term');
     if (this.get('isSelected')) {
-      this.sendAction('remove', term);
+      this.remove(term);
     } else {
-      this.sendAction('add', term);
+      this.add(term);
     }
   },
 });

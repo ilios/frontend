@@ -98,10 +98,10 @@ export default Component.extend({
 
   actions: {
     add(cohort) {
-      this.sendAction('add', cohort);
+      this.add(cohort);
     },
     remove(cohort) {
-      this.sendAction('remove', cohort);
+      this.remove(cohort);
     }
   }
 });

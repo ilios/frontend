@@ -4,15 +4,15 @@
       {{selectable-terms-list-item
         selectedTerms=selectedTerms
         term=term
-        add="add"
-        remove="remove"
+        add=(action "add")
+        remove=(action "remove")
       }}
       {{#if term.hasChildren}}
         {{selectable-terms-list
           selectedTerms=selectedTerms
           terms=(await term.children)
-          add="add"
-          remove="remove"
+          add=(action "add")
+          remove=(action "remove")
         }}
       {{/if}}
     </li>

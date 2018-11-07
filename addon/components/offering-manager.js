@@ -32,7 +32,7 @@ export default Component.extend({
       return offering.save();
     },
     remove() {
-      this.sendAction('remove', this.get('offering'));
+      this.remove(this.get('offering'));
     },
     cancelRemove() {
       this.set('showRemoveConfirmation', false);

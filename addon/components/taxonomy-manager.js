@@ -158,10 +158,10 @@ export default Component.extend({
 
   actions: {
     add(term) {
-      this.sendAction('add', term);
+      this.add(term);
     },
     remove(term) {
-      this.sendAction('remove', term);
+      this.remove(term);
     },
     changeSelectedVocabulary(vocabId) {
       this.set('vocabId', vocabId);

@@ -5,7 +5,7 @@
         vocabulary=vocab
         terms=selectedTerms
         canEdit=true
-        remove="remove"
+        remove=(action "remove")
       }}
     {{/each}}
   </div>
@@ -32,8 +32,8 @@
     {{selectable-terms-list
       selectedTerms=selectedTerms
       terms=(await filteredTerms)
-      add="add"
-      remove="remove"
+      add=(action "add")
+      remove=(action "remove")
     }}
   </div>
 {{/if}}

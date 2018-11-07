@@ -10,7 +10,7 @@
   </div>
   {{#if displaySearchBox}}
     {{learningmaterial-search
-      add="addLearningMaterial"
+      add=(action "addLearningMaterial")
       currentMaterials=parentMaterials
     }}
   {{/if}}

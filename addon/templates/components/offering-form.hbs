@@ -28,7 +28,7 @@
 
     <div class="item start-time">
       <label>{{t "general.startTime"}}: <span class="timezone">({{browser-timezone}})</span></label>
-      {{time-picker date=startDate action="updateStartTime"}}
+      {{time-picker date=startDate action=(action "updateStartTime")}}
     </div>
 
     <div class="item offering-duration">
@@ -162,10 +162,10 @@
           {{/unless}}
         </label>
         {{instructor-selection-manager
-          addInstructor="addInstructor"
-          addInstructorGroup="addInstructorGroup"
-          removeInstructor="removeInstructor"
-          removeInstructorGroup="removeInstructorGroup"
+          addInstructor=(action "addInstructor")
+          addInstructorGroup=(action "addInstructorGroup")
+          removeInstructor=(action "removeInstructor")
+          removeInstructorGroup=(action "removeInstructorGroup")
           availableInstructorGroups=(await availableInstructorGroups)
           instructorGroups=instructorGroups
           instructors=instructors

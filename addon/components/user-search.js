@@ -104,7 +104,7 @@ export default Component.extend({
       //prevents a complicated if/else on the template.
       const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
       if(!currentlyActiveUsers.includes(user)){
-        this.sendAction('addUser', user);
+        this.addUser(user);
       }
     },
     addInstructorGroup(group) {
@@ -112,7 +112,9 @@ export default Component.extend({
       //prevents a complicated if/else on the template.
       const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
       if(!currentlyActiveInstructorGroups.includes(group)){
-        this.sendAction('addInstructorGroup', group);
+        if (this.addInstructorGroup) {
+          this.addInstructorGroup(group);
+        }
       }
     }
   }

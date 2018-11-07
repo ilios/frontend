@@ -18,7 +18,11 @@
 </ul>
 <div class="ilios-calendar-calendar">
   {{#if showIcsFeed}}
-    {{ics-feed url=icsFeedUrl instructions=icsInstructions refresh=refreshIcsFeed}}
+    {{ics-feed
+      url=icsFeedUrl
+      instructions=icsInstructions
+      refresh=(action "refreshIcsFeed")
+    }}
   {{/if}}
   <h1 class={{if (is-fulfilled compiledCalendarEvents) "loaded"}}>
     {{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}...

@@ -11,7 +11,7 @@ export default Component.extend({
   click() {
     if (this.get('canEdit')) {
       let term = this.get('term');
-      this.sendAction('remove', term);
+      this.remove(term);
     }
   },
 });

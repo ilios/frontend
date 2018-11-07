@@ -110,13 +110,13 @@ export default Component.extend({
     add(term) {
       const editable = this.get('editable');
       if (editable) {
-        this.sendAction('add', term.get('content'));
+        this.add(term.get('content'));
       }
     },
     remove(term) {
       const editable = this.get('editable');
       if (editable) {
-        this.sendAction('remove', term);
+        this.remove(term);
       }
     }
   }

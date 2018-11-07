@@ -15,7 +15,7 @@ export default Component.extend({
   }).restartable(),
   actions: {
     refresh(){
-      this.sendAction('refresh');
+      this.refresh();
     }
   }
 });
