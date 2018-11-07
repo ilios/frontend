@@ -187,6 +187,11 @@ module.exports = function (environment) {
     // here you can enable a preview-specific feature
     ENV.IliosFeatures.programYearVisualizations = true;
     ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
+
+    //Remove mirage
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    };
   }
 
   //add our API host to the list of acceptable data sources
