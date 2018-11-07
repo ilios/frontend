@@ -10,6 +10,6 @@ export default Component.extend({
     return this.get('selectedItems').includes(this.item);
   }),
   click() {
-    this.sendAction('action', this.get('item'));
+    this.action(this.get('item'));
   }
 });

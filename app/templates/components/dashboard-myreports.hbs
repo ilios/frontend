@@ -84,7 +84,7 @@
         <ul class="saved-reports" data-test-saved-reports>
           {{#each (await sortedReports) as |report|}}
             <li>
-              {{myreports-list-item report=report selectReport="selectReport"}}
+              {{myreports-list-item report=report selectReport=(action "selectReport")}}
               {{fa-icon
                 "trash"
                 class="clickable remove"

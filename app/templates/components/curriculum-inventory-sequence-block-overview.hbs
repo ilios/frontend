@@ -144,8 +144,8 @@
     {{else}}
       {{curriculum-inventory-sequence-block-dates-duration-editor
         sequenceBlock=sequenceBlock
-        save="changeDatesAndDuration"
-        cancel="cancelDateAndDurationEditing"
+        save=(action "changeDatesAndDuration")
+        cancel=(action "cancelDateAndDurationEditing")
       }}
     {{/unless}}
     <div class="block child-sequence-order">
@@ -218,8 +218,8 @@
     {{else}}
       {{curriculum-inventory-sequence-block-min-max-editor
         sequenceBlock=sequenceBlock
-        save="changeMinMax"
-        cancel="cancelMinMaxEditing"
+        save=(action "changeMinMax")
+        cancel=(action "cancelMinMaxEditing")
       }}
     {{/unless}}
     <div class="block academic-level">

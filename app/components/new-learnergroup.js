@@ -8,7 +8,7 @@ export default Component.extend({
 
   actions: {
     generateNewLearnerGroups(num){
-      this.sendAction('generateNewLearnerGroups', num);
+      this.generateNewLearnerGroups(num);
     }
   }
 });

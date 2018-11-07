@@ -70,7 +70,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if(27 === keyCode) {
-      this.sendAction('cancel');
+      this.cancel();
     }
   },
 
@@ -98,7 +98,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     cancel() {
-      this.sendAction('cancel', this.get('course'));
+      this.cancel();
     },
 
     changeValue(value) {

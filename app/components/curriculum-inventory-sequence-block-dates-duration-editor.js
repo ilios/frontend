@@ -94,14 +94,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           const startDate = this.get('startDate');
           const endDate = this.get('endDate');
           const duration = this.get('duration');
-          this.sendAction('save', startDate, endDate, duration);
+          this.save(startDate, endDate, duration);
         } else {
           this.set('isSaving', false);
         }
       });
     },
     cancel(){
-      this.sendAction('cancel');
+      this.cancel();
     }
   }
 });

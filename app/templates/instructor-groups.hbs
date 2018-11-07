@@ -41,7 +41,7 @@
         {{new-instructorgroup
           currentSchool=selectedSchool
           save=(action "saveNewInstructorGroup")
-          cancel="toggleNewInstructorGroupForm"
+          cancel=(action "toggleNewInstructorGroupForm")
         }}
       {{/liquid-if}}
       {{#if newInstructorGroup}}
@@ -58,8 +58,7 @@
         {{instructorgroup-list
           instructorGroups=(await filteredInstructorGroups)
           canDelete=(await canDelete)
-          edit="editInstructorGroup"
-          remove="removeInstructorGroup"
+          remove=(action "removeInstructorGroup")
         }}
       {{else}}
         {{pulse-loader}}

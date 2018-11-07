@@ -34,7 +34,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if(27 === keyCode) {
-      this.sendAction('cancel');
+      this.cancel();
     }
   },
 

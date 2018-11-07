@@ -64,7 +64,7 @@
           currentSchool=selectedSchool
           currentYear=selectedYear
           save=(action "saveNewCourse")
-          cancel="toggleNewCourseForm"
+          cancel=(action "toggleNewCourseForm")
         }}
       {{/liquid-if}}
 
@@ -81,7 +81,7 @@
       {{#if (is-fulfilled filteredCourses)}}
         {{ilios-course-list
           courses=(await filteredCourses)
-          remove="removeCourse"
+          remove=(action "removeCourse")
           sortBy=sortCoursesBy
           setSortBy=(action (mut sortCoursesBy))
           lock=(action "lockCourse")

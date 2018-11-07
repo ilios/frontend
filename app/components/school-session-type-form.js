@@ -137,7 +137,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (27 === keyCode) {
-      this.sendAction('close');
+      this.close();
     }
   },
 

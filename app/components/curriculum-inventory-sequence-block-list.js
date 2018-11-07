@@ -78,7 +78,7 @@ export default Component.extend({
 
   actions: {
     remove(proxy) {
-      this.sendAction('remove', proxy.get('content'));
+      this.remove(proxy.get('content'));
     },
     cancelRemove(proxy) {
       proxy.set('showRemoveConfirmation', false);

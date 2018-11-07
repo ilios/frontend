@@ -36,10 +36,10 @@ export default Component.extend({
   }),
   actions: {
     edit(programProxy) {
-      this.sendAction('edit', programProxy.get('content'));
+      this.edit(programProxy.get('content'));
     },
     remove(programProxy) {
-      this.sendAction('remove', programProxy.get('content'));
+      this.remove(programProxy.get('content'));
     },
     cancelRemove(programProxy) {
       programProxy.set('showRemoveConfirmation', false);

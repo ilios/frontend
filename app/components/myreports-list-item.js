@@ -22,7 +22,7 @@ export default Component.extend(ReportTitleMixin, {
 
   actions: {
     selectReport(report) {
-      this.sendAction('selectReport', report);
+      this.selectReport(report);
     }
   }
 });

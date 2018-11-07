@@ -83,7 +83,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     cancel() {
-      this.sendAction('cancel');
+      this.cancel();
     },
   }
 });
