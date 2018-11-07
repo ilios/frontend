@@ -7774,10 +7774,10 @@ ignore@^4.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ilios-common@20.6.0:
-  version "20.6.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.6.0.tgz#a052ae0d3306d867fb32ce663a031c7668a4e680"
-  integrity sha512-gHX01L1JhZE8R65lbepw1dgzs8y6d3aMJkL09ZcO49njvhVJg5TIL4lUhSuUt19hWu+mZu9T2qWXTMLU8ua9PQ==
+ilios-common@20.7.0:
+  version "20.7.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-20.7.0.tgz#d5df14affa57ab5a8ef253b1f0014357e5700975"
+  integrity sha512-phyi3D3zmTBV1R0ZUTbsy6Xk/9V1h3hXEL1b9CGDfjwHPntTJiHVxtERuZ8Pxmyq9Gs8IEAFBsHbC4WPu2DL0w==
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
     "@fortawesome/ember-fontawesome" "^0.1.7"
@@ -7787,6 +7787,7 @@ ilios-common@20.6.0:
     "@fortawesome/pro-light-svg-icons" "^5.1.0"
     "@fortawesome/pro-regular-svg-icons" "^5.1.0"
     "@fortawesome/pro-solid-svg-icons" "^5.1.0"
+    broccoli-file-creator "^2.1.1"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.1"
     elemental-calendar "^0.1.0"
