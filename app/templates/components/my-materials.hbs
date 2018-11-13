@@ -93,7 +93,7 @@
                 {{/if}}
               {{/if}}
             </td>
-            <td colspan="1" data-test-instructor>
+            <td colspan="1" data-test-instructor class="hide-from-small-screen">
               {{big-text
                 length=25
                 text=(join ", " (sort-by (action "sortString") lmObject.instructors))
