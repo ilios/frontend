@@ -24,8 +24,14 @@
       margin-left: .25rem;
     }
   }
-
   .default-message {
     margin: 1rem;
   }
+
+  .saved-result {
+    border: 1px solid $ilios-green;
+    margin: 1rem;
+    padding: .75rem;
+  }
+
 }
