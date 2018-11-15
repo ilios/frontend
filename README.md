@@ -14,6 +14,7 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 
 - [GitHub](https://github.com)
 - [Travis CI](https://travis-ci.org/)  
+- [Sentry](https://sentry.io/for/open-source/)
 - [Sauce Labs](https://saucelabs.com/)
 - [Heroku](https://www.heroku.com)
 - [Netlify](https://www.netlify.com)
