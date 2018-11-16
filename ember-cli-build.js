@@ -14,16 +14,13 @@ module.exports = function(defaults) {
       enabled: isProductionLikeBuild,
     },
     sourcemaps: {
-      enabled: !isProductionLikeBuild,
+      enabled: true,
     },
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },
 
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
-    'ember-cli-babel': {
-      sourceMaps: isProductionLikeBuild?false:'inline'
-    },
     'ember-cli-image-transformer': {
       images: [
         {
