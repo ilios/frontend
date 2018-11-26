@@ -48,3 +48,16 @@ $base-background-color: $background-grey;
 
 // Link Colors
 $base-link-color: $ilios-blue;
+
+// Toggles
+// @todo identify and remove unused variables [ST 2018/11/26]
+$switch-label-green: #4fb845;
+$switch-blue: #47a8d8;
+$toggle-background-grey: #f0f0f0;
+$switch-grey: #eee;
+$switch-handle-grey: #f9f9f9;
+$calendar-switch-grey: #ddd;
+$offering-switch-blue: #009ccc;
+$barely-visible-black: rgba(0, 0, 0, .05);
+$almost-visible-black: rgba(0, 0, 0, .15);
+$more-visible-black: rgba(0, 0, 0, .2);
