@@ -20,7 +20,7 @@ module('Integration | Component | selectable terms list item', function(hooks) {
       assert.equal(term, term1);
     });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove=remove}}`);
+    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove=(action "remove")}}`);
 
     assert.equal(findAll('.selected').length, 1);
     assert.equal(findAll('.actions .fa-times').length, 1);
@@ -40,7 +40,7 @@ module('Integration | Component | selectable terms list item', function(hooks) {
       assert.equal(term, term1);
     });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add=add}}`);
+    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add=(action "add")}}`);
 
     assert.equal(findAll('.selected').length, 0);
     assert.equal(findAll('.actions .fa-plus').length, 1);
