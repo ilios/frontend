@@ -93,8 +93,8 @@
         {{detail-cohort-manager
           selectedCohorts=selectedCohorts
           school=(await course.school)
-          add="addCohort"
-          remove="removeCohort"
+          add=(action "addCohort")
+          remove=(action "removeCohort")
         }}
       </div>
     {{/liquid-if}}

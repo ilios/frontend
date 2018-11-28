@@ -8,8 +8,4 @@ export default Component.extend({
   'data-test-expand-collapse-button': true,
 
   value: false,
-
-  click() {
-    this.sendAction();
-  }
 });

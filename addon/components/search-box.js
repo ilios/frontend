@@ -32,7 +32,9 @@ export default Component.extend({
     }
 
     if(27 === keyCode) {
-      this.sendAction('clear');
+      if (this.clear) {
+        this.clear();
+      }
     }
   },
   actions: {

@@ -44,7 +44,7 @@ export default Component.extend({
   }).drop(),
 
   addLearningMaterial: task(function * (lm) {
-    yield this.sendAction('add', lm);
+    yield this.add(lm);
   }).enqueue(),
 
   actions: {

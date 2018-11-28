@@ -17,16 +17,16 @@ export default Component.extend({
 
   actions: {
     addInstructor(user){
-      this.sendAction('addInstructor', user);
+      this.addInstructor(user);
     },
     addInstructorGroup(group){
-      this.sendAction('addInstructorGroup', group);
+      this.addInstructorGroup(group);
     },
     removeInstructor(user){
-      this.sendAction('removeInstructor', user);
+      this.removeInstructor(user);
     },
     removeInstructorGroup(group){
-      this.sendAction('removeInstructorGroup', group);
+      this.removeInstructorGroup(group);
     },
   }
 });

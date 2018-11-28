@@ -28,8 +28,8 @@
     {{taxonomy-manager
       subject=subject
       selectedTerms=bufferedTerms
-      add="addTermToBuffer"
-      remove="removeTermFromBuffer"
+      add=(action "addTermToBuffer")
+      remove=(action "removeTermFromBuffer")
     }}
   {{else}}
     {{#each (await subject.associatedVocabularies) as |vocab| }}

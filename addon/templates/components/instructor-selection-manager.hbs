@@ -20,8 +20,8 @@
   </ul>
 {{/if}}
 {{user-search
-  addUser="addInstructor"
-  addInstructorGroup="addInstructorGroup"
+  addUser=(action "addInstructor")
+  addInstructorGroup=(action "addInstructorGroup")
   currentlyActiveUsers=instructors
   placeholder=userSearchPlaceholder
   availableInstructorGroups=(await availableInstructorGroups)

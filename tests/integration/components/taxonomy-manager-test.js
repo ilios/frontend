@@ -102,7 +102,7 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     this.set('selectedTerms', selectedTerms);
     this.set('nothing', () => {});
 
-    await render(hbs`{{taxonomy-manager subject=subject selectedTerms=selectedTerms add='nothing' remove='nothing'}}`);
+    await render(hbs`{{taxonomy-manager subject=subject selectedTerms=selectedTerms add=(action nothing) remove=(action nothing)}}`);
 
     await settled();
     assert.equal(findAll('.detail-terms-list').length, 2);

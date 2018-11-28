@@ -54,9 +54,6 @@ export default Component.extend({
 
   }),
   actions: {
-    click: function(){
-      this.sendAction();
-    },
     expand: function(){
       this.set('expanded', true);
     }

@@ -39,6 +39,7 @@ module.exports = {
     'ember/order-in-components': 0,
     'ember/order-in-controllers': 0,
     'ember/order-in-routes': 0,
+    'ember/no-side-effects': 0,
     'ember/use-brace-expansion': 0,
     'generator-star-spacing': 0,
   },

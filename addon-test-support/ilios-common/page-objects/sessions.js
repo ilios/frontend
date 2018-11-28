@@ -13,7 +13,7 @@ export default create({
   scope: '[data-test-course-sessions]',
   expandCollapseAllSessions: clickable('[data-test-sessions-grid-header] [data-test-expand-collapse-all]'),
   showsAllSessionsExpanded: hasClass('fa-caret-down', '[data-test-expand-all] svg'),
-  expandNewSessionForm: clickable('[data-test-actions] [data-test-expand-collapse-button]'),
+  expandNewSessionForm: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
   newSession: {
     scope: '[data-test-new-session]',
     title: fillable('[data-test-title]'),

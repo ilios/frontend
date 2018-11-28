@@ -21,10 +21,10 @@
 <div class="detail-instructors-content">
   {{#if isManaging class="horizontal"}}
     {{instructor-selection-manager
-      addInstructor="addInstructorToBuffer"
-      addInstructorGroup="addInstructorGroupToBuffer"
-      removeInstructor="removeInstructorFromBuffer"
-      removeInstructorGroup="removeInstructorGroupFromBuffer"
+      addInstructor=(action "addInstructorToBuffer")
+      addInstructorGroup=(action "addInstructorGroupToBuffer")
+      removeInstructor=(action "removeInstructorFromBuffer")
+      removeInstructorGroup=(action "removeInstructorGroupFromBuffer")
       availableInstructorGroups=(await availableInstructorGroups)
       instructorGroups=instructorGroupBuffer
       instructors=instructorBuffer

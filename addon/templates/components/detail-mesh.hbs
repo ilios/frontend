@@ -23,8 +23,8 @@
     {{mesh-manager
       editable=editable
       terms=bufferTerms
-      add="addTermToBuffer"
-      remove="removeTermFromBuffer"
+      add=(action "addTermToBuffer")
+      remove=(action "removeTermFromBuffer")
     }}
   {{else}}
     <ul class="selected-mesh-terms">

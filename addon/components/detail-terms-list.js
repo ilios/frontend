@@ -94,7 +94,7 @@ export default Component.extend({
   actions: {
     remove(term) {
       if (this.get('canEdit')) {
-        this.sendAction('remove', term);
+        this.remove(term);
       }
     }
   }
