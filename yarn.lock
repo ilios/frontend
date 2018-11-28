@@ -7796,9 +7796,9 @@ ignore@^5.0.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.4.tgz#33168af4a21e99b00c5d41cbadb6a6cb49903a45"
   integrity sha512-WLsTMEhsQuXpCiG173+f3aymI43SXa+fB1rSfbzyP4GkPP+ZFVuO0/3sFUGNBtifisPeDcl/uD/Y2NxZ7xFq4g==
 
-ilios-common@stopfstedt/common#rm_sendAction:
+ilios-common@ilios/common#master:
   version "20.7.0"
-  resolved "https://codeload.github.com/stopfstedt/common/tar.gz/5ec9fb35cc97a9e8b397e58e8f1702e3a3ea1c3a"
+  resolved "https://codeload.github.com/ilios/common/tar.gz/17f947e892d030d5ceb9e023cf10369460a2a196"
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
     "@fortawesome/ember-fontawesome" "^0.1.7"
