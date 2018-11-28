@@ -77,7 +77,7 @@
         {{#if (and (await canCreate) (await selectedProgramYear))}}
           {{expand-collapse-button
             value=showNewLearnerGroupForm
-            action="toggleNewLearnerGroupForm"
+            action=(action "toggleNewLearnerGroupForm")
           }}
         {{/if}}
       </div>

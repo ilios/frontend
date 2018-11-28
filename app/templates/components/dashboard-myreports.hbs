@@ -20,7 +20,7 @@
       {{else}}
         {{expand-collapse-button
           value=myReportEditorOn
-          action="toggleEditor"
+          action=(action "toggleEditor")
           data-test-add-new-report=true
         }}
       {{/liquid-if}}
