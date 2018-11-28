@@ -5115,10 +5115,10 @@ ember-debug-handlers-polyfill@^1.1.1:
   resolved "https://registry.yarnpkg.com/ember-debug-handlers-polyfill/-/ember-debug-handlers-polyfill-1.1.1.tgz#e9ae0a720271a834221179202367421b580002ef"
   integrity sha512-lO7FBAqJjzbL+IjnWhVfQITypPOJmXdZngZR/Vdn513W4g/Q6Sjicao/mDzeDCb48Y70C4Facwk0LjdIpSZkRg==
 
-ember-drag-drop@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.5.1.tgz#23b36f5f4da27abe658a47227d669ed80eecf0ef"
-  integrity sha512-n+XCmnLJfVh0YjMjSxfNXdjauwYHX6sQ+0epJ7ylp80/WaRhQsvzyvzW0W+Q9rb76cG/jxHS30F9xb84NFXWcQ==
+ember-drag-drop@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.6.0.tgz#21466f2335eb8c5d43b2599e0d4cb6510094a3f7"
+  integrity sha512-Gnq/JinfXwJMLaGj8vXwIetLX/yt10dvdFoqndm58k0dTmjtgibhQTmvrV4PL/lpzO8vVuDNokdcmOOi7SmxkQ==
   dependencies:
     ember-cli-babel "^6.6.0"
 
