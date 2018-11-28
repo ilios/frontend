@@ -21,7 +21,7 @@ module('Integration | Component | expand collapse button', function(hooks) {
       assert.ok(true, 'button was clicked');
       this.set('value', !this.get('value'));
     });
-    await render(hbs`{{expand-collapse-button value=value action='click'}}`);
+    await render(hbs`{{expand-collapse-button value=value action=(action click)}}`);
     assert.ok(find('svg').classList.contains('fa-plus'));
 
     await click('svg');
