@@ -32,7 +32,7 @@ export default create({
     },
   }),
   headerTitle: text('[data-test-courses-header-title]'),
-  toggleNewCourseForm: clickable('[data-test-toggle-new-course-form]'),
+  toggleNewCourseForm: clickable('[data-test-toggle-new-course-form] button'),
   toggleNewCourseFormExists: isVisible('[data-test-toggle-new-course-form]'),
   newCourseForm: {
     scope: '[data-test-new-course]',
