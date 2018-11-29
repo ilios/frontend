@@ -94,7 +94,7 @@
           </ul>
         {{else}}
           {{user-search
-            addUser="chooseInstructor"
+            addUser=(action "chooseInstructor")
           }}
         {{/if}}
       {{else if (is-equal currentPrepositionalObject "mesh term")}}
