@@ -14,7 +14,7 @@ export default create({
   visit: visitable('/dashboard'),
   myReports: {
     scope: '[data-test-myreports]',
-    addNewReport: clickable('[data-test-add-new-report]'),
+    addNewReport: clickable('[data-test-add-new-report] button'),
     reports: collection({
       scope: '[data-test-saved-reports]',
       itemScope: 'li',
