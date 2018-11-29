@@ -55,7 +55,7 @@
 
 <section class="token-maintenance">
   <h3>{{t "general.manageAPITokens"}}</h3>
-  <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl}}</p>
+  <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl htmlSafe=true}}</p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
     <button
       class="new-token done text"
