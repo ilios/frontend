@@ -21,8 +21,8 @@
     {{/each}}
   </ul>
   {{user-search
-    addUser="addInstructor"
-    addInstructorGroup="addInstructorGroup"
+    addUser=(action "addInstructor")
+    addInstructorGroup=(action "addInstructorGroup")
     currentlyActiveUsers=instructors
     availableInstructorGroups=(await availableInstructorGroups)
     currentlyActiveInstructorGroups=instructorGroups

@@ -28,7 +28,7 @@
 
   {{#if canUpdate}}
     {{user-search
-      addUser="addUser"
+      addUser=(action "addUser")
       currentlyActiveUsers=(await instructorGroup.users)
     }}
   {{/if}}

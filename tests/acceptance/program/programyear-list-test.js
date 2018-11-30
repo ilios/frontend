@@ -181,7 +181,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       schoolId: 1,
     });
 
-    const expandButton = '.expand-collapse-button';
+    const expandButton = '.expand-collapse-button button';
     const cancelButton = '.new-programyear .cancel';
     const selectField = '.startyear-select select';
 
@@ -205,7 +205,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
 
     const listRows = '.programyears .list tbody tr';
-    const expandButton = '.expand-collapse-button';
+    const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';
     const saveButton = '.new-programyear .done';
 
@@ -267,7 +267,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       programYearId: 1
     });
 
-    const expandButton = '.expand-collapse-button';
+    const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';
     const saveButton = '.new-programyear .done';
     const thisYear = new Date().getFullYear();

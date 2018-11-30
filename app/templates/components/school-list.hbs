@@ -5,7 +5,10 @@
     </div>
     {{#if currentUser.isRoot}}
       <div class="actions">
-        {{expand-collapse-button value=showNewSchoolForm action="toggleNewSchoolForm"}}
+        {{expand-collapse-button
+          value=showNewSchoolForm
+          action=(action "toggleNewSchoolForm")
+        }}
       </div>
     {{/if}}
   </div>

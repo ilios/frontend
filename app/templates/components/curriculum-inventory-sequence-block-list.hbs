@@ -6,7 +6,7 @@
 
     <div class="actions">
       {{#if canUpdate}}
-        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+        {{expand-collapse-button value=editorOn action=(action "toggleEditor")}}
       {{/if}}
     </div>
   </div>

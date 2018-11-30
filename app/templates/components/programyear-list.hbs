@@ -3,7 +3,7 @@
     <div class="title">{{t "general.programYears"}}</div>
     {{#if canCreate}}
       <div class="actions">
-        {{expand-collapse-button value=editorOn action="toggleEditor"}}
+        {{expand-collapse-button value=editorOn action=(action "toggleEditor")}}
       </div>
     {{/if}}
   </div>

@@ -33,7 +33,7 @@
   </div>
   {{#if canUpdate}}
     {{user-search
-      addUser="addDirector"
+      addUser=(action "addDirector")
       currentlyActiveUsers=(await programYear.directors)
     }}
   {{/if}}

@@ -9,7 +9,7 @@
     {{#if (and canCreate (not managedSessionTypeId))}}
       {{expand-collapse-button
         value=schoolNewSessionType
-        action="toggleSchoolNewSessionType"
+        action=(action "toggleSchoolNewSessionType")
       }}
     {{/if}}
   </div>
