@@ -17,12 +17,13 @@ export default Mixin.create({
     });
 
     const minutes = await map(sessionsWithUser, async session => {
-      const totalHours = await session.get('totalSumDuration');
       const offeringHours = await session.get('maxSingleOfferingDuration');
+      const ilmSession = await session.get('ilmSession');
       const offeringMinutes = Math.round(offeringHours * 60);
-      const totalMinutes = Math.round(totalHours * 60);
-      const ilmMinutes = totalMinutes - offeringMinutes;
-
+      let ilmMinutes = 0;
+      if (ilmSession) {
+        ilmMinutes = Math.round(parseFloat(ilmSession.get('hours')) * 60);
+      }
       return {
         offeringMinutes,
         ilmMinutes
