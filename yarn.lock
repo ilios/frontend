@@ -2764,7 +2764,7 @@ broccoli-stew@^1.4.2, broccoli-stew@^1.5.0:
     symlink-or-copy "^1.2.0"
     walk-sync "^0.3.0"
 
-broccoli-stew@^2.0.0:
+broccoli-stew@^2.0.0, broccoli-stew@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-2.0.1.tgz#d0a507b79bf5fea9ff84032ae837dc48670ab1dc"
   integrity sha512-EUzgkbYF4m8YVD2bkEa7OfYJ11V3dQ+yPuxdz/nFh8eMEn6dhOujtuSBnOWsvGDgsS9oqNZgx/MHJxI6Rr3AqQ==
@@ -4741,17 +4741,17 @@ ember-a11y-testing@^0.5.2:
     ember-cli-version-checker "^2.1.0"
     ember-get-config "^0.2.4"
 
-ember-a11y@^0.1.15:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/ember-a11y/-/ember-a11y-0.1.17.tgz#dc50aa302f2aa044411d00bc0574ea3e87c25647"
-  integrity sha512-5EHfoCTOmvKWgHCmFU97iPpy1fB8dLI45zmngGU4T+ntw6AxK1ZTk/TAofPlTidoZQkfQsBbz5VQjiX6R7m8zw==
+ember-a11y@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-a11y/-/ember-a11y-0.2.0.tgz#6aecf3474ebb1f6fece0581819fc62e67fce529d"
+  integrity sha512-JqH0xmdc4Bvn0cLkaNnilnxVk3VtrCA1B+F3PzJ7x24clMOchMOT8DtqtpaIYGuzKplRJsUTH9GMRUzTQfKxdw==
   dependencies:
-    broccoli-funnel "^2.0.1"
+    broccoli-file-creator "^2.1.1"
     broccoli-merge-trees "^3.0.1"
-    broccoli-string-replace "^0.1.2"
+    broccoli-stew "^2.0.1"
     ember-cli-babel "^6.6.0"
+    ember-cli-htmlbars "^2.0.1"
     ember-cli-version-checker "^2.1.2"
-    ember-getowner-polyfill "^2.2.0"
 
 ember-ajax@^4.0.0:
   version "4.0.0"
