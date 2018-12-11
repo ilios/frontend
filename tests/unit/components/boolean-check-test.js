@@ -1,8 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('boolean-check', 'Unit | Component | boolean check ', {
-  unit: true,
-});
+moduleForComponent('boolean-check', 'Unit | Component | boolean check ');
 
 test('default properties are correct', function(assert) {
   assert.expect(2);
