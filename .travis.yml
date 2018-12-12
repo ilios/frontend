@@ -20,10 +20,6 @@ env:
     - JOBS=1
 
 jobs:
-  fail_fast: true
-  allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-canary
-
   include:
     - stage: greenkeeper
       if: branch =~ ^greenkeeper
@@ -37,19 +33,6 @@ jobs:
         - yarn lint:hbs
         - yarn lint:js
         - yarn test
-
-    # we recommend new addons test the current and previous LTS
-    # as well as latest stable release (bonus points to beta/canary)
-    - stage: "Additional Tests - Ember Release"
-      env: EMBER_TRY_SCENARIO=ember-release
-    ######
-    # temporarily disabled tests against ember beta. see https://github.com/ilios/common/issues/360 [ST 2018/10/23]
-    ######
-    #- stage: "Additional Tests - Ember Beta"
-    #  env: EMBER_TRY_SCENARIO=ember-beta
-    - stage: "Additional Tests - Ember Default with jQuery"
-      env: EMBER_TRY_SCENARIO=ember-default-with-jquery
-
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
