@@ -654,7 +654,7 @@
     silent-error "^1.1.0"
     util.promisify "^1.0.0"
 
-"@ember/ordered-set@^2.0.0":
+"@ember/ordered-set@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@ember/ordered-set/-/ordered-set-2.0.3.tgz#2ac1ca73b3bd116063cae814898832ef434a57f9"
   integrity sha512-F4yfVk6WMc4AUHxeZsC3CaKyTvO0qSZJy7WWHCFTlVDQw6vubn+FvnGdhzpN1F00EiXMI4Tv1tJdSquHcCnYrA==
@@ -1677,11 +1677,6 @@ babel-plugin-feature-flags@^0.3.1:
   resolved "https://registry.yarnpkg.com/babel-plugin-feature-flags/-/babel-plugin-feature-flags-0.3.1.tgz#9c827cf9a4eb9a19f725ccb239e85cab02036fc1"
   integrity sha1-nIJ8+aTrmhn3JcyyOehcqwIDb8E=
 
-babel-plugin-filter-imports@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-filter-imports/-/babel-plugin-filter-imports-0.3.1.tgz#e7859b56886b175dd2616425d277b219e209ea8b"
-  integrity sha1-54WbVohrF13SYWQl0neyGeIJ6os=
-
 babel-plugin-filter-imports@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-filter-imports/-/babel-plugin-filter-imports-1.1.2.tgz#c6e1f2685253bbda91b1dc5a6652ce825f771264"
@@ -1689,6 +1684,14 @@ babel-plugin-filter-imports@^1.1.1:
   dependencies:
     babel-types "^6.26.0"
     lodash "^4.17.10"
+
+babel-plugin-filter-imports@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-filter-imports/-/babel-plugin-filter-imports-2.0.4.tgz#9209b708ed3b228349c4e6f660358bf02685e803"
+  integrity sha512-Ra4VylqMFsmTJCUeLRJ/OP2ZqO0cCJQK2HKihNTnoKP4f8IhxHKL4EkbmfkwGjXCeDyXd0xQ6UTK8Nd+h9V/SQ==
+  dependencies:
+    "@babel/types" "^7.1.5"
+    lodash "^4.17.11"
 
 babel-plugin-htmlbars-inline-precompile@^0.2.5:
   version "0.2.6"
@@ -1749,7 +1752,7 @@ babel-plugin-transform-es2015-block-scoped-functions@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-es2015-block-scoping@^6.23.0, babel-plugin-transform-es2015-block-scoping@^6.26.0:
+babel-plugin-transform-es2015-block-scoping@^6.23.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-block-scoping/-/babel-plugin-transform-es2015-block-scoping-6.26.0.tgz#d70f5299c1308d05c12f463813b0a09e73b1895f"
   integrity sha1-1w9SmcEwjQXBL0Y4E7CgnnOxiV8=
@@ -5624,25 +5627,24 @@ ember-d3@0.4.3:
     d3-selection-multi "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-data@3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.5.0.tgz#1cd22312112fd3a961248090eac850d513f844cf"
-  integrity sha512-BVfObUyajwP93/dTeSiCSUQSU28EVLsq2G8OithwnAgxg2Neupln2cnRBW2+Gv4JzWwUFk075GcuL7qsD+xNmQ==
+ember-data@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.6.0.tgz#6853983d6ab21f578b62b41b14f45c7b6f502aff"
+  integrity sha512-N1jMJ8hHu/84MfbBg+RXobQXpczIv8xtFs4f+R/KzfX1vLSNwoxmNzw1OUKQnKnl3PrZCl3+5bojlK1SD7sPWw==
   dependencies:
-    "@ember/ordered-set" "^2.0.0"
+    "@ember/ordered-set" "^2.0.3"
     babel-plugin-feature-flags "^0.3.1"
-    babel-plugin-filter-imports "^0.3.1"
-    babel-plugin-transform-es2015-block-scoping "^6.26.0"
+    babel-plugin-filter-imports "^2.0.3"
     babel6-plugin-strip-class-callcheck "^6.0.0"
     babel6-plugin-strip-heimdall "^6.0.1"
-    broccoli-debug "^0.6.4"
+    broccoli-debug "^0.6.5"
     broccoli-file-creator "^2.1.1"
     broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^3.0.0"
+    broccoli-merge-trees "^3.0.1"
     broccoli-rollup "^2.1.1"
     calculate-cache-key-for-tree "^1.1.0"
     chalk "^2.4.1"
-    ember-cli-babel "^6.16.0"
+    ember-cli-babel "^7.1.2"
     ember-cli-path-utils "^1.0.0"
     ember-cli-string-utils "^1.1.0"
     ember-cli-test-info "^1.0.0"
@@ -5653,8 +5655,8 @@ ember-data@3.5.0:
     inflection "^1.12.0"
     npm-git-info "^1.0.3"
     resolve "^1.8.1"
-    semver "^5.5.0"
-    silent-error "^1.1.0"
+    semver "^5.6.0"
+    silent-error "^1.1.1"
 
 ember-debug-handlers-polyfill@^1.1.1:
   version "1.1.1"
@@ -11586,7 +11588,7 @@ select@^1.1.2:
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
   integrity sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1:
+"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
@@ -11706,7 +11708,7 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-silent-error@^1.0.0, silent-error@^1.0.1, silent-error@^1.1.0:
+silent-error@^1.0.0, silent-error@^1.0.1, silent-error@^1.1.0, silent-error@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/silent-error/-/silent-error-1.1.1.tgz#f72af5b0d73682a2ba1778b7e32cd8aa7c2d8662"
   integrity sha512-n4iEKyNcg4v6/jpb3c0/iyH2G1nzUNl7Gpqtn/mHIJK9S/q/7MCfoO4rwVOoO59qPFIc0hVHvMbiOJ0NdtxKKw==
