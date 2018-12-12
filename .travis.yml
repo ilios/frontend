@@ -20,9 +20,6 @@ env:
     - JOBS=1
 
 jobs:
-  allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-canary
-
   include:
     - stage: greenkeeper
       if: branch =~ ^greenkeeper
