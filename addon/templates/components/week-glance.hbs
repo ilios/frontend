@@ -11,23 +11,10 @@
 </h3>
 {{#liquid-unless collapsed class="vertical"}}
   {{#if (is-fulfilled publishedWeekEvents)}}
-    <div class="ilm-events" data-test-ilm-events>
-      <h4>{{t "general.independentLearningActivities"}}</h4>
-      {{#if (gt (get (await ilmEvents) "length") 0)}}
-        {{#each (await ilmEvents) as |event|}}
-          <WeekGlanceEvent @event={{event}} />
-        {{/each}}
-      {{else}}
-        <p>{{t "general.none"}}</p>
-      {{/if}}
-    </div>
-
-    {{#if (gt (get (await offeringEvents) "length") 0)}}
-      <div class="ilm-events" data-test-offering-events>
-        {{#each (await offeringEvents) as |event|}}
-          <WeekGlanceEvent @event={{event}} />
-        {{/each}}
-      </div>
+    {{#if (gt (get (await publishedWeekEvents) "length") 0)}}
+      {{#each (await publishedWeekEvents) as |event|}}
+        <WeekGlanceEvent @event={{event}} />
+      {{/each}}
     {{else}}
       <p>{{t "general.none"}}</p>
     {{/if}}

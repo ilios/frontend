@@ -1,99 +1,97 @@
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
-
-const today = moment('2019-01-15');
-
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios-common/page-objects/components/week-glance';
-
-const mockEvents = [
-  {
-    name: 'Learn to Learn',
-    startDate: today.format(),
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    offering: 1,
-  },
-  {
-    name: 'Finding the Point in Life',
-    startDate: today.format(),
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    ilmSession: 1,
-  },
-  {
-    name: 'Blank',
-    isBlanked: true,
-  },
-  {
-    name: 'Not Published',
-    isBlanked: false,
-    isPublished: false,
-    isScheduled: false,
-  },
-  {
-    name: 'Scheduled',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: true,
-  },
-  {
-    name: 'Schedule some materials',
-    startDate: today.format(),
-    location: 'Room 123',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    offering: 1,
-  },
-];
-const userEventsMock = Service.extend({
-  getEvents(){
-    return new resolve(mockEvents);
-  },
-});
-let blankEventsMock = Service.extend({
-  getEvents(){
-    return new resolve([]);
-  }
-});
 
 module('Integration | Component | week glance', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+  const today = moment('2019-01-15');
 
-  const getTitle = function(fullTitle){
-    const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
-    const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
+  hooks.beforeEach(function () {
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+    });
+    this.server.create('userevent', {
+      name: 'Finding the Point in Life',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      ilmSession: 1,
+    });
+    this.server.create('userevent', {
+      name: 'Blank',
+      isBlanked: true,
+    });
+    this.server.create('userevent', {
+      name: 'Not Published',
+      isBlanked: false,
+      isPublished: false,
+      isScheduled: false,
+    });
+    this.server.create('userevent', {
+      name: 'Scheduled',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: true,
+    });
+    this.server.create('userevent', {
+      name: 'Schedule some materials',
+      startDate: today.format(),
+      location: 'Room 123',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+    });
+    const events = this.server.db.userevents;
 
-    let expectedTitle;
-    if (startOfWeek.month() != endOfWeek.month()) {
-      const from = startOfWeek.format('MMMM D');
-      const to = endOfWeek.format('MMMM D');
-      expectedTitle = `${from} - ${to}`;
-    } else {
-      const from = startOfWeek.format('MMMM D');
-      const to = endOfWeek.format('D');
-      expectedTitle = `${from}-${to}`;
-    }
-    if (fullTitle) {
-      expectedTitle += ' Week at a Glance';
-    }
+    this.userEventsMock = Service.extend({
+      async getEvents() {
+        return events.toArray();
+      },
+    });
+    this.blankEventsMock = Service.extend({
+      async getEvents(){
+        return [];
+      }
+    });
 
-    return expectedTitle;
-  };
+    this.getTitle = function(fullTitle){
+      const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
+      const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
+
+      let expectedTitle;
+      if (startOfWeek.month() != endOfWeek.month()) {
+        const from = startOfWeek.format('MMMM D');
+        const to = endOfWeek.format('MMMM D');
+        expectedTitle = `${from} - ${to}`;
+      } else {
+        const from = startOfWeek.format('MMMM D');
+        const to = endOfWeek.format('D');
+        expectedTitle = `${from}-${to}`;
+      }
+      if (fullTitle) {
+        expectedTitle += ' Week at a Glance';
+      }
+
+      return expectedTitle;
+    };
+  });
 
   test('it renders with events', async function(assert) {
-    assert.expect(6);
-    this.owner.register('service:user-events', userEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    assert.expect(5);
+    this.owner.register('service:user-events', this.userEventsMock);
     this.set('today', today);
     await render(hbs`{{week-glance
       collapsible=false
@@ -103,19 +101,17 @@ module('Integration | Component | week glance', function(hooks) {
       week=(moment-format today 'W')
     }}`);
 
+    assert.equal(component.title, this.getTitle(true));
 
-    assert.equal(component.title, getTitle(true));
-    assert.equal(component.ilmEvents.length, 1);
-    assert.equal(component.ilmEvents[0].title, 'Finding the Point in Life');
-
-    assert.equal(component.offeringEvents.length, 2);
+    assert.equal(component.offeringEvents.length, 3);
     assert.equal(component.offeringEvents[0].title, 'Learn to Learn');
-    assert.equal(component.offeringEvents[1].title, 'Schedule some materials');
+    assert.equal(component.offeringEvents[1].title, 'Finding the Point in Life');
+    assert.equal(component.offeringEvents[2].title, 'Schedule some materials');
   });
 
   test('it renders blank', async function(assert) {
     assert.expect(2);
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
@@ -128,7 +124,7 @@ module('Integration | Component | week glance', function(hooks) {
     }}`);
     const title = 'h3';
     const body = 'p';
-    const expectedTitle = getTitle(true);
+    const expectedTitle = this.getTitle(true);
 
     await settled();
 
@@ -139,7 +135,7 @@ module('Integration | Component | week glance', function(hooks) {
 
   test('renders short title', async function(assert) {
     assert.expect(1);
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
@@ -151,7 +147,7 @@ module('Integration | Component | week glance', function(hooks) {
       week=(moment-format today 'W')
     }}`);
     const title = 'h3';
-    const expectedTitle = getTitle(false);
+    const expectedTitle = this.getTitle(false);
     await settled();
 
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
@@ -159,7 +155,7 @@ module('Integration | Component | week glance', function(hooks) {
 
   test('it renders collapsed', async function(assert) {
     assert.expect(2);
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
@@ -172,7 +168,7 @@ module('Integration | Component | week glance', function(hooks) {
     }}`);
     const title = 'h3';
     const body = 'p';
-    const expectedTitle = getTitle(false);
+    const expectedTitle = this.getTitle(false);
 
     await settled();
 
@@ -183,7 +179,7 @@ module('Integration | Component | week glance', function(hooks) {
 
   test('click to expend', async function(assert) {
     assert.expect(1);
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
@@ -205,7 +201,7 @@ module('Integration | Component | week glance', function(hooks) {
 
   test('click to collapse', async function(assert) {
     assert.expect(1);
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
@@ -229,8 +225,8 @@ module('Integration | Component | week glance', function(hooks) {
     assert.expect(10);
     const nextYear = today.clone().add(1, 'year');
     let count = 1;
-    blankEventsMock = Service.reopen({
-      getEvents(fromStamp, toStamp){
+    this.blankEventsMock = Service.reopen({
+      async getEvents(fromStamp, toStamp){
         const from = moment(fromStamp, 'X');
         const to = moment(toStamp, 'X');
         switch (count) {
@@ -251,10 +247,10 @@ module('Integration | Component | week glance', function(hooks) {
           assert.notOk(true, 'Called too many times');
         }
         count++;
-        return resolve([]);
+        return [];
       }
     });
-    this.owner.register('service:user-events', blankEventsMock);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
 
@@ -270,7 +266,7 @@ module('Integration | Component | week glance', function(hooks) {
     }}`);
     const title = 'h3';
     const body = 'p';
-    const expectedTitle = getTitle(true);
+    const expectedTitle = this.getTitle(true);
 
     await settled();
 

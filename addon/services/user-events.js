@@ -35,11 +35,24 @@ export default Service.extend(EventMixin, {
     const commonAjax = this.get('commonAjax');
     const data = await commonAjax.request(url);
 
-    return data.userEvents.map(event => {
-      event.isBlanked = !event.offering && !event.ilmSession;
-      event.slug = this.getSlugForEvent(event);
-      return event;
-    }).sortBy('startDate', 'name');
+    return data.userEvents.map(obj => this.createEventFromData(obj)).sortBy('startDate', 'name');
+  },
+
+
+
+  /**
+   * Retrieves and event by it's given slug.
+   * @method getEventForSlug
+   * @param {String} slug
+   * @return {Promise.<Object>}
+   */
+  createEventFromData(obj) {
+    obj.isBlanked = !obj.offering && !obj.ilmSession;
+    obj.slug = this.getSlugForEvent(obj);
+    obj.prerequisites = obj.prerequisites.map(prereq => this.createEventFromData(prereq)).sortBy('startDate', 'name');
+    obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq)).sortBy('startDate', 'name');
+
+    return obj;
   },
 
   /**

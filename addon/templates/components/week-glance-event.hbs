@@ -12,6 +12,20 @@
       {{moment-format @event.startDate "dddd h:mma"}}
     </span>
   </h4>
+  {{#if @event.prerequisites.length}}
+    <p class="pre-work" data-test-pre-work>
+      <h5>{{t "general.preWork"}}</h5>
+      <ol>
+        {{#each @event.prerequisites as |event|}}
+          <li>
+            {{#link-to "events" event.slug}}
+              {{event.name}}
+            {{/link-to}}
+          </li>
+        {{/each}}
+      </ol>
+    </p>
+  {{/if}}
   <p>
     <span class="sessiontype" data-test-session-type>
       {{@event.sessionTypeTitle}}

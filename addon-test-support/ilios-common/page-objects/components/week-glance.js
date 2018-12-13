@@ -8,7 +8,7 @@ import weekGlanceEvent from './week-glance-event';
 const definition = {
   scope: '[data-test-week-glance]',
   title: text('[data-test-week-title]'),
-  offeringEvents: collection('[data-test-offering-events] [data-test-week-glance-event]', weekGlanceEvent),
+  offeringEvents: collection('[data-test-week-glance-event]', weekGlanceEvent),
   ilmEvents: collection('[data-test-ilm-events] [data-test-week-glance-event]', weekGlanceEvent),
 };
 

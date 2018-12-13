@@ -34,6 +34,10 @@ const definition = {
     url: attribute('href', '[data-test-material-title]'),
     timedReleaseInfo: text('[data-test-time-release-info]'),
   }),
+  preWork: collection('[data-test-pre-work] li', {
+    title: text(),
+    hasLink: isPresent('a'),
+  }),
 };
 
 export default definition;

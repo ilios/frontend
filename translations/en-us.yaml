@@ -190,8 +190,9 @@ general:
   ownedBy: "owned by {owner}"
   owner: Owner
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
-  prerequisites: "Prerequisites"
   parentObjectives: "Parent Objectives"
+  prerequisites: "Prerequisites"
+  preWork: "PreWork"
   printSummary: "Print Summary"
   program: Program
   programAndCohort: "Program/Cohort"

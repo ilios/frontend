@@ -197,4 +197,30 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.notOk(component.hasInstructors);
     assert.equal(component.sessionAttributes.length, 4);
   });
+
+  test('it renders prework', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      prerequisites: [
+        { name: 'prework 1', slug: 'e1' },
+        { name: 'prework 2', slug: 'e2' },
+      ]
+    });
+    await render(hbs`<WeekGlanceEvent @event={{event}} />`);
+
+    assert.equal(component.title, 'Learn to Learn');
+    assert.equal(component.preWork.length, 2);
+    assert.equal(component.preWork[0].title, 'prework 1');
+    assert.ok(component.preWork[0].hasLink);
+    assert.equal(component.preWork[1].title, 'prework 2');
+    assert.ok(component.preWork[1].hasLink);
+  });
 });

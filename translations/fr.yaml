@@ -192,6 +192,7 @@ general:
   parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
   parentObjectives: "Objectifs Mères"
   prerequisites: "Conditions préalables"
+  preWork: "Préalable"
   printSummary: "Empreinte Résumé"
   program: "Diplôme"
   programAndCohort: "Diplôme et Cohortes"

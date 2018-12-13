@@ -192,6 +192,7 @@ general:
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentObjectives: "Objetivos de Matriz"
   prerequisites: "Prerrequisitos"
+  preWork: "Pre Trabajo"
   printSummary: "Sumario Printado"
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"

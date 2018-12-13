@@ -75,14 +75,4 @@ export default Component.extend({
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
   }),
-
-  ilmEvents: computed('publishedWeekEvents', async function () {
-    const events = await this.get('publishedWeekEvents');
-    return events.filter(ev => ('ilmSession' in ev));
-  }),
-
-  offeringEvents: computed('publishedWeekEvents', async function () {
-    const events = await this.get('publishedWeekEvents');
-    return events.filter(ev => ('offering' in ev));
-  }),
 });
