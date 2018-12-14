@@ -75,4 +75,13 @@ export default Component.extend({
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
   }),
+
+  ilmPreWork: computed('publishedWeekEvents.[]', async function () {
+    const publishedWeekEvents = await this.get('publishedWeekEvents');
+    const preWork =  publishedWeekEvents.reduce((arr, eventObject) => {
+      return arr.pushObjects(eventObject.prerequisites);
+    }, []);
+
+    return preWork.filter(ev => ev.ilmSession);
+  }),
 });

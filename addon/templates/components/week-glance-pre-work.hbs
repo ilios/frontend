@@ -1,0 +1,15 @@
+<div class="week-glance-pre-work" data-test-week-glance-pre-work>
+  <h4>
+    <span class="title" data-test-event-title>
+      {{#link-to "events" @event.slug}}
+        {{@event.name}}
+      {{/link-to}}
+    </span>
+    <span class="date" data-test-date>
+      {{#if @event.ilmSession}}
+        <span class="ilm-due">{{t "general.dueBy"}}</span>
+      {{/if}}
+      {{moment-format @event.startDate "dddd h:mma"}}
+    </span>
+  </h4>
+</div>
