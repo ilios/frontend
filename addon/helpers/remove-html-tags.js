@@ -1,10 +1,10 @@
 /* eslint ember/no-global-jquery: 0 */
 import { helper } from '@ember/component/helper';
-import $ from 'jquery';
+import striptags from 'striptags';
 
 export function removeHtmlTags(params) {
   if (!(params[0] === undefined)) {
-    return $("<p>" + params[0] + "</p>").text();
+    return striptags(params[0]);
   }
 }
 
