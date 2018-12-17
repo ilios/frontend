@@ -672,10 +672,10 @@
     ember-cli-babel "^6.12.0"
     ember-cli-htmlbars-inline-precompile "^1.0.0"
 
-"@fortawesome/ember-fontawesome@^0.1.7":
-  version "0.1.8"
-  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.8.tgz#79cc2fc9d1e0d67181227d12cd78fb27def95b79"
-  integrity sha512-82SVD+c8dVidJAaZGBXBCjEykksF67K6TxtaDTBNI3SljoXr9AwIIQPdw+PolACp0ATojPKcLxQ4uut4tWtWzQ==
+"@fortawesome/ember-fontawesome@^0.1.9":
+  version "0.1.9"
+  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.9.tgz#57c5647d59bcfa4516cf35952daf8f9b4e4b5c37"
+  integrity sha512-0+dmxvlg3PZjQ9bej4UB6I6+wtVzNy1b0q6w+D9uPz6Onj3NGKU1vtUK7a48aq8b4yjeSoLuxpaBSHdGhcKKLg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.0"
     broccoli-file-creator "^1.1.1"
@@ -685,11 +685,16 @@
     broccoli-source "^1.1.0"
     camel-case "^3.0.0"
     ember-ast-helpers "0.3.5"
-    ember-cli-babel "^6.6.0"
-    ember-cli-htmlbars "^2.0.3"
+    ember-cli-babel "^6.16.0"
+    ember-cli-htmlbars "^3.0.0"
     ember-get-config "^0.2.4"
     glob "^7.1.2"
     rollup-plugin-node-resolve "^3.0.2"
+
+"@fortawesome/fontawesome-common-types@^0.2.10":
+  version "0.2.10"
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.10.tgz#ae0e6858daf6f9ff1e2396f9fbea87b244628343"
+  integrity sha512-FbrzSgFDzoC6Dm8w7gCWxgdffFbYV7O/4THOtYDQEplZVOpYIA3vjgnxCXApY49YaIQ91mxIGROS3d7wS+fO3A==
 
 "@fortawesome/fontawesome-common-types@^0.2.8":
   version "0.2.8"
@@ -703,47 +708,47 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.8"
 
-"@fortawesome/free-brands-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-5.5.0.tgz#50e020aced5b9652db1d2d9d7909c73561ff1f4a"
-  integrity sha512-R2I2eARMVofGTtfxe5+VaMRXiQYQQFoDkHj2Q1qZVn37eRFszDySvSlJuKTsqFRsOxoP4Iq+xIGFy/ppoSo3Wg==
+"@fortawesome/free-brands-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-5.6.1.tgz#5f96bb8eb17cc62f962546e7d0e76086bfcec696"
+  integrity sha512-rrlucemW9+Az26+faQ9O7D50PPrBD+0ATi86yufqnyy44HapoWPuu/0AJhdUCV4hDEWMrAVAvGUEVg9oxHoTHQ==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/free-regular-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.5.0.tgz#15f59e2727f863acde11b34957d485657638b322"
-  integrity sha512-qXOglmsMJR3a//AtfTHYaAITODuTDV73IDtU95diP//wSU+md8umWryB6B38S9b5ECvH8eMN1zLa+np2Pw564g==
+"@fortawesome/free-regular-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.6.1.tgz#7da568c166105936554c512f4e02487aa311c756"
+  integrity sha512-5ztVA0cdbY+uMi1huFdC5gQTmsTMT3x87Ow7kN89ZbtaQcEcVG9l7h1+KIN5CrtQ5+ihdkDZdbZh7yqAlGDjaA==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/free-solid-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.5.0.tgz#4d815df4bba076f209eb409bc56d9d830367a7c0"
-  integrity sha512-VawIT2owNP97EwehZmxkvZDhoKwEevU/1HOMkln6kc4OtfE+JKYr6DpyzQnHVWXvz/eFj36QElHNe6zT8gR+Tg==
+"@fortawesome/free-solid-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.6.1.tgz#5f6888639c8564a7ba98f4f295807ca5bc250e2c"
+  integrity sha512-J5es6So1zoT234XkYVkuDtHKeeNe7gvTM9VHdEwG8wSKwSIbdMixoNAMBbL88haGUolj0YjEmZwov4NMTx3Srw==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/pro-light-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-light-svg-icons/-/pro-light-svg-icons-5.5.0.tgz#bbfafc6c315592bd93bd77d96b22ba5cc054f745"
-  integrity sha512-Ywqf0tZ0nxbshnc2L3FkjP99uO7CYWUn+RaAxSJS2gAivzl64Kd84/JIPFsiUJID4Edn6lYd56pwcq72/kAUcQ==
+"@fortawesome/pro-light-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-light-svg-icons/-/pro-light-svg-icons-5.6.1.tgz#965c072297fe64d7d0dae6e904caa29272ad47ab"
+  integrity sha512-eYaazW5s75jkcsTqck+mQs+zNj8HIcRSMrBXFsGbvG7LGaRBw1fHkiIBqFlxC5S9E0nt0nibGT4MusBu2QUOHg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/pro-regular-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/pro-regular-svg-icons-5.5.0.tgz#2533fb1ea44b6fefbe9eaf5c19104ec48ea60675"
-  integrity sha512-CBZeN+Tytsy53IGssKRUj0OM2VwOq92E9s71ceHuvDY3ik93YkMxcUaGdll+adXu5VbCHBAW5lc7cOqhw4JAJw==
+"@fortawesome/pro-regular-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/pro-regular-svg-icons-5.6.1.tgz#c956cf0bf3be97daa3d15019587e50d3c422a5f1"
+  integrity sha512-3FOy4EZNuAPuJnq4alAEcWO9h95GRhmLjdZKcTTjC1nMMTXu+yX12rMOAtSMmgGt8sOMT2agF67nCjgKDoekNA==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
-"@fortawesome/pro-solid-svg-icons@^5.1.0":
-  version "5.5.0"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-solid-svg-icons/-/pro-solid-svg-icons-5.5.0.tgz#fccaba199394fa0a200b7a2617ea2b4b3b3c773d"
-  integrity sha512-XIzTlyDHLZFCiSQ7o4uxESvsUOzmtZ7MHwRuPnUerAC+iAF5Ye5lm9KzIiV3k08ZGAaEK1NZICcHXFYtZyNLEw==
+"@fortawesome/pro-solid-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-solid-svg-icons/-/pro-solid-svg-icons-5.6.1.tgz#7f6eee68dacc9d4f519d76ca0eaf6ba7fd2ae510"
+  integrity sha512-4nPqU4q1KgIgDO7QJN6uuVqagH+X77DmoQawTwrPs2CPkbtfJTNUn8N5ctXQWpJa/cYs1nxCNS5tkInYUMMq5Q==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.8"
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
 "@glimmer/compiler@^0.27.0":
   version "0.27.0"
@@ -5300,6 +5305,20 @@ ember-cli-normalize-entity-name@^1.0.0:
   dependencies:
     silent-error "^1.0.0"
 
+ember-cli-page-object@1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.15.0.tgz#e236e63b33be7ba719a21303217438ac920272ba"
+  integrity sha512-/GbDnGpzu7FuHrRHN5ETuHP7Lz6JP6vCalmqs2scqhrRi/7CVyS4AVsz/kQ9wSmF7eAO1bVqYVKHoFnZRh9qvw==
+  dependencies:
+    broccoli-file-creator "^2.1.1"
+    broccoli-merge-trees "^2.0.0"
+    ceibo "~2.0.0"
+    ember-cli-babel "^6.12.0"
+    ember-cli-node-assets "^0.2.2"
+    ember-native-dom-helpers "^0.5.3"
+    jquery "^3.2.1"
+    rsvp "^4.7.0"
+
 ember-cli-page-object@1.15.0-beta.3:
   version "1.15.0-beta.3"
   resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.15.0-beta.3.tgz#e41f3a33e35a6717c507b1a4c13fc990950c7d35"
@@ -5661,12 +5680,13 @@ ember-debug-handlers-polyfill@^1.1.1:
   resolved "https://registry.yarnpkg.com/ember-debug-handlers-polyfill/-/ember-debug-handlers-polyfill-1.1.1.tgz#e9ae0a720271a834221179202367421b580002ef"
   integrity sha512-lO7FBAqJjzbL+IjnWhVfQITypPOJmXdZngZR/Vdn513W4g/Q6Sjicao/mDzeDCb48Y70C4Facwk0LjdIpSZkRg==
 
-ember-drag-drop@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.5.1.tgz#23b36f5f4da27abe658a47227d669ed80eecf0ef"
-  integrity sha512-n+XCmnLJfVh0YjMjSxfNXdjauwYHX6sQ+0epJ7ylp80/WaRhQsvzyvzW0W+Q9rb76cG/jxHS30F9xb84NFXWcQ==
+ember-drag-drop@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/ember-drag-drop/-/ember-drag-drop-0.6.2.tgz#682712bc1a0b55b6da698e4ff3077daef0d9941d"
+  integrity sha512-k188JF6HdJW2VHWkjIMnRxXaVoChRrcY/J0ic/PaopW1XIioAKlmiUNJkeZCdvxpFibDNIt5smCid+6rX0ETvw==
   dependencies:
     ember-cli-babel "^6.6.0"
+    ember-jquery-legacy "^1.0.0"
 
 ember-export-application-global@^2.0.0:
   version "2.0.0"
@@ -5808,6 +5828,13 @@ ember-invoke-action@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ember-invoke-action/-/ember-invoke-action-1.5.1.tgz#b6cad51ee729fc227cdbdba83b2b5486f0fa5834"
   integrity sha512-co6Yg9r5qtK4LvZTZHk+u02YLPbnM2c5ZkXvundxEj3V7qdZg7RULfjU09LmohD+rxW5ADZlwgBi/32XIEWTlw==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
+ember-jquery-legacy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-jquery-legacy/-/ember-jquery-legacy-1.0.0.tgz#2a2a29109385dfabe4c626a3ac8d1dd3c6a4b9a3"
+  integrity sha1-KiopEJOF36vkxiajrI0d08akuaM=
   dependencies:
     ember-cli-babel "^6.6.0"
 
@@ -7823,19 +7850,19 @@ ignore@^5.0.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.4.tgz#33168af4a21e99b00c5d41cbadb6a6cb49903a45"
   integrity sha512-WLsTMEhsQuXpCiG173+f3aymI43SXa+fB1rSfbzyP4GkPP+ZFVuO0/3sFUGNBtifisPeDcl/uD/Y2NxZ7xFq4g==
 
-ilios-common@21.0.1:
-  version "21.0.1"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-21.0.1.tgz#ae4d42ba95c5d51a099ffff45719262733c23ba5"
-  integrity sha512-Bd2O6VyM4enFmsmZWOv1aJpFR1q5+imUsKur6NLVJNi/b+EQAME+I4rp+GrnE2l1i23JN5NYuC60tmilm6gFFw==
+ilios-common@21.1.0:
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-21.1.0.tgz#f6f66313360e23a8784b43d7d81aacc33a27be61"
+  integrity sha512-qpZ3RiGEoV38F8XoArb7ZqiaSbmd4duyfgZ3kXFED2+GO5Q2ehWk1QzVc/NkWLvdhCS4v2dxzdV70yEaerjp6Q==
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
-    "@fortawesome/ember-fontawesome" "^0.1.7"
-    "@fortawesome/free-brands-svg-icons" "^5.1.0"
-    "@fortawesome/free-regular-svg-icons" "^5.1.0"
-    "@fortawesome/free-solid-svg-icons" "^5.1.0"
-    "@fortawesome/pro-light-svg-icons" "^5.1.0"
-    "@fortawesome/pro-regular-svg-icons" "^5.1.0"
-    "@fortawesome/pro-solid-svg-icons" "^5.1.0"
+    "@fortawesome/ember-fontawesome" "^0.1.9"
+    "@fortawesome/free-brands-svg-icons" "^5.6.1"
+    "@fortawesome/free-regular-svg-icons" "^5.6.1"
+    "@fortawesome/free-solid-svg-icons" "^5.6.1"
+    "@fortawesome/pro-light-svg-icons" "^5.6.1"
+    "@fortawesome/pro-regular-svg-icons" "^5.6.1"
+    "@fortawesome/pro-solid-svg-icons" "^5.6.1"
     broccoli-file-creator "^2.1.1"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.1"
@@ -7848,12 +7875,12 @@ ilios-common@21.0.1:
     ember-cli-htmlbars "^3.0.0"
     ember-cli-mirage "^0.4.9"
     ember-cli-moment-shim "^3.1.0"
-    ember-cli-page-object "1.15.0-beta.3"
+    ember-cli-page-object "1.15.0"
     ember-cli-string-helpers "^2.0.0"
     ember-composable-helpers "^2.0.1"
     ember-concurrency "^0.8.21"
     ember-cp-validations "^3.3.1"
-    ember-drag-drop "^0.5.1"
+    ember-drag-drop "^0.6.2"
     ember-file-upload "^2.5.0"
     ember-intl "^3.4.0"
     ember-math-helpers "^2.7.1"
