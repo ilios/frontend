@@ -39,7 +39,7 @@
     "ember-cli-clipboard": "^0.10.0",
     "ember-cli-google-fonts": "^2.16.2",
     "ember-cli-htmlbars": "^3.0.0",
-    "ember-cli-mirage": "^0.4.9",
+    "ember-cli-mirage": "^0.4.10",
     "ember-cli-moment-shim": "^3.1.0",
     "ember-cli-page-object": "1.15.0",
     "ember-cli-string-helpers": "^2.0.0",
