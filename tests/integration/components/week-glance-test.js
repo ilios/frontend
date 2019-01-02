@@ -8,7 +8,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-const today = moment();
+const today = moment('2019-01-15');
 
 const mockEvents = [
   {

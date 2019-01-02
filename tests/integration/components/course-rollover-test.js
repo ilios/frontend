@@ -298,7 +298,7 @@ module('Integration | Component | course rollover', function(hooks) {
   test('rollover start date adjustment with former year course start date', async function(assert) {
     assert.expect(3);
 
-    const courseStartDate = moment().hour(0).minute(0).subtract(2, 'year').day(1);
+    const courseStartDate = moment('2019-01-15').hour(0).minute(0).subtract(2, 'year').day(1);
     const rolloverDate = moment()
       .hour(0)
       .minute(0)
