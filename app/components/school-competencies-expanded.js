@@ -105,7 +105,7 @@ export default Component.extend({
         RSVP.all(promises).then(() => {
           RSVP.all(domainsToRemove.invoke('save')).then(() => {
             this.set('isManaging', false);
-            this.set('bufferedTopics', []);
+            this.set('bufferedCompetencies', []);
             this.set('isSaving', false);
           });
         });
