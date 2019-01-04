@@ -83,6 +83,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           }).finally(() => {
             this.send('clearErrorDisplay');
             this.set('title', null);
+            this.set('iliosAdministratorEmail', null);
             this.set('showNewSchoolForm', false);
             this.set('isSavingNewSchool', false);
           });
