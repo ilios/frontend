@@ -85,8 +85,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
             this.set('title', null);
             this.set('showNewSchoolForm', false);
             this.set('isSavingNewSchool', false);
-
           });
+        } else {
+          this.set('isSavingNewSchool', false);
         }
       });
     },
