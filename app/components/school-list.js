@@ -64,6 +64,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     toggleNewSchoolForm(){
       this.set('showNewSchoolForm', !this.get('showNewSchoolForm'));
       this.set('newSchool', null);
+      this.set('title', null);
+      this.set('iliosAdministratorEmail', null);
     },
     hideNewSchoolForm(){
       this.set('showNewSchoolForm', false);
