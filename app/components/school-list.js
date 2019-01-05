@@ -29,13 +29,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   init(){
     this._super(...arguments);
-    this.set('newSchools', []);
     this.set('sortSchoolsBy', ['title']);
   },
   classNames: ['school-list'],
   tagName: 'section',
   schools: null,
-  newSchools: null,
+  newSchool: null,
   title: null,
   iliosAdministratorEmail: null,
   isSavingNewSchool: false,
@@ -64,10 +63,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   actions: {
     toggleNewSchoolForm(){
       this.set('showNewSchoolForm', !this.get('showNewSchoolForm'));
+      this.set('newSchool', null);
+      this.set('title', null);
+      this.set('iliosAdministratorEmail', null);
     },
     hideNewSchoolForm(){
       this.set('showNewSchoolForm', false);
       this.set('title', null);
+      this.set('iliosAdministratorEmail', null);
     },
     createNewSchool() {
       this.set('isSavingNewSchool', true);
@@ -79,10 +82,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           const iliosAdministratorEmail = this.get('iliosAdministratorEmail');
           let newSchool = this.get('store').createRecord('school', {title, iliosAdministratorEmail});
           newSchool.save().then(school => {
-            this.get('newSchools').pushObject(school);
+            this.set('newSchool', school);
           }).finally(() => {
             this.send('clearErrorDisplay');
             this.set('title', null);
+            this.set('iliosAdministratorEmail', null);
             this.set('showNewSchoolForm', false);
             this.set('isSavingNewSchool', false);
           });

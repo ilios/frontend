@@ -67,14 +67,14 @@
       </div>
     </section>
   {{/if}}
-  {{#each newSchools as |school|}}
+  {{#if newSchool}}
     <div class="savedschool">
-      {{#link-to "school" school}}
-        {{fa-icon "external-link-square-alt"}} {{school.title}}
+      {{#link-to "school" newSchool}}
+        {{fa-icon "external-link-square-alt"}} {{newSchool.title}}
       {{/link-to}}
       {{t "general.savedSuccessfully"}}
     </div>
-  {{/each}}
+  {{/if}}
   <div class="list">
     <table>
       <thead>
