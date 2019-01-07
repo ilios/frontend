@@ -17,12 +17,6 @@ export default Component.extend({
     return htmlSafe(`width: ${progress}%;`);
   }),
 
-  didReceiveAttrs() {
-    const incrementProgress = this.get('incrementProgress');
-    incrementProgress.perform();
-  },
-
-
   incrementProgress: task(function * () {
     const removeProgress = this.get('removeProgress');
     const isLoading = this.get('isLoading');
@@ -39,7 +33,7 @@ export default Component.extend({
     } else {
       return removeProgress.perform();
     }
-  }).restartable(),
+  }).restartable().on('init'),
 
   removeProgress: task(function * () {
     const progress = this.get('progress');
