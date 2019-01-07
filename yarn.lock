@@ -4494,9 +4494,9 @@ elliptic@^6.0.0:
     minimalistic-crypto-utils "^1.0.0"
 
 ember-ajax@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/ember-ajax/-/ember-ajax-4.0.1.tgz#2a33e10857019637f9ab574bbfc3c42ba21b4cf1"
-  integrity sha512-HbcXTltsxeIhfzwKBOMOE7PBsmVkbqLoenKThoPODMIiiJLtQ46NJztgIcKk5Hgw6zSDOtjHv8YG0nPkO379Aw==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ember-ajax/-/ember-ajax-4.0.2.tgz#ce86d52c24289657e0a230140b06a52fe453d655"
+  integrity sha512-YeeeAQizQc5ioCeraxFo30y3W6mmUxmndF0ShI/Wvwfe8IhVw40jL42itaUHbo2CxKsNRZzQ8x3re65dGM0CrA==
   dependencies:
     ember-cli-babel "^6.16.0"
     najax "^1.0.3"
@@ -5025,7 +5025,7 @@ ember-concurrency@0.8.20:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
-ember-concurrency@^0.8.21:
+ember-concurrency@^0.8.26:
   version "0.8.26"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.26.tgz#7aeaa5c00e87903a57726823efe68787a83154b0"
   integrity sha512-4GrtZdNKUMTsRbWzYwmUFXW+9pqab+78smw9Nn4ECUl1yuzIyHVcV7zKsgxgPISIGwrY6HwhgmFBCxipyyYP5w==
@@ -6312,9 +6312,9 @@ fast-deep-equal@^2.0.1:
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
 fast-glob@^2.0.2:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.4.tgz#e54f4b66d378040e0e4d6a68ec36bbc5b04363c0"
-  integrity sha512-FjK2nCGI/McyzgNtTESqaWP3trPvHyRyoyY70hxjc3oKPNmDe8taohLZpoVKoUjW85tbU5txaYUZCNtVzygl1g==
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.5.tgz#e03dd265921cfb7a11a896048ab9bb818a944d50"
+  integrity sha512-8E7F/dTYpMFiZpz8U9h87AMDaAWkkLrNzxAcolwwvlOURzFqeRS0XaiKeUEUcH1kWWPTXGPALq/ue7652YygzA==
   dependencies:
     "@mrmlnc/readdir-enhanced" "^2.2.1"
     "@nodelib/fs.stat" "^1.1.2"
