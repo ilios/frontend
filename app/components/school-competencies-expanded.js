@@ -112,7 +112,6 @@ export default Component.extend({
       });
 
       // cleanup
-      this.set('isManaging', false);
       this.set('bufferedCompetencies', []);
       this.set('isSaving', false);
       setSchoolManageCompetencies(false);
