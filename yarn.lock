@@ -4468,9 +4468,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.96:
-  version "1.3.98"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.98.tgz#f200bdac84b1110d7d9904f34f4fc6d5573a8a9c"
-  integrity sha512-WIZdNuvE3dFr6kkPgv4d/cfswNZD6XbeLBM8baOIQTsnbf4xWrVEaLvp7oNnbnMWWXDqq7Tbv+H5JfciLTJm4Q==
+  version "1.3.99"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.99.tgz#1b676afb6bce62165a3db7533bab3e2f8184bfcf"
+  integrity sha512-2+EyjU/3Iu+UEwcZimGLQ3VVloCjoLYcjm88vXW89UsqAwsXjgjNrnsK5iaxj6/H8CECSsaiMKlLIASjGhNuBg==
 
 elemental-calendar@^0.1.0:
   version "0.1.0"
@@ -4737,9 +4737,9 @@ ember-cli-lodash-subset@^2.0.1:
   integrity sha1-IMtop5D+D94kiN39jvu332/nZvI=
 
 ember-cli-mirage@^0.4.10:
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.4.11.tgz#48e887bbcc7fce0a24eb300fe8132f17547c44d3"
-  integrity sha512-oHPGAcGFxehbRxlzkkZi9VwE8+bUrgn1rCZ77QfunuFlLnjK0XS/QDNyLmhuyINt5t3OLecPwoZK0jdQXyioRA==
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.4.12.tgz#7f8158c820c3e0ddd449b65377ee0e19a62806dc"
+  integrity sha512-/bYZDsciKt0xzMd+nQb7dvwFV8Eg/sBcqLAh4zobXIooU+71x3yITCy7BwLC76v9LT0uKAyd6fZ3LlThjWEuoQ==
   dependencies:
     "@xg-wang/whatwg-fetch" "^3.0.0"
     broccoli-file-creator "^2.1.1"
@@ -4897,9 +4897,9 @@ ember-cli-uglify@^2.1.0:
     lodash.defaultsdeep "^4.6.0"
 
 ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0, ember-cli-version-checker@^2.1.1, ember-cli-version-checker@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.1.2.tgz#305ce102390c66e4e0f1432dea9dc5c7c19fed98"
-  integrity sha512-sjkHGr4IGXnO3EUcY21380Xo9Qf6bC8HWH4D62bVnrQop/8uha5XgMQRoAflMCeH6suMrezQL287JUoYc2smEw==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.2.0.tgz#47771b731fe0962705e27c8199a9e3825709f3b3"
+  integrity sha512-G+KtYIVlSOWGcNaTFHk76xR4GdzDLzAS4uxZUKdASuFX0KJE43C6DaqL+y3VTpUFLI2FIkAS6HZ4I1YBi+S3hg==
   dependencies:
     resolve "^1.3.3"
     semver "^5.3.0"
@@ -5016,16 +5016,7 @@ ember-composable-helpers@^2.0.1:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.6.0"
 
-ember-concurrency@0.8.20:
-  version "0.8.20"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.20.tgz#2c4f84ed3eb86cd0c7be9c2d21dd23f560757ac7"
-  integrity sha512-pZ0+F6UoGvDWL6boRLoQ0/qrEw3K8CHZcRRswOLdsPIGboYwquPD8pStm6haS7QIaEd+gfYxXYpdGfBo3fIUmg==
-  dependencies:
-    babel-core "^6.24.1"
-    ember-cli-babel "^6.8.2"
-    ember-maybe-import-regenerator "^0.1.5"
-
-ember-concurrency@^0.8.26:
+ember-concurrency@^0.8.21, ember-concurrency@^0.8.26:
   version "0.8.26"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.26.tgz#7aeaa5c00e87903a57726823efe68787a83154b0"
   integrity sha512-4GrtZdNKUMTsRbWzYwmUFXW+9pqab+78smw9Nn4ECUl1yuzIyHVcV7zKsgxgPISIGwrY6HwhgmFBCxipyyYP5w==
@@ -5505,20 +5496,20 @@ ember-simple-auth@^1.6.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-charts@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.17.0.tgz#e15c0ddf7bd25f2cdd7781894be01a2168eb6543"
-  integrity sha512-+7gU6+AiPQj0Hd/j15oAx382Yy0xYK+TaiyF9iYQgEkta5Nq113DhaaTyXgoP2CJWg8YRQdg+XRR73C+tuiOMA==
+ember-simple-charts@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-charts/-/ember-simple-charts-0.19.0.tgz#44634295f78e3130dd09c66cd4bc1776689800e8"
+  integrity sha512-8/AhLEvXQnrk74lPBZmGX2wvHsFKvmqG0IpoOSHumHAD8jgxris1T9RR9qJoYTdRUzcNmrorfgHWY5rur5lWIw==
   dependencies:
     d3 "^5.4.0"
-    ember-cli-babel "^6.8.1"
-    ember-cli-htmlbars "^2.0.1"
-    ember-cli-sass "8.0.1"
-    ember-concurrency "0.8.20"
+    ember-cli-babel "^7.1.2"
+    ember-cli-htmlbars "^3.0.0"
+    ember-cli-sass "^8.0.1"
+    ember-concurrency "^0.8.21"
     ember-d3 "0.4.3"
     ember-modal-dialog "^2.4.1"
     ember-resize-aware "^1.0.0"
-    ember-tether "1.0.0"
+    ember-tether "^1.0.0"
     merge "^1.2.0"
 
 ember-singularity@^1.2.1:
@@ -5582,7 +5573,7 @@ ember-test-selectors@^2.0.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-ember-tether@1.0.0:
+ember-tether@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0.tgz#6117ea7351927887cb74fa5d46097dd300280c2d"
   integrity sha1-YRfqc1GSeIfLdPpdRgl90wAoDC0=
@@ -6312,9 +6303,9 @@ fast-deep-equal@^2.0.1:
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
 fast-glob@^2.0.2:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.5.tgz#e03dd265921cfb7a11a896048ab9bb818a944d50"
-  integrity sha512-8E7F/dTYpMFiZpz8U9h87AMDaAWkkLrNzxAcolwwvlOURzFqeRS0XaiKeUEUcH1kWWPTXGPALq/ue7652YygzA==
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-2.2.6.tgz#a5d5b697ec8deda468d85a74035290a025a95295"
+  integrity sha512-0BvMaZc1k9F+MeWWMe8pL6YltFzZYcJsYU7D4JyDA6PAczaXvxqQQ/z+mDF7/4Mw01DeUc+i3CTKajnkANkV4w==
   dependencies:
     "@mrmlnc/readdir-enhanced" "^2.2.1"
     "@nodelib/fs.stat" "^1.1.2"
