@@ -49,7 +49,7 @@
     "ember-drag-drop": "^0.6.2",
     "ember-file-upload": "^2.5.0",
     "ember-intl": "^3.4.0",
-    "ember-math-helpers": "^2.7.1",
+    "ember-math-helpers": "^2.9.0",
     "ember-moment": "^7.4.1",
     "ember-one-way-select": "^4.0.0",
     "ember-pad": "^1.2.3",

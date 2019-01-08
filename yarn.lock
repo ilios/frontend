@@ -5281,7 +5281,7 @@ ember-macro-helpers@^1.0.0:
     ember-cli-test-info "^1.0.0"
     ember-weakmap "^3.0.0"
 
-ember-math-helpers@^2.7.1:
+ember-math-helpers@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/ember-math-helpers/-/ember-math-helpers-2.9.0.tgz#1211d34a63bd35d2657b79e28f1b653370ee7732"
   integrity sha512-sJu59PRLoHzTzeHPTMsaecnpn1/4rBBJ6efsQD9vVErkUGSx5iddeOvNfR/4MEpo+D6lHMDqNuQIglJwmTgdEw==
