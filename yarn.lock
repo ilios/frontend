@@ -2516,7 +2516,7 @@ broccoli-merge-trees@^2.0.0:
     broccoli-plugin "^1.3.0"
     merge-trees "^1.0.1"
 
-"broccoli-merge-trees@^2.0.0 || ^3.0.0", broccoli-merge-trees@^3.0.0, broccoli-merge-trees@^3.0.1:
+"broccoli-merge-trees@^2.0.0 || ^3.0.0", broccoli-merge-trees@^3.0.0, broccoli-merge-trees@^3.0.1, broccoli-merge-trees@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-3.0.2.tgz#f33b451994225522b5c9bcf27d59decfd8ba537d"
   integrity sha512-ZyPAwrOdlCddduFbsMyyFzJUrvW6b04pMvDiAQZrCwghlvgowJDY+EfoXn+eR1RRA5nmGHJ+B68T63VnpRiT1A==
@@ -4468,9 +4468,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.96:
-  version "1.3.99"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.99.tgz#1b676afb6bce62165a3db7533bab3e2f8184bfcf"
-  integrity sha512-2+EyjU/3Iu+UEwcZimGLQ3VVloCjoLYcjm88vXW89UsqAwsXjgjNrnsK5iaxj6/H8CECSsaiMKlLIASjGhNuBg==
+  version "1.3.100"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.100.tgz#899fb088def210aee6b838a47655bbb299190e13"
+  integrity sha512-cEUzis2g/RatrVf8x26L8lK5VEls1AGnLHk6msluBUg/NTB4wcXzExTsGscFq+Vs4WBBU2zbLLySvD4C0C3hwg==
 
 elemental-calendar@^0.1.0:
   version "0.1.0"
@@ -5526,13 +5526,13 @@ ember-source-channel-url@^1.0.1:
   dependencies:
     got "^8.0.1"
 
-ember-source@~3.6.0:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.6.1.tgz#61a286e4a954e2e514a25df6d97bfe5a380c1cfd"
-  integrity sha512-hkUvGz4XBLhmac1iCZBjGZGDY3y1ke6fMyfzxP6QutlGUtlQOaQsKOk0HuP3DR7pNggLzQfK8Qxjr5/bNQ1lPw==
+ember-source@~3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.7.0.tgz#99d8d306daf05a7a8063adcb944b04a9c9c94be7"
+  integrity sha512-4Ne361XAwLV0hYfFSbZP8NJUzD1IZLWHO1ON9Hb67K9B67H+3CF6SdbE+3+V+WiIom1n93/M35A72sNmh9CTjg==
   dependencies:
     broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^3.0.2"
     chalk "^2.3.0"
     ember-cli-babel "^7.1.3"
     ember-cli-get-component-path-option "^1.0.0"
