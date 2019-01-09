@@ -11,6 +11,7 @@ export default Component.extend({
   intl: service(),
   event: null,
   classNames: ['single-event'],
+  'data-test-single-event': true,
 
   taughtBy: computed('intl.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
@@ -165,6 +166,17 @@ export default Component.extend({
     const today = moment();
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
     return daysSinceLastUpdate < 6;
+  }),
+
+  offeredAt: computed('intl.locale', 'event.startDate', 'event.ilmSession', 'event.postrequisites', function(){
+    const intl = this.get('intl');
+    const event = this.get('event');
+    if (event.postrequisites.length) {
+      const postreq = event.postrequisites[0];
+      return intl.t('general.dueBefore', { name: postreq.name, date: moment(postreq.startDate).format("dddd, MMMM Do YYYY, h:mm a") });
+    } else {
+      return intl.t('general.offeredAt', { date: moment(event.startDate).format("dddd, MMMM Do YYYY, h:mm a") });
+    }
   }),
 
   /**

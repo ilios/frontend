@@ -1,6 +1,6 @@
 {{#if event}}
   <div class="single-event-summary">
-    <h1>
+    <h1 data-test-title>
       {{#if recentlyUpdated}}
         {{fa-icon
           "exclamation-circle"
@@ -10,11 +10,8 @@
       {{/if}}
       {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
-    <div class="single-event-offered-at">
-      {{t
-        "general.offeredAt"
-        date=(moment-format event.startDate "dddd, MMMM Do YYYY, h:mm a")
-      }}
+    <div class="single-event-offered-at" data-test-offered-at>
+      {{offeredAt}}
     </div>
     <div class="single-event-location">{{event.location}}</div>
     {{#if taughtBy}}

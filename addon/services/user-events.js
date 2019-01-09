@@ -41,7 +41,7 @@ export default Service.extend(EventMixin, {
 
 
   /**
-   * Retrieves and event by it's given slug.
+   * Parses event and does some transformation
    * @method getEventForSlug
    * @param {String} slug
    * @return {Promise.<Object>}
