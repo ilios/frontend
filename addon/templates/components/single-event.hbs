@@ -50,6 +50,20 @@
       {{! template-lint-disable no-triple-curlies }}
       {{{event.sessionDescription}}}<br>
     {{/if}}
+    {{#if @event.prerequisites.length}}
+      <p class="pre-work" data-test-pre-work>
+        <h5>{{t "general.preWork"}}</h5>
+        <ol>
+          {{#each @event.prerequisites as |event|}}
+            <li>
+              {{#link-to "events" event.slug}}
+                {{event.name}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ol>
+      </p>
+    {{/if}}
   </div>
 
   <fieldset>

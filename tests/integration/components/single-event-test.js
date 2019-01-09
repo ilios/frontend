@@ -213,4 +213,44 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     const formatedDate = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
     assert.equal(component.offeredAt, `Due Before postrequisite session (${formatedDate})`);
   });
+
+  test('prequisites are displayed', async function(assert) {
+    assert.expect(6);
+
+    const today = moment().hour(8).minute(0).second(0);
+    const prereq1 = EmberObject.create({
+      name: 'prework 1',
+      startDate: today.clone().subtract(1, 'day').format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+    });
+    const prereq2 = EmberObject.create({
+      name: 'prework 2',
+      startDate: today.clone().subtract(3, 'days').format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+    });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      prerequisites: [prereq1, prereq2]
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.preWork.length, 2);
+    assert.equal(component.preWork[0].title, 'prework 1');
+    assert.ok(component.preWork[0].hasLink);
+    assert.equal(component.preWork[1].title, 'prework 2');
+    assert.ok(component.preWork[1].hasLink);
+  });
 });
