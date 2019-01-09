@@ -189,6 +189,7 @@ general:
   owner: "Dueño"
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentObjectives: "Objetivos de Matriz"
+  prerequisites: "Prerrequisitos"
   printSummary: "Sumario Printado"
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"

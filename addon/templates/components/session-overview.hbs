@@ -242,8 +242,19 @@
         </span>
       </div>
     {{/if}}
+    <div class="prerequisites block">
+      <label>{{t "general.prerequisites"}}:</label>
+      {{#if session.hasPrerequisites}}
+        <span>
+          {{#each (await session.prerequisites) as |prerequisite|}}
+            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{prerequisite.title}}{{/link-to}},
+          {{/each}}
+        </span>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    </div>
     <hr>
-
     <div class="sessiondescription">
       <label>{{t "general.description"}}:</label>
       <span>
