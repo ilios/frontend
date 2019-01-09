@@ -197,7 +197,7 @@
               close=(action "revertIlmHoursChanges")
               saveOnEnter=true
               closeOnEscape=true
-              as |isSaving|
+            as |isSaving|
             }}
               <input
                 type="text"
@@ -216,27 +216,31 @@
         </span>
       </div>
       <div class="sessionilmduedate block">
-        <label>{{t "general.dueBy"}}:</label>
+        <label class={{if session.hasPostrequisite "not-applicable"}}>{{t "general.dueBy"}}:</label>
         <span>
           {{#if (is-fulfilled session.ilmSession)}}
-            {{#if editable}}
-              {{#editable-field
-                value=(moment-format session.ilmSession.dueDate "L")
-                save=(action "changeIlmDueDate")
-                close=(action "revertIlmDueDateChanges")
-              }}
-                {{pikaday-input
-                  value=dueDate
-                  format="L"
-                  onSelection=(action (mut dueDate))
-                  focusOut=(action "addErrorDisplayFor" "dueDate")
-                }}
-                {{#if (and (v-get this "dueDate" "isInvalid") (is-in showErrorsFor "dueDate"))}}
-                  <span class="validation-error-message">{{v-get this "dueDate" "message"}}</span>
-                {{/if}}
-              {{/editable-field}}
+            {{#if session.hasPostrequisite}}
+              <span class="not-applicable">{{moment-format session.ilmSession.dueDate "L"}}</span>
             {{else}}
-              {{moment-format session.ilmSession.dueDate "L"}}
+              {{#if editable}}
+                {{#editable-field
+                  value=(moment-format session.ilmSession.dueDate "L")
+                  save=(action "changeIlmDueDate")
+                  close=(action "revertIlmDueDateChanges")
+                }}
+                  {{pikaday-input
+                    value=dueDate
+                    format="L"
+                    onSelection=(action (mut dueDate))
+                    focusOut=(action "addErrorDisplayFor" "dueDate")
+                  }}
+                  {{#if (and (v-get this "dueDate" "isInvalid") (is-in showErrorsFor "dueDate"))}}
+                    <span class="validation-error-message">{{v-get this "dueDate" "message"}}</span>
+                  {{/if}}
+                {{/editable-field}}
+              {{else}}
+                {{moment-format session.ilmSession.dueDate "L"}}
+              {{/if}}
             {{/if}}
           {{/if}}
         </span>

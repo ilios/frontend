@@ -283,6 +283,15 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return ids.length > 0;
   }),
 
+  /**
+   * Computes if this session has a postrequisite.
+   * @property hasPostrequisite
+   * @type {Ember.computed}
+   */
+  hasPostrequisite: computed('postrequisite', function(){
+    return !!this.belongsTo('postrequisite').id();
+  }),
+
   init() {
     this._super(...arguments);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);

@@ -87,4 +87,8 @@
   .sessionassociatedgroups {
     grid-column: 1 / -1;
   }
+
+  .not-applicable {
+    text-decoration: line-through;
+  }
 }
