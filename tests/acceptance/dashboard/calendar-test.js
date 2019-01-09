@@ -1,4 +1,13 @@
-import { click, fillIn, findAll, find, currentURL, currentRouteName, visit, triggerEvent } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  findAll,
+  find,
+  currentURL,
+  currentRouteName,
+  visit,
+  triggerEvent
+} from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import {
@@ -608,10 +617,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(course);
     await click(term);
 
-    assert.equal(find(clearFilter).textContent.trim(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(sessiontype).checked, 'filter is checked');
-    assert.ok(find(course).checked, 'filter is checked');
-    assert.ok(find(term).checked, 'filter is checked');
+    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
+    assert.dom(sessiontype).isChecked('filter is checked');
+    assert.dom(course).isChecked('filter is checked');
+    assert.dom(term).isChecked('filter is checked');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
@@ -635,10 +644,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(courselevel);
     await click(cohort);
 
-    assert.equal(find(clearFilter).textContent.trim(), 'Clear Filters', 'clear filter button is active');
-    assert.ok(find(sessiontype).checked, 'filter is checked');
-    assert.ok(find(courselevel).checked, 'filter is checked');
-    assert.ok(find(cohort).checked, 'filter is checked');
+    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
+    assert.dom(sessiontype).isChecked('filter is checked');
+    assert.dom(courselevel).isChecked('filter is checked');
+    assert.dom(cohort).isChecked('filter is checked');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
@@ -812,14 +821,14 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     await visit('/dashboard?show=calendar');
     await showFilters();
-    assert.equal(findAll('div.event').length, 2);
+    assert.dom('div.event').exists({ count: 2 });
     await pickTerm(1);
-    assert.equal(findAll('div.event').length, 1);
+    assert.dom('div.event').exists({ count: 1 });
 
-    assert.equal(findAll(filters).length, 1);
+    assert.dom(filters).exists({ count: 1 });
     await click(filter);
-    assert.equal(findAll(filters).length, 0);
-    assert.equal(findAll('div.event').length, 2);
+    assert.dom(filters).doesNotExist();
+    assert.dom('div.event').exists({ count: 2 });
   });
 
   test('test tooltip', async function(assert) {

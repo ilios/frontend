@@ -3,7 +3,7 @@ import { sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { Promise as RSVPPromise} from 'rsvp';
+import { Promise as RSVPPromise } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import layout from '../templates/components/print-course';

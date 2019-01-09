@@ -1,7 +1,12 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  find
+} from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
@@ -73,24 +78,24 @@ module('Integration | Component | learning materials sort manager', function(hoo
     await render(hbs`{{learning-materials-sort-manager subject=subject}}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.draggable-object').length, 2);
-      assert.equal(find('.draggable-object:nth-of-type(1) [data-test-title]').textContent.trim(), lm2.get('title'));
-      assert.equal(findAll('.draggable-object:nth-of-type(1) .lm-type-icon .fa-paragraph').length, 1, 'Shows LM type icon.');
+      assert.dom('.draggable-object').exists({ count: 2 });
+      assert.dom('.draggable-object:nth-of-type(1) [data-test-title]').hasText(lm2.get('title'));
+      assert.dom('.draggable-object:nth-of-type(1) .lm-type-icon .fa-paragraph').exists({ count: 1 }, 'Shows LM type icon.');
 
       assert.equal(
         find('.draggable-object:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(/[\s\n\t]+/g, '')
       );
 
-      assert.equal(find('.draggable-object:nth-of-type(2) [data-test-title]').textContent.trim(), lm1.get('title'));
-      assert.equal(findAll('.draggable-object:nth-of-type(2) .lm-type-icon .fa-file-pdf').length, 1, 'Shows LM type icon.');
+      assert.dom('.draggable-object:nth-of-type(2) [data-test-title]').hasText(lm1.get('title'));
+      assert.dom('.draggable-object:nth-of-type(2) .lm-type-icon .fa-file-pdf').exists({ count: 1 }, 'Shows LM type icon.');
 
       assert.equal(
         find('.draggable-object:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${lm1.type.capitalize()}, owned by ${owner1.fullName}, Status: ${status1.title}`.replace(/[\s\n\t]+/g, '')
       );
-      assert.equal(findAll('.actions .bigadd').length, 1);
-      assert.equal(findAll('.actions .bigcancel').length, 1);
+      assert.dom('.actions .bigadd').exists({ count: 1 });
+      assert.dom('.actions .bigcancel').exists({ count: 1 });
     });
   });
 

@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -163,28 +163,28 @@ module('Integration | Component | dashboard week', function(hooks) {
     assert.dom(this.element.querySelector(allWeeks)).hasText('Last Week / Next Week / All Weeks');
     assert.equal(this.element.querySelectorAll(events).length, 2, 'Blank events are not shown');
 
-    assert.equal(find(firstEventTitle).textContent.trim(), 'Learn to Learn');
-    assert.equal(find(firstSessionType).textContent.trim(), 'Lecture');
-    assert.equal(find(firstLocation).textContent.trim(), '- Room 123');
-    assert.equal(find(firstDescription).textContent.trim(), 'Best Session For Sure');
+    assert.dom(firstEventTitle).hasText('Learn to Learn');
+    assert.dom(firstSessionType).hasText('Lecture');
+    assert.dom(firstLocation).hasText('- Room 123');
+    assert.dom(firstDescription).hasText('Best Session For Sure');
     assert.equal(find(firstLm1).textContent.replace(/[\t\n\s]+/g, ""), 'CitationCitationLMcitationtext');
-    assert.equal(findAll(firstLm1TypeIcon).length, 1, 'LM type icon is present');
+    assert.dom(firstLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.ok(find(firstLm2).textContent.includes('Link LM'));
     assert.equal(find(firstLm2Link).href, 'http://myhost.com/url2');
-    assert.equal(findAll(firstLm2TypeIcon).length, 1, 'LM type icon is present');
+    assert.dom(firstLm2TypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.ok(find(firstLm3).textContent.includes('File LM'));
     assert.equal(find(firstLm3Link).href, 'http://myhost.com/url1?inline');
     assert.equal(find(firstLm3DownloadLink).href, 'http://myhost.com/url1');
-    assert.equal(findAll(firstLm3TypeIcon).length, 1, 'LM type icon is present');
-    assert.equal(findAll(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
+    assert.dom(firstLm3TypeIcon).exists({ count: 1 }, 'LM type icon is present');
+    assert.dom(firstInstructors).doesNotExist('No Instructors leaves and empty spot');
 
-    assert.equal(find(secondEventTitle).textContent.trim(), 'Finding the Point in Life');
-    assert.equal(find(secondSessionType).textContent.trim(), 'Independent Learning');
-    assert.equal(find(secondLocation).textContent.trim(), '- Room 456');
-    assert.equal(findAll(secondDescription).length, 0, 'Empty Description is Empty');
+    assert.dom(secondEventTitle).hasText('Finding the Point in Life');
+    assert.dom(secondSessionType).hasText('Independent Learning');
+    assert.dom(secondLocation).hasText('- Room 456');
+    assert.dom(secondDescription).doesNotExist('Empty Description is Empty');
     assert.ok(find(secondLm1).textContent.includes('Great Slides'));
     assert.equal(find(secondLm1Link).href, 'http://myhost.com/url1');
-    assert.equal(findAll(secondLm1TypeIcon).length, 1, 'LM type icon is present');
+    assert.dom(secondLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.equal(find(secondInstructors).textContent.replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
   });
 

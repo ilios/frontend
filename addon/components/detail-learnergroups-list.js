@@ -1,7 +1,12 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import { all, Promise as RSVPPromise, filter, map } from 'rsvp';
+import {
+  all,
+  Promise as RSVPPromise,
+  filter,
+  map
+} from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/detail-learnergroups-list';
 

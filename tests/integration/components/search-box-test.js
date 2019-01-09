@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, fillIn, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  fillIn,
+  triggerKeyEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search box', function(hooks) {
@@ -9,7 +14,7 @@ module('Integration | Component | search box', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{search-box}}`);
 
-    assert.equal(findAll('input[type=search]').length, 1);
+    assert.dom('input[type=search]').exists({ count: 1 });
   });
 
   test('clicking search calls search', async function(assert) {

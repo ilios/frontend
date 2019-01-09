@@ -12,6 +12,6 @@ module('Integration | Component | visualizer-course-term', function(hooks) {
 
     await render(hbs`{{visualizer-course-term}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

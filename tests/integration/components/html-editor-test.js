@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { later } from '@ember/runloop';
 
@@ -11,8 +11,8 @@ module('Integration | Component | html editor', function(hooks) {
     await render(hbs`{{html-editor}}`);
 
     await later(() => {
-      assert.equal(this.element.textContent.trim(), 'BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');
-      assert.equal(findAll('svg').length, 7);
+      assert.dom(this.element).hasText('BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');
+      assert.dom('svg').exists({ count: 7 });
     }, 500);
   });
 });

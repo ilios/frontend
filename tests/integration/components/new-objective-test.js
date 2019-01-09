@@ -20,7 +20,7 @@ module('Integration | Component | new objective', function(hooks) {
       assert.ok(false); //shouldn't be called
     });
     await render(hbs`{{new-objective cancel=(action cancel)}}`);
-    assert.equal(findAll('.validation-error-message').length, 0);
+    assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('errors show up', async function(assert) {

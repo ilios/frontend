@@ -9,7 +9,7 @@ module('Integration | Component | progress bar', function(hooks) {
   test('it renders at default 0%', async function(assert) {
     await render(hbs`{{progress-bar}}`);
 
-    assert.equal(this.element.textContent.trim(), '0%');
+    assert.dom(this.element).hasText('0%');
   });
 
   test('changing percentage changes width', async function(assert) {
@@ -30,10 +30,10 @@ module('Integration | Component | progress bar', function(hooks) {
     
     await render(hbs`{{progress-bar percentage=passedValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '42%');
+    assert.dom(this.element).hasText('42%');
     
     this.set('passedValue', 11);
-    assert.equal(this.element.textContent.trim(), '11%');
+    assert.dom(this.element).hasText('11%');
     
   });
 });

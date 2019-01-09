@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | sessions-grid-loading', function(hooks) {
@@ -9,6 +9,6 @@ module('Integration | Component | sessions-grid-loading', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{sessions-grid-loading count=5}}`);
 
-    assert.equal(findAll('[data-test-row]').length, 5);
+    assert.dom('[data-test-row]').exists({ count: 5 });
   });
 });

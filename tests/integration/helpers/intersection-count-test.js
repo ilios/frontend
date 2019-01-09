@@ -12,7 +12,7 @@ module('Integration | Helper | intersection-count', function(hooks) {
 
     await render(hbs`{{intersection-count first second}}`);
 
-    assert.equal(this.element.textContent.trim(), '1');
+    assert.dom(this.element).hasText('1');
   });
 
   test('different', async function(assert) {
@@ -21,6 +21,6 @@ module('Integration | Helper | intersection-count', function(hooks) {
 
     await render(hbs`{{intersection-count first second}}`);
 
-    assert.equal(this.element.textContent.trim(), '1');
+    assert.dom(this.element).hasText('1');
   });
 });

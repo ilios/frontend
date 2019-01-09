@@ -11,6 +11,6 @@ module('Integration | Helper | has-route', function(hooks) {
     // @todo figure out how we can reach into `getOwner(this).lookup()` for testing purposes. [ST 2018/10/22]
     this.set('value', 'does-not-matter');
     await render(hbs`{{if (has-route value) 'true' 'false'}}`);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
   });
 });

@@ -140,15 +140,25 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
     let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
     assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Competency A (Domain A)'));
-    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).textContent.trim(), 'Session Objective B');
-    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).textContent.trim(), 'Session Objective A');
+    assert.dom(
+      this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)
+    ).hasText('Session Objective B');
+    assert.dom(
+      this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`)
+    ).hasText('Session Objective A');
     assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2)`).textContent.trim().startsWith('Domain B (Domain B)'));
-    assert.equal(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`).textContent.trim(), 'Session Objective C');
+    assert.dom(
+      this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`)
+    ).hasText('Session Objective C');
 
     let courseObjectivesSelector = '[data-test-course-objectives]';
     assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Domain A (Domain A)'));
-    assert.equal(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).textContent.trim(), 'Course Objective B');
-    assert.equal(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).textContent.trim(), 'Course Objective A');
+    assert.dom(
+      this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)
+    ).hasText('Course Objective B');
+    assert.dom(
+      this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`)
+    ).hasText('Course Objective A');
     assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`).textContent.trim().startsWith('Domain B (Domain B)'));
   });
 });

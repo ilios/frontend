@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ilios calendar week', function(hooks) {
@@ -42,7 +42,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     const weekTitles = '.week-titles .cell';
     const sunday = `${weekTitles}:nth-of-type(2)`;
 
-    assert.ok(find(sunday).classList.contains('clickable'));
+    assert.dom(sunday).hasClass('clickable');
 
     await click(sunday);
   });
@@ -65,7 +65,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     const weekTitles = '.week-titles .cell';
     const sunday = `${weekTitles}:nth-of-type(2)`;
 
-    assert.notOk(find(sunday).classList.contains('clickable'));
+    assert.dom(sunday).hasNoClass('clickable');
 
     await click(sunday);
   });
