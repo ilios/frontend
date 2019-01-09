@@ -6,10 +6,11 @@
       {{/link-to}}
     </span>
     <span class="date" data-test-date>
-      {{#if @event.ilmSession}}
-        <span class="ilm-due">{{t "general.dueBy"}}</span>
-      {{/if}}
-      {{moment-format @event.startDate "dddd h:mma"}}
+      {{t
+        "general.dueBefore"
+        name=@event.postrequisiteName
+        date=(format-date @event.startDate)
+      }}
     </span>
   </h4>
 </div>

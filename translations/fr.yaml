@@ -82,6 +82,7 @@ general:
   displayName: "Nom d’Affichage"
   done: Fini
   download: "Télécharger"
+  dueBefore: "Avant {name} ({date})"
   dueBy: Avant
   duePriorTo: "Dû avant"
   dueThisDay: "Dû ce jour-là"

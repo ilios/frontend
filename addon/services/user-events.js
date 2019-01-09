@@ -49,7 +49,13 @@ export default Service.extend(EventMixin, {
   createEventFromData(obj) {
     obj.isBlanked = !obj.offering && !obj.ilmSession;
     obj.slug = this.getSlugForEvent(obj);
-    obj.prerequisites = obj.prerequisites.map(prereq => this.createEventFromData(prereq)).sortBy('startDate', 'name');
+    obj.prerequisites = obj.prerequisites.map(prereq => {
+      const rhett = this.createEventFromData(prereq);
+      rhett.startDate = obj.startDate;
+      rhett.postrequisiteName = obj.name;
+
+      return rhett;
+    }).sortBy('startDate', 'name');
     obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq)).sortBy('startDate', 'name');
 
     return obj;
