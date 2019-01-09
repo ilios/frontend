@@ -284,7 +284,7 @@
       {{#if session.hasPrerequisites}}
         <span>
           {{#each (await session.prerequisites) as |prerequisite|}}
-            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{prerequisite.title}}{{/link-to}},
+            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to}},
           {{/each}}
         </span>
       {{else}}
