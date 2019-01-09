@@ -247,7 +247,15 @@
       </div>
     {{/if}}
     <div class="postrequisite block">
-      <label>{{t "general.duePriorTo"}}</label>
+      <label>
+        {{#if session.hasPostrequisite}}
+          {{#link-to "session.index" (await session.postrequisite.course) (await session.postrequisite)}}
+            {{fa-icon  "external-link-square-alt"}} {{t "general.duePriorTo"}}:
+          {{/link-to}}
+        {{else}}
+          {{t "general.duePriorTo"}}:
+        {{/if}}
+      </label>
       {{#if editable}}
         {{#editable-field
           value=(await postRequisiteTitle)
