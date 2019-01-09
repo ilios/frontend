@@ -83,6 +83,7 @@ general:
   done: Acabado
   download: Descargar
   dueBy: "Debido Por"
+  duePriorTo: "Debido antes de"
   dueThisDay: "Debido por esta fecha"
   duration: "Duración"
   durationHours: "{count, plural, =1 {un hora} other {# horas}}"

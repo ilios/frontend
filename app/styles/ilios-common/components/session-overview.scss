@@ -62,11 +62,9 @@
     }
   }
 
-  .independentlearningcontrol {
-    grid-column: 1 / -1;
-  }
-
-  .prerequisites {
+  .independentlearningcontrol,
+  .prerequisites,
+  .postrequisite {
     grid-column: 1/-1;
   }
 

@@ -83,6 +83,7 @@ general:
   done: Fini
   download: "Télécharger"
   dueBy: Avant
+  duePriorTo: "Dû avant"
   dueThisDay: "Dû ce jour-là"
   duration: "Durée"
   durationHours:  "{count, plural, =1 {1 une heure} other {# heures}}"
