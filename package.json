@@ -130,6 +130,7 @@
       "ember-export-application-global",
       "ember-load-initializers",
       "ember-maybe-import-regenerator",
+      "ember-source",
       "ember-resolver",
       "loader.js",
       "qunit-dom",
