@@ -1,5 +1,6 @@
-import { module, test } from 'ember-qunit';
 import { setupTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+import 'ember-qunit';
 
 import moment from 'moment';
 

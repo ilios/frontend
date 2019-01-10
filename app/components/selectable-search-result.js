@@ -7,9 +7,9 @@ export default Component.extend({
   selectedItems: A(),
   item: null,
   selected: computed('item', 'selectedItems.[]', function(){
-    return this.get('selectedItems').includes(this.item);
+    return this.selectedItems.includes(this.item);
   }),
   click() {
-    this.action(this.get('item'));
+    this.action(this.item);
   }
 });

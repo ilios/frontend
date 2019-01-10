@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -34,17 +34,17 @@ module('Integration | Component | school session attributes manager', function(h
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
     const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
 
-    assert.equal(find(attendanceTitle).textContent.trim(), 'Attendance Required');
-    assert.notOk(find(attendanceCheckbox).checked);
+    assert.dom(attendanceTitle).hasText('Attendance Required');
+    assert.dom(attendanceCheckbox).isNotChecked();
 
-    assert.equal(find(supplementalTitle).textContent.trim(), 'Supplemental Curriculum');
-    assert.ok(find(supplementalCheckbox).checked);
+    assert.dom(supplementalTitle).hasText('Supplemental Curriculum');
+    assert.dom(supplementalCheckbox).isChecked();
 
-    assert.equal(find(specialAttireTitle).textContent.trim(), 'Special Attire Required');
-    assert.notOk(find(specialAttireCheckbox).checked);
+    assert.dom(specialAttireTitle).hasText('Special Attire Required');
+    assert.dom(specialAttireCheckbox).isNotChecked();
 
-    assert.equal(find(specialEquipmentTitle).textContent.trim(), 'Special Equipment Required');
-    assert.notOk(find(specialEquipmentCheckbox).checked);
+    assert.dom(specialEquipmentTitle).hasText('Special Equipment Required');
+    assert.dom(specialEquipmentCheckbox).isNotChecked();
   });
 
   let selectTest = async function(context, assert, name, position){
@@ -70,9 +70,9 @@ module('Integration | Component | school session attributes manager', function(h
 
     const rows = 'table tbody tr';
     const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
-    assert.notOk(find(checkbox).checked);
+    assert.dom(checkbox).isNotChecked();
     await click(checkbox);
-    assert.ok(find(checkbox).checked);
+    assert.dom(checkbox).isChecked();
   };
 
   test('select showSessionAttendanceRequired', async function(assert) {
@@ -114,9 +114,9 @@ module('Integration | Component | school session attributes manager', function(h
 
     const rows = 'table tbody tr';
     const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
-    assert.ok(find(checkbox).checked);
+    assert.dom(checkbox).isChecked();
     await click(checkbox);
-    assert.notOk(find(checkbox).checked);
+    assert.dom(checkbox).isNotChecked();
   };
 
   test('unSelect showSessionAttendanceRequired', async function(assert) {

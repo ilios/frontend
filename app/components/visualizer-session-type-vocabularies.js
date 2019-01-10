@@ -16,7 +16,7 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   data: computed('sessionType.sessions.[]', async function(){
-    const sessionType = this.get('sessionType');
+    const sessionType = this.sessionType;
     const sessions = await sessionType.get('sessions');
     const terms = await map(sessions.toArray(), async session => {
       const sessionTerms = await session.get('terms');
@@ -63,13 +63,13 @@ export default Component.extend({
   }),
 
   vocabulariesWithLinkedTerms: computed('data.[]', async function(){
-    const data = await this.get('data');
+    const data = await this.data;
 
     return data.filter(obj => obj.data !== 0);
   }),
 
   async getTooltipData(obj){
-    const isIcon = this.get('isIcon');
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
     }
@@ -93,9 +93,9 @@ export default Component.extend({
   }).restartable(),
   actions: {
     donutClick(obj) {
-      const sessionType = this.get('sessionType');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
+      const sessionType = this.sessionType;
+      const isIcon = this.isIcon;
+      const router = this.router;
       if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
         return;
       }

@@ -19,7 +19,7 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
   programYear: alias('subject'),
 
   authHeaders: computed('session.isAuthenticated', function(){
-    const session = this.get('session');
+    const session = this.session;
     const { jwt } = session.data.authenticated;
     let headers = {};
     if (jwt) {
@@ -36,7 +36,7 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
 
   actions: {
     toggleExpand(objectiveId) {
-      const expandedObjectiveIds = this.get('expandedObjectiveIds');
+      const expandedObjectiveIds = this.expandedObjectiveIds;
       if (expandedObjectiveIds.includes(objectiveId)) {
         expandedObjectiveIds.removeObject(objectiveId);
       } else {
@@ -47,13 +47,13 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
   },
 
   downloadReport: task(function * (subject) {
-    const ajax = this.get('ajax');
-    const config = this.get('iliosConfig');
+    const ajax = this.ajax;
+    const config = this.iliosConfig;
     const apiPath = '/' + config.get('apiNameSpace');
     const resourcePath = '/programyears/' + subject.get('id') + '/downloadobjectivesmapping';
     const host = config.get('apiHost')?config.get('apiHost'):window.location.protocol + '//' + window.location.host;
     const url = host + apiPath + resourcePath;
-    const authHeaders = this.get('authHeaders');
+    const authHeaders = this.authHeaders;
 
     this.set('isDownloading', true);
     const content = yield ajax.request(url, {

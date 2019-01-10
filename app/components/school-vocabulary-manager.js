@@ -48,7 +48,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['school-vocabulary-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
-    const vocabulary = this.get('vocabulary');
+    const vocabulary = this.vocabulary;
     if (vocabulary) {
       this.set('title', vocabulary.get('title'));
       this.set('isActive', vocabulary.get('active'));
@@ -56,7 +56,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   sortedTerms: computed('vocabulary.terms.[]', 'newTerm', function(){
     return new Promise(resolve => {
-      const vocabulary = this.get('vocabulary');
+      const vocabulary = this.vocabulary;
       if (isPresent(vocabulary)) {
         vocabulary.get('terms').then(terms => {
           resolve(
@@ -84,13 +84,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   actions: {
     changeVocabularyTitle(){
-      const vocabulary = this.get('vocabulary');
-      const title = this.get('title');
+      const vocabulary = this.vocabulary;
+      const title = this.title;
       vocabulary.set('title', title);
       return vocabulary.save();
     },
     revertVocabularyTitleChanges(){
-      const vocabulary = this.get('vocabulary');
+      const vocabulary = this.vocabulary;
       this.set('title', vocabulary.get('title'));
     },
     createTerm(){
@@ -99,9 +99,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           this.send('removeErrorDisplayFor', 'newTermTitle');
-          let title = this.get('newTermTitle');
-          const vocabulary = this.get('vocabulary');
-          const store = this.get('store');
+          let title = this.newTermTitle;
+          const vocabulary = this.vocabulary;
+          const store = this.store;
           let term = store.createRecord('term', {title, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);

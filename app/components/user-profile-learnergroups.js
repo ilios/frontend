@@ -11,7 +11,7 @@ export default Component.extend({
   user: null,
 
   selectedLearnerGroups: computed('user.learnerGroups.[]', async function() {
-    const user = this.get('user');
+    const user = this.user;
     if (isEmpty(user)) {
       return [];
     }

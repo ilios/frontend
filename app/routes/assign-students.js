@@ -13,9 +13,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
     }
   },
   async model(){
-    const currentUser = this.get('currentUser');
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
+    const currentUser = this.currentUser;
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
 
     const user = await currentUser.get('model');
     const schools = await store.findAll('school');

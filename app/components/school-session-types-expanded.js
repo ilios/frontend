@@ -17,28 +17,28 @@ export default Component.extend({
   managedSessionTypeId: null,
   isManaging: notEmpty('managedSessionTypeId'),
   isCollapsible: computed('isManaging', 'school.session-types.length', async function(){
-    const school = this.get('school');
-    const isManaging = this.get('isManaging');
+    const school = this.school;
+    const isManaging = this.isManaging;
     const sessionTypes = await school.get('sessionTypes');
 
     return sessionTypes.get('length') && ! isManaging;
   }),
   sessionTypes: computed('school.sessionTypes.[]', async function(){
-    const school = this.get('school');
+    const school = this.school;
     return await school.get('sessionTypes');
   }),
   managedSessionType: computed('managedSessionTypeId', async function(){
-    const managedSessionTypeId = this.get('managedSessionTypeId');
-    const sessionTypes = await this.get('sessionTypes');
+    const managedSessionTypeId = this.managedSessionTypeId;
+    const sessionTypes = await this.sessionTypes;
     const sessionType = sessionTypes.findBy('id', managedSessionTypeId);
 
     return sessionType;
   }),
   save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const store = this.get('store');
+    const store = this.store;
     const sessionType = store.createRecord('sessionType');
-    const closeComponent = this.get('setSchoolNewSessionType');
-    const school = this.get('school');
+    const closeComponent = this.setSchoolNewSessionType;
+    const school = this.school;
     let aamcMethods = [];
     if (aamcMethod) {
       aamcMethods.pushObject(aamcMethod);
@@ -58,21 +58,21 @@ export default Component.extend({
   }),
   actions: {
     async collapse(){
-      const isCollapsible = this.get('isCollapsible');
-      const collapse = this.get('collapse');
-      const setSchoolManagedSessionType = this.get('setSchoolManagedSessionType');
+      const isCollapsible = this.isCollapsible;
+      const collapse = this.collapse;
+      const setSchoolManagedSessionType = this.setSchoolManagedSessionType;
       if (isCollapsible) {
         collapse();
         setSchoolManagedSessionType(null);
       }
     },
     cancel(){
-      const setSchoolManagedSessionType = this.get('setSchoolManagedSessionType');
+      const setSchoolManagedSessionType = this.setSchoolManagedSessionType;
       setSchoolManagedSessionType(null);
     },
     toggleSchoolNewSessionType(){
-      let schoolNewSessionType = this.get("schoolNewSessionType");
-      let setSchoolNewSessionType = this.get("setSchoolNewSessionType");
+      let schoolNewSessionType = this.schoolNewSessionType;
+      let setSchoolNewSessionType = this.setSchoolNewSessionType;
       setSchoolNewSessionType(!schoolNewSessionType);
     }
   }

@@ -56,9 +56,9 @@ module('Integration | Component | new user', function(hooks) {
     const schools = 'select:nth-of-type(1) option';
     let options = findAll(schools);
     assert.equal(options.length, 3);
-    assert.equal(options[0].textContent.trim(), 'school 0');
-    assert.equal(options[1].textContent.trim(), 'school 1');
-    assert.equal(options[2].textContent.trim(), 'school 2');
+    assert.dom(options[0]).hasText('school 0');
+    assert.dom(options[1]).hasText('school 1');
+    assert.dom(options[2]).hasText('school 2');
   });
 
   test('errors do not show up initially', async function(assert) {
@@ -66,7 +66,7 @@ module('Integration | Component | new user', function(hooks) {
       assert.ok(false); //shouldn't be called
     });
     await render(hbs`{{new-user close=(action close)}}`);
-    assert.equal(findAll('.message').length, 0);
+    assert.dom('.message').doesNotExist();
   });
 
   test('errors show up', async function(assert) {
@@ -76,7 +76,7 @@ module('Integration | Component | new user', function(hooks) {
     await render(hbs`{{new-user close=(action close)}}`);
 
     await click('.done');
-    assert.equal(findAll('.message').length, 5);
+    assert.dom('.message').exists({ count: 5 });
     let boxes = findAll('.item');
     assert.ok(boxes[0].textContent.includes('blank'));
     assert.ok(boxes[2].textContent.includes('blank'));

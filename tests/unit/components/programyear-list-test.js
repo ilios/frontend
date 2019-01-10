@@ -1,5 +1,6 @@
-import { module, test } from 'ember-qunit';
 import { setupTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+import 'ember-qunit';
 
 module('Unit | Component | programyear list', function(hooks) {
   setupTest(hooks);

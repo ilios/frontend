@@ -1,0 +1,1 @@
+[2,"testing",28,"app/routes/application.js","  //Override the default session invalidator so we can do auth stuff\n  sessionInvalidated() {\n    if (!Ember.testing) {\n      let logoutUrl = '/auth/logout';\n      return this.get('commonAjax').request(logoutUrl).then(response => {"]

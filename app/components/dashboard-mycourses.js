@@ -8,12 +8,12 @@ export default Component.extend({
   tagName: 'div',
   classNames: ['dashboard-mycourses'],
   listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function(){
-    return this.get('currentUser').get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {
+    return this.currentUser.get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {
       return courses.sortBy('startDate');
     });
   }),
   canEditCourses: computed('currentUser.performsNonLearnerFunction', async function(){
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     return currentUser.get('performsNonLearnerFunction');
   }),
 });

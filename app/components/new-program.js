@@ -43,11 +43,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.send('addErrorDisplayFor', 'title');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let program = this.get('store').createRecord('program', {
-            title: this.get('title'),
-            school: this.get('currentSchool')
+          let program = this.store.createRecord('program', {
+            title: this.title,
+            school: this.currentSchool
           });
-          this.get('save')(program).finally(()=>{
+          this.save(program).finally(()=>{
             this.set('isSaving', false);
           });
         } else {

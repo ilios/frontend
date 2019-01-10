@@ -10,9 +10,9 @@ export default Component.extend(SortableTable, {
   filter: null,
   courseIdFilter: null,
   filteredMaterials: computed('materials.[]', 'filter', 'courseIdFilter', function(){
-    let materials = this.get('materials');
-    const filter = this.get('filter');
-    const courseIdFilter = this.get('courseIdFilter');
+    let materials = this.materials;
+    const filter = this.filter;
+    const courseIdFilter = this.courseIdFilter;
     if (isPresent(courseIdFilter)) {
       materials = materials.filterBy('course', courseIdFilter);
     }
@@ -32,7 +32,7 @@ export default Component.extend(SortableTable, {
     return materials;
   }),
   courses: computed('materials.[]', function(){
-    const materials = this.get('materials');
+    const materials = this.materials;
     return materials.map(material => {
       return {
         id: material.course,

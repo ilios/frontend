@@ -100,7 +100,7 @@ export default Component.extend(NewUser, {
   namespace: reads('iliosConfig.apiNameSpace'),
 
   existingUsernames(){
-    const store = this.get('store');
+    const store = this.store;
     return new Promise(resolve => {
       store.findAll('authentication').then(authentications => {
         resolve(authentications.mapBy('username'));
@@ -119,7 +119,7 @@ export default Component.extend(NewUser, {
     return new Promise(resolve => {
       let allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
-        const intl = this.get('intl');
+        const intl = this.intl;
         this.set('fileUploadError', true);
         throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
       }
@@ -175,14 +175,14 @@ export default Component.extend(NewUser, {
 
   save: task(function * () {
     this.set('savedUserIds', []);
-    const store = this.get('store');
-    const nonStudentMode = this.get('nonStudentMode');
-    const selectedSchool = yield this.get('bestSelectedSchool');
-    const selectedCohort = yield this.get('bestSelectedCohort');
+    const store = this.store;
+    const nonStudentMode = this.nonStudentMode;
+    const selectedSchool = yield this.bestSelectedSchool;
+    const selectedCohort = yield this.bestSelectedCohort;
     const roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('id', '4');
 
-    let proposedUsers = this.get('selectedUsers');
+    let proposedUsers = this.selectedUsers;
 
     let validUsers = yield filter(proposedUsers, obj => {
       return obj.validate().then(({validations}) => {
@@ -235,16 +235,16 @@ export default Component.extend(NewUser, {
       } catch (e) {
         let userErrors = parts.filter(obj => obj.user.get('isError'));
         let authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
-        this.get('savingUserErrors').pushObjects(userErrors);
-        this.get('savingAuthenticationErrors').pushObjects(authenticationErrors);
+        this.savingUserErrors.pushObjects(userErrors);
+        this.savingAuthenticationErrors.pushObjects(authenticationErrors);
       } finally {
-        this.get('savedUserIds').pushObjects(parts.mapBy('user').mapBy('id'));
+        this.savedUserIds.pushObjects(parts.mapBy('user').mapBy('id'));
       }
 
     }
 
-    const flashMessages = this.get('flashMessages');
-    if (this.get('savingUserErrors').get('length') || this.get('savingAuthenticationErrors').get('length')) {
+    const flashMessages = this.flashMessages;
+    if (this.savingUserErrors.get('length') || this.savingAuthenticationErrors.get('length')) {
       flashMessages.warning('general.newUsersCreatedWarning');
     } else {
       flashMessages.success('general.newUsersCreatedSuccessfully');
@@ -269,15 +269,15 @@ export default Component.extend(NewUser, {
       // Check for the various File API support.
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         if (files.length > 0) {
-          this.get('parseFile').perform(files[0]);
+          this.parseFile.perform(files[0]);
         }
       } else {
-        const intl = this.get('intl');
+        const intl = this.intl;
         throw new Error(intl.t('general.unsupportedBrowserFailure'));
       }
     },
     toggleUserSelection(obj){
-      let selectedUsers = this.get('selectedUsers');
+      let selectedUsers = this.selectedUsers;
       if (selectedUsers.includes(obj)) {
         selectedUsers.removeObject(obj);
       } else {

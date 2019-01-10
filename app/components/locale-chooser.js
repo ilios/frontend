@@ -12,19 +12,19 @@ export default Component.extend({
   'data-test-locale-chooser': true,
 
   locale: computed('locales.[]', 'intl.locale', function () {
-    const locale = this.get('intl').get('locale');
+    const locale = this.intl.get('locale');
     return this.locales.findBy('id', locale[0]);
   }),
 
   locales: computed('intl.locales.[]', function() {
-    return this.get('intl').get('locales').uniq().map(locale => {
-      return { id: locale, text: this.get('intl').t('general.language.' + locale) };
+    return this.intl.get('locales').uniq().map(locale => {
+      return { id: locale, text: this.intl.t('general.language.' + locale) };
     });
   }),
 
   actions: {
     toggleMenu() {
-      const isOpen = this.get('isOpen');
+      const isOpen = this.isOpen;
       if (isOpen) {
         this.set('isOpen', false);
       } else {
@@ -33,8 +33,8 @@ export default Component.extend({
     },
     changeLocale(id) {
       this.set('isOpen', false);
-      this.get('intl').setLocale(id);
-      this.get('moment').setLocale(id);
+      this.intl.setLocale(id);
+      this.moment.setLocale(id);
       window.document.querySelector('html').setAttribute('lang', id);
     }
   },

@@ -38,7 +38,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     this.set('years', years);
 
-    const currentYear = this.get('currentYear');
+    const currentYear = this.currentYear;
     if (isPresent(currentYear) && years.includes(parseInt(currentYear.get('title'), 10))) {
       this.set('selectedYear', currentYear.get('title'));
     } else {
@@ -84,13 +84,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           this.send('removeErrorDisplayFor', 'title');
-          let course = this.get('store').createRecord('course', {
-            title: this.get('title'),
-            school: this.get('currentSchool'),
-            year: this.get('selectedYear'),
+          let course = this.store.createRecord('course', {
+            title: this.title,
+            school: this.currentSchool,
+            year: this.selectedYear,
             level: 1,
           });
-          this.get('save')(course);
+          this.save(course);
         } else {
           this.set('isSaving', false);
         }

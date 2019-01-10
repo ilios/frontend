@@ -10,7 +10,7 @@ export default Component.extend({
   learnerGroup: null,
   init(){
     this._super(...arguments);
-    const learnerGroup = this.get('learnerGroup');
+    const learnerGroup = this.learnerGroup;
     if (isPresent(learnerGroup)) {
       learnerGroup.get('instructors').then(instructors => {
         this.set('instructors', instructors.toArray());
@@ -22,22 +22,22 @@ export default Component.extend({
   },
   availableInstructorGroups: oneWay('learnerGroup.cohort.programYear.program.school.instructorGroups'),
   saveChanges: task(function * () {
-    const instructors = this.get('instructors');
-    const instructorGroups = this.get('instructorGroups');
-    yield this.get('save')(instructors, instructorGroups);
+    const instructors = this.instructors;
+    const instructorGroups = this.instructorGroups;
+    yield this.save(instructors, instructorGroups);
   }).drop(),
   actions: {
     addInstructor(user){
-      this.get('instructors').pushObject(user);
+      this.instructors.pushObject(user);
     },
     addInstructorGroup(instructorGroup){
-      this.get('instructorGroups').pushObject(instructorGroup);
+      this.instructorGroups.pushObject(instructorGroup);
     },
     removeInstructor(user){
-      this.get('instructors').removeObject(user);
+      this.instructors.removeObject(user);
     },
     removeInstructorGroup(instructorGroup){
-      this.get('instructorGroups').removeObject(instructorGroup);
+      this.instructorGroups.removeObject(instructorGroup);
     }
   }
 });

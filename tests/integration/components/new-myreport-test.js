@@ -3,7 +3,12 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find, click, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -34,7 +39,7 @@ module('Integration | Component | new myreport', function(hooks) {
     const subjects = '[data-test-subject] select';
 
     const schoolSelect = find(schools);
-    assert.equal(find(title).textContent, 'New Report');
+    assert.dom(title).hasText('New Report');
     assert.ok(schoolSelect.options[0].value, "null");
     assert.ok(schoolSelect.options[0].textContent.includes('All Schools'));
     assert.ok(schoolSelect.options[1].value, "1");
@@ -240,9 +245,9 @@ module('Integration | Component | new myreport', function(hooks) {
     const subjectSelect = find(subject);
     assert.equal(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
     await fillIn(object, 'instructor');
-    assert.equal(findAll(userSearch).length, 1);
+    assert.dom(userSearch).exists({ count: 1 });
     await fillIn(input, 'test');
     await click(firstResult);
-    assert.equal(find(selectedUser).textContent.trim(), 'Test Person');
+    assert.dom(selectedUser).hasText('Test Person');
   });
 });

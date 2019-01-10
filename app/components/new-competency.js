@@ -23,8 +23,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
     yield timeout(10);
-    const title = this.get('title');
-    yield this.get('add')(title);
+    const title = this.title;
+    yield this.add(title);
     this.send('clearErrorDisplay');
     this.set('title', null);
   }),
@@ -38,7 +38,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     if (13 === keyCode) {
-      this.get('save').perform();
+      this.save.perform();
       return;
     }
 

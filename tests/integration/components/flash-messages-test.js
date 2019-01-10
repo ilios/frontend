@@ -9,7 +9,7 @@ module('Integration | Component | flash-messages', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{flash-messages}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
 
   });
 });

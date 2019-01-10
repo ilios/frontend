@@ -38,7 +38,7 @@ export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisp
   isDownloading: false,
 
   downloadReport: task(function * (report) {
-    const ajax = this.get('ajax');
+    const ajax = this.ajax;
     this.set('isDownloading', true);
     const content = yield ajax.request(report.get('absoluteFileUri'), {
       method: 'GET',
@@ -51,8 +51,8 @@ export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisp
 
   actions: {
     changeName(){
-      const report = this.get('report');
-      const newName = this.get('reportName');
+      const report = this.report;
+      const newName = this.reportName;
       this.send('addErrorDisplayFor', 'reportName');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -72,7 +72,7 @@ export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisp
     },
 
     revertNameChanges(){
-      const report = this.get('report');
+      const report = this.report;
       this.set('reportName', report.get('name'));
     },
 

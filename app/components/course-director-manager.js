@@ -9,15 +9,15 @@ export default Component.extend({
   'data-test-course-director-manager': true,
   saveChanges: task(function * () {
     yield timeout(10);  //small timeout so spinner has time to load
-    const directors = this.get('directors');
-    yield this.get('save')(directors);
+    const directors = this.directors;
+    yield this.save(directors);
   }).drop(),
   actions: {
     addDirector(user){
-      this.get('directors').pushObject(user);
+      this.directors.pushObject(user);
     },
     removeDirector(user){
-      this.get('directors').removeObject(user);
+      this.directors.removeObject(user);
     },
   }
 });

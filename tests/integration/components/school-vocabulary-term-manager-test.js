@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, findAll, click } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  findAll,
+  click
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -68,15 +73,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     const termTitle = '.term-title .editinplace';
     const termDescription = '.term-description .editinplace';
 
-    assert.equal(find(all).textContent.trim(), 'All Vocabularies');
-    assert.equal(find(vocab).textContent.trim(), vocabulary.title);
-    assert.equal(find(firstParent).textContent.trim(), 'first');
-    assert.equal(find(secondParent).textContent.trim(), 'second');
-    assert.equal(find(termCrumb).textContent.trim(), title);
-    assert.equal(find(termTitle).textContent.trim(), title);
-    assert.equal(find(termDescription).textContent.trim(), description);
-    assert.equal(find('.terms ul li').textContent.trim(), 'first child');
-    assert.equal(find(findAll('.terms ul li')[1]).textContent.trim(), 'second child (inactive)');
+    assert.dom(all).hasText('All Vocabularies');
+    assert.dom(vocab).hasText(vocabulary.title);
+    assert.dom(firstParent).hasText('first');
+    assert.dom(secondParent).hasText('second');
+    assert.dom(termCrumb).hasText(title);
+    assert.dom(termTitle).hasText(title);
+    assert.dom(termDescription).hasText(description);
+    assert.dom('.terms ul li').hasText('first child');
+    assert.dom(findAll('.terms ul li')[1]).hasText('second child (inactive)');
   });
 
   test('activate inactive term', async function(assert) {
@@ -112,11 +117,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.notOk(find(toggleValue).checked);
+    assert.dom(toggleValue).isNotChecked();
     await click(toggle);
     await settled();
     assert.ok(term.get('active'));
-    assert.ok(find(toggleValue).checked);
+    assert.dom(toggleValue).isChecked();
   });
 
   test('inactive active term', async function(assert) {
@@ -152,10 +157,10 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     const toggle = `.is-active .toggle-yesno`;
     const toggleValue = `${toggle} input`;
-    assert.ok(find(toggleValue).checked);
+    assert.dom(toggleValue).isChecked();
     await click(toggle);
     await settled();
     assert.notOk(term.get('active'));
-    assert.notOk(find(toggleValue).checked);
+    assert.dom(toggleValue).isNotChecked();
   });
 });

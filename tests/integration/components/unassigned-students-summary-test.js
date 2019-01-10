@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -61,11 +61,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
 
     let options = findAll('option');
     assert.equal(options.length, 2);
-    assert.equal(options[0].textContent.trim(), 'school 0');
-    assert.equal(options[1].textContent.trim(), 'school 1');
+    assert.dom(options[0]).hasText('school 0');
+    assert.dom(options[1]).hasText('school 1');
 
-    assert.equal(findAll('button').length, 1);
-    assert.ok(find('div:nth-of-type(2)').classList.contains('alert'));
+    assert.dom('button').exists({ count: 1 });
+    assert.dom('div:nth-of-type(2)').hasClass('alert');
   });
 
   test('it renders empty', async function(assert) {
@@ -87,7 +87,7 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
 
-    assert.notOk(find('div:nth-of-type(2)').classList.contains('alert'));
-    assert.equal(findAll('button').length, 0);
+    assert.dom('div:nth-of-type(2)').hasNoClass('alert');
+    assert.dom('button').doesNotExist();
   });
 });

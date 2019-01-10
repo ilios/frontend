@@ -7,19 +7,19 @@ export default Component.extend({
   tagName: 'section',
   classNames: ['school-session-types-collapsed'],
   sessionTypes: computed('school.sessionTypes.[]', async function(){
-    const school = this.get('school');
+    const school = this.school;
     if (!school) {
       return [];
     }
     return await school.get('sessionTypes');
   }),
   instructionalMethods: computed('sessionTypes.[]', async function(){
-    const sessionTypes = await this.get('sessionTypes');
+    const sessionTypes = await this.sessionTypes;
 
     return sessionTypes.filterBy('assessment', false);
   }),
   assessmentMethods: computed('sessionTypes.[]', async function(){
-    const sessionTypes = await this.get('sessionTypes');
+    const sessionTypes = await this.sessionTypes;
 
     return sessionTypes.filterBy('assessment');
   }),

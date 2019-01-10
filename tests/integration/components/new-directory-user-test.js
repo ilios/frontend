@@ -3,7 +3,12 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  findAll,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -75,7 +80,7 @@ module('Integration | Component | new directory user', function(hooks) {
     );
     const searchBox = '.new-directory-user-search-tools';
     const searchInput = `${searchBox} input`;
-    assert.equal(find(searchInput).value, startingSearchTerms, 'passed value is in the box');
+    assert.dom(searchInput).hasValue(startingSearchTerms, 'passed value is in the box');
 
   });
 
@@ -172,30 +177,39 @@ module('Integration | Component | new directory user', function(hooks) {
 
     const save = '.done';
 
-    assert.ok(find(firstIcon).classList.contains('fa-plus'), 'this user can be added');
-    assert.equal(findAll(firstResultValues)[1].textContent.trim(), user1Object.get('firstName') + ' ' + user1Object.get('lastName'), 'correct display for name');
-    assert.equal(findAll(firstResultValues)[2].textContent.trim(), user1Object.get('campusId'), 'correct display for campusId');
-    assert.equal(findAll(firstResultValues)[3].textContent.trim(), user1Object.get('email'), 'correct display for email');
+    assert.dom(firstIcon).hasClass('fa-plus', 'this user can be added');
+    assert.dom(findAll(firstResultValues)[1]).hasText(
+      user1Object.get('firstName') + ' ' + user1Object.get('lastName'),
+      'correct display for name'
+    );
+    assert.dom(findAll(firstResultValues)[2]).hasText(user1Object.get('campusId'), 'correct display for campusId');
+    assert.dom(findAll(firstResultValues)[3]).hasText(user1Object.get('email'), 'correct display for email');
 
-    assert.ok(find(secondIcon).classList.contains('fa-sun'), 'correct display for things');
-    assert.equal(findAll(secondResultValues)[1].textContent.trim(), user2Object.get('firstName') + ' ' + user2Object.get('lastName'), 'correct display for name');
-    assert.equal(findAll(secondResultValues)[2].textContent.trim(), user2Object.get('campusId'), 'correct display for campusId');
-    assert.equal(findAll(secondResultValues)[3].textContent.trim(), user2Object.get('email'), 'correct display for email');
+    assert.dom(secondIcon).hasClass('fa-sun', 'correct display for things');
+    assert.dom(findAll(secondResultValues)[1]).hasText(
+      user2Object.get('firstName') + ' ' + user2Object.get('lastName'),
+      'correct display for name'
+    );
+    assert.dom(findAll(secondResultValues)[2]).hasText(user2Object.get('campusId'), 'correct display for campusId');
+    assert.dom(findAll(secondResultValues)[3]).hasText(user2Object.get('email'), 'correct display for email');
 
-    assert.ok(find(thirdIcon).classList.contains('fa-ambulance'), 'correct display for things');
-    assert.equal(findAll(thirdResultValues)[1].textContent.trim(), user3Object.get('firstName') + ' ' + user3Object.get('lastName'), 'correct display for name');
-    assert.equal(findAll(thirdResultValues)[2].textContent.trim(), '', 'campus id is empty');
-    assert.equal(findAll(thirdResultValues)[3].textContent.trim(), '', 'email is empty');
+    assert.dom(thirdIcon).hasClass('fa-ambulance', 'correct display for things');
+    assert.dom(findAll(thirdResultValues)[1]).hasText(
+      user3Object.get('firstName') + ' ' + user3Object.get('lastName'),
+      'correct display for name'
+    );
+    assert.dom(findAll(thirdResultValues)[2]).hasText('', 'campus id is empty');
+    assert.dom(findAll(thirdResultValues)[3]).hasText('', 'email is empty');
 
     await click(firstIcon);
 
-    assert.equal(find(firstName).textContent.trim(), user1Object.get('firstName'), 'firstName is correct in form');
-    assert.equal(find(lastName).textContent.trim(), user1Object.get('lastName'), 'lastName is correct in form');
-    assert.equal(find(campusId).textContent.trim(), user1Object.get('campusId'), 'campusId is correct in form');
-    assert.equal(find(email).textContent.trim(), user1Object.get('email'), 'email is correct in form');
-    assert.equal(find(phone).textContent.trim(), user1Object.get('telephoneNumber'), 'phone is correct in form');
-    assert.equal(find(otherId).textContent.trim(), '', 'otherId is blank in form');
-    assert.equal(find(username).textContent.trim(), user1Object.get('username'), 'username is correct in form');
+    assert.dom(firstName).hasText(user1Object.get('firstName'), 'firstName is correct in form');
+    assert.dom(lastName).hasText(user1Object.get('lastName'), 'lastName is correct in form');
+    assert.dom(campusId).hasText(user1Object.get('campusId'), 'campusId is correct in form');
+    assert.dom(email).hasText(user1Object.get('email'), 'email is correct in form');
+    assert.dom(phone).hasText(user1Object.get('telephoneNumber'), 'phone is correct in form');
+    assert.dom(otherId).hasText('', 'otherId is blank in form');
+    assert.dom(username).hasText(user1Object.get('username'), 'username is correct in form');
 
     await click(save);
 

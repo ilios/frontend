@@ -7,7 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   editable: false,
   async afterModel(model) {
-    const permissionChecker = this.get('permissionChecker');
+    const permissionChecker = this.permissionChecker;
 
     const school = await model.get('school');
     const canUpdate = await permissionChecker.canUpdateLearnerGroup(model);
@@ -28,8 +28,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canUpdate', this.get('canUpdate'));
-    controller.set('canDelete', this.get('canDelete'));
-    controller.set('canCreate', this.get('canCreate'));
+    controller.set('canUpdate', this.canUpdate);
+    controller.set('canDelete', this.canDelete);
+    controller.set('canCreate', this.canCreate);
   }
 });

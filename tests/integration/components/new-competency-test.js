@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, fillIn, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | new competency', function(hooks) {
@@ -9,8 +14,8 @@ module('Integration | Component | new competency', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{new-competency}}`);
 
-    assert.equal(findAll('input').length, 1);
-    assert.equal(find('button').textContent.trim(), 'Add');
+    assert.dom('input').exists({ count: 1 });
+    assert.dom('button').hasText('Add');
   });
 
   test('save', async function(assert) {
@@ -29,7 +34,7 @@ module('Integration | Component | new competency', function(hooks) {
     assert.expect(1);
 
     await render(hbs`{{new-competency}}`);
-    assert.equal(findAll('.validation-error-message').length, 0);
+    assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('validation errors show up when saving', async function(assert) {
@@ -37,7 +42,7 @@ module('Integration | Component | new competency', function(hooks) {
 
     await render(hbs`{{new-competency}}`);
     await click('button.save');
-    assert.equal(findAll('.validation-error-message').length, 1);
+    assert.dom('.validation-error-message').exists({ count: 1 });
     return settled();
   });
 });

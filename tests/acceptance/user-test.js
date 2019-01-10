@@ -1,4 +1,10 @@
-import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
+import {
+  click,
+  fillIn,
+  currentURL,
+  triggerEvent,
+  visit
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -44,12 +50,12 @@ module('Acceptance | User', function(hooks) {
     await visit('/users/100');
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
-    assert.equal(find(secondResultUsername).textContent.trim(), '1 guy M. Mc1son', 'user name is correct');
-    assert.equal(find(secondResultEmail).textContent.trim(), 'user@example.edu', 'user email is correct');
+    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
+    assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
     await click(secondResultUsername);
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
-    assert.equal(find(name).textContent.trim(), '1 guy M. Mc1son', 'user name is shown');
+    assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
   });
 
   test('User roles display', async function (assert) {

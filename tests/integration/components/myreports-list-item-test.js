@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -22,8 +22,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     });
     await render(hbs`{{myreports-list-item report=report selectReport=(action selectReport)}}`);
 
-    assert.equal(this.element.textContent.trim(), report.title);
-    assert.equal(findAll('.clickable').length, 1);
+    assert.dom(this.element).hasText(report.title);
+    assert.dom('.clickable').exists({ count: 1 });
     await click('.clickable');
   });
 
@@ -40,8 +40,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     });
     await render(hbs`{{myreports-list-item report=report selectReport=(action selectReport)}}`);
 
-    assert.equal(this.element.textContent.trim(), 'All Competencies in All Schools');
-    assert.equal(findAll('.clickable').length, 1);
+    assert.dom(this.element).hasText('All Competencies in All Schools');
+    assert.dom('.clickable').exists({ count: 1 });
     await click('.clickable');
   });
 
@@ -56,8 +56,8 @@ module('Integration | Component | myreports list item', function(hooks) {
     const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
     this.set('report', reportModel);
     await render(hbs`{{myreports-list-item report=report}}`);
-    assert.equal(this.element.textContent.trim(), 'All Competencies in ' + school.title);
-    assert.equal(findAll('.clickable').length, 1);
+    assert.dom(this.element).hasText('All Competencies in ' + school.title);
+    assert.dom('.clickable').exists({ count: 1 });
   });
 
   test('all competencies for user X in school Y', async function(assert) {
@@ -79,8 +79,10 @@ module('Integration | Component | myreports list item', function(hooks) {
     this.set('report', reportModel);
     await render(hbs`{{myreports-list-item report=report}}`);
 
-    assert.equal(this.element.textContent.trim(), 'All Competencies for ' + userModel.get('fullName') +  ' in ' + school.title);
-    assert.equal(findAll('.clickable').length, 1);
+    assert.dom(this.element).hasText(
+      'All Competencies for ' + userModel.get('fullName') +  ' in ' + school.title
+    );
+    assert.dom('.clickable').exists({ count: 1 });
   });
 
   test('broken report', async function(assert) {
@@ -97,7 +99,7 @@ module('Integration | Component | myreports list item', function(hooks) {
     this.set('report', reportModel);
 
     await render(hbs`{{myreports-list-item report=report}}`);
-    assert.equal(this.element.textContent.trim(), 'This report is no longer available.');
-    assert.equal(findAll('.clickable').length, 0);
+    assert.dom(this.element).hasText('This report is no longer available.');
+    assert.dom('.clickable').doesNotExist();
   });
 });

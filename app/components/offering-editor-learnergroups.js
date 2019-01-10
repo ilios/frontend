@@ -11,7 +11,7 @@ export default Component.extend({
 
   revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', async function() {
     const cohortId = this.get('cohort.id');
-    let learnerGroups = this.get('learnerGroups')[cohortId];
+    let learnerGroups = this.learnerGroups[cohortId];
 
     if (isPresent(learnerGroups)) {
       return await map(learnerGroups, async group => {
@@ -34,7 +34,7 @@ export default Component.extend({
 
 
   sortedLearnerGroups: computed('revisedLearnerGroups.[]', async function() {
-    const groups = await this.get('revisedLearnerGroups');
+    const groups = await this.revisedLearnerGroups;
     return groups.sortBy('sortName');
   }),
 

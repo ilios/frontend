@@ -12,6 +12,6 @@ module('Integration | Component | visualizer session type vocabularies', functio
 
     await render(hbs`{{visualizer-session-type-vocabularies}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

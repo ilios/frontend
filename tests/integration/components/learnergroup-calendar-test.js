@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, click } from '@ember/test-helpers';
+import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -49,7 +49,7 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
     const events = '.ilios-calendar-event';
     await settled();
 
-    assert.equal(findAll(events).length, 1);
+    assert.dom(events).exists({ count: 1 });
   });
 
   test('shows subgroup events', async function(assert) {
@@ -96,6 +96,6 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
 
     await click(subgroupEventsToggle);
     await settled();
-    assert.equal(findAll(events).length, 2);
+    assert.dom(events).exists({ count: 2 });
   });
 });
