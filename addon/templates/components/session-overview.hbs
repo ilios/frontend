@@ -279,9 +279,10 @@
       <label>{{t "general.prerequisites"}}:</label>
       {{#if session.hasPrerequisites}}
         <span>
-          {{#each (await session.prerequisites) as |prerequisite|}}
-            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to}},
-          {{/each}}
+          {{#each (await session.prerequisites) as |prerequisite|~}}
+            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
+            {{#unless (eq prerequisite session.prerequisites.lastObject)}}, {{/unless}}
+          {{~/each}}
         </span>
       {{else}}
         {{t "general.none"}}
