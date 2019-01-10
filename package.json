@@ -108,7 +108,7 @@
     "validator": "^10.0.0"
   },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": ">= 10.*"
   },
   "ember-addon": {
     "paths": [
