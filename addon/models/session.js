@@ -273,7 +273,24 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return flat.uniq();
   }),
 
+  /**
+   * Computes if this session has any prerequisites.
+   * @property hasPrerequisites
+   * @type {Ember.computed}
+   */
+  hasPrerequisites: computed('prerequisites.[]', function(){
+    const ids = this.hasMany('prerequisites').ids();
+    return ids.length > 0;
+  }),
 
+  /**
+   * Computes if this session has a postrequisite.
+   * @property hasPostrequisite
+   * @type {Ember.computed}
+   */
+  hasPostrequisite: computed('postrequisite', function(){
+    return !!this.belongsTo('postrequisite').id();
+  }),
 
   init() {
     this._super(...arguments);

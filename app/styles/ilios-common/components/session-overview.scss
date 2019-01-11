@@ -62,8 +62,10 @@
     }
   }
 
-  .independentlearningcontrol {
-    grid-column: 1 / -1;
+  .independentlearningcontrol,
+  .prerequisites,
+  .postrequisite {
+    grid-column: 1/-1;
   }
 
   hr {
@@ -82,5 +84,9 @@
 
   .sessionassociatedgroups {
     grid-column: 1 / -1;
+  }
+
+  .not-applicable {
+    display: none;
   }
 }

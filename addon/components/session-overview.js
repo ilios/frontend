@@ -50,6 +50,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   currentUser: service(),
   routing: service('-routing'),
   permissionChecker: service(),
+  intl: service(),
   init() {
     this._super(...arguments);
     this.set('sortTypes', ['title']);
@@ -69,6 +70,10 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.set('sessionType', sessionType);
     });
 
+    this.get('session.postrequisite').then(postRequisite => {
+      this.set('postRequisite', postRequisite);
+    });
+
     this.get('session.sessionDescription').then(sessionDescription => {
       if (sessionDescription){
         this.set('description', sessionDescription.get('description'));
@@ -86,6 +91,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   sortTypes: null,
   sessionTypes: null,
   sessionType: null,
+  postRequisite: null,
   sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
@@ -97,6 +103,37 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     return this.get('sessionTypes').filter(sessionType => {
       return (sessionType.get('active') || sessionType.get('id') === selectedSessionTypeId);
     });
+  }),
+
+  /**
+   * A list of sessions in this session's course that can be linked to this session,
+   * excluding this session itself.
+   * @propery linkablePostrequisites
+   * @type {Ember.computed}
+   */
+  linkablePostrequisites: computed('session.course.sessions.[]', async function() {
+    const session = this.get('session');
+    const course = await session.get('course');
+    const sessions = await course.get('sessions');
+    return sessions.sortBy("title").toArray().filter(sessionInCourse => {
+      return sessionInCourse.get('id') !== session.get('id');
+    });
+  }),
+
+  /**
+   * This session's post-requisite title. If there is none then the an i18n text string indicating as such is returned.
+   * @property postRequisiteTitle
+   * @type {Ember.computed}
+   */
+  postRequisiteTitle: computed('session.postrequisite', async function(){
+    const intl = this.get('intl');
+    const session = this.get('session');
+    const postRequisite = await session.get('postrequisite');
+    if (postRequisite) {
+      return postRequisite.get('title');
+    } else {
+      return intl.t('general.none');
+    }
   }),
 
   /**
@@ -206,6 +243,30 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
           session.save();
         });
       }
+    },
+    async setPostrequisite(id) {
+      if (! id) {
+        this.set('postRequisite', null);
+        return;
+      }
+      const session = this.get('session');
+      const course = await session.get('course');
+      const sessions = await course.get('sessions');
+      const postRequisite = sessions.findBy('id', id);
+      this.set('postRequisite', postRequisite);
+    },
+
+    async changePostrequisite() {
+      const session = this.get('session');
+      const postRequisite = this.get('postRequisite');
+      session.set('postrequisite', postRequisite);
+      await session.save();
+    },
+
+    async revertPostrequisiteChanges() {
+      const session = this.get('session');
+      const postRequisite = await session.get('postRequisite');
+      this.set('postRequisite', postRequisite);
     },
     changeTitle(){
       const title = this.get('title');

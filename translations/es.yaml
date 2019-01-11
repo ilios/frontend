@@ -83,6 +83,7 @@ general:
   done: Acabado
   download: Descargar
   dueBy: "Debido Por"
+  duePriorTo: "Debido antes de"
   dueThisDay: "Debido por esta fecha"
   duration: "Duración"
   durationHours: "{count, plural, =1 {un hora} other {# horas}}"
@@ -189,6 +190,7 @@ general:
   owner: "Dueño"
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentObjectives: "Objetivos de Matriz"
+  prerequisites: "Prerrequisitos"
   printSummary: "Sumario Printado"
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"
