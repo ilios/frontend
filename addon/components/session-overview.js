@@ -256,11 +256,11 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.set('postRequisite', postRequisite);
     },
 
-    changePostrequisite() {
+    async changePostrequisite() {
       const session = this.get('session');
       const postRequisite = this.get('postRequisite');
       session.set('postrequisite', postRequisite);
-      session.save();
+      await session.save();
     },
 
     async revertPostrequisiteChanges() {
