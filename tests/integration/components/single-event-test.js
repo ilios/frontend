@@ -11,6 +11,10 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.owner.setupRouter();
+  }),
+
   test('it renders', async function(assert) {
     assert.expect(20);
 
@@ -183,7 +187,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   });
 
   test('postrequisite date and title are displayed', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     const today = moment().hour(8).minute(0).second(0);
     const tomorrow = today.clone().add(1, 'day');
@@ -194,6 +198,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
+      slug: '1234'
     });
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -202,7 +207,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
-      offering: 1,
+      ilmSession: 1,
       lastModified: null,
       postrequisites: [postReq]
     });
@@ -212,6 +217,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.equal(component.title, 'course - Learn to Learn');
     const formatedDate = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
     assert.equal(component.offeredAt, `Due Before postrequisite session (${formatedDate})`);
+    assert.equal(component.offeredAtLink, `/events/1234`);
   });
 
   test('prequisites are displayed', async function(assert) {
@@ -252,5 +258,41 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(component.preWork[0].hasLink);
     assert.equal(component.preWork[1].title, 'prework 2');
     assert.ok(component.preWork[1].hasLink);
+  });
+
+  test('for non ilms postrequisite date and title are displayed along with offering date', async function(assert) {
+    assert.expect(3);
+    this.owner.setupRouter();
+
+    const today = moment().hour(8).minute(0).second(0);
+    const tomorrow = today.clone().add(1, 'day');
+    const postReq = EmberObject.create({
+      name: 'postrequisite session',
+      courseTitle: 'course',
+      startDate: tomorrow.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      slug: '1234'
+    });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      postrequisites: [postReq]
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    const formattedTomorrow = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
+    const formattedToday = today.format('dddd, MMMM Do YYYY, h:mm a');
+    assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) On ${formattedToday}`);
+    assert.equal(component.offeredAtLink, `/events/1234`);
   });
 });

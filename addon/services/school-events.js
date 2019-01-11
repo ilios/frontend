@@ -31,10 +31,7 @@ export default Service.extend(EventMixin, {
     const commonAjax = this.get('commonAjax');
     const data = await commonAjax.request(url);
 
-    return data.events.map(event => {
-      event.slug = this.getSlugForEvent(event);
-      return event;
-    }).sortBy('startDate');
+    return data.events.map(obj => this.createEventFromData(obj)).sortBy('startDate', 'name');
   },
 
   /**

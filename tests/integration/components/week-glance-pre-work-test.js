@@ -49,9 +49,13 @@ module('Integration | Component | week-glance-pre-work', function(hooks) {
       equipmentRequired: true,
       attendanceRequired: true,
       supplemental: true,
+      postrequisiteName: 'reading to read',
+      postrequisiteSlug: '123',
     });
     await render(hbs`<WeekGlancePreWork @event={{event}} />`);
 
     assert.equal(component.title, 'Learn to Learn');
+    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.equal(component.url, '#event123');
   });
 });

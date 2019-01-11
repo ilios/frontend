@@ -10,8 +10,27 @@
       {{/if}}
       {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
+
     <div class="single-event-offered-at" data-test-offered-at>
-      {{offeredAt}}
+      {{#if (gt @event.postrequisites.length 0)}}
+        <p>
+          {{t
+            "general.dueBefore"
+            name=(get (object-at 0 @event.postrequisites) "name")
+            date=(moment-format (get (object-at 0 @event.postrequisites) "startDate") "dddd, MMMM Do YYYY, h:mm a")
+            link=postrequisiteLink
+            htmlSafe=true
+          }}
+        </p>
+      {{/if}}
+      {{#unless @event.ilmSession}}
+        <p>
+          {{t
+            "general.offeredAt"
+            date=(moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a")
+          }}
+        </p>
+      {{/unless}}
     </div>
     <div class="single-event-location">{{event.location}}</div>
     {{#if taughtBy}}

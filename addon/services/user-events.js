@@ -38,29 +38,6 @@ export default Service.extend(EventMixin, {
     return data.userEvents.map(obj => this.createEventFromData(obj)).sortBy('startDate', 'name');
   },
 
-
-
-  /**
-   * Parses event and does some transformation
-   * @method getEventForSlug
-   * @param {String} slug
-   * @return {Promise.<Object>}
-   */
-  createEventFromData(obj) {
-    obj.isBlanked = !obj.offering && !obj.ilmSession;
-    obj.slug = this.getSlugForEvent(obj);
-    obj.prerequisites = obj.prerequisites.map(prereq => {
-      const rhett = this.createEventFromData(prereq);
-      rhett.startDate = obj.startDate;
-      rhett.postrequisiteName = obj.name;
-
-      return rhett;
-    }).sortBy('startDate', 'name');
-    obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq)).sortBy('startDate', 'name');
-
-    return obj;
-  },
-
   /**
    * Retrieves and event by it's given slug.
    * @method getEventForSlug

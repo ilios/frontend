@@ -31,12 +31,16 @@ module('Integration | Service | school events', function(hooks) {
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
-      school: 7
+      school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
       startDate: '2008-09-02',
-      school: 7
+      school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
@@ -85,11 +89,15 @@ module('Integration | Service | school events', function(hooks) {
       offering: 1,
       startDate: '2011-04-21',
       school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
       startDate: '2008-09-02',
-      school: 7
+      school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     this.commonAjax.reopen({
       request(url) {
@@ -112,11 +120,15 @@ module('Integration | Service | school events', function(hooks) {
       offering: 1,
       startDate: '2011-04-21',
       school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
       startDate: '2008-09-02',
-      school: 7
+      school: 7,
+      prerequisites: [],
+      postrequisites: [],
     };
     this.commonAjax.reopen({
       request(url) {
@@ -139,7 +151,9 @@ module('Integration | Service | school events', function(hooks) {
     const event = {
       startDate: moment('2013-01-21').toDate(),
       offering: 1,
-      school: 2
+      school: 2,
+      prerequisites: [],
+      postrequisites: [],
     };
     assert.equal(service.getSlugForEvent(event), 'S0220130121O1');
   });
@@ -150,7 +164,9 @@ module('Integration | Service | school events', function(hooks) {
     const event = {
       startDate: moment('2014-10-30').toDate(),
       ilmSession: 1,
-      school: 10
+      school: 10,
+      prerequisites: [],
+      postrequisites: [],
     };
     assert.equal(service.getSlugForEvent(event), 'S1020141030I1');
   });

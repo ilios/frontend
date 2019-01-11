@@ -1,5 +1,5 @@
 <div class="event" data-test-week-glance-event>
-  <h4>
+  <h4 id={{concat "event" @event.slug}}>
     <span class="title" data-test-event-title>
       {{#link-to "events" @event.slug}}
         {{@event.name}}

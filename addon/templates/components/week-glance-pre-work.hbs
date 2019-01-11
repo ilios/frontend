@@ -10,6 +10,8 @@
         "general.dueBefore"
         name=@event.postrequisiteName
         date=(format-date @event.startDate)
+        link=(concat "#event" @event.postrequisiteSlug)
+        htmlSafe=true
       }}
     </span>
   </h4>

@@ -5,6 +5,8 @@ export default Factory.extend({
   name:  (i) => `event ${i}`,
   isPublished: false,
   isScheduled: false,
+  sessionObjectives: [],
+  courseObjectives: [],
   prerequisites: [],
   postrequisites: [],
 });
