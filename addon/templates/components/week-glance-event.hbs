@@ -14,7 +14,7 @@
   </h4>
   {{#if @event.prerequisites.length}}
     <p class="pre-work" data-test-pre-work>
-      <h5>{{t "general.preWork"}}</h5>
+      <strong>{{t "general.preWork"}}</strong>:
       <ol>
         {{#each @event.prerequisites as |event|}}
           <li>
