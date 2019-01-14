@@ -24,12 +24,12 @@ module('Integration | Component | toggle buttons', function(hooks) {
       secondIcon='expand'
     }}`);
     assert.dom(firstLabel).hasText('First', 'first label has correct text');
-    assert.ok(find(firstRadio).checked, 'first radio is checked');
-    assert.equal(find(firstLabel).getAttribute('for'), find(firstRadio).id, 'first label is linked to radio correctly');
+    assert.dom(firstRadio).isChecked('first radio is checked');
+    assert.dom(firstLabel).hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
 
     assert.dom(secondLabel).hasText('Second', 'second label has correct text');
-    assert.notOk(find(secondRadio).checked, 'second radio is not checked');
-    assert.equal(find(secondLabel).getAttribute('for'), find(secondRadio).id, 'second label is linked to radio correctly');
+    assert.dom(secondRadio).isNotChecked('second radio is not checked');
+    assert.dom(secondLabel).hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
 
   });
 

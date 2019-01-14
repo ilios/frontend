@@ -1,6 +1,10 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import  { Promise as RSVPPromise, all, filter} from 'rsvp';
+import  {
+  Promise as RSVPPromise,
+  all,
+  filter
+} from 'rsvp';
 import { computed } from '@ember/object';
 import layout from '../templates/components/objective-manage-competency';
 

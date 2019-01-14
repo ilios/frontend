@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | publish menu', function(hooks) {
@@ -37,16 +37,16 @@ module('Integration | Component | publish menu', function(hooks) {
     const schedule = `${dropDownItems}:nth-of-type(3)`;
     const unpublish = `${dropDownItems}:nth-of-type(4)`;
 
-    assert.equal(find(toggle).textContent.trim(), 'title');
-    assert.ok(find(icon).classList.contains('fa-cloud'));
+    assert.dom(toggle).hasText('title');
+    assert.dom(icon).hasClass('fa-cloud');
 
     await click(toggle);
-    assert.equal(findAll(dropDownItems).length, 5);
-    assert.equal(find(asIs).textContent.trim(), 'Publish As-is');
-    assert.equal(find(publish).textContent.trim(), 'Publish Course');
-    assert.equal(find(review).textContent.trim(), 'Review 3 Missing Items');
-    assert.equal(find(schedule).textContent.trim(), 'Mark as Scheduled');
-    assert.equal(find(unpublish).textContent.trim(), 'UnPublish Course');
+    assert.dom(dropDownItems).exists({ count: 5 });
+    assert.dom(asIs).hasText('Publish As-is');
+    assert.dom(publish).hasText('Publish Course');
+    assert.dom(review).hasText('Review 3 Missing Items');
+    assert.dom(schedule).hasText('Mark as Scheduled');
+    assert.dom(unpublish).hasText('UnPublish Course');
   });
 
   test('as is action fires', async function(assert) {
@@ -66,7 +66,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
-    assert.equal(find(item).textContent.trim(), 'Publish As-is');
+    assert.dom(item).hasText('Publish As-is');
     await click(item);
   });
 
@@ -88,7 +88,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
-    assert.equal(find(item).textContent.trim(), 'Publish Course');
+    assert.dom(item).hasText('Publish Course');
     await click(item);
   });
 
@@ -109,7 +109,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
-    assert.equal(find(item).textContent.trim(), 'Mark as Scheduled');
+    assert.dom(item).hasText('Mark as Scheduled');
     await click(item);
   });
 
@@ -131,7 +131,7 @@ module('Integration | Component | publish menu', function(hooks) {
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
-    assert.equal(find(item).textContent.trim(), 'UnPublish Course');
+    assert.dom(item).hasText('UnPublish Course');
     await click(item);
   });
 
@@ -171,15 +171,15 @@ module('Integration | Component | publish menu', function(hooks) {
     const unpublish = `${dropDownItems}:nth-of-type(4)`;
 
 
-    assert.equal(find(toggle).textContent.trim(), 'title');
-    assert.ok(find(icon).classList.contains('fa-cloud'));
+    assert.dom(toggle).hasText('title');
+    assert.dom(icon).hasClass('fa-cloud');
 
     await click(toggle);
-    assert.equal(findAll(dropDownItems).length, 5);
-    assert.equal(find(asIs).textContent.trim(), 'Publish As-is');
-    assert.equal(find(publish).textContent.trim(), 'Publish Course');
-    assert.equal(find(review).textContent.trim(), 'Review 3 Missing Items');
-    assert.equal(find(schedule).textContent.trim(), 'Mark as Scheduled');
-    assert.equal(find(unpublish).textContent.trim(), 'UnPublish Course');
+    assert.dom(dropDownItems).exists({ count: 5 });
+    assert.dom(asIs).hasText('Publish As-is');
+    assert.dom(publish).hasText('Publish Course');
+    assert.dom(review).hasText('Review 3 Missing Items');
+    assert.dom(schedule).hasText('Mark as Scheduled');
+    assert.dom(unpublish).hasText('UnPublish Course');
   });
 });

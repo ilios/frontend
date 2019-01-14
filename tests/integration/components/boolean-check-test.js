@@ -9,6 +9,6 @@ module('Integration | Component | boolean-check', function(hooks) {
   test('it renders', async function(assert) {
     await render(hbs`{{boolean-check}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.dom(this.element).hasText('');
   });
 });

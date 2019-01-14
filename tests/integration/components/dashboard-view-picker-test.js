@@ -16,14 +16,14 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'week');
     await render(hbs`{{dashboard-view-picker show=show change=(action nothing)}}`);
 
-    assert.equal(find(week).textContent.trim(), 'Week at a Glance');
-    assert.ok(find(week).classList.contains('active'));
-    assert.equal(find(activities).textContent.trim(), 'Activities');
-    assert.notOk(find(activities).classList.contains('active'));
-    assert.equal(find(materials).textContent.trim(), 'Materials');
-    assert.notOk(find(materials).classList.contains('active'));
-    assert.equal(find(calendar).textContent.trim(), 'Calendar');
-    assert.notOk(find(calendar).classList.contains('active'));
+    assert.dom(week).hasText('Week at a Glance');
+    assert.dom(week).hasClass('active');
+    assert.dom(activities).hasText('Activities');
+    assert.dom(activities).hasNoClass('active');
+    assert.dom(materials).hasText('Materials');
+    assert.dom(materials).hasNoClass('active');
+    assert.dom(calendar).hasText('Calendar');
+    assert.dom(calendar).hasNoClass('active');
   });
 
   test('changing show changes active button', async function(assert) {
@@ -36,28 +36,28 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'week');
     await render(hbs`{{dashboard-view-picker show=show change=(action nothing)}}`);
 
-    assert.ok(find(week).classList.contains('active'));
-    assert.notOk(find(activities).classList.contains('active'));
-    assert.notOk(find(materials).classList.contains('active'));
-    assert.notOk(find(calendar).classList.contains('active'));
+    assert.dom(week).hasClass('active');
+    assert.dom(activities).hasNoClass('active');
+    assert.dom(materials).hasNoClass('active');
+    assert.dom(calendar).hasNoClass('active');
 
     this.set('show', 'agenda');
-    assert.notOk(find(week).classList.contains('agenda'));
-    assert.ok(find(activities).classList.contains('active'));
-    assert.notOk(find(materials).classList.contains('active'));
-    assert.notOk(find(calendar).classList.contains('active'));
+    assert.dom(week).hasNoClass('agenda');
+    assert.dom(activities).hasClass('active');
+    assert.dom(materials).hasNoClass('active');
+    assert.dom(calendar).hasNoClass('active');
 
     this.set('show', 'materials');
-    assert.notOk(find(week).classList.contains('agenda'));
-    assert.notOk(find(activities).classList.contains('active'));
-    assert.ok(find(materials).classList.contains('active'));
-    assert.notOk(find(calendar).classList.contains('active'));
+    assert.dom(week).hasNoClass('agenda');
+    assert.dom(activities).hasNoClass('active');
+    assert.dom(materials).hasClass('active');
+    assert.dom(calendar).hasNoClass('active');
 
     this.set('show', 'calendar');
-    assert.notOk(find(week).classList.contains('agenda'));
-    assert.notOk(find(activities).classList.contains('active'));
-    assert.notOk(find(materials).classList.contains('active'));
-    assert.ok(find(calendar).classList.contains('active'));
+    assert.dom(week).hasNoClass('agenda');
+    assert.dom(activities).hasNoClass('active');
+    assert.dom(materials).hasNoClass('active');
+    assert.dom(calendar).hasClass('active');
   });
 
   test('clicking week fires action', async function(assert) {
@@ -70,7 +70,7 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(find(week).classList.contains('active'));
+    assert.dom(week).hasNoClass('active');
     find(week).click();
   });
 
@@ -84,7 +84,7 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'materials');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(find(activities).classList.contains('active'));
+    assert.dom(activities).hasNoClass('active');
     find(activities).click();
   });
 
@@ -98,7 +98,7 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(find(materials).classList.contains('active'));
+    assert.dom(materials).hasNoClass('active');
     find(materials).click();
   });
 
@@ -112,7 +112,7 @@ module('Integration | Component | dashbaord view picker', function(hooks) {
     this.set('show', 'agenda');
     await render(hbs`{{dashboard-view-picker show=show change=(action click)}}`);
 
-    assert.notOk(find(calendar).classList.contains('active'));
+    assert.dom(calendar).hasNoClass('active');
     find(calendar).click();
   });
 });

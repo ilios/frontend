@@ -1,4 +1,4 @@
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
 import {
   module,
@@ -6,7 +6,6 @@ import {
 } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
-import { currentRouteName } from '@ember/test-helpers';
 
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios-common/page-objects/course';

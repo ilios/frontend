@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | course sessions', function(hooks) {
@@ -29,6 +29,6 @@ module('Integration | Component | course sessions', function(hooks) {
       setFilterBy=(action nothing)
     }}`);
 
-    assert.equal(find(title).textContent.trim(), 'Sessions (0)');
+    assert.dom(title).hasText('Sessions (0)');
   });
 });

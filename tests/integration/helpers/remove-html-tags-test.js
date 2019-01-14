@@ -12,7 +12,7 @@ module('Integration | Helper | remove-html-tags', function(hooks) {
 
     await render(hbs`{{remove-html-tags inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Tags should not show up');
+    assert.dom(this.element).hasText('Tags should not show up');
   });
 });
 

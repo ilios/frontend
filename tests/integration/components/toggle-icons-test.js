@@ -26,16 +26,16 @@ module('Integration | Component | toggle icons', function(hooks) {
       secondIcon='expand'
     }}`);
     assert.dom(firstLabel).hasText('First', 'first label has correct text');
-    assert.ok(find(firstRadio).checked, 'first radio is checked');
-    assert.equal(find(firstLabel).getAttribute('for'), find(firstRadio).id, 'first label is linked to radio correctly');
+    assert.dom(firstRadio).isChecked('first radio is checked');
+    assert.dom(firstLabel).hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
 
     assert.dom(secondLabel).hasText('Second', 'second label has correct text');
-    assert.notOk(find(secondRadio).checked, 'second radio is not checked');
-    assert.equal(find(secondLabel).getAttribute('for'), find(secondRadio).id, 'second label is linked to radio correctly');
+    assert.dom(secondRadio).isNotChecked('second radio is not checked');
+    assert.dom(secondLabel).hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
 
     assert.dom(icon).exists({ count: 1 });
     assert.dom(icon).hasClass('fa-user', 'correct icon is visible');
-    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
+    assert.dom(iconTitle).hasText('Second', 'Title text is correct');
   });
 
   test('clicking radio fires toggle action', async function(assert) {
@@ -117,12 +117,12 @@ module('Integration | Component | toggle icons', function(hooks) {
     }}`);
 
     assert.dom(icon).hasClass('fa-user');
-    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
+    assert.dom(iconTitle).hasText('Second', 'Title text is correct');
     await click(icon);
     assert.dom(icon).hasClass('fa-expand');
-    assert.equal(find(iconTitle).textContent.trim(), 'First', 'Title text is correct');
+    assert.dom(iconTitle).hasText('First', 'Title text is correct');
     await click(icon);
     assert.dom(icon).hasClass('fa-user');
-    assert.equal(find(iconTitle).textContent.trim(), 'Second', 'Title text is correct');
+    assert.dom(iconTitle).hasText('Second', 'Title text is correct');
   });
 });

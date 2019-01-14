@@ -3,7 +3,12 @@ import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, findAll, settled, click } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  settled,
+  click
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -236,46 +241,46 @@ module('Integration | Component | week glance', function(hooks) {
     const expectedTitle = getTitle(true);
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
     assert.equal(this.element.querySelectorAll(events).length, 3, 'Blank events are not shown');
-    assert.equal(find(firstEventTitle).textContent.trim(), 'Learn to Learn');
-    assert.equal(find(firstSessionType).textContent.trim(), 'Lecture');
-    assert.equal(find(firstLocation).textContent.trim(), '- Room 123');
-    assert.equal(find(firstDescription).textContent.trim(), 'Best Session For SureLorem ipsum dolor sit amet, c');
+    assert.dom(firstEventTitle).hasText('Learn to Learn');
+    assert.dom(firstSessionType).hasText('Lecture');
+    assert.dom(firstLocation).hasText('- Room 123');
+    assert.dom(firstDescription).hasText('Best Session For SureLorem ipsum dolor sit amet, c');
     assert.equal(find(firstLm1).textContent.replace(/[\t\n\s]+/g, ""), 'CitationCitationLMcitationtextThisiscool.');
-    assert.equal(findAll(firstLm1TypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(firstLm1IconTitle).textContent.trim(), 'Citation', 'LM type icon has correct title.');
+    assert.dom(firstLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(firstLm1IconTitle).hasText('Citation', 'LM type icon has correct title.');
     assert.equal(find(firstLm1Notes).textContent.replace(/[\t\n\s]+/g, ""), 'Thisiscool.');
     assert.ok(find(firstLm2).textContent.includes('Link LM'));
-    assert.equal(findAll(firstLm2TypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(firstLm2IconTitle).textContent.trim(), 'Web Link', 'LM type icon has correct title.');
-    assert.equal(findAll(firstLm2Notes).length, 0);
+    assert.dom(firstLm2TypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(firstLm2IconTitle).hasText('Web Link', 'LM type icon has correct title.');
+    assert.dom(firstLm2Notes).doesNotExist();
     assert.equal(find(firstLm2Link).href, 'http://myhost.com/url2');
     assert.ok(find(firstLm3).textContent.includes('File LM'));
-    assert.equal(findAll(firstLm3TypeIcon).length, 1, 'LM type icon is present.');
-    assert.equal(find(firstLm3IconTitle).textContent.trim(), 'File', 'LM type icon has correct title.');
+    assert.dom(firstLm3TypeIcon).exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(firstLm3IconTitle).hasText('File', 'LM type icon has correct title.');
     assert.equal(find(firstLm3Link).href, 'http://myhost.com/url1?inline');
     assert.equal(find(firstLm3DownloadLink).href, 'http://myhost.com/url1');
-    assert.equal(findAll(firstInstructors).length, 0, 'No Instructors leaves and empty spot');
-    assert.equal(findAll(firstAttributes).length, 4, 'All attributes flags show up');
-    assert.equal(this.element.querySelector('.fa-black-tie title').textContent, 'Whitecoats / special attire');
-    assert.equal(this.element.querySelector('.fa-flask title').textContent, 'Special Equipment');
-    assert.equal(this.element.querySelector('.fa-calendar-check title').textContent, 'Attendance is required');
+    assert.dom(firstInstructors).doesNotExist('No Instructors leaves and empty spot');
+    assert.dom(firstAttributes).exists({ count: 4 }, 'All attributes flags show up');
+    assert.dom(this.element.querySelector('.fa-black-tie title')).hasText('Whitecoats / special attire');
+    assert.dom(this.element.querySelector('.fa-flask title')).hasText('Special Equipment');
+    assert.dom(this.element.querySelector('.fa-calendar-check title')).hasText('Attendance is required');
 
-    assert.equal(find(secondEventTitle).textContent.trim(), 'Finding the Point in Life');
-    assert.equal(find(secondSessionType).textContent.trim(), 'Independent Learning');
-    assert.equal(find(secondLocation).textContent.trim(), '- Room 456');
-    assert.equal(findAll(secondDescription).length, 0, 'Empty Description is Empty');
-    assert.equal(findAll(secondLm1TypeIcon).length, 1, 'LM type icon is present.');
+    assert.dom(secondEventTitle).hasText('Finding the Point in Life');
+    assert.dom(secondSessionType).hasText('Independent Learning');
+    assert.dom(secondLocation).hasText('- Room 456');
+    assert.dom(secondDescription).doesNotExist('Empty Description is Empty');
+    assert.dom(secondLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.ok(find(secondLm1Link).textContent.includes('Great Slides'));
-    assert.equal(find(secondLm1Notes).textContent.trim(), 'slide notes');
+    assert.dom(secondLm1Notes).hasText('slide notes');
     assert.equal(find(secondLm1Link).href, 'http://myhost.com/url1?inline');
     assert.equal(find(secondInstructors).textContent.replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
-    assert.equal(findAll(secondAttributes).length, 0, 'no attributes flags show up');
+    assert.dom(secondAttributes).doesNotExist('no attributes flags show up');
 
-    assert.equal(find(thirdEventTitle).textContent.trim(), 'Schedule some materials');
-    assert.equal(findAll(thirdLearningMaterials).length, 3, 'all lms are visible');
-    assert.equal(findAll(thirdLm1Schedule).length, 1, 'event in between says something');
-    assert.equal(findAll(thirdLm2Schedule).length, 1, 'early LM says something');
-    assert.equal(findAll(thirdLm3Schedule).length, 1, 'late LM says something');
+    assert.dom(thirdEventTitle).hasText('Schedule some materials');
+    assert.dom(thirdLearningMaterials).exists({ count: 3 }, 'all lms are visible');
+    assert.dom(thirdLm1Schedule).exists({ count: 1 }, 'event in between says something');
+    assert.dom(thirdLm2Schedule).exists({ count: 1 }, 'early LM says something');
+    assert.dom(thirdLm3Schedule).exists({ count: 1 }, 'late LM says something');
   });
 
   test('it renders blank', async function(assert) {

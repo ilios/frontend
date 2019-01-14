@@ -5,7 +5,10 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import { fillInFroalaEditor, froalaEditorValue } from 'ilios-common';
+import {
+  fillInFroalaEditor,
+  froalaEditorValue
+} from 'ilios-common';
 import meshManager from './mesh-manager';
 
 

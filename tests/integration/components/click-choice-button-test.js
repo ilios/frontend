@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | click choice buttons', function(hooks) {
@@ -20,10 +20,10 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent1='Left Button'
       buttonContent2='Right Button'
     }}`);
-    assert.equal(find(firstButton).textContent.trim(), 'Left Button', 'first button has correct text');
-    assert.equal(find(secondButton).textContent.trim(), 'Right Button', 'second button has correct text');
-    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
-    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
+    assert.dom(firstButton).hasText('Left Button', 'first button has correct text');
+    assert.dom(secondButton).hasText('Right Button', 'second button has correct text');
+    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
+    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
   });
 
   test('click fires toggle action', async function(assert) {
@@ -51,18 +51,18 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent2='Right Button'
     }}`);
 
-    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
-    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
+    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
+    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
 
     await click(secondButton);
 
-    assert.notOk(find(firstButton).classList.contains(activeClass), 'first button does not have active class');
-    assert.ok(find(secondButton).classList.contains(activeClass), 'second button has active class');
+    assert.dom(firstButton).hasNoClass(activeClass, 'first button does not have active class');
+    assert.dom(secondButton).hasClass(activeClass, 'second button has active class');
 
     await click(firstButton);
 
-    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
-    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
+    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
+    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
   });
 
   test('clicking selected futton does not fire toggle action', async function(assert) {
@@ -82,12 +82,12 @@ module('Integration | Component | click choice buttons', function(hooks) {
       buttonContent2='Right Button'
     }}`);
 
-    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
-    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
+    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
+    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
 
     await click(firstButton);
 
-    assert.ok(find(firstButton).classList.contains(activeClass), 'first button has active class');
-    assert.notOk(find(secondButton).classList.contains(activeClass), 'second button does not have active class');
+    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
+    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
   });
 });

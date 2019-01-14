@@ -65,14 +65,14 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.expect(1);
     await setupAuthentication( { school: this.school });
     await visit('/course/1/print');
-    assert.equal(find('[data-test-course-header] h2').textContent, 'Back to the Future');
+    assert.dom('[data-test-course-header] h2').hasText('Back to the Future');
   });
 
   test('print course mesh terms', async function (assert) {
     assert.expect(1);
     await setupAuthentication( { school: this.school });
     await visit('/course/1/print');
-    assert.equal(find('[data-test-course-mesh] ul li').textContent.trim(), 'Flux Capacitor');
+    assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
   test('test print course learning materials', async function (assert) {
@@ -81,10 +81,12 @@ module('Acceptance | Course - Print Course', function(hooks) {
     await visit('/course/1/print');
 
     const values = await findAll('[data-test-course-learningmaterials] .content tbody tr td');
-    assert.equal(values[0].textContent.trim(), 'Save the Clock Tower');
-    assert.equal(values[1].textContent.trim(), 'file');
-    assert.equal(values[2].textContent.trim(), 'No');
-    assert.equal(values[4].textContent.trim(), 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955');
+    assert.dom(values[0]).hasText('Save the Clock Tower');
+    assert.dom(values[1]).hasText('file');
+    assert.dom(values[2]).hasText('No');
+    assert.dom(values[4]).hasText(
+      'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
+    );
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
@@ -108,9 +110,9 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
     const sessionHeaders = await findAll('[data-test-session-header] h2');
     assert.equal(sessionHeaders.length, 3);
-    assert.equal(sessionHeaders[0].textContent, 'session 0');
-    assert.equal(sessionHeaders[1].textContent, 'session 1');
-    assert.equal(sessionHeaders[2].textContent, 'session 2');
+    assert.dom(sessionHeaders[0]).hasText('session 0');
+    assert.dom(sessionHeaders[1]).hasText('session 1');
+    assert.dom(sessionHeaders[2]).hasText('session 2');
   });
 
   test('test does not print unpublished sessions for unprivileged users', async function (assert) {
@@ -134,8 +136,8 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
     const sessionHeaders = await findAll('[data-test-session-header] h2');
     assert.equal(sessionHeaders.length, 2);
-    assert.equal(sessionHeaders[0].textContent, 'session 1');
-    assert.equal(sessionHeaders[1].textContent, 'session 2');
+    assert.dom(sessionHeaders[0]).hasText('session 1');
+    assert.dom(sessionHeaders[1]).hasText('session 2');
   });
 
   test('test print ILM details', async function (assert) {
@@ -162,11 +164,11 @@ module('Acceptance | Course - Print Course', function(hooks) {
     const values = await findAll('[data-test-session-ilm-section] td');
 
     assert.equal(ilmSection.length, 1);
-    assert.equal(title.textContent.trim(), 'Independent Learning');
-    assert.equal(labels[0].textContent.trim(), 'Hours');
-    assert.equal(labels[1].textContent.trim(), 'Due By');
-    assert.equal(values[0].textContent.trim(), '1.5');
-    assert.equal(values[1].textContent.trim(), '12/17/1995');
+    assert.dom(title).hasText('Independent Learning');
+    assert.dom(labels[0]).hasText('Hours');
+    assert.dom(labels[1]).hasText('Due By');
+    assert.dom(values[0]).hasText('1.5');
+    assert.dom(values[1]).hasText('12/17/1995');
   });
 
   test('test print session objectives', async function(assert) {
@@ -208,11 +210,11 @@ module('Acceptance | Course - Print Course', function(hooks) {
     const labels = await findAll('[data-test-session-objectives] th');
     const values = await findAll('[data-test-session-objectives] td');
 
-    assert.equal(labels[0].textContent.trim(), 'Objectives');
-    assert.equal(labels[1].textContent.trim(), 'Parent Objectives');
-    assert.equal(labels[2].textContent.trim(), 'MeSH Terms');
-    assert.equal(values[0].textContent.trim(), 'Session Objective 1');
-    assert.equal(values[1].textContent.trim(), 'Course Objective 1');
+    assert.dom(labels[0]).hasText('Objectives');
+    assert.dom(labels[1]).hasText('Parent Objectives');
+    assert.dom(labels[2]).hasText('MeSH Terms');
+    assert.dom(values[0]).hasText('Session Objective 1');
+    assert.dom(values[1]).hasText('Course Objective 1');
     assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));
     assert.ok(values[2].textContent.trim().endsWith('MeSH Descriptor 2'));
   });
@@ -265,10 +267,10 @@ module('Acceptance | Course - Print Course', function(hooks) {
     const labels = await findAll('[data-test-course-objectives] th');
     const values = await findAll('[data-test-course-objectives] td');
 
-    assert.equal(labels[0].textContent.trim(), 'Objectives');
-    assert.equal(labels[1].textContent.trim(), 'Parent Objectives');
-    assert.equal(labels[2].textContent.trim(), 'MeSH Terms');
-    assert.equal(values[0].textContent.trim(), 'Course Objective 1');
+    assert.dom(labels[0]).hasText('Objectives');
+    assert.dom(labels[1]).hasText('Parent Objectives');
+    assert.dom(labels[2]).hasText('MeSH Terms');
+    assert.dom(values[0]).hasText('Course Objective 1');
     assert.ok(values[1].textContent.trim().startsWith('Program Year Objective 1'));
     assert.ok(values[1].textContent.trim().endsWith('(Competency 1)'));
     assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));

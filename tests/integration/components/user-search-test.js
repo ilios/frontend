@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, click, fillIn, find } from '@ember/test-helpers';
+import {
+  render,
+  findAll,
+  click,
+  fillIn,
+  find
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -18,14 +24,14 @@ module('Integration | Component | user search', function(hooks) {
 
   test('it renders', async function(assert) {
     await render(hbs`{{user-search}}`);
-    assert.equal(findAll('input').length, 1);
+    assert.dom('input').exists({ count: 1 });
   });
 
   test('less than 3 charecters triggers warning', async function(assert) {
     await render(hbs`{{user-search}}`);
 
     await fillIn('input', 'ab');
-    assert.equal(find('ul').textContent.trim(), 'keep typing...');
+    assert.dom('ul').hasText('keep typing...');
   });
 
   test('input triggers search', async function (assert) {
@@ -38,7 +44,7 @@ module('Integration | Component | user search', function(hooks) {
 
     await fillIn('input', 'search words');
 
-    assert.equal(find('li').textContent.trim(), '1 Results');
+    assert.dom('li').hasText('1 Results');
     assert.equal(find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ""), '0guyM.Mc0sonuser@example.edu');
   });
 
@@ -46,7 +52,7 @@ module('Integration | Component | user search', function(hooks) {
     await render(hbs`{{user-search}}`);
 
     await fillIn('input', 'search words');
-    assert.equal(find('li').textContent.trim(), 'no results');
+    assert.dom('li').hasText('no results');
   });
 
   test('search for groups', async function (assert) {
@@ -56,9 +62,9 @@ module('Integration | Component | user search', function(hooks) {
     await render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
 
     await fillIn('input', 'group');
-    assert.equal(find('li').textContent.trim(), '2 Results');
-    assert.equal(find(findAll('li')[1]).textContent.trim(), 'instructor group 0');
-    assert.equal(find(findAll('li')[2]).textContent.trim(), 'instructor group 1');
+    assert.dom('li').hasText('2 Results');
+    assert.dom(findAll('li')[1]).hasText('instructor group 0');
+    assert.dom(findAll('li')[2]).hasText('instructor group 1');
   });
 
   test('click user fires add user', async function(assert) {
@@ -87,7 +93,7 @@ module('Integration | Component | user search', function(hooks) {
     );
 
     await fillIn('input', 'group');
-    assert.equal(findAll('li')[1].textContent.trim(), 'instructor group 0');
+    assert.dom(findAll('li')[1]).hasText('instructor group 0');
     await click(findAll('li')[1]);
   });
 

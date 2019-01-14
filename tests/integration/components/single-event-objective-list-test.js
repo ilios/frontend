@@ -46,7 +46,9 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.ok(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is visible');
     for(let i = 0, n = objectives.length; i < n; i++) {
       assert.equal(0, this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1})`).textContent.trim().indexOf(objectives[i].title), 'Objective title is visible');
-      assert.equal(this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1}) .details`).textContent.trim(), objectives[i].domain, 'Domain is visible.');
+      assert.dom(
+        this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1}) .details`)
+      ).hasText(objectives[i].domain, 'Domain is visible.');
     }
   });
 

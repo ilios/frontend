@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | sessions-grid-header', function(hooks) {
@@ -10,6 +10,6 @@ module('Integration | Component | sessions-grid-header', function(hooks) {
     this.set('nothing', () => { });
     await render(hbs`{{sessions-grid-header sortBy='title' toggleExpandAll=(action nothing)}}`);
 
-    assert.equal(findAll('span').length, 10);
+    assert.dom('span').exists({ count: 10 });
   });
 });

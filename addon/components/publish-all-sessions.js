@@ -2,7 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import {all, Promise as RSVPPromise} from 'rsvp';
+import { all, Promise as RSVPPromise } from 'rsvp';
 import layout from '../templates/components/publish-all-sessions';
 
 const { equal } = computed;

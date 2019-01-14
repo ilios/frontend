@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, click, findAll } from '@ember/test-helpers';
+import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | selected term tree', function(hooks) {
@@ -41,12 +41,12 @@ module('Integration | Component | selected term tree', function(hooks) {
     const secondTopTermFirstChildCheckbox = `${secondTopTermChildren}:nth-of-type(1) input`;
 
 
-    assert.equal(find(firstTopTerm).textContent.trim(), 'top 1');
-    assert.notOk(find(firstTopTermCheckbox).checked);
+    assert.dom(firstTopTerm).hasText('top 1');
+    assert.dom(firstTopTermCheckbox).isNotChecked();
     assert.equal(find(secondTopTerm).textContent.replace(/\s/g, ''), 'top2top2child1');
-    assert.equal(findAll(firstTopTermChildren).length, 0);
-    assert.equal(find(secondTopTermChildren).textContent.trim(), 'top 2 child 1');
-    assert.ok(find(secondTopTermFirstChildCheckbox).checked);
+    assert.dom(firstTopTermChildren).doesNotExist();
+    assert.dom(secondTopTermChildren).hasText('top 2 child 1');
+    assert.dom(secondTopTermFirstChildCheckbox).isChecked();
   });
 
   test('clicking checkbox fires toggle', async function(assert) {

@@ -94,13 +94,13 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     await render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups remove=(action nothing)}}`);
     await settled();
 
-    assert.equal(find(set1Legend).textContent.trim(), 'tlg1 ( )');
-    assert.equal(find(set1Group1).textContent.trim(), 'tlg1 (2)');
-    assert.equal(find(set1Group2).textContent.trim(), 'sub group 1 (3)');
+    assert.dom(set1Legend).hasText('tlg1 ( )');
+    assert.dom(set1Group1).hasText('tlg1 (2)');
+    assert.dom(set1Group2).hasText('sub group 1 (3)');
     assert.equal(find(set1Group3).textContent.trim().replace(/[\n\s]+/g, ''), 'subsubgroup1(1)');
 
-    assert.equal(find(set2Legend).textContent.trim(), 'tlg2 ( )');
-    assert.equal(find(set2Group1).textContent.trim(), 'tlg2 (2)');
-    assert.equal(find(set2Group2).textContent.trim(), 'sub group 2 (0)');
+    assert.dom(set2Legend).hasText('tlg2 ( )');
+    assert.dom(set2Group1).hasText('tlg2 (2)');
+    assert.dom(set2Group2).hasText('sub group 2 (0)');
   });
 });

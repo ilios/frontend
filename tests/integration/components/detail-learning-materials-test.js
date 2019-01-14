@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, settled, click, findAll } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  settled,
+  click
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -51,14 +56,14 @@ module('Integration | Component | detail learning materials', function(hooks) {
       isCourse=true
       editable=true
     }}`);
-    assert.equal(findAll(rows).length, 1);
+    assert.dom(rows).exists({ count: 1 });
     assert.ok(find(title).textContent.trim().startsWith('Citation'));
     assert.ok(find(title).textContent.trim().endsWith('test title'));
-    assert.equal(find(owner).textContent.trim(), 'Jolly Green Champ');
-    assert.equal(find(required).textContent.trim(), 'Yes');
-    assert.equal(find(notes).textContent.trim(), 'Yes');
-    assert.equal(find(mesh).textContent.trim(), 'None');
-    assert.equal(find(status).textContent.trim(), 'Good');
+    assert.dom(owner).hasText('Jolly Green Champ');
+    assert.dom(required).hasText('Yes');
+    assert.dom(notes).hasText('Yes');
+    assert.dom(mesh).hasText('None');
+    assert.dom(status).hasText('Good');
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function(assert) {
@@ -89,7 +94,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.sort-materials-btn').length, 1);
+      assert.dom('.sort-materials-btn').exists({ count: 1 });
     });
   });
 
@@ -115,7 +120,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=false }}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.sort-materials-btn').length, 0);
+      assert.dom('.sort-materials-btn').doesNotExist();
     });
   });
 
@@ -132,7 +137,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.sort-materials-btn').length, 0);
+      assert.dom('.sort-materials-btn').doesNotExist();
     });
   });
 
@@ -156,7 +161,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(() => {
-      assert.equal(findAll('.sort-materials-btn').length, 0);
+      assert.dom('.sort-materials-btn').doesNotExist();
     });
   });
 
@@ -188,17 +193,17 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
 
     return settled().then(async () => {
-      assert.equal(findAll('.sort-materials-btn').length, 1, 'Sort materials button is visible');
-      assert.equal(findAll('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible');
+      assert.dom('.sort-materials-btn').exists({ count: 1 }, 'Sort materials button is visible');
+      assert.dom('.learning-materials-sort-manager').doesNotExist('LM sort manager is not visible');
 
       await click('.sort-materials-btn');
       return settled().then(async () => {
-        assert.equal(findAll('.sort-materials-btn').length, 0, 'Sort materials button is not visible');
-        assert.equal(findAll('.learning-materials-sort-manager').length, 1, 'LM sort manager is visible');
+        assert.dom('.sort-materials-btn').doesNotExist('Sort materials button is not visible');
+        assert.dom('.learning-materials-sort-manager').exists({ count: 1 }, 'LM sort manager is visible');
         await click('.learning-materials-sort-manager .bigcancel');
         return settled().then(() => {
-          assert.equal(findAll('.sort-materials-btn').length, 1, 'Sort materials button is visible again');
-          assert.equal(findAll('.learning-materials-sort-manager').length, 0, 'LM sort manager is not visible again');
+          assert.dom('.sort-materials-btn').exists({ count: 1 }, 'Sort materials button is visible again');
+          assert.dom('.learning-materials-sort-manager').doesNotExist('LM sort manager is not visible again');
         });
       });
     });

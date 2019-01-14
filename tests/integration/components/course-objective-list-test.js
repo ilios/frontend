@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -26,12 +26,12 @@ module('Integration | Component | course objective list', function(hooks) {
     );
 
     assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
-    assert.equal(find('thead th').textContent.trim(), 'Description');
-    assert.equal(findAll('thead th')[1].textContent.trim(), 'Parent Objectives');
-    assert.equal(findAll('thead th')[2].textContent.trim(), 'MeSH Terms');
-    assert.equal(findAll('thead th')[3].textContent.trim(), 'Actions');
+    assert.dom('thead th').hasText('Description');
+    assert.dom(findAll('thead th')[1]).hasText('Parent Objectives');
+    assert.dom(findAll('thead th')[2]).hasText('MeSH Terms');
+    assert.dom(findAll('thead th')[3]).hasText('Actions');
     for (let i = 0, n = objectives.length; i < n; i++) {
-      assert.equal(find(`tbody tr:nth-of-type(${i + 1}) td`).textContent.trim(), `objective ${i}`);
+      assert.dom(`tbody tr:nth-of-type(${i + 1}) td`).hasText(`objective ${i}`);
     }
   });
 
@@ -43,7 +43,7 @@ module('Integration | Component | course objective list', function(hooks) {
     await render(hbs`{{course-objective-list subject=subject}}`);
     let container = findAll('.course-objective-list');
     assert.equal(container.length, 1, 'Component container element exists.');
-    assert.equal(container[0].textContent.trim(), '', 'No content is shown.');
+    assert.dom(container[0]).hasText('', 'No content is shown.');
   });
 
   test('no "sort objectives" button in list with one item', async function(assert) {
@@ -61,7 +61,7 @@ module('Integration | Component | course objective list', function(hooks) {
       hbs`{{course-objective-list subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
     );
     assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'objective 0', 'Objective is visible');
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('objective 0', 'Objective is visible');
   });
 });
 

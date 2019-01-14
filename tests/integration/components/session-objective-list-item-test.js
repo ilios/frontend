@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
 
@@ -25,10 +25,10 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action nothing)
     }}`);
 
-    assert.equal(find('td').textContent.trim(), 'fake title');
-    assert.equal(find('td:nth-of-type(2) button').textContent.trim(), 'Add New');
-    assert.equal(find('td:nth-of-type(3) button').textContent.trim(), 'Add New');
-    assert.equal(findAll('td:nth-of-type(4) svg').length, 1);
+    assert.dom('td').hasText('fake title');
+    assert.dom('td:nth-of-type(2) button').hasText('Add New');
+    assert.dom('td:nth-of-type(3) button').hasText('Add New');
+    assert.dom('td:nth-of-type(4) svg').exists({ count: 1 });
   });
 
   test('renders removable', async function(assert) {
@@ -46,7 +46,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action nothing)
     }}`);
 
-    assert.ok(find('tr').classList.contains('confirm-removal'));
+    assert.dom('tr').hasClass('confirm-removal');
   });
 
   test('can change title', async function(assert) {
