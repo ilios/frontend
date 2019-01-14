@@ -80,8 +80,8 @@ export default Component.extend({
   courseLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
-      let pos1 = lm1.position || 0;
-      let pos2 = lm2.position || 0;
+      let pos1 = parseInt(lm1.position, 10) || 0;
+      let pos2 = parseInt(lm2.position, 10) || 0;
 
       // 1. position, asc
       if (pos1 > pos2) {
@@ -138,8 +138,8 @@ export default Component.extend({
   sessionLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
-      let pos1 = lm1.position || 0;
-      let pos2 = lm2.position || 0;
+      let pos1 = parseInt(lm1.position, 10) || 0;
+      let pos2 = parseInt(lm2.position, 10) || 0;
 
       // 1. position, asc
       if (pos1 > pos2) {
