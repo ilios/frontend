@@ -108,6 +108,17 @@ export default create({
       click: clickable('.toggle-yesno'),
     },
     toggleIlm: clickable('.toggle-yesno', { scope: '.independentlearningcontrol' }),
+    prerequisites: {
+      scope: '.prerequisites',
+    },
+    postrequisite: {
+      scope: '.postrequisite',
+      value: text('span', { at: 0}),
+      edit: clickable('.clickable'),
+      set: fillable('select'),
+      save: clickable('.done'),
+      hasError: isVisible('.validation-error-message')
+    }
   },
 
   leadershipCollapsed,
