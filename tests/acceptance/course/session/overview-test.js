@@ -530,4 +530,64 @@ module('Acceptance | Session - Overview', function(hooks) {
     await page.overview.instructionalNotes.cancel();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });
+
+  test('has no pre-requisite', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.overview.prerequisites.text, 'Prerequisites: None');
+  });
+
+  test('has pre-requisites', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    const session = this.server.create('session', {
+      course: this.course,
+    });
+    const preRequisites = this.server.createList('session', 3);
+    session.update('prerequisites', preRequisites);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.overview.prerequisites.text, 'Prerequisites: session 1, session 2, session 3');
+  });
+
+  test('has no post-requisite', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(page.overview.postrequisite.text, 'Due prior to: None');
+  });
+
+  test('has post-requisite', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    const session = this.server.create('session', {
+      course: this.course,
+    });
+    const postRequisite = this.server.create('session', {});
+    session.update('postrequisite', postRequisite);
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(page.overview.postrequisite.text, 'Due prior to: session 1');
+  });
+
+  test('change post-requisite', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+    });
+    this.server.createList('sessions', 3, {
+      course: this.course
+    });
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(page.overview.postrequisite.value, 'None');
+    await page.overview.postrequisite.edit();
+    await page.overview.postrequisite.set(2);
+    await page.overview.postrequisite.save();
+    assert.equal(page.overview.postrequisite.value, 'session 1');
+  });
 });
