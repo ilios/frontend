@@ -25,7 +25,7 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
       instructorGroupIds: [1,2,3],
       instructorIds: [2,3,4]
     });
-    this.server.create('session', {
+    this.ilmSession = this.server.create('session', {
       course,
       ilmSession
     });
@@ -262,5 +262,19 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     assert.equal(page.instructors.currentInstructors(1).title, '2 guy M. Mc2son');
     assert.equal(page.instructors.currentInstructors(2).title, '3 guy M. Mc3son');
 
+  });
+
+  test('ilm due date is visible if sesion has no post-requisite', async function(assert) {
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.ok(page.overview.ilmDueDate.isPresent);
+    assert.ok(page.overview.ilmDueDate.isVisible);
+  });
+
+  test('ilm due date should not be visible if session has post-requisite', async function(assert) {
+    const postRequisite = this.server.create('session', {});
+    this.ilmSession.update('postrequisite', postRequisite);
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.ok(page.overview.ilmDueDate.isPresent);
+    assert.ok(page.overview.ilmDueDate.isHidden);
   });
 });
