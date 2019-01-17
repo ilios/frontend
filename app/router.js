@@ -5,23 +5,9 @@ import config from './config/environment';
 
 const Router = EmberRouter.extend({
   iliosMetrics: service(),
-  headData: service(),
 
   location: config.locationType,
   rootURL: config.rootURL,
-
-  /**
-  * Send our title tokens on the to headData service
-  * protect against receiving a string here since that is part of the
-  * API for ember-cli-document-title
-  */
-  setTitle(tokens) {
-    if (typeof tokens === 'string') {
-      tokens = [tokens];
-    }
-
-    this.get('headData').set('titleTokens', tokens);
-  },
 
   didTransition() {
     this._super(...arguments);

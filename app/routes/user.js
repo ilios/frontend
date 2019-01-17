@@ -8,7 +8,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   permissionChecker: service(),
   iliosConfig: service(),
-  titleToken: 'general.admin',
   canUpdate: false,
   canCreate: false,
   /**

@@ -7,7 +7,6 @@ const { all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
-  titleToken: 'general.coursesAndSessions',
   async model(params) {
     const store = this.get('store');
     const sessionType = await store.find('session-type', params.session_type_id);

@@ -7,7 +7,6 @@ export default Route.extend({
   currentUser: service(),
   store: service(),
   permissionChecker: service(),
-  titleToken: 'general.admin',
   async model(){
     const currentUser = this.get('currentUser');
     const store = this.get('store');

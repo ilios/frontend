@@ -6,7 +6,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
-  titleToken: 'general.learnerGroups',
   model() {
     let defer = RSVP.defer();
     let model = {};

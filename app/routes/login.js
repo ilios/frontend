@@ -13,7 +13,6 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   session: service(),
   commonAjax: service(),
   iliosConfig: service(),
-  titleToken: 'general.login',
 
   noAccountExistsError: false,
   noAccountExistsAccount: null,

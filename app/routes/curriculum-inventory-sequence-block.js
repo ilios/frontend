@@ -8,7 +8,6 @@ const { all } = RSVP;
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   canUpdate: false,
-  titleToken: 'general.curriculumInventoryReports',
   async afterModel(model) {
     const permissionChecker = this.get('permissionChecker');
 

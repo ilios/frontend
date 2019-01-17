@@ -5,7 +5,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
-  titleToken: 'general.programs',
 
   /**
    * Prefetch related data to limit network requests

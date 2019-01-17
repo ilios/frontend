@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
-  titleToken: 'general.schools',
   canUpdateSchool: false,
   canUpdateCompetency: false,
   canDeleteCompetency: false,

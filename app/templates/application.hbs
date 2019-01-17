@@ -8,7 +8,7 @@
 <div
   class="application-wrapper {{if currentUser.performsNonLearnerFunction "show-navigation"}}"
 >
-  {{ilios-header title=translatedTitle currentlyLoading=currentlyLoading}}
+  {{ilios-header currentlyLoading=currentlyLoading}}
   {{#if session.isAuthenticated}}
     {{ilios-navigation}}
   {{/if}}
