@@ -10,6 +10,22 @@
     }
   }
 
+  .list-in-order {
+    @include ilios-list-reset;
+
+    list-style-type: disc;
+
+    li {
+      margin-left: 1em;
+      padding-bottom: .5em;
+    }
+
+    .details {
+      font-size: smaller;
+      font-weight: bold;
+    }
+  }
+
   .tree {
     @include ilios-list-reset;
 
@@ -25,22 +41,6 @@
         font-weight: normal;
         list-style-type: disc;
       }
-    }
-  }
-
-  .list-in-order {
-    @include ilios-list-reset;
-
-    list-style-type: disc;
-
-    li {
-      margin-left: 1em;
-      padding-bottom: .5em;
-    }
-
-    .details {
-      font-size: smaller;
-      font-weight: bold;
     }
   }
 
