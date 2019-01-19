@@ -100,6 +100,26 @@ module.exports = function(defaults) {
         }
       }
     },
+    postcssOptions: {
+      compile: {
+        extension: 'scss',
+        enabled: true,
+        parser: require('postcss-scss'),
+        plugins: [
+          {
+            module: require('@csstools/postcss-sass'),
+          },
+        ]
+      },
+      filter: {
+        enabled: true,
+        plugins: [
+          {
+            module: require('autoprefixer'),
+          }
+        ]
+      }
+    },
   });
 
   app.import('node_modules/normalize.css/normalize.css');
