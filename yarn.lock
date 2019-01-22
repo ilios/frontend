@@ -4841,7 +4841,17 @@ ember-cli-sass-lint@^1.0.5:
     broccoli-sass-lint "^1.1.2"
     ember-cli-babel "^6.6.0"
 
-ember-cli-sass@8.0.1, ember-cli-sass@^8.0.1:
+ember-cli-sass@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-9.0.1.tgz#cfbcbdaf679e44d9603b324b21e8d97cd605077b"
+  integrity sha512-t94vuRp44MftcIXzG/w7zAnSUN4jlOmqF+9ia9+L0LnQgQK/yfi5NSHEd9Sc6APOEo46nnU29gxE2v9lf7uf5w==
+  dependencies:
+    broccoli-funnel "^2.0.1"
+    broccoli-merge-trees "^3.0.1"
+    broccoli-sass-source-maps "^4.0.0"
+    ember-cli-version-checker "^2.1.0"
+
+ember-cli-sass@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-8.0.1.tgz#22730bb8eee1eedc6ddd0cf2e51f5405a09b9139"
   integrity sha512-sJQiBJo51tReuJmDLHkJ/zIbqSslEjJB2zRPH+6bbhzfznzUfhCLXHthpHCS3SqnVq2rnzZQ8ifdmAX7mRWJ7w==
@@ -5289,9 +5299,9 @@ ember-macro-helpers@^1.0.0:
     ember-weakmap "^3.0.0"
 
 ember-math-helpers@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/ember-math-helpers/-/ember-math-helpers-2.9.0.tgz#1211d34a63bd35d2657b79e28f1b653370ee7732"
-  integrity sha512-sJu59PRLoHzTzeHPTMsaecnpn1/4rBBJ6efsQD9vVErkUGSx5iddeOvNfR/4MEpo+D6lHMDqNuQIglJwmTgdEw==
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/ember-math-helpers/-/ember-math-helpers-2.10.0.tgz#a2646f9b6d4d09fed3cbb820a4845f7af18dfd14"
+  integrity sha512-4zK4KammW8x1VU1u+mVHSKRIinK9hFol9I8pH4yI7DNAFKjCj/aewwiqBtYfMSdcxHH2oT0aj47lIdzEh9ts8g==
   dependencies:
     broccoli-funnel "^2.0.0"
     ember-cli-babel "^7.1.2"
