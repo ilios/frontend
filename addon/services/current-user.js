@@ -53,6 +53,7 @@ export default Service.extend({
     'model.instructorGroups.[]',
     'model.instructedLearnerGroups.[]',
     'model.directedCourses.[]',
+    'model.administeredCourses.[]',
     'model.instructorIlmSessions.[]',
     async function(){
       const user = await this.get('model');
