@@ -1,7 +1,6 @@
 # Ilios Frontend
 ## Web interface for accessing and managing [Ilios Platform](https://github.com/ilios/ilios) data.
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ilios/frontend.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/ilios/frontend.svg?branch=master)](https://travis-ci.org/ilios/frontend)
 [![Code Climate](https://codeclimate.com/github/ilios/frontend/badges/gpa.svg)](https://codeclimate.com/github/ilios/frontend)
 [![Test Coverage](https://codeclimate.com/github/ilios/frontend/badges/coverage.svg)](https://codeclimate.com/github/ilios/frontend/coverage)

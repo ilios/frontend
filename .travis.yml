@@ -21,7 +21,6 @@ env:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
 
 install:
   - yarn install --non-interactive
@@ -34,11 +33,6 @@ script:
 
 jobs:
   include:
-    - stage: greenkeeper
-      if: branch =~ ^greenkeeper
-      script:
-        - greenkeeper-lockfile-update
-        - greenkeeper-lockfile-upload
     - stage: test
       env: SW_DISABLED=true
       before_script:

@@ -116,28 +116,6 @@
       "lib/ilios-loading"
     ]
   },
-  "greenkeeper": {
-    "ignore": [
-      "ember-cli-babel",
-      "ember-cli-app-version",
-      "ember-cli-dependency-checker",
-      "ember-cli-htmlbars-inline-precompile",
-      "ember-cli-htmlbars",
-      "ember-cli-inject-live-reload",
-      "ember-qunit",
-      "ember-cli-sri",
-      "ember-cli-uglify",
-      "ember-export-application-global",
-      "ember-load-initializers",
-      "ember-maybe-import-regenerator",
-      "ember-source",
-      "ember-resolver",
-      "loader.js",
-      "qunit-dom",
-      "ember-inflector",
-      "ember-tether"
-    ]
-  },
   "pre-commit": [
     "lint:hbs",
     "lint:style",
