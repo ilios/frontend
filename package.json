@@ -101,7 +101,7 @@
     "papaparse": "^4.6.3",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^0.8.0",
-    "sass": "^1.13.2",
+    "sass": "^1.16.1",
     "stylelint": "^9.5.0",
     "stylelint-config-recommended-scss": "^3.1.0",
     "stylelint-scss": "^3.0.0",
