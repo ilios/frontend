@@ -25,11 +25,6 @@ branches:
 
 jobs:
   include:
-    - stage: greenkeeper
-      if: branch =~ ^greenkeeper
-      script:
-        - greenkeeper-lockfile-update
-        - greenkeeper-lockfile-upload
     # runs linting and tests with current locked deps
     - stage: "Tests"
       name: "Tests"
@@ -40,7 +35,6 @@ jobs:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
 
 install:
   - yarn install --no-lockfile --non-interactive
