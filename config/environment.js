@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(/* environment, appConfig */) {
-  return {
+module.exports = function(environment /*, appConfig */) {
+  var ENV = {
     googleFonts: [
       'Nunito:400,700',
       'Nunito Sans:400,600,700'
@@ -18,4 +18,11 @@ module.exports = function(/* environment, appConfig */) {
       'sessionLinkingAdminUi': false,
     }
   };
+
+  if ('development' === environment) {
+    ENV.featureFlags.sessionLinkingAdminUi = true;
+  }
+
+  return ENV;
+
 };
