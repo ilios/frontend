@@ -36,7 +36,9 @@ export default Component.extend({
    */
   didRender() {
     next(() => {
-      dom.i2svg({node: this.element});
+      if (this.element) {
+        dom.i2svg({node: this.element});
+      }
     });
   },
   options: computed('intl.locale', function(){
