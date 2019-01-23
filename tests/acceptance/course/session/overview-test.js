@@ -7,6 +7,7 @@ import {
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios-common/page-objects/session';
@@ -532,6 +533,7 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('has no pre-requisite', async function(assert) {
+    enableFeature('sessionLinkingAdminUi');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
@@ -541,6 +543,7 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('has pre-requisites', async function(assert) {
+    enableFeature('sessionLinkingAdminUi');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     const session = this.server.create('session', {
       course: this.course,
@@ -556,6 +559,7 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('has no post-requisite', async function(assert) {
+    enableFeature('sessionLinkingAdminUi');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
@@ -565,6 +569,7 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('has post-requisite', async function(assert) {
+    enableFeature('sessionLinkingAdminUi');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     const session = this.server.create('session', {
       course: this.course,
@@ -576,6 +581,7 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('change post-requisite', async function(assert) {
+    enableFeature('sessionLinkingAdminUi');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
