@@ -242,52 +242,54 @@
         </span>
       </div>
     {{/if}}
-    <div class="postrequisite block">
-      <label>
-        {{#if session.hasPostrequisite}}
-          {{#link-to "session.index" (await session.postrequisite.course) (await session.postrequisite)}}
-            {{fa-icon  "external-link-square-alt"}} {{t "general.duePriorTo"}}:
-          {{/link-to}}
+    {{#if features.sessionLinkingAdminUi}}
+      <div class="postrequisite block">
+        <label>
+          {{#if session.hasPostrequisite}}
+            {{#link-to "session.index" (await session.postrequisite.course) (await session.postrequisite)}}
+              {{fa-icon  "external-link-square-alt"}} {{t "general.duePriorTo"}}:
+            {{/link-to}}
+          {{else}}
+            {{t "general.duePriorTo"}}:
+          {{/if}}
+        </label>
+        {{#if editable}}
+          {{#editable-field
+            value=(await postRequisiteTitle)
+            save=(action "changePostrequisite")
+            close=(action "revertPostrequisiteChanges")
+          }}
+            <select onchange={{action "setPostrequisite" value="target.value"}}>
+              <option value="null" selected={{is-empty (await session.postrequisite)}}>{{t "general.none"}}</option>
+              {{#each (await linkablePostrequisites) as |linkablePostrequisite|}}
+                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await session.postrequisite)}}>
+                  {{linkablePostrequisite.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{/editable-field}}
         {{else}}
-          {{t "general.duePriorTo"}}:
+          {{#if session.hasPostrequisite}}
+            {{session.postrequisite.title}}
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
         {{/if}}
-      </label>
-      {{#if editable}}
-        {{#editable-field
-          value=(await postRequisiteTitle)
-          save=(action "changePostrequisite")
-          close=(action "revertPostrequisiteChanges")
-        }}
-          <select onchange={{action "setPostrequisite" value="target.value"}}>
-            <option value="null" selected={{is-empty (await session.postrequisite)}}>{{t "general.none"}}</option>
-            {{#each (await linkablePostrequisites) as |linkablePostrequisite|}}
-              <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await session.postrequisite)}}>
-                {{linkablePostrequisite.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{/editable-field}}
-      {{else}}
-        {{#if session.hasPostrequisite}}
-          {{session.postrequisite.title}}
+      </div>
+      <div class="prerequisites block">
+        <label>{{t "general.prerequisites"}}:</label>
+        {{#if session.hasPrerequisites}}
+          <span>
+            {{#each (await session.prerequisites) as |prerequisite|~}}
+              {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
+              {{#unless (eq prerequisite session.prerequisites.lastObject)}}, {{/unless}}
+            {{~/each}}
+          </span>
         {{else}}
           {{t "general.none"}}
         {{/if}}
-      {{/if}}
-    </div>
-    <div class="prerequisites block">
-      <label>{{t "general.prerequisites"}}:</label>
-      {{#if session.hasPrerequisites}}
-        <span>
-          {{#each (await session.prerequisites) as |prerequisite|~}}
-            {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
-            {{#unless (eq prerequisite session.prerequisites.lastObject)}}, {{/unless}}
-          {{~/each}}
-        </span>
-      {{else}}
-        {{t "general.none"}}
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
     <hr>
     <div class="sessiondescription">
       <label>{{t "general.description"}}:</label>
