@@ -17,8 +17,6 @@
         {{#each (await ilmPreWork) as |event|}}
           <WeekGlancePreWork @event={{event}} />
         {{/each}}
-      {{else}}
-        <p>{{t "general.none"}}</p>
       {{/if}}
     </div>
 
