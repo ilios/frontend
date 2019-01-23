@@ -84,6 +84,7 @@
     "ember-cli-uglify": "^2.1.0",
     "ember-data": "^3.5.0",
     "ember-export-application-global": "^2.0.0",
+    "ember-feature-flags": "^5.0.0",
     "ember-froala-editor": "^2.9.0",
     "ember-inflector": "^3.0.0",
     "ember-load-initializers": "^1.1.0",

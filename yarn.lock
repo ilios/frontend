@@ -5140,6 +5140,13 @@ ember-factory-for-polyfill@^1.3.1:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
+ember-feature-flags@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ember-feature-flags/-/ember-feature-flags-5.0.0.tgz#630d2876f5341b456db89996f35c0b109a0e27ec"
+  integrity sha1-Yw0odvU0G0VtuJmW81wLEJoOJ+w=
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 "ember-fetch@^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0", "ember-fetch@^4.0.0 || ^5.0.0 || ^6.0.0":
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/ember-fetch/-/ember-fetch-6.4.0.tgz#806b2acfbda07f3b0dd48a9fcdbc575c5519611d"
