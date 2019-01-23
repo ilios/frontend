@@ -48,6 +48,7 @@ const Validations = buildValidations({
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
   layout,
   currentUser: service(),
+  features: service(),
   routing: service('-routing'),
   permissionChecker: service(),
   intl: service(),
