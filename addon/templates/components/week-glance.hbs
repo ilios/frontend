@@ -12,8 +12,8 @@
 {{#liquid-unless collapsed class="vertical"}}
   {{#if (is-fulfilled publishedWeekEvents)}}
     <div class="ilm-pre-work">
-      <h4>{{t "general.preWork"}}</h4>
       {{#if (gt (get (await ilmPreWork) "length") 0)}}
+        <h4>{{t "general.preWork"}}</h4>
         {{#each (await ilmPreWork) as |event|}}
           <WeekGlancePreWork @event={{event}} />
         {{/each}}
