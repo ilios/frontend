@@ -84,4 +84,11 @@ export default Component.extend({
 
     return preWork.filter(ev => ev.ilmSession);
   }),
+
+  nonIlmPreWorkEvents: computed('publishedWeekEvents.[]', async function () {
+    const publishedWeekEvents = await this.get('publishedWeekEvents');
+    return publishedWeekEvents.filter(ev => {
+      return ev.postrequisites.length === 0 && !ev.ilmSession;
+    });
+  }),
 });

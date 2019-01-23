@@ -105,7 +105,8 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     click('.day:nth-of-type(1) .clickable');
   });
 
-  let createUserEventObject = function(){
+  let createUserEventObject = function () {
+
     return {
       user: 1,
       name: '',
@@ -116,7 +117,9 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       location: 'Rm. 160',
       lastModified: new Date(),
       isPublished: true,
-      isScheduled: false
+      isScheduled: false,
+      prerequisites: [],
+      postrequisites: [],
     };
   };
 });

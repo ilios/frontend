@@ -20,8 +20,8 @@
       {{/if}}
     </div>
 
-    {{#if (gt (get (await publishedWeekEvents) "length") 0)}}
-      {{#each (await publishedWeekEvents) as |event|}}
+    {{#if (gt (get (await nonIlmPreWorkEvents) "length") 0)}}
+      {{#each (await nonIlmPreWorkEvents) as |event|}}
         <WeekGlanceEvent @event={{event}} />
       {{/each}}
     {{else}}
