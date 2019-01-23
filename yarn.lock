@@ -5167,14 +5167,14 @@ ember-file-upload@^2.5.0:
     ember-cli-htmlbars "^2.0.1"
 
 ember-froala-editor@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.9.0.tgz#ad3d7da835f608efa155c847baa1b90b6ba8c969"
-  integrity sha512-/Vyf7mGB2JXxxqx9LnxpCF4waRV0rcz/2QEHFQEP3NcFd79CY34vTIyso8PnGHbyGRDfLDL8ACN1T2m2Cdv1Eg==
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/ember-froala-editor/-/ember-froala-editor-2.9.1.tgz#c3ef8006e39c08f576bbac16dc7d5ecd0948e458"
+  integrity sha512-+yLLBz4qFce8CYD5yxZJcfau/rhKHmiFDZOa8HQZJGAJzCcJ+xvsg6G69eqEcnNyI9OtFSlcSxRD91XRfNddww==
   dependencies:
     ember-cli-babel "^6.16.0"
     ember-cli-htmlbars "^3.0.0"
     ember-cli-version-checker "^2.1.2"
-    froala-editor "^2.6.3"
+    froala-editor "^2.9.1"
 
 ember-get-config@^0.2.2, ember-get-config@^0.2.4:
   version "0.2.4"
@@ -6658,7 +6658,7 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-froala-editor@^2.6.3:
+froala-editor@^2.9.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/froala-editor/-/froala-editor-2.9.1.tgz#6487b55ad1db9ef0379bfeaa58b35534b28ad589"
   integrity sha512-ZEyBnZ/J5w87pjh6F8pNdI0owJ8w3fvwqfOnfcVqHblBQ2A1yjeOfOEIsCUM3QbFscHqY2ChArRCfpDpGxy/Vw==
