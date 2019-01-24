@@ -16,6 +16,7 @@
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
+    "lint:style": "stylelint app/styles",
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each"
@@ -74,12 +75,10 @@
     "ember-cli": "~3.7.0",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-deprecation-workflow": "^1.0.0",
-    "ember-cli-eslint": "^5.0.0",
     "ember-cli-flash": "^1.6.6",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-sass": "9.0.1",
-    "ember-cli-sass-lint": "^1.0.5",
     "ember-cli-server-variables": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^2.1.0",
@@ -94,14 +93,18 @@
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.7.0",
     "ember-source-channel-url": "^1.0.1",
-    "ember-template-lint": "^1.0.0-beta.6",
+    "ember-template-lint": "^1.1.0",
     "ember-try": "^1.0.0",
-    "eslint-plugin-ember": "^6.0.1",
+    "eslint": "^5.12.1",
+    "eslint-plugin-ember": "^6.1.0",
     "eslint-plugin-node": "^8.0.0",
     "loader.js": "^4.7.0",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^0.8.0",
-    "sass": "^1.13.4"
+    "sass": "^1.13.4",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-scss": "^3.5.1"
   },
   "engines": {
     "node": ">= 10.*"
@@ -123,6 +126,7 @@
   ],
   "pre-commit": [
     "lint:hbs",
-    "lint:js"
+    "lint:js",
+    "lint:style"
   ]
 }

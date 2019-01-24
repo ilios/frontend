@@ -18,6 +18,13 @@
   border-top-left-radius: $radii;
 }
 
+.ilios-calendar-event {
+  @include border-top-radius($base-border-radius);
+  @include border-bottom-radius($base-border-radius);
+  background-color: $background-grey;
+  border: 1px solid $grey;
+}
+
 .ilios-calendar {
   .el-calendar {
     .event {
@@ -63,13 +70,6 @@
 
       }
     }
-  }
-
-  .ilios-calendar-event {
-    @include border-top-radius($base-border-radius);
-    @include border-bottom-radius($base-border-radius);
-    background-color: $background-grey;
-    border: 1px solid $grey;
   }
 
   .clickable {
