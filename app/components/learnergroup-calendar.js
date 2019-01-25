@@ -41,7 +41,9 @@ export default Component.extend({
         name: session.get('title'),
         offering: offering.get("id"),
         location: offering.get("location"),
-        color: "#84c444"
+        color: "#84c444",
+        prerequisites: [],
+        postrequisites: [],
       };
     });
 
