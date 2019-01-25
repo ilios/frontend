@@ -18,7 +18,7 @@
     "lint:style": "stylelint app/styles"
   },
   "devDependencies": {
-    "@csstools/postcss-sass": "^3.0.0",
+    "@csstools/postcss-sass": "^4.0.0",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.7.0",
     "autoprefixer": "^9.4.5",
