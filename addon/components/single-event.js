@@ -9,8 +9,10 @@ export default Component.extend({
   layout,
   store: service(),
   intl: service(),
+  router: service(),
   event: null,
   classNames: ['single-event'],
+  'data-test-single-event': true,
 
   taughtBy: computed('intl.locale', 'event.instructors', function(){
     const instructors = this.get('event.instructors');
@@ -165,6 +167,12 @@ export default Component.extend({
     const today = moment();
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
     return daysSinceLastUpdate < 6;
+  }),
+
+  postrequisiteLink: computed('event.postrequisiteSlug', function(){
+    if (this.event.postrequisites.length) {
+      return this.router.urlFor('events', this.event.postrequisites[0].slug);
+    }
   }),
 
   /**

@@ -1,101 +1,65 @@
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-const { resolve } = RSVP;
-
-let today = moment();
-
-const mockEvents = [
-  {
-    name: 'Learn to Learn',
-    startDate: today.format(),
-    location: 'Room 123',
-    sessionTypeTitle: 'Lecture',
-    courseExternalId: 'C1',
-    sessionDescription: 'Best <strong>Session</strong> For Sure',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    learningMaterials: [
-      {
-        title: 'Citation LM',
-        required: true,
-        publicNote: 'This is cool.',
-        citation: 'citationtext',
-        type: 'citation'
-      },
-      {
-        title: 'Link LM',
-        required: false,
-        link: 'http://myhost.com/url2',
-        type: 'link'
-      },
-      {
-        title: 'File LM',
-        required: true,
-        absoluteFileUri: 'http://myhost.com/url1',
-        type: 'file',
-        mimetype: 'application/pdf'
-      },
-    ],
-  },
-  {
-    name: 'Finding the Point in Life',
-    startDate: today.format(),
-    location: 'Room 456',
-    sessionTypeTitle: 'Independent Learning',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: false,
-    learningMaterials: [
-      {
-        title: 'Great Slides',
-        required: true,
-        absoluteFileUri: 'http://myhost.com/url1',
-        type: 'file',
-        mimetype: 'keynote'
-      },
-    ],
-    instructors: [
-      'Second Person',
-      'First Person',
-    ],
-  },
-  {
-    name: 'Blank',
-    isBlanked: true,
-  },
-  {
-    name: 'Not Published',
-    isBlanked: false,
-    isPublished: false,
-    isScheduled: false,
-  },
-  {
-    name: 'Scheduled',
-    isBlanked: false,
-    isPublished: true,
-    isScheduled: true,
-  },
-];
-const userEventsMock = Service.extend({
-  getEvents(){
-    return new resolve(mockEvents);
-  },
-});
-let blankEventsMock = Service.extend({
-  getEvents(){
-    return new resolve([]);
-  }
-});
+import { component } from 'ilios-common/page-objects/components/dashboard-week';
 
 module('Integration | Component | dashboard week', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  const today = moment();
+
+  hooks.beforeEach(function () {
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+    });
+    this.server.create('userevent', {
+      name: 'Finding the Point in Life',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      ilmSession: 1,
+    });
+    this.server.create('userevent', {
+      name: 'Blank',
+      isBlanked: true,
+    });
+    this.server.create('userevent', {
+      name: 'Not Published',
+      isBlanked: false,
+      isPublished: false,
+      isScheduled: false,
+    });
+    this.server.create('userevent', {
+      name: 'Scheduled',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: true,
+    });
+    const events = this.server.db.userevents;
+
+    this.userEventsMock = Service.extend({
+      async getEvents() {
+        return events.toArray();
+      },
+    });
+    this.blankEventsMock = Service.extend({
+      async getEvents() {
+        return [];
+      }
+    });
+  });
 
   const getTitle = function(){
     const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
@@ -117,89 +81,31 @@ module('Integration | Component | dashboard week', function(hooks) {
   };
 
   test('it renders with events', async function(assert) {
-    assert.expect(25);
-    this.owner.register('service:user-events', userEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    assert.expect(5);
+    this.owner.register('service:user-events', this.userEventsMock);
 
     await render(hbs`{{dashboard-week}}`);
-    const title = 'h3';
-    const allWeeks = '.weeklylink a';
-    const events = '.event';
-    const firstEvent = `${events}:nth-of-type(1)`;
-    const secondEvent = `${events}:nth-of-type(2)`;
-
-    const firstEventTitle = `${firstEvent} .title`;
-    const firstSessionType = `${firstEvent} .sessiontype`;
-    const firstLocation = `${firstEvent} .location`;
-    const firstDescription = `${firstEvent} .description`;
-    const firstLearningMaterials = `${firstEvent} .learning-material`;
-    const firstLm1 = `${firstLearningMaterials}:nth-of-type(1)`;
-    const firstLm1TypeIcon = `${firstLm1} .fa-paragraph`;
-    const firstLm2 = `${firstLearningMaterials}:nth-of-type(2)`;
-    const firstLm2Link = `${firstLm2} a`;
-    const firstLm2TypeIcon = `${firstLm2} .fa-link`;
-    const firstLm3 = `${firstLearningMaterials}:nth-of-type(3)`;
-    const firstLm3Link = `${firstLm3} a:nth-of-type(1)`;
-    const firstLm3DownloadLink = `${firstLm3} a:nth-of-type(2)`;
-
-    const firstLm3TypeIcon = `${firstLm3} .fa-file-pdf`;
-
-    const firstInstructors = `${firstEvent} .instructors`;
-
-    const secondEventTitle = `${secondEvent} .title`;
-    const secondSessionType = `${secondEvent} .sessiontype`;
-    const secondLocation = `${secondEvent} .location`;
-    const secondDescription = `${secondEvent} .description`;
-    const secondLearningMaterials = `${secondEvent} .learning-material`;
-    const secondLm1 = `${secondLearningMaterials}:nth-of-type(1)`;
-    const secondLm1Link = `${secondLm1} a`;
-    const secondLm1TypeIcon = `${secondLm1} .fa-file-powerpoint`;
-
-    const secondInstructors = `${secondEvent} .instructors`;
-
 
     const expectedTitle = getTitle();
-    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.dom(this.element.querySelector(allWeeks)).hasText('Last Week / Next Week / All Weeks');
-    assert.equal(this.element.querySelectorAll(events).length, 2, 'Blank events are not shown');
 
-    assert.dom(firstEventTitle).hasText('Learn to Learn');
-    assert.dom(firstSessionType).hasText('Lecture');
-    assert.dom(firstLocation).hasText('- Room 123');
-    assert.dom(firstDescription).hasText('Best Session For Sure');
-    assert.equal(find(firstLm1).textContent.replace(/[\t\n\s]+/g, ""), 'CitationCitationLMcitationtext');
-    assert.dom(firstLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present');
-    assert.ok(find(firstLm2).textContent.includes('Link LM'));
-    assert.equal(find(firstLm2Link).href, 'http://myhost.com/url2');
-    assert.dom(firstLm2TypeIcon).exists({ count: 1 }, 'LM type icon is present');
-    assert.ok(find(firstLm3).textContent.includes('File LM'));
-    assert.equal(find(firstLm3Link).href, 'http://myhost.com/url1?inline');
-    assert.equal(find(firstLm3DownloadLink).href, 'http://myhost.com/url1');
-    assert.dom(firstLm3TypeIcon).exists({ count: 1 }, 'LM type icon is present');
-    assert.dom(firstInstructors).doesNotExist('No Instructors leaves and empty spot');
+    assert.equal(component.weeklyLink, 'Last Week / Next Week / All Weeks');
+    assert.equal(component.weekGlance.title, expectedTitle);
+    assert.equal(component.weekGlance.offeringEvents.length, 2, 'Blank events are not shown');
 
-    assert.dom(secondEventTitle).hasText('Finding the Point in Life');
-    assert.dom(secondSessionType).hasText('Independent Learning');
-    assert.dom(secondLocation).hasText('- Room 456');
-    assert.dom(secondDescription).doesNotExist('Empty Description is Empty');
-    assert.ok(find(secondLm1).textContent.includes('Great Slides'));
-    assert.equal(find(secondLm1Link).href, 'http://myhost.com/url1');
-    assert.dom(secondLm1TypeIcon).exists({ count: 1 }, 'LM type icon is present');
-    assert.equal(find(secondInstructors).textContent.replace(/[\t\n\s]+/g, ""), 'Instructors:FirstPerson,SecondPerson', 'Instructors sorted and formated correctly');
+    assert.equal(component.weekGlance.offeringEvents[0].title, 'Learn to Learn');
+    assert.equal(component.weekGlance.offeringEvents[1].title, 'Finding the Point in Life');
   });
 
   test('it renders blank', async function(assert) {
-    assert.expect(2);
-    this.owner.register('service:user-events', blankEventsMock);
+    assert.expect(3);
+    this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`{{dashboard-week}}`);
-    const title = 'h3';
-    const body = 'p';
     const expectedTitle = getTitle();
 
-    assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
-    assert.dom(this.element.querySelector(body)).hasText('None');
-
+    assert.equal(component.weeklyLink, 'Last Week / Next Week / All Weeks');
+    assert.equal(component.weekGlance.title, expectedTitle);
+    assert.equal(component.weekGlance.offeringEvents.length, 0);
   });
 });

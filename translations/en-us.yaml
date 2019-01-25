@@ -82,6 +82,7 @@ general:
   displayName: "Display Name"
   done: Done
   download: Download
+  dueBefore: "Due Before <a href='{link}'>{name}</a> ({date})"
   dueBy: "Due By"
   duePriorTo: "Due prior to"
   dueThisDay: "Due this day"
@@ -115,6 +116,7 @@ general:
   include: Include
   incompleteSessions: "Sessions Incomplete: cannot publish"
   independentLearning: "Independent Learning"
+  independentLearningActivities: "Independent Learning Activities"
   instructionalNotes: "Instructional Notes"
   instructorGroups: "Instructor Groups"
   instructors: Instructors
@@ -189,8 +191,9 @@ general:
   ownedBy: "owned by {owner}"
   owner: Owner
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
-  prerequisites: "Prerequisites"
   parentObjectives: "Parent Objectives"
+  prerequisites: "Prerequisites"
+  preWork: "PreWork"
   printSummary: "Print Summary"
   program: Program
   programAndCohort: "Program/Cohort"

@@ -54,6 +54,8 @@
   </div>
 {{/el-weekly-calendar}}
 
+<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} />
+
 {{ilios-calendar-multiday-events
   events=multiDayEventsList
   selectEvent=(action "selectEvent")

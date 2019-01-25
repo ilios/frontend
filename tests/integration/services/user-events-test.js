@@ -39,14 +39,20 @@ module('Integration | Service | user events', function(hooks) {
     assert.expect(10);
     const event1 = {
       offering: 1,
-      startDate: '2011-04-21'
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
-      startDate: '2008-09-02'
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
     };
     const event3 = {
-      startDate: '2015-11-20'
+      startDate: '2015-11-20',
+      prerequisites: [],
+      postrequisites: [],
     };
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
@@ -117,12 +123,16 @@ module('Integration | Service | user events', function(hooks) {
     const event1 = {
       name: 'Zeppelin',
       offering: 1,
-      startDate: '2011-04-21'
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       name: 'Aardvark',
       offering: 2,
-      startDate: '2011-04-21'
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
     };
 
     const from = moment('20110421', 'YYYYMMDD').hour(0);
@@ -147,11 +157,15 @@ module('Integration | Service | user events', function(hooks) {
     assert.expect(2);
     const event1 = {
       offering: 1,
-      startDate: '2011-04-21'
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
-      startDate: '2008-09-02'
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
     };
     this.commonAjax.reopen({
       request(url) {
@@ -172,11 +186,15 @@ module('Integration | Service | user events', function(hooks) {
     assert.expect(2);
     const event1 = {
       offering: 1,
-      startDate: '2011-04-21'
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
     };
     const event2 = {
       ilmSession: 3,
-      startDate: '2008-09-02'
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
     };
     this.commonAjax.reopen({
       request(url) {
@@ -198,7 +216,9 @@ module('Integration | Service | user events', function(hooks) {
     const service = this.owner.lookup('service:user-events');
     const event = {
       startDate: moment('2013-01-21').toDate(),
-      offering: 1
+      offering: 1,
+      prerequisites: [],
+      postrequisites: [],
     };
     assert.equal(service.getSlugForEvent(event), 'U20130121O1');
   });
@@ -208,7 +228,9 @@ module('Integration | Service | user events', function(hooks) {
     const service = this.owner.lookup('service:user-events');
     const event = {
       startDate: moment('2014-10-30').toDate(),
-      ilmSession: 1
+      ilmSession: 1,
+      prerequisites: [],
+      postrequisites: [],
     };
     assert.equal(service.getSlugForEvent(event), 'U20141030I1');
   });

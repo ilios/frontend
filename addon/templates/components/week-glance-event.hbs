@@ -1,0 +1,129 @@
+<div class="event" data-test-week-glance-event>
+  <h4 id={{concat "event" @event.slug}}>
+    <span class="title" data-test-event-title>
+      {{#link-to "events" @event.slug}}
+        {{@event.name}}
+      {{/link-to}}
+    </span>
+    <span class="date" data-test-date>
+      {{#if @event.ilmSession}}
+        <span class="ilm-due">{{t "general.dueBy"}}</span>
+      {{/if}}
+      {{moment-format @event.startDate "dddd h:mma"}}
+    </span>
+  </h4>
+  {{#if @event.prerequisites.length}}
+    <p class="pre-work" data-test-pre-work>
+      <strong>{{t "general.preWork"}}</strong>:
+      <ol>
+        {{#each @event.prerequisites as |event|}}
+          <li>
+            {{#link-to "events" event.slug}}
+              {{event.name}}
+            {{/link-to}}
+          </li>
+        {{/each}}
+      </ol>
+    </p>
+  {{/if}}
+  <p>
+    <span class="sessiontype" data-test-session-type>
+      {{@event.sessionTypeTitle}}
+    </span>
+    {{#if @event.location}}
+      <span class="location" data-test-location>
+        - {{@event.location}}
+      </span>
+    {{/if}}
+    <span class="session-attributes" data-test-session-attributes>
+      {{#if @event.attireRequired}}
+        {{fa-icon
+          "black-tie"
+          prefix="fab"
+          ariaHidden=false
+          title=(t "general.whitecoatsSlashSpecialAttire")
+        }}
+      {{/if}}
+      {{#if @event.equipmentRequired}}
+        {{fa-icon
+          "flask"
+          ariaHidden=false
+          title=(t "general.specialEquipment")
+        }}
+      {{/if}}
+      {{#if @event.attendanceRequired}}
+        {{fa-icon
+          "calendar-check"
+          ariaHidden=false
+          title=(t "general.attendanceIsRequired")
+        }}
+      {{/if}}
+      {{#if @event.supplemental}}
+        {{fa-icon
+          "calendar-minus"
+          ariaHidden=false
+          title=(t "general.supplementalCurriculum")
+        }}
+      {{/if}}
+    </span>
+  </p>
+  {{#if @event.instructors.length}}
+    <div class="instructors" data-test-instructors>
+      <label>{{t "general.instructors"}}:</label>
+      {{join ", " (sort-by (action "sortString") @event.instructors)}}
+    </div>
+  {{/if}}
+  {{#if @event.sessionDescription.length}}
+    <p class="description" data-test-description>
+      {{big-text text=@event.sessionDescription length=50}}
+    </p>
+  {{/if}}
+  <ul class="learning-materials" data-test-learning-materials>
+    {{#each @event.learningMaterials as |lm|}}
+      <li class="learning-material"  data-test-learning-material>
+        {{#if lm.isBlanked}}
+          <span class="lm-type-icon" data-test-type-icon>{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
+          <span data-test-material-title>{{lm.title}}</span>
+        {{else}}
+          {{lm-type-icon type=(lm-type lm) mimetype=lm.mimetype}}
+          {{#if lm.absoluteFileUri}}
+            {{#if (eq lm.mimetype "application/pdf")}}
+              <a href="{{lm.absoluteFileUri}}?inline" data-test-material-title>
+                {{lm.title}}
+              </a>
+              <a href={{lm.absoluteFileUri}} target="_blank" rel="noopener">
+                {{fa-icon "download" title=(t "general.download")}}
+              </a>
+            {{else}}
+              <a
+                href={{lm.absoluteFileUri}}
+                target="_blank"
+                rel="noopener"
+                data-test-material-title
+              >
+                {{lm.title}}
+              </a>
+            {{/if}}
+          {{else if lm.link}}
+            <a href={{lm.link}} target="_blank" rel="noopener" data-test-material-title>{{lm.title}}</a>
+          {{else}}
+            <span data-test-material-title>{{lm.title}}</span>
+            <ul data-test-citation>
+              <li><small>{{lm.citation}}</small></li>
+            </ul>
+          {{/if}}
+          {{#if lm.publicNotes}}
+            <p class="public-notes" data-test-public-notes>{{big-text text=lm.publicNotes length=50}}</p>
+          {{/if}}
+        {{/if}}
+        <span class="timed-release-info" data-test-time-release-info>
+          {{timed-release-schedule
+            startDate=lm.startDate
+            endDate=lm.endDate
+            showNoSchedule=false
+          }}
+        </span>
+      </li>
+    {{/each}}
+  </ul>
+</div>

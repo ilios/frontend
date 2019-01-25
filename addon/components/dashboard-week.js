@@ -6,6 +6,7 @@ import moment from 'moment';
 export default Component.extend({
   layout,
   classNames: ['dashboard-week'],
+  'data-test-dashboard-week': true,
   expanded: computed(function(){
     const lastSunday = moment().day(1).subtract(1, 'week').format('W');
     const thisSunday = moment().day(1).format('W');

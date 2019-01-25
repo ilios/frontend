@@ -84,5 +84,17 @@
     .lm-type-icon {
       color: $dark-grey;
     }
+
+    .pre-work {
+
+      ol {
+        @include ilios-list-reset;
+        margin-left: 2em;
+      }
+    }
+  }
+
+  .ilm-pre-work {
+    padding-bottom: 2rem;
   }
 }

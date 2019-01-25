@@ -35,8 +35,9 @@
   </div>
 {{/el-daily-calendar}}
 
+<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} />
+
 {{ilios-calendar-multiday-events
-  multidayEvents=multidayEvents
-  events=multiDayEventsList
+  events=multiDayEvents
   selectEvent=(action selectEvent event)
 }}

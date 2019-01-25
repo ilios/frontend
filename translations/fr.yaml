@@ -82,6 +82,7 @@ general:
   displayName: "Nom d’Affichage"
   done: Fini
   download: "Télécharger"
+  dueBefore: "Avant <a href='{link}'>{name}</a> ({date})"
   dueBy: Avant
   duePriorTo: "Dû avant"
   dueThisDay: "Dû ce jour-là"
@@ -115,6 +116,7 @@ general:
   include: Inclure
   incompleteSessions: "Séances incomplète: ne peut être pas publiée"
   independentLearning: "Apprentissage autonome"
+  independentLearningActivities: "Apprentissage autonome Activités"
   instructionalNotes: "Notes Didactiques"
   instructorGroups: "Groupes des Instructeurs"
   instructors: Instructeurs
@@ -191,6 +193,7 @@ general:
   parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
   parentObjectives: "Objectifs Mères"
   prerequisites: "Conditions préalables"
+  preWork: "Préalable"
   printSummary: "Empreinte Résumé"
   program: "Diplôme"
   programAndCohort: "Diplôme et Cohortes"

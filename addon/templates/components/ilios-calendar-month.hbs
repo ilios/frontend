@@ -1,4 +1,4 @@
-{{#el-monthly-calendar date=date events=calendarEvents as |weeks|}}
+{{#el-monthly-calendar date=date events=nonIlmPreWorkEvents as |weeks|}}
   <div class="row month-titles">
     <div class="cell">
     </div>
@@ -63,3 +63,5 @@
     </div>
   {{/each}}
 {{/el-monthly-calendar}}
+
+<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} />

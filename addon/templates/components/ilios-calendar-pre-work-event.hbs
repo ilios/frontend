@@ -1,0 +1,18 @@
+<div class="ilios-calendar-pre-work-event" data-test-ilios-calendar-pre-work-event>
+  <h4>
+    <span class="title" data-test-event-title>
+      {{#link-to "events" @event.slug}}
+        {{@event.name}}
+      {{/link-to}}
+    </span>
+    <span class="date" data-test-date>
+      {{t
+        "general.dueBefore"
+        name=@event.postrequisiteName
+        date=(format-date @event.startDate)
+        link=postrequisiteLink
+        htmlSafe=true
+      }}
+    </span>
+  </h4>
+</div>

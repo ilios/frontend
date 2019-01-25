@@ -1,0 +1,18 @@
+<div class="week-glance-pre-work" data-test-week-glance-pre-work>
+  <h4>
+    <span class="title" data-test-event-title>
+      {{#link-to "events" @event.slug}}
+        {{@event.name}}
+      {{/link-to}}
+    </span>
+    <span class="date" data-test-date>
+      {{t
+        "general.dueBefore"
+        name=@event.postrequisiteName
+        date=(format-date @event.startDate)
+        link=(concat "#event" @event.postrequisiteSlug)
+        htmlSafe=true
+      }}
+    </span>
+  </h4>
+</div>

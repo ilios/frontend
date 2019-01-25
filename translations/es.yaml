@@ -82,6 +82,7 @@ general:
   displayName: "Nombre de Mostrar"
   done: Acabado
   download: Descargar
+  dueBefore: "Debido antes de <a href='{link}'>{name}</a> ({date})"
   dueBy: "Debido Por"
   duePriorTo: "Debido antes de"
   dueThisDay: "Debido por esta fecha"
@@ -115,6 +116,7 @@ general:
   include: Incluir
   incompleteSessions: "Sesiónes Incompletas: No se pueden publicar"
   independentLearning: "Aprendizaje Independiente"
+  independentLearningActivities: "Aprendizaje Independiente Actividades"
   instructionalNotes: "Notes para la Instrucción"
   instructorGroups: "Grupos de Instructores"
   instructors: Instructores
@@ -191,6 +193,7 @@ general:
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentObjectives: "Objetivos de Matriz"
   prerequisites: "Prerrequisitos"
+  preWork: "Pre Trabajo"
   printSummary: "Sumario Printado"
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"

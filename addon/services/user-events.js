@@ -35,11 +35,7 @@ export default Service.extend(EventMixin, {
     const commonAjax = this.get('commonAjax');
     const data = await commonAjax.request(url);
 
-    return data.userEvents.map(event => {
-      event.isBlanked = !event.offering && !event.ilmSession;
-      event.slug = this.getSlugForEvent(event);
-      return event;
-    }).sortBy('startDate', 'name');
+    return data.userEvents.map(obj => this.createEventFromData(obj)).sortBy('startDate', 'name');
   },
 
   /**

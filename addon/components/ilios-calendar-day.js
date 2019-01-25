@@ -15,8 +15,23 @@ export default Component.extend({
       this.$(".el-calendar .week").scrollTop(500);
     });
   },
-  singleDayEvents: computed('calendarEvents.[]', function(){
-    const events = this.get('calendarEvents');
+  ilmPreWorkEvents: computed('calendarEvents.[]', function () {
+    const calendarEvents = this.calendarEvents || [];
+    const preWork =  calendarEvents.reduce((arr, eventObject) => {
+      return arr.pushObjects(eventObject.prerequisites);
+    }, []);
+
+    return preWork.filter(ev => ev.ilmSession);
+  }),
+
+  nonIlmPreWorkEvents: computed('calendarEvents.[]', function () {
+    const calendarEvents = this.calendarEvents || [];
+    return calendarEvents.filter(ev => {
+      return ev.postrequisites.length === 0 && !ev.ilmSession;
+    });
+  }),
+  singleDayEvents: computed('nonIlmPreWorkEvents.[]', function(){
+    const events = this.get('nonIlmPreWorkEvents');
     if(isEmpty(events)){
       return [];
     }
@@ -24,8 +39,8 @@ export default Component.extend({
       event => moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
   }),
-  multiDayEventsList: computed('calendarEvents.[]', function(){
-    const events = this.get('calendarEvents');
+  multiDayEvents: computed('nonIlmPreWorkEvents.[]', function(){
+    const events = this.get('nonIlmPreWorkEvents');
     if(isEmpty(events)){
       return [];
     }

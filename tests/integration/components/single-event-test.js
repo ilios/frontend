@@ -1,17 +1,23 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios-common/page-objects/components/single-event';
 
 module('Integration | Component | ilios calendar single event', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.logging = true;
+    this.owner.setupRouter();
+  }),
+
+  test('it renders', async function(assert) {
+    assert.expect(20);
+
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
       id: 1,
@@ -22,8 +28,9 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       title: 'test session',
       course
     });
-    this.sessionLearningMaterials = [
-      this.server.create('session-learning-material', {
+
+    const learningMaterials = [
+      EmberObject.create({
         title: 'Lecture Notes',
         sessionLearningMaterial: '1',
         description: 'Lecture Notes in PDF format',
@@ -34,7 +41,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         publicNotes: 'Lorem Ipsum',
         position: 0,
       }),
-      this.server.create('session-learning-material', {
+      EmberObject.create({
         title: 'Mystery Meat',
         sessionLearningMaterial: '2',
         position: 1,
@@ -42,7 +49,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         endDate: new Date('2013-03-01T01:10:00')
       })
     ];
-    this.ourEvent = EmberObject.create({
+    const ourEvent = this.server.create('userevent', {
       user: 1,
       courseExternalId: 'ext1',
       sessionTypeTitle: 'test type',
@@ -54,7 +61,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       location: 'here',
       instructors: ['Great Teacher'],
       session: 1,
-      learningMaterials: this.sessionLearningMaterials,
+      learningMaterials,
       sessionObjectives: [
         {
           id: 1,
@@ -113,13 +120,9 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         }
       ],
     });
-  });
 
-  test('it renders', async function(assert) {
-    assert.expect(20);
-    this.set('event', this.ourEvent);
+    this.set('event', ourEvent);
     await render(hbs`{{single-event event=event}}`);
-    await settled();
 
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test course'), 'course title is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test session'), 'session title is displayed');
@@ -130,14 +133,14 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     let sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
     assert.dom(
       this.element.querySelector('.single-event-learningmaterial-item-notes', sessionLm)
-    ).hasText(this.sessionLearningMaterials[0].publicNotes);
+    ).hasText(learningMaterials[0].publicNotes);
     assert.dom(
       this.element.querySelector('.single-event-learningmaterial-item-description', sessionLm)
-    ).hasText(this.sessionLearningMaterials[0].description);
-    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    ).hasText(learningMaterials[0].description);
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(learningMaterials[0].title));
     sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
     assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock', sessionLm).length, 1, 'Timed release icon is visible');
-    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(this.sessionLearningMaterials[0].title));
+    assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(learningMaterials[0].title));
     let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
     assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Competency A (Domain A)'));
     assert.dom(
@@ -160,5 +163,136 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`)
     ).hasText('Course Objective A');
     assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`).textContent.trim().startsWith('Domain B (Domain B)'));
+  });
+
+  test('unlinked event date and title are displayed', async function(assert) {
+    assert.expect(2);
+
+    const today = moment().hour(8).minute(0).second(0);
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.offeredAt, 'On ' + today.format('dddd, MMMM Do YYYY, h:mm a'));
+  });
+
+  test('postrequisite date and title are displayed', async function(assert) {
+    assert.expect(3);
+
+    const today = moment().hour(8).minute(0).second(0);
+    const tomorrow = today.clone().add(1, 'day');
+    const postReq = EmberObject.create({
+      name: 'postrequisite session',
+      courseTitle: 'course',
+      startDate: tomorrow.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      slug: '1234'
+    });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      ilmSession: 1,
+      lastModified: null,
+      postrequisites: [postReq]
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    const formatedDate = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
+    assert.equal(component.offeredAt, `Due Before postrequisite session (${formatedDate})`);
+    assert.equal(component.offeredAtLink, `/events/1234`);
+  });
+
+  test('prequisites are displayed', async function(assert) {
+    assert.expect(6);
+
+    const today = moment().hour(8).minute(0).second(0);
+    const prereq1 = EmberObject.create({
+      name: 'prework 1',
+      startDate: today.clone().subtract(1, 'day').format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+    });
+    const prereq2 = EmberObject.create({
+      name: 'prework 2',
+      startDate: today.clone().subtract(3, 'days').format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+    });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      prerequisites: [prereq1, prereq2]
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.preWork.length, 2);
+    assert.equal(component.preWork[0].title, 'prework 1');
+    assert.ok(component.preWork[0].hasLink);
+    assert.equal(component.preWork[1].title, 'prework 2');
+    assert.ok(component.preWork[1].hasLink);
+  });
+
+  test('for non ilms postrequisite date and title are displayed along with offering date', async function(assert) {
+    assert.expect(3);
+    this.owner.setupRouter();
+
+    const today = moment().hour(8).minute(0).second(0);
+    const tomorrow = today.clone().add(1, 'day');
+    const postReq = EmberObject.create({
+      name: 'postrequisite session',
+      courseTitle: 'course',
+      startDate: tomorrow.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      slug: '1234'
+    });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      postrequisites: [postReq]
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`{{single-event event=event}}`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    const formattedTomorrow = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
+    const formattedToday = today.format('dddd, MMMM Do YYYY, h:mm a');
+    assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) On ${formattedToday}`);
+    assert.equal(component.offeredAtLink, `/events/1234`);
   });
 });

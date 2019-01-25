@@ -1,6 +1,6 @@
 {{#if event}}
   <div class="single-event-summary">
-    <h1>
+    <h1 data-test-title>
       {{#if recentlyUpdated}}
         {{fa-icon
           "exclamation-circle"
@@ -10,11 +10,27 @@
       {{/if}}
       {{event.courseTitle}} - <em>{{event.name}}</em>
     </h1>
-    <div class="single-event-offered-at">
-      {{t
-        "general.offeredAt"
-        date=(moment-format event.startDate "dddd, MMMM Do YYYY, h:mm a")
-      }}
+
+    <div class="single-event-offered-at" data-test-offered-at>
+      {{#if (gt @event.postrequisites.length 0)}}
+        <p>
+          {{t
+            "general.dueBefore"
+            name=(get (object-at 0 @event.postrequisites) "name")
+            date=(moment-format (get (object-at 0 @event.postrequisites) "startDate") "dddd, MMMM Do YYYY, h:mm a")
+            link=postrequisiteLink
+            htmlSafe=true
+          }}
+        </p>
+      {{/if}}
+      {{#unless @event.ilmSession}}
+        <p>
+          {{t
+            "general.offeredAt"
+            date=(moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a")
+          }}
+        </p>
+      {{/unless}}
     </div>
     <div class="single-event-location">{{event.location}}</div>
     {{#if taughtBy}}
@@ -52,6 +68,20 @@
     {{#if (gt (get event.sessionDescription "length") 0)}}
       {{! template-lint-disable no-triple-curlies }}
       {{{event.sessionDescription}}}<br>
+    {{/if}}
+    {{#if @event.prerequisites.length}}
+      <p class="pre-work" data-test-pre-work>
+        <h5>{{t "general.preWork"}}</h5>
+        <ol>
+          {{#each @event.prerequisites as |event|}}
+            <li>
+              {{#link-to "events" event.slug}}
+                {{event.name}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        </ol>
+      </p>
     {{/if}}
   </div>
 
