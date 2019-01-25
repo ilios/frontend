@@ -82,7 +82,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
   iliosConfig: service(),
   commonAjax: service(),
-  passwordStrength: service(),
 
   init(){
     this._super(...arguments);
@@ -278,9 +277,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
 
   passwordStrengthScore: computed('password', async function () {
-    const passwordStrength = this.get('passwordStrength');
+    const { default: zxcvbn } = await import('zxcvbn');
     const password = isEmpty(this.get('password'))?'':this.get('password');
-    const obj = await passwordStrength.strength(password);
+    const obj = zxcvbn(password);
     return obj.score;
   }),
 

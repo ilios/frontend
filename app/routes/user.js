@@ -7,6 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   currentUser: service(),
   permissionChecker: service(),
+  iliosConfig: service(),
   titleToken: 'general.admin',
   canUpdate: false,
   canCreate: false,
@@ -32,6 +33,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
     this.set('canUpdate', canUpdate);
     this.set('canCreate', canCreate);
+
+    const userSearchType = await this.iliosConfig.userSearchType;
+    if (userSearchType !== 'ldap' && (canCreate || canUpdate)) {
+      await import('zxcvbn');
+    }
   },
   setupController(controller, model) {
     this._super(controller, model);

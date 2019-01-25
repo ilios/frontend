@@ -21,6 +21,9 @@ module.exports = function(defaults) {
 
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+    babel: {
+      plugins: [ require('ember-auto-import/babel-plugin') ]
+    },
     'ember-cli-image-transformer': {
       images: [
         {
@@ -36,9 +39,6 @@ module.exports = function(defaults) {
           sizes: [16, 32, 48, 96, 150, 512],
         },
       ]
-    },
-    'ember-cli-password-strength': {
-      bundleZxcvbn: false
     },
     'ember-cli-qunit': {
       useLintTree: false
