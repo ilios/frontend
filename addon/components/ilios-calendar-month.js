@@ -20,7 +20,7 @@ export default Component.extend({
   nonIlmPreWorkEvents: computed('calendarEvents.[]', function () {
     const calendarEvents = this.calendarEvents || [];
     return calendarEvents.filter(ev => {
-      return ev.postrequisites.length === 0 && !ev.ilmSession;
+      return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }),
   actions: {
