@@ -4,7 +4,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
-  titleToken: 'general.schools',
   model(){
     return this.get('store').findAll('school');
   },

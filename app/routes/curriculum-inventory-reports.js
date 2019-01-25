@@ -5,7 +5,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   store: service(),
-  titleToken: 'general.curriculumInventoryReports',
 
   async model() {
     const store = this.get('store');

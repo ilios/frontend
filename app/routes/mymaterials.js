@@ -11,7 +11,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   commonAjax: service(),
   iliosConfig: service(),
-  titleToken: 'general.learningMaterials',
 
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),

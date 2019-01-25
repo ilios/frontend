@@ -6,7 +6,6 @@ import { inject as service } from '@ember/service';
 export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   editable: false,
-  titleToken: 'general.learnerGroups',
   async afterModel(model) {
     const permissionChecker = this.get('permissionChecker');
 

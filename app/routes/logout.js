@@ -3,7 +3,6 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   session: service(),
-  titleToken: 'general.logout',
   beforeModel(){
     const session = this.get('session');
     if(session.isAuthenticated){

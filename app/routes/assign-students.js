@@ -12,7 +12,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
       replace: true
     }
   },
-  titleToken: 'general.admin',
   async model(){
     const currentUser = this.get('currentUser');
     const store = this.get('store');

@@ -7,7 +7,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   permissionChecker: service(),
   currentUser: service(),
-  titleToken: 'general.admin',
 
   beforeModel() {
     const currentUser = this.get('currentUser');

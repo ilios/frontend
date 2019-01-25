@@ -1,8 +1,6 @@
-<title>
-  {{t "general.ilios"}}
-  {{#if model.titleTokens.length}}
-    {{#each model.titleTokens as |token|}}
-      {{t token}}&nbsp;
-    {{/each}}
-  {{/if}}
-</title>
+{{!--
+Add content you wish automatically added to the documents head
+here. The 'model' available in this template can be populated by
+setting values on the 'head-data' service.
+--}}
+<title>{{t "general.ilios"}} {{model.title}}</title>
