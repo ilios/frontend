@@ -34,9 +34,9 @@ module('Integration | Component | user profile calendar', function(hooks) {
         assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
 
         let userEvents = [
-          {name: 'first', startDate: today.format(), location: 123, lastModified: today.format()},
-          {name: 'second', startDate: today.format(), location: 456, lastModified: today.format()},
-          {name: 'third', startDate: today.format(), location: 789, lastModified: today.format()},
+          {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
+          {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
+          {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},
         ];
 
         return resolve({ userEvents });
