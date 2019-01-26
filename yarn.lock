@@ -5667,6 +5667,13 @@ ember-factory-for-polyfill@^1.3.1:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
+ember-feature-flags@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ember-feature-flags/-/ember-feature-flags-5.0.0.tgz#630d2876f5341b456db89996f35c0b109a0e27ec"
+  integrity sha1-Yw0odvU0G0VtuJmW81wLEJoOJ+w=
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 "ember-fetch@^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0", "ember-fetch@^4.0.0 || ^5.0.0 || ^6.0.0":
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/ember-fetch/-/ember-fetch-6.4.0.tgz#806b2acfbda07f3b0dd48a9fcdbc575c5519611d"
@@ -7862,10 +7869,10 @@ ignore@^5.0.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.4.tgz#33168af4a21e99b00c5d41cbadb6a6cb49903a45"
   integrity sha512-WLsTMEhsQuXpCiG173+f3aymI43SXa+fB1rSfbzyP4GkPP+ZFVuO0/3sFUGNBtifisPeDcl/uD/Y2NxZ7xFq4g==
 
-ilios-common@21.2.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-21.2.0.tgz#b9108ee6ebc70a2eeb40f9158ff5ba6f76c6e737"
-  integrity sha512-E3Bp2mkfsth4ajDp8TfPxnCKLa9rzCHjm6vJAkMo4yvz3eibF9p2k4ab/4aGKr7PDiPbdgjY8fOcE+nfEvF2mA==
+ilios-common@22.0.0:
+  version "22.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-22.0.0.tgz#ccf8717f3cf3b5e8d574ae3daa2ea464e967c22e"
+  integrity sha512-Y9VRo/3BsbO1J1Q09mSLnW5L6Rovkr8zOTQeA8IdHF6MmqwNKibc7qeM6U+nh16ZoII1kFVf1slfFjGQnYA87Q==
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
     "@fortawesome/ember-fontawesome" "^0.1.9"
@@ -7893,6 +7900,7 @@ ilios-common@21.2.0:
     ember-concurrency "^0.8.26"
     ember-cp-validations "^3.3.1"
     ember-drag-drop "^0.6.2"
+    ember-feature-flags "^5.0.0"
     ember-file-upload "^2.5.0"
     ember-intl "^3.4.0"
     ember-math-helpers "^2.9.0"
