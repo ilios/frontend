@@ -120,6 +120,9 @@ module.exports = function(defaults) {
         ]
       }
     },
+    autoImport: {
+      publicAssetURL: '/assets'
+    },
   });
 
   app.import('node_modules/normalize.css/normalize.css');
