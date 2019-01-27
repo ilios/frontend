@@ -44,7 +44,9 @@ jobs:
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - stage: deploy staging
       if: branch = master AND NOT type = pull_request AND NOT type = cron
+      env: COVERAGE=false
       script: node_modules/.bin/ember deploy staging --activate
     - stage: deploy production
       if: tag IS present
+      env: COVERAGE=false
       script: node_modules/.bin/ember deploy production --activate
