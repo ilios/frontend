@@ -154,7 +154,6 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.dom(title).exists({ count: 1 });
     assert.dom(color).exists({ count: 1 });
     assert.dom(assessment).exists({ count: 1 });
-    assert.dom(assessment).isNotChecked();
     assert.dom(assessmentOption).doesNotExist();
   });
 
