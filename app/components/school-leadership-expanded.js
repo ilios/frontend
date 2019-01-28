@@ -8,7 +8,7 @@ export default Component.extend({
   classNames: ['school-leadership-expanded'],
   didReceiveAttrs(){
     this._super(...arguments);
-    const school = this.get('school');
+    const school = this.school;
     if (school) {
       school.get('directors').then(directors => {
         this.set('directors', directors.toArray());
@@ -22,8 +22,8 @@ export default Component.extend({
   administrators: null,
   isManaging: false,
   isCollapsible: computed('isManaging', 'school.directors.length', 'school.administrators.length', function(){
-    const school = this.get('school');
-    const isManaging = this.get('isManaging');
+    const school = this.school;
+    const isManaging = this.isManaging;
     const administratorIds = school.hasMany('administrators').ids();
     const directorIds = school.hasMany('directors').ids();
 
@@ -32,13 +32,13 @@ export default Component.extend({
   }),
   save: task(function * (){
     yield timeout(10);
-    const directors = this.get('directors');
-    const administrators = this.get('administrators');
-    let school = this.get('school');
+    const directors = this.directors;
+    const administrators = this.administrators;
+    let school = this.school;
     school.setProperties({directors, administrators});
-    this.get('expand')();
+    this.expand();
     yield school.save();
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
   }),
   add(where, user){
     let arr = this.get(where).toArray();

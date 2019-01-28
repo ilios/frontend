@@ -12,16 +12,16 @@ export default Component.extend({
   isLoading: false,
 
   barWidth: computed('progress', function () {
-    const progress = parseInt(this.get('progress'), 10);
+    const progress = parseInt(this.progress, 10);
 
     return htmlSafe(`width: ${progress}%;`);
   }),
 
   incrementProgress: task(function * () {
-    const removeProgress = this.get('removeProgress');
-    const isLoading = this.get('isLoading');
-    const progress = this.get('progress');
-    const incrementProgress = this.get('incrementProgress');
+    const removeProgress = this.removeProgress;
+    const isLoading = this.isLoading;
+    const progress = this.progress;
+    const incrementProgress = this.incrementProgress;
     if (isLoading) {
       // as progress goes up we load progressively faster to give the appearance of acceleration
       const velocity = 200 - progress * progress;
@@ -36,7 +36,7 @@ export default Component.extend({
   }).restartable().on('init'),
 
   removeProgress: task(function * () {
-    const progress = this.get('progress');
+    const progress = this.progress;
     if (progress > 0) {
       yield timeout(1);
       this.set('progress', 100);

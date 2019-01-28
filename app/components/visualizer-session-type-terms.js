@@ -15,8 +15,8 @@ export default Component.extend({
   tooltipContent: null,
   tooltipTitle: null,
   data: computed('sessionType.sessions.[]', 'vocabulary', async function(){
-    const sessionType = this.get('sessionType');
-    const vocabulary = this.get('vocabulary');
+    const sessionType = this.sessionType;
+    const vocabulary = this.vocabulary;
     const sessions = await sessionType.get('sessions');
     const terms = await map(sessions.toArray(), async session => {
       const sessionTerms = await session.get('terms');
@@ -92,7 +92,7 @@ export default Component.extend({
   }),
   donutHover: task(function* (obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
+    const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       this.set('tooltipTitle', null);
       this.set('tooltipContent', null);

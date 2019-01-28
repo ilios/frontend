@@ -18,9 +18,9 @@ export default Component.extend({
   schoolId: null,
   schools: null,
   selectedSchool: computed('currentUser', 'schoolId', async function () {
-    const schools = this.get('schools');
-    const currentUser = this.get('currentUser');
-    const schoolId = this.get('schoolId');
+    const schools = this.schools;
+    const currentUser = this.currentUser;
+    const schoolId = this.schoolId;
 
     if (schoolId) {
       return schools.findBy('id', schoolId);
@@ -37,8 +37,8 @@ export default Component.extend({
 
   unassignedStudents: computed('selectedSchool', function(){
     return new Promise(resolve => {
-      this.get('selectedSchool').then(school => {
-        this.get('store').query('user', {
+      this.selectedSchool.then(school => {
+        this.store.query('user', {
           filters: {
             roles: [4],
             school: school.get('id'),
@@ -57,7 +57,7 @@ export default Component.extend({
   unassignedStudentsProxy: computed('unassignedStudents', function(){
     let ap = ArrayProxy.extend(PromiseProxyMixin);
     return ap.create({
-      promise: this.get('unassignedStudents')
+      promise: this.unassignedStudents
     });
   }),
   actions: {

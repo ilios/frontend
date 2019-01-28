@@ -26,13 +26,13 @@ export default Component.extend({
   usersBeingMoved: null,
   sortBy: 'firstName',
   sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
+    const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
   filter: '',
   filteredUsers: computed('filter', 'users.[]', function() {
-    let users = this.get('users')?this.get('users'):[];
-    const filter = this.get('filter');
+    let users = this.users?this.users:[];
+    const filter = this.filter;
 
     if (isEmpty(filter)){
       return users;
@@ -47,59 +47,59 @@ export default Component.extend({
   }),
 
   usersInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', 'isEditing', function(){
-    const isEditing = this.get('isEditing');
-    const filteredUsers = this.get('filteredUsers');
+    const isEditing = this.isEditing;
+    const filteredUsers = this.filteredUsers;
     if (!isEditing) {
       return filteredUsers;
     }
-    const learnerGroupId = this.get('learnerGroupId');
+    const learnerGroupId = this.learnerGroupId;
     return filteredUsers.filter(user => {
       return user.get('lowestGroupInTree').get('id') === learnerGroupId;
     });
   }),
 
   usersNotInCurrentGroup: computed('filteredUsers.[]', 'learnerGroupId', function(){
-    const learnerGroupId = this.get('learnerGroupId');
-    return this.get('filteredUsers').filter(user => user.get('lowestGroupInTree').get('id') !== learnerGroupId);
+    const learnerGroupId = this.learnerGroupId;
+    return this.filteredUsers.filter(user => user.get('lowestGroupInTree').get('id') !== learnerGroupId);
   }),
 
   addSingleUser: task(function * (user) {
-    this.get('usersBeingMoved').pushObject(user);
+    this.usersBeingMoved.pushObject(user);
     //timeout gives the spinner time to render
     yield timeout(10);
-    yield this.get('addUserToGroup')(user);
-    this.get('usersBeingMoved').removeObject(user);
+    yield this.addUserToGroup(user);
+    this.usersBeingMoved.removeObject(user);
   }),
   removeSingleUser: task(function * (user) {
-    this.get('usersBeingMoved').pushObject(user);
+    this.usersBeingMoved.pushObject(user);
     //timeout gives the spinner time to render
     yield timeout(10);
-    yield this.get('removeUserFromGroup')(user);
-    this.get('usersBeingMoved').removeObject(user);
+    yield this.removeUserFromGroup(user);
+    this.usersBeingMoved.removeObject(user);
   }),
 
   addSelectedUsers: task(function * () {
-    const users = this.get('selectedUsers');
-    this.get('usersBeingMoved').pushObjects(users);
+    const users = this.selectedUsers;
+    this.usersBeingMoved.pushObjects(users);
     //timeout gives the spinner time to render
     yield timeout(10);
-    yield this.get('addUsersToGroup')(users);
-    this.get('usersBeingMoved').removeObjects(users);
+    yield this.addUsersToGroup(users);
+    this.usersBeingMoved.removeObjects(users);
     this.set('selectedUsers', []);
   }),
   removeSelectedUsers: task(function * () {
-    const users = this.get('selectedUsers');
-    this.get('usersBeingMoved').pushObjects(users);
+    const users = this.selectedUsers;
+    this.usersBeingMoved.pushObjects(users);
     //timeout gives the spinner time to render
     yield timeout(10);
-    yield this.get('removeUsersFromGroup')(users);
-    this.get('usersBeingMoved').removeObjects(users);
+    yield this.removeUsersFromGroup(users);
+    this.usersBeingMoved.removeObjects(users);
     this.set('selectedUsers', []);
   }),
 
   setCheckAllState(){
-    const selectedUsers = this.get('selectedUsers').get('length');
-    const filteredUsers = this.get('filteredUsers').get('length');
+    const selectedUsers = this.selectedUsers.get('length');
+    const filteredUsers = this.filteredUsers.get('length');
     let el = this.$('th:eq(0) input');
     if (selectedUsers === 0) {
       el.prop('indeterminate', false);
@@ -114,28 +114,28 @@ export default Component.extend({
   },
   actions: {
     sortBy(what){
-      const sortBy = this.get('sortBy');
+      const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
-      this.get('setSortBy')(what);
+      this.setSortBy(what);
     },
     toggleUserSelection(user){
-      if (this.get('selectedUsers').includes(user)) {
-        this.get('selectedUsers').removeObject(user);
+      if (this.selectedUsers.includes(user)) {
+        this.selectedUsers.removeObject(user);
       } else {
-        this.get('selectedUsers').pushObject(user);
+        this.selectedUsers.pushObject(user);
       }
     },
     toggleUserSelectionAllOrNone() {
-      const selectedUsers = this.get('selectedUsers').get('length');
-      const filteredUsers = this.get('filteredUsers').get('length');
+      const selectedUsers = this.selectedUsers.get('length');
+      const filteredUsers = this.filteredUsers.get('length');
 
       if (selectedUsers >= filteredUsers) {
-        this.get('selectedUsers').clear();
+        this.selectedUsers.clear();
       } else {
-        const users = this.get('filteredUsers');
-        this.get('selectedUsers').pushObjects(users.mapBy('content'));
+        const users = this.filteredUsers;
+        this.selectedUsers.pushObjects(users.mapBy('content'));
       }
 
       this.setCheckAllState();

@@ -2,7 +2,13 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll,
+  find
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | learnergroup cohort user manager', function(hooks) {
@@ -51,20 +57,20 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
 
-    assert.equal(find('.title').textContent.trim(), 'Cohort Members NOT assigned to top level group  (2)');
-    assert.equal(findAll(userList).length, 2);
-    assert.equal(findAll(user1CheckBox).length, 1);
-    assert.notOk(find(user1CheckBox).checked);
-    assert.equal(find(user1FirstName).textContent.trim(), 'Jasper');
-    assert.equal(find(user1LastName).textContent.trim(), 'Dog');
-    assert.equal(find(user1CampusId).textContent.trim(), '1234');
-    assert.equal(find(user1Email).textContent.trim(), 'testemail');
+    assert.dom('.title').hasText('Cohort Members NOT assigned to top level group (2)');
+    assert.dom(userList).exists({ count: 2 });
+    assert.dom(user1CheckBox).exists({ count: 1 });
+    assert.dom(user1CheckBox).isNotChecked();
+    assert.dom(user1FirstName).hasText('Jasper');
+    assert.dom(user1LastName).hasText('Dog');
+    assert.dom(user1CampusId).hasText('1234');
+    assert.dom(user1Email).hasText('testemail');
 
-    assert.equal(findAll(user2Disabled).length, 1);
-    assert.equal(find(user2FirstName).textContent.trim(), 'Jackson');
-    assert.equal(find(user2LastName).textContent.trim(), 'Doggy');
-    assert.equal(find(user2CampusId).textContent.trim(), '123');
-    assert.equal(find(user2Email).textContent.trim(), 'testemail2');
+    assert.dom(user2Disabled).exists({ count: 1 });
+    assert.dom(user2FirstName).hasText('Jackson');
+    assert.dom(user2LastName).hasText('Doggy');
+    assert.dom(user2CampusId).hasText('123');
+    assert.dom(user2Email).hasText('testemail2');
   });
 
   test('sort by firstName', async function(assert) {
@@ -94,9 +100,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
 
-    assert.equal(findAll(userList).length, 2);
-    assert.equal(find(user1FirstName).textContent.trim(), 'Jackson');
-    assert.equal(find(user2FirstName).textContent.trim(), 'Jasper');
+    assert.dom(userList).exists({ count: 2 });
+    assert.dom(user1FirstName).hasText('Jackson');
+    assert.dom(user2FirstName).hasText('Jasper');
   });
 
   test('add multiple users', async function(assert) {
@@ -125,12 +131,12 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       addUsersToGroup=(action addMany)
     }}`);
 
-    assert.equal(findAll(button).length, 0);
+    assert.dom(button).doesNotExist();
     await click(user1CheckBox);
-    assert.equal(find(button).textContent.trim(), 'Move learner to this group');
+    assert.dom(button).hasText('Move learner to this group');
     await click(button);
     await settled();
-    assert.equal(findAll(button).length, 0, 'button is hidden after save');
+    assert.dom(button).doesNotExist('button is hidden after save');
   });
 
   test('add single user', async function(assert) {
@@ -185,7 +191,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
     await click(user1CheckBox);
-    assert.equal(findAll(action).length, 0);
+    assert.dom(action).doesNotExist();
 
   });
 
@@ -222,9 +228,9 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     }}`);
 
     await click(checkAllBox);
-    assert.ok(find(user1CheckBox).checked);
-    assert.ok(find(user2CheckBox).checked);
-    assert.equal(find(button).textContent.trim(), 'Move 2 learners to this group');
+    assert.dom(user1CheckBox).isChecked();
+    assert.dom(user2CheckBox).isChecked();
+    assert.dom(button).hasText('Move 2 learners to this group');
     return settled(await click(button));
 
   });
@@ -259,10 +265,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     await click(user1CheckBox);
     assert.ok(find(checkAllBox).indeterminate);
     await click(user2CheckBox);
-    assert.ok(find(checkAllBox).checked);
+    assert.dom(checkAllBox).isChecked();
     await click(checkAllBox);
-    assert.notOk(find(user1CheckBox).checked);
-    assert.notOk(find(user2CheckBox).checked);
+    assert.dom(user1CheckBox).isNotChecked();
+    assert.dom(user2CheckBox).isNotChecked();
   });
 
   test('root users can manage disabled users', async function(assert) {

@@ -2,7 +2,12 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -76,9 +81,9 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const courses = '.learnergroup-overview .associatedcourses div';
 
     return settled().then(()=>{
-      assert.equal(find(defaultLocation).textContent.trim(), 'test location');
-      assert.equal(find(instructors).textContent.trim(), 'user5; user6');
-      assert.equal(find(courses).textContent.trim(), 'test course 1; test course 2');
+      assert.dom(defaultLocation).hasText('test location');
+      assert.dom(instructors).hasText('user5; user6');
+      assert.dom(courses).hasText('test course 1; test course 2');
     });
   });
 
@@ -132,10 +137,10 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const editLocation = `${defaultLocation} .editable`;
     const input =  `${defaultLocation} input`;
     const save =  `${defaultLocation} .done`;
-    assert.equal(find(defaultLocation).textContent.trim(), 'test location');
+    assert.dom(defaultLocation).hasText('test location');
     await click(editLocation);
     await fillIn(input, 'new location name');
     await click(save);
-    assert.equal(find(defaultLocation).textContent.trim(), 'new location name');
+    assert.dom(defaultLocation).hasText('new location name');
   });
 });

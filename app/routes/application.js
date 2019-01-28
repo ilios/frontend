@@ -16,11 +16,11 @@ export default Route.extend(ApplicationRouteMixin, {
   sessionInvalidated() {
     if (!Ember.testing) {
       let logoutUrl = '/auth/logout';
-      return this.get('commonAjax').request(logoutUrl).then(response => {
+      return this.commonAjax.request(logoutUrl).then(response => {
         if(response.status === 'redirect'){
           window.location.replace(response.logoutUrl);
         } else {
-          this.get('flashMessages').success('general.confirmLogout');
+          this.flashMessages.success('general.confirmLogout');
           window.location.replace(config.rootURL);
         }
       });
@@ -28,8 +28,8 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   beforeModel() {
-    const intl = this.get('intl');
-    const moment = this.get('moment');
+    const intl = this.intl;
+    const moment = this.moment;
     const locale = intl.get('locale');
     moment.setLocale(locale);
     window.document.querySelector('html').setAttribute('lang', locale);
@@ -40,7 +40,7 @@ export default Route.extend(ApplicationRouteMixin, {
    * This makes the initial page rendering (especially the navigation) much smoother
    */
   async afterModel() {
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     const user = await currentUser.get('model');
     if (user) {
       await user.get('roles');
@@ -59,7 +59,7 @@ export default Route.extend(ApplicationRouteMixin, {
       this.set('event', event);
     }
 
-    const session = this.get('session');
+    const session = this.session;
     session.on('authenticationSucceeded', async () => {
       if ('serviceWorker' in navigator) {
         const reg = await navigator.serviceWorker.getRegistration();
@@ -71,7 +71,7 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   deactivate() {
-    const event = this.get('event');
+    const event = this.event;
     if (event && 'serviceWorker' in navigator) {
       navigator.serviceWorker.removeEventListener(event);
     }

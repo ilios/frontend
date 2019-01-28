@@ -18,7 +18,7 @@ export default Mixin.create(ValidationErrorDisplay, {
 
   init(){
     this._super(...arguments);
-    this.get('loadCohorts').perform();
+    this.loadCohorts.perform();
   },
 
   firstName: null,
@@ -37,8 +37,8 @@ export default Mixin.create(ValidationErrorDisplay, {
   nonStudentMode: true,
 
   schools: computed(async function(){
-    const permissionChecker = this.get('permissionChecker');
-    const store = this.get('store');
+    const permissionChecker = this.permissionChecker;
+    const store = this.store;
     const schools = await store.findAll('school', {reload: true});
     return filter(schools.toArray(), async school => {
       return permissionChecker.canCreateUser(school);
@@ -48,8 +48,8 @@ export default Mixin.create(ValidationErrorDisplay, {
   bestSelectedSchool: computed('schools.[]', 'schoolId', {
     get(){
       return new Promise(resolve => {
-        const schoolId = this.get('schoolId');
-        this.get('schools').then(schools => {
+        const schoolId = this.schoolId;
+        this.schools.then(schools => {
           if (schoolId) {
             let currentSchool = schools.find(school => {
               return school.get('id') === schoolId;
@@ -70,8 +70,8 @@ export default Mixin.create(ValidationErrorDisplay, {
   bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', {
     get(){
       return new Promise(resolve => {
-        const primaryCohortId = this.get('primaryCohortId');
-        this.get('bestSelectedSchool').then(school => {
+        const primaryCohortId = this.primaryCohortId;
+        this.bestSelectedSchool.then(school => {
           school.get('cohorts').then(cohorts => {
             if (primaryCohortId) {
               let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
@@ -89,8 +89,8 @@ export default Mixin.create(ValidationErrorDisplay, {
 
   cohorts: oneWay('loadCohorts.lastSuccessful.value'),
   loadCohorts: task(function * () {
-    let school = yield this.get('bestSelectedSchool');
-    let cohorts = yield this.get('store').query('cohort', {
+    let school = yield this.bestSelectedSchool;
+    let cohorts = yield this.store.query('cohort', {
       filters: {
         schools: [school.get('id')],
       }
@@ -143,11 +143,11 @@ export default Mixin.create(ValidationErrorDisplay, {
       password,
       store,
       nonStudentMode
-    } = this.getProperties('firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password', 'store', 'nonStudentMode');
+    } = this;
     const roles = yield store.findAll('user-role');
-    const school = yield this.get('bestSelectedSchool');
-    const primaryCohort = yield this.get('bestSelectedCohort');
-    let user = this.get('store').createRecord('user', {
+    const school = yield this.bestSelectedSchool;
+    const primaryCohort = yield this.bestSelectedCohort;
+    let user = this.store.createRecord('user', {
       firstName,
       middleName,
       lastName,
@@ -165,21 +165,21 @@ export default Mixin.create(ValidationErrorDisplay, {
       user.set('roles', [studentRole]);
     }
     user = yield user.save();
-    let authentication = this.get('store').createRecord('authentication', {
+    let authentication = this.store.createRecord('authentication', {
       user,
       username,
       password
     });
     yield authentication.save();
-    this.get('flashMessages').success('general.saved');
-    this.get('transitionToUser')(user.get('id'));
+    this.flashMessages.success('general.saved');
+    this.transitionToUser(user.get('id'));
     this.send('clearErrorDisplay');
   }).drop(),
 
   actions: {
     setSchool(id){
       this.set('schoolId', id);
-      this.get('loadCohorts').perform();
+      this.loadCohorts.perform();
     },
     setPrimaryCohort(id){
       this.set('primaryCohortId', id);

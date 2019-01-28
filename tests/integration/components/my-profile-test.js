@@ -32,13 +32,13 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(find('.name').textContent.trim(), 'test name');
-    assert.equal(find('.is-student').textContent.trim(), 'Student');
+    assert.dom('.name').hasText('test name');
+    assert.dom('.is-student').hasText('Student');
 
     assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
     assert.equal(findAll('[data-test-info] div')[1].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
-    assert.equal(find('[data-test-info] div:nth-of-type(3) li').textContent.trim(), 'a third cohort');
-    assert.equal(findAll('[data-test-info] div:nth-of-type(3) li')[1].textContent.trim(), 'second cohort');
+    assert.dom('[data-test-info] div:nth-of-type(3) li').hasText('a third cohort');
+    assert.dom(findAll('[data-test-info] div:nth-of-type(3) li')[1]).hasText('second cohort');
 
   });
 
@@ -60,8 +60,8 @@ module('Integration | Component | my profile', function(hooks) {
       hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
     );
 
-    assert.equal(find('.name').textContent.trim(), 'test name');
-    assert.equal(findAll('.is-student').length, 0);
+    assert.dom('.name').hasText('test name');
+    assert.dom('.is-student').doesNotExist();
 
     assert.equal(findAll('[data-test-info] div')[0].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:Unassigned');
     assert.equal(findAll('[data-test-info] div')[1].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:Unassigned');
@@ -122,7 +122,7 @@ module('Integration | Component | my profile', function(hooks) {
     await click(go);
 
     assert.equal(find(newToken).value.trim(), 'new token');
-    assert.equal(findAll(newTokenForm).length, 0);
+    assert.dom(newTokenForm).doesNotExist();
     await click(cancel);
   });
 

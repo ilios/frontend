@@ -54,14 +54,14 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
     assert.equal(this.element.querySelectorAll(rows).length, 3);
     assert.ok(this.element.querySelector(titles).textContent.includes('Courses'));
     assert.ok(this.element.querySelector(titles).textContent.includes('Objectives'));
-    assert.equal(this.element.querySelector(firstCourseTitle).textContent.trim(), 'course 1 (ABC 123)');
+    assert.dom(this.element.querySelector(firstCourseTitle)).hasText('course 1 (ABC 123)');
     assert.equal(this.element.querySelectorAll(firstCourseObjectives).length, 2);
-    assert.equal(this.element.querySelector(firstCourseFirstObjective).textContent.trim(), 'objective 1');
-    assert.equal(this.element.querySelector(firstCourseSecondObjective).textContent.trim(), 'objective 2');
+    assert.dom(this.element.querySelector(firstCourseFirstObjective)).hasText('objective 1');
+    assert.dom(this.element.querySelector(firstCourseSecondObjective)).hasText('objective 2');
 
-    assert.equal(this.element.querySelector(secondCourseTitle).textContent.trim(), 'course 2');
+    assert.dom(this.element.querySelector(secondCourseTitle)).hasText('course 2');
     assert.equal(this.element.querySelectorAll(secondCourseObjectives).length, 1);
-    assert.equal(this.element.querySelector(secondCourseFirstObjective).textContent.trim(), 'objective 3');
+    assert.dom(this.element.querySelector(secondCourseFirstObjective)).hasText('objective 3');
   });
 
   test('it renders empty', async function (assert) {
@@ -81,6 +81,6 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
     assert.equal(this.element.querySelectorAll(rows).length, 2);
     assert.ok(this.element.querySelector(titles).textContent.includes('Courses'));
     assert.ok(this.element.querySelector(titles).textContent.includes('Objectives'));
-    assert.equal(this.element.querySelector(none).textContent.trim(), 'None');
+    assert.dom(this.element.querySelector(none)).hasText('None');
   });
 });

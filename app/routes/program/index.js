@@ -7,7 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   canCreate: false,
   async afterModel(program) {
-    const permissionChecker = this.get('permissionChecker');
+    const permissionChecker = this.permissionChecker;
     const canCreate = await permissionChecker.canCreateProgramYear(program);
     this.set('canCreate', canCreate);
 
@@ -18,6 +18,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set('canCreate', this.get('canCreate'));
+    controller.set('canCreate', this.canCreate);
   }
 });

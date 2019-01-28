@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 const { resolve } = RSVP;
 
@@ -37,7 +37,7 @@ module('Integration | Component | school vocabularies expanded', function(hooks)
     );
     const title = '.title';
     return settled().then(() => {
-      assert.equal(find(title).textContent.trim(), 'Vocabularies (2)');
+      assert.dom(title).hasText('Vocabularies (2)');
     });
   });
 });

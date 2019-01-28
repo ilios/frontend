@@ -12,11 +12,11 @@ export default Component.extend({
   deletedSessionTypes: null,
   deleteSessionType: task(function * (sessionType) {
     if (sessionType.get('sessionCount') === 0) {
-      this.get('deletedSessionTypes').pushObject(sessionType.get('id'));
+      this.deletedSessionTypes.pushObject(sessionType.get('id'));
       yield timeout(10);
       sessionType.deleteRecord();
       yield sessionType.save();
-      this.get('deletedSessionTypes').removeObject(sessionType.get('id'));
+      this.deletedSessionTypes.removeObject(sessionType.get('id'));
     }
   }).drop(),
 });

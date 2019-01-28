@@ -14,24 +14,24 @@ export default Component.extend({
   isManaging: false,
   details: false,
   showSessionAttendanceRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
-    const school = this.get('school');
+    const school = this.school;
     return await school.getConfigValue('showSessionAttendanceRequired');
   }),
   showSessionSupplemental: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
-    const school = this.get('school');
+    const school = this.school;
     return await school.getConfigValue('showSessionSupplemental');
   }),
   showSessionSpecialAttireRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
-    const school = this.get('school');
+    const school = this.school;
     return await school.getConfigValue('showSessionSpecialAttireRequired');
   }),
   showSessionSpecialEquipmentRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
-    const school = this.get('school');
+    const school = this.school;
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
   actions: {
     async save(newValues) {
-      const school = this.get('school');
+      const school = this.school;
       const names = [
         'showSessionAttendanceRequired',
         'showSessionSupplemental',
@@ -49,7 +49,7 @@ export default Component.extend({
       try {
         return await all(toSave.invoke('save'));
       } finally {
-        this.get('manage')(false);
+        this.manage(false);
       }
     }
   }

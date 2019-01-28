@@ -53,7 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   classNames: ['school-vocabulary-term-manager'],
   didReceiveAttrs(){
     this._super(...arguments);
-    const term = this.get('term');
+    const term = this.term;
     if (term) {
       this.set('description', term.get('description'));
       this.set('title', term.get('title'));
@@ -62,7 +62,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
   sortedTerms: computed('term.children.[]', 'newTerm', function(){
     return new Promise(resolve => {
-      const term = this.get('term');
+      const term = this.term;
       if (isPresent(term)) {
         term.get('children').then(terms => {
           resolve(terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title'));
@@ -72,7 +72,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
   allParents: computed('term.allParents.[]', function(){
     return new Promise(resolve => {
-      const term = this.get('term');
+      const term = this.term;
       if (isPresent(term)) {
         term.get('allParents').then(allParents => {
           resolve(allParents.reverse());
@@ -94,7 +94,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   changeIsActive: task(function * (isActive){
-    const term = this.get('term');
+    const term = this.term;
     term.set('active', isActive);
     yield term.save();
     this.set('isActive', term.get('active'));
@@ -102,23 +102,23 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   actions: {
     changeTermTitle(){
-      const term = this.get('term');
-      const title = this.get('title');
+      const term = this.term;
+      const title = this.title;
       term.set('title', title);
       return term.save();
     },
     revertTermTitleChanges(){
-      const term = this.get('term');
+      const term = this.term;
       this.set('title', term.get('title'));
     },
     changeTermDescription(){
-      const term = this.get('term');
-      const description = this.get('description');
+      const term = this.term;
+      const description = this.description;
       term.set('description', description);
       return term.save();
     },
     revertTermDescriptionChanges(){
-      const term = this.get('term');
+      const term = this.term;
       this.set('description', term.get('description'));
     },
     createTerm(){
@@ -127,10 +127,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
           this.send('removeErrorDisplayFor', 'newTermTitle');
-          let title = this.get('newTermTitle');
-          const parent = this.get('term');
-          const vocabulary = this.get('vocabulary');
-          const store = this.get('store');
+          let title = this.newTermTitle;
+          const parent = this.term;
+          const vocabulary = this.vocabulary;
+          const store = this.store;
           let term = store.createRecord('term', {title, parent, vocabulary, active: true});
           return term.save().then((newTerm) => {
             this.set('newTermTitle', null);
@@ -142,21 +142,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
     deleteTerm(){
-      const term = this.get('term');
-      const manageTerm = this.get('manageTerm');
+      const term = this.term;
+      const manageTerm = this.manageTerm;
       term.get('parent').then(parent => {
         let goTo = isEmpty(parent)?null:parent.get('id');
         manageTerm(goTo);
         term.deleteRecord();
         term.save().then(() => {
-          this.get('flashMessages').success('general.successfullyRemovedTerm');
+          this.flashMessages.success('general.successfullyRemovedTerm');
         });
       });
 
     },
     clearVocabAndTerm(){
-      const manageVocabulary = this.get('manageVocabulary');
-      const manageTerm = this.get('manageTerm');
+      const manageVocabulary = this.manageVocabulary;
+      const manageTerm = this.manageTerm;
       manageVocabulary(null);
       manageTerm(null);
     }

@@ -25,7 +25,7 @@ export default Controller.extend({
   errors: null,
 
   addError(error) {
-    this.get('errors').pushObject(error);
+    this.errors.pushObject(error);
     this.set('showErrorDisplay', true);
   },
 

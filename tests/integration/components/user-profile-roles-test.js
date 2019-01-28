@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll } from '@ember/test-helpers';
+import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { run } from '@ember/runloop';
@@ -35,20 +35,20 @@ module('Integration | Component | user profile roles', function(hooks) {
     const learner = '[data-test-learner] span';
     const root = '[data-test-root] span';
 
-    assert.equal(find(student).textContent.trim(), 'Yes', 'student shows status');
-    assert.equal(find(formerStudent).textContent.trim(), 'No', 'former student shows status');
-    assert.ok(find(formerStudent).classList.contains('no'), 'former student has right class');
-    assert.equal(find(enabled).textContent.trim(), 'Yes', 'enabled shows status');
-    assert.ok(find(enabled).classList.contains('yes'), 'enabled has right class');
-    assert.equal(find(syncIgnored).textContent.trim(), 'No', 'sync ignored shows status');
-    assert.ok(find(syncIgnored).classList.contains('no'), 'sync ignored has right class');
+    assert.dom(student).hasText('Yes', 'student shows status');
+    assert.dom(formerStudent).hasText('No', 'former student shows status');
+    assert.dom(formerStudent).hasClass('no', 'former student has right class');
+    assert.dom(enabled).hasText('Yes', 'enabled shows status');
+    assert.dom(enabled).hasClass('yes', 'enabled has right class');
+    assert.dom(syncIgnored).hasText('No', 'sync ignored shows status');
+    assert.dom(syncIgnored).hasClass('no', 'sync ignored has right class');
 
-    assert.equal(find(performsNonLearnerFunction).textContent.trim(), 'No');
-    assert.ok(find(performsNonLearnerFunction).classList.contains('no'));
-    assert.equal(find(learner).textContent.trim(), 'No');
-    assert.ok(find(learner).classList.contains('no'));
-    assert.equal(find(root).textContent.trim(), 'No');
-    assert.ok(find(root).classList.contains('no'));
+    assert.dom(performsNonLearnerFunction).hasText('No');
+    assert.dom(performsNonLearnerFunction).hasClass('no');
+    assert.dom(learner).hasText('No');
+    assert.dom(learner).hasClass('no');
+    assert.dom(root).hasText('No');
+    assert.dom(root).hasClass('no');
   });
 
   // @link https://github.com/ilios/frontend/issues/3899
@@ -63,8 +63,8 @@ module('Integration | Component | user profile roles', function(hooks) {
     await render(hbs`{{user-profile-roles user=user}}`);
     const root = '[data-test-root] span';
 
-    assert.equal(find(root).textContent.trim(), 'Yes');
-    assert.ok(find(root).classList.contains('yes'));
+    assert.dom(root).hasText('Yes');
+    assert.dom(root).hasClass('yes');
   });
 
   test('clicking manage sends the action', async function(assert) {
@@ -101,9 +101,9 @@ module('Integration | Component | user profile roles', function(hooks) {
     const syncIgnored = '[data-test-exclude-from-sync] input';
 
     assert.equal(inputs.length, 3);
-    assert.notOk(find(formerStudent).checked);
-    assert.ok(find(enabled).checked);
-    assert.notOk(find(syncIgnored).checked);
+    assert.dom(formerStudent).isNotChecked();
+    assert.dom(enabled).isChecked();
+    assert.dom(syncIgnored).isNotChecked();
 
     await click(formerStudent);
     await click(enabled);

@@ -44,9 +44,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.validate().then(({validations}) => {
         this.set('isSaving', true);
         if (validations.get('isValid')) {
-          const title = this.get('title');
-          const fillWithCohort = this.get('fillWithCohort');
-          return this.get('save')(title, fillWithCohort);
+          const title = this.title;
+          const fillWithCohort = this.fillWithCohort;
+          return this.save(title, fillWithCohort);
         }
       }).finally(()=>{
         this.set('isSaving', false);

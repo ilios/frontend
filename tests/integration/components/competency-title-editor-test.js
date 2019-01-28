@@ -1,7 +1,13 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, click, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  find,
+  click,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | competency title editor', function(hooks) {
@@ -15,7 +21,7 @@ module('Integration | Component | competency title editor', function(hooks) {
     this.set('competency', competency);
     await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
     return settled().then(()=>{
-      assert.equal(findAll('.validation-error-message').length, 0);
+      assert.dom('.validation-error-message').doesNotExist();
     });
   });
 
@@ -30,7 +36,7 @@ module('Integration | Component | competency title editor', function(hooks) {
     await fillIn('input', '');
     await click('button.done');
     return settled().then(()=>{
-      assert.equal(findAll('.validation-error-message').length, 1);
+      assert.dom('.validation-error-message').exists({ count: 1 });
     });
   });
 });

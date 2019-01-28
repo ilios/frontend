@@ -2,7 +2,13 @@ import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll, click, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  findAll,
+  click,
+  find
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { resolve } from 'rsvp';
 
@@ -53,22 +59,22 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', [ program1, program2 ]);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
-    assert.equal(find('thead tr:nth-of-type(1) th').textContent, 'Program Title');
-    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[1]).textContent, 'School');
-    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[2]).textContent, 'Status');
-    assert.equal(find(findAll('thead tr:nth-of-type(1) th')[3]).textContent, 'Actions');
+    assert.dom('thead tr:nth-of-type(1) th').hasText('Program Title');
+    assert.dom(findAll('thead tr:nth-of-type(1) th')[1]).hasText('School');
+    assert.dom(findAll('thead tr:nth-of-type(1) th')[2]).hasText('Status');
+    assert.dom(findAll('thead tr:nth-of-type(1) th')[3]).hasText('Actions');
 
-    assert.equal(find('tbody tr:nth-of-type(1) td').textContent.trim(), 'Aardvark');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[1]).textContent.trim(), 'Medicine');
-    assert.equal(find(findAll('tbody tr:nth-of-type(1) td')[2]).textContent.trim(), 'Scheduled');
-    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) a .fa-edit').length, 1);
-    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').length, 1);
+    assert.dom('tbody tr:nth-of-type(1) td').hasText('Aardvark');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Medicine');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Scheduled');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
 
-    assert.equal(find('tbody tr:nth-of-type(2) td').textContent.trim(), 'Zeppelin');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[1]).textContent.trim(), 'Dentistry');
-    assert.equal(find(findAll('tbody tr:nth-of-type(2) td')[2]).textContent.trim(), 'Published');
-    assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(4) a .fa-edit').length, 1);
-    assert.equal(findAll('tbody tr:nth-of-type(2) td:nth-of-type(4) .remove .fa-trash').length, 1);
+    assert.dom('tbody tr:nth-of-type(2) td').hasText('Zeppelin');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Dentistry');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Published');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) .remove .fa-trash').exists({ count: 1 });
   });
 
   test('empty list', async function(assert){
@@ -76,8 +82,8 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', []);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
-    assert.equal(findAll('tbody').length, 1);
-    assert.equal(findAll('tbody tr').length, 0);
+    assert.dom('tbody').exists({ count: 1 });
+    assert.dom('tbody tr').doesNotExist();
   });
 
   test('edit', async function(assert){
@@ -139,14 +145,14 @@ module('Integration | Component | program list', function(hooks) {
     });
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
-    assert.equal(findAll('tbody tr').length, 1);
+    assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
     await settled();
-    assert.equal(findAll('tbody tr').length, 2);
+    assert.dom('tbody tr').exists({ count: 2 });
     assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
     await click('tbody tr:nth-of-type(2) .done');
     await settled();
-    assert.equal(findAll('tbody tr').length, 1);
+    assert.dom('tbody tr').exists({ count: 1 });
   });
 
   test('remove and confirm', async function(assert){
@@ -180,10 +186,10 @@ module('Integration | Component | program list', function(hooks) {
     });
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
-    assert.equal(findAll('tbody tr').length, 1);
+    assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
     await settled();
-    assert.equal(findAll('tbody tr').length, 2);
+    assert.dom('tbody tr').exists({ count: 2 });
     assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
     await click('tbody tr:nth-of-type(2) .remove');
   });
@@ -216,7 +222,7 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', [ program1 ]);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
-    assert.equal(findAll('tbody tr').length, 1);
-    assert.equal(findAll('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').length, 1);
+    assert.dom('tbody tr').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
   });
 });

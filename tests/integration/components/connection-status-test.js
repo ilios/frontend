@@ -8,6 +8,6 @@ module('Integration | Component | connection status', function(hooks) {
 
   test('it renders offline and therefor hidden', async function(assert) {
     await render(hbs`{{connection-status}}`);
-    assert.notOk(this.element.classList.contains('offline'));
+    assert.dom(this.element).hasNoClass('offline');
   });
 });

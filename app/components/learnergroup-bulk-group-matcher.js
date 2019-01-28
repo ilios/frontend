@@ -10,8 +10,8 @@ export default Component.extend({
   classNames: ['learnergroup-bulk-group-matcher'],
   classNameBindings: ['matchedGroupId:matched:not-matched'],
   matchedGroupId: computed('matches.[]', 'groupName', function () {
-    const matches = this.get('matches');
-    const groupName = this.get('groupName');
+    const matches = this.matches;
+    const groupName = this.groupName;
     const match = matches.findBy('name', groupName);
     if (match) {
       return match.get('group.id');
@@ -20,16 +20,16 @@ export default Component.extend({
     return null;
   }),
   noGroupWithThisName: computed('groups.[]', 'groupName', function () {
-    const groups = this.get('groups');
-    const groupName = this.get('groupName');
+    const groups = this.groups;
+    const groupName = this.groupName;
     const match = groups.findBy('title', groupName);
     return match ? false : true;
   }),
   actions: {
     matchGroup(learnerGroupId) {
-      const groupName = this.get('groupName');
-      const unsetMatch = this.get('unsetMatch');
-      const setMatch = this.get('setMatch');
+      const groupName = this.groupName;
+      const unsetMatch = this.unsetMatch;
+      const setMatch = this.setMatch;
       if (learnerGroupId === 'null') {
         unsetMatch(groupName);
       } else {

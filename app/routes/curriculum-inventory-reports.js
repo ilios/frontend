@@ -7,7 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
 
   async model() {
-    const store = this.get('store');
+    const store = this.store;
     return store.findAll('school');
   },
 });

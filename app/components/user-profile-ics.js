@@ -13,7 +13,7 @@ export default Component.extend({
 
   didReceiveAttrs(){
     this._super(...arguments);
-    const user = this.get('user');
+    const user = this.user;
     if (isPresent(user)) {
       this.set('icsFeedKey', user.get('icsFeedKey'));
     } else {
@@ -47,13 +47,13 @@ export default Component.extend({
     return hash;
   },
   refreshKey: task(function * (){
-    const user = this.get('user');
+    const user = this.user;
     const token = this.randomToken(user.get('id'));
 
     user.set('icsFeedKey', token);
     yield user.save();
 
-    this.get('setIsManaging')(false);
+    this.setIsManaging(false);
     this.set('hasSavedRecently', true);
     yield timeout(500);
     this.set('hasSavedRecently', false);
@@ -67,8 +67,8 @@ export default Component.extend({
   }).restartable(),
 
   icsFeedUrl: computed('icsFeedKey', 'host', function(){
-    const icsFeedKey = this.get('icsFeedKey');
-    let host = this.get('host');
+    const icsFeedKey = this.icsFeedKey;
+    let host = this.host;
     if (isPresent(icsFeedKey)) {
       if (isEmpty(host)) {
         host = window.location.protocol + '//' + window.location.hostname;

@@ -3,7 +3,7 @@ import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
@@ -72,19 +72,19 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     const thirdCourseYear = `${thirdCourse} td:nth-of-type(1)`;
     const thirdCourseTitle = `${thirdCourse} td:nth-of-type(2)`;
 
-    assert.equal(find(header).textContent.trim(), 'My Courses');
-    assert.equal(findAll(allLinks).length, 6);
-    assert.equal(findAll(courses).length, 3);
+    assert.dom(header).hasText('My Courses');
+    assert.dom(allLinks).exists({ count: 6 });
+    assert.dom(courses).exists({ count: 3 });
 
-    assert.equal(find(firstCourseYear).textContent.trim(), mockCourses[0].academicYear);
+    assert.dom(firstCourseYear).hasText(mockCourses[0].academicYear);
     assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].title));
     assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].externalId));
 
-    assert.equal(find(secondCourseYear).textContent.trim(), mockCourses[1].academicYear);
-    assert.equal(find(secondCourseTitle).textContent.trim(), mockCourses[1].title);
+    assert.dom(secondCourseYear).hasText(mockCourses[1].academicYear);
+    assert.dom(secondCourseTitle).hasText(mockCourses[1].title);
 
-    assert.equal(find(thirdCourseYear).textContent.trim(), mockCourses[2].academicYear);
-    assert.equal(find(thirdCourseTitle).textContent.trim(), mockCourses[2].title);
+    assert.dom(thirdCourseYear).hasText(mockCourses[2].academicYear);
+    assert.dom(thirdCourseTitle).hasText(mockCourses[2].title);
   });
 
 
@@ -106,28 +106,28 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     const thirdCourseYear = `${thirdCourse} td:nth-of-type(1)`;
     const thirdCourseTitle = `${thirdCourse} td:nth-of-type(2)`;
 
-    assert.equal(find(header).textContent.trim(), 'My Courses');
-    assert.equal(findAll(allLinks).length, 0);
-    assert.equal(findAll(courses).length, 3);
+    assert.dom(header).hasText('My Courses');
+    assert.dom(allLinks).doesNotExist();
+    assert.dom(courses).exists({ count: 3 });
 
-    assert.equal(find(firstCourseYear).textContent.trim(), mockCourses[0].academicYear);
+    assert.dom(firstCourseYear).hasText(mockCourses[0].academicYear);
     assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].title));
     assert.notOk(find(firstCourseTitle).textContent.includes(mockCourses[0].externalId));
 
-    assert.equal(find(secondCourseYear).textContent.trim(), mockCourses[1].academicYear);
-    assert.equal(find(secondCourseTitle).textContent.trim(), mockCourses[1].title);
+    assert.dom(secondCourseYear).hasText(mockCourses[1].academicYear);
+    assert.dom(secondCourseTitle).hasText(mockCourses[1].title);
 
-    assert.equal(find(thirdCourseYear).textContent.trim(), mockCourses[2].academicYear);
-    assert.equal(find(thirdCourseTitle).textContent.trim(), mockCourses[2].title);
+    assert.dom(thirdCourseYear).hasText(mockCourses[2].academicYear);
+    assert.dom(thirdCourseTitle).hasText(mockCourses[2].title);
   });
 
   test('display none when no courses', async function(assert) {
     assert.expect(2);
     this.owner.register('service:currentUser', currentUserMockNoCourses);
     await render(hbs`{{dashboard-mycourses}}`);
-    assert.equal(find('.dashboard-block-header').textContent.trim(), 'My Courses');
+    assert.dom('.dashboard-block-header').hasText('My Courses');
 
-    assert.equal(find('.dashboard-block-body').textContent.trim(), 'None');
+    assert.dom('.dashboard-block-body').hasText('None');
 
   });
 });

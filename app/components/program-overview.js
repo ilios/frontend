@@ -20,7 +20,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('shortTitle', this.get('program.shortTitle'));
-    this.set('duration', this.get('program').get('duration'));
+    this.set('duration', this.program.get('duration'));
   },
   classNames: ['program-overview'],
   program: null,
@@ -43,8 +43,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   actions: {
     changeShortTitle() {
-      const program = this.get('program');
-      const newTitle = this.get('shortTitle');
+      const program = this.program;
+      const newTitle = this.shortTitle;
       this.send('addErrorDisplayFor', 'shortTitle');
       return new Promise((resolve, reject) => {
         this.validate().then(({validations}) => {
@@ -64,13 +64,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     revertShortTitleChanges(){
-      const program = this.get('program');
+      const program = this.program;
       this.set('shortTitle', program.get('shortTitle'));
     },
 
     changeDuration(){
-      const program = this.get('program');
-      let duration = this.get('duration');
+      const program = this.program;
+      let duration = this.duration;
       // If duration isn't changed it means the default of 1 was selected
       duration = duration == null ? 1 : duration;
       program.set('duration', duration);
@@ -78,7 +78,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     revertDurationChanges(){
-      this.set('duration', this.get('program').get('duration'));
+      this.set('duration', this.program.get('duration'));
     }
   }
 });

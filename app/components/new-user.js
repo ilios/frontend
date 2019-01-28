@@ -69,7 +69,7 @@ export default Component.extend(NewUser, Validations, {
     }
 
     if (13 === keyCode) {
-      this.get('save').perform();
+      this.save.perform();
       return;
     }
 

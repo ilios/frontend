@@ -10,11 +10,11 @@ export default Component.extend({
   canUpdate: false,
   classNames: ['school-session-type-manager'],
   readonlySessionType: computed('sessionType', async function(){
-    const sessionType = this.get('sessionType');
+    const sessionType = this.sessionType;
     if (!sessionType) {
       return null;
     }
-    const { title, calendarColor, assessment, active: isActive } = sessionType.getProperties('title', 'calendarColor', 'assessment', 'active');
+    const { title, calendarColor, assessment, active: isActive } = sessionType;
     const assessmentOption = await sessionType.get('assessmentOption');
     const selectedAssessmentOptionId = assessmentOption?assessmentOption.get('id'):null;
     const firstAamcMethod = await sessionType.get('firstAamcMethod');
@@ -32,8 +32,8 @@ export default Component.extend({
   }),
 
   save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const sessionType = this.get('sessionType');
-    const closeComponent = this.get('close');
+    const sessionType = this.sessionType;
+    const closeComponent = this.close;
     let aamcMethods = [];
     if (aamcMethod) {
       aamcMethods.pushObject(aamcMethod);

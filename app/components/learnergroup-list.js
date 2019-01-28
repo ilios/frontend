@@ -14,24 +14,24 @@ export default Component.extend({
   learnerGroupsForCopy: null,
   actions: {
     cancelRemove(learnerGroup) {
-      this.get('learnerGroupsForRemovalConfirmation').removeObject(learnerGroup);
+      this.learnerGroupsForRemovalConfirmation.removeObject(learnerGroup);
     },
     confirmRemove(learnerGroup) {
-      const canDelete = this.get('canDelete');
+      const canDelete = this.canDelete;
       if (canDelete) {
-        this.get('learnerGroupsForRemovalConfirmation').pushObject(learnerGroup);
+        this.learnerGroupsForRemovalConfirmation.pushObject(learnerGroup);
       }
     },
     cancelCopy(learnerGroup) {
-      this.get('learnerGroupsForCopy').removeObject(learnerGroup);
+      this.learnerGroupsForCopy.removeObject(learnerGroup);
     },
     startCopy(learnerGroup) {
-      this.get('learnerGroupsForCopy').pushObject(learnerGroup);
+      this.learnerGroupsForCopy.pushObject(learnerGroup);
     },
     async copy(withLearners, learnerGroup) {
-      const copy = this.get('copy');
+      const copy = this.copy;
       await copy(withLearners, learnerGroup);
-      this.get('learnerGroupsForCopy').removeObject(learnerGroup);
+      this.learnerGroupsForCopy.removeObject(learnerGroup);
     }
   }
 });

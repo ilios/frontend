@@ -19,9 +19,9 @@ export default Component.extend({
   schoolId: null,
   schools: null,
   selectedSchool: computed('currentUser', 'schoolId', async function () {
-    const schools = this.get('schools');
-    const currentUser = this.get('currentUser');
-    const schoolId = this.get('schoolId');
+    const schools = this.schools;
+    const currentUser = this.currentUser;
+    const schoolId = this.schoolId;
 
     if (schoolId) {
       return schools.findBy('id', schoolId);
@@ -51,7 +51,7 @@ export default Component.extend({
   _updatesProxy: computed('updates', function(){
     let ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
     return ArrayPromiseProxy.create({
-      promise: this.get('updates')
+      promise: this.updates
     });
   }),
 
@@ -62,8 +62,8 @@ export default Component.extend({
    * @public
    */
   updates: computed('selectedSchool', async function(){
-    const store = this.get('store');
-    const school = await this.get('selectedSchool');
+    const store = this.store;
+    const school = await this.selectedSchool;
     const updates = await store.query('pending-user-update', {
       filters: {
         schools: [school.get('id')]

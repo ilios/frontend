@@ -8,7 +8,7 @@ export default Controller.extend({
   canUpdate: false,
   actions: {
     removeChildSequenceBlock(block) {
-      let parent = this.get('model');
+      let parent = this.model;
       block.destroyRecord().then(() => {
         parent.reload().then(parent => {
           parent.get('children').then(children => {

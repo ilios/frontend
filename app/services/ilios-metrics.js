@@ -11,8 +11,8 @@ export default Service.extend({
   iliosConfig: service(),
 
   setup(){
-    const iliosConfig = this.get('iliosConfig');
-    const metrics = this.get('metrics');
+    const iliosConfig = this.iliosConfig;
+    const metrics = this.metrics;
     return new Promise(resolve => {
       iliosConfig.get('trackingEnabled').then(trackingEnabled => {
         iliosConfig.get('trackingCode').then(trackingCode => {
@@ -39,8 +39,8 @@ export default Service.extend({
     scheduleOnce('afterRender', this, () => {
       this.setup().then(setupSuccessful => {
         if (setupSuccessful) {
-          const metrics = this.get('metrics');
-          const currentUser = this.get('currentUser');
+          const metrics = this.metrics;
+          const currentUser = this.currentUser;
           currentUser.get('model').then(user => {
             if (user) {
               metrics.set('context.userId', user.get('id'));

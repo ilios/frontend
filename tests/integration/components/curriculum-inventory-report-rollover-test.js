@@ -1,7 +1,12 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  find,
+  fillIn
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { run } from '@ember/runloop';
@@ -29,11 +34,11 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const description  = '.description textarea';
 
     for (let i = 0; i < 5; i++){
-      assert.equal(find(`${yearSelect} option:nth-of-type(${i+1})`).textContent.trim(), `${thisYear + i} - ${thisYear + 1 + i}`);
+      assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${thisYear + i} - ${thisYear + 1 + i}`);
     }
-    assert.equal(findAll(name).length, 1);
+    assert.dom(name).exists({ count: 1 });
     assert.equal(find(name).value.trim(), report.get('name'));
-    assert.equal(findAll(description).length, 1);
+    assert.dom(description).exists({ count: 1 });
     assert.equal(find(description).value.trim(), report.get('description'));
   });
 
@@ -124,7 +129,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
-    assert.equal(findAll('.validation-error-message').length, 0);
+    assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('input validation fails on blank reort name', async function(assert) {
@@ -138,7 +143,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const name = '.name';
     const input = `${name} input`;
     await fillIn(input, '');
-    assert.equal(findAll('.validation-error-message').length, 1);
+    assert.dom('.validation-error-message').exists({ count: 1 });
     assert.ok(find('.validation-error-message').textContent.includes('blank'));
   });
 });

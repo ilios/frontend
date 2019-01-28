@@ -9,7 +9,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
 
   beforeModel() {
-    const currentUser = this.get('currentUser');
+    const currentUser = this.currentUser;
     const performsNonLearnerFunction = currentUser.get('performsNonLearnerFunction');
     if (!performsNonLearnerFunction) {
       this.transitionTo('dashboard');
@@ -17,8 +17,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   async model() {
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
+    const store = this.store;
+    const permissionChecker = this.permissionChecker;
     const schools = await store.findAll('school');
     const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
       return permissionChecker.canCreateUser(school);

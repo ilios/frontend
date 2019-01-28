@@ -11,8 +11,8 @@ export default Mixin.create({
     if (title) {
       return title;
     }
-    const intl = this.get('intl');
-    const store = this.get('store');
+    const intl = this.intl;
+    const store = this.store;
     const subject = report.get('subject');
     const subjectTranslation = intl.t(this.subjectTranslations[subject]);
     const prepositionalObject = report.get('prepositionalObject');

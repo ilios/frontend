@@ -1,7 +1,12 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find, findAll } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | course director manager', function(hooks) {
@@ -20,8 +25,8 @@ module('Integration | Component | course director manager', function(hooks) {
       close=(action nothing)
     }}`);
 
-    assert.equal(find('li').textContent.trim(), 'test person 1');
-    assert.equal(find(findAll('li')[1]).textContent.trim(), 'test person 2');
+    assert.dom('li').hasText('test person 1');
+    assert.dom(findAll('li')[1]).hasText('test person 2');
   });
 
   test('can remove users', async function(assert) {
@@ -46,8 +51,8 @@ module('Integration | Component | course director manager', function(hooks) {
       close=(action nothing)
     }}`);
 
-    assert.equal(find(user1).textContent.trim(), 'test person 1');
-    assert.equal(find(user2).textContent.trim(), 'test person 2');
+    assert.dom(user1).hasText('test person 1');
+    assert.dom(user2).hasText('test person 2');
 
     await click(user1);
 

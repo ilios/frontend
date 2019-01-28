@@ -17,7 +17,7 @@ module('Integration | Component | ilios users', function(hooks) {
   test('it renders', async function(assert) {
     const title = '.users .title';
     await render(hbs`{{ilios-users}}`);
-    assert.equal(find(title).textContent.trim(), 'Users');
+    assert.dom(title).hasText('Users');
   });
 
   test('param passing', async function(assert) {
@@ -68,9 +68,9 @@ module('Integration | Component | ilios users', function(hooks) {
     const form = '.new-user-form';
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';
-    assert.equal(findAll(form).length, 1, 'the user search form is present');
+    assert.dom(form).exists({ count: 1 }, 'the user search form is present');
     assert.ok(findAll(blocks).length > 4, 'there are many form fields for adding a new user');
-    assert.equal(findAll(directorySearchBox).length, 0, 'the directory form search form is not present');
+    assert.dom(directorySearchBox).doesNotExist('the directory form search form is not present');
   });
 
   test('directory search renders when configured to', async function(assert) {
@@ -108,8 +108,8 @@ module('Integration | Component | ilios users', function(hooks) {
     const form = '.new-user-form';
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';
-    assert.equal(findAll(form).length, 0, 'the user search form is not present');
-    assert.equal(findAll(blocks).length, 0, 'there are no form fields for adding a new user');
-    assert.equal(findAll(directorySearchBox).length, 1, 'the directory form search form is present');
+    assert.dom(form).doesNotExist('the user search form is not present');
+    assert.dom(blocks).doesNotExist('there are no form fields for adding a new user');
+    assert.dom(directorySearchBox).exists({ count: 1 }, 'the directory form search form is present');
   });
 });

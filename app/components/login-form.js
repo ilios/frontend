@@ -14,7 +14,7 @@ export default Component.extend({
     try {
       this.set('errors', []);
       const credentials = this.getProperties('username', 'password');
-      const session = this.get('session');
+      const session = this.session;
       const authenticator = 'authenticator:ilios-jwt';
       yield session.authenticate(authenticator, credentials);
     } catch (error) {

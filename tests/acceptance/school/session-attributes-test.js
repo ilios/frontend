@@ -1,4 +1,4 @@
-import { click, find, visit } from '@ember/test-helpers';
+import { click, visit } from '@ember/test-helpers';
 import {
   module,
   test
@@ -43,20 +43,20 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).classList.contains('no'));
-    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
+    assert.dom(attendanceEnabled).hasClass('no');
+    assert.dom(attendanceEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).classList.contains('yes'));
-    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
+    assert.dom(supplementalEnabled).hasClass('yes');
+    assert.dom(supplementalEnabled).hasClass('fa-check');
 
     assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).classList.contains('no'));
-    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
+    assert.dom(specialAttireEnabled).hasClass('no');
+    assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
+    assert.dom(specialEquipmentEnabled).hasClass('no');
+    assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
   });
 
   test('check fields expanded', async function(assert) {
@@ -85,20 +85,20 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).classList.contains('no'));
-    assert.ok(find(attendanceEnabled).classList.contains('fa-ban'));
+    assert.dom(attendanceEnabled).hasClass('no');
+    assert.dom(attendanceEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).classList.contains('yes'));
-    assert.ok(find(supplementalEnabled).classList.contains('fa-check'));
+    assert.dom(supplementalEnabled).hasClass('yes');
+    assert.dom(supplementalEnabled).hasClass('fa-check');
 
     assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).classList.contains('no'));
-    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
+    assert.dom(specialAttireEnabled).hasClass('no');
+    assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('no'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-ban'));
+    assert.dom(specialEquipmentEnabled).hasClass('no');
+    assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
   });
 
   test('manage session attributes', async function(assert) {
@@ -133,42 +133,42 @@ module('Acceptance | School - Session Attributes', function(hooks) {
 
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.notOk(find(attendanceCheckbox).checked);
+    assert.dom(attendanceCheckbox).isNotChecked();
 
     assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalCheckbox).checked);
+    assert.dom(supplementalCheckbox).isChecked();
 
     assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.notOk(find(specialAttireCheckbox).checked);
+    assert.dom(specialAttireCheckbox).isNotChecked();
 
     assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.notOk(find(specialEquipmentCheckbox).checked);
+    assert.dom(specialEquipmentCheckbox).isNotChecked();
 
     await click(attendanceCheckbox);
     await click(supplementalCheckbox);
     await click(specialEquipmentCheckbox);
 
-    assert.ok(find(attendanceCheckbox).checked);
-    assert.notOk(find(supplementalCheckbox).checked);
-    assert.ok(find(specialEquipmentCheckbox).checked);
+    assert.dom(attendanceCheckbox).isChecked();
+    assert.dom(supplementalCheckbox).isNotChecked();
+    assert.dom(specialEquipmentCheckbox).isChecked();
 
     await click(save);
 
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.ok(find(attendanceEnabled).classList.contains('yes'));
-    assert.ok(find(attendanceEnabled).classList.contains('fa-check'));
+    assert.dom(attendanceEnabled).hasClass('yes');
+    assert.dom(attendanceEnabled).hasClass('fa-check');
 
     assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.ok(find(supplementalEnabled).classList.contains('no'));
-    assert.ok(find(supplementalEnabled).classList.contains('fa-ban'));
+    assert.dom(supplementalEnabled).hasClass('no');
+    assert.dom(supplementalEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
-    assert.ok(find(specialAttireEnabled).classList.contains('no'));
-    assert.ok(find(specialAttireEnabled).classList.contains('fa-ban'));
+    assert.dom(specialAttireEnabled).hasClass('no');
+    assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
     assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('yes'));
-    assert.ok(find(specialEquipmentEnabled).classList.contains('fa-check'));
+    assert.dom(specialEquipmentEnabled).hasClass('yes');
+    assert.dom(specialEquipmentEnabled).hasClass('fa-check');
 
 
   });

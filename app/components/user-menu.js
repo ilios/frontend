@@ -12,7 +12,7 @@ export default Component.extend({
 
   actions: {
     toggleMenu() {
-      const isOpen = this.get('isOpen');
+      const isOpen = this.isOpen;
       if (isOpen) {
         this.set('isOpen', false);
       } else {

@@ -5,6 +5,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
   model(){
-    return this.get('store').findAll('school');
+    return this.store.findAll('school');
   },
 });
