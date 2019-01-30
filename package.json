@@ -96,7 +96,7 @@
     "ember-web-app": "^2.2.0",
     "eslint": "^5.12.1",
     "eslint-plugin-ember": "^6.1.0",
-    "ilios-common": "22.0.0",
+    "ilios-common": "22.0.1",
     "loader.js": "^4.7.0",
     "normalize.css": "^8.0.0",
     "papaparse": "^4.6.3",
