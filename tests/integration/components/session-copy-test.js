@@ -363,4 +363,182 @@ module('Integration | Component | session copy', function(hooks) {
     const newPostRequisite = await newSession.postrequisite;
     assert.equal(postrequisite.id, newPostRequisite.id);
   });
+
+  test('copy session into different course does not save postrequisites', async function(assert) {
+    assert.expect(4);
+
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('academic-year', {
+      id: thisYear,
+      title: thisYear
+    });
+
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+    const secondCourse = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const postrequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+      postrequisite
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 3);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+    const courseSelect = '.course-select select';
+    await fillIn(courseSelect, secondCourse.id);
+    await click('.done');
+
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 3);
+    const newSession = sessions.findBy('id', '3');
+    assert.equal(session.title, newSession.title);
+
+    const newPostRequisite = await newSession.postrequisite;
+    assert.equal(newPostRequisite, null);
+  });
+
+  test('copy session into same course saves prerequisites', async function(assert) {
+    assert.expect(6);
+
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('academic-year', {
+      id: thisYear,
+      title: thisYear
+    });
+
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const firstPrerequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+    const secondPrerequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+      prerequisites: [firstPrerequisite, secondPrerequisite]
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 4);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await click('.done');
+
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 4);
+    const newSession = sessions.findBy('id', '4');
+    assert.equal(session.title, newSession.title);
+
+    const newPostRequisites = await newSession.prerequisites;
+    const ids = newPostRequisites.mapBy('id');
+    assert.equal(ids.length, 2);
+    assert.ok(ids.includes(firstPrerequisite.id));
+    assert.ok(ids.includes(secondPrerequisite.id));
+  });
+
+  test('copy session into different course does not save prerequisites', async function(assert) {
+    assert.expect(4);
+
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('academic-year', {
+      id: thisYear,
+      title: thisYear
+    });
+
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+    const secondCourse = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const firstPrerequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+    const secondPrerequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+      prerequisites: [firstPrerequisite, secondPrerequisite]
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 4);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    const courseSelect = '.course-select select';
+    await fillIn(courseSelect, secondCourse.id);
+    await click('.done');
+
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 4);
+    const newSession = sessions.findBy('id', '4');
+    assert.equal(session.title, newSession.title);
+
+    const newPostRequisites = await newSession.prerequisites;
+    assert.equal(newPostRequisites.length, 0);
+  });
 });
