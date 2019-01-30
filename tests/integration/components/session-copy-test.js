@@ -140,7 +140,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
     assert.equal(sessions.length, 2);
-    const newSession = sessions.findBy('id', '1');
+    const newSession = sessions.findBy('id', '2');
     assert.equal(session.attireRequired, newSession.attireRequired);
     assert.equal(session.equipmentRequired, newSession.equipmentRequired);
     assert.equal(session.supplemental, newSession.supplemental);
@@ -148,7 +148,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     const sessionLearningMaterials = await run(() => this.owner.lookup('service:store').findAll('session-learning-material'));
     assert.equal(sessionLearningMaterials.length, 2);
-    const newSessionLm = sessionLearningMaterials.findBy('id', '1');
+    const newSessionLm = sessionLearningMaterials.findBy('id', '2');
     assert.equal(sessionLearningMaterial.notes, newSessionLm.notes);
     assert.equal(sessionLearningMaterial.required, newSessionLm.required);
     assert.equal(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
@@ -158,7 +158,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     const sessionDescriptions = await run(() => this.owner.lookup('service:store').findAll('session-description'));
     assert.equal(sessionLearningMaterials.length, 2);
-    const newSessionDescription = sessionDescriptions.findBy('id', '1');
+    const newSessionDescription = sessionDescriptions.findBy('id', '2');
     assert.equal(sessionDescription.description, newSessionDescription.description);
     assert.equal(newSessionDescription.belongsTo('session').id(), newSession.id);
 
@@ -310,5 +310,57 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(newSession.belongsTo('course').id(), course3.id);
+  });
+
+  test('copy session into same course saves postrequisites', async function(assert) {
+    assert.expect(4);
+
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('academic-year', {
+      id: thisYear,
+      title: thisYear
+    });
+
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      year: thisYear,
+      school
+    });
+
+    const sessionType = this.server.create('session-type');
+
+    const postrequisite = this.server.create('session', {
+      course,
+      sessionType,
+    });
+
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+      postrequisite
+    });
+
+    const permissionCheckerMock = Service.extend({
+      canCreateSession() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    this.set('session', sessionModel);
+    this.set('visit', (newSession) => {
+      assert.equal(newSession.id, 3);
+    });
+    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await click('.done');
+
+    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    assert.equal(sessions.length, 3);
+    const newSession = sessions.findBy('id', '3');
+    assert.equal(session.title, newSession.title);
+
+    const newPostRequisite = await newSession.postrequisite;
+    assert.equal(postrequisite.id, newPostRequisite.id);
   });
 });
