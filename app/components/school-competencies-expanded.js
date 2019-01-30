@@ -39,34 +39,35 @@ export default Component.extend({
     return competencyIds.length && ! isManaging;
   }),
 
-  didReceiveAttrs(){
+  /**
+   * @todo rewrite the component so we don't deal with promises in this lifecycle hook. [ST 2019/01/30]
+   */
+  async didReceiveAttrs(){
     this._super(...arguments);
     if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
       const school = this.school;
-      school.get('competencies').then(competencies => {
-        this.set('bufferedCompetencies', competencies.toArray());
-      });
+      const competencies  = await school.get('competencies');
+      this.set('bufferedCompetencies', competencies.toArray());
     }
   },
 
   actions: {
-    collapse(){
+    async collapse(){
       const collapse = this.collapse;
-      this.get('school.competencies').then(competencies => {
-        if(competencies.length){
-          collapse();
-        }
-      });
+      const school = this.school;
+      const competencies = await school.get('competencies');
+      if (competencies.length) {
+        collapse();
+      }
     },
 
-    addCompetencyToBuffer(domain, title){
+    async addCompetencyToBuffer(domain, title){
       let competency = this.store.createRecord('competency', {title, active: true});
       if (isPresent(domain)) {
         competency.set('parent', domain);
-        domain.get('children').then(children => {
-          children.pushObject(competency);
-          this.bufferedCompetencies.pushObject(competency);
-        });
+        const children = await domain.get('children');
+        children.pushObject(competency);
+        this.bufferedCompetencies.pushObject(competency);
       } else {
         this.bufferedCompetencies.pushObject(competency);
       }
@@ -80,10 +81,10 @@ export default Component.extend({
     },
     async save(){
       this.set('isSaving', true);
-      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
+      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       const school = this.school;
       const schoolCompetencies = await school.get('competencies');
-      const bufferedCompetencies = this.get('bufferedCompetencies');
+      const bufferedCompetencies = this.bufferedCompetencies;
       const domainsToRemove = schoolCompetencies.filter(competency => {
         return !bufferedCompetencies.includes(competency) && competency.get('isDomain');
       });
