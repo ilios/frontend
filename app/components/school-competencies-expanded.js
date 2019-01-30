@@ -2,7 +2,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { all } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
 
 export default Component.extend({
@@ -11,34 +11,34 @@ export default Component.extend({
   classNames: ['school-competencies-expanded'],
   school: null,
   isManaging: false,
+  isSaving: false,
   canUpdate: false,
   canDelete: false,
   canCreate: false,
   bufferedCompetencies: null,
+
   competencies: computed('school.competencies.[]', async function(){
     const school = this.school;
-    const competencies = await school.get('competencies');
-
-    return competencies;
+    return await school.get('competencies');
   }),
+
   domains: computed('school.competencies.[]', async function(){
     const competencies = await this.competencies;
-    const domains = competencies.filterBy('isDomain');
-
-    return domains;
+    return competencies.filterBy('isDomain');
   }),
+
   childCompetencies: computed('school.competencies.[]', async function(){
     const competencies = await this.competencies;
-    const childCompetencies = competencies.filterBy('isNotDomain');
-
-    return childCompetencies;
+    return competencies.filterBy('isNotDomain');
   }),
+
   showCollapsible: computed('isManaging', 'school.competencies.length', function(){
     const isManaging = this.isManaging;
     const school = this.school;
     const competencyIds = school.hasMany('competencies').ids();
     return competencyIds.length && ! isManaging;
   }),
+
   didReceiveAttrs(){
     this._super(...arguments);
     if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
@@ -47,8 +47,8 @@ export default Component.extend({
         this.set('bufferedCompetencies', competencies.toArray());
       });
     }
-
   },
+
   actions: {
     collapse(){
       const collapse = this.collapse;
@@ -58,6 +58,7 @@ export default Component.extend({
         }
       });
     },
+
     addCompetencyToBuffer(domain, title){
       let competency = this.store.createRecord('competency', {title, active: true});
       if (isPresent(domain)) {
@@ -70,58 +71,60 @@ export default Component.extend({
         this.bufferedCompetencies.pushObject(competency);
       }
     },
+
     removeCompetencyFromBuffer(competency){
       let buffer = this.bufferedCompetencies;
       if (buffer.includes(competency)) {
         buffer.removeObject(competency);
       }
     },
-    save(){
+    async save(){
       this.set('isSaving', true);
-      let school = this.school;
-      school.get('competencies').then(schoolCompetencies => {
-        let promises = [];
-        let domainsToRemove = [];
-        let bufferedCompetencies = this.bufferedCompetencies;
-        schoolCompetencies.filter(competency => {
-          return !bufferedCompetencies.includes(competency);
-        }).forEach(competency => {
-          competency.deleteRecord();
-          if (competency.get('isDomain')) {
-            domainsToRemove.pushObject(competency);
-          } else {
-            promises.pushObject(competency.save());
-          }
-
-        });
-        bufferedCompetencies.filterBy('isNew').forEach(competency => {
-          competency.set('school', school);
-        });
-        promises.pushObjects(bufferedCompetencies.filterBy('hasDirtyAttributes').invoke('save'));
-        schoolCompetencies.clear();
-        bufferedCompetencies.forEach(competency=>{
-          schoolCompetencies.pushObject(competency);
-        });
-        RSVP.all(promises).then(() => {
-          RSVP.all(domainsToRemove.invoke('save')).then(() => {
-            this.set('isManaging', false);
-            this.set('bufferedTopics', []);
-            this.set('isSaving', false);
-          });
-        });
+      const setSchoolManageCompetencies = this.get('setSchoolManageCompetencies');
+      const school = this.school;
+      const schoolCompetencies = await school.get('competencies');
+      const bufferedCompetencies = this.get('bufferedCompetencies');
+      const domainsToRemove = schoolCompetencies.filter(competency => {
+        return !bufferedCompetencies.includes(competency) && competency.get('isDomain');
       });
-    },
-    cancel(){
-      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
+      const competenciesToRemove = schoolCompetencies.filter(competency => {
+        return !bufferedCompetencies.includes(competency) && !competency.get('isDomain');
+      });
+
+      // delete all removed competencies first, then all removed domains
+      await all(competenciesToRemove.invoke('destroyRecord'));
+      await all(domainsToRemove.invoke('destroyRecord'));
+
+      // set the school on new competencies
+      bufferedCompetencies.filterBy('isNew').forEach(competency => {
+        competency.set('school', school);
+      });
+
+      // update all modified competencies (this will include new ones).
+      await all(
+        bufferedCompetencies.filterBy('hasDirtyAttributes').invoke('save')
+      );
+
+      // repopulate school from buffer.
+      schoolCompetencies.clear();
+      bufferedCompetencies.forEach(competency => {
+        schoolCompetencies.pushObject(competency);
+      });
+
+      // cleanup
       this.set('bufferedCompetencies', []);
+      this.set('isSaving', false);
       setSchoolManageCompetencies(false);
     },
+
+    cancel(){
+      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
+      setSchoolManageCompetencies(false);
+    },
+
     manage(){
       const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
-      this.get('school.competencies').then(competencies => {
-        this.set('bufferedCompetencies', competencies.toArray());
-        setSchoolManageCompetencies(true);
-      });
+      setSchoolManageCompetencies(true);
     }
   }
 });
