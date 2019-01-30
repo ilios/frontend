@@ -39,6 +39,9 @@ export default Component.extend({
     return competencyIds.length && ! isManaging;
   }),
 
+  /**
+   * @todo rewrite the component so we don't deal with promises in this lifecycle hook. [ST 2019/01/30]
+   */
   async didReceiveAttrs(){
     this._super(...arguments);
     if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
