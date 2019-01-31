@@ -38,7 +38,9 @@ export default Component.extend({
           name: session.get('title'),
           offering: offering.get("id"),
           location: offering.get("location"),
-          color: "#84c444"
+          color: "#84c444",
+          postrequisites: [],
+          prerequisites: [],
         };
 
         return event;
@@ -69,7 +71,9 @@ export default Component.extend({
         name: session.get('title'),
         offering: offering.get("id"),
         location: offering.get("location"),
-        color: "#f6f6f6"
+        color: "#f6f6f6",
+        postrequisites: [],
+        prerequisites: [],
       };
 
       return event;
@@ -96,7 +100,9 @@ export default Component.extend({
       isPublished: session.get('isPublished'),
       offering: 1,
       loc,
-      color: sessionType.get('calendarColor')
+      color: sessionType.get('calendarColor'),
+      postrequisites: [],
+      prerequisites: [],
     };
   }),
 
