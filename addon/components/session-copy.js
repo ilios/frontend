@@ -78,6 +78,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       toSave.pushObject(learningMaterial);
     }
 
+    const originalCourse = yield sessionToCopy.course;
+    if (newCourse.id === originalCourse.id) {
+      const postrequisiteToCopy = yield sessionToCopy.postrequisite;
+      session.set('postrequisite', postrequisiteToCopy);
+
+      const prerequisitesToCopy = yield sessionToCopy.prerequisites;
+      session.set('prerequisites', prerequisitesToCopy);
+    }
+
     // save the session first to fill out relationships with the session id
     yield session.save();
     yield all(toSave.invoke('save'));
