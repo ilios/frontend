@@ -520,6 +520,6 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`{{offering-form close=(action nothing)}}`);
 
     const timezone = '.start-time .timezone';
-    assert.dom(timezone).containsText(moment.tz.guess());
+    assert.dom(timezone).containsText(Intl.DateTimeFormat().resolvedOptions().timeZone);
   });
 });
