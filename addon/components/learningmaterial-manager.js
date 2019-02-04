@@ -21,7 +21,14 @@ const Validations = buildValidations({
       precision: 'minute',
       errorFormat: 'L LT'
     }),
-  ]
+  ],
+  title: [
+    validator('presence', true),
+    validator('length', {
+      min: 4,
+      max: 60
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -125,7 +132,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return true;
   }).restartable(),
   save: task(function* () {
-    this.send('addErrorDisplaysFor', ['endDate']);
+    this.send('addErrorDisplaysFor', ['endDate', 'title']);
     let {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {

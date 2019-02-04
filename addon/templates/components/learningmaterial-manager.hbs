@@ -8,7 +8,17 @@
         type="text"
         value={{title}}
         oninput={{action (mut title) value="target.value"}}
+        disabled={{save.isRunning}}
+        onkeyup={{action "addErrorDisplayFor" "title"}}
       >
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        <span
+          class="validation-error-message"
+          data-test-title-validation-error-message
+        >
+          {{v-get this "title" "message"}}
+        </span>
+      {{/if}}
     {{else}}
       <span>{{title}}</span>
     {{/if}}
