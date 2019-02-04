@@ -116,6 +116,8 @@ export default {
       minute: fillable('select', { at: 1 }),
       ampm: fillable('select', { at: 2 }),
     },
-    hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]')
+    hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
+    hasTitleValidationError: isVisible('[data-test-title-validation-error-message]')
+
   }
 };

@@ -567,6 +567,28 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.current(0).details();
       assert.equal(page.learningMaterials.manager.name.value, newTitle);
     });
+
+    test('title too short', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
+      await page.visit({ courseId: 1, details: true });
+      assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+      await page.learningMaterials.current(0).details();
+      assert.notOk(page.learningMaterials.manager.hasTitleValidationError);
+      await page.learningMaterials.manager.name.fillIn('a');
+      await page.learningMaterials.manager.save();
+      assert.ok(page.learningMaterials.manager.hasTitleValidationError);
+    });
+
+    test('title too long', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
+      await page.visit({ courseId: 1, details: true });
+      assert.notOk(page.learningMaterials.current(0).isTimedRelease);
+      await page.learningMaterials.current(0).details();
+      assert.notOk(page.learningMaterials.manager.hasTitleValidationError);
+      await page.learningMaterials.manager.name.fillIn('0123456789'.repeat(10));
+      await page.learningMaterials.manager.save();
+      assert.ok(page.learningMaterials.manager.hasTitleValidationError);
+    });
   });
 
   module('Double Linked Materials', function (hooks2) {
