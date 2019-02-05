@@ -55,11 +55,6 @@ module.exports = function (environment) {
     'ember-metrics': {
       includeAdapters: ['google-analytics']
     },
-    moment: {
-      // Full list of locales: https://github.com/moment/moment/tree/2.10.3/locale
-      includeLocales: ['es', 'fr'],
-      includeTimezone: 'all',
-    },
     'ember-qunit-nice-errors': {
       completeExistingMessages: true,
       showFileInfo: true,
@@ -183,8 +178,6 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
 
-    //silence warnings in tests when dates are not initialized
-    ENV.moment.allowEmpty = true;
     ENV.APP.autoboot = false;
   }
 
