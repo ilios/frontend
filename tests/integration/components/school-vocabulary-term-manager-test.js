@@ -1,57 +1,46 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  findAll,
-  click
-} from '@ember/test-helpers';
+import { run } from '@ember/runloop';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/school-vocabulary-term-manager';
 
 module('Integration | Component | school vocabulary term manager', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(9);
-    let allParents = resolve([
-      {id: 1, title: 'first'},
-      {id: 2, title: 'second'},
-    ]);
+    assert.expect(11);
 
-    let child1 = EmberObject.create({
-      title: 'first child',
-      active: true,
-      isNew: false,
-      isDeleted: false,
+    const vocabulary = this.server.create('vocabulary');
+    const grandParent = this.server.create('term', {
+      title: 'grandparent',
+      vocabulary
     });
-
-    let child2 = EmberObject.create({
-      title: 'second child',
+    const parent = this.server.create('term', {
+      vocabulary,
+      parent: grandParent
+    });
+    const term = this.server.create('term', {
+      vocabulary,
+      parent,
+      description: 'some description'
+    });
+    this.server.create('term', {
+      parent: term,
       active: false,
-      isNew: false,
-      isDeleted: false,
+    });
+    this.server.create('term', {
+      parent: term,
+      active: true,
     });
 
-    let children = resolve([ child1, child2 ]);
-    let vocabulary = EmberObject.create({
-      title: 'fake vocab'
-    });
-    let title = 'fake term';
-    let description = 'fake description';
-    let term = EmberObject.create({
-      allParents,
-      children,
-      vocabulary: resolve(vocabulary),
-      title,
-      description
-    });
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
 
-    this.set('term', term);
-    this.set('vocabulary', vocabulary);
+    this.set('term', termModel);
+    this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
@@ -64,45 +53,32 @@ module('Integration | Component | school vocabulary term manager', function(hook
       canCreate=true
     }}`);
 
-    const all = '.breadcrumbs span:nth-of-type(1)';
-    const vocab = '.breadcrumbs span:nth-of-type(2)';
-    const firstParent = '.breadcrumbs span:nth-of-type(4)';
-    const secondParent = '.breadcrumbs span:nth-of-type(3)';
-    const termCrumb = '.breadcrumbs span:nth-of-type(5)';
+    assert.equal(component.title, `Title: ${term.title}`);
+    assert.equal(component.description, `Description: ${term.description}`);
+    assert.equal(component.breadcrumbs.all, 'All Vocabularies');
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.equal(component.breadcrumbs.terms.length, 3);
+    assert.equal(component.breadcrumbs.terms[0].text, grandParent.title);
+    assert.equal(component.breadcrumbs.terms[1].text, parent.title);
+    assert.equal(component.breadcrumbs.terms[2].text, term.title);
 
-    const termTitle = '.term-title .editinplace';
-    const termDescription = '.term-description .editinplace';
-
-    assert.dom(all).hasText('All Vocabularies');
-    assert.dom(vocab).hasText(vocabulary.title);
-    assert.dom(firstParent).hasText('first');
-    assert.dom(secondParent).hasText('second');
-    assert.dom(termCrumb).hasText(title);
-    assert.dom(termTitle).hasText(title);
-    assert.dom(termDescription).hasText(description);
-    assert.dom('.terms ul li').hasText('first child');
-    assert.dom(findAll('.terms ul li')[1]).hasText('second child (inactive)');
+    assert.equal(component.subTerms.list.length, 2);
+    assert.equal(component.subTerms.list[0].text, 'term 3 (inactive)');
+    assert.equal(component.subTerms.list[1].text, 'term 4');
   });
 
   test('activate inactive term', async function(assert) {
     assert.expect(3);
-    let vocabulary = EmberObject.create({
-      title: 'fake vocab'
-    });
-    let title = 'fake term';
-    let description = 'fake tescription';
-    let term = EmberObject.create({
-      children: resolve([]),
-      vocabulary: resolve(vocabulary),
-      title,
-      description,
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
       active: false,
-      save() {
-        return resolve(this);
-      }
     });
-    this.set('term', term);
-    this.set('vocabulary', vocabulary);
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('term', termModel);
+    this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
@@ -114,35 +90,24 @@ module('Integration | Component | school vocabulary term manager', function(hook
       canDelete=true
       canCreate=true
     }}`);
-
-    const toggle = `.is-active .toggle-yesno`;
-    const toggleValue = `${toggle} input`;
-    assert.dom(toggleValue).isNotChecked();
-    await click(toggle);
-    await settled();
-    assert.ok(term.get('active'));
-    assert.dom(toggleValue).isChecked();
+    assert.notOk(component.isActive.active);
+    await component.isActive.toggle();
+    assert.ok(component.isActive.active);
+    assert.ok(this.server.db.terms[0].active);
   });
 
   test('inactive active term', async function(assert) {
     assert.expect(3);
-    let vocabulary = EmberObject.create({
-      title: 'fake vocab'
-    });
-    let title = 'fake term';
-    let description = 'fake tescription';
-    let term = EmberObject.create({
-      children: resolve([]),
-      vocabulary: resolve(vocabulary),
-      title,
-      description,
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
       active: true,
-      save() {
-        return resolve(this);
-      }
     });
-    this.set('term', term);
-    this.set('vocabulary', vocabulary);
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('term', termModel);
+    this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
     await render(hbs`{{
       school-vocabulary-term-manager
@@ -154,13 +119,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       canDelete=true
       canCreate=true
     }}`);
-
-    const toggle = `.is-active .toggle-yesno`;
-    const toggleValue = `${toggle} input`;
-    assert.dom(toggleValue).isChecked();
-    await click(toggle);
-    await settled();
-    assert.notOk(term.get('active'));
-    assert.dom(toggleValue).isNotChecked();
+    assert.ok(component.isActive.active);
+    await component.isActive.toggle();
+    assert.notOk(component.isActive.active);
+    assert.notOk(this.server.db.terms[0].active);
   });
 });

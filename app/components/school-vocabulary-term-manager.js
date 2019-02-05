@@ -51,6 +51,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   title: null,
   isActive: null,
   classNames: ['school-vocabulary-term-manager'],
+  'data-test-school-vocabulary-term-manager': true,
   didReceiveAttrs(){
     this._super(...arguments);
     const term = this.term;
@@ -75,7 +76,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const term = this.term;
       if (isPresent(term)) {
         term.get('allParents').then(allParents => {
-          resolve(allParents.reverse());
+          resolve(allParents);
         });
       }
     });
