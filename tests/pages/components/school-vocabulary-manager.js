@@ -13,6 +13,8 @@ const definition = {
   editTitle: clickable('[data-test-title] .clickable'),
   changeTitle: fillable('[data-test-title] input'),
   saveTitle: clickable('[data-test-title] .done'),
+  hasError: isPresent('[data-test-title-error-message]'),
+  errorMessage: text('[data-test-title-error-message]'),
   breadcrumbs: {
     scope: '[data-test-breadcrumbs]',
     all: text('[data-test-all]'),

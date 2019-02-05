@@ -7,21 +7,28 @@
   <h4>{{t "general.title"}}: </h4>
   {{#if canUpdate}}
     {{#editable-field
-      value=(if title title (t "general.clickToEdit"))
+      value=(if vocabularyTitle vocabularyTitle (t "general.clickToEdit"))
       save=(action "changeVocabularyTitle")
       close=(action "revertVocabularyTitleChanges")
+      isSaveDisabled=(and (v-get this "vocabularyTitle" "isInvalid") (is-in showErrorsFor "vocabularyTitle"))
       saveOnEnter=true
       closeOnEscape=true
       as |isSaving|
     }}
       <input
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
+        value={{vocabularyTitle}}
+        oninput={{action (mut vocabularyTitle) value="target.value"}}
         disabled={{isSaving}}
+        onkeyup={{action "addErrorDisplayFor" "vocabularyTitle"}}
       >
     {{/editable-field}}
+    {{#if
+      (and (v-get this "vocabularyTitle" "isInvalid") (is-in showErrorsFor "vocabularyTitle"))
+    }}
+      <span class="validation-error-message" data-test-title-error-message>{{v-get this "vocabularyTitle" "message"}}</span>
+    {{/if}}
   {{else}}
-    {{title}}
+    {{vocabularyTitle}}
   {{/if}}
 </div>
 
