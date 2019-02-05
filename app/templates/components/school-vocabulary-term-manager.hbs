@@ -89,7 +89,7 @@
     </div>
   {{/if}}
   {{#if canCreate}}
-    <div>
+    <div data-test-new-term-form>
       <input
         type="text"
         value={{newTermTitle}}
@@ -106,7 +106,7 @@
       {{#if
         (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))
       }}
-        <span class="validation-error-message">{{v-get this "newTermTitle" "message"}}</span>
+        <span class="validation-error-message" data-test-error-message>{{v-get this "newTermTitle" "message"}}</span>
       {{/if}}
     </div>
   {{/if}}

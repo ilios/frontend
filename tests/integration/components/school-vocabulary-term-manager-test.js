@@ -124,4 +124,144 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.notOk(component.isActive.active);
     assert.notOk(this.server.db.terms[0].active);
   });
+
+  test('change title', async function(assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{
+      school-vocabulary-term-manager
+      term=term
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+    }}`);
+    assert.equal(component.title, `Title: ${term.title}`);
+    await component.editTitle();
+    await component.changeTitle('new title');
+    await component.saveTitle();
+    assert.equal(this.server.db.terms[0].title, 'new title');
+  });
+
+  test('add term', async function(assert) {
+    assert.expect(5);
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{
+      school-vocabulary-term-manager
+      term=term
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+    }}`);
+    assert.equal(component.title, `Title: ${term.title}`);
+    assert.equal(component.subTerms.list.length, 0);
+
+    await component.subTerms.newTermForm.setTitle('new term');
+    await component.subTerms.newTermForm.save();
+    assert.equal(component.subTerms.list.length, 1);
+
+    assert.equal(this.server.db.terms[1].title, 'new term');
+    assert.equal(this.server.db.terms[1].vocabularyId, vocabulary.id);
+  });
+
+  test('cant add term with empty title', async function(assert) {
+    assert.expect(6);
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{
+      school-vocabulary-term-manager
+      term=term
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+    }}`);
+    assert.equal(component.title, `Title: ${term.title}`);
+    assert.equal(component.subTerms.list.length, 0);
+
+    assert.notOk(component.subTerms.newTermForm.hasError);
+    await component.subTerms.newTermForm.setTitle('');
+    await component.subTerms.newTermForm.save();
+    assert.equal(component.subTerms.list.length, 0);
+    assert.ok(component.subTerms.newTermForm.hasError);
+    assert.equal(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
+  });
+
+  test('cant add term with duplicate title', async function(assert) {
+    assert.expect(6);
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    this.server.create('term', {
+      title: 'duplicate term',
+      vocabulary,
+      parent: term,
+    });
+
+
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{
+      school-vocabulary-term-manager
+      term=term
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canUpdate=true
+      canDelete=true
+      canCreate=true
+    }}`);
+    assert.equal(component.title, `Title: ${term.title}`);
+    assert.equal(component.subTerms.list.length, 1);
+
+    assert.notOk(component.subTerms.newTermForm.hasError);
+    await component.subTerms.newTermForm.setTitle('duplicate term');
+    await component.subTerms.newTermForm.save();
+    assert.equal(component.subTerms.list.length, 1);
+    assert.ok(component.subTerms.newTermForm.hasError);
+    assert.equal(component.subTerms.newTermForm.errorMessage, 'Term is a duplicate');
+  });
 });
