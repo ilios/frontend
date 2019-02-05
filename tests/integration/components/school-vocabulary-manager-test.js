@@ -1,25 +1,29 @@
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { run } from '@ember/runloop';
 import { component } from 'ilios/tests/pages/components/school-vocabulary-manager';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | school vocabulary manager', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(6);
-    let vocabulary = EmberObject.create({
-      title: 'fake vocab',
-      terms: resolve([
-        { title: 'first', isTopLevel: true, isNew: false, isDeleted: false, active: false },
-        { title: 'second', isTopLevel: true, isNew: false, isDeleted: false, active: true },
-      ])
+    const vocabulary = this.server.create('vocabulary');
+    this.server.create('term', {
+      vocabulary
+    });
+    this.server.create('term', {
+      active: true,
+      vocabulary
     });
 
-    this.set('vocabulary', vocabulary);
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+
+    this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
     await render(hbs`{{school-vocabulary-manager
       vocabulary=vocabulary
@@ -30,7 +34,106 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(component.breadcrumbs.all, 'All Vocabularies');
     assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
     assert.equal(component.terms.list.length, 2);
-    assert.equal(component.terms.list[0].text, 'first (inactive)');
-    assert.equal(component.terms.list[1].text, 'second');
+    assert.equal(component.terms.list[0].text, 'term 0 (inactive)');
+    assert.equal(component.terms.list[1].text, 'term 1');
+  });
+
+  test('change title', async function(assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-vocabulary-manager
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canUpdate=true
+    }}`);
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    await component.editTitle();
+    await component.changeTitle('new title');
+    await component.saveTitle();
+    assert.equal(this.server.db.vocabularies[0].title, 'new title');
+  });
+
+  test('add term', async function(assert) {
+    assert.expect(5);
+
+    const vocabulary = this.server.create('vocabulary');
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-vocabulary-manager
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canCreate=true
+    }}`);
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.equal(component.terms.list.length, 0);
+
+    await component.terms.newTermForm.setTitle('new term');
+    await component.terms.newTermForm.save();
+    assert.equal(component.terms.list.length, 1);
+
+    assert.equal(this.server.db.terms[0].title, 'new term');
+    assert.equal(this.server.db.terms[0].vocabularyId, vocabulary.id);
+  });
+
+  test('cant add term with empty title', async function(assert) {
+    assert.expect(6);
+
+    const vocabulary = this.server.create('vocabulary');
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-vocabulary-manager
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canCreate=true
+    }}`);
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.equal(component.terms.list.length, 0);
+
+    assert.notOk(component.terms.newTermForm.hasError);
+    await component.terms.newTermForm.setTitle('');
+    await component.terms.newTermForm.save();
+    assert.ok(component.terms.newTermForm.hasError);
+    assert.equal(component.terms.newTermForm.errorMessage, 'This field can not be blank');
+    assert.equal(component.terms.list.length, 0);
+  });
+
+  test('cant add term with duplicate title', async function(assert) {
+    assert.expect(6);
+
+    const vocabulary = this.server.create('vocabulary');
+    this.server.create('term', {
+      vocabulary
+    });
+    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('nothing', () => {});
+    await render(hbs`{{school-vocabulary-manager
+      vocabulary=vocabulary
+      manageTerm=(action nothing)
+      manageVocabulary=(action nothing)
+      canCreate=true
+    }}`);
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.equal(component.terms.list.length, 1);
+
+    assert.notOk(component.terms.newTermForm.hasError);
+    await component.terms.newTermForm.setTitle('term 0');
+    await component.terms.newTermForm.save();
+    assert.ok(component.terms.newTermForm.hasError);
+    assert.equal(component.terms.newTermForm.errorMessage, 'Term is a duplicate');
+    assert.equal(component.terms.list.length, 1);
   });
 });
