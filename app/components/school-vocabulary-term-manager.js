@@ -27,6 +27,26 @@ const Validations = buildValidations({
       descriptionKey: 'general.term',
     }),
   ],
+  termTitle: [
+    validator('presence', true),
+    validator('length', {
+      min: 1,
+      max: 200
+    }),
+    validator('async-exclusion', {
+      dependentKeys: ['model.vocabulary.@each.terms'],
+      in: computed('model.vocabulary.@each.terms.title', async function(){
+        const vocabulary = this.get('model.vocabulary');
+        if (isPresent(vocabulary)) {
+          const terms = await vocabulary.terms;
+          return terms.mapBy('title');
+        }
+        return [];
+
+      }),
+      descriptionKey: 'general.term',
+    })
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -41,7 +61,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTermTitle: null,
   isSavingNewTerm: false,
   description: null,
-  title: null,
+  termTitle: null,
   isActive: null,
   classNames: ['school-vocabulary-term-manager'],
   'data-test-school-vocabulary-term-manager': true,
@@ -62,18 +82,26 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this._super(...arguments);
     if (this.term) {
       this.set('description', this.term.description);
-      this.set('title', this.term.title);
+      this.set('termTitle', this.term.title);
       this.set('isActive', this.term.active);
     }
   },
 
   actions: {
-    async changeTermTitle(){
-      this.term.set('title', this.title);
-      return this.term.save();
+    async changeTermTitle() {
+      this.send('addErrorDisplayFor', 'termTitle');
+      await this.validate();
+      if (this.validations.attrs.termTitle.isValid) {
+        this.send('removeErrorDisplayFor', 'termTitle');
+        this.term.set('title', this.termTitle);
+        return this.term.save();
+      }
+
+      return false;
     },
     revertTermTitleChanges(){
-      this.set('title', this.term.title);
+      this.send('removeErrorDisplayFor', 'termTitle');
+      this.set('termTitle', this.term.title);
     },
     async changeTermDescription(){
       this.term.set('description', this.description);

@@ -1,4 +1,3 @@
-{{! template-lint-disable attribute-indentation }}
 {{#if (is-fulfilled allParents)}}
   <div class="breadcrumbs" data-test-breadcrumbs>
     <span {{action "clearVocabAndTerm"}} data-test-all>{{t "general.allVocabularies"}}</span>
@@ -16,7 +15,7 @@
       <h4>{{t "general.title"}}:</h4>
       {{#if canUpdate}}
         {{#editable-field
-          value=(if title title (t "general.clickToEdit"))
+          value=(if termTitle termTitle (t "general.clickToEdit"))
           save=(action "changeTermTitle")
           close=(action "revertTermTitleChanges")
           saveOnEnter=true
@@ -24,13 +23,18 @@
           as |isSaving|
         }}
           <input
-            value={{title}}
-            oninput={{action (mut title) value="target.value"}}
+            value={{termTitle}}
+            oninput={{action (mut termTitle) value="target.value"}}
             disabled={{isSaving}}
           >
         {{/editable-field}}
       {{else}}
-        {{title}}
+        {{termTitle}}
+      {{/if}}
+      {{#if
+        (and (v-get this "termTitle" "isInvalid") (is-in showErrorsFor "termTitle"))
+      }}
+        <span class="validation-error-message" data-test-title-error-message>{{v-get this "termTitle" "message"}}</span>
       {{/if}}
       {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
         {{fa-icon "trash" class="clickable remove" click=(action "deleteTerm")}}
