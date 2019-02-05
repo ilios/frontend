@@ -6,6 +6,9 @@ module.exports = function(environment /*, appConfig */) {
       'Nunito:400,700',
       'Nunito Sans:400,600,700'
     ],
+    moment: {
+      includeLocales: ['es', 'fr'],
+    },
     EmberENV: {
       EXTEND_PROTOTYPES: {
         String: true,
