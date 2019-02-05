@@ -1,10 +1,9 @@
-{{! template-lint-disable attribute-indentation }}
-<div class="breadcrumbs">
-  <span {{action manageVocabulary null}}>{{t "general.allVocabularies"}}</span>
-  <span>{{vocabulary.title}}</span>
+<div class="breadcrumbs" data-test-breadcrumbs>
+  <span {{action manageVocabulary null}} data-test-all>{{t "general.allVocabularies"}}</span>
+  <span data-test-vocabulary>{{vocabulary.title}}</span>
 </div><br>
 
-<div class="school-vocabulary-manager-title">
+<div class="school-vocabulary-manager-title" data-test-title>
   <h4>{{t "general.title"}}: </h4>
   {{#if canUpdate}}
     {{#editable-field
@@ -29,7 +28,7 @@
 <h5>{{t "general.terms"}}:</h5>
 
 
-<div class="terms">
+<div class="terms" data-test-terms>
   {{#if newTerm}}
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
@@ -62,9 +61,9 @@
     </div>
   {{/if}}
   {{#if (is-fulfilled sortedTerms)}}
-    <ul>
+    <ul data-test-term-list>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action manageTerm term.id}}>
+        <li {{action manageTerm term.id}} data-test-term>
           {{term.title}}{{#if (not term.active)}} <em>({{t "general.inactive"}})</em>{{/if}}
         </li>
       {{/each}}

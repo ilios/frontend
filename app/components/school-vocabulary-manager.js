@@ -1,13 +1,10 @@
-/* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import RSVP from 'rsvp';
+import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   newTermTitle: [
@@ -46,14 +43,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSavingNewTerm: false,
   newTerm: null,
   classNames: ['school-vocabulary-manager'],
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const vocabulary = this.vocabulary;
-    if (vocabulary) {
-      this.set('title', vocabulary.get('title'));
-      this.set('isActive', vocabulary.get('active'));
-    }
-  },
+  'data-test-school-vocabulary-manager': true,
   sortedTerms: computed('vocabulary.terms.[]', 'newTerm', function(){
     return new Promise(resolve => {
       const vocabulary = this.vocabulary;
@@ -69,19 +59,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
     });
   }),
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.send('createTerm');
+  didReceiveAttrs(){
+    this._super(...arguments);
+    const vocabulary = this.vocabulary;
+    if (vocabulary) {
+      this.set('title', vocabulary.get('title'));
+      this.set('isActive', vocabulary.get('active'));
     }
   },
-
   actions: {
     changeVocabularyTitle(){
       const vocabulary = this.vocabulary;
@@ -112,5 +97,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         this.set('isSavingNewTerm', false);
       });
     }
-  }
+  },
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('createTerm');
+    }
+  },
 });

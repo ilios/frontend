@@ -1,17 +1,16 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { component } from 'ilios/tests/pages/components/school-vocabulary-manager';
 
 module('Integration | Component | school vocabulary manager', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(4);
+    assert.expect(6);
     let vocabulary = EmberObject.create({
       title: 'fake vocab',
       terms: resolve([
@@ -27,13 +26,11 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       manageTerm=(action nothing)
       manageVocabulary=(action nothing)
     }}`);
-
-    const all = '.breadcrumbs span:nth-of-type(1)';
-    const vocab = '.breadcrumbs span:nth-of-type(2)';
-
-    assert.dom(all).hasText('All Vocabularies');
-    assert.dom(vocab).hasText(vocabulary.title);
-    assert.dom('.terms ul li').hasText('first (inactive)');
-    assert.dom(findAll('.terms ul li')[1]).hasText('second');
+    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.breadcrumbs.all, 'All Vocabularies');
+    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.equal(component.terms.list.length, 2);
+    assert.equal(component.terms.list[0].text, 'first (inactive)');
+    assert.equal(component.terms.list[1].text, 'second');
   });
 });
