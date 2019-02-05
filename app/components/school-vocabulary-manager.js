@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -15,16 +14,13 @@ const Validations = buildValidations({
     }),
     validator('async-exclusion', {
       dependentKeys: ['model.vocabulary.terms.@each.title'],
-      in: computed('model.vocabulary.terms.@each.title', function(){
-        return new Promise(resolve => {
-          const vocabulary = this.get('model.vocabulary');
-          if (isPresent(vocabulary)) {
-            return vocabulary.get('terms').then(terms => {
-              resolve(terms.filterBy('isTopLevel', true).mapBy('title'));
-            });
-          }
-          resolve([]);
-        });
+      in: computed('model.vocabulary.terms.@each.title', async function(){
+        const vocabulary = this.get('model.vocabulary');
+        if (isPresent(vocabulary)) {
+          const terms = await vocabulary.terms;
+          return terms.filterBy('isTopLevel', true).mapBy('title');
+        }
+        return [];
 
       }),
       descriptionKey: 'general.term',
@@ -44,20 +40,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTerm: null,
   classNames: ['school-vocabulary-manager'],
   'data-test-school-vocabulary-manager': true,
-  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', function(){
-    return new Promise(resolve => {
-      const vocabulary = this.vocabulary;
-      if (isPresent(vocabulary)) {
-        vocabulary.get('terms').then(terms => {
-          resolve(
-            terms.filterBy('isTopLevel')
-              .filterBy('isNew', false)
-              .filterBy('isDeleted', false)
-              .sortBy('title')
-          );
-        });
-      }
-    });
+  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', async function(){
+    const vocabulary = this.vocabulary;
+    if (isPresent(vocabulary)) {
+      const terms = await vocabulary.terms;
+      return terms.filterBy('isTopLevel')
+        .filterBy('isNew', false)
+        .filterBy('isDeleted', false)
+        .sortBy('title');
+    }
   }),
   didReceiveAttrs(){
     this._super(...arguments);
@@ -78,10 +69,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const vocabulary = this.vocabulary;
       this.set('title', vocabulary.get('title'));
     },
-    createTerm(){
+    async createTerm(){
       this.send('addErrorDisplayFor', 'newTermTitle');
       this.set('isSavingNewTerm', true);
-      this.validate().then(({validations}) => {
+      try {
+        const { validations } = await this.validate();
         if (validations.get('isValid')) {
           this.send('removeErrorDisplayFor', 'newTermTitle');
           let title = this.newTermTitle;
@@ -93,9 +85,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             this.set('newTerm', newTerm);
           });
         }
-      }).finally(() => {
+      } finally {
         this.set('isSavingNewTerm', false);
-      });
+      }
     }
   },
   keyUp(event) {
