@@ -144,30 +144,4 @@ module('Integration | Service | school events', function(hooks) {
       assert.equal(event, event2);
     });
   });
-
-  test('getSlugForEvent - offering', function(assert) {
-    assert.expect(1);
-    const service = this.owner.lookup('service:school-events');
-    const event = {
-      startDate: moment('2013-01-21').toDate(),
-      offering: 1,
-      school: 2,
-      prerequisites: [],
-      postrequisites: [],
-    };
-    assert.equal(service.getSlugForEvent(event), 'S0220130121O1');
-  });
-
-  test('getSlugForEvent - ILM', function(assert) {
-    assert.expect(1);
-    const service = this.owner.lookup('service:school-events');
-    const event = {
-      startDate: moment('2014-10-30').toDate(),
-      ilmSession: 1,
-      school: 10,
-      prerequisites: [],
-      postrequisites: [],
-    };
-    assert.equal(service.getSlugForEvent(event), 'S1020141030I1');
-  });
 });

@@ -210,28 +210,4 @@ module('Integration | Service | user events', function(hooks) {
       assert.equal(event, event2);
     });
   });
-
-  test('getSlugForEvent - offering', function(assert) {
-    assert.expect(1);
-    const service = this.owner.lookup('service:user-events');
-    const event = {
-      startDate: moment('2013-01-21').toDate(),
-      offering: 1,
-      prerequisites: [],
-      postrequisites: [],
-    };
-    assert.equal(service.getSlugForEvent(event), 'U20130121O1');
-  });
-
-  test('getSlugForEvent - ILM', function(assert) {
-    assert.expect(1);
-    const service = this.owner.lookup('service:user-events');
-    const event = {
-      startDate: moment('2014-10-30').toDate(),
-      ilmSession: 1,
-      prerequisites: [],
-      postrequisites: [],
-    };
-    assert.equal(service.getSlugForEvent(event), 'U20141030I1');
-  });
 });
