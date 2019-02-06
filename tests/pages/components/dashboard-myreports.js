@@ -6,6 +6,7 @@ import {
   isPresent,
   fillable,
   text,
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -21,11 +22,9 @@ const definition = {
     title: text('[data-test-report-title]'),
     yearsFilterExists: isPresent('[data-test-year-filter]'),
     chooseYear: fillable('[data-test-year-filter]'),
-    results: collection({
-      itemScope: '[data-test-results] li',
-      item: {
-        title: text(),
-      },
+    currentYear: value('[data-test-year-filter]'),
+    results: collection('[data-test-results] li', {
+      title: text(),
     }),
   },
   newReport: {
@@ -39,12 +38,9 @@ const definition = {
     chooseAcademicYear: fillable('[data-test-report-year-filter]'),
     fillMeshSearch: fillable('[data-test-mesh-manager] [data-test-search-box] input'),
     runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
-    meshSearchResults: collection({
-      itemScope: '[data-test-search-results] li',
-      item: {
-        name: text('[data-test-name]'),
-        pick: clickable()
-      },
+    meshSearchResults: collection('[data-test-search-results] li', {
+      name: text('[data-test-name]'),
+      pick: clickable()
     }),
     save: clickable('[data-test-report-save]'),
   }
