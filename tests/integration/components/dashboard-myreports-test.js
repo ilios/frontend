@@ -1,74 +1,57 @@
-import EmberObject, { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-
-const { resolve } = RSVP;
-
-let mockReports = [
-  EmberObject.create({
-    title: 'all courses',
-    subject: 'courses',
-    user: 1
-  }),
-  EmberObject.create({
-    title: 'courses for session',
-    subject: 'courses',
-    prepositionalObject: 'session',
-    prepositionalObjectTableRowId: 11,
-    user: 1
-  }),
-];
-
-let reportingMock = Service.extend({
-  reportsList: computed(function(){
-    return resolve(mockReports);
-  })
-});
-
-let reportingMockNoReports = Service.extend({
-  reportsList: computed(function(){
-    return resolve([]);
-  })
-});
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { authenticateSession } from 'ember-simple-auth/test-support';
+import { component } from 'ilios/tests/pages/components/dashboard-myreports';
 
 module('Integration | Component | dashboard myreports', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    this.user = this.server.create('user');
+    const jwtObject = {
+      'user_id': this.user.id
+    };
+    let encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData
+    });
+  });
 
   test('list reports', async function(assert) {
     assert.expect(4);
-    let currentUserMock = Service.extend({
-      model: resolve(EmberObject.create({
-        reports: resolve(mockReports)
-      }))
+    const course = this.server.create('course');
+    const session = this.server.create('session', {
+      course
     });
-    this.owner.register('service:reporting', reportingMock);
-    this.owner.register('service:currentUser', currentUserMock);
+    this.server.create('report', {
+      title: 'report 0',
+      subject: 'courses',
+      user: this.user,
+    });
+    this.server.create('report', {
+      title: 'report 1',
+      subject: 'courses',
+      prepositionalObject: 'session',
+      prepositionalObjectTableRowId: session.id,
+      user: this.user,
+    });
     await render(hbs`{{dashboard-myreports}}`);
 
-    assert.dom('.dashboard-block-header').hasText('My Reports');
-    for (let i = 0; i < 2; i++) {
-      let tds = findAll(`[data-test-saved-reports] li:nth-of-type(${i + 1})`);
-      assert.dom(tds[0]).hasText(mockReports[i].get('title'));
-    }
-    assert.dom(`[data-test-saved-reports] li`).exists({ count: 2 });
+    assert.equal(component.title, 'My Reports');
+    assert.equal(component.reports.length, 2);
+    assert.equal(component.reports[0].title, 'report 0');
+    assert.equal(component.reports[1].title, 'report 1');
   });
 
   test('display none when no reports', async function(assert) {
-    assert.expect(2);
-    let currentUserMock = Service.extend({
-      model: resolve(EmberObject.create({
-        reports: resolve([])
-      }))
-    });
-    this.owner.register('service:reporting', reportingMockNoReports);
-    this.owner.register('service:currentUser', currentUserMock);
+    assert.expect(3);
     await render(hbs`{{dashboard-myreports}}`);
-    assert.dom('.dashboard-block-header').hasText('My Reports');
-    assert.dom('.dashboard-block-body').hasText('None');
+    assert.equal(component.title, 'My Reports');
+    assert.equal(component.reports.length, 1);
+    assert.equal(component.reports[0].title, 'None');
   });
 });
