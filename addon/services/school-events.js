@@ -31,7 +31,7 @@ export default Service.extend(EventMixin, {
     const commonAjax = this.get('commonAjax');
     const data = await commonAjax.request(url);
 
-    return data.events.map(obj => this.createEventFromData(obj)).sortBy('startDate', 'name');
+    return data.events.map(obj => this.createEventFromData(obj, false)).sortBy('startDate', 'name');
   },
 
   /**
@@ -57,29 +57,5 @@ export default Service.extend(EventMixin, {
         return parseInt(event.ilmSession, 10) === id;
       }
     });
-  },
-
-  /**
-   * Generates a slug for a given event.
-   * @method getSlugForEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForEvent(event){
-    let slug = 'S';
-    let schoolId = parseInt(event.school, 10).toString();
-    //always use a two digit schoolId
-    if(schoolId.length === 1){
-      schoolId = '0' + schoolId;
-    }
-    slug += schoolId;
-    slug += moment(event.startDate).format('YYYYMMDD');
-    if(event.offering){
-      slug += 'O' + event.offering;
-    }
-    if(event.ilmSession){
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
   },
 });

@@ -1,4 +1,5 @@
 import Mixin from '@ember/object/mixin';
+import moment from 'moment';
 
 export default Mixin.create({
 
@@ -94,23 +95,66 @@ export default Mixin.create({
 
   /**
    * Parses event and does some transformation
-   * @method getEventForSlug
-   * @param {String} slug
-   * @return {Promise.<Object>}
+   * @method createEventFromData
+   * @param {Object} obj
+   * @param {Boolean} isUserEvent TRUE if the given object represents a user event, FALSE if it represents a school event.
+   * @return {Object}
    */
-  createEventFromData(obj) {
+  createEventFromData(obj, isUserEvent) {
     obj.isBlanked = !obj.offering && !obj.ilmSession;
-    obj.slug = this.getSlugForEvent(obj);
+    obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
     obj.prerequisites = obj.prerequisites.map(prereq => {
-      const rhett = this.createEventFromData(prereq);
+      const rhett = this.createEventFromData(prereq, isUserEvent);
       rhett.startDate = obj.startDate;
       rhett.postrequisiteName = obj.name;
       rhett.postrequisiteSlug = obj.slug;
 
       return rhett;
     }).sortBy('startDate', 'name');
-    obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq)).sortBy('startDate', 'name');
+    obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq, isUserEvent)).sortBy('startDate', 'name');
 
     return obj;
+  },
+
+  /**
+   * Generates a slug for a given user event.
+   * @method getSlugForUserEvent
+   * @param {Object} event
+   * @return {String}
+   */
+  getSlugForUserEvent(event){
+    let slug = 'U';
+    slug += moment(event.startDate).format('YYYYMMDD');
+    if(event.offering){
+      slug += 'O' + event.offering;
+    }
+    if(event.ilmSession){
+      slug += 'I' + event.ilmSession;
+    }
+    return slug;
+  },
+
+  /**
+   * Generates a slug for a given school event.
+   * @method getSlugForSchoolEvent
+   * @param {Object} event
+   * @return {String}
+   */
+  getSlugForSchoolEvent(event){
+    let slug = 'S';
+    let schoolId = parseInt(event.school, 10).toString();
+    //always use a two digit schoolId
+    if(schoolId.length === 1){
+      schoolId = '0' + schoolId;
+    }
+    slug += schoolId;
+    slug += moment(event.startDate).format('YYYYMMDD');
+    if(event.offering){
+      slug += 'O' + event.offering;
+    }
+    if(event.ilmSession){
+      slug += 'I' + event.ilmSession;
+    }
+    return slug;
   },
 });

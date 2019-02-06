@@ -3,6 +3,7 @@ import RSVP from 'rsvp';
 import { run } from '@ember/runloop';
 import EventsMixin from 'ilios-common/mixins/events';
 import { module, test } from 'qunit';
+import moment from 'moment';
 
 const { resolve } = RSVP;
 
@@ -154,5 +155,56 @@ module('Unit | Mixin | events', function(hooks) {
       assert.ok(cohortIds.includes(20));
       assert.ok(cohortIds.includes(30));
     });
+  });
+
+  test('getSlugForSchoolEvent - offering', function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = {
+      startDate: moment('2013-01-21').toDate(),
+      offering: 1,
+      school: 2,
+      prerequisites: [],
+      postrequisites: [],
+    };
+    assert.equal(subject.getSlugForSchoolEvent(event), 'S0220130121O1');
+  });
+
+  test('getSlugForSchoolEvent - ILM', function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = {
+      startDate: moment('2014-10-30').toDate(),
+      ilmSession: 1,
+      school: 10,
+      prerequisites: [],
+      postrequisites: [],
+    };
+    assert.equal(subject.getSlugForSchoolEvent(event), 'S1020141030I1');
+  });
+
+
+  test('getSlugForUserEvent - offering', function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = {
+      startDate: moment('2013-01-21').toDate(),
+      offering: 1,
+      prerequisites: [],
+      postrequisites: [],
+    };
+    assert.equal(subject.getSlugForUserEvent(event), 'U20130121O1');
+  });
+
+  test('getSlugForUserEvent - ILM', function(assert) {
+    assert.expect(1);
+    const subject = this.subject();
+    const event = {
+      startDate: moment('2014-10-30').toDate(),
+      ilmSession: 1,
+      prerequisites: [],
+      postrequisites: [],
+    };
+    assert.equal(subject.getSlugForUserEvent(event), 'U20141030I1');
   });
 });
