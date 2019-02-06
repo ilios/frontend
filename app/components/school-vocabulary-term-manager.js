@@ -1,14 +1,10 @@
-/* eslint ember/order-in-components: 0 */
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
-import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   newTermTitle: [
@@ -19,17 +15,34 @@ const Validations = buildValidations({
     }),
     validator('async-exclusion', {
       dependentKeys: ['model.term.children.@each.title'],
-      in: computed('model.term.@each.title', function(){
-        return new Promise(resolve => {
-          const term = this.get('model.term');
-          if (isPresent(term)) {
-            term.get('children').then(children => {
-              resolve(children.mapBy('title'));
-            });
-          } else {
-            resolve([]);
-          }
-        });
+      in: computed('model.term.children.@each.title', async function(){
+        const term = this.get('model.term');
+        if (isPresent(term)) {
+          const children = await term.children;
+          return children.mapBy('title');
+        }
+        return [];
+
+      }),
+      descriptionKey: 'general.term',
+    }),
+  ],
+  termTitle: [
+    validator('presence', true),
+    validator('length', {
+      min: 1,
+      max: 200
+    }),
+    validator('async-exclusion', {
+      dependentKeys: ['model.vocabulary.@each.terms'],
+      in: computed('model.vocabulary.@each.terms.title', async function(){
+        const vocabulary = this.get('model.vocabulary');
+        if (isPresent(vocabulary)) {
+          const terms = await vocabulary.terms;
+          return terms.mapBy('title');
+        }
+        return [];
+
       }),
       descriptionKey: 'general.term',
     })
@@ -48,38 +61,92 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTermTitle: null,
   isSavingNewTerm: false,
   description: null,
-  title: null,
+  termTitle: null,
   isActive: null,
   classNames: ['school-vocabulary-term-manager'],
+  'data-test-school-vocabulary-term-manager': true,
+  sortedTerms: computed('term.children.[]', 'newTerm', async function(){
+    if (isPresent(this.term)) {
+      const terms = await this.term.children;
+      return terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title');
+    }
+  }),
+  allParents: computed('term.allParents.[]', async function(){
+    if (isPresent(this.term)) {
+      return await this.term.allParents;
+    }
+
+    return [];
+  }),
   didReceiveAttrs(){
     this._super(...arguments);
-    const term = this.term;
-    if (term) {
-      this.set('description', term.get('description'));
-      this.set('title', term.get('title'));
-      this.set('isActive', term.get('active'));
+    if (this.term) {
+      this.set('description', this.term.description);
+      this.set('termTitle', this.term.title);
+      this.set('isActive', this.term.active);
     }
   },
-  sortedTerms: computed('term.children.[]', 'newTerm', function(){
-    return new Promise(resolve => {
-      const term = this.term;
-      if (isPresent(term)) {
-        term.get('children').then(terms => {
-          resolve(terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title'));
-        });
+
+  actions: {
+    async changeTermTitle() {
+      this.send('addErrorDisplayFor', 'termTitle');
+      await this.validate();
+      if (this.validations.attrs.termTitle.isValid) {
+        this.send('removeErrorDisplayFor', 'termTitle');
+        this.term.set('title', this.termTitle);
+        return this.term.save();
       }
-    });
-  }),
-  allParents: computed('term.allParents.[]', function(){
-    return new Promise(resolve => {
-      const term = this.term;
-      if (isPresent(term)) {
-        term.get('allParents').then(allParents => {
-          resolve(allParents.reverse());
-        });
+
+      return false;
+    },
+    revertTermTitleChanges(){
+      this.send('removeErrorDisplayFor', 'termTitle');
+      this.set('termTitle', this.term.title);
+    },
+    async changeTermDescription(){
+      this.term.set('description', this.description);
+      return this.term.save();
+    },
+    revertTermDescriptionChanges(){
+      this.set('description', this.term.description);
+    },
+    async createTerm() {
+      this.send('addErrorDisplayFor', 'newTermTitle');
+      this.set('isSavingNewTerm', true);
+      try {
+        await this.validate();
+        if (this.validations.attrs.newTermTitle.isValid) {
+          this.send('removeErrorDisplayFor', 'newTermTitle');
+          let title = this.newTermTitle;
+          let term = this.store.createRecord('term', {
+            title,
+            parent: this.term,
+            vocabulary: this.vocabulary,
+            active: true,
+          });
+
+          const newTerm = await term.save();
+          this.set('newTermTitle', null);
+          this.set('newTerm', newTerm);
+          return true;
+        }
+      } finally {
+        this.set('isSavingNewTerm', false);
       }
-    });
-  }),
+    },
+    async deleteTerm() {
+      const parent = await this.term.parent;
+      let goTo = isEmpty(parent)?null:parent.id;
+      this.manageTerm(goTo);
+      this.term.deleteRecord();
+      await this.term.save();
+      this.flashMessages.success('general.successfullyRemovedTerm');
+    },
+    clearVocabAndTerm(){
+      this.manageVocabulary(null);
+      this.manageTerm(null);
+    }
+  },
   keyUp(event) {
     const keyCode = event.keyCode;
     const target = event.target;
@@ -92,73 +159,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('createTerm');
     }
   },
-
   changeIsActive: task(function * (isActive){
-    const term = this.term;
-    term.set('active', isActive);
-    yield term.save();
-    this.set('isActive', term.get('active'));
+    this.term.set('active', isActive);
+    yield this.term.save();
+    this.set('isActive', this.term.active);
   }).drop(),
-
-  actions: {
-    changeTermTitle(){
-      const term = this.term;
-      const title = this.title;
-      term.set('title', title);
-      return term.save();
-    },
-    revertTermTitleChanges(){
-      const term = this.term;
-      this.set('title', term.get('title'));
-    },
-    changeTermDescription(){
-      const term = this.term;
-      const description = this.description;
-      term.set('description', description);
-      return term.save();
-    },
-    revertTermDescriptionChanges(){
-      const term = this.term;
-      this.set('description', term.get('description'));
-    },
-    createTerm(){
-      this.send('addErrorDisplayFor', 'newTermTitle');
-      this.set('isSavingNewTerm', true);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          this.send('removeErrorDisplayFor', 'newTermTitle');
-          let title = this.newTermTitle;
-          const parent = this.term;
-          const vocabulary = this.vocabulary;
-          const store = this.store;
-          let term = store.createRecord('term', {title, parent, vocabulary, active: true});
-          return term.save().then((newTerm) => {
-            this.set('newTermTitle', null);
-            this.set('newTerm', newTerm);
-          });
-        }
-      }).finally(() => {
-        this.set('isSavingNewTerm', false);
-      });
-    },
-    deleteTerm(){
-      const term = this.term;
-      const manageTerm = this.manageTerm;
-      term.get('parent').then(parent => {
-        let goTo = isEmpty(parent)?null:parent.get('id');
-        manageTerm(goTo);
-        term.deleteRecord();
-        term.save().then(() => {
-          this.flashMessages.success('general.successfullyRemovedTerm');
-        });
-      });
-
-    },
-    clearVocabAndTerm(){
-      const manageVocabulary = this.manageVocabulary;
-      const manageTerm = this.manageTerm;
-      manageVocabulary(null);
-      manageTerm(null);
-    }
-  }
 });
