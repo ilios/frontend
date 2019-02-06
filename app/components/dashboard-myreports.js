@@ -21,6 +21,7 @@ export default Component.extend(ReportTitleMixin, {
   selectedYear: null,
   user: null,
   finishedBuildingReport: false,
+  'data-test-dashboard-myreports': true,
 
   didReceiveAttrs() {
     this._super(...arguments);
