@@ -82,7 +82,8 @@ general:
   displayName: "Nombre de Mostrar"
   done: Acabado
   download: Descargar
-  dueBefore: "Debido antes de <a href='{link}'>{name}</a> ({date})"
+  dueBefore: "Debido antes de {name} ({date})"
+  dueBeforeLink: "Debido antes de <a href='{link}'>{name}</a> ({date})"
   dueBy: "Debido Por"
   duePriorTo: "Debido antes de"
   dueThisDay: "Debido por esta fecha"

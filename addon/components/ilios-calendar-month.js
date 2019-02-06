@@ -8,6 +8,7 @@ export default Component.extend({
   date: null,
   calendarEvents: null,
   showMore: null,
+  areEventsSelectable: true,
   ilmPreWorkEvents: computed('calendarEvents.[]', function () {
     const calendarEvents = this.calendarEvents || [];
     const preWork =  calendarEvents.reduce((arr, eventObject) => {

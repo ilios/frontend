@@ -3,7 +3,7 @@
     <h4>{{t "general.preWork"}}</h4>
     <ul>
       {{#each events as |event|}}
-        <IliosCalendarPreWorkEvent @event={{event}} />
+        <IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{areEventsSelectable}} />
       {{/each}}
     </ul>
   </div>
