@@ -1,1 +1,0 @@
-[2,"onerror",19,"app/instance-initializers/error.js","\n    // Global error handler in Ember run loop\n    Ember.onerror = (error) => {\n      if (error) {\n        const mappedError = this.mapError(error);"]
