@@ -90,7 +90,6 @@
     "ember-source": "~3.7.0",
     "ember-template-lint": "^1.1.0",
     "ember-test-selectors": "^2.0.0",
-    "ember-tether": "1.0.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-uploader": "2.0.0",
     "ember-web-app": "^2.2.0",
