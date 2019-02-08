@@ -54,6 +54,17 @@ module('Integration | Component | leadership search', function(hooks) {
     await fillIn(search, 'test person');
     assert.dom(resultsCount).hasText('1 result');
     assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
+
+    // Check that special characters do not mess things up.
+    await fillIn(search, 'test?person');
+    assert.dom(resultsCount).hasText('1 result');
+    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
+
+    // Check that multiple special characters do not mess things up.
+    await fillIn(search, 'test"person"');
+    assert.dom(resultsCount).hasText('1 result');
+    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
+
   });
 
   test('no results displays messages', async function(assert) {
