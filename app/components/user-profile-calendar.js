@@ -2,11 +2,12 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
 const { reads } = computed;
 
-export default Component.extend({
+export default Component.extend(EventMixin, {
   commonAjax: service(),
   iliosConfig: service(),
   init() {
@@ -32,9 +33,9 @@ export default Component.extend({
     }
     url += '/userevents/' + user.get('id') + '?from=' + from + '&to=' + to;
     const data = await commonAjax.request(url);
-
-    return data.userEvents;
+    return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
   }),
+
 
   actions: {
     goForward(){
