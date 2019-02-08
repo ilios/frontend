@@ -82,7 +82,8 @@ general:
   displayName: "Display Name"
   done: Done
   download: Download
-  dueBefore: "Due Before <a href='{link}'>{name}</a> ({date})"
+  dueBefore: "Due Before {name} ({date})"
+  dueBeforeLink: "Due Before <a href='{link}'>{name}</a> ({date})"
   dueBy: "Due By"
   duePriorTo: "Due prior to"
   dueThisDay: "Due this day"

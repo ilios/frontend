@@ -10,6 +10,7 @@ export default Component.extend({
   classNames: ['ilios-calendar-day'],
   date: null,
   calendarEvents: null,
+  areEventsSelectable: true,
   didInsertElement(){
     run.next(() => {
       this.$(".el-calendar .week").scrollTop(500);

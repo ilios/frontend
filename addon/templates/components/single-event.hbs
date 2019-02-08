@@ -15,7 +15,7 @@
       {{#if (gt @event.postrequisites.length 0)}}
         <p>
           {{t
-            "general.dueBefore"
+            "general.dueBeforeLink"
             name=(get (object-at 0 @event.postrequisites) "name")
             date=(moment-format (get (object-at 0 @event.postrequisites) "startDate") "dddd, MMMM Do YYYY, h:mm a")
             link=postrequisiteLink
