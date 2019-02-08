@@ -6112,7 +6112,7 @@ ember-test-selectors@^2.0.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-ember-tether@1.0.0, ember-tether@^1.0.0:
+ember-tether@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0.tgz#6117ea7351927887cb74fa5d46097dd300280c2d"
   integrity sha1-YRfqc1GSeIfLdPpdRgl90wAoDC0=
