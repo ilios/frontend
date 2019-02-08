@@ -1,6 +1,7 @@
 import {
   attribute,
   create,
+  isPresent,
   text
 } from 'ember-cli-page-object';
 
@@ -8,8 +9,10 @@ const definition = {
   scope: '[data-test-ilios-calendar-pre-work-event]',
   title: text('[data-test-event-title]'),
   titleUrl: attribute('href', '[data-test-event-title] a'),
+  titleUrlIsPresent: isPresent('[data-test-event-title] a'),
   date: text('[data-test-date]'),
   url: attribute('href', '[data-test-date] a'),
+  urlIsPresent: isPresent('[data-test-date] a'),
 };
 
 export default definition;

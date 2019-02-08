@@ -13,9 +13,6 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
 
   hooks.beforeEach(function () {
     this.owner.setupRouter();
-  }),
-
-  test('it renders', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
       slug: 'abc',
@@ -57,11 +54,23 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
       postrequisiteName: 'reading to read',
       postrequisiteSlug: '123',
     });
-    await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} />`);
+  });
 
+  test('it renders with links enabled', async function (assert) {
+    this.set('selectable', true);
+    await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{selectable}} />`);
     assert.equal(component.title, 'Learn to Learn');
     assert.equal(component.titleUrl, '/events/abc');
     assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
     assert.equal(component.url, '/events/123');
+  });
+
+  test('it renders without links enabled', async function (assert) {
+    this.set('selectable', true);
+    await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{selectable}} />`);
+    assert.equal(component.title, 'Learn to Learn');
+    assert.notOk(component.titleUrlIsPresent);
+    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.notOk(component.urlIsPresent);
   });
 });
