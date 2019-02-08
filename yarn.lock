@@ -5229,10 +5229,10 @@ ember-cli-path-utils@^1.0.0:
   resolved "https://registry.yarnpkg.com/ember-cli-path-utils/-/ember-cli-path-utils-1.0.0.tgz#4e39af8b55301cddc5017739b77a804fba2071ed"
   integrity sha1-Tjmvi1UwHN3FAXc5t3qAT7ogce0=
 
-ember-cli-postcss@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-postcss/-/ember-cli-postcss-4.1.1.tgz#1ad056535fd0d8fd4252f2af4f1f6085bfd4053e"
-  integrity sha512-hnFm+d/9fN3QaOnbLnKjQ4jfIRumnoAJNCrtsPt+RbxAU05MZY6N0Vlx56fyYz7q04YsmPoO8QFC4d1OR/0/Fw==
+ember-cli-postcss@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-postcss/-/ember-cli-postcss-4.2.0.tgz#7c840c0b5317923f35f062ff6882189dc55b8c13"
+  integrity sha512-TkSl+v94Wx3eiX24773nv7Wk61+mrDg+WIqYu1Fvkm+HCmt09UuUJJHnpZUk2d+Uv0FZcXe2aay/6unIAmZufw==
   dependencies:
     broccoli-file-creator "^2.1.1"
     broccoli-merge-trees "^3.0.0"
