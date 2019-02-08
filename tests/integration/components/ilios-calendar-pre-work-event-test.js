@@ -66,7 +66,7 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
   });
 
   test('it renders without links enabled', async function (assert) {
-    this.set('selectable', true);
+    this.set('selectable', false);
     await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{selectable}} />`);
     assert.equal(component.title, 'Learn to Learn');
     assert.notOk(component.titleUrlIsPresent);
