@@ -3149,10 +3149,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-db@^1.0.30000935:
-  version "1.0.30000935"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000935.tgz#0b4210ae207013c76bc1a2e0e903b15bec742a08"
-  integrity sha512-HFqvW9MZZcWD02F3J2GV2ggQyIXiDr7DRPlOWSKVIihu8J1dtsYFqtMjmFqiYamfOmY4NHyn7xFaWAHBtFWgjQ==
+caniuse-db@^1.0.30000936:
+  version "1.0.30000936"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000936.tgz#19035ce7c0f44c1562328d73bd455a2390206070"
+  integrity sha512-gOrcU8d+h5AdrO/Mhnj35vttNvAed2taqzrYDfhJE/qVnLxAaGb1doWlRF7iDex+EQPhkwAHc07RBwixnxpFDQ==
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000929, caniuse-lite@^1.0.30000932:
   version "1.0.30000935"
@@ -5738,8 +5738,9 @@ ember-test-selectors@^2.0.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-"ember-tether@github:yapplabs/ember-tether#98ad29da5455d1f892075651305059079a1dbab0":
+ember-tether@yapplabs/ember-tether#98ad29da5455d1f892075651305059079a1dbab0:
   version "1.0.0"
+  uid "98ad29da5455d1f892075651305059079a1dbab0"
   resolved "https://codeload.github.com/yapplabs/ember-tether/tar.gz/98ad29da5455d1f892075651305059079a1dbab0"
   dependencies:
     ember-auto-import "^1.2.19"
