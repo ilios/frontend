@@ -29,12 +29,14 @@ module('Integration | Component | week-glance-event', function(hooks) {
           required: true,
           publicNotes: 'This is cool.',
           citation: 'citationtext',
+          sessionLearningMaterial: 1,
         },
         {
           title: 'Link LM',
           type: 'link',
           required: false,
           link: 'http://myhost.com/url2',
+          sessionLearningMaterial: 2,
         },
         {
           title: 'File LM',
@@ -43,6 +45,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           mimetype: 'application/pdf',
           required: true,
           absoluteFileUri: 'http://myhost.com/url1',
+          sessionLearningMaterial: 3,
         },
       ],
       attireRequired: true,
@@ -106,6 +109,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           mimetype: 'application/pdf',
           absoluteFileUri: 'http://myhost.com/url1',
           publicNotes: 'slide notes',
+          sessionLearningMaterial: 1,
         },
       ],
       instructors: [
@@ -156,6 +160,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           citation: 'citationtext',
           endDate: today.clone().add(1, 'day').toDate(),
           startDate: today.clone().subtract(1, 'day').toDate(),
+          sessionLearningMaterial: 1,
         },
         {
           title: 'Too Early',
@@ -164,6 +169,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           isBlanked: true,
           citation: 'citationtext',
           startDate: moment('2001-12-31').toDate(),
+          sessionLearningMaterial: 2,
         },
         {
           title: 'Too Late',
@@ -172,6 +178,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           isBlanked: true,
           citation: 'citationtext',
           endDate: moment('2035-06-01').toDate(),
+          sessionLearningMaterial: 3,
         },
       ],
       attireRequired: true,
@@ -222,5 +229,67 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.ok(component.preWork[0].hasLink);
     assert.equal(component.preWork[1].title, 'prework 2');
     assert.ok(component.preWork[1].hasLink);
+  });
+
+  test('it skips course learning materials', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [
+        {
+          title: 'Citation LM',
+          type: 'citation',
+          required: true,
+          publicNotes: 'This is cool.',
+          citation: 'citationtext',
+          courseLearningMaterial: 1,
+        },
+        {
+          title: 'Link LM',
+          type: 'link',
+          required: false,
+          link: 'http://myhost.com/url2',
+          sessionLearningMaterial: 1,
+        },
+        {
+          title: 'File LM',
+          type: 'file',
+          filename: 'This is a PDF',
+          mimetype: 'application/pdf',
+          required: true,
+          absoluteFileUri: 'http://myhost.com/url1',
+          sessionLearningMaterial: 2,
+        },
+      ],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    });
+    await render(hbs`<WeekGlanceEvent @event={{event}} />`);
+
+    assert.equal(component.title, 'Learn to Learn');
+    assert.equal(component.learningMaterials.length, 2);
+
+    assert.equal(component.learningMaterials[0].title, 'Link LM');
+    assert.ok(component.learningMaterials[0].hasTypeIcon);
+    assert.equal(component.learningMaterials[0].typeIconTitle, 'Web Link');
+    assert.notOk(component.learningMaterials[0].hasCitation);
+    assert.notOk(component.learningMaterials[0].hasPublicNotes);
+    assert.equal(component.learningMaterials[0].url, 'http://myhost.com/url2');
+
+    assert.equal(component.learningMaterials[1].title, 'File LM');
+    assert.ok(component.learningMaterials[1].hasTypeIcon);
+    assert.equal(component.learningMaterials[1].typeIconTitle, 'File');
+    assert.notOk(component.learningMaterials[1].hasCitation);
+    assert.notOk(component.learningMaterials[1].hasPublicNotes);
+    assert.equal(component.learningMaterials[1].url, 'http://myhost.com/url1?inline');
   });
 });
