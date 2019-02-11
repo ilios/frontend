@@ -264,6 +264,9 @@
               {{#each (await linkablePostrequisites) as |linkablePostrequisite|}}
                 <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await session.postrequisite)}}>
                   {{linkablePostrequisite.title}}
+                  {{#if (await linkablePostrequisite.firstOfferingDate)}}
+                    ({{moment-format (await linkablePostrequisite.firstOfferingDate) "L LT"}})
+                  {{/if}}
                 </option>
               {{/each}}
             </select>
