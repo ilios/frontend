@@ -72,7 +72,7 @@
     {{#if @event.prerequisites.length}}
       <p class="pre-work" data-test-pre-work>
         <h5>{{t "general.preWork"}}</h5>
-        <ol>
+        <ul>
           {{#each @event.prerequisites as |event|}}
             <li>
               {{#link-to "events" event.slug}}
@@ -80,7 +80,7 @@
               {{/link-to}}
             </li>
           {{/each}}
-        </ol>
+        </ul>
       </p>
     {{/if}}
   </div>
