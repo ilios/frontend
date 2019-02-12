@@ -18,7 +18,7 @@ module.exports = function(environment /*, appConfig */) {
       }
     },
     featureFlags: {
-      'sessionLinkingAdminUi': false,
+      'sessionLinkingAdminUi': true,
     }
   };
 
