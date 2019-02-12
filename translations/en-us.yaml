@@ -194,7 +194,7 @@ general:
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
   parentObjectives: "Parent Objectives"
   prerequisites: "Prerequisites"
-  preWork: "PreWork"
+  preWork: "Pre-work"
   printSummary: "Print Summary"
   program: Program
   programAndCohort: "Program/Cohort"
