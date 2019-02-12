@@ -5505,7 +5505,7 @@ ember-tether@^1.0.0:
     ember-cli-node-assets "^0.2.2"
     tether "^1.4.0"
 
-"ember-tether@github:yapplabs/ember-tether#98ad29da5455d1f892075651305059079a1dbab0":
+ember-tether@yapplabs/ember-tether#98ad29da5455d1f892075651305059079a1dbab0:
   version "1.0.0"
   resolved "https://codeload.github.com/yapplabs/ember-tether/tar.gz/98ad29da5455d1f892075651305059079a1dbab0"
   dependencies:
