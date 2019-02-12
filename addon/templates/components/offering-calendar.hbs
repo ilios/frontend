@@ -9,7 +9,10 @@
   </span>
   <span class="filter">
     {{toggle-yesno yes=showSessionEvents toggle=(action (mut showSessionEvents))}}
-    <label onclick={{toggle "showSessionEvents" this}}>{{t "general.showSessionEvents" sessionTitle=session.title}}</label>
+    <label onclick={{toggle "showSessionEvents" this}}>
+      {{! template-lint-disable no-triple-curlies }}
+      {{{t "general.showSessionEvents" sessionTitle=session.title}}}
+    </label>
   </span>
 </p>
 <div class="ilios-calendar">
