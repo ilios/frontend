@@ -544,13 +544,14 @@ module('Acceptance | Session - Overview', function(hooks) {
 
   test('has pre-requisites', async function(assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const session = this.server.create('session', {
       course: this.course,
     });
-    const preRequisites = this.server.createList('session', 3);
-    session.update('prerequisites', preRequisites);
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.createList('session', 3, {
+      course: this.course,
+      postrequisite: session,
+    });
     this.server.create('session', {
       course: this.course,
     });
