@@ -264,6 +264,13 @@
               {{#each (await linkablePostrequisites) as |linkablePostrequisite|}}
                 <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await session.postrequisite)}}>
                   {{linkablePostrequisite.title}}
+                  {{#if (await linkablePostrequisite.firstOfferingDate)}}
+                    {{#if linkablePostrequisite.ilmSession}}
+                      <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await linkablePostrequisite.firstOfferingDate) "L"}}
+                    {{else}}
+                      {{moment-format (await linkablePostrequisite.firstOfferingDate) "L LT"}}
+                    {{/if}}
+                  {{/if}}
                 </option>
               {{/each}}
             </select>
