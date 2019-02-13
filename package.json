@@ -36,7 +36,7 @@
     "ember-chrome-devtools": "^0.2.0",
     "ember-cli": "~3.7.0",
     "ember-cli-app-version": "^3.2.0",
-    "ember-cli-babel": "^7.1.2",
+    "ember-cli-babel": "^7.4.2",
     "ember-cli-bourbon": "2.0.1",
     "ember-cli-code-coverage": "^0.4.1",
     "ember-cli-content-security-policy": "1.0.0",
