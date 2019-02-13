@@ -720,10 +720,10 @@
     glob "^7.1.2"
     rollup-plugin-node-resolve "^3.0.2"
 
-"@fortawesome/fontawesome-common-types@^0.2.13", "@fortawesome/fontawesome-common-types@^0.2.14":
-  version "0.2.14"
-  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.14.tgz#0eb86a77ac88e8c12c48591735283f0bf0ea5606"
-  integrity sha512-LOcvERCI96KioXSIfOYN4IATv2ROJOyf72dYnpoWfOIkuyLp45oMej1kL03kYdzvktLCzYhykgHwiu6nkg9Xbw==
+"@fortawesome/fontawesome-common-types@^0.2.13", "@fortawesome/fontawesome-common-types@^0.2.14", "@fortawesome/fontawesome-common-types@^0.2.15":
+  version "0.2.15"
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.15.tgz#16af950653083d1e3064061de9f8e5e3b579f688"
+  integrity sha512-ATBRyKJw1d2ko+0DWN9+BXau0EK3I/Q6pPzPv3LhJD7r052YFAkAdfb1Bd7ZqhBsJrdse/S7jKxWUOZ61qBD4g==
 
 "@fortawesome/fontawesome-svg-core@^1.2.0":
   version "1.2.13"
@@ -754,11 +754,11 @@
     "@fortawesome/fontawesome-common-types" "^0.2.14"
 
 "@fortawesome/pro-light-svg-icons@^5.6.1":
-  version "5.7.1"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-light-svg-icons/-/pro-light-svg-icons-5.7.1.tgz#77cfc50fce11c892ccbbf19f728ea8dbf72724bd"
-  integrity sha512-tvzJ9UjJMhStl2N9bWaIP657pyvLgPK+s/8jjSvq+bbidhDE4xzBBbxJ2vzeAtKpesFTeQOlxStZyI+eBRF8vw==
+  version "5.7.2"
+  resolved "https://npm.fontawesome.com/@fortawesome/pro-light-svg-icons/-/pro-light-svg-icons-5.7.2.tgz#e2832b2e495e291741b058f29651092818334969"
+  integrity sha512-TXqtvPm+EUFJG9SEyyZzbwzi3HqUPL0tBMODBFy/7bh8OdUu/qBsoI9rol8XKxA8GCcLtH1JfoI8UbI/8GyTKw==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.14"
+    "@fortawesome/fontawesome-common-types" "^0.2.15"
 
 "@fortawesome/pro-regular-svg-icons@^5.6.1":
   version "5.7.1"
