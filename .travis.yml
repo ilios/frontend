@@ -42,3 +42,10 @@ install:
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
+
+deploy:
+  provider: npm
+  email: jon.johnson@ucsf.edu
+  api_key: $NPM_TOKEN
+  on:
+    tags: true
