@@ -72,10 +72,10 @@ export default Component.extend({
 
     let availableInstructorGroups = yield this.get('availableInstructorGroups');
     if(! isEmpty(availableInstructorGroups)){
-      let exp = new RegExp(searchTerms, 'gi');
+      let fragment = searchTerms.toLowerCase().trim();
 
       let filteredGroups = availableInstructorGroups.filter(group => {
-        return group.get('title') && group.get('title').match(exp);
+        return group.get('title') && group.get('title').toLowerCase().includes(fragment);
       });
       const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
       let instructorGroupProxies = filteredGroups.map(group => {
