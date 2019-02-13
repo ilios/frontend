@@ -21,14 +21,62 @@ module.exports = function(environment) {
     i18n: {
       defaultLocale: 'en'
     },
+    fontawesome: {
+      enableExperimentalBuildTimeTransform: false,
+      defaultPrefix: 'fas',
+      icons: {
+        'pro-light-svg-icons': [
+          'clipboard-list',
+        ],
+        'free-solid-svg-icons': 'all',
+        'free-brands-svg-icons': [
+          'black-tie',
+        ],
+        // //icons which are used dynamically and cannot be detected at build time
+        // 'free-solid-svg-icons': [
+        //   'ban',
+        //   'bold',
+        //   'check',
+        //   'clock',
+        //   'cloud',
+        //   'download',
+        //   'ellipsis-h',
+        //   'exclamation-circle',
+        //   'external-link-square-alt',
+        //   'file-audio',
+        //   'file-pdf',
+        //   'file-powerpoint',
+        //   'file-video',
+        //   'file',
+        //   'info-circle',
+        //   'italic',
+        //   'link',
+        //   'list-ol',
+        //   'list-ul',
+        //   'paragraph',
+        //   'sort-alpha-down',
+        //   'sort-alpha-up',
+        //   'sort-numeric-down',
+        //   'sort-numeric-up',
+        //   'sort',
+        //   'spinner',
+        //   'star',
+        //   'star-half-alt',
+        //   'subscript',
+        //   'superscript',
+        // ],
+      }
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
-        Date: false
+        String: true,
+        Array: true,
+        Function: false,
+        Date: false,
       }
     },
 
@@ -44,6 +92,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    };
   }
 
   if (environment === 'test') {

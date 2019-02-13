@@ -1,11 +1,12 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('service:server-variables', 'Unit | Service | server variables', {
-  needs: ['service:session']
-});
+module('Unit | Service | server variables', function(hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let service = this.subject();
-  assert.ok(service);
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    var service = this.owner.lookup('service:server-variables');
+    assert.ok(service);
+  });
 });
