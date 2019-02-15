@@ -138,7 +138,7 @@ module.exports = function (environment) {
       programYearVisualizations: false
     },
     featureFlags: {
-      sessionLinkingAdminUi: false
+      sessionLinkingAdminUi: true
     }
   };
 
@@ -157,7 +157,6 @@ module.exports = function (environment) {
     };
 
     ENV.IliosFeatures.programYearVisualizations = true;
-    ENV.featureFlags.sessionLinkingAdminUi = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
@@ -188,7 +187,6 @@ module.exports = function (environment) {
   if (environment === 'preview') {
     // here you can enable a preview-specific feature
     ENV.IliosFeatures.programYearVisualizations = true;
-    ENV.featureFlags.sessionLinkingAdminUi = true;
     ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
 
     //Remove mirage
