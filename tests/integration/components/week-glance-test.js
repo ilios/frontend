@@ -10,12 +10,12 @@ import { component } from 'ilios-common/page-objects/components/week-glance';
 module('Integration | Component | week glance', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-  const today = moment('2019-01-15');
+  const testDate = moment('2017-01-19').hour(0).minute(0).second(0);
 
   hooks.beforeEach(function () {
     this.server.create('userevent', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: testDate.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -23,7 +23,7 @@ module('Integration | Component | week glance', function(hooks) {
     });
     this.server.create('userevent', {
       name: 'Finding the Point in Life',
-      startDate: today.format(),
+      startDate: testDate.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -47,7 +47,7 @@ module('Integration | Component | week glance', function(hooks) {
     });
     this.server.create('userevent', {
       name: 'Schedule some materials',
-      startDate: today.format(),
+      startDate: testDate.format(),
       location: 'Room 123',
       isBlanked: false,
       isPublished: true,
@@ -68,8 +68,8 @@ module('Integration | Component | week glance', function(hooks) {
     });
 
     this.getTitle = function(fullTitle){
-      const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
-      const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
+      const startOfWeek = testDate.clone().day(0).hour(0).minute(0).second(0);
+      const endOfWeek = testDate.clone().day(6).hour(23).minute(59).second(59);
 
       let expectedTitle;
       if (startOfWeek.month() != endOfWeek.month()) {
@@ -92,7 +92,7 @@ module('Integration | Component | week glance', function(hooks) {
   test('it renders with events', async function(assert) {
     assert.expect(5);
     this.owner.register('service:user-events', this.userEventsMock);
-    this.set('today', today);
+    this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{false}}
       @collapsed={{false}}
@@ -114,7 +114,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    this.set('today', today);
+    this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{false}}
       @collapsed={{false}}
@@ -138,7 +138,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    this.set('today', today);
+    this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{false}}
       @collapsed={{false}}
@@ -158,7 +158,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    this.set('today', today);
+    this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{true}}
       @collapsed={{true}}
@@ -182,7 +182,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    this.set('today', today);
+    this.set('today', testDate);
     this.set('toggle', value => {
       assert.ok(value);
     });
@@ -204,7 +204,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    this.set('today', today);
+    this.set('today', testDate);
     this.set('toggle', value => {
       assert.notOk(value);
     });
@@ -223,7 +223,7 @@ module('Integration | Component | week glance', function(hooks) {
 
   test('changing passed properties re-renders', async function(assert) {
     assert.expect(10);
-    const nextYear = today.clone().add(1, 'year');
+    const nextYear = testDate.clone().add(1, 'year');
     let count = 1;
     this.blankEventsMock = Service.reopen({
       async getEvents(fromStamp, toStamp){
@@ -231,10 +231,10 @@ module('Integration | Component | week glance', function(hooks) {
         const to = moment(toStamp, 'X');
         switch (count) {
         case 1:
-          assert.ok(from.isSame(today, 'year'), 'From-date has same year as today.');
-          assert.ok(to.isSame(today, 'year'), 'To-date has same year as today.');
-          assert.ok(from.isSame(today, 'week'), 'From-date has same week as today.');
-          assert.ok(to.isSame(today, 'week'), 'To-date has same wek as today.');
+          assert.ok(from.isSame(testDate, 'year'), 'From-date has same year as testDate.');
+          assert.ok(to.isSame(testDate, 'year'), 'To-date has same year as testDate.');
+          assert.ok(from.isSame(testDate, 'week'), 'From-date has same week as testDate.');
+          assert.ok(to.isSame(testDate, 'week'), 'To-date has same wek as testDate.');
           break;
         case 2:
           assert.ok(from.isSame(nextYear, 'year'), 'From-date has same year as next year.');
@@ -254,9 +254,9 @@ module('Integration | Component | week glance', function(hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
 
-    let year = today.format('YYYY');
+    let year = testDate.format('YYYY');
     this.set('year', year);
-    this.set('today', today);
+    this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{false}}
       @collapsed={{false}}
