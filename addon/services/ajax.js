@@ -11,12 +11,12 @@ export default AjaxService.extend({
   host: reads('iliosConfig.apiHost'),
 
   headers: computed('session.isAuthenticated', 'session.data.authenticated.jwt', function(){
-    const session = this.get('session');
-    const { jwt } = session.data.authenticated;
     let headers = {};
-
-    if (jwt) {
-      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    if(this.session){
+      const jwt = this.session.get('data.authenticated.jwt');
+      if (jwt) {
+        headers['X-JWT-Authorization'] = `Token ${jwt}`;
+      }
     }
 
     return headers;
