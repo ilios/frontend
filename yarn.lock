@@ -702,9 +702,9 @@
     ember-cli-htmlbars-inline-precompile "^1.0.0"
 
 "@fortawesome/ember-fontawesome@^0.1.9":
-  version "0.1.9"
-  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.9.tgz#57c5647d59bcfa4516cf35952daf8f9b4e4b5c37"
-  integrity sha512-0+dmxvlg3PZjQ9bej4UB6I6+wtVzNy1b0q6w+D9uPz6Onj3NGKU1vtUK7a48aq8b4yjeSoLuxpaBSHdGhcKKLg==
+  version "0.1.11"
+  resolved "https://npm.fontawesome.com/@fortawesome/ember-fontawesome/-/ember-fontawesome-0.1.11.tgz#3e847b27acdfef97f7c3e0c9e5cb459022281938"
+  integrity sha512-8TI/mLy/D+DCxDR/tSwPloDqlcRFatTzNyYXUJiAxrOHshlqzE9knN3d8XMH/0ZwG3jyWGTng82KQ2tOJzEDXQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.0"
     broccoli-file-creator "^1.1.1"
@@ -714,11 +714,12 @@
     broccoli-source "^1.1.0"
     camel-case "^3.0.0"
     ember-ast-helpers "0.3.5"
-    ember-cli-babel "^6.16.0"
+    ember-cli-babel "^7.1.2"
     ember-cli-htmlbars "^3.0.0"
     ember-get-config "^0.2.4"
+    find-yarn-workspace-root "^1.2.1"
     glob "^7.1.2"
-    rollup-plugin-node-resolve "^3.0.2"
+    rollup-plugin-node-resolve "^4.0.0"
 
 "@fortawesome/fontawesome-common-types@^0.2.13", "@fortawesome/fontawesome-common-types@^0.2.15":
   version "0.2.15"
@@ -2882,11 +2883,6 @@ buffer@^4.3.0:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
     isarray "^1.0.0"
-
-builtin-modules@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-2.0.0.tgz#60b7ef5ae6546bd7deefa74b08b62a43a232648e"
-  integrity sha512-3U5kUA5VPsRUA3nofm/BXX7GVHKfxz0hOBAPxXrIvHzlDRkQVqEn6yi8QJegxl4LzOHLdvb7XF5dVawa/VVYBg==
 
 builtin-modules@^3.0.0:
   version "3.0.0"
@@ -6009,7 +6005,7 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-find-yarn-workspace-root@^1.1.0:
+find-yarn-workspace-root@^1.1.0, find-yarn-workspace-root@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/find-yarn-workspace-root/-/find-yarn-workspace-root-1.2.1.tgz#40eb8e6e7c2502ddfaa2577c176f221422f860db"
   integrity sha512-dVtfb0WuQG+8Ag2uWkbG79hOUzEsRrhBzgfn86g2sJPkzmcpGdghbNTfUKGTxymFrY/tLIodDzLoW9nOJ4FY8Q==
@@ -10244,14 +10240,14 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rollup-plugin-node-resolve@^3.0.2:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-3.4.0.tgz#908585eda12e393caac7498715a01e08606abc89"
-  integrity sha512-PJcd85dxfSBWih84ozRtBkB731OjXk0KnzN0oGp7WOWcarAFkVa71cV5hTJg2qpVsV2U8EUwrzHP3tvy9vS3qg==
+rollup-plugin-node-resolve@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-4.0.0.tgz#9bc6b8205e9936cc0e26bba2415f1ecf1e64d9b2"
+  integrity sha512-7Ni+/M5RPSUBfUaP9alwYQiIKnKeXCOHiqBpKUl9kwp3jX5ZJtgXAait1cne6pGEVUUztPD6skIKH9Kq9sNtfw==
   dependencies:
-    builtin-modules "^2.0.0"
+    builtin-modules "^3.0.0"
     is-module "^1.0.0"
-    resolve "^1.1.6"
+    resolve "^1.8.1"
 
 rollup-pluginutils@^2.0.1:
   version "2.3.3"
