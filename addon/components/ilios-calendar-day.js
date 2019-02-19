@@ -13,7 +13,9 @@ export default Component.extend({
   areEventsSelectable: true,
   didInsertElement(){
     run.next(() => {
-      this.$(".el-calendar .week").scrollTop(500);
+      if (!this.isDestroyed && !this.isDestroying && this.element) {
+        this.element.querySelector(".el-calendar .week").scrollTop = 500;
+      }
     });
   },
   ilmPreWorkEvents: computed('calendarEvents.[]', function () {
