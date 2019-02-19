@@ -10,7 +10,9 @@ const isCI = !!process.env.CI;
 const isProduction = process.env.EMBER_ENV === 'production';
 
 if (isCI || isProduction) {
-  browsers.push('ie 11');
+  browsers.push('last 1 edge versions');
+  browsers.push('firefox esr'); //sometimes points to the last 2 ESR releases when they overlap
+  browsers.push('last 1 ios versions');
 }
 
 module.exports = {
