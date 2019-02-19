@@ -17,6 +17,8 @@ env:
     - CC_TEST_REPORTER_ID=8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
     - COVERAGE=true
     - MOZ_HEADLESS=1
+    - SENTRY_ORG=ilios
+    - SENTRY_PROJECT=frontend
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -49,4 +51,9 @@ jobs:
     - stage: deploy production
       if: tag IS present
       env: COVERAGE=false
-      script: node_modules/.bin/ember deploy production --activate
+      script:
+       - node_modules/.bin/ember deploy production --activate
+       - sentry-cli releases new $TRAVIS_TAG
+       - sentry-cli releases set-commits --auto $TRAVIS_TAG
+       - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps dist/
+       - sentry-cli releases finalize $TRAVIS_TAG
