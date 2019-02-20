@@ -82,7 +82,7 @@ export default Component.extend({
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
-    return preWork.filter(ev => ev.ilmSession);
+    return preWork.filter(ev => ev.ilmSession).sortBy('session');
   }),
 
   nonIlmPreWorkEvents: computed('publishedWeekEvents.[]', async function () {
