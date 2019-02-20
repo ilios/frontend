@@ -7380,10 +7380,10 @@ ignore@^5.0.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.5.tgz#c663c548d6ce186fb33616a8ccb5d46e56bdbbf9"
   integrity sha512-kOC8IUb8HSDMVcYrDVezCxpJkzSQWTAzf3olpKM6o9rM5zpojx23O0Fl8Wr4+qJ6ZbPEHqf1fdwev/DS7v7pmA==
 
-ilios-common@22.2.1:
-  version "22.2.1"
-  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-22.2.1.tgz#3934e392720da22bf0d6b885adabe3d95888566a"
-  integrity sha512-YcHsszOM/69FRvePA/o9eDfQPrkxkkyKaPmrPN+s2hQg+VEa0ItNWFOfGIO1E9018LoYBw5CYjpAbbk7fnR+QQ==
+ilios-common@23.0.0:
+  version "23.0.0"
+  resolved "https://registry.yarnpkg.com/ilios-common/-/ilios-common-23.0.0.tgz#b70dc9925c738eb57bee2e4ae8173c2dc0a61509"
+  integrity sha512-cQYWZaUjwauu2uaqa7e0Odc+vWeeg9y3q2OmOwfQTbEEsbb4LEao0VlB+LOc3RX+l0tapI/Y6f6PvkS8q7Ek3w==
   dependencies:
     "@ember-intl/cp-validations" "^4.0.1"
     "@fortawesome/ember-fontawesome" "^0.1.9"
