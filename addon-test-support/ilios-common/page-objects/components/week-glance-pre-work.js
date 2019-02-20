@@ -1,6 +1,7 @@
 import {
   attribute,
   create,
+  isPresent,
   text
 } from 'ember-cli-page-object';
 
@@ -9,6 +10,8 @@ const definition = {
   title: text('[data-test-event-title]'),
   date: text('[data-test-date]'),
   url: attribute('href', '[data-test-date] a'),
+  moreInfo: text('[data-test-more]'),
+  hasMoreInfo: isPresent('[data-test-more]'),
 };
 
 export default definition;

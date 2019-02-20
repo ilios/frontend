@@ -305,6 +305,7 @@ general:
   weeks: Semanas
   when: Cuando
   whitecoatsSlashSpecialAttire: "Abrigos blancos / vestimenta especial"
+  withXmoreOfferings: "con {count, plural, =1 {una ofrenda mas} other {# ofertas más}}"
   year: "Año"
   yes: "Sí"
 errors:

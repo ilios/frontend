@@ -14,8 +14,8 @@
     <div class="ilm-pre-work">
       {{#if (gt (get (await ilmPreWork) "length") 0)}}
         <h4>{{t "general.preWork"}}</h4>
-        {{#each (await ilmPreWork) as |event|}}
-          <WeekGlancePreWork @event={{event}} />
+        {{#each (await ilmPreWork) as |ilmGroup|}}
+          <WeekGlancePreWork @events={{ilmGroup}} />
         {{/each}}
       {{/if}}
     </div>

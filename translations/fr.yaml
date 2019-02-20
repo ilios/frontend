@@ -305,6 +305,7 @@ general:
   weeks: Semaines
   when: Quand
   whitecoatsSlashSpecialAttire: "Blouses blanches / vêtements particuliers"
+  withXmoreOfferings: "avec {count, plural, =1 {une autre offre} other {# autres offres}}"
   year: "Année"
   yes: Oui
 errors:

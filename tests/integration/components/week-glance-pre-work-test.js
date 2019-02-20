@@ -12,7 +12,8 @@ module('Integration | Component | week-glance-pre-work', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    this.set('event', {
+    assert.expect(4);
+    this.set('events', [{
       name: 'Learn to Learn',
       startDate: today.format(),
       location: 'Room 123',
@@ -51,11 +52,45 @@ module('Integration | Component | week-glance-pre-work', function(hooks) {
       supplemental: true,
       postrequisiteName: 'reading to read',
       postrequisiteSlug: '123',
-    });
-    await render(hbs`<WeekGlancePreWork @event={{event}} />`);
+    }]);
+    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
     assert.equal(component.title, 'Learn to Learn');
     assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
     assert.equal(component.url, '#event123');
+    assert.notOk(component.hasMoreInfo);
+  });
+
+  test('two items', async function (assert) {
+    assert.expect(4);
+    this.set('events', [{
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      postrequisiteName: 'reading to read',
+      postrequisiteSlug: '123',
+    }, {} ]);
+    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
+
+    assert.equal(component.title, 'Learn to Learn');
+    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.equal(component.url, '#event123');
+    assert.equal(component.moreInfo, 'with one more offering');
+
+  });
+
+  test('more than two items', async function (assert) {
+    assert.expect(4);
+    this.set('events', [{
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      postrequisiteName: 'reading to read',
+      postrequisiteSlug: '123',
+    }, {}, {} ]);
+    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
+
+    assert.equal(component.title, 'Learn to Learn');
+    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.equal(component.url, '#event123');
+    assert.equal(component.moreInfo, 'with 2 more offerings');
   });
 });
