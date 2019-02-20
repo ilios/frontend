@@ -39,7 +39,6 @@ module('Integration | Component | offering-calendar', function(hooks) {
     });
     const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
     const learnerGroupModel = await run(() => this.owner.lookup('service:store').find('learner-group', learnerGroup.id));
-    this.server.logging = true;
     this.set('startDate', today.toDate());
     this.set('endDate', tomorrow.toDate());
     this.set('session', sessionModel);
