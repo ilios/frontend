@@ -1,3 +1,4 @@
+/* eslint ember/no-observers: 0 */
 import Helper from '@ember/component/helper';
 import { observer } from '@ember/object';
 
