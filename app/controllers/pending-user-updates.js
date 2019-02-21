@@ -5,6 +5,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 const { sort, gt } = computed;
 const { all, Promise } = RSVP;
 
@@ -54,8 +55,7 @@ export default Controller.extend({
     const limit = this.limit;
     const offset = this.offset;
     const end = limit + offset;
-    const filter = this.filter;
-    const exp = new RegExp(filter, 'gi');
+    const exp = new RegExp(escapeRegExp(this.filter), 'gi');
 
     return new Promise(resolve => {
       this.allUpdates.then(allUpdates => {
