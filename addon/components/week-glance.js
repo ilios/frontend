@@ -5,11 +5,11 @@ import moment from 'moment';
 import layout from '../templates/components/week-glance';
 
 export default Component.extend({
-  layout,
-  classNames: ['week-glance'],
-
   userEvents: service(),
   intl: service(),
+
+  layout,
+  classNames: ['week-glance'],
 
   startOfWeek: 0,
   endOfWeek: 6,

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-learning-materials';
 import { isEmpty } from '@ember/utils';
@@ -11,10 +11,10 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 const { notEmpty, not } = computed;
 
 export default Component.extend(SortableByPosition, {
-  layout,
   currentUser: service(),
   store: service(),
   intl: service(),
+  layout,
   tagName: 'section',
   classNameBindings: [':detail-learningmaterials', 'displaySearchBox'],
   subject: null,
@@ -22,9 +22,7 @@ export default Component.extend(SortableByPosition, {
   editable: true,
   isSorting: false,
   isSaving: false,
-  isManaging: notEmpty('managingMaterial'),
   managingMaterial: null,
-  isSession: not('isCourse'),
   totalMaterialsToSave: null,
   currentMaterialsSaved: null,
 
@@ -32,6 +30,8 @@ export default Component.extend(SortableByPosition, {
   type: null,
   'data-test-detail-learning-materials': true,
 
+  isManaging: notEmpty('managingMaterial'),
+  isSession: not('isCourse'),
   displaySearchBox: computed('isManaging', 'displayAddNewForm', 'isSorting', function(){
     const isManaging = this.get('isManaging');
     const displayAddNewForm = this.get('displayAddNewForm');
@@ -73,15 +73,6 @@ export default Component.extend(SortableByPosition, {
     return learningMaterials.length > 1;
   }),
 
-  saveSomeMaterials(arr){
-    let chunk = arr.splice(0, 5);
-    return all(chunk.invoke('save')).then(() => {
-      if (arr.length){
-        this.set('currentMaterialsSaved', this.get('currentMaterialsSaved') + chunk.length);
-        return this.saveSomeMaterials(arr);
-      }
-    });
-  },
   learningMaterialStatuses: computed(async function () {
     const store = this.get('store');
     return await store.findAll('learning-material-status');
@@ -180,5 +171,14 @@ export default Component.extend(SortableByPosition, {
       subjectLearningMaterial.deleteRecord();
       return subjectLearningMaterial.save();
     },
-  }
+  },
+  saveSomeMaterials(arr){
+    let chunk = arr.splice(0, 5);
+    return all(chunk.invoke('save')).then(() => {
+      if (arr.length){
+        this.set('currentMaterialsSaved', this.get('currentMaterialsSaved') + chunk.length);
+        return this.saveSomeMaterials(arr);
+      }
+    });
+  },
 });

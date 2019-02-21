@@ -1,13 +1,9 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import layout from '../templates/components/detail-cohorts';
 import RSVP from 'rsvp';
 
 export default Component.extend({
-  init() {
-    this._super(...arguments);
-    this.set('bufferedCohorts', []);
-  },
   layout,
   tagName: 'section',
   classNames: ['detail-cohorts'],
@@ -17,6 +13,10 @@ export default Component.extend({
   editable: true,
   bufferedCohorts: null,
   'data-test-detail-cohorts': true,
+  init() {
+    this._super(...arguments);
+    this.set('bufferedCohorts', []);
+  },
   actions: {
     manage(){
       this.get('course.cohorts').then(cohorts => {

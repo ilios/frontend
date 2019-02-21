@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -18,29 +18,10 @@ const defaultButtons = [
   'html'
 ];
 export default Component.extend({
-  layout,
   intl: service(),
+  layout,
   content: '',
 
-  /**
-   * Disable Froala's built in beacon tracking
-   * Has to be done on the global jQuery plugin object
-   */
-  init() {
-    this._super(...arguments);
-    $.FE.DT = true;
-  },
-  /**
-   * Convert `<i>` tags from froala into SVG icons
-   * Uses: https://fontawesome.com/how-to-use/with-the-api/methods/dom-i2svg
-   */
-  didRender() {
-    next(() => {
-      if (this.element) {
-        dom.i2svg({node: this.element});
-      }
-    });
-  },
   options: computed('intl.locale', function(){
     const intl = this.get('intl');
     const language = intl.get('locale');
@@ -64,6 +45,25 @@ export default Component.extend({
       iconsTemplate: 'font_awesome_5',
       listAdvancedTypes: false,
     };
-  })
+  }),
 
+  /**
+   * Disable Froala's built in beacon tracking
+   * Has to be done on the global jQuery plugin object
+   */
+  init() {
+    this._super(...arguments);
+    $.FE.DT = true;
+  },
+  /**
+   * Convert `<i>` tags from froala into SVG icons
+   * Uses: https://fontawesome.com/how-to-use/with-the-api/methods/dom-i2svg
+   */
+  didRender() {
+    next(() => {
+      if (this.element) {
+        dom.i2svg({node: this.element});
+      }
+    });
+  },
 });

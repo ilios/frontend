@@ -7,15 +7,15 @@ import moment from 'moment';
 const { reads } = computed;
 
 export default Component.extend({
-  layout,
   currentUser: service(),
   commonAjax: service(),
   iliosConfig: service(),
+  layout,
   daysInAdvance: 60,
 
-  namespace: reads('iliosConfig.apiNameSpace'),
-
   classNames: ['dashboard-materials'],
+
+  namespace: reads('iliosConfig.apiNameSpace'),
 
   materials: computed('currentUser.currentUserId', async function() {
     const from = moment().hour(0).minute(0).unix();

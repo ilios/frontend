@@ -30,6 +30,8 @@ export default CalendarEvent.extend(TooltipContent, {
   ],
   'data-test-ilios-calendar-event': true,
 
+  daysToShowAlert: null,
+
   isIlm: notEmpty('event.ilmSession'),
   isOffering: notEmpty('event.offering'),
   clickable: or('isIlm', 'isOffering'),
@@ -63,8 +65,6 @@ export default CalendarEvent.extend(TooltipContent, {
        width: ${escapeExpression(this.calculateWidth())}%;`
     );
   }),
-
-  daysToShowAlert: null,
 
   recentlyUpdated: computed('event.lastModified', function(){
     const lastModifiedDate = moment(this.get('event.lastModified'));

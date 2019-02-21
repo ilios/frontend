@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
@@ -11,6 +11,7 @@ const { oneWay } = computed;
 let userProxy = ObjectProxy.extend({
   isUser: true,
   currentlyActiveUsers: null,
+  sortTerm: oneWay('content.fullName'),
   isActive: computed('content', 'currentlyActiveUsers.[]', function(){
     let user = this.get('content');
     if(!user.get('enabled')){
@@ -18,21 +19,20 @@ let userProxy = ObjectProxy.extend({
     }
     return !this.get('currentlyActiveUsers').includes(user);
   }),
-  sortTerm: oneWay('content.fullName'),
 });
 let instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
+  sortTerm: oneWay('content.title'),
   isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
     return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
   }),
-  sortTerm: oneWay('content.title'),
 });
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
+  layout,
   classNames: ['user-search'],
   'data-test-user-search': true,
   showMoreInputPrompt: false,
@@ -42,6 +42,26 @@ export default Component.extend({
   roles: '',
   availableInstructorGroups: null,
   currentlyActiveInstructorGroups: null,
+  actions: {
+    addUser(user) {
+      //don't send actions to the calling component if the user is already in the list
+      //prevents a complicated if/else on the template.
+      const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
+      if(!currentlyActiveUsers.includes(user)){
+        this.addUser(user);
+      }
+    },
+    addInstructorGroup(group) {
+      //don't send actions to the calling component if the user is already in the list
+      //prevents a complicated if/else on the template.
+      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
+      if(!currentlyActiveInstructorGroups.includes(group)){
+        if (this.addInstructorGroup) {
+          this.addInstructorGroup(group);
+        }
+      }
+    }
+  },
   search: task(function * (searchTerms = '') {
     this.set('showMoreInputPrompt', false);
     this.set('searchReturned', false);
@@ -98,24 +118,4 @@ export default Component.extend({
     this.set('searchReturned', true);
     return results;
   }).restartable(),
-  actions: {
-    addUser(user) {
-      //don't send actions to the calling component if the user is already in the list
-      //prevents a complicated if/else on the template.
-      const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
-      if(!currentlyActiveUsers.includes(user)){
-        this.addUser(user);
-      }
-    },
-    addInstructorGroup(group) {
-      //don't send actions to the calling component if the user is already in the list
-      //prevents a complicated if/else on the template.
-      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
-      if(!currentlyActiveInstructorGroups.includes(group)){
-        if (this.addInstructorGroup) {
-          this.addInstructorGroup(group);
-        }
-      }
-    }
-  }
 });

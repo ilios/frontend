@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
@@ -21,8 +21,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  layout,
   store: service(),
+  layout,
   classNames: ['new-session'],
 
   sessionTypes: null,

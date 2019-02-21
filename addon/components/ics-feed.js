@@ -8,14 +8,14 @@ export default Component.extend({
   url: null,
   instructions: null,
   showCopySuccessMessage: false,
+  actions: {
+    refresh(){
+      this.refresh();
+    }
+  },
   textCopied: task(function * (){
     this.set('showCopySuccessMessage', true);
     yield timeout(3000);
     this.set('showCopySuccessMessage', false);
   }).restartable(),
-  actions: {
-    refresh(){
-      this.refresh();
-    }
-  }
 });

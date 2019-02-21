@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { set, computed } from '@ember/object';
@@ -68,19 +68,10 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  layout,
   store: service(),
   currentUser: service(),
   iliosConfig: service(),
-  host: reads('iliosConfig.apiHost'),
-  uploadPath: computed('host', function () {
-    return this.get('host') + '/upload';
-  }),
-
-  isFile: equal('type', 'file'),
-  isCitation: equal('type', 'citation'),
-  isLink: equal('type', 'link'),
-
+  layout,
   classNames: ['new-learningmaterial'],
 
   learningMaterialStatuses: null,
@@ -99,6 +90,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   owner: null,
   citation: null,
   fileUploadErrorMessage: false,
+
+  host: reads('iliosConfig.apiHost'),
+  isFile: equal('type', 'file'),
+  isCitation: equal('type', 'citation'),
+  isLink: equal('type', 'link'),
+
+  uploadPath: computed('host', function () {
+    return this.get('host') + '/upload';
+  }),
 
   selectedStatus: computed('learningMaterialStatuses.[]', 'statusId', function () {
     const learningMaterialStatuses = this.get('learningMaterialStatuses');
@@ -128,6 +128,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return learningMaterialUserRoles.get('firstObject');
   }),
 
+  actions: {
+    setFile(e) {
+      this.setProperties({
+        filename: e.filename,
+        fileHash: e.fileHash,
+        showUploadStatus: false,
+        fileUploadPercentage: 100,
+        fileUploadErrorMessage: null,
+      });
+    },
+
+    startUploadingFile() {
+      set(this, 'fileHash', null);
+      set(this, 'showUploadStatus', true);
+      set(this, 'fileUploadPercentage', 0);
+      set(this, 'fileUploadErrorMessage', 0);
+    },
+
+    setFileUploadPercentage(percent) {
+      set(this, 'fileUploadPercentage', Math.floor(percent));
+    },
+  },
   prepareSave: task(function *() {
     this.send('addErrorDisplaysFor', ['title', 'originalAuthor', 'fileHash', 'url', 'citation']);
     let {validations} = yield this.validate();
@@ -179,26 +201,4 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.send('clearErrorDisplay');
   }),
 
-  actions: {
-    setFile(e) {
-      this.setProperties({
-        filename: e.filename,
-        fileHash: e.fileHash,
-        showUploadStatus: false,
-        fileUploadPercentage: 100,
-        fileUploadErrorMessage: null,
-      });
-    },
-
-    startUploadingFile() {
-      set(this, 'fileHash', null);
-      set(this, 'showUploadStatus', true);
-      set(this, 'fileUploadPercentage', 0);
-      set(this, 'fileUploadErrorMessage', 0);
-    },
-
-    setFileUploadPercentage(percent) {
-      set(this, 'fileUploadPercentage', Math.floor(percent));
-    },
-  }
 });

@@ -5,6 +5,8 @@ import layout from '../templates/components/dashboard-agenda';
 import moment from 'moment';
 
 export default Component.extend({
+  userEvents: service(),
+
   layout,
   /**
    * Days in advance of the current date.
@@ -16,8 +18,7 @@ export default Component.extend({
 
   classNames: ['dashboard-agenda'],
 
-  userEvents: service(),
-
+  sixDaysAgo: moment().hour(0).minute(0).subtract(6, 'days'),
   weeksEvents: computed('daysInAdvance', function() {
     const daysInAdvance = this.get('daysInAdvance');
     const from = moment().hour(0).minute(0).unix();
@@ -25,5 +26,4 @@ export default Component.extend({
 
     return this.get('userEvents').getEvents(from, to);
   }),
-  sixDaysAgo: moment().hour(0).minute(0).subtract(6, 'days'),
 });

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -40,7 +40,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   notes: null,
   learningMaterial: null,
   isCourse: false,
-  isSession: not('isCourse'),
   editable: false,
   type: null,
   title: null,
@@ -61,11 +60,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   startDate: null,
   endDate: null,
 
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const setup = this.get('setup');
-    setup.perform();
-  },
+  isSession: not('isCourse'),
   isFile: equal('type', 'file'),
   isLink: equal('type', 'link'),
   isCitation: equal('type', 'citation'),
@@ -90,6 +85,56 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return cLmIds.length + sLmIds.length === 1;
   }),
 
+  currentStatus: computed('statusId', 'learningMaterialStatuses.[]', async function () {
+    const statusId = this.get('statusId');
+    const learningMaterialStatuses = await this.get('learningMaterialStatuses');
+    return learningMaterialStatuses.findBy('id', statusId);
+  }),
+  didReceiveAttrs(){
+    this._super(...arguments);
+    const setup = this.get('setup');
+    setup.perform();
+  },
+  actions: {
+    updateDate(which, value) {
+      const oldDate = moment(this.get(which));
+      let newDate = moment(value);
+      const hour = oldDate.get('hour');
+      const minute = oldDate.get('minute');
+      newDate.set({hour, minute});
+      this.set(which, newDate.toDate());
+    },
+    updateTime(which, value, type) {
+      const oldDate = moment(this.get(which));
+      const year = oldDate.get('year');
+      const month = oldDate.get('month');
+      const date = oldDate.get('date');
+      let hour = oldDate.get('hour');
+      let minute = oldDate.get('minute');
+      if (type === 'hour') {
+        hour = value;
+      }
+      if (type === 'minute') {
+        minute = value;
+      }
+
+      let newDate = moment();
+      newDate.set({year, month, date, hour, minute});
+      this.set(which, newDate.toDate());
+    },
+    addDate(which) {
+      let now = moment().hour(8).minute(0).second(0).toDate();
+      this.set(which, now);
+    },
+    addTerm(term) {
+      const terms = this.get('terms');
+      terms.pushObject(term);
+    },
+    removeTerm(term) {
+      const terms = this.get('terms');
+      terms.removeObject(term);
+    },
+  },
   setup: task(function * (){
     const learningMaterial = this.get('learningMaterial');
     if (!learningMaterial) {
@@ -169,49 +214,4 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     yield parent.save();
     closeManager();
   }),
-  currentStatus: computed('statusId', 'learningMaterialStatuses.[]', async function () {
-    const statusId = this.get('statusId');
-    const learningMaterialStatuses = await this.get('learningMaterialStatuses');
-    return learningMaterialStatuses.findBy('id', statusId);
-  }),
-  actions: {
-    updateDate(which, value) {
-      const oldDate = moment(this.get(which));
-      let newDate = moment(value);
-      const hour = oldDate.get('hour');
-      const minute = oldDate.get('minute');
-      newDate.set({hour, minute});
-      this.set(which, newDate.toDate());
-    },
-    updateTime(which, value, type) {
-      const oldDate = moment(this.get(which));
-      const year = oldDate.get('year');
-      const month = oldDate.get('month');
-      const date = oldDate.get('date');
-      let hour = oldDate.get('hour');
-      let minute = oldDate.get('minute');
-      if (type === 'hour') {
-        hour = value;
-      }
-      if (type === 'minute') {
-        minute = value;
-      }
-
-      let newDate = moment();
-      newDate.set({year, month, date, hour, minute});
-      this.set(which, newDate.toDate());
-    },
-    addDate(which) {
-      let now = moment().hour(8).minute(0).second(0).toDate();
-      this.set(which, now);
-    },
-    addTerm(term) {
-      const terms = this.get('terms');
-      terms.pushObject(term);
-    },
-    removeTerm(term) {
-      const terms = this.get('terms');
-      terms.removeObject(term);
-    },
-  }
 });

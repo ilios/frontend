@@ -11,13 +11,6 @@ export default Component.extend({
   date: null,
   calendarEvents: null,
   areEventsSelectable: true,
-  didInsertElement(){
-    run.next(() => {
-      if (!this.isDestroyed && !this.isDestroying && this.element) {
-        this.element.querySelector(".el-calendar .week").scrollTop = 500;
-      }
-    });
-  },
   ilmPreWorkEvents: computed('calendarEvents.[]', function () {
     const calendarEvents = this.calendarEvents || [];
     const preWork =  calendarEvents.reduce((arr, eventObject) => {
@@ -51,4 +44,11 @@ export default Component.extend({
       event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
   }),
+  didInsertElement(){
+    run.next(() => {
+      if (!this.isDestroyed && !this.isDestroying && this.element) {
+        this.element.querySelector(".el-calendar .week").scrollTop = 500;
+      }
+    });
+  },
 });

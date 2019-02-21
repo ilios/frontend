@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
@@ -11,18 +11,18 @@ import layout from '../templates/components/course-objective-manager';
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
 const competencyGroup = EmberObject.extend({
+  title: '',
+  originalObjectives: null,
+  objectiveSorting: null,
+  uniqueObjectives: uniq('originalObjectives'),
+  objectives: sort('uniqueObjectives', 'objectiveSorting'),
+  selectedObjectives: filterBy('uniqueObjectives', 'selected', true),
+  selected: gt('selectedObjectives.length', 0),
+  noTitle: none('title'),
   init(){
     this._super(...arguments);
     this.set('objectiveSorting', ['title']);
   },
-  title: '',
-  originalObjectives: null,
-  uniqueObjectives: uniq('originalObjectives'),
-  objectiveSorting: null,
-  objectives: sort('uniqueObjectives', 'objectiveSorting'),
-  selectedObjectives: filterBy('uniqueObjectives', 'selected', true),
-  selected: gt('selectedObjectives.length', 0),
-  noTitle: none('title')
 });
 
 const objectiveProxy = ObjectProxy.extend({
@@ -35,8 +35,8 @@ const objectiveProxy = ObjectProxy.extend({
 const cohortProxy = EmberObject.extend({
   cohort: null,
   objective: null,
-  id: oneWay('cohort.id'),
   title: null,
+  id: oneWay('cohort.id'),
   objectivesByCompetency: computed('objectives.[]', function(){
     return new RSVPPromise(resolve => {
       let objectives = this.get('objectives');
@@ -88,24 +88,12 @@ const cohortProxy = EmberObject.extend({
 });
 
 export default Component.extend({
-  layout,
   intl: service(),
+  layout,
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,
   'data-test-course-objective-manager': true,
-
-  didReceiveAttrs(){
-    this.get('loadAttr').perform();
-  },
-
-  loadAttr: task(function * () {
-    let cohorts = yield this.get('cohorts');
-    let firstCohort = cohorts.get('firstObject');
-    if(firstCohort != null){
-      this.set('selectedCohort', firstCohort);
-    }
-  }),
 
   course: computed('courseObjective.courses.[]', async function () {
     const courseObjective = this.get('courseObjective');
@@ -189,6 +177,32 @@ export default Component.extend({
     });
   }),
 
+  didReceiveAttrs(){
+    this.get('loadAttr').perform();
+  },
+
+  actions: {
+    setSelectedCohort(cohortId){
+      this.get('cohorts').then(cohorts => {
+        let selectedCohort = cohorts.findBy('id', cohortId);
+        this.set('selectedCohort', selectedCohort);
+      });
+    },
+    removeParent(parentProxy){
+      let removingParent = parentProxy.get('content');
+      let courseObjective = this.get('courseObjective');
+      courseObjective.get('parents').removeObject(removingParent);
+      removingParent.get('children').removeObject(courseObjective);
+    },
+  },
+  loadAttr: task(function * () {
+    let cohorts = yield this.get('cohorts');
+    let firstCohort = cohorts.get('firstObject');
+    if(firstCohort != null){
+      this.set('selectedCohort', firstCohort);
+    }
+  }),
+
   addParent: task(function* (parentProxy) {
     const courseObjective = this.get('courseObjective');
     const newParent = parentProxy.get('content');
@@ -216,18 +230,4 @@ export default Component.extend({
     }
   }),
 
-  actions: {
-    setSelectedCohort(cohortId){
-      this.get('cohorts').then(cohorts => {
-        let selectedCohort = cohorts.findBy('id', cohortId);
-        this.set('selectedCohort', selectedCohort);
-      });
-    },
-    removeParent(parentProxy){
-      let removingParent = parentProxy.get('content');
-      let courseObjective = this.get('courseObjective');
-      courseObjective.get('parents').removeObject(removingParent);
-      removingParent.get('children').removeObject(courseObjective);
-    },
-  }
 });

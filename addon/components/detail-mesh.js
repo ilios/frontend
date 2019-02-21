@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { oneWay, sort } from '@ember/object/computed';
 import layout from '../templates/components/detail-mesh';
 import { all } from 'rsvp';
@@ -7,27 +7,27 @@ import Component from '@ember/component';
 import { translationMacro as t } from "ember-intl";
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
-  init() {
-    this._super(...arguments);
-    this.set('sortTerms', ['title']);
-    this.set('bufferTerms', []);
-  },
+  layout,
   classNames: ['detail-mesh'],
   tagName: 'section',
-  placeholder: t('general.meshSearchPlaceholder'),
   subject: null,
-  terms: oneWay('subject.meshDescriptors'),
   isCourse: false,
   sortTerms: null,
-  sortedTerms: sort('terms', 'sortTerms'),
   isSession: false,
   isManaging: false,
   editable: true,
   bufferTerms: null,
   'data-test-detail-mesh': true,
+  placeholder: t('general.meshSearchPlaceholder'),
+  terms: oneWay('subject.meshDescriptors'),
+  sortedTerms: sort('terms', 'sortTerms'),
+  init() {
+    this._super(...arguments);
+    this.set('sortTerms', ['title']);
+    this.set('bufferTerms', []);
+  },
   actions: {
     manage() {
       var self = this;

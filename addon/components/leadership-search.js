@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import layout from '../templates/components/leadership-search';
@@ -13,15 +13,15 @@ const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
+  layout,
   classNames: ['leadership-search'],
   existingUsers: null,
   searchValue: null,
-  existingUserIds: mapBy('existingUsers', 'id'),
   'data-test-leadership-search': true,
 
+  existingUserIds: mapBy('existingUsers', 'id'),
   searchForUsers: task(function * (query) {
     const intl = this.get('intl');
     const store = this.get('store');

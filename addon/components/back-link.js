@@ -4,8 +4,8 @@ import { computed } from '@ember/object';
 import layout from '../templates/components/back-link';
 
 export default Component.extend({
-  layout,
   intl: service(),
+  layout,
   tagName: 'a',
   classNames: ['back-link'],
   attributeBindings: ['title'],

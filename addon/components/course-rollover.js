@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -25,11 +25,24 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  layout,
   commonAjax: service(),
   store: service(),
   flashMessages: service(),
   iliosConfig: service(),
+  layout,
+  classNames: ['course-rollover'],
+  years: null,
+  selectedYear: null,
+  course: null,
+  expandAdvancedOptions: false,
+  startDate: null,
+  skipOfferings: false,
+  title: null,
+  isSaving: false,
+  selectedCohorts: null,
+
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
   init() {
     this._super(...arguments);
     this.set('selectedCohorts', []);
@@ -50,19 +63,22 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.get('loadUnavailableYears').perform();
     this.get('changeSelectedYear').perform(lastYear);
   },
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-  classNames: ['course-rollover'],
-  years: null,
-  selectedYear: null,
-  course: null,
-  expandAdvancedOptions: false,
-  startDate: null,
-  skipOfferings: false,
-  title: null,
-  isSaving: false,
-  selectedCohorts: null,
-
+  actions: {
+    changeTitle(newTitle){
+      this.set('title', newTitle);
+      this.get('loadUnavailableYears').perform();
+    },
+    addCohort(cohort) {
+      let selectedCohorts = this.get('selectedCohorts');
+      selectedCohorts.pushObject(cohort);
+      this.set('selectedCohorts', selectedCohorts);
+    },
+    removeCohort(cohort){
+      let selectedCohorts = this.get('selectedCohorts');
+      selectedCohorts.removeObject(cohort);
+      this.set('selectedCohorts', selectedCohorts);
+    },
+  },
   keyUp(event) {
     const keyCode = event.keyCode;
     const target = event.target;
@@ -168,20 +184,4 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return false; // don't disable anything if we don't have a course to compare to.
   },
 
-  actions: {
-    changeTitle(newTitle){
-      this.set('title', newTitle);
-      this.get('loadUnavailableYears').perform();
-    },
-    addCohort(cohort) {
-      let selectedCohorts = this.get('selectedCohorts');
-      selectedCohorts.pushObject(cohort);
-      this.set('selectedCohorts', selectedCohorts);
-    },
-    removeCohort(cohort){
-      let selectedCohorts = this.get('selectedCohorts');
-      selectedCohorts.removeObject(cohort);
-      this.set('selectedCohorts', selectedCohorts);
-    },
-  }
 });

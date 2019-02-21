@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -7,9 +7,9 @@ import { task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/course-sessions';
 
 export default Component.extend({
-  layout,
   intl: service(),
   permissionChecker: service(),
+  layout,
   tagName: 'section',
   classNames: ['course-sessions'],
   'data-test-course-sessions': true,
@@ -102,6 +102,31 @@ export default Component.extend({
     return sessionObjects;
   }),
 
+  sessionTypes: computed('course.school.sessionTypes.[]', async function(){
+    const course = this.get('course');
+    const school = await course.get('school');
+    const sessionTypes = await school.get('sessionTypes');
+
+    return sessionTypes;
+  }),
+
+  filterByDebounced: computed('filterByLocalCache', 'filterBy', function(){
+    const filterBy = this.get('filterBy');
+    const filterByLocalCache = this.get('filterByLocalCache');
+    const changeFilterBy = this.get('changeFilterBy');
+
+    if (changeFilterBy.get('isIdle')) {
+      return filterBy;
+    }
+
+    return filterByLocalCache;
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('expandedSessionIds', []);
+  },
+
   saveSession: task(function * (session) {
     const course = this.get('course');
     session.set('course', course);
@@ -128,31 +153,6 @@ export default Component.extend({
       this.set('expandedSessionIds', ids);
     }
   }).drop(),
-
-  sessionTypes: computed('course.school.sessionTypes.[]', async function(){
-    const course = this.get('course');
-    const school = await course.get('school');
-    const sessionTypes = await school.get('sessionTypes');
-
-    return sessionTypes;
-  }),
-
-  filterByDebounced: computed('filterByLocalCache', 'filterBy', function(){
-    const filterBy = this.get('filterBy');
-    const filterByLocalCache = this.get('filterByLocalCache');
-    const changeFilterBy = this.get('changeFilterBy');
-
-    if (changeFilterBy.get('isIdle')) {
-      return filterBy;
-    }
-
-    return filterByLocalCache;
-  }),
-
-  init() {
-    this._super(...arguments);
-    this.set('expandedSessionIds', []);
-  },
 
   changeFilterBy: task(function * (value){
     const setFilterBy = this.get('setFilterBy');

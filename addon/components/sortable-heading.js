@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../templates/components/sortable-heading';
@@ -12,6 +12,8 @@ export default Component.extend({
   classNameBindings: ['textDirection', ':sortable', ':clickable', ':sortable-heading', 'hideFromSmallScreen'],
   tagName: 'span',
   hideFromSmallScreen: false,
+  attributeBindings: ['title'],
+  title: '',
   sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
     const sortedBy = this.get('sortedBy');
     const sortedAscending = this.get('sortedAscending');
@@ -30,6 +32,4 @@ export default Component.extend({
   textDirection: computed('align', function(){
     return 'text-' + this.get('align');
   }),
-  attributeBindings: ['title'],
-  title: ''
 });

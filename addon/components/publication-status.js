@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../templates/components/publication-status';
@@ -19,6 +19,9 @@ export default Component.extend({
     ':publication-status',
     'publicationStatus'
   ],
+  item: null,
+  isPublished: alias('item.isPublished'),
+  isScheduled: alias('item.publishedAsTbd'),
   textKey: computed('publishedLangKey', 'scheduledLangKey',  'notPublishedLangKey', 'isPublished', 'isScheduled', function(){
     const isPublished = this.get('isPublished');
     const isScheduled = this.get('isScheduled');
@@ -57,7 +60,4 @@ export default Component.extend({
 
     return 'notpublished';
   }),
-  item: null,
-  isPublished: alias('item.isPublished'),
-  isScheduled: alias('item.publishedAsTbd')
 });

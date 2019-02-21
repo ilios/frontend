@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -8,22 +8,18 @@ import layout from '../templates/components/publish-all-sessions';
 const { equal } = computed;
 
 export default Component.extend({
-  layout,
   store: service(),
-  init(){
-    this._super(...arguments);
-    this.set('sessionsToOverride', []);
-  },
+  layout,
   isSaving: false,
   classNames: ['publish-all-sessions'],
   sessions: null,
   sessionsToOverride: null,
-  noSessionsAsIs: equal('sessionsToOverride.length', 0),
   publishableCollapsed: true,
   unPublishableCollapsed: true,
   totalSessionsToSave: null,
   currentSessionsSaved: null,
 
+  noSessionsAsIs: equal('sessionsToOverride.length', 0),
   /**
    * @property allSessionsAsIs
    * @type {Ember.computed}
@@ -116,6 +112,10 @@ export default Component.extend({
     });
   }),
 
+  init(){
+    this._super(...arguments);
+    this.set('sessionsToOverride', []);
+  },
   actions: {
     toggleSession(session){
       if(this.get('sessionsToOverride').includes(session)){

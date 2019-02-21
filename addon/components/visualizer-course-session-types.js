@@ -8,9 +8,9 @@ import { inject as service } from '@ember/service';
 import layout from '../templates/components/visualizer-course-session-types';
 
 export default Component.extend({
-  layout,
   intl: service(),
   router: service(),
+  layout,
   course: null,
   isIcon: false,
   chartType: 'horz-bar',

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { Promise as RSVPPromise, filter } from 'rsvp';
@@ -14,15 +14,15 @@ export default Component.extend({
   selectedGroups: null,
   filter: '',
   tagName: 'li',
+  classNameBindings: ['hasChildren:strong:em', 'selectable::disabled'],
+  isVisible: false,
+  selectable: false,
+  'data-test-learnergroup-tree': true,
+  hasChildren: gt('learnerGroup.children.length', 0),
   didReceiveAttrs(){
     this._super(...arguments);
     this.get('updateIsVisible').perform();
   },
-  classNameBindings: ['hasChildren:strong:em', 'selectable::disabled'],
-  isVisible: false,
-  hasChildren: gt('learnerGroup.children.length', 0),
-  selectable: false,
-  'data-test-learnergroup-tree': true,
   /**
    * Recursivly search a group tree to see if there are any children
    * which have not been selected
