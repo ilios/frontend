@@ -11,7 +11,7 @@
         fixedWidth=true
       }}
     {{/link-to}}
-    {{#link-to "printCourse" course (query-params unpublished=true) class="print"}}
+    {{#link-to "print_course" course (query-params unpublished=true) class="print"}}
       {{fa-icon "print" title=(t "general.printSummary") fixedWidth=true}}
     {{/link-to}}
     {{#if (and (is-fulfilled showRollover) (await showRollover))}}

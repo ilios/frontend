@@ -22,7 +22,7 @@ module('Integration | Component | publish menu', function(hooks) {
       showUnPublish=true
       publishTranslation='general.publishCourse'
       unPublishTranslation='general.unPublishCourse'
-      reviewRoute='course.publicationCheck'
+      reviewRoute='course.publication_check'
       reviewObject=testObj
       publish=(action nothing)
       publishAsTbd=(action nothing)
@@ -154,7 +154,7 @@ module('Integration | Component | publish menu', function(hooks) {
       showUnPublish=true
       publishTranslation='general.publishCourse'
       unPublishTranslation='general.unPublishCourse'
-      reviewRoute='course.publicationCheck'
+      reviewRoute='course.publication_check'
       reviewObject=testObj
       parentObject=parentTestObject
       publish=(action nothing)

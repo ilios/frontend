@@ -9,7 +9,5 @@ module.exports = {
     'ember/no-jquery': 0,
     'ember/use-brace-expansion': 0,
     'ember/no-new-mixins': 0,
-    'ember/no-capital-letters-in-routes': 0,
-    'ember/no-unnecessary-route-path-option': 0,
   }
 };
