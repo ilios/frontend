@@ -51,7 +51,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
 
   academicYear: computed('year', function(){
-    return this.get('year') + ' - ' + (parseInt(this.get('year')) + 1);
+    return this.get('year') + ' - ' + (parseInt(this.get('year'), 10) + 1);
   }),
 
   /**

@@ -22,11 +22,11 @@ export default Component.extend({
   actions: {
     incrementYear(){
       const year = this.get('year');
-      this.get('setYear')(parseInt(year) + 1);
+      this.get('setYear')(parseInt(year, 10) + 1);
     },
     decrementYear(){
       const year = this.get('year');
-      this.get('setYear')(parseInt(year) - 1);
+      this.get('setYear')(parseInt(year, 10) - 1);
     }
   }
 });

@@ -6,6 +6,6 @@ const { attr, Model } = DS;
 export default Model.extend({
   title: attr('number'),
   academicYearTitle: computed('title', function(){
-    return this.get('title') + ' - ' + (parseInt(this.get('title')) + 1);
+    return this.get('title') + ' - ' + (parseInt(this.get('title'), 10) + 1);
   }),
 });
