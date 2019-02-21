@@ -6,10 +6,10 @@ import layout from '../templates/components/single-event';
 import moment from 'moment';
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
   router: service(),
+  layout,
   event: null,
   classNames: ['single-event'],
   'data-test-single-event': true,

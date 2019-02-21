@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -46,58 +46,29 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
-  layout,
   currentUser: service(),
   features: service(),
   routing: service('-routing'),
   permissionChecker: service(),
   intl: service(),
-  init() {
-    this._super(...arguments);
-    this.set('sortTypes', ['title']);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('title', this.get('session.title'));
-    this.set('instructionalNotes', this.get('session.instructionalNotes'));
-    this.get('session.ilmSession').then(ilmSession => {
-      if (ilmSession){
-        this.set('hours', ilmSession.get('hours'));
-        this.set('dueDate', ilmSession.get('dueDate'));
-      }
-    });
-
-    this.get('session.sessionType').then(sessionType => {
-      this.set('sessionType', sessionType);
-    });
-
-    this.get('session.postrequisite').then(postRequisite => {
-      this.set('postRequisite', postRequisite);
-    });
-
-    this.get('session.sessionDescription').then(sessionDescription => {
-      if (sessionDescription){
-        this.set('description', sessionDescription.get('description'));
-      }
-    });
-  },
+  layout,
   session: null,
   title: null,
   instructionalNotes: null,
   hours: null,
   dueDate: null,
   description: null,
-  publishTarget: oneWay('session'),
   editable: true,
   sortTypes: null,
   sessionTypes: null,
   sessionType: null,
   postRequisite: null,
-  sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   showCheckLink: true,
   isSaving: false,
   'data-test-session-overview': true,
 
+  publishTarget: oneWay('session'),
+  sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   filteredSessionTypes: computed('sessionTypes.[]', function() {
     const selectedSessionType = this.get('sessionType');
     const selectedSessionTypeId = isEmpty(selectedSessionType) ? -1 : selectedSessionType.get('id');
@@ -196,29 +167,35 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
 
-  revertDescriptionChanges: task(function * (){
-    const session = this.get('session');
-    const sessionDescription = yield session.get('sessionDescription');
-    if (sessionDescription) {
-      this.set('description', sessionDescription.get('description'));
-    } else {
-      this.set('description', null);
-    }
-  }),
+  init() {
+    this._super(...arguments);
+    this.set('sortTypes', ['title']);
+  },
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('title', this.get('session.title'));
+    this.set('instructionalNotes', this.get('session.instructionalNotes'));
+    this.get('session.ilmSession').then(ilmSession => {
+      if (ilmSession){
+        this.set('hours', ilmSession.get('hours'));
+        this.set('dueDate', ilmSession.get('dueDate'));
+      }
+    });
 
-  saveInstructionalNotes: task(function* () {
-    this.send('addErrorDisplayFor', 'instructionalNotes');
-    let { validations } = yield this.validate({ on: ['instructionalNotes'] });
-    if (validations.get('isInvalid')) {
-      return false;
-    }
-    this.send('removeErrorDisplayFor', 'instructionalNotes');
-    this.session.set('instructionalNotes', this.instructionalNotes);
+    this.get('session.sessionType').then(sessionType => {
+      this.set('sessionType', sessionType);
+    });
 
-    yield this.session.save();
-    this.set('instructionalNotes', this.session.instructionalNotes);
-  }),
+    this.get('session.postrequisite').then(postRequisite => {
+      this.set('postRequisite', postRequisite);
+    });
 
+    this.get('session.sessionDescription').then(sessionDescription => {
+      if (sessionDescription){
+        this.set('description', sessionDescription.get('description'));
+      }
+    });
+  },
   actions: {
     saveIndependentLearning(value) {
       var session = this.get('session');
@@ -447,5 +424,28 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
       this.set('instructionalNotes', html);
     },
-  }
+  },
+  revertDescriptionChanges: task(function * (){
+    const session = this.get('session');
+    const sessionDescription = yield session.get('sessionDescription');
+    if (sessionDescription) {
+      this.set('description', sessionDescription.get('description'));
+    } else {
+      this.set('description', null);
+    }
+  }),
+
+  saveInstructionalNotes: task(function* () {
+    this.send('addErrorDisplayFor', 'instructionalNotes');
+    let { validations } = yield this.validate({ on: ['instructionalNotes'] });
+    if (validations.get('isInvalid')) {
+      return false;
+    }
+    this.send('removeErrorDisplayFor', 'instructionalNotes');
+    this.session.set('instructionalNotes', this.instructionalNotes);
+
+    yield this.session.save();
+    this.set('instructionalNotes', this.session.instructionalNotes);
+  }),
+
 });

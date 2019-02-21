@@ -10,24 +10,13 @@ import momentFormat from 'ember-moment/computeds/format';
 const { all, map } = RSVP;
 
 export default Component.extend({
-  layout,
-  init() {
-    this._super(...arguments);
-    //do these on setup otherwise tests were failing because
-    //the old filter value hung around
-    this.set('selectedSessionTypes', []);
-    this.set('selectedCourseLevels', []);
-    this.set('selectedCohorts', []);
-    this.set('selectedCourses', []);
-    this.set('selectedTerms', []);
-    this.set('courseLevels', [1, 2, 3, 4, 5]);
-  },
   userEvents: service(),
   schoolEvents: service(),
   currentUser: service(),
   store: service(),
   intl: service(),
   iliosConfig: service(),
+  layout,
   classNames: ['dashboard-calendar'],
   selectedSchool: null,
   selectedDate: null,
@@ -38,6 +27,15 @@ export default Component.extend({
   selectedSessionTypes: null,
   selectedAcademicYear: null,
   selectedTerms: null,
+
+  /**
+   * @property courseLevels
+   * @type {Array}
+   * @public
+   */
+  courseLevels: null,
+
+  calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
   dayTranslation: computed('intl.locale', function(){
     return this.get('intl').t('general.day');
@@ -67,8 +65,6 @@ export default Component.extend({
 
     return 1;
   }),
-  calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
-
   /**
    * @property academicYears
    * @type {Ember.computed}
@@ -104,13 +100,6 @@ export default Component.extend({
 
     return cohortProxies.sortBy('displayTitle').mapBy('cohort');
   }),
-
-  /**
-   * @property courseLevels
-   * @type {Array}
-   * @public
-   */
-  courseLevels: null,
 
   /**
    * @property courses
@@ -469,6 +458,17 @@ export default Component.extend({
     return server + '/ics/' + icsFeedKey;
   }),
 
+  init() {
+    this._super(...arguments);
+    //do these on setup otherwise tests were failing because
+    //the old filter value hung around
+    this.set('selectedSessionTypes', []);
+    this.set('selectedCourseLevels', []);
+    this.set('selectedCohorts', []);
+    this.set('selectedCourses', []);
+    this.set('selectedTerms', []);
+    this.set('courseLevels', [1, 2, 3, 4, 5]);
+  },
   actions: {
     toggleSessionType(sessionType){
       if(this.get('selectedSessionTypes').includes(sessionType)){

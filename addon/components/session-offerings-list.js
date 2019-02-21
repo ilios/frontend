@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -10,14 +10,14 @@ import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 const { oneWay } = computed;
 
 export default Component.extend({
-  layout,
   store: service(),
+  layout,
   classNames: ['session-offerings-list'],
   session: null,
-  offerings: oneWay('session.offerings'),
   editable: true,
   'data-test-session-offerings-list': true,
 
+  offerings: oneWay('session.offerings'),
   /**
    * @property offeringBlocks
    * @type {Ember.computed}

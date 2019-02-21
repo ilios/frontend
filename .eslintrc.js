@@ -4,7 +4,6 @@ module.exports = {
     '@ilios/eslint-config-ember-addon'
   ],
   rules: {
-    'ember/order-in-components': 0,
     'ember/no-side-effects': 0,
     'ember/use-ember-get-and-set': 0,
     'ember/no-jquery': 0,

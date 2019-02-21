@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { filter, map } from 'rsvp';
 import { computed } from '@ember/object';
@@ -9,9 +9,9 @@ import { inject as service } from '@ember/service';
 import layout from '../templates/components/visualizer-course-vocabulary';
 
 export default Component.extend({
-  layout,
   intl: service(),
   router: service(),
+  layout,
   course: null,
   vocabulary: null,
   isIcon: false,

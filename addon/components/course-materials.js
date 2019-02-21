@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
@@ -7,10 +7,6 @@ import SortableTable from 'ilios-common/mixins/sortable-table';
 import layout from '../templates/components/course-materials';
 
 export default Component.extend(SortableTable, {
-  init(){
-    this._super(...arguments);
-    this.set('typesWithUrl', ['file', 'link']);
-  },
   layout,
   course: null,
   sortBy: null,
@@ -124,4 +120,8 @@ export default Component.extend(SortableTable, {
       });
     });
   }),
+  init(){
+    this._super(...arguments);
+    this.set('typesWithUrl', ['file', 'link']);
+  },
 });

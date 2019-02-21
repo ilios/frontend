@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-cohort-list';
 import Component from '@ember/component';
@@ -8,8 +8,8 @@ import { isEmpty } from '@ember/utils';
 const { map } = RSVP;
 
 export default Component.extend({
-  layout,
   intl: service(),
+  layout,
   classNames: ['detail-cohort-list'],
   cohorts: null,
   /**

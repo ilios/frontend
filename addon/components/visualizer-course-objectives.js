@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
@@ -11,8 +11,8 @@ import layout from '../templates/components/visualizer-course-objectives';
 const { map, filter } = RSVP;
 
 export default Component.extend({
-  layout,
   intl: service(),
+  layout,
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],

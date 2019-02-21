@@ -17,6 +17,12 @@ export default CalendarEvent.extend(TooltipContent, {
   event: null,
   timeFormat: 'h:mma',
   classNameBindings: [':event', ':event-pos', ':ilios-calendar-event', ':month-event', 'clickable:clickable'],
+  daysToShowAlert: null,
+
+  isIlm: notEmpty('event.ilmSession'),
+  isOffering: notEmpty('event.offering'),
+  clickable: or('isIlm', 'isOffering'),
+
   style: computed(function() {
     const event = this.get('event');
     if (event == null) {
@@ -29,12 +35,6 @@ export default CalendarEvent.extend(TooltipContent, {
        border-left: 4px solid ${escapeExpression(darkcolor)};`
     );
   }),
-  isIlm: notEmpty('event.ilmSession'),
-  isOffering: notEmpty('event.offering'),
-  clickable: or('isIlm', 'isOffering'),
-
-  daysToShowAlert: null,
-
   recentlyUpdated: computed('event.lastModified', {
     get() {
       const lastModifiedDate = moment(this.get('event.lastModified'));

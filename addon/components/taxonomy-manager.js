@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -11,19 +11,10 @@ import layout from '../templates/components/taxonomy-manager';
 const { sort } = computed;
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
   flashMessages: service(),
-  init() {
-    this._super(...arguments);
-    this.set('termsSorting', [
-      'vocabulary.school.title',
-      'vocabulary.title',
-      //'titleWithParentTitles.content', // @todo does not work, sorting on 'title instead. Revisit [ST 2016/02/19]
-      'title'
-    ]);
-  },
+  layout,
   subject: null,
   classNames: ['taxonomy-manager'],
   tagName: 'section',
@@ -156,6 +147,15 @@ export default Component.extend({
     });
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('termsSorting', [
+      'vocabulary.school.title',
+      'vocabulary.title',
+      //'titleWithParentTitles.content', // @todo does not work, sorting on 'title instead. Revisit [ST 2016/02/19]
+      'title'
+    ]);
+  },
   actions: {
     add(term) {
       this.add(term);

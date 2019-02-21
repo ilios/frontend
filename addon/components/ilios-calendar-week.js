@@ -15,13 +15,6 @@ export default Component.extend({
   weekOf: computed('date', function(){
     return moment(this.get('date')).startOf('week').format('MMMM Do YYYY');
   }),
-  didInsertElement(){
-    run.next(() => {
-      if (!this.isDestroyed && !this.isDestroying && this.element) {
-        this.element.querySelector(".el-calendar .week").scrollTop = 500;
-      }
-    });
-  },
   ilmPreWorkEvents: computed('calendarEvents.[]', function () {
     const calendarEvents = this.calendarEvents || [];
     const preWork =  calendarEvents.reduce((arr, eventObject) => {
@@ -55,6 +48,13 @@ export default Component.extend({
       event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
   }),
+  didInsertElement(){
+    run.next(() => {
+      if (!this.isDestroyed && !this.isDestroying && this.element) {
+        this.element.querySelector(".el-calendar .week").scrollTop = 500;
+      }
+    });
+  },
   actions: {
     changeToDayView(date){
       const changeDate = this.get('changeDate');

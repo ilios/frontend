@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/course-overview';
 import Component from '@ember/component';
@@ -34,15 +34,62 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  layout,
   store: service(),
   currentUser: service(),
   routing: service('-routing'),
   permissionChecker: service(),
   intl: service(),
+  layout,
   editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
+  course: null,
+  externalId: null,
+  startDate: null,
+  level: null,
+  levelOptions: null,
+  classNames: ['course-overview'],
+  tagName: 'section',
+  clerkshipTypeId: null,
+  manageDirectors: false,
+  showDirectorManagerLoader: true,
+  currentRoute: '',
+  selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', async function() {
+    const id = this.get('clerkshipTypeId');
+    const clerkshipTypeOptions = await this.get('clerkshipTypeOptions');
+    if (isEmpty(id)) {
+      return null;
+    }
+
+    return clerkshipTypeOptions.findBy('id', id);
+  }),
+  showRollover: computed('course', 'routing.currentRouteName', async function () {
+    const routing = this.get('routing');
+    if (routing.get('currentRouteName') === 'course.rollover') {
+      return false;
+    }
+
+    const permissionChecker = this.get('permissionChecker');
+    const course = this.get('course');
+    const school = await course.get('school');
+    return permissionChecker.canCreateCourse(school);
+  }),
+
+  clerkshipTypeTitle: computed('selectedClerkshipType', async function () {
+    const selectedClerkshipType = await this.get('selectedClerkshipType');
+    const intl = this.get('intl');
+    if (!selectedClerkshipType) {
+      return intl.t('general.notAClerkship');
+    }
+
+    return selectedClerkshipType.title;
+  }),
+
+  clerkshipTypeOptions: computed(async function () {
+    const store = this.get('store');
+    return store.findAll('course-clerkship-type');
+  }),
+
   init(){
     this._super(...arguments);
 
@@ -72,62 +119,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
     });
   },
-  course: null,
-  externalId: null,
-  startDate: null,
-  level: null,
-  levelOptions: null,
-  classNames: ['course-overview'],
-  tagName: 'section',
-  clerkshipTypeId: null,
-  manageDirectors: false,
-  showDirectorManagerLoader: true,
-  currentRoute: '',
-  selectedClerkshipType: computed('clerkshipTypeId', 'clerkshipTypeOptions.[]', async function() {
-    const id = this.get('clerkshipTypeId');
-    const clerkshipTypeOptions = await this.get('clerkshipTypeOptions');
-    if (isEmpty(id)) {
-      return null;
-    }
-
-    return clerkshipTypeOptions.findBy('id', id);
-  }),
-  directorsToPassToManager: task(function * () {
-    const course = this.get('course');
-
-    let users = yield course.get('directors');
-
-    this.set('showDirectorManagerLoader', false);
-    return users;
-  }).restartable(),
-
-  showRollover: computed('course', 'routing.currentRouteName', async function () {
-    const routing = this.get('routing');
-    if (routing.get('currentRouteName') === 'course.rollover') {
-      return false;
-    }
-
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('course');
-    const school = await course.get('school');
-    return permissionChecker.canCreateCourse(school);
-  }),
-
-  clerkshipTypeTitle: computed('selectedClerkshipType', async function () {
-    const selectedClerkshipType = await this.get('selectedClerkshipType');
-    const intl = this.get('intl');
-    if (!selectedClerkshipType) {
-      return intl.t('general.notAClerkship');
-    }
-
-    return selectedClerkshipType.title;
-  }),
-
-  clerkshipTypeOptions: computed(async function () {
-    const store = this.get('store');
-    return store.findAll('course-clerkship-type');
-  }),
-
   actions: {
     saveDirectors(newDirectors){
       const course = this.get('course');
@@ -243,5 +234,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertLevelChanges(){
       this.set('level', this.get('course').get('level'));
     },
-  }
+  },
+  directorsToPassToManager: task(function * () {
+    const course = this.get('course');
+
+    let users = yield course.get('directors');
+
+    this.set('showDirectorManagerLoader', false);
+    return users;
+  }).restartable(),
+
 });

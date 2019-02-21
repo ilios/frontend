@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import layout from '../templates/components/course-header';
 import { computed } from '@ember/object';
@@ -20,19 +20,19 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('courseTitle', this.get('course.title'));
-  },
   layout,
   classNames: ['course-header'],
   course: null,
   courseTitle: null,
-  publishTarget: alias('course'),
-
   editable: false,
   'data-test-course-header': true,
 
+  publishTarget: alias('course'),
+
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('courseTitle', this.get('course.title'));
+  },
   actions: {
     changeTitle() {
       const course = this.get('course');

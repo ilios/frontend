@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import { task } from 'ember-concurrency';
@@ -17,11 +17,6 @@ export default Component.extend(SortableByPosition, {
 
   },
 
-  loadAttr: task(function * (subject) {
-    let learningMaterials = yield subject.get('learningMaterials');
-    this.set('sortableObjectList', learningMaterials.toArray().sort(this.get('positionSortingCallback')));
-  }),
-
   actions: {
     cancel(){
       this.cancel();
@@ -29,5 +24,10 @@ export default Component.extend(SortableByPosition, {
     save() {
       this.save(this.get('sortableObjectList'));
     }
-  }
+  },
+  loadAttr: task(function * (subject) {
+    let learningMaterials = yield subject.get('learningMaterials');
+    this.set('sortableObjectList', learningMaterials.toArray().sort(this.get('positionSortingCallback')));
+  }),
+
 });

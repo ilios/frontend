@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -6,13 +6,8 @@ import { all, Promise as RSVPPromise } from 'rsvp';
 import layout from '../templates/components/detail-instructors';
 
 export default Component.extend({
-  layout,
   currentUser: service(),
-  init() {
-    this._super(...arguments);
-    this.set('instructorGroupBuffer', []);
-    this.set('instructorBuffer', []);
-  },
+  layout,
   tagName: 'section',
   classNames: ['detail-instructors'],
   ilmSession: null,
@@ -38,6 +33,11 @@ export default Component.extend({
     });
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('instructorGroupBuffer', []);
+    this.set('instructorBuffer', []);
+  },
   actions: {
     manage() {
       let promises = [];

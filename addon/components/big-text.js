@@ -16,9 +16,9 @@ export default Component.extend({
   expandIcon: 'info-circle',
   text: '',
   ellipsis: 'ellipsis-h',
+  renderHtml: true,
   lengths: collect('length', 'slippage'),
   totalLength: sum('lengths'),
-  renderHtml: true,
   showIcons: computed('displayText', 'text', 'renderHtml', function(){
     if(this.get('renderHtml')){
       return this.get('displayText').toString() !== this.get('text');

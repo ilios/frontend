@@ -1,11 +1,11 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import layout from '../templates/components/new-offering';
 
 export default Component.extend({
-  layout,
   store: service(),
+  layout,
   classNames: ['new-offering'],
   session: null,
   courseStartDate: null,

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
@@ -19,14 +19,9 @@ const ProxiedDescriptors = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
-  init(){
-    this._super(...arguments);
-    this.set('searchResults', []);
-    this.set('sortTerms', ['name']);
-  },
+  layout,
   'data-test-mesh-manager': true,
   classNames: ['mesh-manager'],
   terms: null,
@@ -40,6 +35,8 @@ export default Component.extend({
   searching: false,
   searchReturned: false,
   sortTerms: null,
+  tagName: 'section',
+
   sortedTerms: computed('terms.@each.name', function(){
     var terms = this.get('terms');
     if(!terms || terms.length === 0){
@@ -47,31 +44,11 @@ export default Component.extend({
     }
     return terms.sortBy('name');
   }),
-  tagName: 'section',
-
-  searchMore: task(function * () {
-    var terms = this.get('terms');
-    var query = this.get('query');
-    const descriptors = yield this.get('store').query('mesh-descriptor', {
-      q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage')
-    });
-    let results = descriptors.map(function(descriptor){
-      return ProxiedDescriptors.create({
-        content: descriptor,
-        terms: terms
-      });
-    });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
-      results.pop();
-    }
-    this.get('searchResults').pushObjects(results);
-  }).drop(),
-
-
+  init(){
+    this._super(...arguments);
+    this.set('searchResults', []);
+    this.set('sortTerms', ['name']);
+  },
   actions: {
     search(query) {
       this.set('searchReturned', false);
@@ -119,5 +96,28 @@ export default Component.extend({
         this.remove(term);
       }
     }
-  }
+  },
+  searchMore: task(function * () {
+    var terms = this.get('terms');
+    var query = this.get('query');
+    const descriptors = yield this.get('store').query('mesh-descriptor', {
+      q: query,
+      limit: this.get('searchResultsPerPage') + 1,
+      offset: this.get('searchPage') * this.get('searchResultsPerPage')
+    });
+    let results = descriptors.map(function(descriptor){
+      return ProxiedDescriptors.create({
+        content: descriptor,
+        terms: terms
+      });
+    });
+    this.set('searchPage', this.get('searchPage') + 1);
+    this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
+    if (this.get('hasMoreSearchResults')) {
+      results.pop();
+    }
+    this.get('searchResults').pushObjects(results);
+  }).drop(),
+
+
 });

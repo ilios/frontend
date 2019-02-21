@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -9,13 +9,8 @@ import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import layout from '../templates/components/print-course';
 
 export default Component.extend(SortableByPosition, {
-  layout,
   store: service(),
-  init(){
-    this._super(...arguments);
-    this.set('sortTitle', ['title']);
-    this.set('sortDirectorsBy', ['lastName', 'firstName']);
-  },
+  layout,
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',
@@ -41,10 +36,6 @@ export default Component.extend(SortableByPosition, {
       }
 
       let SessionProxy = ObjectProxy.extend({
-        init() {
-          this._super(...arguments);
-          this.set('sortTitle', ['title']);
-        },
         sortTitle: null,
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
@@ -58,7 +49,11 @@ export default Component.extend(SortableByPosition, {
               resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
             });
           });
-        })
+        }),
+        init() {
+          this._super(...arguments);
+          this.set('sortTitle', ['title']);
+        },
       });
       course.get('sessions').then(sessions => {
         if (!this.get('includeUnpublishedSessions')) {
@@ -86,6 +81,11 @@ export default Component.extend(SortableByPosition, {
         resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
       });
     });
-  })
+  }),
 
+  init(){
+    this._super(...arguments);
+    this.set('sortTitle', ['title']);
+    this.set('sortDirectorsBy', ['lastName', 'firstName']);
+  },
 });

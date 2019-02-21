@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
@@ -9,18 +9,18 @@ const { reads } = computed;
 const { map } = RSVP;
 
 export default Component.extend({
-  layout,
   commonAjax: service(),
   iliosConfig: service(),
+  layout,
   classNames: ['offering-calendar'],
 
-  namespace: reads('iliosConfig.apiNameSpace'),
   session: null,
   learnerGroups: null,
   startDate: null,
   endDate: null,
   showLearnerGroupEvents: true,
   showSessionEvents: true,
+  namespace: reads('iliosConfig.apiNameSpace'),
   learnerGroupEvents: computed('learnerGroups.[]', async function () {
     const learnerGroups = this.get('learnerGroups');
     if (!learnerGroups) {

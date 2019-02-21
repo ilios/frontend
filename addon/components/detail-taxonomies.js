@@ -1,14 +1,14 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-taxonomies';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
   flashMessages: service(),
+  layout,
   subject: null,
   bufferedTerms: null,
   tagName: 'section',
@@ -18,16 +18,16 @@ export default Component.extend({
   editable: true,
   'data-test-detail-taxonomies': true,
 
-  init(){
-    this._super(...arguments);
-    this.set('bufferedTerms', []);
-  },
-
   showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
     const isManaging = this.get('isManaging');
     const terms = this.get('subject.terms');
     return !isManaging && terms.get('length');
   }),
+
+  init(){
+    this._super(...arguments);
+    this.set('bufferedTerms', []);
+  },
 
   actions: {
     manage() {

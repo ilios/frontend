@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-cohort-manager';
 
@@ -9,17 +9,17 @@ import { computed } from '@ember/object';
 import { translationMacro as t } from "ember-intl";
 
 export default Component.extend({
-  layout,
   intl: service(),
   store: service(),
   permissionChecker: service(),
+  layout,
   tagName: 'section',
   classNames: ['detail-cohort-manager'],
-  placeholder: t('general.filterPlaceholder'),
   filter: '',
   school: null,
   selectedCohorts: null,
 
+  placeholder: t('general.filterPlaceholder'),
   allCohorts: computed('school', async function () {
     const store = this.get('store');
     const permissionChecker = this.get('permissionChecker');

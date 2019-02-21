@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -6,13 +6,9 @@ import { task } from 'ember-concurrency';
 import layout from '../templates/components/learningmaterial-search';
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
-  init(){
-    this._super(...arguments);
-    this.set('searchResults', []);
-  },
+  layout,
   classNames: ['learningmaterial-search'],
   currentMaterials: null,
   query: '',
@@ -24,29 +20,10 @@ export default Component.extend({
   searching: false,
   searchReturned: false,
 
-  searchMore: task(function * () {
-    const query = this.get('query');
-    const results  = yield this.get('store').query('learningMaterial', {
-      q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage'),
-      'order_by[title]': 'ASC',
-    });
-    let lms = results.map(lm => {
-      return lm;
-    });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
-      lms.pop();
-    }
-    this.get('searchResults').pushObjects(lms);
-  }).drop(),
-
-  addLearningMaterial: task(function * (lm) {
-    yield this.add(lm);
-  }).enqueue(),
-
+  init(){
+    this._super(...arguments);
+    this.set('searchResults', []);
+  },
   actions: {
     search(query){
       if ($.trim(query) === '') {
@@ -86,5 +63,28 @@ export default Component.extend({
       this.set('hasMoreSearchResults', false);
       this.set('query', '');
     },
-  }
+  },
+  searchMore: task(function * () {
+    const query = this.get('query');
+    const results  = yield this.get('store').query('learningMaterial', {
+      q: query,
+      limit: this.get('searchResultsPerPage') + 1,
+      offset: this.get('searchPage') * this.get('searchResultsPerPage'),
+      'order_by[title]': 'ASC',
+    });
+    let lms = results.map(lm => {
+      return lm;
+    });
+    this.set('searchPage', this.get('searchPage') + 1);
+    this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
+    if (this.get('hasMoreSearchResults')) {
+      lms.pop();
+    }
+    this.get('searchResults').pushObjects(lms);
+  }).drop(),
+
+  addLearningMaterial: task(function * (lm) {
+    yield this.add(lm);
+  }).enqueue(),
+
 });

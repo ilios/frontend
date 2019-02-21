@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { hash, all, filter } from 'rsvp';
@@ -19,15 +19,79 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  layout,
   store: service(),
   flashMessages: service(),
   permissionChecker: service(),
+  layout,
   classNames: ['session-copy'],
   selectedYear: null,
   session: null,
   selectedCourseId: null,
 
+  years: computed(async function () {
+    const now = moment();
+    const thisYear = now.year();
+    const store = this.get('store');
+
+    let years = await store.findAll('academicYear');
+    let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
+
+    return academicYears;
+  }),
+
+  bestSelectedYear: computed('years.[]', 'selectedYear', async function () {
+    const selectedYear = this.get('selectedYear');
+    if (selectedYear) {
+      return selectedYear;
+    }
+
+    const years = await this.get('years');
+    return years.get('firstObject');
+  }),
+
+  courses: computed('selectedYear', 'session.course.school', async function(){
+    const store = this.get('store');
+    const permissionChecker = this.get('permissionChecker');
+    const session = this.get('session');
+    if (!session) {
+      return [];
+    }
+    const selectedYear = await this.get('bestSelectedYear');
+    const course = await session.get('course');
+    const school = await course.get('school');
+    const courses = await store.query('course', {
+      filters: {
+        year: selectedYear,
+        school: school.get('id')
+      }
+    });
+
+    const filteredCourses = await filter(courses.toArray(), async co => {
+      return permissionChecker.canCreateSession(co);
+    });
+
+    return filteredCourses.sortBy('title');
+  }),
+
+  bestSelectedCourse: computed('courses.[]', 'selectedCourseId', async function () {
+    const courses = await this.get('courses');
+    const selectedCourseId = this.get('selectedCourseId');
+    if (selectedCourseId) {
+      const course = courses.findBy('id', selectedCourseId);
+      if (course) {
+        return course;
+      }
+    }
+
+    return courses.get('firstObject');
+  }),
+
+  actions: {
+    changeSelectedYear(newYear){
+      this.set('selectedCourseId', null);
+      this.set('selectedYear', parseInt(newYear, 10));
+    },
+  },
   save: task(function * (){
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['selectedCourse', 'selectedYear']);
@@ -111,68 +175,4 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return this.get('visit')(session);
   }).drop(),
 
-  years: computed(async function () {
-    const now = moment();
-    const thisYear = now.year();
-    const store = this.get('store');
-
-    let years = await store.findAll('academicYear');
-    let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
-
-    return academicYears;
-  }),
-
-  bestSelectedYear: computed('years.[]', 'selectedYear', async function () {
-    const selectedYear = this.get('selectedYear');
-    if (selectedYear) {
-      return selectedYear;
-    }
-
-    const years = await this.get('years');
-    return years.get('firstObject');
-  }),
-
-  courses: computed('selectedYear', 'session.course.school', async function(){
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
-    const session = this.get('session');
-    if (!session) {
-      return [];
-    }
-    const selectedYear = await this.get('bestSelectedYear');
-    const course = await session.get('course');
-    const school = await course.get('school');
-    const courses = await store.query('course', {
-      filters: {
-        year: selectedYear,
-        school: school.get('id')
-      }
-    });
-
-    const filteredCourses = await filter(courses.toArray(), async co => {
-      return permissionChecker.canCreateSession(co);
-    });
-
-    return filteredCourses.sortBy('title');
-  }),
-
-  bestSelectedCourse: computed('courses.[]', 'selectedCourseId', async function () {
-    const courses = await this.get('courses');
-    const selectedCourseId = this.get('selectedCourseId');
-    if (selectedCourseId) {
-      const course = courses.findBy('id', selectedCourseId);
-      if (course) {
-        return course;
-      }
-    }
-
-    return courses.get('firstObject');
-  }),
-
-  actions: {
-    changeSelectedYear(newYear){
-      this.set('selectedCourseId', null);
-      this.set('selectedYear', parseInt(newYear, 10));
-    },
-  }
 });

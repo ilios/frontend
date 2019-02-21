@@ -8,9 +8,9 @@ import { inject as service } from '@ember/service';
 import layout from '../templates/components/visualizer-course-vocabularies';
 
 export default Component.extend({
-  layout,
   router: service(),
   intl: service(),
+  layout,
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabularies'],

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-objectives';
 import Component from '@ember/component';
@@ -10,37 +10,32 @@ import scrollTo from 'ilios-common/utils/scroll-to';
 const { or, notEmpty, alias } = computed;
 
 export default Component.extend({
-  layout,
   store: service(),
   intl: service(),
   flashMessages: service(),
-  init() {
-    this._super(...arguments);
-    this.set('initialStateForManageParentsObjective', []);
-    this.set('initialStateForManageMeshObjective', []);
-  },
+  layout,
   subject: null,
-  objectives:  alias('subject.objectives'),
   tagName: 'section',
   classNameBindings: [':detail-objectives', 'showCollapsible:collapsible'],
   isCourse: false,
   isSession: false,
   isProgramYear: false,
   editable: true,
-  isManaging: or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
-  isManagingParents: notEmpty('mangeParentsObjective'),
   mangeParentsObjective: null,
   initialStateForManageParentsObjective: null,
-  isManagingDescriptors: notEmpty('manageDescriptorsObjective'),
   mangeMeshObjective: null,
   initialStateForManageMeshObjective: null,
-  isManagingCompetency: notEmpty('manageCompetencyObjective'),
   manageCompetencyObjective: null,
   initialStateForManageCompetencyObjective: null,
   newObjectiveEditorOn: false,
   newObjectiveTitle: null,
   'data-test-detail-objectives': true,
 
+  objectives:  alias('subject.objectives'),
+  isManaging: or('isManagingParents', 'isManagingDescriptors', 'isManagingCompetency'),
+  isManagingParents: notEmpty('mangeParentsObjective'),
+  isManagingDescriptors: notEmpty('manageDescriptorsObjective'),
+  isManagingCompetency: notEmpty('manageCompetencyObjective'),
   showCollapsible: computed('isManaging', 'objectives', function(){
     const isManaging = this.get('isManaging');
     const objectives = this.get('objectives');
@@ -56,6 +51,11 @@ export default Component.extend({
     }
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('initialStateForManageParentsObjective', []);
+    this.set('initialStateForManageMeshObjective', []);
+  },
   actions: {
     manageParents(objective) {
       objective.get('parents').then((parents) => {

@@ -6,10 +6,10 @@ export default Component.extend({
   layout,
   tagName: 'li',
   event: null,
+  isEventSelectable: true,
   isIlm: notEmpty('event.ilmSession'),
   isOffering: notEmpty('event.offering'),
   clickable: or('isIlm', 'isOffering'),
-  isEventSelectable: true,
   actions: {
     selectEvent(selectedEvent) {
       const clickable = this.get('clickable');

@@ -1,4 +1,4 @@
-/* eslint ember/order-in-components: 0 */
+
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -69,29 +69,8 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  layout,
   currentUser: service(),
-  init(){
-    this._super(...arguments);
-    this.set('recurringDayOptions', [
-      {day: '0', t: 'general.sunday'},
-      {day: '1', t: 'general.monday'},
-      {day: '2', t: 'general.tuesday'},
-      {day: '3', t: 'general.wednesday'},
-      {day: '4', t: 'general.thursday'},
-      {day: '5', t: 'general.friday'},
-      {day: '6', t: 'general.saturday'},
-    ]);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const offering = this.get('offering');
-    if (isPresent(offering)) {
-      this.get('loadAttrsFromOffering').perform(offering);
-    } else {
-      this.loadDefaultAttrs();
-    }
-  },
+  layout,
   classNames: ['offering-form'],
   startDate: null,
   endDate: null,
@@ -197,6 +176,117 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     return diff;
   }),
+  lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
+    const learnerGroups = this.get('learnerGroups');
+    const ids = learnerGroups.mapBy('id');
+    return new RSVPPromise(resolve => {
+      filter(learnerGroups, group => {
+        return new RSVPPromise(resolve => {
+          group.get('allDescendants').then(children => {
+            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
+            resolve(selectedChildren.length === 0);
+          });
+        });
+      }).then(lowestLeaves => resolve(lowestLeaves));
+    });
+  }),
+  init(){
+    this._super(...arguments);
+    this.set('recurringDayOptions', [
+      {day: '0', t: 'general.sunday'},
+      {day: '1', t: 'general.monday'},
+      {day: '2', t: 'general.tuesday'},
+      {day: '3', t: 'general.wednesday'},
+      {day: '4', t: 'general.thursday'},
+      {day: '5', t: 'general.friday'},
+      {day: '6', t: 'general.saturday'},
+    ]);
+  },
+  didReceiveAttrs(){
+    this._super(...arguments);
+    const offering = this.get('offering');
+    if (isPresent(offering)) {
+      this.get('loadAttrsFromOffering').perform(offering);
+    } else {
+      this.loadDefaultAttrs();
+    }
+  },
+  actions: {
+    addLearnerGroup(learnerGroup) {
+      let learnerGroups = this.get('learnerGroups').toArray();
+      learnerGroups.addObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.addObjects(descendants);
+      });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
+    },
+    removeLearnerGroup(learnerGroup) {
+      let learnerGroups = this.get('learnerGroups').toArray();
+      learnerGroups.removeObject(learnerGroup);
+      learnerGroup.get('allDescendants').then(function(descendants){
+        learnerGroups.removeObjects(descendants);
+      });
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('learnerGroups', learnerGroups);
+    },
+    toggleRecurringDay(day){
+      let recurringDays = this.get('recurringDays');
+      if (recurringDays.includes(day)) {
+        recurringDays.removeObject(day);
+      } else {
+        recurringDays.pushObject(day);
+      }
+    },
+    addInstructor(user){
+      let instructors = this.get('instructors').toArray();
+      instructors.addObject(user);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructors', instructors);
+    },
+    addInstructorGroup(group){
+      let instructorGroups = this.get('instructorGroups').toArray();
+      instructorGroups.addObject(group);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructorGroups', instructorGroups);
+    },
+    removeInstructor(user){
+      let instructors = this.get('instructors').toArray();
+      instructors.removeObject(user);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructors', instructors);
+    },
+    removeInstructorGroup(group){
+      let instructorGroups = this.get('instructorGroups').toArray();
+      instructorGroups.removeObject(group);
+      //re-create the object so we trigger downstream didReceiveAttrs
+      this.set('instructorGroups', instructorGroups);
+    },
+    updateStartTime(value, type) {
+      let startDate = moment(this.get('startDate'));
+
+      if (type === 'hour') {
+        startDate.hour(value);
+      } else {
+        startDate.minute(value);
+      }
+      const minutes = this.get('durationMinutes');
+      const hours = this.get('durationHours');
+      let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
+
+      this.set('startDate', startDate.toDate());
+      this.set('endDate', endDate.toDate());
+    },
+    updateStartDate(date) {
+      const minutes = this.get('durationMinutes');
+      const hours = this.get('durationHours');
+      const currentStartDate = moment(this.get('startDate'));
+      let startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
+      let endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
+
+      this.setProperties({startDate, endDate});
+    },
+  },
   makeRecurringOfferingObjects: task(function * () {
     const {
       startDate,
@@ -350,20 +440,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     yield this.get('saveOffering').perform();
   }),
-  lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
-    const learnerGroups = this.get('learnerGroups');
-    const ids = learnerGroups.mapBy('id');
-    return new RSVPPromise(resolve => {
-      filter(learnerGroups, group => {
-        return new RSVPPromise(resolve => {
-          group.get('allDescendants').then(children => {
-            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
-            resolve(selectedChildren.length === 0);
-          });
-        });
-      }).then(lowestLeaves => resolve(lowestLeaves));
-    });
-  }),
   updateDurationMinutes: task(function * (minutes) {
     let {validations} = yield this.validate();
     this.send('addErrorDisplayFor', 'durationMinutes');
@@ -388,80 +464,4 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
     this.set('endDate', endDate);
   }).restartable(),
-  actions: {
-    addLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.addObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.addObjects(descendants);
-      });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
-    },
-    removeLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.removeObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.removeObjects(descendants);
-      });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
-    },
-    toggleRecurringDay(day){
-      let recurringDays = this.get('recurringDays');
-      if (recurringDays.includes(day)) {
-        recurringDays.removeObject(day);
-      } else {
-        recurringDays.pushObject(day);
-      }
-    },
-    addInstructor(user){
-      let instructors = this.get('instructors').toArray();
-      instructors.addObject(user);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructors', instructors);
-    },
-    addInstructorGroup(group){
-      let instructorGroups = this.get('instructorGroups').toArray();
-      instructorGroups.addObject(group);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructorGroups', instructorGroups);
-    },
-    removeInstructor(user){
-      let instructors = this.get('instructors').toArray();
-      instructors.removeObject(user);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructors', instructors);
-    },
-    removeInstructorGroup(group){
-      let instructorGroups = this.get('instructorGroups').toArray();
-      instructorGroups.removeObject(group);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructorGroups', instructorGroups);
-    },
-    updateStartTime(value, type) {
-      let startDate = moment(this.get('startDate'));
-
-      if (type === 'hour') {
-        startDate.hour(value);
-      } else {
-        startDate.minute(value);
-      }
-      const minutes = this.get('durationMinutes');
-      const hours = this.get('durationHours');
-      let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
-
-      this.set('startDate', startDate.toDate());
-      this.set('endDate', endDate.toDate());
-    },
-    updateStartDate(date) {
-      const minutes = this.get('durationMinutes');
-      const hours = this.get('durationHours');
-      const currentStartDate = moment(this.get('startDate'));
-      let startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
-      let endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
-
-      this.setProperties({startDate, endDate});
-    },
-  }
 });
