@@ -6,5 +6,7 @@ module('Unit | Utility | escape Regular Expressions special characters', functio
     assert.equal(escapeRegExp('\\^$*+?.()|{}[]'), '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]');
     assert.equal(escapeRegExp('abc'), 'abc');
     assert.equal(escapeRegExp('MoneyBag$$$ +1'), 'MoneyBag\\$\\$\\$ \\+1');
+    assert.equal(escapeRegExp(null), null);
+    assert.equal(escapeRegExp(''), '');
   });
 });
