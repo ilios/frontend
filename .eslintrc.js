@@ -6,5 +6,11 @@ module.exports = {
   rules: {
     'ember/order-in-components': 0,
     'ember/no-side-effects': 0,
+    'ember/use-ember-get-and-set': 0,
+    'ember/no-jquery': 0,
+    'ember/use-brace-expansion': 0,
+    'ember/no-new-mixins': 0,
+    'ember/no-capital-letters-in-routes': 0,
+    'ember/no-unnecessary-route-path-option': 0,
   }
 };

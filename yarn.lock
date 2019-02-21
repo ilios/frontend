@@ -872,26 +872,26 @@
   dependencies:
     "@glimmer/util" "^0.38.1"
 
-"@ilios/eslint-config-ember-addon@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ilios/eslint-config-ember-addon/-/eslint-config-ember-addon-1.1.0.tgz#c2fe5053d837d449fbd8f986ac7ad79c51d239cf"
-  integrity sha512-XPHpfyJjRkG+3+4JiAXi2C9hRPRmAIrDnzdpOiJdx7w+3Pgwa50aeLsVAT41mtpH3v1TeF4m3Vnr1UECHDm4yQ==
+"@ilios/eslint-config-ember-addon@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@ilios/eslint-config-ember-addon/-/eslint-config-ember-addon-1.3.0.tgz#434da971842b64eccb44c96c9322d441fffc33c2"
+  integrity sha512-0K7WzpHpTP3ZqK1rcjW2CSn68d8Ab0aKxlDHHEhdO/pXp7RfjY+n7YQbBelQ96wo5ruYchz7fPoeRkTaALFGMA==
   dependencies:
-    "@ilios/eslint-config-ember" "^1.0.0"
+    "@ilios/eslint-config-ember" "1.3.0"
     eslint-plugin-node "^8.0.1"
 
-"@ilios/eslint-config-ember@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ilios/eslint-config-ember/-/eslint-config-ember-1.1.0.tgz#01f5e5a5a0518b3b415cf41ec4ef5e2ff766a9fe"
-  integrity sha512-F1JjgD3VYsUU4VRRUBCL1IvKY3dP1Mp8ZWk/TAf8CYgf6wiEpr1j80dqVRj6NjGSCDqZsrF5C267VQp3W4ZH/w==
+"@ilios/eslint-config-ember@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@ilios/eslint-config-ember/-/eslint-config-ember-1.3.0.tgz#b66aa44180bd0d87f8956476b09873f367966f79"
+  integrity sha512-gOihutoFL208BHl114MLu8RXTsw2sr/GuA6w6heCVr8L9UHaktfaXR6k3J/twSkWNV51XocbpbKIosY44F+PLA==
   dependencies:
-    "@ilios/eslint-config" "^1.0.0"
+    "@ilios/eslint-config" "1.3.0"
     eslint-plugin-ember "^6.2.0"
 
-"@ilios/eslint-config@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ilios/eslint-config/-/eslint-config-1.1.0.tgz#cfea028ba2a344cd4fa3f7bd82aef5fdb2bccf06"
-  integrity sha512-tJku/XMCgnCpdR/cIpwkqqJSoGeVHRPnS7n5miUFCNNfq9/u6w+WzOBM0GlqWW54hvQm/cum08u0IUebltpBYw==
+"@ilios/eslint-config@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@ilios/eslint-config/-/eslint-config-1.3.0.tgz#88cd0b88e1b48ba190bb6acbac61b21e950a935b"
+  integrity sha512-RNhfkOhV5bpkrHz1BACJxPT/nmHBGIxkNyepdKHfsKrH37qA7QhevBr88fmaeLBOjtQPpFskDGGytVzFI03oVA==
   dependencies:
     babel-eslint "^10.0.1"
 
