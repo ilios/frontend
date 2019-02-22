@@ -82,7 +82,22 @@ export default Component.extend({
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
-    return preWork.filter(ev => ev.ilmSession);
+    // grab ILMs only, and group them by session.
+    const groups = {};
+    preWork.filter(ev => ev.ilmSession).forEach(ilm => {
+      if (! groups.hasOwnProperty(ilm.session)) {
+        groups[ilm.session] = [];
+      }
+      groups[ilm.session].pushObject(ilm);
+    });
+
+    // return an array of arrays of ILMs.
+    const sessions = Object.getOwnPropertyNames(groups);
+    const rhett = [];
+    sessions.forEach(session => {
+      rhett.push(groups[session]);
+    });
+    return rhett;
   }),
 
   nonIlmPreWorkEvents: computed('publishedWeekEvents.[]', async function () {

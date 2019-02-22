@@ -305,6 +305,7 @@ general:
   weeks: Weeks
   when: When
   whitecoatsSlashSpecialAttire: "Whitecoats / special attire"
+  withXmoreOfferings: "with {count, plural, =1 {one more offering} other {# more offerings}}"
   year: Year
   yes: Yes
 errors:
