@@ -83,6 +83,8 @@
                     class="remove clickable"
                     click=(action "confirmRemoval" vocabulary)
                   }}
+                {{else}}
+                  {{fa-icon "trash" class="disabled"}}
                 {{/if}}
               </td>
             </tr>
