@@ -10,7 +10,8 @@ addons:
   chrome: stable
 
 cache:
-  yarn: true
+  directories:
+    - $HOME/.npm
 
 env:
   global:
@@ -29,16 +30,13 @@ jobs:
     - stage: "Tests"
       name: "Tests"
       script:
-        - yarn lint:hbs
-        - yarn lint:js
-        - yarn lint:style
-        - yarn test
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
+        - npm run lint:hbs
+        - npm run lint:js
+        - npm run lint:style
+        - npm test
 
-install:
-  - yarn install --no-lockfile --non-interactive
+before_install:
+  - npm config set spin false
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
