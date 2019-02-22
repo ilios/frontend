@@ -5,7 +5,6 @@ import Controller from '@ember/controller';
 import { resolve } from 'rsvp';
 import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
 
 const { gt } = computed;
 
@@ -48,15 +47,14 @@ export default Controller.extend({
   filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function(){
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter ;
-    const cleanTitle = escapeRegExp(title);
-    let exp = new RegExp(cleanTitle, 'gi');
     const instructorGroups = await this.instructorGroups;
     let filteredInstructorGroups;
     if(isEmpty(title)){
       filteredInstructorGroups = instructorGroups;
     } else {
       filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
-        return isPresent(instructorGroup.get('title')) && instructorGroup.get('title').match(exp);
+        return isPresent(instructorGroup.get('title'))
+          && instructorGroup.get('title').toLowerCase().includes(title.toLowerCase());
       });
     }
     return filteredInstructorGroups.sortBy('title');

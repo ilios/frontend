@@ -4,7 +4,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 
 export default Component.extend({
   currentUser: service(),
@@ -30,21 +29,17 @@ export default Component.extend({
   filter: '',
   filteredUsers: computed('filter', 'users.[]', function() {
     let users = this.users;
-    const filter = escapeRegExp(this.filter);
+    const filter = this.filter.toLowerCase();
 
     if (isEmpty(filter)){
       return users;
     }
-    const exp = new RegExp(filter, 'gi');
 
-    let filteredUsers = users.filter((user) => {
-      return user.get('firstName').match(exp) ||
-        user.get('lastName').match(exp) ||
-        user.get('email').match(exp);
+    return users.filter((user) => {
+      return user.get('firstName').toLowerCase().includes(filter) ||
+        user.get('lastName').toLowerCase().includes(filter) ||
+        user.get('email').toLowerCase().includes(filter);
     });
-
-    return filteredUsers;
-
   }),
 
   addSingleUser: task(function * (user) {

@@ -6,7 +6,6 @@ import Controller from '@ember/controller';
 import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
 
 const { gt, sort } = computed;
 
@@ -77,17 +76,17 @@ export default Controller.extend({
     async function(){
       const titleFilter = this.titleFilter;
       const title = isBlank(titleFilter) ? '' : titleFilter ;
-      const cleanTitle = escapeRegExp(title);
       let filterMyCourses = this.userCoursesOnly;
-      let exp = new RegExp(cleanTitle, 'gi');
       const courses = await this.courses;
       let filteredCourses;
-      if (isEmpty(cleanTitle)) {
+      if (isEmpty(title)) {
         filteredCourses = courses.sortBy('title');
       } else {
         filteredCourses = courses.filter(course => {
-          return (isPresent(course.get('title')) && course.get('title').match(exp)) ||
-            (isPresent(course.get('externalId')) && course.get('externalId').match(exp));
+          return (isPresent(course.get('title')) && course.get('title').toLowerCase().includes(title.toLowerCase())) ||
+            (isPresent(course.get('externalId'))
+              && course.get('externalId').toLowerCase().includes(title.toLowerCase())
+            );
         }).sortBy('title');
       }
       if (filterMyCourses) {

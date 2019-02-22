@@ -3,7 +3,6 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { isBlank, isEmpty, isPresent } from '@ember/utils';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 const { gt } = computed;
 const { Promise } = RSVP;
 
@@ -37,11 +36,10 @@ export default Controller.extend({
           enabled: true
         }
       }).then(students => {
-        const filter = escapeRegExp(this.filter);
+        const filter = this.filter;
         if (!isBlank(filter)) {
-          const exp = new RegExp(filter, 'gi');
           students = students.filter(user => {
-            return (isEmpty(user.get('fullName')) || user.get('fullName').match(exp));
+            return (isEmpty(user.get('fullName')) || user.get('fullName').toLowerCase().includes(filter.toLowerCase()));
           });
         }
         students = students.sortBy('lastName', 'firstName');
