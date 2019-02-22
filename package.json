@@ -56,7 +56,7 @@
     "ember-web-app": "^2.2.0",
     "eslint": "^5.14.1",
     "eslint-plugin-ember": "^6.1.0",
-    "ilios-common": "22.2.1",
+    "ilios-common": "23.1.0",
     "loader.js": "^4.7.0",
     "normalize.css": "8.0.1",
     "qunit-dom": "^0.8.0",
