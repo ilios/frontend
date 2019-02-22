@@ -5,7 +5,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+
 const { sort, gt } = computed;
 const { all, Promise } = RSVP;
 
@@ -55,13 +55,13 @@ export default Controller.extend({
     const limit = this.limit;
     const offset = this.offset;
     const end = limit + offset;
-    const exp = new RegExp(escapeRegExp(this.filter), 'gi');
 
     return new Promise(resolve => {
       this.allUpdates.then(allUpdates => {
         let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
           return !this.deletedUpdates.includes(update) &&
-            (isEmpty(update.get('user.fullName')) || update.get('user.fullName').match(exp));
+            (isEmpty(update.get('user.fullName'))
+              || update.get('user.fullName').toLowerCase().includes(this.filter.toLowerCase()));
         });
         resolve(sortedUpdates);
       });

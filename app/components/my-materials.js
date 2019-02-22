@@ -3,7 +3,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import SortableTable from 'ilios-common/mixins/sortable-table';
-import escapeRegExp from '../utils/escape-reg-exp';
 
 export default Component.extend(SortableTable, {
   classNames: ['my-materials'],
@@ -17,15 +16,13 @@ export default Component.extend(SortableTable, {
       materials = materials.filterBy('course', courseIdFilter);
     }
     if (isPresent(filter)) {
-      let val = escapeRegExp(filter);
-      const exp = new RegExp(val, 'gi');
 
       materials = materials.filter(material => {
         let searchString = material.title + ' ' + material.courseTitle + ' ' + material.sessionTitle + ' ';
         if (isPresent(material.instructors)) {
           searchString += material.instructors.join(' ');
         }
-        return searchString.match(exp);
+        return searchString.toLowerCase().includes(filter.toLowerCase());
       });
     }
 

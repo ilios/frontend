@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import Controller from '@ember/controller';
 import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
 export default Controller.extend({
@@ -89,15 +88,14 @@ export default Controller.extend({
   filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function(){
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter;
-    const cleanTitle = escapeRegExp(title);
     const learnerGroups = await this.learnerGroups;
-    const exp = new RegExp(cleanTitle, 'gi');
     let filteredGroups;
-    if (isEmpty(cleanTitle)) {
+    if (isEmpty(title)) {
       filteredGroups = learnerGroups.sortBy('title');
     } else {
       filteredGroups = learnerGroups.filter(learnerGroup => {
-        return isPresent(learnerGroup.get('title')) && learnerGroup.get('title').match(exp);
+        return isPresent(learnerGroup.get('title'))
+          && learnerGroup.get('title').toLowerCase().includes(title.toLowerCase());
       });
     }
     return filteredGroups.sortBy('title');

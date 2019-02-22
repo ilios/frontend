@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { resolve } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
 
 const { gt } = computed;
 
@@ -33,16 +32,14 @@ export default Controller.extend({
   filteredPrograms: computed('titleFilter', 'programs.[]', async function() {
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter ;
-    const cleanTitle = escapeRegExp(title);
-    let exp = new RegExp(cleanTitle, 'gi');
 
     const programs = await this.programs;
     let filteredPrograms;
-    if(isEmpty(cleanTitle)){
+    if(isEmpty(title)){
       filteredPrograms = programs;
     } else {
       filteredPrograms = programs.filter(program => {
-        return isPresent(program.get('title')) && program.get('title').match(exp);
+        return isPresent(program.get('title')) && program.get('title').toLowerCase().includes(title.toLowerCase());
       });
     }
     return filteredPrograms.sortBy('title');
