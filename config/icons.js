@@ -17,6 +17,7 @@ module.exports = function() {
       'check',
       'clock',
       'cloud',
+      'cogs',
       'download',
       'ellipsis-h',
       'exclamation-circle',
