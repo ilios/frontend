@@ -55,6 +55,8 @@
                 click=(perform deleteSessionType sessionType)
               }}
             {{/if}}
+          {{else}}
+            {{fa-icon "trash" class="disabled"}}
           {{/if}}
           {{#link-to "session-type-visualize-vocabularies" sessionType}}
             {{fa-icon "chart-bar"}}

@@ -95,6 +95,8 @@
           </span>
           {{#if (await report.userCanDelete)}}
             <span class="clickable remove" {{action "confirmRemove" report}}>{{fa-icon "trash"}}</span>
+          {{else}}
+            {{fa-icon "trash" class="disabled"}}
           {{/if}}
         </td>
       </tr>

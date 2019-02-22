@@ -38,6 +38,8 @@
       {{/if}}
       {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
         {{fa-icon "trash" class="clickable remove" click=(action "deleteTerm")}}
+      {{else}}
+        {{fa-icon "trash" class="disabled"}}
       {{/if}}
     </div>
     <div class="block is-active" data-test-is-active>

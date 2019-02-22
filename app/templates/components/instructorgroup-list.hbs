@@ -29,6 +29,8 @@
           {{/link-to}}
           {{#if (and canDelete (eq (get (await instructorGroup.courses) "length") 0))}}
             <span class="clickable remove" {{action "confirmRemove" instructorGroup}}>{{fa-icon "trash"}}</span>
+          {{else}}
+            {{fa-icon "trash" class="disabled"}}
           {{/if}}
         </td>
       </tr>

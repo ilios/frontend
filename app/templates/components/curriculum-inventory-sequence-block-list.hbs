@@ -86,6 +86,8 @@
                   {{/link-to}}
                   {{#if canUpdate}}
                     <span class="clickable remove" {{action "confirmRemove" block}}>{{fa-icon "trash"}}</span>
+                  {{else}}
+                    {{fa-icon "trash" class="disabled"}}
                   {{/if}}
                 </td>
               </tr>
