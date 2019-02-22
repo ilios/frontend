@@ -93,6 +93,8 @@
             {{/if}}
             {{#if (await course.userCanDelete)}}
               <span class="clickable remove" {{action "confirmRemove" course}}>{{fa-icon "trash"}}</span>
+            {{else}}
+              {{fa-icon "trash" class="disabled"}}
             {{/if}}
           {{/if}}
         </td>
