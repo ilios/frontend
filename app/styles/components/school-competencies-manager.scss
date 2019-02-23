@@ -23,4 +23,8 @@
       }
     }
   }
+
+  .fa-trash {
+    @include icon;
+  }
 }

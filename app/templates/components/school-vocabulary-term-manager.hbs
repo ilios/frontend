@@ -37,7 +37,7 @@
         <span class="validation-error-message" data-test-title-error-message>{{v-get this "termTitle" "message"}}</span>
       {{/if}}
       {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
-        {{fa-icon "trash" class="clickable remove" click=(action "deleteTerm")}}
+        {{fa-icon "trash" class="clickable remove enabled" click=(action "deleteTerm")}}
       {{else}}
         {{fa-icon "trash" class="disabled"}}
       {{/if}}

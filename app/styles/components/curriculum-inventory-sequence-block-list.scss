@@ -34,4 +34,8 @@
     padding: .75rem;
   }
 
+  .fa-edit, .fa-trash {
+    @include icon;
+  }
+
 }

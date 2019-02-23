@@ -37,4 +37,8 @@
   .list {
     @include main-list-box-table;
   }
+
+  .fa-download, .fa-edit, .fa-lock, .fa-trash {
+    @include icon;
+  }
 }

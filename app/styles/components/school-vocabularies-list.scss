@@ -32,4 +32,8 @@
       @include ilios-table-colors;
     }
   }
+
+  .fa-edit, .fa-trash {
+    @include icon;
+  }
 }

@@ -3,7 +3,7 @@
     <div class="block">
       {{competency-title-editor competency=obj.domain canUpdate=canUpdate}}
       {{#if (eq obj.competencies.length 0)}}
-        {{fa-icon "trash" class="remove clickable" click=(action remove obj.domain)}}
+        {{fa-icon "trash" class="clickable enabled" click=(action remove obj.domain)}}
       {{else}}
         {{fa-icon "trash" class="disabled"}}
       {{/if}}
@@ -14,7 +14,7 @@
           {{competency-title-editor competency=competency canUpdate=canUpdate}}
           ({{competency.objectives.length}})
           {{#if (and canDelete (eq competency.objectives.length 0))}}
-            {{fa-icon "trash" class="remove clickable" click=(action remove competency)}}
+            {{fa-icon "trash" class="clickable enabled" click=(action remove competency)}}
           {{else}}
             {{fa-icon "trash" class="disabled"}}
           {{/if}}

@@ -25,10 +25,12 @@
         </td>
         <td class="text-right">
           {{#link-to "instructorGroup" instructorGroup class="edit"}}
-            {{fa-icon "edit"}}
+            {{fa-icon "edit" class="enabled"}}
           {{/link-to}}
           {{#if (and canDelete (eq (get (await instructorGroup.courses) "length") 0))}}
-            <span class="clickable remove" {{action "confirmRemove" instructorGroup}}>{{fa-icon "trash"}}</span>
+            <span class="clickable remove" {{action "confirmRemove" instructorGroup}}>
+              {{fa-icon "trash" class="enabled"}}
+            </span>
           {{else}}
             {{fa-icon "trash" class="disabled"}}
           {{/if}}

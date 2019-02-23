@@ -80,19 +80,21 @@
               (and (is-fulfilled course.userCanUnlock) (is-fulfilled course.userCanLock) course.locked)
             }}
               {{#if (await course.userCanUnLock)}}
-                {{fa-icon "lock" class="clickable link" click=(action "unlockCourse" course)}}
+                {{fa-icon "lock" class="clickable enabled" click=(action "unlockCourse" course)}}
               {{else}}
-                {{fa-icon "lock"}}
+                {{fa-icon "lock" class="disabled"}}
               {{/if}}
             {{else}}
               {{#if (await course.userCanLock)}}
-                {{fa-icon "unlock" class="clickable link" click=(action "lockCourse" course)}}
+                {{fa-icon "unlock" class="clickable enabled" click=(action "lockCourse" course)}}
               {{else}}
-                {{fa-icon "unlock"}}
+                {{fa-icon "unlock" class="disabled"}}
               {{/if}}
             {{/if}}
             {{#if (await course.userCanDelete)}}
-              <span class="clickable remove" {{action "confirmRemove" course}}>{{fa-icon "trash"}}</span>
+              <span class="clickable remove" {{action "confirmRemove" course}}>
+                {{fa-icon "trash" class="enabled"}}
+              </span>
             {{else}}
               {{fa-icon "trash" class="disabled"}}
             {{/if}}

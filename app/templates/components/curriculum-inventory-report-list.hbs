@@ -71,7 +71,7 @@
           {{moment-format report.endDate "L"}}
         </td>
         <td class="text-center" colspan="2" {{action "edit" report}} data-test-status>
-          {{#if report.isFinalized}}{{fa-icon "lock"}}{{/if}}
+          {{#if report.isFinalized}}{{fa-icon "lock" class="enabled"}}{{/if}}
           {{publication-status
             publishedLangKey="general.finalized"
             notPublishedLangKey="general.draft"
@@ -81,7 +81,7 @@
         </td>
         <td class="text-right report-actions" colspan="2" data-test-actions>
           {{#link-to "curriculumInventoryReport" report.content}}
-            {{fa-icon "edit"}}
+            {{fa-icon "edit" class="enabled"}}
           {{/link-to}}
           <span>
             <a
@@ -90,11 +90,13 @@
               target="_blank"
               rel="noopener"
             >
-              {{fa-icon "download"}}
+              {{fa-icon "download" class="enabled"}}
             </a>
           </span>
           {{#if (await report.userCanDelete)}}
-            <span class="clickable remove" {{action "confirmRemove" report}}>{{fa-icon "trash"}}</span>
+            <span class="clickable remove" {{action "confirmRemove" report}}>
+              {{fa-icon "trash" class="enabled"}}
+            </span>
           {{else}}
             {{fa-icon "trash" class="disabled"}}
           {{/if}}
