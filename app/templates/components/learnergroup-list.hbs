@@ -28,7 +28,9 @@
             {{#if (or (not canDelete) (await learnerGroup.hasLearnersInGroupOrSubgroups))}}
               {{fa-icon "trash" class="disabled"}}
             {{else}}
-              <span class="clickable remove" {{action "confirmRemove" learnerGroup}}>{{fa-icon "trash"}}</span>
+              <span class="clickable" {{action "confirmRemove" learnerGroup}}>
+                {{fa-icon "trash" class="enabled"}}
+              </span>
             {{/if}}
           {{else}}
             {{loading-spinner}}
@@ -36,10 +38,12 @@
           {{#if canCreate}}
             {{fa-icon
               "copy"
-              class="clickable"
+              class="clickable enabled"
               click=(action "startCopy" learnerGroup)
               title=(t "general.copy")
             }}
+          {{else}}
+            {{fa-icon "copy" class="disabled"}}
           {{/if}}
         </td>
       </tr>

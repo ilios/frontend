@@ -10,4 +10,8 @@
       width: 1.5rem;
     }
   }
+
+  .fa-chart-bar, .fa-edit, .fa-trash {
+    @include icon;
+  }
 }

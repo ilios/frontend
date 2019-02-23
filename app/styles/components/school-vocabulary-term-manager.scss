@@ -71,4 +71,8 @@
       }
     }
   }
+
+  .fa-trash {
+    @include icon;
+  }
 }

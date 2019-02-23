@@ -114,7 +114,7 @@
                     {{#if (await programYearProxy.userCanDelete)}}
                       {{fa-icon
                         "trash"
-                        class="remove clickable"
+                        class="clickable enabled"
                         click=(action "remove" programYearProxy)
                       }}
                     {{else}}
