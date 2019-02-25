@@ -102,5 +102,9 @@
     &.active {
       font-weight: bold;
     }
+
+    .text {
+      color: $text-grey;
+    }
   }
 }
