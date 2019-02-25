@@ -68,7 +68,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^2.1.0",
     "ember-click-outside": "^1.0.0",
-    "ember-composable-helpers": "^2.0.2",
+    "ember-composable-helpers": "^2.2.0",
     "ember-data": "3.7.0",
     "ember-export-application-global": "^2.0.0",
     "ember-froala-editor": "^2.8.5",
