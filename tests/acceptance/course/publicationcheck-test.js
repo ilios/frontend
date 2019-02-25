@@ -37,7 +37,7 @@ module('Acceptance | Course - Publication Check', function(hooks) {
 
   test('full course count', async function(assert) {
     await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'course.publicationCheck');
+    assert.equal(currentRouteName(), 'course.publication_check');
     var items = findAll('.course-publicationcheck table tbody td');
     assert.equal(await getElementText(items[0]), getText('course 0'));
     assert.equal(await getElementText(items[1]), getText('Yes (1)'));
@@ -48,7 +48,7 @@ module('Acceptance | Course - Publication Check', function(hooks) {
 
   test('empty course count', async function(assert) {
     await visit('/courses/' + this.emptyCourse.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'course.publicationCheck');
+    assert.equal(currentRouteName(), 'course.publication_check');
     var items = findAll('.course-publicationcheck table tbody td');
     assert.equal(await getElementText(items[0]), getText('course 1'));
     assert.equal(await getElementText(items[1]), getText('No'));
