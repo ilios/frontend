@@ -7,7 +7,6 @@ module('Unit | Model | LearnerGroup', function(hooks) {
 
   test('it exists', function(assert) {
     let model = run(() => this.owner.lookup('service:store').createRecord('learner-group'));
-    // let store = this.store();
     assert.ok(!!model);
   });
 
@@ -448,38 +447,29 @@ module('Unit | Model | LearnerGroup', function(hooks) {
 
   test('allParentsTitle', async function(assert) {
     assert.expect(2);
+
     const store = this.owner.lookup('service:store');
-    const learnerGroup = run(() => store.createRecord('learner-group'));
-    await run( async () => {
-      learnerGroup.set('title', 'Foo');
-      learnerGroup.set('id', 1);
-      const titles = await learnerGroup.get('allParentsTitle');
-      assert.equal(titles, '');
-    });
-    await run( async () => {
-      const subGroup = store.createRecord('learner-group', { id: 2, title: 'Bar', parent: learnerGroup });
-      const subSubGroup = store.createRecord('learner-group', {id: 3, title: 'Baz', parent: subGroup });
-      const titles = await subSubGroup.get('allParentsTitle');
-      assert.equal(titles, 'Foo > Bar > ');
-    });
+    const learnerGroup = run(() => store.createRecord('learner-group', {title: 'Foo'}));
+    let titles = await learnerGroup.get('allParentsTitle');
+    assert.equal(titles.length, '');
+
+    const subGroup = run(() => store.createRecord('learner-group', {title: 'Bar', parent: learnerGroup }));
+    const subSubGroup = run(() => store.createRecord('learner-group', {title: 'Baz', parent: subGroup }));
+    titles = await subSubGroup.get('allParentsTitle');
+    assert.equal(titles, 'Foo > Bar > ');
   });
 
   test('sortTitle', async function(assert) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
-    const learnerGroup = run(() => store.createRecord('learner-group'));
-    await run( async () => {
-      learnerGroup.set('title', 'Foo');
-      learnerGroup.set('id', 1);
-      const title = await learnerGroup.get('sortTitle');
-      assert.equal(title, 'Foo');
-    });
-    await run( async () => {
-      const subGroup = store.createRecord('learner-group', { id: 2, title: 'Bar', parent: learnerGroup });
-      const subSubGroup = store.createRecord('learner-group', {id: 3, title: 'Baz', parent: subGroup });
-      const title = await subSubGroup.get('sortTitle');
-      assert.equal(title, 'FooBarBaz');
-    });
+    const learnerGroup = run(() => store.createRecord('learner-group', {title: 'Foo'}));
+    let title = await learnerGroup.get('sortTitle');
+    assert.equal(title, 'Foo');
+
+    const subGroup = run(() => store.createRecord('learner-group', {title: 'Bar', parent: learnerGroup }));
+    const subSubGroup = run(() => store.createRecord('learner-group', {title: 'Baz', parent: subGroup }));
+    title = await subSubGroup.get('sortTitle');
+    assert.equal(title, 'FooBarBaz');
   });
 
   test('topLevelGroup', async function(assert) {
