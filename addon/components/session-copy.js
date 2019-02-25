@@ -109,7 +109,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     let session = store.createRecord(
       'session',
-      sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental')
+      sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental', 'instructionalNotes')
     );
     session.set('course', newCourse);
     let props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
