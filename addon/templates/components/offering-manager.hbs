@@ -47,7 +47,7 @@
         role="button"
         {{action (toggle "isEditing" this)}}
       >
-        {{fa-icon "edit"}}
+        {{fa-icon "edit" class="enabled"}}
       </span>
       {{#if (await userCanDelete)}}
         <span
@@ -55,8 +55,10 @@
           role="button"
           {{action "confirmRemove"}}
         >
-          {{fa-icon "trash"}}
+          {{fa-icon "trash" class="enabled"}}
         </span>
+      {{else}}
+        {{fa-icon "trash" class="disabled"}}
       {{/if}}
     </div>
   {{/if}}

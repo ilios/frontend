@@ -2,4 +2,8 @@
   .mesh-descriptor-list {
     @include ilios-list-reset;
   }
+
+  .fa-trash {
+    @include icon;
+  }
 }

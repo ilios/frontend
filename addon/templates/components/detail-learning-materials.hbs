@@ -129,8 +129,10 @@
                     role="button"
                     {{action "confirmRemoval" lmProxy}}
                   >
-                    {{fa-icon "trash"}}
+                    {{fa-icon "trash" class="enabled"}}
                   </span>
+                {{else}}
+                  {{fa-icon "trash" class="disabled"}}
                 {{/if}}
               </td>
             </tr>

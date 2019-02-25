@@ -3,7 +3,7 @@
     <span onclick={{perform edit}} class="clickable editable">
       {{#if value}}
         {{#if looksEmpty}}
-          {{fa-icon "edit"}}
+          {{fa-icon "edit" class="enabled"}}
         {{else}}
           {{big-text text=value renderHtml=renderHtml}}
         {{/if}}

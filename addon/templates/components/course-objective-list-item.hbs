@@ -90,7 +90,9 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if editable}}
-    <span {{action remove objective}} class="clickable remove" role="button">{{fa-icon "trash"}}</span>
+    <span {{action remove objective}} class="clickable remove" role="button">
+      {{fa-icon "trash" class="enabled"}}
+    </span>
   {{else}}
     {{fa-icon "trash" class="disabled"}}
   {{/if}}

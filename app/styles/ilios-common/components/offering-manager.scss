@@ -66,4 +66,8 @@
       color: $ilios-remove-color;
     }
   }
+
+  .fa-trash, .fa-edit {
+    @include icon;
+  }
 }
