@@ -6,7 +6,7 @@ WORKDIR /web
 ENV PATH=/web/node_modules/.bin:$PATH
 COPY . /web
 
-RUN yarn install
+RUN npm install
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
 EXPOSE 4200
