@@ -26,15 +26,13 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Yarn](https://yarnpkg.com/)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
+* [Node](https://nodejs.org/)
 
 ### Installation
 
 * `git clone git@github.com:ilios/frontend.git`
 * `cd frontend`
-* `yarn install`
+* `npm install`
 
 ### Running / Development
 
@@ -47,7 +45,7 @@ within the same directory as your Ilios Frontend code:
 
 Then you can start a local development server:
 
-* `yarn start`
+* `npm start`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
@@ -57,20 +55,20 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Running Tests
 
-* `yarn test`
-* `yarn test --server`
+* `npm test`
+* `npm test --server`
 
 ### Linting
 
-* `yarn lint:hbs`
-* `yarn lint:style`
-* `yarn lint:js`
-* `yarn lint:js --fix`
+* `npm run lint:hbs`
+* `npm run lint:style`
+* `npm run lint:js`
+* `npm run lint:js --fix`
 
 ### Building
 
-* `yarn build` (development)
-* `yarn build --environment production` (production)
+* `npm build` (development)
+* `npm build --environment production` (production)
 
 ## Further Reading / Useful Links
 
