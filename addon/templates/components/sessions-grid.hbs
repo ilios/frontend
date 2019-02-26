@@ -53,10 +53,17 @@
         {{#if obj.canUpdate}}
           {{fa-icon
             "trash"
-            class="clickable remove"
+            class="clickable remove enabled"
             title=(t "general.remove")
             ariaHidden=false
             click=(action "confirmDelete" obj.session.id)
+          }}
+        {{else}}
+          {{fa-icon
+            "trash"
+            class="disabled"
+            title=(t "general.remove")
+            ariaHidden=false
           }}
         {{/if}}
       </span>

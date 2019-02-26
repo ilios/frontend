@@ -40,5 +40,7 @@
     }
   }
 
-
+  .fa-trash {
+    @include icon;
+  }
 }

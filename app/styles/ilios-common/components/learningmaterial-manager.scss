@@ -12,6 +12,10 @@
     @include ilios-form-buttons;
   }
 
+  .copy-btn {
+    background-color: $ilios-green;
+  }
+
   .notes,
   .description {
     @include ilios-browser-defaults;
@@ -67,6 +71,5 @@
       border: 1px solid $ilios-red;
       color: $ilios-red;
     }
-
   }
 }
