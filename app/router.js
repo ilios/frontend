@@ -28,18 +28,18 @@ Router.map(function() {
     path: 'courses/:course_id',
     resetNamespace: true
   }, function(){
-    this.route('publicationCheck', { path: '/publicationcheck'});
+    this.route('publication_check', { path: '/publicationcheck'});
     this.route('publishall', { path: '/publishall'});
     this.route('rollover', { path: '/rollover'});
     this.route("session", {
       path: '/sessions/:session_id',
       resetNamespace: true
     }, function(){
-      this.route('publicationCheck', {path: '/publicationcheck'});
+      this.route('publication_check', {path: '/publicationcheck'});
       this.route('copy');
     });
   });
-  this.route('printCourse', { path: 'course/:course_id/print'});
+  this.route('print_course', { path: 'course/:course_id/print'});
   this.route('course-materials', { path: 'courses/:course_id/materials'});
 
   this.route('instructorGroups', { path: 'instructorgroups'});
