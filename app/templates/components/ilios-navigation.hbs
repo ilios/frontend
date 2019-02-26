@@ -5,7 +5,7 @@
   >
     <li title={{t "general.menu"}}>{{fa-icon "bars"}}</li>
   </ul>
-  <ul class="navigation-links" role="navigation">
+  <ul class="navigation-links">
     <li>{{#link-to "dashboard"}}{{fa-icon "home" fixedWidth=true title=(t "general.dashboard")}}<span class="text">{{t "general.dashboard"}}</span>{{/link-to}}</li>
     {{#if currentUser.performsNonLearnerFunction}}
       <li>{{#link-to "courses" title=(t "general.coursesAndSessions")}}{{fa-icon "book" fixedWidth=true}}<span class="text">{{t "general.coursesAndSessions"}}</span>{{/link-to}}</li>
