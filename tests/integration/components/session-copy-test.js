@@ -74,7 +74,7 @@ module('Integration | Component | session copy', function(hooks) {
   });
 
   test('copy session', async function(assert) {
-    assert.expect(19);
+    assert.expect(20);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -115,6 +115,7 @@ module('Integration | Component | session copy', function(hooks) {
       attireRequired: true,
       equipmentRequired: false,
       supplemental: true,
+      instructionalNotes: 'old session notes',
       sessionType,
       sessionDescription,
       objectives: [objective],
@@ -145,6 +146,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(session.equipmentRequired, newSession.equipmentRequired);
     assert.equal(session.supplemental, newSession.supplemental);
     assert.equal(session.title, newSession.title);
+    assert.equal(session.instructionalNotes, newSession.instructionalNotes);
 
     const sessionLearningMaterials = await run(() => this.owner.lookup('service:store').findAll('session-learning-material'));
     assert.equal(sessionLearningMaterials.length, 2);
