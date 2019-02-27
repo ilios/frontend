@@ -112,7 +112,6 @@ module.exports = function (environment) {
     //Remove mirage in developemnt, we only use it in testing
     ENV['ember-cli-mirage'] = {
       enabled: false,
-      excludeFilesFromBuild: true
     };
 
     ENV.IliosFeatures.programYearVisualizations = true;
