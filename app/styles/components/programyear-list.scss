@@ -25,7 +25,7 @@
     @include main-list-box-table;
   }
 
-  .fa-edit, .fa-trash {
+  .fa-lock, .fa-trash, .fa-unlock {
     @include icon;
   }
 }
