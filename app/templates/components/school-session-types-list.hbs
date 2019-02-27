@@ -42,7 +42,7 @@
         <td>
           {{fa-icon
             "edit"
-            class="edit clickable"
+            class="edit clickable enabled"
             click=(action manageSessionType sessionType.id)
           }}
           {{#if (eq sessionType.sessionCount 0)}}
@@ -51,13 +51,15 @@
             {{else if canDelete}}
               {{fa-icon
                 "trash"
-                class=(if deleteSessionType.isRunning "inactive" "remove clickable")
+                class=(if deleteSessionType.isRunning "inactive" "clickable remove enabled")
                 click=(perform deleteSessionType sessionType)
               }}
             {{/if}}
+          {{else}}
+            {{fa-icon "trash" class="disabled"}}
           {{/if}}
           {{#link-to "session-type-visualize-vocabularies" sessionType}}
-            {{fa-icon "chart-bar"}}
+            {{fa-icon "chart-bar" class="enabled"}}
           {{/link-to}}
         </td>
       </tr>

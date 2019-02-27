@@ -73,7 +73,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     assert.dom(`[data-test-report="1"] [data-test-status]`).hasText('Finalized', 'Status shows.');
     assert.dom(`[data-test-report="1"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
     assert.dom(`[data-test-report="1"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
-    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash`).doesNotExist('Delete button is not visible for finalized reports.');
+    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash.disabled`).exists({ count: 1}, 'Delete button disabled for finalized reports.');
   });
 
   test('empty list', async function (assert) {

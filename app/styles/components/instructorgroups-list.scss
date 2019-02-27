@@ -43,4 +43,8 @@
   .list {
     @include main-list-box-table;
   }
+
+  .fa-edit, .fa-trash {
+    @include icon;
+  }
 }

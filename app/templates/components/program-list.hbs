@@ -31,10 +31,12 @@
         </td>
         <td class="text-right" colspan="2">
           {{#link-to "program" program.content class="edit"}}
-            {{fa-icon "edit"}}
+            {{fa-icon "edit" class="enabled"}}
           {{/link-to}}
           {{#if (await program.canDelete)}}
-            <span class="clickable remove" {{action "confirmRemove" program}}>{{fa-icon "trash"}}</span>
+            <span class="clickable remove" {{action "confirmRemove" program}}>
+              {{fa-icon "trash" class="enabled"}}
+            </span>
           {{else}}
             {{fa-icon "trash" class="disabled"}}
           {{/if}}

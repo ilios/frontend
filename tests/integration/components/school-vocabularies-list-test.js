@@ -63,9 +63,9 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     this.set('edit', () => {});
     this.set('school', schoolModel);
     await render(hbs`{{school-vocabularies-list school=school manageVocabulary=(action edit) canDelete=true}}`);
-    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) svg').exists({ count: 1 });
-    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(3) svg').exists({ count: 1 });
-    assert.dom('[data-test-vocabulary="2"] td:nth-of-type(3) svg').exists({ count: 2 });
+    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) svg.fa-trash.disabled').exists({ count: 1 });
+    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(3) svg.fa-trash.disabled').exists({ count: 1 });
+    assert.dom('[data-test-vocabulary="2"] td:nth-of-type(3) svg.fa-trash.enabled').exists({ count: 1 });
 
   });
 

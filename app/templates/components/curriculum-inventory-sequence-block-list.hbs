@@ -82,10 +82,14 @@
                 </td>
                 <td class="text-center" colspan="1">
                   {{#link-to "curriculumInventorySequenceBlock" block.content class="edit"}}
-                    {{fa-icon "edit"}}
+                    {{fa-icon "edit" class="enabled"}}
                   {{/link-to}}
                   {{#if canUpdate}}
-                    <span class="clickable remove" {{action "confirmRemove" block}}>{{fa-icon "trash"}}</span>
+                    <span class="clickable remove" {{action "confirmRemove" block}}>
+                      {{fa-icon "trash" class="enabled"}}
+                    </span>
+                  {{else}}
+                    {{fa-icon "trash" class="disabled"}}
                   {{/if}}
                 </td>
               </tr>

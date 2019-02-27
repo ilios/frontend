@@ -24,4 +24,8 @@
   .list {
     @include main-list-box-table;
   }
+
+  .fa-lock, .fa-trash, .fa-unlock {
+    @include icon;
+  }
 }

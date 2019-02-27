@@ -46,4 +46,8 @@
   .list {
     @include main-list-box-table;
   }
+
+  .fa-copy, .fa-trash {
+    @include icon;
+  }
 }

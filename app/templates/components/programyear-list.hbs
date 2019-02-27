@@ -94,7 +94,7 @@
                       {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon
                           "lock"
-                          class="clickable"
+                          class="clickable enabled"
                           click=(action "unlockProgramYear" programYearProxy)
                         }}
                       {{else}}
@@ -104,7 +104,7 @@
                       {{#if (await programYearProxy.userCanLock)}}
                         {{fa-icon
                           "unlock"
-                          class="clickable"
+                          class="clickable enabled"
                           click=(action "lockProgramYear" programYearProxy)
                         }}
                       {{else}}
@@ -114,9 +114,11 @@
                     {{#if (await programYearProxy.userCanDelete)}}
                       {{fa-icon
                         "trash"
-                        class="remove clickable"
+                        class="clickable remove enabled"
                         click=(action "remove" programYearProxy)
                       }}
+                    {{else}}
+                      {{fa-icon "trash" class="disabled"}}
                     {{/if}}
                   {{/if}}
                 </td>
