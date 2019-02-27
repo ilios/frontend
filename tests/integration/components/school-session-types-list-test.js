@@ -202,13 +202,13 @@ module('Integration | Component | school session types list', function(hooks) {
     const rows = 'table tbody tr';
     const linkedTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
     const unlinkedTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const linkedTrash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash`;
-    const unlinkedTrash = `${rows}:nth-of-type(2) td:nth-of-type(7) .fa-trash`;
+    const linkedTrash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash.disabled`;
+    const unlinkedTrash = `${rows}:nth-of-type(2) td:nth-of-type(7) .fa-trash.enabled`;
 
     assert.dom(linkedTitle).hasText('linked', 'linked is first');
     assert.dom(unlinkedTitle).hasText('unlinked', 'unlinked is second');
-    assert.dom(linkedTrash).doesNotExist('linked has no trash can');
-    assert.dom(unlinkedTrash).exists({ count: 1 }, 'unlinked has a trash can');
+    assert.dom(linkedTrash).exists({ count: 1 }, 'linked has a disabled trash can');
+    assert.dom(unlinkedTrash).exists({ count: 1 }, 'unlinked has an enabled trash can');
   });
 
   test('clicking delete deletes the record', async function(assert) {
