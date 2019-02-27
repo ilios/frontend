@@ -2,7 +2,6 @@
 language: node_js
 node_js:
   - "lts/*"
-
 sudo: false
 dist: trusty
 
@@ -10,7 +9,8 @@ addons:
   chrome: stable
 
 cache:
-  yarn: true
+  directories:
+    - $HOME/.npm
 
 env:
   global:
@@ -18,21 +18,13 @@ env:
     - JOBS=1
 
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
-
-install:
-  - yarn install --non-interactive
-
-before_script: greenkeeper-lockfile-update
+  - npm config set spin false
 
 script:
-  - yarn lint:hbs
-  - yarn lint:js
-  - yarn test
-
-after_script: greenkeeper-lockfile-upload
+  - npm run lint:style
+  - npm run lint:hbs
+  - npm run lint:js
+  - npm test
 
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && node_modules/.bin/ember deploy staging --activate

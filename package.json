@@ -16,7 +16,6 @@
     "start": "ember serve",
     "test": "ember test",
     "lint:style": "stylelint app/styles"
-
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
