@@ -11,6 +11,10 @@ import {
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
+  header: {
+    scope: '[data-test-learnergroup-header]',
+    members: text('[data-test-members]'),
+  },
   overview: {
     scope: '.learnergroup-overview',
     manage: clickable('[data-test-manage]'),

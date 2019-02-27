@@ -281,7 +281,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     await visit('/learnergroups');
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
-    
+
     assert.equal(2, findAll(subGroupList).length);
 
     assert.equal(await getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
@@ -425,5 +425,55 @@ module('Acceptance | Learnergroup', function(hooks) {
     await click(manage);
     assert.dom(membersOfGroup).exists({ count: 1 }, 'displays all group members');
     assert.dom(membersOfTree).exists({ count: 2 }, 'lists all tree members');
+  });
+
+  test('moving learners to group updates count #3570', async function (assert) {
+    assert.expect(6);
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learnerGroup', { cohort });
+    this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup]
+    });
+    this.server.createList('user', 2, { cohorts: [cohort] });
+
+    await visit('/learnergroups/1');
+    await page.overview.manage();
+    assert.equal(page.overview.list.length, 2);
+    assert.equal(page.usersInCohort.list.length, 2);
+    assert.equal(page.header.members, 'Members: 2 / 4');
+
+    await page.usersInCohort.list[0].add();
+
+    assert.equal(page.overview.list.length, 3);
+    assert.equal(page.usersInCohort.list.length, 1);
+    assert.equal(page.header.members, 'Members: 3 / 4');
+  });
+
+  test('moving learners out of group updates count #3570', async function (assert) {
+    assert.expect(6);
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learnerGroup', { cohort });
+    this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup]
+    });
+    this.server.createList('user', 2, { cohorts: [cohort] });
+
+    await visit('/learnergroups/1');
+    await page.overview.manage();
+    assert.equal(page.overview.list.length, 2);
+    assert.equal(page.usersInCohort.list.length, 2);
+    assert.equal(page.header.members, 'Members: 2 / 4');
+
+    await page.overview.list[0].remove();
+
+    assert.equal(page.overview.list.length, 1);
+    assert.equal(page.usersInCohort.list.length, 3);
+    assert.equal(page.header.members, 'Members: 1 / 4');
   });
 });

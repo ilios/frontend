@@ -19,6 +19,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   canUpdate: false,
   tagName: 'header',
   classNames: ['learnergroup-header'],
+  'data-test-learnergroup-header': true,
   didReceiveAttrs(){
     this._super(...arguments);
     const learnerGroup = this.learnerGroup;
