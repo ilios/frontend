@@ -10,5 +10,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-polyfills.deprecate-merge"},
     { handler: "silence", matchId: "deprecate-router-events"},
     { handler: "silence", matchId: "remove-handler-infos"},
+    { handler: "silence", matchId: "ember-name-key-usage"}, //waiting for https://github.com/offirgolan/ember-cp-validations/issues/620
   ]
 };
