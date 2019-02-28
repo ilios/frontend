@@ -5,17 +5,20 @@ import config from './config/environment';
 
 const Router = EmberRouter.extend({
   iliosMetrics: service(),
+  router: service(),
 
   location: config.locationType,
   rootURL: config.rootURL,
 
-  didTransition() {
+  init() {
     this._super(...arguments);
-    const iliosMetrics = this.iliosMetrics;
-    const page = this.url;
-    const title = this.getWithDefault('currentRouteName', 'unknown');
 
-    iliosMetrics.track(page, title);
+    this.on('routeDidChange', () => {
+      const page = this.router.currentURL;
+      const title = this.router.currentRouteName || 'unknown';
+
+      this.iliosMetrics.track(page, title);
+    });
   },
 });
 

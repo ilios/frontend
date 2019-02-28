@@ -12,6 +12,15 @@ export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
   session: service(),
 
+  init() {
+    this._super(...arguments);
+    this.on('routeWillChange', () => {
+      let controller = this.controllerFor('application');
+      controller.set('errors', []);
+      controller.set('showErrorDisplay', false);
+    });
+  },
+
   //Override the default session invalidator so we can do auth stuff
   sessionInvalidated() {
     if (!Ember.testing) {
@@ -78,11 +87,6 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   actions: {
-    willTransition() {
-      let controller = this.controllerFor('application');
-      controller.set('errors', []);
-      controller.set('showErrorDisplay', false);
-    },
     loading(transition) {
       let controller = this.controllerFor('application');
       controller.set('currentlyLoading', true);
