@@ -8,7 +8,7 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-routing.route-router"},
     { handler: "silence", matchId: "ember-runtime.deprecate-copy-copyable"},
     { handler: "silence", matchId: "ember-polyfills.deprecate-merge"},
-    { handler: "silence", matchId: "deprecate-router-events"},
+    { handler: "silence", matchId: "deprecate-router-events"}, // requires https://github.com/ember-a11y/ember-a11y/issues/73
     { handler: "silence", matchId: "remove-handler-infos"},
     { handler: "silence", matchId: "ember-name-key-usage"}, //waiting for https://github.com/offirgolan/ember-cp-validations/issues/620
   ]
