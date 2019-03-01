@@ -51,6 +51,11 @@ jobs:
     displayName: 'npm test'
     inputs:
       command: custom
-      customCommand: 'test'
+      customCommand: 'test -- --filter=Unit'
   - script: ./cc-test-reporter format-coverage --input-type=cobertura coverage/cobertura-coverage.xml
   - script: ./cc-test-reporter upload-coverage
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'cobertura'
+      summaryFileLocation: coverage/cobertura-coverage.xml
+      reportDirectory: coverage
