@@ -49,5 +49,5 @@ jobs:
     inputs:
       command: custom
       customCommand: 'test'
-  - script: ./cc-test-reporter format-coverage --input-type=lcov coverage/lcov.info
+  - script: ./cc-test-reporter format-coverage --input-type=lcov coverage/cobertura-coverage.xml
   - script: ./cc-test-reporter after-build
