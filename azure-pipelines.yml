@@ -1,6 +1,9 @@
 # Add steps that run tests, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/javascript
 
+trigger:
+- master
+
 variables:
   IMAGE: 'Ubuntu-16.04'
   CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
@@ -49,5 +52,5 @@ jobs:
     inputs:
       command: custom
       customCommand: 'test'
-  - script: ./cc-test-reporter format-coverage --input-type=lcov coverage/cobertura-coverage.xml
-  - script: ./cc-test-reporter after-build
+  - script: ./cc-test-reporter format-coverage --input-type=cobertura coverage/cobertura-coverage.xml
+  - script: ./cc-test-reporter upload-coverage
