@@ -1,5 +1,5 @@
 'use strict';
-const existsSync = require('exists-sync');
+const { existsSync } = require('fs');
 const dotenv = require('dotenv');
 const path = require('path');
 const dotEnvPath = path.join(__dirname, '../.env');
