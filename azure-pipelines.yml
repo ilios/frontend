@@ -25,11 +25,29 @@ jobs:
   - script: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - script: chmod +x ./cc-test-reporter
   - script: ./cc-test-reporter before-build
-  - script: npm config set spin false
-  - script: npm install
-  - script: npm run lint:style
-  - script: npm run lint:hbs
-  - script: npm run lint:js
-  - script: npm test -- --filter=Unit
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      command: install
+  - task: Npm@1
+    displayName: 'lint style'
+    inputs:
+      command: custom
+      customCommand: 'run lint:style'
+  - task: Npm@1
+    displayName: 'lint templates'
+    inputs:
+      command: custom
+      customCommand: 'run lint:hbs'
+  - task: Npm@1
+    displayName: 'lint scripts'
+    inputs:
+      command: custom
+      customCommand: 'run lint:js'
+  - task: Npm@1
+    displayName: 'npm test'
+    inputs:
+      command: custom
+      customCommand: 'test'
   - script: ./cc-test-reporter format-coverage --input-type=lcov coverage/lcov.info
   - script: ./cc-test-reporter after-build
