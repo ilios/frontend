@@ -9,6 +9,8 @@ variables:
   SENTRY_ORG: ilios
   SENTRY_PROJECT: frontend
   NODE_VERSION: '10.x'
+  GIT_BRANCH: $[ coalesce(variables['System.PullRequest.SourceBranch'], variables['Build.SourceBranchName'], 'not-found') ]
+  GIT_COMMIT_SHA: $[ coalesce(variables['System.PullRequest.SourceCommitId'], variables['Build.SourceVersion'], 'not-found') ]
 
 jobs:
 - job: tests
@@ -20,9 +22,14 @@ jobs:
   - task: NodeTool@0
     inputs:
       versionSpec: $(NODE_VERSION)
+  - script: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - script: chmod +x ./cc-test-reporter
+  - script: ./cc-test-reporter before-build
   - script: npm config set spin false
   - script: npm install
   - script: npm run lint:style
   - script: npm run lint:hbs
   - script: npm run lint:js
-  - script: npm test
+  - script: npm test -- --filter=Unit
+  - script: ./cc-test-reporter format-coverage --input-type=lcov coverage/lcov.info
+  - script: ./cc-test-reporter after-build
