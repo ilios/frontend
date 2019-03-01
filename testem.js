@@ -9,6 +9,9 @@ module.exports = {
   launch_in_dev: [
     'Firefox'
   ],
+  reporter: 'xunit',
+  report_file: 'build/test-results.xml',
+  xunit_intermediate_output: true,
   browser_disconnect_timeout: 300,
   browser_start_timeout: 60,
   browser_args: {

@@ -51,11 +51,25 @@ jobs:
     displayName: 'npm test'
     inputs:
       command: custom
-      customCommand: 'test -- --filter=Unit'
+      customCommand: "test"
+  - task: CopyFiles@2
+    displayName: 'copy test results to staging directory'
+    inputs:
+      contents: build/*.xml
+      targetFolder: $(Build.ArtifactStagingDirectory)
   - script: ./cc-test-reporter format-coverage --input-type=cobertura coverage/cobertura-coverage.xml
+    displayName: 'prepare coverage report'
   - script: ./cc-test-reporter upload-coverage
+    displayName: 'send coverage report to code climate'
   - task: PublishCodeCoverageResults@1
+    displayName: 'send coverage report at azure'
     inputs:
       codeCoverageTool: 'cobertura'
       summaryFileLocation: coverage/cobertura-coverage.xml
       reportDirectory: coverage
+  - task: PublishTestResults@2
+    displayName: 'send test results to azure'
+    inputs:
+      testResultsFormat: 'jUnit' # testem calls this output xUnit
+      testResultsFiles: 'test-results.xml'
+      searchFolder: $(Build.ArtifactStagingDirectory)/build
