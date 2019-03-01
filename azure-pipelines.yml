@@ -1,19 +1,28 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/javascript
 
-trigger:
-- master
+variables:
+  IMAGE: 'Ubuntu-16.04'
+  CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
+  COVERAGE: true
+  MOZ_HEADLESS: 1
+  SENTRY_ORG: ilios
+  SENTRY_PROJECT: frontend
+  NODE_VERSION: '10.x'
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: tests
+  pool:
+    vmImage: $(IMAGE)
+  variables:
+    SW_DISABLED: true
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: $(NODE_VERSION)
+  - script: npm config set spin false
+  - script: npm install
+  - script: npm run lint:style
+  - script: npm run lint:hbs
+  - script: npm run lint:js
+  - script: npm test
