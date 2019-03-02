@@ -11,7 +11,7 @@
 /node_modules/
 
 # misc
-/coverage/
+/build/
 !.*
 
 # ember-try

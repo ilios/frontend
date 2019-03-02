@@ -51,25 +51,44 @@ jobs:
     displayName: 'npm test'
     inputs:
       command: custom
-      customCommand: "test"
+      customCommand: "test -- --filter=Unit"
+  - script: |
+      ./cc-test-reporter format-coverage --input-type=cobertura build/coverage/cobertura-coverage.xml
+      ./cc-test-reporter upload-coverage
+    displayName: 'send coverage report to code climate'
   - task: CopyFiles@2
+    condition: succeededOrFailed()
     displayName: 'copy test results to staging directory'
     inputs:
-      contents: build/*.xml
+      contents: build/**
       targetFolder: $(Build.ArtifactStagingDirectory)
-  - script: ./cc-test-reporter format-coverage --input-type=cobertura coverage/cobertura-coverage.xml
-    displayName: 'prepare coverage report'
-  - script: ./cc-test-reporter upload-coverage
-    displayName: 'send coverage report to code climate'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Upload Build Artifacts for Reports'
+    condition: succeededOrFailed()
+    inputs:
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: BuildOutput
+- job: report
+  pool:
+    vmImage: $(IMAGE)
+  dependsOn:
+    - tests
+  steps:
+  - checkout: none #skip checking out the default repository resource
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      artifactName: BuildOutput
+      downloadPath: $(System.DefaultWorkingDirectory)
   - task: PublishCodeCoverageResults@1
     displayName: 'send coverage report at azure'
     inputs:
-      codeCoverageTool: 'cobertura'
-      summaryFileLocation: coverage/cobertura-coverage.xml
-      reportDirectory: coverage
+      codeCoverageTool: cobertura
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/BuildOutput/build/coverage/cobertura-coverage.xml
+      reportDirectory: $(System.DefaultWorkingDirectory)/BuildOutput/build/coverage
   - task: PublishTestResults@2
     displayName: 'send test results to azure'
     inputs:
-      testResultsFormat: 'jUnit' # testem calls this output xUnit
-      testResultsFiles: 'test-results.xml'
-      searchFolder: $(Build.ArtifactStagingDirectory)/build
+      testResultsFormat: jUnit # testem calls this output xUnit
+      testResultsFiles: test-results.xml
+      searchFolder: $(System.DefaultWorkingDirectory)/BuildOutput/build

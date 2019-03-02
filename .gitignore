@@ -13,7 +13,6 @@
 /.pnp*
 /.sass-cache
 /connect.lock
-/coverage/
 /build/
 /libpeerconnection.log
 /npm-debug.log*
