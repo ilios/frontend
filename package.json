@@ -30,7 +30,7 @@
     "browserslist": "^4.4.2",
     "caniuse-db": "^1.0.30000940",
     "crypto-js": "^3.1.9-1",
-    "ember-a11y": "^0.2.0",
+    "ember-a11y": "^0.2.1",
     "ember-a11y-testing": "^0.5.2",
     "ember-ajax": "^4.0.1",
     "ember-auto-import": "^1.2.21",
