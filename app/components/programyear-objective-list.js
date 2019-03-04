@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import { task } from 'ember-concurrency';
+import fetch from 'fetch';
 
 const { alias } = computed;
 
@@ -25,7 +26,7 @@ export default Component.extend(SortableObjectiveList, {
       headers['X-JWT-Authorization'] = `Token ${jwt}`;
     }
 
-    return headers;
+    return new Headers(headers);
   }),
 
   init() {
@@ -50,17 +51,15 @@ export default Component.extend(SortableObjectiveList, {
     const resourcePath = '/programyears/' + subject.get('id') + '/downloadobjectivesmapping';
     const host = this.iliosConfig.get('apiHost')?this.iliosConfig.get('apiHost'):window.location.protocol + '//' + window.location.host;
     const url = host + apiPath + resourcePath;
-    const authHeaders = this.authHeaders;
     const { saveAs } = yield import('file-saver');
 
     this.set('isDownloading', true);
-    const content = yield this.ajax.request(url, {
-      method: 'GET',
-      dataType: 'arraybuffer',
-      processData: false,
-      headers: authHeaders
+    const response = yield fetch(url, {
+      headers: this.authHeaders
     });
-    saveAs(new Blob([ content ], { type: 'text/csv' }), 'report.csv');
+    const blob = yield response.blob();
+    saveAs(blob, 'report.csv');
+
     this.set('isDownloading', false);
   }).drop(),
 });

@@ -6,6 +6,7 @@ import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
+import fetch from 'fetch';
 
 const { alias } = computed;
 const { Promise } = RSVP;
@@ -38,12 +39,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   downloadReport: task(function * (report) {
     this.set('isDownloading', true);
     const { saveAs } = yield import('file-saver');
-    const content = yield this.ajax.request(report.absoluteFileUri, {
-      method: 'GET',
-      dataType: 'arraybuffer',
-      processData: false
-    });
-    saveAs(new Blob([ content ], { type: 'application/xml' }), 'report.xml');
+    const response = yield fetch(report.absoluteFileUri);
+    const blob = yield response.blob();
+    saveAs(blob, 'report.xml');
     this.set('isDownloading', false);
   }).drop(),
 
