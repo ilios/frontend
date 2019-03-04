@@ -3,11 +3,10 @@ import { computed } from '@ember/object';
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import { task } from 'ember-concurrency';
-import FileSaverMixin from 'ember-cli-file-saver/mixins/file-saver';
 
 const { alias } = computed;
 
-export default Component.extend(FileSaverMixin, SortableObjectiveList, {
+export default Component.extend(SortableObjectiveList, {
   ajax: service(),
   iliosConfig: service(),
   session:service(),
@@ -47,22 +46,21 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
   },
 
   downloadReport: task(function * (subject) {
-    const ajax = this.ajax;
-    const config = this.iliosConfig;
-    const apiPath = '/' + config.get('apiNameSpace');
+    const apiPath = '/' + this.iliosConfig.apiNameSpace;
     const resourcePath = '/programyears/' + subject.get('id') + '/downloadobjectivesmapping';
-    const host = config.get('apiHost')?config.get('apiHost'):window.location.protocol + '//' + window.location.host;
+    const host = this.iliosConfig.get('apiHost')?this.iliosConfig.get('apiHost'):window.location.protocol + '//' + window.location.host;
     const url = host + apiPath + resourcePath;
     const authHeaders = this.authHeaders;
+    const { saveAs } = yield import('file-saver');
 
     this.set('isDownloading', true);
-    const content = yield ajax.request(url, {
+    const content = yield this.ajax.request(url, {
       method: 'GET',
       dataType: 'arraybuffer',
       processData: false,
       headers: authHeaders
     });
-    this.saveFileAs('report.csv', content, 'text/csv');
+    saveAs(new Blob([ content ], { type: 'text/csv' }), 'report.csv');
     this.set('isDownloading', false);
   }).drop(),
 });

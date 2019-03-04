@@ -6,8 +6,6 @@ import RSVP from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
-import FileSaverMixin from 'ember-cli-file-saver/mixins/file-saver';
-
 
 const { alias } = computed;
 const { Promise } = RSVP;
@@ -22,7 +20,7 @@ const Validations = buildValidations({
   ],
 });
 
-export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisplay, {
+export default Component.extend(Validations, ValidationErrorDisplay, {
   flashMessages: service(),
   ajax: service(),
 
@@ -38,14 +36,14 @@ export default Component.extend(FileSaverMixin, Validations, ValidationErrorDisp
   isDownloading: false,
 
   downloadReport: task(function * (report) {
-    const ajax = this.ajax;
     this.set('isDownloading', true);
-    const content = yield ajax.request(report.get('absoluteFileUri'), {
+    const { saveAs } = yield import('file-saver');
+    const content = yield this.ajax.request(report.absoluteFileUri, {
       method: 'GET',
       dataType: 'arraybuffer',
       processData: false
     });
-    this.saveFileAs('report.xml', content, 'application/xml');
+    saveAs(new Blob([ content ], { type: 'application/xml' }), 'report.xml');
     this.set('isDownloading', false);
   }).drop(),
 
