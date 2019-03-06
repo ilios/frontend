@@ -3,11 +3,11 @@ import { computed } from '@ember/object';
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import { task } from 'ember-concurrency';
-import FileSaverMixin from 'ember-cli-file-saver/mixins/file-saver';
+import fetch from 'fetch';
 
 const { alias } = computed;
 
-export default Component.extend(FileSaverMixin, SortableObjectiveList, {
+export default Component.extend(SortableObjectiveList, {
   ajax: service(),
   iliosConfig: service(),
   session:service(),
@@ -26,7 +26,7 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
       headers['X-JWT-Authorization'] = `Token ${jwt}`;
     }
 
-    return headers;
+    return new Headers(headers);
   }),
 
   init() {
@@ -47,22 +47,19 @@ export default Component.extend(FileSaverMixin, SortableObjectiveList, {
   },
 
   downloadReport: task(function * (subject) {
-    const ajax = this.ajax;
-    const config = this.iliosConfig;
-    const apiPath = '/' + config.get('apiNameSpace');
+    const apiPath = '/' + this.iliosConfig.apiNameSpace;
     const resourcePath = '/programyears/' + subject.get('id') + '/downloadobjectivesmapping';
-    const host = config.get('apiHost')?config.get('apiHost'):window.location.protocol + '//' + window.location.host;
+    const host = this.iliosConfig.get('apiHost')?this.iliosConfig.get('apiHost'):window.location.protocol + '//' + window.location.host;
     const url = host + apiPath + resourcePath;
-    const authHeaders = this.authHeaders;
+    const { saveAs } = yield import('file-saver');
 
     this.set('isDownloading', true);
-    const content = yield ajax.request(url, {
-      method: 'GET',
-      dataType: 'arraybuffer',
-      processData: false,
-      headers: authHeaders
+    const response = yield fetch(url, {
+      headers: this.authHeaders
     });
-    this.saveFileAs('report.csv', content, 'text/csv');
+    const blob = yield response.blob();
+    saveAs(blob, 'report.csv');
+
     this.set('isDownloading', false);
   }).drop(),
 });
