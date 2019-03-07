@@ -13,6 +13,7 @@ export default Model.extend({
   middleName: attr('string'),
   phone: attr('string'),
   email:  attr('string'),
+  preferredEmail: attr('string'),
   addedViaIlios:  attr('boolean'),
   enabled:  attr('boolean'),
   campusId:  attr('string'),
