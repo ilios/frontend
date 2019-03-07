@@ -8,17 +8,10 @@ export default Service.extend({
   store: service(),
   session: service(),
   currentUserId: computed('session.data.authenticated.jwt', function(){
-    const session = this.get('session');
-    if(isEmpty(session)){
+    if (!this.session || !this.session.data || !this.session.data.authenticated || !this.session.data.authenticated.jwt) {
       return null;
     }
-
-    const jwt = session.get('data.authenticated.jwt');
-
-    if(isEmpty(jwt)){
-      return null;
-    }
-    const obj = jwtDecode(jwt);
+    const obj = jwtDecode(this.session.data.authenticated.jwt);
 
     return get(obj, 'user_id');
   }),
