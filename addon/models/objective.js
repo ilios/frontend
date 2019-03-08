@@ -30,6 +30,7 @@ export default Model.extend({
     inverse: 'ancestor',
     async: true
   }),
+  active: attr('boolean'),
   //While it is possible at some point that objectives will be allowed to
   //link to multiple courses, for now we just reflect a many to one relationship
   course: alias('courses.firstObject'),
