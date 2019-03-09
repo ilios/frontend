@@ -14,5 +14,5 @@ export default RavenService.extend({
     return !this.iliosConfig.errorCaptureEnabled;
   },
 
-  release: config.APP.version.match(versionRegExp),
+  release: config.APP.version.match(versionRegExp)[0],
 });
