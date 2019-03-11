@@ -73,7 +73,7 @@
     "ember-fetch": "^6.4.0",
     "ember-froala-editor": "^2.8.5",
     "ember-inflector": "^3.0.0",
-    "ember-lifeline": "^4.0.0",
+    "ember-lifeline": "^4.1.0",
     "ember-link-action": "^0.1.0",
     "ember-load": "0.0.17",
     "ember-load-initializers": "^1.1.0",
