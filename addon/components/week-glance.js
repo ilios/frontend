@@ -97,7 +97,31 @@ export default Component.extend({
     sessions.forEach(session => {
       rhett.push(groups[session]);
     });
-    return rhett;
+
+
+    return rhett.sort((ilmGroupA, ilmGroupB) => {
+      const eventA = ilmGroupA.firstObject;
+      const eventB = ilmGroupB.firstObject;
+
+      if (eventA.startDate > eventB.startDate) {
+        return 1;
+      } else if (eventA.startDate < eventB.startDate) {
+        return -1;
+      }
+
+      if (eventA.postrequisiteName > eventB.postrequisiteName) {
+        return 1;
+      }
+      else if (eventA.postrequisiteName < eventB.postrequisiteName) {
+        return -1;
+      }
+
+      if (eventA.session > eventB.session) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
   }),
 
   nonIlmPreWorkEvents: computed('publishedWeekEvents.[]', async function () {
