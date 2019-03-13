@@ -226,7 +226,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       const firstName = this.firstName;
       const lastName = this.lastName;
       const email = this.email;
-      const preferredEmail = this.preferredEmail;
       const username = this.username;
       const phone = this.phone;
       const campusId = this.campusId;
@@ -242,10 +241,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         this.set('email', userData.email);
         this.updatedFieldsFromSync.pushObject('email');
       }
-      if (userData.preferredEmail !== preferredEmail) {
-        this.set('preferredEmail', userData.preferredEmail);
-        this.updatedFieldsFromSync.pushObject('preferredEmail');
-      }
+
       if (userData.campusId !== campusId) {
         this.set('campusId', userData.campusId);
         this.updatedFieldsFromSync.pushObject('campusId');
