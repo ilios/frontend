@@ -172,7 +172,7 @@
         value={{preferredEmail}}
         oninput={{action (mut preferredEmail) value="target.value"}}
         onkeyup={{action "addErrorDisplayFor" "preferredEmail"}}
-        data-test-email-input
+        data-test-preferred-email-input
       >
       {{#if (and (v-get this "preferredEmail" "isInvalid") (is-in showErrorsFor "preferredEmail"))}}
         <span class="message error">{{v-get this "preferredEmail" "message"}}</span>
