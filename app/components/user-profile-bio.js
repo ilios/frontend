@@ -47,6 +47,14 @@ const Validations = buildValidations({
       type: 'email'
     }),
   ],
+  preferredEmail: [
+    validator('length', {
+      max: 100
+    }),
+    validator('format', {
+      type: 'email'
+    }),
+  ],
   phone: [
     validator('length', {
       max: 20
@@ -110,6 +118,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   campusId: null,
   otherId: null,
   email: null,
+  preferredEmail: null,
   phone: null,
   username: null,
   password: null,
@@ -129,6 +138,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'campusId',
       'otherId',
       'email',
+      'preferredEmail',
       'phone'
     ));
     let auth = yield user.get('authentication');
@@ -147,7 +157,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const store = this.store;
     const canEditUsernameAndPassword = yield this.canEditUsernameAndPassword;
     const changeUserPassword = yield this.changeUserPassword;
-    this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
+    this.send('addErrorDisplaysFor', [
+      'firstName',
+      'middleName',
+      'lastName',
+      'campusId',
+      'otherId',
+      'email',
+      'preferredEmail',
+      'phone',
+      'username',
+      'password'
+    ]);
     let {validations} = yield this.validate();
     if (validations.get('isValid')) {
       const user = this.user;
@@ -159,6 +180,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'campusId',
         'otherId',
         'email',
+        'preferredEmail',
         'phone'
       ));
       let auth = yield user.get('authentication');
@@ -204,6 +226,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       const firstName = this.firstName;
       const lastName = this.lastName;
       const email = this.email;
+      const preferredEmail = this.preferredEmail;
       const username = this.username;
       const phone = this.phone;
       const campusId = this.campusId;
@@ -218,6 +241,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       if (userData.email !== email) {
         this.set('email', userData.email);
         this.updatedFieldsFromSync.pushObject('email');
+      }
+      if (userData.preferredEmail !== preferredEmail) {
+        this.set('preferredEmail', userData.preferredEmail);
+        this.updatedFieldsFromSync.pushObject('preferredEmail');
       }
       if (userData.campusId !== campusId) {
         this.set('campusId', userData.campusId);
@@ -255,6 +282,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('campusId', null);
     this.set('otherId', null);
     this.set('email', null);
+    this.set('preferredEmail', null);
     this.set('phone', null);
     this.set('username', null);
     this.set('password', null);

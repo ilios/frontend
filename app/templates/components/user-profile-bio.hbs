@@ -161,6 +161,25 @@
     {{/unless}}
   </div>
   <div
+    class="item {{if (contains "preferredEmail" updatedFieldsFromSync) "synced-from-directory"}}"
+  >
+    <label>{{t "general.preferredEmail"}}:</label>
+    {{#unless isManaging}}
+      <span class="value">{{user.preferredEmail}}</span>
+    {{else}}
+      <input
+        type="text"
+        value={{preferredEmail}}
+        oninput={{action (mut preferredEmail) value="target.value"}}
+        onkeyup={{action "addErrorDisplayFor" "preferredEmail"}}
+        data-test-email-input
+      >
+      {{#if (and (v-get this "preferredEmail" "isInvalid") (is-in showErrorsFor "preferredEmail"))}}
+        <span class="message error">{{v-get this "preferredEmail" "message"}}</span>
+      {{/if}}
+    {{/unless}}
+  </div>
+  <div
     class="item {{if (contains "phone" updatedFieldsFromSync) "synced-from-directory"}}"
   >
     <label>{{t "general.phone"}}:</label>
