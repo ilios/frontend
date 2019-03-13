@@ -1,7 +1,4 @@
 {{connection-status}}
-{{#service-worker-update-notify}}
-  {{update-notification}}
-{{/service-worker-update-notify}}
 {{#new-version-notifier as |version lastVersion reload|}}
   {{update-notification reload=(action reload)}}
 {{/new-version-notifier}}

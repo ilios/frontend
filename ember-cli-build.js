@@ -50,45 +50,14 @@ module.exports = function(defaults) {
       themes: 'gray'
     },
     'ember-service-worker': {
-      immediateClaim: false,
-      skipWaitingOnMessage: true,
+      immediateClaim: true,
       versionStrategy: 'every-build',
     },
-    'asset-cache': {
-      version: '3',
-      include: [
-        'assets/**/*',
-        'ilios-prerender/*',
-      ]
-    },
     'esw-cache-first': {
-      version: '1',
+      version: '4',
       patterns: [
-        'fonts/fontawesome(.+)',
-      ]
-    },
-    'esw-index': {
-      version: '3',
-      excludeScope: [/\/tests(\?.*)?$/],
-      includeScope: [
-        /\/dashboard(\/.*)?$/,
-        /\/courses(\/.*)?$/,
-        /\/course-materials(\/.*)?$/,
-        /\/instructorgroups(\/.*)?$/,
-        /\/learnergroups(\/.*)?$/,
-        /\/programs(\/.*)?$/,
-        /\/admin(\/.*)?$/,
-        /\/login(\/.*)?$/,
-        /\/logout(\/.*)?$/,
-        /\/schools(\/.*)?$/,
-        /\/myprofile(\/.*)?$/,
-        /\/mymaterials(\/.*)?$/,
-        /\/course-rollover(\/.*)?$/,
-        /\/curriculum-inventory-reports(\/.*)?$/,
-        /\/curriculum-inventory-sequence-block(\/.*)?$/,
-        /\/data(\/.*)?$/,
-        /\/weeklyevents(\/.*)?$/,
-      ]
+        'https://fonts.gstatic.com/(.+)',
+      ],
     },
     newVersion: {
       enabled: true,
