@@ -41,6 +41,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       campusId: 'idC',
       otherId: 'idO',
       email: 'test@test.com',
+      preferredEmail: 'test2@test.com',
       phone: 'x1234',
       roles: resolve([]),
       cohorts: resolve([]),
@@ -67,17 +68,19 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `${fields}:nth-of-type(4) span`;
     const otherId = `${fields}:nth-of-type(5) span`;
     const email = `${fields}:nth-of-type(6) span`;
-    const phone = `${fields}:nth-of-type(7) span`;
-    const username = `${fields}:nth-of-type(8) span`;
+    const preferredEmail = `${fields}:nth-of-type(7) span`;
+    const phone = `${fields}:nth-of-type(8) span`;
+    const username = `${fields}:nth-of-type(9) span`;
 
     assert.dom(primarySchool).hasText('Primary School: ' + school.title, 'primary school is correct');
-    assert.dom(fields).exists({ count: 8 });
+    assert.dom(fields).exists({ count: 9 });
     assert.dom(firstName).hasText('Test Person', 'first name is displayed');
     assert.dom(middleName).hasText('Name', 'middle name is displayed');
     assert.dom(lastName).hasText('Thing', 'last name is displayed');
     assert.dom(campusId).hasText('idC', 'campus Id is displayed');
     assert.dom(otherId).hasText('idO', 'other id is displayed');
     assert.dom(email).hasText('test@test.com', 'email is displayed');
+    assert.dom(preferredEmail).hasText('test2@test.com', 'email is displayed');
     assert.dom(phone).hasText('x1234', 'phone is displayed');
     assert.dom(username).hasText('test-username', 'username is displayed');
   });
@@ -97,17 +100,19 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `${fields}:nth-of-type(4) span`;
     const otherId = `${fields}:nth-of-type(5) span`;
     const email = `${fields}:nth-of-type(6) span`;
-    const phone = `${fields}:nth-of-type(7) span`;
-    const username = `${fields}:nth-of-type(8) span`;
-    const password = `${fields}:nth-of-type(9) span`;
+    const preferredEmail = `${fields}:nth-of-type(7) span`;
+    const phone = `${fields}:nth-of-type(8) span`;
+    const username = `${fields}:nth-of-type(9) span`;
+    const password = `${fields}:nth-of-type(10) span`;
 
-    assert.dom(fields).exists({ count: 9 });
+    assert.dom(fields).exists({ count: 10 });
     assert.dom(firstName).hasText('Test Person', 'first name is displayed');
     assert.dom(middleName).hasText('Name', 'middle name is displayed');
     assert.dom(lastName).hasText('Thing', 'last name is displayed');
     assert.dom(campusId).hasText('idC', 'campus Id is displayed');
     assert.dom(otherId).hasText('idO', 'other id is displayed');
     assert.dom(email).hasText('test@test.com', 'email is displayed');
+    assert.dom(preferredEmail).hasText('test2@test.com', 'email is displayed');
     assert.dom(phone).hasText('x1234', 'phone is displayed');
     assert.dom(username).hasText('test-username', 'username is displayed');
     assert.dom(password).hasText('*********', 'password placeholder is displayed');
@@ -129,7 +134,7 @@ module('Integration | Component | user profile bio', function(hooks) {
   });
 
   test('can edit user bio for ldap config', async function(assert) {
-    assert.expect(21);
+    assert.expect(23);
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('ldap')
     });
@@ -158,6 +163,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
       assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
       assert.equal(user.get('email'), 'e@e.com', 'email is saved');
+      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'preferred email is saved');
       assert.equal(user.get('phone'), '12345x', 'phone is saved');
 
       return resolve(user);
@@ -176,16 +182,18 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `[data-test-campus-id-input]`;
     const otherId = `[data-test-other-id-input]`;
     const email = `[data-test-email-input]`;
+    const preferredEmail = `[data-test-preferred-email-input]`;
     const phone = `[data-test-phone-input]`;
     const username = `[data-test-username-input]`;
 
-    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(inputs).exists({ count: 9 }, 'correct number of inputs');
     assert.dom(firstName).hasValue('Test Person', 'firstname is set');
     assert.dom(middleName).hasValue('Name', 'middlename is set');
     assert.dom(lastName).hasValue('Thing', 'lastname is set');
     assert.dom(campusId).hasValue('idC', 'campuId is set');
     assert.dom(otherId).hasValue('idO', 'otherId is set');
     assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(preferredEmail).hasValue('test2@test.com', 'preferred email is set');
     assert.dom(phone).hasValue('x1234', 'phone is set');
     assert.dom(username).hasValue('test-username', 'username is set');
     assert.dom(username).isDisabled('username is disabled');
@@ -195,13 +203,14 @@ module('Integration | Component | user profile bio', function(hooks) {
     await fillIn(campusId, 'new campusId');
     await fillIn(otherId, 'new otherId');
     await fillIn(email, 'e@e.com');
+    await fillIn(preferredEmail, 'e2@e.com');
     await fillIn(phone, '12345x');
 
     await click('.bigadd');
   });
 
   test('can edit non-ldap without setting a password', async function(assert) {
-    assert.expect(19);
+    assert.expect(21);
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('local')
     });
@@ -220,6 +229,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
       assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
       assert.equal(user.get('email'), 'e@e.com', 'email is saved');
+      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'preferred email is saved');
       assert.equal(user.get('phone'), '12345x', 'phone is saved');
 
       return resolve(user);
@@ -233,17 +243,19 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `[data-test-campus-id-input]`;
     const otherId = `[data-test-other-id-input]`;
     const email = `[data-test-email-input]`;
+    const preferredEmail = `[data-test-preferred-email-input]`;
     const phone = `[data-test-phone-input]`;
     const username = `[data-test-username-input]`;
     const activatePasswordField = '.activate-password-field';
 
-    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(inputs).exists({ count: 9 }, 'correct number of inputs');
     assert.dom(firstName).hasValue('Test Person', 'firstname is set');
     assert.dom(middleName).hasValue('Name', 'middlename is set');
     assert.dom(lastName).hasValue('Thing', 'lastname is set');
     assert.dom(campusId).hasValue('idC', 'campuId is set');
     assert.dom(otherId).hasValue('idO', 'otherId is set');
     assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(preferredEmail).hasValue('test2@test.com', 'preferred email is set');
     assert.dom(phone).hasValue('x1234', 'phone is set');
     assert.dom(username).hasValue('test-username', 'username is set');
     assert.dom(activatePasswordField).hasText('Click here to reset password.');
@@ -253,13 +265,14 @@ module('Integration | Component | user profile bio', function(hooks) {
     await fillIn(campusId, 'new campusId');
     await fillIn(otherId, 'new otherId');
     await fillIn(email, 'e@e.com');
+    await fillIn(preferredEmail, 'e2@e.com');
     await fillIn(phone, '12345x');
     await fillIn(username, 'new-test-user');
     await click('.bigadd');
   });
 
   test('can edit user bio for non-ldap config', async function(assert) {
-    assert.expect(20);
+    assert.expect(22);
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('local')
     });
@@ -278,6 +291,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
       assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
       assert.equal(user.get('email'), 'e@e.com', 'email is saved');
+      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'email is saved');
       assert.equal(user.get('phone'), '12345x', 'phone is saved');
 
       return resolve(user);
@@ -291,23 +305,25 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `[data-test-campus-id-input]`;
     const otherId = `[data-test-other-id-input]`;
     const email = `[data-test-email-input]`;
+    const preferredEmail = `[data-test-preferred-email-input]`;
     const phone = `[data-test-phone-input]`;
     const username = `[data-test-username-input]`;
     const password = `[data-test-password-input]`;
     const activatePasswordField = '.activate-password-field';
 
-    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(inputs).exists({ count: 9 }, 'correct number of inputs');
     assert.dom(firstName).hasValue('Test Person', 'firstname is set');
     assert.dom(middleName).hasValue('Name', 'middlename is set');
     assert.dom(lastName).hasValue('Thing', 'lastname is set');
     assert.dom(campusId).hasValue('idC', 'campuId is set');
     assert.dom(otherId).hasValue('idO', 'otherId is set');
     assert.dom(email).hasValue('test@test.com', 'email is set');
+    assert.dom(preferredEmail).hasValue('test2@test.com', 'email is set');
     assert.dom(phone).hasValue('x1234', 'phone is set');
     assert.dom(username).hasValue('test-username', 'username is set');
     await click(activatePasswordField);
 
-    assert.dom(inputs).exists({ count: 9 }, 'password input has been added');
+    assert.dom(inputs).exists({ count: 10 }, 'password input has been added');
     assert.dom(password).hasValue('', 'password is set');
     await fillIn(firstName, 'new first');
     await fillIn(middleName, 'new middle');
@@ -315,6 +331,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     await fillIn(campusId, 'new campusId');
     await fillIn(otherId, 'new otherId');
     await fillIn(email, 'e@e.com');
+    await fillIn(preferredEmail, 'e2@e.com');
     await fillIn(phone, '12345x');
     await fillIn(username, 'new-test-user');
     await fillIn(password, 'new-password');
@@ -340,10 +357,10 @@ module('Integration | Component | user profile bio', function(hooks) {
     const activatePasswordField = '.activate-password-field';
     const cancelPasswordField = '.cancel-password-field';
 
-    assert.dom(inputs).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(inputs).exists({ count: 9 }, 'correct number of inputs');
     await click(activatePasswordField);
 
-    assert.dom(inputs).exists({ count: 9 }, 'password input has been added');
+    assert.dom(inputs).exists({ count: 10 }, 'password input has been added');
     assert.dom(password).hasValue('', 'password is blank');
     await fillIn(password, 'new-password');
     await click(cancelPasswordField);
@@ -451,7 +468,7 @@ module('Integration | Component | user profile bio', function(hooks) {
 
 
   test('sync user from directory', async function(assert) {
-    assert.expect(24);
+    assert.expect(26);
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('ldap')
     });
@@ -481,8 +498,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusId = `${items}:nth-of-type(4)`;
     const otherId = `${items}:nth-of-type(5)`;
     const email = `${items}:nth-of-type(6)`;
-    const phone = `${items}:nth-of-type(7)`;
-    const username = `${items}:nth-of-type(8)`;
+    const preferredEmail = `${items}:nth-of-type(7)`;
+    const phone = `${items}:nth-of-type(8)`;
+    const username = `${items}:nth-of-type(9)`;
 
     const firstNameInput = `${firstName} input:nth-of-type(1)`;
     const middleNameInput = `${middleName} input:nth-of-type(1)`;
@@ -490,19 +508,21 @@ module('Integration | Component | user profile bio', function(hooks) {
     const campusIdInput = `${campusId} input:nth-of-type(1)`;
     const otherIdInput = `${otherId} input:nth-of-type(1)`;
     const emailInput = `${email} input:nth-of-type(1)`;
+    const preferredEmailInput = `${preferredEmail} input:nth-of-type(1)`;
     const phoneInput = `${phone} input:nth-of-type(1)`;
     const usernameInput = `${username} input:nth-of-type(1)`;
 
     const syncBUtton = 'button.directory-sync';
 
 
-    assert.dom(items).exists({ count: 8 }, 'correct number of inputs');
+    assert.dom(items).exists({ count: 9 }, 'correct number of inputs');
     assert.dom(firstNameInput).hasValue('Test Person', 'firstname is set');
     assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
     assert.dom(lastNameInput).hasValue('Thing', 'lastname is set');
     assert.dom(campusIdInput).hasValue('idC', 'campuId is set');
     assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
     assert.dom(emailInput).hasValue('test@test.com', 'email is set');
+    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
     assert.dom(phoneInput).hasValue('x1234', 'phone is set');
     assert.dom(usernameInput).hasValue('test-username', 'username is set');
     await click(syncBUtton);
@@ -513,6 +533,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(campusIdInput).hasValue('new-campus-id', 'campuId is updated');
     assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
     assert.dom(emailInput).hasValue('new-email', 'email is updated');
+    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email does not get updated via sync');
     assert.dom(phoneInput).hasValue('new-phone', 'phone is updated');
     assert.dom(usernameInput).hasValue('new-username', 'username is updated');
 
@@ -522,6 +543,5 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(email).hasClass('synced-from-directory', 'email has updated class applied');
     assert.dom(campusId).hasClass('synced-from-directory', 'campusId has updated class applied');
     assert.dom(username).hasClass('synced-from-directory', 'username has updated class applied');
-
   });
 });
