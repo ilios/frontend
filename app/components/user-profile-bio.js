@@ -52,7 +52,8 @@ const Validations = buildValidations({
       max: 100
     }),
     validator('format', {
-      type: 'email'
+      allowBlank: true,
+      type: 'email',
     }),
   ],
   phone: [

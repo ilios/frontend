@@ -544,4 +544,23 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(campusId).hasClass('synced-from-directory', 'campusId has updated class applied');
     assert.dom(username).hasClass('synced-from-directory', 'username has updated class applied');
   });
+
+  test('preferred email can be blanked', async function(assert) {
+    assert.expect(2);
+    setupConfigAndAuth(this);
+    authentication.set('save', () => {});
+    this.set('user', user);
+    this.set('nothing', parseInt);
+
+    user.set('save', ()=> {
+      assert.equal(user.get('preferredEmail'), '', 'blank value for preferred email is saved');
+      return resolve(user);
+    });
+
+    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    const preferredEmailInput = '[data-test-preferred-email-input]';
+    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
+    await fillIn(preferredEmailInput, '');
+    await click('.bigadd');
+  });
 });
