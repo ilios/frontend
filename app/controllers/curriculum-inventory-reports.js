@@ -55,7 +55,7 @@ export default Controller.extend({
   }),
 
   /**
-   * A list of published programs owned by the currently selected school.
+   * A list of  programs owned by the currently selected school.
    * @property programs
    * @type {Ember.computed}
    * @protected
@@ -69,7 +69,6 @@ export default Controller.extend({
           this.store.query('program', {
             filters: {
               school: school.get('id'),
-              published: true
             }
           }).then(programs => {
             resolve(programs.toArray());
