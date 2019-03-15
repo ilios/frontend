@@ -263,6 +263,7 @@ general:
   perPage: "Por Página"
   phone: "Teléfono"
   populateGroup: "¿Quieres auto-rellenar este grupo?"
+  preferredEmail: 'Email preferido'
   prev: Anterior
   primaryCohort: "Clase de la Graduación Principal"
   primarySchool: "Escuela Primaria"
