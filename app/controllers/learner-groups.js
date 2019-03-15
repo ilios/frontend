@@ -47,8 +47,7 @@ export default Controller.extend({
     }
     return await this.store.query('program', {
       filters: {
-        school: school.get('id'),
-        published: true
+        school: school.get('id')
       }
     });
   }),
@@ -65,8 +64,7 @@ export default Controller.extend({
     }
     return await this.store.query('programYear', {
       filters: {
-        program: program.get('id'),
-        published: true
+        program: program.get('id')
       }
     });
   }),
