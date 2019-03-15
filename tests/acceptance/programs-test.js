@@ -111,7 +111,7 @@ module('Acceptance | Programs', function(hooks) {
       await visit('/programs');
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('program 0'));
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
       await click('.confirm-buttons .remove');
       assert.dom('.flash-messages').exists({ count: 1 });
       assert.equal(0, findAll('.list tbody tr').length);
@@ -126,7 +126,7 @@ module('Acceptance | Programs', function(hooks) {
       await visit('/programs');
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('program 0'));
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
       await click('.confirm-buttons .done');
       assert.equal(1, findAll('.list tbody tr').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('program 0'));
@@ -138,7 +138,7 @@ module('Acceptance | Programs', function(hooks) {
         school: this.school,
       });
       await visit('/programs');
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .edit');
+      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .edit');
       assert.equal(currentURL(), '/programs/1');
     });
 

@@ -1,12 +1,9 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
-const { alias } = computed;
 const { Promise } = RSVP;
 
 const Validations = buildValidations({
@@ -19,7 +16,7 @@ const Validations = buildValidations({
   ],
 });
 
-export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
+export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('programTitle', this.get('program.title'));
@@ -28,7 +25,6 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
   program: null,
   canUpdate: false,
   programTitle: null,
-  publishTarget: alias('program'),
 
   actions: {
     changeTitle() {

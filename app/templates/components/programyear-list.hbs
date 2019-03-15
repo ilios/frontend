@@ -36,7 +36,7 @@
             <th class="text-left hide-from-small-screen">{{t "general.objectives"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.directors"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.terms"}}</th>
-            <th class="text-center" colspan="2">{{t "general.status"}}</th>
+            <th class="text-center" colspan="2">{{t "general.actions"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -89,7 +89,6 @@
                   {{#if programYearProxy.isSaving}}
                     {{loading-spinner}}
                   {{else}}
-                    {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}
                       {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon
