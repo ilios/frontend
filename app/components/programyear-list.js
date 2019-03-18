@@ -86,7 +86,12 @@ export default Component.extend({
     let itemsToSave = 0;
     this.resetSaveItems();
 
-    let newProgramYear = store.createRecord('program-year', { program, startYear });
+    let newProgramYear = store.createRecord('program-year', {
+      program,
+      startYear,
+      published: true,
+      publishedAsTbd: false,
+    });
     this.incrementSavedItems();
 
     if (latestProgramYear) {
