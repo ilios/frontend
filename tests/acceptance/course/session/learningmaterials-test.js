@@ -159,10 +159,10 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
-      assert.ok(page.learningMaterials.canSearch);
+      assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Web Link');
-      assert.notOk(page.learningMaterials.canSearch, 'search box is hidden while new group are being added');
+      assert.notOk(page.learningMaterials.search.isVisible, 'search box is hidden while new group are being added');
 
       await page.learningMaterials.newLearningMaterial.name(testTitle);
       assert.equal(page.learningMaterials.newLearningMaterial.userName, '0 guy M. Mc0son');
@@ -186,10 +186,10 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
-      assert.ok(page.learningMaterials.canSearch);
+      assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Citation');
-      assert.notOk(page.learningMaterials.canSearch, 'search box is hidden while new group are being added');
+      assert.notOk(page.learningMaterials.search.isVisible, 'search box is hidden while new group are being added');
 
       await page.learningMaterials.newLearningMaterial.name(testTitle);
       assert.equal(page.learningMaterials.newLearningMaterial.userName, '0 guy M. Mc0son');
@@ -221,7 +221,7 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
-      assert.ok(page.learningMaterials.canSearch);
+      assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Citation');
       await page.learningMaterials.newLearningMaterial.cancel();
@@ -442,16 +442,16 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current().count, 4);
-      await page.learningMaterials.search('doc');
-      assert.equal(page.learningMaterials.searchResults().count, 1);
+      await page.learningMaterials.search.search('doc');
+      assert.equal(page.learningMaterials.search.searchResults.length, 1);
 
-      assert.equal(page.learningMaterials.searchResults(0).title, 'Letter to Doc Brown');
-      assert.ok(page.learningMaterials.searchResults(0).hasFileIcon);
-      assert.equal(page.learningMaterials.searchResults(0).properties().count, 3);
-      assert.equal(page.learningMaterials.searchResults(0).properties(0).value, 'Owner: 0 guy M. Mc0son');
-      assert.equal(page.learningMaterials.searchResults(0).properties(1).value, 'Content Author: ' + 'Marty McFly');
-      assert.equal(page.learningMaterials.searchResults(0).properties(2).value, 'Upload date: ' + moment('2016-03-03').format('M-D-YYYY'));
-      await page.learningMaterials.searchResults(0).add();
+      assert.equal(page.learningMaterials.search.searchResults[0].title, 'Letter to Doc Brown');
+      assert.ok(page.learningMaterials.search.searchResults[0].hasFileIcon);
+      assert.equal(page.learningMaterials.search.searchResults[0].properties.length, 3);
+      assert.equal(page.learningMaterials.search.searchResults[0].properties[0].value, 'Owner: 0 guy M. Mc0son');
+      assert.equal(page.learningMaterials.search.searchResults[0].properties[1].value, 'Content Author: ' + 'Marty McFly');
+      assert.equal(page.learningMaterials.search.searchResults[0].properties[2].value, 'Upload date: ' + moment('2016-03-03').format('M-D-YYYY'));
+      await page.learningMaterials.search.searchResults[0].add();
       assert.equal(page.learningMaterials.current().count, 5);
     });
 
