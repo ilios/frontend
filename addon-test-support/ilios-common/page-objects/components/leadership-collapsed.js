@@ -6,19 +6,11 @@ import {
 export default {
   scope: '[data-test-leadership-collapsed]',
   title: text('.title'),
-  headers: collection({
-    scope: 'thead',
-    itemScope: 'th',
-    item: {
-      title: text(),
-    },
+  headers: collection('thead th', {
+    title: text(),
   }),
-  summary: collection({
-    scope: 'tbody',
-    itemScope: 'tr',
-    item: {
-      name: text('td', { at: 0 }),
-      value: text('td', { at: 1 }),
-    },
+  summary: collection('tbody tr', {
+    name: text('td', { at: 0 }),
+    value: text('td', { at: 1 }),
   }),
 };

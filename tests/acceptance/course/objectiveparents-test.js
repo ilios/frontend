@@ -58,56 +58,56 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     assert.expect(19);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current().count, 2);
+    assert.equal(page.objectives.current.length, 2);
 
-    assert.equal(page.objectives.current(0).description.text, 'objective 3');
-    assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current[0].description.text, 'objective 3');
+    assert.equal(page.objectives.current[0].parents.length, 1);
+    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current(0).manageParents();
+    await page.objectives.current[0].manageParents();
 
     assert.equal(page.objectiveParentManager.title, 'objective 3');
     assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    assert.equal(page.objectiveParentManager.competencies().count, 2);
-    assert.equal(page.objectiveParentManager.competencies(0).title, 'competency 0');
-    assert.ok(page.objectiveParentManager.competencies(0).selected);
-    assert.equal(page.objectiveParentManager.competencies(0).objectives().count, 1);
-    assert.equal(page.objectiveParentManager.competencies(0).objectives(0).title, 'objective 0');
-    assert.ok(page.objectiveParentManager.competencies(0).objectives(0).selected);
+    assert.equal(page.objectiveParentManager.competencies.length, 2);
+    assert.equal(page.objectiveParentManager.competencies[0].title, 'competency 0');
+    assert.ok(page.objectiveParentManager.competencies[0].selected);
+    assert.equal(page.objectiveParentManager.competencies[0].objectives.length, 1);
+    assert.equal(page.objectiveParentManager.competencies[0].objectives[0].title, 'objective 0');
+    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].selected);
 
-    assert.equal(page.objectiveParentManager.competencies(1).title, 'competency 1');
-    assert.ok(page.objectiveParentManager.competencies(1).notSelected);
-    assert.equal(page.objectiveParentManager.competencies(1).objectives().count, 2);
-    assert.equal(page.objectiveParentManager.competencies(1).objectives(0).title, 'objective 1');
-    assert.ok(page.objectiveParentManager.competencies(1).objectives(0).notSelected);
-    assert.equal(page.objectiveParentManager.competencies(1).objectives(1).title, 'objective 2');
-    assert.ok(page.objectiveParentManager.competencies(1).objectives(1).notSelected);
+    assert.equal(page.objectiveParentManager.competencies[1].title, 'competency 1');
+    assert.ok(page.objectiveParentManager.competencies[1].notSelected);
+    assert.equal(page.objectiveParentManager.competencies[1].objectives.length, 2);
+    assert.equal(page.objectiveParentManager.competencies[1].objectives[0].title, 'objective 1');
+    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].notSelected);
+    assert.equal(page.objectiveParentManager.competencies[1].objectives[1].title, 'objective 2');
+    assert.ok(page.objectiveParentManager.competencies[1].objectives[1].notSelected);
   });
 
   test('save changes', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current().count, 2);
+    assert.equal(page.objectives.current.length, 2);
 
-    assert.equal(page.objectives.current(0).description.text, 'objective 3');
-    assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current[0].description.text, 'objective 3');
+    assert.equal(page.objectives.current[0].parents.length, 1);
+    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current(0).manageParents();
+    await page.objectives.current[0].manageParents();
 
     assert.equal(page.objectiveParentManager.title, 'objective 3');
     assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    await page.objectiveParentManager.competencies(1).objectives(0).add();
-    assert.ok(page.objectiveParentManager.competencies(0).objectives(0).notSelected);
-    assert.ok(page.objectiveParentManager.competencies(1).objectives(0).selected);
+    await page.objectiveParentManager.competencies[1].objectives[0].add();
+    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
+    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
     await page.objectives.save();
 
-    assert.equal(page.objectives.current(0).description.text, 'objective 3');
-    assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).description, 'objective 1');
+    assert.equal(page.objectives.current[0].description.text, 'objective 3');
+    assert.equal(page.objectives.current[0].parents.length, 1);
+    assert.equal(page.objectives.current[0].parents[0].description, 'objective 1');
 
   });
 
@@ -115,24 +115,24 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current().count, 2);
+    assert.equal(page.objectives.current.length, 2);
 
-    assert.equal(page.objectives.current(0).description.text, 'objective 3');
-    assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current[0].description.text, 'objective 3');
+    assert.equal(page.objectives.current[0].parents.length, 1);
+    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current(0).manageParents();
+    await page.objectives.current[0].manageParents();
 
     assert.equal(page.objectiveParentManager.title, 'objective 3');
     assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    await page.objectiveParentManager.competencies(1).objectives(0).add();
-    assert.ok(page.objectiveParentManager.competencies(0).objectives(0).notSelected);
-    assert.ok(page.objectiveParentManager.competencies(1).objectives(0).selected);
+    await page.objectiveParentManager.competencies[1].objectives[0].add();
+    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
+    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
     await page.objectives.cancel();
 
-    assert.equal(page.objectives.current(0).description.text, 'objective 3');
-    assert.equal(page.objectives.current(0).parents().count, 1);
-    assert.equal(page.objectives.current(0).parents(0).description, 'objective 0');
+    assert.equal(page.objectives.current[0].description.text, 'objective 3');
+    assert.equal(page.objectives.current[0].parents.length, 1);
+    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
   });
 });

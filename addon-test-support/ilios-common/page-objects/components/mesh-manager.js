@@ -9,24 +9,16 @@ import {
 
 export default {
   scope: '.mesh-manager',
-  selectedTerms: collection({
-    scope: '.selected-terms',
-    itemScope: 'li',
-    item: {
-      title: text('.term-title'),
-      remove: clickable(),
-    },
+  selectedTerms: collection('.selected-terms li', {
+    title: text('.term-title'),
+    remove: clickable(),
   }),
   search: fillable('[data-test-search-box] input'),
   runSearch: clickable('[data-test-search-box] .search-icon'),
-  searchResults: collection({
-    scope: '[data-test-search-results]',
-    itemScope: '[data-test-search-result]',
-    item: {
-      title: text('.descriptor-name'),
-      isDisabled: hasClass('disabled'),
-      isEnabled: notHasClass('disabled'),
-      add: clickable(),
-    },
+  searchResults: collection('[data-test-search-results] [data-test-search-result]', {
+    title: text('.descriptor-name'),
+    isDisabled: hasClass('disabled'),
+    isEnabled: notHasClass('disabled'),
+    add: clickable(),
   }),
 };

@@ -4,12 +4,6 @@ import {
 
 export default {
   scope: '[data-test-leadership-list]',
-  directors: collection({
-    scope: '[data-test-directors] ul',
-    itemScope: 'li',
-  }),
-  administrators: collection({
-    scope: '[data-test-administrators] ul',
-    itemScope: 'li',
-  }),
+  directors: collection('[data-test-directors] ul li', {}),
+  administrators: collection('[data-test-administrators] ul li', {}),
 };

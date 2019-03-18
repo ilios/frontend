@@ -142,14 +142,10 @@ export default create({
     scope: '[data-test-session-objective-manager]',
     title: text('.objectivetitle'),
     courseTitle: text('h5'),
-    objectives: collection({
-      scope: '.parent-picker',
-      itemScope: 'li',
-      item: {
-        title: text(),
-        selected: hasClass('selected'),
-        notSelected: notHasClass('selected'),
-      }
+    objectives: collection('.parent-picker li', {
+      title: text(),
+      selected: hasClass('selected'),
+      notSelected: notHasClass('selected'),
     }),
   },
 
@@ -158,20 +154,12 @@ export default create({
     manage: clickable('.actions button'),
     save: clickable('.actions button.bigadd'),
     cancel: clickable('.actions button.bigcancel'),
-    current: collection({
-      scope: '.trees',
-      itemScope: 'fieldset',
-      item: {
-        title: text('legend'),
-        groups: collection({
-          scope: 'ul',
-          itemScope: 'li',
-          item: {
-            title: text(),
-            isTopLevelGroup: hasClass('top-level-group')
-          }
-        })
-      },
+    current: collection('.trees fieldset', {
+      title: text('legend'),
+      groups: collection('ul li', {
+        title: text(),
+        isTopLevelGroup: hasClass('top-level-group')
+      })
     }),
     manager: learnerGroupManager,
   },
@@ -182,19 +170,11 @@ export default create({
     save: clickable('.actions button.bigadd'),
     cancel: clickable('.actions button.bigcancel'),
     title: text('.detail-instructors-header .title'),
-    currentGroups: collection({
-      scope: '[data-test-instructor-groups]',
-      itemScope: 'li',
-      item: {
-        title: text(),
-      },
+    currentGroups: collection('[data-test-instructor-groups] li', {
+      title: text(),
     }),
-    currentInstructors: collection({
-      scope: '[data-test-instructors]',
-      itemScope: 'li',
-      item: {
-        title: text(),
-      },
+    currentInstructors: collection('[data-test-instructors] li', {
+      title: text(),
     }),
     manager: instructorSelectionManager,
   },
@@ -202,20 +182,12 @@ export default create({
   collapseLearnerGroups: {
     scope: '[data-test-collapsed-learnergroups]',
     title: text('.title'),
-    headers: collection({
-      scope: 'thead',
-      itemScope: 'th',
-      item: {
-        title: text(),
-      },
+    headers: collection('thead th', {
+      title: text(),
     }),
-    cohorts: collection({
-      scope: 'tbody',
-      itemScope: 'tr',
-      item: {
-        name: text('td', { at: 0 }),
-        learnerGroups: text('td', { at: 1 }),
-      },
+    cohorts: collection('tbody tr', {
+      name: text('td', { at: 0 }),
+      learnerGroups: text('td', { at: 1 }),
     }),
   },
 
@@ -226,47 +198,31 @@ export default create({
       title: text('.title'),
       createNew: clickable('.actions button'),
     },
-    dateBlocks: collection({
-      scope: '[data-test-session-offerings-list]',
-      itemScope: '.offering-block',
-      item: {
-        dayOfWeek: text('.offering-block-date-dayofweek'),
-        dayOfMonth: text('.offering-block-date-dayofmonth'),
-        startTime: text('.offering-block-time-time-starttime'),
-        hasStartTime: isVisible('.offering-block-time-time-starttime'),
-        endTime: text('.offering-block-time-time-endtime'),
-        hasEndTime: isVisible('.offering-block-time-time-endtime'),
-        multiDay: text('.multiday-offering-block-time-time'),
-        hasMultiDay: isVisible('.multiday-offering-block-time-time'),
-        offerings: collection({
-          scope: '[data-test-offerings]',
-          itemScope: '[data-test-offering-manager]',
-          item: {
-            learnerGroups: collection({
-              scope: '.offering-manager-learner-groups',
-              itemScope: 'li',
-              item: {
-                title: text()
-              }
-            }),
-            location: text('.offering-manager-location'),
-            instructors: collection({
-              scope: '.offering-manager-instructors',
-              itemScope: '[data-test-instructor]',
-              item: {
-                title: text()
-              }
-            }),
-            edit: clickable('.edit'),
-            remove: clickable('.remove'),
-            hasRemoveConfirm: hasClass('show-remove-confirmation'),
-            removeConfirmMessage: text('.confirm-message'),
-            confirmRemoval: clickable('.remove', { scope: '.confirm-buttons'}),
-            cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
-            offeringForm,
-          }
+    dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
+      dayOfWeek: text('.offering-block-date-dayofweek'),
+      dayOfMonth: text('.offering-block-date-dayofmonth'),
+      startTime: text('.offering-block-time-time-starttime'),
+      hasStartTime: isVisible('.offering-block-time-time-starttime'),
+      endTime: text('.offering-block-time-time-endtime'),
+      hasEndTime: isVisible('.offering-block-time-time-endtime'),
+      multiDay: text('.multiday-offering-block-time-time'),
+      hasMultiDay: isVisible('.multiday-offering-block-time-time'),
+      offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
+        learnerGroups: collection('.offering-manager-learner-groups li', {
+          title: text()
         }),
-      }
+        location: text('.offering-manager-location'),
+        instructors: collection('.offering-manager-instructors [data-test-instructor]', {
+          title: text()
+        }),
+        edit: clickable('.edit'),
+        remove: clickable('.remove'),
+        hasRemoveConfirm: hasClass('show-remove-confirmation'),
+        removeConfirmMessage: text('.confirm-message'),
+        confirmRemoval: clickable('.remove', { scope: '.confirm-buttons'}),
+        cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
+        offeringForm,
+      }),
     }),
     offeringForm,
     smallGroup: clickable('.choose-offering-type button', { at: 0}),
