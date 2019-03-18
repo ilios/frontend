@@ -108,32 +108,20 @@ export default create({
     title: text('.objectivetitle'),
     groupTitle: text('.group-picker'),
     selectGroup: fillable('.group-picker select'),
-    groups: collection({
-      scope: '.group-picker select',
-      itemScope: 'option',
-      item: {
-        title: text(),
-        value: value(),
-      },
+    groups: collection('.group-picker select option', {
+      title: text(),
+      value: value(),
     }),
-    competencies: collection({
-      scope: '.parent-picker',
-      itemScope: '[data-test-competency]',
-      item: {
-        title: text('.competency-title'),
-        selected: hasClass('selected', '.competency-title'),
-        notSelected: notHasClass('selected', '.competency-title'),
-        objectives: collection({
-          scope: 'ul',
-          itemScope: 'li',
-          item: {
-            title: text(),
-            selected: hasClass('selected'),
-            notSelected: notHasClass('selected'),
-            add: clickable('input')
-          }
-        }),
-      }
+    competencies: collection('.parent-picker [data-test-competency]', {
+      title: text('.competency-title'),
+      selected: hasClass('selected', '.competency-title'),
+      notSelected: notHasClass('selected', '.competency-title'),
+      objectives: collection('ul li', {
+        title: text(),
+        selected: hasClass('selected'),
+        notSelected: notHasClass('selected'),
+        add: clickable('input')
+      }),
     }),
   },
 
@@ -142,31 +130,19 @@ export default create({
     manage: clickable('.actions button'),
     save: clickable('.actions button.bigadd'),
     cancel: clickable('.actions button.bigcancel'),
-    current: collection({
-      scope: 'table',
-      itemScope: 'tbody tr',
-      item: {
-        school: text('td', { at: 0 }),
-        program: text('td', { at: 1 }),
-        cohort: text('td', { at: 2 }),
-        level: text('td', { at: 3 }),
-      },
+    current: collection('table tbody tr', {
+      school: text('td', { at: 0 }),
+      program: text('td', { at: 1 }),
+      cohort: text('td', { at: 2 }),
+      level: text('td', { at: 3 }),
     }),
-    selected: collection({
-      scope: '.selected-cohorts',
-      itemScope: 'li',
-      item: {
-        name: text(),
-        remove: clickable(),
-      },
+    selected: collection('.selected-cohorts li', {
+      name: text(),
+      remove: clickable(),
     }),
-    selectable: collection({
-      scope: '.selectable-cohorts',
-      itemScope: 'li',
-      item: {
-        name: text(),
-        add: clickable(),
-      },
+    selectable: collection('.selectable-cohorts li', {
+      name: text(),
+      add: clickable(),
     }),
   },
 });

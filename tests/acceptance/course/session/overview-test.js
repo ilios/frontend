@@ -587,7 +587,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     this.server.create('session', {
       course: this.course,
     });
-    this.server.createList('sessions', 3, {
+    this.server.createList('session', 3, {
       course: this.course
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });

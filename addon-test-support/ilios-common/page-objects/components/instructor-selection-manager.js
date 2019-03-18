@@ -8,27 +8,15 @@ import {
 export default {
   scope: '[data-test-instructor-selection-manager]',
   search: fillable('.search-box input'),
-  searchResults: collection({
-    scope: '.results',
-    itemScope: '[data-test-result]',
-    item: {
-      add: clickable(),
-      active: hasClass('active'),
-      inactive: hasClass('inactive'),
-    },
+  searchResults: collection('.results [data-test-result]', {
+    add: clickable(),
+    active: hasClass('active'),
+    inactive: hasClass('inactive'),
   }),
-  instructors: collection({
-    scope: '[data-test-instructors]',
-    itemScope: 'li',
-    item: {
-      remove: clickable()
-    }
+  instructors: collection('[data-test-instructors] li', {
+    remove: clickable()
   }),
-  instructorGroups: collection({
-    scope: '[data-test-instructor-groups]',
-    itemScope: 'li',
-    item: {
-      remove: clickable()
-    }
+  instructorGroups: collection('[data-test-instructor-groups] li', {
+    remove: clickable()
   }),
 };

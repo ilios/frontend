@@ -8,44 +8,28 @@ import {
 
 export default {
   scope: '[data-test-leadership-manager]',
-  selectedDirectors: collection({
-    scope: '[data-test-directors] ul',
-    itemScope: 'li',
-    item: {
-      remove: clickable('.remove'),
-    }
+  selectedDirectors: collection('[data-test-directors] ul li', {
+    remove: clickable('.remove'),
   }),
   directorSearch: {
     scope: '[data-test-director-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
-    results: collection({
-      scope: '.results',
-      itemScope: '[data-test-result]',
-      item: {
-        add: clickable(),
-        isSelectable: hasClass('clickable'),
-        isSelected: notHasClass('clickable'),
-      },
+    results: collection('.results [data-test-result]', {
+      add: clickable(),
+      isSelectable: hasClass('clickable'),
+      isSelected: notHasClass('clickable'),
     }),
   },
   administratorSearch: {
     scope: '[data-test-administrator-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
-    results: collection({
-      scope: '.results',
-      itemScope: '[data-test-result]',
-      item: {
-        add: clickable(),
-        isSelectable: hasClass('clickable'),
-        isSelected: notHasClass('clickable'),
-      },
+    results: collection('.results [data-test-result]', {
+      add: clickable(),
+      isSelectable: hasClass('clickable'),
+      isSelected: notHasClass('clickable'),
     }),
   },
-  selectedAdministrators: collection({
-    scope: '[data-test-administrators] ul',
-    itemScope: 'li',
-    item: {
-      remove: clickable('.remove'),
-    }
+  selectedAdministrators: collection('[data-test-administrators] ul li', {
+    remove: clickable('.remove'),
   }),
 };

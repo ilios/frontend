@@ -10,12 +10,8 @@ export default {
   manage: clickable('.actions button'),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),
-  current: collection({
-    scope: '.selected-mesh-terms',
-    itemScope: 'li',
-    item: {
-      title: text('.term-title'),
-    },
+  current: collection('.selected-mesh-terms li', {
+    title: text('.term-title'),
   }),
   meshManager,
 };

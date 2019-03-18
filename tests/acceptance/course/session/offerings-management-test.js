@@ -33,11 +33,11 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks(0).offerings(0).edit();
+    await page.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.offerings;
     await form.instructorSelectionManager.search('guy 3');
-    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
+    assert.equal(form.instructorSelectionManager.searchResults.length, 1);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
@@ -59,23 +59,23 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks(0).offerings(0).edit();
+    await page.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.offerings;
-    assert.equal(form.instructorSelectionManager.instructors().count, 0);
+    assert.equal(form.instructorSelectionManager.instructors.length, 0);
     await form.instructorSelectionManager.search('guy 2');
-    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
-    await form.instructorSelectionManager.searchResults(0).add();
-    assert.equal(form.instructorSelectionManager.instructors().count, 1);
-    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
+    assert.equal(form.instructorSelectionManager.searchResults.length, 1);
+    await form.instructorSelectionManager.searchResults[0].add();
+    assert.equal(form.instructorSelectionManager.instructors.length, 1);
+    assert.equal(form.instructorSelectionManager.instructors[0].text, '2 guy M. Mc2son');
 
     await form.instructorSelectionManager.search('guy 3');
-    assert.equal(form.instructorSelectionManager.instructors().count, 1);
-    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
-    assert.equal(form.instructorSelectionManager.searchResults().count, 1);
-    await form.instructorSelectionManager.searchResults(0).add();
-    assert.equal(form.instructorSelectionManager.instructors().count, 2);
-    assert.equal(form.instructorSelectionManager.instructors(0).text, '2 guy M. Mc2son');
-    assert.equal(form.instructorSelectionManager.instructors(1).text, '3 guy M. Mc3son');
+    assert.equal(form.instructorSelectionManager.instructors.length, 1);
+    assert.equal(form.instructorSelectionManager.instructors[0].text, '2 guy M. Mc2son');
+    assert.equal(form.instructorSelectionManager.searchResults.length, 1);
+    await form.instructorSelectionManager.searchResults[0].add();
+    assert.equal(form.instructorSelectionManager.instructors.length, 2);
+    assert.equal(form.instructorSelectionManager.instructors[0].text, '2 guy M. Mc2son');
+    assert.equal(form.instructorSelectionManager.instructors[1].text, '3 guy M. Mc3son');
   });
 });

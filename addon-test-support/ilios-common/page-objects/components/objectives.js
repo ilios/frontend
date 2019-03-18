@@ -25,36 +25,24 @@ export default {
     validationError: text('.validation-error-message'),
     hasValidationError: isVisible('.validation-error-message'),
   },
-  current: collection({
-    scope: 'table',
-    itemScope: 'tbody tr',
-    item: {
-      description: {
-        scope: 'td:eq(0)',
-        openEditor: clickable('.editable'),
-        editorContents: froalaEditorValue('.fr-box'),
-        edit: fillInFroalaEditor('.fr-box'),
-        save: clickable('.done'),
-        validationError: text('.validation-error-message'),
-        hasValidationError: isVisible('.validation-error-message'),
-      },
-      parents: collection({
-        scope: 'td:eq(1)',
-        itemScope: '[data-test-parent]',
-        item: {
-          description: text(),
-        },
-      }, { at: 1 }),
-      manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
-      meshTerms: collection({
-        scope: 'td:eq(2)',
-        itemScope: '[data-test-term]',
-        item: {
-          title: text(),
-        },
-      }, { at: 1 }),
-      manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
+  current: collection('table tbody tr', {
+    description: {
+      scope: 'td:eq(0)',
+      openEditor: clickable('.editable'),
+      editorContents: froalaEditorValue('.fr-box'),
+      edit: fillInFroalaEditor('.fr-box'),
+      save: clickable('.done'),
+      validationError: text('.validation-error-message'),
+      hasValidationError: isVisible('.validation-error-message'),
     },
+    parents: collection('td:eq(1) [data-test-parent]', {
+      description: text(),
+    }, { at: 1 }),
+    manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
+    meshTerms: collection('td:eq(2) [data-test-term]', {
+      title: text(),
+    }, { at: 1 }),
+    manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
   }),
   meshManager,
 };
