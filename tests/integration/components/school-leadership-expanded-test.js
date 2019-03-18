@@ -1,52 +1,25 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | school leadership expanded', function(hooks) {
   setupRenderingTest(hooks);
-
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(6);
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
 
-    let user1 = EmberObject.create({
-      firstName: 'a',
-      lastName: 'person',
-      fullName: 'a b person',
-      enabled: true,
-    });
-    let user2 = EmberObject.create({
-      firstName: 'b',
-      lastName: 'person',
-      fullName: 'b a person',
-      enabled: true,
-    });
-    let school = EmberObject.create({
-      directors: resolve([user1]),
-      administrators: resolve([user1, user2]),
-      hasMany(what){
-        if (what === 'directors') {
-          return {
-            ids(){
-              return [1];
-            }
-          };
-        }
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [1, 2];
-            }
-          };
-        }
-      }
+    const school = this.server.create('school', {
+      directors: [user1],
+      administrators: [user1, user2],
     });
 
-    this.set('school', school);
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     this.set('nothing', parseInt);
     await render(hbs`{{school-leadership-expanded
       school=school
@@ -66,36 +39,18 @@ module('Integration | Component | school leadership expanded', function(hooks) {
 
     assert.dom(title).hasText('School Leadership');
     assert.dom(directors).exists({ count: 1 });
-    assert.dom(firstDirector).hasText('a b person');
+    assert.dom(firstDirector).hasText('0 guy M. Mc0son');
     assert.dom(administrators).exists({ count: 2 });
-    assert.dom(firstAdministrator).hasText('a b person');
-    assert.dom(secondAdministrator).hasText('b a person');
+    assert.dom(firstAdministrator).hasText('0 guy M. Mc0son');
+    assert.dom(secondAdministrator).hasText('1 guy M. Mc1son');
   });
 
   test('clicking the header collapses', async function(assert) {
     assert.expect(1);
-    let school = EmberObject.create({
-      directors: resolve([]),
-      administrators: resolve([]),
-      hasMany(what){
-        if (what === 'directors') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-      }
-    });
 
-    this.set('school', school);
+    const school = this.server.create('school', {});
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
@@ -115,28 +70,9 @@ module('Integration | Component | school leadership expanded', function(hooks) {
 
   test('clicking manage fires action', async function(assert) {
     assert.expect(1);
-    let school = EmberObject.create({
-      directors: resolve([]),
-      administrators: resolve([]),
-      hasMany(what){
-        if (what === 'directors') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-      }
-    });
-
-    this.set('school', school);
+    const school = this.server.create('school', {});
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
