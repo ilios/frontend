@@ -9,6 +9,7 @@ import {
   value
 } from 'ember-cli-page-object';
 import meshManager from './mesh-manager';
+import search from './learningmaterial-search';
 import {
   fillInFroalaEditor,
   froalaEditorValue
@@ -17,14 +18,13 @@ import { datePicker } from 'ilios-common';
 
 export default {
   scope: '[data-test-detail-learning-materials]',
+  search,
   createNew: clickable('.detail-learningmaterials-actions button'),
   pickNew: clickOnText('.detail-learningmaterials-actions ul li'),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),
-  canSearch: isVisible('[data-test-search-box]'),
   canCreateNew: isVisible('.detail-learningmaterials-actions .action-menu'),
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
-  search: fillable('[data-test-search-box] input'),
   current: collection({
     scope: '.detail-learningmaterials-content table',
     itemScope: 'tbody tr',
@@ -38,23 +38,6 @@ export default {
       isNotePublic: isVisible('.fa-eye'),
       isTimedRelease: isVisible('.fa-clock'),
       details: clickable('.link', { at: 0 }),
-    },
-  }),
-  searchResults: collection({
-    scope: '.lm-search-results',
-    itemScope: '> li',
-    item: {
-      title: text('[data-test-title]'),
-      description: text('learning-material-description'),
-      hasFileIcon: isVisible('.fa-file'),
-      properties: collection({
-        scope: '.learning-material-properties',
-        itemScope: 'li',
-        item: {
-          value: text(),
-        },
-      }),
-      add: clickable(),
     },
   }),
   newLearningMaterial: {
@@ -118,6 +101,5 @@ export default {
     },
     hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
     hasTitleValidationError: isVisible('[data-test-title-validation-error-message]')
-
-  }
+  },
 };
