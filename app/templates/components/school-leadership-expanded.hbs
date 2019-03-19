@@ -17,11 +17,11 @@
   </div>
 </div>
 <div class="school-leadership-expanded-content">
-  {{#if (and (is-array directors) (is-array administrators))}}
+  {{#if (and (is-fulfilled directors) (is-fulfilled administrators))}}
     {{#if isManaging}}
       {{leadership-manager
-        directors=directors
-        administrators=administrators
+        directors=(await directors)
+        administrators=(await administrators)
         removeDirector=(action "removeDirector")
         addDirector=(action "addDirector")
         removeAdministrator=(action "removeAdministrator")
@@ -29,8 +29,8 @@
       }}
     {{else}}
       {{leadership-list
-        directors=directors
-        administrators=administrators
+        directors=(await directors)
+        administrators=(await administrators)
       }}
     {{/if}}
   {{else}}

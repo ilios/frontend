@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
@@ -6,20 +5,10 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   school: null,
   classNames: ['school-leadership-expanded'],
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const school = this.school;
-    if (school) {
-      school.get('directors').then(directors => {
-        this.set('directors', directors.toArray());
-      });
-      school.get('administrators').then(administrators => {
-        this.set('administrators', administrators.toArray());
-      });
-    }
-  },
-  directors: null,
-  administrators: null,
+  directorsToAdd: null,
+  directorsToRemove: null,
+  administratorsToAdd: null,
+  administratorsToRemove: null,
   isManaging: false,
   isCollapsible: computed('isManaging', 'school.directors.length', 'school.administrators.length', function(){
     const school = this.school;
@@ -30,38 +19,58 @@ export default Component.extend({
     return (administratorIds.length > 0 || directorIds.length > 0) && !isManaging;
 
   }),
+  directors: computed('school.directors.[]', 'directorsToAdd.[]', 'directorsToRemove.[]', async function () {
+    if (!this.school) {
+      return [];
+    }
+    const directors = await this.school.directors;
+    let arr = directors.toArray();
+    arr.pushObjects(this.directorsToAdd);
+    return arr.filter(user => !this.directorsToRemove.includes(user)).uniq();
+  }),
+  administrators: computed('school.administrators.[]', 'administratorsToAdd.[]', 'administratorsToRemove.[]', async function () {
+    if (!this.school) {
+      return [];
+    }
+    const administrators = await this.school.administrators;
+    let arr = administrators.toArray();
+    arr.pushObjects(this.administratorsToAdd);
+    return arr.filter(user => !this.administratorsToRemove.includes(user)).uniq();
+  }),
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.set('directorsToAdd', []);
+    this.set('directorsToRemove', []);
+    this.set('administratorsToAdd', []);
+    this.set('administratorsToRemove', []);
+  },
+  actions: {
+    addDirector(user){
+      this.directorsToRemove.removeObject(user);
+      this.directorsToAdd.pushObject(user);
+    },
+    removeDirector(user){
+      this.directorsToAdd.removeObject(user);
+      this.directorsToRemove.pushObject(user);
+    },
+    addAdministrator(user){
+      this.administratorsToRemove.removeObject(user);
+      this.administratorsToAdd.pushObject(user);
+    },
+    removeAdministrator(user){
+      this.administratorsToAdd.removeObject(user);
+      this.administratorsToRemove.pushObject(user);
+    },
+  },
   save: task(function * (){
     yield timeout(10);
-    const directors = this.directors;
-    const administrators = this.administrators;
+    const directors = yield this.directors;
+    const administrators = yield this.administrators;
+
     let school = this.school;
     school.setProperties({directors, administrators});
     this.expand();
     yield school.save();
     this.setIsManaging(false);
   }),
-  add(where, user){
-    let arr = this.get(where).toArray();
-    arr.pushObject(user);
-    this.set(where, arr);
-  },
-  remove(where, user){
-    let arr = this.get(where).toArray();
-    arr.removeObject(user);
-    this.set(where, arr);
-  },
-  actions: {
-    addDirector(user){
-      this.add('directors', user);
-    },
-    removeDirector(user){
-      this.remove('directors', user);
-    },
-    addAdministrator(user){
-      this.add('administrators', user);
-    },
-    removeAdministrator(user){
-      this.remove('administrators', user);
-    },
-  }
 });
