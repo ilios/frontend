@@ -231,7 +231,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(0, 3, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
     assert.dom(getTableDataText(0, 4, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
     assert.dom(getTableDataText(0, 5, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
-    assert.dom(getTableDataText(0, 6, 'span')).hasText('Not Published', 'unpublished shown');
+    assert.dom(getTableDataText(0, 6, 'span')).hasText('Published', 'always published');
   });
 
   test('can add a program-year (with pre-existing program-year)', async function(assert) {
@@ -300,7 +300,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(1, 3)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 4)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 5)).hasText('3', 'copied correctly from latest program-year');
-    assert.dom(getTableDataText(1, 6, 'span')).hasText('Not Published', 'unpublished shown');
+    assert.dom(getTableDataText(1, 6, 'span')).hasText('Published', 'always published');
   });
 
   test('privileged users can lock and unlock program-year', async function(assert) {
