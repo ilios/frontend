@@ -45,7 +45,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         if (validations.get('isValid')) {
           let program = this.store.createRecord('program', {
             title: this.title,
-            school: this.currentSchool
+            published: true,
+            publishedAsTbd: false,
           });
           this.save(program).finally(()=>{
             this.set('isSaving', false);
