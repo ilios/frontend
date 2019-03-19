@@ -1,7 +1,7 @@
-<h4 class="title">{{t "general.newProgramYear"}}</h4>
+<h4 class="title" data-test-newprogramyear-title>{{t "general.newProgramYear"}}</h4>
 
 <div class="form">
-  <div class="startyear-select">
+  <div class="startyear-select" data-test-newprogramyear-startyear>
     <label>{{t "general.academicYear"}}:</label>
     <select onchange={{action (mut year) value="target.value"}}>
       {{#each (sort-by "value" availableAcademicYears) as |obj|}}
