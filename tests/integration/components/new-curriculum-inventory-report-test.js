@@ -9,7 +9,6 @@ import {
   fillIn,
   triggerKeyEvent
 } from '@ember/test-helpers';
-import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -22,7 +21,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     assert.expect(20);
 
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
 
@@ -67,7 +66,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     assert.expect(6);
 
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     const currentYear = parseInt(moment().format('YYYY'), 10);
@@ -101,7 +100,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('cancel', async function(assert) {
     assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     this.set('cancelReport', () => {
@@ -115,7 +114,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     assert.expect(1);
 
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     this.set('saveReport', () => {
@@ -131,7 +130,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('validation errors do not show up initially', async function(assert) {
     assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
@@ -141,7 +140,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('validation errors show up when saving with empty report name', async function(assert) {
     assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
@@ -152,7 +151,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
   test('validation errors show up when saving with a too long report name', async function(assert) {
     assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);

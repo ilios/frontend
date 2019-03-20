@@ -5,7 +5,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | new user', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,7 +15,7 @@ module('Integration | Component | new user', function(hooks) {
     this.server.create('user', {
       school: this.schools[0],
     });
-    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
+    const user = await this.owner.lookup('service:store').find('user', 1);
 
     this.currentUserMock = Service.extend({
       model: resolve(user),
@@ -118,7 +117,7 @@ module('Integration | Component | new user', function(hooks) {
     await fillIn(password, 'password123');
     await click('.done');
 
-    const newUser = await run(() => this.owner.lookup('service:store').find('user', 2));
+    const newUser = await this.owner.lookup('service:store').find('user', 2);
     assert.equal(newUser.firstName, 'first', 'with the correct firstName');
     assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
     assert.equal(newUser.lastName, 'last', 'with the correct lastName');
@@ -176,7 +175,7 @@ module('Integration | Component | new user', function(hooks) {
 
     await click('.done');
 
-    const newUser = await run(() => this.owner.lookup('service:store').find('user', 2));
+    const newUser = await this.owner.lookup('service:store').find('user', 2);
     assert.equal(newUser.firstName, 'first', 'with the correct firstName');
     assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
     assert.equal(newUser.lastName, 'last', 'with the correct lastName');

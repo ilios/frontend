@@ -12,7 +12,6 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | new curriculum inventory sequence block', function(hooks) {
   setupRenderingTest(hooks);
@@ -39,7 +38,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       report
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
@@ -117,8 +116,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
       parent
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
-    const parentModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    const parentModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id);
 
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
@@ -150,7 +149,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
@@ -178,7 +177,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     let newDescription = 'lorem ipsum';
     let newStartDate = moment('2016-01-05');
     let newEndDate = moment('2016-02-12');
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     this.set('saveBlock', (block) => {
@@ -195,7 +194,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     interactor.selectDate(newEndDate.toDate());
     await click('button.done');
 
-    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
     assert.equal(blocks.length, 1);
     const newBlock = blocks.objectAt(0);
     assert.equal(newBlock.title, newTitle, 'Given title gets passed.');
@@ -239,7 +238,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       school,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     let minimum = 10;
     let maximum = 12;
     let duration = 6;
@@ -264,7 +263,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await click('.track .toggle-yesno');
     await click('button.done');
 
-    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
     assert.equal(blocks.length, 1);
     const newBlock = blocks.objectAt(0);
     assert.equal(newBlock.belongsTo('academicLevel').id(), academicLevels[1].id, 'Selected academic level gets passed.');
@@ -296,8 +295,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
       parent
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
-    const parentModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    const parentModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', parent.id);
 
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
@@ -316,7 +315,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.duration input', '19');
     await click('button.done');
 
-    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
     assert.equal(blocks.length, 3);
     const newBlock = blocks.objectAt(2);
     assert.equal(newBlock.orderInSequence, 2, 'Selected order-in-sequence gets passed.');
@@ -332,7 +331,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     this.set('cancelAction', () => {
       assert.ok(true, 'Cancel action was invoked.');
@@ -353,7 +352,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
@@ -379,7 +378,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
 
@@ -407,7 +406,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -433,7 +432,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -459,7 +458,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -485,7 +484,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     this.set('saveBlock', () => {
@@ -503,7 +502,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.duration input', '0');
     await click('button.done');
 
-    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
     assert.equal(blocks.length, 1);
     const newBlock = blocks.objectAt(0);
     assert.equal(newBlock.duration, 0, 'correcrt duration.');
@@ -519,7 +518,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
     const duration = 10;
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     this.set('saveBlock', () => {
       return resolve();
@@ -530,7 +529,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.duration input', duration);
     await click('button.done');
 
-    const blocks = await run(() => this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block'));
+    const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
     assert.equal(blocks.length, 1);
     const newBlock = blocks.objectAt(0);
     assert.equal(newBlock.duration, duration, 'correct duration.');
@@ -545,7 +544,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -571,7 +570,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -597,7 +596,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -623,7 +622,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');
@@ -641,7 +640,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.title input', 'Foo Bar');

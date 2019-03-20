@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -36,8 +35,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       active: true,
     });
 
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -74,8 +73,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: false,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -103,8 +102,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -133,8 +132,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -164,8 +163,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -202,8 +201,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       title: 'duplicate one',
       vocabulary,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -235,8 +234,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -269,8 +268,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -310,8 +309,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
     });
 
 
-    const vocabularyModel = await run(() => this.owner.lookup('service:store').find('vocabulary', vocabulary.id));
-    const termModel = await run(() => this.owner.lookup('service:store').find('term', term.id));
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);

@@ -9,7 +9,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { run } from '@ember/runloop';
 import { resolve } from 'rsvp';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -24,7 +23,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
       description: 'this is an old report',
       year: thisYear
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
@@ -50,7 +49,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
       description: 'this is an old report',
       year: thisYear
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     let ajaxMock = Service.extend({
       request(url, {method, data}){
@@ -86,7 +85,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
       description: 'this is an old report',
       year: thisYear
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     const newName = 'new report';
     const newDescription = 'new description';
     const newYear = thisYear + 4;
@@ -125,7 +124,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
 
   test('no input validation errors are shown initially', async function(assert) {
     this.server.create('curriculum-inventory-report');
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
     await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
@@ -134,7 +133,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
 
   test('input validation fails on blank reort name', async function(assert) {
     this.server.create('curriculum-inventory-report');
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     this.set('report', report);
 

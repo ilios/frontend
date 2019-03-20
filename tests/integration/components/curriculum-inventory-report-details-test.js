@@ -9,7 +9,6 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | curriculum inventory report details', function(hooks) {
   setupRenderingTest(hooks);
@@ -32,7 +31,7 @@ module('Integration | Component | curriculum inventory report details', function
       endDate: moment('2016-04-11').toDate(),
       description: 'Lorem Ipsum',
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     this.set('report', report);
     this.set('nothing', () =>{});
@@ -67,7 +66,7 @@ module('Integration | Component | curriculum inventory report details', function
       endDate: moment('2016-04-11').toDate(),
       description: 'Lorem Ipsum',
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
     this.set('nothing', () => { });
     this.set('canUpdate', true);
@@ -110,7 +109,7 @@ module('Integration | Component | curriculum inventory report details', function
       endDate: moment('2016-04-11').toDate(),
       description: 'Lorem Ipsum',
     });
-    const report = run(() => this.owner.lookup('service:store').find('curriculum-inventory-report', 1));
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     this.set('report', report);
     this.set('nothing', () =>{});
