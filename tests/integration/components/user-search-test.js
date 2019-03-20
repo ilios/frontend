@@ -9,7 +9,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | user search', function(hooks) {
   setupRenderingTest(hooks);
@@ -57,7 +56,7 @@ module('Integration | Component | user search', function(hooks) {
 
   test('search for groups', async function (assert) {
     this.server.createList('instructor-group', 2);
-    const instructorGroups = await run(() => this.owner.lookup('service:store').findAll('instructor-group'));
+    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     await render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
 
@@ -85,7 +84,7 @@ module('Integration | Component | user search', function(hooks) {
       assert.equal(1, group.id);
     });
     this.server.createList('instructor-group', 2);
-    const instructorGroups = await run(() => this.owner.lookup('service:store').findAll('instructor-group'));
+    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
 
     await render(

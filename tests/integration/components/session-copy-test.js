@@ -10,7 +10,6 @@ import {
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | session copy', function(hooks) {
   setupRenderingTest(hooks);
@@ -53,7 +52,7 @@ module('Integration | Component | session copy', function(hooks) {
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`{{session-copy session=session}}`);
@@ -130,7 +129,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
@@ -139,7 +138,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(session.attireRequired, newSession.attireRequired);
@@ -148,7 +147,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(session.title, newSession.title);
     assert.equal(session.instructionalNotes, newSession.instructionalNotes);
 
-    const sessionLearningMaterials = await run(() => this.owner.lookup('service:store').findAll('session-learning-material'));
+    const sessionLearningMaterials = await this.owner.lookup('service:store').findAll('session-learning-material');
     assert.equal(sessionLearningMaterials.length, 2);
     const newSessionLm = sessionLearningMaterials.findBy('id', '2');
     assert.equal(sessionLearningMaterial.notes, newSessionLm.notes);
@@ -158,13 +157,13 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
     assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
 
-    const sessionDescriptions = await run(() => this.owner.lookup('service:store').findAll('session-description'));
+    const sessionDescriptions = await this.owner.lookup('service:store').findAll('session-description');
     assert.equal(sessionLearningMaterials.length, 2);
     const newSessionDescription = sessionDescriptions.findBy('id', '2');
     assert.equal(sessionDescription.description, newSessionDescription.description);
     assert.equal(newSessionDescription.belongsTo('session').id(), newSession.id);
 
-    const objectives = await run(() => this.owner.lookup('service:store').findAll('objective'));
+    const objectives = await this.owner.lookup('service:store').findAll('objective');
     assert.equal(objectives.length, 3);
     const newObjective = objectives.findBy('id', '3');
     assert.equal(objective.title, newObjective.title);
@@ -192,7 +191,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`{{session-copy session=session}}`);
@@ -238,7 +237,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`{{session-copy session=session}}`);
     const yearSelect = '.year-select select';
@@ -295,7 +294,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
@@ -308,7 +307,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(newSession.belongsTo('course').id(), course3.id);
@@ -348,7 +347,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
@@ -357,7 +356,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -404,7 +403,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
@@ -414,7 +413,7 @@ module('Integration | Component | session copy', function(hooks) {
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -461,7 +460,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
@@ -470,7 +469,7 @@ module('Integration | Component | session copy', function(hooks) {
 
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);
@@ -524,7 +523,7 @@ module('Integration | Component | session copy', function(hooks) {
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
@@ -535,7 +534,7 @@ module('Integration | Component | session copy', function(hooks) {
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await run(() => this.owner.lookup('service:store').findAll('session'));
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);

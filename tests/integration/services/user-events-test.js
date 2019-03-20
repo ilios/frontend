@@ -1,6 +1,5 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
-import { run } from '@ember/runloop';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
@@ -64,18 +63,16 @@ module('Integration | Service | user events', function(hooks) {
     });
 
     const subject = this.owner.lookup('service:user-events');
-    run(async () => {
-      const events = await subject.getEvents(from.unix(), to.unix());
-      assert.equal(events.length, 3);
-      assert.equal(events[0], event2);
-      assert.equal(events[0].isBlanked, false);
-      assert.equal(events[0].slug, 'U20080902I3');
-      assert.equal(events[1], event1);
-      assert.equal(events[1].isBlanked, false);
-      assert.equal(events[1].slug, 'U20110421O1');
-      assert.equal(events[2], event3);
-      assert.equal(events[2].isBlanked, true);
-    });
+    const events = await subject.getEvents(from.unix(), to.unix());
+    assert.equal(events.length, 3);
+    assert.equal(events[0], event2);
+    assert.equal(events[0].isBlanked, false);
+    assert.equal(events[0].slug, 'U20080902I3');
+    assert.equal(events[1], event1);
+    assert.equal(events[1].isBlanked, false);
+    assert.equal(events[1].slug, 'U20110421O1');
+    assert.equal(events[2], event3);
+    assert.equal(events[2].isBlanked, true);
   });
 
   test('getEvents - no user', async function(assert){
@@ -91,10 +88,8 @@ module('Integration | Service | user events', function(hooks) {
     const subject = this.owner.lookup('service:user-events');
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
-    run( async () => {
-      const events = await subject.getEvents(from.unix(), to.unix());
-      assert.equal(events.length, 0);
-    });
+    const events = await subject.getEvents(from.unix(), to.unix());
+    assert.equal(events.length, 0);
   });
 
   test('getEvents - with configured namespace', async function(assert){
@@ -112,10 +107,8 @@ module('Integration | Service | user events', function(hooks) {
     });
     const subject = this.owner.lookup('service:user-events');
 
-    run( async () => {
-      const events = await subject.getEvents(from.unix(), to.unix());
-      assert.equal(events.length, 0);
-    });
+    const events = await subject.getEvents(from.unix(), to.unix());
+    assert.equal(events.length, 0);
   });
 
   test('getEvents - sorted by name for events occupying same time slot', async function(assert){
@@ -144,12 +137,10 @@ module('Integration | Service | user events', function(hooks) {
     });
 
     const subject = this.owner.lookup('service:user-events');
-    run(async () => {
-      const events = await subject.getEvents(from.unix(), to.unix());
-      assert.equal(events.length, 2);
-      assert.equal(events[0], event2);
-      assert.equal(events[1], event1);
-    });
+    const events = await subject.getEvents(from.unix(), to.unix());
+    assert.equal(events.length, 2);
+    assert.equal(events[0], event2);
+    assert.equal(events[1], event1);
   });
 
 
@@ -176,10 +167,8 @@ module('Integration | Service | user events', function(hooks) {
       }
     });
     const subject = this.owner.lookup('service:user-events');
-    run( async () => {
-      const event = await subject.getEventForSlug('U20130121O1');
-      assert.equal(event, event1);
-    });
+    const event = await subject.getEventForSlug('U20130121O1');
+    assert.equal(event, event1);
   });
 
   test('getEventsForSlug - ILM', async function(assert){
@@ -205,9 +194,7 @@ module('Integration | Service | user events', function(hooks) {
       }
     });
     const subject = this.owner.lookup('service:user-events');
-    run( async () => {
-      const event = await subject.getEventForSlug('U20130121I3');
-      assert.equal(event, event2);
-    });
+    const event = await subject.getEventForSlug('U20130121I3');
+    assert.equal(event, event2);
   });
 });

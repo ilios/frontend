@@ -8,7 +8,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | leadership search', function(hooks) {
   setupRenderingTest(hooks);
@@ -114,7 +113,7 @@ module('Integration | Component | leadership search', function(hooks) {
     this.set('select', (user) => {
       assert.equal(user.id, 2, 'only user2 should be sent here');
     });
-    const user1 = run(() => this.owner.lookup('service:store').find('user', 1));
+    const user1 = this.owner.lookup('service:store').find('user', 1);
 
     this.set('existingUsers', [user1]);
     await render(hbs`{{leadership-search existingUsers=existingUsers selectUser=(action select)}}`);

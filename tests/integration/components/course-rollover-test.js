@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { resolve } from 'rsvp';
 import EmberObject from '@ember/object';
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -354,7 +353,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.server.create('course', {
       title: 'old course'
     });
-    const course = run(() => this.owner.lookup('service:store').find('course', 1));
+    const course = this.owner.lookup('service:store').find('course', 1);
     let ajaxMock = Service.extend({
       request(url, {data}){
         assert.ok('skipOfferings' in data);
@@ -432,7 +431,7 @@ module('Integration | Component | course rollover', function(hooks) {
       title: 'old course',
       school,
     });
-    const course = run(() => this.owner.lookup('service:store').find('course', 1));
+    const course = this.owner.lookup('service:store').find('course', 1);
     let ajaxMock = Service.extend({
       request(url, { data }) {
         assert.ok('newCohorts' in data);

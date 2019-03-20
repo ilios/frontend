@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { run } from '@ember/runloop';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | offering-calendar', function(hooks) {
@@ -37,8 +36,8 @@ module('Integration | Component | offering-calendar', function(hooks) {
     const learnerGroup = this.server.create('learner-group', {
       offerings: [offering1, offering2],
     });
-    const sessionModel = await run(() => this.owner.lookup('service:store').find('session', session.id));
-    const learnerGroupModel = await run(() => this.owner.lookup('service:store').find('learner-group', learnerGroup.id));
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('startDate', today.toDate());
     this.set('endDate', tomorrow.toDate());
     this.set('session', sessionModel);

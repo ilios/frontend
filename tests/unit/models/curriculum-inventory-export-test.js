@@ -1,13 +1,11 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
 
 module('Unit | Model | CurriculumInventoryExport', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('curriculum-inventory-export'));
-    // let store = this.store();
+    let model = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     assert.ok(!!model);
   });
 });
