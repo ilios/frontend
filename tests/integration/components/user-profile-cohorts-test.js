@@ -1,6 +1,5 @@
 import { resolve } from 'rsvp';
 import Service from '@ember/service';
-import { run } from "@ember/runloop";
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -40,8 +39,8 @@ module('Integration | Component | user profile cohorts', function(hooks) {
       school: school1
     });
 
-    this.user = await run(() => this.owner.lookup('service:store').find('user', user.id));
-    const sessionUser = await run(() => this.owner.lookup('service:store').find('user', user2.id));
+    this.user = await this.owner.lookup('service:store').find('user', user.id);
+    const sessionUser = await this.owner.lookup('service:store').find('user', user2.id);
 
     const currentUserMock = Service.extend({
       model: resolve(sessionUser),

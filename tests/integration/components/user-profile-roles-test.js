@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | user profile roles', function(hooks) {
   setupRenderingTest(hooks);
@@ -23,7 +22,7 @@ module('Integration | Component | user profile roles', function(hooks) {
       root: false,
       roles: [this.studentRole],
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`{{user-profile-roles user=user}}`);
@@ -57,7 +56,7 @@ module('Integration | Component | user profile roles', function(hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`{{user-profile-roles user=user}}`);
@@ -73,7 +72,7 @@ module('Integration | Component | user profile roles', function(hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     this.set('click', (what) =>{
       assert.ok(what, 'recieved boolean true value');
@@ -89,7 +88,7 @@ module('Integration | Component | user profile roles', function(hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
     this.set('nothing', parseInt);

@@ -5,7 +5,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 import ENV from 'ilios/config/environment';
 
 const { apiVersion } = ENV.APP;
@@ -48,7 +47,7 @@ module('Integration | Component | ilios users', function(hooks) {
     const user = this.server.create('user', {
       school
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     const currentUserMock = Service.extend({
       model: resolve(userModel),
@@ -87,7 +86,7 @@ module('Integration | Component | ilios users', function(hooks) {
     const user = this.server.create('user', {
       school
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     const currentUserMock = Service.extend({
       model: resolve(userModel),

@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | school session type manager', function(hooks) {
   setupRenderingTest(hooks);
@@ -26,7 +25,7 @@ module('Integration | Component | school session type manager', function(hooks) 
       assessmentOption: this.summative,
       sessionCount: 0
     });
-    const sessionTypeModel = await run(() => this.owner.lookup('service:store').find('session-type', sessionType.id));
+    const sessionTypeModel = await this.owner.lookup('service:store').find('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('nothing', () => {});
     await render(hbs`{{school-session-type-manager
@@ -58,7 +57,7 @@ module('Integration | Component | school session type manager', function(hooks) 
       assessment: true,
       assessmentOption: this.summative,
     });
-    const sessionTypeModel = await run(() => this.owner.lookup('service:store').find('session-type', sessionType.id));
+    const sessionTypeModel = await this.owner.lookup('service:store').find('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('close', ()=>{
       assert.ok(true, 'action was fired');

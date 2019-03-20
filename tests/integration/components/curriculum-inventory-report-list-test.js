@@ -6,7 +6,6 @@ import { click, render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | curriculum inventory report list', function(hooks) {
   setupRenderingTest(hooks);
@@ -40,7 +39,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.owner.register('service:permission-checker', permissionCheckerMock);
 
     const reports = [report1, report2];
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
@@ -79,7 +78,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
   test('empty list', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
@@ -96,7 +95,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
       program,
       name: 'Zeppelin',
     });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     const permissionCheckerMock = Service.extend({
       canDeleteCurriculumInventoryReport() {
@@ -130,7 +129,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
       }
     });
     this.owner.register('service:permission-checker', permissionCheckerMock);
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     this.set('removeAction', () => {
@@ -152,7 +151,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
       program,
       name: 'Zeppelin',
     });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     let count = 0;
     let sortBys = ['name', 'name:desc', 'year', 'year:desc'];
@@ -179,7 +178,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
       program,
       name: 'Zeppelin',
     });
-    const programModel = await run(() => this.owner.lookup('service:store').find('program', program.id));
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     this.set('editAction', (obj) => {

@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | myreports list item', function(hooks) {
   setupRenderingTest(hooks);
@@ -15,7 +14,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       title: 'Lorem Ipsum'
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
     this.set('selectReport', (param) => {
       assert.equal(param, reportModel);
@@ -33,7 +32,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       subject: 'competency'
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
     this.set('selectReport', (param) => {
       assert.equal(param, reportModel);
@@ -53,7 +52,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       subject: 'competency',
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{myreports-list-item report=report}}`);
     assert.dom(this.element).hasText('All Competencies in ' + school.title);
@@ -74,8 +73,8 @@ module('Integration | Component | myreports list item', function(hooks) {
       prepositionalObjectTableRowId: user.id,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('report', reportModel);
     await render(hbs`{{myreports-list-item report=report}}`);
 
@@ -95,7 +94,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       prepositionalObjectTableRowId: 13,
     });
 
-    const reportModel = await run(() => this.owner.lookup('service:store').find('report', report.id));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`{{myreports-list-item report=report}}`);
