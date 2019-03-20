@@ -1,6 +1,5 @@
 /*eslint ember/avoid-leaking-state-in-ember-objects: 0*/
 import EmberObject from '@ember/object';
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import RSVP from 'rsvp';
@@ -172,9 +171,7 @@ module('CurrentUserService', function(hooks) {
       }
     });
     const subject = this.owner.lookup('service:current-user');
-    run( async () => {
-      const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
-      assert.equal(activeRelatedCourses, courses);
-    });
+    const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
+    assert.equal(activeRelatedCourses, courses);
   });
 });

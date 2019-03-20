@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | course objective list', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,7 +15,7 @@ module('Integration | Component | course objective list', function(hooks) {
     const course = this.server.create('course', {
       objectives
     });
-    const courseModel = await run(() => this.owner.lookup('service:store').find('course', course.id));
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('nothing', () => {});
     this.set('subject', courseModel);
@@ -38,7 +37,7 @@ module('Integration | Component | course objective list', function(hooks) {
   test('empty list', async function(assert) {
     assert.expect(2);
     const course = this.server.create('course');
-    const courseModel = await run(() => this.owner.lookup('service:store').find('course', course.id));
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
     await render(hbs`{{course-objective-list subject=subject}}`);
     let container = findAll('.course-objective-list');
@@ -52,7 +51,7 @@ module('Integration | Component | course objective list', function(hooks) {
     const course = this.server.create('course', {
       objectives
     });
-    const courseModel = await run(() => this.owner.lookup('service:store').find('course', course.id));
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('nothing', () => {});
     this.set('subject', courseModel);

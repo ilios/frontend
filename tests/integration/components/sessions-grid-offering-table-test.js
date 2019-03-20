@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 import moment from 'moment';
 import { create } from 'ember-cli-page-object';
 import table from 'ilios-common/page-objects/components/sessions-grid-offering-table';
@@ -35,7 +34,7 @@ module('Integration | Component | sessions-grid-offering-table', function(hooks)
       startDate: moment().hour(8).add(1, 'day').add(1, 'hour').toDate(),
       endDate: moment().hour(8).add(1, 'day').add(2, 'hour').toDate(),
     });
-    const offerings = run(() => this.owner.lookup('service:store').findAll('offering'));
+    const offerings = this.owner.lookup('service:store').findAll('offering');
     this.set('offerings', offerings);
 
     await render(hbs`{{sessions-grid-offering-table offerings=offerings}}`);

@@ -10,7 +10,6 @@ import {
 } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import hbs from 'htmlbars-inline-precompile';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | collapsed learnergroups', function(hooks) {
   setupRenderingTest(hooks);
@@ -29,7 +28,7 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
     this.server.create('learner-group', { cohort: cohorts[0] });
     this.server.create('learner-group', { cohort: cohorts[1] });
 
-    const learnerGroups = await run(() => this.owner.lookup('service:store').findAll('learner-group'));
+    const learnerGroups = this.owner.lookup('service:store').findAll('learner-group');
     const subject = EmberObject.create({
       learnerGroups: resolve(learnerGroups)
     });

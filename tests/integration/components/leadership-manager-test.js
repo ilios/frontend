@@ -9,7 +9,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | leadership manager', function(hooks) {
   setupRenderingTest(hooks);
@@ -18,7 +17,7 @@ module('Integration | Component | leadership manager', function(hooks) {
   test('it renders with data', async function(assert) {
     assert.expect(5);
     this.server.createList('user', 2);
-    const users = await run(() => this.owner.lookup('service:store').findAll('user'));
+    const users = await this.owner.lookup('service:store').findAll('user');
     this.set('directors', [users.firstObject]);
     this.set('administrators', users);
     this.set('nothing', parseInt);
@@ -65,7 +64,7 @@ module('Integration | Component | leadership manager', function(hooks) {
   test('remove director', async function(assert) {
     assert.expect(3);
     this.server.createList('user', 1);
-    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
+    const user = await this.owner.lookup('service:store').find('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('nothing', parseInt);
@@ -92,7 +91,7 @@ module('Integration | Component | leadership manager', function(hooks) {
   test('remove administrator', async function(assert) {
     assert.expect(3);
     this.server.createList('user', 1);
-    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
+    const user = await this.owner.lookup('service:store').find('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('nothing', parseInt);
@@ -119,7 +118,7 @@ module('Integration | Component | leadership manager', function(hooks) {
   test('add director', async function(assert) {
     assert.expect(6);
     this.server.createList('user', 1);
-    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
+    const user = await this.owner.lookup('service:store').find('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('nothing', parseInt);
@@ -154,7 +153,7 @@ module('Integration | Component | leadership manager', function(hooks) {
   test('add administrator', async function(assert) {
     assert.expect(6);
     this.server.createList('user', 1);
-    const user = await run(() => this.owner.lookup('service:store').find('user', 1));
+    const user = await this.owner.lookup('service:store').find('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('nothing', parseInt);
@@ -195,7 +194,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     this.server.create('user', {
       enabled: false
     });
-    const users = await run(() => this.owner.lookup('service:store').findAll('user'));
+    const users = await this.owner.lookup('service:store').findAll('user');
 
     this.set('directors', [users.firstObject]);
     this.set('administrators', users);

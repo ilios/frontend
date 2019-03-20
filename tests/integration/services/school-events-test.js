@@ -1,5 +1,4 @@
 import RSVP from 'rsvp';
-import { run } from '@ember/runloop';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
@@ -52,14 +51,12 @@ module('Integration | Service | school events', function(hooks) {
     });
     const schoolId = 7;
     const subject = this.owner.lookup('service:school-events');
-    run(async () => {
-      const events = await subject.getEvents(schoolId, from.unix(), to.unix());
-      assert.equal(events.length, 2);
-      assert.equal(events[0], event2);
-      assert.equal(events[0].slug, 'S0720080902I3');
-      assert.equal(events[1], event1);
-      assert.equal(events[1].slug, 'S0720110421O1');
-    });
+    const events = await subject.getEvents(schoolId, from.unix(), to.unix());
+    assert.equal(events.length, 2);
+    assert.equal(events[0], event2);
+    assert.equal(events[0].slug, 'S0720080902I3');
+    assert.equal(events[1], event1);
+    assert.equal(events[1].slug, 'S0720110421O1');
   });
 
   test('getEvents - with configured namespace', async function(assert){
@@ -77,10 +74,8 @@ module('Integration | Service | school events', function(hooks) {
     });
     const subject = this.owner.lookup('service:school-events');
     const schoolId = 3;
-    run( async () => {
-      const events = await subject.getEvents(schoolId, from.unix(), to.unix());
-      assert.equal(events.length, 0);
-    });
+    const events = await subject.getEvents(schoolId, from.unix(), to.unix());
+    assert.equal(events.length, 0);
   });
 
   test('getEventForSlug - offering', async function(assert){
@@ -108,10 +103,8 @@ module('Integration | Service | school events', function(hooks) {
       }
     });
     const subject = this.owner.lookup('service:school-events');
-    run( async () => {
-      const event = await subject.getEventForSlug('S0720110421O1');
-      assert.equal(event, event1);
-    });
+    const event = await subject.getEventForSlug('S0720110421O1');
+    assert.equal(event, event1);
   });
 
   test('getEventForSlug - ILM', async function(assert){
@@ -139,9 +132,7 @@ module('Integration | Service | school events', function(hooks) {
       }
     });
     const subject = this.owner.lookup('service:school-events');
-    run( async () => {
-      const event = await subject.getEventForSlug('S0720080902I3');
-      assert.equal(event, event2);
-    });
+    const event = await subject.getEventForSlug('S0720080902I3');
+    assert.equal(event, event2);
   });
 });
