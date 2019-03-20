@@ -1,13 +1,11 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
 
 module('Unit | Model | pending user update', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = run(() => this.owner.lookup('service:store').createRecord('pending-user-update'));
-    // let store = this.store();
+    let model = this.owner.lookup('service:store').createRecord('pending-user-update');
     assert.ok(!!model);
   });
 });
