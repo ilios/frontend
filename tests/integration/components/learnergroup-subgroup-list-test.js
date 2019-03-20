@@ -11,7 +11,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | learnergroup subgroup list', function(hooks) {
   setupRenderingTest(hooks);
@@ -30,7 +29,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
       parent
     });
     this.server.createList('learner-group', 2, { parent: subGroup2 });
-    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
 
@@ -104,7 +103,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
       users
     });
 
-    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
     await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
@@ -120,7 +119,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     assert.equal(find('.saved-result').textContent.trim().replace(/[\t\n\s]+/g, ''),
       (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
     );
-    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));
+    const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
@@ -139,7 +138,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
       users
     });
 
-    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
     const groups = 'table tbody tr';
@@ -160,7 +159,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     await click(done);
 
     assert.dom(secondGroupTitle).hasText('group 2');
-    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 3));
+    const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
 
@@ -177,7 +176,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
       cohort
     });
 
-    const parentGroup = await run(() => this.owner.lookup('service:store').find('learner-group', parent.id));
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
     const groups = 'table tbody tr';
@@ -195,7 +194,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     await click(done);
 
     assert.dom(firstGroupTitle).hasText(expectedGroupTitle);
-    const newGroup = await run(() => this.owner.lookup('service:store').find('learner-group', 2));
+    const newGroup = await this.owner.lookup('service:store').find('learner-group', 2);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
     assert.equal(newGroup.title, expectedGroupTitle);

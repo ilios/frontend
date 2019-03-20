@@ -37,7 +37,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.create('cohort', {id: 2, title: 'second', programYear: py1});
     this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
 
-    const schoolModel = await run(() => this.owner.lookup('service:store').find('school', school.id));
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
     const mockUser = EmberObject.create({
       school: resolve(schoolModel)

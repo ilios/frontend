@@ -8,7 +8,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | school session type form', function(hooks) {
   setupRenderingTest(hooks);
@@ -91,7 +90,7 @@ module('Integration | Component | school session type form', function(hooks) {
     this.server.create('assessment-option', {
       name: 'summative'
     });
-    const assessmentOptions = await run(() => this.owner.lookup('service:store').findAll('assessment-option'));
+    const assessmentOptions = await this.owner.lookup('service:store').findAll('assessment-option');
 
     this.set('assessmentOption', assessmentOptions[1]);
     this.set('assessmentOptions', assessmentOptions);
@@ -211,8 +210,8 @@ module('Integration | Component | school session type form', function(hooks) {
     const formative = this.server.create('assessment-option', {
       name: 'formative'
     });
-    const aamcMethodModel = await run(() => this.owner.lookup('service:store').find('aamc-method', method.id));
-    const assessmentOptionModel = await run(() => this.owner.lookup('service:store').find('assessment-option', formative.id));
+    const aamcMethodModel = await this.owner.lookup('service:store').find('aamc-method', method.id);
+    const assessmentOptionModel = await this.owner.lookup('service:store').find('assessment-option', formative.id);
 
     this.set('nothing', () => {});
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {

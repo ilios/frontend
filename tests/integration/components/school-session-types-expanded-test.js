@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | school session types expanded', function(hooks) {
   setupRenderingTest(hooks);
@@ -26,8 +25,8 @@ module('Integration | Component | school session types expanded', function(hooks
       id: 1,
       sessionTypes: [sessionType]
     });
-    this.school = await run(() => this.owner.lookup('service:store').find('school', school.id));
-    this.sessionType = await run(() => this.owner.lookup('service:store').find('session-type', sessionType.id));
+    this.school = await this.owner.lookup('service:store').find('school', school.id);
+    this.sessionType = await this.owner.lookup('service:store').find('session-type', sessionType.id);
   });
 
   test('it renders', async function(assert) {

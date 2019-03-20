@@ -11,7 +11,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { run } from '@ember/runloop';
 
 const permissionCheckerMock = Service.extend({
   async canCreateUser() {
@@ -28,7 +27,7 @@ module('Integration | Component | new directory user', function(hooks) {
     const user = this.server.create('user', {
       school: schools[0]
     });
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', user.id));
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     const currentUserMock = Service.extend({
       model: resolve(userModel)
     });
@@ -213,7 +212,7 @@ module('Integration | Component | new directory user', function(hooks) {
 
     await click(save);
 
-    const userModel = await run(() => this.owner.lookup('service:store').find('user', 5));
+    const userModel = await this.owner.lookup('service:store').find('user', 5);
     assert.equal(userModel.firstName, user1Object.get('firstName'), 'record created with correct value for firstName');
     assert.equal(userModel.middleName, null, 'record created with correct value for middleName');
     assert.equal(userModel.lastName, user1Object.get('lastName'), 'record created with correct value for lastName');
