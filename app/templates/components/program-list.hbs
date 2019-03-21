@@ -3,8 +3,8 @@
     <tr>
       <th class="text-left" colspan="3">{{t "general.programTitle"}}</th>
       <th class="text-center hide-from-small-screen" colspan="2">{{t "general.school"}}</th>
-      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.status"}}</th>
-      <th class="text-center" colspan="2">{{t "general.actions"}}</th>
+      <th class="text-center hide-from-small-screen">{{t "general.status"}}</th>
+      <th class="text-right" colspan="2">{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody>
@@ -22,12 +22,12 @@
         >
           {{program.school.title}}
         </td>
-        <td
-          class="text-center hide-from-small-screen"
-          colspan="2"
-          {{action "edit" program}}
-        >
-          {{publication-status item=program showIcon=false}}
+        <td class="text-center hide-from-small-screen">
+          {{#if (and program.isPublished (not program.isScheduled))}}
+            {{fa-icon "circle" class="yes"}}
+          {{else}}
+            {{fa-icon "circle" class="warning"}}
+          {{/if}}
         </td>
         <td class="text-right" colspan="2">
           {{#link-to "program" program.content class="edit"}}
@@ -44,7 +44,7 @@
       </tr>
       {{#if program.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan="9">
+          <td colspan="8">
             <div class="confirm-message">
               {{#if (is-fulfilled program.courses)}}
                 {{t

@@ -36,7 +36,9 @@
             <th class="text-left hide-from-small-screen">{{t "general.objectives"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.directors"}}</th>
             <th class="text-left hide-from-small-screen">{{t "general.terms"}}</th>
-            <th class="text-center" colspan="2">{{t "general.status"}}</th>
+            <th class="text-center hide-from-small-screen">{{t "general.status"}}</th>
+            <th class="text-right" colspan="2">{{t "general.actions"}}</th>
+
           </tr>
         </thead>
         <tbody>
@@ -85,11 +87,17 @@
                   {{/if}}
                 </td>
 
-                <td class="text-center" colspan="2">
+                <td class="text-center hide-from-small-screen">
+                  {{#if (and programYearProxy.isPublished (not programYearProxy.isScheduled))}}
+                    {{fa-icon "circle" class="yes"}}
+                  {{else}}
+                    {{fa-icon "circle" class="warning"}}
+                  {{/if}}
+                </td>
+                <td class="text-right" colspan="2">
                   {{#if programYearProxy.isSaving}}
                     {{loading-spinner}}
                   {{else}}
-                    {{publication-status item=programYearProxy.content showIcon=false}}
                     {{#if programYearProxy.locked}}
                       {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon
@@ -126,7 +134,7 @@
 
               {{#if programYearProxy.showRemoveConfirmation}}
                 <tr class="confirm-removal">
-                  <td colspan="8">
+                  <td colspan="9">
                     <div class="confirm-message">
                       {{t
                         "general.confirmRemoveProgramYear"
