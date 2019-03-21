@@ -1,32 +1,36 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event';
 import moment from 'moment';
 
 export default Component.extend({
-  store: service(),
   intl: service(),
   router: service(),
-  layout,
-  event: null,
+  store: service(),
+
   classNames: ['single-event'],
+
   'data-test-single-event': true,
+  event: null,
+  layout,
 
-  taughtBy: computed('intl.locale', 'event.instructors', function(){
-    const instructors = this.get('event.instructors');
-    if (isEmpty(instructors)) {
-      return '';
+  taughtBy: computed('event.instructors', 'intl.locale', {
+    get() {
+      const instructors = this.get('event.instructors');
+      if (isEmpty(instructors)) return '';
+      return this.get('intl').t('general.taughtBy', { instructors });
     }
-    return this.get('intl').t('general.taughtBy', {instructors});
-  }),
+  }).readOnly(),
 
-  sessionIs: computed('event.sessionType', 'intl.locale', function(){
-    const intl = this.get('intl');
-    const type = this.get('event.sessionTypeTitle');
-    return intl.t('general.sessionIs', { type });
-  }),
+  sessionIs: computed('event.sessionType', 'intl.locale', {
+    get() {
+      const intl = this.get('intl');
+      const type = this.get('event.sessionTypeTitle');
+      return intl.t('general.sessionIs', { type });
+    }
+  }).readOnly(),
 
   courseObjectives: computed('intl.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
     const intl = this.get('intl');
