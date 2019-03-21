@@ -128,7 +128,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test session'), 'session title is displayed');
     assert.ok(this.element.querySelector('.single-event-location').textContent.includes('here'), 'location is displayed');
     assert.ok(this.element.querySelector('.single-event-instructors').textContent.includes('Taught By Great Teacher'), 'instructors are displayed');
-    assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('This session is "test type"'), 'session type is displayed');
+    assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('Session Type: "test type"'), 'session type is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test description'), 'session description is displayed');
     let sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
     assert.dom(
@@ -183,7 +183,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`{{single-event event=event}}`);
     assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.offeredAt, 'On ' + today.format('dddd, MMMM Do YYYY, h:mm a'));
+    assert.equal(component.offeredAt, today.format('dddd, MMMM Do YYYY, h:mm a'));
   });
 
   test('postrequisite date and title are displayed', async function(assert) {
@@ -292,7 +292,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.equal(component.title, 'course - Learn to Learn');
     const formattedTomorrow = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
     const formattedToday = today.format('dddd, MMMM Do YYYY, h:mm a');
-    assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) On ${formattedToday}`);
+    assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`);
     assert.equal(component.offeredAtLink, `/events/1234`);
   });
 });

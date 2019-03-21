@@ -24,25 +24,25 @@
         </p>
       {{/if}}
       {{#unless @event.ilmSession}}
-        <p>
-          {{t
-            "general.offeredAt"
-            date=(moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a")
-          }}
-        </p>
+        <p>{{moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a"}}</p>
       {{/unless}}
     </div>
+
     <div class="single-event-location">{{event.location}}</div>
+
     {{#if taughtBy}}
       <div class="single-event-instructors">{{taughtBy}}</div>
     {{/if}}
+
     <div class="single-event-session-is">{{sessionIs}}</div>
+
     {{#if event.equipmentRequired}}
       <div class="single-event-equipment-required">
         {{! template-lint-disable no-triple-curlies }}
         {{{t "general.specialEquipmentIs_Required_"}}} {{fa-icon "flask" title=(t "general.specialEquipment")}}
       </div>
     {{/if}}
+
     {{#if event.attireRequired}}
       <div class="single-event-attire-required">
         {{! template-lint-disable no-triple-curlies }}
