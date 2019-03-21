@@ -4,6 +4,7 @@ general:
   academicLevels: "Niveaux scolaire"
   academicYear: "Année Scolaire"
   accountEnabled: "Compte Activé"
+  activate: Activer
   active: Actif
   addCohort: "Ajouté cohorte"
   admin: Admin
