@@ -16,21 +16,19 @@ export default Component.extend({
   event: null,
   layout,
 
-  taughtBy: computed('event.instructors', 'intl.locale', {
-    get() {
-      const instructors = this.get('event.instructors');
-      if (isEmpty(instructors)) return '';
-      return this.get('intl').t('general.taughtBy', { instructors });
+  taughtBy: computed('event.instructors', 'intl.locale', function() {
+    const instructors = this.get('event.instructors');
+    if (isEmpty(instructors)) {
+      return '';
     }
-  }).readOnly(),
+    return this.get('intl').t('general.taughtBy', { instructors });
+  }),
 
-  sessionIs: computed('event.sessionType', 'intl.locale', {
-    get() {
-      const intl = this.get('intl');
-      const type = this.get('event.sessionTypeTitle');
-      return intl.t('general.sessionIs', { type });
-    }
-  }).readOnly(),
+  sessionIs: computed('event.sessionType', 'intl.locale', function() {
+    const intl = this.get('intl');
+    const type = this.get('event.sessionTypeTitle');
+    return intl.t('general.sessionIs', { type });
+  }),
 
   courseObjectives: computed('intl.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
     const intl = this.get('intl');
