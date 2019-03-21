@@ -228,7 +228,7 @@ general:
   selectVocabulary: "Select Vocabulary"
   session: Session
   sessionAdministration: "Session Administration"
-  sessionIs: "Session Type: \"{type}\""
+  sessionIs: "Session Type: {type}"
   sessionLearningMaterials: "Session Learning Materials"
   sessionObjectives: "Session Objectives"
   sessions: Sessions

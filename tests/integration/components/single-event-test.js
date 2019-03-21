@@ -128,7 +128,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test session'), 'session title is displayed');
     assert.ok(this.element.querySelector('.single-event-location').textContent.includes('here'), 'location is displayed');
     assert.ok(this.element.querySelector('.single-event-instructors').textContent.includes('Taught By Great Teacher'), 'instructors are displayed');
-    assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('Session Type: "test type"'), 'session type is displayed');
+    assert.ok(this.element.querySelector('.single-event-session-is').textContent.includes('Session Type: test type'), 'session type is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test description'), 'session description is displayed');
     let sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)');
     assert.dom(
