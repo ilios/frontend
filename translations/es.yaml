@@ -184,7 +184,6 @@ general:
   objectivesTotalInstructionalTime: "Objetivos: Tiempo de Instrucción Total"
   objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
   objectivesWithNoLink: "No hay objetivos del curso actualmente vinculados a tiempo de instrucción."
-  offeredAt: "en {date}"
   offering: Ofrecimiento
   offerings: Ofrecimientos
   otherVisualizations: "Otras Visualizaciones"
@@ -229,7 +228,7 @@ general:
   selectVocabulary: "Seleccione un Vocabulario"
   session: "Sessión"
   sessionAdministration: "Administración de la Sesión"
-  sessionIs: "Esta sesión es \"{type}\""
+  sessionIs: "Tipo de Sesión: {type}"
   sessionLearningMaterials: "Materiales de Aprendizaje de la Sesión"
   sessionObjectives: "Objetivos de la Sesión"
   sessions: Sesiones
