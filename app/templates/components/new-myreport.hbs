@@ -71,20 +71,24 @@
       {{/each}}
     </select>
   </p>
-  {{#if currentPrepositionalObject class="crossFade"}}
-    {{#if (contains currentPrepositionalObject (w "course session"))}}
+  {{#if this.currentPrepositionalObject class="crossFade"}}
+    {{#if (contains this.currentPrepositionalObject (w "course session"))}}
       <select
-        onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-report-year-filter
-      >
-        <option value="" selected={{is-empty selectedYear}}>{{t "general.allAcademicYears"}}</option>
-        {{#each (sort-by "academicYearTitle:desc" (await allAcademicYears)) as |year|}}
-          <option value={{year.id}} selected={{is-equal year selectedYear}}>
+        onchange={{action "changeSelectedYear" value="target.value"}}>
+        <option selected={{is-empty this.selectedYear}} value="">
+          {{t "general.allAcademicYears"}}
+        </option>
+        {{#each (sort-by "academicYearTitle:desc" (await this.allAcademicYears)) as |year|}}
+          <option
+            selected={{is-equal year.id this.selectedYear}}
+            value={{year.id}}>
             {{year.academicYearTitle}}
           </option>
         {{/each}}
       </select>
     {{/if}}
+
     <p>
       <label>{{t "general.whichIs"}}</label>
       {{#if (is-equal currentPrepositionalObject "instructor")}}
