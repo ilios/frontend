@@ -64,23 +64,25 @@ const PrepositionObject = EmberObject.extend({
     }
 
     return null;
-  }),
+  })
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  intl: service(),
   currentUser: service(),
   flashMessages: service(),
-  classNames: ['new-myreport', 'mesh-manager'],
-  title: null,
-  selectedSchool: null,
-  schoolChanged: false,
-  currentSubject: 'course',
+  intl: service(),
+  store: service(),
+
+  classNames: ['mesh-manager', 'new-myreport'],
+
   currentPrepositionalObject: null,
   currentPrepositionalObjectId: null,
+  currentSubject: 'course',
   isSaving: false,
+  selectedSchool: null,
   selectedYear: null,
+  schoolChanged: false,
+  title: null,
 
   subjectList: computed('intl.locale', function(){
     let list = [
@@ -349,25 +351,31 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('currentPrepositionalObject', null);
       this.set('currentPrepositionalObjectId', null);
     },
+
     changePrepositionalObject(object){
       this.set('currentPrepositionalObject', object);
       this.set('currentPrepositionalObjectId', null);
       this.resetCurrentPrepositionalObjectId.perform();
     },
+
     changeSelectedYear(year){
       this.set('selectedYear', year);
       this.set('currentPrepositionalObjectId', null);
       this.resetCurrentPrepositionalObjectId.perform();
     },
+
     changePrepositionalObjectId(id){
       this.set('currentPrepositionalObjectId', id);
     },
+
     chooseInstructor(user){
       this.set('currentPrepositionalObjectId', user.get('id'));
     },
+
     chooseMeshTerm(term){
       this.set('currentPrepositionalObjectId', term.get('id'));
     },
+
     closeEditor(){
       this.close();
     }
