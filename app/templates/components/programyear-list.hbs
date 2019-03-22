@@ -98,6 +98,11 @@
                   {{#if programYearProxy.isSaving}}
                     {{loading-spinner}}
                   {{else}}
+                    {{#if (await programYearProxy.userCanActivate)}}
+                      <button {{action "activateProgramYear" programYearProxy}} class="text">
+                        {{t "general.activate"}}
+                      </button>
+                    {{/if}}
                     {{#if programYearProxy.locked}}
                       {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon
