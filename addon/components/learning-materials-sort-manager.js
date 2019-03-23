@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import { task } from 'ember-concurrency';

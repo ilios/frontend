@@ -1,4 +1,3 @@
-
 import { oneWay, sort } from '@ember/object/computed';
 import layout from '../templates/components/detail-mesh';
 import { all } from 'rsvp';

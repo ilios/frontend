@@ -1,4 +1,3 @@
-
 import { sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';

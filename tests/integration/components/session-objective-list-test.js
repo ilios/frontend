@@ -102,4 +102,3 @@ module('Integration | Component | session objective list', function(hooks) {
   });
 });
 
-

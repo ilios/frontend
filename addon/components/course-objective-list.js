@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import layout from '../templates/components/course-objective-list';

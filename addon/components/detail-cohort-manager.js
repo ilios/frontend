@@ -1,4 +1,3 @@
-
 import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-cohort-manager';
 

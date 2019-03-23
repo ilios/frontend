@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';

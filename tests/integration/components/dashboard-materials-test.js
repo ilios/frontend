@@ -69,7 +69,6 @@ module('Integration | Component | dashboard materials', function(hooks) {
   });
 
 
-
   test('it renders with materials', async function(assert) {
     assert.expect(39);
     const currentUserMock = Service.extend({

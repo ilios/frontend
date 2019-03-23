@@ -13,27 +13,27 @@ module('Integration | Component | progress bar', function(hooks) {
   });
 
   test('changing percentage changes width', async function(assert) {
-    
+
     this.set('passedValue', 42);
-    
+
     await render(hbs`{{progress-bar percentage=passedValue}}`);
 
     assert.equal(find('.meter').getAttribute('style').trim(), 'width: 42%');
-    
+
     this.set('passedValue', 12);
     assert.equal(find('.meter').getAttribute('style').trim(), 'width: 12%');
   });
 
   test('changing percentage changes the displayvalue', async function(assert) {
-    
+
     this.set('passedValue', 42);
-    
+
     await render(hbs`{{progress-bar percentage=passedValue}}`);
 
     assert.dom(this.element).hasText('42%');
-    
+
     this.set('passedValue', 11);
     assert.dom(this.element).hasText('11%');
-    
+
   });
 });

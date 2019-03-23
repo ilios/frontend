@@ -14,4 +14,3 @@ export default Mixin.create({
   }
 });
 
-

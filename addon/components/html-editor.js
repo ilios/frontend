@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';

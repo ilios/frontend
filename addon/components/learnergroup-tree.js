@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { Promise as RSVPPromise, filter } from 'rsvp';
