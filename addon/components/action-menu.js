@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import DropdownComponentMixin from 'ember-rl-dropdown/mixins/rl-dropdown-component';
 import layout from '../templates/components/action-menu';

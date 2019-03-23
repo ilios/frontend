@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import layout from '../templates/components/editable-field';
 import { computed } from '@ember/object';

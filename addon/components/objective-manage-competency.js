@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import  {
   Promise as RSVPPromise,

@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';

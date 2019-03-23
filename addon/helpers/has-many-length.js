@@ -5,7 +5,7 @@ export function hasManyLength([model, property]) {
   if(isEmpty(model) || typeof model !== 'object') {
     return model;
   }
-  
+
   if(typeof model.hasMany !== 'function') {
     return model;
   }

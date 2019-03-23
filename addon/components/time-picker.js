@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';

@@ -11,7 +11,7 @@ export default DS.RESTSerializer.extend({
     if (fileHash) {
       json.fileHash = fileHash;
     }
-    
+
     //don't persist this, it is handled by the server
     delete json.absoluteFileUri;
     delete json.uploadDate;

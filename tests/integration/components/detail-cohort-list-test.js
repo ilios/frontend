@@ -67,4 +67,3 @@ module('Integration | Component | detail cohort list', function(hooks) {
   });
 });
 
-

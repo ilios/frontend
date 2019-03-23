@@ -1,4 +1,3 @@
-
 /**
  * Stolen from https://github.com/auth0/jwt-decode/blob/master/lib/base64_url_decode.js
  */

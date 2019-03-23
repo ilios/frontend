@@ -1,4 +1,3 @@
-
 import Component from '@ember/component';
 import { filter, map } from 'rsvp';
 import { computed } from '@ember/object';

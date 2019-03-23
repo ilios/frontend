@@ -1,4 +1,3 @@
-
 import EmberObject from '@ember/object';
 import ValidationErrorDisplayMixin from 'ilios-common/mixins/validation-error-display';
 import { module, test } from 'qunit';
