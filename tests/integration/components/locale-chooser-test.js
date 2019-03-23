@@ -13,7 +13,7 @@ module('Integration | Component | locale-chooser', function(hooks) {
 
     await a11yAudit(this.element);
     assert.equal(component.text, 'English (en)');
-    
+
     await component.toggle.click();
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

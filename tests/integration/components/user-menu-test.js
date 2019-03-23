@@ -25,7 +25,7 @@ module('Integration | Component | user-menu', function(hooks) {
 
     await a11yAudit(this.element);
     assert.equal(component.text, 'Test Person');
-    
+
     await component.toggle.click();
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
