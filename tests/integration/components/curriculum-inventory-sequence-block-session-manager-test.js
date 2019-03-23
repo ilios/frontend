@@ -578,4 +578,3 @@ module('Integration | Component | curriculum inventory sequence block session ma
   });
 });
 
-
