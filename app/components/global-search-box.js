@@ -12,7 +12,16 @@ export default Component.extend({
   tagName: '',
   searchValue: null,
 
+  actions: {
+    focus({ target }) {
+      //place focus into the search box when search icon is clicked
+      target.parentElement.parentElement.querySelector('input[type="search"]').focus();
+    },
+  },
   search: task(function* () {
+
+  }),
+  autocomplete: task(function* () {
     let q = cleanQuery(this.searchValue);
     if (isBlank(q)) {
       return [];
@@ -26,21 +35,19 @@ export default Component.extend({
       }];
     }
 
-    let searchResults = yield this.store.query('search', { q });
-    if (searchResults.length === 0) {
-      return [{
-        type: 'text',
-        text: this.intl.t('general.noSearchResultsPrompt')
-      }];
-    }
-
-    let results = [
+    return [
       {
-        type: 'summary',
-        text: this.intl.t('general.resultsCount', {count: 11})
-      }
+        type: 'text',
+        text: 'first'
+      },
+      {
+        type: 'text',
+        text: 'second'
+      },
+      {
+        type: 'text',
+        text: 'third'
+      },
     ];
-
-    return results;
   }),
 });

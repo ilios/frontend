@@ -1,0 +1,34 @@
+<div class="global-search-box">
+  <input
+    type="search"
+    value={{searchValue}}
+    oninput={{action (mut searchValue) value="target.value"}}
+    incremental="true"
+    onsearch={{perform search}}
+    onkeyup={{perform autocomplete}}
+    class={{if
+            (or autocomplete.isRunning autocomplete.lastSuccessful.value.length)
+            "has-autocomplete"
+          }}
+  >
+  <span
+    class="search-icon"
+    onclick={{pipe-action (action "focus") (perform search)}}
+  >
+    {{fa-icon "search"}}
+  </span>
+  <ul
+    class="autocomplete {{unless
+                     (or autocomplete.isRunning autocomplete.lastSuccessful.value.length)
+                     "hidden"
+                   }}"
+  >
+    {{#if autocomplete.isRunning}}
+      <li>{{t "general.currentlySearchingPrompt"}}</li>
+    {{else}}
+      {{#each autocomplete.lastSuccessful.value as |result|}}
+        <li>{{result.text}}</li>
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>
