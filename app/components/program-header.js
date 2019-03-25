@@ -2,7 +2,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -19,7 +18,7 @@ const Validations = buildValidations({
   ],
 });
 
-export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
+export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('programTitle', this.get('program.title'));
@@ -55,5 +54,11 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
       const program = this.program;
       this.set('programTitle', program.get('title'));
     },
+    async activate() {
+      const program = this.program;
+      program.set('isPublished', true);
+      program.set('isPublishedAsTbd', false);
+      await program.save();
+    }
   }
 });
