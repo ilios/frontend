@@ -2,18 +2,23 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { once } from '@ember/runloop';
-import { observer } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 
 export default Component.extend({
   session: service(),
   pageTitleList: service(),
+  router: service(),
   features: service(),
 
   classNames: ['ilios-header'],
   tagName: 'header',
   ariaRole: 'banner',
   title: null,
+
+  showSearch: computed('session.isAuthenticated', 'router.currentRouteName', function () {
+    return this.session.isAuthenticated && this.router.currentRouteName !== 'search';
+  }),
 
   /**
    * We have to use an observer here
