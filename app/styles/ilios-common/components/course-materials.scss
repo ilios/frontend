@@ -15,7 +15,7 @@
     display: inline;
   }
 
-  .filter-session-lms {
+  .filter-course-lms, .filter-session-lms {
     text-align: right;
 
     @include for-phone-only {

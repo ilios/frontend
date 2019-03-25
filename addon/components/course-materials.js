@@ -1,126 +1,152 @@
 import Component from '@ember/component';
-import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import SortableTable from 'ilios-common/mixins/sortable-table';
+import { or, reads } from '@ember/object/computed';
+import { isEmpty, isPresent } from '@ember/utils';
+import { all, task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/course-materials';
 
-export default Component.extend(SortableTable, {
+const DEBOUNCE_DELAY = 250;
+
+export default Component.extend({
   layout,
-  course: null,
-  sortBy: null,
+
   classNames: ['course-materials'],
-  typesWithUrl: null,
-  filter: '',
-  sessionLearningMaterials: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    return new RSVPPromise(resolve => {
-      course.get('sessions').then(sessions => {
-        map(sessions.toArray(), session => {
-          return session.get('learningMaterials');
-        }).then(learningMaterials => {
-          let flat = learningMaterials.reduce((flattened, obj) => {
-            return flattened.pushObjects(obj.toArray());
-          }, []);
 
-          resolve(flat);
-        });
-      });
-    });
-  }),
-  sessionLearningMaterialObjects: computed('sessionLearningMaterials.[]', function(){
-    return new RSVPPromise(resolve =>{
-      this.get('sessionLearningMaterials').then(slms => {
-        map(slms.toArray(), sessionLearningMaterial => {
-          return new RSVPPromise(resolve =>{
-            sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
-              sessionLearningMaterial.get('session').then(session => {
-                session.get('firstOfferingDate').then(firstOfferingDate => {
-                  let obj = EmberObject.create({
-                    title: learningMaterial.get('title'),
-                    description: learningMaterial.get('description'),
-                    author: learningMaterial.get('originalAuthor'),
-                    type: learningMaterial.get('type'),
-                    url: learningMaterial.get('url'),
-                    citation: learningMaterial.get('citation'),
-                    sessionTitle: session.get('title'),
-                    firstOfferingDate,
-                  });
-                  resolve(obj);
-                });
-              });
-            });
-          });
-        }).then(lmObjects => {
-          resolve(lmObjects);
-        });
-      });
-    });
-  }),
-  filteredSessionLearningMaterialObjects: computed('filter', 'sessionLearningMaterialObjects.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('sessionLearningMaterialObjects').then(objs => {
-        const filter = this.get('filter');
-        if (isEmpty(filter)) {
-          resolve(objs);
-        } else {
-          let exp = new RegExp(filter, 'gi');
-          let filteredObjs = objs.filter(obj => {
-            return (isPresent(obj.get('title')) && obj.get('title').match(exp)) ||
-                   (isPresent(obj.get('description')) && obj.get('description').match(exp)) ||
-                   (isPresent(obj.get('author')) && obj.get('author').match(exp)) ||
-                   (isPresent(obj.get('type')) && obj.get('type').match(exp)) ||
-                   (isPresent(obj.get('citation')) && obj.get('citation').match(exp)) ||
-                   (isPresent(obj.get('sessionTitle')) && obj.get('sessionTitle').match(exp));
-          });
+  course: null,
+  clmQuery: '',
+  clmSortBy: null,
+  slmQuery: '',
+  slmSortBy: null,
+  onClmSort() {},
+  onSlmSort() {},
+  typesWithUrl: Object.freeze(['file', 'link']),
 
-          resolve(filteredObjs);
-        }
-      });
-    });
-  }),
-  sessions: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    return new RSVPPromise(resolve => {
-      course.get('sessions').then(sessions => {
-        map(sessions.toArray(), session => {
-          return session.get('learningMaterials');
-        }).then(learningMaterials => {
-          let flat = learningMaterials.reduce((flattened, obj) => {
-            return flattened.pushObjects(obj.toArray());
-          }, []);
+  isClmLoading: reads('courseLearningMaterialObjects.isRunning'),
 
-          resolve(flat);
-        });
-      });
-    });
+  isSlmLoading: or(
+    'sessionLearningMaterials.isRunning',
+    'sessionLearningMaterialObjects.isRunning'
+  ),
+
+  filteredCouseLearningMaterialObjects: computed(
+    'courseLearningMaterialObjects.last.value', 'clmQuery', function() {
+      const q = this.clmQuery;
+      const clmo = this.courseLearningMaterialObjects.last.value;
+      return isEmpty(q) ? clmo : this.filterClmo(clmo);
+    }
+  ),
+
+  filteredSessionLearningMaterialObjects: computed(
+    'sessionLearningMaterialObjects.last.value', 'slmQuery', function() {
+      const q = this.slmQuery;
+      const slmo = this.sessionLearningMaterialObjects.last.value;
+      return isEmpty(q) ? slmo : this.filterSlmo(slmo);
+    }
+  ),
+
+  clmSortedAscending: computed('clmSortBy', function() {
+    return this.clmSortBy.search(/desc/) === -1;
   }),
-  courseLearningMaterialObjects: computed('course.learningMaterials.[]', function(){
-    return new RSVPPromise(resolve =>{
-      const course = this.get('course');
-      course.get('learningMaterials').then(clms => {
-        map(clms.toArray(), courseLearningMaterial => {
-          return new RSVPPromise(resolve =>{
-            courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
-              let obj = EmberObject.create({
-                title: learningMaterial.get('title'),
-                description: learningMaterial.get('description'),
-                author: learningMaterial.get('originalAuthor'),
-                type: learningMaterial.get('type'),
-                url: learningMaterial.get('url'),
-                citation: learningMaterial.get('citation'),
-              });
-              resolve(obj);
-            });
-          });
-        }).then(lmObjects => {
-          resolve(lmObjects);
-        });
-      });
-    });
+
+  slmSortedAscending: computed('slmSortBy', function() {
+    return this.slmSortBy.search(/desc/) === -1;
   }),
-  init(){
-    this._super(...arguments);
-    this.set('typesWithUrl', ['file', 'link']);
+
+  actions: {
+    clmSortBy(prop) {
+      if (this.clmSortBy === prop) {
+        prop += ':desc';
+      }
+      this.onClmSort(prop);
+    },
+
+    slmSortBy(prop) {
+      if (this.slmSortBy === prop) {
+        prop += ':desc';
+      }
+      this.onSlmSort(prop);
+    }
   },
+
+  courseLearningMaterialObjects: task(function* () {
+    const clms = yield this.course.get('learningMaterials');
+    const promises = clms.map((clm) => this.buildClmObject.perform(clm));
+    return yield all(promises);
+  }).on('init'),
+
+  buildClmObject: task(function* (clm) {
+    const lm = yield clm.get('learningMaterial');
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url,
+    });
+  }),
+
+  sessionLearningMaterials: task(function* () {
+    const sessions = yield this.course.sessions;
+    const lms = yield all(sessions.mapBy('learningMaterials'));
+    const result = lms.reduce((flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    }, []);
+    this.sessionLearningMaterialObjects.perform(result);
+    return result;
+  }).on('init'),
+
+  sessionLearningMaterialObjects: task(function* (slms) {
+    const promises = slms.map((slm) => this.buildSlmObject.perform(slm));
+    return yield all(promises);
+  }),
+
+  buildSlmObject: task(function* (slm) {
+    const lm = yield slm.get('learningMaterial');
+    const session = yield slm.session;
+    const firstOfferingDate = yield session.firstOfferingDate;
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      firstOfferingDate,
+      sessionTitle: session.title,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url,
+    });
+  }),
+
+  setClmQuery: task(function* (q) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('clmQuery', q);
+  }).restartable(),
+
+  setSlmQuery: task(function* (q) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('slmQuery', q);
+  }).restartable(),
+
+  filterClmo(clmo) {
+    const exp = new RegExp(this.clmQuery, 'gi');
+    return clmo.filter((obj) => {
+      return (isPresent(obj.title) && obj.title.match(exp)) ||
+             (isPresent(obj.description) && obj.description.match(exp)) ||
+             (isPresent(obj.author) && obj.author.match(exp)) ||
+             (isPresent(obj.type) && obj.type.match(exp)) ||
+             (isPresent(obj.citation) && obj.citation.match(exp));
+    });
+  },
+
+  filterSlmo(slmo) {
+    const exp = new RegExp(this.slmQuery, 'gi');
+    return slmo.filter((obj) => {
+      return (isPresent(obj.title) && obj.title.match(exp)) ||
+             (isPresent(obj.description) && obj.description.match(exp)) ||
+             (isPresent(obj.author) && obj.author.match(exp)) ||
+             (isPresent(obj.type) && obj.type.match(exp)) ||
+             (isPresent(obj.citation) && obj.citation.match(exp)) ||
+             (isPresent(obj.sessionTitle) && obj.sessionTitle.match(exp));
+    });
+  }
 });
