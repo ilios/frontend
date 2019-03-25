@@ -21,27 +21,8 @@
     {{/if}}
   </div>
   <div class ="programyear-publication">
-    {{#if canUpdate}}
-      {{publish-menu
-        title=menuTitle
-        icon=menuIcon
-        publicationStatus=publicationStatus
-        showAsIs=showAsIs
-        showPublish=showPublish
-        showReview=showReview
-        showTbd=showTbd
-        showUnPublish=showUnPublish
-        reviewRoute="programYear.publicationCheck"
-        reviewObject=programYear
-        parentObject=(await programYear.program)
-        publishTranslation="general.publishProgramYear"
-        unPublishTranslation="general.unPublishProgramYear"
-        publish=(action "publish")
-        publishAsTbd=(action "publishAsTbd")
-        unpublish=(action "unpublish")
-      }}
-    {{else}}
-      {{publication-status item=programYear}}
+    {{#if (and canUpdate (or programYear.isScheduled (not programYear.isPublished)))}}
+      <button {{action "activate" programYear}}>{{t "general.activate"}}</button>
     {{/if}}
   </div>
 </header>
