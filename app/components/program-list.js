@@ -14,7 +14,17 @@ const ProgramProxy = ObjectProxy.extend({
     const canDelete = await permissionChecker.canDeleteProgram(program);
 
     return !hasCiReports && !hasProgramYears && canDelete;
-  })
+  }),
+  canActivate: computed(
+    'content.isScheduled',
+    'content.isPublished',
+    async function() {
+      const program = this.content;
+      const permissionChecker = this.permissionChecker;
+      const canBeUpdated = await permissionChecker.canUpdateProgram(program);
+      const isNotFullyPublished = (program.get('isScheduled') || ! program.get('isPublished'));
+      return (isNotFullyPublished && canBeUpdated);
+    })
 });
 
 
@@ -30,7 +40,7 @@ export default Component.extend({
     return programs.map(program => {
       return ProgramProxy.create({
         content: program,
-        permissionChecker
+        permissionChecker,
       });
     });
   }),
@@ -40,6 +50,9 @@ export default Component.extend({
     },
     remove(programProxy) {
       this.remove(programProxy.get('content'));
+    },
+    activate(programProxy) {
+      this.activate(programProxy.get('content'));
     },
     cancelRemove(programProxy) {
       programProxy.set('showRemoveConfirmation', false);
