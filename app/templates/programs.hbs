@@ -61,6 +61,7 @@
       {{#if (is-fulfilled filteredCourses)}}
         {{program-list
           programs=(await filteredPrograms)
+          activate=(action "activateProgram")
           edit=(action "editProgram")
           remove=(action "removeProgram")
         }}

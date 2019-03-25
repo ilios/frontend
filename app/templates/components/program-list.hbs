@@ -30,6 +30,11 @@
           {{/if}}
         </td>
         <td class="text-right" colspan="2">
+          {{#if (await program.canActivate)}}
+            <button {{action "activate" program}} class="text">
+              {{t "general.activate"}}
+            </button>
+          {{/if}}
           {{#link-to "program" program.content class="edit"}}
             {{fa-icon "edit" class="enabled"}}
           {{/link-to}}
