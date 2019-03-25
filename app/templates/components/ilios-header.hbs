@@ -6,6 +6,9 @@
 {{/link-to}}
 <h1>{{title}}</h1>
 <div class="tools">
+  {{#if features.globalSearch}}
+    <GlobalSearch />
+  {{/if}}
   {{locale-chooser}}
   {{#if session.isAuthenticated}}
     {{user-menu}}

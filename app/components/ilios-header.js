@@ -8,6 +8,7 @@ import { on } from '@ember/object/evented';
 export default Component.extend({
   session: service(),
   pageTitleList: service(),
+  features: service(),
 
   classNames: ['ilios-header'],
   tagName: 'header',
