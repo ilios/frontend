@@ -216,9 +216,6 @@ const ProgramYearProxy = ObjectProxy.extend({
   userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function(){
     const programYear = this.content;
     const permissionChecker = this.permissionChecker;
-    if (programYear.get('isPublishedOrScheduled')) {
-      return false;
-    }
     const cohort = await programYear.get('cohort');
     const cohortUsers = cohort.hasMany('users').ids();
     if (cohortUsers.length > 0) {
