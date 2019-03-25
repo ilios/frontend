@@ -1,62 +1,54 @@
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  findAll,
-  click,
-  find
-} from '@ember/test-helpers';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { render, settled, findAll, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { resolve } from 'rsvp';
 
 module('Integration | Component | program list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert){
-    assert.expect(14);
-    const program1 = EmberObject.create({
-      id: 1,
-      // KLUDGE!
-      // see the comment on ProgramProxy::isDeletable() in the component file.
-      hasMany() {
-        return {
-          ids() {
-            return [ 1 ];
-          }
-        };
-      },
+    assert.expect(16);
+    const som = this.server.create('school', {
+      title: 'Medicine'
+    });
+    const sod = this.server.create('school', {
+      title: 'Dentistry'
+    });
+    const program1 = this.server.create('program', {
+      school: som,
       title: 'Aardvark',
-      school: {
-        title: 'Medicine',
-      },
-      publishedAsTbd: true,
+      published: true,
+      publishedAsTbd: true
     });
-    const program2 = EmberObject.create({
-      id: 2,
-      hasMany() {
-        return {
-          ids() {
-            return [];
-          }
-        };
-      },
+
+    this.server.create('programYear', {
+      program: program1,
+    });
+    const program2 = this.server.create('program', {
+      school: sod,
       title: 'Zeppelin',
-      school: {
-        title: 'Dentistry'
-      },
-      isPublished: true,
+      published: true,
+      publishedAsTbd: false,
     });
+
     const permissionCheckerMock = Service.extend({
-      canDeleteProgram() {
-        return resolve(true);
+      async canDeleteProgram() {
+        return true;
+      },
+      async canUpdateProgram() {
+        return true;
       }
     });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    this.set('programs', [ program1, program2 ]);
+    const programModel1 = await this.owner.lookup('service:store').find('program', program1.id);
+    const programModel2 = await this.owner.lookup('service:store').find('program', program2.id);
+
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.set('programs', [ programModel1, programModel2 ]);
+
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
     assert.dom('thead tr:nth-of-type(1) th').hasText('Program Title');
@@ -66,13 +58,15 @@ module('Integration | Component | program list', function(hooks) {
 
     assert.dom('tbody tr:nth-of-type(1) td').hasText('Aardvark');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Medicine');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Scheduled');
+    assert.dom('tbody tr:nth-of-type(1) td .warning').exists();
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) button').exists();
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
 
     assert.dom('tbody tr:nth-of-type(2) td').hasText('Zeppelin');
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Dentistry');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Published');
+    assert.dom('tbody tr:nth-of-type(2) td .yes').exists();
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) button').doesNotExist();
     assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
     assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) .remove .fa-trash').exists({ count: 1 });
   });
@@ -88,25 +82,18 @@ module('Integration | Component | program list', function(hooks) {
 
   test('edit', async function(assert){
     assert.expect(1);
-    const program1 = EmberObject.create({
-      id: 1,
-      school: {
-        title: 'Foo'
-      },
-      title: 'Bar',
-      isPublished: true,
-      hasMany() {
-        return {
-          ids() {
-            return [];
-          }
-        };
-      },
+    const school = this.server.create('school', {
+      title: 'Medicine'
     });
+    const program = this.server.create('program', {
+      school,
+      title: 'Aardvark',
+    });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
-    this.set('programs', [ program1 ]);
-    this.set('editAction', program => {
-      assert.equal(program, program1 );
+    this.set('programs', [ programModel ]);
+    this.set('editAction', (program) => {
+      assert.equal(program, programModel );
     });
 
     await render(hbs`{{program-list programs=programs edit=editAction}}`);
@@ -116,33 +103,27 @@ module('Integration | Component | program list', function(hooks) {
 
   test('remove and cancel', async function(assert){
     assert.expect(5);
-    const program1 = EmberObject.create({
-      id: 1,
-      school: {
-        title: 'Foo'
-      },
-      title: 'Bar',
-      isPublished: true,
-      hasMany() {
-        return {
-          ids() {
-            return [];
-          }
-        };
-      },
+    const school = this.server.create('school', {
+      title: 'Medicine'
     });
+    const program = this.server.create('program', {
+      school,
+      title: 'Aardvark',
+    });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
     const permissionCheckerMock = Service.extend({
-      canDeleteProgram(program) {
-        assert.equal(program, program1);
-        return resolve(true);
+      async canDeleteProgram(program) {
+        assert.equal(program, programModel);
+        return true;
       }
     });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    this.set('programs', [ program1 ]);
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.set('programs', [ programModel ]);
     this.set('removeAction', () => {
       assert.ok(false, 'This function should never be called.');
     });
+
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
@@ -156,34 +137,27 @@ module('Integration | Component | program list', function(hooks) {
   });
 
   test('remove and confirm', async function(assert){
-    assert.expect(5);
-    const program1 = EmberObject.create({
-      id: 1,
-      school: {
-        title: 'Foo'
-      },
-      title: 'Bar',
-      isPublished: true,
-      hasMany() {
-        return {
-          ids() {
-            return [];
-          }
-        };
-      },
+    assert.expect(4);
+    const school = this.server.create('school', {
+      title: 'Medicine'
     });
+    const program = this.server.create('program', {
+      school,
+      title: 'Aardvark',
+    });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
     const permissionCheckerMock = Service.extend({
-      canDeleteProgram(program) {
-        assert.equal(program, program1);
-        return resolve(true);
-      }
+      async canDeleteProgram() {
+        return true;
+      },
     });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    this.set('programs', [ program1 ]);
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
     this.set('removeAction', (program) => {
-      assert.equal(program, program1);
+      assert.equal(program, programModel);
     });
+    this.set('programs', [ programModel ]);
+
     await render(hbs`{{program-list programs=programs remove=removeAction}}`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
@@ -195,34 +169,57 @@ module('Integration | Component | program list', function(hooks) {
   });
 
   test('trash is disabled for unprivileged users', async function(assert){
-    assert.expect(3);
-    const program1 = EmberObject.create({
-      id: 1,
-      school: {
-        title: 'Foo'
-      },
-      title: 'Bar',
-      isPublished: true,
-      hasMany() {
-        return {
-          ids() {
-            return [];
-          }
-        };
-      },
+    assert.expect(2);
+    const school = this.server.create('school', {
+      title: 'Medicine'
     });
+    const program = this.server.create('program', {
+      school,
+      title: 'Aardvark',
+    });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
     const permissionCheckerMock = Service.extend({
-      canDeleteProgram(program) {
-        assert.equal(program, program1);
-        return resolve(false);
+      async canDeleteProgram() {
+        return false;
       }
     });
+
+    this.set('programs', [ programModel ]);
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    this.set('programs', [ program1 ]);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
+  });
+
+  test('activate!', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school', {
+      title: 'Medicine'
+    });
+    const program = this.server.create('program', {
+      school,
+      title: 'Aardvark',
+      published: false,
+      publishedAsTbd: true,
+    });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const permissionCheckerMock = Service.extend({
+      async canUpdateProgram() {
+        return true;
+      }
+    });
+
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.set('programs', [ programModel ]);
+    this.set('activate', (program) => {
+      assert.equal(program, programModel);
+    });
+
+    await render(hbs`{{program-list programs=programs activate=activate}}`);
+    await settled();
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) button');
+    await settled();
   });
 });
