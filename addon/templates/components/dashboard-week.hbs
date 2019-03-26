@@ -1,16 +1,13 @@
 <div class="weeklylink" data-test-weekly-link>
   {{t "general.view"}}:
-  {{#link-to
-    "weeklyevents"
-    (query-params expanded=expanded)
-  }}
-    {{t "general.lastNextAllWeeks"}}
+  {{#link-to "weeklyevents" (query-params expanded=expanded)}}
+    {{t "general.allWeeks"}}
   {{/link-to}}
 </div>
+
 {{week-glance
-  collapsible=false
   collapsed=false
+  collapsible=false
   showFullTitle=true
-  year=year
   week=week
-}}
+  year=year}}

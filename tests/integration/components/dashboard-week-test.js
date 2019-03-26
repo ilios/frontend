@@ -85,13 +85,10 @@ module('Integration | Component | dashboard week', function(hooks) {
     this.owner.register('service:user-events', this.userEventsMock);
 
     await render(hbs`{{dashboard-week}}`);
-
     const expectedTitle = getTitle();
-
-    assert.equal(component.weeklyLink, 'Last Week / Next Week / All Weeks');
+    assert.equal(component.weeklyLink, 'All Weeks');
     assert.equal(component.weekGlance.title, expectedTitle);
     assert.equal(component.weekGlance.offeringEvents.length, 2, 'Blank events are not shown');
-
     assert.equal(component.weekGlance.offeringEvents[0].title, 'Learn to Learn');
     assert.equal(component.weekGlance.offeringEvents[1].title, 'Finding the Point in Life');
   });
@@ -103,8 +100,7 @@ module('Integration | Component | dashboard week', function(hooks) {
 
     await render(hbs`{{dashboard-week}}`);
     const expectedTitle = getTitle();
-
-    assert.equal(component.weeklyLink, 'Last Week / Next Week / All Weeks');
+    assert.equal(component.weeklyLink, 'All Weeks');
     assert.equal(component.weekGlance.title, expectedTitle);
     assert.equal(component.weekGlance.offeringEvents.length, 0);
   });
