@@ -69,6 +69,14 @@
       display: table-cell;
     }
   }
+
+  .hide-from-large-screen {
+    display: none;
+
+    @include for-smaller-than-laptop {
+      display: table-cell;
+    }
+  }
 }
 
 
