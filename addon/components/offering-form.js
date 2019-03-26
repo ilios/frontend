@@ -14,7 +14,7 @@ import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display
 import { task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/offering-form';
 
-const { not } = computed;
+const DEBOUNCE_DELAY = 750;
 
 const Validations = buildValidations({
   room: [
@@ -39,14 +39,14 @@ const Validations = buildValidations({
       }),
     ]
   },
-  durationHours: [
+  hourBuffer: [
     validator('number', {
       allowString: true,
       integer: true,
       gte: 0
     })
   ],
-  durationMinutes: [
+  minuteBuffer: [
     validator('number', {
       allowString: true,
       integer: true,
@@ -63,14 +63,16 @@ const Validations = buildValidations({
         messageKey: 'general.smallGroupMessage'
       })
     ]
-  },
-
+  }
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
+
   layout,
+
   classNames: ['offering-form'],
+
   startDate: null,
   endDate: null,
   room: 'TBD',
@@ -93,6 +95,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   recurringDayOptions: null,
   loaded: false,
   'data-test-offering-form': true,
+  hourBuffer: null,
+  minuteBuffer: null,
+
   associatedSchools: computed('cohorts.[]', function(){
     return new RSVPPromise(resolve => {
       const cohorts = this.get('cohorts');
@@ -402,6 +407,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups, loaded});
   }).drop(),
+
   saveOffering: task(function * () {
     this.set('offeringsToSave', 0);
     this.set('savedOfferings', 0);
@@ -427,8 +433,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     this.send('clearErrorDisplay');
     this.get('close')();
-
   }),
+
   validateThenSaveOffering: task(function * () {
     this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
     let {validations} = yield this.validate();
@@ -439,28 +445,40 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     yield this.get('saveOffering').perform();
   }),
-  updateDurationMinutes: task(function * (minutes) {
-    let {validations} = yield this.validate();
-    this.send('addErrorDisplayFor', 'durationMinutes');
 
-    if (validations.get('durationMinutes.isInvalid')) {
-      return;
-    }
-    const hours = this.get('durationHours');
-    const startDate = moment(this.get('startDate'));
-    let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
-    this.set('endDate', endDate);
-  }).restartable(),
   updateDurationHours: task(function * (hours) {
-    let {validations} = yield this.validate();
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('hourBuffer', hours);
+    const { validations } = yield this.validate();
+    const hourValidation = validations.toArray()[2];
     this.send('addErrorDisplayFor', 'durationHours');
-
-    if (validations.get('durationHours.isInvalid')) {
+    if (hourValidation.isInvalid) {
       return;
     }
-    const minutes = this.get('durationMinutes');
-    const startDate = moment(this.get('startDate'));
-    let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes').toDate();
+    const minutes = this.durationMinutes;
+    const endDate = moment(this.startDate)
+      .clone()
+      .add(hours, 'hours')
+      .add(minutes, 'minutes')
+      .toDate();
     this.set('endDate', endDate);
   }).restartable(),
+
+  updateDurationMinutes: task(function * (minutes) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('minuteBuffer', minutes);
+    const { validations } = yield this.validate();
+    const minValidation = validations.toArray()[3];
+    this.send('addErrorDisplayFor', 'durationMinutes');
+    if (minValidation.isInvalid) {
+      return;
+    }
+    const hours = this.durationHours;
+    const endDate = moment(this.startDate)
+      .clone()
+      .add(hours, 'hours')
+      .add(minutes, 'minutes')
+      .toDate();
+    this.set('endDate', endDate);
+  }).restartable()
 });
