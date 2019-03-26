@@ -122,7 +122,6 @@ general:
   instructorGroups: "Groupes des Instructeurs"
   instructors: Instructeurs
   instructorsManageTitle: "Manager Instructeurs"
-  lastNextAllWeeks: "dernière semaine / la semaine prochaîne / toutes les semaine"
   learnerGroups: "Groupes d'Étudiants"
   learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: "Étudiants"
