@@ -119,6 +119,12 @@ export default Controller.extend({
       return savedProgram;
     },
 
+    async activateProgram(program){
+      program.set('published', true);
+      program.set('publishedAsTbd', false);
+      await program.save();
+    },
+
     cancel() {
       this.set('showNewProgramForm', false);
     },

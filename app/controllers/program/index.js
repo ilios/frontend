@@ -10,5 +10,10 @@ export default Controller.extend({
       programYear.set('locked', false);
       return programYear.save();
     },
+    activateProgramYear(programYear) {
+      programYear.set('published', true);
+      programYear.set('publishedAsTbd', false);
+      return programYear.save();
+    }
   }
 });

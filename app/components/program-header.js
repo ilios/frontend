@@ -1,13 +1,7 @@
 /* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { alias } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   programTitle: [
@@ -19,7 +13,7 @@ const Validations = buildValidations({
   ],
 });
 
-export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
+export default Component.extend(Validations, ValidationErrorDisplay, {
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('programTitle', this.get('program.title'));
@@ -28,32 +22,32 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
   program: null,
   canUpdate: false,
   programTitle: null,
-  publishTarget: alias('program'),
 
   actions: {
-    changeTitle() {
+    async changeTitle() {
       const program = this.program;
       const newTitle = this.programTitle;
       this.send('addErrorDisplayFor', 'programTitle');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'programTitle');
-            program.set('title', newTitle);
-            program.save().then((newprogram) => {
-              this.set('programTitle', newprogram.get('title'));
-              this.set('program', newprogram);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      await this.validate();
+      if (this.validations.get('isValid')) {
+        this.send('removeErrorDisplayFor', 'programTitle');
+        program.set('title', newTitle);
+        const newprogram = await program.save();
+        this.set('programTitle', newprogram.get('title'));
+        this.set('program', newprogram);
+        return true;
+      }
+      return false;
     },
     revertTitleChanges(){
       const program = this.program;
       this.set('programTitle', program.get('title'));
     },
+    async activate() {
+      const program = this.program;
+      program.set('published', true);
+      program.set('publishedAsTbd', false);
+      await program.save();
+    }
   }
 });

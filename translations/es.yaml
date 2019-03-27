@@ -4,6 +4,7 @@ general:
   academicLevels: "Niveles Académicos"
   academicYear: "Año Academico"
   accountEnabled: "Cuenta Activa"
+  activate: Activar
   active: Activo
   addCohort: "Agregar Cohorte"
   admin: Admin

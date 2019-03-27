@@ -205,6 +205,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   }
 
   test('can add a program-year (with no pre-existing program-years)', async function(assert) {
+    assert.expect(7);
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       id: 1,
@@ -231,10 +232,10 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(0, 3, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
     assert.dom(getTableDataText(0, 4, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
     assert.dom(getTableDataText(0, 5, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
-    assert.dom(getTableDataText(0, 6, 'span')).hasText('Published', 'always published');
   });
 
   test('can add a program-year (with pre-existing program-year)', async function(assert) {
+    assert.expect(12);
     this.user.update({ administeredSchools: [this.school] });
     this.server.createList('user', 3, {
       directedProgramYearIds: [1]
@@ -287,7 +288,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(0, 3)).hasText('3');
     assert.dom(getTableDataText(0, 4)).hasText('3');
     assert.dom(getTableDataText(0, 5)).hasText('3');
-    assert.dom(getTableDataText(0, 6, 'span')).hasText('Not Published', 'unpublished shown');
 
     await click(expandButton);
     await fillIn(selectField, thisYear + 1);
@@ -300,7 +300,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(1, 3)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 4)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 5)).hasText('3', 'copied correctly from latest program-year');
-    assert.dom(getTableDataText(1, 6, 'span')).hasText('Published', 'always published');
   });
 
   test('privileged users can lock and unlock program-year', async function(assert) {
@@ -308,8 +307,8 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.expect(6);
     const firstProgramYearRow = '.list tbody tr:nth-of-type(1)';
     const secondProgramYearRow = '.list tbody tr:nth-of-type(2)';
-    const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
-    const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
+    const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(8) svg:nth-of-type(1)`;
+    const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(8) svg:nth-of-type(1)`;
     const program = this.server.create('program',  {
       school: this.school
     });
@@ -363,5 +362,66 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await visit(url);
     assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
     assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
+  });
+
+  test('activation status and activation button', async function(assert) {
+    assert.expect(6);
+    this.user.update({ administeredSchools: [this.school] });
+    const program = this.server.create('program', {
+      school: this.school
+    });
+    this.server.create('programYear', {
+      program,
+      published: true,
+      publishedAsTbd: true
+    });
+    this.server.create('programYear', {
+      program,
+      published: false,
+      publishedAsTbd: false
+    });
+    this.server.create('programYear', {
+      program,
+      published: true,
+      publishedAsTbd: false
+    });
+
+    await visit(url);
+    const firstProgramYearStatus = '.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning';
+    const secondProgramYearStatus = '.list tbody tr:nth-of-type(2) td:nth-of-type(7) .warning';
+    const thirdProgramYearStatus = '.list tbody tr:nth-of-type(3) td:nth-of-type(7) .yes';
+
+    const firstProgramYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
+    const secondProgramYearActivationButton =  '.list tbody tr:nth-of-type(2) td:nth-of-type(8) button';
+    const thirdProgramYearActivationButton =  '.list tbody tr:nth-of-type(3) td:nth-of-type(8) button';
+
+    await visit(url);
+    assert.ok(isPresent(find(firstProgramYearStatus)));
+    assert.ok(isPresent(find(secondProgramYearStatus)));
+    assert.ok(isPresent(find(thirdProgramYearStatus)));
+    assert.ok(isPresent(find(firstProgramYearActivationButton)));
+    assert.ok(isPresent(find(secondProgramYearActivationButton)));
+    assert.notOk(isPresent(find(thirdProgramYearActivationButton)));
+  });
+
+  test('activate!', async function(assert) {
+    assert.expect(4);
+    this.user.update({ administeredSchools: [this.school] });
+    const program = this.server.create('program', {
+      school: this.school
+    });
+    this.server.create('programYear', {
+      program,
+      published: false,
+      publishedAsTbd: true
+    });
+
+    await visit(url);
+    const programYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
+    assert.ok(find('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning'));
+    assert.ok(isPresent(find(programYearActivationButton)));
+    await click(programYearActivationButton);
+    assert.ok(find('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .yes'));
+    assert.notOk(isPresent(find(programYearActivationButton)));
   });
 });
