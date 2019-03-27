@@ -30,9 +30,26 @@
       <span class="session-grid-first-offering">
         {{#if (await obj.session.firstOfferingDate)}}
           {{#if obj.isIlm}}
-            <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await obj.session.firstOfferingDate) "L"}}
+            {{#if obj.postrequisite}}
+              {{t "general.ilm"}}: {{fa-icon "user-clock"}}
+              {{t "general.duePriorTo"}}:
+              {{#link-to "course.session" obj.postrequisite.id}}
+                {{truncate-text obj.postrequisite.title max=18}}
+              {{/link-to}}
+            {{else}}
+              {{t "general.ilm"}}: {{t "general.dueBy"}}:
+              {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
+            {{/if}}
           {{else}}
-            {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
+            {{#if obj.postrequisite}}
+              {{fa-icon "user-clock"}}
+              {{t "general.duePriorTo"}}:
+              {{#link-to "course.session" obj.postrequisite.id}}
+                {{truncate-text obj.postrequisite.title max=18}}
+              {{/link-to}}
+            {{else}}
+              {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
+            {{/if}}
           {{/if}}
         {{/if}}
       </span>

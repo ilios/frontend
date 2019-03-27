@@ -69,9 +69,10 @@ module.exports = function() {
       'trash',
       'undo',
       'user',
+      'user-clock',
       'user-plus',
       'user-times',
-      'users',
+      'users'
     ],
     'pro-light-svg-icons': [
       'clipboard-list',
