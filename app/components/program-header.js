@@ -56,8 +56,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     async activate() {
       const program = this.program;
-      program.set('isPublished', true);
-      program.set('isPublishedAsTbd', false);
+      program.set('published', true);
+      program.set('publishedAsTbd', false);
       await program.save();
     }
   }
