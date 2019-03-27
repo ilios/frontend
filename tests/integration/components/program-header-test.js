@@ -12,7 +12,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(3);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: false,
       publishedAsTbd: false
@@ -32,7 +32,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(3);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: false,
       publishedAsTbd: false
@@ -52,7 +52,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(1);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -70,7 +70,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(2);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -92,7 +92,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(2);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -114,7 +114,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(2);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -136,7 +136,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(3);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -159,7 +159,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(3);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: true,
       publishedAsTbd: false
@@ -182,7 +182,7 @@ module('Integration | Component | program header', function(hooks) {
     assert.expect(5);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
-      school: school,
+      school,
       title: 'Aardvark',
       published: false,
       publishedAsTbd: true
