@@ -49,7 +49,25 @@
       </tr>
       {{#if program.showRemoveConfirmation}}
         <tr class="confirm-removal">
-          <td colspan="8">
+          <td colspan="8" class="hide-from-small-screen">
+            <div class="confirm-message">
+              {{#if (is-fulfilled program.courses)}}
+                {{t
+                  "general.confirmRemoveProgram"
+                  programYearCount=(get (await program.programYears) "length")
+                  courseCount=(get (await program.courses) "length")
+                }}
+                <br>
+                <div class="confirm-buttons">
+                  <button {{action "remove" program}} class="remove text">{{t "general.yes"}}</button>
+                  <button {{action "cancelRemove" program}} class="done text">{{t "general.cancel"}}</button>
+                </div>
+              {{else}}
+                {{loading-spinner tagName="div"}}
+              {{/if}}
+            </div>
+          </td>
+          <td colspan="5" class="hide-from-large-screen">
             <div class="confirm-message">
               {{#if (is-fulfilled program.courses)}}
                 {{t
