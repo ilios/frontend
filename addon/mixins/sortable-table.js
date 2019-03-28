@@ -1,6 +1,5 @@
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
-
 export default Mixin.create({
   sortBy: '',
 
@@ -8,14 +7,13 @@ export default Mixin.create({
     const sortBy = this.get('sortBy');
     return sortBy.search(/desc/) === -1;
   }),
-
   actions: {
-    sortBy(prop) {
+    sortBy(what){
       const sortBy = this.get('sortBy');
-      if (sortBy === prop) {
-        prop += ':desc';
+      if (sortBy === what){
+        what += ':desc';
       }
-      this.get('setSortBy')(prop);
-    }
+      this.get('setSortBy')(what);
+    },
   }
 });
