@@ -15,7 +15,7 @@ import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display
 import { task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/offering-form';
 
-const DEBOUNCE_DELAY = 750;
+const DEBOUNCE_DELAY = 600;
 
 const Validations = buildValidations({
   room: [
@@ -40,21 +40,6 @@ const Validations = buildValidations({
       }),
     ]
   },
-  hourBuffer: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0
-    })
-  ],
-  minuteBuffer: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0,
-      lte: 59
-    })
-  ],
   learnerGroups: {
     dependentKeys: ['model.smallGroupMode'],
     disabled: not('model.smallGroupMode'),
@@ -96,8 +81,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   recurringDayOptions: null,
   loaded: false,
   'data-test-offering-form': true,
-  hourBuffer: null,
-  minuteBuffer: null,
 
   associatedSchools: computed('cohorts.[]', function(){
     return new RSVPPromise(resolve => {
@@ -449,13 +432,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   updateDurationHours: task(function * (hours) {
     yield timeout(DEBOUNCE_DELAY);
-    this.set('hourBuffer', hours);
-    const { validations } = yield this.validate();
-    const hourValidation = validations.toArray()[2];
-    this.send('addErrorDisplayFor', 'durationHours');
-    if (hourValidation.isInvalid) {
-      return;
-    }
     const minutes = this.durationMinutes;
     const endDate = moment(this.startDate)
       .clone()
@@ -467,13 +443,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   updateDurationMinutes: task(function * (minutes) {
     yield timeout(DEBOUNCE_DELAY);
-    this.set('minuteBuffer', minutes);
-    const { validations } = yield this.validate();
-    const minValidation = validations.toArray()[3];
-    this.send('addErrorDisplayFor', 'durationMinutes');
-    if (minValidation.isInvalid) {
-      return;
-    }
     const hours = this.durationHours;
     const endDate = moment(this.startDate)
       .clone()

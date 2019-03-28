@@ -35,44 +35,22 @@
       <label>{{t "general.duration"}}:</label>
       <div class="duration-inputs">
         <div class="hours">
-          <div class="hours__container">
-            <input
-              class={{if (and
-                (v-get this "hourBuffer" "isInvalid")
-                (is-in this.showErrorsFor "hourBuffer")) "has-error"}}
-              min="0"
-              type="number"
-              value={{durationHours}}
-              oninput={{perform this.updateDurationHours value="target.value"}}
-              onkeyup={{action "addErrorDisplayFor" "hourBuffer"}}>
-            <label>{{t "general.hours"}}</label>
-            {{#if (and (v-get this "hourBuffer" "isInvalid") (is-in showErrorsFor "hourBuffer"))}}
-              <span class="validation-error-message">
-                {{v-get this "hourBuffer" "message"}}
-              </span>
-            {{/if}}
-          </div>
+          <input
+            min="0"
+            type="number"
+            value={{durationHours}}
+            oninput={{perform this.updateDurationHours value="target.value"}}>
+          <label>{{t "general.hours"}}</label>
         </div>
 
         <div class="minutes">
-          <div class="minutes__container">
-            <input
-              class={{if (and
-                (v-get this "durationMinutes" "isInvalid")
-                (is-in this.showErrorsFor "durationMinutes")) "has-error"}}
-              max="59"
-              min="0"
-              type="number"
-              value={{durationMinutes}}
-              oninput={{perform this.updateDurationMinutes value="target.value"}}
-              onkeyup={{action "addErrorDisplayFor" "minuteBuffer"}}>
-            <label>{{t "general.minutes"}}</label>
-            {{#if (and (v-get this "minuteBuffer" "isInvalid") (is-in showErrorsFor "minuteBuffer"))}}
-              <span class="validation-error-message">
-                {{v-get this "minuteBuffer" "message"}}
-              </span>
-            {{/if}}
-          </div>
+          <input
+            max="59"
+            min="0"
+            type="number"
+            value={{durationMinutes}}
+            oninput={{perform this.updateDurationMinutes value="target.value"}}>
+          <label>{{t "general.minutes"}}</label>
         </div>
       </div>
     </div>
