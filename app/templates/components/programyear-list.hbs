@@ -139,7 +139,20 @@
 
               {{#if programYearProxy.showRemoveConfirmation}}
                 <tr class="confirm-removal">
-                  <td colspan="9">
+                  <td colspan="9" class="hide-from-small-screen">
+                    <div class="confirm-message">
+                      {{t
+                        "general.confirmRemoveProgramYear"
+                        courseCount=programYearProxy.cohort.courses.length
+                      }}
+                      <br>
+                      <div class="confirm-buttons">
+                        <button {{action "confirmRemove" programYearProxy}} class="remove text">{{t "general.yes"}}</button>
+                        <button {{action "cancelRemove" programYearProxy}} class="done text">{{t "general.cancel"}}</button>
+                      </div>
+                    </div>
+                  </td>
+                  <td colspan="3" class="hide-from-large-screen">
                     <div class="confirm-message">
                       {{t
                         "general.confirmRemoveProgramYear"
