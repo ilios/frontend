@@ -1,9 +1,12 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import { or, reads } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { isEmpty, isPresent } from '@ember/utils';
 import { all, task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/course-materials';
+import DS from 'ember-data';
+
+const { PromiseArray } = DS;
 
 const DEBOUNCE_DELAY = 250;
 
@@ -12,110 +15,67 @@ export default Component.extend({
 
   classNames: ['course-materials'],
 
-  course: null,
   clmQuery: '',
-  clmSortBy: null,
+  course: null,
+  courseSort: null,
+  sessionSort: null,
   slmQuery: '',
-  slmSortBy: null,
   onClmSort() {},
   onSlmSort() {},
   typesWithUrl: Object.freeze(['file', 'link']),
 
-  isClmLoading: reads('courseLearningMaterialObjects.isRunning'),
+  isClmLoading: reads('courseLearningMaterialObjects.isPending'),
+  isSlmLoading: reads('sessionLearningMaterialObjects.isPending'),
 
-  isSlmLoading: or(
-    'sessionLearningMaterials.isRunning',
-    'sessionLearningMaterialObjects.isRunning'
-  ),
+  courseLearningMaterialObjects: computed(function() {
+    const promise = this.fetchCourseLearningMaterials();
+    return PromiseArray.create({ promise });
+  }),
 
-  filteredCouseLearningMaterialObjects: computed(
-    'courseLearningMaterialObjects.last.value', 'clmQuery', function() {
+  sessionLearningMaterialObjects: computed(function() {
+    const promise = this.fetchSessionLearningMaterials();
+    return PromiseArray.create({ promise });
+  }),
+
+  filteredCourseLearningMaterialObjects: computed(
+    'courseLearningMaterialObjects', 'clmQuery', function() {
       const q = this.clmQuery;
-      const clmo = this.courseLearningMaterialObjects.last.value;
+      const clmo = this.courseLearningMaterialObjects;
       return isEmpty(q) ? clmo : this.filterClmo(clmo);
     }
   ),
 
   filteredSessionLearningMaterialObjects: computed(
-    'sessionLearningMaterialObjects.last.value', 'slmQuery', function() {
+    'sessionLearningMaterialObjects', 'slmQuery', function() {
       const q = this.slmQuery;
-      const slmo = this.sessionLearningMaterialObjects.last.value;
+      const slmo = this.sessionLearningMaterialObjects;
       return isEmpty(q) ? slmo : this.filterSlmo(slmo);
     }
   ),
 
-  clmSortedAscending: computed('clmSortBy', function() {
-    return this.clmSortBy.search(/desc/) === -1;
+  clmSortedAscending: computed('courseSort', function() {
+    return this.courseSort.search(/desc/) === -1;
   }),
 
-  slmSortedAscending: computed('slmSortBy', function() {
-    return this.slmSortBy.search(/desc/) === -1;
+  slmSortedAscending: computed('sessionSort', function() {
+    return this.sessionSort.search(/desc/) === -1;
   }),
 
   actions: {
     clmSortBy(prop) {
-      if (this.clmSortBy === prop) {
+      if (this.courseSort === prop) {
         prop += ':desc';
       }
       this.onClmSort(prop);
     },
 
     slmSortBy(prop) {
-      if (this.slmSortBy === prop) {
+      if (this.sessionSort === prop) {
         prop += ':desc';
       }
       this.onSlmSort(prop);
     }
   },
-
-  courseLearningMaterialObjects: task(function* () {
-    const clms = yield this.course.get('learningMaterials');
-    const promises = clms.map((clm) => this.buildClmObject.perform(clm));
-    return yield all(promises);
-  }).on('init'),
-
-  buildClmObject: task(function* (clm) {
-    const lm = yield clm.get('learningMaterial');
-    return EmberObject.create({
-      author: lm.originalAuthor,
-      citation: lm.citation,
-      description: lm.description,
-      title: lm.title,
-      type: lm.type,
-      url: lm.url,
-    });
-  }),
-
-  sessionLearningMaterials: task(function* () {
-    const sessions = yield this.course.sessions;
-    const lms = yield all(sessions.mapBy('learningMaterials'));
-    const result = lms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-    this.sessionLearningMaterialObjects.perform(result);
-    return result;
-  }).on('init'),
-
-  sessionLearningMaterialObjects: task(function* (slms) {
-    const promises = slms.map((slm) => this.buildSlmObject.perform(slm));
-    return yield all(promises);
-  }),
-
-  buildSlmObject: task(function* (slm) {
-    const lm = yield slm.get('learningMaterial');
-    const session = yield slm.session;
-    const firstOfferingDate = yield session.firstOfferingDate;
-    return EmberObject.create({
-      author: lm.originalAuthor,
-      citation: lm.citation,
-      description: lm.description,
-      firstOfferingDate,
-      sessionTitle: session.title,
-      title: lm.title,
-      type: lm.type,
-      url: lm.url,
-    });
-  }),
 
   setClmQuery: task(function* (q) {
     yield timeout(DEBOUNCE_DELAY);
@@ -126,6 +86,50 @@ export default Component.extend({
     yield timeout(DEBOUNCE_DELAY);
     this.set('slmQuery', q);
   }).restartable(),
+
+  async fetchCourseLearningMaterials() {
+    const clms = await this.course.get('learningMaterials');
+    const promises = clms.map((clm) => this.buildClmObject(clm));
+    return await all(promises);
+  },
+
+  async buildClmObject(clm) {
+    const lm = await clm.get('learningMaterial');
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url
+    });
+  },
+
+  async fetchSessionLearningMaterials() {
+    const sessions = await this.course.sessions;
+    const lms = await all(sessions.mapBy('learningMaterials'));
+    const slms = lms.reduce((flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    }, []);
+    const promises = slms.map((slm) => this.buildSlmObject(slm));
+    return await all(promises);
+  },
+
+  async buildSlmObject(slm) {
+    const lm = await slm.get('learningMaterial');
+    const session = await slm.session;
+    const firstOfferingDate = await session.firstOfferingDate;
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      firstOfferingDate,
+      sessionTitle: session.title,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url
+    });
+  },
 
   filterClmo(clmo) {
     const exp = new RegExp(this.clmQuery, 'gi');

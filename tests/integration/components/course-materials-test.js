@@ -15,8 +15,8 @@ import { resolve } from 'rsvp';
 module('Integration | Component | course materials', function(hooks) {
   setupRenderingTest(hooks);
 
-  const COURSE_TABLE = '.table__course';
-  const SESSION_TABLE = '.table__session';
+  const COURSE_TABLE = '[data-test-course-table]';
+  const SESSION_TABLE = '[data-test-session-table]';
 
   test('course lms render', async function(assert) {
     assert.expect(3);
@@ -38,13 +38,16 @@ module('Integration | Component | course materials', function(hooks) {
     });
     courseLm1.set('course', resolve(course));
 
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy}}`);
+        courseSort=courseSort
+        sessionSort=sessionSort}}`);
 
     const courseMaterials = `${COURSE_TABLE} tbody tr`;
     const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -113,13 +116,16 @@ module('Integration | Component | course materials', function(hooks) {
 
     let course = setupPage();
     this.set('nothing', parseInt);
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy
+        courseSort=courseSort
+        sessionSort=sessionSort
         onSlmSort=(action nothing)}}`);
 
     const courseMaterials = `${COURSE_TABLE} tbody tr`;
@@ -193,22 +199,25 @@ module('Integration | Component | course materials', function(hooks) {
     ];
     this.set('cSortBy', (prop) => {
       assert.equal(prop, cSortList[cCount]);
-      this.set('clmSortBy', prop);
+      this.set('courseSort', prop);
       cCount++;
     });
     this.set('sSortBy', (prop) => {
       assert.equal(prop, sSortList[sCount]);
-      this.set('slmSortBy', prop);
+      this.set('sessionSort', prop);
       sCount++;
     });
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
 
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy
+        courseSort=courseSort
+        sessionSort=sessionSort
         onClmSort=(action cSortBy)
         onSlmSort=(action sSortBy)}}`);
 
@@ -246,14 +255,17 @@ module('Integration | Component | course materials', function(hooks) {
     assert.expect(3);
 
     let course = setupPage();
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
 
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy}}`);
+        courseSort=courseSort
+        sessionSort=sessionSort}}`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -271,14 +283,17 @@ module('Integration | Component | course materials', function(hooks) {
     assert.expect(3);
 
     let course = setupPage();
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
 
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy}}`);
+        courseSort=courseSort
+        sessionSort=sessionSort}}`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -296,14 +311,17 @@ module('Integration | Component | course materials', function(hooks) {
     assert.expect(3);
 
     let course = setupPage();
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
 
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy}}`);
+        courseSort=courseSort
+        sessionSort=sessionSort}}`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -321,14 +339,17 @@ module('Integration | Component | course materials', function(hooks) {
     assert.expect(3);
 
     let course = setupPage();
-    this.setProperties({ clmSortBy: 'title', slmSortBy: 'firstOfferingDate' });
-    this.set('course', course);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
 
     await render(hbs`
       {{course-materials
-        clmSortBy=clmSortBy
         course=course
-        slmSortBy=slmSortBy}}`);
+        courseSort=courseSort
+        sessionSort=sessionSort}}`);
 
     const sessionTable = SESSION_TABLE;
     const sessionMaterials = `${sessionTable} tbody tr`;
