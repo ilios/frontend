@@ -30,7 +30,7 @@
             {{#if obj.postrequisite}}
               {{t "general.ilm"}}: {{fa-icon "user-clock"}}
               {{t "general.duePriorTo"}}:
-              {{#link-to "course.session" obj.postrequisite.id}}
+              {{#link-to "session" obj.course.id obj.postrequisite.id}}
                 {{truncate-text obj.postrequisite.title max=18}}
               {{/link-to}}
             {{else}}
@@ -41,7 +41,7 @@
             {{#if obj.postrequisite}}
               {{fa-icon "user-clock"}}
               {{t "general.duePriorTo"}}:
-              {{#link-to "course.session" obj.postrequisite.id}}
+              {{#link-to "session" obj.course.id obj.postrequisite.id}}
                 {{truncate-text obj.postrequisite.title max=18}}
               {{/link-to}}
             {{else}}
