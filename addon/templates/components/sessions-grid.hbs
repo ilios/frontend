@@ -28,22 +28,24 @@
         {{#if (await obj.session.firstOfferingDate)}}
           {{#if obj.isIlm}}
             {{#if obj.postrequisite}}
-              <b>
+              <strong>
                 {{t "general.ilm"}}: {{fa-icon "user-clock"}}
                 {{t "general.duePriorTo"}}:
-              </b>
+              </strong>
               {{#link-to "session" obj.course.id obj.postrequisite.id}}
-                {{truncate-text obj.postrequisite.title max=18}}
+                {{truncate obj.postrequisite.title 18 true}}
               {{/link-to}}
             {{else}}
-              <b>{{t "general.ilm"}}: {{t "general.dueBy"}}</b>
+              <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong>
               {{moment-format (await obj.session.firstOfferingDate) "MM/DD/YYYY"}}
             {{/if}}
           {{else}}
             {{#if obj.postrequisite}}
-              <b>{{fa-icon "user-clock"}} {{t "general.duePriorTo"}}:</b>
+              <strong>
+                {{fa-icon "user-clock"}} {{t "general.duePriorTo"}}:
+              </strong>
               {{#link-to "session" obj.course.id obj.postrequisite.id}}
-                {{truncate-text obj.postrequisite.title max=18}}
+                {{truncate obj.postrequisite.title 18 true}}
               {{/link-to}}
             {{else}}
               {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
