@@ -126,7 +126,7 @@ module('Integration | Component | course materials', function(hooks) {
         course=course
         courseSort=courseSort
         sessionSort=sessionSort
-        onSlmSort=(action nothing)}}`);
+        onSessionSort=(action nothing)}}`);
 
     const courseMaterials = `${COURSE_TABLE} tbody tr`;
     const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -218,8 +218,8 @@ module('Integration | Component | course materials', function(hooks) {
         course=course
         courseSort=courseSort
         sessionSort=sessionSort
-        onClmSort=(action cSortBy)
-        onSlmSort=(action sSortBy)}}`);
+        onCourseSort=(action cSortBy)
+        onSessionSort=(action sSortBy)}}`);
 
     const cHeaders = `${COURSE_TABLE} thead th`;
     const cTitle = `${cHeaders}:nth-of-type(1)`;

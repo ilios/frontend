@@ -1,12 +1,9 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
 import { isEmpty, isPresent } from '@ember/utils';
 import { all, task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/course-materials';
-import DS from 'ember-data';
-
-const { PromiseArray } = DS;
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -15,40 +12,47 @@ export default Component.extend({
 
   classNames: ['course-materials'],
 
-  clmQuery: '',
   course: null,
+  courseQuery: '',
   courseSort: null,
+  sessionQuery: '',
   sessionSort: null,
-  slmQuery: '',
-  onClmSort() {},
-  onSlmSort() {},
+  onCourseSort() {},
+  onSessionSort() {},
   typesWithUrl: Object.freeze(['file', 'link']),
 
-  isClmLoading: reads('courseLearningMaterialObjects.isPending'),
-  isSlmLoading: reads('sessionLearningMaterialObjects.isPending'),
+  courseLearningMaterialObjects: computed(
+    'course.learningMaterials.[]', async function() {
+      const clms = await this.course.get('learningMaterials');
+      const promises = clms.map((clm) => this.buildClmObject(clm));
+      return await all(promises);
+    }
+  ),
 
-  courseLearningMaterialObjects: computed(function() {
-    const promise = this.fetchCourseLearningMaterials();
-    return PromiseArray.create({ promise });
-  }),
-
-  sessionLearningMaterialObjects: computed(function() {
-    const promise = this.fetchSessionLearningMaterials();
-    return PromiseArray.create({ promise });
-  }),
+  sessionLearningMaterialObjects: computed(
+    'course.sessions.[]', async function() {
+      const sessions = await this.course.sessions;
+      const lms = await all(sessions.mapBy('learningMaterials'));
+      const slms = lms.reduce((flattened, obj) => {
+        return flattened.pushObjects(obj.toArray());
+      }, []);
+      const promises = slms.map((slm) => this.buildSlmObject(slm));
+      return await all(promises);
+    }
+  ),
 
   filteredCourseLearningMaterialObjects: computed(
-    'courseLearningMaterialObjects', 'clmQuery', function() {
-      const q = this.clmQuery;
-      const clmo = this.courseLearningMaterialObjects;
+    'courseLearningMaterialObjects.[]', 'courseQuery', async function() {
+      const q = cleanQuery(this.courseQuery);
+      const clmo = await this.courseLearningMaterialObjects;
       return isEmpty(q) ? clmo : this.filterClmo(clmo);
     }
   ),
 
   filteredSessionLearningMaterialObjects: computed(
-    'sessionLearningMaterialObjects', 'slmQuery', function() {
-      const q = this.slmQuery;
-      const slmo = this.sessionLearningMaterialObjects;
+    'sessionLearningMaterialObjects.[]', 'sessionQuery', async function() {
+      const q = cleanQuery(this.sessionQuery);
+      const slmo = await this.sessionLearningMaterialObjects;
       return isEmpty(q) ? slmo : this.filterSlmo(slmo);
     }
   ),
@@ -62,36 +66,30 @@ export default Component.extend({
   }),
 
   actions: {
-    clmSortBy(prop) {
+    courseSortBy(prop) {
       if (this.courseSort === prop) {
         prop += ':desc';
       }
-      this.onClmSort(prop);
+      this.onCourseSort(prop);
     },
 
-    slmSortBy(prop) {
+    sessionSortBy(prop) {
       if (this.sessionSort === prop) {
         prop += ':desc';
       }
-      this.onSlmSort(prop);
+      this.onSessionSort(prop);
     }
   },
 
-  setClmQuery: task(function* (q) {
+  setCourseQuery: task(function* (q) {
     yield timeout(DEBOUNCE_DELAY);
-    this.set('clmQuery', q);
+    this.set('courseQuery', q);
   }).restartable(),
 
-  setSlmQuery: task(function* (q) {
+  setSessionQuery: task(function* (q) {
     yield timeout(DEBOUNCE_DELAY);
-    this.set('slmQuery', q);
+    this.set('sessionQuery', q);
   }).restartable(),
-
-  async fetchCourseLearningMaterials() {
-    const clms = await this.course.get('learningMaterials');
-    const promises = clms.map((clm) => this.buildClmObject(clm));
-    return await all(promises);
-  },
 
   async buildClmObject(clm) {
     const lm = await clm.get('learningMaterial');
@@ -103,16 +101,6 @@ export default Component.extend({
       type: lm.type,
       url: lm.url
     });
-  },
-
-  async fetchSessionLearningMaterials() {
-    const sessions = await this.course.sessions;
-    const lms = await all(sessions.mapBy('learningMaterials'));
-    const slms = lms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-    const promises = slms.map((slm) => this.buildSlmObject(slm));
-    return await all(promises);
   },
 
   async buildSlmObject(slm) {
@@ -132,7 +120,7 @@ export default Component.extend({
   },
 
   filterClmo(clmo) {
-    const exp = new RegExp(this.clmQuery, 'gi');
+    const exp = new RegExp(this.courseQuery, 'gi');
     return clmo.filter((obj) => {
       return (isPresent(obj.title) && obj.title.match(exp)) ||
              (isPresent(obj.description) && obj.description.match(exp)) ||
@@ -143,7 +131,7 @@ export default Component.extend({
   },
 
   filterSlmo(slmo) {
-    const exp = new RegExp(this.slmQuery, 'gi');
+    const exp = new RegExp(this.sessionQuery, 'gi');
     return slmo.filter((obj) => {
       return (isPresent(obj.title) && obj.title.match(exp)) ||
              (isPresent(obj.description) && obj.description.match(exp)) ||
