@@ -35,22 +35,46 @@
       <label>{{t "general.duration"}}:</label>
       <div class="duration-inputs">
         <div class="hours">
-          <input
-            min="0"
-            type="number"
-            value={{durationHours}}
-            oninput={{perform this.updateDurationHours value="target.value"}}>
-          <label>{{t "general.hours"}}</label>
+          <div class="hours-container">
+            <input
+              class={{if (and
+                (v-get this "durationHours" "isInvalid")
+                (is-in showErrorsFor "durationHours")) "has-error"}}
+              min="0"
+              type="number"
+              value={{durationHours}}
+              oninput={{perform this.updateDurationHours value="target.value"}}>
+            {{#if (and
+              (v-get this "durationHours" "isInvalid")
+              (is-in showErrorsFor "durationHours"))}}
+              <span class="validation-error-message">
+                {{v-get this "durationHours" "message"}}
+              </span>
+            {{/if}}
+            <label>{{t "general.hours"}}</label>
+          </div>
         </div>
 
         <div class="minutes">
-          <input
-            max="59"
-            min="0"
-            type="number"
-            value={{durationMinutes}}
-            oninput={{perform this.updateDurationMinutes value="target.value"}}>
-          <label>{{t "general.minutes"}}</label>
+          <div class="minutes-container">
+            <input
+              class={{if (and
+                (v-get this "durationMinutes" "isInvalid")
+                (is-in showErrorsFor "durationMinutes")) "has-error"}}
+              max="59"
+              min="0"
+              type="number"
+              value={{durationMinutes}}
+              oninput={{perform this.updateDurationMinutes value="target.value"}}>
+            {{#if (and
+              (v-get this "durationMinutes" "isInvalid")
+              (is-in showErrorsFor "durationMinutes"))}}
+              <span class="validation-error-message">
+                {{v-get this "durationMinutes" "message"}}
+              </span>
+            {{/if}}
+            <label>{{t "general.minutes"}}</label>
+          </div>
         </div>
       </div>
     </div>

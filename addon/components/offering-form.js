@@ -40,6 +40,21 @@ const Validations = buildValidations({
       }),
     ]
   },
+  durationHours: [
+    validator('number', {
+      allowString: true,
+      integer: true,
+      gte: 0
+    })
+  ],
+  durationMinutes: [
+    validator('number', {
+      allowString: true,
+      integer: true,
+      gte: 0,
+      lte: 59
+    })
+  ],
   learnerGroups: {
     dependentKeys: ['model.smallGroupMode'],
     disabled: not('model.smallGroupMode'),
@@ -432,6 +447,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   updateDurationHours: task(function * (hours) {
     yield timeout(DEBOUNCE_DELAY);
+    this.send('addErrorDisplayFor', 'durationHours');
     const minutes = this.durationMinutes;
     const endDate = moment(this.startDate)
       .clone()
@@ -443,6 +459,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   updateDurationMinutes: task(function * (minutes) {
     yield timeout(DEBOUNCE_DELAY);
+    this.send('addErrorDisplayFor', 'durationMinutes');
     const hours = this.durationHours;
     const endDate = moment(this.startDate)
       .clone()
