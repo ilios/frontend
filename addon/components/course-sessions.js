@@ -44,17 +44,19 @@ export default Component.extend({
     const sessionObjects = await map(sessions.toArray(), async session => {
       const canDelete = await permissionChecker.canDeleteSession(session);
       const canUpdate = await permissionChecker.canUpdateSession(session);
+      const postrequisite = await session.postrequisite;
       let sessionObject = {
         session,
         course,
         canDelete,
         canUpdate,
+        postrequisite,
         id: session.get('id'),
         title: session.get('title'),
         instructionalNotes: session.get('instructionalNotes'),
         isPublished: session.get('isPublished'),
         isNotPublished: session.get('isNotPublished'),
-        isScheduled: session.get('isScheduled'),
+        isScheduled: session.get('isScheduled')
       };
       const sessionType = await session.get('sessionType');
       sessionObject.sessionTypeTitle = sessionType.get('title');

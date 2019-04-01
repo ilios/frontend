@@ -2,20 +2,17 @@
 {{#each sortedSessions as |obj|}}
   <div
     class="{{if (contains obj.session.id expandedSessionIds) "is-expanded" "not-expanded"}} session"
-    data-test-session
     data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
-  >
+    data-test-session>
     <div class="session-row">
       <span class="expand-collapse-control" data-test-expand-collapse-control>
         {{#if (contains obj.session.id expandedSessionIds)}}
           {{fa-icon "caret-down" class="link" click=(action closeSession obj.session)}}
         {{else}}
-          {{fa-icon
-            "caret-right"
+          {{fa-icon "caret-right"
             class=(if (gt obj.offeringCount 0) "link" "disabled")
-            click=(action "expandSession" obj)
             title=(if (eq obj.offeringCount 0) (t "general.noOfferings"))
-          }}
+            click=(action "expandSession" obj)}}
         {{/if}}
       </span>
       <span class="session-grid-title">
@@ -30,65 +27,87 @@
       <span class="session-grid-first-offering">
         {{#if (await obj.session.firstOfferingDate)}}
           {{#if obj.isIlm}}
-            <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await obj.session.firstOfferingDate) "L"}}
+            {{#if obj.postrequisite}}
+              <strong>
+                {{t "general.ilm"}}: {{fa-icon "user-clock"}}
+                {{t "general.duePriorTo"}}:
+              </strong>
+              {{#link-to "session" obj.course.id obj.postrequisite.id}}
+                {{truncate obj.postrequisite.title 18 true}}
+              {{/link-to}}
+            {{else}}
+              <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong>
+              {{moment-format (await obj.session.firstOfferingDate) "MM/DD/YYYY"}}
+            {{/if}}
           {{else}}
-            {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
+            {{#if obj.postrequisite}}
+              <strong>
+                {{fa-icon "user-clock"}} {{t "general.duePriorTo"}}:
+              </strong>
+              {{#link-to "session" obj.course.id obj.postrequisite.id}}
+                {{truncate obj.postrequisite.title 18 true}}
+              {{/link-to}}
+            {{else}}
+              {{moment-format (await obj.session.firstOfferingDate) "L LT"}}
+            {{/if}}
           {{/if}}
         {{/if}}
       </span>
       <span class="session-grid-offerings">{{obj.offeringCount}}</span>
       <span class="session-grid-status" data-test-status>
         {{#if (and obj.canUpdate obj.instructionalNotes.length)}}
-          {{fa-icon
-            "clipboard-list"
-            prefix="fal"
-            class="instructional-notes"
-            title=(t "general.instructionalNotes")
+          {{fa-icon "clipboard-list"
             ariaHidden=false
-          }}
+            class="instructional-notes"
+            prefix="fal"
+            title=(t "general.instructionalNotes")}}
         {{/if}}
         {{publication-status item=obj showText=false}}
       </span>
       <span class="session-grid-actions" data-test-actions>
         {{#if obj.canUpdate}}
-          {{fa-icon
-            "trash"
+          {{fa-icon "trash"
+            ariaHidden=false
             class="clickable remove enabled"
             title=(t "general.remove")
-            ariaHidden=false
-            click=(action "confirmDelete" obj.session.id)
-          }}
+            click=(action "confirmDelete" obj.session.id)}}
         {{else}}
-          {{fa-icon
-            "trash"
-            class="disabled"
-            title=(t "general.remove")
+          {{fa-icon "trash"
             ariaHidden=false
-          }}
+            class="disabled"
+            title=(t "general.remove")}}
         {{/if}}
       </span>
     </div>
+
     {{#if (contains obj.session.id confirmDeleteSessionIds)}}
       <div class="confirm-removal" data-test-confirm-removal>
         {{t "general.confirmSessionRemoval"}}
         <div class="confirm-buttons">
-          <button {{action (perform removeSession obj.session)}} class="cancel" disabled={{removeSession.isRunning}} data-test-yes>
+          <button
+            class="cancel"
+            data-test-yes
+            disabled={{removeSession.isRunning}}
+            onclick={{perform removeSession obj.session}}>
             {{#if removeSession.isRunning}}
               {{loading-spinner}}
             {{else}}
               {{t "general.yes"}}
             {{/if}}
           </button>
-          <button {{action "cancelDelete" obj.session.id}} class="done">{{t "general.cancel"}}</button>
+          <button
+            class="done"
+            onclick={{action "cancelDelete" obj.session.id}}>
+            {{t "general.cancel"}}
+          </button>
         </div>
       </div>
     {{/if}}
+
     {{#if (contains obj.session.id expandedSessionIds)}}
       {{sessions-grid-offering-table
-        offerings=(await obj.session.offerings)
         canUpdate=obj.canUpdate
-      }}
+        offerings=(await obj.session.offerings)}}
     {{/if}}
   </div>
-
 {{/each}}
