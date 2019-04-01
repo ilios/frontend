@@ -1,33 +1,33 @@
 {{#if loaded}}
   <div class="toggle-offering-calendar">
     {{toggle-buttons
-      firstOptionSelected=(not showOfferingCalendar)
       firstLabel=(t "general.hideCalendar")
+      firstOptionSelected=(not showOfferingCalendar)
       secondLabel=(t "general.showCalendar")
-      toggle=(toggle "showOfferingCalendar" this)
-    }}
+      toggle=(toggle "showOfferingCalendar" this)}}
   </div>
+
   {{#if showOfferingCalendar}}
     {{offering-calendar
-      startDate=startDate
       endDate=endDate
       learnerGroups=learnerGroups
-      session=session
-    }}
+      startDate=startDate
+      session=session}}
   {{/if}}
 
   <div class="form">
     <div class="item start-date">
       <label>{{t "general.startDate"}}:</label>
       {{pikaday-input
-        value=startDate
-        onSelection=(action "updateStartDate")
         format="M/D/YYYY"
-      }}
+        value=startDate
+        onSelection=(action "updateStartDate")}}
     </div>
 
     <div class="item start-time">
-      <label>{{t "general.startTime"}}: <span class="timezone">({{browser-timezone}})</span></label>
+      <label>
+        {{t "general.startTime"}}: <span class="timezone">({{browser-timezone}})</span>
+      </label>
       {{time-picker date=startDate action=(action "updateStartTime")}}
     </div>
 
@@ -35,40 +35,46 @@
       <label>{{t "general.duration"}}:</label>
       <div class="duration-inputs">
         <div class="hours">
-          <input
-            type="text"
-            value={{durationHours}}
-            oninput={{action (perform updateDurationHours) value="target.value"}}
-            onkeyup={{action "addErrorDisplayFor" "durationHours"}}
-            class={{if
-              (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
-              "has-error"
-            }}
-          >
-          {{#if
-            (and (v-get this "durationHours" "isInvalid") (is-in showErrorsFor "durationHours"))
-          }}
-            <span class="validation-error-message">{{v-get this "durationHours" "message"}}</span>
-          {{/if}}
-          <label>{{t "general.hours"}}</label>
+          <div class="hours-container">
+            <input
+              class={{if (and
+                (v-get this "durationHours" "isInvalid")
+                (is-in showErrorsFor "durationHours")) "has-error"}}
+              min="0"
+              type="number"
+              value={{durationHours}}
+              oninput={{perform this.updateDurationHours value="target.value"}}>
+            {{#if (and
+              (v-get this "durationHours" "isInvalid")
+              (is-in showErrorsFor "durationHours"))}}
+              <span class="validation-error-message">
+                {{v-get this "durationHours" "message"}}
+              </span>
+            {{/if}}
+            <label>{{t "general.hours"}}</label>
+          </div>
         </div>
+
         <div class="minutes">
-          <input
-            type="text"
-            value={{durationMinutes}}
-            oninput={{action (perform updateDurationMinutes) value="target.value"}}
-            onkeyup={{action "addErrorDisplayFor" "durationMinutes"}}
-            class={{if
-              (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
-              "has-error"
-            }}
-          >
-          {{#if
-            (and (v-get this "durationMinutes" "isInvalid") (is-in showErrorsFor "durationMinutes"))
-          }}
-            <span class="validation-error-message">{{v-get this "durationMinutes" "message"}}</span>
-          {{/if}}
-          <label>{{t "general.minutes"}}</label>
+          <div class="minutes-container">
+            <input
+              class={{if (and
+                (v-get this "durationMinutes" "isInvalid")
+                (is-in showErrorsFor "durationMinutes")) "has-error"}}
+              max="59"
+              min="0"
+              type="number"
+              value={{durationMinutes}}
+              oninput={{perform this.updateDurationMinutes value="target.value"}}>
+            {{#if (and
+              (v-get this "durationMinutes" "isInvalid")
+              (is-in showErrorsFor "durationMinutes"))}}
+              <span class="validation-error-message">
+                {{v-get this "durationMinutes" "message"}}
+              </span>
+            {{/if}}
+            <label>{{t "general.minutes"}}</label>
+          </div>
         </div>
       </div>
     </div>
@@ -83,7 +89,9 @@
     {{#if showMakeRecurring}}
       <div class="item make-recurring">
         <label>{{t "general.makeRecurring"}}</label>
-        {{toggle-yesno yes=makeRecurring toggle=(toggle-action "makeRecurring" this)}}
+        {{toggle-yesno
+          yes=makeRecurring
+          toggle=(toggle-action "makeRecurring" this)}}
         {{#if makeRecurring}}
           <div class="make-recurring-options">
             <div class="make-recurring-days">

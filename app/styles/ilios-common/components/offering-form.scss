@@ -47,7 +47,12 @@
       input {
         margin-right: .5rem;
         min-width: 5rem;
+        outline: none;
         width: 5rem;
+
+        &:invalid {
+          border: 1px $ilios-red solid;
+        }
       }
 
       label {
@@ -68,6 +73,30 @@
           width: auto;
         }
       }
+    }
+
+    .hours {
+      margin-right: 40px;
+
+      .hours-container {
+        vertical-align: top;
+        width: 140px;
+      }
+    }
+
+    .minutes {
+      .minutes-container {
+        vertical-align: top;
+        width: 150px;
+      }
+    }
+
+    .validation-error-message {
+      color: $ilios-red;
+      display: block;
+      font-size: 12px;
+      font-style: italic;
+      margin-top: .75rem;
     }
 
     .instructors,
