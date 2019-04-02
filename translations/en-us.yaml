@@ -167,9 +167,12 @@ general:
   noAssociatedCompetency: "No Associated Competency"
   noAvailableLearnerGroups: "No learner groups available; No cohort is attached to this course."
   noCohorts: "There are no cohorts in this course"
+  noCourseLearningMaterialsAvailable: "No Course Learning Materials Available"
   none: None
   noOfferings: "This session has no offerings"
+  noResultsFound: "No Results Found"
   noSearchResultsPrompt: "no results"
+  noSessionLearningMaterialsAvailable: "No Session Learning Materials Available"
   notAClerkship: "Not a Clerkship"
   notes: Notes
   notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."

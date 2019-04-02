@@ -62,7 +62,7 @@
         {{else}}
           <tr>
             <td colspan="6" align="center">
-              {{if this.courseQuery "No Results Found" "No Course Learning Materials Available"}}
+              {{if this.courseQuery (t "general.noResultsFound") (t "general.noCourseLearningMaterialsAvailable")}}
             </td>
           </tr>
         {{/each}}
@@ -161,7 +161,7 @@
         {{else}}
           <tr>
             <td colspan="9" align="center">
-              {{if this.sessionQuery "No Results Found" "No Session Learning Materials Available"}}
+              {{if this.sessionQuery (t "general.noResultsFound") (t "general.noSessionLearningMaterialsAvailable")}}
             </td>
           </tr>
         {{/each}}

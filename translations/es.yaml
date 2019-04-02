@@ -167,9 +167,12 @@ general:
   noAssociatedCompetency: "No Competencia Asociada"
   noAvailableLearnerGroups: "No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
   noCohorts: "No hay ningún clase de la graduación en este curso"
+  noCourseLearningMaterialsAvailable: "Ningunos Materiales Didácticos del Curso Disponibles"
   none: "Ningún"
   noOfferings: "Esta sesión no tiene ningunos ofrecimientos"
+  noResultsFound: "Ningunos Resultados Encontrados"
   noSearchResultsPrompt: "no resultados"
+  noSessionLearningMaterialsAvailable: "Ningunos Materiales Didácticos de la Sesión Disponibles"
   notAClerkship: "No una Rotación"
   notes: Notas
   notFoundMessage: "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
