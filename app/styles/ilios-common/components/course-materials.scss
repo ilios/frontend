@@ -15,7 +15,7 @@
     display: inline;
   }
 
-  .filter-session-lms {
+  .filter-course-lms, .filter-session-lms {
     text-align: right;
 
     @include for-phone-only {
@@ -26,5 +26,9 @@
     input {
       width: 300px;
     }
+  }
+
+  .fa-spinner.orange {
+    color: $ilios-orange;
   }
 }

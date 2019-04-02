@@ -10,7 +10,7 @@ export default Mixin.create({
   actions: {
     sortBy(what){
       const sortBy = this.get('sortBy');
-      if(sortBy === what){
+      if (sortBy === what){
         what += ':desc';
       }
       this.get('setSortBy')(what);

@@ -1,126 +1,144 @@
 import Component from '@ember/component';
-import { Promise as RSVPPromise, map } from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import SortableTable from 'ilios-common/mixins/sortable-table';
+import { isEmpty, isPresent } from '@ember/utils';
+import { all, task, timeout } from 'ember-concurrency';
 import layout from '../templates/components/course-materials';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
-export default Component.extend(SortableTable, {
+const DEBOUNCE_DELAY = 250;
+
+export default Component.extend({
   layout,
-  course: null,
-  sortBy: null,
+
   classNames: ['course-materials'],
-  typesWithUrl: null,
-  filter: '',
-  sessionLearningMaterials: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    return new RSVPPromise(resolve => {
-      course.get('sessions').then(sessions => {
-        map(sessions.toArray(), session => {
-          return session.get('learningMaterials');
-        }).then(learningMaterials => {
-          let flat = learningMaterials.reduce((flattened, obj) => {
-            return flattened.pushObjects(obj.toArray());
-          }, []);
 
-          resolve(flat);
-        });
-      });
-    });
-  }),
-  sessionLearningMaterialObjects: computed('sessionLearningMaterials.[]', function(){
-    return new RSVPPromise(resolve =>{
-      this.get('sessionLearningMaterials').then(slms => {
-        map(slms.toArray(), sessionLearningMaterial => {
-          return new RSVPPromise(resolve =>{
-            sessionLearningMaterial.get('learningMaterial').then(learningMaterial => {
-              sessionLearningMaterial.get('session').then(session => {
-                session.get('firstOfferingDate').then(firstOfferingDate => {
-                  let obj = EmberObject.create({
-                    title: learningMaterial.get('title'),
-                    description: learningMaterial.get('description'),
-                    author: learningMaterial.get('originalAuthor'),
-                    type: learningMaterial.get('type'),
-                    url: learningMaterial.get('url'),
-                    citation: learningMaterial.get('citation'),
-                    sessionTitle: session.get('title'),
-                    firstOfferingDate,
-                  });
-                  resolve(obj);
-                });
-              });
-            });
-          });
-        }).then(lmObjects => {
-          resolve(lmObjects);
-        });
-      });
-    });
-  }),
-  filteredSessionLearningMaterialObjects: computed('filter', 'sessionLearningMaterialObjects.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('sessionLearningMaterialObjects').then(objs => {
-        const filter = this.get('filter');
-        if (isEmpty(filter)) {
-          resolve(objs);
-        } else {
-          let exp = new RegExp(filter, 'gi');
-          let filteredObjs = objs.filter(obj => {
-            return (isPresent(obj.get('title')) && obj.get('title').match(exp)) ||
-                   (isPresent(obj.get('description')) && obj.get('description').match(exp)) ||
-                   (isPresent(obj.get('author')) && obj.get('author').match(exp)) ||
-                   (isPresent(obj.get('type')) && obj.get('type').match(exp)) ||
-                   (isPresent(obj.get('citation')) && obj.get('citation').match(exp)) ||
-                   (isPresent(obj.get('sessionTitle')) && obj.get('sessionTitle').match(exp));
-          });
+  course: null,
+  courseQuery: '',
+  courseSort: null,
+  sessionQuery: '',
+  sessionSort: null,
+  onCourseSort() {},
+  onSessionSort() {},
+  typesWithUrl: Object.freeze(['file', 'link']),
 
-          resolve(filteredObjs);
-        }
-      });
-    });
-  }),
-  sessions: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    return new RSVPPromise(resolve => {
-      course.get('sessions').then(sessions => {
-        map(sessions.toArray(), session => {
-          return session.get('learningMaterials');
-        }).then(learningMaterials => {
-          let flat = learningMaterials.reduce((flattened, obj) => {
-            return flattened.pushObjects(obj.toArray());
-          }, []);
+  courseLearningMaterialObjects: computed(
+    'course.learningMaterials.[]', async function() {
+      const clms = await this.course.get('learningMaterials');
+      const promises = clms.map((clm) => this.buildClmObject(clm));
+      return await all(promises);
+    }
+  ),
 
-          resolve(flat);
-        });
-      });
-    });
+  sessionLearningMaterialObjects: computed(
+    'course.sessions.[]', async function() {
+      const sessions = await this.course.sessions;
+      const lms = await all(sessions.mapBy('learningMaterials'));
+      const slms = lms.reduce((flattened, obj) => {
+        return flattened.pushObjects(obj.toArray());
+      }, []);
+      const promises = slms.map((slm) => this.buildSlmObject(slm));
+      return await all(promises);
+    }
+  ),
+
+  filteredCourseLearningMaterialObjects: computed(
+    'courseLearningMaterialObjects.[]', 'courseQuery', async function() {
+      const q = cleanQuery(this.courseQuery);
+      const clmo = await this.courseLearningMaterialObjects;
+      return isEmpty(q) ? clmo : this.filterClmo(clmo);
+    }
+  ),
+
+  filteredSessionLearningMaterialObjects: computed(
+    'sessionLearningMaterialObjects.[]', 'sessionQuery', async function() {
+      const q = cleanQuery(this.sessionQuery);
+      const slmo = await this.sessionLearningMaterialObjects;
+      return isEmpty(q) ? slmo : this.filterSlmo(slmo);
+    }
+  ),
+
+  clmSortedAscending: computed('courseSort', function() {
+    return this.courseSort.search(/desc/) === -1;
   }),
-  courseLearningMaterialObjects: computed('course.learningMaterials.[]', function(){
-    return new RSVPPromise(resolve =>{
-      const course = this.get('course');
-      course.get('learningMaterials').then(clms => {
-        map(clms.toArray(), courseLearningMaterial => {
-          return new RSVPPromise(resolve =>{
-            courseLearningMaterial.get('learningMaterial').then(learningMaterial => {
-              let obj = EmberObject.create({
-                title: learningMaterial.get('title'),
-                description: learningMaterial.get('description'),
-                author: learningMaterial.get('originalAuthor'),
-                type: learningMaterial.get('type'),
-                url: learningMaterial.get('url'),
-                citation: learningMaterial.get('citation'),
-              });
-              resolve(obj);
-            });
-          });
-        }).then(lmObjects => {
-          resolve(lmObjects);
-        });
-      });
-    });
+
+  slmSortedAscending: computed('sessionSort', function() {
+    return this.sessionSort.search(/desc/) === -1;
   }),
-  init(){
-    this._super(...arguments);
-    this.set('typesWithUrl', ['file', 'link']);
+
+  actions: {
+    courseSortBy(prop) {
+      if (this.courseSort === prop) {
+        prop += ':desc';
+      }
+      this.onCourseSort(prop);
+    },
+
+    sessionSortBy(prop) {
+      if (this.sessionSort === prop) {
+        prop += ':desc';
+      }
+      this.onSessionSort(prop);
+    }
   },
+
+  setCourseQuery: task(function* (q) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('courseQuery', q);
+  }).restartable(),
+
+  setSessionQuery: task(function* (q) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('sessionQuery', q);
+  }).restartable(),
+
+  async buildClmObject(clm) {
+    const lm = await clm.get('learningMaterial');
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url
+    });
+  },
+
+  async buildSlmObject(slm) {
+    const lm = await slm.get('learningMaterial');
+    const session = await slm.session;
+    const firstOfferingDate = await session.firstOfferingDate;
+    return EmberObject.create({
+      author: lm.originalAuthor,
+      citation: lm.citation,
+      description: lm.description,
+      firstOfferingDate,
+      sessionTitle: session.title,
+      title: lm.title,
+      type: lm.type,
+      url: lm.url
+    });
+  },
+
+  filterClmo(clmo) {
+    const exp = new RegExp(this.courseQuery, 'gi');
+    return clmo.filter((obj) => {
+      return (isPresent(obj.title) && obj.title.match(exp)) ||
+             (isPresent(obj.description) && obj.description.match(exp)) ||
+             (isPresent(obj.author) && obj.author.match(exp)) ||
+             (isPresent(obj.type) && obj.type.match(exp)) ||
+             (isPresent(obj.citation) && obj.citation.match(exp));
+    });
+  },
+
+  filterSlmo(slmo) {
+    const exp = new RegExp(this.sessionQuery, 'gi');
+    return slmo.filter((obj) => {
+      return (isPresent(obj.title) && obj.title.match(exp)) ||
+             (isPresent(obj.description) && obj.description.match(exp)) ||
+             (isPresent(obj.author) && obj.author.match(exp)) ||
+             (isPresent(obj.type) && obj.type.match(exp)) ||
+             (isPresent(obj.citation) && obj.citation.match(exp)) ||
+             (isPresent(obj.sessionTitle) && obj.sessionTitle.match(exp));
+    });
+  }
 });
