@@ -86,7 +86,7 @@
     "ember-resolver": "^5.1.2",
     "ember-service-worker": "^0.7.0",
     "ember-service-worker-cache-first": "^0.6.2",
-    "ember-source": "~3.8.0",
+    "ember-source": "~3.9.0",
     "ember-template-lint": "^1.1.0",
     "ember-test-selectors": "^2.1.0",
     "ember-truth-helpers": "^2.0.0",
