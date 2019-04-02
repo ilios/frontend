@@ -199,7 +199,7 @@ general:
   programCohorts: Cohortes
   publicationStatus: "Statut de Publication"
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
-  publishAllSessions: "Publier {count} des séances"
+  publishAllSessions: "Publier {sessionCount} des séances"
   publishAsIs: "Publier \"as-is\""
   publishCourse: "Publier Cours"
   published: Publier
