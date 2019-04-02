@@ -130,6 +130,8 @@ general:
   learningMaterialsSummary: "Résumé Matières d'Étude"
   level: Niveau
   link: "Lien web"
+  linkedCompetencies: "Compétences Liés"
+  linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
   listByPriority: "Liste par priorité"
   loadingEvents: "Rassembler les événements..."
   loadingMaterials: "Chargement Matières..."

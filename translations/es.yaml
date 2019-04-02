@@ -130,6 +130,8 @@ general:
   learningMaterialsSummary: "Resumen de Materiales de Aprendizaje"
   level: Nivel
   link: "Enlace de la Web"
+  linkedCompetencies: "Competencias Vinculadas"
+  linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
   listByPriority: "Lista por prioridad"
   loadingEvents: "Cargando eventos..."
   loadingMaterials: "Carga de Materiales..."

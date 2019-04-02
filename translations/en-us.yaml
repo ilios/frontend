@@ -130,6 +130,8 @@ general:
   learningMaterialsSummary: "Learning Materials Summary"
   level: Level
   link: "Web Link"
+  linkedCompetencies: "Linked Competencies"
+  linkedCompetencyCount: "{count, plural, =1 {1 has a linked competency} other {# have linked competencies}}"
   listByPriority: "List by Priority"
   loadingEvents: "Loading Events"
   loadingMaterials: "Loading Materials..."
