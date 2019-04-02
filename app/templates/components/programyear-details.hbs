@@ -23,10 +23,9 @@
     expand=(action setPyObjectiveDetails true)
   }}
 {{else}}
-  {{collapsed-objectives
+  {{collapsed-objectives-program-years
     subject=programYear
-    expand=(action setPyObjectiveDetails true)
-  }}
+    expand=(action setPyObjectiveDetails true)}}
 {{/liquid-if}}
 
 {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
