@@ -3,31 +3,33 @@
 </div>
 
 <div class="form">
-  <label>{{t "general.unassignedStudentsConfirmation" count=selectedUserIds.length}}:</label>
-  {{#if
-    (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort) (gt cohorts.length 0))
-  }}
-    <select onchange={{action (mut primaryCohortId) value="target.value"}}>
-      {{#each (sort-by "title" cohorts) as |cohort|}}
+  <label>
+    {{t "general.unassignedStudentsConfirmation"
+      count=this.selectedUserIds.length}}:
+  </label>
+
+  {{#if (and this.loadCohorts.isIdle
+    (is-fulfilled this.bestSelectedCohort)
+    (gt this.cohorts.length 0))}}
+    <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
+      {{#each (sort-by "title" this.cohorts) as |cohort|}}
         <option
-          value={{cohort.id}}
-          selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
-        >
+          selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
+          value={{cohort.id}}>
           {{cohort.title}}
         </option>
       {{/each}}
     </select>
+
     <button
       class="done text"
       disabled={{or
-        isSaving
-        (is-pending bestSelectedCohort)
-        (lt cohorts.length 1)
-        (eq selectedUserIds.length 0)
-      }}
-      {{action (perform save)}}
-    >
-      {{#if isSaving}}
+        this.isSaving
+        (is-pending this.bestSelectedCohort)
+        (lt this.cohorts.length 1)
+        (eq this.selectedUserIds.length 0)}}
+      onclick={{perform this.save}}>
+      {{#if this.isSaving}}
         {{loading-spinner}}
       {{else}}
         {{t "general.save"}}
@@ -42,15 +44,17 @@
   <table>
     <thead>
       <tr>
-        <th class="text-left clickable" colspan="1" onclick={{action "toggleCheck"}}>
+        <th
+          class="text-left clickable"
+          colspan="1"
+          onclick={{action "toggleCheck"}}>
           <input
+            checked={{eq this.selectedUserIds.length this.filteredStudents.length}}
             type="checkbox"
-            checked={{eq selectedUserIds.length filteredStudents.length}}
             indeterminate={{and
-              (gt selectedUserIds.length 0)
-              (lt selectedUserIds.length filteredStudents.length)
-            }}
-          >
+              (gt this.selectedUserIds.length 0)
+              (lt this.selectedUserIds.length this.filteredStudents.length)
+            }}>
           {{t "general.all"}}
         </th>
         <th class="text-left" colspan="4">{{t "general.fullName"}}</th>
@@ -58,32 +62,38 @@
         <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
       </tr>
     </thead>
+
     <tbody>
-      {{#each filteredStudents as |user|}}
-        <tr class={{if (is-in selectedUserIds user.id) "highlighted" ""}}>
+      {{#each this.filteredStudents as |user|}}
+        <tr class={{if (is-in this.selectedUserIds user.id) "highlighted"}}>
           <td
             class="text-left clickable"
             colspan="1"
-            {{action "toggleUserSelection" user.id}}
-          >
-            {{#if (is-in selectedUserIds user.id)}}
+            {{action "toggleUserSelection" user.id}}>
+            {{#if (is-in this.selectedUserIds user.id)}}
               <input type="checkbox" checked>
             {{else}}
               <input type="checkbox">
             {{/if}}
           </td>
-          <td class="text-left" colspan="4">{{#link-to "user" user}}{{user.fullName}}{{/link-to}}</td>
+          <td class="text-left" colspan="4">
+            {{#link-to "user" user}}{{user.fullName}}{{/link-to}}
+          </td>
           <td class="text-left" colspan="4">{{user.email}}</td>
           <td class="text-left" colspan="2">{{user.campusId}}</td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="11" align="center">{{t "general.noResultsFound"}}</td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
-{{#liquid-if isSaving class="crossFade"}}
+
+{{#liquid-if this.isSaving class="crossFade"}}
   {{wait-saving
+    currentProgress=this.savedUserIds.length
     showProgress=true
-    totalProgress=selectedUserIds.length
-    currentProgress=savedUserIds.length
-  }}
+    totalProgress=this.selectedUserIds.length}}
 {{/liquid-if}}

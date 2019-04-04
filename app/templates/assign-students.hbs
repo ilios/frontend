@@ -5,40 +5,32 @@
   <div class="filters">
     <div class="schoolsfilter">
       {{fa-icon "university" fixedWidth=true}}
-      {{#if hasMoreThanOneSchool}}
-        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by "title" model.schools) as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+
+      {{#if this.hasMoreThanOneSchool}}
+        <select onchange={{action (mut this.schoolId) value="target.value"}}>
+          {{#each (sort-by "title" this.schools) as |school|}}
+            <option
+              selected={{is-equal school this.selectedSchool}}
+              value={{school.id}}>
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{selectedSchool.title}}
+        {{this.selectedSchool.title}}
       {{/if}}
     </div>
 
     <div class="titlefilter">
       <input
-        type="text"
-        value={{filter}}
-        oninput={{action (mut filter) value="target.value"}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
-      >
+        type="text"
+        value={{this.query}}
+        oninput={{perform this.setQuery value="target.value"}}>
     </div>
   </div>
 
-  {{#liquid-if (is-fulfilled displayedUnassignedStudents)}}
-    {{assign-students
-      students=(await unassignedStudents)
-      school=selectedSchool
-      limit=limit
-      offset=offset
-      setOffset=(action (mut offset))
-      setLimit=(action (mut limit))
-    }}
-  {{else}}
-    {{loading-spinner}}
-  {{/liquid-if}}
-
+  {{assign-students
+    school=this.selectedSchool
+    students=(await this.filteredUnassignedStudents)}}
 </section>
