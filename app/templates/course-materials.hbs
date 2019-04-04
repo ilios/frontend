@@ -1,5 +1,12 @@
 <div class="backtolink">
   {{#link-to "course" model}}{{t "general.backToCourse"}}{{/link-to}}
 </div>
+
 {{course-summary-header course=model}}
-{{course-materials course=model sortBy=sortBy setSortBy=(action (mut sortBy))}}
+
+{{course-materials
+  course=model
+  courseSort=courseSort
+  sessionSort=sessionSort
+  onCourseSort=(action (mut courseSort))
+  onSessionSort=(action (mut sessionSort))}}
