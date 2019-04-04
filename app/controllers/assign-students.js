@@ -1,57 +1,66 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import { isBlank, isEmpty, isPresent } from '@ember/utils';
-const { gt } = computed;
-const { Promise } = RSVP;
+import { gt, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
+import { task, timeout } from 'ember-concurrency';
+
+const DEBOUNCE_DELAY = 250;
 
 export default Controller.extend({
   store: service(),
 
-  queryParams: ['offset', 'limit', 'filter', 'school'],
-  offset: 0,
-  limit: 25,
-  filter: null,
-  school: null,
+  queryParams: ['query', 'schoolId'],
+
+  query: '',
+  schoolId: null,
+
   hasMoreThanOneSchool: gt('model.schools.length', 1),
-  selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
-    if(isPresent(this.school)){
-      let school =  this.get('model.schools').findBy('id', this.school);
-      if(school){
-        return school;
-      }
+  primarySchool: reads('model.primarySchool'),
+  schools: reads('model.schools'),
+
+  selectedSchool: computed('primarySchool', 'schoolId', 'schools.[]', function() {
+    const primarySchool = this.primarySchool;
+    const schoolId = this.schoolId;
+
+    if (isPresent(schoolId)){
+      const school = this.schools.findBy('id', schoolId);
+      return school ? school : primarySchool;
+    } else {
+      return primarySchool;
     }
-    return this.get('model.primarySchool');
   }),
 
-  unassignedStudents: computed('selectedSchool', 'filter', function(){
-    return new Promise(resolve => {
-      let school = this.selectedSchool;
-      this.store.query('user', {
-        filters: {
-          roles: [4],
-          school: school.get('id'),
-          cohorts: null,
-          enabled: true
-        }
-      }).then(students => {
-        const filter = this.filter;
-        if (!isBlank(filter)) {
-          students = students.filter(user => {
-            return (isEmpty(user.get('fullName')) || user.get('fullName').toLowerCase().includes(filter.toLowerCase()));
-          });
-        }
-        students = students.sortBy('lastName', 'firstName');
-        resolve(students);
-      });
+  unassignedStudents: computed('selectedSchool', async function() {
+    const filters = {
+      cohorts: null,
+      enabled: true,
+      school: this.schoolId,
+      roles: [4]
+    };
+    return await this.store.query('user', { filters });
+  }),
+
+  filteredUnassignedStudents: computed(
+    'query', 'unassignedStudents', async function() {
+      const query = this.query;
+      const students = await this.unassignedStudents;
+      const sortedStudents = students.sortBy('lastName', 'firstName');
+      return isPresent(query)
+        ? this.filterStudents(sortedStudents, query)
+        : sortedStudents;
+    }
+  ),
+
+  setQuery: task(function* (q) {
+    yield timeout(DEBOUNCE_DELAY);
+    this.set('query', q);
+  }).restartable(),
+
+  filterStudents(students, query) {
+    return students.filter((student) => {
+      const regex = new RegExp(query, "i");
+      return student.fullName.search(regex) > -1;
     });
-
-  }),
-
-  actions: {
-    changeSelectedSchool(schoolId){
-      this.set('school', schoolId);
-    },
   }
 });

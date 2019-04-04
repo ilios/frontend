@@ -351,7 +351,7 @@ general:
   unableToReconnect: "Ne pouver reconnecter!"
   unableToSyncUser: "Incapable de syncroniser le utilisateur de répertoire, veuillez vous assurer le campus ID soit exacte."
   unassigned: "Non attribuée"
-  unassignedStudentsConfirmation: "{count, plural, =1 {Attribuez l’utilisateur sélectionné à} other {Attribuez # utilisateurs sélectionnés à}}"
+  unassignedStudentsConfirmation: "{count, plural, =1 {Attribuez 1 l’utilisateur sélectionné à} other {Attribuez # utilisateurs sélectionnés à}}"
   unassignedStudentsSummary: "{count, plural, =1 {Il y a un étudiant qui a besoin affectation à une cohorte} other {Il y a # étudiants qui ont besoin affectation à une cohorte}}"
   unassignedStudentsSummaryTitle: "Étudiants qui ont besoin affectation à une cohorte"
   undo: "Defaît"

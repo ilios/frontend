@@ -1,42 +1,30 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 import RSVP from 'rsvp';
-import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 
-const { reads } = computed;
-const { Promise } = RSVP;
-
 export default Component.extend({
-  store: service(),
   flashMessages: service(),
+  store: service(),
+
   classNames: ['students'],
 
-  init(){
-    this._super(...arguments);
-    this.set('selectedUserIds', []);
-    this.set('savedUserIds', []);
-  },
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.loadCohorts.perform();
-  },
-  students: null,
   school: null,
-  offset: null,
-  limit: null,
+  students: null,
 
-  primaryCohortId: null,
-  selectedUserIds: null,
-  savedUserIds: null,
   isSaving: false,
+  primaryCohortId: null,
+  savedUserIds: null,
+  selectedUserIds: null,
 
-  bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function(){
-    return new Promise(resolve => {
+  cohorts: reads('loadCohorts.lastSuccessful.value'),
+
+  bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function() {
+    return new RSVP.Promise(resolve => {
       const primaryCohortId = this.primaryCohortId;
       const cohorts = this.cohorts;
       if (primaryCohortId) {
@@ -50,22 +38,50 @@ export default Component.extend({
     });
   }),
 
-  filteredStudents: computed('savedUserIds.[]', 'students.[]', 'offset', 'limit', function(){
-    const limit = this.limit;
-    const offset = this.offset;
-    const end = limit + offset;
+  filteredStudents: computed('savedUserIds.[]', 'students.[]', function(){
     const savedUserIds = this.savedUserIds;
-    let students = this.students;
-
-    if (isEmpty(students)) {
-      return [];
-    }
-    return students.filter(user => {
-      return (!savedUserIds.includes(user.get('id')));
-    }).sortBy('lastName', 'firstName').slice(offset, end);
+    const students = this.students;
+    return isPresent(students)
+      ? students.filter((user) => !savedUserIds.includes(user.id))
+      : [];
   }),
 
-  cohorts: reads('loadCohorts.lastSuccessful.value'),
+  totalUnassignedStudents: computed('students.length', 'savedUserIds.length', function(){
+    const students = this.get('students.length');
+    const saved = this.get('savedUserIds.length');
+    return students - saved;
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('selectedUserIds', []);
+    this.set('savedUserIds', []);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.loadCohorts.perform();
+  },
+
+  actions: {
+    toggleCheck() {
+      const currentlySelected = this.selectedUserIds.length;
+      const totalDisplayed = this.filteredStudents.length;
+      const selectedUserIds = currentlySelected < totalDisplayed
+        ? this.filteredStudents.mapBy('id')
+        : [];
+      this.set('selectedUserIds', selectedUserIds);
+    },
+
+    toggleUserSelection(userId){
+      if (this.selectedUserIds.includes(userId)) {
+        this.selectedUserIds.removeObject(userId);
+      } else {
+        this.selectedUserIds.pushObject(userId);
+      }
+    }
+  },
+
   loadCohorts: task(function * () {
     let school = this.school;
     let cohorts = yield this.store.query('cohort', {
@@ -129,32 +145,5 @@ export default Component.extend({
 
     this.flashMessages.success('general.savedSuccessfully');
 
-  }).drop(),
-
-  totalUnassignedStudents: computed('students.length', 'savedUserIds.length', function(){
-    const students = this.get('students.length');
-    const saved = this.get('savedUserIds.length');
-
-    return students - saved;
-  }),
-
-  actions: {
-    toggleCheck(){
-      const currentlySelected = this.get('selectedUserIds.length');
-      const totalDisplayed = this.get('filteredStudents.length');
-      if (currentlySelected < totalDisplayed) {
-        let users = this.filteredStudents;
-        this.set('selectedUserIds', users.mapBy('id'));
-      } else {
-        this.set('selectedUserIds', []);
-      }
-    },
-    toggleUserSelection(userId){
-      if (this.selectedUserIds.includes(userId)) {
-        this.selectedUserIds.removeObject(userId);
-      } else {
-        this.selectedUserIds.pushObject(userId);
-      }
-    }
-  }
+  }).drop()
 });
