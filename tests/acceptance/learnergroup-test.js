@@ -161,7 +161,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
     const firstGroupCopyNoLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(2)';
     const secondGroup = `${groups}:nth-of-type(2)`;
     const secondTitle = `${secondGroup} td:nth-of-type(1)`;
@@ -244,7 +244,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
     const firstGroupCopyWithLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(1)';
     const secondGroup = `${groups}:nth-of-type(2)`;
     const secondTitle = `${secondGroup} td:nth-of-type(1)`;
