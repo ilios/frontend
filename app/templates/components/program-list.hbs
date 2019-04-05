@@ -24,9 +24,9 @@
         </td>
         <td class="text-center hide-from-small-screen">
           {{#if (and program.isPublished (not program.isScheduled))}}
-            {{fa-icon "circle" class="yes"}}
+            {{fa-icon "circle" class="yes" title=(capitalize (t "general.active"))}}
           {{else}}
-            {{fa-icon "circle" class="warning"}}
+            {{fa-icon "circle" class="warning" title=(capitalize (t "general.inactive"))}}
           {{/if}}
         </td>
         <td class="text-right" colspan="2">
