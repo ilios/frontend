@@ -329,7 +329,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
     await click('.list tbody tr:nth-of-type(1) td:nth-of-type(5) .remove');
     await click('.list tbody tr:nth-of-type(2) .remove');
-    assert.equal(0, findAll('.list tbody tr').length);
+    assert.equal(find('.list tbody tr').textContent.trim(), 'None');
   });
 
   test('cancel remove learnergroup', async function (assert) {
