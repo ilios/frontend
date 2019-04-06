@@ -6,6 +6,7 @@ export default Component.extend({
   canCreate: false,
   canDelete: false,
   learnerGroups: null,
+  query: null,
   copy() {},
   remove() {},
 
