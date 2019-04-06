@@ -109,6 +109,12 @@
           </td>
         </tr>
       {{/if}}
+    {{else}}
+      <tr>
+        <td colspan="6" align="center">
+          {{if @query (t "general.noResultsFound") (t "general.none")}}
+        </td>
+      </tr>
     {{/each}}
   </tbody>
 </table>

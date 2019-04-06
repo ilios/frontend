@@ -105,12 +105,12 @@
     <div class="list">
       {{#if (is-fulfilled learnerGroups)}}
         {{learnergroup-list
-          learnerGroups=(await filteredLearnerGroups)
-          remove=(action "removeLearnerGroup")
-          copy=(perform copyGroup)
-          canDelete=(await canDelete)
           canCreate=(await canCreate)
-        }}
+          canDelete=(await canDelete)
+          learnerGroups=(await filteredLearnerGroups)
+          query=titleFilter
+          copy=(perform copyGroup)
+          remove=(action "removeLearnerGroup")}}
       {{else}}
         {{pulse-loader}}
       {{/if}}
