@@ -55,12 +55,12 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled filteredInstructorGroups)}}
+      {{#if (is-fulfilled this.filteredInstructorGroups)}}
         {{instructorgroup-list
-          instructorGroups=(await filteredInstructorGroups)
-          canDelete=(await canDelete)
-          remove=(action "removeInstructorGroup")
-        }}
+          canDelete=(await this.canDelete)
+          instructorGroups=(await this.filteredInstructorGroups)
+          query=this.titleFilter
+          remove=(action "removeInstructorGroup")}}
       {{else}}
         {{pulse-loader}}
       {{/if}}

@@ -79,15 +79,15 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled filteredCourses)}}
+      {{#if (is-fulfilled this.filteredCourses)}}
         {{ilios-course-list
-          courses=(await filteredCourses)
-          remove=(action "removeCourse")
-          sortBy=sortCoursesBy
-          setSortBy=(action (mut sortCoursesBy))
+          courses=(await this.filteredCourses)
+          query=this.titleFilter
+          sortBy=this.sortCoursesBy
           lock=(action "lockCourse")
-          unlock=(action "unlockCourse")
-        }}
+          remove=(action "removeCourse")
+          setSortBy=(action (mut this.sortCoursesBy))
+          unlock=(action "unlockCourse")}}
       {{else}}
         {{pulse-loader}}
       {{/if}}
