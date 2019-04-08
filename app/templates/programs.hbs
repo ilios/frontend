@@ -58,13 +58,13 @@
     {{/if}}
 
     <div class="list">
-      {{#if (is-fulfilled filteredCourses)}}
+      {{#if (is-fulfilled this.filteredPrograms)}}
         {{program-list
-          programs=(await filteredPrograms)
+          programs=(await this.filteredPrograms)
+          query=this.titleFilter
           activate=(action "activateProgram")
           edit=(action "editProgram")
-          remove=(action "removeProgram")
-        }}
+          remove=(action "removeProgram")}}
       {{else}}
         {{pulse-loader}}
       {{/if}}
