@@ -3,36 +3,40 @@
     <tr>
       {{#sortable-th
         colspan=4
-        click=(action "sortBy" "name")
-        sortedBy=(or (eq sortBy "name") (eq sortBy "name:desc"))
-        sortedAscending=sortedAscending
-      }}
+        sortedAscending=this.sortedAscending
+        sortedBy=(or (eq @sortBy "name") (eq @sortBy "name:desc"))
+        click=(action "sortBy" "name")}}
         {{t "general.reportName"}}
       {{/sortable-th}}
-      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.program"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">
+        {{t "general.program"}}
+      </th>
       {{#sortable-th
-        colspan=2
-        click=(action "sortBy" "year")
-        sortedBy=(or (eq sortBy "year") (eq sortBy "year:desc"))
-        sortedAscending=sortedAscending
-        sortType="numeric"
         align="center"
+        colspan=2
         hideFromSmallScreen=true
-      }}
+        sortedAscending=this.sortedAscending
+        sortedBy=(or (eq @sortBy "year") (eq @sortBy "year:desc"))
+        sortType="numeric"
+        click=(action "sortBy" "year")}}
         {{t "general.academicYear"}}
       {{/sortable-th}}
-      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.startDate"}}</th>
-      <th class="text-center hide-from-small-screen" colspan="2">{{t "general.endDate"}}</th>
+      <th class="text-center hide-from-small-screen" colspan="2">
+        {{t "general.startDate"}}
+      </th>
+      <th class="text-center hide-from-small-screen" colspan="2">
+        {{t "general.endDate"}}
+      </th>
       <th class="text-center" colspan="2">{{t "general.status"}}</th>
       <th class="text-right" colspan="2">{{t "general.actions"}}</th>
     </tr>
   </thead>
+
   <tbody>
-    {{#each (sort-by sortBy (await proxiedReports)) as |report index|}}
+    {{#each (sort-by @sortBy (await this.proxiedReports)) as |report index|}}
       <tr
-        class={{if report.showRemoveConfirmation "confirm-removal" ""}}
-        data-test-report={{index}}
-      >
+        class={{if report.showRemoveConfirmation "confirm-removal"}}
+        data-test-report={{index}}>
         <td class="text-left" colspan="4" data-test-name>
           {{#link-to "curriculumInventoryReport" report.content}}
             {{report.name}}
@@ -42,54 +46,57 @@
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-program
-          {{action "edit" report}}
-        >
+          {{action "edit" report}}>
           {{report.program.title}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-year
-          {{action "edit" report}}
-        >
+          {{action "edit" report}}>
           {{report.yearLabel}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-start-date
-          {{action "edit" report}}
-        >
+          {{action "edit" report}}>
           {{moment-format report.startDate "L"}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-end-date
-          {{action "edit" report}}
-        >
+          {{action "edit" report}}>
           {{moment-format report.endDate "L"}}
         </td>
-        <td class="text-center" colspan="2" {{action "edit" report}} data-test-status>
-          {{#if report.isFinalized}}{{fa-icon "lock" class="enabled"}}{{/if}}
+        <td
+          class="text-center"
+          colspan="2"
+          data-test-status
+          {{action "edit" report}}>
+          {{#if report.isFinalized}}
+            {{fa-icon "lock" class="enabled"}}
+          {{/if}}
           {{publication-status
-            publishedLangKey="general.finalized"
-            notPublishedLangKey="general.draft"
             item=report
-            showIcon=false
-          }}
+            notPublishedLangKey="general.draft"
+            publishedLangKey="general.finalized"
+            showIcon=false}}
         </td>
-        <td class="text-right report-actions" colspan="2" data-test-actions>
+        <td
+          class="text-right report-actions"
+          colspan="2"
+          data-test-actions>
           {{#link-to "curriculumInventoryReport" report.content}}
             {{fa-icon "edit" class="enabled"}}
           {{/link-to}}
           <span>
             <a
-              href={{report.content.absoluteFileUri}}
               download="report.xml"
-              target="_blank"
+              href={{report.content.absoluteFileUri}}
               rel="noopener"
-            >
+              target="_blank">
               {{fa-icon "download" class="enabled"}}
             </a>
           </span>
@@ -108,8 +115,16 @@
             <div class="confirm-message">
               {{t "general.reportConfirmRemove"}} <br>
               <div class="confirm-buttons">
-                <button {{action "remove" report}} class="remove text">{{t "general.yes"}}</button>
-                <button {{action "cancelRemove" report}} class="done text">{{t "general.cancel"}}</button>
+                <button
+                  class="remove text"
+                  onclick={{action "remove" report}}>
+                  {{t "general.yes"}}
+                </button>
+                <button
+                  class="done text"
+                  onclick={{action "cancelRemove" report}}>
+                  {{t "general.cancel"}}
+                </button>
               </div>
             </div>
           </td>
