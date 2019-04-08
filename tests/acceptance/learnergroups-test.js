@@ -327,9 +327,9 @@ module('Acceptance | Learner Groups', function(hooks) {
     await visit('/learnergroups');
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
-    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(5) .remove');
     await click('.list tbody tr:nth-of-type(2) .remove');
-    assert.equal(0, findAll('.list tbody tr').length);
+    assert.equal(find('.list tbody tr').textContent.trim(), 'None');
   });
 
   test('cancel remove learnergroup', async function (assert) {
@@ -351,7 +351,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     await visit('/learnergroups');
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
-    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(5) .remove');
     await click('.list tbody tr:nth-of-type(2) .done');
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
@@ -381,7 +381,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     await visit('/learnergroups');
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
-    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await click('.list tbody tr:nth-of-type(1) td:nth-of-type(5) .remove');
     assert.dom('.list tbody tr').hasClass('confirm-removal');
     assert.dom(findAll('.list tbody tr')[1]).hasClass('confirm-removal');
     assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'));
@@ -410,7 +410,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     await visit('/learnergroups');
     assert.equal(1, findAll('.list tbody tr').length);
     assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText('learnergroup 0'));
-    assert.notOk(findAll('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove').length, 'No delete action is available');
+    assert.notOk(findAll('.list tbody tr:nth-of-type(1) td:nth-of-type(5) .remove').length, 'No delete action is available');
   });
 
   test('click title takes you to learnergroup route', async function (assert) {
@@ -538,7 +538,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
     const firstGroupCopyNoLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(2)';
     const secondGroup = `${groups}:nth-of-type(2)`;
     const secondTitle = `${secondGroup} td:nth-of-type(1)`;
@@ -628,7 +628,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(4) .fa-copy`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
     const firstGroupCopyWithLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(1)';
     const secondGroup = `${groups}:nth-of-type(2)`;
     const secondTitle = `${secondGroup} td:nth-of-type(1)`;
@@ -676,4 +676,3 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(await getElementText(find(secondSubgroupSubgroups)), getText('0'));
   });
 });
-
