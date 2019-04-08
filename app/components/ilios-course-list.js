@@ -1,18 +1,17 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
+import ObjectProxy from '@ember/object/proxy';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 const CourseProxy = ObjectProxy.extend({
-  content: null,
   currentUser: null,
-  permissionChecker: null,
-  showRemoveConfirmation: false,
+  content: null,
   intl: null,
   isSaving: false,
+  permissionChecker: null,
+  showRemoveConfirmation: false,
 
-  status: computed('content.isPublished', 'content.isScheduled', function(){
+  status: computed('content.{isPublished,isScheduled}', function() {
     const intl = this.intl;
     let course = this.content;
     let translation = 'general.';
@@ -24,40 +23,58 @@ const CourseProxy = ObjectProxy.extend({
       translation += 'notPublished';
 
     }
-
     return intl.t(translation);
   }),
 
-  userCanDelete: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const permissionChecker = this.permissionChecker;
-    const course = this.content;
-    if (course.get('isPublishedOrScheduled')) {
-      return false;
-    } else if (course.hasMany('descendants').ids().length > 0) {
-      return false;
+  userCanDelete: computed(
+    'content',
+    'content.{archived,locked}',
+    'currentUser.model.directedCourses.[]', async function() {
+      const permissionChecker = this.permissionChecker;
+      const course = this.content;
+      if (course.get('isPublishedOrScheduled')) {
+        return false;
+      } else if (course.hasMany('descendants').ids().length > 0) {
+        return false;
+      }
+      return permissionChecker.canDeleteCourse(course);
     }
-    return permissionChecker.canDeleteCourse(course);
-  }),
+  ),
 
-  userCanLock: computed('content', 'content.locked', 'content.archived', 'currentUser.model.directedCourses.[]', async function(){
-    const permissionChecker = this.permissionChecker;
-    const course = this.content;
-    return permissionChecker.canUpdateCourse(course);
-  }),
+  userCanLock: computed(
+    'content',
+    'content.{archived,locked}',
+    'currentUser.model.directedCourses.[]', async function() {
+      const permissionChecker = this.permissionChecker;
+      const course = this.content;
+      return permissionChecker.canUpdateCourse(course);
+    }
+  ),
 
-  userCanUnLock: computed('content', 'content.locked', 'content.archived', async function(){
-    const permissionChecker = this.permissionChecker;
-    const course = this.content;
-    return permissionChecker.canUnlockCourse(course);
-  })
+  userCanUnLock: computed(
+    'content',
+    'content.{archived,locked}', async function() {
+      const permissionChecker = this.permissionChecker;
+      const course = this.content;
+      return permissionChecker.canUnlockCourse(course);
+    }
+  )
 });
+
 export default Component.extend({
   currentUser: service(),
   intl: service(),
   permissionChecker: service(),
-  courses: null,
 
-  proxiedCourses: computed('courses.[]', function(){
+  courses: null,
+  query: null,
+  sortBy: 'title',
+  lock() {},
+  remove() {},
+  setSortBy() {},
+  unlock() {},
+
+  proxiedCourses: computed('courses.[]', function() {
     const intl = this.intl;
     const courses = this.courses;
     if (!courses) {
@@ -73,38 +90,41 @@ export default Component.extend({
     });
   }),
 
-  sortBy: 'title',
-
-  sortedCourses: computed('proxiedCourses.[]', 'sortBy', 'sortedAscending', function(){
-    let sortBy = this.sortBy;
-    if (-1 !== sortBy.indexOf(':')) {
-      sortBy = sortBy.split(':', 1)[0];
+  sortedCourses: computed(
+    'proxiedCourses.[]',
+    'sortedAscending',
+    'sortBy', function() {
+      let sortBy = this.sortBy;
+      if (-1 !== sortBy.indexOf(':')) {
+        sortBy = sortBy.split(':', 1)[0];
+      }
+      let sortedAscending = this.sortedAscending;
+      const courses = this.proxiedCourses;
+      let sortedCourses = courses.sortBy(sortBy);
+      if (!sortedAscending) {
+        sortedCourses = sortedCourses.slice().reverse();
+      }
+      return sortedCourses;
     }
-    let sortedAscending = this.sortedAscending;
-    const courses = this.proxiedCourses;
-    let sortedCourses = courses.sortBy(sortBy);
-    if (!sortedAscending) {
-      sortedCourses = sortedCourses.slice().reverse();
-    }
+  ),
 
-    return sortedCourses;
-  }),
-
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.sortBy;
-    return sortBy.search(/desc/) === -1;
+  sortedAscending: computed('sortBy', function() {
+    return this.sortBy.search(/desc/) === -1;
   }),
 
   actions: {
     remove(courseProxy) {
       this.remove(courseProxy.get('content'));
     },
+
     cancelRemove(courseProxy) {
       courseProxy.set('showRemoveConfirmation', false);
     },
+
     confirmRemove(courseProxy) {
       courseProxy.set('showRemoveConfirmation', true);
     },
+
     unlockCourse(courseProxy){
       courseProxy.get('userCanUnLock').then(permission => {
         if (permission) {
@@ -115,6 +135,7 @@ export default Component.extend({
         }
       });
     },
+
     lockCourse(courseProxy){
       courseProxy.get('userCanLock').then(permission => {
         if (permission) {
@@ -125,12 +146,13 @@ export default Component.extend({
         }
       });
     },
+
     sortBy(what){
       const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
       this.setSortBy(what);
-    },
+    }
   }
 });
