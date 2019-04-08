@@ -1,13 +1,14 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  instructorGroups: null,
   canDelete: false,
+  instructorGroups: null,
+  query: null,
+  remove() {},
 
-  proxiedInstructorGroups: computed('instructorGroups.[]', function(){
+  proxiedInstructorGroups: computed('instructorGroups.[]', function() {
     const instructorGroups = this.instructorGroups;
     if (!instructorGroups) {
       return [];
@@ -24,11 +25,13 @@ export default Component.extend({
     remove(instructorGroupProxy) {
       this.remove(instructorGroupProxy.get('content'));
     },
+
     cancelRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', false);
     },
+
     confirmRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', true);
-    },
+    }
   }
 });
