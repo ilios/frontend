@@ -351,7 +351,7 @@ general:
   unableToReconnect: "Unable to Reconnect!"
   unableToSyncUser: "Unable to sync user from directory, please ensure the Campus ID is correct."
   unassigned: Unassigned
-  unassignedStudentsConfirmation: "{count, plural, =1 {Assign selected user to} other {Assign # selected users to}}"
+  unassignedStudentsConfirmation: "{count, plural, =1 {Assign 1 selected user to} other {Assign # selected users to}}"
   unassignedStudentsSummary: "{count, plural, =1 {There is one student needing assignment to a cohort} other {There are # students needing assignment to a cohort}}"
   unassignedStudentsSummaryTitle: "Students Requiring Cohort Assignment"
   undo: Undo
