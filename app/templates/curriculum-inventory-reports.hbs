@@ -76,14 +76,13 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled reports)}}
+      {{#if (is-fulfilled this.reports)}}
         {{curriculum-inventory-report-list
+          program=(await selectedProgram)
+          sortBy=this.sortReportsBy
           edit=(action "editCurriculumInventoryReport")
           remove=(action "removeCurriculumInventoryReport")
-          sortBy=sortReportsBy
-          program=(await selectedProgram)
-          setSortBy=(action (mut sortReportsBy))
-        }}
+          setSortBy=(action (mut this.sortReportsBy))}}
       {{else}}
         {{pulse-loader}}
       {{/if}}

@@ -55,6 +55,12 @@
           <td class="hide-from-small-screen"></td>
         </tr>
       {{/if}}
+    {{else}}
+      <tr>
+        <td class="text-center" colspan="5">
+          {{if @query (t "general.noResultsFound") (t "general.none")}}
+        </td>
+      </tr>
     {{/each}}
   </tbody>
 </table>
