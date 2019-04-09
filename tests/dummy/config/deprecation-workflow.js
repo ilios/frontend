@@ -6,5 +6,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-component.send-action"},
     { handler: "silence", matchId: "events.inherited-function-listeners"},
     { handler: "silence", matchId: "ember-polyfills.deprecate-merge"},
+    { handler: "silence", matchId: "ember-views.curly-components.jquery-element"},
   ]
 };
