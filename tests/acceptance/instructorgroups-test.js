@@ -89,31 +89,31 @@ module('Acceptance | Instructor Groups', function(hooks) {
       });
       assert.expect(19);
       await visit('/instructorgroups');
-      assert.equal(4, findAll('.list tbody tr').length);
+      assert.equal(4, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(regexInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),getText(regularInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(3) td'))),getText(firstInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(4) td'))),getText(secondInstructorgroup.title));
 
       await fillIn('.titlefilter input', 'first');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText(firstInstructorgroup.title));
 
       await fillIn('.titlefilter input', 'second');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))), getText(secondInstructorgroup.title));
 
       await fillIn('.titlefilter input', 'special');
-      assert.equal(2, findAll('.list tbody tr').length);
+      assert.equal(2, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(firstInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),getText(secondInstructorgroup.title));
 
       await fillIn('.titlefilter input', '\\');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(regexInstructorgroup.title));
 
       await fillIn('.titlefilter input', '');
-      assert.equal(4, findAll('.list tbody tr').length);
+      assert.equal(4, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(regexInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),getText(regularInstructorgroup.title));
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(3) td'))),getText(firstInstructorgroup.title));
@@ -138,28 +138,29 @@ module('Acceptance | Instructor Groups', function(hooks) {
         school: this.school,
       });
       await visit('/instructorgroups');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.actions button');
       assert.dom('.new-instructorgroup').exists({ count: 1 });
       await click('.new-instructorgroup .cancel');
       assert.dom('.new-instructorgroup').doesNotExist();
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
     });
 
     test('remove instructorgroup', async function(assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(3);
+      assert.expect(4);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await visit('/instructorgroups');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
       await click('.confirm-buttons .remove');
-      assert.equal(0, findAll('.list tbody tr').length);
+      assert.equal(0, findAll('.list tbody [data-test-active-row]').length);
+      assert.dom('.list tbody [data-test-empty-list]').exists();
     });
 
     test('cancel remove instructorgroup', async function(assert) {
@@ -169,11 +170,11 @@ module('Acceptance | Instructor Groups', function(hooks) {
         school: this.school,
       });
       await visit('/instructorgroups');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
       await click('.confirm-buttons .done');
-      assert.dom('.list tbody tr').exists({ count: 1 });
+      assert.dom('.list tbody [data-test-active-row]').exists({ count: 1 });
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
     });
 
@@ -187,10 +188,10 @@ module('Acceptance | Instructor Groups', function(hooks) {
 
       assert.expect(5);
       await visit('/instructorgroups');
-      assert.equal(1, findAll('.list tbody tr').length);
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
-      assert.dom('.list tbody tr').hasClass('confirm-removal');
+      assert.dom('.list tbody [data-test-active-row]').hasClass('confirm-removal');
       assert.dom(findAll('.list tbody tr')[1]).hasClass('confirm-removal');
       assert.equal(await getElementText(find(findAll('.list tbody tr')[1])), getText('Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'));
     });
@@ -223,7 +224,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
         school: this.school,
       });
 
-      const groups = '.list tbody tr';
+      const groups = '.list tbody [data-test-active-row]';
       const firstGroupTitle = `${groups}:nth-of-type(1) td:nth-of-type(1)`;
       const filter = '.titlefilter input';
       await visit('/instructorgroups');
@@ -250,12 +251,11 @@ module('Acceptance | Instructor Groups', function(hooks) {
       this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
       this.server.create('offering', { session: session2, instructorGroups: [group2] });
       await visit('/instructorgroups');
-      assert.dom('.list tbody tr').exists({ count: 2 });
+      assert.dom('.list tbody [data-test-active-row]').exists({ count: 2 });
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText('instructorgroup 0'));
       assert.dom('.list tbody tr:nth-of-type(0) td:nth-of-type(4) .remove').doesNotExist();
       assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(4) .remove').doesNotExist();
     });
-
   });
 
   test('filters options', async function(assert) {
