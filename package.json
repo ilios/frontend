@@ -70,6 +70,7 @@
   "devDependencies": {
     "@ember/jquery": "^0.6.0",
     "@ember/optional-features": "^0.6.3",
+    "@ilios/ember-template-lint-plugin": "^1.0.1",
     "@ilios/eslint-config-ember-addon": "^2.0.1",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv": "^7.0.0",
