@@ -8,35 +8,35 @@
       count=this.selectedUserIds.length}}:
   </label>
 
-  {{#if (and this.loadCohorts.isIdle
-    (is-fulfilled this.bestSelectedCohort)
-    (gt this.cohorts.length 0))}}
-    <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
-      {{#each (sort-by "title" this.cohorts) as |cohort|}}
-        <option
-          selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
-          value={{cohort.id}}>
-          {{cohort.title}}
-        </option>
-      {{/each}}
-    </select>
-
-    <button
-      class="done text"
-      disabled={{or
-        this.isSaving
-        (is-pending this.bestSelectedCohort)
-        (lt this.cohorts.length 1)
-        (eq this.selectedUserIds.length 0)}}
-      onclick={{perform this.save}}>
-      {{#if this.isSaving}}
-        {{loading-spinner}}
-      {{else}}
-        {{t "general.save"}}
-      {{/if}}
-    </button>
-  {{else}}
+  {{#if this.isLoading}}
     {{loading-spinner}}
+  {{else}}
+    {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
+      <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
+        {{#each (sort-by "title" this.cohorts) as |cohort|}}
+          <option
+            selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
+            value={{cohort.id}}>
+            {{cohort.title}}
+          </option>
+        {{/each}}
+      </select>
+
+      <button
+        class="done text"
+        disabled={{or
+          this.isSaving
+          (is-pending this.bestSelectedCohort)
+          (lt this.cohorts.length 1)
+          (eq this.selectedUserIds.length 0)}}
+        onclick={{perform this.save}}>
+        {{#if this.isSaving}}
+          {{loading-spinner}}
+        {{else}}
+          {{t "general.save"}}
+        {{/if}}
+      </button>
+    {{/if}}
   {{/if}}
 </div>
 
