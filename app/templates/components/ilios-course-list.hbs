@@ -4,7 +4,7 @@
       {{#sortable-th data-test-course-title-heading
         colspan=3
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "title") (eq @sortBy "title:desc"))
+        sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
         click=(action "sortBy" "title")}}
         {{t "general.courseTitle"}}
       {{/sortable-th}}
@@ -28,7 +28,7 @@
         colspan="2"
         hideFromSmallScreen=true
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "startDate") (eq @sortBy "startDate:desc"))
+        sortedBy=(or (eq sortBy "startDate") (eq sortBy "startDate:desc"))
         sortType="numeric"
         click=(action "sortBy" "startDate")}}
         {{t "general.startDate"}}
@@ -38,7 +38,7 @@
         colspan="2"
         hideFromSmallScreen=true
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "endDate") (eq @sortBy "endDate:desc"))
+        sortedBy=(or (eq sortBy "endDate") (eq sortBy "endDate:desc"))
         sortType="numeric"
         click=(action "sortBy" "endDate")}}
         {{t "general.endDate"}}
@@ -46,7 +46,7 @@
       {{#sortable-th
         colspan="3"
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "status") (eq @sortBy "status:desc"))
+        sortedBy=(or (eq sortBy "status") (eq sortBy "status:desc"))
         click=(action "sortBy" "status")}}
         {{t "general.status"}}
       {{/sortable-th}}
@@ -55,7 +55,9 @@
 
   <tbody data-test-courses>
     {{#each (await this.sortedCourses) as |course|}}
-      <tr class={{if course.showRemoveConfirmation "confirm-removal"}}>
+      <tr
+        class={{if course.showRemoveConfirmation "confirm-removal"}}
+        data-test-active-row>
         <td class="text-left" colspan="3">
           {{#link-to "course" course.content}}
             {{course.title}}
@@ -136,7 +138,7 @@
         </tr>
       {{/if}}
     {{else}}
-      <tr>
+      <tr data-test-empty-list>
         <td class="text-center" colspan="15">
           {{if @query (t "general.noResultsFound") (t "general.none")}}
         </td>

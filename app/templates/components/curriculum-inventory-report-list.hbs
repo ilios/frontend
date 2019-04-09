@@ -4,7 +4,7 @@
       {{#sortable-th
         colspan=4
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "name") (eq @sortBy "name:desc"))
+        sortedBy=(or (eq sortBy "name") (eq sortBy "name:desc"))
         click=(action "sortBy" "name")}}
         {{t "general.reportName"}}
       {{/sortable-th}}
@@ -16,7 +16,7 @@
         colspan=2
         hideFromSmallScreen=true
         sortedAscending=this.sortedAscending
-        sortedBy=(or (eq @sortBy "year") (eq @sortBy "year:desc"))
+        sortedBy=(or (eq sortBy "year") (eq sortBy "year:desc"))
         sortType="numeric"
         click=(action "sortBy" "year")}}
         {{t "general.academicYear"}}
@@ -33,9 +33,10 @@
   </thead>
 
   <tbody>
-    {{#each (sort-by @sortBy (await this.proxiedReports)) as |report index|}}
+    {{#each (sort-by sortBy (await this.proxiedReports)) as |report index|}}
       <tr
         class={{if report.showRemoveConfirmation "confirm-removal"}}
+        data-test-active-row
         data-test-report={{index}}>
         <td class="text-left" colspan="4" data-test-name>
           {{#link-to "curriculumInventoryReport" report.content}}
@@ -131,7 +132,7 @@
         </tr>
       {{/if}}
     {{else}}
-      <tr>
+      <tr data-test-empty-list>
         <td class="text-center" colspan="16">{{t "general.none"}}</td>
       </tr>
     {{/each}}

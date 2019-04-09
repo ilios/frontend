@@ -294,7 +294,7 @@ module('Acceptance | Courses', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('academicYear', {id: 2012});
     this.server.create('academicYear', {id: 2013});
-    assert.expect(1);
+    assert.expect(2);
 
     const newTitle = 'new course title, woohoo';
 
@@ -303,6 +303,7 @@ module('Acceptance | Courses', function(hooks) {
     await page.newCourseForm.title(newTitle);
     await page.newCourseForm.save();
     assert.equal(page.courses().count, 0);
+    assert.ok(page.emptyListRowIsVisible);
   });
 
   test('new course does not appear twice when navigating back', async function(assert) {
@@ -337,27 +338,30 @@ module('Acceptance | Courses', function(hooks) {
     });
     this.server.db.users.update(this.user.id, {roleIds: [1]});
 
-    assert.expect(9);
+    assert.expect(11);
 
     await page.visit({ year });
     assert.equal(page.courses().count, 0);
+    assert.ok(page.emptyListRowIsVisible);
     assert.equal(page.savedCoursesCount, 0);
+
     await page.toggleNewCourseForm();
     await page.newCourseForm.title('Course 1');
     await page.newCourseForm.chooseYear(year);
     await page.newCourseForm.save();
-
     assert.equal(page.courses().count, 1);
     assert.equal(page.newCourseLink, 'Course 1');
+
     await page.visitNewCourse();
     await page.visit({ year });
-
     assert.equal(page.courses().count, 1);
     assert.equal(page.savedCoursesCount, 1);
     assert.equal(page.newCourseLink, 'Course 1');
+
     await page.courses(0).remove();
     await page.confirmCourseRemoval();
     assert.equal(page.courses().count, 0);
+    assert.ok(page.emptyListRowIsVisible);
     assert.equal(page.savedCoursesCount, 0);
   });
 
