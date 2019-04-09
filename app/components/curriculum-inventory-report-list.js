@@ -15,17 +15,14 @@ const ReportProxy = ObjectProxy.extend({
   isNotPublished: not('isPublished'),
   isPublished: alias('isFinalized'),
 
-  userCanDelete: computed(
-    'content',
-    'content.{isFinalized,model}', async function(){
-      const permissionChecker = this.permissionChecker;
-      const report = this.content;
-      if (report.get('isFinalized')) {
-        return false;
-      }
-      return permissionChecker.canDeleteCurriculumInventoryReport(report);
+  userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function() {
+    const permissionChecker = this.permissionChecker;
+    const report = this.content;
+    if (report.get('isFinalized')) {
+      return false;
     }
-  )
+    return permissionChecker.canDeleteCurriculumInventoryReport(report);
+  })
 });
 
 export default Component.extend({
@@ -44,23 +41,21 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  proxiedReports: computed(
-    'program.curriculumInventoryReports.[]', async function () {
-      const currentUser = this.currentUser;
-      const intl = this.intl;
-      const permissionChecker = this.permissionChecker;
-      const program = this.program;
-      const reports = await program.get('curriculumInventoryReports');
-      return reports.map(report => {
-        return ReportProxy.create({
-          content: report,
-          intl,
-          currentUser,
-          permissionChecker
-        });
+  proxiedReports: computed('program.curriculumInventoryReports.[]', async function () {
+    const currentUser = this.currentUser;
+    const intl = this.intl;
+    const permissionChecker = this.permissionChecker;
+    const program = this.program;
+    const reports = await program.get('curriculumInventoryReports');
+    return reports.map(report => {
+      return ReportProxy.create({
+        content: report,
+        intl,
+        currentUser,
+        permissionChecker
       });
-    }
-  ),
+    });
+  }),
 
   sortedAscending: computed('sortBy', function() {
     return this.sortBy.search(/desc/) === -1;
