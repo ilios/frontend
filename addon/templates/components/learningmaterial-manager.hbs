@@ -182,7 +182,7 @@
         {{/if}}
       </div>
       {{#if editable}}
-        <button class="remove-date" {{action (mut startDate null)}}>{{t "general.timedReleaseClearStartDate"}}</button>
+        <button class="remove-date" {{action (mut startDate) null}}>{{t "general.timedReleaseClearStartDate"}}</button>
       {{/if}}
     {{else if editable}}
       <p>
@@ -227,7 +227,7 @@
         </span>
       {{/if}}
       {{#if editable}}
-        <button class="remove-date" {{action (mut endDate null)}}>{{t "general.timedReleaseClearEndDate"}}</button>
+        <button class="remove-date" {{action (mut endDate) null}}>{{t "general.timedReleaseClearEndDate"}}</button>
       {{/if}}
     {{else if editable}}
       <p><button class="add-date" {{action "addDate" "endDate"}} data-test-add-end-date>{{t "general.timedReleaseAddEndDate"}}</button></p>
