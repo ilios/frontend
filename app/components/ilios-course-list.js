@@ -26,20 +26,16 @@ const CourseProxy = ObjectProxy.extend({
     return intl.t(translation);
   }),
 
-  userCanDelete: computed(
-    'content',
-    'content.{archived,locked}',
-    'currentUser.model.directedCourses.[]', async function() {
-      const permissionChecker = this.permissionChecker;
-      const course = this.content;
-      if (course.get('isPublishedOrScheduled')) {
-        return false;
-      } else if (course.hasMany('descendants').ids().length > 0) {
-        return false;
-      }
-      return permissionChecker.canDeleteCourse(course);
+  userCanDelete: computed('content', 'content.{archived,locked}', 'currentUser.model.directedCourses.[]', async function() {
+    const permissionChecker = this.permissionChecker;
+    const course = this.content;
+    if (course.get('isPublishedOrScheduled')) {
+      return false;
+    } else if (course.hasMany('descendants').ids().length > 0) {
+      return false;
     }
-  ),
+    return permissionChecker.canDeleteCourse(course);
+  }),
 
   userCanLock: computed(
     'content',
