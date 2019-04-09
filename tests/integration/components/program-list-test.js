@@ -72,12 +72,14 @@ module('Integration | Component | program list', function(hooks) {
   });
 
   test('empty list', async function(assert){
-    assert.expect(2);
+    assert.expect(3);
+
     this.set('programs', []);
     await render(hbs`{{program-list programs=programs}}`);
     await settled();
     assert.dom('tbody').exists({ count: 1 });
-    assert.dom('tbody tr').doesNotExist();
+    assert.dom('tbody [data-test-active-row]').doesNotExist();
+    assert.dom('tbody [data-test-empty-list]').exists();
   });
 
   test('edit', async function(assert){

@@ -84,7 +84,8 @@ module('Integration | Component | curriculum inventory report list', function(ho
     await render(hbs`{{curriculum-inventory-report-list program=program}}`);
     assert.dom('thead tr').exists({ count: 1 }, 'Table header shows.');
     assert.dom('tbody').exists({ count: 1 }, 'Table body shows.');
-    assert.dom('tbody tr').doesNotExist('Table body is empty.');
+    assert.dom('tbody [data-test-active-row]').doesNotExist('Table body is empty.');
+    assert.dom('tbody [data-test-empty-list]').exists();
   });
 
   test('delete and confirm', async function(assert) {
