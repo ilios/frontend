@@ -101,8 +101,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.cancel();
     },
 
-    changeValue(value) {
-      this.set('title', value);
+  actions: {
+    setYear(year) {
+      this.set('selectedYear', parseInt(year, 10));
     }
   }
 });
