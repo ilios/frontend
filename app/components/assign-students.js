@@ -24,7 +24,7 @@ export default Component.extend({
   cohorts: reads('loadCohorts.lastSuccessful.value'),
   isLoading: reads('loadCohorts.isRunning'),
 
-  bestSelectedCohort: computed('cohorts', 'primaryCohortId', function() {
+  bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function() {
     const cohorts = this.cohorts;
     const primaryCohortId = this.primaryCohortId;
 
