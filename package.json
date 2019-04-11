@@ -45,7 +45,7 @@
     "ember-cli-page-object": "1.15.2",
     "ember-cli-string-helpers": "^2.0.0",
     "ember-composable-helpers": "^2.0.1",
-    "ember-concurrency": "^0.9.0",
+    "ember-concurrency": "^0.10.0",
     "ember-cp-validations": "^4.0.0-beta.6",
     "ember-data": "^3.9.0",
     "ember-drag-drop": "^0.6.2",
