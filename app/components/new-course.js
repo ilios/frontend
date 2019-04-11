@@ -1,60 +1,60 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
+  currentSchool: validator('presence', true),
+  selectedYear: validator('presence', true),
   title: [
     validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    }),
-  ],
-  selectedYear: [
-    validator('presence', true)
-  ],
-  currentSchool: [
-    validator('presence', true)
-  ],
+    validator('length', { min: 3, max: 200 })
+  ]
 });
 
+const THIS_YEAR = parseInt(moment().format('YYYY'), 10);
+const YEARS = [
+  THIS_YEAR-2,
+  THIS_YEAR-1,
+  THIS_YEAR,
+  THIS_YEAR+1,
+  THIS_YEAR+2
+];
+
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  didReceiveAttrs(){
-    this._super(...arguments);
-
-    //build a list of years to seelct from
-    let thisYear = parseInt(moment().format('YYYY'), 10);
-    let years = [
-      thisYear-2,
-      thisYear-1,
-      thisYear,
-      thisYear+1,
-      thisYear+2
-    ];
-
-    this.set('years', years);
-
-    const currentYear = this.currentYear;
-    if (isPresent(currentYear) && years.includes(parseInt(currentYear.get('title'), 10))) {
-      this.set('selectedYear', currentYear.get('title'));
-    } else {
-      this.set('selectedYear', thisYear);
-    }
-  },
-
-  classNames: ['new-course'],
   intl: service(),
   store: service(),
-  years: null,
-  currentYear: null,
+
+  classNames: ['new-course'],
+
   currentSchool: null,
-  title: null,
+  currentYear: null,
   selectedYear: null,
-  isSaving: false,
+  title: null,
+  years: null,
+  cancel() {},
+  save() {},
+
+  isSaving: reads('saveCourse.isRunning'),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.set('years', YEARS);
+    const currentYear = this.currentYear;
+    const selectedYear = currentYear && YEARS.includes(currentYear.title)
+      ? currentYear.title
+      : THIS_YEAR;
+    this.set('selectedYear', selectedYear);
+  },
+
+  actions: {
+    setYear(year) {
+      this.set('selectedYear', parseInt(year, 10));
+    }
+  },
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -63,46 +63,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if ('text' !== target.type) {
       return;
     }
-
     if (13 === keyCode) {
       this.send('save');
       return;
     }
-
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.cancel();
     }
   },
 
-  actions: {
-    setYear(year) {
-      this.set('selectedYear', year);
-    },
-    save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          this.send('removeErrorDisplayFor', 'title');
-          let course = this.store.createRecord('course', {
-            title: this.title,
-            school: this.currentSchool,
-            year: this.selectedYear,
-            level: 1,
-          });
-          this.save(course);
-        } else {
-          this.set('isSaving', false);
-        }
+  saveCourse: task(function* () {
+    this.send('addErrorDisplayFor', 'title');
+    const { validations } = yield this.validate();
+
+    if (validations.get('isValid')) {
+      this.send('removeErrorDisplayFor', 'title');
+      const course = this.store.createRecord('course', {
+        level: 1,
+        title: this.title,
+        school: this.currentSchool,
+        year: this.selectedYear
       });
-    },
-
-    cancel() {
-      this.cancel();
-    },
-
-    changeValue(value) {
-      this.set('title', value);
+      this.save(course);
     }
-  }
+  })
 });

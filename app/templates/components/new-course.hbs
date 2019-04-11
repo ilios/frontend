@@ -1,29 +1,30 @@
 <h4>{{t "general.newCourse"}}</h4>
 
 <div data-test-new-course>
-
   <div class="item">
     <label> {{t "general.title"}}:</label>
     <input
       class="course-title"
-      type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
-      placeholder={{t "general.courseTitlePlaceholder"}}
       data-test-title
-    >
-    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      disabled={{this.isSaving}}
+      placeholder={{t "general.courseTitlePlaceholder"}}
+      type="text"
+      value={{this.title}}
+      oninput={{action (mut this.title) value="target.value"}}
+      onkeyup={{action "addErrorDisplayFor" "title"}}>
+    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+      <span class="validation-error-message">
+        {{v-get this "title" "message"}}
+      </span>
     {{/if}}
   </div>
 
   <div class="item">
     <label>{{t "general.academicYear"}}:</label>
-    <select onchange={{action "setYear" value="target.value"}} data-test-year>
-      {{#each years as |year|}}
-        <option value={{year}} selected={{is-equal year selectedYear}}>
+
+    <select data-test-year onchange={{action "setYear" value="target.value"}}>
+      {{#each this.years as |year|}}
+        <option selected={{is-equal year this.selectedYear}} value={{year}}>
           {{year}} - {{inc year}}
         </option>
       {{/each}}
@@ -31,13 +32,15 @@
   </div>
 
   <div class="buttons">
-    <button class="done text" {{action "save"}}>
-      {{#if isSaving}}
+    <button class="done text" onclick={{perform this.saveCourse}}>
+      {{#if this.isSaving}}
         {{loading-spinner}}
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" onclick={{action @cancel}}>
+      {{t "general.cancel"}}
+    </button>
   </div>
 </div>
