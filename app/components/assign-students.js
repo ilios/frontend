@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
@@ -22,20 +22,22 @@ export default Component.extend({
   selectedUserIds: null,
 
   cohorts: reads('loadCohorts.lastSuccessful.value'),
+  isLoading: reads('loadCohorts.isRunning'),
 
   bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function() {
-    return new RSVP.Promise(resolve => {
-      const primaryCohortId = this.primaryCohortId;
-      const cohorts = this.cohorts;
-      if (primaryCohortId) {
-        let currentCohort = cohorts.find(cohort => cohort.id === primaryCohortId);
-        if (currentCohort) {
-          resolve(currentCohort);
-          return;
-        }
-      }
-      resolve(cohorts.get('lastObject'));
-    });
+    const cohorts = this.cohorts;
+    const primaryCohortId = this.primaryCohortId;
+
+    if (isEmpty(cohorts)) {
+      return false;
+    }
+
+    if (primaryCohortId) {
+      const currentCohort = cohorts.find((cohort) => cohort.id === primaryCohortId);
+      return currentCohort ? currentCohort : false;
+    } else {
+      return cohorts.lastObject;
+    }
   }),
 
   filteredStudents: computed('savedUserIds.[]', 'students.[]', function(){
@@ -51,36 +53,6 @@ export default Component.extend({
     const saved = this.get('savedUserIds.length');
     return students - saved;
   }),
-
-  init() {
-    this._super(...arguments);
-    this.set('selectedUserIds', []);
-    this.set('savedUserIds', []);
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.loadCohorts.perform();
-  },
-
-  actions: {
-    toggleCheck() {
-      const currentlySelected = this.selectedUserIds.length;
-      const totalDisplayed = this.filteredStudents.length;
-      const selectedUserIds = currentlySelected < totalDisplayed
-        ? this.filteredStudents.mapBy('id')
-        : [];
-      this.set('selectedUserIds', selectedUserIds);
-    },
-
-    toggleUserSelection(userId){
-      if (this.selectedUserIds.includes(userId)) {
-        this.selectedUserIds.removeObject(userId);
-      } else {
-        this.selectedUserIds.pushObject(userId);
-      }
-    }
-  },
 
   loadCohorts: task(function * () {
     let school = this.school;
@@ -114,12 +86,34 @@ export default Component.extend({
 
     let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
     return all.filter(obj=> {
-
       let finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
+  }).restartable().on('didReceiveAttrs'),
 
-  }).restartable(),
+  init() {
+    this._super(...arguments);
+    this.setProperties({ savedUserIds: [], selectedUserIds: [] });
+  },
+
+  actions: {
+    toggleCheck() {
+      const currentlySelected = this.selectedUserIds.length;
+      const totalDisplayed = this.filteredStudents.length;
+      const selectedUserIds = currentlySelected < totalDisplayed
+        ? this.filteredStudents.mapBy('id')
+        : [];
+      this.set('selectedUserIds', selectedUserIds);
+    },
+
+    toggleUserSelection(userId){
+      if (this.selectedUserIds.includes(userId)) {
+        this.selectedUserIds.removeObject(userId);
+      } else {
+        this.selectedUserIds.pushObject(userId);
+      }
+    }
+  },
 
   save: task(function * () {
     this.set('savedUserIds', []);
@@ -144,6 +138,5 @@ export default Component.extend({
     this.set('selectedUserIds', []);
 
     this.flashMessages.success('general.savedSuccessfully');
-
   }).drop()
 });
