@@ -1,6 +1,8 @@
 export default {
-  mobile:  '(max-width: 767px)',
-  tablet:  '(min-width: 768px) and (max-width: 991px)',
-  desktop: '(min-width: 992px) and (max-width: 1200px)',
-  smallScreen: '(max-width: 1200px)'
+  // Ilios Additions from ilios-common/mixins/media.scss
+  phoneOnly: '(max-width: 380px)',
+  tabletAndUp: '(min-width: 768px)',
+  laptopAndUp: '(min-width: 1200px)',
+  smallerThanLaptop: '(max-width: 1199px)',
+  desktopAndUp: '(min-width: 1920px)'
 };

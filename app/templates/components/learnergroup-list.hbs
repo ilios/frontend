@@ -113,7 +113,7 @@
       {{/if}}
     {{else}}
       <tr data-test-empty-list>
-        <td class="text-center" colspan={{if (media "isSmallScreen") "3" "6"}}>
+        <td class="text-center" colspan={{if (media "isLaptopAndUp") "6" "3"}}>
           {{if @query (t "general.noResultsFound") (t "general.none")}}
         </td>
       </tr>
