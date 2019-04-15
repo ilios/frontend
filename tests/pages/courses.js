@@ -5,6 +5,7 @@ import {
   count,
   fillable,
   hasClass,
+  isHidden,
   isVisible,
   property,
   text,
@@ -48,7 +49,8 @@ export default create({
     }),
   },
   newCourseLink: text('[data-test-new-course] a'),
-  savedCoursesCount: count('[data-test-new-course] a'),
+  newCourseLinkIsHidden: isHidden('[data-test-new-course] a'),
+  savedCoursesCount: count('[data-test-courses] [data-test-active-row]'),
   visitNewCourse: clickable('[data-test-new-course] a'),
   courses: collection({
     scope: '[data-test-ilios-course-list]',

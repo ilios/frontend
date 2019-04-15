@@ -319,14 +319,13 @@ module('Acceptance | Courses', function(hooks) {
     await page.newCourseForm.title(courseTitle);
     await page.newCourseForm.chooseYear(year);
     await page.newCourseForm.save();
-
     assert.equal(page.courses().count, 1);
     assert.equal(page.newCourseLink, 'Course 1');
+
     await page.visitNewCourse();
     await page.visit({ year });
-
     assert.equal(page.courses().count, 1);
-    assert.equal(page.newCourseLink, 'Course 1');
+    assert.ok(page.newCourseLinkIsHidden);
   });
 
   test('new course can be deleted', async function(assert) {
@@ -338,7 +337,7 @@ module('Acceptance | Courses', function(hooks) {
     });
     this.server.db.users.update(this.user.id, {roleIds: [1]});
 
-    assert.expect(11);
+    assert.expect(10);
 
     await page.visit({ year });
     assert.equal(page.courses().count, 0);
@@ -354,9 +353,8 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visitNewCourse();
     await page.visit({ year });
-    assert.equal(page.courses().count, 1);
     assert.equal(page.savedCoursesCount, 1);
-    assert.equal(page.newCourseLink, 'Course 1');
+    assert.ok(page.newCourseLinkIsHidden);
 
     await page.courses(0).remove();
     await page.confirmCourseRemoval();
