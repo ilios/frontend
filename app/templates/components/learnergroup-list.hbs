@@ -19,7 +19,9 @@
 
   <tbody>
     {{#each (sort-by "title" @learnerGroups) as |learnerGroup|}}
-      <tr class={{if (contains learnerGroup this.learnerGroupsForRemovalConfirmation) "confirm-removal"}}>
+      <tr
+        class={{if (contains learnerGroup this.learnerGroupsForRemovalConfirmation) "confirm-removal"}}
+        data-test-active-row>
         <td class="text-left" colspan="2">
           {{#link-to "learnerGroup" learnerGroup}}
             {{learnerGroup.title}}
@@ -110,8 +112,8 @@
         </tr>
       {{/if}}
     {{else}}
-      <tr>
-        <td colspan="6" class="text-center">
+      <tr data-test-empty-list>
+        <td class="text-center" colspan={{if (media "isLaptopAndUp") "6" "3"}}>
           {{if @query (t "general.noResultsFound") (t "general.none")}}
         </td>
       </tr>

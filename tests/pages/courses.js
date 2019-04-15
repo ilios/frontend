@@ -52,7 +52,7 @@ export default create({
   visitNewCourse: clickable('[data-test-new-course] a'),
   courses: collection({
     scope: '[data-test-ilios-course-list]',
-    itemScope: '[data-test-courses] tr',
+    itemScope: '[data-test-courses] [data-test-active-row]',
 
     item: {
       title: text('td', { at: 0 }),
@@ -70,6 +70,7 @@ export default create({
       removeActionCount: count('.remove', {scope: 'td:eq(6)'}),
     },
   }),
+  emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   sortByTitle: clickable('th', {scope: '[data-test-ilios-course-list] [data-test-course-headings]', at: 0}),
   sortByLevel: clickable('th', {scope: '[data-test-ilios-course-list] [data-test-course-headings]', at: 3}),
   sortByStartDate: clickable('th', {scope: '[data-test-ilios-course-list] [data-test-course-headings]', at: 4}),

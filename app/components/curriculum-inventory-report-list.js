@@ -1,21 +1,21 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import ObjectProxy from '@ember/object/proxy';
 import Component from '@ember/component';
-const { alias, not } = computed;
+import ObjectProxy from '@ember/object/proxy';
+import { computed } from '@ember/object';
+import { alias, not } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 const ReportProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
+  intl: null,
+  isScheduled: false,
   permissionChecker: null,
   showRemoveConfirmation: false,
-  intl: null,
-  isPublished: alias('isFinalized'),
-  isScheduled: false,
-  isNotPublished: not('isPublished'),
 
-  userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function(){
+  isNotPublished: not('isPublished'),
+  isPublished: alias('isFinalized'),
+
+  userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function() {
     const permissionChecker = this.permissionChecker;
     const report = this.content;
     if (report.get('isFinalized')) {
@@ -29,7 +29,12 @@ export default Component.extend({
   currentUser: service(),
   intl: service(),
   permissionChecker: service(),
+
   program: null,
+  sortBy: 'title',
+  edit() {},
+  remove() {},
+  setSortBy() {},
 
   /**
    * @property proxiedReports
@@ -41,7 +46,6 @@ export default Component.extend({
     const intl = this.intl;
     const permissionChecker = this.permissionChecker;
     const program = this.program;
-
     const reports = await program.get('curriculumInventoryReports');
     return reports.map(report => {
       return ReportProxy.create({
@@ -53,32 +57,33 @@ export default Component.extend({
     });
   }),
 
-  sortBy: 'title',
-
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.sortBy;
-    return sortBy.search(/desc/) === -1;
+  sortedAscending: computed('sortBy', function() {
+    return this.sortBy.search(/desc/) === -1;
   }),
 
   actions: {
     edit(proxy) {
       this.edit(proxy.get('content'));
     },
+
     remove(proxy) {
       this.remove(proxy.get('content'));
     },
+
     cancelRemove(proxy) {
       proxy.set('showRemoveConfirmation', false);
     },
+
     confirmRemove(proxy) {
       proxy.set('showRemoveConfirmation', true);
     },
+
     sortBy(what){
       const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
       this.setSortBy(what);
-    },
+    }
   }
 });
