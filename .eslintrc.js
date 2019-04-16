@@ -9,5 +9,6 @@ module.exports = {
     'ember/no-jquery': 0,
     'ember/use-brace-expansion': 0,
     'ember/no-new-mixins': 0,
+    'sort-imports': 0,
   }
 };
