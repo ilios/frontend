@@ -19,7 +19,13 @@
     changeSchool=changeSchool
     courseFilters=courseFilters
     toggleCourseFilters=toggleCourseFilters
-  }}
+    selectedCohorts=@selectedCohorts
+    selectedCourseLevels=@selectedCourseLevels
+    selectedCourses=@selectedCourses
+    selectedSessionTypes=@selectedSessionTypes
+    selectedTerms=@selectedTerms
+    onResetParams=(action @onResetParams)
+    onUpdateParam=(action @onUpdateParam)}}
 {{else if (eq show "materials")}}
   {{dashboard-materials}}
 {{else if (eq show "agenda")}}

@@ -1,29 +1,71 @@
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 import moment from 'moment';
 
 export default Mixin.create({
-  queryParams: [
-    'date',
-    'view',
-    'mySchedule',
-    'showFilters',
-    'courseFilters',
-    'school',
-    'academicYear',
-    'show',
-  ],
-  date: null,
-  view: 'week',
-  mySchedule: true,
-  showFilters: false,
-  courseFilters: true,
-  academicYear: null,
-  school: null,
-  show: 'week',
-
   currentUser: service(),
+  store: service(),
+
+  queryParams: [
+    'academicYear',
+    'cohorts',
+    'courseFilters',
+    'courseLevels',
+    'courses',
+    'date',
+    'mySchedule',
+    'school',
+    'sessionTypes',
+    'show',
+    'showFilters',
+    'terms',
+    'view'
+  ],
+
+  academicYear: null,
+  cohorts: '',
+  courseFilters: true,
+  courseLevels: '',
+  courses: '',
+  date: null,
+  mySchedule: true,
+  school: null,
+  sessionTypes: '',
+  show: 'week',
+  showFilters: false,
+  terms: '',
+  view: 'week',
+
+  selectedCohorts: computed('cohorts', async function() {
+    const cohortIds = this.cohorts;
+    return cohortIds ? await all(this.fetchModels(cohortIds, 'cohort')) : [];
+  }),
+
+  selectedCourseLevels: computed('courseLevels', function() {
+    const courseLevels = this.courseLevels;
+    return courseLevels
+      ? courseLevels.split(',').map((level) => parseInt(level, 10))
+      : [];
+  }),
+
+  selectedCourses: computed('courses', async function() {
+    const courseIds = this.courses;
+    return courseIds ? await all(this.fetchModels(courseIds, 'course')) : [];
+  }),
+
+  selectedSessionTypes: computed('sessionTypes', async function() {
+    const sessionTypeIds = this.sessionTypes;
+    return sessionTypeIds
+      ? await all(this.fetchModels(sessionTypeIds, 'session-type'))
+      : [];
+  }),
+
+  selectedTerms: computed('terms', async function() {
+    const termIds = this.terms;
+    return termIds ? await all(this.fetchModels(termIds, 'term')) : [];
+  }),
 
   selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function(){
     const academicYear = this.get('academicYear');
@@ -59,6 +101,14 @@ export default Mixin.create({
     return view;
   }),
 
+  fetchModels(ids, modelName) {
+    const store = this.store;
+    return ids.split(',').map((id) => {
+      const model = store.peekRecord(modelName, id);
+      return model ? model : store.findRecord(modelName, id);
+    });
+  },
+
   actions: {
     changeDate(newDate) {
       this.set('date', moment(newDate).format('YYYY-MM-DD'));
@@ -82,6 +132,30 @@ export default Mixin.create({
       } else {
         this.set('showFilters', true);
       }
+    },
+
+    updateParam(modelId, property) {
+      const id = modelId.toString();
+      const queryParam = this.get(property);
+
+      if (queryParam) {
+        const idArray = queryParam.split(',');
+
+        if (idArray.includes(id)) {
+          idArray.removeObject(id);
+          this.set(property, idArray.join(','));
+        } else {
+          this.set(property, queryParam + `,${id}`);
+        }
+      } else {
+        this.set(property, id);
+      }
+    },
+
+    resetParams() {
+      this.setProperties({
+        cohorts: '', courseLevels: '', courses: '', sessionTypes: '', terms: ''
+      });
     }
   }
 });
