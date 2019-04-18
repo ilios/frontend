@@ -152,6 +152,18 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       cohortIds: [1],
     });
     this.server.create('user', {
+      firstName: 'jebediah',
+      lastName: 'johnson',
+      campusId: '666666',
+      cohortIds: [1],
+    });
+    this.server.create('user', {
+      firstName: 'magick',
+      lastName: 'johnson',
+      campusId: '101010',
+      cohortIds: [1],
+    });
+    this.server.create('user', {
       firstName: 'mrs',
       lastName: 'maisel',
       campusId: '123456',
@@ -159,18 +171,20 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     let users = [
       ['j', 'johnson', '1234567890', '123Test'],
       ['jackson', 'j', '12345'],
-      ['', 'johnson', '12345', '123Test'],
-      ['Magick', '', '12345'],
+      ['', 'johnson', '666666', '123Test'],
+      ['Magick', '', '101010'],
       ['Missing', 'Person', 'abcd'],
       ['mrs', 'maisel', '123456'],
+      ['j', 'johnson', '1234567890', 'anothergroup' ]
     ];
     await triggerUpload(users, '[data-test-user-upload]');
 
-    assert.equal(page.bulkAssign.invalidUploadedUsers().count, 4);
+    assert.equal(page.bulkAssign.invalidUploadedUsers().count, 5);
     assert.equal(page.bulkAssign.invalidUploadedUsers(0).errors, 'First Name is required');
     assert.equal(page.bulkAssign.invalidUploadedUsers(1).errors, 'Last Name is required');
     assert.equal(page.bulkAssign.invalidUploadedUsers(2).errors, 'Could not find a user with the campusId abcd');
     assert.equal(page.bulkAssign.invalidUploadedUsers(3).errors, "User is not in this group's cohort: class of this year");
+    assert.equal(page.bulkAssign.invalidUploadedUsers(4).errors, "This user already exists in the upload.");
     assert.notOk(page.bulkAssign.showConfirmUploadButton);
   });
 
