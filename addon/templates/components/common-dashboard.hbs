@@ -24,8 +24,12 @@
     selectedCourses=@selectedCourses
     selectedSessionTypes=@selectedSessionTypes
     selectedTerms=@selectedTerms
-    onResetParams=(action @onResetParams)
-    onUpdateParam=(action @onUpdateParam)}}
+    onClearFilters=@onClearFilters
+    onUpdateCohorts=@onUpdateCohorts
+    onUpdateCourseLevels=@onUpdateCourseLevels
+    onUpdateCourses=@onUpdateCourses
+    onUpdateSessionTypes=@onUpdateSessionTypes
+    onUpdateTerms=@onUpdateTerms}}
 {{else if (eq show "materials")}}
   {{dashboard-materials}}
 {{else if (eq show "agenda")}}

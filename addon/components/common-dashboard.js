@@ -21,6 +21,10 @@ export default Component.extend({
   selectedCourses: null,
   selectedSessionTypes: null,
   selectedTerms: null,
-  onResetParams() {},
-  onUpdateParam() {}
+  onClearFilters() {},
+  onUpdateCohorts() {},
+  onUpdateCourseLevels() {},
+  onUpdateCourses() {},
+  onUpdateSessionTypes() {},
+  onUpdateTerms() {}
 });

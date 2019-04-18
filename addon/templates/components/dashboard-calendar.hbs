@@ -32,7 +32,7 @@
         id="calendar-clear-filters"
         class="calendar-clear-filters"
         role="button"
-        {{action @onResetParams}}>
+        {{action @onClearFilters}}>
         {{t "general.clearFilters"}}
       </span>
     {{/if}}
@@ -90,8 +90,8 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCourses) course}}
-                    {{action "toggleCourse" course.id on="change"}}>
-                  <span {{action "toggleCourse" course.id}} class="list-indentation" role="button">
+                    {{action @onUpdateCourses course.id on="change"}}>
+                  <span {{action @onUpdateCourses course.id}} class="list-indentation" role="button">
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
@@ -117,11 +117,11 @@
                     checked={{is-in (await @selectedSessionTypes) type}}
                     class="checkbox"
                     type="checkbox"
-                    {{action "toggleSessionType" type.id on="change"}}>
+                    {{action @onUpdateSessionTypes type.id on="change"}}>
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action "toggleSessionType" type.id}}>
+                    {{action @onUpdateSessionTypes type.id}}>
                     {{type.title}}
                   </span>
                 </li>
@@ -139,10 +139,9 @@
               {{#each (await vocabularies) as |vocabulary|}}
                 <h6>{{vocabulary.title}}</h6>
                 {{selected-term-tree
-                  terms=(await vocabulary.topLevelTerms)
                   selectedTerms=(await @selectedTerms)
-                  toggle=(action "toggleTerm")
-                }}
+                  terms=(await vocabulary.topLevelTerms)
+                  toggle=(action @onUpdateTerms)}}
               {{/each}}
             </ul>
           {{else}}
@@ -162,11 +161,11 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedSessionTypes) type}}
-                    {{action "toggleSessionType" type.id on="change"}}>
+                    {{action @onUpdateSessionTypes type.id on="change"}}>
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action "toggleSessionType" type.id}}>
+                    {{action @onUpdateSessionTypes type.id}}>
                     {{type.title}}
                   </span>
                 </li>
@@ -187,11 +186,11 @@
                   class="checkbox"
                   type="checkbox"
                   checked={{contains level @selectedCourseLevels}}
-                  {{action "toggleCourseLevel" level on="change"}}>
+                  {{action @onUpdateCourseLevels level on="change"}}>
                 <span
                   class="list-indentation"
                   role="button"
-                  {{action "toggleCourseLevel" level}}>
+                  {{action @onUpdateCourseLevels level}}>
                   {{level}}
                 </span>
               </li>
@@ -211,8 +210,8 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCohorts) cohort}}
-                    {{action "toggleCohort" cohort.id on="change"}}>
-                  <span {{action "toggleCohort" cohort.id}} class="list-indentation" role="button">
+                    {{action @onUpdateCohorts cohort.id on="change"}}>
+                  <span {{action @onUpdateCohorts cohort.id}} class="list-indentation" role="button">
                     {{#if cohort.title}}
                       {{cohort.title}}
                     {{else}}
@@ -248,7 +247,7 @@
         id="calendar-clear-filters"
         class="filters-clear-filters"
         role="button"
-        {{action @onResetParams}}>
+        {{action @onClearFilters}}>
         {{t "general.clearFilters"}}
       </span>
     </div>

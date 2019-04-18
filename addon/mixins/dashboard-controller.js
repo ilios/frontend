@@ -134,25 +134,94 @@ export default Mixin.create({
       }
     },
 
-    updateParam(modelId, property) {
-      const id = modelId.toString();
-      const queryParam = this.get(property);
+    updateCohorts(cohortId) {
+      const cohortIds = this.cohorts;
 
-      if (queryParam) {
-        const idArray = queryParam.split(',');
+      if (cohortIds) {
+        const idArray = cohortIds.split(',');
 
-        if (idArray.includes(id)) {
-          idArray.removeObject(id);
-          this.set(property, idArray.join(','));
+        if (idArray.includes(cohortId)) {
+          idArray.removeObject(cohortId);
+          this.set('cohorts', idArray.join(','));
         } else {
-          this.set(property, queryParam + `,${id}`);
+          this.set('cohorts', cohortIds + `,${cohortId}`);
         }
       } else {
-        this.set(property, id);
+        this.set('cohorts', cohortId);
       }
     },
 
-    resetParams() {
+    updateCourseLevels(level) {
+      const id = level.toString();
+      const levels = this.courseLevels;
+
+      if (levels) {
+        const idArray = levels.split(',');
+
+        if (idArray.includes(id)) {
+          idArray.removeObject(id);
+          this.set('courseLevels', idArray.join(','));
+        } else {
+          this.set('courseLevels', levels + `,${id}`);
+        }
+      } else {
+        this.set('courseLevels', id);
+      }
+    },
+
+    updateCourses(courseId) {
+      const courseIds = this.courses;
+
+      if (courseIds) {
+        const idArray = courseIds.split(',');
+
+        if (idArray.includes(courseId)) {
+          idArray.removeObject(courseId);
+          this.set('courses', idArray.join(','));
+        } else {
+          this.set('courses', courseIds + `,${courseId}`);
+        }
+      } else {
+        this.set('courses', courseId);
+      }
+    },
+
+    updateSessionTypes(sessionTypeId) {
+      const sessionTypeIds = this.sessionTypes;
+
+      if (sessionTypeIds) {
+        const idArray = sessionTypeIds.split(',');
+
+        if (idArray.includes(sessionTypeId)) {
+          idArray.removeObject(sessionTypeId);
+          this.set('sessionTypes', idArray.join(','));
+        } else {
+          this.set('sessionTypes', sessionTypeIds + `,${sessionTypeId}`);
+        }
+      } else {
+        this.set('sessionTypes', sessionTypeId);
+      }
+    },
+
+    updateTerms(term) {
+      const termId = term.id;
+      const termIds = this.terms;
+
+      if (termIds) {
+        const idArray = termIds.split(',');
+
+        if (idArray.includes(termId)) {
+          idArray.removeObject(termId);
+          this.set('terms', idArray.join(','));
+        } else {
+          this.set('terms', termIds + `,${termId}`);
+        }
+      } else {
+        this.set('terms', termId);
+      }
+    },
+
+    clearFilters() {
       this.setProperties({
         cohorts: '', courseLevels: '', courses: '', sessionTypes: '', terms: ''
       });

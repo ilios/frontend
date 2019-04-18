@@ -30,8 +30,12 @@ export default Component.extend({
   selectedCourses: null,
   selectedSessionTypes: null,
   selectedTerms: null,
-  onResetParams() {},
-  onUpdateParam() {},
+  onClearFilters() {},
+  onUpdateCohorts() {},
+  onUpdateCourseLevels() {},
+  onUpdateCourses() {},
+  onUpdateSessionTypes() {},
+  onUpdateTerms() {},
 
   /**
    * @property courseLevels
@@ -470,44 +474,24 @@ export default Component.extend({
   }),
 
   actions: {
-    toggleCohort(cohortId) {
-      this.onUpdateParam(cohortId, 'cohorts');
-    },
-
-    toggleCourse(courseId){
-      this.onUpdateParam(courseId, 'courses');
-    },
-
-    toggleCourseLevel(level) {
-      this.onUpdateParam(level, 'courseLevels');
-    },
-
-    toggleSessionType(sessionTypeId) {
-      this.onUpdateParam(sessionTypeId, 'sessionTypes');
-    },
-
-    toggleTerm(term) {
-      this.onUpdateParam(term.id, 'terms');
-    },
-
     removeFilter(filter) {
       if (typeof filter === 'number') {
-        this.onUpdateParam(filter, 'courseLevels');
+        this.onUpdateCourseLevels(filter);
       } else {
         const model = filter.constructor.modelName;
         const id = filter.id;
         switch (model) {
         case 'session-type':
-          this.onUpdateParam(id, 'sessionTypes');
+          this.onUpdateSessionTypes(id);
           break;
         case 'cohort':
-          this.onUpdateParam(id, 'cohorts');
+          this.onUpdateCohorts(id);
           break;
         case 'course':
-          this.onUpdateParam(id, 'courses');
+          this.onUpdateCourses(id);
           break;
         case 'term':
-          this.onUpdateParam(id, 'terms');
+          this.onUpdateTerms(filter);
           break;
         }
       }
