@@ -99,7 +99,7 @@ module('Integration | Component | leadership search', function(hooks) {
   });
 
   test('can not add users twice', async function(assert) {
-    assert.expect(6);
+    assert.expect(7);
     this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -128,6 +128,7 @@ module('Integration | Component | leadership search', function(hooks) {
     assert.dom(resultsCount).hasText('2 results');
     assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.persontestemail');
     assert.dom(firstResult).hasNoClass('clickable');
+    assert.dom(firstResult).hasClass('inactive');
     assert.equal(find(secondResult).textContent.replace(/[\t\n\s]+/g, ""), 'testM.person2testemail2');
     assert.dom(secondResult).hasClass('clickable');
     await click(firstResult);
