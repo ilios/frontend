@@ -1,30 +1,37 @@
 {{#if noAccountExistsError}}
-  <div class="error">{{t "general.noAccountExists" accountName=noAccountExistsAccount}}</div>
+  <div class="error">
+    {{t "general.noAccountExists" accountName=noAccountExistsAccount}}
+  </div>
 {{else}}
   <h2>{{t "general.login"}}</h2>
   {{#each error.keys as |key|}}
     <div class="error">{{t key}}</div>
   {{/each}}
+
   <form {{action (perform authenticate) on="submit"}}>
     <div class="item">
-      <label for={{concat elementId "-username-input"}}>{{t "general.username"}}:</label>
+      <label for={{concat elementId "-username-input"}}>
+        {{t "general.username"}}:
+      </label>
       <input
+        autocapitalize="off"
+        autocorrect="off"
+        autofocus
         id={{concat elementId "-username-input"}}
         type="text"
-        autocorrect="off"
-        autocapitalize="off"
         value={{username}}
-        oninput={{action (mut username) value="target.value"}}
-      >
+        oninput={{action (mut username) value="target.value"}}>
     </div>
+
     <div class="item">
-      <label for={{concat elementId "-password-input"}}>{{t "general.password"}}:</label>
+      <label for={{concat elementId "-password-input"}}>
+        {{t "general.password"}}:
+      </label>
       <input
         id={{concat elementId "-password-input"}}
         type="password"
         value={{password}}
-        oninput={{action (mut password) value="target.value"}}
-      >
+        oninput={{action (mut password) value="target.value"}}>
     </div>
 
     <div class="buttons">
