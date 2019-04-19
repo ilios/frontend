@@ -137,6 +137,17 @@ export default Component.extend({
       };
     });
 
+    // flag duplicate users as such
+    const campusIds = [];
+    data.forEach(user => {
+      if (campusIds.includes(user.campusId)) {
+        user.errors.push(intl.t('general.userExistsMultipleTimesInUpload'));
+        user.isValid = false;
+      } else {
+        campusIds.push(user.campusId);
+      }
+    });
+
     this.set('data', data);
   }).restartable(),
 

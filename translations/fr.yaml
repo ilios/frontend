@@ -366,6 +366,7 @@ general:
   uploadGroupAssignments: "téléversez travaux des groupes"
   uploadUsers: "fichier de donnée utilisateurs (csv, tsv, txt)"
   username: "Nom d'utilisateur"
+  userExistsMultipleTimesInUpload: "Cet utilisateur existe déjà dans le téléchargement."
   userNotAddableFromDirectory: "Cette utilisateur manque les informations requises, et ne peut pas être ajouté"
   userNotInGroupCohort: "utilisateur introuvable dans cette groupe de cohorte: {cohortTitle}"
   userRoles: "Rôles des Utilisateurs"

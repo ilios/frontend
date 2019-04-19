@@ -365,6 +365,7 @@ general:
   uploadedGroup: "Grupo Subido"
   uploadGroupAssignments: "Cargar Asignaciones de Grupos"
   uploadUsers: "Archivo con datos de usuarios (csv, tsv, tx)"
+  userExistsMultipleTimesInUpload: "Este usuario ya existe en la carga."
   username: "Nombre de Usuario"
   userNotAddableFromDirectory: "ste usuario está faltando información requerida y no se puede agregar"
   userNotInGroupCohort: "El usuario no está en la cohorte de este grupo: {cohortTitle}"
