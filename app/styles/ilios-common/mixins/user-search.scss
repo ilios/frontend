@@ -18,7 +18,10 @@
 
   li {
     border-bottom: 1px solid $base-border-color;
-    padding-left: 1rem;
+    color: $ilios-blue;
+    display: block;
+    padding: .1rem;
+    width: 100%;
 
     &.inactive {
       color: darken($header-grey, 20);
@@ -31,10 +34,6 @@
 
     a,
     &.clickable {
-      display: block;
-      padding: .1rem;
-      width: 100%;
-
       &:hover {
         background-color: lighten($base-link-color, 50);
       }
@@ -42,7 +41,6 @@
 
     .name,
     .email {
-      color: $ilios-blue;
       display: block;
       width: 100%;
 

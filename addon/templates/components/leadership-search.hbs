@@ -26,7 +26,7 @@
       {{/if}}
       {{#if (eq result.type "user")}}
         <li {{action (perform clickUser) result.user}}
-          class="user {{unless (contains result.user.id existingUserIds) "clickable"}}"
+          class="user {{unless (contains result.user.id existingUserIds) "clickable" "inactive" }}"
           role="button"
           data-test-result-index={{index}}
           data-test-result
