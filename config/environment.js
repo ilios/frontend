@@ -149,6 +149,7 @@ module.exports = function (environment) {
     // here you can enable a preview-specific feature
     ENV.IliosFeatures.programYearVisualizations = true;
     ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
+    ENV.featureFlags['globalSearch'] = true;
 
     //Remove mirage
     ENV['ember-cli-mirage'] = {
