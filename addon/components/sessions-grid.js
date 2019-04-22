@@ -1,13 +1,21 @@
 import Component from '@ember/component';
-import { isEmpty } from '@ember/utils';
 import { computed } from '@ember/object';
+import { next } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import escapeRegExp from '../utils/escape-reg-exp';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/sessions-grid';
+import { addEventListener, runDisposables } from 'ember-lifeline';
 
 export default Component.extend({
+  preserveScroll: service(),
+  router: service(),
+
   layout,
+
   classNames: ['sessions-grid'],
+
   'data-test-sessions-grid': true,
   confirmDeleteSessionIds: null,
 
@@ -46,7 +54,6 @@ export default Component.extend({
     if (sortInfo.descending) {
       return sessions.sortBy(sortInfo.column).reverse();
     }
-
     return sessions.sortBy(sortInfo.column);
   }),
 
@@ -64,6 +71,24 @@ export default Component.extend({
     this.set('confirmDeleteSessionIds', []);
   },
 
+  didInsertElement() {
+    this._super(...arguments);
+    this.scrollDown();
+  },
+
+  didRender() {
+    this._super(...arguments);
+    addEventListener(this, window, 'scroll', () => {
+      const isCourseRoute = this.router.currentRouteName === 'course.index';
+      const preserveScroll = this.preserveScroll;
+
+      if (isCourseRoute) {
+        const yPos = window.scrollY;
+        preserveScroll.set('yPos', yPos === 0 ? null : yPos);
+      }
+    });
+  },
+
   actions: {
     confirmDelete(sessionId) {
       this.confirmDeleteSessionIds.pushObject(sessionId);
@@ -76,6 +101,21 @@ export default Component.extend({
         this.expandSession(sessionObject.session);
       }
     }
+  },
+
+  destroy() {
+    runDisposables(this);
+    this._super(...arguments);
+  },
+
+  scrollDown() {
+    const preserveScroll = this.preserveScroll;
+    const { shouldScrollDown, yPos } = preserveScroll;
+    next(() => {
+      if (shouldScrollDown && yPos) {
+        window.scroll(0, yPos);
+      }
+    });
   },
 
   removeSession: task(function * (session){

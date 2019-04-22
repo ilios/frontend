@@ -1,12 +1,20 @@
 import Mixin from '@ember/object/mixin';
-import { all } from 'rsvp';
+import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
 export default Mixin.create({
-  store: service(),
   permissionChecker: service(),
+  preserveScroll: service(),
+  store: service(),
+
   canCreateSession: false,
   canUpdateCourse: false,
+
+  beforeModel(transition) {
+    const isFromSessionIndex = get(transition, 'from.name') === 'session.index';
+    this.preserveScroll.set('shouldScrollDown', isFromSessionIndex);
+  },
 
   /**
    * Prefetch related data to limit network requests
@@ -57,6 +65,7 @@ export default Mixin.create({
     this.set('canUpdateCourse', canUpdateCourse);
     this.set('canCreateSession', canCreateSession);
   },
+
   queryParams: {
     sortSessionsBy: {
       replace: true
@@ -64,5 +73,14 @@ export default Mixin.create({
     filterSessionsBy: {
       replace: true
     },
+  },
+
+  actions: {
+    willTransition(transition) {
+      this.preserveScroll.set('isListenerOn', false);
+      if (transition.targetName !== 'session.index') {
+        this.preserveScroll.set('yPos', null);
+      }
+    }
   }
 });
