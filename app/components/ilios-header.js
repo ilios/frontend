@@ -33,4 +33,12 @@ export default Component.extend({
       }
     });
   })),
+
+  actions: {
+    search(q) {
+      this.router.transitionTo('search', {
+        queryParams: { q }
+      });
+    }
+  }
 });

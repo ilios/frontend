@@ -8,7 +8,7 @@
 <div class="tools">
   {{#if features.globalSearch}}
     {{#if showSearch}}
-      <GlobalSearchBox />
+      <GlobalSearchBox @search={{action "search"}} />
     {{/if}}
   {{/if}}
   {{locale-chooser}}
