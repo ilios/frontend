@@ -126,18 +126,23 @@
       {{else}}
         {{#if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
           <select
-            onchange={{action "changePrepositionalObjectId" value="target.value"}}
             data-test-report-object
-          >
-            {{#each
-              (sort-by "active:desc" "label" (await filteredPrepositionalObjectIdList))
-              as |o|
-            }}
+            onchange={{action "changePrepositionalObjectId" value="target.value"}}>
+            {{#each (sort-by "active:desc" "academicYear" "label"
+              (await this.filteredPrepositionalObjectIdList)) as |o|}}
               <option
-                value={{o.value}}
-                selected={{is-equal o.value currentPrepositionalObjectId}}
-              >
-                {{await o.label}}
+                selected={{is-equal o.value this.currentPrepositionalObjectId}}
+                value={{o.value}}>
+                {{#if o.academicYear}}
+                  {{o.academicYear}} |
+                {{/if}}
+                {{#if (and this.isCourse o.externalId)}}
+                  [{{o.externalId}}] | {{o.label}}
+                {{else if this.isSession}}
+                  {{o.label}} | {{o.courseTitle}}
+                {{else}}
+                  {{o.label}}
+                {{/if}}
                 {{#unless o.active}}
                   ({{t "general.inactive"}})
                 {{/unless}}
