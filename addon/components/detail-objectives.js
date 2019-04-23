@@ -64,7 +64,7 @@ export default Component.extend({
     },
     manageDescriptors(objective) {
       objective.get('meshDescriptors').then((meshDescriptors) => {
-        scrollTo(".detail-objectives");
+        scrollTo('.detail-objectives', 1000);
         this.set('initialStateForManageMeshObjective', meshDescriptors.toArray());
         this.set('manageDescriptorsObjective', objective);
       });

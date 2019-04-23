@@ -52,7 +52,8 @@
       cancel=(action "toggleNewObjectiveEditor")
     }}
   {{/if}}
-  {{#unless isManaging class="horizontal"}}
+
+  {{#liquid-unless isManaging class="horizontal"}}
     {{#if isCourse}}
       {{course-objective-list
         subject=subject
@@ -92,12 +93,11 @@
     {{/if}}
     {{#if isManagingDescriptors}}
       {{objective-manage-descriptors
-        objective=manageDescriptorsObjective
         editable=editable
-      }}
+        objective=manageDescriptorsObjective}}
     {{/if}}
     {{#if isManagingCompetency}}
       {{objective-manage-competency objective=manageCompetencyObjective}}
     {{/if}}
-  {{/unless}}
+  {{/liquid-unless}}
 </div>
