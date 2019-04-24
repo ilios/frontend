@@ -4,6 +4,7 @@ import Component from '@ember/component';
 import RSVP from 'rsvp';
 import { isPresent, isEmpty } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
@@ -83,6 +84,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   selectedYear: null,
   schoolChanged: false,
   title: null,
+
+  isCourse: equal('currentPrepositionalObject', 'course'),
+  isSession: equal('currentPrepositionalObject', 'session'),
 
   subjectList: computed('intl.locale', function(){
     let list = [
@@ -166,12 +170,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     });
 
-    return await map(values, async obj => {
-      const label = await obj.get('label');
-      const value = obj.get('value');
-      const active = obj.get('active');
-      const academicYear = await obj.get('academicYear');
-      return {value, label, active, academicYear};
+    return await map(values, async (obj) => {
+      const academicYear = await obj.academicYear;
+      const label = await obj.label;
+      const { active, value } = obj.getProperties('active', 'value');
+      const payload = { academicYear, active, label, value };
+
+      if (this.isCourse) {
+        payload.externalId = obj.model.externalId;
+      }
+
+      if (this.isSession) {
+        payload.courseTitle = obj.model.course.get('title');
+      }
+
+      return payload;
     });
   }),
 
