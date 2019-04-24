@@ -99,7 +99,10 @@
       margin-top: .75rem;
     }
 
-    .instructors,
+    .instructors {
+      grid-column: 1 / 1;
+    }
+
     .learner-groups {
       grid-column: 1 / -1;
     }

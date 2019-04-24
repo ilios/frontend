@@ -13,11 +13,11 @@
   }
 
   .search-box {
-    grid-column: 2 / -1;
+    grid-column: 1 / 2;
+  }
 
-    input {
-      width: 100%;
-    }
+  .cohorts-container {
+    grid-column: 1 / 2;
   }
 
   .cohort-learner-groups {

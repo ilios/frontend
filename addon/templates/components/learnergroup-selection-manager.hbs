@@ -22,7 +22,7 @@
     search=(action (mut filter))
     placeholder=(t "general.filterPlaceholder")
   }}
-  <div data-test-cohorts>
+  <div class="cohorts-container" data-test-cohorts>
     {{#each (sort-by "title" (await cohorts)) as |cohort|}}
       <div class="cohort-learner-groups" data-test-cohort>
         {{#if
