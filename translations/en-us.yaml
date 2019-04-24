@@ -39,6 +39,7 @@ general:
   competencies: Competencies
   completeSessions: "Sessions Complete: ready to publish"
   confirmObjectiveRemoval: "Are you sure you want to delete this objective?"
+  confirmObjectiveRemovalMultipleSessionObjectives: "You are about to delete this course objective, which is linked to {count} session objectives. This will delete those relationships as well. Are you sure you want to continue?"
   confirmRemoval: "Are you sure you want to remove this learning material?"
   confirmRemove: "Are you sure you want to delete this offering with {learnerGroupCount} learner groups? This action cannot be undone."
   confirmSessionRemoval: "Are you sure you want to delete this session?"

@@ -34,10 +34,24 @@
               <tr class="confirm-removal">
                 <td colspan="8">
                   <div class="confirm-message">
-                    {{t "general.confirmObjectiveRemoval"}}<br>
+                    {{#if (gt objective.children.length 0)}}
+                      {{t "general.confirmObjectiveRemovalMultipleSessionObjectives"
+                        count=objective.children.length}}
+                    {{else}}
+                      {{t "general.confirmObjectiveRemoval"}}
+                    {{/if}}
+                    <br>
                     <div class="confirm-buttons">
-                      <button {{action "remove" objective}} class="remove text">{{t "general.yes"}}</button>
-                      <button {{action "cancelRemove" objective}} class="done text">{{t "general.cancel"}}</button>
+                      <button
+                        class="remove text"
+                        onclick={{action "remove" objective}}>
+                        {{t "general.yes"}}
+                      </button>
+                      <button
+                        class="done text"
+                        onclick={{action "cancelRemove" objective}}>
+                        {{t "general.cancel"}}
+                      </button>
                     </div>
                   </div>
                 </td>
@@ -48,7 +62,6 @@
       </table>
     {{/if}}
   {{/if}}
-
 {{else}}
   {{! template-lint-disable unused-block-params }}
   {{#each (repeat course.objectives.length) as |empty|}}

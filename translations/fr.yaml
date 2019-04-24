@@ -39,6 +39,7 @@ general:
   competencies: "Compétences"
   completeSessions: "Séances complète: prêt à publier"
   confirmObjectiveRemoval: "Êtes vous sûr de vouloir supprimer cet objectif?"
+  confirmObjectiveRemovalMultipleSessionObjectives: "Vous êtes sur le point de supprimer cet objectif de cours, qui est lié à {count} objectifs de séance. Cela supprimera également ces liens. Êtes-vous certain de vouloir continuer?"
   confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matière d’étude?"
   confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: "Êtes vous sûr de vouloir supprimer cette séance?"
