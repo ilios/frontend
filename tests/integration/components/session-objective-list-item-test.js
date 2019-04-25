@@ -67,7 +67,7 @@ module('Integration | Component | session objective list item', function(hooks) 
       manageDescriptors=(action nothing)
     }}`);
 
-    await click('td:nth-of-type(1) .editable');
+    await click('td:nth-of-type(1) [data-test-edit]');
     await fillInFroalaEditor('td:nth-of-type(1) .froala-editor-container', 'new title');
     await click('td:nth-of-type(1) .done');
   });

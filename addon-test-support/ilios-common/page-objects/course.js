@@ -31,8 +31,8 @@ export default create({
 
   header: {
     scope: '[data-test-course-header]',
-    title: text('.editable'),
-    edit: clickable('.clickable'),
+    title: text('[data-test-edit]'),
+    edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done')
   },
@@ -48,7 +48,7 @@ export default create({
     externalId: {
       scope: '.courseexternalid',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
@@ -56,7 +56,7 @@ export default create({
     startDate: {
       scope: '.coursestartdate',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: datePicker('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
@@ -64,7 +64,7 @@ export default create({
     endDate: {
       scope: '.courseenddate',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: datePicker('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
@@ -72,7 +72,7 @@ export default create({
     level: {
       scope: '.courselevel',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('select'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
@@ -81,7 +81,7 @@ export default create({
     clerkshipType: {
       scope: '.clerkshiptype',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('select'),
       save: clickable('.done')
     },

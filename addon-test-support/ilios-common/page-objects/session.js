@@ -34,7 +34,7 @@ export default create({
     title: {
       scope: '.session-header',
       title: text('.editable'),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('input'),
       save: clickable('.done'),
       value: text('.title')
@@ -48,7 +48,7 @@ export default create({
     sessionType: {
       scope: '.sessiontype',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('select'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
@@ -56,7 +56,7 @@ export default create({
     sessionDescription: {
       scope: '.sessiondescription',
       value: text('span', { at: 0}),
-      edit: clickable('.editable'),
+      edit: clickable('[data-test-edit]'),
       set: fillInFroalaEditor('.fr-box'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
@@ -65,7 +65,7 @@ export default create({
     instructionalNotes: {
       scope: '[data-test-instructional-notes]',
       value: text('span', { at: 0}),
-      edit: clickable('.editable'),
+      edit: clickable('[data-test-edit]'),
       set: fillInFroalaEditor('.fr-box'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
@@ -74,7 +74,7 @@ export default create({
     ilmHours: {
       scope: '.sessionilmhours',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message'),
@@ -82,7 +82,7 @@ export default create({
     ilmDueDate: {
       scope: '.sessionilmduedate',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: datePicker('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message'),
@@ -114,7 +114,7 @@ export default create({
     postrequisite: {
       scope: '.postrequisite',
       value: text('span', { at: 0}),
-      edit: clickable('.clickable'),
+      edit: clickable('[data-test-edit]'),
       set: fillable('select'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
