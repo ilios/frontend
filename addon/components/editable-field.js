@@ -39,25 +39,11 @@ export default Component.extend({
   }).drop(),
 
   edit: task(function * () {
-    if (this.shouldExpandText(event)) {
-      return;
-    }
-
     this.set('isEditing', true);
     yield timeout(10);
     const control = this.$('.editor').find('input,textarea,select,.fr-element').filter(':visible:first');
     control.focus();
   }).drop(),
-
-  // Checks to see if the event should be bubbled down to expand text instead
-  // of showing an editor. Hacky addition until component is fully refactored.
-  shouldExpandText({ path }) {
-    return path.any(({ className }) => {
-      return typeof className === 'string'
-        ? className.includes('expand-text')
-        : false;
-    });
-  },
 
   keyUp(event) {
     const keyCode = event.keyCode;

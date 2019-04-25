@@ -1,9 +1,12 @@
-<span class={{if renderHtml "list-reset"}}>
+<span
+  class={{if renderHtml "list-reset"}}
+  role="button"
+  onclick={{action onEdit}}>
   {{displayText}}
 </span>
 {{#if showIcons}}
   <span
-    class="clickable expand-text"
+    class="clickable"
     role="button"
     {{action (mut expanded) true}}>
     {{fa-icon ellipsis classNames="text-bottom"}} {{fa-icon expandIcon}}

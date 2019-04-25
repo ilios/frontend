@@ -1,11 +1,14 @@
 <span class="content">
   {{#unless isEditing}}
-    <span onclick={{perform edit}} class="clickable editable">
+    <span class="clickable editable">
       {{#if value}}
         {{#if looksEmpty}}
-          {{fa-icon "edit" class="enabled"}}
+          {{fa-icon "edit" class="enabled" click=(perform edit)}}
         {{else}}
-          {{big-text text=value renderHtml=renderHtml}}
+          {{big-text
+            renderHtml=renderHtml
+            text=value
+            onEdit=(perform edit)}}
         {{/if}}
       {{else}}
         {{clickPrompt}}
