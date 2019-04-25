@@ -52,10 +52,5 @@ export default Component.extend({
 
     return new htmlSafe(text);
 
-  }),
-  actions: {
-    expand: function(){
-      this.set('expanded', true);
-    }
-  }
+  })
 });

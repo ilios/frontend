@@ -2,7 +2,10 @@
   {{displayText}}
 </span>
 {{#if showIcons}}
-  <span {{action "expand"}} class="clickable" role="button">
+  <span
+    class="clickable expand-text"
+    role="button"
+    {{action (mut expanded) true}}>
     {{fa-icon ellipsis classNames="text-bottom"}} {{fa-icon expandIcon}}
   </span>
 {{/if}}
