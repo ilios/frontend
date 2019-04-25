@@ -709,10 +709,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(calendarPicker);
     assert.equal(currentURL(), '/dashboard?show=calendar');
 
-    await click(find(schoolEvents));
+    await click(schoolEvents);
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
-    await click(find(showFiltersButton));
+    await click(showFiltersButton);
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await chooseDetailFilter();
@@ -721,8 +721,58 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await fillIn(academicYearDropdown, '2015');
     assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click(find(hideFiltersButton));
+    await click(hideFiltersButton);
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
+
+    await click(showFiltersButton);
+    await click('.coursefilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.coursefilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?courses=1%2C2&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.coursefilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.coursefilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.sessiontypefilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
+
+    await click('.sessiontypefilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1%2C2&show=calendar&showFilters=true');
+
+    await click('.sessiontypefilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
+
+    await click('.sessiontypefilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.togglecoursefilters label:nth-of-type(2)');
+    await click('.courselevelfilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.courselevelfilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1%2C2&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.courselevelfilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.courselevelfilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.cohortfilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.cohortfilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?cohorts=1%2C2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.cohortfilter ul li:nth-child(2) input');
+    assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+
+    await click('.cohortfilter ul li:nth-child(1) input');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
   });
 
   test('week summary displays the whole week', async function(assert) {

@@ -3,8 +3,10 @@ import layout from '../templates/components/common-dashboard';
 
 export default Component.extend({
   layout,
+
   classNames: ['common-dashboard'],
   tagName: 'section',
+
   show: 'week',
   selectedDate: null,
   selectedView: 'week',
@@ -13,4 +15,16 @@ export default Component.extend({
   selectedAcademicYear: null,
   selectedSchool: null,
   courseFilters: null,
+
+  selectedCohorts: null,
+  selectedCourseLevels: null,
+  selectedCourses: null,
+  selectedSessionTypes: null,
+  selectedTerms: null,
+  onClearFilters() {},
+  onUpdateCohorts() {},
+  onUpdateCourseLevels() {},
+  onUpdateCourses() {},
+  onUpdateSessionTypes() {},
+  onUpdateTerms() {}
 });

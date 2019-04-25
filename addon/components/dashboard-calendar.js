@@ -16,24 +16,33 @@ export default Component.extend({
   store: service(),
   intl: service(),
   iliosConfig: service(),
+
   layout,
   classNames: ['dashboard-calendar'],
+
   selectedSchool: null,
   selectedDate: null,
   selectedView: null,
+  selectedAcademicYear: null,
+
   selectedCohorts: null,
   selectedCourseLevels: null,
   selectedCourses: null,
   selectedSessionTypes: null,
-  selectedAcademicYear: null,
   selectedTerms: null,
+  onClearFilters() {},
+  onUpdateCohorts() {},
+  onUpdateCourseLevels() {},
+  onUpdateCourses() {},
+  onUpdateSessionTypes() {},
+  onUpdateTerms() {},
 
   /**
    * @property courseLevels
    * @type {Array}
    * @public
    */
-  courseLevels: null,
+  courseLevels: Object.freeze([1, 2, 3, 4, 5]),
 
   calendarDate: momentFormat('selectedDate', 'YYYY-MM-DD'),
 
@@ -264,15 +273,20 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  activeFilters: computed('selectedCourses.[]', 'selectedSessionTypes.[]', 'selectedCourseLevels.[]', 'selectedCohorts.[]', 'selectedTerms.[]', function () {
-    const a = this.get('selectedSessionTypes');
-    const b = this.get('selectedCourseLevels');
-    const c = this.get('selectedCohorts');
-    const d = this.get('selectedCourses');
-    const e = this.get('selectedTerms');
-
-    return [].concat(a, b, c, d, e);
-  }),
+  activeFilters: computed(
+    'selectedCohorts.[]',
+    'selectedCourseLevels.[]',
+    'selectedCourses.[]',
+    'selectedSessionTypes.[]',
+    'selectedTerms.[]', async function () {
+      const a = await this.selectedSessionTypes;
+      const b = this.selectedCourseLevels;
+      const c = await this.selectedCohorts;
+      const d = await this.selectedCourses;
+      const e = await this.selectedTerms;
+      return [].concat(a, b, c, d, e);
+    }
+  ),
 
   /**
    * @property ourEvents
@@ -292,10 +306,11 @@ export default Component.extend({
    * @type {Ember.computed}
    * @protected
    */
-  eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', async function(){
-    const events = await this.get('ourEvents');
-    const selectedSessionTypes = this.get('selectedSessionTypes').mapBy('id');
-    if(isEmpty(selectedSessionTypes)) {
+  eventsWithSelectedSessionTypes: computed('ourEvents.[]', 'selectedSessionTypes.[]', async function() {
+    const events = await this.ourEvents;
+    const selectedSessionTypes = (await this.selectedSessionTypes).mapBy('id');
+
+    if (isEmpty(selectedSessionTypes)) {
       return events;
     }
     const matchingEvents = await map(events, async event => {
@@ -319,8 +334,8 @@ export default Component.extend({
    * @protected
    */
   eventsWithSelectedCourseLevels: computed('ourEvents.[]', 'selectedCourseLevels.[]', async function(){
-    const events = await this.get('ourEvents');
-    const selectedCourseLevels = this.get('selectedCourseLevels');
+    const events = await this.ourEvents;
+    const selectedCourseLevels = this.selectedCourseLevels;
     if(isEmpty(selectedCourseLevels)) {
       return events;
     }
@@ -345,8 +360,8 @@ export default Component.extend({
    * @protected
    */
   eventsWithSelectedCohorts: computed('ourEvents.[]', 'selectedCohorts.[]', async function(){
-    const events = await this.get('ourEvents');
-    const selectedCohorts = this.get('selectedCohorts').mapBy('id');
+    const events = await this.ourEvents;
+    const selectedCohorts = (await this.selectedCohorts).mapBy('id');
     if(isEmpty(selectedCohorts)) {
       return events;
     }
@@ -373,8 +388,8 @@ export default Component.extend({
    * @protected
    */
   eventsWithSelectedCourses: computed('ourEvents.[]', 'selectedCourses.[]', async function(){
-    const events = await this.get('ourEvents');
-    const selectedCourses = this.get('selectedCourses').mapBy('id');
+    const events = await this.ourEvents;
+    const selectedCourses = (await this.selectedCourses).mapBy('id');
     if(isEmpty(selectedCourses)) {
       return events;
     }
@@ -400,8 +415,8 @@ export default Component.extend({
    * @protected
    */
   eventsWithSelectedTerms: computed('ourEvents.[]', 'selectedTerms.[]', async function(){
-    const events = await this.get('ourEvents');
-    const selectedTerms = this.get('selectedTerms').mapBy('id');
+    const events = await this.ourEvents;
+    const selectedTerms = (await this.selectedTerms).mapBy('id');
     if(isEmpty(selectedTerms)) {
       return events;
     }
@@ -458,82 +473,25 @@ export default Component.extend({
     return server + '/ics/' + icsFeedKey;
   }),
 
-  init() {
-    this._super(...arguments);
-    //do these on setup otherwise tests were failing because
-    //the old filter value hung around
-    this.set('selectedSessionTypes', []);
-    this.set('selectedCourseLevels', []);
-    this.set('selectedCohorts', []);
-    this.set('selectedCourses', []);
-    this.set('selectedTerms', []);
-    this.set('courseLevels', [1, 2, 3, 4, 5]);
-  },
   actions: {
-    toggleSessionType(sessionType){
-      if(this.get('selectedSessionTypes').includes(sessionType)){
-        this.get('selectedSessionTypes').removeObject(sessionType);
-      } else {
-        this.get('selectedSessionTypes').pushObject(sessionType);
-      }
-    },
-    toggleCourseLevel(level){
-      if(this.get('selectedCourseLevels').includes(level)){
-        this.get('selectedCourseLevels').removeObject(level);
-      } else {
-        this.get('selectedCourseLevels').pushObject(level);
-      }
-    },
-    toggleCohort(cohort){
-      if(this.get('selectedCohorts').includes(cohort)){
-        this.get('selectedCohorts').removeObject(cohort);
-      } else {
-        this.get('selectedCohorts').pushObject(cohort);
-      }
-    },
-    toggleCourse(course){
-      if(this.get('selectedCourses').includes(course)){
-        this.get('selectedCourses').removeObject(course);
-      } else {
-        this.get('selectedCourses').pushObject(course);
-      }
-    },
-    toggleTerm(term){
-      if(this.get('selectedTerms').includes(term)){
-        this.get('selectedTerms').removeObject(term);
-      } else {
-        this.get('selectedTerms').pushObject(term);
-      }
-    },
-
-    clearFilters() {
-      const selectedCourses = [];
-      const selectedSessionTypes = [];
-      const selectedCourseLevels = [];
-      const selectedCohorts = [];
-      const selectedTerms = [];
-
-      this.setProperties({ selectedCourses, selectedSessionTypes, selectedCourseLevels, selectedCohorts, selectedTerms });
-    },
-
     removeFilter(filter) {
       if (typeof filter === 'number') {
-        this.send('toggleCourseLevel', filter);
+        this.onUpdateCourseLevels(filter);
       } else {
-        let model = filter.get('constructor.modelName');
-
+        const model = filter.constructor.modelName;
+        const id = filter.id;
         switch (model) {
         case 'session-type':
-          this.send('toggleSessionType', filter);
+          this.onUpdateSessionTypes(id);
           break;
         case 'cohort':
-          this.send('toggleCohort', filter);
+          this.onUpdateCohorts(id);
           break;
         case 'course':
-          this.send('toggleCourse', filter);
+          this.onUpdateCourses(id);
           break;
         case 'term':
-          this.send('toggleTerm', filter);
+          this.onUpdateTerms(filter);
           break;
         }
       }
