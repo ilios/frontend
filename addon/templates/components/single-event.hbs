@@ -93,6 +93,11 @@
   <fieldset>
     <div class="single-event-learningmaterial-list">
       <h2>{{t "general.sessionLearningMaterials"}}</h2>
+      {{fa-icon "archive"
+        class="clickable"
+        title=(t "general.accessAllMaterialsForThisCourse")
+        click=(action "transitionToLearningMaterialsSummary")}}
+      {{{tooltipContent}}}
       {{single-event-learningmaterial-list
         learningMaterials=sessionLearningMaterials}}
     </div>
@@ -109,6 +114,10 @@
   <fieldset>
     <div class="single-event-learningmaterial-list">
       <h2>{{t "general.courseLearningMaterials"}}</h2>
+      {{fa-icon "archive"
+        class="clickable"
+        title=(t "general.accessAllMaterialsForThisCourse")
+        click=(action "transitionToLearningMaterialsSummary")}}
       {{single-event-learningmaterial-list
         learningMaterials=courseLearningMaterials}}
     </div>

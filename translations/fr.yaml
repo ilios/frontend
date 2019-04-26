@@ -1,4 +1,5 @@
 general:
+  accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   actions: Actions
   activeFilters: "Filtres actifs"
   activities: "Activités"

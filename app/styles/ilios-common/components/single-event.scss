@@ -8,6 +8,7 @@
 
   h2 {
     @include ilios-heading-h4;
+    display: inline;
     margin: 1em 0;
   }
 
