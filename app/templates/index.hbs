@@ -1,19 +1,31 @@
-{{common-dashboard
-  show=show
-  setShow=(action (mut show))
-  selectedDate=selectedDate
-  selectedView=selectedView
-  mySchedule=mySchedule
-  showFilters=showFilters
-  changeDate=(action "changeDate")
-  changeView=(action (mut view))
-  selectEvent=(action "selectEvent")
-  toggleMySchedule=(action "toggleMySchedule")
-  toggleShowFilters=(action "toggleShowFilters")
-  selectedAcademicYear=selectedAcademicYear
-  selectedSchool=selectedSchool
-  changeAcademicYear=(action (mut academicYear))
-  changeSchool=(action (mut school))
-  courseFilters=courseFilters
-  toggleCourseFilters=(action (toggle "courseFilters" this))
-}}
+
+  {{common-dashboard
+    show=show
+    setShow=(action (mut show))
+    selectedDate=selectedDate
+    selectedView=selectedView
+    mySchedule=mySchedule
+    showFilters=showFilters
+    changeDate=(action "changeDate")
+    changeView=(action (mut view))
+    selectEvent=(action "selectEvent")
+    toggleMySchedule=(action "toggleMySchedule")
+    toggleShowFilters=(action "toggleShowFilters")
+    selectedAcademicYear=selectedAcademicYear
+    selectedSchool=selectedSchool
+    changeAcademicYear=(action (mut academicYear))
+    changeSchool=(action (mut school))
+    courseFilters=courseFilters
+    toggleCourseFilters=(action (toggle "courseFilters" this))
+    selectedCohorts=selectedCohorts
+    selectedCourseLevels=selectedCourseLevels
+    selectedCourses=selectedCourses
+    selectedSessionTypes=selectedSessionTypes
+    selectedTerms=selectedTerms
+    onClearFilters=(action "clearFilters")
+    onUpdateCohorts=(action "updateCohorts")
+    onUpdateCourseLevels=(action "updateCourseLevels")
+    onUpdateCourses=(action "updateCourses")
+    onUpdateSessionTypes=(action "updateSessionTypes")
+    onUpdateTerms=(action "updateTerms")
+  }}
