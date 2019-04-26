@@ -1,11 +1,7 @@
 import {
   currentRouteName,
-  find,
   visit,
-  click,
-  fillIn,
   currentURL,
-  findAll
 } from '@ember/test-helpers';
 import {
   module,
@@ -14,13 +10,14 @@ import {
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
+import page from '../pages/instructor-group';
 
 let url = '/instructorgroups/1';
 
 module('Acceptance | Instructor Group Details', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
@@ -61,92 +58,81 @@ module('Acceptance | Instructor Group Details', function(hooks) {
   test('check fields', async function(assert) {
     await visit(url);
     assert.equal(currentRouteName(), 'instructorGroup');
-    assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')), getText('school 0 > '));
-    assert.equal(await getElementText(find('[data-test-group-title]')), getText('instructor group 0'));
-    assert.equal(await getElementText(find('.info')), getText('Members:2'));
-    assert.equal(await getElementText(find('.instructorgroup-overview h2')), getText('instructor group 0 Members (2)'));
+    assert.equal(page.header.schoolTitle, 'school 0 >');
+    assert.equal(page.header.groupTitle.text, 'instructor group 0');
+    assert.equal(page.header.membersInfo, 'Members: 2');
+    assert.equal(page.details.title, 'instructor group 0 Members (2)');
 
-    let items = findAll('.instructorgroup-overview .instructorgroup-users li');
-    assert.equal(items.length, 2);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
+    assert.equal(page.details.list.length, 2);
+    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
+    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
 
-    assert.equal(await getElementText('.instructorgroupcourses li'), getText('course 0 course 1'));
+    assert.equal(page.associatedCourses.list.length, 2);
+    assert.equal(page.associatedCourses.list[0].title, 'course 0');
+    assert.equal(page.associatedCourses.list[1].title, 'course 1');
   });
 
   test('change title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('instructor group 0'));
-    await click(find('.instructorgroup-header .title .editable'));
-    let input = find('.instructorgroup-header .title .editinplace input');
-    assert.equal(getText(input.value), getText('instructor group 0'));
-    await fillIn(input, 'test new title');
-    await click(find('.instructorgroup-header .title .editinplace .actions .done'));
-    assert.equal(await getElementText(find('.instructorgroup-header .title .editable')), getText('test new title'));
+    assert.equal(page.header.groupTitle.text, 'instructor group 0');
+    await page.header.groupTitle.edit();
+    assert.equal(page.header.groupTitle.inputValue, 'instructor group 0');
+    page.header.groupTitle.fillInput('test new title');
+    await page.header.groupTitle.save();
+    assert.equal(page.header.groupTitle.text, 'test new title');
   });
 
   test('search instructors', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    const container = '.instructorgroup-overview';
-    const search = `${container} .search-box input`;
-    const results = `${container} .results li`;
-
-    await fillIn(search, 'guy');
-    let searchResults = findAll(results);
-    assert.equal(searchResults.length, 6);
-    assert.equal(await getElementText(searchResults[0]), getText('5 Results'));
-    assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
-    assert.dom(searchResults[1]).hasClass('active');
-    assert.equal(await getElementText(searchResults[2]), getText('1 guy M. Mc1son user@example.edu'));
-    assert.ok(!searchResults[2].classList.contains('active'));
-    assert.equal(await getElementText(searchResults[3]), getText('2 guy M. Mc2son user@example.edu'));
-    assert.ok(!searchResults[3].classList.contains('active'));
-    assert.equal(await getElementText(searchResults[4]), getText('3 guy M. Mc3son user@example.edu'));
-    assert.dom(searchResults[4]).hasClass('active');
-    assert.equal(await getElementText(searchResults[5]), getText('4 guy M. Mc4son user@example.edu'));
-    assert.dom(searchResults[5]).hasClass('active');
+    await page.search.input.fillInput('guy');
+    assert.equal(page.search.results.length, 5);
+    assert.equal(page.search.results[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.equal(page.search.results[1].text, '1 guy M. Mc1son user@example.edu');
+    assert.equal(page.search.results[2].text, '2 guy M. Mc2son user@example.edu');
+    assert.equal(page.search.results[3].text, '3 guy M. Mc3son user@example.edu');
+    assert.equal(page.search.results[4].text, '4 guy M. Mc4son user@example.edu');
   });
 
   test('add instructor', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
-    let items = findAll('.instructorgroup-overview .instructorgroup-users li');
-    assert.equal(items.length, 2);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
+    assert.equal(page.details.list.length, 2);
+    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
+    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
 
-    await fillIn(find('.instructorgroup-overview .search-box input'), 'guy');
-    await click(findAll('.instructorgroup-overview .results li')[4]);
-    items = findAll('.instructorgroup-overview .instructorgroup-users li');
-    assert.equal(items.length, 3);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
+    await page.search.input.fillInput('guy');
+    await page.search.results[3].add();
+
+    assert.equal(page.details.list.length, 3);
+    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
+    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
+    assert.equal(page.details.list[2].name, '3 guy M. Mc3son');
   });
 
-  test('remove default instructor', async function(assert) {
+  test('remove instructor', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-
-    await click(find('.instructorgroup-overview .instructorgroup-users li'));
-    let items = findAll('.instructorgroup-overview .instructorgroup-users li');
-    assert.equal(items.length, 1);
-    assert.equal(await getElementText(items[0]), getText('2 guy M. Mc2son'));
+    assert.equal(page.details.list.length, 2);
+    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
+    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
+    await page.details.list[0].remove();
+    assert.equal(page.details.list.length, 1);
+    assert.equal(page.details.list[0].name, '2 guy M. Mc2son');
   });
 
   test('follow link to course', async function(assert) {
     await visit(url);
-    await click('.instructorgroupcourses li:nth-of-type(1) a');
+    await page.associatedCourses.list[0].visit();
     assert.equal(currentURL(), '/courses/1');
   });
 
   test('no associated courses', async function(assert) {
     await visit('/instructorgroups/3');
-    assert.equal(await getElementText(find('.instructorgroup-header .title .school-title')),getText('school 0 >'));
-    assert.equal(await getElementText(find('[data-test-group-title]')),getText('instructorgroup 2'));
-    assert.equal(await getElementText(find('.instructorgroupcourses')), getText('Associated Courses: None'));
+    assert.equal(page.header.schoolTitle, 'school 0 >');
+    assert.equal(page.header.groupTitle.text, 'instructor group 2');
+    assert.equal(page.associatedCourses.text, 'Associated Courses: None');
   });
 });
