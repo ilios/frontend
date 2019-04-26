@@ -56,7 +56,7 @@
     "ilios-common": "^25.2.0",
     "loader.js": "^4.7.0",
     "normalize.css": "8.0.1",
-    "qunit-dom": "^0.8.0",
+    "qunit-dom": "^0.8.5",
     "stylelint": "^10.0.1",
     "stylelint-config-recommended-scss": "^3.3.0",
     "stylelint-scss": "^3.6.0"
