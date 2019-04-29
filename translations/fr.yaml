@@ -51,7 +51,7 @@ general:
   copyrightPermission: "Droit d’Auteur"
   copyrightRationale: "Raison du droit d'auteur"
   copySession: "Copier Séance"
-  copySessionSummary: "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matiéres d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\"."
+  copySessionSummary: "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\"."
   copySuccess: "Copie achevée avec succès"
   course: Cours
   courseLeadership: "Dirigeants de Cours"
@@ -128,7 +128,7 @@ general:
   learners: "Étudiants"
   learningMaterialManageTitle: "Manager Matières d’Étude"
   learningMaterials: "Matières d’Étude"
-  learningMaterialsSummary: "Résumé Matières d'Étude"
+  learningMaterialsSummary: "Résumé Matériels d'Étude"
   level: Niveau
   link: "Lien web"
   linkedCompetencies: "Compétences Liés"
@@ -170,12 +170,12 @@ general:
   noAssociatedCompetency: "Nul compétence associée"
   noAvailableLearnerGroups: "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
   noCohorts: "Il n'y a aucun des cohortes dans ce cours"
-  noCourseLearningMaterialsAvailable: "Aucun Matières D'étude de Cours"
+  noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
   none: Nul
   noOfferings: "Ce session n'a aucun des offres"
   noResultsFound: "Aucun Résultat"
   noSearchResultsPrompt: "Aucun Résultat"
-  noSessionLearningMaterialsAvailable: "Aucun Matières D'étude de Séance"
+  noSessionLearningMaterialsAvailable: "Aucun Matériels D'étude de Séance"
   notAClerkship: "Pas une stage"
   notes: Notes
   notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
@@ -226,7 +226,7 @@ general:
   scheduledSuccessfully: "Faire à prévu réussi"
   school: "Écôle"
   searchForIliosUsers: "Trouver des utilisateurs..."
-  searchPlaceholder: "Trouver matières d'étude"
+  searchPlaceholder: "Trouver matériels d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
   selectedLearnerGroups: "Groupes d’Étudiants Selectionées"
   selectMeshFor: "Sélectionnez MeSH pour: {title}"
@@ -293,7 +293,7 @@ general:
   unPublishSession: "Faire à Dépublier Session"
   unusedObjectives: "Objectifs non Utilisés"
   upcomingActivities: "Mes Activités pendant les {days} prochains jours"
-  upcomingMaterials: "Mes Matières d'Étude pendant les {days} prochains jours"
+  upcomingMaterials: "Mes Matériels d'Étude pendant les {days} prochains jours"
   uploadDate: "Date de dépôt"
   url: URL
   userRole: "Rôle d'utilisateur"
