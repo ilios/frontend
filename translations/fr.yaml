@@ -40,7 +40,7 @@ general:
   completeSessions: "Séances complète: prêt à publier"
   confirmObjectiveRemoval: "Êtes vous sûr de vouloir supprimer cet objectif?"
   confirmObjectiveRemovalMultipleSessionObjectives: "Vous êtes sur le point de supprimer cet objectif de cours, qui est lié à {count} objectifs de séance. Cela supprimera également ces liens. Êtes-vous certain de vouloir continuer?"
-  confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matière d’étude?"
+  confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude?"
   confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: "Êtes vous sûr de vouloir supprimer cette séance?"
   contentAuthor: Auteur
@@ -55,7 +55,7 @@ general:
   copySuccess: "Copie achevée avec succès"
   course: Cours
   courseLeadership: "Dirigeants de Cours"
-  courseLearningMaterials: "Matières d’Étude du Cours"
+  courseLearningMaterials: "Matériels d'Étude du Cours"
   courseLevels: "Niveaux de Cours"
   courseObjectives: "Objectifs du Cours"
   courseOrType: "Cours / Type"
@@ -126,8 +126,8 @@ general:
   learnerGroups: "Groupes d'Étudiants"
   learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: "Étudiants"
-  learningMaterialManageTitle: "Manager Matières d’Étude"
-  learningMaterials: "Matières d’Étude"
+  learningMaterialManageTitle: "Manager Matériels d'Étude"
+  learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
   level: Niveau
   link: "Lien web"
@@ -135,13 +135,13 @@ general:
   linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
   listByPriority: "Liste par priorité"
   loadingEvents: "Rassembler les événements..."
-  loadingMaterials: "Chargement Matières..."
+  loadingMaterials: "Chargement Matériels..."
   location: Locale
   login: Login
   makeRecurring: "Activité Récurrente"
   manageLeadership: "Gérer Dirigeants"
   markAsScheduled: "Faire à prévu"
-  materials: "Matières"
+  materials: "Matériels"
   mesh: MeSH
   meshCount:  "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
   meshManageTitle: "Manager MeSH"
@@ -234,7 +234,7 @@ general:
   session: "Séance"
   sessionAdministration: "Administration de Séance"
   sessionIs: "Type de Séance: {type}"
-  sessionLearningMaterials: "Matières d’Étude de la Séance"
+  sessionLearningMaterials: "Matériels d'Étude de la Séance"
   sessionObjectives: "Objectifs de la Séance"
   sessions: "Séances"
   sessionTitle: "Titre de Séance"
