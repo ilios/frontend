@@ -159,8 +159,8 @@ general:
   learnerGroupTitle: "Titre de groupe d'apprenants"
   learnerGroupTitleFilterPlaceholder: "Filtre par titre de groupe d'apprenants"
   learnerGroupTitlePlaceholder: "Ajoutez une titre pour cette groupe d'apprenants"
-  learningMaterial: "Matière d’Étude"
-  lmDescriptorTitle: "Choisi MeSH pour les matières d'étude"
+  learningMaterial: "Matériel d'Étude"
+  lmDescriptorTitle: "Choisi MeSH pour les matériels d'étude"
   loading: "Chargement Ilios"
   loadingSessionTypes: "Chargement des genres de session..."
   login: Login
@@ -191,7 +191,7 @@ general:
   multipleUsersFoundWithCampusId: "Plusieurs utilisateurs trouvés avec le Campus ID  {campusId}"
   myCalendar: "Mon Calendrier"
   myCourses: "Mes Cours"
-  myMaterials: "Mes Matières d'étude"
+  myMaterials: "Mes Matériels d'étude"
   myProfile: "Mon profil"
   myReports: "Mes Rapports"
   name: Nom
