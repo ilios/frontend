@@ -34,13 +34,15 @@ export default Component.extend({
         text: intl.t('general.moreInputRequiredPrompt')
       }];
     }
+    let params = { q, limit: 100 };
 
-    let searchResults = yield store.query('user', {
-      q,
-      'order_by[lastName]': 'ASC',
-      'order_by[firstName]': 'ASC',
-      limit: 100
-    });
+    const searchEnabled = yield this.iliosConfig.searchEnabled;
+    if (!searchEnabled) {
+      params['order_by[lastName]'] = 'ASC';
+      params['order_by[firstName]'] = 'ASC';
+    }
+
+    let searchResults = yield store.query('user', params);
     if (searchResults.length === 0) {
       return [{
         type: 'text',
