@@ -7,6 +7,7 @@ import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
 export default Component.extend(EventMixin, {
+  currentUser: service(),
   intl: service(),
   router: service(),
   store: service(),
@@ -183,9 +184,10 @@ export default Component.extend(EventMixin, {
   }),
 
   actions: {
-    async transitionToLearningMaterialsSummary() {
-      const courseId = await this.courseId;
-      this.router.transitionTo('course-materials', courseId);
+    async transitionToMyMaterials() {
+      const course = await this.courseId;
+      const queryParams = { course, sortBy: 'sessionTitle' };
+      this.router.transitionTo('mymaterials', { queryParams });
     }
   },
 
