@@ -14,6 +14,7 @@
   <div class="title">
     {{t "general.missingItems"}} ({{session.allPublicationIssuesLength}})
   </div>
+
   <div class="session-publicationcheck-content">
     <table>
       <thead>
@@ -25,6 +26,7 @@
           <th>{{t "general.meshTerms"}}</th>
         </tr>
       </thead>
+
       <tbody>
         <tr>
           <td>{{session.title}}</td>
@@ -38,8 +40,15 @@
           {{else}}
             <td class="no">{{t "general.no"}}</td>
           {{/if}}
-          {{#if session.objectives.length}}
-            <td class="yes">{{t "general.yes"}} ({{session.objectives.length}})</td>
+          {{#if @session.objectives.length}}
+            <td class="yes">
+              {{t "general.yes"}} ({{@session.objectives.length}})
+              {{#if this.showUnlinkIcon}}
+                {{fa-icon "unlink"
+                  class="clickable"
+                  click=(action "transitionToSession")}}
+              {{/if}}
+            </td>
           {{else}}
             <td class="no">{{t "general.no"}}</td>
           {{/if}}
