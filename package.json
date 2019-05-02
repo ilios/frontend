@@ -103,7 +103,7 @@
     "pre-commit": "^1.2.2",
     "qunit-dom": "^0.8.0",
     "sass": "^1.13.4",
-    "stylelint": "^9.10.1",
+    "stylelint": "^10.0.1",
     "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-scss": "^3.5.1"
   },
