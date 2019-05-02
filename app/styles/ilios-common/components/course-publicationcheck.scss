@@ -8,4 +8,9 @@
   .course-publicationcheck-content {
     @include detail-container-content;
   }
+
+  .fa-unlink {
+    color: $black;
+    font-size: .75rem;
+  }
 }
