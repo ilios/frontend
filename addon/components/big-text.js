@@ -17,8 +17,12 @@ export default Component.extend({
   text: '',
   ellipsis: 'ellipsis-h',
   renderHtml: true,
+
+  onEdit() {},
+
   lengths: collect('length', 'slippage'),
   totalLength: sum('lengths'),
+
   showIcons: computed('displayText', 'text', 'renderHtml', function(){
     if(this.get('renderHtml')){
       return this.get('displayText').toString() !== this.get('text');
@@ -52,10 +56,5 @@ export default Component.extend({
 
     return new htmlSafe(text);
 
-  }),
-  actions: {
-    expand: function(){
-      this.set('expanded', true);
-    }
-  }
+  })
 });

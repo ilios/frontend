@@ -37,7 +37,7 @@ module('Integration | Component | course overview', function(hooks) {
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
-    const button = `${item} .clickable`;
+    const button = `${item} [data-test-edit]`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
@@ -56,7 +56,7 @@ module('Integration | Component | course overview', function(hooks) {
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
-    const button = `${item} .clickable`;
+    const button = `${item} [data-test-edit]`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
@@ -86,7 +86,7 @@ module('Integration | Component | course overview', function(hooks) {
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
-    const button = `${item} .clickable`;
+    const button = `${item} [data-test-edit]`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);
@@ -116,7 +116,7 @@ module('Integration | Component | course overview', function(hooks) {
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
-    const button = `${item} .clickable`;
+    const button = `${item} [data-test-edit]`;
     const save = `${item} .actions .done`;
     const input = `${item} input`;
     await click(button);

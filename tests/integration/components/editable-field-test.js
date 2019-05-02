@@ -30,10 +30,8 @@ module('Integration | Component | editable field', function(hooks) {
    `);
 
     assert.dom(this.element).hasText('text');
-    await click('.editable');
+    await click('[data-test-edit]');
     assert.dom(this.element).hasText('template block text');
-
-
   });
 
   test('it renders an edit icon when it looks empty', async function(assert) {
@@ -54,7 +52,7 @@ module('Integration | Component | editable field', function(hooks) {
     await render(
       hbs`{{#editable-field save=(action save) saveOnEnter=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`
     );
-    await click('.editable');
+    await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 13);
   });
 
@@ -67,7 +65,7 @@ module('Integration | Component | editable field', function(hooks) {
     await render(
       hbs`{{#editable-field close=(action revert) closeOnEscape=true value=value}}<input value={{value}} oninput={{action (mut value) value="target.value"}}>{{/editable-field}}`
     );
-    await click('.editable');
+    await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 27);
   });
 });

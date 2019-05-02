@@ -28,7 +28,7 @@ export default {
   current: collection('table tbody tr', {
     description: {
       scope: 'td:eq(0)',
-      openEditor: clickable('.editable'),
+      openEditor: clickable('[data-test-edit]'),
       editorContents: froalaEditorValue('.fr-box'),
       edit: fillInFroalaEditor('.fr-box'),
       save: clickable('.done'),

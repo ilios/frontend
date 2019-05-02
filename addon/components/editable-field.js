@@ -1,7 +1,7 @@
 import Component from '@ember/component';
-import layout from '../templates/components/editable-field';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
+import layout from '../templates/components/editable-field';
 import { timeout, task } from 'ember-concurrency';
 
 export default Component.extend({
@@ -42,7 +42,6 @@ export default Component.extend({
     this.set('isEditing', true);
     yield timeout(10);
     const control = this.$('.editor').find('input,textarea,select,.fr-element').filter(':visible:first');
-
     control.focus();
   }).drop(),
 
