@@ -82,4 +82,16 @@ export default Service.extend({
 
     return errorCaptureEnabled === 'true';
   }),
+
+  searchEnabled: computed('config.searchEnabled', async function(){
+    const searchEnabled = await this.itemFromConfig('searchEnabled');
+    if (searchEnabled === null) {
+      return false;
+    }
+    if (typeof searchEnabled === 'boolean') {
+      return searchEnabled;
+    }
+
+    return searchEnabled === 'true';
+  }),
 });
