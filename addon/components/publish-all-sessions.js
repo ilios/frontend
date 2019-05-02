@@ -1,13 +1,15 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import { all, Promise as RSVPPromise } from 'rsvp';
 import layout from '../templates/components/publish-all-sessions';
 
-const { equal } = computed;
-
 export default Component.extend({
+  router: service(),
   store: service(),
+
   layout,
   isSaving: false,
   classNames: ['publish-all-sessions'],
@@ -111,6 +113,16 @@ export default Component.extend({
     });
   }),
 
+  course: computed('sessions', async function() {
+    return await this.sessions.firstObject.course;
+  }),
+
+  showWarning: computed('course', async function() {
+    const course = await this.course;
+    const objectives = await course.objectives;
+    return objectives.any((objective) => isEmpty(objective.parents));
+  }),
+
   init(){
     this._super(...arguments);
     this.set('sessionsToOverride', []);
@@ -199,6 +211,22 @@ export default Component.extend({
     },
     toggleUnPublishableCollapsed(){
       this.set('unPublishableCollapsed', !this.get('unPublishableCollapsed'));
+    },
+
+    async transitionToCourse() {
+      const course = await this.course;
+      const queryParams = { courseObjectiveDetails: true, details: true };
+      this.router.transitionTo('course', course, { queryParams });
+    },
+
+    async transitionToVisualizeObjectives() {
+      const course = await this.course;
+      this.router.transitionTo('course-visualize-objectives', course);
+    },
+
+    transitionToSession(session) {
+      const queryParams = { sessionObjectiveDetails: true };
+      this.router.transitionTo('session', session, { queryParams });
     }
   }
 });

@@ -35,6 +35,16 @@
     padding: 1rem;
     text-align: center;
 
+    .unlinked-warning {
+      color: $ilios-yellow;
+      font-size: 1rem;
+    }
+
+    .fa-chart-bar {
+      color: $ilios-blue;
+      font-size: .8rem;
+    }
+
     p {
       color: $ilios-green;
       font-weight: bold;
@@ -46,6 +56,10 @@
       background: $ilios-green;
       color: $white;
     }
+  }
 
+  .fa-unlink {
+    color: $black;
+    font-size: .75rem;
   }
 }

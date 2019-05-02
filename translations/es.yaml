@@ -288,6 +288,7 @@ general:
   tuesday: Martes
   type: Tipo
   universalLocator: "Localizador universal de"
+  unlinkedObjectives: "Este curso tiene objetivo(s) no vinculados"
   unPublishCourse: "No Publique El Curso"
   unPublishedSuccessfully: "No Publicado con Éxito"
   unPublishSession: "No Publique La Sesión"
