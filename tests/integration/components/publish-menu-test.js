@@ -33,9 +33,9 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;
-    const review = 'a:nth-of-type(1)';
-    const schedule = `${dropDownItems}:nth-of-type(3)`;
-    const unpublish = `${dropDownItems}:nth-of-type(4)`;
+    const review = `${dropDownItems}:nth-of-type(3)`;
+    const schedule = `${dropDownItems}:nth-of-type(4)`;
+    const unpublish = `${dropDownItems}:nth-of-type(5)`;
 
     assert.dom(toggle).hasText('title');
     assert.dom(icon).hasClass('fa-cloud');
@@ -166,10 +166,9 @@ module('Integration | Component | publish menu', function(hooks) {
     const dropDownItems = '.rl-dropdown button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;
-    const review = 'a:nth-of-type(1)';
-    const schedule = `${dropDownItems}:nth-of-type(3)`;
-    const unpublish = `${dropDownItems}:nth-of-type(4)`;
-
+    const review = `${dropDownItems}:nth-of-type(3)`;
+    const schedule = `${dropDownItems}:nth-of-type(4)`;
+    const unpublish = `${dropDownItems}:nth-of-type(5)`;
 
     assert.dom(toggle).hasText('title');
     assert.dom(icon).hasClass('fa-cloud');

@@ -131,10 +131,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     const menu = '.session-header .publish-menu';
     const selector = `${menu} .rl-dropdown-toggle`;
     const choices = `${menu} .rl-dropdown button`;
-    const schedule = `${choices}:nth-of-type(2)`;
+    const schedule = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(schedule);
-
     assert.equal(await getElementText(selector), getText('Scheduled'));
   });
 
@@ -155,10 +154,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     const menu = '.session-header .publish-menu';
     const selector = `${menu} .rl-dropdown-toggle`;
     const choices = `${menu} .rl-dropdown button`;
-    const unPublish = `${choices}:nth-of-type(2)`;
+    const unPublish = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(unPublish);
-
     assert.equal(await getElementText(selector), getText('Not Published'));
   });
 
@@ -167,10 +165,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     const menu = '.session-header .publish-menu';
     const selector = `${menu} .rl-dropdown-toggle`;
     const choices = `${menu} .rl-dropdown > button`;
-    const schedule = `${choices}:nth-of-type(1)`;
+    const schedule = `${choices}:nth-of-type(2)`;
     await click(selector);
     await click(schedule);
-
     assert.equal(await getElementText(selector), getText('Scheduled'));
   });
 
@@ -179,10 +176,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     const menu = '.session-header .publish-menu';
     const selector = `${menu} .rl-dropdown-toggle`;
     const choices = `${menu} .rl-dropdown button`;
-    const unPublish = `${choices}:nth-of-type(2)`;
+    const unPublish = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(unPublish);
-
     assert.equal(await getElementText(selector), getText('Not Published'));
   });
 
@@ -192,10 +188,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     const selector = `${menu} .rl-dropdown-toggle`;
     const choices = `${menu} .rl-dropdown > button`;
     const firstChoice = `${choices}:nth-of-type(1)`;
-    const secondChoice = `${menu} a`;
-    const thirdChoice = `${choices}:nth-of-type(2)`;
+    const secondChoice = `${choices}:nth-of-type(2)`;
+    const thirdChoice = `${choices}:nth-of-type(3)`;
     await click(selector);
-
     assert.equal(await getElementText(firstChoice), getText('Publish As-is'));
     assert.equal(await getElementText(secondChoice), getText('Review 3 Missing Items'));
     assert.equal(await getElementText(thirdChoice), getText('Mark as Scheduled'));
