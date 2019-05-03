@@ -208,7 +208,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await visit(url);
     const container = '.programyear-objective-list';
     const title = `${container} tbody tr:nth-of-type(1) td:nth-of-type(2)`;
-    const edit = `${title} .editable span`;
+    const edit = `${title} .editable`;
     const editor = `${title} .fr-box`;
     const initialObjectiveTitle = 'objective 0';
     const save = `${title} .done`;
