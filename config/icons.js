@@ -68,6 +68,7 @@ module.exports = function() {
       'times',
       'trash',
       'undo',
+      'unlink',
       'user',
       'user-clock',
       'user-plus',

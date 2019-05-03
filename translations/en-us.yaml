@@ -288,6 +288,7 @@ general:
   tuesday: Tuesday
   type: Type
   universalLocator: "Universal Locator"
+  unlinkedObjectives: "This course has unlinked objective(s)"
   unPublishCourse: "UnPublish Course"
   unPublishedSuccessfully: "UnPublished Successfully"
   unPublishSession: "UnPublish Session"

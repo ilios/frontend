@@ -1,6 +1,7 @@
 <div class="title">
   {{t "general.missingItems"}} ({{course.allPublicationIssuesLength}})
 </div>
+
 <div class="course-publicationcheck-content">
   <table>
     <thead>
@@ -12,6 +13,7 @@
         <th>{{t "general.meshTerms"}}</th>
       </tr>
     </thead>
+
     <tbody>
       <tr>
         <td>{{course.title}}</td>
@@ -25,8 +27,15 @@
         {{else}}
           <td class="no">{{t "general.no"}}</td>
         {{/if}}
-        {{#if course.objectives.length}}
-          <td class="yes">{{t "general.yes"}} ({{course.objectives.length}})</td>
+        {{#if @course.objectives.length}}
+          <td class="yes">
+            {{t "general.yes"}} ({{@course.objectives.length}})
+            {{#if this.showUnlinkIcon}}
+              {{fa-icon "unlink"
+                class="clickable"
+                click=(action "transitionToCourse")}}
+            {{/if}}
+          </td>
         {{else}}
           <td class="no">{{t "general.no"}}</td>
         {{/if}}

@@ -14,6 +14,7 @@
   >
     {{t "general.incompleteSessions"}} ({{get (await unPublishableSessions) "length"}})
   </div>
+
   {{#unless unPublishableCollapsed}}
     <div class="content">
       <table>
@@ -26,6 +27,7 @@
             <th>{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
+
         <tbody>
           {{#each (await unPublishableSessions) as |session|}}
             <tr>
@@ -41,7 +43,14 @@
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
               {{#if session.objectives.length}}
-                <td class="yes">{{t "general.yes"}} ({{session.objectives.length}})</td>
+                <td class="yes">
+                  {{t "general.yes"}} ({{session.objectives.length}})
+                  {{#if session.showUnlinkIcon}}
+                    {{fa-icon "unlink"
+                      class="clickable"
+                      click=(action "transitionToSession" session)}}
+                  {{/if}}
+                </td>
               {{else}}
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
@@ -66,6 +75,7 @@
   >
     {{t "general.completeSessions"}} ({{get (await publishableSessions) "length"}})
   </div>
+
   {{#unless publishableCollapsed}}
     <div class="content">
       <table>
@@ -78,6 +88,7 @@
             <th>{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
+
         <tbody>
           {{#each (await publishableSessions) as |session|}}
             <tr>
@@ -93,7 +104,14 @@
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
               {{#if session.objectives.length}}
-                <td class="yes">{{t "general.yes"}} ({{session.objectives.length}})</td>
+                <td class="yes">
+                  {{t "general.yes"}} ({{session.objectives.length}})
+                  {{#if session.showUnlinkIcon}}
+                    {{fa-icon "unlink"
+                      class="clickable"
+                      click=(action "transitionToSession" session)}}
+                  {{/if}}
+                </td>
               {{else}}
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
@@ -114,6 +132,7 @@
   <div class="title">
     {{t "general.reviewSessions"}} ({{get (await overridableSessions) "length"}})
   </div>
+
   <div class="content">
     {{#if (get (await overridableSessions) "length")}}
       <button disabled={{await allSessionsAsIs}} {{action "publishAllAsIs"}}>
@@ -122,6 +141,7 @@
       <button disabled={{noSessionsAsIs}} {{action "publishNoneAsIs"}}>
         {{t "general.markAsScheduled"}}
       </button>
+
       <table>
         <thead>
           <tr>
@@ -133,6 +153,7 @@
             <th>{{t "general.meshTerms"}}</th>
           </tr>
         </thead>
+
         <tbody>
           {{#each (await overridableSessions) as |session|}}
             <tr>
@@ -180,7 +201,14 @@
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
               {{#if session.objectives.length}}
-                <td class="yes">{{t "general.yes"}} ({{session.objectives.length}})</td>
+                <td class="yes">
+                  {{t "general.yes"}} ({{session.objectives.length}})
+                  {{#if session.showUnlinkIcon}}
+                    {{fa-icon "unlink"
+                      class="clickable"
+                      click=(action "transitionToSession" session)}}
+                  {{/if}}
+                </td>
               {{else}}
                 <td class="no">{{t "general.no"}}</td>
               {{/if}}
@@ -198,6 +226,15 @@
 </section>
 
 <div class="publish-all-sessions-review">
+  {{#if (await this.showWarning)}}
+    <span class="unlinked-warning">{{t "general.unlinkedObjectives"}}</span>
+    {{fa-icon "unlink"
+      class="clickable"
+      click=(action "transitionToCourse")}}
+    {{fa-icon "chart-bar"
+      class="clickable"
+      click=(action "transitionToVisualizeObjectives")}}
+  {{/if}}
   <p>
     {{t
       "general.publishAllConfirmation"

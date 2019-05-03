@@ -292,6 +292,11 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     return !!this.belongsTo('postrequisite').id();
   }),
 
+  showUnlinkIcon: computed('objectives.[]', function() {
+    const objectives = this.objectives;
+    return objectives.any((objective) => isEmpty(objective.parents));
+  }),
+
   init() {
     this._super(...arguments);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);

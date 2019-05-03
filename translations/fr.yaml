@@ -288,6 +288,7 @@ general:
   tuesday: Mardi
   type: Type
   universalLocator: "Localisateur universel"
+  unlinkedObjectives: "Ce cours comprend des objectifs non liés"
   unPublishCourse: "Faire à Dépublier Cours"
   unPublishedSuccessfully: "Faire à Dépublier réussi"
   unPublishSession: "Faire à Dépublier Session"
