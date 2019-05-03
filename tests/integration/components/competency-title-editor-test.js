@@ -32,7 +32,7 @@ module('Integration | Component | competency title editor', function(hooks) {
     });
     this.set('competency', competency);
     await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
-    await click(find('.content span'));
+    await click(find('.content .editable'));
     await fillIn('input', '');
     await click('button.done');
     return settled().then(()=>{
