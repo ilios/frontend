@@ -1,4 +1,10 @@
-import { currentRouteName, visit, findAll } from '@ember/test-helpers';
+import {
+  currentRouteName,
+  currentURL,
+  click,
+  findAll,
+  visit
+} from '@ember/test-helpers';
 import {
   module,
   test
@@ -55,5 +61,11 @@ module('Acceptance | Course - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[2]), getText('No'));
     assert.equal(await getElementText(items[3]), getText('No'));
     assert.equal(await getElementText(items[4]), getText('No'));
+  });
+
+  test('unlink icon transitions properly', async function(assert) {
+    await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
+    await click('.fa-unlink');
+    assert.equal(currentURL(), '/courses/1?courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=true&courseTaxonomyDetails=false&details=true&filterBy=&sortBy=title');
   });
 });
