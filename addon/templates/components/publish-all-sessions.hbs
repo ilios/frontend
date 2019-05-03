@@ -227,7 +227,11 @@
 
 <div class="publish-all-sessions-review">
   {{#if (await this.showWarning)}}
-    <span class="unlinked-warning">{{t "general.unlinkedObjectives"}}</span>
+    <span
+      class="unlinked-warning"
+      data-test-unlinked-warning>
+      {{t "general.unlinkedObjectives"}}
+    </span>
     {{fa-icon "unlink"
       class="clickable"
       click=(action "transitionToCourse")}}
