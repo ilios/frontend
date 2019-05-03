@@ -74,7 +74,7 @@
     "@ilios/ember-template-lint-plugin": "^1.0.1",
     "@ilios/eslint-config-ember-addon": "^2.0.1",
     "broccoli-asset-rev": "^3.0.0",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.0.0",
     "ember-ajax": "^5.0.0",
     "ember-cli": "~3.9.0",
     "ember-cli-dependency-checker": "^3.1.0",
