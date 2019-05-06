@@ -1,9 +1,9 @@
 <h3>{{t "general.upcomingActivities" days=daysInAdvance}}</h3>
 {{#if (is-fulfilled weeksEvents)}}
-  {{#if (gt (get (await weeksEvents) "length") 0)}}
+  {{#if (gt (get (await nonIlmPreWorkEvents) "length") 0)}}
     <table>
       <tbody>
-        {{#each (await weeksEvents) as |event|}}
+        {{#each (await nonIlmPreWorkEvents) as |event|}}
           {{#if event.isBlanked}}
             <tr>
               <td colspan="4" class="event-date">
@@ -79,6 +79,9 @@
   {{else}}
     <p>{{t "general.none"}}</p>
   {{/if}}
+
+  <IliosCalendarPreWorkEvents @events={{await ilmPreWorkEvents}} @areEventsSelectable={{areEventsSelectable}} />
+
 {{else}}
   <p>{{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}</p>
 {{/if}}
