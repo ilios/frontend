@@ -11,5 +11,6 @@ module.exports = {
     'ember/no-capital-letters-in-routes': 0,
     'ember/no-unnecessary-route-path-option': 0,
     'ember/routes-segments-snake-case': 0,
+    'sort-imports': 0,
   },
 };
