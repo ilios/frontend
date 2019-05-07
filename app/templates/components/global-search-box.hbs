@@ -1,4 +1,4 @@
-<span class="global-search-box">
+<span class="global-search-box" data-test-global-search-box>
   <input
     type="search"
     value={{this.query}}
@@ -10,14 +10,16 @@
           }}
   >
   <span
-    class="search-icon"
+    class="search-icon clickable"
     onclick={{pipe-action (action "focus") (action "search")}}
+    data-test-search-icon
   >
     {{fa-icon "search"}}
   </span>
   <ul
     class="autocomplete
           {{unless autocomplete.lastSuccessful.value.length "hidden" }}"
+    data-test-autocomplete
   >
     {{#each autocomplete.lastSuccessful.value as |result|}}
       <li
