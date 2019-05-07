@@ -1,46 +1,58 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  program: null,
   classNames: ['program-leadership-expanded'],
-  directors: null,
-  isManaging: false,
+
+  canUpdate: null,
   'data-test-program-leadership-expanded': true,
-  didReceiveAttrs(){
+  program: null,
+  isManaging: false,
+  collapse() {},
+  expand() {},
+  setIsManaging() {},
+
+  isSaving: reads('save.isRunning'),
+
+  directors: computed('directorsToAdd.[]', 'directorsToRemove.[]', 'program', async function() {
+    const directors = await this.program.directors;
+    return directors
+      .toArray()
+      .concat(this.directorsToAdd)
+      .filter((user) => !this.directorsToRemove.includes(user));
+  }),
+
+  init() {
     this._super(...arguments);
-    const program = this.program;
-    if (program) {
-      program.get('directors').then(directors => {
-        this.set('directors', directors.toArray());
-      });
+    this.setProperties({ directorsToAdd: [], directorsToRemove: [] });
+  },
+
+  actions: {
+    addDirector(user) {
+      this.directorsToRemove.removeObject(user);
+      this.directorsToAdd.pushObject(user);
+    },
+
+    removeDirector(user) {
+      this.directorsToAdd.removeObject(user);
+      this.directorsToRemove.pushObject(user);
+    },
+
+    cancel() {
+      this.setIsManaging(false);
+      this.setProperties({ directorsToAdd: [], directorsToRemove: [] });
     }
   },
-  actions: {
-    addDirector(user){
-      this.add('directors', user);
-    },
-    removeDirector(user){
-      this.remove('directors', user);
-    },
-  },
-  save: task(function * (){
+
+  save: task(function* () {
     yield timeout(10);
-    const directors = this.directors;
-    let program = this.program;
-    program.setProperties({directors});
+    const program = this.program;
+    const directors = yield this.directors;
+    program.set('directors', directors);
     this.expand();
     yield program.save();
     this.setIsManaging(false);
-  }),
-  add(where, user){
-    let arr = this.get(where).toArray();
-    arr.pushObject(user);
-    this.set(where, arr);
-  },
-  remove(where, user){
-    let arr = this.get(where).toArray();
-    arr.removeObject(user);
-    this.set(where, arr);
-  },
+  })
 });

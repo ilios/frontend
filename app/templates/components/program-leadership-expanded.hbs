@@ -1,32 +1,38 @@
 <div class="program-leadership-expanded-header">
-  <h3 class="title collapsible clickable" {{action collapse}}>
+  <h3 class="title collapsible clickable" {{action @collapse}}>
     {{t "general.programLeadership"}}
   </h3>
+
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
-        {{fa-icon (if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
+      <button class="bigadd" onclick={{perform this.save}}>
+        {{fa-icon (if this.isSaving "spinner" "check") spin=this.isSaving}}
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon "undo"}}</button>
-    {{else if canUpdate}}
-      <button {{action setIsManaging true}}>{{t "general.manageLeadership"}}</button>
+      <button
+        class="bigcancel"
+        onclick={{action "cancel"}}>
+        {{fa-icon "undo"}}
+      </button>
+    {{else if @canUpdate}}
+      <button onclick={{action @setIsManaging true}}>
+        {{t "general.manageLeadership"}}
+      </button>
     {{/if}}
   </div>
 </div>
+
 <div class="program-leadership-expanded-content">
-  {{#if (is-array directors)}}
+  {{#if (is-array (await this.directors))}}
     {{#if isManaging}}
       {{leadership-manager
+        directors=(await this.directors)
         showAdministrators=false
-        directors=directors
-        removeDirector=(action "removeDirector")
         addDirector=(action "addDirector")
-      }}
+        removeDirector=(action "removeDirector")}}
     {{else}}
       {{leadership-list
-        showAdministrators=false
-        directors=directors
-      }}
+        directors=(await this.directors)
+        showAdministrators=false}}
     {{/if}}
   {{else}}
     {{loading-spinner tagName="h3"}}
