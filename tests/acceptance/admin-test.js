@@ -7,7 +7,9 @@ import {
   waitFor
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+import ENV from 'ilios/config/environment';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+const { apiVersion } = ENV.APP;
 
 let url = '/admin';
 
@@ -50,5 +52,59 @@ module('Acceptance | Admin', function(hooks) {
     await waitFor('[data-test-user-profile]');
     assert.equal(currentURL(), '/users/2', 'new user profile is shown');
     assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
+  });
+
+  test('ordered by when search is disabled', async function (assert) {
+    assert.expect(4);
+    this.server.get('application/config', function() {
+      return { config: {
+        type: 'form',
+        apiVersion,
+        searchEnabled: false,
+      }};
+    });
+    this.server.createList('user', 2, {schoolId: 1});
+    this.server.createList('authentication', 2);
+
+    const userSearch = '.user-search input';
+    await visit(url);
+
+    this.server.get('api/users', ({ db }, { queryParams }) => {
+      assert.ok('order_by[lastName]' in queryParams);
+      assert.ok('order_by[firstName]' in queryParams);
+      assert.equal(queryParams['order_by[lastName]'], 'ASC');
+      assert.equal(queryParams['order_by[firstName]'], 'ASC');
+
+      return { users: db.users };
+    });
+
+    await fillIn(userSearch, 'son');
+    await triggerEvent(userSearch, 'keyup');
+  });
+
+  test('no order by when search is enabled', async function (assert) {
+    assert.expect(2);
+    this.server.get('application/config', function() {
+      return { config: {
+        type: 'form',
+        apiVersion,
+        searchEnabled: true,
+      }};
+    });
+    this.server.createList('user', 2, {schoolId: 1});
+    this.server.createList('authentication', 2);
+
+    const userSearch = '.user-search input';
+    await visit(url);
+
+    this.server.get('api/users', ({ db }, { queryParams }) => {
+      assert.notOk('order_by[lastName]' in queryParams);
+      assert.notOk('order_by[firstName]' in queryParams);
+
+      return { users: db.users };
+    });
+
+    await fillIn(userSearch, 'son');
+    await triggerEvent(userSearch, 'keyup');
   });
 });
