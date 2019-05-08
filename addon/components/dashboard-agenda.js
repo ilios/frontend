@@ -30,15 +30,31 @@ export default Component.extend({
 
   ilmPreWorkEvents: computed('weeksEvents.[]', async function () {
     const events = await this.get('weeksEvents');
-    const preWork =  events.reduce((arr, eventObject) => {
+    let preWork =  events.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
-    return preWork.filter(ev => ev.ilmSession);
+    preWork.filter(ev => ev.ilmSession);
+    preWork = preWork.filter(ev => {
+      return ev.postrequisites.length === 0 || !ev.ilmSession;
+    });
+
+    const hashes = [];
+    const uniques = [];
+    preWork.forEach(event => {
+      let hash = moment(event.startDate).format() +
+        moment(event.endDate).format() +
+        event.name;
+      if (! hashes.includes(hash)) {
+        hashes.push(hash);
+        uniques.pushObject(event);
+      }
+    });
+    return uniques;
   }),
 
   nonIlmPreWorkEvents: computed('weeksEvents.[]', async function () {
-    const events = await this.get('weeksEvents');
+    let events = await this.get('weeksEvents');
     return events.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
