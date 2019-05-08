@@ -96,7 +96,7 @@
         {{t "general.sessionLearningMaterials"}}
         {{#if (and (await this.currentUser.userIsStudent) (await this.courseId))}}
           {{fa-icon "archive"
-            class="clickable"
+            class="link"
             title=(t "general.accessAllMaterialsForThisCourse")
             click=(action "transitionToMyMaterials")}}
         {{/if}}
