@@ -1,5 +1,4 @@
 .learnergroup-selection-manager {
-
   .available-learner-groups {
     display: grid;
 
@@ -26,6 +25,10 @@
     h5 {
       margin-bottom: .5rem;
       padding: .5rem;
+    }
+
+    .tree-groups-list > li > span {
+      font-weight: bold;
     }
 
     & > ul {
