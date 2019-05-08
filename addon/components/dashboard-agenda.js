@@ -35,9 +35,6 @@ export default Component.extend({
     }, []);
 
     preWork.filter(ev => ev.ilmSession);
-    preWork = preWork.filter(ev => {
-      return ev.postrequisites.length === 0 || !ev.ilmSession;
-    });
 
     const hashes = [];
     const uniques = [];
