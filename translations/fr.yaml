@@ -8,6 +8,7 @@ general:
   administratorCount:  "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
   administrators: Administrateurs
   advancedOptions: "Options avancées"
+  allCourses: "Tous les Cours"
   allEvents: "Tous les Événements"
   allWeeks: "Toutes les Semaines"
   assignedTerms: "Termes assignées"
