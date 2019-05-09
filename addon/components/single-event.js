@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event';
@@ -12,15 +13,14 @@ export default Component.extend(EventMixin, {
   router: service(),
   store: service(),
 
+  layout,
+
   classNames: ['single-event'],
 
   'data-test-single-event': true,
   event: null,
-  layout,
 
-  courseId: computed('event', async function() {
-    return await this.getCourseIdForEvent(this.event);
-  }),
+  courseId: reads('event.course'),
 
   taughtBy: computed('event.instructors', 'intl.locale', function() {
     const instructors = this.get('event.instructors');
@@ -184,8 +184,8 @@ export default Component.extend(EventMixin, {
   }),
 
   actions: {
-    async transitionToMyMaterials() {
-      const course = await this.courseId;
+    transitionToMyMaterials() {
+      const course = this.courseId;
       const queryParams = { course, sortBy: 'sessionTitle' };
       this.router.transitionTo('mymaterials', { queryParams });
     }

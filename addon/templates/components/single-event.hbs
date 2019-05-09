@@ -94,7 +94,7 @@
     <div class="single-event-learningmaterial-list">
       <h2>
         {{t "general.sessionLearningMaterials"}}
-        {{#if (and (await this.currentUser.userIsStudent) (await this.courseId))}}
+        {{#if (await this.currentUser.userIsStudent)}}
           {{fa-icon "archive"
             class="link"
             title=(t "general.accessAllMaterialsForThisCourse")
