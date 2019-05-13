@@ -42,6 +42,7 @@ module.exports = function() {
       'lock',
       'meh',
       'paragraph',
+      'search',
       'sort-alpha-down',
       'sort-alpha-up',
       'sort-numeric-down',

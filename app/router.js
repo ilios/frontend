@@ -129,6 +129,7 @@ Router.map(function() {
   this.route('program-year-visualize-competencies', {
     path: 'data/programyears/:program_year_id/competencies'
   });
+  this.route('search');
 });
 
 export default Router;

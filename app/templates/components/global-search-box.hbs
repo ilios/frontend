@@ -1,0 +1,32 @@
+<span class="global-search-box" data-test-global-search-box>
+  <input
+    type="search"
+    value={{this.query}}
+    oninput={{action (mut this.query) value="target.value"}}
+    onkeyup={{perform autocomplete}}
+    class={{if
+            (or autocomplete.isRunning autocomplete.lastSuccessful.value.length)
+            "has-autocomplete"
+          }}
+  >
+  <span
+    class="search-icon clickable"
+    onclick={{pipe-action (action "focus") (action "search")}}
+    data-test-search-icon
+  >
+    {{fa-icon "search"}}
+  </span>
+  <ul
+    class="autocomplete
+          {{unless autocomplete.lastSuccessful.value.length "hidden" }}"
+    data-test-autocomplete
+  >
+    {{#each autocomplete.lastSuccessful.value as |result|}}
+      <li
+        onclick={{pipe-action (action (mut this.query) result.text) (action "search")}}
+      >
+        {{result.text}}
+      </li>
+    {{/each}}
+  </ul>
+</span>

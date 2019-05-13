@@ -54,6 +54,10 @@
     grid-area: tools;
     justify-self: end;
     margin-right: 1rem;
+
+    .global-search-box {
+      width: 10rem;
+    }
   }
 
   .visually-hidden {

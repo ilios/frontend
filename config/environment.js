@@ -96,7 +96,8 @@ module.exports = function (environment) {
       programYearVisualizations: false
     },
     featureFlags: {
-      sessionLinkingAdminUi: true
+      sessionLinkingAdminUi: true,
+      globalSearch: false,
     }
   };
 
@@ -115,6 +116,8 @@ module.exports = function (environment) {
     };
 
     ENV.IliosFeatures.programYearVisualizations = true;
+
+    ENV.featureFlags['globalSearch'] = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
@@ -146,6 +149,7 @@ module.exports = function (environment) {
     // here you can enable a preview-specific feature
     ENV.IliosFeatures.programYearVisualizations = true;
     ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
+    ENV.featureFlags['globalSearch'] = true;
 
     //Remove mirage
     ENV['ember-cli-mirage'] = {

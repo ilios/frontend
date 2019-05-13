@@ -1,0 +1,18 @@
+<div class="global-search">
+  <GlobalSearchBox @query={{@query}} @search={{perform search}} />
+
+  <ul
+    class="results {{unless
+                     (or search.isRunning search.lastSuccessful.value.length)
+                     "hidden"
+                   }}"
+  >
+    {{#if search.isRunning}}
+      <li>{{t "general.currentlySearchingPrompt"}}</li>
+    {{else}}
+      {{#each search.lastSuccessful.value as |result|}}
+        <li>{{result.text}}</li>
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>
