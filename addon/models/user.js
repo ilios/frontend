@@ -11,6 +11,7 @@ export default Model.extend({
   lastName: attr('string'),
   firstName: attr('string'),
   middleName: attr('string'),
+  displayName: attr('string'),
   phone: attr('string'),
   email:  attr('string'),
   preferredEmail: attr('string'),
