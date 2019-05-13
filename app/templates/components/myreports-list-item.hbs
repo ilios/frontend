@@ -1,6 +1,6 @@
 {{#unless loadTitle.isRunning}}
   {{#if reporttitle}}
-    <span {{action "selectReport" report}} class="link clickable">
+    <span class="link clickable" {{action @onReportSelect report.id}}>
       {{fa-icon "external-link-square-alt"}}
       {{reporttitle}}
     </span>

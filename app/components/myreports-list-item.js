@@ -3,11 +3,12 @@ import Component from '@ember/component';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import { task } from 'ember-concurrency';
 
-
 export default Component.extend(ReportTitleMixin, {
   reporttitle: null,
   classNames: ['myreports-list-item'],
   tagName: 'span',
+
+  onReportSelect() {},
 
   didReceiveAttrs() {
     this._super(...arguments);
@@ -18,11 +19,5 @@ export default Component.extend(ReportTitleMixin, {
   loadTitle: task(function * (report) {
     const title = yield this.getReportTitle(report);
     this.set('reporttitle', title);
-  }).restartable(),
-
-  actions: {
-    selectReport(report) {
-      this.selectReport(report);
-    }
-  }
+  }).restartable()
 });

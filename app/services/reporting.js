@@ -27,24 +27,21 @@ export default Service.extend({
 
   async findResults(report){
     const store = this.store;
-    const subject = report.get('subject');
-    const object = report.get('prepositionalObject');
-    const objectId = report.get('prepositionalObjectTableRowId');
-    const school = await report.get('school');
-
+    const subject = report.subject;
+    const object = report.prepositionalObject;
+    const objectId = report.prepositionalObjectTableRowId;
+    const school = await report.school;
     return store.query(
       this.getModel(subject),
       this.getQuery(subject, object, objectId, school)
     );
   },
 
-  async getResults(report, year){
-    const subject = report.get('subject');
-
+  async getResults(report, year) {
+    const subject = report.subject;
     const results = await this.findResults(report);
     let mapper = pluralize(subject.camelize()) + 'Results';
     const mappedResults = await this[mapper](results, year);
-
     return mappedResults.sortBy('value');
   },
 
@@ -97,7 +94,7 @@ export default Service.extend({
       query.filters[what] = objectId;
     } else {
       if(subject !== 'mesh term' && subject !== 'instructor' && subject !== 'learning material' && school){
-        query.filters['schools'] = [school.get('id')];
+        query.filters['schools'] = [school.id];
       }
     }
 

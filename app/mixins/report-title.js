@@ -7,17 +7,17 @@ export default Mixin.create({
   report: null,
 
   async getReportTitle(report){
-    const title = report.get('title');
+    const title = report.title;
     if (title) {
       return title;
     }
     const intl = this.intl;
     const store = this.store;
-    const subject = report.get('subject');
+    const subject = report.subject;
     const subjectTranslation = intl.t(this.subjectTranslations[subject]);
-    const prepositionalObject = report.get('prepositionalObject');
+    const prepositionalObject = report.prepositionalObject;
 
-    const school = await report.get('school');
+    const school = await report.school;
     const schoolTitle = school?school.get('title'):intl.t('general.allSchools');
 
     if (prepositionalObject) {
@@ -39,11 +39,11 @@ export default Mixin.create({
 
       let object;
       if(model === 'user'){
-        object = record.get('fullName');
+        object = record.fullName;
       } else if(model === 'mesh-descriptor'){
-        object = record.get('name');
+        object = record.name;
       } else {
-        object = record.get('title');
+        object = record.title;
       }
 
       return intl.t('general.reportDisplayTitleWithObject', {
