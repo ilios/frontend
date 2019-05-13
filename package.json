@@ -62,7 +62,7 @@
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-new-version": "^1.5.0",
     "ember-cli-postcss": "^4.2.0",
-    "ember-cli-progress": "^1.0.10",
+    "ember-cli-progress": "^1.0.11",
     "ember-cli-sentry": "^4.1.0",
     "ember-cli-server-variables": "2.2.0",
     "ember-cli-sri": "^2.1.1",
