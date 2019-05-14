@@ -1,8 +1,8 @@
-import {resolve} from 'rsvp';
+import { resolve } from 'rsvp';
 import Service from '@ember/service';
-import {module, test} from 'qunit';
-import {setupRenderingTest} from 'ember-qunit';
-import {render, settled} from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 

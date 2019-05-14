@@ -94,7 +94,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
     this.set('sessions', sessions);
     await render(hbs`{{publish-all-sessions sessions=sessions}}`);
     await settled();
-    assert.equal(find('[data-test-unlinked-warning]').textContent.trim(), 'This course has unlinked objective(s)');
+    assert.dom('[data-test-unlinked-warning]').hasText('This course has unlinked objective(s)');
     assert.ok(!!find('.fa-unlink'));
     assert.ok(!!find('.fa-chart-bar'));
   });
