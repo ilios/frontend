@@ -42,7 +42,6 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
     const yPos = this.preserveScroll[this.scrollKey];
 
     if (yPos > 0) {
-      const element = document.querySelector('.dashboard-block-body');
       element.scrollTop = yPos;
     }
 
@@ -79,7 +78,7 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
   }),
 
   reportResultsList: computed('selectedReport', 'selectedYear', async function() {
-    const report = await this.selectedReport;
+    const report = this.selectedReport;
     const year = this.selectedYear;
     return report ? await this.reporting.getResults(report, year) : [];
   }),

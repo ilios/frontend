@@ -14,9 +14,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       title: 'Lorem Ipsum'
     });
 
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
     this.set('selectReport', (param) => assert.equal(param, reportModel.id));
     await render(hbs`
@@ -34,9 +32,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       subject: 'competency'
     });
 
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('report', reportModel);
     this.set('selectReport', (param) => assert.equal(param, reportModel.id));
     await render(hbs`
@@ -56,9 +52,7 @@ module('Integration | Component | myreports list item', function(hooks) {
       subject: 'competency',
     });
 
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.setProperties({ report: reportModel, selectReport: () => {} });
     await render(hbs`
       {{myreports-list-item
@@ -82,12 +76,8 @@ module('Integration | Component | myreports list item', function(hooks) {
       prepositionalObjectTableRowId: user.id,
     });
 
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('report', report.id);
-    const userModel = await this.owner
-      .lookup('service:store')
-      .find('user', user.id);
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.setProperties({ report: reportModel, selectReport: () => {} });
     await render(hbs`
       {{myreports-list-item
