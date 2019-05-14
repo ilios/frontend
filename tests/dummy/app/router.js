@@ -36,6 +36,7 @@ Router.map(function() {
   this.route('course-visualize-objectives', {
     path: 'data/courses/:course_id/objectives'
   });
+  this.route('mymaterials');
 });
 
 export default Router;
