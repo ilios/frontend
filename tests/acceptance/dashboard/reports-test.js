@@ -1,4 +1,4 @@
-import { currentRouteName } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import {
   module,
   test
@@ -78,6 +78,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.selectedReport.title, 'my report 0');
     assert.equal(page.myReports.selectedReport.results.length, 1);
     assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
+    assert.equal(currentURL(), '/dashboard?report=1', 'report query param works');
   });
 
   test('no year filter on reports with a course prepositional object', async function(assert) {
@@ -96,10 +97,12 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.selectedReport.results.length, 2);
     assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
     assert.equal(page.myReports.selectedReport.results[1].text, '2016 - 2017 course 1 session 1');
+    assert.equal(currentURL(), '/dashboard?report=2', 'report query param works');
   });
 
   test('year filter works', async function (assert) {
     await page.visit();
+    assert.equal(currentURL(), '/dashboard');
     assert.equal(page.myReports.reports.length, 2);
     await page.myReports.reports[0].select();
     assert.equal(page.myReports.selectedReport.title, 'All Sessions for term 0 in school 0');
@@ -108,6 +111,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.selectedReport.chooseYear('2016');
     assert.equal(page.myReports.selectedReport.results.length, 1);
     assert.equal(page.myReports.selectedReport.results[0].text, '2016 - 2017 course 1 session 1');
+    assert.equal(currentURL(), '/dashboard?report=2&reportYear=2016', 'reportYear query param works');
   });
 
   test('create new report', async function (assert) {

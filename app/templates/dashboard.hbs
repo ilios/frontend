@@ -30,7 +30,12 @@
     onUpdateSessionTypes=(action "updateSessionTypes")
     onUpdateTerms=(action "updateTerms")}}
   <div class="dashboard-blocks">
-    {{dashboard-myreports data-test-myreports}}
+    {{dashboard-myreports
+      data-test-myreports
+      selectedReport=(await this.selectedReport)
+      selectedYear=this.reportYear
+      onReportSelect=(action (mut this.report))
+      onReportYearSelect=(action (mut this.reportYear))}}
     {{dashboard-mycourses}}
   </div>
 </div>

@@ -1,31 +1,62 @@
 /* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { computed } from '@ember/object';
+import { next } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
+import DomMixin from 'ember-lifeline/mixins/dom';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import PapaParse from 'papaparse';
 import createDownloadFile from '../utils/create-download-file';
+import { runDisposables } from 'ember-lifeline';
 
-const { Promise, resolve } = RSVP;
-
-export default Component.extend(ReportTitleMixin, {
+export default Component.extend(DomMixin, ReportTitleMixin, {
   currentUser: service(),
+  preserveScroll: service(),
   reporting: service(),
   store: service(),
-  tagName: 'div',
+
   classNames: ['dashboard-myreports'],
+  tagName: 'div',
+
+  scrollKey: 'reportList',
+
+  'data-test-dashboard-myreports': true,
+  finishedBuildingReport: false,
   myReportEditorOn: false,
   selectedReport: null,
   selectedYear: null,
   user: null,
-  finishedBuildingReport: false,
-  'data-test-dashboard-myreports': true,
+  onReportSelect() {},
+  onReportYearSelect() {},
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.loadAttr.perform();
+  },
+
+  didRender() {
+    this._super(...arguments);
+    const element = document.querySelector('.dashboard-block-body');
+    const yPos = this.preserveScroll[this.scrollKey];
+
+    if (yPos > 0) {
+      element.scrollTop = yPos;
+    }
+
+    if (element) {
+      next(() => {
+        this.addEventListener('.dashboard-block-body', 'scroll', () => {
+          this.preserveScroll.set(this.scrollKey, element.scrollTop);
+        });
+      });
+    }
+  },
+
+  destroy() {
+    runDisposables(this);
+    this._super(...arguments);
   },
 
   loadAttr: task(function * () {
@@ -45,34 +76,34 @@ export default Component.extend(ReportTitleMixin, {
       });
     });
   }),
-  reportResultsList: computed('selectedReport', 'selectedYear', function(){
+
+  reportResultsList: computed('selectedReport', 'selectedYear', async function() {
     const report = this.selectedReport;
     const year = this.selectedYear;
-    if(!report){
-      return resolve([]);
-    }
-    return this.reporting.getResults(report, year);
+    return report ? await this.reporting.getResults(report, year) : [];
   }),
+
   allAcademicYears: computed(async function () {
     const store = this.store;
     const years = await store.findAll('academic-year');
-
     return years;
   }),
+
   showAcademicYearFilter: computed('selectedReport', function(){
     const report = this.selectedReport;
     if(!report){
       return false;
     }
-    const subject = report.get('subject');
-    const prepositionalObject = report.get('prepositionalObject');
-
+    const subject = report.subject;
+    const prepositionalObject = report.prepositionalObject;
     return prepositionalObject != 'course' && ['course', 'session'].includes(subject);
   }),
+
   selectedReportTitle: computed('selectedReport', async function(){
     const report = this.selectedReport;
     return this.getReportTitle(report);
   }),
+
   downloadReport: task(function* () {
     const report = this.selectedReport;
     const title = yield this.getReportTitle(report);
@@ -84,19 +115,19 @@ export default Component.extend(ReportTitleMixin, {
     yield timeout(2000);
     this.set('finishedBuildingReport', false);
   }).drop(),
+
   actions: {
     toggleEditor() {
       this.set('myReportEditorOn', !this.myReportEditorOn);
     },
+
     closeEditor() {
       this.set('myReportEditorOn', false);
     },
-    selectReport(report){
-      this.set('selectedReport', report);
-    },
+
     deleteReport(report){
       report.deleteRecord();
       report.save();
-    },
+    }
   }
 });
