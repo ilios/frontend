@@ -24,6 +24,14 @@ module('Unit | Model | User', function(hooks) {
     assert.equal(model.get('fullName'), 'first last');
   });
 
+  test('full name with displayName', function(assert) {
+    let model = this.owner.lookup('service:store').createRecord('user');
+    model.set('displayName', 'something else');
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    assert.equal(model.get('fullName'), 'something else');
+  });
+
   test('gets all directed courses', async function(assert) {
     let model = this.owner.lookup('service:store').createRecord('user');
     let store = this.owner.lookup('service:store');

@@ -11,6 +11,7 @@ export default Model.extend({
   lastName: attr('string'),
   firstName: attr('string'),
   middleName: attr('string'),
+  displayName: attr('string'),
   phone: attr('string'),
   email:  attr('string'),
   preferredEmail: attr('string'),
@@ -157,19 +158,21 @@ export default Model.extend({
     }
   ),
 
-  fullName: computed('firstName', 'middleName', 'lastName', function() {
-    const { firstName, middleName, lastName } = this.getProperties('firstName', 'middleName', 'lastName');
+  fullName: computed('firstName', 'middleName', 'lastName', 'displayName', function() {
+    if (this.displayName) {
+      return this.displayName;
+    }
 
-    if (!firstName || !lastName) {
+    if (!this.firstName || !this.lastName) {
       return '';
     }
 
-    const middleInitial = middleName?middleName.charAt(0):false;
+    const middleInitial = this.middleName?this.middleName.charAt(0):false;
 
     if (middleInitial) {
-      return `${firstName} ${middleInitial}. ${lastName}`;
+      return `${this.firstName} ${middleInitial}. ${this.lastName}`;
     } else {
-      return `${firstName} ${lastName}`;
+      return `${this.firstName} ${this.lastName}`;
     }
   }),
 
