@@ -1,7 +1,7 @@
 {{title (t "general.instructorGroups")}}
-<section class="instructorgroups-list">
+<section class="instructorgroups-list" data-test-instructor-groups-list>
   <div class="filters">
-    <div class="schoolsfilter">
+    <div class="schoolsfilter" data-test-school-filter>
       {{fa-icon "university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
@@ -20,6 +20,7 @@
         value={{titleFilter}}
         oninput={{action (perform changeTitleFilter) value="target.value"}}
         placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
+        data-test-title-filter
       >
     </div>
   </div>
@@ -31,6 +32,7 @@
       <div class="actions">
         {{#if (await canCreate)}}
           {{expand-collapse-button
+            data-test-toggle-new-instructor-group-form
             value=showNewInstructorGroupForm
             action=(action "toggleNewInstructorGroupForm")
           }}
@@ -54,7 +56,7 @@
         </div>
       {{/if}}
     </section>
-    <div class="list">
+    <div class="list" data-test-instructor-groups-list>
       {{#if (is-fulfilled this.filteredInstructorGroups)}}
         {{instructorgroup-list
           canDelete=(await this.canDelete)

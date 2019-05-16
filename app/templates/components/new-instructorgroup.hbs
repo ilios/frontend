@@ -1,5 +1,5 @@
 <h4>{{t "general.newInstructorGroup"}}</h4>
-<div class="form">
+<div class="form" data-test-new-instructor-group>
   <div class="item newinstructorgroup-title">
     <label>{{t "general.title"}}:</label>
     <input
@@ -9,6 +9,7 @@
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.instructorGroupTitlePlaceholder"}}
+      data-test-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
       <span class="validation-error-message">{{v-get this "title" "message"}}</span>
