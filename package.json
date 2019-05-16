@@ -80,6 +80,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.13.0",
     "ember-noscript": "^2.0.0",
+    "ember-page-title": "^5.0.1",
     "ember-qunit": "^3.4.1",
     "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^5.1.2",
