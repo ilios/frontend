@@ -1,4 +1,5 @@
 general:
+  accessAllMaterialsForThisCourse: "Access All Materials for this Course"
   actions: Actions
   activeFilters: "Active Filters"
   activities: Activities
@@ -7,6 +8,7 @@ general:
   administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
   administrators: Administrators
   advancedOptions: "Advanced Options"
+  allCourses: "All Courses"
   allEvents: "All Events"
   allWeeks: "All Weeks"
   assignedTerms: "Assigned Terms"
@@ -120,6 +122,7 @@ general:
   independentLearning: "Independent Learning"
   independentLearningActivities: "Independent Learning Activities"
   instructionalNotes: "Instructional Notes"
+  instructor: Instructor
   instructorGroups: "Instructor Groups"
   instructors: Instructors
   instructorsManageTitle: "Manage Instructors"

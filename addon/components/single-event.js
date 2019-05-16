@@ -1,20 +1,26 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import layout from '../templates/components/single-event';
+import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
-export default Component.extend({
+export default Component.extend(EventMixin, {
+  currentUser: service(),
   intl: service(),
   router: service(),
   store: service(),
+
+  layout,
 
   classNames: ['single-event'],
 
   'data-test-single-event': true,
   event: null,
-  layout,
+
+  courseId: reads('event.course'),
 
   taughtBy: computed('event.instructors', 'intl.locale', function() {
     const instructors = this.get('event.instructors');
@@ -177,6 +183,14 @@ export default Component.extend({
     }
   }),
 
+  actions: {
+    transitionToMyMaterials() {
+      const course = this.courseId;
+      const queryParams = { course, sortBy: 'sessionTitle' };
+      this.router.transitionTo('mymaterials', { queryParams });
+    }
+  },
+
   /**
    * Callback function for <code>Array.sort()<code>.
    * Compares two given Objects by their position property (in ascending order), and then by id (descending).
@@ -205,5 +219,5 @@ export default Component.extend({
       return 1;
     }
     return 0;
-  },
+  }
 });

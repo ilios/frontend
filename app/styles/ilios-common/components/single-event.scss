@@ -9,6 +9,10 @@
   h2 {
     @include ilios-heading-h4;
     margin: 1em 0;
+
+    .fa-archive {
+      font-size: 1rem;
+    }
   }
 
   fieldset {

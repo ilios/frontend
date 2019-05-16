@@ -92,7 +92,15 @@
 
   <fieldset>
     <div class="single-event-learningmaterial-list">
-      <h2>{{t "general.sessionLearningMaterials"}}</h2>
+      <h2>
+        {{t "general.sessionLearningMaterials"}}
+        {{#if (await this.currentUser.userIsStudent)}}
+          {{fa-icon "archive"
+            class="link"
+            title=(t "general.accessAllMaterialsForThisCourse")
+            click=(action "transitionToMyMaterials")}}
+        {{/if}}
+      </h2>
       {{single-event-learningmaterial-list
         learningMaterials=sessionLearningMaterials}}
     </div>
