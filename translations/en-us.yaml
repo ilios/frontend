@@ -12,7 +12,6 @@ general:
   administratorEmail: "Administrator Email"
   all: All
   allAcademicYears: "All Academic Years"
-  allCourses: "All Courses"
   allOtherMembers: "All other members of {topLevelGroupTitle}"
   allReports: "All Reports"
   allSchools: "All Schools"
@@ -138,7 +137,6 @@ general:
   ilios: Ilios
   iliosUpdatePending: "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
   instructionalMethods: "Instructional Methods"
-  instructor: Instructor
   instructorGroup: "Instructor Group"
   instructorGroupTitle: "Instructor Group Title"
   instructorGroupTitleFilterPlaceholder: "Filter by Instructor Group Title"

@@ -12,7 +12,6 @@ general:
   administratorEmail: "Courriel d'administrateur"
   all: Tous
   allAcademicYears: "Toutes Années Scolaires"
-  allCourses: "Tous les Cours"
   allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
   allReports: "Tous Rapports"
   allSchools: "Toutes les écoles"
@@ -138,7 +137,6 @@ general:
   ilios: Ilios
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
   instructionalMethods: "Modalités d'Instruction"
-  instructor: Instructeur
   instructorGroup: "Groupe des Instructeurs"
   instructorGroupTitle: "Titre de Groupe des Instructeurs"
   instructorGroupTitleFilterPlaceholder: "Filtre par Titre de Groupe des Instructeurs"
