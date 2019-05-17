@@ -1,64 +1,70 @@
 <div class="material-list">
-  {{#if (gt (get materials "length") 0)}}
-    <span class="course-filter">
-      <select onchange={{action @setCourseIdFilter value="target.value"}}>
-        <option value="">{{t "general.allCourses"}}</option>
-        {{#each this.courses as |courseObj|}}
-          <option
-            selected={{is-equal courseObj.id @courseIdFilter}}
-            value={{courseObj.id}}>
-            {{courseObj.title}}
-          </option>
-        {{/each}}
-      </select>
-    </span>
+  <span class="course-filter">
+    <select onchange={{action @setCourseIdFilter value="target.value"}}>
+      <option value="">{{t "general.allCourses"}}</option>
+      {{#each (await this.courses) as |courseObj|}}
+        <option
+          selected={{is-equal courseObj.id @courseIdFilter}}
+          value={{courseObj.id}}>
+          {{courseObj.title}}
+        </option>
+      {{/each}}
+    </select>
+  </span>
 
-    <span class="filter">
-      <input
-        placeholder={{t "general.filterPlaceholder"}}
-        type="text"
-        value={{@filter}}
-        oninput={{perform this.setQuery value="target.value"}}>
-    </span>
+  <span class="filter">
+    <input
+      placeholder={{t "general.filterPlaceholder"}}
+      type="text"
+      value={{@filter}}
+      oninput={{perform this.setQuery value="target.value"}}>
+  </span>
 
-    <table>
-      <thead>
+  <table>
+    <thead>
+      <tr>
+        {{#sortable-th
+          colspan=3
+          sortedAscending=this.sortedAscending
+          sortedBy=(or (eq @sortBy "sessionTitle") (eq @sortBy "sessionTitle:desc"))
+          click=(action "sortBy" "sessionTitle")}}
+          {{t "general.session"}}
+        {{/sortable-th}}
+        {{#sortable-th
+          colspan=3
+          sortedAscending=this.sortedAscending
+          sortedBy=(or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc"))
+          click=(action "sortBy" "courseTitle")}}
+          {{t "general.course"}}
+        {{/sortable-th}}
+        {{#sortable-th
+          colspan=3
+          sortedAscending=this.sortedAscending
+          sortedBy=(or (eq @sortBy "title") (eq @sortBy "title:desc"))
+          click=(action "sortBy" "title")}}
+          {{t "general.title"}}
+        {{/sortable-th}}
+        <th class="hide-from-small-screen">{{t "general.instructor"}}</th>
+        {{#sortable-th
+          colspan=1
+          sortedAscending=this.sortedAscending
+          sortedBy=(or (eq @sortBy "firstOfferingDate") (eq @sortBy "firstOfferingDate:desc"))
+          sortType="numeric"
+          click=(action "sortBy" "firstOfferingDate")}}
+          {{t "general.date"}}
+        {{/sortable-th}}
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#if (is-pending @materials)}}
         <tr>
-          {{#sortable-th
-            colspan=3
-            sortedAscending=this.sortedAscending
-            sortedBy=(or (eq @sortBy "sessionTitle") (eq @sortBy "sessionTitle:desc"))
-            click=(action "sortBy" "sessionTitle")}}
-            {{t "general.session"}}
-          {{/sortable-th}}
-          {{#sortable-th
-            colspan=3
-            sortedAscending=this.sortedAscending
-            sortedBy=(or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc"))
-            click=(action "sortBy" "courseTitle")}}
-            {{t "general.course"}}
-          {{/sortable-th}}
-          {{#sortable-th
-            colspan=3
-            sortedAscending=this.sortedAscending
-            sortedBy=(or (eq @sortBy "title") (eq @sortBy "title:desc"))
-            click=(action "sortBy" "title")}}
-            {{t "general.title"}}
-          {{/sortable-th}}
-          <th class="hide-from-small-screen">{{t "general.instructor"}}</th>
-          {{#sortable-th
-            colspan=1
-            sortedAscending=this.sortedAscending
-            sortedBy=(or (eq @sortBy "firstOfferingDate") (eq @sortBy "firstOfferingDate:desc"))
-            sortType="numeric"
-            click=(action "sortBy" "firstOfferingDate")}}
-            {{t "general.date"}}
-          {{/sortable-th}}
+          <td class="text-center" colspan="11">
+            {{fa-icon "spinner" class="orange" size="2x" spin=true}}
+          </td>
         </tr>
-      </thead>
-
-      <tbody>
-        {{#each (sort-by @sortBy this.filteredMaterials) as |lmObject|}}
+      {{else}}
+        {{#each (sort-by @sortBy (await this.filteredMaterials)) as |lmObject|}}
           <tr>
             <td colspan="3" data-test-session-title>
               {{lmObject.sessionTitle}}
@@ -123,10 +129,12 @@
               {{/if}}
             </td>
           </tr>
+        {{else}}
+          <tr>
+            <td align="center" colspan="11">{{t "general.none"}}</td>
+          </tr>
         {{/each}}
-      </tbody>
-    </table>
-  {{else}}
-    {{t "general.none"}}
-  {{/if}}
+      {{/if}}
+    </tbody>
+  </table>
 </div>
