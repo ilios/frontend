@@ -161,6 +161,25 @@
     {{/unless}}
   </div>
   <div
+    class="item {{if (contains "displayName" updatedFieldsFromSync) "synced-from-directory"}}"
+  >
+    <label>{{t "general.displayName"}}:</label>
+    {{#unless isManaging}}
+      <span class="value">{{user.displayName}}</span>
+    {{else}}
+      <input
+        type="text"
+        value={{displayName}}
+        oninput={{action (mut displayName) value="target.value"}}
+        onkeyup={{action "addErrorDisplayFor" "displayName"}}
+        data-test-display-name-input
+      >
+      {{#if (and (v-get this "displayName" "isInvalid") (is-in showErrorsFor "displayName"))}}
+        <span class="message error">{{v-get this "displayName" "message"}}</span>
+      {{/if}}
+    {{/unless}}
+  </div>
+  <div
     class="item {{if (contains "preferredEmail" updatedFieldsFromSync) "synced-from-directory"}}"
   >
     <label>{{t "general.preferredEmail"}}:</label>
