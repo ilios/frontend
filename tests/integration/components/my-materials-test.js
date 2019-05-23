@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
+import { next } from '@ember/runloop';
 
 module('Integration | Component | my-materials', function(hooks) {
   setupRenderingTest(hooks);
@@ -62,25 +63,28 @@ module('Integration | Component | my-materials', function(hooks) {
   };
 
   test('it renders empty', async function(assert) {
-    this.set('materials', []);
-    this.set('nothing', parseInt);
+    assert.expect(1);
+
+    this.setProperties({ materials: [], nothing: parseInt});
     await render(hbs`{{my-materials
-      materials=materials
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action this.nothing)
     }}`);
-    assert.dom(this.element).hasText('None');
+    assert.dom('[data-test-none]').exists();
   });
 
   test('it renders with materials', async function(assert) {
     assert.expect(42);
+
     this.set('materials', createMaterials());
     this.set('nothing', parseInt);
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action this.nothing)
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -185,15 +189,16 @@ module('Integration | Component | my-materials', function(hooks) {
   });
 
   test('filter by title', async function(assert) {
+    assert.expect(4);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('filter', null);
+    this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
+      filter=this.filter
+      materials=this.materials
+      sortBy="firstOfferingDate"
       setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      filter=filter
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -202,22 +207,22 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('filter', 'title2');
+    await fillIn('[data-test-filter-input]', 'title2');
     assert.dom(materials).exists({ count: 1 });
     assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by instructor', async function(assert) {
+    assert.expect(5);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('filter', null);
+    this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      filter=filter
+      filter=this.filter
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -227,23 +232,23 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('filter', 'instructor1name');
+    await fillIn('[data-test-filter-input]', 'instructor1name');
     assert.dom(materials).exists({ count: 2 });
     assert.dom(firstLmTitle).hasText('title1');
     assert.dom(secondLmTitle).hasText('title2');
   });
 
   test('filter by session title', async function(assert) {
+    assert.expect(4);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('filter', null);
+    this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      filter=filter
+      filter=this.filter
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -252,22 +257,22 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('filter', 'session2');
+    await fillIn('[data-test-filter-input]', 'session2');
     assert.dom(materials).exists({ count: 1 });
     assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by course title', async function(assert) {
+    assert.expect(4);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('filter', null);
+    this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      filter=filter
+      filter=this.filter
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -276,22 +281,22 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('filter', 'course2');
+    await fillIn('[data-test-filter-input]', 'course2');
     assert.dom(materials).exists({ count: 1 });
     assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('filter by course', async function(assert) {
+    assert.expect(4);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('courseIdFilter', null);
+    this.setProperties({ course: '', filter: null });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      courseIdFilter=courseIdFilter
+      courseIdFilter=this.course
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action (mut this.course))
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -300,10 +305,11 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('courseIdFilter', '2');
-    assert.dom(materials).exists({ count: 1 });
-    assert.dom(firstLmTitle).hasText('title2');
+    this.set('course', '2');
+    next(() => {
+      assert.dom(materials).exists({ count: 1 });
+      assert.dom(firstLmTitle).hasText('title2');
+    });
   });
 
   test('clicking sort fires action', async function(assert) {
@@ -318,15 +324,14 @@ module('Integration | Component | my-materials', function(hooks) {
       this.set('sortBy', what);
       count++;
     });
-
     this.set('sortBy', 'firstOfferingDate');
 
     await render(hbs`{{my-materials
-      materials=materials
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      setSortBy=(action setSortBy)
-      sortBy=sortBy
+      materials=this.materials
+      sortBy=this.sortBy
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action this.nothing)
+      setSortBy=(action this.setSortBy)
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -357,15 +362,14 @@ module('Integration | Component | my-materials', function(hooks) {
       this.set('courseIdFilter', what);
       count++;
     });
-
     this.set('courseIdFilter', null);
 
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setFilter=(action nothing)
-      setCourseIdFilter=(action setCourseIdFilter)
-      courseIdFilter=courseIdFilter
+      courseIdFilter=this.courseIdFilter
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.setCourseIdFilter)
+      setFilter=(action this.nothing)
     }}`);
 
     const select = '.course-filter select';
@@ -375,15 +379,16 @@ module('Integration | Component | my-materials', function(hooks) {
   });
 
   test('find with slash does not blow up on regex error', async function(assert) {
+    assert.expect(3);
+
     this.set('materials', createMaterials());
-    this.set('nothing', parseInt);
-    this.set('filter', null);
+    this.setProperties({ filter: null, nothing: parseInt });
     await render(hbs`{{my-materials
-      materials=materials
-      sortBy='firstOfferingDate'
-      setCourseIdFilter=(action nothing)
-      setFilter=(action nothing)
-      filter=filter
+      filter=this.filter
+      materials=this.materials
+      sortBy="firstOfferingDate"
+      setCourseIdFilter=(action this.nothing)
+      setFilter=(action (mut this.filter))
     }}`);
 
     const table = 'table:nth-of-type(1)';
@@ -392,8 +397,7 @@ module('Integration | Component | my-materials', function(hooks) {
 
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
-
-    this.set('filter', "course2\\");
-    assert.dom(materials).doesNotExist();
+    await fillIn('[data-test-filter-input]', 'course2\\');
+    assert.dom('[data-test-none]').exists();
   });
 });

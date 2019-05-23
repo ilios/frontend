@@ -35,4 +35,8 @@
     @include ilios-zebra-table;
     grid-column: 1 / -1;
   }
+
+  .fa-spinner.orange {
+    color: $ilios-orange;
+  }
 }

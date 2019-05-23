@@ -11,7 +11,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
 
-  async model() {
+  model() {
+    return { materials: this.fetchModelData() };
+  },
+
+  async fetchModelData() {
     const commonAjax = this.commonAjax;
     const host = this.host;
     const namespace = this.namespace;

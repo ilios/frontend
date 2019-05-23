@@ -20,10 +20,10 @@ export default Component.extend(SortableTable, {
   setFilter() {},
   setSortBy() {},
 
-  filteredMaterials: computed('courseIdFilter', 'filter', 'materials.[]', function() {
+  filteredMaterials: computed('courseIdFilter', 'filter', 'materials.[]', async function() {
     const courseIdFilter = this.courseIdFilter;
     const filter = this.filter;
-    let materials = this.materials;
+    let materials = await this.materials;
 
     if (isPresent(courseIdFilter)) {
       materials = materials.filterBy('course', courseIdFilter);
@@ -44,8 +44,8 @@ export default Component.extend(SortableTable, {
     return materials;
   }),
 
-  courses: computed('materials.[]', function() {
-    const materials = this.materials;
+  courses: computed('materials.[]', async function() {
+    const materials = await this.materials;
     return materials.map((material) => {
       return { id: material.course, title: material.courseTitle };
     }).uniqBy('id').sortBy('title');
