@@ -45,7 +45,7 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('rollover course', async function(assert) {
-    assert.expect(8);
+    assert.expect(7);
     let course = EmberObject.create({
       id: 1,
       title: 'old title',
@@ -60,8 +60,7 @@ module('Integration | Component | course rollover', function(hooks) {
         assert.ok('year' in data);
         assert.equal(data.year, lastYear);
         assert.equal(data.newCourseTitle, course.get('title'));
-        assert.notOk('newStartDate' in data);
-        assert.notOk('skipOfferings' in data);
+        assert.ok('newStartDate' in data);
 
         return resolve({
           courses: [
@@ -191,10 +190,8 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
     const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
 
-    await click(title);
     let interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
@@ -270,11 +267,9 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
     const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
 
-    await click(title);
     await fillIn(yearSelect, courseStartDate.format('YYYY'));
     await emberBlur(yearSelect);
 
@@ -322,11 +317,9 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
     const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
 
-    await click(title);
     await fillIn(yearSelect, rolloverDate.format('YYYY'));
     await emberBlur(yearSelect);
 
@@ -374,10 +367,8 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
     const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
 
-    await click(title);
     assert.dom(offerings).isChecked();
     await click(offerings);
     assert.dom(offerings).isNotChecked();
@@ -458,10 +449,8 @@ module('Integration | Component | course rollover', function(hooks) {
     this.set('nothing', parseInt);
     await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
     const advancedOptions = '.advanced-options';
-    const title = `.advanced-options-title`;
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1)`;
 
-    await click(title);
     await click(firstCohort);
     await click('.done');
   });

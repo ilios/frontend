@@ -51,53 +51,45 @@
     {{/if}}
   </div>
 
-  <span
-    onclick={{toggle-action "expandAdvancedOptions" this}}
-    class="advanced-options-title {{if expandAdvancedOptions "expanded" "collapsed"}}"
-  >
-    {{t "general.advancedOptions"}}
-  </span>
   <div class="advanced-options">
-    {{#liquid-if expandAdvancedOptions class="vertical"}}
-      <div class="item">
-        <label>
-          {{t "general.startDate"}}:<br>
-          <small>({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})</small>
-        </label>
-        {{pikaday-input
-          size=10
-          value=startDate
-          minDate=course.startDate
-          format="YYYY-MM-DD"
-          onSelection=(action (mut startDate))
-          options=(hash disableDayFn=disableDayFn course=course)
-        }}
+    <div class="item">
+      <label>
+        {{t "general.startDate"}}:<br>
+        <small>({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})</small>
+      </label>
+      {{pikaday-input
+        size=10
+        value=startDate
+        minDate=course.startDate
+        format="YYYY-MM-DD"
+        onSelection=(action (mut startDate))
+        options=(hash disableDayFn=disableDayFn course=course)
+      }}
 
-      </div>
+    </div>
 
-      <div class="included">
-        <span class="title">{{t "general.include"}}:</span>
-        <div class="include">
-          <input
-            type="checkbox"
-            checked={{not skipOfferings}}
-            onclick={{toggle "skipOfferings" this}}
-            data-test-skip-offerings
-          >
-          <span>{{t "general.offerings"}}</span>
-        </div>
+    <div class="included">
+      <span class="title">{{t "general.include"}}:</span>
+      <div class="include">
+        <input
+          type="checkbox"
+          checked={{not skipOfferings}}
+          onclick={{toggle "skipOfferings" this}}
+          data-test-skip-offerings
+        >
+        <span>{{t "general.offerings"}}</span>
       </div>
+    </div>
 
-      <div class="cohorts">
-        <span class="title">{{t "general.selectCohortsToAttach"}}:</span>
-        {{detail-cohort-manager
-          selectedCohorts=selectedCohorts
-          school=(await course.school)
-          add=(action "addCohort")
-          remove=(action "removeCohort")
-        }}
-      </div>
-    {{/liquid-if}}
+    <div class="cohorts">
+      <span class="title">{{t "general.selectCohortsToAttach"}}:</span>
+      {{detail-cohort-manager
+        selectedCohorts=selectedCohorts
+        school=(await course.school)
+        add=(action "addCohort")
+        remove=(action "removeCohort")
+      }}
+    </div>
   </div>
 
   <div class="buttons">
