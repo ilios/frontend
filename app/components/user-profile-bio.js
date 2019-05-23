@@ -47,6 +47,11 @@ const Validations = buildValidations({
       type: 'email'
     }),
   ],
+  displayName: [
+    validator('length', {
+      max: 200
+    }),
+  ],
   preferredEmail: [
     validator('length', {
       max: 100
@@ -119,6 +124,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   campusId: null,
   otherId: null,
   email: null,
+  displayName: null,
   preferredEmail: null,
   phone: null,
   username: null,
@@ -139,6 +145,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'campusId',
       'otherId',
       'email',
+      'displayName',
       'preferredEmail',
       'phone'
     ));
@@ -165,6 +172,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'campusId',
       'otherId',
       'email',
+      'displayName',
       'preferredEmail',
       'phone',
       'username',
@@ -181,6 +189,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'campusId',
         'otherId',
         'email',
+        'displayName',
         'preferredEmail',
         'phone'
       ));
@@ -226,6 +235,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       let userData = data.result;
       const firstName = this.firstName;
       const lastName = this.lastName;
+      const displayName = this.displayName;
       const email = this.email;
       const username = this.username;
       const phone = this.phone;
@@ -237,6 +247,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       if (userData.lastName !== lastName) {
         this.set('lastName', userData.lastName);
         this.updatedFieldsFromSync.pushObject('lastName');
+      }
+      if (userData.displayName !== displayName) {
+        this.set('displayName', userData.displayName);
+        this.updatedFieldsFromSync.pushObject('displayName');
       }
       if (userData.email !== email) {
         this.set('email', userData.email);
@@ -279,6 +293,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('campusId', null);
     this.set('otherId', null);
     this.set('email', null);
+    this.set('displayName', null);
     this.set('preferredEmail', null);
     this.set('phone', null);
     this.set('username', null);
