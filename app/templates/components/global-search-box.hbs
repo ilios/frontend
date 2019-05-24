@@ -1,32 +1,36 @@
-<span class="global-search-box" data-test-global-search-box>
+<div class="global-search-box" data-test-global-search-box>
   <input
+    class="global-search-input"
+    data-test-input
     type="search"
     value={{this.query}}
-    oninput={{action (mut this.query) value="target.value"}}
-    onkeyup={{perform autocomplete}}
-    class={{if
-            (or autocomplete.isRunning autocomplete.lastSuccessful.value.length)
-            "has-autocomplete"
-          }}
-  >
+    oninput={{action (queue
+      (action (mut this.query) value="target.value")
+      (perform this.autocomplete))}}>
+
   <span
-    class="search-icon clickable"
-    onclick={{pipe-action (action "focus") (action "search")}}
+    class="search-icon"
     data-test-search-icon
-  >
-    {{fa-icon "search"}}
+    onclick={{pipe-action (action "focus") (action "search")}}>
+    {{fa-icon "search" class="clickable"}}
   </span>
-  <ul
-    class="autocomplete
-          {{unless autocomplete.lastSuccessful.value.length "hidden" }}"
-    data-test-autocomplete
-  >
-    {{#each autocomplete.lastSuccessful.value as |result|}}
-      <li
-        onclick={{pipe-action (action (mut this.query) result.text) (action "search")}}
-      >
-        {{result.text}}
-      </li>
-    {{/each}}
-  </ul>
-</span>
+
+  {{#if (and this.showResults this.hasResults)}}
+    {{#click-outside action=(action (mut this.showResults) false)}}
+      <ul
+        class="autocomplete"
+        data-test-autocomplete>
+        {{#each this.results as |result|}}
+          <li
+            class="autocomplete-row"
+            onclick={{pipe-action
+              (action (mut this.query) result.text)
+              (action "search")}}
+            onfocus={{action (mut this.query) result.text}}>
+            {{result.text}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/click-outside}}
+  {{/if}}
+</div>
