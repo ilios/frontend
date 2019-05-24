@@ -29,23 +29,8 @@
     }
   }
 
-  .advanced-options-title {
-    clear: both;
-    cursor: pointer;
-    display: block;
-
-    &.collapsed::after {
-      content: ' \25BA';
-    }
-
-    &.expanded::after {
-      content: ' \25BC';
-    }
-  }
-
   .advanced-options {
     clear: both;
-    padding-left: 1rem;
   }
 
   .included {
