@@ -33,7 +33,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   years: null,
   selectedYear: null,
   course: null,
-  expandAdvancedOptions: false,
   startDate: null,
   skipOfferings: false,
   title: null,
@@ -103,7 +102,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     const commonAjax = this.get('commonAjax');
     const courseId = this.get('course.id');
-    const expandAdvancedOptions = this.get('expandAdvancedOptions');
     const year = this.get('selectedYear');
     const newCourseTitle = this.get('title');
     const selectedCohortIds = this.get('selectedCohorts').mapBy('id');
@@ -114,10 +112,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       year,
       newCourseTitle
     };
-    if (expandAdvancedOptions && newStartDate) {
+    if (newStartDate) {
       data.newStartDate = newStartDate;
     }
-    if (expandAdvancedOptions && skipOfferings) {
+    if (skipOfferings) {
       data.skipOfferings = true;
     }
     if (selectedCohortIds) {
