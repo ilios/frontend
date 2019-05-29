@@ -8,47 +8,132 @@ module('Integration | Component | global search box', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{global-search-box}}`);
+    assert.expect(1);
 
+    await render(hbs`{{global-search-box}}`);
     assert.dom('input[type=search]').exists({ count: 1 });
   });
 
-  test('clicking search focuses input', async function(assert) {
-    this.set('search', () => {
-      assert.ok(false);
-    });
-    await render(hbs`{{global-search-box search=(action search)}}`);
+  test('clicking search icon focuses input', async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{global-search-box}}`);
     await component.clickIcon();
     assert.ok(component.inputHasFocus);
   });
 
   test('clicking search searches if there is content', async function(assert) {
-    this.set('search', value => {
-      assert.equal(value, 'typed it');
-    });
-    await render(hbs`{{global-search-box search=(action search)}}`);
+    assert.expect(1);
+
+    this.set('search', (value) => assert.equal(value, 'typed it'));
+    await render(hbs`{{global-search-box search=(action this.search)}}`);
     await component.input('typed it');
     await component.clickIcon();
   });
 
+  test('displays initial passed down value', async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{global-search-box initialQuery="course"}}`);
+    assert.equal(component.inputValue, 'course');
+  });
+
   test('typing start autocomplete', async function(assert) {
-    this.set('search', value => {
+    assert.expect(1);
+
+    this.set('search', (value) => {
       assert.equal(value, 'typed it');
     });
-    await render(hbs`{{global-search-box search=(action search)}}`);
+    await render(hbs`{{global-search-box search=(action this.search)}}`);
     await component.input('typed it');
     await component.triggerInput();
     assert.equal(component.autocompleteResults.length, 3);
   });
 
-  //@todo implement keybindings
-  // test('escape calls clear', async function(assert) {
-  //   this.set('nothing', () => { });
-  //   await render(hbs`{{global-search-box search=(action nothing)}}`);
-  //   await component.input('typed it');
-  //   assert.ok(component.autocompleteResults.length, 3);
-  //   await component.escape();
-  //   assert.ok(component.autocompleteResults.length, 0);
-  //   assert.equal(component.inputValue, '');
-  // });
+  test('clicking enter triggers search', async function(assert) {
+    assert.expect(3);
+
+    this.set('search', (value) => {
+      assert.equal(value, 'typed it');
+      assert.ok(true, 'search action gets called');
+    });
+    await render(hbs`{{global-search-box search=(action this.search)}}`);
+    await component.input('typed it');
+    await component.keyUp.enter();
+    assert.equal(component.autocompleteResults.length, 0);
+  });
+
+  test('escape calls clears query', async function(assert) {
+    assert.expect(3);
+
+    await render(hbs`{{global-search-box}}`);
+    await component.input('typed it');
+    assert.equal(component.autocompleteResults.length, 3);
+    await component.keyUp.escape();
+    assert.equal(component.autocompleteResults.length, 0);
+    assert.equal(component.inputValue, '');
+  });
+
+  test('vertical triggers work', async function(assert) {
+    assert.expect(38);
+
+    let inputValue = 'first';
+    this.set('search', (value) => {
+      assert.equal(value, inputValue);
+      assert.ok(true, 'search action gets called');
+    });
+    await render(hbs`{{global-search-box search=(action this.search)}}`);
+    await component.input('typed it');
+    await component.keyUp.down();
+    assert.ok(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'first');
+    await component.keyUp.down();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.ok(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'second');
+    await component.keyUp.down();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.ok(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'third');
+    await component.keyUp.down();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'typed it');
+    await component.keyUp.up();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.ok(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'third');
+    await component.keyUp.up();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.ok(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'second');
+    await component.keyUp.up();
+    assert.ok(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'first');
+    await component.keyUp.up();
+    assert.notOk(component.resultsRow1HasActiveClass);
+    assert.notOk(component.resultsRow2HasActiveClass);
+    assert.notOk(component.resultsRow3HasActiveClass);
+    assert.equal(component.inputValue, 'typed it');
+    await component.keyUp.down();
+    await component.keyUp.enter();
+    inputValue = 'second';
+    await component.input('typed it');
+    await component.keyUp.down();
+    await component.keyUp.down();
+    await component.keyUp.enter();
+    inputValue = 'third';
+    await component.input('typed it');
+    await component.keyUp.up();
+    await component.keyUp.enter();
+  });
 });

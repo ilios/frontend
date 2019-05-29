@@ -1,15 +1,15 @@
 .global-search-box {
   display: inline-block;
   height: 2rem;
+  max-width: 40rem;
   position: relative;
-  width: 100%;
 
   input[type='search'] {
     background-color: $white;
     border: 1px solid $text-blue;
     border-radius: 3px;
     height: 100%;
-    padding-left: 1.5rem;
+    padding: 0 .5rem 0 1.5rem;
     width: 100%;
 
     &.has-results {
@@ -39,6 +39,7 @@
     color: $base-font-color;
     cursor: pointer;
     max-height: 23rem;
+    max-width: 40rem;
     overflow-y: scroll;
     position: absolute;
     transition: all .2s ease-in-out;
@@ -50,8 +51,7 @@
     }
 
     li {
-      border-bottom: 1px solid $base-border-color;
-      padding-left: 1rem;
+      padding: .125rem 1.5rem;
 
       &.inactive {
         color: darken($header-grey, 20);
@@ -71,6 +71,10 @@
         &:hover {
           background-color: lighten($base-link-color, 50);
         }
+      }
+
+      &.active {
+        background: $grey;
       }
     }
   }
