@@ -1,34 +1,39 @@
 import Component from '@ember/component';
-import { task, timeout } from 'ember-concurrency';
+import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   intl: service(),
-  tagName: '',
+
+  query: null,
+  onQuery() {},
+
+  isLoading: reads('search.isRunning'),
+  hasResults: reads('results.length'),
+  results: reads('search.lastSuccessful.value'),
 
   search: task(function* () {
-    yield timeout(1);
-    if (!this.query || this.query.length === 0) {
-      return [];
-    }
+    yield timeout(300);
 
     // let searchResults = yield this.store.query('search', { q });
-    let searchResults = [];
-    if (searchResults.length === 0) {
-      return [{
-        type: 'text',
-        text: this.intl.t('general.noSearchResultsPrompt')
-      }];
+    return [{
+      link: 'Link to a route',
+      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
+    },{
+      link: 'Link to a route',
+      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
+    }, {
+      link: 'Link to a route',
+      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
+    }];
+  }).observes('query').restartable(),
+
+  init() {
+    this._super(...arguments);
+
+    if (this.query) {
+      this.search.perform();
     }
-
-    let results = [
-      {
-        type: 'summary',
-        text: this.intl.t('general.resultsCount', {count: 11})
-      }
-    ];
-
-    return results;
-  }).restartable().on('didInsertElement'),
+  }
 });

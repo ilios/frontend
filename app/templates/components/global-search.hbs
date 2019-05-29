@@ -1,17 +1,22 @@
-<div class="global-search">
-  <GlobalSearchBox @query={{@query}} @search={{perform search}} />
+<div class="global-search" data-test-global-search>
+  <GlobalSearchBox @initialQuery={{@query}} @search={{@onQuery}} />
 
-  <ul
-    class="results {{unless
-                     (or search.isRunning search.lastSuccessful.value.length)
-                     "hidden"
-                   }}"
-  >
-    {{#if search.isRunning}}
-      <li>{{t "general.currentlySearchingPrompt"}}</li>
+  <hr>
+
+  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}">
+    {{#if this.isLoading}}
+      <li class="searching">
+        {{fa-icon "spinner" class="orange" spin=true}}
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
     {{else}}
-      {{#each search.lastSuccessful.value as |result|}}
-        <li>{{result.text}}</li>
+      {{#each this.results as |result|}}
+        <li class="results-row">
+          <a class="results-row-link">{{result.link}}</a>
+          <span class="results-row-dsc">{{result.description}}</span>
+        </li>
+      {{else}}
+        <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>
       {{/each}}
     {{/if}}
   </ul>
