@@ -1,7 +1,41 @@
 .global-search {
-
   .global-search-box {
-    margin: 1rem auto;
-    width: 90%;
+    margin: .75rem 0 1rem 10%;
+    width: 80%;
+  }
+
+  hr {
+    background: $base-border-color;
+  }
+
+  .results {
+    list-style-type: none;
+    margin: 1rem 10% auto;
+    max-width: 40rem;
+    padding: 0;
+    width: 80%;
+
+    .searching, .no-results {
+      text-align: center;
+      text-transform: capitalize;
+
+      .fa-spinner.orange {
+        color: $ilios-orange;
+      }
+    }
+
+    .results-row {
+      margin-bottom: 1.5rem;
+      max-width: 40rem;
+
+      .results-row-link {
+        display: block;
+      }
+
+      .results-row-dsc {
+        display: block;
+        font-size: .75rem;
+      }
+    }
   }
 }
