@@ -1,5 +1,4 @@
 import {
-  attribute,
   clickable,
   count,
   create,
@@ -42,8 +41,7 @@ export default create({
     rollover: {
       scope: 'a.rollover',
       visit: clickable(),
-      link: attribute('href'),
-      visible: isVisible(),
+      visible: isVisible()
     },
     externalId: {
       scope: '.courseexternalid',

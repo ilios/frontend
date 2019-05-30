@@ -14,10 +14,13 @@
     {{#link-to "print_course" course (query-params unpublished=true) class="print"}}
       {{fa-icon "print" title=(t "general.printSummary") fixedWidth=true}}
     {{/link-to}}
-    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-      {{#link-to "course.rollover" course class="rollover"}}
-        {{fa-icon "random" title=(t "general.courseRollover") fixedWidth=true}}
-      {{/link-to}}
+    {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
+      <a
+        class="rollover"
+        href="javascript:void(0)"
+        {{action "transitionToRollover"}}>
+        {{fa-icon "random" fixedWidth=true title=(t "general.courseRollover")}}
+      </a>
     {{/if}}
     {{#link-to
       "course-visualizations"
