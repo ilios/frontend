@@ -137,6 +137,8 @@ module.exports = function (environment) {
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
+    ENV.featureFlags['globalSearch'] = true;
+
 
     ENV.APP.autoboot = false;
   }

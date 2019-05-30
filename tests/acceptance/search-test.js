@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { click, currentURL, fillIn, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -13,7 +13,7 @@ module('Acceptance | search', function(hooks) {
     this.user = await setupAuthentication({ school: this.school });
   });
 
-  skip('visiting /search', async function(assert) {
+  test('visiting /search', async function(assert) {
     assert.expect(3);
 
     await visit('/search');
