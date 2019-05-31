@@ -3,9 +3,21 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/global-search-box';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | global search box', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function () {
+    this.server.get('experimental_search', () => {
+      return {
+        results: {
+          autocomplete: ['first', 'second', 'third']
+        }
+      };
+    });
+  });
 
   test('it renders', async function(assert) {
     assert.expect(1);
@@ -38,14 +50,29 @@ module('Integration | Component | global search box', function(hooks) {
     assert.equal(component.inputValue, 'course');
   });
 
-  test('typing start autocomplete', async function(assert) {
-    assert.expect(1);
+  test('typing start autocomplete', async function (assert) {
+    assert.expect(5);
+
+    const input = 'typed it';
+
+    this.server.get('experimental_search', (schema, { queryParams }) => {
+      assert.ok(queryParams.q);
+      assert.ok(queryParams.onlySuggest);
+      assert.equal(queryParams.q, input);
+      assert.equal(queryParams.onlySuggest, 'true');
+
+      return {
+        results: {
+          autocomplete: ['one', 'two', 'three']
+        }
+      };
+    });
 
     this.set('search', (value) => {
-      assert.equal(value, 'typed it');
+      assert.equal(value, input);
     });
     await render(hbs`{{global-search-box search=(action this.search)}}`);
-    await component.input('typed it');
+    await component.input(input);
     await component.triggerInput();
     assert.equal(component.autocompleteResults.length, 3);
   });
