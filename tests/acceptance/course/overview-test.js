@@ -45,7 +45,6 @@ module('Acceptance | Course - Overview', function(hooks) {
       assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
-      assert.equal(page.overview.rollover.link, '/courses/1/rollover');
     });
 
     test('expanded', async function (assert) {
@@ -56,7 +55,6 @@ module('Acceptance | Course - Overview', function(hooks) {
       assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
-      assert.equal(page.overview.rollover.link, '/courses/1/rollover?details=true');
     });
 
     test('open and close details', async function(assert) {

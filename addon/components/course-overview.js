@@ -7,6 +7,7 @@ import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import scrollTo from 'ilios-common/utils/scroll-to';
 
 const { reads } = computed;
 
@@ -33,12 +34,15 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
   currentUser: service(),
-  routing: service('-routing'),
-  permissionChecker: service(),
   intl: service(),
+  permissionChecker: service(),
+  router: service(),
+  routing: service('-routing'),
+  store: service(),
+
   layout,
+
   editable: false,
   universalLocator: 'ILIOS',
   'data-test-course-overview': true,
@@ -233,7 +237,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertLevelChanges(){
       this.set('level', this.get('course').get('level'));
     },
+
+    transitionToRollover() {
+      this.router.transitionTo('course.rollover', this.course);
+      scrollTo('.rollover-form');
+    }
   },
+
   directorsToPassToManager: task(function * () {
     const course = this.get('course');
 
