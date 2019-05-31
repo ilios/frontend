@@ -39,7 +39,7 @@ export default create({
   overview: {
     scope: '[data-test-course-overview]',
     rollover: {
-      scope: 'a.rollover',
+      scope: 'span.rollover',
       visit: clickable(),
       visible: isVisible()
     },

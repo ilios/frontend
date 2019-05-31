@@ -15,12 +15,12 @@
       {{fa-icon "print" title=(t "general.printSummary") fixedWidth=true}}
     {{/link-to}}
     {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
-      <a
-        class="rollover"
-        href="javascript:void(0)"
+      <span
+        class="clickable rollover"
+        role="button"
         {{action "transitionToRollover"}}>
         {{fa-icon "random" fixedWidth=true title=(t "general.courseRollover")}}
-      </a>
+      </span>
     {{/if}}
     {{#link-to
       "course-visualizations"
