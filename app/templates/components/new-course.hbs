@@ -23,6 +23,9 @@
     <label>{{t "general.academicYear"}}:</label>
 
     <select data-test-year onchange={{action "setYear" value="target.value"}}>
+      <option disabled hidden selected value="">
+        {{t "general.pleaseSelect"}}
+      </option>
       {{#each this.years as |year|}}
         <option selected={{is-equal year this.selectedYear}} value={{year}}>
           {{year}} - {{inc year}}
@@ -32,7 +35,10 @@
   </div>
 
   <div class="buttons">
-    <button class="done text" onclick={{perform this.saveCourse}}>
+    <button
+      class="done text"
+      disabled={{not this.selectedYear}}
+      onclick={{perform this.saveCourse}}>
       {{#if this.isSaving}}
         {{loading-spinner}}
       {{else}}

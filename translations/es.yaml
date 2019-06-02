@@ -261,6 +261,7 @@ general:
   permissionsInOtherSchools: "Permisos en Otras Escuelas"
   perPage: "Por Página"
   phone: "Teléfono"
+  pleaseSelect: "Por Favor Seleccione"
   populateGroup: "¿Quieres auto-rellenar este grupo?"
   preferredEmail: 'Email preferido'
   prev: Anterior

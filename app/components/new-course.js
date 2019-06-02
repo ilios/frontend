@@ -34,21 +34,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   currentYear: null,
   selectedYear: null,
   title: null,
-  years: null,
   cancel() {},
   save() {},
+  years: Object.freeze(YEARS),
 
   isSaving: reads('saveCourse.isRunning'),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('years', YEARS);
-    const currentYear = this.currentYear;
-    const selectedYear = currentYear && YEARS.includes(currentYear.title)
-      ? currentYear.title
-      : THIS_YEAR;
-    this.set('selectedYear', selectedYear);
-  },
 
   actions: {
     setYear(year) {
