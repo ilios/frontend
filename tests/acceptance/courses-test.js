@@ -403,10 +403,9 @@ module('Acceptance | Courses', function(hooks) {
       thisYear+2
     ];
 
-
-    assert.equal(page.newCourseForm.years().count, years.length);
+    assert.equal(page.newCourseForm.years().count, years.length + 1);
     for (let i = 0; i < years.length; i++){
-      assert.equal(page.newCourseForm.years(i).text.substring(0,4), years[i]);
+      assert.equal(page.newCourseForm.years(i + 1).text.substring(0,4), years[i]);
     }
   });
 

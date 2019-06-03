@@ -21,10 +21,9 @@
 
   <div class="item">
     <label>{{t "general.academicYear"}}:</label>
-
     <select data-test-year onchange={{action "setYear" value="target.value"}}>
-      <option disabled hidden selected value="">
-        {{t "general.pleaseSelect"}}
+      <option disabled selected={{is-empty this.selectedYear}} value="">
+        {{t "general.selectYear"}}
       </option>
       {{#each this.years as |year|}}
         <option selected={{is-equal year this.selectedYear}} value={{year}}>
