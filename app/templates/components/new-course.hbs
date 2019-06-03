@@ -23,7 +23,7 @@
     <label>{{t "general.academicYear"}}:</label>
     <select data-test-year onchange={{action "setYear" value="target.value"}}>
       <option disabled selected={{is-empty this.selectedYear}} value="">
-        {{t "general.selectYear"}}
+        {{t "general.selectAcademicYear"}}
       </option>
       {{#each this.years as |year|}}
         <option selected={{is-equal year this.selectedYear}} value={{year}}>
