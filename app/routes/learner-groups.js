@@ -6,6 +6,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
+
   model() {
     let defer = RSVP.defer();
     let model = {};
@@ -16,9 +17,16 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
     return defer.promise;
   },
+
   queryParams: {
     titleFilter: {
       replace: true
+    }
+  },
+
+  actions: {
+    willTransition() {
+      this.controller.set('newGroup', null);
     }
   }
 });
