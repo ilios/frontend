@@ -389,7 +389,7 @@ module('Acceptance | Courses', function(hooks) {
 
   test('no academic years exist', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(6);
+    assert.expect(7);
 
     await page.visit();
     await page.toggleNewCourseForm();
@@ -404,6 +404,7 @@ module('Acceptance | Courses', function(hooks) {
     ];
 
     assert.equal(page.newCourseForm.years().count, years.length + 1);
+    assert.equal(page.newCourseForm.years(0).text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++){
       assert.equal(page.newCourseForm.years(i + 1).text.substring(0,4), years[i]);
     }
