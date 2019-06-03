@@ -1,21 +1,24 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   store: service(),
-  report: null,
-  canUpdate: false,
-  showFinalizeConfirmation: false,
-  isFinalizing: false,
+
   classNames: ['curriculum-inventory-report-details'],
+
   'data-test-curriculum-inventory-report-details': true,
 
+  canUpdate: false,
+  isFinalizing: false,
+  report: null,
+  showFinalizeConfirmation: false,
+
   actions: {
-    cancelFinalization(){
+    cancelFinalization() {
       this.set('showFinalizeConfirmation', false);
     },
-    finalize(){
+
+    finalize() {
       this.set('isFinalizing', true);
       const report = this.report;
       let repExport = this.store.createRecord('curriculumInventoryExport', {
@@ -28,8 +31,9 @@ export default Component.extend({
         this.set('isFinalizing', false);
       });
     },
-    confirmFinalization(){
+
+    confirmFinalization() {
       this.set('showFinalizeConfirmation', true);
-    },
+    }
   }
 });

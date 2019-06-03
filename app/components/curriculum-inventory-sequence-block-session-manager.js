@@ -1,46 +1,21 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-  linkedSessionsBuffer: null,
-  excludedSessionsBuffer: null,
-  sessionsBuffer: null,
+
   classNames: ['curriculum-inventory-sequence-block-session-manager', 'resultslist'],
   tagName: 'section',
+
+  excludedSessionsBuffer: null,
+  linkedSessionsBuffer: null,
+  sessionsBuffer: null,
   sortBy: 'title',
 
-  init() {
-    this._super(...arguments);
-    this.set('linkedSessionsBuffer', []);
-    this.set('linkableSessionsBuffer', []);
-  },
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const sequenceBlock = this.sequenceBlock;
-    const sessions = this.sessions;
-    this.loadAttr.perform(sequenceBlock, sessions);
-  },
-
-  loadAttr: task(function * (sequenceBlock, sessions) {
-    let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
-    linkedSessionsBuffer = linkedSessionsBuffer.toArray();
-    let excludedSessionsBuffer = yield sequenceBlock.get('excludedSessions');
-    excludedSessionsBuffer = excludedSessionsBuffer.toArray();
-    let sessionsBuffer = yield sessions;
-    this.setProperties({
-      linkedSessionsBuffer,
-      excludedSessionsBuffer,
-      sessionsBuffer,
-    });
-  }),
-
-  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
     const linkedSessions = this.linkedSessionsBuffer;
     const sessions = this.sessionsBuffer;
     if (isEmpty(linkedSessions) || isEmpty(sessions) || linkedSessions.length < sessions.length) {
@@ -54,7 +29,7 @@ export default Component.extend({
     return true;
   }),
 
-  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
     const excludedSessions = this.excludedSessionsBuffer;
     const sessions = this.sessionsBuffer;
     if (isEmpty(excludedSessions) || isEmpty(sessions) || excludedSessions.length < sessions.length) {
@@ -68,19 +43,19 @@ export default Component.extend({
     return true;
   }),
 
-  someSelected: computed('allSelected', 'noneSelected', function(){
+  someSelected: computed('allSelected', 'noneSelected', function() {
     const allSelected = this.allSelected;
     const noneSelected = this.noneSelected;
     return (!allSelected && !noneSelected);
   }),
 
-  someExcluded: computed('allExcluded', 'noneExcluded', function(){
+  someExcluded: computed('allExcluded', 'noneExcluded', function() {
     const allExcluded = this.allExcluded;
     const noneExcluded = this.noneExcluded;
     return (!allExcluded && !noneExcluded);
   }),
 
-  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
     const linkedSessions = this.linkedSessionsBuffer;
     const sessions = this.sessionsBuffer;
 
@@ -97,7 +72,7 @@ export default Component.extend({
     return !isSelected;
   }),
 
-  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function(){
+  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
     const excludedSessions = this.excludedSessionsBuffer;
     const sessions = this.sessionsBuffer;
 
@@ -114,17 +89,23 @@ export default Component.extend({
     return !isSelected;
   }),
 
-  saveChanges: task(function * () {
-    let sessions = this.linkedSessionsBuffer;
-    let excludedSessions = this.excludedSessionsBuffer;
-    yield this.save(sessions, excludedSessions);
-
-  }),
-
-  sortedAscending: computed('sortBy', function(){
+  sortedAscending: computed('sortBy', function() {
     const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
+
+  init() {
+    this._super(...arguments);
+    this.set('linkedSessionsBuffer', []);
+    this.set('linkableSessionsBuffer', []);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    const sequenceBlock = this.sequenceBlock;
+    const sessions = this.sessions;
+    this.loadAttr.perform(sequenceBlock, sessions);
+  },
 
   actions: {
     changeSession(session) {
@@ -165,15 +146,35 @@ export default Component.extend({
       }
     },
 
-    sortBy(what){
+    sortBy(what) {
       const sortBy = this.sortBy;
       if(sortBy === what){
         what += ':desc';
       }
       this.setSortBy(what);
     },
+
     close() {
       this.cancel();
     }
-  }
+  },
+
+  loadAttr: task(function* (sequenceBlock, sessions) {
+    let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
+    linkedSessionsBuffer = linkedSessionsBuffer.toArray();
+    let excludedSessionsBuffer = yield sequenceBlock.get('excludedSessions');
+    excludedSessionsBuffer = excludedSessionsBuffer.toArray();
+    let sessionsBuffer = yield sessions;
+    this.setProperties({
+      linkedSessionsBuffer,
+      excludedSessionsBuffer,
+      sessionsBuffer,
+    });
+  }),
+
+  saveChanges: task(function* () {
+    let sessions = this.linkedSessionsBuffer;
+    let excludedSessions = this.excludedSessionsBuffer;
+    yield this.save(sessions, excludedSessions);
+  })
 });

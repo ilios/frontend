@@ -1,11 +1,9 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { reads } = computed;
 
 const Validations = buildValidations({
   description: [
@@ -25,20 +23,46 @@ const Validations = buildValidations({
     validator('date', {
       dependentKeys: ['model.startDate'],
       onOrAfter: reads('model.startDate'),
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   permissionChecker: service(),
   routing: service('-routing'),
+
+  classNames: ['curriculum-inventory-report-overview'],
+  tagName: 'section',
+
+  canUpdate: false,
   currentRoute: '',
+  description: null,
+  endDate: null,
+  report: null,
+  startDate: null,
   year: null,
+  yearOptions: null,
 
-  didReceiveAttrs(){
+  yearLabel: computed('year', function() {
+    const year = this.year;
+    return year + ' - ' + (parseInt(year, 10) + 1);
+  }),
+
+  showRollover: computed('report.program', 'currentUser', 'routing.currentRouteName', async function() {
+    const routing = this.routing;
+    if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
+      return false;
+    }
+    const permissionChecker = this.permissionChecker;
+    const report = this.report;
+    const program = await report.get('program');
+    const school = await program.get('school');
+    return await permissionChecker.canCreateCurriculumInventoryReport(school);
+  }),
+
+  didReceiveAttrs() {
     this._super(...arguments);
-
     const report = this.report;
     const description = report.get('description');
     const currentYear = new Date().getFullYear();
@@ -56,7 +80,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
 
     yearOptions = yearOptions.uniq().sortBy('title');
-
     this.setProperties({
       description,
       yearOptions,
@@ -66,33 +89,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   },
 
-  yearLabel: computed('year', function() {
-    const year = this.year;
-    return year + ' - ' + (parseInt(year, 10) + 1);
-  }),
-
-  showRollover: computed('report.program', 'currentUser', 'routing.currentRouteName', async function () {
-    const routing = this.routing;
-    if (routing.get('currentRouteName') === 'curriculumInventoryReport.rollover') {
-      return false;
-    }
-    const permissionChecker = this.permissionChecker;
-    const report = this.report;
-    const program = await report.get('program');
-    const school = await program.get('school');
-    return await permissionChecker.canCreateCurriculumInventoryReport(school);
-  }),
-
-  classNames: ['curriculum-inventory-report-overview'],
-  tagName: 'section',
-  description: null,
-  report: null,
-  startDate: null,
-  endDate: null,
-  yearOptions: null,
-  canUpdate: false,
   actions: {
-    changeStartDate(){
+    changeStartDate() {
       const newDate = this.startDate;
       const report = this.report;
       this.send('addErrorDisplayFor', 'startDate');
@@ -112,11 +110,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         });
       });
     },
-    revertStartDateChanges(){
+
+    revertStartDateChanges() {
       const report = this.report;
       this.set('startDate', report.get('startDate'));
     },
-    changeEndDate(){
+
+    changeEndDate() {
       const newDate = this.endDate;
       const report = this.report;
       this.send('addErrorDisplayFor', 'endDate');
@@ -136,19 +136,23 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         });
       });
     },
-    revertEndDateChanges(){
+
+    revertEndDateChanges() {
       const report = this.report;
       this.set('endDate', report.get('endDate'));
     },
+
     changeYear() {
       let report = this.report;
       let year = this.year;
       report.set('year', year);
       report.save();
     },
+
     revertYearChanges(){
       this.set('year', this.report.get('year'));
     },
+
     changeDescription() {
       const report = this.report;
       const newDescription = this.description;
@@ -169,9 +173,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         });
       });
     },
+
     revertDescriptionChanges(){
       const report = this.report;
       this.set('description', report.get('description'));
-    },
+    }
   }
 });

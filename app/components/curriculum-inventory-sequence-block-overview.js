@@ -1,96 +1,40 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { Promise } from 'rsvp';
 import { task } from 'ember-concurrency';
-
-const { Promise } = RSVP;
 
 export default Component.extend({
   intl: service(),
   store: service(),
+
   classNames: ['curriculum-inventory-sequence-block-overview'],
   tagName: 'section',
-  sequenceBlock: null,
+
+  academicLevel: null,
+  academicLevels: null,
   canUpdate: false,
-  parent: null,
-  report: null,
-  minimum: 0,
-  maximum: 0,
-  orderInSequenceOptions: null,
-  startDate: null,
-  endDate: null,
-  duration: null,
   childSequenceOrder: null,
-  orderInSequence: null,
+  course: null,
   description: null,
-  isSaving: false,
-  isManagingSessions: false,
+  duration: null,
+  endDate: null,
   isEditingDatesAndDuration: false,
   isEditingMinMax: false,
-  academicLevels: null,
-  course: null,
+  isManagingSessions: false,
+  isSaving: false,
+  maximum: 0,
+  minimum: 0,
+  orderInSequence: null,
+  orderInSequenceOptions: null,
+  parent: null,
+  report: null,
   required: null,
-  academicLevel: null,
+  sequenceBlock: null,
+  startDate: null,
 
-  init() {
-    this._super(...arguments);
-    this.set('orderInSequenceOptions', []);
-  },
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const sequenceBlock = this.sequenceBlock;
-    this.loadAttr.perform(sequenceBlock);
-  },
-
-  loadAttr: task(function * (sequenceBlock) {
-    const report = yield sequenceBlock.get('report');
-    const parent = yield sequenceBlock.get('parent');
-    let academicLevels = yield report.get('academicLevels');
-    academicLevels = academicLevels.toArray();
-    let isInOrderedSequence = false;
-    let orderInSequenceOptions = [];
-    if (isPresent(parent) && parent.get('isOrdered')) {
-      isInOrderedSequence = true;
-      const siblings = yield parent.get('children');
-      for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
-        let num = i + 1;
-        orderInSequenceOptions.push(num);
-      }
-    }
-    const linkedSessions = yield sequenceBlock.get('sessions');
-    const academicLevel = yield sequenceBlock.get('academicLevel');
-    const required = '' + sequenceBlock.get('required');
-    const duration = sequenceBlock.get('duration');
-    const startDate = sequenceBlock.get('startDate');
-    const endDate = sequenceBlock.get('endDate');
-    const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
-    const orderInSequence = sequenceBlock.get('orderInSequence');
-    const description = sequenceBlock.get('description');
-    const course = yield sequenceBlock.get('course');
-    this.setProperties({
-      parent,
-      report,
-      academicLevel,
-      academicLevels,
-      isInOrderedSequence,
-      orderInSequenceOptions,
-      startDate,
-      endDate,
-      duration,
-      childSequenceOrder,
-      orderInSequence,
-      description,
-      linkedSessions,
-      course,
-      required,
-    });
-  }),
-
-  requiredLabel: computed('required', function(){
+  requiredLabel: computed('required', function() {
     const intl = this.intl;
     const required = this.required;
     switch(required) {
@@ -103,7 +47,7 @@ export default Component.extend({
     }
   }),
 
-  childSequenceOrderLabel: computed('childSequenceOrder', function(){
+  childSequenceOrderLabel: computed('childSequenceOrder', function() {
     const intl = this.intl;
     const childSequenceOrder = this.childSequenceOrder;
     switch(childSequenceOrder) {
@@ -123,7 +67,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  sessions: computed('sequenceBlock.course', async function () {
+  sessions: computed('sequenceBlock.course', async function() {
     const store = this.store;
     const course = await this.sequenceBlock.get('course');
     if (!course) {
@@ -136,7 +80,6 @@ export default Component.extend({
         published: true
       },
     });
-
     return sessions.toArray();
   }),
 
@@ -147,7 +90,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function(){
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function() {
     return new Promise(resolve => {
       const report = this.report;
       const sequenceBlock = this.sequenceBlock;
@@ -178,16 +121,16 @@ export default Component.extend({
     });
   }),
 
-  saveCourseChange: task(function * (course) {
-    let block = this.sequenceBlock;
-    const oldCourse = block.get('course');
-    if (oldCourse !== course) {
-      block.set('sessions', []);
-      block.set('excludedSessions', []);
-    }
-    block.set('course', course);
-    yield block.save();
-  }).drop(),
+  init() {
+    this._super(...arguments);
+    this.set('orderInSequenceOptions', []);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    const sequenceBlock = this.sequenceBlock;
+    this.loadAttr.perform(sequenceBlock);
+  },
 
   actions: {
     changeRequired() {
@@ -244,7 +187,7 @@ export default Component.extend({
       this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
     },
 
-    changeAcademicLevel(){
+    changeAcademicLevel() {
       let block = this.sequenceBlock;
       block.set('academicLevel', this.academicLevel);
       block.save();
@@ -256,7 +199,7 @@ export default Component.extend({
       this.set('academicLevel', level);
     },
 
-    revertAcademicLevelChanges(){
+    revertAcademicLevelChanges() {
       let block = this.sequenceBlock;
       this.set('academicLevel', block.get('academicLevel'));
     },
@@ -273,7 +216,7 @@ export default Component.extend({
       });
     },
 
-    revertOrderInSequenceChanges(){
+    revertOrderInSequenceChanges() {
       let block = this.sequenceBlock;
       this.set('orderInSequence', block.get('orderInSequence'));
     },
@@ -287,12 +230,15 @@ export default Component.extend({
         this.set('isEditingDatesAndDuration', false);
       });
     },
+
     editDatesAndDuration() {
       this.set('isEditingDatesAndDuration', true);
     },
+
     cancelDateAndDurationEditing() {
       this.set('isEditingDatesAndDuration', false);
     },
+
     changeMinMax(minimum, maximum) {
       let block = this.sequenceBlock;
       block.set('minimum', minimum);
@@ -301,18 +247,23 @@ export default Component.extend({
         this.set('isEditingMinMax', false);
       });
     },
+
     editMinMax() {
       this.set('isEditingMinMax', true);
     },
+
     cancelMinMaxEditing() {
       this.set('isEditingMinMax', false);
     },
+
     toggleManagingSessions() {
       this.set('isManagingSessions', ! this.isManagingSessions);
     },
-    cancelManagingSessions(){
+
+    cancelManagingSessions() {
       this.set('isManagingSessions', false);
     },
+
     changeSessions(sessions, excludedSessions) {
       let block = this.sequenceBlock;
       block.set('sessions', sessions);
@@ -320,6 +271,61 @@ export default Component.extend({
       return block.save().then(() => {
         this.set('isManagingSessions', false);
       });
-    },
-  }
+    }
+  },
+
+  loadAttr: task(function* (sequenceBlock) {
+    const report = yield sequenceBlock.get('report');
+    const parent = yield sequenceBlock.get('parent');
+    let academicLevels = yield report.get('academicLevels');
+    academicLevels = academicLevels.toArray();
+    let isInOrderedSequence = false;
+    let orderInSequenceOptions = [];
+    if (isPresent(parent) && parent.get('isOrdered')) {
+      isInOrderedSequence = true;
+      const siblings = yield parent.get('children');
+      for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
+        let num = i + 1;
+        orderInSequenceOptions.push(num);
+      }
+    }
+    const linkedSessions = yield sequenceBlock.get('sessions');
+    const academicLevel = yield sequenceBlock.get('academicLevel');
+    const required = '' + sequenceBlock.get('required');
+    const duration = sequenceBlock.get('duration');
+    const startDate = sequenceBlock.get('startDate');
+    const endDate = sequenceBlock.get('endDate');
+    const childSequenceOrder = '' + sequenceBlock.get('childSequenceOrder');
+    const orderInSequence = sequenceBlock.get('orderInSequence');
+    const description = sequenceBlock.get('description');
+    const course = yield sequenceBlock.get('course');
+    this.setProperties({
+      parent,
+      report,
+      academicLevel,
+      academicLevels,
+      isInOrderedSequence,
+      orderInSequenceOptions,
+      startDate,
+      endDate,
+      duration,
+      childSequenceOrder,
+      orderInSequence,
+      description,
+      linkedSessions,
+      course,
+      required,
+    });
+  }),
+
+  saveCourseChange: task(function* (course) {
+    let block = this.sequenceBlock;
+    const oldCourse = block.get('course');
+    if (oldCourse !== course) {
+      block.set('sessions', []);
+      block.set('excludedSessions', []);
+    }
+    block.set('course', course);
+    yield block.save();
+  }).drop()
 });
