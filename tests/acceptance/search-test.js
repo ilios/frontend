@@ -14,13 +14,29 @@ module('Acceptance | search', function(hooks) {
   });
 
   test('visiting /search', async function(assert) {
-    assert.expect(3);
+    assert.expect(7);
+
+    const input = 'hello';
+
+    this.server.get('experimental_search', (schema, { queryParams }) => {
+      assert.ok(queryParams.q);
+      assert.ok(queryParams.onlySuggest);
+      assert.equal(queryParams.q, input);
+      assert.equal(queryParams.onlySuggest, 'true');
+
+      return {
+        results: {
+          autocomplete: [],
+          courses: []
+        }
+      };
+    });
 
     await visit('/search');
     assert.equal(currentURL(), '/search');
-    await fillIn('input.global-search-input', 'hello');
+    await fillIn('input.global-search-input', input);
     assert.equal(currentURL(), '/search', 'entering input value does not update query param');
     await click('[data-test-search-icon]');
-    assert.equal(currentURL(), '/search?q=hello', 'triggering search updates query param');
+    assert.equal(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
   });
 });

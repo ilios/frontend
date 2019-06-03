@@ -1,25 +1,46 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
+import fetch from 'fetch';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
 export default Component.extend({
+  iliosConfig: service(),
+  session: service(),
+
+  autocompleteCache: null,
   initialQuery: null,
   query: null,
   savedQuery: null,
   showResults: true,
   search() {},
 
+
   isLoading: reads('autocomplete.isRunning'),
   hasResults: reads('results.length'),
   results: reads('autocomplete.lastSuccessful.value'),
 
+  authHeaders: computed('session.isAuthenticated', function(){
+    const session = this.session;
+    const { jwt } = session.data.authenticated;
+    let headers = {};
+    if (jwt) {
+      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    }
+
+    return new Headers(headers);
+  }),
+
   init() {
     this._super(...arguments);
+
+    this.autocompleteCache = [];
 
     if (this.initialQuery) {
       this.set('query', this.initialQuery);
@@ -40,6 +61,7 @@ export default Component.extend({
       const q = cleanQuery(this.query);
 
       if (q.length > 0) {
+        this.autocompleteCache = [];
         this.search(q);
       }
     }
@@ -134,6 +156,41 @@ export default Component.extend({
     });
   },
 
+  /**
+   * Discover previously cached autocomplete suggestions
+   * @param {string} q
+   *
+   * @returns {array}
+   */
+  findCachedAutocomplete(q) {
+    const exactMatch = this.autocompleteCache.findBy('q', q);
+    if (exactMatch) {
+      return exactMatch.autocomplete;
+    }
+    const possibleKeys = [];
+    for (let i = q.length; i > MIN_INPUT; i--) {
+      possibleKeys.push(q.substring(0, i));
+    }
+
+    const allMatches = possibleKeys.reduce((set, q) => {
+      const removedChar = q.substring(q.length - 1);
+      const newQuery = q.substring(0, q.length - 1);
+      const possibleMatches = this.autocompleteCache.findBy('q', newQuery);
+
+      if (possibleMatches) {
+        const matches = possibleMatches.autocomplete.filter(text => {
+          return text.substring(newQuery.length, newQuery.length + 1) === removedChar;
+        });
+
+        set.pushObjects(matches);
+      }
+
+      return set;
+    }, []);
+
+    return allMatches.filter(text => text.indexOf(q) === 0);
+  },
+
   autocomplete: task(function* () {
     this.set('showResults', true);
     const q = cleanQuery(this.query);
@@ -142,7 +199,25 @@ export default Component.extend({
       return [];
     }
 
+    const cachedResults = this.findCachedAutocomplete(q);
+    if (cachedResults.length) {
+      return cachedResults.map(text => {
+        return { text };
+      });
+    }
+
     yield timeout(DEBOUNCE_MS);
-    return [{ text: 'first' }, { text: 'second' }, { text: 'third' }];
+
+    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
+    const url = `${host}/experimental_search?q=${q}&onlySuggest=true`;
+    const response = yield fetch(url, {
+      headers: this.authHeaders
+    });
+    const { results: { autocomplete } } = yield response.json();
+    this.autocompleteCache.pushObject({ q, autocomplete });
+
+    return autocomplete.map(text => {
+      return { text };
+    });
   }).restartable()
 });
