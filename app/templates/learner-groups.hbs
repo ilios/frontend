@@ -92,10 +92,11 @@
           fillModeSupported=true
         }}
       {{/liquid-if}}
-      {{#if newGroup}}
+
+      {{#if this.newGroup}}
         <div class="saved-result">
-          {{#link-to "learnerGroup" newGroup}}
-            {{fa-icon "external-link-square-alt"}} {{newGroup.title}}
+          {{#link-to "learnerGroup" this.newGroup}}
+            {{fa-icon "external-link-square-alt"}} {{this.newGroup.title}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>
