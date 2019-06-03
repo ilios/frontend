@@ -1,15 +1,13 @@
-/* eslint ember/order-in-routes: 0 */
-import Ember from 'ember';
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'ilios/config/environment';
 
 export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
+  currentUser: service(),
   intl: service(),
   moment: service(),
-  currentUser: service(),
   session: service(),
 
   init() {
@@ -19,21 +17,6 @@ export default Route.extend(ApplicationRouteMixin, {
       controller.set('errors', []);
       controller.set('showErrorDisplay', false);
     });
-  },
-
-  //Override the default session invalidator so we can do auth stuff
-  sessionInvalidated() {
-    if (!Ember.testing) {
-      let logoutUrl = '/auth/logout';
-      return this.commonAjax.request(logoutUrl).then(response => {
-        if(response.status === 'redirect'){
-          window.location.replace(response.logoutUrl);
-        } else {
-          this.flashMessages.success('general.confirmLogout');
-          window.location.replace(config.rootURL);
-        }
-      });
-    }
   },
 
   beforeModel() {
@@ -95,6 +78,21 @@ export default Route.extend(ApplicationRouteMixin, {
       });
 
       return true;
+    }
+  },
+
+  //Override the default session invalidator so we can do auth stuff
+  sessionInvalidated() {
+    if (config.environment !== 'test') {
+      let logoutUrl = '/auth/logout';
+      return this.commonAjax.request(logoutUrl).then(response => {
+        if(response.status === 'redirect'){
+          window.location.replace(response.logoutUrl);
+        } else {
+          this.flashMessages.success('general.confirmLogout');
+          window.location.replace(config.rootURL);
+        }
+      });
     }
   }
 });

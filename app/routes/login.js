@@ -1,26 +1,29 @@
-/* eslint ember/order-in-routes: 0 */
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import RSVP from 'rsvp';
+import { Promise } from 'rsvp';
 import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-const { Promise } = RSVP;
-
 export default Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: service(),
-  session: service(),
   commonAjax: service(),
+  currentUser: service(),
   iliosConfig: service(),
+  session: service(),
 
-  noAccountExistsError: false,
   noAccountExistsAccount: null,
+  noAccountExistsError: false,
+
   beforeModel(transition){
     this._super(transition);
-
     return this.attemptSSOAuth();
   },
+
+  setupController(controller) {
+    controller.set('noAccountExistsError', this.noAccountExistsError);
+    controller.set('noAccountExistsAccount', this.noAccountExistsAccount);
+  },
+
   async attemptSSOAuth(){
     const iliosConfig = this.iliosConfig;
     const type = await iliosConfig.get('authenticationType');
@@ -35,6 +38,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       return await this.casLogin();
     }
   },
+
   async casLogin() {
     const iliosConfig = this.iliosConfig;
     const commonAjax = this.commonAjax;
@@ -71,6 +75,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   },
+
   async shibbolethAuth(){
     const iliosConfig = this.iliosConfig;
     const commonAjax = this.commonAjax;
@@ -97,9 +102,5 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       let authenticator = 'authenticator:ilios-jwt';
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
-  },
-  setupController(controller) {
-    controller.set('noAccountExistsError', this.noAccountExistsError);
-    controller.set('noAccountExistsAccount', this.noAccountExistsAccount);
-  },
+  }
 });
