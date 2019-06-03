@@ -9,6 +9,12 @@
       background-color: $active-background-color;
       margin: .5rem 0;
     }
+
+    .lastUpdated {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .session-row {
       @include sessions-grid;
       padding: .25rem 0;
