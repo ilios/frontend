@@ -15,7 +15,7 @@ import {
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | course rollover', function(hooks) {
   setupRenderingTest(hooks);

@@ -9,7 +9,7 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | session copy', function(hooks) {
   setupRenderingTest(hooks);
