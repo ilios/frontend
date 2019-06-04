@@ -363,6 +363,7 @@ general:
   uploadedGroup: "Uploaded Group"
   uploadGroupAssignments: "Upload Group Assignments"
   uploadUsers: "File with user data (csv, tsv, txt)"
+  userExistsInGroupHierarchy: "User already exists in top-level group {groupTitle} or one of its subgroups."
   userExistsMultipleTimesInUpload: "This user already exists in the upload."
   username: Username
   userNotAddableFromDirectory: "This user is missing required information and cannot be added"
