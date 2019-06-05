@@ -109,7 +109,7 @@
     "stylelint-scss": "^3.5.1"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": ">= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
