@@ -14,7 +14,7 @@ export default Component.extend({
     const users = this.users;
     const learnerGroup = this.learnerGroup;
     const matchedGroups = this.matchedGroups;
-    const finalUsers = users.map(obj => {
+    return users.map(obj => {
       let selectedGroup = learnerGroup;
       if (obj.subGroupName) {
         const match = matchedGroups.findBy('name', obj.subGroupName);
@@ -27,8 +27,6 @@ export default Component.extend({
         learnerGroup: selectedGroup
       };
     });
-
-    return finalUsers;
   }),
 
   save: task(function* () {
