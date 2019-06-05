@@ -26,8 +26,10 @@
             onclick={{pipe-action
               (action (mut this.query) result.text)
               (action "search")}}
-            onfocus={{action (mut this.query) result.text}}>
-            {{result.text}}
+            onfocus={{action (mut this.query) result.text}}
+            onmouseover={{action "addActiveClass"}}>
+            {{fa-icon "search"}}
+            <span class="result-text">{{result.text}}</span>
           </li>
         {{/each}}
       </ul>

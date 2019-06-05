@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
 import fetch from 'fetch';
 
 const DEBOUNCE_MS = 250;
@@ -20,7 +20,6 @@ export default Component.extend({
   savedQuery: null,
   showResults: true,
   search() {},
-
 
   isLoading: reads('autocomplete.isRunning'),
   hasResults: reads('results.length'),
@@ -39,7 +38,6 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-
     this.autocompleteCache = [];
 
     if (this.initialQuery) {
@@ -47,14 +45,10 @@ export default Component.extend({
     }
   },
 
-  didRender() {
-    this._super(...arguments);
-    this.send('focus');
-  },
-
   actions: {
-    focus() {
-      document.querySelector('input.global-search-input').focus();
+    focus({ target }) {
+      const container = target.parentElement.parentElement.parentElement;
+      container.querySelector('input.global-search-input').focus();
     },
 
     search() {
@@ -63,7 +57,16 @@ export default Component.extend({
       if (q.length > 0) {
         this.autocompleteCache = [];
         this.search(q);
+        this.set('showResults', false);
       }
+    },
+
+    addActiveClass({ target }) {
+      const container = target.parentElement;
+      const list = container.getElementsByClassName('autocomplete-row');
+      const listArray = Array.from(list);
+      this.removeActiveClass(listArray);
+      target.classList.add('active');
     }
   },
 

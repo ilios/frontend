@@ -34,7 +34,6 @@
     background: $white;
     border: 1px solid $text-blue;
     border-radius: 0 0 3px 3px;
-    border-top: 0;
     box-shadow: 0 2px 2px transparentize($black, .8);
     color: $base-font-color;
     cursor: pointer;
@@ -51,7 +50,21 @@
     }
 
     li {
-      padding: .125rem 1.5rem;
+      padding: .25rem .375rem;
+
+      .fa-search {
+        bottom: .125rem;
+        display: inline-block;
+        font-size: .75rem;
+        margin-right: .125rem;
+        position: relative;
+      }
+
+      .result-text {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(100% - 1.5rem);
+      }
 
       &.inactive {
         color: darken($header-grey, 20);
