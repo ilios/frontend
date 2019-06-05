@@ -56,7 +56,21 @@
     margin-right: 1rem;
 
     .global-search-box {
-      width: 10rem;
+      margin-right: .5rem;
+      width: 13rem;
+
+      .autocomplete {
+        width: 25rem;
+
+        @include for-smaller-than-laptop {
+          right: 0rem;
+        }
+
+        @media screen and (max-width: 550px) {
+          left: -7rem;
+          right: auto;
+        }
+      }
     }
   }
 
