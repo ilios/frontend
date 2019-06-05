@@ -1,12 +1,5 @@
 module.exports = {
   root: true,
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module'
-  },
-  plugins: [
-    'ember'
-  ],
   extends: [
     '@ilios/eslint-config-ember-addon'
   ],
