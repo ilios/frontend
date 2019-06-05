@@ -13,7 +13,7 @@ import { setupAuthentication } from 'ilios-common';
 
 import { getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | Session - Publish', function(hooks) {
   setupApplicationTest(hooks);

@@ -8,7 +8,7 @@ import {
   click,
   findAll
 } from '@ember/test-helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | collapsed learnergroups', function(hooks) {

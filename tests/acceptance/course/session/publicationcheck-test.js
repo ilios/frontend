@@ -12,7 +12,7 @@ import {
 import { setupAuthentication } from 'ilios-common';
 import { getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const url = '/courses/1/sessions/1/publicationcheck';
 module('Acceptance | Session - Publication Check', function(hooks) {

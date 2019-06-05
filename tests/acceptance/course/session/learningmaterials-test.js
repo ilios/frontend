@@ -6,7 +6,7 @@ import { setupAuthentication } from 'ilios-common';
 import moment from 'moment';
 import { currentRouteName } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
 const today = moment();
