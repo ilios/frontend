@@ -136,160 +136,151 @@ module('Acceptance | Learnergroup', function(hooks) {
   test('copy learnergroup without learners', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(20);
-    this.server.create('programYear', { program: this.program });
-    this.server.create('cohort', {
-      programYearId: 1,
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', {
+      programYear,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
+    const parent = this.server.create('learnerGroup', {
+      cohort,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
+    const subGroup = this.server.create('learnerGroup', {
+      cohort,
+      parent,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
+    this.server.createList('learnerGroup', 2, {
+      cohort,
+      parent: subGroup
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 2,
-    });
-    const groups = '.list tbody tr';
+
+    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
     const firstGroup = `${groups}:nth-of-type(1)`;
     const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
     const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
-    const firstGroupCopyNoLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(2)';
+    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
+    const firstGroupCopyOptions = `${groups}:nth-of-type(2) .done`;
     const secondGroup = `${groups}:nth-of-type(2)`;
     const secondTitle = `${secondGroup} td:nth-of-type(1)`;
     const secondLink = `${secondTitle} a`;
     const secondMembers = `${secondGroup} td:nth-of-type(2)`;
     const secondSubgroups = `${secondGroup} td:nth-of-type(3)`;
 
-    const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
-    const firstSubgroup = `${subGroupList}:nth-of-type(1)`;
-    const firstSubgroupTitle = `${firstSubgroup} td:nth-of-type(1)`;
-    const firstSubgroupMembers = `${firstSubgroup} td:nth-of-type(2)`;
-    const firstSubgroupSubgroups = `${firstSubgroup} td:nth-of-type(3)`;
-    const secondSubgroup = `${subGroupList}:nth-of-type(2)`;
-    const secondSubgroupTitle = `${secondSubgroup} td:nth-of-type(1)`;
-    const secondSubgroupMembers = `${secondSubgroup} td:nth-of-type(2)`;
-    const secondSubgroupSubgroups = `${secondSubgroup} td:nth-of-type(3)`;
+    await visit('/learnergroups/1');
 
+    assert.equal(findAll(groups).length, 1);
 
-    await visit('/learnergroups');
-    assert.equal(1, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
     assert.equal(await getElementText(find(firstMembers)), getText('0'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
+
     await click(firstGroupCopy);
-    await click(firstGroupCopyNoLearners);
-    assert.equal(2, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
+    assert.equal(findAll(firstGroupCopyOptions).length, 1);
+    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
+    await click(firstGroupCopyConfirmation);
+    await visit('/learnergroups/1');
+    assert.equal(findAll(groups).length, 2);
+
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
     assert.equal(await getElementText(find(firstMembers)), getText('0'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
-    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
+    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 1 (Copy)'));
     assert.equal(await getElementText(find(secondMembers)), getText('0'));
     assert.equal(await getElementText(find(secondSubgroups)), getText('2'));
-    await click(firstLink);
-    assert.equal(currentURL(), '/learnergroups/1');
-    await visit('/learnergroups');
+
     await click(secondLink);
     assert.equal(currentURL(), '/learnergroups/5');
 
-    assert.equal(2, findAll(subGroupList).length);
-
-    assert.equal(await getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstSubgroupMembers)), getText('0'));
-    assert.equal(await getElementText(find(firstSubgroupSubgroups)), getText('1'));
-    assert.equal(await getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
-    assert.equal(await getElementText(find(secondSubgroupMembers)), getText('0'));
-    assert.equal(await getElementText(find(secondSubgroupSubgroups)), getText('0'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 2'));
+    assert.equal(await getElementText(find(firstMembers)), getText('0'));
+    assert.equal(await getElementText(find(firstSubgroups)), getText('0'));
+    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 3'));
+    assert.equal(await getElementText(find(secondMembers)), getText('0'));
+    assert.equal(await getElementText(find(secondSubgroups)), getText('0'));
   });
 
-  test('copy learnergroup with learners', async function(assert) {
+  test('cannot copy learnergroup with learners', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(20);
-    this.server.createList('user', 10);
-    this.server.create('programYear', { program: this.program });
-    this.server.create('cohort', {
-      programYearId: 1,
+    assert.expect(6);
+    const users = this.server.createList('user', 3);
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', {
+      programYear,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      userIds: [2, 3, 4, 5, 6, 7, 8]
+    const parent = this.server.create('learnerGroup', {
+      cohort,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
-      userIds: [8]
+    const subGroup = this.server.create('learnerGroup', {
+      cohort,
+      parent,
+      users,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
-      userIds: [5, 6, 7]
-    });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 2,
-      userIds: [8]
+    this.server.createList('learnerGroup', 2, {
+      cohort,
+      parent: subGroup
     });
 
-    const groups = '.list tbody tr';
+    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
     const firstGroup = `${groups}:nth-of-type(1)`;
     const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstLink = `${firstTitle} a`;
     const firstMembers = `${firstGroup} td:nth-of-type(2)`;
     const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
     const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
-    const firstGroupCopyWithLearners = '.list tbody tr:nth-of-type(2) .done:nth-of-type(1)';
-    const secondGroup = `${groups}:nth-of-type(2)`;
-    const secondTitle = `${secondGroup} td:nth-of-type(1)`;
-    const secondLink = `${secondTitle} a`;
-    const secondMembers = `${secondGroup} td:nth-of-type(2)`;
-    const secondSubgroups = `${secondGroup} td:nth-of-type(3)`;
+    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
+    const copyOptions = `${groups}:nth-of-type(2) .done`;
 
-    const subGroupList = '.learnergroup-subgroup-list-list tbody tr';
-    const firstSubgroup = `${subGroupList}:nth-of-type(1)`;
-    const firstSubgroupTitle = `${firstSubgroup} td:nth-of-type(1)`;
-    const firstSubgroupMembers = `${firstSubgroup} td:nth-of-type(2)`;
-    const firstSubgroupSubgroups = `${firstSubgroup} td:nth-of-type(3)`;
-    const secondSubgroup = `${subGroupList}:nth-of-type(2)`;
-    const secondSubgroupTitle = `${secondSubgroup} td:nth-of-type(1)`;
-    const secondSubgroupMembers = `${secondSubgroup} td:nth-of-type(2)`;
-    const secondSubgroupSubgroups = `${secondSubgroup} td:nth-of-type(3)`;
-
-    await visit('/learnergroups');
+    await visit('/learnergroups/1');
     assert.equal(1, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(await getElementText(find(firstMembers)), getText('7'));
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
+    assert.equal(await getElementText(find(firstMembers)), getText('3'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
     await click(firstGroupCopy);
-    await click(firstGroupCopyWithLearners);
-    assert.equal(2, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
-    assert.equal(await getElementText(find(firstMembers)), getText('7'));
+    assert.equal(findAll(copyOptions).length, 1);
+    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
+  });
+
+  test('cannot copy learnergroup with learners in subgroup', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    assert.expect(6);
+    const users = this.server.createList('user', 3);
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', {
+      programYear,
+    });
+    const parent = this.server.create('learnerGroup', {
+      cohort,
+    });
+    const subGroup = this.server.create('learnerGroup', {
+      cohort,
+      parent,
+    });
+    this.server.create('learnerGroup', {
+      cohort,
+      parent: subGroup,
+      users,
+    });
+    this.server.create('learnerGroup', {
+      cohort,
+      parent: subGroup,
+    });
+
+    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
+    const firstGroup = `${groups}:nth-of-type(1)`;
+    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
+    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
+    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
+    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
+    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
+    const copyOptions = `${groups}:nth-of-type(2) .done`;
+
+    await visit('/learnergroups/1');
+    assert.equal(1, findAll(groups).length);
+    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
+    assert.equal(await getElementText(find(firstMembers)), getText('0'));
     assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
-    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 0 (Copy)'));
-    assert.equal(await getElementText(find(secondMembers)), getText('7'));
-    assert.equal(await getElementText(find(secondSubgroups)), getText('2'));
-    await click(firstLink);
-    assert.equal(currentURL(), '/learnergroups/1');
-    await visit('/learnergroups');
-    await click(secondLink);
-    assert.equal(currentURL(), '/learnergroups/5');
-
-    assert.equal(2, findAll(subGroupList).length);
-
-    assert.equal(await getElementText(find(firstSubgroupTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstSubgroupMembers)), getText('1'));
-    assert.equal(await getElementText(find(firstSubgroupSubgroups)), getText('1'));
-    assert.equal(await getElementText(find(secondSubgroupTitle)), getText('learnergroup 2'));
-    assert.equal(await getElementText(find(secondSubgroupMembers)), getText('3'));
-    assert.equal(await getElementText(find(secondSubgroupSubgroups)), getText('0'));
+    await click(firstGroupCopy);
+    assert.equal(findAll(copyOptions).length, 1);
+    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
   });
 
 
