@@ -24,6 +24,8 @@ export default Component.extend({
   saved: false,
   savedGroup: null,
 
+  'data-test-learnergroup-subgroup-list': true,
+
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('saved', false);

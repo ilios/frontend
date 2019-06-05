@@ -36,7 +36,7 @@
         <td class="text-center hide-from-small-screen">
           {{get (await learnerGroup.courses) "length"}}
         </td>
-        <td class="text-right">
+        <td class="text-right" data-test-actions>
           {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
             {{#if (and
               @canDelete
@@ -44,7 +44,9 @@
               (eq (get (await learnerGroup.courses) "length") 0))}}
               <span
                 class="clickable remove"
-                {{action "confirmRemove" learnerGroup}}>
+                {{action "confirmRemove" learnerGroup}}
+                data-test-remove
+              >
                 {{fa-icon "trash" class="enabled"}}
               </span>
             {{else}}
@@ -53,12 +55,13 @@
           {{else}}
             {{loading-spinner}}
           {{/if}}
-
           {{#if @canCreate}}
             {{fa-icon "copy"
               class="clickable enabled"
               title=(t "general.copy")
-              click=(action "startCopy" learnerGroup)}}
+              click=(action "startCopy" learnerGroup)
+              data-test-copy=true
+            }}
           {{else}}
             {{fa-icon "copy" class="disabled"}}
           {{/if}}
@@ -66,15 +69,17 @@
       </tr>
 
       {{#if (contains learnerGroup this.learnerGroupsForRemovalConfirmation)}}
-        <tr class="confirm-removal">
+        <tr class="confirm-removal" data-test-confirm-removal>
           <td colspan="5">
-            <div class="confirm-message">
+            <div class="confirm-message" data-test-confirmation>
               {{t "general.confirmRemoveLearnerGroup"
                 subgroupCount=learnerGroup.children.length}} <br>
               <div class="confirm-buttons">
                 <button
                   class="remove text"
-                  onclick={{action @remove learnerGroup}}>
+                  onclick={{action @remove learnerGroup}}
+                  data-test-confirm
+                >
                   {{t "general.yes"}}
                 </button>
                 <button
@@ -89,19 +94,34 @@
       {{/if}}
 
       {{#if (contains learnerGroup this.learnerGroupsForCopy)}}
-        <tr class="confirm-copy">
+        <tr class="confirm-copy" data-test-confirm-copy>
           <td colspan="5">
             <div class="confirm-buttons">
-              <button
-                class="done text"
-                onclick={{action "copy" true learnerGroup}}>
-                {{t "general.copyWithLearners"}}
-              </button>
-              <button
-                class="done text"
-                onclick={{action "copy" false learnerGroup}}>
-                {{t "general.copyWithoutLearners"}}
-              </button>
+              {{#if @canCopyWithLearners}}
+                <button
+                  class="done text"
+                  onclick={{action "copy" true learnerGroup}}
+                  data-test-confirm-with-learners
+                >
+                  {{t "general.copyWithLearners"}}
+                </button>
+                <button
+                  class="done text"
+                  onclick={{action "copy" false learnerGroup}}
+                  data-test-confirm-without-learners
+                >
+                  {{t "general.copyWithoutLearners"}}
+                </button>
+              {{else}}
+                <button
+                    class="done text"
+                    onclick={{action "copy" false learnerGroup}}
+                    data-test-confirm-without-learners
+                  >
+                  {{t "general.copy"}}
+                </button>
+              {{/if}}
+
               <button
                 class="cancel text"
                 onclick={{action "cancelCopy" learnerGroup}}>

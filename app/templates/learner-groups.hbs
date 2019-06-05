@@ -108,6 +108,7 @@
         {{learnergroup-list
           canCreate=(await canCreate)
           canDelete=(await canDelete)
+          canCopyWithLearners=true
           learnerGroups=(await filteredLearnerGroups)
           query=titleFilter
           copy=(perform copyGroup)

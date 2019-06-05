@@ -7,6 +7,9 @@ export default Component.extend({
   canDelete: false,
   learnerGroups: null,
   query: null,
+
+  'data-test-learnergroup-list': true,
+
   copy() {},
   remove() {},
 
