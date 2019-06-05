@@ -120,6 +120,18 @@ export default Component.extend({
           if (user.get('lastName') != lastName) {
             warnings.push(intl.t('general.doesNotMatchUserRecord', {description: intl.t('general.lastName'), record: user.get('lastName')}));
           }
+
+          const topLevelGroup = await learnerGroup.get('topLevelGroup');
+          const allUsersInGroupHierarchy = await topLevelGroup.get('allDescendantUsers');
+          if (allUsersInGroupHierarchy.includes(user)) {
+            errors.push(
+              intl.t(
+                'general.userExistsInGroupHierarchy',
+                {groupTitle: topLevelGroup.get('title')}
+              )
+            );
+          }
+
           userRecord = user;
         }
       }

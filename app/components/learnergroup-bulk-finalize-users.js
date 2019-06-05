@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import { filter, map } from 'rsvp';
+import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 
@@ -10,19 +10,11 @@ export default Component.extend({
   users: null,
   matchedGroups: null,
   learnerGroup: null,
-  invalidUsers: computed('users.[]', 'learnerGroup', async function () {
-    const users = this.users;
-    const learnerGroup = this.learnerGroup;
-    const allDescendantUsers = await learnerGroup.get('allDescendantUsers');
-    const allDescendantUserIds = allDescendantUsers.mapBy('id');
-
-    return filter(users, async user => allDescendantUserIds.includes(user.userRecord.get('id')));
-  }),
   finalData: computed('users.[]', 'matchedGroups.[]', 'learnerGroup', function(){
     const users = this.users;
     const learnerGroup = this.learnerGroup;
     const matchedGroups = this.matchedGroups;
-    const finalUsers = users.map(obj => {
+    return users.map(obj => {
       let selectedGroup = learnerGroup;
       if (obj.subGroupName) {
         const match = matchedGroups.findBy('name', obj.subGroupName);
@@ -35,8 +27,6 @@ export default Component.extend({
         learnerGroup: selectedGroup
       };
     });
-
-    return finalUsers;
   }),
 
   save: task(function* () {
