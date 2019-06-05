@@ -1,10 +1,15 @@
 import Component from '@ember/component';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
+import { computed } from '@ember/object';
+import fetch from 'fetch';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default Component.extend({
+  iliosConfig: service(),
   intl: service(),
+  session: service(),
 
   query: null,
   onQuery() {},
@@ -13,20 +18,29 @@ export default Component.extend({
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
 
-  search: task(function* () {
-    yield timeout(300);
+  authHeaders: computed('session.isAuthenticated', function(){
+    const session = this.session;
+    const { jwt } = session.data.authenticated;
+    let headers = {};
+    if (jwt) {
+      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    }
 
-    // let searchResults = yield this.store.query('search', { q });
-    return [{
-      link: 'Link to a route',
-      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
-    },{
-      link: 'Link to a route',
-      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
-    }, {
-      link: 'Link to a route',
-      description: 'ABC ABC ABC ABC ABC ABC ABC ABC'
-    }];
+    return new Headers(headers);
+  }),
+
+  search: task(function* () {
+    const q = cleanQuery(this.query);
+    this.onQuery(q);
+
+    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
+    const url = `${host}/experimental_search?q=${q}`;
+    const response = yield fetch(url, {
+      headers: this.authHeaders
+    });
+    const { results: { courses } } = yield response.json();
+
+    return courses;
   }).observes('query').restartable(),
 
   init() {
@@ -35,5 +49,5 @@ export default Component.extend({
     if (this.query) {
       this.search.perform();
     }
-  }
+  },
 });

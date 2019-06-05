@@ -10,10 +10,16 @@
         {{t "general.currentlySearchingPrompt"}}
       </li>
     {{else}}
-      {{#each this.results as |result|}}
+      {{#each this.results as |course|}}
         <li class="results-row">
-          <a class="results-row-link">{{result.link}}</a>
-          <span class="results-row-dsc">{{result.description}}</span>
+          {{#link-to "course" course.id}}{{course.title}}{{/link-to}}
+          <ul>
+            {{#each course.sessions as |session|}}
+              <li>
+                {{#link-to "session" course.id session.id}}{{session.title}}{{/link-to}}
+              </li>
+            {{/each}}
+          </ul>
         </li>
       {{else}}
         <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>

@@ -20,9 +20,7 @@ module('Acceptance | search', function(hooks) {
 
     this.server.get('experimental_search', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
-      assert.ok(queryParams.onlySuggest);
       assert.equal(queryParams.q, input);
-      assert.equal(queryParams.onlySuggest, 'true');
 
       return {
         results: {
