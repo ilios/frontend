@@ -1,55 +1,32 @@
-{{#if (is-fulfilled invalidUsers)}}
-  {{#if (await invalidUsers)}}
-    <table data-test-final-error-data>
-      <thead>
-        <tr>
-          <th>{{t "general.name"}}</th>
-          <th>{{t "general.campusId"}}</th>
-          <th>{{t "general.error"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await invalidUsers) as |obj|}}
-          <tr>
-            <td>{{obj.userRecord.fullName}}</td>
-            <td>{{obj.userRecord.campusId}}</td>
-            <td>{{t "general.alreadyInLearnerGroup" learnerGroupTitle=learnerGroup.title}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+<h3>{{t "general.finalResults"}}</h3>
+<table data-test-final-data>
+  <thead>
+    <tr>
+      <th>{{t "general.name"}}</th>
+      <th>{{t "general.campusId"}}</th>
+      <th>{{t "general.learnerGroups"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each finalData as |obj|}}
+      <tr>
+        <td>{{obj.user.fullName}}</td>
+        <td>{{obj.user.campusId}}</td>
+        <td>{{obj.learnerGroup.title}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
 
+<button
+  disabled={{save.isRunning}}
+  data-test-finalize-users-submit
+  {{action (perform save)}}
+>
+  {{#if save.isRunning}}
+    {{loading-spinner}}
   {{else}}
-    <h3>{{t "general.finalResults"}}</h3>
-    <table data-test-final-data>
-      <thead>
-        <tr>
-          <th>{{t "general.name"}}</th>
-          <th>{{t "general.campusId"}}</th>
-          <th>{{t "general.learnerGroups"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each finalData as |obj|}}
-          <tr>
-            <td>{{obj.user.fullName}}</td>
-            <td>{{obj.user.campusId}}</td>
-            <td>{{obj.learnerGroup.title}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
-    <button
-      disabled={{save.isRunning}}
-      data-test-finalize-users-submit
-      {{action (perform save)}}
-    >
-      {{#if save.isRunning}}
-        {{loading-spinner}}
-      {{else}}
-        {{t "general.save"}}
-      {{/if}}
-    </button>
+    {{t "general.save"}}
   {{/if}}
-{{/if}}
+</button>
+
