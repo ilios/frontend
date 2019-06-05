@@ -1,14 +1,14 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { isEmpty, isPresent } from '@ember/utils';
 import { computed } from '@ember/object';
-const { map } = RSVP;
+import { isEmpty, isPresent } from '@ember/utils';
+import { map } from 'rsvp';
 
 export default Component.extend({
-  tagName: 'section',
   classNames: ['collapsed-stewards'],
+  tagName: 'section',
+
   programYear: null,
+
   schoolData: computed('programYear.stewards.[]', async function(){
     const programYear = this.programYear;
     if (isEmpty(programYear)) {
@@ -36,5 +36,5 @@ export default Component.extend({
     });
 
     return schoolData;
-  }),
+  })
 });

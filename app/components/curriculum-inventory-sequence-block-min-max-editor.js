@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
@@ -10,7 +9,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: 0
-    }),
+    })
   ],
   maximum: [
     validator('number', {
@@ -21,25 +20,45 @@ const Validations = buildValidations({
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
       })
-    }),
+    })
   ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-
-  sequenceBlock: null,
-  minimum: null,
-  maximum: null,
-  isSaving: false,
   classNames: ['curriculum-inventory-sequence-block-min-max-editor'],
   tagName: 'section',
 
-  didReceiveAttrs(){
+  isSaving: false,
+  maximum: null,
+  minimum: null,
+  sequenceBlock: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const sequenceBlock = this.sequenceBlock;
     const minimum =  sequenceBlock.get('minimum');
     const maximum = sequenceBlock.get('maximum');
     this.setProperties({ minimum, maximum });
+  },
+
+  actions: {
+    save() {
+      this.set('isSaving', true);
+      this.send('addErrorDisplaysFor', ['minimum', 'maximum']);
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const min = this.minimum;
+          const max = this.maximum;
+          this.save(min, max);
+        } else {
+          this.set('isSaving', false);
+        }
+      });
+    },
+
+    cancel() {
+      this.cancel();
+    }
   },
 
   keyUp(event) {
@@ -57,25 +76,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     if (27 === keyCode) {
       this.send('cancel');
-    }
-  },
-
-  actions: {
-    save(){
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['minimum', 'maximum']);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const min = this.minimum;
-          const max = this.maximum;
-          this.save(min, max);
-        } else {
-          this.set('isSaving', false);
-        }
-      });
-    },
-    cancel(){
-      this.cancel();
     }
   }
 });

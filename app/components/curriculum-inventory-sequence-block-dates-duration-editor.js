@@ -1,27 +1,24 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { gt, reads } from '@ember/object/computed';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
-const { gt, reads } = computed;
-
 const Validations = buildValidations({
-
   duration: [
     validator('number', {
       allowString: true,
       integer: true,
       gte: 0,
       lte: 1200
-    }),
+    })
   ],
   startDate: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.duration'],
       disabled: gt('model.duration', 0)
-    }),
+    })
   ],
   endDate: [
     validator('date', {
@@ -37,27 +34,56 @@ const Validations = buildValidations({
       disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
       })
-    }),
+    })
   ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-
-  sequenceBlock: null,
-  startDate: null,
-  endDate: null,
-  duration: null,
-  isSaving: false,
   classNames: ['curriculum-inventory-sequence-block-dates-duration-editor'],
   tagName: 'section',
 
-  didReceiveAttrs(){
+  duration: null,
+  endDate: null,
+  isSaving: false,
+  sequenceBlock: null,
+  startDate: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const sequenceBlock = this.sequenceBlock;
     const startDate =  sequenceBlock.get('startDate');
     const endDate = sequenceBlock.get('endDate');
     const duration = sequenceBlock.get('duration');
     this.setProperties({ startDate, endDate, duration });
+  },
+
+  actions: {
+    changeStartDate(startDate) {
+      this.set('startDate', startDate);
+    },
+
+    changeEndDate(endDate) {
+      this.set('endDate', endDate);
+    },
+
+    save() {
+      this.set('isSaving', true);
+      this.send('addErrorDisplaysFor', ['duration', 'startDate', 'endDate']);
+      this.validate().then(({validations}) => {
+        if (validations.get('isValid')) {
+          const startDate = this.startDate;
+          const endDate = this.endDate;
+          const duration = this.duration;
+          this.save(startDate, endDate, duration);
+        } else {
+          this.set('isSaving', false);
+        }
+      });
+    },
+
+    cancel() {
+      this.cancel();
+    }
   },
 
   keyUp(event) {
@@ -75,33 +101,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     if (27 === keyCode) {
       this.send('cancel');
-    }
-  },
-
-  actions: {
-    changeStartDate(startDate) {
-      this.set('startDate', startDate);
-    },
-    changeEndDate(endDate) {
-      this.set('endDate', endDate);
-    },
-
-    save(){
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['duration', 'startDate', 'endDate']);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const startDate = this.startDate;
-          const endDate = this.endDate;
-          const duration = this.duration;
-          this.save(startDate, endDate, duration);
-        } else {
-          this.set('isSaving', false);
-        }
-      });
-    },
-    cancel(){
-      this.cancel();
     }
   }
 });

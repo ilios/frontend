@@ -1,17 +1,14 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { isPresent } from '@ember/utils';
-import EmberObject, { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
+import EmberObject, { computed } from '@ember/object';
+import { not, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
+import { Promise, all, filter } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
 import PapaParse from 'papaparse';
-
-const { Promise, filter } = RSVP;
-const { reads, not } = computed;
 
 const UserValidations = buildValidations({
   firstName: [
@@ -76,6 +73,30 @@ const UserValidations = buildValidations({
 });
 
 export default Component.extend(NewUser, {
+  flashMessages: service(),
+  iliosConfig: service(),
+  intl: service(),
+
+  classNames: ['bulk-new-users'],
+
+  file: null,
+  fileUploadError: false,
+  proposedUsers: null,
+  savedUserIds: null,
+  savingAuthenticationErrors: null,
+  savingUserErrors: null,
+  selectedUsers: null,
+
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
+
+  sampleData: computed(function(){
+    const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
+    const str = sampleUploadFields.join("\t");
+    const encoded = window.btoa(str);
+    return encoded;
+  }),
+
   init(){
     this._super(...arguments);
     this.set('selectedUsers', []);
@@ -85,19 +106,28 @@ export default Component.extend(NewUser, {
     this.set('savingAuthenticationErrors', []);
   },
 
-  intl: service(),
-  flashMessages: service(),
-  iliosConfig: service(),
-  classNames: ['bulk-new-users'],
-  file: null,
-  selectedUsers: null,
-  proposedUsers: null,
-  savedUserIds: null,
-  savingUserErrors: null,
-  savingAuthenticationErrors: null,
-  fileUploadError: false,
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
+  actions: {
+    updateSelectedFile(files){
+      // Check for the various File API support.
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        if (files.length > 0) {
+          this.parseFile.perform(files[0]);
+        }
+      } else {
+        const intl = this.intl;
+        throw new Error(intl.t('general.unsupportedBrowserFailure'));
+      }
+    },
+
+    toggleUserSelection(obj){
+      let selectedUsers = this.selectedUsers;
+      if (selectedUsers.includes(obj)) {
+        selectedUsers.removeObject(obj);
+      } else {
+        selectedUsers.pushObject(obj);
+      }
+    }
+  },
 
   existingUsernames(){
     const store = this.store;
@@ -229,9 +259,9 @@ export default Component.extend(NewUser, {
       try {
         parts = records.splice(0, 10);
         let users = parts.mapBy('user');
-        yield RSVP.all(users.invoke('save'));
+        yield all(users.invoke('save'));
         let authentications = parts.mapBy('authentication');
-        yield RSVP.all(authentications.invoke('save'));
+        yield all(authentications.invoke('save'));
       } catch (e) {
         let userErrors = parts.filter(obj => obj.user.get('isError'));
         let authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
@@ -253,36 +283,5 @@ export default Component.extend(NewUser, {
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
 
-  }).drop(),
-
-  sampleData: computed(function(){
-    const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
-
-    const str = sampleUploadFields.join("\t");
-    const encoded = window.btoa(str);
-
-    return encoded;
-  }),
-
-  actions: {
-    updateSelectedFile(files){
-      // Check for the various File API support.
-      if (window.File && window.FileReader && window.FileList && window.Blob) {
-        if (files.length > 0) {
-          this.parseFile.perform(files[0]);
-        }
-      } else {
-        const intl = this.intl;
-        throw new Error(intl.t('general.unsupportedBrowserFailure'));
-      }
-    },
-    toggleUserSelection(obj){
-      let selectedUsers = this.selectedUsers;
-      if (selectedUsers.includes(obj)) {
-        selectedUsers.removeObject(obj);
-      } else {
-        selectedUsers.pushObject(obj);
-      }
-    },
-  }
+  }).drop()
 });

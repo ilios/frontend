@@ -1,15 +1,11 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 import fetch from 'fetch';
-
-const { alias } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   reportName: [
@@ -17,36 +13,30 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 200
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  flashMessages: service(),
   ajax: service(),
+  flashMessages: service(),
+
+  classNames: ['curriculum-inventory-report-header'],
+
+  canUpdate: false,
+  isDownloading: false,
+  report: null,
+  reportName: null,
+
+  publishTarget: alias('report'),
 
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('reportName', this.get('report.name'));
   },
-  classNames: ['curriculum-inventory-report-header'],
-  report: null,
-  reportName: null,
-  publishTarget: alias('report'),
-  canUpdate: false,
-  isDownloading: false,
-
-  downloadReport: task(function * (report) {
-    this.set('isDownloading', true);
-    const { saveAs } = yield import('file-saver');
-    const response = yield fetch(report.absoluteFileUri);
-    const blob = yield response.blob();
-    saveAs(blob, 'report.xml');
-    this.set('isDownloading', false);
-  }).drop(),
 
   actions: {
-    changeName(){
+    changeName() {
       const report = this.report;
       const newName = this.reportName;
       this.send('addErrorDisplayFor', 'reportName');
@@ -67,7 +57,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
 
-    revertNameChanges(){
+    revertNameChanges() {
       const report = this.report;
       this.set('reportName', report.get('name'));
     },
@@ -75,5 +65,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     finalize() {
       this.finalize();
     }
-  }
+  },
+
+  downloadReport: task(function* (report) {
+    this.set('isDownloading', true);
+    const { saveAs } = yield import('file-saver');
+    const response = yield fetch(report.absoluteFileUri);
+    const blob = yield response.blob();
+    saveAs(blob, 'report.xml');
+    this.set('isDownloading', false);
+  }).drop()
 });

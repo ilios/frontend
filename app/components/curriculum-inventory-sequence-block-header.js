@@ -1,13 +1,9 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { alias } = computed;
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   blockTitle: [
@@ -15,23 +11,27 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 200
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
+  store: service(),
+  classNames: ['curriculum-inventory-sequence-block-header'],
+
+  canUpdate: false,
+  report: null,
+  reportName: null,
+
+  publishTarget: alias('sequenceBlock'),
+
   didReceiveAttrs(){
     this._super(...arguments);
     this.set('blockTitle', this.get('sequenceBlock.title'));
   },
-  store: service(),
-  classNames: ['curriculum-inventory-sequence-block-header'],
-  report: null,
-  canUpdate: false,
-  reportName: null,
-  publishTarget: alias('sequenceBlock'),
+
   actions: {
-    changeTitle(){
+    changeTitle() {
       const block = this.sequenceBlock;
       const newTitle = this.blockTitle;
       this.send('addErrorDisplayFor', 'blockTitle');
@@ -52,9 +52,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
 
-    revertTitleChanges(){
+    revertTitleChanges() {
       const block = this.sequenceBlock;
       this.set('blockTitle', block.get('title'));
-    },
+    }
   }
 });

@@ -1,17 +1,28 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import DomMixin from 'ember-lifeline/mixins/dom';
-import { task, timeout } from 'ember-concurrency';
 import { computed } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+import DomMixin from 'ember-lifeline/mixins/dom';
 
 export default Component.extend(DomMixin, {
   attributeBindings: ['ariaHidden:aria-hidden'],
   classNameBindings: [':connection-status', 'isOnline::offline'],
+
   isOnline: true,
-  timer: 5,
   multiplier: 1,
-  unableToReconnect: false,
   stopAttemptingToReconnect: false,
+  timer: 5,
+  unableToReconnect: false,
+
+  ariaHidden: computed('isOnline', function() {
+    const isOnline = this.isOnline;
+    return isOnline?'true':false;
+  }),
+
+  ariaRole: computed('isOnline', function() {
+    const isOnline = this.isOnline;
+    return isOnline?false:'alert';
+  }),
+
   didInsertElement() {
     this._super(...arguments);
     if (!navigator.onLine) {
@@ -24,15 +35,8 @@ export default Component.extend(DomMixin, {
       this.changeConnectionState.perform(false);
     });
   },
-  ariaHidden: computed('isOnline', function () {
-    const isOnline = this.isOnline;
-    return isOnline?'true':false;
-  }),
-  ariaRole: computed('isOnline', function () {
-    const isOnline = this.isOnline;
-    return isOnline?false:'alert';
-  }),
-  changeConnectionState: task(function * (isOnline) {
+
+  changeConnectionState: task(function* (isOnline) {
     this.set('timer', 5);
     this.set('multiplier', 1);
     this.set('stopAttemptingToReconnect', false);
@@ -44,6 +48,7 @@ export default Component.extend(DomMixin, {
       reconnect.cancelAll();
     }
   }).restartable(),
+
   reconnect: task(function* (force) {
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
@@ -71,5 +76,5 @@ export default Component.extend(DomMixin, {
 
     yield timeout(1000);
     this.reconnect.perform();
-  }).restartable(),
+  }).restartable()
 });

@@ -1,13 +1,11 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { reads } = computed;
 
 const Validations = buildValidations({
   name: [
@@ -15,16 +13,29 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 200
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   commonAjax: service(),
-  store: service(),
   flashMessages: service(),
   iliosConfig: service(),
-  didReceiveAttrs(){
+  store: service(),
+
+  classNames: ['curriculum-inventory-report-rollover'],
+
+  description: null,
+  isSaving: false,
+  name: null,
+  report: null,
+  selectedYear: null,
+  years: null,
+
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const report = this.report;
     const thisYear = parseInt(moment().format('YYYY'), 10);
@@ -38,24 +49,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       years.pushObject(year);
     }
     const selectedYear = years.findBy('id', startYear + 1);
-
     this.set('name', report.get('name'));
     this.set('description', report.get('description'));
     this.set('selectedYear', selectedYear);
     this.set('years', years);
   },
 
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-  classNames: ['curriculum-inventory-report-rollover'],
-  years: null,
-  selectedYear: null,
-  report: null,
-  name: null,
-  description: null,
-  isSaving: false,
+  actions: {
+    changeName(newName){
+      this.set('name', newName);
+    }
+  },
 
-  save: task(function * (){
+  save: task(function* () {
     this.set('isSaving', true);
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['name']);
@@ -104,11 +110,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (13 === keyCode) {
       this.save.perform();
     }
-  },
-
-  actions: {
-    changeName(newName){
-      this.set('name', newName);
-    },
   }
 });
