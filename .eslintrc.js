@@ -1,8 +1,5 @@
 module.exports = {
   root: true,
-  plugins: [
-    'ember'
-  ],
   extends: [
     '@ilios/eslint-config-ember'
   ],
