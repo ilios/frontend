@@ -343,10 +343,14 @@ module('Integration | Component | course rollover', function(hooks) {
 
   test('rollover course with no offerings', async function(assert) {
     assert.expect(4);
-    this.server.create('course', {
-      title: 'old course'
+    const school = this.server.create('school', {
+      title: 'SOM',
     });
-    const course = this.owner.lookup('service:store').find('course', 1);
+    this.server.create('course', {
+      title: 'old course',
+      school
+    });
+    const course = await this.owner.lookup('service:store').find('course', 1);
     let ajaxMock = Service.extend({
       request(url, {data}){
         assert.ok('skipOfferings' in data);
@@ -422,7 +426,7 @@ module('Integration | Component | course rollover', function(hooks) {
       title: 'old course',
       school,
     });
-    const course = this.owner.lookup('service:store').find('course', 1);
+    const course = await this.owner.lookup('service:store').find('course', 1);
     let ajaxMock = Service.extend({
       request(url, { data }) {
         assert.ok('newCohorts' in data);
