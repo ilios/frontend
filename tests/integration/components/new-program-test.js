@@ -45,7 +45,7 @@ module('Integration | Component | new program', function(hooks) {
     await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
     const saveBtn = find('.buttons .done');
     const validationError = '[data-test-newprogram-title] .validation-error-message';
-    assert.notOk(find(validationError));
+    assert.dom(validationError).doesNotExist();
     await click(saveBtn);
     assert.dom(find(validationError)).hasText('This field can not be blank');
   });
@@ -59,7 +59,7 @@ module('Integration | Component | new program', function(hooks) {
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     const validationError = '[data-test-newprogram-title] .validation-error-message';
-    assert.notOk(find(validationError));
+    assert.dom(validationError).doesNotExist();
     fillIn(titleInput, 'Aa');
     await click(saveBtn);
     assert.dom(find(validationError)).hasText('Title is too short (minimum is 3 characters)');
@@ -74,7 +74,7 @@ module('Integration | Component | new program', function(hooks) {
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     let validationError = '[data-test-newprogram-title] .validation-error-message';
-    assert.notOk(find(validationError));
+    assert.dom(validationError).doesNotExist();
     fillIn(titleInput, '0123456789'.repeat(21));
     await click(saveBtn);
     assert.dom(find(validationError)).hasText('Title is too long (maximum is 200 characters)');
@@ -93,9 +93,9 @@ module('Integration | Component | new program', function(hooks) {
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     let validationError = '[data-test-newprogram-title] .validation-error-message';
-    assert.notOk(find(validationError));
+    assert.dom(validationError).doesNotExist();
     fillIn(titleInput, 'foobar');
     await click(saveBtn);
-    assert.notOk(find(validationError));
+    assert.dom(validationError).doesNotExist();
   });
 });

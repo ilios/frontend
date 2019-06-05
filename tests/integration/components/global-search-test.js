@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { findAll, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/global-search';
 
@@ -11,7 +11,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.expect(1);
 
     await render(hbs`{{global-search}}`);
-    assert.equal(findAll('[data-test-global-search-box]').length, 1);
+    assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
   test('handles empty and non-empty query', async function(assert) {

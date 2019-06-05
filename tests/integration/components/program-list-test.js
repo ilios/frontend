@@ -2,7 +2,13 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { render, settled, findAll, click, find } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  findAll,
+  click,
+  find
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | program list', function(hooks) {

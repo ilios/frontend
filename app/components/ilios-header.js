@@ -25,7 +25,7 @@ export default Component.extend({
    * otherwise we get errors when the property is double set
    */
   titleChangeObserver: on('init', observer('pageTitleList.sortedTokens.[]', function () {
-    const pageTitleList = this.get('pageTitleList');
+    const pageTitleList = this.pageTitleList;
     once(this, function () {
       const tokens = pageTitleList.get('sortedTokens');
       if (tokens.length) {

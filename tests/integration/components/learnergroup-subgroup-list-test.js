@@ -88,7 +88,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
       {{learnergroup-subgroup-list
         canDelete=true
         parentGroup=parentGroup}}`);
-    assert.notOk(find('tbody td:nth-of-type(5) .remove'));
+    assert.dom('tbody td:nth-of-type(5) .remove').doesNotExist();
   });
 
   test('removal confirmation', async function(assert) {
