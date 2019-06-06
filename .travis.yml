@@ -21,6 +21,9 @@ env:
     - SENTRY_ORG=ilios
     - SENTRY_PROJECT=frontend
 
+before_install:
+  - npm config set spin false
+
 script:
   - npm run lint:style
   - npm run lint:hbs
