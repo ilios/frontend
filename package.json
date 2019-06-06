@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
-    "@ember/jquery": "^0.6.0",
+    "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.7.0",
     "@ilios/eslint-config-ember": "^2.0.1",
     "autoprefixer": "^9.6.0",
