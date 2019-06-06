@@ -59,12 +59,6 @@ module.exports = function (environment) {
       completeExistingMessages: true,
       showFileInfo: true,
     },
-    'ember-a11y-testing': {
-      componentOptions: {
-        turnAuditOff: process.env.SKIP_A11Y || false,
-        visualNoiseLevel: 1,
-      },
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
@@ -150,7 +144,6 @@ module.exports = function (environment) {
   if (environment === 'preview') {
     // here you can enable a preview-specific feature
     ENV.IliosFeatures.programYearVisualizations = true;
-    ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
     ENV.featureFlags['globalSearch'] = true;
 
     //Remove mirage

@@ -3,7 +3,6 @@ import Service from '@ember/service';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | ilios-navigation', function(hooks) {
   setupRenderingTest(hooks);
@@ -15,7 +14,6 @@ module('Integration | Component | ilios-navigation', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     await render(hbs`{{ilios-navigation}}`);
-    await a11yAudit(this.element);
     const link = '.navigation-links li:nth-of-type';
 
     assert.dom(`${link}(1)`).includesText('Dashboard');
@@ -35,7 +33,6 @@ module('Integration | Component | ilios-navigation', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     await render(hbs`{{ilios-navigation}}`);
-    await a11yAudit(this.element);
     const link = '.navigation-links li:nth-of-type';
 
     assert.dom(`${link}(1)`).includesText('Dashboard');
