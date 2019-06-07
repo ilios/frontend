@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/user-menu';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -19,12 +20,15 @@ module('Integration | Component | user-menu', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders and is accessible', async function(assert) {
     await render(hbs`{{user-menu}}`);
 
+    await a11yAudit(this.element);
     assert.equal(component.text, 'Test Person');
 
     await component.toggle.click();
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('click opens menu', async function(assert) {
