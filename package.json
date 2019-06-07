@@ -109,7 +109,7 @@
     "zxcvbn": "^4.4.2"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": ">= 10.*"
   },
   "ember-addon": {
     "paths": [
