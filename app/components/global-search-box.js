@@ -212,7 +212,7 @@ export default Component.extend({
     yield timeout(DEBOUNCE_MS);
 
     const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
-    const url = `${host}/experimental_search?q=${q}&onlySuggest=true`;
+    const url = `${host}/experimental_search/v1/curriculum?q=${q}&onlySuggest=true`;
     const response = yield fetch(url, {
       headers: this.authHeaders
     });
