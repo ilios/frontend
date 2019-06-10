@@ -5,87 +5,87 @@ update_configs:
     directory: "/"
     update_schedule: daily
     ignored_updates:
-      # ignore everything ember-cli provides in the blueprint
-      - match:
+    # ignore everything ember-cli provides in the blueprint
+    - match:
         dependency_name: "@ember/jquery"
-      - match:
+    - match:
         dependency_name: "@ember/optional-features"
-      - match:
+    - match:
         dependency_name: "broccoli-asset-rev"
-      - match:
+    - match:
         dependency_name: "ember-ajax"
-      - match:
+    - match:
         dependency_name: "ember-cli"
-      - match:
+    - match:
         dependency_name: "ember-cli-app-version"
-      - match:
+    - match:
         dependency_name: "ember-cli-babel"
-      - match:
+    - match:
         dependency_name: "ember-cli-dependency-checker"
-      - match:
+    - match:
         dependency_name: "ember-cli-eslint"
-      - match:
+    - match:
         dependency_name: "ember-cli-htmlbars"
-      - match:
+    - match:
         dependency_name: "ember-cli-htmlbars-inline-precompile"
-      - match:
+    - match:
         dependency_name: "ember-cli-inject-live-reload"
-      - match:
+    - match:
         dependency_name: "ember-cli-sri"
-      - match:
+    - match:
         dependency_name: "ember-cli-template-lint"
-      - match:
+    - match:
         dependency_name: "ember-cli-uglify"
-      - match:
+    - match:
         dependency_name: "ember-data"
-      - match:
+    - match:
         dependency_name: "ember-export-application-global"
-      - match:
+    - match:
         dependency_name: "ember-load-initializers"
-      - match:
+    - match:
         dependency_name: "ember-maybe-import-regenerator"
-      - match:
+    - match:
         dependency_name: "ember-qunit"
-      - match:
+    - match:
         dependency_name: "ember-resolver"
-      - match:
+    - match:
         dependency_name: "ember-source"
-      - match:
+    - match:
         dependency_name: "ember-welcome-page"
-      - match:
+    - match:
         dependency_name: "eslint-plugin-ember"
-      - match:
+    - match:
         dependency_name: "eslint-plugin-node"
-      - match:
+    - match:
         dependency_name: "loader.js"
-      - match:
+    - match:
         dependency_name: "qunit-dom"
     automerged_updates:
       - match:
-        dependency_name: "browserslist"
+          dependency_name: "browserslist"
       - match:
-        dependency_name: "caniuse-db"
+          dependency_name: "caniuse-db"
       - match:
-        dependency_name: "ember-a11y-testing"
+          dependency_name: "ember-a11y-testing"
       - match:
-        dependency_name: "ember-chrome-devtools"
+          dependency_name: "ember-chrome-devtools"
       - match:
-        dependency_name: "ember-cli-code-coverage"
+          dependency_name: "ember-cli-code-coverage"
       - match:
-        dependency_name: "ember-cli-dependency-lint"
+          dependency_name: "ember-cli-dependency-lint"
       - match:
-        dependency_name: "ember-cli-sentry"
+          dependency_name: "ember-cli-sentry"
       - match:
-        dependency_name: "ember-template-lint"
+          dependency_name: "ember-template-lint"
       - match:
-        dependency_name: "ember-test-selectors"
+          dependency_name: "ember-test-selectors"
       - match:
-        dependency_name: "eslinteslint-plugin-ember"
+          dependency_name: "eslinteslint-plugin-ember"
       - match:
-        dependency_name: "pre-commit"
+          dependency_name: "pre-commit"
       - match:
-        dependency_name: "stylelint"
+          dependency_name: "stylelint"
       - match:
-        dependency_name: "stylelint-config-recommended-scss"
+          dependency_name: "stylelint-config-recommended-scss"
       - match:
-        dependency_name: "stylelint-scss"
+          dependency_name: "stylelint-scss"
