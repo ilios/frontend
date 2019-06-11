@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
@@ -10,8 +11,9 @@ const MIN_INPUT = 3;
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
-  routing: service('-routing'),
+  session: service('session'),
   store: service(),
+  router: service('router'),
 
   classNames: ['manage-users-summary', 'large-component'],
   tagName: 'section',
@@ -19,9 +21,71 @@ export default Component.extend({
   canCreate: false,
   searchValue: null,
 
+  authHeaders: computed('session.isAuthenticated', function(){
+    const session = this.session;
+    const { jwt } = session.data.authenticated;
+    let headers = {};
+    if (jwt) {
+      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    }
+
+    return new Headers(headers);
+  }),
+
+  /**
+   * Find users using the user API
+   * @param {string} q
+   */
+  async apiSearch(q) {
+    let params = {
+      q,
+      limit: 100,
+      'order_by[lastName]': 'ASC',
+      'order_by[firstName]': 'ASC',
+    };
+
+    return await this.store.query('user', params);
+  },
+
+  /**
+   * Find users using the search index API
+   * @param {string} q
+   */
+  async indexSearch(q) {
+    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
+    const url = `${host}/experimental_search/v1/users?q=${q}&size=100`;
+    const response = await fetch(url, {
+      headers: this.authHeaders
+    });
+    const { results: { users } } = await response.json();
+
+    return users.map(user => {
+      user.fullName = this.getUserFullName(user);
+
+      return user;
+    });
+  },
+
+  getUserFullName(user) {
+    if (user.displayName) {
+      return user.displayName;
+    }
+
+    if (!user.firstName || !user.lastName) {
+      return '';
+    }
+
+    const middleInitial = user.middleName?user.middleName.charAt(0):false;
+
+    if (middleInitial) {
+      return `${user.firstName} ${middleInitial}. ${user.lastName}`;
+    } else {
+      return `${user.firstName} ${user.lastName}`;
+    }
+  },
+
   searchForUsers: task(function* (query) {
     const intl = this.intl;
-    const store = this.store;
 
     let q = cleanQuery(query);
     if (isBlank(q)) {
@@ -36,15 +100,15 @@ export default Component.extend({
         text: intl.t('general.moreInputRequiredPrompt')
       }];
     }
-    let params = { q, limit: 100 };
-
     const searchEnabled = yield this.iliosConfig.searchEnabled;
-    if (!searchEnabled) {
-      params['order_by[lastName]'] = 'ASC';
-      params['order_by[firstName]'] = 'ASC';
+
+    let searchResults;
+    if (searchEnabled) {
+      searchResults = yield this.indexSearch(q);
+    } else {
+      searchResults = yield this.apiSearch(q);
     }
 
-    let searchResults = yield store.query('user', params);
     if (searchResults.length === 0) {
       return [{
         type: 'text',
@@ -64,15 +128,13 @@ export default Component.extend({
       }
     ];
     results.pushObjects(mappedResults);
+
     return results;
   }).restartable(),
 
   clickUser: task(function* (user) {
-    const routing = this.routing;
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
-    //private routing API requires putting the model we are passing inside of an array
-    //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
-    routing.transitionTo('user', [user]);
-  }).drop()
+    this.router.transitionTo('user', user.id);
+  }).drop(),
 });
