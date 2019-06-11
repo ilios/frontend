@@ -418,10 +418,10 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
 
     await visit(url);
     const programYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
-    assert.ok(find('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning'));
+    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning').exists();
     assert.ok(isPresent(find(programYearActivationButton)));
     await click(programYearActivationButton);
-    assert.ok(find('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .yes'));
+    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .yes').exists();
     assert.notOk(isPresent(find(programYearActivationButton)));
   });
 });

@@ -1,4 +1,9 @@
-import { clickable, create, fillable, isVisible } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  fillable,
+  isVisible
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-global-search]',

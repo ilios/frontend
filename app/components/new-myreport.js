@@ -173,7 +173,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return await map(values, async (obj) => {
       const academicYear = await obj.academicYear;
       const label = await obj.label;
-      const { active, value } = obj.getProperties('active', 'value');
+      const { active, value } = obj;
       const payload = { academicYear, active, label, value };
 
       if (this.isCourse) {
