@@ -11,14 +11,19 @@ export default Component.extend({
   intl: service(),
   session: service(),
 
+  page: null,
   query: null,
+  size: 10,
+  onNextPage() {},
+  onPrevPage() {},
   onQuery() {},
+  onSelectPage() {},
 
   isLoading: reads('search.isRunning'),
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
 
-  authHeaders: computed('session.isAuthenticated', function(){
+  authHeaders: computed('session.isAuthenticated', function() {
     const session = this.session;
     const { jwt } = session.data.authenticated;
     let headers = {};
@@ -27,6 +32,12 @@ export default Component.extend({
     }
 
     return new Headers(headers);
+  }),
+
+  paginatedResults: computed('page', 'results', 'size', function() {
+    const { page, size } = this.getProperties('page', 'size');
+    const results = this.results;
+    return results ? results.slice((page * size) - size, page * size) : [];
   }),
 
   search: task(function* () {
