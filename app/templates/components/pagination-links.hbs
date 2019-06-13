@@ -1,0 +1,27 @@
+{{#if (gt @results.length @size)}}
+  <span
+    class="prev-link link clickable {{if this.disablePrev "inactive"}}"
+    role="button"
+    {{action @onPrevPage}}>
+    {{fa-icon "angle-left"}}{{t "general.prev"}}
+  </span>
+
+  {{#each this.computedPages as |pageNumber|}}
+    {{#if (eq pageNumber "...")}}
+      <span class="ellipsis">. . .</span>
+    {{else}}
+      <button
+        class="page-button {{if (eq @page pageNumber) "inactive"}}"
+        {{action @onSelectPage pageNumber}}>
+        {{pageNumber}}
+      </button>
+    {{/if}}
+  {{/each}}
+
+  <span
+    class="next-link link clickable {{if this.disableNext "inactive"}}"
+    role="button"
+    {{action @onNextPage}}>
+    {{t "general.next"}}{{fa-icon "angle-right"}}
+  </span>
+{{/if}}

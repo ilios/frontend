@@ -1,0 +1,79 @@
+.pagination-links {
+  color: $text-grey;
+  margin: 2rem 0;
+  text-align: center;
+
+  span {
+    text-transform: uppercase;
+
+    &.inactive {
+      color: $dark-grey;
+      pointer-events: none;
+    }
+  }
+
+  .prev-link {
+    margin-right: 1rem;
+    position: relative;
+    top: 1px;
+
+    .fa-angle-left {
+      font-size: 1.25rem;
+      margin-right: .25rem;
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .next-link {
+    margin-left: 1rem;
+    position: relative;
+    top: 1px;
+
+    .fa-angle-right {
+      font-size: 1.25rem;
+      margin-left: .25rem;
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .page-button {
+    background: $background-grey;
+    border: 1px solid $darker-grey;
+    color: $darker-grey;
+    display: inline-block;
+    min-width: 2rem;
+    outline: none;
+    padding: .125rem 0;
+
+    &:hover {
+      background: $ilios-orange;
+      border: 1px solid $ilios-orange;
+      color: $white;
+    }
+
+    @media only screen and (max-width: 550px) {
+      display: none;
+    }
+
+    &.inactive {
+      background: $white;
+      border: none;
+      color: $darker-grey;
+      pointer-events: none;
+
+      @media only screen and (max-width: 550px) {
+        display: inline-block;
+      }
+    }
+  }
+
+  .ellipsis {
+    margin: 0 .5rem;
+
+    @media only screen and (max-width: 550px) {
+      display: none;
+    }
+  }
+}
