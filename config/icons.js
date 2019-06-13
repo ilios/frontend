@@ -8,6 +8,8 @@ module.exports = function() {
     ],
     'free-solid-svg-icons': [
       'ambulance',
+      'angle-left',
+      'angle-right',
       'arrow-circle-up',
       'ban',
       'bars',
