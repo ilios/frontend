@@ -1,0 +1,31 @@
+.course-search-result {
+  margin-bottom: 1rem;
+  max-width: 40rem;
+
+  .matched-in {
+    color: $darker-grey;
+    display: block;
+    font-size: .7rem;
+  }
+
+  .show-more {
+    font-size: .75rem;
+  }
+
+  .global-search-tags {
+    margin: .125rem 0;
+    overflow: hidden;
+
+    .global-search-tag {
+      background: lighten($grey, 5%);
+      border: 1px solid lighten($dark-grey, 10%);
+      border-radius: .125rem;
+      color: $darker-grey;
+      display: inline-block;
+      float: left;
+      font-size: .5rem;
+      margin-right: .375rem;
+      padding: .125rem;
+    }
+  }
+}
