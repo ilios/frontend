@@ -22,31 +22,36 @@ export default Component.extend({
 
   pages: computed('page', 'totalPages', function() {
     const { lastPage, page } = this.getProperties('lastPage', 'page');
-
-    if (lastPage <= 7) {
-      const pageNumbers = [];
-
-      for (let i = 1; i <= lastPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      return pageNumbers;
-    } else {
-      if (page <= 4) {
-        return [1, 2, 3, 4, 5, '...', lastPage];
-      }
-
-      if (page >= (lastPage - 3)) {
-        return [1, '...', lastPage - 4, lastPage - 3, lastPage - 2, lastPage - 1, lastPage];
-      }
-
-      return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
-    }
+    return lastPage <= 7
+      ? this.simplePages(lastPage)
+      : this.complexPages(lastPage, page);
   }),
 
   actions: {
     selectPage(value) {
       this.onSelectPage(this.page + value);
     }
+  },
+
+  simplePages(lastPage) {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= lastPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  },
+
+  complexPages(lastPage, page) {
+    if (page <= 4) {
+      return [1, 2, 3, 4, 5, '...', lastPage];
+    }
+
+    if (page >= (lastPage - 3)) {
+      return [1, '...', lastPage - 4, lastPage - 3, lastPage - 2, lastPage - 1, lastPage];
+    }
+
+    return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
   }
 });
