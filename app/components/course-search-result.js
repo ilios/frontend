@@ -10,9 +10,9 @@ export default Component.extend({
   showMore: false,
 
   courseTags: reads('course.matchedIn'),
-  sessions: reads('course.sessions'),
 
-  computedSessions: computed('showMore', function() {
-    return this.showMore ? this.sessions : this.sessions.slice(0, 3);
+  sessions: computed('showMore', function() {
+    const sessions = this.course.sessions;
+    return this.showMore ? sessions : sessions.slice(0, 3);
   })
 });

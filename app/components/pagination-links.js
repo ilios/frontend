@@ -8,8 +8,6 @@ export default Component.extend({
   page: null,
   results: null,
   size: null,
-  onNextPage() {},
-  onPrevPage() {},
   onSelectPage() {},
 
   disablePrev: equal('page', 1),
@@ -22,7 +20,7 @@ export default Component.extend({
     return Math.ceil(this.results.length / this.size);
   }),
 
-  computedPages: computed('page', 'totalPages', function() {
+  pages: computed('page', 'totalPages', function() {
     const { lastPage, page } = this.getProperties('lastPage', 'page');
 
     if (lastPage <= 7) {
@@ -44,5 +42,11 @@ export default Component.extend({
 
       return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
     }
-  })
+  }),
+
+  actions: {
+    selectPage(value) {
+      this.onSelectPage(this.page + value);
+    }
+  }
 });

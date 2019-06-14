@@ -14,8 +14,6 @@ export default Component.extend({
   page: null,
   query: null,
   size: 10,
-  onNextPage() {},
-  onPrevPage() {},
   onQuery() {},
   onSelectPage() {},
 

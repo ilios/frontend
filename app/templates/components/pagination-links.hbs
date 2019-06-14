@@ -2,11 +2,11 @@
   <span
     class="prev-link link clickable {{if this.disablePrev "inactive"}}"
     role="button"
-    {{action @onPrevPage}}>
+    {{action "selectPage" -1}}>
     {{fa-icon "angle-left"}}{{t "general.prev"}}
   </span>
 
-  {{#each this.computedPages as |pageNumber|}}
+  {{#each this.pages as |pageNumber|}}
     {{#if (eq pageNumber "...")}}
       <span class="ellipsis">. . .</span>
     {{else}}
@@ -21,7 +21,7 @@
   <span
     class="next-link link clickable {{if this.disableNext "inactive"}}"
     role="button"
-    {{action @onNextPage}}>
+    {{action "selectPage" 1}}>
     {{t "general.next"}}{{fa-icon "angle-right"}}
   </span>
 {{/if}}

@@ -4,7 +4,7 @@
 {{global-search-tags tags=this.courseTags}}
 
 <ul>
-  {{#each this.computedSessions as |session|}}
+  {{#each this.sessions as |session|}}
     <li class="session-row">
       {{#link-to "session" @course.id session.id class="session-title-link"}}
         {{session.title}}
@@ -13,7 +13,7 @@
     </li>
   {{/each}}
 
-  {{#if (and (not this.showMore) (gt this.sessions.length 3))}}
+  {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
     <span
       class="show-more clickable link"
       role="button"

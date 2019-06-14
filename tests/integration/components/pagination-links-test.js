@@ -18,8 +18,6 @@ module('Integration | Component | pagination-links', function(hooks) {
         page=this.page
         results=this.results
         size=this.size
-        onNextPage=(action this.nextPage)
-        onPrevPage=(action this.prevPage)
         onSelectPage=(action (mut this.page))
       }}`);
     assert.ok(component.nextIsHidden, 'results array length needs to be greater than size for pagination to show');
