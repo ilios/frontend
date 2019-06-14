@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['course-search-result', 'results-row'],
+  classNames: ['course-search-result'],
   tagName: 'li',
 
   course: null,
