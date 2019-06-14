@@ -10,20 +10,17 @@
         {{t "general.currentlySearchingPrompt"}}
       </li>
     {{else}}
-      {{#each this.results as |course|}}
-        <li class="results-row">
-          {{#link-to "course" course.id}}{{course.title}}{{/link-to}}
-          <ul>
-            {{#each course.sessions as |session|}}
-              <li>
-                {{#link-to "session" course.id session.id}}{{session.title}}{{/link-to}}
-              </li>
-            {{/each}}
-          </ul>
-        </li>
+      {{#each this.paginatedResults as |course|}}
+        {{course-search-result course=course}}
       {{else}}
         <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>
       {{/each}}
     {{/if}}
   </ul>
 </div>
+
+<PaginationLinks
+  @page={{this.page}}
+  @results={{this.results}}
+  @size={{this.size}}
+  @onSelectPage={{@onSelectPage}} />

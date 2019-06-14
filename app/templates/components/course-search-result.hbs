@@ -1,0 +1,24 @@
+{{#link-to "course" @course.id class="course-title-link"}}
+  {{@course.title}}
+{{/link-to}}
+{{global-search-tags tags=this.courseTags}}
+
+<ul>
+  {{#each this.sessions as |session|}}
+    <li class="session-row">
+      {{#link-to "session" @course.id session.id class="session-title-link"}}
+        {{session.title}}
+      {{/link-to}}
+      {{global-search-tags tags=session.matchedIn}}
+    </li>
+  {{/each}}
+
+  {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
+    <span
+      class="show-more clickable link"
+      role="button"
+      {{action (mut this.showMore) true}}>
+      [{{t "general.showMore"}}]
+    </span>
+  {{/if}}
+</ul>

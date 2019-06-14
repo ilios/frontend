@@ -132,6 +132,7 @@ general:
   home: Accueil
   icsAdminInstructions: "Pour ajouter le calendrier d'un utilisateur à des services ou applications autre, devront utiliser cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir le calendrier de cet utilisateur!"
   icsFeed: "Données de ICS"
+  id: "ID"
   ignore: Ignorer
   ilios: Ilios
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."

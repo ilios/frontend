@@ -132,6 +132,7 @@ general:
   home: Inicio
   icsAdminInstructions: "Para agregar el calendario de Ilios de un usuario a otra aplicación o servicio, será necesario utilizar esta URL.  esta dirección URL es como una contraseña. ¡Quien lo sabe puede ver el calendario de este usuario!"
   icsFeed: "Fuente de ICS"
+  id: "ID"
   ignore: Ignorar
   ilios: Ilios
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
