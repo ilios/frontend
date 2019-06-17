@@ -51,7 +51,7 @@
     "ember-drag-drop": "^0.6.2",
     "ember-feature-flags": "^5.0.0",
     "ember-file-upload": "^2.5.0",
-    "ember-intl": "^3.4.0",
+    "ember-intl": "^4.0.0",
     "ember-lifeline": "^4.1.3",
     "ember-math-helpers": "^2.9.0",
     "ember-moment": "^7.4.1",
