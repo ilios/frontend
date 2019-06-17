@@ -75,8 +75,9 @@ export default Component.extend({
     const fromInput = target.classList.contains('global-search-input');
     const list = container.getElementsByClassName('autocomplete-row');
     const listArray = Array.from(list);
+    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
 
-    if (fromInput && listArray.length > 0) {
+    if (fromInput && isValid) {
       this.keyActions(keyCode, listArray, container);
     }
   },
