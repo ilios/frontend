@@ -1,4 +1,10 @@
-import { clickable, create, hasClass, isHidden } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  hasClass,
+  isHidden
+} from 'ember-cli-page-object';
 
 const definition = {
   prevIsHidden: isHidden('.prev-link'),
@@ -7,7 +13,8 @@ const definition = {
   nextDisabled: hasClass('inactive', '.next-link'),
   clickPrev: clickable('.prev-link'),
   clickNext: clickable('.next-link'),
-  clickLastPage: clickable('.page-button:last')
+  clickLastPage: clickable('.page-button:last'),
+  pageLinks: collection('.page-button')
 };
 
 export default definition;

@@ -20,7 +20,7 @@ export default Component.extend({
     return Math.ceil(this.results.length / this.size);
   }),
 
-  pages: computed('page', 'totalPages', function() {
+  pages: computed('lastPage', 'page', 'totalPages', function() {
     const { lastPage, page } = this.getProperties('lastPage', 'page');
     return lastPage <= 7
       ? this.simplePages(lastPage)
