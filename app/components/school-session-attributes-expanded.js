@@ -1,19 +1,24 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import EmberObject from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  tagName: 'section',
   classNames: ['school-session-attributes-expanded'],
+  tagName: 'section',
+
+  canUpdate: false,
+  bufferedShowSessionAttendanceRequired: false,
+  bufferedShowSessionSpecialAttireRequired: false,
+  bufferedShowSessionSpecialEquipmentRequired: false,
+  bufferedShowSessionSupplemental: false,
+  isManaging: false,
   showSessionAttendanceRequired: false,
-  showSessionSupplemental: false,
   showSessionSpecialAttireRequired: false,
   showSessionSpecialEquipmentRequired: false,
-  isManaging: false,
-  canUpdate: false,
-  didReceiveAttrs(){
+  showSessionSupplemental: false,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const isManaging = this.isManaging;
     if (isManaging) {
@@ -21,18 +26,34 @@ export default Component.extend({
       const showSessionSupplemental = this.showSessionSupplemental;
       const showSessionSpecialAttireRequired = this.showSessionSpecialAttireRequired;
       const showSessionSpecialEquipmentRequired = this.showSessionSpecialEquipmentRequired;
-
       this.set('bufferedShowSessionAttendanceRequired', showSessionAttendanceRequired);
       this.set('bufferedShowSessionSupplemental', showSessionSupplemental);
       this.set('bufferedShowSessionSpecialAttireRequired', showSessionSpecialAttireRequired);
       this.set('bufferedShowSessionSpecialEquipmentRequired', showSessionSpecialEquipmentRequired);
     }
   },
-  bufferedShowSessionAttendanceRequired: false,
-  bufferedShowSessionSupplemental: false,
-  bufferedShowSessionSpecialAttireRequired: false,
-  bufferedShowSessionSpecialEquipmentRequired: false,
-  save: task(function * (){
+
+  actions: {
+    cancel() {
+      this.manage(false);
+      this.set('bufferedShowSessionAttendanceRequired', false);
+      this.set('bufferedShowSessionSupplemental', false);
+      this.set('bufferedShowSessionSpecialAttireRequired', false);
+      this.set('bufferedShowSessionSpecialEquipmentRequired', false);
+    },
+
+    enableSessionAttributeConfig(name) {
+      const bufferName = 'buffered' + name.capitalize();
+      this.set(bufferName, true);
+    },
+
+    disableSessionAttributeConfig(name) {
+      const bufferName = 'buffered' + name.capitalize();
+      this.set(bufferName, false);
+    }
+  },
+
+  save: task(function* () {
     const bufferedShowSessionAttendanceRequired = this.bufferedShowSessionAttendanceRequired;
     const bufferedShowSessionSupplemental = this.bufferedShowSessionSupplemental;
     const bufferedShowSessionSpecialAttireRequired = this.bufferedShowSessionSpecialAttireRequired;
@@ -51,22 +72,5 @@ export default Component.extend({
     });
 
     yield this.saveAll(values);
-  }),
-  actions: {
-    cancel(){
-      this.manage(false);
-      this.set('bufferedShowSessionAttendanceRequired', false);
-      this.set('bufferedShowSessionSupplemental', false);
-      this.set('bufferedShowSessionSpecialAttireRequired', false);
-      this.set('bufferedShowSessionSpecialEquipmentRequired', false);
-    },
-    enableSessionAttributeConfig(name){
-      const bufferName = 'buffered' + name.capitalize();
-      this.set(bufferName, true);
-    },
-    disableSessionAttributeConfig(name){
-      const bufferName = 'buffered' + name.capitalize();
-      this.set(bufferName, false);
-    },
-  }
+  })
 });

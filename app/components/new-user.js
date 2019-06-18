@@ -1,31 +1,30 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
+import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
   firstName: [
     validator('presence', true),
     validator('length', {
       max: 20
-    }),
+    })
   ],
   middleName: [
     validator('length', {
       max: 20
-    }),
+    })
   ],
   lastName: [
     validator('presence', true),
     validator('length', {
       max: 20
-    }),
+    })
   ],
   username: [
     validator('presence', true),
     validator('length', {
       max: 100
-    }),
+    })
   ],
   password: [
     validator('presence', true)
@@ -33,12 +32,12 @@ const Validations = buildValidations({
   campusId: [
     validator('length', {
       max: 16
-    }),
+    })
   ],
   otherId: [
     validator('length', {
       max: 16
-    }),
+    })
   ],
   email: [
     validator('presence', true),
@@ -47,18 +46,17 @@ const Validations = buildValidations({
     }),
     validator('format', {
       type: 'email'
-    }),
+    })
   ],
   phone: [
     validator('length', {
       max: 20
-    }),
+    })
   ]
 });
 
 export default Component.extend(NewUser, Validations, {
   classNames: ['new-user'],
-
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -73,7 +71,7 @@ export default Component.extend(NewUser, Validations, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.close();
     }
   }

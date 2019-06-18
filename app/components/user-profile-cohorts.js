@@ -1,15 +1,59 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { all, filter } from 'rsvp';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
+import { all, filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   currentUser: service(),
   permissionChecker: service(),
   store: service(),
+
+  classNameBindings: [':user-profile-cohorts', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+
+  cohorts: null,
+  finishedSetup: false,
+  hasSavedRecently: false,
+  isManageable: false,
+  isManaging: false,
+  primaryCohort: null,
+  schools: null,
+  selectedSchoolId: null,
+  user: null,
+
+  selectedSchool: computed('selectedSchoolId', 'schools.[]', function() {
+    const selectedSchoolId = this.selectedSchoolId;
+    const schools = this.schools;
+    return schools.findBy('id', selectedSchoolId);
+  }),
+
+  assignableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function() {
+    const cohorts = await this.allCohorts;
+    const selectedCohorts = this.selectedCohorts || [];
+    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
+  }),
+
+  assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', async function() {
+    const selectedSchool = this.selectedSchool;
+    const assignableCohorts = await this.assignableCohorts;
+    return filter(assignableCohorts, async cohort => {
+      const school = await cohort.get('school');
+      return school.get('id') === selectedSchool.get('id');
+    });
+  }),
+
+  secondaryCohorts: computed('primaryCohort', 'selectedCohorts.[]', function() {
+    const primaryCohort = this.primaryCohort;
+    const selectedCohorts = this.selectedCohorts;
+    if (isEmpty(primaryCohort)) {
+      return selectedCohorts;
+    }
+
+    return selectedCohorts.filter(cohort => {
+      return cohort.get('id') != primaryCohort.get('id');
+    });
+  }),
 
   didReceiveAttrs(){
     this._super(...arguments);
@@ -19,19 +63,16 @@ export default Component.extend({
     }
   },
 
-  classNameBindings: [':user-profile-cohorts', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  actions: {
+    removeSelectedCohort(cohort){
+      this.selectedCohorts.removeObject(cohort);
+    },
+    addSelectedCohort(cohort){
+      this.selectedCohorts.pushObject(cohort);
+    },
+  },
 
-  user: null,
-  isManaging: false,
-  isManageable: false,
-  cohorts: null,
-  schools: null,
-  selectedSchoolId: null,
-  primaryCohort: null,
-  hasSavedRecently: false,
-  finishedSetup: false,
-
-  setup: task(function * (user){
+  setup: task(function* (user) {
     this.set('finishedSetup', false);
     const store = this.store;
     const currentUser = this.currentUser;
@@ -62,7 +103,7 @@ export default Component.extend({
     this.set('finishedSetup', true);
   }),
 
-  save: task(function * (){
+  save: task(function* () {
     const finishedSetup = this.finishedSetup;
     if (!finishedSetup) {
       return;
@@ -82,50 +123,5 @@ export default Component.extend({
     this.set('hasSavedRecently', true);
     yield timeout(500);
     this.set('hasSavedRecently', false);
-
-  }).drop(),
-
-  selectedSchool: computed('selectedSchoolId', 'schools.[]', function(){
-    const selectedSchoolId = this.selectedSchoolId;
-    const schools = this.schools;
-    return schools.findBy('id', selectedSchoolId);
-  }),
-
-  assignableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function () {
-    const cohorts = await this.allCohorts;
-    const selectedCohorts = this.selectedCohorts || [];
-
-    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
-  }),
-
-  assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', async function(){
-    const selectedSchool = this.selectedSchool;
-    const assignableCohorts = await this.assignableCohorts;
-
-    return filter(assignableCohorts, async cohort => {
-      const school = await cohort.get('school');
-      return school.get('id') === selectedSchool.get('id');
-    });
-  }),
-
-  secondaryCohorts: computed('primaryCohort', 'selectedCohorts.[]', function(){
-    const primaryCohort = this.primaryCohort;
-    const selectedCohorts = this.selectedCohorts;
-    if (isEmpty(primaryCohort)) {
-      return selectedCohorts;
-    }
-
-    return selectedCohorts.filter(cohort => {
-      return cohort.get('id') != primaryCohort.get('id');
-    });
-  }),
-
-  actions: {
-    removeSelectedCohort(cohort){
-      this.selectedCohorts.removeObject(cohort);
-    },
-    addSelectedCohort(cohort){
-      this.selectedCohorts.pushObject(cohort);
-    },
-  }
+  }).drop()
 });

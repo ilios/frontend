@@ -1,20 +1,21 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { filter, map } from 'rsvp';
 import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
+import { isEmpty } from '@ember/utils';
+import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  sessionType: null,
-  vocabulary: null,
-  isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-session-type-terms'],
   tagName: 'span',
+
+  isIcon: false,
+  sessionType: null,
   tooltipContent: null,
   tooltipTitle: null,
-  data: computed('sessionType.sessions.[]', 'vocabulary', async function(){
+  vocabulary: null,
+
+  data: computed('sessionType.sessions.[]', 'vocabulary', async function() {
     const sessionType = this.sessionType;
     const vocabulary = this.vocabulary;
     const sessions = await sessionType.get('sessions');
@@ -90,6 +91,7 @@ export default Component.extend({
 
     return data;
   }),
+
   donutHover: task(function* (obj) {
     yield timeout(100);
     const isIcon = this.isIcon;

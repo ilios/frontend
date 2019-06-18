@@ -1,28 +1,30 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;
 
 export default Component.extend({
-  store: service(),
   iliosConfig: service(),
+  store: service(),
+
   classNames: ['ilios-users'],
-  offset: null,
+
   limit: null,
+  offset: null,
   query: null,
-  showNewUserForm: false,
   showBulkNewUserForm: false,
+  showNewUserForm: false,
 
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.searchForUsers.perform();
-  },
+  newUserComponent: computed('iliosConfig.userSearchType', async function() {
+    const iliosConfig = this.iliosConfig;
+    const userSearchType = await iliosConfig.get('userSearchType');
+    return userSearchType === 'ldap'?'new-directory-user':'new-user';
+  }),
 
-  searchForUsers: task(function * (){
+  searchForUsers: task(function* () {
     const query = this.query;
     const q = cleanQuery(query);
     yield timeout(DEBOUNCE_TIMEOUT);
@@ -32,22 +34,19 @@ export default Component.extend({
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC'
     });
-
   }).cancelOn('deactivate').restartable(),
 
-  newUserComponent: computed('iliosConfig.userSearchType', async function(){
-    const iliosConfig = this.iliosConfig;
-    const userSearchType = await iliosConfig.get('userSearchType');
-
-    return userSearchType === 'ldap'?'new-directory-user':'new-user';
-  }),
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.searchForUsers.perform();
+  },
 
   actions: {
-    setOffset(offset){
+    setOffset(offset) {
       if (offset < 0) {
         offset = 0;
       }
       this.setOffset(offset);
-    },
+    }
   }
 });

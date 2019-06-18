@@ -1,6 +1,5 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -11,32 +10,18 @@ const Validations = buildValidations({
       min: 3,
       max: 200,
       descriptionKey: 'general.title'
-    }),
+    })
   ]
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  title: null,
-  isSaving: false,
+
   classNames: ['new-program'],
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
 
-    if ('text' !== target.type) {
-      return;
-    }
+  isSaving: false,
+  title: null,
 
-    if (13 === keyCode) {
-      this.send('save');
-      return;
-    }
-
-    if(27 === keyCode) {
-      this.cancel();
-    }
-  },
   actions: {
     save() {
       this.set('isSaving', true);
@@ -55,6 +40,24 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
           this.set('isSaving', false);
         }
       });
+    }
+  },
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('save');
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.cancel();
     }
   }
 });

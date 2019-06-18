@@ -1,25 +1,22 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
-
-const { reads } = computed;
 
 export default Component.extend(EventMixin, {
   commonAjax: service(),
   iliosConfig: service(),
-  init() {
-    this._super(...arguments);
-    this.set('date', new Date());
-  },
+
   classNames: ['user-profile-calendar'],
 
-  namespace: reads('iliosConfig.apiNameSpace'),
-  user: null,
   date: null,
-  calendarEvents: computed('user.id', 'date', async function(){
+  user: null,
+
+  namespace: reads('iliosConfig.apiNameSpace'),
+
+  calendarEvents: computed('user.id', 'date', async function() {
     const commonAjax = this.commonAjax;
     const user = this.user;
     const date = this.date;
@@ -36,21 +33,27 @@ export default Component.extend(EventMixin, {
     return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('date', new Date());
+  },
 
   actions: {
-    goForward(){
+    goForward() {
       const date = this.date;
       let newDate = moment(date).add(1, 'week').toDate();
       this.set('date', newDate);
     },
-    goBack(){
+
+    goBack() {
       const date = this.date;
       let newDate = moment(date).subtract(1, 'week').toDate();
       this.set('date', newDate);
     },
-    gotoToday(){
+
+    gotoToday() {
       let newDate = moment().toDate();
       this.set('date', newDate);
-    },
+    }
   }
 });

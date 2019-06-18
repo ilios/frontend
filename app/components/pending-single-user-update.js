@@ -1,17 +1,17 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-const { reads } = computed;
+import { reads } from '@ember/object/computed';
+import { all } from 'rsvp';
 
 export default Component.extend({
-  user: null,
-  isSaving: false,
-  updates: reads('user.pendingUserUpdates'),
   classNames: ['pending-single-user-updates'],
 
+  isSaving: false,
+  user: null,
+
+  updates: reads('user.pendingUserUpdates'),
+
   actions: {
-    updateEmailAddress(update){
+    updateEmailAddress(update) {
       this.set('isSaving', true);
       let user = this.user;
       user.set('email', update.get('value'));
@@ -23,29 +23,30 @@ export default Component.extend({
         });
       });
     },
-    disableUser(){
+
+    disableUser() {
       this.set('isSaving', true);
       let user = this.user;
       user.set('enabled', false);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {
           updates.invoke('deleteRecord');
-          RSVP.all(updates.invoke('save')).then(() => {
+          all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
             this.flashMessages.success('general.savedSuccessfully');
           });
         });
       });
-
     },
-    excludeFromSync(){
+
+    excludeFromSync() {
       this.set('isSaving', true);
       let user = this.user;
       user.set('userSyncIgnore', true);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {
           updates.invoke('deleteRecord');
-          RSVP.all(updates.invoke('save')).then(() => {
+          all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
             this.flashMessages.success('general.savedSuccessfully');
           });

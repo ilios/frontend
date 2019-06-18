@@ -1,33 +1,21 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
+import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
 
 const Validations = buildValidations({
   title: [
     validator('presence', true),
     validator('length', {
       max: 200
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  title: null,
   classNames: ['new-competency'],
-  save: task(function * (){
-    this.send('addErrorDisplayFor', 'title');
-    let {validations} = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
-    }
-    yield timeout(10);
-    const title = this.title;
-    yield this.add(title);
-    this.send('clearErrorDisplay');
-    this.set('title', null);
-  }),
+
+  title: null,
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -46,5 +34,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('removeErrorDisplayFor', 'title');
       this.set('title', '');
     }
-  }
+  },
+
+  save: task(function* () {
+    this.send('addErrorDisplayFor', 'title');
+    let {validations} = yield this.validate();
+    if (validations.get('isInvalid')) {
+      return;
+    }
+    yield timeout(10);
+    const title = this.title;
+    yield this.add(title);
+    this.send('clearErrorDisplay');
+    this.set('title', null);
+  })
 });

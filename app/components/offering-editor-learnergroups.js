@@ -1,10 +1,7 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
-
-const { map } = RSVP;
+import { isEmpty, isPresent } from '@ember/utils';
+import { map } from 'rsvp';
 
 export default Component.extend({
   classNames: ['offering-editor-learnergroups'],

@@ -1,33 +1,37 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { notEmpty } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-const { notEmpty } = computed;
 
 export default Component.extend({
   store: service(),
-  school: null,
-  canUpdateVocabulary: false,
-  canUpdateTerm: false,
-  canDeleteVocabulary: false,
-  canDeleteTerm: false,
-  canCreateVocabulary: false,
-  canCreateTerm: false,
-  tagName: 'section',
+
   classNames: ['school-vocabularies-expanded'],
-  managedVocabularyId: null,
+  tagName: 'section',
+
+  canCreateTerm: false,
+  canCreateVocabulary: false,
+  canDeleteTerm: false,
+  canDeleteVocabulary: false,
+  canUpdateTerm: false,
+  canUpdateVocabulary: false,
+  managedTerm: null,
   managedTermId: null,
   managedVocabulary: null,
-  managedTerm: null,
+  managedVocabularyId: null,
+  school: null,
+
   isManaging: notEmpty('managedVocabulary'),
-  showCollapsible: computed('isManaging', 'school.vocabularies.length', function(){
+
+  showCollapsible: computed('isManaging', 'school.vocabularies.length', function() {
     const isManaging = this.isManaging;
     const school = this.school;
     const competencyIds = school.hasMany('vocabularies').ids();
     return competencyIds.length && ! isManaging;
   }),
-  didReceiveAttrs(){
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const managedVocabularyId = this.managedVocabularyId;
     const managedTermId = this.managedTermId;
@@ -48,8 +52,9 @@ export default Component.extend({
       this.set('managedVocabulary', null);
     }
   },
+
   actions: {
-    collapse(){
+    collapse() {
       const collapse = this.collapse;
       const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
       const setSchoolManagedVocabularyTerm = this.setSchoolManagedVocabularyTerm;
@@ -61,10 +66,11 @@ export default Component.extend({
         }
       });
     },
-    cancel(){
+
+    cancel() {
       const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
       setSchoolManagedVocabulary(null);
       this.set('bufferedTerms', []);
-    },
+    }
   }
 });

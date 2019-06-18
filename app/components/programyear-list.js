@@ -1,26 +1,31 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { mapBy } from '@ember/object/computed';
 import ObjectProxy from '@ember/object/proxy';
-import { hash } from 'rsvp';
 import { run } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import moment from 'moment';
+import { hash } from 'rsvp';
 import { task } from 'ember-concurrency';
-
-const { mapBy } = computed;
+import moment from 'moment';
 
 export default Component.extend({
-  classNames: ['programyear-list'],
-
-  store: service(),
   currentUser: service(),
   permissionChecker: service(),
+  store: service(),
 
+  classNames: ['programyear-list'],
+
+  canCreate: false,
+  editorOn: false,
+  itemsToSave: null,
   program: null,
   programYears: null,
-  canCreate: false,
+  saved: false,
+  savedItems: null,
+  savedProgramYear: null,
+
+  existingStartYears: mapBy('programYears', 'startYear'),
 
   sortedContent: computed('programYears.[]', async function() {
     const programYears = await this.programYears;
@@ -30,7 +35,7 @@ export default Component.extend({
     return programYears.toArray().sortBy('academicYear');
   }),
 
-  proxiedProgramYears: computed('sortedContent.[]', async function(){
+  proxiedProgramYears: computed('sortedContent.[]', async function() {
     const permissionChecker = this.permissionChecker;
     const currentUser = this.currentUser;
     const programYears = await this.sortedContent;
@@ -42,8 +47,6 @@ export default Component.extend({
       });
     });
   }),
-
-  existingStartYears: mapBy('programYears', 'startYear'),
 
   availableAcademicYears: computed('existingStartYears.[]', {
     get() {
@@ -62,23 +65,81 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  editorOn: false,
+  actions: {
+    toggleEditor() {
+      if (this.editorOn) {
+        this.send('cancel');
+      } else {
+        this.setProperties({ editorOn: true, saved: false });
+      }
+    },
 
-  saved: false,
-  savedProgramYear: null,
-  itemsToSave: null,
-  savedItems: null,
+    cancel() {
+      this.set('editorOn', false);
+    },
 
-  resetSaveItems(){
+    remove(programYearProxy) {
+      programYearProxy.set('showRemoveConfirmation', true);
+    },
+
+    confirmRemove(programYearProxy) {
+      const programYear = programYearProxy.get('content');
+      programYear.deleteRecord();
+      programYear.save();
+    },
+
+    cancelRemove(programYearProxy) {
+      programYearProxy.set('showRemoveConfirmation', false);
+    },
+
+    unlockProgramYear(programYearProxy) {
+      programYearProxy.get('userCanUnLock').then(permission => {
+        if (permission) {
+          run(()=>{
+            programYearProxy.set('isSaving', true);
+          });
+          this.unlock(programYearProxy.get('content')).then(()=>{
+            programYearProxy.set('isSaving', false);
+          });
+        }
+      });
+    },
+
+    lockProgramYear(programYearProxy) {
+      programYearProxy.get('userCanLock').then(permission => {
+        if (permission) {
+          run(()=>{
+            programYearProxy.set('isSaving', true);
+          });
+          this.lock(programYearProxy.get('content')).then(()=>{
+            programYearProxy.set('isSaving', false);
+          });
+        }
+      });
+    },
+
+    async activateProgramYear(programYearProxy) {
+      const permission = await programYearProxy.get('userCanActivate');
+      if (permission) {
+        run(()=>{
+          programYearProxy.set('isSaving', true);
+        });
+        await this.activate(programYearProxy.get('content'));
+        programYearProxy.set('isSaving', false);
+      }
+    }
+  },
+
+  resetSaveItems() {
     this.set('itemsToSave', 100);
     this.set('savedItems', 0);
   },
 
-  incrementSavedItems(){
+  incrementSavedItems() {
     this.set('savedItems', this.savedItems + 1);
   },
 
-  save: task(function * (startYear){
+  save: task(function* (startYear) {
     const programYears = yield this.sortedContent;
     const latestProgramYear = programYears.get('lastObject');
     const program = this.program;
@@ -141,79 +202,17 @@ export default Component.extend({
     this.set('itemsToSave', itemsToSave);
     this.setProperties({ saved: true, savedProgramYear: newProgramYear });
     this.send('cancel');
-  }).drop(),
-
-  actions: {
-    toggleEditor() {
-      if (this.editorOn) {
-        this.send('cancel');
-      } else {
-        this.setProperties({ editorOn: true, saved: false });
-      }
-    },
-
-    cancel() {
-      this.set('editorOn', false);
-    },
-
-    remove(programYearProxy) {
-      programYearProxy.set('showRemoveConfirmation', true);
-    },
-
-    confirmRemove(programYearProxy) {
-      const programYear = programYearProxy.get('content');
-      programYear.deleteRecord();
-      programYear.save();
-    },
-
-    cancelRemove(programYearProxy) {
-      programYearProxy.set('showRemoveConfirmation', false);
-    },
-    unlockProgramYear(programYearProxy){
-      programYearProxy.get('userCanUnLock').then(permission => {
-        if (permission) {
-          run(()=>{
-            programYearProxy.set('isSaving', true);
-          });
-          this.unlock(programYearProxy.get('content')).then(()=>{
-            programYearProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
-    lockProgramYear(programYearProxy){
-      programYearProxy.get('userCanLock').then(permission => {
-        if (permission) {
-          run(()=>{
-            programYearProxy.set('isSaving', true);
-          });
-          this.lock(programYearProxy.get('content')).then(()=>{
-            programYearProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
-    async activateProgramYear(programYearProxy) {
-      const permission = await programYearProxy.get('userCanActivate');
-      if (permission) {
-        run(()=>{
-          programYearProxy.set('isSaving', true);
-        });
-        await this.activate(programYearProxy.get('content'));
-        programYearProxy.set('isSaving', false);
-      }
-    }
-  }
+  }).drop()
 });
-
 
 const ProgramYearProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
+  isSaving: false,
   permissionChecker: null,
   showRemoveConfirmation: false,
-  isSaving: false,
-  userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function(){
+
+  userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function() {
     const programYear = this.content;
     const permissionChecker = this.permissionChecker;
     const cohort = await programYear.get('cohort');
@@ -223,16 +222,19 @@ const ProgramYearProxy = ObjectProxy.extend({
     }
     return permissionChecker.canDeleteProgramYear(programYear);
   }),
-  userCanLock: computed('content', 'currentUser.model.programYears.[]', async function(){
+
+  userCanLock: computed('content', 'currentUser.model.programYears.[]', async function() {
     const programYear = this.content;
     const permissionChecker = this.permissionChecker;
     return permissionChecker.canLockProgramYear(programYear);
   }),
-  userCanUnLock: computed('content', 'currentUser.model.programYears.[]', async function(){
+
+  userCanUnLock: computed('content', 'currentUser.model.programYears.[]', async function() {
     const programYear = this.content;
     const permissionChecker = this.permissionChecker;
     return permissionChecker.canUnlockProgramYear(programYear);
   }),
+
   userCanActivate: computed(
     'content.locked',
     'content.archived',

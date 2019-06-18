@@ -1,64 +1,40 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { Promise, all } from 'rsvp';
 import { task } from 'ember-concurrency';
-
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-const { Promise } = RSVP;
-
 export default Component.extend({
-  store: service(),
-  intl: service(),
   flashMessages: service(),
-  parentGroup: null,
-  canCreate: false,
-  canDelete: false,
+  intl: service(),
+  store: service(),
+
   classNames: ['learnergroup-subgroup-list'],
   tagName: 'section',
-  showNewLearnerGroupForm: false,
-  isSaving: false,
-  saved: false,
-  savedGroup: null,
 
   'data-test-learnergroup-subgroup-list': true,
 
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('saved', false);
-    this.set('savedGroup', null);
-  },
+  canCreate: false,
+  canDelete: false,
+  isSaving: false,
+  parentGroup: null,
+  saved: false,
+  savedGroup: null,
+  showNewLearnerGroupForm: false,
 
-  copyGroup: task(function * (withLearners, learnerGroup) {
-    this.set('saved', false);
-    const store = this.store;
-    const intl = this.intl;
-    const cohort = yield learnerGroup.get('cohort');
-    const parentGroup = yield learnerGroup.get('parent');
-    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
-    // indicate that the top group is a copy
-    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
-    this.set('totalGroupsToSave', newGroups.length);
-    // save groups one at a time because we need to save in this order so parents are saved before children
-    for (let i = 0; i < newGroups.length; i++) {
-      yield newGroups[i].save();
-      this.set('currentGroupsSaved', i + 1);
-    }
-    this.set('saved', true);
-    this.set('savedGroup', newGroups[0]);
-  }),
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.setProperties({ saved: false, savedGroup: null });
+  },
 
   actions: {
     saveNewLearnerGroup(title) {
-      return new Promise (resolve => {
+      return new Promise(resolve => {
         const { store, parentGroup } = this;
-
         parentGroup.get('cohort').then((cohort) => {
           let newLearnerGroup = store.createRecord('learner-group', { title, parent: parentGroup, cohort });
-
           newLearnerGroup.save().then((savedLearnerGroup) => {
             this.set('showNewLearnerGroupForm', false);
             this.set('saved', true);
@@ -67,15 +43,13 @@ export default Component.extend({
           });
         });
       });
-
     },
+
     generateNewLearnerGroups(num) {
       const { store, parentGroup } = this;
-
       this.set('totalGroupsToSave', num);
       this.set('currentGroupsSaved', 0);
       this.set('isSaving', true);
-
       return new Promise (resolve => {
         parentGroup.get('subgroupNumberingOffset').then((offset) => {
           parentGroup.get('cohort').then((cohort) => {
@@ -95,7 +69,7 @@ export default Component.extend({
             let saveSomeGroups = (groupsToSave) => {
               let chunk = groupsToSave.splice(0, 6);
 
-              RSVP.all(chunk.invoke('save')).then(() => {
+              all(chunk.invoke('save')).then(() => {
                 if (groupsToSave.length){
                   this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
                   saveSomeGroups(groupsToSave);
@@ -112,8 +86,28 @@ export default Component.extend({
         });
       });
     },
+
     removeLearnerGroup(learnerGroup) {
       return learnerGroup.destroyRecord();
-    },
-  }
+    }
+  },
+
+  copyGroup: task(function* (withLearners, learnerGroup) {
+    this.set('saved', false);
+    const store = this.store;
+    const intl = this.intl;
+    const cohort = yield learnerGroup.get('cohort');
+    const parentGroup = yield learnerGroup.get('parent');
+    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
+    // indicate that the top group is a copy
+    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
+    this.set('totalGroupsToSave', newGroups.length);
+    // save groups one at a time because we need to save in this order so parents are saved before children
+    for (let i = 0; i < newGroups.length; i++) {
+      yield newGroups[i].save();
+      this.set('currentGroupsSaved', i + 1);
+    }
+    this.set('saved', true);
+    this.set('savedGroup', newGroups[0]);
+  })
 });

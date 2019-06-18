@@ -1,23 +1,71 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { Promise } from 'rsvp';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
-const { Promise } = RSVP;
-const { reads } = computed;
-
-
 export default Component.extend({
-  init(){
+  commonAjax: service(),
+  flashMessages: service(),
+  iliosConfig: service(),
+  session: service(),
+
+  classNames: ['my-profile'],
+
+  expiresAt: null,
+  generatedJwt: null,
+  maxDate: null,
+  minDate: null,
+  user: null,
+
+  host: reads('iliosConfig.apiHost'),
+  namespace: reads('iliosConfig.apiNameSpace'),
+
+  roles: computed('user.roles.[]', function() {
+    const user = this.user;
+    return new Promise(resolve => {
+      user.get('roles').then(roles => {
+        resolve(roles.mapBy('title'));
+      });
+    });
+  }),
+
+  apiDocsUrl: computed('host', 'namespace', function() {
+    let apiPath = '/' + this.namespace;
+    let host = this.host?this.host:window.location.protocol + '//' + window.location.host;
+    let docPath = host + apiPath.replace('v1', 'doc');
+    return docPath;
+  }),
+
+  init() {
     this._super(...arguments);
     this.reset();
   },
-  reset(){
+
+  actions: {
+    nothing() {
+      //noop action to pass to profile components
+    },
+
+    tokenCopied() {
+      const flashMessages = this.flashMessages;
+      flashMessages.success('general.copiedSuccessfully');
+    },
+
+    reset() {
+      this.reset();
+    },
+
+    selectExpiresAtDate(selectedDate) {
+      this.set('expiresAt', selectedDate);
+    }
+  },
+
+  reset() {
     let midnightToday = moment().hour(23).minute(59).second(59);
     let twoWeeksFromNow = midnightToday.clone().add(2, 'weeks');
     let oneYearFromNow = midnightToday.clone().add(1, 'year');
@@ -26,36 +74,8 @@ export default Component.extend({
     this.set('expiresAt', twoWeeksFromNow.toDate());
     this.set('generatedJwt', null);
   },
-  iliosConfig: service(),
-  commonAjax: service(),
-  flashMessages: service(),
-  session: service(),
 
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-  expiresAt: null,
-  maxDate: null,
-  minDate: null,
-  generatedJwt: null,
-
-  classNames: ['my-profile'],
-  user: null,
-  roles: computed('user.roles.[]', function(){
-    const user = this.user;
-    return new Promise(resolve => {
-      user.get('roles').then(roles => {
-        resolve(roles.mapBy('title'));
-      });
-    });
-  }),
-  apiDocsUrl: computed('host', 'namespace', function(){
-    let apiPath = '/' + this.namespace;
-    let host = this.host?this.host:window.location.protocol + '//' + window.location.host;
-    let docPath = host + apiPath.replace('v1', 'doc');
-
-    return docPath;
-  }),
-  createNewToken: task(function * (){
+  createNewToken: task(function* () {
     yield timeout(10); //small delay to allow rendering the spinner
     let selection = this.expiresAt;
     let expiresAt = moment(selection).hour(23).minute(59).second(59);
@@ -71,10 +91,10 @@ export default Component.extend({
     const commonAjax = this.commonAjax;
     let url = '/auth/token?ttl=' + interval;
     let data = yield commonAjax.request(url);
-
     this.set('generatedJwt', data.jwt);
   }),
-  invalidateTokens: task(function * (){
+
+  invalidateTokens: task(function* () {
     yield timeout(10); //small delay to allow rendering the spinner
     const commonAjax = this.commonAjax;
     let url = '/auth/invalidatetokens';
@@ -88,20 +108,5 @@ export default Component.extend({
       flashMessages.success('general.successfullyInvalidatedTokens');
       this.toggleShowInvalidateTokens();
     }
-  }),
-  actions: {
-    nothing() {
-      //noop action to pass to profile components
-    },
-    tokenCopied(){
-      const flashMessages = this.flashMessages;
-      flashMessages.success('general.copiedSuccessfully');
-    },
-    reset(){
-      this.reset();
-    },
-    selectExpiresAtDate(selectedDate){
-      this.set('expiresAt', selectedDate);
-    }
-  }
+  })
 });

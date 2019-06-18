@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -9,19 +8,21 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 200
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  didReceiveAttrs(){
+  classNames: ['program-header'],
+
+  canUpdate: false,
+  program: null,
+  programTitle: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     this.set('programTitle', this.get('program.title'));
   },
-  classNames: ['program-header'],
-  program: null,
-  canUpdate: false,
-  programTitle: null,
 
   actions: {
     async changeTitle() {
@@ -39,10 +40,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
       return false;
     },
-    revertTitleChanges(){
+
+    revertTitleChanges() {
       const program = this.program;
       this.set('programTitle', program.get('title'));
     },
+
     async activate() {
       const program = this.program;
       program.set('published', true);

@@ -1,23 +1,24 @@
-/* eslint ember/order-in-components: 0 */
+import Component from '@ember/component';
+import ArrayProxy from '@ember/array/proxy';
+import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { computed } from '@ember/object';
-import ArrayProxy from '@ember/array/proxy';
+import { Promise } from 'rsvp';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-const { Promise } = RSVP;
-
 
 export default Component.extend({
-  store: service(),
   currentUser: service(),
-  tagName: 'div',
+  store: service(),
+
   classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
-  alert: gt('unassignedStudentsProxy.length', 0),
+  tagName: 'div',
+
   schoolId: null,
   schools: null,
-  selectedSchool: computed('currentUser', 'schoolId', async function () {
+
+  alert: gt('unassignedStudentsProxy.length', 0),
+
+  selectedSchool: computed('currentUser', 'schoolId', async function() {
     const schools = this.schools;
     const currentUser = this.currentUser;
     const schoolId = this.schoolId;
@@ -35,7 +36,7 @@ export default Component.extend({
     return schools.get('firstObject');
   }),
 
-  unassignedStudents: computed('selectedSchool', function(){
+  unassignedStudents: computed('selectedSchool', function() {
     return new Promise(resolve => {
       this.selectedSchool.then(school => {
         this.store.query('user', {
@@ -50,19 +51,19 @@ export default Component.extend({
         });
       });
     });
-
   }),
 
   //temporary solution until the classNameBindings can be promise aware
-  unassignedStudentsProxy: computed('unassignedStudents', function(){
+  unassignedStudentsProxy: computed('unassignedStudents', function() {
     let ap = ArrayProxy.extend(PromiseProxyMixin);
     return ap.create({
       promise: this.unassignedStudents
     });
   }),
+
   actions: {
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
-    },
+    }
   }
 });

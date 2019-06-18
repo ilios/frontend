@@ -1,52 +1,18 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { Promise, all, filter } from 'rsvp';
 import { computed } from '@ember/object';
+import { Promise, all, filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  init(){
-    this._super(...arguments);
-    this.set('selectedCompetencies', []);
-    this.loadSelectedCompetencies.perform();
-  },
-  didUpdateAttrs(){
-    this._super(...arguments);
-    this.loadSelectedCompetencies.perform();
-  },
-  programYear: null,
-  isManaging: null,
   classNames: ['programyear-competencies'],
-  isSaving: false,
+
   canUpdate: false,
+  isManaging: null,
+  isSaving: false,
+  programYear: null,
   selectedCompetencies: null,
 
-  loadSelectedCompetencies: task(function * (){
-    const programYear = this.programYear;
-    if (programYear){
-      let selectedCompetencies = yield programYear.get('competencies');
-      this.set('selectedCompetencies', selectedCompetencies.toArray());
-    } else {
-      yield timeout(1000);
-    }
-  }).restartable(),
-
-  save: task(function * () {
-    yield timeout(10);
-    let programYear = this.programYear;
-    let selectedCompetencies = this.selectedCompetencies;
-    programYear.set('competencies', selectedCompetencies);
-    try {
-      yield programYear.save();
-    } finally {
-      this.flashMessages.success('general.savedSuccessfully');
-      this.setIsManaging(false);
-      this.expand();
-    }
-
-  }).drop(),
-
-  competencies: computed('programYear.program.school.competencies.[]', function(){
+  competencies: computed('programYear.program.school.competencies.[]', function() {
     return new Promise(resolve => {
       const programYear = this.programYear;
       programYear.get('program').then(program => {
@@ -59,7 +25,7 @@ export default Component.extend({
     });
   }),
 
-  domains: computed('competencies.[]', function(){
+  domains: computed('competencies.[]', function() {
     return new Promise(resolve => {
       this.competencies.then(competencies => {
         all(competencies.mapBy('domain')).then(domains => {
@@ -69,7 +35,7 @@ export default Component.extend({
     });
   }),
 
-  competenciesWithSelectedChildren: computed('competencies.[]', 'selectedCompetencies.[]', function(){
+  competenciesWithSelectedChildren: computed('competencies.[]', 'selectedCompetencies.[]', function() {
     const selectedCompetencies = this.selectedCompetencies;
     return new Promise(resolve => {
       this.competencies.then(competencies => {
@@ -87,11 +53,23 @@ export default Component.extend({
     });
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('selectedCompetencies', []);
+    this.loadSelectedCompetencies.perform();
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+    this.loadSelectedCompetencies.perform();
+  },
+
   actions: {
     cancel() {
       this.loadSelectedCompetencies.perform();
       this.setIsManaging(false);
     },
+
     addCompetencyToBuffer(competency) {
       let selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.addObject(competency);
@@ -100,6 +78,7 @@ export default Component.extend({
       });
       this.set('selectedCompetencies', selectedCompetencies);
     },
+
     removeCompetencyFromBuffer(competency) {
       let selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.removeObject(competency);
@@ -108,12 +87,37 @@ export default Component.extend({
       });
       this.set('selectedCompetencies', selectedCompetencies);
     },
-    collapse(){
+
+    collapse() {
       this.get('programYear.competencies').then(competencies => {
         if (competencies.get('length')) {
           this.collapse();
         }
       });
-    },
-  }
+    }
+  },
+
+  loadSelectedCompetencies: task(function* () {
+    const programYear = this.programYear;
+    if (programYear){
+      let selectedCompetencies = yield programYear.get('competencies');
+      this.set('selectedCompetencies', selectedCompetencies.toArray());
+    } else {
+      yield timeout(1000);
+    }
+  }).restartable(),
+
+  save: task(function* () {
+    yield timeout(10);
+    let programYear = this.programYear;
+    let selectedCompetencies = this.selectedCompetencies;
+    programYear.set('competencies', selectedCompetencies);
+    try {
+      yield programYear.save();
+    } finally {
+      this.flashMessages.success('general.savedSuccessfully');
+      this.setIsManaging(false);
+      this.expand();
+    }
+  }).drop()
 });

@@ -1,13 +1,12 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import { task } from 'ember-concurrency';
 
 export default Component.extend(ReportTitleMixin, {
-  reporttitle: null,
   classNames: ['myreports-list-item'],
   tagName: 'span',
 
+  reporttitle: null,
   onReportSelect() {},
 
   didReceiveAttrs() {
@@ -16,7 +15,7 @@ export default Component.extend(ReportTitleMixin, {
     this.loadTitle.perform(report);
   },
 
-  loadTitle: task(function * (report) {
+  loadTitle: task(function* (report) {
     const title = yield this.getReportTitle(report);
     this.set('reporttitle', title);
   }).restartable()

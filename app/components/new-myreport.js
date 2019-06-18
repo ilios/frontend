@@ -1,31 +1,29 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { isPresent, isEmpty } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+import { equal, oneWay } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isPresent, isEmpty } from '@ember/utils';
+import { Promise, map } from 'rsvp';
+import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
-
-const { map, Promise } = RSVP;
-const { oneWay } = computed;
 
 const Validations = buildValidations({
   title: [
     validator('length', {
       max: 240,
       descriptionKey: 'general.title'
-    }),
+    })
   ]
 });
 
 const PrepositionObject = EmberObject.extend({
   model: null,
   type: null,
+
   value: oneWay('model.id'),
-  label: computed('model', 'type', function () {
+
+  label: computed('model', 'type', function() {
     const type = this.type;
     const model = this.model;
     return new Promise(resolve => {
@@ -46,6 +44,7 @@ const PrepositionObject = EmberObject.extend({
       }
     });
   }),
+
   active: computed('model', 'type', function() {
     const type = this.type;
     if (['session type', 'term'].includes(type)) {
@@ -53,7 +52,8 @@ const PrepositionObject = EmberObject.extend({
     }
     return true;
   }),
-  academicYear: computed('model', 'type', async function () {
+
+  academicYear: computed('model', 'type', async function() {
     const type = this.type;
     const model = this.model;
     if (type === 'course') {
@@ -88,7 +88,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isCourse: equal('currentPrepositionalObject', 'course'),
   isSession: equal('currentPrepositionalObject', 'session'),
 
-  subjectList: computed('intl.locale', function(){
+  subjectList: computed('intl.locale', function() {
     let list = [
       {value: 'course', label: this.intl.t('general.courses')},
       {value: 'session', label: this.intl.t('general.sessions')},
@@ -106,7 +106,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return list;
   }),
 
-  prepositionalObjectList: computed('intl.locale', 'currentSubject', function(){
+  prepositionalObjectList: computed('intl.locale', 'currentSubject', function() {
     let list = [
       {value: 'course', label: this.intl.t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
       {value: 'session', label: this.intl.t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
@@ -132,7 +132,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', async function(){
+  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', async function() {
     const type = this.currentPrepositionalObject;
     if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
       return [];
@@ -194,7 +194,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  filteredPrepositionalObjectIdList: computed('prepositionalObjectIdList.[]', 'selectedYear', async function () {
+  filteredPrepositionalObjectIdList: computed('prepositionalObjectIdList.[]', 'selectedYear', async function() {
     const selectedYear = this.selectedYear?parseInt(this.selectedYear, 10): null;
     const objects = await this.prepositionalObjectIdList;
     const type = this.currentPrepositionalObject;
@@ -208,7 +208,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
 
-  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function(){
+  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function() {
     const currentSubjectValue = this.currentSubject;
     let currentSubject = this.subjectList.find(subject => {
       return subject.value === currentSubjectValue;
@@ -217,7 +217,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return currentSubject.label;
   }),
 
-  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
+  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function() {
     if(
       this.currentPrepositionalObject === 'instructor' &&
       this.currentPrepositionalObjectId
@@ -228,7 +228,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }),
 
-  selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function(){
+  selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function() {
     if(
       this.currentPrepositionalObject === 'mesh term' &&
       this.currentPrepositionalObjectId
@@ -245,14 +245,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  schoolList: computed(async function(){
+  schoolList: computed(async function() {
     const store = this.store;
 
     const schools = await store.findAll('school');
     return schools.sortBy('title');
   }),
 
-  currentSchool: computed('currentUser.model.school', 'selectedSchool', async function(){
+  currentSchool: computed('currentUser.model.school', 'selectedSchool', async function() {
     const selectedSchool = this.selectedSchool;
     const schoolChanged = this.schoolChanged;
     if (isPresent(selectedSchool)) {
@@ -271,14 +271,63 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return school;
   }),
 
-  allAcademicYears: computed(async function () {
+  allAcademicYears: computed(async function() {
     const store = this.store;
     const years = await store.findAll('academic-year');
 
     return years;
   }),
 
-  save: task(function *(){
+  actions: {
+    changeSubject(subject) {
+      this.set('currentSubject', subject);
+      this.set('currentPrepositionalObject', null);
+      this.set('currentPrepositionalObjectId', null);
+    },
+
+    changePrepositionalObject(object) {
+      this.set('currentPrepositionalObject', object);
+      this.set('currentPrepositionalObjectId', null);
+      this.resetCurrentPrepositionalObjectId.perform();
+    },
+
+    changeSelectedYear(year) {
+      this.set('selectedYear', year);
+      this.set('currentPrepositionalObjectId', null);
+      this.resetCurrentPrepositionalObjectId.perform();
+    },
+
+    changePrepositionalObjectId(id) {
+      this.set('currentPrepositionalObjectId', id);
+    },
+
+    chooseInstructor(user) {
+      this.set('currentPrepositionalObjectId', user.get('id'));
+    },
+
+    chooseMeshTerm(term) {
+      this.set('currentPrepositionalObjectId', term.get('id'));
+    },
+
+    closeEditor() {
+      this.close();
+    }
+  },
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.close();
+    }
+  },
+
+  save: task(function*() {
     this.set('isSaving', true);
     this.send('addErrorDisplayFor', 'title');
     const {validations} = yield this.validate();
@@ -330,7 +379,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.close();
   }),
 
-  changeSchool: task(function * (schoolId) {
+  changeSchool: task(function* (schoolId) {
     const schoolList = yield this.schoolList;
     const school = schoolList.findBy('id', schoolId);
     this.set('selectedSchool', school);
@@ -343,54 +392,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if(first){
       this.set('currentPrepositionalObjectId', first.value);
     }
-  }).restartable(),
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
-    if(27 === keyCode) {
-      this.close();
-    }
-  },
-
-  actions: {
-    changeSubject(subject){
-      this.set('currentSubject', subject);
-      this.set('currentPrepositionalObject', null);
-      this.set('currentPrepositionalObjectId', null);
-    },
-
-    changePrepositionalObject(object){
-      this.set('currentPrepositionalObject', object);
-      this.set('currentPrepositionalObjectId', null);
-      this.resetCurrentPrepositionalObjectId.perform();
-    },
-
-    changeSelectedYear(year){
-      this.set('selectedYear', year);
-      this.set('currentPrepositionalObjectId', null);
-      this.resetCurrentPrepositionalObjectId.perform();
-    },
-
-    changePrepositionalObjectId(id){
-      this.set('currentPrepositionalObjectId', id);
-    },
-
-    chooseInstructor(user){
-      this.set('currentPrepositionalObjectId', user.get('id'));
-    },
-
-    chooseMeshTerm(term){
-      this.set('currentPrepositionalObjectId', term.get('id'));
-    },
-
-    closeEditor(){
-      this.close();
-    }
-  }
+  }).restartable()
 });

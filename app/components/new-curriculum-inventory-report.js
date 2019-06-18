@@ -1,7 +1,6 @@
-/* eslint ember/order-in-components: 0 */
+import Component from '@ember/component';
 import EmberObject from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -17,14 +16,16 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  title: null,
+
+  classNames: ['new-curriculum-inventory-report'],
+
   currentProgram: null,
   isSaving: false,
   selectedYear: null,
+  title: null,
   years: null,
-  classNames: ['new-curriculum-inventory-report'],
 
-  didReceiveAttrs(){
+  didReceiveAttrs() {
     this._super(...arguments);
     let years = [];
     const currentYear = new Date().getFullYear();
@@ -39,24 +40,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       selectedYear,
       isSaving: false,
     });
-  },
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.send('save');
-      return;
-    }
-
-    if(27 === keyCode) {
-      this.send('cancel');
-    }
   },
 
   actions: {
@@ -82,8 +65,27 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       });
     },
+
     cancel() {
       this.cancel();
-    },
+    }
+  },
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.send('save');
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.send('cancel');
+    }
   }
 });

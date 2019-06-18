@@ -1,21 +1,23 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { map } from 'rsvp';
 import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/string';
+import { isPresent, isEmpty } from '@ember/utils';
+import { map } from 'rsvp';
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   router: service(),
-  sessionType: null,
-  isIcon: false,
+
   classNameBindings: ['isIcon::not-icon', ':visualizer-session-type-vocabularies'],
   tagName: 'span',
+
+  isIcon: false,
+  sessionType: null,
   tooltipContent: null,
   tooltipTitle: null,
-  data: computed('sessionType.sessions.[]', async function(){
+
+  data: computed('sessionType.sessions.[]', async function() {
     const sessionType = this.sessionType;
     const sessions = await sessionType.get('sessions');
     const terms = await map(sessions.toArray(), async session => {
@@ -62,13 +64,25 @@ export default Component.extend({
     return data;
   }),
 
-  vocabulariesWithLinkedTerms: computed('data.[]', async function(){
+  vocabulariesWithLinkedTerms: computed('data.[]', async function() {
     const data = await this.data;
-
     return data.filter(obj => obj.data !== 0);
   }),
 
-  async getTooltipData(obj){
+  actions: {
+    donutClick(obj) {
+      const sessionType = this.sessionType;
+      const isIcon = this.isIcon;
+      const router = this.router;
+      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+        return;
+      }
+
+      router.transitionTo('session-type-visualize-terms', sessionType.get('id'), obj.meta.vocabulary.get('id'));
+    }
+  },
+
+  async getTooltipData(obj) {
     const isIcon = this.isIcon;
     if (isIcon || isEmpty(obj) || obj.empty) {
       return '';
@@ -83,6 +97,7 @@ export default Component.extend({
       content: title
     };
   },
+
   donutHover: task(function* (obj) {
     yield timeout(100);
     const data = yield this.getTooltipData(obj);
@@ -90,17 +105,5 @@ export default Component.extend({
       this.set('tooltipTitle', data.title);
       this.set('tooltipContent', data.content);
     }
-  }).restartable(),
-  actions: {
-    donutClick(obj) {
-      const sessionType = this.sessionType;
-      const isIcon = this.isIcon;
-      const router = this.router;
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('session-type-visualize-terms', sessionType.get('id'), obj.meta.vocabulary.get('id'));
-    }
-  }
+  }).restartable()
 });

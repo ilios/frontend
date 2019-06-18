@@ -1,13 +1,11 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
+import { gt, reads } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
-
-const { gt, reads } = computed;
 
 const Validations = buildValidations({
   title: [
@@ -23,14 +21,14 @@ const Validations = buildValidations({
       integer: true,
       gte: 0,
       lte: 1200
-    }),
+    })
   ],
   startDate: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.duration'],
       disabled: gt('model.duration', 0)
-    }),
+    })
   ],
   endDate: [
     validator('date', {
@@ -47,14 +45,14 @@ const Validations = buildValidations({
       disabled: computed('model.duration', 'model.startDate', function(){
         return this.get('model.duration') > 0 && !this.get('model.startDate');
       })
-    }),
+    })
   ],
   minimum: [
     validator('number', {
       allowString: true,
       integer: true,
       gte: 0
-    }),
+    })
   ],
   maximum: [
     validator('number', {
@@ -65,101 +63,39 @@ const Validations = buildValidations({
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
       })
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
   intl: service(),
-
-  init(){
-    this._super(...arguments);
-    this.set('orderInSequenceOptions', []);
-    this.set('academicLevels', []);
-    this.set('childSequenceOrderOptions', []);
-    this.set('requiredOptions', []);
-  },
+  store: service(),
 
   classNames: ['new-result', 'new-curriculum-inventory-sequence-block'],
   tagName: 'section',
-  title: null,
+
+  academicLevel: null,
+  academicLevels: null,
+  childSequenceOrder: null,
+  childSequenceOrderOptions: null,
+  course: null,
   description: null,
+  duration: 0,
+  endDate: null,
+  orderInSequence: 0,
+  isInOrderedSequence: false,
+  isLoaded: false,
+  isSaving: false,
+  maximum: 0,
+  minimum: 0,
+  orderInSequenceOptions: null,
   parent: null,
   report: null,
-  academicLevel: null,
   required: null,
-  track: false,
-  duration: 0,
-  orderInSequence: 0,
-  childSequenceOrder: null,
-  isInOrderedSequence: false,
-  startDate: null,
-  endDate: null,
-  course: null,
-  minimum: 0,
-  maximum: 0,
-  orderInSequenceOptions: null,
-  isSaving: false,
-  isLoaded: false,
-  academicLevels: null,
-  childSequenceOrderOptions: null,
   requiredOptions: null,
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const report = this.report;
-    const parent = this.parent;
-    this.loadAttr.perform(report, parent);
-  },
-
-  loadAttr: task(function * (report, parent) {
-    this.set('isLoaded', false);
-    let academicLevels = yield report.get('academicLevels');
-    academicLevels = academicLevels.toArray();
-
-    let isInOrderedSequence = false;
-    let orderInSequence = 0;
-    let orderInSequenceOptions = [];
-    if (isPresent(parent) && parent.get('isOrdered')) {
-      isInOrderedSequence = true;
-      const siblings = yield parent.get('children');
-      for (let i = 0, n = (siblings.toArray().length + 1); i < n; i++) {
-        orderInSequenceOptions.push(i + 1);
-      }
-      orderInSequence = 1;
-    }
-    let academicLevel = academicLevels[0];
-    if (isPresent(parent)) {
-      academicLevel = yield parent.get('academicLevel');
-    }
-    const intl = this.intl;
-    const childSequenceOrderOptions = [
-      EmberObject.create({ 'id' : 1, 'title': intl.t('general.ordered') }),
-      EmberObject.create({ 'id' : 2, 'title': intl.t('general.unordered') }),
-      EmberObject.create({ 'id' : 3, 'title': intl.t('general.parallel') })
-    ];
-    const requiredOptions = [
-      EmberObject.create({ 'id' : 1, 'title': intl.t('general.required') }),
-      EmberObject.create({ 'id' : 2, 'title': intl.t('general.optionalElective') }),
-      EmberObject.create({ 'id' : 3, 'title': intl.t('general.requiredInTrack') })
-    ];
-    const required = requiredOptions[0];
-    const childSequenceOrder = childSequenceOrderOptions[0];
-
-    this.setProperties({
-      academicLevel,
-      academicLevels,
-      isInOrderedSequence,
-      orderInSequence,
-      orderInSequenceOptions,
-      requiredOptions,
-      childSequenceOrderOptions,
-      required,
-      childSequenceOrder,
-    });
-    this.set('isLoaded', true);
-  }).restartable(),
+  startDate: null,
+  title: null,
+  track: false,
 
   /**
    * A list of courses that can be linked to this sequence block.
@@ -186,22 +122,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     });
   }),
 
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
+  init() {
+    this._super(...arguments);
+    this.set('orderInSequenceOptions', []);
+    this.set('academicLevels', []);
+    this.set('childSequenceOrderOptions', []);
+    this.set('requiredOptions', []);
+  },
 
-    if (! ['text', 'textarea'].includes(target.type)) {
-      return;
-    }
-
-    if (13 === keyCode && 'text' === target.type) {
-      this.send('save');
-      return;
-    }
-
-    if(27 === keyCode) {
-      this.send('cancel');
-    }
+  didReceiveAttrs() {
+    this._super(...arguments);
+    const report = this.report;
+    const parent = this.parent;
+    this.loadAttr.perform(report, parent);
   },
 
   actions: {
@@ -243,24 +176,93 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       });
     },
+
     cancel() {
       this.cancel();
     },
+
     changeRequired(required) {
       this.set('required', required);
     },
+
     changeTrack(track) {
       this.set('track', track);
     },
+
     changeStartDate(startDate) {
       this.set('startDate', startDate);
     },
+
     changeEndDate(endDate) {
       this.set('endDate', endDate);
     },
+
     clearDates() {
-      this.set('startDate', null);
-      this.set('endDate', null);
+      this.setProperties({ endDate: null, startDate: null });
     }
-  }
+  },
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if (! ['text', 'textarea'].includes(target.type)) {
+      return;
+    }
+
+    if (13 === keyCode && 'text' === target.type) {
+      this.send('save');
+      return;
+    }
+
+    if(27 === keyCode) {
+      this.send('cancel');
+    }
+  },
+
+  loadAttr: task(function* (report, parent) {
+    this.set('isLoaded', false);
+    let academicLevels = yield report.get('academicLevels');
+    academicLevels = academicLevels.toArray();
+    let isInOrderedSequence = false;
+    let orderInSequence = 0;
+    let orderInSequenceOptions = [];
+    if (isPresent(parent) && parent.get('isOrdered')) {
+      isInOrderedSequence = true;
+      const siblings = yield parent.get('children');
+      for (let i = 0, n = (siblings.toArray().length + 1); i < n; i++) {
+        orderInSequenceOptions.push(i + 1);
+      }
+      orderInSequence = 1;
+    }
+    let academicLevel = academicLevels[0];
+    if (isPresent(parent)) {
+      academicLevel = yield parent.get('academicLevel');
+    }
+    const intl = this.intl;
+    const childSequenceOrderOptions = [
+      EmberObject.create({ 'id' : 1, 'title': intl.t('general.ordered') }),
+      EmberObject.create({ 'id' : 2, 'title': intl.t('general.unordered') }),
+      EmberObject.create({ 'id' : 3, 'title': intl.t('general.parallel') })
+    ];
+    const requiredOptions = [
+      EmberObject.create({ 'id' : 1, 'title': intl.t('general.required') }),
+      EmberObject.create({ 'id' : 2, 'title': intl.t('general.optionalElective') }),
+      EmberObject.create({ 'id' : 3, 'title': intl.t('general.requiredInTrack') })
+    ];
+    const required = requiredOptions[0];
+    const childSequenceOrder = childSequenceOrderOptions[0];
+    this.setProperties({
+      academicLevel,
+      academicLevels,
+      isInOrderedSequence,
+      orderInSequence,
+      orderInSequenceOptions,
+      requiredOptions,
+      childSequenceOrderOptions,
+      required,
+      childSequenceOrder,
+    });
+    this.set('isLoaded', true);
+  }).restartable()
 });

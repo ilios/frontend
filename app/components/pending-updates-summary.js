@@ -1,24 +1,24 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-const { gt } = computed;
 
 export default Component.extend({
-  store: service(),
   currentUser: service(),
-  init(){
-    this._super(...arguments);
-    this.set('sortSchoolsBy', ['title']);
-  },
-  'data-test-pending-updates-summary': true,
+  store: service(),
+
   classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
-  alert: gt('_updatesProxy.length', 0),
+
+  'data-test-pending-updates-summary': true,
+
   schoolId: null,
   schools: null,
-  selectedSchool: computed('currentUser', 'schoolId', async function () {
+
+  alert: gt('_updatesProxy.length', 0),
+
+  selectedSchool: computed('currentUser', 'schoolId', async function() {
     const schools = this.schools;
     const currentUser = this.currentUser;
     const schoolId = this.schoolId;
@@ -36,7 +36,6 @@ export default Component.extend({
     return schools.get('firstObject');
   }),
 
-
   /**
    * Create a proxy object to drive the alerts CP.  This is hopefully a temporary
    * way to address this problem of needed the value of a promise to drive a computed property
@@ -48,7 +47,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @private
    */
-  _updatesProxy: computed('updates', function(){
+  _updatesProxy: computed('updates', function() {
     let ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
     return ArrayPromiseProxy.create({
       promise: this.updates
@@ -61,7 +60,7 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  updates: computed('selectedSchool', async function(){
+  updates: computed('selectedSchool', async function() {
     const store = this.store;
     const school = await this.selectedSchool;
     const updates = await store.query('pending-user-update', {
@@ -73,9 +72,14 @@ export default Component.extend({
     return updates;
   }),
 
+  init() {
+    this._super(...arguments);
+    this.set('sortSchoolsBy', ['title']);
+  },
+
   actions: {
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
-    },
+    }
   }
 });

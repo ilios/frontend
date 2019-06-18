@@ -1,33 +1,33 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { filter, map } from 'rsvp';
 import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/string';
+import { isEmpty } from '@ember/utils';
+import { filter, map } from 'rsvp';
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   intl: service(),
-  programYear: null,
-  isIcon: false,
+
   classNameBindings: ['isIcon::not-icon', ':visualizer-program-year-competencies'],
+
+  isIcon: false,
+  programYear: null,
   tooltipCourses: null,
   tooltipSessions: null,
   tooltipTitle: null,
 
-  programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function(){
+  programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function() {
     const intl = this.intl;
     const programYear = this.programYear;
     const cohort = await programYear.get('cohort');
     const title = cohort.get('title');
     const year = await cohort.get('classOfYear');
     const classOfYear = intl.t('classOfYear', { year });
-
     return title ? title : classOfYear;
   }),
 
-  objectiveObjects: computed('programYear.objectives.[]', async function () {
+  objectiveObjects: computed('programYear.objectives.[]', async function() {
     const programYear = this.programYear;
     const buildTree = async function (parent) {
       const children = await parent.get('children');
@@ -64,7 +64,7 @@ export default Component.extend({
     return objectiveObjects;
   }),
 
-  competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function () {
+  competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function() {
     const programYear = this.programYear;
     const objectiveObjects = await this.objectiveObjects;
     const competencies = await programYear.get('competencies');
@@ -84,7 +84,7 @@ export default Component.extend({
     return competencyObjects;
   }),
 
-  domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function () {
+  domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function() {
     const programYear = this.programYear;
     const competencies = await programYear.get('competencies');
     const competencyObjects = await this.competencyObjects;
@@ -115,7 +115,7 @@ export default Component.extend({
     return domainObjects;
   }),
 
-  data: computed('domainObjects.[]', async function () {
+  data: computed('domainObjects.[]', async function() {
     const name = await this.programYearName;
     const children = await this.domainObjects;
 

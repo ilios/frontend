@@ -1,9 +1,7 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-const { map } = RSVP;
+import { map } from 'rsvp';
 
 export default Component.extend({
   classNameBindings: [':user-profile-learnergroups', ':large-component'],
