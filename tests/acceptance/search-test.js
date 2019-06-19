@@ -18,7 +18,7 @@ module('Acceptance | search', function(hooks) {
 
     const input = 'hello';
 
-    this.server.get('experimental_search', (schema, { queryParams }) => {
+    this.server.get('experimental_search/v1/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
       assert.equal(queryParams.q, input);
 
