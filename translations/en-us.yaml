@@ -129,7 +129,7 @@ general:
   instructorGroups: "Instructor Groups"
   instructors: Instructors
   instructorsManageTitle: "Manage Instructors"
-  lastUpdated: "Last Updated"
+  lastUpdate: "Last Update"
   learnerGroups: "Learner Groups"
   learnerGroupsManageTitle: "Manage Learner Groups"
   learners: Learners
