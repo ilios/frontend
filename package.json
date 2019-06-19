@@ -43,7 +43,7 @@
     "ember-cli-mirage": "^1.0.0",
     "ember-cli-moment-shim": "^3.1.0",
     "ember-cli-page-object": "1.15.3",
-    "ember-cli-string-helpers": "^2.0.0",
+    "ember-cli-string-helpers": "^3.0.0",
     "ember-composable-helpers": "^2.0.1",
     "ember-concurrency": "^1.0.0",
     "ember-cp-validations": "^4.0.0-beta.9",
