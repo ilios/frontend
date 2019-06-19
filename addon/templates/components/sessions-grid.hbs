@@ -103,11 +103,12 @@
         </div>
       </div>
     {{/if}}
-    <span class="lastUpdated">
-      {{t "general.lastUpdated"}}:
-      {{moment-format (await obj.session.updatedAt) "L LT"}}
-    </span>
     {{#if (contains obj.session.id expandedSessionIds)}}
+      <div class="last-update">
+        {{fa-icon "history" title=(t "general.lastUpdate")}}
+        {{t "general.lastUpdate"}}:
+        {{moment-format (await obj.session.updatedAt) "L LT"}}
+      </div>
       {{sessions-grid-offering-table
         canUpdate=obj.canUpdate
         offerings=(await obj.session.offerings)}}
