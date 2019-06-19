@@ -4,13 +4,14 @@
     <div class="title">{{t "general.overview"}}</div>
     <div class="report-overview-actions">
       {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-        {{#link-to "curriculumInventoryReport.rollover" report class="rollover"}}
-          {{fa-icon
-            "random"
-            title=(t "general.curriculumInventoryReportRollover")
+        <span
+          class="link rollover"
+          role="button"
+          {{action "transitionToRollover"}}>
+          {{fa-icon "random"
             fixedWidth=true
-          }}
-        {{/link-to}}
+            title=(t "general.curriculumInventoryReportRollover")}}
+        </span>
       {{/if}}
     </div>
   </div>

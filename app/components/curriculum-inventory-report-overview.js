@@ -4,6 +4,7 @@ import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import scrollTo from 'ilios-common/utils/scroll-to';
 
 const Validations = buildValidations({
   description: [
@@ -30,6 +31,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   currentUser: service(),
   permissionChecker: service(),
+  router: service(),
   routing: service('-routing'),
 
   classNames: ['curriculum-inventory-report-overview'],
@@ -177,6 +179,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertDescriptionChanges(){
       const report = this.report;
       this.set('description', report.get('description'));
+    },
+
+    transitionToRollover() {
+      this.router.transitionTo('curriculumInventoryReport.rollover', this.report);
+      scrollTo('.rollover-form');
     }
   }
 });

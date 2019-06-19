@@ -13,15 +13,13 @@
     .report-overview-actions {
       @include ilios-overview-actions;
 
-      a {
+      a, span {
         color: $header-blue;
         font-size: 1.2rem;
         margin-right: .5rem;
       }
     }
   }
-
-
 
   .block {
     @include ilios-overview-block;
