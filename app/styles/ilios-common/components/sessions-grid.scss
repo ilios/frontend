@@ -10,9 +10,12 @@
       margin: .5rem 0;
     }
 
-    .lastUpdated {
-      display: flex;
-      justify-content: flex-end;
+    .last-update {
+      color: $darker-grey;
+      margin: auto;
+      padding-bottom: .5rem;
+      text-align: right;
+      width: 95%;
     }
 
     .session-row {
