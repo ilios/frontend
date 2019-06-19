@@ -53,10 +53,19 @@
 </div>
 
 <section class="session-overview">
+
+  <div class="last-update">
+    {{fa-icon "history" title=(t "general.lastUpdate")}}
+    {{t "general.lastUpdate"}}:
+    {{moment-format session.updatedAt "L LT"}}
+  </div>
+
   <div class="session-overview-header">
+
     <div class="title">
       {{t "general.overview"}}
     </div>
+
     <div class="session-overview-actions">
       {{#if (and (is-fulfilled showCopy) (await showCopy))}}
         {{#link-to "session.copy" session class="copy"}}
