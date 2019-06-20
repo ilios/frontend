@@ -1,23 +1,25 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { filterBy, sort } from '@ember/object/computed';
 import config from '../config/environment';
-const { filterBy, sort } = computed;
 
 const { IliosFeatures: { programYearVisualizations } } = config;
 
 export default Component.extend({
-  init(){
+  classNames: ['programyear-overview'],
+
+  canUpdate: false,
+  directorsSort: null,
+  programYear: null,
+  programYearVisualizations,
+
+  directorsWithFullName: filterBy('programYear.directors', 'fullName'),
+  sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
+
+  init() {
     this._super(...arguments);
     this.set('directorsSort', ['lastName', 'firstName']);
   },
-  classNames: ['programyear-overview'],
-  programYear: null,
-  canUpdate: false,
-  directorsSort: null,
-  programYearVisualizations,
-  directorsWithFullName: filterBy('programYear.directors', 'fullName'),
-  sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
+
   actions: {
     addDirector(user) {
       let programYear = this.programYear;
@@ -27,6 +29,7 @@ export default Component.extend({
         programYear.save();
       });
     },
+
     removeDirector(user) {
       let programYear = this.programYear;
       programYear.get('directors').then(directors => {
@@ -34,6 +37,6 @@ export default Component.extend({
         user.get('programYears').removeObject(programYear);
         programYear.save();
       });
-    },
+    }
   }
 });

@@ -1,42 +1,39 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
+import { Promise, all } from 'rsvp';
+import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
-
-const { Promise, all } = RSVP;
 
 const Validations = buildValidations({
   firstName: [
     validator('presence', true),
     validator('length', {
       max: 20
-    }),
+    })
   ],
   middleName: [
     validator('length', {
       max: 20
-    }),
+    })
   ],
   lastName: [
     validator('presence', true),
     validator('length', {
       max: 20
-    }),
+    })
   ],
   campusId: [
     validator('length', {
       max: 16
-    }),
+    })
   ],
   otherId: [
     validator('length', {
       max: 16
-    }),
+    })
   ],
   email: [
     validator('presence', true),
@@ -45,12 +42,12 @@ const Validations = buildValidations({
     }),
     validator('format', {
       type: 'email'
-    }),
+    })
   ],
   displayName: [
     validator('length', {
       max: 200
-    }),
+    })
   ],
   preferredEmail: [
     validator('length', {
@@ -59,12 +56,12 @@ const Validations = buildValidations({
     validator('format', {
       allowBlank: true,
       type: 'email',
-    }),
+    })
   ],
   phone: [
     validator('length', {
       max: 20
-    }),
+    })
   ],
   username: {
     descriptionKey: 'general.username',
@@ -74,35 +71,90 @@ const Validations = buildValidations({
       }),
       validator('format', {
         regex: /^[a-z0-9_\-()@.]*$/i,
-      }),
+      })
     ]
   },
   password: {
     dependentKeys: ['model.canEditUsernameAndPassword', 'model.changeUserPassword'],
-    disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function(){
+    disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function() {
       return this.get('model.canEditUsernameAndPassword') && !this.get('model.changeUserPassword');
     }),
     validators: [
       validator('presence', true),
       validator('length', {
         min: 5
-      }),
+      })
     ]
-  },
+  }
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
+  commonAjax: service(),
   currentUser: service(),
   iliosConfig: service(),
-  commonAjax: service(),
+  store: service(),
 
-  init(){
+  classNameBindings: [':user-profile-bio', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+
+  'data-test-user-profile-bio': true,
+
+  campusId: null,
+  changeUserPassword: false,
+  email: null,
+  displayName: null,
+  firstName: null,
+  hasSavedRecently: false,
+  isManageable: false,
+  isManaging: false,
+  lastName: null,
+  middleName: null,
+  otherId: null,
+  password: null,
+  phone: null,
+  preferredEmail: null,
+  showSyncErrorMessage: false,
+  updatedFieldsFromSync: null,
+  user: null,
+  username: null,
+
+  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', function() {
+    return new Promise(resolve => {
+      this.get('iliosConfig.userSearchType').then(userSearchType => {
+        resolve(userSearchType !== 'ldap');
+      });
+    });
+  }),
+
+  canSyncFromDirectory: computed('iliosConfig.userSearchType', function() {
+    return new Promise(resolve => {
+      this.get('iliosConfig.userSearchType').then(userSearchType => {
+        resolve(userSearchType === 'ldap');
+      });
+    });
+  }),
+
+  passwordStrengthScore: computed('password', async function() {
+    const { default: zxcvbn } = await import('zxcvbn');
+    const password = isEmpty(this.password) ? '' : this.password;
+    const obj = zxcvbn(password);
+    return obj.score;
+  }),
+
+  usernameMissing: computed('user.authentication', function() {
+    const user = this.user;
+    return new Promise(resolve => {
+      user.get('authentication').then(authentication => {
+        resolve(isEmpty(authentication) || isEmpty(authentication.get('username')));
+      });
+    });
+  }),
+
+  init() {
     this._super(...arguments);
     this.set('updatedFieldsFromSync', []);
   },
 
-  didReceiveAttrs(){
+  didReceiveAttrs() {
     this._super(...arguments);
     const user = this.user;
     const isManaging = this.isManaging;
@@ -112,31 +164,37 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
   },
 
-  classNameBindings: [':user-profile-bio', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  actions: {
+    cancelChangeUserPassword() {
+      this.set('changeUserPassword', false);
+      this.set('password', null);
+      this.send('removeErrorDisplayFor', 'password');
+    }
+  },
 
-  user: null,
-  isManaging: false,
-  isManageable: false,
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
 
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  campusId: null,
-  otherId: null,
-  email: null,
-  displayName: null,
-  preferredEmail: null,
-  phone: null,
-  username: null,
-  password: null,
+    if (! ['text', 'password'].includes(target.type)) {
+      return;
+    }
 
-  hasSavedRecently: false,
-  changeUserPassword: false,
-  updatedFieldsFromSync: null,
-  showSyncErrorMessage: false,
-  'data-test-user-profile-bio': true,
+    if (13 === keyCode) {
+      this.save.perform();
+      return;
+    }
 
-  manage: task(function * (){
+    if (27 === keyCode) {
+      if ('text' === target.type) {
+        this.cancel.perform();
+      } else {
+        this.send('cancelChangeUserPassword');
+      }
+    }
+  },
+
+  manage: task(function* () {
     const user = this.user;
     this.setProperties(user.getProperties(
       'firstName',
@@ -156,11 +214,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     this.setIsManaging(true);
-
     return true;
   }),
 
-  save: task(function * (){
+  save: task(function* () {
     yield timeout(10);
     const store = this.store;
     const canEditUsernameAndPassword = yield this.canEditUsernameAndPassword;
@@ -219,10 +276,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       yield timeout(500);
       this.set('hasSavedRecently', false);
     }
-
   }).drop(),
 
-  directorySync: task(function * (){
+  directorySync: task(function* () {
     yield timeout(10);
     this.set('updatedFieldsFromSync', []);
     this.set('showSyncErrorMessage', false);
@@ -275,18 +331,15 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('syncComplete', true);
       yield timeout(2000);
       this.set('syncComplete', false);
-
     }
-
   }).drop(),
 
-  cancel: task(function * (){
+  cancel: task(function* () {
     yield timeout(1);
     this.set('hasSavedRecently', false);
     this.set('updatedFieldsFromSync', []);
     this.setIsManaging(false);
     this.set('changeUserPassword', false);
-
     this.set('firstName', null);
     this.set('lastName', null);
     this.set('middleName', null);
@@ -298,67 +351,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('phone', null);
     this.set('username', null);
     this.set('password', null);
-  }).drop(),
-
-  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', function(){
-    return new Promise(resolve => {
-      this.get('iliosConfig.userSearchType').then(userSearchType => {
-        resolve(userSearchType !== 'ldap');
-      });
-    });
-  }),
-
-  canSyncFromDirectory: computed('iliosConfig.userSearchType', function(){
-    return new Promise(resolve => {
-      this.get('iliosConfig.userSearchType').then(userSearchType => {
-        resolve(userSearchType === 'ldap');
-      });
-    });
-  }),
-
-  passwordStrengthScore: computed('password', async function () {
-    const { default: zxcvbn } = await import('zxcvbn');
-    const password = isEmpty(this.password) ? '' : this.password;
-    const obj = zxcvbn(password);
-    return obj.score;
-  }),
-
-  usernameMissing: computed('user.authentication', function(){
-    const user = this.user;
-    return new Promise(resolve => {
-      user.get('authentication').then(authentication => {
-        resolve(isEmpty(authentication) || isEmpty(authentication.get('username')));
-      });
-    });
-  }),
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if (! ['text', 'password'].includes(target.type)) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.save.perform();
-      return;
-    }
-
-    if(27 === keyCode) {
-      if ('text' === target.type) {
-        this.cancel.perform();
-      } else {
-        this.send('cancelChangeUserPassword');
-      }
-    }
-  },
-
-  actions: {
-    cancelChangeUserPassword(){
-      this.set('changeUserPassword', false);
-      this.set('password', null);
-      this.send('removeErrorDisplayFor', 'password');
-    }
-  }
+  }).drop()
 });

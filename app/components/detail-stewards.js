@@ -1,24 +1,19 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
+import { inject as service } from '@ember/service';
+import { isEmpty, isPresent } from '@ember/utils';
+import { all, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-
-const { map, all } = RSVP;
 
 export default Component.extend({
   store: service(),
-  init() {
-    this._super(...arguments);
-    this.set('bufferStewards', []);
-  },
-  programYear: null,
-  isManaging: false,
-  bufferStewards: null,
+
   classNameBindings: [':detail-stewards', ':stewards-manager', 'showCollapsible:collapsible'],
+
+  bufferStewards: null,
   editable: true,
+  isManaging: false,
+  programYear: null,
 
   showCollapsible: computed('isManaging', 'programYear.stewards.[]', function () {
     const isManaging = this.isManaging;
@@ -27,7 +22,7 @@ export default Component.extend({
     return !isManaging && stewardIds.get('length');
   }),
 
-  stewardsBySchool: computed('programYear.stewards.[]', async function(){
+  stewardsBySchool: computed('programYear.stewards.[]', async function() {
     const programYear = this.programYear;
     if (isEmpty(programYear)) {
       return [];
@@ -63,7 +58,35 @@ export default Component.extend({
     return schoolData;
   }),
 
-  save: task( function * (){
+  actions: {
+    collapse() {
+      const programYear = this.programYear;
+      const stewardIds = programYear.hasMany('stewards').ids();
+      if (stewardIds.get('length')) {
+        this.collapse();
+      }
+    },
+
+    cancel() {
+      this.setProperties({ bufferStewards: [], isManaging: false });
+    },
+
+    addStewardToBuffer(steward) {
+      //copy the array to didReceiveAttrs gets called on detail-steward-manager
+      let bufferStewards = this.bufferStewards.toArray();
+      bufferStewards.pushObject(steward);
+      this.set('bufferStewards', bufferStewards);
+    },
+
+    removeStewardFromBuffer(steward) {
+      //copy the array to didReceiveAttrs gets called on detail-steward-manager
+      let bufferStewards = this.bufferStewards.toArray();
+      bufferStewards.removeObject(steward);
+      this.set('bufferStewards', bufferStewards);
+    }
+  },
+
+  save: task(function* () {
     yield timeout(10);
     const programYear = this.programYear;
     const bufferStewards = this.bufferStewards;
@@ -73,40 +96,14 @@ export default Component.extend({
     stewardsToAdd.setEach('programYear', programYear);
     yield all(stewardsToAdd.invoke('save'));
     yield all(stewardsToRemove.invoke('destroyRecord'));
-    this.set('isManaging', false);
-    this.set('bufferStewards', []);
+    this.setProperties({ bufferStewards: [], isManaging: false });
   }),
 
-  manage: task( function * (){
+  manage: task(function* () {
     yield timeout(10);
     this.expand();
     const stewards = yield this.get('programYear.stewards');
     this.set('bufferStewards', stewards.toArray());
     this.set('isManaging', true);
-  }),
-  actions: {
-    collapse(){
-      const programYear = this.programYear;
-      const stewardIds = programYear.hasMany('stewards').ids();
-      if (stewardIds.get('length')) {
-        this.collapse();
-      }
-    },
-    cancel() {
-      this.set('isManaging', false);
-      this.set('bufferStewards', []);
-    },
-    addStewardToBuffer(steward) {
-      //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.bufferStewards.toArray();
-      bufferStewards.pushObject(steward);
-      this.set('bufferStewards', bufferStewards);
-    },
-    removeStewardFromBuffer(steward) {
-      //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.bufferStewards.toArray();
-      bufferStewards.removeObject(steward);
-      this.set('bufferStewards', bufferStewards);
-    },
-  }
+  })
 });

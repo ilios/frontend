@@ -1,11 +1,8 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -13,35 +10,37 @@ const Validations = buildValidations({
     validator('length', {
       max: 60,
       descriptionKey: 'general.title'
-    }),
+    })
   ]
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
 
-  didReceiveAttrs(){
+  classNames: ['school-manager' ],
+  tagName: 'section',
+
+  canCreateCompetency: false,
+  canCreateSessionType: false,
+  canCreateTerm: false,
+  canCreateVocabulary: false,
+  canDeleteCompetency: false,
+  canDeleteSessionType: false,
+  canDeleteTerm: false,
+  canDeleteVocabulary: false,
+  canUpdateCompetency: false,
+  canUpdateSchool: false,
+  canUpdateSchoolConfig: false,
+  canUpdateSessionType: false,
+  canUpdateVocabulary: false,
+  canUpdateTerm: false,
+  school: null,
+  title: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     this.set('title', this.get('school.title'));
   },
-  classNames: ['school-manager' ],
-  tagName: 'section',
-  school: null,
-  title: null,
-  canUpdateSchool: false,
-  canUpdateCompetency: false,
-  canDeleteCompetency: false,
-  canCreateCompetency: false,
-  canUpdateVocabulary: false,
-  canDeleteVocabulary: false,
-  canCreateVocabulary: false,
-  canUpdateTerm: false,
-  canDeleteTerm: false,
-  canCreateTerm: false,
-  canUpdateSessionType: false,
-  canDeleteSessionType: false,
-  canCreateSessionType: false,
-  canUpdateSchoolConfig: false,
 
   actions: {
     changeTitle() {
@@ -65,9 +64,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         });
       });
     },
-    revertTitleChanges(){
+
+    revertTitleChanges() {
       const school = this.school;
       this.set('title', school.get('title'));
-    },
+    }
   }
 });

@@ -1,38 +1,39 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { all } from 'rsvp';
+import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
+import { all } from 'rsvp';
 
 export default Component.extend({
   store: service(),
-  tagName: 'section',
+
   classNames: ['school-competencies-expanded'],
-  school: null,
+  tagName: 'section',
+
+  bufferedCompetencies: null,
+  canCreate: false,
+  canDelete: false,
+  canUpdate: false,
   isManaging: false,
   isSaving: false,
-  canUpdate: false,
-  canDelete: false,
-  canCreate: false,
-  bufferedCompetencies: null,
+  school: null,
 
-  competencies: computed('school.competencies.[]', async function(){
+  competencies: computed('school.competencies.[]', async function() {
     const school = this.school;
     return await school.get('competencies');
   }),
 
-  domains: computed('school.competencies.[]', async function(){
+  domains: computed('school.competencies.[]', async function() {
     const competencies = await this.competencies;
     return competencies.filterBy('isDomain');
   }),
 
-  childCompetencies: computed('school.competencies.[]', async function(){
+  childCompetencies: computed('school.competencies.[]', async function() {
     const competencies = await this.competencies;
     return competencies.filterBy('isNotDomain');
   }),
 
-  showCollapsible: computed('isManaging', 'school.competencies.length', function(){
+  showCollapsible: computed('isManaging', 'school.competencies.length', function() {
     const isManaging = this.isManaging;
     const school = this.school;
     const competencyIds = school.hasMany('competencies').ids();
@@ -42,7 +43,7 @@ export default Component.extend({
   /**
    * @todo rewrite the component so we don't deal with promises in this lifecycle hook. [ST 2019/01/30]
    */
-  async didReceiveAttrs(){
+  async didReceiveAttrs() {
     this._super(...arguments);
     if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
       const school = this.school;
@@ -52,7 +53,7 @@ export default Component.extend({
   },
 
   actions: {
-    async collapse(){
+    async collapse() {
       const collapse = this.collapse;
       const school = this.school;
       const competencies = await school.get('competencies');
@@ -61,7 +62,7 @@ export default Component.extend({
       }
     },
 
-    async addCompetencyToBuffer(domain, title){
+    async addCompetencyToBuffer(domain, title) {
       let competency = this.store.createRecord('competency', {title, active: true});
       if (isPresent(domain)) {
         competency.set('parent', domain);
@@ -73,13 +74,14 @@ export default Component.extend({
       }
     },
 
-    removeCompetencyFromBuffer(competency){
+    removeCompetencyFromBuffer(competency) {
       let buffer = this.bufferedCompetencies;
       if (buffer.includes(competency)) {
         buffer.removeObject(competency);
       }
     },
-    async save(){
+
+    async save() {
       this.set('isSaving', true);
       const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       const school = this.school;
@@ -118,12 +120,12 @@ export default Component.extend({
       setSchoolManageCompetencies(false);
     },
 
-    cancel(){
+    cancel() {
       const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       setSchoolManageCompetencies(false);
     },
 
-    manage(){
+    manage() {
       const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
       setSchoolManageCompetencies(true);
     }

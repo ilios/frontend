@@ -1,14 +1,11 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
+import { inject as service } from '@ember/service';
+import { isEmpty, isPresent } from '@ember/utils';
+import { Promise } from 'rsvp';
 import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   username: [
@@ -23,7 +20,7 @@ const Validations = buildValidations({
     }),
     validator('length', {
       max: 100
-    }),
+    })
   ],
   password: [
     validator('presence', {
@@ -39,16 +36,33 @@ const Validations = buildValidations({
   otherId: [
     validator('length', {
       max: 16
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(NewUser, Validations, {
-  intl: service(),
   commonAjax: service(),
   iliosConfig: service(),
+  intl: service(),
 
-  init(){
+  classNames: ['new-directory-user'],
+
+  isSearching: false,
+  searchResults: null,
+  searchResultsReturned: false,
+  searchTerms: null,
+  selectedUser: false,
+  tooManyResults: false,
+
+  allowCustomUserName: computed('iliosConfig.authenticationType', function() {
+    return new Promise (resolve => {
+      this.get('iliosConfig.authenticationType').then(type => {
+        resolve(type === 'form');
+      });
+    });
+  }),
+
+  init() {
     this._super(...arguments);
     this.set('searchResults', []);
     const searchTerms = this.searchTerms;
@@ -57,40 +71,27 @@ export default Component.extend(NewUser, Validations, {
     }
   },
 
-  classNames: ['new-directory-user'],
-  searchResults: null,
-  selectedUser: false,
-  isSearching: false,
-  searchResultsReturned: false,
-  tooManyResults: false,
-  searchTerms: null,
+  actions: {
+    pickUser(user) {
+      this.set('selectedUser', true);
+      this.set('firstName', user.firstName);
+      this.set('lastName', user.lastName);
+      this.set('email', user.email);
+      this.set('campusId', user.campusId);
+      this.set('phone', user.telephoneNumber);
+      this.set('username', user.username);
+    },
 
-  allowCustomUserName: computed('iliosConfig.authenticationType', function(){
-    return new Promise (resolve => {
-      this.get('iliosConfig.authenticationType').then(type => {
-        resolve(type === 'form');
-      });
-    });
-  }),
-
-  findUsersInDirectory: task(function * (searchTerms){
-    this.set('searchResultsReturned', false);
-    this.set('tooManyResults', false);
-    if (!isEmpty(searchTerms)) {
-      this.set('isSearching', true);
-      let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const commonAjax = this.commonAjax;
-      let data = yield commonAjax.request(url);
-      let mappedResults = data.results.map(result => {
-        result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
-        return result;
-      });
-      this.set('tooManyResults', mappedResults.length > 50);
-      this.set('searchResults', mappedResults);
-      this.set('isSearching', false);
-      this.set('searchResultsReturned', true);
+    unPickUser() {
+      this.set('selectedUser', false);
+      this.set('firstName', null);
+      this.set('lastName', null);
+      this.set('email', null);
+      this.set('campusId', null);
+      this.set('phone', null);
+      this.set('username', null);
     }
-  }).restartable(),
+  },
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -120,24 +121,22 @@ export default Component.extend(NewUser, Validations, {
     }
   },
 
-  actions: {
-    pickUser(user){
-      this.set('selectedUser', true);
-      this.set('firstName', user.firstName);
-      this.set('lastName', user.lastName);
-      this.set('email', user.email);
-      this.set('campusId', user.campusId);
-      this.set('phone', user.telephoneNumber);
-      this.set('username', user.username);
-    },
-    unPickUser(){
-      this.set('selectedUser', false);
-      this.set('firstName', null);
-      this.set('lastName', null);
-      this.set('email', null);
-      this.set('campusId', null);
-      this.set('phone', null);
-      this.set('username', null);
+  findUsersInDirectory: task(function* (searchTerms) {
+    this.set('searchResultsReturned', false);
+    this.set('tooManyResults', false);
+    if (!isEmpty(searchTerms)) {
+      this.set('isSearching', true);
+      let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
+      const commonAjax = this.commonAjax;
+      let data = yield commonAjax.request(url);
+      let mappedResults = data.results.map(result => {
+        result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
+        return result;
+      });
+      this.set('tooManyResults', mappedResults.length > 50);
+      this.set('searchResults', mappedResults);
+      this.set('isSearching', false);
+      this.set('searchResultsReturned', true);
     }
-  }
+  }).restartable(),
 });

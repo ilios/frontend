@@ -1,16 +1,18 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import { timeout, task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
+  classNames: ['school-session-types-list'],
+
+  canDelete: false,
+  deletedSessionTypes: null,
+
   init(){
     this._super(...arguments);
     this.set('deletedSessionTypes', []);
   },
-  canDelete: false,
-  classNames: ['school-session-types-list'],
-  deletedSessionTypes: null,
-  deleteSessionType: task(function * (sessionType) {
+
+  deleteSessionType: task(function* (sessionType) {
     if (sessionType.get('sessionCount') === 0) {
       this.deletedSessionTypes.pushObject(sessionType.get('id'));
       yield timeout(10);
@@ -18,5 +20,5 @@ export default Component.extend({
       yield sessionType.save();
       this.deletedSessionTypes.removeObject(sessionType.get('id'));
     }
-  }).drop(),
+  }).drop()
 });

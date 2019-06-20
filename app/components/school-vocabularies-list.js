@@ -1,12 +1,11 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { resolve } from 'rsvp';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { resolve } from 'rsvp';
+import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   newVocabularyTitle: [
@@ -15,18 +14,23 @@ const Validations = buildValidations({
       min: 1,
       max: 200
     })
-  ],
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  classNames: ['school-vocabularies-list'],
-  school: null,
-  canDelete: false,
-  canCreate: false,
-  newVocabulary: null,
 
-  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function(){
+  classNames: ['school-vocabularies-list'],
+
+  canCreate: false,
+  canDelete: false,
+  newVocabulary: null,
+  newVocabularyTitle: null,
+  school: null,
+  showNewVocabularyForm: false,
+  showRemovalConfirmationFor: null,
+
+  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function() {
     const school = this.school;
     if (! isPresent(school)) {
       resolve([]);
@@ -35,11 +39,40 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return vocabularies.filterBy('isNew', false).sortBy('title').toArray();
   }),
 
-  showNewVocabularyForm: false,
-  newVocabularyTitle: null,
-  showRemovalConfirmationFor: null,
+  actions: {
+    toggleShowNewVocabularyForm() {
+      this.set('newVocabularyTitle', null);
+      this.set('showNewVocabularyForm', !this.showNewVocabularyForm);
+    },
 
-  saveNew: task(function * (title){
+    confirmRemoval(vocabulary) {
+      this.set('showRemovalConfirmationFor', vocabulary);
+    },
+
+    cancelRemoval() {
+      this.set('showRemovalConfirmationFor', null);
+    }
+  },
+
+  keyUp(event) {
+    const keyCode = event.keyCode;
+    const target = event.target;
+
+    if ('text' !== target.type) {
+      return;
+    }
+
+    if (13 === keyCode) {
+      this.saveNew.perform(this.newVocabularyTitle);
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.send('toggleShowNewVocabularyForm');
+    }
+  },
+
+  saveNew: task(function* (title) {
     this.send('addErrorDisplayFor', 'newVocabularyTitle');
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
@@ -55,7 +88,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   }).drop(),
 
-  remove: task(function * (vocabulary){
+  remove: task(function* (vocabulary) {
     const school = this.school;
     const vocabularies = yield school.get('vocabularies');
     vocabularies.removeObject(vocabulary);
@@ -64,36 +97,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (newVocabulary === vocabulary) {
       this.set('newVocabulary', null);
     }
-  }).drop(),
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.saveNew.perform(this.newVocabularyTitle);
-      return;
-    }
-
-    if(27 === keyCode) {
-      this.send('toggleShowNewVocabularyForm');
-    }
-  },
-
-  actions: {
-    toggleShowNewVocabularyForm(){
-      this.set('newVocabularyTitle', null);
-      this.set('showNewVocabularyForm', !this.showNewVocabularyForm);
-    },
-    confirmRemoval(vocabulary){
-      this.set('showRemovalConfirmationFor', vocabulary);
-    },
-    cancelRemoval(){
-      this.set('showRemovalConfirmationFor', null);
-    },
-  }
+  }).drop()
 });

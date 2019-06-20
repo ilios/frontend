@@ -1,58 +1,35 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { filter, map } from 'rsvp';
 import { task } from 'ember-concurrency';
-
-const { map, filter } = RSVP;
 
 export default Component.extend({
   store: service(),
-  stewards: null,
-  tagName: 'section',
+
   classNames: ['detail-steward-manager'],
-  stewardsBySchoolLoaded: false,
+  tagName: 'section',
+
   availableSchoolsLoaded: false,
+  stewards: null,
+  stewardsBySchoolLoaded: false,
 
-  /**
-   * This is a hack because ember-async-helpers flickers when the CPs are evaluated
-   * so we cheat and use ember-concurrency to display the values
-   */
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.getStewardsBySchool.perform();
-    this.getAvailableSchools.perform();
-  },
-  getStewardsBySchool: task(function *(){
-    const stewardsBySchool =  yield this.stewardsBySchool;
-    this.set('stewardsBySchoolLoaded', true);
-    return stewardsBySchool;
-  }),
-  getAvailableSchools: task(function *(){
-    const availableSchools =  yield this.availableSchools;
-    this.set('availableSchoolsLoaded', true);
-    return availableSchools;
+  allSchools: computed(async function() {
+    return await this.store.findAll('school');
   }),
 
-  allSchools: computed(async function(){
-    const store = this.store;
-    return await store.findAll('school');
-  }),
-
-  selectedDepartments: computed('stewards.[]', async function(){
+  selectedDepartments: computed('stewards.[]', async function() {
     const stewards = this.stewards;
     const selectedDepartments = await map(stewards.toArray(), async steward => {
       return await steward.get('department');
     });
-
     return selectedDepartments.filter(department => {
       return isPresent(department);
     });
   }),
 
-  selectedSchools: computed('stewards.[]', async function(){
+  selectedSchools: computed('stewards.[]', async function() {
     const stewards = this.stewards;
     const selectedDepartments = await map(stewards.toArray(), async steward => {
       return await steward.get('school');
@@ -63,7 +40,7 @@ export default Component.extend({
     });
   }),
 
-  stewardsBySchool: computed('stewards.[]', async function(){
+  stewardsBySchool: computed('stewards.[]', async function() {
     const stewards = this.stewards;
     const stewardObjects = await map(stewards.toArray(), async steward => {
       const school = await steward.get('school');
@@ -88,7 +65,7 @@ export default Component.extend({
     return stewardsBySchool;
   }),
 
-  availableSchools: computed('selectedDepartments.[]', 'selectedSchools.[]', 'allSchools.[]', async function(){
+  availableSchools: computed('selectedDepartments.[]', 'selectedSchools.[]', 'allSchools.[]', async function() {
     const allSchools = await this.allSchools;
     const selectedDepartments = await this.selectedDepartments;
     const selectedSchools = await this.selectedSchools;
@@ -115,9 +92,31 @@ export default Component.extend({
     });
 
     return availableSchools;
-
   }),
-  addSchool: task(function * (school){
+
+  /**
+   * This is a hack because ember-async-helpers flickers when the CPs are evaluated
+   * so we cheat and use ember-concurrency to display the values
+   */
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.getStewardsBySchool.perform();
+    this.getAvailableSchools.perform();
+  },
+
+  getStewardsBySchool: task(function* () {
+    const stewardsBySchool =  yield this.stewardsBySchool;
+    this.set('stewardsBySchoolLoaded', true);
+    return stewardsBySchool;
+  }),
+
+  getAvailableSchools: task(function* () {
+    const availableSchools =  yield this.availableSchools;
+    this.set('availableSchoolsLoaded', true);
+    return availableSchools;
+  }),
+
+  addSchool: task(function* (school) {
     const store = this.store;
     const selectedDepartments = yield this.selectedDepartments;
     const steward = store.createRecord('program-year-steward', {
@@ -136,7 +135,8 @@ export default Component.extend({
       this.add(newSteward);
     });
   }),
-  addDepartment: task(function * (school, department){
+
+  addDepartment: task(function* (school, department) {
     const store = this.store;
     const selectedDepartments = yield this.selectedDepartments;
     if (!selectedDepartments.includes(department)) {
@@ -147,14 +147,16 @@ export default Component.extend({
       this.add(steward);
     }
   }),
-  removeDepartment: task(function * (school, department){
+
+  removeDepartment: task(function* (school, department) {
     const stewards = this.stewards;
     const stewardToRemove = stewards.find(steward => {
       return department.get('id') === steward.belongsTo('department').id();
     });
     yield this.remove(stewardToRemove);
   }),
-  removeSchool: task(function * (school){
+
+  removeSchool: task(function* (school) {
     const stewards = this.stewards;
     const stewardsToRemove = stewards.filter(steward => {
       return school.get('id') === steward.belongsTo('school').id();
@@ -162,5 +164,5 @@ export default Component.extend({
     for (let i = 0; i < stewardsToRemove.length; i++) {
       yield this.remove(stewardsToRemove[i]);
     }
-  }),
+  })
 });

@@ -1,4 +1,3 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
@@ -10,26 +9,36 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 60
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  learnerGroup: null,
-  canUpdate: false,
-  tagName: 'header',
   classNames: ['learnergroup-header'],
+  tagName: 'header',
+
   'data-test-learnergroup-header': true,
-  didReceiveAttrs(){
+
+  canUpdate: false,
+  learnerGroup: null,
+  title: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const learnerGroup = this.learnerGroup;
     if (learnerGroup) {
       this.set('title', learnerGroup.get('title'));
     }
   },
-  title: null,
 
-  changeTitle: task(function * () {
+  actions: {
+    revertTitleChanges() {
+      const learnerGroup = this.learnerGroup;
+      this.set('title', learnerGroup.get('title'));
+    }
+  },
+
+  changeTitle: task(function* () {
     const learnerGroup = this.learnerGroup;
     const newTitle = this.title;
     this.send('addErrorDisplayFor', 'title');
@@ -42,12 +51,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     } else {
       throw false;
     }
-  }),
-
-  actions: {
-    revertTitleChanges(){
-      const learnerGroup = this.learnerGroup;
-      this.set('title', learnerGroup.get('title'));
-    },
-  }
+  })
 });

@@ -1,23 +1,25 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
+
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
-  store: service(),
   routing: service('-routing'),
-  tagName: 'section',
+  store: service(),
+
   classNames: ['manage-users-summary', 'large-component'],
+  tagName: 'section',
+
   canCreate: false,
   searchValue: null,
 
-  searchForUsers: task(function * (query) {
+  searchForUsers: task(function* (query) {
     const intl = this.intl;
     const store = this.store;
 
@@ -62,11 +64,10 @@ export default Component.extend({
       }
     ];
     results.pushObjects(mappedResults);
-
     return results;
   }).restartable(),
 
-  clickUser: task(function * (user) {
+  clickUser: task(function* (user) {
     const routing = this.routing;
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);

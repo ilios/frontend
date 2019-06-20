@@ -1,11 +1,8 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
+import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise } = RSVP;
 
 const Validations = buildValidations({
   title: [
@@ -13,21 +10,25 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 60
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  didReceiveAttrs(){
+  store: service(),
+
+  classNames: ['instructorgroup-header'],
+
+  canUpdate: false,
+  title: null,
+
+  didReceiveAttrs() {
     this._super(...arguments);
     this.set('title', this.get('instructorGroup.title'));
   },
-  store: service(),
-  title: null,
-  canUpdate: false,
-  classNames: ['instructorgroup-header'],
+
   actions: {
-    changeTitle(){
+    changeTitle() {
       const group = this.instructorGroup;
       const newTitle = this.title;
       this.send('addErrorDisplayFor', 'title');
@@ -48,9 +49,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       });
     },
 
-    revertTitleChanges(){
+    revertTitleChanges() {
       const group = this.instructorGroup;
       this.set('title', group.get('title'));
-    },
+    }
   }
 });

@@ -1,34 +1,38 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import RSVP from 'rsvp';
 import { computed } from '@ember/object';
-
-const { all } = RSVP;
+import { inject as service } from '@ember/service';
+import { all } from 'rsvp';
 
 export default Component.extend({
   store: service(),
+
   classNames: ['school-session-attributes'],
-  school: null,
+
   canUpdate: false,
-  isManaging: false,
   details: false,
-  showSessionAttendanceRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
+  isManaging: false,
+  school: null,
+
+  showSessionAttendanceRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function() {
     const school = this.school;
     return await school.getConfigValue('showSessionAttendanceRequired');
   }),
-  showSessionSupplemental: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
+
+  showSessionSupplemental: computed('school.configurations.[]', 'school.configurations.@each.value', async function() {
     const school = this.school;
     return await school.getConfigValue('showSessionSupplemental');
   }),
-  showSessionSpecialAttireRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
+
+  showSessionSpecialAttireRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function() {
     const school = this.school;
     return await school.getConfigValue('showSessionSpecialAttireRequired');
   }),
-  showSessionSpecialEquipmentRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function(){
+
+  showSessionSpecialEquipmentRequired: computed('school.configurations.[]', 'school.configurations.@each.value', async function() {
     const school = this.school;
     return await school.getConfigValue('showSessionSpecialEquipmentRequired');
   }),
+
   actions: {
     async save(newValues) {
       const school = this.school;

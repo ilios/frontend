@@ -1,14 +1,11 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { isPresent } from '@ember/utils';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
+import { isPresent } from '@ember/utils';
+import { Promise, all, map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-
-const { Promise, all, map } = RSVP;
 
 const Validations = buildValidations({
   location: [
@@ -16,31 +13,46 @@ const Validations = buildValidations({
       allowBlank: true,
       min: 2,
       max: 100
-    }),
-  ],
+    })
+  ]
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-
-  learnerGroup: null,
-  canCreate: false,
-  canUpdate: false,
-  canDelete: false,
-  learnerGroupId: null,
-  learnerGroupTitle: null,
-  cohortTitle: null,
-  topLevelGroupTitle: null,
   classNames: ['learnergroup-summary'],
   tagName: 'section',
+
+  canCreate: false,
+  canDelete: false,
+  canUpdate: false,
+  cohortTitle: null,
+  currentGroupsSaved: 0,
+  isBulkAssigning: false,
+  isEditing: false,
+  isSaving: false,
+  learnerGroup: null,
+  learnerGroupId: null,
+  learnerGroupTitle: null,
   location: null,
   manageInstructors: false,
-  isEditing: false,
-  isBulkAssigning: false,
-  isSaving: false,
   sortUsersBy: '',
+  topLevelGroupTitle: null,
   totalGroupsToSave: 0,
-  currentGroupsSaved: 0,
-  didReceiveAttrs(){
+
+  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function() {
+    const learnerGroup = this.learnerGroup;
+    return new Promise(resolve => {
+      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
+        let treeGroups = [];
+        treeGroups.pushObject(topLevelGroup);
+        topLevelGroup.get('allDescendants').then(allDescendants => {
+          treeGroups.pushObjects(allDescendants);
+          resolve(treeGroups);
+        });
+      });
+    });
+  }),
+
+  didReceiveAttrs() {
     this._super(...arguments);
     const learnerGroup = this.learnerGroup;
     if (isPresent(learnerGroup)) {
@@ -57,97 +69,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.createUsersToPassToCohortManager.perform();
     }
   },
-  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function(){
-    const learnerGroup = this.learnerGroup;
-    return new Promise(resolve => {
-      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
-        let treeGroups = [];
-        treeGroups.pushObject(topLevelGroup);
-        topLevelGroup.get('allDescendants').then(allDescendants => {
-          treeGroups.pushObjects(allDescendants);
-          resolve(treeGroups);
-        });
-      });
-    });
-  }),
-  addUserToGroup: task(function * (user) {
-    const learnerGroup = this.learnerGroup;
-    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-    let groups = [].concat(removeGroups).concat(addGroups);
-    yield all(groups.invoke('save'));
-    yield this.createUsersToPassToManager.perform();
-    yield this.createUsersToPassToCohortManager.perform();
-  }).enqueue(),
-  removeUserToCohort: task(function * (user) {
-    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
-    let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    yield all(groups.invoke('save'));
-    yield this.createUsersToPassToManager.perform();
-    yield this.createUsersToPassToCohortManager.perform();
-  }).enqueue(),
-  addUsersToGroup: task(function * (users) {
-    const learnerGroup = this.learnerGroup;
-    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    let groupsToSave = [];
-    for (let i = 0; i < users.length; i++) {
-      let user = users[i];
-      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-      groupsToSave.pushObjects(removeGroups);
-      groupsToSave.pushObjects(addGroups);
-    }
-    yield all(groupsToSave.uniq().invoke('save'));
-    yield this.createUsersToPassToManager.perform();
-    yield this.createUsersToPassToCohortManager.perform();
-  }).enqueue(),
-  removeUsersToCohort: task(function * (users) {
-    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
-    let groupsToSave = [];
-    for (let i = 0; i < users.length; i++) {
-      let user = users[i];
-      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      groupsToSave.pushObjects(removeGroups);
-    }
-    yield all(groupsToSave.uniq().invoke('save'));
-    yield this.createUsersToPassToManager.perform();
-    yield this.createUsersToPassToCohortManager.perform();
-  }).enqueue(),
-  createUsersToPassToManager: task(function * () {
-    const isEditing = this.isEditing;
-    const learnerGroup = this.learnerGroup;
-    let users;
-    if (isEditing) {
-      let topLevelGroup = yield learnerGroup.get('topLevelGroup');
-      users = yield topLevelGroup.get('allDescendantUsers');
-    } else {
-      users = yield learnerGroup.get('usersOnlyAtThisLevel');
-    }
-    const treeGroups = yield this.treeGroups;
-    return yield map(users.toArray(), async user => {
-      let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-      return ObjectProxy.create({
-        content: user,
-        lowestGroupInTree,
-        //special sorting property
-        lowestGroupInTreeTitle: lowestGroupInTree.get('title')
-      });
-    });
-  }),
-  createUsersToPassToCohortManager: task(function * () {
-    const learnerGroup = this.learnerGroup;
-    const cohort = yield learnerGroup.get('cohort');
-    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    const currentUsers = yield topLevelGroup.get('allDescendantUsers');
-    const users = yield cohort.get('users');
 
-    let filteredUsers = users.filter(
-      user => !currentUsers.includes(user)
-    );
-
-    return filteredUsers;
-  }),
   actions: {
     changeLocation() {
       const newLocation = this.location;
@@ -169,17 +91,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         });
       });
     },
-    revertLocationChanges(){
+
+    revertLocationChanges() {
       const learnerGroup = this.learnerGroup;
       this.set('location', learnerGroup.get('location'));
     },
-    saveInstructors(newInstructors, newInstructorGroups){
+
+    saveInstructors(newInstructors, newInstructorGroups) {
       const learnerGroup = this.learnerGroup;
       learnerGroup.set('instructors', newInstructors.toArray());
       learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
       this.set('manageInstructors', false);
       return learnerGroup.save();
     },
+
     manageInstructors() {
       const canUpdate = this.canUpdate;
       const manageInstructors = this.manageInstructors;
@@ -187,5 +112,87 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         this.set('manageInstructors', !manageInstructors);
       }
     }
-  }
+  },
+
+  addUserToGroup: task(function* (user) {
+    const learnerGroup = this.learnerGroup;
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+    let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
+    let groups = [].concat(removeGroups).concat(addGroups);
+    yield all(groups.invoke('save'));
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
+  }).enqueue(),
+
+  removeUserToCohort: task(function* (user) {
+    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
+    let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+    yield all(groups.invoke('save'));
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
+  }).enqueue(),
+
+  addUsersToGroup: task(function* (users) {
+    const learnerGroup = this.learnerGroup;
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    let groupsToSave = [];
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+      let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
+      groupsToSave.pushObjects(removeGroups);
+      groupsToSave.pushObjects(addGroups);
+    }
+    yield all(groupsToSave.uniq().invoke('save'));
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
+  }).enqueue(),
+
+  removeUsersToCohort: task(function* (users) {
+    const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
+    let groupsToSave = [];
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+      groupsToSave.pushObjects(removeGroups);
+    }
+    yield all(groupsToSave.uniq().invoke('save'));
+    yield this.createUsersToPassToManager.perform();
+    yield this.createUsersToPassToCohortManager.perform();
+  }).enqueue(),
+
+  createUsersToPassToManager: task(function* () {
+    const isEditing = this.isEditing;
+    const learnerGroup = this.learnerGroup;
+    let users;
+    if (isEditing) {
+      let topLevelGroup = yield learnerGroup.get('topLevelGroup');
+      users = yield topLevelGroup.get('allDescendantUsers');
+    } else {
+      users = yield learnerGroup.get('usersOnlyAtThisLevel');
+    }
+    const treeGroups = yield this.treeGroups;
+    return yield map(users.toArray(), async user => {
+      let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+      return ObjectProxy.create({
+        content: user,
+        lowestGroupInTree,
+        //special sorting property
+        lowestGroupInTreeTitle: lowestGroupInTree.get('title')
+      });
+    });
+  }),
+
+  createUsersToPassToCohortManager: task(function* () {
+    const learnerGroup = this.learnerGroup;
+    const cohort = yield learnerGroup.get('cohort');
+    const topLevelGroup = yield learnerGroup.get('topLevelGroup');
+    const currentUsers = yield topLevelGroup.get('allDescendantUsers');
+    const users = yield cohort.get('users');
+    let filteredUsers = users.filter(
+      user => !currentUsers.includes(user)
+    );
+    return filteredUsers;
+  })
 });

@@ -1,18 +1,17 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { validator, buildValidations } from 'ember-cp-validations';
-import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   title: [
     validator('presence', true),
     validator('length', {
       max: 100
-    }),
+    })
   ],
   calendarColor: [
     validator('presence', true),
@@ -42,49 +41,36 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
+
   classNames: ['school-session-type-form'],
-  title: null,
-  selectedAamcMethodId: null,
-  calendarColor: null,
+
   assessment: false,
-  isActive: true,
-  selectedAssessmentOptionId: null,
-  canEditTitle: false,
+  calendarColor: null,
   canEditAamcMethod: false,
-  canEditCalendarColor: false,
+  canEditActive: false,
   canEditAssessment: false,
   canEditAssessmentOption: false,
-  canEditActive: false,
+  canEditCalendarColor: false,
+  canEditTitle: false,
   canUpdate: false,
-  saveSessionType: task(function * () {
-    this.send('addErrorDisplaysFor', ['title', 'calendarColor', 'selectedAamcMethodId']);
-    let {validations} = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
-    }
+  isActive: true,
+  selectedAamcMethodId: null,
+  selectedAssessmentOptionId: null,
+  title: null,
 
-    const title = this.title;
-    const calendarColor = this.calendarColor;
-    const assessment = this.assessment;
-    const aamcMethod = yield this.selectedAamcMethod;
-    const assessmentOption = yield this.selectedAssessmentOption;
-    const isActive = this.isActive;
-    const save = this.save;
-
-    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive);
-    this.send('clearErrorDisplay');
-  }),
-  assessmentOptions: computed(async function(){
+  assessmentOptions: computed(async function() {
     const store = this.store;
     return await store.findAll('assessment-option');
   }),
-  allAamcMethods: computed(async function(){
+
+  allAamcMethods: computed(async function() {
     const store = this.store;
     const aamcMethods = await store.findAll('aamc-method');
 
     return aamcMethods;
   }),
-  filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', async function(){
+
+  filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', async function() {
     const assessment = this.assessment;
     const aamcMethods = await this.allAamcMethods;
     const filteredAamcMethods = aamcMethods.filter(aamcMethod => {
@@ -95,10 +81,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         return id.indexOf('IM') === 0;
       }
     });
-
     return filteredAamcMethods;
   }),
-  selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function(){
+
+  selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function() {
     const filteredAamcMethods = await this.filteredAamcMethods;
     const selectedAamcMethodId = this.selectedAamcMethodId;
     if(isPresent(selectedAamcMethodId)){
@@ -110,7 +96,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     return null;
   }),
-  selectedAssessmentOption: computed('assessmentOptions.[]', 'selectedAssessmentOptionId', 'assessment', async function(){
+
+  selectedAssessmentOption: computed('assessmentOptions.[]', 'selectedAssessmentOptionId', 'assessment', async function() {
     const assessment = this.assessment;
     const selectedAssessmentOptionId = this.selectedAssessmentOptionId;
     const assessmentOptions = await this.assessmentOptions;
@@ -122,6 +109,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     return assessmentOption;
   }),
+
+  actions: {
+    updateAssessment(value) {
+      this.set('selectedAamcMethodId', null);
+      this.set('assessment', value);
+    }
+  },
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -141,10 +135,22 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
   },
 
-  actions: {
-    updateAssessment(value){
-      this.set('selectedAamcMethodId', null);
-      this.set('assessment', value);
+  saveSessionType: task(function* () {
+    this.send('addErrorDisplaysFor', ['title', 'calendarColor', 'selectedAamcMethodId']);
+    let {validations} = yield this.validate();
+    if (validations.get('isInvalid')) {
+      return;
     }
-  }
+
+    const title = this.title;
+    const calendarColor = this.calendarColor;
+    const assessment = this.assessment;
+    const aamcMethod = yield this.selectedAamcMethod;
+    const assessmentOption = yield this.selectedAssessmentOption;
+    const isActive = this.isActive;
+    const save = this.save;
+
+    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive);
+    this.send('clearErrorDisplay');
+  })
 });

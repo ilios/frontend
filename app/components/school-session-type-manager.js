@@ -1,15 +1,17 @@
-/* eslint ember/order-in-components: 0 */
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-  sessionType: null,
-  canUpdate: false,
+
   classNames: ['school-session-type-manager'],
-  readonlySessionType: computed('sessionType', async function(){
+
+  canUpdate: false,
+  sessionType: null,
+
+  readonlySessionType: computed('sessionType', async function() {
     const sessionType = this.sessionType;
     if (!sessionType) {
       return null;
@@ -27,11 +29,10 @@ export default Component.extend({
       selectedAamcMethodId,
       isActive
     });
-
     return readonlySessionType;
   }),
 
-  save: task(function * (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
+  save: task(function* (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
     const sessionType = this.sessionType;
     const closeComponent = this.close;
     let aamcMethods = [];
@@ -49,5 +50,5 @@ export default Component.extend({
 
     yield sessionType.save();
     closeComponent();
-  }),
+  })
 });

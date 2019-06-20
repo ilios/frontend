@@ -1,19 +1,23 @@
-/* eslint ember/order-in-components: 0 */
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-const { lte } = computed;
+import { lte } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['pagedlist-controls'],
   tagName: 'div',
-  offset: null,
+
   limit: null,
-  total: null,
   limitless: false,
-  start: computed('offset', function(){
+  offset: null,
+  total: null,
+
+  firstPage: lte('offset', 0),
+
+  start: computed('offset', function() {
     return parseInt(this.offset, 10) + 1;
   }),
-  end: computed('offset', 'limit', function(){
+
+  end: computed('offset', 'limit', function() {
     const total = this.total;
     let end = parseInt(this.offset, 10) + parseInt(this.limit, 10);
     if(end > total) {
@@ -22,7 +26,8 @@ export default Component.extend({
 
     return end;
   }),
-  offsetOptions: computed('total', function(){
+
+  offsetOptions: computed('total', function() {
     const total = this.limitless?1000:this.total;
     const available = [10, 25, 50, 100, 200, 400, 1000];
     let options = available.filter(option => {
@@ -32,7 +37,8 @@ export default Component.extend({
 
     return options;
   }),
-  lastPage: computed('total', 'limit', 'offset', 'limitless', function(){
+
+  lastPage: computed('total', 'limit', 'offset', 'limitless', function() {
     if(this.limitless) {
       return false;
     }
@@ -43,21 +49,21 @@ export default Component.extend({
 
     return (offset + limit) >= total;
   }),
-  firstPage: lte('offset', 0),
-
 
   actions: {
-    goForward(){
+    goForward() {
       const offset = this.offset;
       const limit = this.limit;
       this.setOffset(offset+limit);
     },
-    goBack(){
+
+    goBack() {
       const offset = this.offset;
       const limit = this.limit;
       this.setOffset(offset-limit);
     },
-    setOffset(offset){
+
+    setOffset(offset) {
       const limit = this.limit;
       const total = this.total;
       const largestOffset = total - limit;
@@ -70,7 +76,8 @@ export default Component.extend({
 
       this.setOffset(offset);
     },
-    setLimit(limit){
+
+    setLimit(limit) {
       this.setLimit(parseInt(limit, 10));
       this.setOffset(0);
     }
