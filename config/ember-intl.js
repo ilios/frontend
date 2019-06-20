@@ -1,14 +1,14 @@
-/*jshint node:true*/
+'use strict';
 
-module.exports = function(/* env */) {
+module.exports = function(/* environment */) {
   return {
     /**
-     * The locales that our application supports.
+     * The locales that the application needs to support.
      *
-     * This is optional and is automatically set if project stores translations
-     * where ember-intl is able to look them up (<project root>/translations/).
+     * NOTE: this is optional and is automatically set *if* you store translations
+     * within the `inputPath` defined below.
      *
-     * If the project relies on side-loading translations, then you must explicitly
+     * If you side load translations, you must then explicitly
      * list out the locales. i.e: ['en-us', 'en-gb', 'fr-fr']
      *
      * @property locales
@@ -18,36 +18,16 @@ module.exports = function(/* env */) {
     locales: null,
 
     /**
-     * autoPolyfill, when true will automatically inject the IntlJS polyfill
-     * into index.html
+     * Merges the fallback locale's translations into all other locales as a
+     * build-time fallback strategy.
      *
-     * @property autoPolyfill
-     * @type {Boolean}
-     * @default "false"
+     * NOTE: a side effect of this option could result in missing translation warnings to be masked.
+     *
+     * @property fallbackLocale
+     * @type {String?}
+     * @default "null"
      */
-    autoPolyfill: false,
-
-    /**
-     * disablePolyfill prevents the polyfill from being bundled in the asset folder of the build
-     *
-     * @property disablePolyfill
-     * @type {Boolean}
-     * @default "false"
-     */
-    disablePolyfill: false,
-
-    /**
-     * prevents the translations from being bundled with the application code.
-     * This enables asynchronously loading the translations for the active locale
-     * by fetching them from the asset folder of the build.
-     *
-     * See: https://github.com/jasonmit/ember-intl/blob/master/docs/asynchronously-loading-translations.md
-     *
-     * @property publicOnly
-     * @type {Boolean}
-     * @default "false"
-     */
-    publicOnly: false,
+    fallbackLocale: null,
 
     /**
      * Path where translations are kept.  This is relative to the project root.
@@ -56,30 +36,81 @@ module.exports = function(/* env */) {
      *
      * @property inputPath
      * @type {String}
-     * @default "translations"
+     * @default "'translations'"
      */
     inputPath: 'translations',
 
     /**
-     * cause a build error if missing translations are detected.
+     * Automatically inject the Intl.JS polyfill into index.html
      *
-     * See https://github.com/jasonmit/ember-intl/blob/master/docs/missing-translations.md#throwing-a-build-error-on-missing-required-translation
-     *
-     * @property throwMissingTranslations
+     * @property autoPolyfill
      * @type {Boolean}
      * @default "false"
      */
-    throwMissingTranslations: false,
+    autoPolyfill: false,
 
     /**
-     * filter missing translations to ignore expected missing translations.
+     * Prevents the polyfill from being bundled in the asset folder of the build
      *
-     * See https://github.com/jasonmit/ember-intl/blob/master/docs/missing-translations.md#requiring-translations
+     * @property disablePolyfill
+     * @type {Boolean}
+     * @default "false"
+     */
+    disablePolyfill: false,
+
+    /**
+     * Prevents the translations from being bundled with the application code.
+     * This enables asynchronously loading the translations for the active locale
+     * by fetching them from the asset folder of the build.
+     *
+     * See: https://ember-intl.github.io/ember-intl/docs/guide/asynchronously-loading-translations
+     *
+     * @property publicOnly
+     * @type {Boolean}
+     * @default "false"
+     */
+    publicOnly: false,
+
+    /**
+     * Cause a build error if ICU argument mismatches are detected.
+     *
+     * @property errorOnNamedArgumentMismatch
+     * @type {Boolean}
+     * @default "false"
+     */
+    errorOnNamedArgumentMismatch: false,
+
+    /**
+     * Cause a build error if missing translations are detected.
+     *
+     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#throwing-a-build-error-on-missing-required-translation
+     *
+     * @property errorOnMissingTranslations
+     * @type {Boolean}
+     * @default "false"
+     */
+    errorOnMissingTranslations: false,
+
+    /**
+     * removes empty translations from the build output.
+     *
+     * @property stripEmptyTranslations
+     * @type {Boolean}
+     * @default false
+     */
+    stripEmptyTranslations: false,
+
+    /**
+     * Filter missing translations to ignore expected missing translations.
+     *
+     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations
      *
      * @property requiresTranslation
-     * @type {Function?}
-     * @default "function() { return true; }"
+     * @type {Function}
+     * @default "function(key,locale){return true}"
      */
-    // requiresTranslation: (key, locale) => true
+    requiresTranslation(/* key, locale */) {
+      return true;
+    }
   };
 };
