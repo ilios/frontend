@@ -78,8 +78,7 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     });
     await visit(url);
     const container = '.curriculum-inventory-report-overview';
-    const rollover = `${container} a.rollover`;
-
+    const rollover = `${container} span.rollover`;
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.dom(rollover).exists({ count: 1 });
   });
