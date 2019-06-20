@@ -10,4 +10,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const store = this.store;
     return store.findAll('school');
   },
+
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('sortByTitle', ['title']);
+  }
 });

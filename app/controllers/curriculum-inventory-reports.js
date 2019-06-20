@@ -1,4 +1,3 @@
-/* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { gt, oneWay, sort } from '@ember/object/computed';
@@ -21,7 +20,7 @@ export default Controller.extend({
   programId: null,
   schoolId: null,
   showNewCurriculumInventoryForm: false,
-  sortByTitle: ['title'],
+  sortByTitle: null,
   sortReportsBy: 'name',
 
   hasMoreThanOneSchool: gt('model.length', 1),

@@ -1,4 +1,3 @@
-/* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 import { gt, sort } from '@ember/object/computed';
@@ -12,13 +11,13 @@ export default Controller.extend({
 
   queryParams: ['offset', 'limit', 'filter', 'school'],
 
-  deletedUpdates: [],
+  deletedUpdates: null,
   filter: '',
   limit: 25,
   offset: 0,
   school: null,
-  sortSchoolsBy: ['title'],
-  updatesBeingSaved: [],
+  sortSchoolsBy: null,
+  updatesBeingSaved: null,
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
