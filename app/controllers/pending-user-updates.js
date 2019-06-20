@@ -1,26 +1,29 @@
-/* eslint ember/order-in-controllers: 0 */
 /* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
+import { gt, sort } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-
-const { sort, gt } = computed;
-const { all, Promise } = RSVP;
+import { Promise, all } from 'rsvp';
 
 export default Controller.extend({
-  store: service(),
   flashMessages: service(),
+  store: service(),
+
   queryParams: ['offset', 'limit', 'filter', 'school'],
-  offset: 0,
-  limit: 25,
+
+  deletedUpdates: [],
   filter: '',
+  limit: 25,
+  offset: 0,
   school: null,
+  sortSchoolsBy: ['title'],
+  updatesBeingSaved: [],
+
   hasMoreThanOneSchool: gt('model.schools.length', 1),
-  sortSchoolsBy:['title'],
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
-  selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function(){
+
+  selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function() {
     let schools = this.get('model.schools');
     const schoolId = this.school;
     if(isPresent(schoolId)){
@@ -32,10 +35,7 @@ export default Controller.extend({
     return this.get('model.primarySchool');
   }),
 
-  deletedUpdates: [],
-  updatesBeingSaved: [],
-
-  allUpdates: computed('selectedSchool', function(){
+  allUpdates: computed('selectedSchool', function() {
     return new Promise(resolve => {
       let school = this.selectedSchool;
       this.store.query('pending-user-update', {
@@ -51,11 +51,10 @@ export default Controller.extend({
     });
   }),
 
-  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', function(){
+  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', function() {
     const limit = this.limit;
     const offset = this.offset;
     const end = limit + offset;
-
     return new Promise(resolve => {
       this.allUpdates.then(allUpdates => {
         let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
@@ -69,10 +68,11 @@ export default Controller.extend({
   }),
 
   actions: {
-    changeSelectedSchool(schoolId){
+    changeSelectedSchool(schoolId) {
       this.set('school', schoolId);
     },
-    updateEmailAddress(update){
+
+    updateEmailAddress(update) {
       this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('email', update.get('value'));
@@ -86,14 +86,15 @@ export default Controller.extend({
         });
       });
     },
-    disableUser(update){
+
+    disableUser(update) {
       this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('enabled', false);
         user.save().then(() => {
           user.get('pendingUserUpdates').then(updates => {
             updates.invoke('deleteRecord');
-            RSVP.all(updates.invoke('save')).then(() => {
+            all(updates.invoke('save')).then(() => {
               this.deletedUpdates.pushObject(update);
               this.updatesBeingSaved.removeObject(update);
               this.flashMessages.success('general.savedSuccessfully');
@@ -101,16 +102,16 @@ export default Controller.extend({
           });
         });
       });
-
     },
-    excludeFromSync(update){
+
+    excludeFromSync(update) {
       this.updatesBeingSaved.pushObject(update);
       update.get('user').then(user => {
         user.set('userSyncIgnore', true);
         user.save().then(() => {
           user.get('pendingUserUpdates').then(updates => {
             updates.invoke('deleteRecord');
-            RSVP.all(updates.invoke('save')).then(() => {
+            all(updates.invoke('save')).then(() => {
               this.deletedUpdates.pushObject(update);
               this.updatesBeingSaved.removeObject(update);
               this.flashMessages.success('general.savedSuccessfully');
@@ -118,7 +119,6 @@ export default Controller.extend({
           });
         });
       });
-
     }
   }
 });

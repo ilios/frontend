@@ -1,12 +1,10 @@
-/* eslint ember/order-in-controllers: 0 */
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { isPresent, isEmpty, isBlank } from '@ember/utils';
+import { gt } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { resolve } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-
-const { gt } = computed;
 
 export default Controller.extend({
   currentUser: service(),
@@ -18,14 +16,11 @@ export default Controller.extend({
     titleFilter: 'filter'
   },
 
+  deletedProgram: null,
+  newProgram: null,
   schoolId: null,
+  showNewProgramForm: false,
   titleFilter: null,
-
-  changeTitleFilter: task(function * (value) {
-    this.set('titleFilter', value);
-    yield timeout(250);
-    return value;
-  }).restartable(),
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
@@ -45,7 +40,7 @@ export default Controller.extend({
     return filteredPrograms.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
+  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function() {
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
     if(isPresent(this.schoolId)){
@@ -72,15 +67,11 @@ export default Controller.extend({
     });
   }),
 
-  canCreate: computed('selectedSchool', async function () {
+  canCreate: computed('selectedSchool', async function() {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateProgram(selectedSchool);
   }),
-
-  showNewProgramForm: false,
-  deletedProgram: null,
-  newProgram: null,
 
   actions: {
     toggleEditor() {
@@ -107,7 +98,7 @@ export default Controller.extend({
       }
     },
 
-    async saveNewProgram(newProgram){
+    async saveNewProgram(newProgram) {
       const school = await this.selectedSchool;
       const duration = 4;
       newProgram.setProperties({school, duration});
@@ -119,7 +110,7 @@ export default Controller.extend({
       return savedProgram;
     },
 
-    async activateProgram(program){
+    async activateProgram(program) {
       program.set('published', true);
       program.set('publishedAsTbd', false);
       await program.save();
@@ -131,6 +122,12 @@ export default Controller.extend({
 
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
-    },
-  }
+    }
+  },
+
+  changeTitleFilter: task(function* (value) {
+    this.set('titleFilter', value);
+    yield timeout(250);
+    return value;
+  }).restartable()
 });

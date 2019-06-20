@@ -1,33 +1,32 @@
-/* eslint ember/order-in-controllers: 0 */
 /* eslint ember/avoid-leaking-state-in-ember-objects: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Controller from '@ember/controller';
-import RSVP from 'rsvp';
-import { isPresent, isEmpty } from '@ember/utils';
-const { Promise } = RSVP;
-const { gt, oneWay, sort } = computed;
+import { computed } from '@ember/object';
+import { gt, oneWay, sort } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isEmpty, isPresent } from '@ember/utils';
+import { Promise } from 'rsvp';
 
 export default Controller.extend({
-  intl: service(),
   currentUser: service(),
+  intl: service(),
   permissionChecker: service(),
 
   queryParams: {
-    schoolId: 'school',
     programId: 'program',
-    sortReportsBy: 'sortBy',
+    schoolId: 'school',
+    sortReportsBy: 'sortBy'
   },
 
-  schools: oneWay('model'),
+  newReport: null,
   programId: null,
   schoolId: null,
-  sortReportsBy: 'name',
-  sortByTitle:['title'],
-  newReport: null,
-  sortedSchools: sort('model', 'sortByTitle'),
-  hasMoreThanOneSchool: gt('model.length', 1),
   showNewCurriculumInventoryForm: false,
+  sortByTitle: ['title'],
+  sortReportsBy: 'name',
+
+  hasMoreThanOneSchool: gt('model.length', 1),
+  schools: oneWay('model'),
+  sortedSchools: sort('model', 'sortByTitle'),
 
   /**
    * The currently selected school. Defaults to the current-user's primary school if none is selected.
@@ -35,7 +34,7 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedSchool: computed('model.[]', 'schoolId', function(){
+  selectedSchool: computed('model.[]', 'schoolId', function() {
     return new Promise(resolve => {
       let schools = this.model;
       const schoolId = this.schoolId;
@@ -60,7 +59,7 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @protected
    */
-  programs: computed('selectedSchool', function(){
+  programs: computed('selectedSchool', function() {
     return new Promise(resolve => {
       this.selectedSchool.then(school => {
         if(isEmpty(school)){
@@ -86,7 +85,7 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedProgram: computed('programs.[]', 'programId', function(){
+  selectedProgram: computed('programs.[]', 'programId', function() {
     return new Promise(resolve => {
       this.programs.then(programs => {
         let program;
@@ -166,6 +165,6 @@ export default Controller.extend({
 
     cancel() {
       this.set('showNewCurriculumInventoryReportForm', false);
-    },
+    }
   }
 });

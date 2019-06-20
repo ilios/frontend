@@ -1,46 +1,39 @@
-/* eslint ember/order-in-controllers: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
 export default Controller.extend({
   currentUser: service(),
-  permissionChecker: service(),
   intl: service(),
+  permissionChecker: service(),
   store: service(),
 
   queryParams: {
-    schoolId: 'school',
     programId: 'program',
     programYearId: 'programYear',
-    titleFilter: 'filter',
+    schoolId: 'school',
+    titleFilter: 'filter'
   },
 
-  schoolId: null,
-  programId: null,
-  programYearId: null,
-  titleFilter: null,
+  currentGroupsSaved: 0,
   deletedGroup: null,
   newGroup: null,
-  totalGroupsToSave: 0,
-  currentGroupsSaved: 0,
+  programId: null,
+  programYearId: null,
+  schoolId: null,
   showNewLearnerGroupForm: false,
-
-  changeTitleFilter: task(function * (value) {
-    this.set('titleFilter', value);
-    yield timeout(250);
-    return value;
-  }).restartable(),
+  titleFilter: null,
+  totalGroupsToSave: 0,
 
   sortedSchools: computed('model.schools', async function() {
     const schools = await this.get('model.schools');
     return schools.sortBy('title');
   }),
 
-  programs: computed('selectedSchool', async function(){
+  programs: computed('selectedSchool', async function() {
     const school = await this.selectedSchool;
     if(isEmpty(school)){
       return [];
@@ -53,12 +46,12 @@ export default Controller.extend({
     });
   }),
 
-  sortedPrograms: computed('programs', async function(){
+  sortedPrograms: computed('programs', async function() {
     const programs = await this.programs;
     return programs.sortBy('title');
   }),
 
-  programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function(){
+  programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function() {
     const program = await this.selectedProgram;
     if(isEmpty(program)){
       return [];
@@ -76,7 +69,7 @@ export default Controller.extend({
     return programYears.sortBy('startYear').reverse();
   }),
 
-  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function(){
+  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function() {
     const programYear = await this.selectedProgramYear;
     if(isEmpty(programYear)) {
       return [];
@@ -85,7 +78,7 @@ export default Controller.extend({
     return await cohort.get('rootLevelLearnerGroups');
   }),
 
-  filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function(){
+  filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function() {
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter;
     const learnerGroups = await this.learnerGroups;
@@ -101,7 +94,7 @@ export default Controller.extend({
     return filteredGroups.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', async function(){
+  selectedSchool: computed('model.schools.[]', 'schoolId', async function() {
     let schools = await this.get('model.schools');
     const schoolId = this.schoolId;
     if(isPresent(schoolId)){
@@ -115,7 +108,7 @@ export default Controller.extend({
     return await user.get('school');
   }),
 
-  selectedProgram: computed('programs.[]', 'programId', async function(){
+  selectedProgram: computed('programs.[]', 'programId', async function() {
     const programs = await this.programs;
     let program;
     const programId = this.programId;
@@ -134,7 +127,7 @@ export default Controller.extend({
     return programs.sortBy('title').get('firstObject');
   }),
 
-  selectedProgramYear: computed('programYears.[]', 'programYearId', async function(){
+  selectedProgramYear: computed('programYears.[]', 'programYearId', async function() {
     const programYears = await this.programYears;
     let programYear;
     const programYearId = this.programYearId;
@@ -147,29 +140,13 @@ export default Controller.extend({
     return programYears.sortBy('startYear').get('lastObject');
   }),
 
-  copyGroup: task(function * (withLearners, learnerGroup) {
-    const store = this.store;
-    const intl = this.intl;
-    const cohort = yield learnerGroup.get('cohort');
-    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners);
-    this.set('totalGroupsToSave', newGroups.length);
-    // indicate that the top group is a copy
-    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
-    // save groups one at a time because we need to save in this order so parents are saved before children
-    for (let i = 0; i < newGroups.length; i++) {
-      yield newGroups[i].save();
-      this.set('currentGroupsSaved', i + 1);
-    }
-    this.set('newGroup', newGroups[0]);
-  }),
-
-  canCreate: computed('selectedSchool', async function () {
+  canCreate: computed('selectedSchool', async function() {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = await this.selectedSchool;
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
-  canDelete: computed('selectedSchool', async function () {
+  canDelete: computed('selectedSchool', async function() {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = await this.selectedSchool;
     return permissionChecker.canDeleteLearnerGroupInSchool(selectedSchool);
@@ -230,7 +207,6 @@ export default Controller.extend({
       this.set('schoolId', school.get('id'));
       this.set('programId', programId);
       this.set('programYearId', null);
-
     },
 
     async changeSelectedProgramYear(programYearId) {
@@ -247,6 +223,28 @@ export default Controller.extend({
       this.set('schoolId', schoolId);
       this.set('programId', null);
       this.set('programYearId', null);
-    },
-  }
+    }
+  },
+
+  changeTitleFilter: task(function* (value) {
+    this.set('titleFilter', value);
+    yield timeout(250);
+    return value;
+  }).restartable(),
+
+  copyGroup: task(function* (withLearners, learnerGroup) {
+    const store = this.store;
+    const intl = this.intl;
+    const cohort = yield learnerGroup.get('cohort');
+    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners);
+    this.set('totalGroupsToSave', newGroups.length);
+    // indicate that the top group is a copy
+    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
+    // save groups one at a time because we need to save in this order so parents are saved before children
+    for (let i = 0; i < newGroups.length; i++) {
+      yield newGroups[i].save();
+      this.set('currentGroupsSaved', i + 1);
+    }
+    this.set('newGroup', newGroups[0]);
+  })
 });
