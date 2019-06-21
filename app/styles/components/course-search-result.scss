@@ -1,10 +1,9 @@
 .course-search-result {
-  border-bottom: 1px solid darken($grey, 5%);
   max-width: 40rem;
   padding: .5rem 0;
 
   .course-flag {
-    background: lighten($ilios-orange, 20%);
+    background: $ilios-orange;
     border-radius: 2px;
     bottom: 2px;
     color: $white;
@@ -12,10 +11,6 @@
     font-size: .625rem;
     padding: 2px 3px 1px;
     position: relative;
-  }
-
-  &:last-child {
-    border: none;
   }
 
   ul {
@@ -49,8 +44,8 @@
     overflow: hidden;
 
     .global-search-tag {
-      background: lighten($grey, 15%);
-      border: 1px solid lighten($dark-grey, 10%);
+      background: $background-grey;
+      border: 1px solid $dark-grey;
       border-radius: .125rem;
       color: $text-grey;
       display: inline-block;
