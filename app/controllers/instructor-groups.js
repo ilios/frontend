@@ -1,16 +1,14 @@
-/* eslint ember/order-in-controllers: 0 */
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { resolve } from 'rsvp';
-import { isPresent, isEmpty, isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 
-const { gt } = computed;
-
 export default Controller.extend({
-  intl: service(),
   currentUser: service(),
+  intl: service(),
   permissionChecker: service(),
 
   queryParams: {
@@ -18,13 +16,15 @@ export default Controller.extend({
     titleFilter: 'filter'
   },
 
-  schoolId: null,
-  titleFilter: null,
-  showNewInstructorGroupForm: false,
-  newInstructorGroup: null,
   deletedInstructorGroup: null,
+  newInstructorGroup: null,
+  schoolId: null,
+  showNewInstructorGroupForm: false,
+  titleFilter: null,
 
-  instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function(){
+  hasMoreThanOneSchool: gt('model.schools.length', 1),
+
+  instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function() {
     let schoolId = this.selectedSchool.get('id');
     if(isEmpty(schoolId)) {
       resolve([]);
@@ -36,15 +36,7 @@ export default Controller.extend({
     });
   }),
 
-  changeTitleFilter: task(function * (value) {
-    this.set('titleFilter', value);
-    yield timeout(250);
-    return value;
-  }).restartable(),
-
-  hasMoreThanOneSchool: gt('model.schools.length', 1),
-
-  filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function(){
+  filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function() {
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter ;
     const instructorGroups = await this.instructorGroups;
@@ -60,7 +52,7 @@ export default Controller.extend({
     return filteredInstructorGroups.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function(){
+  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function() {
     const schools = this.get('model.schools');
     const primarySchool = this.get('model.primarySchool');
     const schoolId = this.schoolId;
@@ -74,13 +66,13 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  canCreate: computed('selectedSchool', async function () {
+  canCreate: computed('selectedSchool', async function() {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateInstructorGroup(selectedSchool);
   }),
 
-  canDelete: computed('selectedSchool', async function () {
+  canDelete: computed('selectedSchool', async function() {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);
@@ -99,7 +91,7 @@ export default Controller.extend({
       }
     },
 
-    async saveNewInstructorGroup(newInstructorGroup){
+    async saveNewInstructorGroup(newInstructorGroup) {
       const savedInstructorGroup = await newInstructorGroup.save();
       this.set('showNewInstructorGroupForm', false);
       this.set('newInstructorGroup', savedInstructorGroup);
@@ -112,8 +104,15 @@ export default Controller.extend({
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
     },
+
     toggleNewInstructorGroupForm() {
       this.set('showNewInstructorGroupForm', !this.showNewInstructorGroupForm);
     }
-  }
+  },
+
+  changeTitleFilter: task(function* (value) {
+    this.set('titleFilter', value);
+    yield timeout(250);
+    return value;
+  }).restartable()
 });

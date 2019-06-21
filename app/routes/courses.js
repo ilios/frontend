@@ -32,6 +32,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return defer.promise;
   },
 
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('sortSchoolsBy', ['title']);
+    controller.set('sortYearsBy', ['title:desc']);
+  },
+
   actions: {
     willTransition() {
       this.controller.set('newCourse', null);

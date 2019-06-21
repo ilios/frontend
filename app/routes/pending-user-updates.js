@@ -24,5 +24,12 @@ export default Route.extend({
     const user = await currentUser.get('model');
     const primarySchool = await user.get('school');
     return { primarySchool, schools };
+  },
+
+  setupController(controller, model) {
+    this._super(controller, model);
+    controller.set('deletedUpdates', []);
+    controller.set('sortSchoolsBy', ['title']);
+    controller.set('updatesBeingSaved', []);
   }
 });
