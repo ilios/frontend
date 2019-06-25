@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
@@ -90,35 +89,31 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', function() {
-    return new Promise(resolve => {
-      const report = this.report;
-      const sequenceBlock = this.sequenceBlock;
-      report.get('program').then(program => {
-        let schoolId = program.belongsTo('school').id();
-        this.store.query('course', {
-          filters: {
-            school: [schoolId],
-            published: true,
-            year: report.get('year'),
-          },
-        }).then(allLinkableCourses => {
-          report.get('linkedCourses').then(linkedCourses => {
-            // Filter out all courses that are linked to (sequence blocks in) this report.
-            let linkableCourses = allLinkableCourses.filter(function(course) {
-              return ! linkedCourses.includes(course);
-            });
-            // Always add the currently linked course to this list, if existent.
-            sequenceBlock.get('course').then(course => {
-              if (isPresent(course)) {
-                linkableCourses.pushObject(course);
-              }
-              resolve(linkableCourses);
-            });
-          });
-        });
-      });
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', 'sequenceBlock.course', async function() {
+    const report = this.report;
+    const sequenceBlock = this.sequenceBlock;
+    const program = await report.program;
+    const schoolId = program.belongsTo('school').id();
+    const allLinkableCourses = await this.store.query('course', {
+      filters: {
+        published: true,
+        school: [schoolId],
+        year: report.get('year')
+      }
     });
+    const linkedCourses = await report.linkedCourses;
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    const linkableCourses = allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
+    });
+    // Always add the currently linked course to this list, if existent.
+    const course = await sequenceBlock.course;
+
+    if (isPresent(course)) {
+      linkableCourses.pushObject(course);
+    }
+
+    return linkableCourses;
   }),
 
   init() {
