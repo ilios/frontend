@@ -129,13 +129,9 @@ export default Component.extend(NewUser, {
     }
   },
 
-  existingUsernames(){
-    const store = this.store;
-    return new Promise(resolve => {
-      store.findAll('authentication').then(authentications => {
-        resolve(authentications.mapBy('username'));
-      });
-    });
+  async existingUsernames() {
+    const authentications = await this.store.findAll('authentication');
+    return authentications.mapBy('username');
   },
 
   /**
