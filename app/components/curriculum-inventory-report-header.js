@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
@@ -36,25 +35,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeName() {
-      const report = this.report;
-      const newName = this.reportName;
+    async changeName() {
+      const { report, reportName } = this.getProperties('report', 'reportName');
       this.send('addErrorDisplayFor', 'reportName');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'reportName');
-            report.set('name', newName);
-            report.save().then((newReport) => {
-              this.set('reportName', newReport.get('name'));
-              this.set('report', newReport);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+
+      if (this.validations.isValid) {
+        this.send('removeErrorDisplayFor', 'reportName');
+        report.set('name', reportName);
+        const newReport = await report.save();
+        this.set('reportName', newReport.name);
+        this.set('report', newReport);
+      }
     },
 
     revertNameChanges() {
