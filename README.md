@@ -1,7 +1,5 @@
 # LTI Dashboard
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ilios/lti-dashboard.svg)](https://greenkeeper.io/)
-
 Learning Tools Interoperability (LTI) application for the Ilios dashboard.
 
 ## Prerequisites
