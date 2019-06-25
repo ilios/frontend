@@ -1,9 +1,42 @@
 .course-search-result {
-  margin-bottom: 1rem;
   max-width: 40rem;
+  padding: .5rem 0;
+
+  .course-flag {
+    background: $ilios-orange;
+    border-radius: 2px;
+    bottom: 2px;
+    color: $white;
+    display: inline-block;
+    font-size: .625rem;
+    padding: 2px 3px 1px;
+    position: relative;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: .25rem .75rem 0;
+
+    .sessions {
+      color: $darker-grey;
+      font-size: .75rem;
+    }
+  }
+
+  .session-title-link {
+    font-size: .875rem;
+  }
 
   .show-more {
     font-size: .75rem;
+    text-transform: capitalize;
+
+    .fa-angle-down {
+      font-size: 1rem;
+      margin-right: .125rem;
+      position: relative;
+      top: 2px;
+    }
   }
 
   .global-search-tags {
@@ -11,8 +44,8 @@
     overflow: hidden;
 
     .global-search-tag {
-      background: lighten($grey, 15%);
-      border: 1px solid lighten($dark-grey, 10%);
+      background: $background-grey;
+      border: 1px solid $dark-grey;
       border-radius: .125rem;
       color: $text-grey;
       display: inline-block;

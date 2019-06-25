@@ -1,9 +1,12 @@
 {{#link-to "course" @course.id class="course-title-link"}}
   {{@course.title}}
 {{/link-to}}
+<span class="course-flag">{{t "general.course"}}</span>
 {{global-search-tags tags=this.courseTags}}
 
 <ul>
+  <li class="sessions">{{t "general.sessions"}}:</li>
+
   {{#each this.sessions as |session|}}
     <li class="session-row">
       {{#link-to "session" @course.id session.id class="session-title-link"}}
@@ -18,7 +21,7 @@
       class="show-more clickable link"
       role="button"
       {{action (mut this.showMore) true}}>
-      [{{t "general.showMore"}}]
+      {{fa-icon "angle-down"}}{{t "general.showMore"}}
     </span>
   {{/if}}
 </ul>
