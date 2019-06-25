@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -28,25 +27,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeTitle() {
+    async changeTitle() {
       const group = this.instructorGroup;
       const newTitle = this.title;
       this.send('addErrorDisplayFor', 'title');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'title');
-            group.set('title', newTitle);
-            group.save().then((newGroup) => {
-              this.set('title', newGroup.get('title'));
-              this.set('instructorGroup', newGroup);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+
+      if (this.validations.isValid) {
+        this.send('removeErrorDisplayFor', 'title');
+        group.set('title', newTitle);
+        const newGroup = await group.save();
+        this.set('title', newGroup.title);
+        this.set('instructorGroup', newGroup);
+      }
     },
 
     revertTitleChanges() {
