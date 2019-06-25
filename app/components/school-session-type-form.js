@@ -75,7 +75,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const assessment = this.assessment;
     const aamcMethods = await this.allAamcMethods;
     const selectedAamcMethodId = this.selectedAamcMethodId;
-    const filteredAamcMethods = aamcMethods.filter(aamcMethod => {
+    return aamcMethods.filter(aamcMethod => {
       const id = aamcMethod.get('id');
       if (id !== selectedAamcMethodId && ! aamcMethod.get('active')) {
         return false;
@@ -86,7 +86,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         return id.indexOf('IM') === 0;
       }
     });
-    return filteredAamcMethods;
   }),
 
   selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function() {
