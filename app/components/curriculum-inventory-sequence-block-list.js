@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
-import { Promise, all } from 'rsvp';
+import { all } from 'rsvp';
 
 const SequenceBlockProxy = ObjectProxy.extend({
   content: null,
@@ -26,48 +26,33 @@ export default Component.extend({
     return isPresent(parent) && parent.get('isOrdered');
   }),
 
-  sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', function() {
-    return new Promise(resolve => {
-      const parent = this.parent;
-      const sequenceBlocks = this.sequenceBlocks;
-      if (isPresent(parent) && parent.get('isOrdered')) {
-        let sortedBlocks = [];
-        sequenceBlocks.sortBy('orderInSequence', 'title', 'id').forEach(block => {
-          sortedBlocks.pushObject(SequenceBlockProxy.create({
-            content: block
-          }));
-        });
-        resolve(sortedBlocks);
+  sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', async function() {
+    const parent = this.parent;
+    const sequenceBlocks = this.sequenceBlocks;
+
+    if (isPresent(parent) && parent.isOrdered) {
+      return sequenceBlocks
+        .sortBy('orderInSequence', 'title', 'id')
+        .map((block) => SequenceBlockProxy.create({ content: block }));
+    } else {
+      if (!sequenceBlocks.length) {
+        return sequenceBlocks;
       } else {
-        let promises = [];
-        let blockProxies = [];
-        if (! sequenceBlocks.length) {
-          resolve(sequenceBlocks);
-        } else {
-          sequenceBlocks.forEach(block => {
-            let proxy = ObjectProxy.create({
-              content: block,
-              level: null
-            });
-            let promise = block.get('academicLevel').then(academicLevel => {
-              proxy.set('level', academicLevel.get('level'));
-              blockProxies.pushObject(proxy);
-            });
-            promises.pushObject(promise);
-            all(promises).then(()=> {
-              let sortedProxies = blockProxies.sortBy('level', 'startDate', 'title', 'id');
-              let sortedBlocks = [];
-              sortedProxies.forEach(sortedProxy => {
-                sortedBlocks.pushObject(SequenceBlockProxy.create({
-                  content: sortedProxy.get('content')
-                }));
-              });
-              resolve(sortedBlocks);
+        const blockProxies = await all(sequenceBlocks.map(async (block) => {
+          const proxy = ObjectProxy.create({ content: block, level: null });
+          const academicLevel = await block.academicLevel;
+          proxy.set('level', academicLevel.level);
+          return proxy;
+        }));
+        return blockProxies
+          .sortBy('level', 'startDate', 'title', 'id')
+          .map((sortedProxy) => {
+            return SequenceBlockProxy.create({
+              content: sortedProxy.content
             });
           });
-        }
       }
-    });
+    }
   }),
 
   init() {
