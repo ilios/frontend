@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   title: [
@@ -37,24 +35,20 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       if (isPresent(competency)) {
         this.set('title', competency.get('title'));
       }
-    }
-  },
+    },
 
-  save: task(function* () {
-    this.send('addErrorDisplayFor', 'title');
-    let {validations} = yield this.validate();
-    return new Promise((resolve, reject) => {
-      if (validations.get('isInvalid')) {
-        reject();
-      } else {
-        const competency = this.competency;
-        const title = this.title;
+    save() {
+      this.send('addErrorDisplayFor', 'title');
+
+      if (this.validations.isValid) {
+        const { competency, title } = this.getProperties('competency', 'title');
+
         if (isPresent(competency)) {
           competency.set('title', title);
         }
+
         this.send('clearErrorDisplay');
-        resolve();
       }
-    });
-  })
+    }
+  }
 });
