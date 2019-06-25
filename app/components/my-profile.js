@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
@@ -24,15 +23,6 @@ export default Component.extend({
 
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
-
-  roles: computed('user.roles.[]', function() {
-    const user = this.user;
-    return new Promise(resolve => {
-      user.get('roles').then(roles => {
-        resolve(roles.mapBy('title'));
-      });
-    });
-  }),
 
   apiDocsUrl: computed('host', 'namespace', function() {
     let apiPath = '/' + this.namespace;
