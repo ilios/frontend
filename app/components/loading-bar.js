@@ -33,7 +33,7 @@ export default Component.extend({
     } else {
       return removeProgress.perform();
     }
-  }).restartable().on('init'),
+  }).restartable().on('didReceiveAttrs'),
 
   removeProgress: task(function * () {
     const progress = this.progress;
