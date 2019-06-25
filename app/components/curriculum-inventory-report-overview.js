@@ -92,25 +92,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeStartDate() {
-      const newDate = this.startDate;
-      const report = this.report;
+    async changeStartDate() {
+      const { report, startDate } = this.getProperties('report', 'startDate');
       this.send('addErrorDisplayFor', 'startDate');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'startDate');
-            report.set('startDate', newDate);
-            report.save().then((newCourse) => {
-              this.set('startDate', newCourse.get('startDate'));
-              this.set('report', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+
+      if (this.validations.isValid) {
+        this.send('removeErrorDisplayFor', 'startDate');
+        report.set('startDate', startDate);
+        const newCourse = await report.save();
+        this.set('startDate', newCourse.startDate);
+        this.set('report', newCourse);
+      }
     },
 
     revertStartDateChanges() {
@@ -118,25 +110,17 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('startDate', report.get('startDate'));
     },
 
-    changeEndDate() {
-      const newDate = this.endDate;
-      const report = this.report;
+    async changeEndDate() {
+      const { endDate, report } = this.getProperties('endDate', 'report');
       this.send('addErrorDisplayFor', 'endDate');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'endDate');
-            report.set('endDate', newDate);
-            report.save().then((newCourse) => {
-              this.set('endDate', newCourse.get('endDate'));
-              this.set('report', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+
+      if (this.validations.isValid) {
+        this.send('removeErrorDisplayFor', 'endDate');
+        report.set('endDate', endDate);
+        const newCourse = await report.save();
+        this.set('endDate', newCourse.endDate);
+        this.set('report', newCourse);
+      }
     },
 
     revertEndDateChanges() {
@@ -155,25 +139,18 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.set('year', this.report.get('year'));
     },
 
-    changeDescription() {
-      const report = this.report;
+    async changeDescription() {
       const newDescription = this.description;
+      const report = this.report;
       this.send('addErrorDisplayFor', 'description');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'description');
-            report.set('description', newDescription);
-            report.save().then((newReport) => {
-              this.set('description', newReport.get('description'));
-              this.set('report', newReport);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+
+      if (this.validations.isValid) {
+        this.send('removeErrorDisplayFor', 'description');
+        report.set('description', newDescription);
+        const newReport = await report.save();
+        this.set('description', newReport.description);
+        this.set('report', newReport);
+      }
     },
 
     revertDescriptionChanges(){
