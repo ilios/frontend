@@ -84,7 +84,7 @@ export default Component.extend({
     }
   },
 
-  searchForUsers: task(function* (query) {
+  searchForUsers: task(function * (query) {
     const intl = this.intl;
 
     let q = cleanQuery(query);
@@ -133,8 +133,8 @@ export default Component.extend({
   }).restartable(),
 
   clickUser: task(function* (user) {
+    yield this.router.transitionTo('user', user.id);
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
-    this.router.transitionTo('user', user.id);
   }).drop(),
 });
