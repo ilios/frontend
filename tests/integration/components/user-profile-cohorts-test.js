@@ -49,6 +49,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
       },
     });
     this.owner.register('service:currentUser', currentUserMock);
+    await this.owner.lookup('service:store').findAll('school');
   });
 
   test('it renders', async function(assert) {

@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'ilios/config/environment';
+import { all } from 'rsvp';
 
 export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
@@ -9,6 +10,7 @@ export default Route.extend(ApplicationRouteMixin, {
   intl: service(),
   moment: service(),
   session: service(),
+  store: service(),
 
   init() {
     this._super(...arguments);
@@ -35,7 +37,10 @@ export default Route.extend(ApplicationRouteMixin, {
     const currentUser = this.currentUser;
     const user = await currentUser.get('model');
     if (user) {
-      await user.get('roles');
+      await all([
+        user.get('roles'),
+        this.store.findAll('school')
+      ]);
     }
   },
 
