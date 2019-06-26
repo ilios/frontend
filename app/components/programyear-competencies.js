@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { Promise, all, filter } from 'rsvp';
+import { all, filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
@@ -12,44 +12,25 @@ export default Component.extend({
   programYear: null,
   selectedCompetencies: null,
 
-  competencies: computed('programYear.program.school.competencies.[]', function() {
-    return new Promise(resolve => {
-      const programYear = this.programYear;
-      programYear.get('program').then(program => {
-        program.get('school').then(school => {
-          school.get('competencies').then(competencies => {
-            resolve(competencies);
-          });
-        });
-      });
-    });
+  competencies: computed('programYear.program.school.competencies.[]', async function() {
+    const program = await this.programYear.program;
+    const school = await program.school;
+    return await school.competencies;
   }),
 
-  domains: computed('competencies.[]', function() {
-    return new Promise(resolve => {
-      this.competencies.then(competencies => {
-        all(competencies.mapBy('domain')).then(domains => {
-          resolve(domains.uniq());
-        });
-      });
-    });
+  domains: computed('competencies.[]', async function() {
+    const competencies = await this.competencies;
+    const domains = await all(competencies.mapBy('domain'));
+    return domains.uniq();
   }),
 
-  competenciesWithSelectedChildren: computed('competencies.[]', 'selectedCompetencies.[]', function() {
+  competenciesWithSelectedChildren: computed('competencies.[]', 'selectedCompetencies.[]', async function() {
     const selectedCompetencies = this.selectedCompetencies;
-    return new Promise(resolve => {
-      this.competencies.then(competencies => {
-        filter(competencies.toArray(), (competency => {
-          return new Promise(resolve => {
-            competency.get('treeChildren').then(children => {
-              let selectedChildren = children.filter(c => selectedCompetencies.includes(c));
-              resolve(selectedChildren.length > 0);
-            });
-          });
-        })).then(competenciesWithSelectedChildren => {
-          resolve(competenciesWithSelectedChildren);
-        });
-      });
+    const competencies = await this.competencies;
+    return await filter(competencies.toArray(), async (competency) => {
+      const children = await competency.treeChildren;
+      const selectedChildren = children.filter((c) => selectedCompetencies.includes(c));
+      return selectedChildren.length > 0;
     });
   }),
 
