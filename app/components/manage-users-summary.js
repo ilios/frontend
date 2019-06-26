@@ -132,8 +132,8 @@ export default Component.extend({
     return results;
   }).restartable(),
 
-  clickUser: task(function* (user) {
-    yield this.router.transitionTo('user', user.id);
+  clickUser: task(function* ({ id }) {
+    yield this.router.transitionTo('user', id);
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
   }).drop(),
