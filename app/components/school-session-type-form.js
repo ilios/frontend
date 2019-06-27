@@ -25,6 +25,7 @@ const Validations = buildValidations({
         return true;
       }
       const assessment = model.get('assessment');
+      console.log(model);
       const lookup = assessment?'AM':'IM';
       if (aamcMethodId.indexOf(lookup) !== 0) {
         return this.createErrorMessage(options.messageKey, aamcMethodId, options);
@@ -70,18 +71,21 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return aamcMethods;
   }),
 
-  filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', async function() {
+  filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', 'selectedAamcMethodId', async function() {
     const assessment = this.assessment;
     const aamcMethods = await this.allAamcMethods;
-    const filteredAamcMethods = aamcMethods.filter(aamcMethod => {
+    const selectedAamcMethodId = this.selectedAamcMethodId;
+    return aamcMethods.filter(aamcMethod => {
       const id = aamcMethod.get('id');
+      if (id !== selectedAamcMethodId && ! aamcMethod.get('active')) {
+        return false;
+      }
       if (assessment) {
         return id.indexOf('AM') === 0;
       } else {
         return id.indexOf('IM') === 0;
       }
     });
-    return filteredAamcMethods;
   }),
 
   selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function() {

@@ -17,10 +17,20 @@ module('Integration | Component | school session types list', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(19);
+    assert.expect(22);
     let assessmentOption = EmberObject.create({
       id: 1,
       name: 'formative'
+    });
+    let aamcMethod1 = EmberObject.create({
+      id: 'AM001',
+      description: 'Lorem Ipsum',
+      active: true,
+    });
+    let aamcMethod2 = EmberObject.create({
+      id: 'AM002',
+      description: 'Dolor Et',
+      active: false,
     });
     let sessionType1 = EmberObject.create({
       id: 1,
@@ -29,6 +39,7 @@ module('Integration | Component | school session types list', function(hooks) {
       assessment: false,
       assessmentOption: resolve(null),
       safeCalendarColor: htmlSafe('#ffffff'),
+      firstAamcMethod: resolve(aamcMethod1),
       sessionCount: 2,
       active: false,
     });
@@ -40,6 +51,7 @@ module('Integration | Component | school session types list', function(hooks) {
       assessment: true,
       assessmentOption: resolve(assessmentOption),
       safeCalendarColor: htmlSafe('#123456'),
+      firstAamcMethod: resolve(aamcMethod2),
       sessionCount: 0,
       active: true,
     });
@@ -50,6 +62,7 @@ module('Integration | Component | school session types list', function(hooks) {
       assessment: false,
       assessmentOption: resolve(null),
       safeCalendarColor: htmlSafe('#cccccc'),
+      firstAamcMethod: resolve(aamcMethod1),
       sessionCount: 2,
       active: true,
     });
@@ -68,24 +81,28 @@ module('Integration | Component | school session types list', function(hooks) {
     const firstSessionCount = `${firstSessionType} td:nth-of-type(2)`;
     const firstAssessment = `${firstSessionType} td:nth-of-type(3) svg`;
     const firstAssessmentOption = `${firstSessionType} td:nth-of-type(4)`;
+    const firstAamcMethod = `${firstSessionType} td:nth-of-type(5)`;
     const firstColorBox = `${firstSessionType} td:nth-of-type(6) .box`;
     const secondSessionType = `${rows}:nth-of-type(2)`;
     const secondTitle = `${secondSessionType} td:nth-of-type(1)`;
     const secondSessionCount = `${secondSessionType} td:nth-of-type(2)`;
     const secondAssessment = `${secondSessionType} td:nth-of-type(3) svg`;
     const secondAssessmentOption = `${secondSessionType} td:nth-of-type(4)`;
+    const secondAamcMethod = `${secondSessionType} td:nth-of-type(5)`;
     const secondColorBox = `${secondSessionType} td:nth-of-type(6) .box`;
     const thirdSessionType = `${rows}:nth-of-type(3)`;
     const thirdTitle = `${thirdSessionType} td:nth-of-type(1)`;
     const thirdSessionCount = `${thirdSessionType} td:nth-of-type(2)`;
     const thirdAssessment = `${thirdSessionType} td:nth-of-type(3) svg`;
     const thirdAssessmentOption = `${thirdSessionType} td:nth-of-type(4)`;
+    const thirdAamcMethod = `${thirdSessionType} td:nth-of-type(5)`;
     const thirdColorBox = `${thirdSessionType} td:nth-of-type(6) .box`;
 
     assert.dom(firstTitle).hasText('first');
     assert.dom(firstSessionCount).hasText('2');
     assert.dom(firstAssessment).hasClass('no');
     assert.dom(firstAssessment).hasClass('fa-ban');
+    assert.dom(firstAamcMethod).hasText(aamcMethod1.get('description'));
     assert.dom(firstAssessmentOption).hasText('');
     assert.equal(find(firstColorBox).style.getPropertyValue('background-color').trim(), ('rgb(204, 204, 204)'));
 
@@ -93,6 +110,7 @@ module('Integration | Component | school session types list', function(hooks) {
     assert.dom(secondSessionCount).hasText('0');
     assert.dom(secondAssessment).hasClass('yes');
     assert.dom(secondAssessment).hasClass('fa-check');
+    assert.dom(secondAamcMethod).hasText(aamcMethod2.get('description') + ' (inactive)');
     assert.dom(secondAssessmentOption).hasText('formative');
     assert.equal(find(secondColorBox).style.getPropertyValue('background-color').trim(), ('rgb(18, 52, 86)'));
 
@@ -101,6 +119,7 @@ module('Integration | Component | school session types list', function(hooks) {
     assert.dom(thirdSessionCount).hasText('2');
     assert.dom(thirdAssessment).hasClass('no');
     assert.dom(thirdAssessment).hasClass('fa-ban');
+    assert.dom(thirdAamcMethod).hasText(aamcMethod1.get('description'));
     assert.dom(thirdAssessmentOption).hasText('');
     assert.equal(find(thirdColorBox).style.getPropertyValue('background-color').trim(), ('rgb(255, 255, 255)'));
   });

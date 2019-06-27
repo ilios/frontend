@@ -28,7 +28,7 @@
               value={{aamcMethod.id}}
               selected={{eq aamcMethod.id selectedAamcMethodId}}
             >
-              {{aamcMethod.description}}
+              {{aamcMethod.description}}{{#if (not aamcMethod.active)}} ({{t "general.inactive"}}){{/if}}
             </option>
           {{/each}}
         </select>
@@ -38,7 +38,10 @@
           <span class="message error">{{v-get this "selectedAamcMethodId" "message"}}</span>
         {{/if}}
       {{else}}
-        <span class="value">{{get (await selectedAamcMethod) "description"}}</span>
+        <span class="value">
+          {{get (await selectedAamcMethod) "description"}}
+          {{#if (not (get (await selectedAamcMethod) "active"))}} ({{t "general.inactive"}}){{/if}}
+        </span>
       {{/if}}
     {{else}}
       {{loading-spinner}}

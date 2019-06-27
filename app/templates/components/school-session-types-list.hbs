@@ -31,7 +31,12 @@
           {{/if}}
         </td>
         <td class="hide-from-small-screen" colspan="2">{{get (await sessionType.assessmentOption) "name"}}</td>
-        <td class="hide-from-small-screen" colspan="2">{{get (await sessionType.firstAamcMethod) "description"}}</td>
+        <td class="hide-from-small-screen" colspan="2">
+          {{get (await sessionType.firstAamcMethod) "description"}}
+          {{#if (not (get (await sessionType.firstAamcMethod) "active"))}}
+            <em>({{t "general.inactive"}})</em>
+          {{/if}}
+        </td>
         <td class="calendar-color hide-from-small-screen">
           <span
             class="box"
