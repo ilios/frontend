@@ -17,11 +17,18 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.expect(9);
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
+    });
+    this.server.create('aamc-method', {
+      id: 'AM002',
+      description: "lorem ipsum",
+      active: false,
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
     });
     this.server.create('assessment-option', {
       name: 'formative'
@@ -77,11 +84,13 @@ module('Integration | Component | school session type form', function(hooks) {
   test('changing assessment changes available aamcMethods', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
     });
 
     this.server.create('assessment-option', {
@@ -204,7 +213,8 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.expect(9);
     const method = this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
     });
 
     const formative = this.server.create('assessment-option', {
@@ -267,7 +277,8 @@ module('Integration | Component | school session type form', function(hooks) {
   test('editing is blocked correctly', async function(assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum"
+      description: "lorem ipsum",
+      active: true,
     });
 
     this.server.create('assessment-option', {
@@ -325,5 +336,74 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.dom(assessmentValue).hasText('Yes');
     assert.dom(assessmentOptionValue).hasText('formative');
     assert.dom(activeValue).hasText('Yes');
+  });
+
+  test('inactive method is labeled as such in dropdown', async function(assert) {
+    assert.expect(2);
+    this.server.create('aamc-method', {
+      id: 'AM001',
+      description: "lorem ipsum",
+      active: false,
+    });
+
+    this.server.create('assessment-option', {
+      name: 'formative'
+    });
+
+    this.set('nothing', () => {});
+    await render(hbs`{{school-session-type-form
+      canEditTitle=true
+      canEditAamcMethod=true
+      canEditCalendarColor=true
+      canEditAssessment=true
+      canEditAssessmentOption=true
+      canEditActive=true
+      title='one'
+      selectedAamcMethodId='AM001'
+      calendarColor='#ffffff'
+      assessment=true
+      selectedAssessmentOptionId='1'
+      save=(action nothing)
+      close=(action nothing)
+    }}`);
+
+    const aamcMethod = '[data-test-aamc-method]';
+    const aamcMethodSelect = `${aamcMethod} select`;
+
+    assert.dom(aamcMethodSelect).hasValue('AM001', 'correct aamc method is selected');
+    assert.dom(aamcMethodSelect).hasText('lorem ipsum (inactive)');
+  });
+
+  test('inactive method is labeled as such in read-only mode', async function(assert) {
+    assert.expect(1);
+    this.server.create('aamc-method', {
+      id: 'AM001',
+      description: "lorem ipsum",
+      active: false,
+    });
+
+    this.server.create('assessment-option', {
+      name: 'formative'
+    });
+
+    this.set('nothing', () => {});
+    await render(hbs`{{school-session-type-form
+      canEditTitle=false
+      canEditAamcMethod=false
+      canEditCalendarColor=false
+      canEditAssessment=false
+      canEditAssessmentOption=false
+      canEditActive=true
+      title='one'
+      selectedAamcMethodId='AM001'
+      calendarColor='#ffffff'
+      assessment=true
+      selectedAssessmentOptionId='1'
+      save=(action nothing)
+      close=(action nothing)
+    }}`);
+
+    const aamcMethodValue = "[data-test-aamc-method] .value";
+    assert.dom(aamcMethodValue).hasText('lorem ipsum (inactive)');
   });
 });
