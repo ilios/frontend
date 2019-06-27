@@ -1,14 +1,13 @@
-import { inject as service } from '@ember/service';
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
-import { task } from 'ember-concurrency';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { task } from 'ember-concurrency';
 import moment from 'moment';
 
-const { Promise, filter } = RSVP;
-const { oneWay } = computed;
-
+const { filter } = RSVP;
 
 export default Mixin.create(ValidationErrorDisplay, {
   store: service(),
@@ -45,47 +44,37 @@ export default Mixin.create(ValidationErrorDisplay, {
     });
   }),
 
-  bestSelectedSchool: computed('schools.[]', 'schoolId', {
-    get(){
-      return new Promise(resolve => {
-        const schoolId = this.schoolId;
-        this.schools.then(schools => {
-          if (schoolId) {
-            let currentSchool = schools.find(school => {
-              return school.get('id') === schoolId;
-            });
-            if (currentSchool) {
-              resolve(currentSchool);
-              return;
-            }
-          }
-          this.get('currentUser.model').then(user => {
-            resolve(user.get('school'));
-          });
-        });
-      });
-    }
-  }).readOnly(),
+  bestSelectedSchool: computed('schoolId', 'schools.[]', async function() {
+    const schoolId = this.schoolId;
+    const schools = await this.schools;
 
-  bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', {
-    get(){
-      return new Promise(resolve => {
-        const primaryCohortId = this.primaryCohortId;
-        this.bestSelectedSchool.then(school => {
-          school.get('cohorts').then(cohorts => {
-            if (primaryCohortId) {
-              let currentCohort = cohorts.find(cohort => cohort.get('id') === primaryCohortId);
-              if (currentCohort) {
-                resolve(currentCohort);
-                return;
-              }
-            }
-            resolve(cohorts.get('lastObject'));
-          });
-        });
-      });
+    if (schoolId) {
+      const currentSchool = schools.findBy('id', schoolId);
+
+      if (currentSchool) {
+        return currentSchool;
+      }
     }
-  }).readOnly(),
+
+    const user = await this.currentUser.model;
+    return user.school;
+  }),
+
+  bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', async function() {
+    const primaryCohortId = this.primaryCohortId;
+    const school = await this.bestSelectedSchool;
+    const cohorts = await school.cohorts;
+
+    if (primaryCohortId) {
+      const currentCohort = cohorts.findBy('id', primaryCohortId);
+
+      if (currentCohort) {
+        return currentCohort;
+      }
+    }
+
+    return cohorts.lastObject;
+  }),
 
   cohorts: oneWay('loadCohorts.lastSuccessful.value'),
   loadCohorts: task(function * () {
