@@ -95,7 +95,7 @@
     "eslint": "^6.0.1",
     "eslint-plugin-node": "^9.0.1",
     "file-saver": "^2.0.2",
-    "ilios-common": "^26.2.2",
+    "ilios-common": "^27.0.0",
     "loader.js": "^4.7.0",
     "normalize.css": "^8.0.0",
     "papaparse": "^5.0.0",
