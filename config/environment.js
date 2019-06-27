@@ -1,5 +1,7 @@
 'use strict';
 
+const API_VERSION = require('./api-version.js');
+
 module.exports = function(environment /*, appConfig */) {
   var ENV = {
     googleFonts: [
@@ -19,7 +21,8 @@ module.exports = function(environment /*, appConfig */) {
     },
     featureFlags: {
       'sessionLinkingAdminUi': true,
-    }
+    },
+    apiVersion: API_VERSION,
   };
 
   if ('development' === environment) {
