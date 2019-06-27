@@ -4,25 +4,16 @@ import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 
-const { filter, Promise, resolve, map } = RSVP;
+const { filter, resolve, map } = RSVP;
 
 export default Service.extend({
   store: service(),
   currentUser: service(),
   intl: service(),
 
-  reportsList: computed('currentUser.model.reports.[]', function(){
-    return new Promise(resolve => {
-      this.currentUser.get('model').then( user => {
-        if(isEmpty(user)){
-          resolve([]);
-        } else {
-          user.get('reports').then( reports => {
-            resolve(reports);
-          });
-        }
-      });
-    });
+  reportsList: computed('currentUser.model.reports.[]', async function() {
+    const user = await this.currentUser.model;
+    return isEmpty(user) ? [] : await user.reports;
   }),
 
   async findResults(report){
