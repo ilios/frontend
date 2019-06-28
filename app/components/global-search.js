@@ -43,7 +43,7 @@ export default Component.extend({
     this.onQuery(q);
 
     const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
-    const url = `${host}/experimental_search/v1/curriculum?q=${q}`;
+    const url = `${host}/search/v1/curriculum?q=${q}`;
     const response = yield fetch(url, {
       headers: this.authHeaders
     });

@@ -10,7 +10,7 @@ module('Integration | Component | global search box', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.get('experimental_search/v1/curriculum', () => {
+    this.server.get('search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third']
@@ -55,7 +55,7 @@ module('Integration | Component | global search box', function(hooks) {
 
     const input = 'typed it';
 
-    this.server.get('experimental_search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('search/v1/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
       assert.ok(queryParams.onlySuggest);
       assert.equal(queryParams.q, input);
