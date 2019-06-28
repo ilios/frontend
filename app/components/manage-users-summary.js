@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
@@ -10,7 +11,8 @@ const MIN_INPUT = 3;
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
-  routing: service('-routing'),
+  router: service(),
+  search: service(),
   store: service(),
 
   classNames: ['manage-users-summary', 'large-component'],
@@ -19,9 +21,31 @@ export default Component.extend({
   canCreate: false,
   searchValue: null,
 
-  searchForUsers: task(function* (query) {
+  /**
+   * Find users using the user API
+   * @param {string} q
+   */
+  async apiSearch(q) {
+    let params = {
+      q,
+      limit: 100,
+      'order_by[lastName]': 'ASC',
+      'order_by[firstName]': 'ASC',
+    };
+
+    return await this.store.query('user', params);
+  },
+
+  /**
+   * Find users using the search index API
+   * @param {string} q
+   */
+  async indexSearch(q) {
+    return this.search.forUsers(q);
+  },
+
+  searchForUsers: task(function * (query) {
     const intl = this.intl;
-    const store = this.store;
 
     let q = cleanQuery(query);
     if (isBlank(q)) {
@@ -36,15 +60,9 @@ export default Component.extend({
         text: intl.t('general.moreInputRequiredPrompt')
       }];
     }
-    let params = { q, limit: 100 };
-
     const searchEnabled = yield this.iliosConfig.searchEnabled;
-    if (!searchEnabled) {
-      params['order_by[lastName]'] = 'ASC';
-      params['order_by[firstName]'] = 'ASC';
-    }
+    const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
 
-    let searchResults = yield store.query('user', params);
     if (searchResults.length === 0) {
       return [{
         type: 'text',
@@ -64,15 +82,21 @@ export default Component.extend({
       }
     ];
     results.pushObjects(mappedResults);
+
     return results;
   }).restartable(),
 
-  clickUser: task(function* (user) {
-    const routing = this.routing;
+  clickUser: task(function* ({ id }) {
+    yield this.router.transitionTo('user', id, {
+      queryParams: {
+        isManagingBio: Ember.DEFAULT_VALUE,
+        isManagingRoles: Ember.DEFAULT_VALUE,
+        isManagingCohorts: Ember.DEFAULT_VALUE,
+        isManagingIcs: Ember.DEFAULT_VALUE,
+        isManagingSchools: Ember.DEFAULT_VALUE
+      }
+    });
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
-    //private routing API requires putting the model we are passing inside of an array
-    //info at https://github.com/emberjs/ember.js/issues/12719#issuecomment-204099140
-    routing.transitionTo('user', [user]);
-  }).drop()
+  }).drop(),
 });

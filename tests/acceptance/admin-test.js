@@ -52,7 +52,7 @@ module('Acceptance | Admin', function(hooks) {
     assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
   });
 
-  test('ordered by when search is disabled', async function (assert) {
+  test('api lookup when search is disabled', async function (assert) {
     assert.expect(4);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function() {
@@ -81,8 +81,8 @@ module('Acceptance | Admin', function(hooks) {
     await triggerEvent(userSearch, 'keyup');
   });
 
-  test('no order by when search is enabled', async function (assert) {
-    assert.expect(2);
+  test('index search when search is enabled', async function (assert) {
+    assert.expect(6);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function() {
       return { config: {
@@ -97,11 +97,20 @@ module('Acceptance | Admin', function(hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/users', ({ db }, { queryParams }) => {
-      assert.notOk('order_by[lastName]' in queryParams);
+    this.server.get('search/v1/users', ({ db }, { queryParams }) => {
+      assert.ok('q' in queryParams);
+      assert.equal(queryParams.q, 'son');
+      assert.ok('size' in queryParams);
+      assert.equal(queryParams.size, 100);
+      assert.notOk('order_by[firstName]' in queryParams);
       assert.notOk('order_by[firstName]' in queryParams);
 
-      return { users: db.users };
+      return {
+        results: {
+          autocomplete: [],
+          users: db.users
+        }
+      };
     });
 
     await fillIn(userSearch, 'son');

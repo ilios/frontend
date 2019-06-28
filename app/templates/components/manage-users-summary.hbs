@@ -1,4 +1,3 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="header">
   <h2 class="title">
     {{t "general.manageUsersSummaryTitle"}}
@@ -41,10 +40,14 @@
     onkeyup={{perform searchForUsers value="target.value"}}
   >
   <ul
-    class="results {{unless
-                     (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
-                     "hidden"
-                   }}"
+    class="
+            results
+            {{unless
+              (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+              "hidden"
+            }}
+            {{if clickUser.isRunning "navigating"}}
+          "
   >
     {{#if searchForUsers.isRunning}}
       <li>{{t "general.currentlySearchingPrompt"}}</li>
@@ -57,7 +60,7 @@
           <li class="summary">{{result.text}}</li>
         {{/if}}
         {{#if (eq result.type "user")}}
-          <li class="user clickable" {{action (perform clickUser) result.user}}>
+          <li class="user {{unless clickUser.isRunning "clickable"}}" {{action (perform clickUser) result.user}}>
             <span class="name">
               {{result.user.fullName}}
               {{#unless result.user.enabled}}
