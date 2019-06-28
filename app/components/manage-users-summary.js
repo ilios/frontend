@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
@@ -86,7 +87,15 @@ export default Component.extend({
   }).restartable(),
 
   clickUser: task(function* ({ id }) {
-    yield this.router.transitionTo('user', id);
+    yield this.router.transitionTo('user', id, {
+      queryParams: {
+        isManagingBio: Ember.DEFAULT_VALUE,
+        isManagingRoles: Ember.DEFAULT_VALUE,
+        isManagingCohorts: Ember.DEFAULT_VALUE,
+        isManagingIcs: Ember.DEFAULT_VALUE,
+        isManagingSchools: Ember.DEFAULT_VALUE
+      }
+    });
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
   }).drop(),
