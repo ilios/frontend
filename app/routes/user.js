@@ -9,6 +9,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   permissionChecker: service(),
   iliosConfig: service(),
   canUpdate: false,
+
   /**
   * Prefetch user relationship data to smooth loading
   **/
@@ -41,6 +42,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       transition.promise.finally(() => {
         controller.set('isLoading', false);
       });
+
+      return true;
     }
   },
 });

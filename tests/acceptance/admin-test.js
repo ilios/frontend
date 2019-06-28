@@ -82,7 +82,7 @@ module('Acceptance | Admin', function(hooks) {
   });
 
   test('index search when search is enabled', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function() {
       return { config: {
@@ -97,7 +97,7 @@ module('Acceptance | Admin', function(hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('experimental_search/v1/users', ({ db }, { queryParams }) => {
+    this.server.get('search/v1/users', ({ db }, { queryParams }) => {
       assert.ok('q' in queryParams);
       assert.equal(queryParams.q, 'son');
       assert.ok('size' in queryParams);

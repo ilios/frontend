@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
@@ -11,26 +10,15 @@ const MIN_INPUT = 3;
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
-  session: service('session'),
+  router: service(),
+  search: service(),
   store: service(),
-  router: service('router'),
 
   classNames: ['manage-users-summary', 'large-component'],
   tagName: 'section',
 
   canCreate: false,
   searchValue: null,
-
-  authHeaders: computed('session.isAuthenticated', function(){
-    const session = this.session;
-    const { jwt } = session.data.authenticated;
-    let headers = {};
-    if (jwt) {
-      headers['X-JWT-Authorization'] = `Token ${jwt}`;
-    }
-
-    return new Headers(headers);
-  }),
 
   /**
    * Find users using the user API
@@ -52,36 +40,7 @@ export default Component.extend({
    * @param {string} q
    */
   async indexSearch(q) {
-    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
-    const url = `${host}/experimental_search/v1/users?q=${q}&size=100`;
-    const response = await fetch(url, {
-      headers: this.authHeaders
-    });
-    const { results: { users } } = await response.json();
-
-    return users.map(user => {
-      user.fullName = this.getUserFullName(user);
-
-      return user;
-    });
-  },
-
-  getUserFullName(user) {
-    if (user.displayName) {
-      return user.displayName;
-    }
-
-    if (!user.firstName || !user.lastName) {
-      return '';
-    }
-
-    const middleInitial = user.middleName?user.middleName.charAt(0):false;
-
-    if (middleInitial) {
-      return `${user.firstName} ${middleInitial}. ${user.lastName}`;
-    } else {
-      return `${user.firstName} ${user.lastName}`;
-    }
+    return this.search.forUsers(q);
   },
 
   searchForUsers: task(function * (query) {
@@ -101,13 +60,7 @@ export default Component.extend({
       }];
     }
     const searchEnabled = yield this.iliosConfig.searchEnabled;
-
-    let searchResults;
-    if (searchEnabled) {
-      searchResults = yield this.indexSearch(q);
-    } else {
-      searchResults = yield this.apiSearch(q);
-    }
+    const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
 
     if (searchResults.length === 0) {
       return [{
