@@ -15,6 +15,7 @@ export default Controller.extend({
     programId: 'program',
     programYearId: 'programYear',
     schoolId: 'school',
+    sortLearnerGroupsBy: 'sortBy',
     titleFilter: 'filter'
   },
 
@@ -25,6 +26,7 @@ export default Controller.extend({
   programYearId: null,
   schoolId: null,
   showNewLearnerGroupForm: false,
+  sortLearnerGroupsBy: 'title',
   titleFilter: null,
   totalGroupsToSave: 0,
 

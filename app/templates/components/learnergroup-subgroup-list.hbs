@@ -45,6 +45,7 @@
     {{#if (is-fulfilled parentGroup.children)}}
       {{#if (get (await parentGroup.children) "length")}}
         {{learnergroup-list
+          bubbleSort=false
           learnerGroups=(await parentGroup.children)
           canDelete=canDelete
           canCreate=canCreate

@@ -111,8 +111,10 @@
           canCopyWithLearners=true
           learnerGroups=(await filteredLearnerGroups)
           query=titleFilter
+          sortBy=this.sortLearnerGroupsBy
           copy=(perform copyGroup)
-          remove=(action "removeLearnerGroup")}}
+          remove=(action "removeLearnerGroup")
+          setSortBy=(action (mut this.sortLearnerGroupsBy))}}
       {{else}}
         {{pulse-loader}}
       {{/if}}
