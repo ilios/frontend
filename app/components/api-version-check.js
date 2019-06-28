@@ -1,13 +1,10 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import ENV from 'ilios/config/environment';
 import { task, timeout } from 'ember-concurrency';
 import { readOnly } from '@ember/object/computed';
 
-const { apiVersion } = ENV.APP;
-
 export default Component.extend({
-  iliosConfig: service(),
+  apiVersion: service(),
   versionMismatch: false,
   updateAvailable: false,
   countdownToUpdate: null,
@@ -19,9 +16,7 @@ export default Component.extend({
     this.loadAttributes.perform();
   },
   loadAttributes: task(function* () {
-    const iliosConfig = this.iliosConfig;
-    const serverApiVersion = yield iliosConfig.get('apiVersion');
-    const versionMismatch = serverApiVersion !== apiVersion;
+    const versionMismatch = yield this.apiVersion.isMismatched;
     if (versionMismatch && 'serviceWorker' in navigator) {
       yield (1000); //wait a second to let the new service worker get fetched if it is available
       const reg = yield navigator.serviceWorker.getRegistration();

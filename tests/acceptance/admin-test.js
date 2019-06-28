@@ -7,9 +7,7 @@ import {
   waitFor
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import ENV from 'ilios/config/environment';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-const { apiVersion } = ENV.APP;
 
 let url = '/admin';
 
@@ -56,6 +54,7 @@ module('Acceptance | Admin', function(hooks) {
 
   test('ordered by when search is disabled', async function (assert) {
     assert.expect(4);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function() {
       return { config: {
         type: 'form',
@@ -84,6 +83,7 @@ module('Acceptance | Admin', function(hooks) {
 
   test('no order by when search is enabled', async function (assert) {
     assert.expect(2);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function() {
       return { config: {
         type: 'form',
