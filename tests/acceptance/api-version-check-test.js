@@ -2,9 +2,6 @@ import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-import ENV from 'ilios/config/environment';
-const { apiVersion } = ENV.APP;
-
 let url = '/';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -19,7 +16,9 @@ module('Acceptance | API Version Check', function(hooks) {
   });
 
   test('No warning shows up when api versions match', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    assert.ok(apiVersion);
     this.server.get('application/config', function() {
       assert.ok(true, 'our config override was called');
       return { config: {

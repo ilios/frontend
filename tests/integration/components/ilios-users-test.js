@@ -5,9 +5,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import ENV from 'ilios/config/environment';
-
-const { apiVersion } = ENV.APP;
 
 module('Integration | Component | ilios users', function(hooks) {
   setupRenderingTest(hooks);
@@ -35,7 +32,9 @@ module('Integration | Component | ilios users', function(hooks) {
   });
 
   test('add user form renders when configured to', async function(assert) {
-    assert.expect(3);
+    assert.expect(4);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    assert.ok(apiVersion);
     this.server.get('application/config', function() {
       return { config: {
         type: 'form',
@@ -73,7 +72,9 @@ module('Integration | Component | ilios users', function(hooks) {
   });
 
   test('directory search renders when configured to', async function(assert) {
-    assert.expect(3);
+    assert.expect(4);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    assert.ok(apiVersion);
     this.server.get('application/config', function() {
       return { config: {
         type: 'form',

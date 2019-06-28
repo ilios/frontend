@@ -1,19 +1,16 @@
 import Service from '@ember/service';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import ENV from 'ilios/config/environment';
-
-const { apiVersion } = ENV.APP;
 
 module('Integration | Component | api version check', function(hooks) {
   setupRenderingTest(hooks);
 
   test('shows no warning when versions match', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     const iliosConfigMock = Service.extend({
-      apiVersion: resolve(apiVersion)
+      apiVersion
     });
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);
@@ -25,7 +22,7 @@ module('Integration | Component | api version check', function(hooks) {
 
   test('shows warning on mismatch', async function(assert) {
     const iliosConfigMock = Service.extend({
-      apiVersion: resolve('bad')
+      apiVersion: 'bad'
     });
     const warningOverlay = '.api-version-check-warning';
     this.owner.register('service:iliosConfig', iliosConfigMock);

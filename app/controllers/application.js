@@ -1,15 +1,12 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import ENV from 'ilios/config/environment';
-
-const { apiVersion } = ENV.APP;
 
 export default Controller.extend({
+  apiVersion: service(),
   currentUser: service(),
   intl: service(),
   session: service(),
 
-  apiVersion,
   currentlyLoading: false,
   errors: null,
   showErrorDisplay: null,
