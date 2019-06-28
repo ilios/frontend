@@ -5,6 +5,7 @@ window.deprecationWorkflow.config = {
   workflow: [
     { handler: "silence", matchId: "ember-cli-page-object.old-collection-api"},
     { handler: "silence", matchId: "ember-metal.run.sync"},
+    { handler: "silence", matchId: "computed-property.override"}, // waiting for https://github.com/yapplabs/ember-modal-dialog/issues/275
     { handler: "silence", matchId: "ember-routing.route-router"},
     { handler: "silence", matchId: "ember-runtime.deprecate-copy-copyable"},
     { handler: "silence", matchId: "ember-polyfills.deprecate-merge"},
