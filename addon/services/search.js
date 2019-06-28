@@ -25,10 +25,8 @@ export default Service.extend({
    * Find courses
    * @param {string} q
    */
-  async forCurriculum(q) {
-    const { results: { courses } } = await this.search('curriculum', q, 1000);
-
-    return courses;
+  async forCurriculum(q, onlySuggestEnabled = false) {
+    return this.search('curriculum', q, 1000, onlySuggestEnabled);
   },
 
   /**
@@ -36,22 +34,28 @@ export default Service.extend({
    * @param {string} q
    * @param {number} size
    */
-  async forUsers(q, size = 100) {
-    const { results: { users } } = await this.search('users', q, size);
+  async forUsers(q, size = 100, onlySuggestEnabled = false) {
+    const { users, autocomplete } = await this.search('users', q, size, onlySuggestEnabled);
 
-    return users.map(user => {
+    const mappedUsers = users.map(user => {
       user.fullName = this.getUserFullName(user);
 
       return user;
     });
+
+    return { autocomplete, users: mappedUsers };
   },
 
-  async search(type, q, size) {
-    const url = `${this.host}/search/v1/${type}?q=${q}&size=${size}`;
+  async search(type, q, size, onlySuggestEnabled) {
+    const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
+    const url = `${this.host}/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
+
     const response = await fetch(url, {
       headers: this.authHeaders
     });
-    return response.json();
+    const { results } = await response.json();
+
+    return results;
   },
 
   getUserFullName(user) {
