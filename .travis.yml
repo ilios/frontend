@@ -50,12 +50,9 @@ jobs:
       env: COVERAGE=false
       script:
        - node_modules/.bin/ember deploy production --activate
-    - stage: send release to sentry
-      if: tag IS present
-      env: COVERAGE=false
-      before_script: npm install -g @sentry/cli
-      script:
+      after_success:
+       - npm install -g @sentry/cli
        - sentry-cli releases new $TRAVIS_TAG
        - sentry-cli releases set-commits --auto $TRAVIS_TAG
-       - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps dist/
+       - sentry-cli releases files $TRAVIS_TAG upload-sourcemaps tmp/deploy-dist/
        - sentry-cli releases finalize $TRAVIS_TAG
