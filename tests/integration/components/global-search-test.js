@@ -3,9 +3,38 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/global-search';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | global-search', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function () {
+    this.server.get('search/v1/curriculum', () => {
+      return {
+        results: {
+          autocomplete: ['first', 'second', 'third'],
+          courses: [{
+            title: 'Course 1',
+            year: 2019,
+            sessions: []
+          }, {
+            title: 'Course 2',
+            year: 2020,
+            sessions: []
+          }, {
+            title: 'Course 3',
+            year: 2021,
+            sessions: []
+          }, {
+            title: 'Course 4',
+            year: 2021,
+            sessions: []
+          }]
+        }
+      };
+    });
+  });
 
   test('it renders', async function(assert) {
     assert.expect(1);
@@ -31,5 +60,25 @@ module('Integration | Component | global-search', function(hooks) {
     await render(hbs`{{global-search onQuery=(action this.query)}}`);
     await component.input('typed it');
     await component.clickIcon();
+  });
+
+  test('academic year filter works properly', async function(assert) {
+    assert.expect(11);
+
+    this.set('query', 'hello world');
+    await render(hbs`{{global-search page=1 query=this.query}}`);
+    assert.equal(component.academicYear, '2021');
+    assert.equal(component.academicYearOptions, '2019 2020 2021');
+    assert.equal(component.courseTitleLinks.length, 2);
+    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 3');
+    assert.equal(component.courseTitleLinks.objectAt(1).text, 'Course 4');
+    await component.selectAcademicYear('2020');
+    assert.equal(component.academicYear, '2020');
+    assert.equal(component.courseTitleLinks.length, 1);
+    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 2');
+    await component.selectAcademicYear('2019');
+    assert.equal(component.academicYear, '2019');
+    assert.equal(component.courseTitleLinks.length, 1);
+    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 1');
   });
 });
