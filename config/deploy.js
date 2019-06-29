@@ -1,7 +1,7 @@
 /* eslint-env node */
-const API_VERSION = require('./api-version.js');
+const API_VERSION = require('ilios-common/config/api-version.js');
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   var ENV = {
     build: {},
     pipeline: {
