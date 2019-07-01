@@ -23,7 +23,8 @@ export default Component.extend({
     const sessions = await course.get('sessions');
     const terms = await map(sessions.toArray(), async session => {
       const sessionTerms = await session.get('terms');
-
+      const hours = await session.get('totalSumDuration');
+      const minutes = Math.round(hours * 60);
       const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async term => {
         const termVocab = await term.get('vocabulary');
         return termVocab.get('id') === vocabulary.get('id');
@@ -31,7 +32,10 @@ export default Component.extend({
       return sessionTermsInThisVocabulary.map(term => {
         return {
           term,
-          session
+          session: {
+            title: session.get('title'),
+            minutes,
+          }
         };
       });
     });
@@ -40,31 +44,26 @@ export default Component.extend({
       return flattened.pushObjects(obj.toArray());
     }, []);
 
-    let termObjects = {};
-    for (let i = 0; i < flat.length; i++) {
-      const { term, session } = flat[i];
-
-      const id = term.get('id');
-      if (typeof termObjects[id] === "undefined") {
-        termObjects[id] = {
+    const termData = flat.reduce((set, { term, session }) => {
+      const termTitle = term.get('title');
+      let existing = set.findBy('label', termTitle);
+      if (!existing) {
+        existing = {
           data: 0,
-          label: term.get('title'),
+          label: termTitle,
           meta: {
-            termTitle: term.get('title'),
+            termTitle,
             termId: term.get('id'),
             sessions: []
           }
         };
+        set.pushObject(existing);
       }
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
-      termObjects[id].data += minutes;
-      termObjects[id].meta.sessions.pushObject(session.get('title'));
-    }
-    const termData = [];
-    Object.keys(termObjects).forEach(key => {
-      termData.push(termObjects[key]);
-    });
+      existing.data += session.minutes;
+      existing.meta.sessions.pushObject(session.title);
+
+      return set;
+    }, []);
 
     const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map(obj => {
