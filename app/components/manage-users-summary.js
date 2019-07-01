@@ -41,7 +41,9 @@ export default Component.extend({
    * @param {string} q
    */
   async indexSearch(q) {
-    return this.search.forUsers(q);
+    const { users } = await this.search.forUsers(q);
+
+    return users;
   },
 
   searchForUsers: task(function * (query) {
