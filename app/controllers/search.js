@@ -7,11 +7,5 @@ export default Controller.extend({
   },
 
   page: 1,
-  query: '',
-
-  actions: {
-    setQuery(query) {
-      this.setProperties({ page: 1, query });
-    }
-  }
+  query: ''
 });

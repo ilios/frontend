@@ -34,11 +34,11 @@ export default Component.extend({
     return new Headers(headers);
   }),
 
-  filteredResults: computed('results', 'selectedYear', function() {
+  filteredResults: computed('results.[]', 'selectedYear', function() {
     return this.results ? this.results.filterBy('year', this.selectedYear) : [];
   }),
 
-  paginatedResults: computed('filteredResults', 'page', 'size', function() {
+  paginatedResults: computed('filteredResults.[]', 'page', 'size', function() {
     const { page, size } = this.getProperties('page', 'size');
     return this.filteredResults.slice((page * size) - size, page * size);
   }),

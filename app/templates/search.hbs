@@ -1,5 +1,5 @@
 <GlobalSearch
   @page={{this.page}}
   @query={{this.query}}
-  @onQuery={{action "setQuery"}}
+  @onQuery={{action (mut this.query)}}
   @onSelectPage={{action (mut this.page)}} />

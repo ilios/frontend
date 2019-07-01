@@ -4,7 +4,9 @@
   {{#if this.paginatedResults}}
     <div class="filters">
       <label>{{t "general.academicYear"}}:</label>
-      <select onchange={{action "setSelectedYear" value="target.value"}}>
+      <select
+        data-test-academic-year-filter
+        onchange={{action "setSelectedYear" value="target.value"}}>
         {{#each this.yearOptions as |year|}}
           <option selected={{is-equal year this.selectedYear}} value={{year}}>
             {{year}}

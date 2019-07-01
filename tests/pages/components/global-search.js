@@ -13,10 +13,10 @@ const definition = {
   noResultsIsVisible: isVisible('.no-results'),
   input: fillable('input.global-search-input'),
   clickIcon: clickable('[data-test-search-icon]'),
-  academicYear: value('select'),
-  academicYearOptions: text('select'),
+  academicYear: value('[data-test-academic-year-filter]'),
+  academicYearOptions: text('[data-test-academic-year-filter]'),
   courseTitleLinks: collection('.course-title-link'),
-  selectAcademicYear: fillable('select')
+  selectAcademicYear: fillable('[data-test-academic-year-filter]')
 };
 
 export default definition;
