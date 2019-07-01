@@ -1,15 +1,30 @@
 <table>
   <thead>
     <tr>
-      <th class="text-left" colspan="2">
+      {{#sortable-th
+        colspan=2
+        sortedAscending=this.sortedAscending
+        click=(action "sortBy" "title")}}
         {{t "general.learnerGroupTitle"}}
-      </th>
-      <th class="text-center hide-from-small-screen">
+      {{/sortable-th}}
+      {{#sortable-th
+        align="center"
+        colspan=1
+        hideFromSmallScreen=true
+        sortedAscending=this.sortedAscending
+        sortType="numeric"
+        click=(action "sortBy" "usersCount")}}
         {{t "general.members"}}
-      </th>
-      <th class="text-center hide-from-small-screen">
+      {{/sortable-th}}
+      {{#sortable-th
+        align="center"
+        colspan=1
+        hideFromSmallScreen=true
+        sortedAscending=this.sortedAscending
+        sortType="numeric"
+        click=(action "sortBy" "childrenCount")}}
         {{t "general.subgroups"}}
-      </th>
+      {{/sortable-th}}
       <th class="text-center hide-from-small-screen">
         {{t "general.courses"}}
       </th>
@@ -18,7 +33,7 @@
   </thead>
 
   <tbody>
-    {{#each (sort-by "title" @learnerGroups) as |learnerGroup|}}
+    {{#each this.sortedLearnerGroups as |learnerGroup|}}
       <tr
         class={{if (contains learnerGroup this.learnerGroupsForRemovalConfirmation) "confirm-removal"}}
         data-test-active-row>
