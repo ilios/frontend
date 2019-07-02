@@ -5,8 +5,6 @@ import Component from '@ember/component';
 import { map, filter } from 'rsvp';
 import { computed } from '@ember/object';
 
-import { translationMacro as t } from "ember-intl";
-
 export default Component.extend({
   intl: service(),
   store: service(),
@@ -18,7 +16,6 @@ export default Component.extend({
   school: null,
   selectedCohorts: null,
 
-  placeholder: t('general.filterPlaceholder'),
   allCohorts: computed('school', async function () {
     const store = this.get('store');
     const permissionChecker = this.get('permissionChecker');

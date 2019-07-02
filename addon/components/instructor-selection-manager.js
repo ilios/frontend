@@ -1,6 +1,5 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { translationMacro as t } from "ember-intl";
 import layout from '../templates/components/instructor-selection-manager';
 
 export default Component.extend({
@@ -13,7 +12,6 @@ export default Component.extend({
   instructorGroups: null,
   'data-test-instructor-selection-manager': true,
 
-  userSearchPlaceholder: t('general.findInstructorOrGroup'),
   actions: {
     addInstructor(user){
       this.addInstructor(user);

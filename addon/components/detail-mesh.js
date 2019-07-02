@@ -3,7 +3,6 @@ import layout from '../templates/components/detail-mesh';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { translationMacro as t } from "ember-intl";
 
 export default Component.extend({
   store: service(),
@@ -19,7 +18,6 @@ export default Component.extend({
   editable: true,
   bufferTerms: null,
   'data-test-detail-mesh': true,
-  placeholder: t('general.meshSearchPlaceholder'),
   terms: oneWay('subject.meshDescriptors'),
   sortedTerms: sort('terms', 'sortTerms'),
   init() {
