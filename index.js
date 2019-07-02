@@ -28,7 +28,7 @@ module.exports = {
     let isRegistered = false;
     for(let i = 0; i < registered.length; i++) {
       const plugin = registered[i];
-      if (plugin.hasOwnProperty('name') && 'v-get' === plugin.name) {
+      if (Object.prototype.hasOwnProperty.call(plugin, 'name') && 'v-get' === plugin.name) {
         isRegistered = true;
         break;
       }

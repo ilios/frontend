@@ -85,7 +85,7 @@ export default Component.extend({
     // grab ILMs only, and group them by session.
     const groups = {};
     preWork.filter(ev => ev.ilmSession).forEach(ilm => {
-      if (! groups.hasOwnProperty(ilm.session)) {
+      if (! Object.prototype.hasOwnProperty.call(groups, ilm.session)) {
         groups[ilm.session] = [];
       }
       groups[ilm.session].pushObject(ilm);

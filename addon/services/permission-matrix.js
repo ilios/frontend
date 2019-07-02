@@ -250,11 +250,11 @@ export default Service.extend({
   async hasPermission(school, capability, userRoles) {
     const matrix = await this.get('permissionMatrix');
     const schoolId = school.get('id');
-    if (!matrix.hasOwnProperty(schoolId)) {
+    if (!Object.prototype.hasOwnProperty.call(matrix, schoolId)) {
       return false;
     }
     const schoolMatrix = matrix[schoolId];
-    if (!schoolMatrix.hasOwnProperty(capability)) {
+    if (!Object.prototype.hasOwnProperty.call(schoolMatrix, capability)) {
       return false;
     }
 
@@ -265,11 +265,11 @@ export default Service.extend({
   async getPermittedRoles(school, capability) {
     const matrix = await this.get('permissionMatrix');
     const schoolId = school.get('id');
-    if (!matrix.hasOwnProperty(schoolId)) {
+    if (!Object.prototype.hasOwnProperty.call(matrix, schoolId)) {
       return [];
     }
     const schoolMatrix = matrix[schoolId];
-    if (!schoolMatrix.hasOwnProperty(capability)) {
+    if (!Object.prototype.hasOwnProperty.call(schoolMatrix, capability)) {
       return [];
     }
 
