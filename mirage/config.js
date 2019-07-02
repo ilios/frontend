@@ -2,7 +2,7 @@ import moment from 'moment';
 import Mirage from 'ember-cli-mirage';
 import ENV from 'ilios/config/environment';
 
-const { apiVersion } = ENV.APP;
+const { apiVersion } = ENV;
 
 import setupMirage from './setup';
 
