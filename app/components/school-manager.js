@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -45,13 +46,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     async changeTitle() {
       const { school, title } = this.getProperties('school', 'title');
       this.send('addErrorDisplayFor', 'title');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('clearErrorDisplay');
         school.set('title', title);
         const newSchool = await school.save();
         this.setProperties({ school: newSchool, title: newSchool.title });
         this.flashMessages.success('general.savedSuccessfully');
+      } else {
+        await reject();
       }
     },
 

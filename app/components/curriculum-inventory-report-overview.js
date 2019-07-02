@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import scrollTo from 'ilios-common/utils/scroll-to';
@@ -95,13 +96,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     async changeStartDate() {
       const { report, startDate } = this.getProperties('report', 'startDate');
       this.send('addErrorDisplayFor', 'startDate');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'startDate');
         report.set('startDate', startDate);
         const newCourse = await report.save();
         this.set('startDate', newCourse.startDate);
         this.set('report', newCourse);
+      } else {
+        await reject();
       }
     },
 
@@ -113,13 +117,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     async changeEndDate() {
       const { endDate, report } = this.getProperties('endDate', 'report');
       this.send('addErrorDisplayFor', 'endDate');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'endDate');
         report.set('endDate', endDate);
         const newCourse = await report.save();
         this.set('endDate', newCourse.endDate);
         this.set('report', newCourse);
+      } else {
+        await reject();
       }
     },
 
@@ -143,13 +150,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const newDescription = this.description;
       const report = this.report;
       this.send('addErrorDisplayFor', 'description');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'description');
         report.set('description', newDescription);
         const newReport = await report.save();
         this.set('description', newReport.description);
         this.set('report', newReport);
+      } else {
+        await reject();
       }
     },
 

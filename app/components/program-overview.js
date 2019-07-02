@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -45,13 +46,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const program = this.program;
       const newTitle = this.shortTitle;
       this.send('addErrorDisplayFor', 'shortTitle');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'shortTitle');
         program.set('shortTitle', newTitle);
         const newProgram = await program.save();
         this.set('shortTitle', newProgram.shortTitle);
         this.set('program', newProgram);
+      } else {
+        await reject();
       }
     },
 

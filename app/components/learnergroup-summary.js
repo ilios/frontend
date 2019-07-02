@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
-import { all, map } from 'rsvp';
+import { all, map, reject } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -69,13 +69,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const learnerGroup = this.learnerGroup;
       const newLocation = this.location;
       this.send('addErrorDisplayFor', 'location');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'location');
         learnerGroup.set('location', newLocation);
         const newLearnerGroup = await learnerGroup.save();
         this.set('location', newLearnerGroup.location);
         this.set('learnerGroup', newLearnerGroup);
+      } else {
+        await reject();
       }
     },
 

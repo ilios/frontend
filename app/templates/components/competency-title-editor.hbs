@@ -2,7 +2,7 @@
 {{#if canUpdate}}
   {{#editable-field
     value=title
-    save=(action "save")
+    save=(perform this.save)
     close=(action "revert")
     saveOnEnter=true
     closeOnEscape=true

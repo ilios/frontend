@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
@@ -38,13 +39,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     async changeName() {
       const { report, reportName } = this.getProperties('report', 'reportName');
       this.send('addErrorDisplayFor', 'reportName');
+      const { validations } = await this.validate();
 
-      if (this.validations.isValid) {
+      if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'reportName');
         report.set('name', reportName);
         const newReport = await report.save();
         this.set('reportName', newReport.name);
         this.set('report', newReport);
+      } else {
+        await reject();
       }
     },
 
