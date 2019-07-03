@@ -50,6 +50,7 @@
     "ember-data": "^3.9.0",
     "ember-drag-drop": "^0.6.2",
     "ember-feature-flags": "^5.0.0",
+    "ember-fetch": "^6.6.0",
     "ember-file-upload": "^2.5.0",
     "ember-intl": "^4.0.0",
     "ember-lifeline": "^4.1.3",
