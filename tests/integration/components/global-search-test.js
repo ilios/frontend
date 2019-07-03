@@ -63,12 +63,18 @@ module('Integration | Component | global-search', function(hooks) {
   });
 
   test('academic year filter works properly', async function(assert) {
-    assert.expect(11);
+    assert.expect(16);
 
     this.set('query', 'hello world');
     await render(hbs`{{global-search page=1 query=this.query}}`);
-    assert.equal(component.academicYear, '2021');
-    assert.equal(component.academicYearOptions, '2019 2020 2021');
+    assert.equal(component.academicYear, '');
+    assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
+    assert.equal(component.courseTitleLinks.length, 4);
+    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 1');
+    assert.equal(component.courseTitleLinks.objectAt(1).text, 'Course 2');
+    assert.equal(component.courseTitleLinks.objectAt(2).text, 'Course 3');
+    assert.equal(component.courseTitleLinks.objectAt(3).text, 'Course 4');
+    await component.selectAcademicYear('2021');
     assert.equal(component.courseTitleLinks.length, 2);
     assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 3');
     assert.equal(component.courseTitleLinks.objectAt(1).text, 'Course 4');

@@ -35,7 +35,16 @@ export default Component.extend({
   }),
 
   filteredResults: computed('results.[]', 'selectedYear', function() {
-    return this.results ? this.results.filterBy('year', this.selectedYear) : [];
+    const results = this.results;
+    const selectedYear = this.selectedYear;
+
+    if (results) {
+      return selectedYear
+        ? results.filterBy('year', this.selectedYear)
+        : results;
+    } else {
+      return [];
+    }
   }),
 
   paginatedResults: computed('filteredResults.[]', 'page', 'size', function() {
@@ -66,14 +75,13 @@ export default Component.extend({
 
   actions: {
     setSelectedYear(year) {
-      this.set('selectedYear', parseInt(year, 10));
+      this.set('selectedYear', year ? parseInt(year, 10) : null);
       this.onSelectPage(1);
     }
   },
 
   setUpYearFilter(years) {
-    const yearOptions = years.uniq().sort();
-    const selectedYear = yearOptions[yearOptions.length-1];
-    this.setProperties({ selectedYear, yearOptions });
+    const yearOptions = years.uniq().sort().reverse();
+    this.set('yearOptions', yearOptions);
   }
 });
