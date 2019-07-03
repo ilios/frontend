@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import fetch from 'fetch';
 
 export default Service.extend({
   iliosConfig: service(),
