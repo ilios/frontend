@@ -4,6 +4,16 @@
     width: 80%;
   }
 
+  .filters {
+    margin: 0 0 1rem 10%;
+    width: 80%;
+
+    select {
+      margin-left: .25rem;
+      outline: none;
+    }
+  }
+
   hr {
     background: $base-border-color;
   }

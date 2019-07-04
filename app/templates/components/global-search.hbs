@@ -1,6 +1,24 @@
 <div class="global-search" data-test-global-search>
   <GlobalSearchBox @initialQuery={{@query}} @search={{@onQuery}} />
 
+  {{#if this.paginatedResults}}
+    <div class="filters">
+      <label>{{t "general.academicYear"}}:</label>
+      <select
+        data-test-academic-year-filter
+        onchange={{action "setSelectedYear" value="target.value"}}>
+        <option selected={{is-equal null this.selectedYear}} value="">
+          {{t "general.allAcademicYears"}}
+        </option>
+        {{#each this.yearOptions as |year|}}
+          <option selected={{is-equal year this.selectedYear}} value={{year}}>
+            {{year}} - {{inc year}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  {{/if}}
+
   <hr>
 
   <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}">
@@ -21,6 +39,6 @@
 
 <PaginationLinks
   @page={{this.page}}
-  @results={{this.results}}
+  @results={{this.filteredResults}}
   @size={{this.size}}
   @onSelectPage={{@onSelectPage}} />
