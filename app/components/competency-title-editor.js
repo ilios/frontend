@@ -53,7 +53,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
       this.send('clearErrorDisplay');
     } else {
-      yield reject();
+      return reject();
     }
   })
 });

@@ -35,7 +35,7 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
    * @public
    */
   sortedReports: computed('user.reports.[]', async function() {
-    const reports = await this.user.reports;
+    const reports = await this.user.get('reports');
     return reports.sortBy('title');
   }),
 

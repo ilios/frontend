@@ -29,7 +29,7 @@ const PrepositionObject = EmberObject.extend({
     if (type === 'mesh term') {
       return model.name;
     } else if (type === 'term') {
-      const vocabulary = await model.vocabulary;
+      const vocabulary = await model.get('vocabulary');
       const titleWithParentTitles = await model.titleWithParentTitles;
       return `${vocabulary.title} > ${titleWithParentTitles}`;
     } else {
