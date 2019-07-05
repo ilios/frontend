@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent, isEmpty } from '@ember/utils';
-import { Promise as RSVPPromise } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
@@ -37,30 +36,27 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return sessionTypes.filterBy('active', true);
   }),
 
-  selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', function(){
-    return new RSVPPromise(resolve => {
-      let selectedSessionType;
-      this.get('sessionTypes').then(sessionTypes => {
-        const selectedSessionTypeId = this.get('selectedSessionTypeId');
-        if(isPresent(selectedSessionTypeId)){
-          selectedSessionType = sessionTypes.find(sessionType => {
-            return parseInt(sessionType.get('id'), 10) === parseInt(selectedSessionTypeId, 10);
-          });
-        }
+  selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', async function() {
+    let selectedSessionType;
+    const sessionTypes = await this.sessionTypes;
+    const selectedSessionTypeId = this.selectedSessionTypeId;
 
-        if (isEmpty(selectedSessionType)){
-          //try and default to a type names 'Lecture';
-          selectedSessionType = sessionTypes.find(sessionType => sessionType.get('title') === 'Lecture');
-        }
-
-        if(isEmpty(selectedSessionType)){
-          selectedSessionType = sessionTypes.get('firstObject');
-        }
-
-        resolve(selectedSessionType);
-
+    if (isPresent(selectedSessionTypeId)) {
+      selectedSessionType = sessionTypes.find((sessionType) => {
+        return parseInt(sessionType.id, 10) === parseInt(selectedSessionTypeId, 10);
       });
-    });
+    }
+
+    if (isEmpty(selectedSessionType)) {
+      // try and default to a type names 'Lecture';
+      selectedSessionType = sessionTypes.find(sessionType => sessionType.title === 'Lecture');
+    }
+
+    if (isEmpty(selectedSessionType)) {
+      selectedSessionType = sessionTypes.firstObject;
+    }
+
+    return selectedSessionType;
   }),
 
   saveNewSession: task(function * () {

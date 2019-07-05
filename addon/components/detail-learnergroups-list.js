@@ -1,12 +1,7 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import {
-  all,
-  Promise as RSVPPromise,
-  filter,
-  map
-} from 'rsvp';
 import { isEmpty } from '@ember/utils';
+import { all, filter, map } from 'rsvp';
 import layout from '../templates/components/detail-learnergroups-list';
 
 export default Component.extend({
@@ -52,21 +47,18 @@ export default Component.extend({
     });
   }),
 
-  lowestLeaves: computed('learnerGroups.[]', function(){
-    const learnerGroups = this.get('learnerGroups').toArray();
+  lowestLeaves: computed('learnerGroups.[]', async function() {
+    const learnerGroups = this.learnerGroups;
     const ids = learnerGroups.mapBy('id');
-    return new RSVPPromise(resolve => {
-      if (isEmpty(learnerGroups)) {
-        return resolve([]);
-      }
-      filter(learnerGroups, group => {
-        return new RSVPPromise(resolve => {
-          group.get('allDescendants').then(children => {
-            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
-            resolve(selectedChildren.length === 0);
-          });
-        });
-      }).then(lowestLeaves => resolve(lowestLeaves));
+
+    if (isEmpty(learnerGroups)) {
+      return [];
+    }
+
+    return await filter(learnerGroups.toArray(), async (group) => {
+      const children = await group.allDescendants;
+      const selectedChildren = children.filter((child) => ids.includes(child.id));
+      return selectedChildren.length === 0;
     });
-  }),
+  })
 });

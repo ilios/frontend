@@ -74,7 +74,7 @@ module('Integration | Component | course summary header', function(hooks) {
       currentRouteName: 'course-materials',
       generateURL(){},
     });
-    this.owner.register('service:-routing', routerMock);
+    this.owner.register('service:router', routerMock);
 
     let course = EmberObject.create({
       title: 'title',
@@ -98,7 +98,7 @@ module('Integration | Component | course summary header', function(hooks) {
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
-    this.owner.register('service:-routing', routerMock);
+    this.owner.register('service:router', routerMock);
 
     let course = EmberObject.create({
       title: 'title',
@@ -122,7 +122,7 @@ module('Integration | Component | course summary header', function(hooks) {
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
-    this.owner.register('service:-routing', routerMock);
+    this.owner.register('service:router', routerMock);
     let permissionCheckerMock = Service.extend({
       canCreateCourse(inSchool) {
         assert.equal(school, inSchool);

@@ -1,13 +1,11 @@
 <div class="course-summary-header-top">
   <h2>{{course.title}}</h2>
   <div class="course-summary-actions">
-    {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
+    {{#if this.showMaterials}}
       {{#link-to "course-materials" course class="materials"}}
-        {{fa-icon
-          "archive"
-          title=(t "general.learningMaterialsSummary")
+        {{fa-icon "archive"
           fixedWidth=true
-        }}
+          title=(t "general.learningMaterialsSummary")}}
       {{/link-to}}
     {{/if}}
     {{#link-to "print_course" course (query-params unpublished=true) class="print"}}

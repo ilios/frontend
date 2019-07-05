@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import layout from '../templates/components/course-header';
 import { computed } from '@ember/object';
-import { Promise as RSVPPromise } from 'rsvp';
+import { reject } from 'rsvp';
 import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -32,27 +32,25 @@ export default Component.extend(Validations, Publishable, ValidationErrorDisplay
     this._super(...arguments);
     this.set('courseTitle', this.get('course.title'));
   },
+
   actions: {
-    changeTitle() {
-      const course = this.get('course');
-      const newTitle = this.get('courseTitle');
+    async changeTitle() {
+      const course = this.course;
+      const newTitle = this.courseTitle;
       this.send('addErrorDisplayFor', 'courseTitle');
-      return new RSVPPromise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'courseTitle');
-            course.set('title', newTitle);
-            course.save().then((newCourse) => {
-              this.set('courseTitle', newCourse.get('title'));
-              this.set('course', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'courseTitle');
+        course.set('title', newTitle);
+        const newCourse = await course.save();
+        this.set('courseTitle', newCourse.title);
+        this.set('course', newCourse);
+      } else {
+        await reject();
+      }
     },
+
     revertTitleChanges(){
       const course = this.get('course');
       this.set('courseTitle', course.get('title'));

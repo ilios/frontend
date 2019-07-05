@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { Promise as RSVPPromise, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/learnergroup-tree';
@@ -26,20 +26,17 @@ export default Component.extend({
    * Recursivly search a group tree to see if there are any children
    * which have not been selected
   **/
-  hasUnSelectedChildren(children){
-    const selectedGroups = this.get('selectedGroups');
-    return new RSVPPromise(resolve => {
-      filter(children.toArray(), (child => {
-        if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
-          return true;
-        }
-        return child.get('children').then(childChildren => {
-          return this.hasUnSelectedChildren(childChildren);
-        });
-      })).then(unselectedChildren => {
-        resolve(unselectedChildren.length > 0);
-      });
+  async hasUnSelectedChildren(children){
+    const selectedGroups = this.selectedGroups;
+    const unselectedChildren = await filter(children.toArray(), async (child) => {
+      if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
+        return true;
+      }
+
+      const childChildren = await child.children;
+      return await this.hasUnSelectedChildren(childChildren);
     });
+    return unselectedChildren.length > 0;
   },
   /**
    * Controls visibility of the learner group element
