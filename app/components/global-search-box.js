@@ -1,18 +1,16 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { task, timeout } from 'ember-concurrency';
-import fetch from 'fetch';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
 export default Component.extend({
   iliosConfig: service(),
-  session: service(),
+  iliosSearch: service('search'),
 
   autocompleteCache: null,
   initialQuery: null,
@@ -24,17 +22,6 @@ export default Component.extend({
   isLoading: reads('autocomplete.isRunning'),
   hasResults: reads('results.length'),
   results: reads('autocomplete.lastSuccessful.value'),
-
-  authHeaders: computed('session.isAuthenticated', function(){
-    const session = this.session;
-    const { jwt } = session.data.authenticated;
-    let headers = {};
-    if (jwt) {
-      headers['X-JWT-Authorization'] = `Token ${jwt}`;
-    }
-
-    return new Headers(headers);
-  }),
 
   init() {
     this._super(...arguments);
@@ -212,12 +199,7 @@ export default Component.extend({
 
     yield timeout(DEBOUNCE_MS);
 
-    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
-    const url = `${host}/search/v1/curriculum?q=${q}&onlySuggest=true`;
-    const response = yield fetch(url, {
-      headers: this.authHeaders
-    });
-    const { results: { autocomplete } } = yield response.json();
+    const { autocomplete } = yield this.iliosSearch.forCurriculum(q, true);
     this.autocompleteCache.pushObject({ q, autocomplete });
 
     return autocomplete.map(text => {

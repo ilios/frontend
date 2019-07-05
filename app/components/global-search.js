@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { computed } from '@ember/object';
-import fetch from 'fetch';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
@@ -9,7 +8,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
-  session: service(),
+  iliosSearch: service('search'),
 
   page: null,
   query: null,
@@ -22,17 +21,6 @@ export default Component.extend({
   isLoading: reads('search.isRunning'),
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
-
-  authHeaders: computed('session.isAuthenticated', function() {
-    const session = this.session;
-    const { jwt } = session.data.authenticated;
-    let headers = {};
-    if (jwt) {
-      headers['X-JWT-Authorization'] = `Token ${jwt}`;
-    }
-
-    return new Headers(headers);
-  }),
 
   filteredResults: computed('results.[]', 'selectedYear', function() {
     const results = this.results;
@@ -55,13 +43,9 @@ export default Component.extend({
   search: task(function* () {
     const q = cleanQuery(this.query);
     this.onQuery(q);
-    const host = this.iliosConfig.apiHost?this.iliosConfig.apiHost:window.location.protocol + '//' + window.location.host;
-    const url = `${host}/search/v1/curriculum?q=${q}`;
-    const response = yield fetch(url, {
-      headers: this.authHeaders
-    });
-    const { results: { courses } } = yield response.json();
+    const { courses } = yield this.iliosSearch.forCurriculum(q);
     this.setUpYearFilter(courses.mapBy('year'));
+
     return courses;
   }).observes('query').restartable(),
 

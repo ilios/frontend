@@ -9,7 +9,55 @@ module('Integration | Component | global-search', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
+  test('it renders', async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`{{global-search}}`);
+    assert.dom('[data-test-global-search-box]').exists({ count: 1 });
+  });
+
+  test('handles empty and non-empty query', async function(assert) {
+    assert.expect(4);
+    this.server.get('search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+      assert.equal(q, 'hello world');
+      assert.notOk(onlySuggest);
+      return {
+        results: {
+          autocomplete: [],
+          courses: []
+        }
+      };
+    });
+
+    this.set('query', '');
+    await render(hbs`{{global-search query=this.query}}`);
+    assert.ok(component.noResultsIsVisible);
+    this.set('query', 'hello world');
+    assert.notOk(component.noResultsIsVisible);
+  });
+
+  test('bubbles action properly', async function(assert) {
+    assert.expect(3);
+    this.server.get('search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+      assert.equal(q, 'typed it');
+      assert.ok(onlySuggest);
+      return {
+        results: {
+          autocomplete: [],
+          courses: []
+        }
+      };
+    });
+
+    this.set('query', (value) => assert.equal(value, 'typed it'));
+    await render(hbs`{{global-search onQuery=(action this.query)}}`);
+    await component.input('typed it');
+    await component.clickIcon();
+  });
+
+  test('academic year filter works properly', async function(assert) {
+    assert.expect(16);
+
     this.server.get('search/v1/curriculum', () => {
       return {
         results: {
@@ -34,36 +82,6 @@ module('Integration | Component | global-search', function(hooks) {
         }
       };
     });
-  });
-
-  test('it renders', async function(assert) {
-    assert.expect(1);
-
-    await render(hbs`{{global-search}}`);
-    assert.dom('[data-test-global-search-box]').exists({ count: 1 });
-  });
-
-  test('handles empty and non-empty query', async function(assert) {
-    assert.expect(2);
-
-    this.set('query', '');
-    await render(hbs`{{global-search query=this.query}}`);
-    assert.ok(component.noResultsIsVisible);
-    this.set('query', 'hello world');
-    assert.notOk(component.noResultsIsVisible);
-  });
-
-  test('bubbles action properly', async function(assert) {
-    assert.expect(1);
-
-    this.set('query', (value) => assert.equal(value, 'typed it'));
-    await render(hbs`{{global-search onQuery=(action this.query)}}`);
-    await component.input('typed it');
-    await component.clickIcon();
-  });
-
-  test('academic year filter works properly', async function(assert) {
-    assert.expect(16);
 
     this.set('query', 'hello world');
     await render(hbs`{{global-search page=1 query=this.query}}`);
