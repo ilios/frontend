@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import { Promise } from 'rsvp';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -42,25 +42,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeShortTitle() {
+    async changeShortTitle() {
       const program = this.program;
       const newTitle = this.shortTitle;
       this.send('addErrorDisplayFor', 'shortTitle');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'shortTitle');
-            program.set('shortTitle', newTitle);
-            program.save().then((newProgram) => {
-              this.set('shortTitle', newProgram.get('shortTitle'));
-              this.set('program', newProgram);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'shortTitle');
+        program.set('shortTitle', newTitle);
+        const newProgram = await program.save();
+        this.set('shortTitle', newProgram.shortTitle);
+        this.set('program', newProgram);
+      } else {
+        await reject();
+      }
     },
 
     revertShortTitleChanges() {

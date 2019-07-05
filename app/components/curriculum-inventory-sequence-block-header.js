@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { Promise } from 'rsvp';
+import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -31,25 +31,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeTitle() {
+    async changeTitle() {
       const block = this.sequenceBlock;
       const newTitle = this.blockTitle;
       this.send('addErrorDisplayFor', 'blockTitle');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'blockTitle');
-            block.set('title', newTitle);
-            block.save().then((newBlock) => {
-              this.set('blockTitle', newBlock.get('title'));
-              this.set('sequenceBlock', newBlock);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'blockTitle');
+        block.set('title', newTitle);
+        const newBlock = await block.save();
+        this.set('blockTitle', newBlock.get('title'));
+        this.set('sequenceBlock', newBlock);
+      } else {
+        await reject();
+      }
     },
 
     revertTitleChanges() {

@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { gt, sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { Promise, all } from 'rsvp';
+import { all } from 'rsvp';
 
 export default Controller.extend({
   flashMessages: service(),
@@ -34,36 +34,31 @@ export default Controller.extend({
     return this.get('model.primarySchool');
   }),
 
-  allUpdates: computed('selectedSchool', function() {
-    return new Promise(resolve => {
-      let school = this.selectedSchool;
-      this.store.query('pending-user-update', {
-        filters: {
-          schools: [school.get('id')]
-        }
-      }).then(updates => {
-        //preload user for each update
-        all(updates.mapBy('user')).then(() => {
-          resolve(updates);
-        });
-      });
-    });
+  allUpdates: computed('selectedSchool', async function() {
+    const school = this.selectedSchool;
+    const filters = { schools: [school.id] };
+    const updates = await this.store.query('pending-user-update', { filters });
+    // Preload user for each update
+    await all(updates.mapBy('user'));
+    return updates;
   }),
 
-  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', function() {
-    const limit = this.limit;
-    const offset = this.offset;
+  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', async function() {
+    const { limit, offset } = this.getProperties('limit', 'offset');
     const end = limit + offset;
-    return new Promise(resolve => {
-      this.allUpdates.then(allUpdates => {
-        let sortedUpdates = allUpdates.sortBy('user.lastName', 'user.firstName').slice(offset, end).filter(update => {
-          return !this.deletedUpdates.includes(update) &&
-            (isEmpty(update.get('user.fullName'))
-              || update.get('user.fullName').toLowerCase().includes(this.filter.toLowerCase()));
-        });
-        resolve(sortedUpdates);
+    const allUpdates = await this.allUpdates;
+    return allUpdates
+      .sortBy('user.lastName', 'user.firstName')
+      .slice(offset, end)
+      .filter((update) => {
+        const isNotDeleted = !this.deletedUpdates.includes(update);
+        const noUpdateName = isEmpty(update.get('user.fullName'));
+        const filterMatch = update
+          .get('user.fullName')
+          .toLowerCase()
+          .includes(this.filter.toLowerCase());
+        return isNotDeleted && (noUpdateName || filterMatch);
       });
-    });
   }),
 
   actions: {

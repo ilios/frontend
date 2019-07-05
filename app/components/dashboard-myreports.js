@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import { Promise } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import DomMixin from 'ember-lifeline/mixins/dom';
 import ReportTitleMixin from 'ilios/mixins/report-title';
@@ -35,12 +34,9 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
    * @type {Ember.computed}
    * @public
    */
-  sortedReports: computed('user.reports.[]', function() {
-    return new Promise(resolve => {
-      this.user.get('reports').then(reports => {
-        resolve(reports.sortBy('title'));
-      });
-    });
+  sortedReports: computed('user.reports.[]', async function() {
+    const reports = await this.user.get('reports');
+    return reports.sortBy('title');
   }),
 
   reportResultsList: computed('selectedReport', 'selectedYear', async function() {

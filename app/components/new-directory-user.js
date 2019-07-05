@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import NewUser from 'ilios/mixins/newuser';
@@ -54,12 +53,9 @@ export default Component.extend(NewUser, Validations, {
   selectedUser: false,
   tooManyResults: false,
 
-  allowCustomUserName: computed('iliosConfig.authenticationType', function() {
-    return new Promise (resolve => {
-      this.get('iliosConfig.authenticationType').then(type => {
-        resolve(type === 'form');
-      });
-    });
+  allowCustomUserName: computed('iliosConfig.authenticationType', async function() {
+    const type = await this.iliosConfig.authenticationType;
+    return type === 'form';
   }),
 
   init() {

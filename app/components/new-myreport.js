@@ -3,7 +3,7 @@ import EmberObject, { computed } from '@ember/object';
 import { equal, oneWay } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isPresent, isEmpty } from '@ember/utils';
-import { Promise, map } from 'rsvp';
+import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -23,26 +23,18 @@ const PrepositionObject = EmberObject.extend({
 
   value: oneWay('model.id'),
 
-  label: computed('model', 'type', function() {
-    const type = this.type;
-    const model = this.model;
-    return new Promise(resolve => {
-      switch (type) {
-      case 'mesh term':
-        resolve(model.get('name'));
-        break;
-      case 'term':
-        model.get('vocabulary').then(vocabulary => {
-          model.get('titleWithParentTitles').then(titleWithParentTitles => {
-            const title = vocabulary.get('title') + ' > ' + titleWithParentTitles;
-            resolve(title);
-          });
-        });
-        break;
-      default:
-        resolve(model.get('title'));
-      }
-    });
+  label: computed('model', 'type', async function() {
+    const { model, type } = this.getProperties('model', 'type');
+
+    if (type === 'mesh term') {
+      return model.name;
+    } else if (type === 'term') {
+      const vocabulary = await model.get('vocabulary');
+      const titleWithParentTitles = await model.titleWithParentTitles;
+      return `${vocabulary.title} > ${titleWithParentTitles}`;
+    } else {
+      return model.title;
+    }
   }),
 
   active: computed('model', 'type', function() {

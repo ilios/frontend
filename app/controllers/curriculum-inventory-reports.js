@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { gt, oneWay, sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { Promise } from 'rsvp';
 
 export default Controller.extend({
   currentUser: service(),
@@ -33,23 +32,20 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedSchool: computed('model.[]', 'schoolId', function() {
-    return new Promise(resolve => {
-      let schools = this.model;
-      const schoolId = this.schoolId;
-      if(isPresent(schoolId)){
-        let school = schools.findBy('id', schoolId);
-        if(school){
-          resolve(school);
-        }
-      } else {
-        this.currentUser.get('model').then(user => {
-          user.get('school').then(school => {
-            resolve(school);
-          });
-        });
+  selectedSchool: computed('model.[]', 'schoolId', async function() {
+    const schools = this.model;
+    const schoolId = this.schoolId;
+
+    if (isPresent(schoolId)){
+      const school = schools.findBy('id', schoolId);
+
+      if (school) {
+        return school;
       }
-    });
+    } else {
+      const user = await this.currentUser.model;
+      return await user.school;
+    }
   }),
 
   /**
@@ -58,23 +54,16 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @protected
    */
-  programs: computed('selectedSchool', function() {
-    return new Promise(resolve => {
-      this.selectedSchool.then(school => {
-        if(isEmpty(school)){
-          resolve([]);
-        } else {
-          this.store.query('program', {
-            filters: {
-              school: school.get('id'),
-              published: true
-            }
-          }).then(programs => {
-            resolve(programs.toArray());
-          });
-        }
-      });
-    });
+  programs: computed('selectedSchool', async function() {
+    const school = await this.selectedSchool;
+
+    if (isEmpty(school)){
+      return [];
+    } else {
+      const filters = { published: true, school: school.id };
+      const programs = await this.store.query('program', { filters });
+      return programs.toArray();
+    }
   }),
 
   /**
@@ -84,26 +73,20 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedProgram: computed('programs.[]', 'programId', function() {
-    return new Promise(resolve => {
-      this.programs.then(programs => {
-        let program;
-        let programId = this.programId;
-        if(isPresent(programId)){
-          program = programs.findBy('id', programId);
-        }
-        if(program){
-          resolve(program);
-        } else {
-          if(programs.length){
-            program = programs.sortBy('title').get('firstObject');
-            resolve(program);
-          } else {
-            resolve(null);
-          }
-        }
-      });
-    });
+  selectedProgram: computed('programs.[]', 'programId', async function() {
+    const programs = await this.programs;
+    const programId = this.programId;
+    let program;
+
+    if (isPresent(programId)) {
+      program = programs.findBy('id', programId);
+    }
+
+    if (program) {
+      return program;
+    } else {
+      return programs.length ? programs.sortBy('title').firstObject : null;
+    }
   }),
 
   canCreate: computed('selectedSchool', async function () {
@@ -147,19 +130,13 @@ export default Controller.extend({
       this.set('showNewCurriculumInventoryReportForm', !this.showNewCurriculumInventoryReportForm);
     },
 
-    saveNewCurriculumInventoryReport(newReport) {
-      return new Promise(resolve => {
-        newReport.save().then(savedReport => {
-          this.set('newReport', savedReport);
-          this.selectedProgram.then(program => {
-            program.get('curriculumInventoryReports').then(reports => {
-              reports.pushObject(savedReport);
-              this.set('showNewCurriculumInventoryReportForm', false);
-              resolve(savedReport);
-            });
-          });
-        });
-      });
+    async saveNewCurriculumInventoryReport(newReport) {
+      const savedReport = await newReport.save();
+      this.set('newReport', savedReport);
+      const program = await this.selectedProgram;
+      const reports = await program.curriculumInventoryReports;
+      reports.pushObject(savedReport);
+      this.set('showNewCurriculumInventoryReportForm', false);
     },
 
     cancel() {

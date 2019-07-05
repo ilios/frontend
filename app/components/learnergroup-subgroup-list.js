@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { Promise, all } from 'rsvp';
+import { all } from 'rsvp';
 import { task } from 'ember-concurrency';
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
@@ -30,61 +30,51 @@ export default Component.extend({
   },
 
   actions: {
-    saveNewLearnerGroup(title) {
-      return new Promise(resolve => {
-        const { store, parentGroup } = this;
-        parentGroup.get('cohort').then((cohort) => {
-          let newLearnerGroup = store.createRecord('learner-group', { title, parent: parentGroup, cohort });
-          newLearnerGroup.save().then((savedLearnerGroup) => {
-            this.set('showNewLearnerGroupForm', false);
-            this.set('saved', true);
-            this.set('savedGroup', savedLearnerGroup);
-            resolve(savedLearnerGroup);
-          });
-        });
+    async saveNewLearnerGroup(title) {
+      const { parentGroup, store } = this;
+      const cohort = await parentGroup.cohort;
+      const newLearnerGroup = await store.createRecord('learner-group', {
+        cohort, parent: parentGroup, title
       });
+      const savedLearnerGroup = await newLearnerGroup.save();
+      this.set('showNewLearnerGroupForm', false);
+      this.setProperties({ saved: true, savedGroup: savedLearnerGroup });
     },
 
-    generateNewLearnerGroups(num) {
-      const { store, parentGroup } = this;
-      this.set('totalGroupsToSave', num);
+    async generateNewLearnerGroups(num) {
+      const { parentGroup, store } = this;
       this.set('currentGroupsSaved', 0);
-      this.set('isSaving', true);
-      return new Promise (resolve => {
-        parentGroup.get('subgroupNumberingOffset').then((offset) => {
-          parentGroup.get('cohort').then((cohort) => {
-            let groups = [];
-            const padBy = countDigits(offset + parseInt(num, 10));
-            const parentTitle = parentGroup.get('title');
-            const shortenedParentTitle = parentTitle.substring(0, 60 - 1 - padBy);
-            for (let i = 0; i < num; i++) {
-              let newGroup = store.createRecord('learner-group', {
-                title: shortenedParentTitle + ' ' + pad(offset + i, padBy),
-                parent: parentGroup,
-                cohort
-              });
-              groups.pushObject(newGroup);
-            }
+      this.setProperties({ isSaving: true, totalGroupsToSave: num });
+      const offset = await parentGroup.subgroupNumberingOffset;
+      const cohort = await parentGroup.cohort;
+      const groups = [];
+      const padBy = countDigits(offset + parseInt(num, 10));
+      const parentTitle = parentGroup.title.substring(0, 60 - 1 - padBy);
 
-            let saveSomeGroups = (groupsToSave) => {
-              let chunk = groupsToSave.splice(0, 6);
-
-              all(chunk.invoke('save')).then(() => {
-                if (groupsToSave.length){
-                  this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
-                  saveSomeGroups(groupsToSave);
-                } else {
-                  this.set('isSaving', false);
-                  this.set('showNewLearnerGroupForm', false);
-                  this.flashMessages.success('general.savedSuccessfully');
-                  resolve();
-                }
-              });
-            };
-            saveSomeGroups(groups);
-          });
+      for (let i = 0; i < num; i++) {
+        const newGroup = await store.createRecord('learner-group', {
+          cohort,
+          parent: parentGroup,
+          title: `${parentTitle} ${pad(offset + i, padBy)}`
         });
-      });
+        groups.pushObject(newGroup);
+      }
+
+      const saveSomeGroups = async (groupsToSave) => {
+        const chunk = groupsToSave.splice(0, 6);
+        await all(chunk.invoke('save'));
+
+        if (groupsToSave.length){
+          this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
+          await saveSomeGroups(groupsToSave);
+        } else {
+          this.set('isSaving', false);
+          this.set('showNewLearnerGroupForm', false);
+          this.flashMessages.success('general.savedSuccessfully');
+        }
+      };
+
+      await saveSomeGroups(groups);
     },
 
     removeLearnerGroup(learnerGroup) {

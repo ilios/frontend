@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { Promise, all } from 'rsvp';
+import { all } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -117,20 +117,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   user: null,
   username: null,
 
-  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', function() {
-    return new Promise(resolve => {
-      this.get('iliosConfig.userSearchType').then(userSearchType => {
-        resolve(userSearchType !== 'ldap');
-      });
-    });
-  }),
-
-  canSyncFromDirectory: computed('iliosConfig.userSearchType', function() {
-    return new Promise(resolve => {
-      this.get('iliosConfig.userSearchType').then(userSearchType => {
-        resolve(userSearchType === 'ldap');
-      });
-    });
+  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', async function() {
+    const userSearchType = await this.iliosConfig.userSearchType;
+    return userSearchType !== 'ldap';
   }),
 
   passwordStrengthScore: computed('password', async function() {
@@ -140,13 +129,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return obj.score;
   }),
 
-  usernameMissing: computed('user.authentication', function() {
-    const user = this.user;
-    return new Promise(resolve => {
-      user.get('authentication').then(authentication => {
-        resolve(isEmpty(authentication) || isEmpty(authentication.get('username')));
-      });
-    });
+  usernameMissing: computed('user.authentication', async function() {
+    const authentication = await this.user.authentication;
+    return isEmpty(authentication) || isEmpty(authentication.username);
   }),
 
   init() {

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
-import { Promise, all, map } from 'rsvp';
+import { all, map, reject } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -38,18 +38,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   topLevelGroupTitle: null,
   totalGroupsToSave: 0,
 
-  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', function() {
-    const learnerGroup = this.learnerGroup;
-    return new Promise(resolve => {
-      learnerGroup.get('topLevelGroup').then(topLevelGroup => {
-        let treeGroups = [];
-        treeGroups.pushObject(topLevelGroup);
-        topLevelGroup.get('allDescendants').then(allDescendants => {
-          treeGroups.pushObjects(allDescendants);
-          resolve(treeGroups);
-        });
-      });
-    });
+  treeGroups: computed('learnerGroup.topLevelGroup.allDescendants.[]', async function() {
+    const topLevelGroup = await this.learnerGroup.topLevelGroup;
+    const treeGroups = [topLevelGroup];
+    const allDescendants = await topLevelGroup.allDescendants;
+    treeGroups.pushObjects(allDescendants);
+    return treeGroups;
   }),
 
   didReceiveAttrs() {
@@ -71,25 +65,21 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   },
 
   actions: {
-    changeLocation() {
-      const newLocation = this.location;
+    async changeLocation() {
       const learnerGroup = this.learnerGroup;
+      const newLocation = this.location;
       this.send('addErrorDisplayFor', 'location');
-      return new Promise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'location');
-            learnerGroup.set('location', newLocation);
-            learnerGroup.save().then((newLearnerGroup) => {
-              this.set('location', newLearnerGroup.get('location'));
-              this.set('learnerGroup', newLearnerGroup);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'location');
+        learnerGroup.set('location', newLocation);
+        const newLearnerGroup = await learnerGroup.save();
+        this.set('location', newLearnerGroup.location);
+        this.set('learnerGroup', newLearnerGroup);
+      } else {
+        await reject();
+      }
     },
 
     revertLocationChanges() {

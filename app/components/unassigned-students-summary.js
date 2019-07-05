@@ -3,7 +3,6 @@ import ArrayProxy from '@ember/array/proxy';
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { Promise } from 'rsvp';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 
 export default Component.extend({
@@ -36,20 +35,15 @@ export default Component.extend({
     return schools.get('firstObject');
   }),
 
-  unassignedStudents: computed('selectedSchool', function() {
-    return new Promise(resolve => {
-      this.selectedSchool.then(school => {
-        this.store.query('user', {
-          filters: {
-            roles: [4],
-            school: school.get('id'),
-            cohorts: null,
-            enabled: true
-          }
-        }).then(students => {
-          resolve(students);
-        });
-      });
+  unassignedStudents: computed('selectedSchool', async function() {
+    const school = await this.selectedSchool;
+    return await this.store.query('user', {
+      filters: {
+        cohorts: null,
+        enabled: true,
+        roles: [4],
+        school: school.id
+      }
     });
   }),
 
