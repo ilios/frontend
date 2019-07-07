@@ -11,12 +11,15 @@ general:
   allCourses: "Tous les Cours"
   allEvents: "Tous les Événements"
   allWeeks: "Toutes les Semaines"
+  apiVersionMismatch: "API  conflit de version"
+  apiVersionMismatchDetails: "Il s'agit généralement d'une erreur temporaire dans votre navigateur; Ilios est en mode lecture seule jusqu'à ce qu'il soit résolu. Si la mise à jour ne vous aide pas, veuillez aviser un administrateur ou le propriétaire de la technologie du système de cette erreur. Vous pouvez également essayer un autre navigateur."
   assignedTerms: "Termes assignées"
   associatedGroups: "Groupes Associés"
   attendanceIs_Required_: "Présence <strong><em>requise</em></strong>"
   attendanceIsRequired: "Présence requise"
   attendanceRequired: "Participation Requise"
   author: Auteur
+  autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
   availableLearnerGroups: "Groupes d'apprenants disponsibles"
   back: Retour
   backToCourse: "Retour au Cours"
@@ -298,6 +301,7 @@ general:
   unusedObjectives: "Objectifs non Utilisés"
   upcomingActivities: "Mes Activités pendant les {days} prochains jours"
   upcomingMaterials: "Mes Matériels d'Étude pendant les {days} prochains jours"
+  updateNow: "Actualiser affichage"
   uploadDate: "Date de dépôt"
   url: URL
   userRole: "Rôle d'utilisateur"

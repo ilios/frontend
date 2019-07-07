@@ -11,12 +11,15 @@ general:
   allCourses: "Todos Los Cursos"
   allEvents: "Todos los Eventos"
   allWeeks: "Todas las Semanas"
+  apiVersionMismatch: "Incompatibilidad de versión de API"
+  apiVersionMismatchDetails: "Este interfaz de usuario no corresponde a la versión del API con el cual se comunica. Por favor notifique a un administrador o el dueño técnico del sistema con respecto a este error <em>inmediatamente</em>, no puede trabajar con Ilios hasta que esto ha sido resuelto"
   assignedTerms: "Términos asignados"
   associatedGroups: "Grupos Associados"
   attendanceIs_Required_: "Se <strong><em>require</em></strong> asistencia"
   attendanceIsRequired: "Se require asistencia"
   attendanceRequired: "Asistencia Requerida"
   author: Autor
+  autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
   availableLearnerGroups: "Grupos de Aprendedores Disponibles"
   back: Volver
   backToCourse: "Volver al Curso"
@@ -298,6 +301,7 @@ general:
   unusedObjectives: "Objetivos no Utilizados"
   upcomingActivities: "Mis Actividades para los próximos {days} días"
   upcomingMaterials: "Mis Materiales de Aprendizaje para los próximos {days} días"
+  updateNow: "Actualizar Ahora "
   uploadDate: "Fecha de carga"
   url: URL
   userRole: "Función de Usuario"
