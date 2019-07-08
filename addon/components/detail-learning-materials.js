@@ -42,7 +42,7 @@ export default Component.extend(SortableByPosition, {
 
   proxyMaterials: computed('subject.learningMaterials.@each.position', async function() {
     const materialProxy = ObjectProxy.extend({ confirmRemoval: false });
-    const materials = await this.subject.learningMaterials;
+    const materials = await this.subject.get('learningMaterials');
     return materials
       .toArray()
       .sort(this.positionSortingCallback)

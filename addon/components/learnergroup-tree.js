@@ -33,7 +33,7 @@ export default Component.extend({
         return true;
       }
 
-      const childChildren = await child.children;
+      const childChildren = await child.get('children');
       return await this.hasUnSelectedChildren(childChildren);
     });
     return unselectedChildren.length > 0;

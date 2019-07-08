@@ -157,7 +157,7 @@ export default Component.extend({
       const { store, subject } = this.getProperties('store', 'subject');
       const newObjective = store.createRecord('objective');
       newObjective.set('title', title);
-      const objectives = await subject.objectives;
+      const objectives = await subject.get('objectives');
       let position = 0;
 
       if (isPresent(objectives)) {

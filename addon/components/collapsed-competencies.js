@@ -24,7 +24,7 @@ export default Component.extend({
    * @public
    */
   summary: computed('subject.competencies.[]', async function() {
-    const competencies = await this.subject.competencies;
+    const competencies = await this.subject.get('competencies');
     const schools = await all(competencies.mapBy('school'));
     const schoolIds = schools.mapBy('id').uniq();
     return schoolIds.map((id) => {

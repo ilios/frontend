@@ -311,7 +311,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
       if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'hours');
-        const ilmSession = await session.ilmSession;
+        const ilmSession = await session.get('ilmSession');
 
         if (ilmSession) {
           ilmSession.set('hours', hours);
@@ -339,7 +339,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
       if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'dueDate');
-        const ilmSession = await session.ilmSession;
+        const ilmSession = await session.get('ilmSession');
 
         if (ilmSession){
           ilmSession.set('dueDate', dueDate);
@@ -368,7 +368,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
       if (validations.isValid) {
         this.send('removeErrorDisplayFor', 'description');
-        let sessionDescription = await session.sessionDescription;
+        let sessionDescription = await session.get('sessionDescription');
 
         if (isEmpty(newDescription) && sessionDescription){
           await sessionDescription.deleteRecord();

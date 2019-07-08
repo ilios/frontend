@@ -16,7 +16,7 @@ export default Component.extend({
    * @public
    */
   showCollapsible: computed('course.competencies.[]', async function() {
-    const competencies = await this.course.competencies;
+    const competencies = await this.course.get('competencies');
     return competencies.length;
   }),
 

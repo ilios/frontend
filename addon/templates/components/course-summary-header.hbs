@@ -3,9 +3,11 @@
   <div class="course-summary-actions">
     {{#if this.showMaterials}}
       {{#link-to "course-materials" course class="materials"}}
-        {{fa-icon "archive"
+        {{fa-icon
+          "archive"
+          title=(t "general.learningMaterialsSummary")
           fixedWidth=true
-          title=(t "general.learningMaterialsSummary")}}
+        }}
       {{/link-to}}
     {{/if}}
     {{#link-to "print_course" course (query-params unpublished=true) class="print"}}

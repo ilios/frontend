@@ -22,7 +22,7 @@ export default Component.extend({
 
   availableInstructorGroups: computed('currentUser.model', async function() {
     const model = await this.currentUser.model;
-    const school = await model.school;
+    const school = await model.get('school');
     return await school.instructorGroups;
   }),
 
