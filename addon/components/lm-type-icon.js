@@ -32,5 +32,9 @@ export default Component.extend({
       }
     }
     return 'file';
+  }),
+  title: computed('type', function () {
+    const type = this.type ? this.type : 'file';
+    return `general.${type}`;
   })
 });
