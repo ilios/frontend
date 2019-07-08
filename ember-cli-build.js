@@ -30,6 +30,7 @@ module.exports = function(defaults) {
         {
           inputFilename: 'lib/images/sunburst.svg',
           outputFileName: 'sunburst-white-background',
+          background: {r: 255, g: 255, b: 255, alpha: 1},
           convertTo: 'png',
           sizes: [48, 96, 180, 192],
         },
