@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { all, Promise as RSVPPromise } from 'rsvp';
+import { all } from 'rsvp';
 import layout from '../templates/components/detail-instructors';
 
 export default Component.extend({
@@ -20,16 +20,10 @@ export default Component.extend({
            this.get('ilmSession.instructors.length');
   }),
 
-  availableInstructorGroups: computed('currentUser.model', function() {
-    return new RSVPPromise(resolve => {
-      this.get('currentUser.model').then(model => {
-        model.get('school').then(school => {
-          school.get('instructorGroups').then(instructorGroups => {
-            resolve(instructorGroups);
-          });
-        });
-      });
-    });
+  availableInstructorGroups: computed('currentUser.model', async function() {
+    const model = await this.currentUser.model;
+    const school = await model.get('school');
+    return await school.instructorGroups;
   }),
 
   init() {

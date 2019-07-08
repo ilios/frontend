@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/detail-competencies';
 import { computed } from '@ember/object';
-import { Promise as RSVPPromise } from 'rsvp';
 
 export default Component.extend({
   layout,
@@ -16,12 +15,9 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  showCollapsible: computed('course.competencies.[]', function () {
-    return new RSVPPromise(resolve => {
-      this.get('course.competencies').then(competencies => {
-        resolve(competencies.length);
-      });
-    });
+  showCollapsible: computed('course.competencies.[]', async function() {
+    const competencies = await this.course.get('competencies');
+    return competencies.length;
   }),
 
   actions: {

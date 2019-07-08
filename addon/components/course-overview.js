@@ -1,9 +1,9 @@
-import { inject as service } from '@ember/service';
-import layout from '../templates/components/course-overview';
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
-import { Promise as RSVPPromise } from 'rsvp';
+import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
+import { reject } from 'rsvp';
+import layout from '../templates/components/course-overview';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -156,74 +156,65 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         }
       });
     },
-    changeStartDate(){
-      const newDate = this.get('startDate');
-      const course = this.get('course');
+
+    async changeStartDate() {
+      const { course, startDate } = this.getProperties('course', 'startDate');
       this.send('addErrorDisplayFor', 'startDate');
-      return new RSVPPromise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'startDate');
-            course.set('startDate', newDate);
-            course.save().then((newCourse) => {
-              this.set('startDate', newCourse.get('startDate'));
-              this.set('course', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'startDate');
+        course.set('startDate', startDate);
+        const newCourse = await course.save();
+        this.set('startDate', newCourse.startDate);
+        this.set('course', newCourse);
+      } else {
+        await reject();
+      }
     },
+
     revertStartDateChanges(){
       const course = this.get('course');
       this.set('startDate', course.get('startDate'));
     },
-    changeEndDate(){
-      const newDate = this.get('endDate');
-      const course = this.get('course');
+
+    async changeEndDate() {
+      const { course, endDate } = this.getProperties('course', 'endDate');
       this.send('addErrorDisplayFor', 'endDate');
-      return new RSVPPromise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'endDate');
-            course.set('endDate', newDate);
-            course.save().then((newCourse) => {
-              this.set('endDate', newCourse.get('endDate'));
-              this.set('course', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'endDate');
+        course.set('endDate', endDate);
+        const newCourse = await course.save();
+        this.set('endDate', newCourse.endDate);
+        this.set('course', newCourse);
+      } else {
+        await reject();
+      }
     },
+
     revertEndDateChanges(){
       const course = this.get('course');
       this.set('endDate', course.get('endDate'));
     },
-    changeExternalId() {
-      const newExternalId = this.get('externalId');
-      const course = this.get('course');
+
+    async changeExternalId() {
+      const { course, externalId } = this.getProperties('course', 'externalId');
       this.send('addErrorDisplayFor', 'externalId');
-      return new RSVPPromise((resolve, reject) => {
-        this.validate().then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'externalId');
-            course.set('externalId', newExternalId);
-            course.save().then((newCourse) => {
-              this.set('externalId', newCourse.get('externalId'));
-              this.set('course', newCourse);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'externalId');
+        course.set('externalId', externalId);
+        const newCourse = await course.save();
+        this.set('externalId', newCourse.externalId);
+        this.set('course', newCourse);
+      } else {
+        await reject();
+      }
     },
+
     revertExternalIdChanges(){
       const course = this.get('course');
       this.set('externalId', course.get('externalId'));

@@ -1,9 +1,9 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { isEmpty } from '@ember/utils';
 import EmberObject, { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import { all, map, Promise as RSVPPromise } from 'rsvp';
+import { inject as service } from '@ember/service';
+import { isEmpty, isPresent } from '@ember/utils';
+import { all, map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/course-objective-manager';
 
@@ -35,50 +35,43 @@ const cohortProxy = EmberObject.extend({
   cohort: null,
   objective: null,
   title: null,
+
   id: oneWay('cohort.id'),
-  objectivesByCompetency: computed('objectives.[]', function(){
-    return new RSVPPromise(resolve => {
-      let objectives = this.get('objectives');
-      let competencies = [];
-      let promises = [];
-      objectives.forEach(objective => {
-        promises.pushObject(objective.get('competency').then(competency => {
-          competencies.pushObject(competency);
-        }));
-      });
-      all(promises).then(() => {
-        let groups = competencies.uniq().filter(competency => {
-          return !!competency;
-        }).map(competency => {
-          let ourObjectives = objectives.filter(objective => {
-            return objective.get('competency').get('id') === competency.get('id');
-          });
-          return competencyGroup.create({
-            title: competency.get('title'),
-            originalObjectives: ourObjectives
-          });
-        });
 
-        groups = groups.sortBy('title');
-
-        // finally, add all program objectives that are not linked to a competency
-        // in a group and add it to the end of the list.
-        // @see https://github.com/ilios/frontend/issues/1905
-        let ourObjectives = objectives.filter(objective => {
-          return isEmpty(objective.get('competency').get('content'));
+  objectivesByCompetency: computed('objectives.[]', async function() {
+    const objectives = this.objectives;
+    const competencies = await all(objectives.mapBy('competency'));
+    const groups = competencies
+      .uniq()
+      .filter((competency) => !!competency)
+      .map((competency) => {
+        const ourObjectives = objectives.filter((objective) => {
+          return objective.get('competency.id') === competency.id;
         });
-        if (!isEmpty(ourObjectives)) {
-          let specialGroup = competencyGroup.create({
-            title: null,
-            originalObjectives: ourObjectives,
-          });
-          groups.pushObject(specialGroup);
-        }
-        resolve(groups);
-      });
+        return competencyGroup.create({
+          title: competency.title,
+          originalObjectives: ourObjectives
+        });
+      })
+      .sortBy('title');
+
+    // finally, add all program objectives that are not linked to a competency
+    // in a group and add it to the end of the list.
+    // @see https://github.com/ilios/frontend/issues/1905
+    const ourObjectives = objectives.filter((objective) => {
+      return isEmpty(objective.get('competency.content'));
     });
 
+    if (isPresent(ourObjectives)) {
+      groups.pushObject(competencyGroup.create({
+        title: null,
+        originalObjectives: ourObjectives
+      }));
+    }
+
+    return groups;
   }),
+
   allowMultipleParents: computed('cohort.school', async function () {
     const cohort = this.get('cohort');
     const school = await cohort.get('school');
@@ -158,22 +151,16 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  currentCohort: computed('selectedCohort', 'cohortProxies.[]', function(){
-    return new RSVPPromise(resolve => {
-      let selectedCohort = this.get('selectedCohort');
-      if (selectedCohort){
-        this.get('cohortProxies').then(cohorts => {
-          let matchingGroups = cohorts.filterBy('id', selectedCohort.get('id'));
-          let currentCohort = null;
-          if(matchingGroups.length > 0){
-            currentCohort = matchingGroups.get('firstObject');
-          }
-          resolve(currentCohort);
-        });
-      } else {
-        resolve(null);
-      }
-    });
+  currentCohort: computed('selectedCohort', 'cohortProxies.[]', async function() {
+    const selectedCohort = this.selectedCohort;
+
+    if (selectedCohort) {
+      const cohorts = await this.cohortProxies;
+      const matchingGroups = cohorts.filterBy('id', selectedCohort.id);
+      return matchingGroups.length > 0 ? matchingGroups.firstObject : null;
+    } else {
+      return null;
+    }
   }),
 
   didReceiveAttrs(){

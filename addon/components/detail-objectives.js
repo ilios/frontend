@@ -2,8 +2,7 @@ import { inject as service } from '@ember/service';
 import layout from '../templates/components/detail-objectives';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { Promise as RSVPPromise } from 'rsvp';
+import { isPresent } from '@ember/utils';
 import scrollTo from 'ilios-common/utils/scroll-to';
 
 const { or, notEmpty, alias } = computed;
@@ -153,34 +152,37 @@ export default Component.extend({
         scrollTo("#objective-" + objective.get('id'));
       }
     },
-    saveNewObjective(title) {
-      return new RSVPPromise(resolve => {
-        let newObjective = this.get('store').createRecord('objective');
-        let subject = this.get('subject');
-        newObjective.set('title', title);
-        subject.get('objectives').then(objectives => {
-          let position = 0;
-          if (! isEmpty(objectives)) {
-            position = objectives.toArray().sortBy('position').reverse()[0].get('position') + 1;
-          }
-          newObjective.set('position', position);
-          if(this.get('isCourse')){
-            newObjective.get('courses').addObject(subject);
-          }
-          if(this.get('isSession')){
-            newObjective.get('sessions').addObject(subject);
-          }
-          if(this.get('isProgramYear')){
-            newObjective.get('programYears').addObject(subject);
-          }
-          newObjective.save().then(savedObjective => {
-            this.set('newObjectiveEditorOn', false);
-            this.get('flashMessages').success('general.newObjectiveSaved');
-            resolve(savedObjective);
-          });
-        });
-      });
+
+    async saveNewObjective(title) {
+      const { store, subject } = this.getProperties('store', 'subject');
+      const newObjective = store.createRecord('objective');
+      newObjective.set('title', title);
+      const objectives = await subject.get('objectives');
+      let position = 0;
+
+      if (isPresent(objectives)) {
+        position = objectives.sortBy('position').lastObject.position + 1;
+      }
+
+      newObjective.set('position', position);
+
+      if (this.isCourse) {
+        newObjective.courses.addObject(subject);
+      }
+
+      if (this.isSession) {
+        newObjective.sessions.addObject(subject);
+      }
+
+      if (this.isProgramYear) {
+        newObjective.programYears.addObject(subject);
+      }
+
+      await newObjective.save();
+      this.set('newObjectiveEditorOn', false);
+      this.flashMessages.success('general.newObjectiveSaved');
     },
+
     toggleNewObjectiveEditor() {
       const expand = this.get('expand');
       //force expand the objective component

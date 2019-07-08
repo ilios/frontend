@@ -4,7 +4,7 @@ import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import { all, map, Promise as RSVPPromise } from 'rsvp';
+import { all, map } from 'rsvp';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 const { notEmpty, not } = computed;
@@ -40,20 +40,13 @@ export default Component.extend(SortableByPosition, {
     return (!isManaging && !displayAddNewForm && !isSorting && editable);
   }),
 
-  proxyMaterials: computed('subject.learningMaterials.@each.position', function(){
-    return new RSVPPromise(resolve => {
-      let materialProxy = ObjectProxy.extend({
-        confirmRemoval: false,
-      });
-      this.get('subject').get('learningMaterials').then(materials => {
-        let sortedMaterials = materials.toArray().sort(this.get('positionSortingCallback'));
-        resolve(sortedMaterials.map(material => {
-          return materialProxy.create({
-            content: material
-          });
-        }));
-      });
-    });
+  proxyMaterials: computed('subject.learningMaterials.@each.position', async function() {
+    const materialProxy = ObjectProxy.extend({ confirmRemoval: false });
+    const materials = await this.subject.get('learningMaterials');
+    return materials
+      .toArray()
+      .sort(this.positionSortingCallback)
+      .map((material) =>  materialProxy.create({ content: material }));
   }),
 
   parentMaterials: computed('subject.learningMaterials.[]', async function () {

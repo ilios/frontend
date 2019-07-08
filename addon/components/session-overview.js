@@ -1,8 +1,8 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { Promise as RSVPPromise } from 'rsvp';
 import { isEmpty } from '@ember/utils';
+import { reject } from 'rsvp';
 import moment from 'moment';
 import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
@@ -245,26 +245,23 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       const postRequisite = await session.get('postRequisite');
       this.set('postRequisite', postRequisite);
     },
-    changeTitle(){
-      const title = this.get('title');
-      const session = this.get('session');
+
+    async changeTitle() {
+      const { session, title } = this.getProperties('session', 'title');
       this.send('addErrorDisplayFor', 'title');
-      return new RSVPPromise((resolve, reject) => {
-        this.validate({ on: ['title'] }).then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'title');
-            session.set('title', title);
-            session.save().then((newSession) => {
-              this.set('title', newSession.get('title'));
-              this.set('session', newSession);
-              resolve();
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate({ on: ['title'] });
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'title');
+        session.set('title', title);
+        const newSession = await session.save();
+        this.set('title', newSession.title);
+        this.set('session', newSession);
+      } else {
+        await reject();
+      }
     },
+
     revertTitleChanges(){
       const session = this.get('session');
       this.set('title', session.get('title'));
@@ -306,28 +303,27 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
       this.get('session').set('attendanceRequired', value);
       this.get('session').save();
     },
-    changeIlmHours() {
-      const newHours = this.get('hours');
-      const session = this.get('session');
+
+    async changeIlmHours() {
+      const { hours, session } = this.getProperties('hours', 'session');
       this.send('addErrorDisplayFor', 'hours');
-      return new Promise((resolve, reject) => {
-        this.validate({ on: ['hours'] }).then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'hours');
-            session.get('ilmSession').then(function(ilmSession){
-              if(ilmSession){
-                ilmSession.set('hours', newHours);
-                resolve(ilmSession.save());
-              } else {
-                reject();
-              }
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate({ on: ['hours'] });
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'hours');
+        const ilmSession = await session.get('ilmSession');
+
+        if (ilmSession) {
+          ilmSession.set('hours', hours);
+          await ilmSession.save();
+        } else {
+          await reject();
+        }
+      } else {
+        await reject();
+      }
     },
+
     revertIlmHoursChanges(){
       this.get('session').get('ilmSession').then(ilmSession => {
         if (ilmSession) {
@@ -335,28 +331,27 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         }
       });
     },
-    changeIlmDueDate() {
-      const newDueDate = this.get('dueDate');
-      const session = this.get('session');
+
+    async changeIlmDueDate() {
+      const { dueDate, session } = this.getProperties('dueDate', 'session');
       this.send('addErrorDisplayFor', 'dueDate');
-      return new Promise((resolve, reject) => {
-        this.validate({ on: ['dueDate'] }).then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'dueDate');
-            session.get('ilmSession').then(function(ilmSession){
-              if(ilmSession){
-                ilmSession.set('dueDate', newDueDate);
-                resolve(ilmSession.save());
-              } else {
-                reject();
-              }
-            });
-          } else {
-            reject();
-          }
-        });
-      });
+      const { validations } = await this.validate({ on: ['dueDate'] });
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'dueDate');
+        const ilmSession = await session.get('ilmSession');
+
+        if (ilmSession){
+          ilmSession.set('dueDate', dueDate);
+          await ilmSession.save();
+        } else {
+          await reject();
+        }
+      } else {
+        await reject();
+      }
     },
+
     revertIlmDueDateChanges(){
       this.get('session').get('ilmSession').then(ilmSession => {
         if (ilmSession) {
@@ -364,41 +359,38 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         }
       });
     },
-    saveDescription() {
-      const session = this.get('session');
-      const store = this.get('store');
-      const newDescription = this.get('description');
 
+    async saveDescription() {
+      const { session, store } = this.getProperties('session', 'store');
+      const newDescription = this.description;
       this.send('addErrorDisplayFor', 'description');
-      return new Promise((resolve, reject) => {
-        this.validate({ on: ['description'] }).then(({validations}) => {
-          if (validations.get('isValid')) {
-            this.send('removeErrorDisplayFor', 'description');
-            session.get('sessionDescription').then(sessionDescription => {
-              if(isEmpty(newDescription) && sessionDescription){
-                sessionDescription.deleteRecord();
-              } else {
-                if(!sessionDescription){
-                  sessionDescription = store.createRecord('session-description');
-                  sessionDescription.set('session', session);
-                }
-                sessionDescription.set('description', newDescription);
-              }
-              this.set('sessionDescription', newDescription);
-              if (sessionDescription) {
-                resolve(sessionDescription.save());
-              } else {
-                resolve();
-              }
-            });
-          } else {
-            reject();
+      const { validations } = await this.validate({ on: ['description'] });
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'description');
+        let sessionDescription = await session.get('sessionDescription');
+
+        if (isEmpty(newDescription) && sessionDescription){
+          await sessionDescription.deleteRecord();
+        } else {
+          if (!sessionDescription) {
+            sessionDescription = store.createRecord('session-description');
+            sessionDescription.set('session', session);
           }
-        });
-      });
 
+          sessionDescription.set('description', newDescription);
+        }
 
+        this.set('sessionDescription', newDescription);
+
+        if (sessionDescription) {
+          await sessionDescription.save();
+        }
+      } else {
+        await reject();
+      }
     },
+
     changeDescription(html){
       this.send('addErrorDisplayFor', 'description');
       let noTagsText = html.replace(/(<([^>]+)>)/ig,"");

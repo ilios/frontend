@@ -1,7 +1,7 @@
 <div class="course-summary-header-top">
   <h2>{{course.title}}</h2>
   <div class="course-summary-actions">
-    {{#if (and (is-fulfilled showMaterials) (await showMaterials))}}
+    {{#if this.showMaterials}}
       {{#link-to "course-materials" course class="materials"}}
         {{fa-icon
           "archive"

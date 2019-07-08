@@ -1,7 +1,7 @@
 import Component from '@ember/component';
-import layout from '../templates/components/collapsed-competencies';
 import { computed } from '@ember/object';
-import { all, Promise as RSVPPromise } from 'rsvp';
+import { all } from 'rsvp';
+import layout from '../templates/components/collapsed-competencies';
 
 export default Component.extend({
   layout,
@@ -23,28 +23,15 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  summary: computed('subject.competencies.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('subject.competencies').then(competencies => {
-        let promises = [];
-        let schools = [];
-        competencies.forEach(competency => {
-          promises.pushObject(competency.get('school').then(school => {
-            schools.pushObject(school);
-          }));
-        });
-        all(promises).then(() => {
-          let schoolIds = schools.mapBy('id').uniq();
-          let summary = [];
-          schoolIds.forEach(id => {
-            summary.pushObject({
-              school: schools.findBy('id', id),
-              competencies: schools.filterBy('id', id)
-            });
-          });
-          resolve(summary);
-        });
-      });
+  summary: computed('subject.competencies.[]', async function() {
+    const competencies = await this.subject.get('competencies');
+    const schools = await all(competencies.mapBy('school'));
+    const schoolIds = schools.mapBy('id').uniq();
+    return schoolIds.map((id) => {
+      return {
+        competencies: schools.filterBy('id', id),
+        school: schools.findBy('id', id)
+      };
     });
   })
 });

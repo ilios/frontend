@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import { all, Promise as RSVPPromise }  from 'rsvp';
+import { all }  from 'rsvp';
 import layout from '../templates/components/detail-terms-list';
 
 /**
@@ -45,26 +45,18 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  sortedTerms: computed('filteredTerms.[]', function() {
-    return new RSVPPromise(resolve => {
-      let terms = this.get('filteredTerms');
-      let promises = [];
-      let proxies = [];
-      terms.forEach(term => {
-        promises.pushObject(term.get('titleWithParentTitles').then(title => {
-          proxies.pushObject({ term, title });
-        }));
-      });
-
-      all(promises).then(() => {
-        let sortedProxies = proxies.sort((a, b) => {
-          let titleA = a.title.toLowerCase();
-          let titleB = b.title.toLowerCase();
-          return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
-        });
-        resolve(sortedProxies.mapBy('term'));
-      });
+  sortedTerms: computed('filteredTerms.[]', async function() {
+    const terms = this.filteredTerms;
+    const proxies = await all(terms.map(async (term) => {
+      const title = await term.titleWithParentTitles;
+      return { term, title };
+    }));
+    const sortedProxies = proxies.sort((a, b) => {
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+      return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
     });
+    return sortedProxies.mapBy('term');
   }),
 
   /**
