@@ -11,12 +11,15 @@ general:
   allCourses: "All Courses"
   allEvents: "All Events"
   allWeeks: "All Weeks"
+  apiVersionMismatch: "API Version Mismatch"
+  apiVersionMismatchDetails: "This is usually a temporary error in your browser; Ilios is in read-only mode until it resolved. If updating does not help, please notify an administrator or technical owner of the system regarding this error. You may also wish to try a different browser."
   assignedTerms: "Assigned Terms"
   associatedGroups: "Associated Groups"
   attendanceIs_Required_: "Attendance is <strong><em>required</em></strong>"
   attendanceIsRequired: "Attendance is required"
   attendanceRequired: "Attendance Required"
   author: Author
+  autoUpdatingSeconds: "{count, plural, =1 {Auto updating in 1 second...} other {Auto updating in # seconds...}}"
   availableLearnerGroups: "Available Learner Groups"
   back: Back
   backToCourse: "Back to Course"
@@ -298,6 +301,7 @@ general:
   unusedObjectives: "Unused Objectives"
   upcomingActivities: "My Activities for the next {days} days"
   upcomingMaterials: "My Learning Materials for the next {days} days"
+  updateNow: "Update Now"
   uploadDate: "Upload date"
   url: URL
   userRole: "User Role"
