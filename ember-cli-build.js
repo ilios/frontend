@@ -49,6 +49,9 @@ module.exports = function(defaults) {
         ]
       }
     },
+    'ember-fetch': {
+      preferNative: true
+    },
   });
 
   app.import('node_modules/normalize.css/normalize.css');
