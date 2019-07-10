@@ -53,11 +53,10 @@
 </div>
 
 <section class="session-overview">
-
   <div class="last-update">
     {{fa-icon "history" title=(t "general.lastUpdate")}}
     {{t "general.lastUpdate"}}:
-    {{moment-format session.updatedAt "L LT"}}
+    {{this.updatedAt}}
   </div>
 
   <div class="session-overview-header">
