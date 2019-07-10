@@ -2,25 +2,28 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import moment from 'moment';
 
 module('Integration | Component | sessions-grid-last-updated', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function() {
+    this.owner.lookup('service:moment').setLocale('en');
+  });
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    assert.expect(1);
+    const session = this.server.create('session', {
+      updatedAt: moment('2019-07-09 17:00:00').toDate()
+    });
 
-    await render(hbs`<SessionsGridLastUpdated  />`);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
-    assert.equal(this.element.textContent.trim(), '');
+    this.set('session', sessionModel);
+    await render(hbs`{{sessions-grid-last-updated session=session}}`);
 
-    // Template block usage:
-    await render(hbs`
-      <SessionsGridLastUpdated>
-        template block text
-      </SessionsGridLastUpdated>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom(this.element).hasText("Last Update Last Update: 07/09/2019 5:00 PM");
   });
 });

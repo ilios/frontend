@@ -26,6 +26,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     this.session1 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
+      updatedAt: moment('2019-07-09 17:00:00').toDate()
     });
     this.session2 = this.server.create('session', {
       course,
@@ -165,6 +166,14 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(expandedSessions.length, 1);
     await sessions.objectAt(0).expandCollapse();
     assert.equal(expandedSessions.length, 0);
+  });
+
+  test('session last update timestamp visible in expanded mode', async function (assert) {
+    assert.expect(1);
+    await page.visit({ courseId: 1, details: true });
+    const { sessions, expandedSessions } = page.sessionsList;
+    await sessions.objectAt(0).expandCollapse();
+    assert.equal(expandedSessions.objectAt(0).lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
   });
 
   test('expand all sessions', async function (assert) {

@@ -140,6 +140,19 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.title.value, 'Rad Session Dude');
   });
 
+  test('last Updated', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      updatedAt: moment('2019-07-09 17:00:00').toDate()
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.equal(currentRouteName(), 'session.index');
+    assert.equal(page.overview.lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
+  });
+
   test('change type', async function (assert) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
