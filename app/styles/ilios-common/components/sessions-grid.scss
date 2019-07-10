@@ -10,14 +10,6 @@
       margin: .5rem 0;
     }
 
-    .last-update {
-      color: $darker-grey;
-      margin: auto;
-      padding-bottom: .5rem;
-      text-align: right;
-      width: 95%;
-    }
-
     .session-row {
       @include sessions-grid;
       padding: .25rem 0;
