@@ -37,6 +37,7 @@ module.exports = function() {
       'file-video',
       'flask',
       'forward',
+      'history',
       'indent',
       'info-circle',
       'italic',

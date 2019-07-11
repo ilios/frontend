@@ -28,5 +28,7 @@ export default {
     confirm: clickable('[data-test-confirm-removal] [data-test-yes]'),
     hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
   }),
-  expandedSessions: collection('[data-test-expanded-session]'),
+  expandedSessions: collection('[data-test-expanded-session]', {
+    lastUpdated: text('.sessions-grid-last-updated'),
+  }),
 };

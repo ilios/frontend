@@ -65,7 +65,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   showCheckLink: true,
   isSaving: false,
   'data-test-session-overview': true,
-
+  updatedAt: null,
   publishTarget: oneWay('session'),
   sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
   filteredSessionTypes: computed('sessionTypes.[]', function() {
@@ -180,6 +180,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
         this.set('dueDate', ilmSession.get('dueDate'));
       }
     });
+    this.set('updatedAt', moment(this.get('session.updatedAt')).format("L LT"));
 
     this.get('session.sessionType').then(sessionType => {
       this.set('sessionType', sessionType);

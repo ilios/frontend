@@ -23,6 +23,12 @@
   @include ilios-overview($text-blue);
   border-bottom: 1px dotted $text-blue;
 
+  .last-update {
+    color: $darker-grey;
+    margin-right: 1rem;
+    text-align: right;
+  }
+
   .session-overview-header {
     @include ilios-overview-header;
 

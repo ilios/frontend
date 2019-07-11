@@ -103,8 +103,8 @@
         </div>
       </div>
     {{/if}}
-
     {{#if (contains obj.session.id expandedSessionIds)}}
+      {{sessions-grid-last-updated session=(await obj.session)}}
       {{sessions-grid-offering-table
         canUpdate=obj.canUpdate
         offerings=(await obj.session.offerings)}}

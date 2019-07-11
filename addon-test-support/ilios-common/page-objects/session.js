@@ -118,7 +118,8 @@ export default create({
       set: fillable('select'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message')
-    }
+    },
+    lastUpdated: text('.last-update'),
   },
 
   leadershipCollapsed,
