@@ -17,15 +17,12 @@ general:
   allSchools: "Toutes les écoles"
   allVocabularies: "Touts vocabulaires"
   anything: "Quelque chose"
-  apiVersionMismatch: "API  conflit de version"
-  apiVersionMismatchDetails: "Ce 'frontend' ne correspond pas à la version de l'API avec laquelle il communique. Notifiez S'il vous plaît un administrateur ou un propriétaire technique du système quant à cette erreur immédiatement. Vous ne pouvez pas travailler avec Ilios avant que ce ne soit résolu."
   assessment: "Évaluation"
   assessmentMethods: "Méthodes d'Évaluation"
   assessmentOption: "Option d'Évaluation"
   associatedCourses: "Cours Associés"
   associatedWith: "associée de"
   attribute: Attribut
-  autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
   available: Disponible
   availableCohorts: "Cohortes Disponsibles"
   backToAdminDashboard: "Rétour au Page Admin"
@@ -358,7 +355,6 @@ general:
   unPublishProgramYear: "Faire à Dépublier année de diplôme"
   unsupportedBrowserFailure: "Votre navigateur n'est pas officiellement soutenu par Ilios et ne peut pas compléter cette action. Essayez S'il vous plaît d'utiliser de nouveau un navigateur à jour."
   updateUserFromDirectory: "Mettez à jour cet enregistrement utilisateur de la répertoire de campus"
-  updateNow: "Actualiser affichage"
   updatePending: "Mise à jour en suspens"
   uploadedGroup: "groupe a été téléversée"
   uploadGroupAssignments: "téléversez travaux des groupes"

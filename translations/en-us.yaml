@@ -25,7 +25,6 @@ general:
   associatedCourses: "Associated Courses"
   associatedWith: "Associated with"
   attribute: Attribute
-  autoUpdatingSeconds: "{count, plural, =1 {Auto updating in 1 second...} other {Auto updating in # seconds...}}"
   available: Available
   availableCohorts: "Available Cohorts"
   backToAdminDashboard: "Back to Admin Dashboard"
@@ -358,7 +357,6 @@ general:
   unPublishProgramYear: "UnPublish Program Year"
   unsupportedBrowserFailure: "Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser."
   updateUserFromDirectory: "Update this user record from the campus directory."
-  updateNow: "Update Now"
   updatePending: "Update Pending"
   uploadedGroup: "Uploaded Group"
   uploadGroupAssignments: "Upload Group Assignments"
