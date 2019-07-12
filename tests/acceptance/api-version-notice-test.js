@@ -6,6 +6,7 @@ let url = '/';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios-common/page-objects/components/api-version-notice';
 
 module('Acceptance | API Version Check', function(hooks) {
   setupApplicationTest(hooks);
@@ -26,10 +27,9 @@ module('Acceptance | API Version Check', function(hooks) {
         apiVersion
       }};
     });
-    const warningOverlay = '.api-version-check-warning';
 
     await visit(url);
-    assert.equal(document.querySelectorAll(warningOverlay).length, 0);
+    assert.ok(component.notMismatched);
   });
 
   test('Warning shows up when api versions do not match', async function(assert) {
@@ -41,9 +41,8 @@ module('Acceptance | API Version Check', function(hooks) {
         apiVersion: 'v0.bad'
       }};
     });
-    const warningOverlay = '.api-version-check-warning';
 
     await visit(url);
-    assert.equal(document.querySelectorAll(warningOverlay).length, 1);
+    assert.ok(component.mismatched);
   });
 });
