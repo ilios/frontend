@@ -209,7 +209,7 @@ general:
   newUsersCreatedSuccessfully: "Nuevos usuarios creados con éxito"
   newUsersCreatedWarning: "Algunos usuarios fueron creados, pero hubo errores."
   next: Siguiente
-  noAccountExists: "Su cuenta no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
+  noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
   noAvailableCohorts: "Ningun Clase de La Graduación Disponible"
   noCourses: "No hay ningún curso en esta escuela"
   noLearnerGroups: "No Grupos de Aprendedores"
