@@ -1,7 +1,9 @@
 <div class="detail-learnergroups-header">
+  {{! template-lint-disable no-invalid-interactive}}
   <div
     class="title {{if collapsible "collapsible clickable"}}"
     onclick={{if collapsible (action collapse)}}
+    role={{if collapsible "button"}}
   >
     {{t "general.learnerGroups"}} ({{subject.learnerGroups.length}})
   </div>

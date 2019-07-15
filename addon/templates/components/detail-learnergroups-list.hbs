@@ -27,9 +27,11 @@
               (without tree.topLevelGroup (await tree.groups))
               as |learnerGroup|
             }}
+              {{! template-lint-disable no-invalid-interactive}}
               <li
                 class="{{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}} {{if isManaging "clickable"}}"
                 onclick={{if isManaging (action remove learnerGroup)}}
+                role={{if isManaging "button"}}
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if isManaging}}
