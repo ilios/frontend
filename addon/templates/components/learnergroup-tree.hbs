@@ -1,6 +1,8 @@
+{{! template-lint-disable no-invalid-interactive}}
 <span
   class={{if selectable "clickable"}}
   onclick={{if selectable (action add learnerGroup)}}
+  role={{if selectable "button"}}
 >
   {{learnerGroup.title}}
 </span>
