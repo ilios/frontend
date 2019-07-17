@@ -12,7 +12,7 @@
         {{#if showSessionAttendanceRequired}}
           <input
             type="checkbox"
-            checked
+            checked={{true}}
             {{action disable "showSessionAttendanceRequired"}}
           >
         {{else}}
@@ -24,7 +24,7 @@
       <td>{{t "general.supplementalCurriculum"}}</td>
       <td>
         {{#if showSessionSupplemental}}
-          <input type="checkbox" checked {{action disable "showSessionSupplemental"}}>
+          <input type="checkbox" checked={{true}} {{action disable "showSessionSupplemental"}}>
         {{else}}
           <input type="checkbox" {{action enable "showSessionSupplemental"}}>
         {{/if}}
@@ -36,7 +36,7 @@
         {{#if showSessionSpecialAttireRequired}}
           <input
             type="checkbox"
-            checked
+            checked={{true}}
             {{action disable "showSessionSpecialAttireRequired"}}
           >
         {{else}}
@@ -50,7 +50,7 @@
         {{#if showSessionSpecialEquipmentRequired}}
           <input
             type="checkbox"
-            checked
+            checked={{true}}
             {{action disable "showSessionSpecialEquipmentRequired"}}
           >
         {{else}}
