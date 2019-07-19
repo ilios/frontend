@@ -103,7 +103,7 @@
     "qunit-dom": "^0.8.5",
     "stylelint": "^10.1.0",
     "stylelint-config-recommended-scss": "^3.3.0",
-    "stylelint-scss": "^3.9.1",
+    "stylelint-scss": "^3.9.2",
     "validator": "^11.1.0",
     "zxcvbn": "^4.4.2"
   },
