@@ -83,7 +83,7 @@
     "ember-qunit": "^4.4.1",
     "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^5.1.2",
-    "ember-responsive": "^3.0.4",
+    "ember-responsive": "^3.0.5",
     "ember-service-worker": "^0.8.0",
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-source": "~3.11.1",
