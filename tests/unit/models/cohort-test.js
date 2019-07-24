@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import moment from 'moment';
 
 module('Unit | Model | Cohort', function(hooks) {
   setupTest(hooks);
@@ -54,27 +53,6 @@ module('Unit | Model | Cohort', function(hooks) {
     assert.equal(objectives.length, 2);
     assert.ok(objectives.includes(objective1));
     assert.ok(objectives.includes(objective2));
-  });
-
-  test('currentLevel', async function(assert){
-    assert.expect(1);
-    const model = this.owner.lookup('service:store').createRecord('cohort');
-    const store = this.owner.lookup('service:store');
-    const twoYearsAgo = moment().subtract(2, 'years').year();
-    const programYear = store.createRecord('programYear', { startYear: twoYearsAgo});
-    model.set('programYear', programYear);
-    const currentLevel = await model.get('currentLevel');
-    assert.equal(currentLevel, 2);
-  });
-
-  test('currentLevel - no start year', async function(assert){
-    assert.expect(1);
-    const model = this.owner.lookup('service:store').createRecord('cohort');
-    const store = this.owner.lookup('service:store');
-    const programYear = store.createRecord('programYear');
-    model.set('programYear', programYear);
-    const currentLevel = await model.get('currentLevel');
-    assert.equal(currentLevel, '');
   });
 
   test('program', async function(assert){

@@ -1,5 +1,4 @@
 import { computed } from '@ember/object';
-import moment from 'moment';
 import DS from 'ember-data';
 
 const { attr, belongsTo, hasMany, Model } = DS;
@@ -33,14 +32,6 @@ export default Model.extend({
     return learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
   }),
 
-  currentLevel: computed('programYear.startYear', async function(){
-    const programYear = await this.get('programYear');
-    const startYear = programYear.get('startYear');
-    if(startYear){
-      return Math.abs(moment().year(startYear).diff(moment(), 'years'));
-    }
-    return '';
-  }),
   program: computed('programYear.program', async function() {
     const programYear = await this.get('programYear');
     return await programYear.get('program');
