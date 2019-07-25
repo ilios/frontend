@@ -26,21 +26,21 @@ module('Acceptance | Curriculum Inventory Report - Leadership', function(hooks) 
     assert.expect(6);
     await page.visit({ reportId: 1 });
 
-    assert.equal(page.leadershipCollapsed.title, 'Curriculum Inventory Report Leadership');
-    assert.equal(page.leadershipCollapsed.headers.length, 1);
-    assert.equal(page.leadershipCollapsed.headers[0].title, 'Summary');
+    assert.equal(page.details.leadershipCollapsed.title, 'Curriculum Inventory Report Leadership');
+    assert.equal(page.details.leadershipCollapsed.headers.length, 1);
+    assert.equal(page.details.leadershipCollapsed.headers[0].title, 'Summary');
 
-    assert.equal(page.leadershipCollapsed.summary.length, 1);
-    assert.equal(page.leadershipCollapsed.summary[0].name, 'Administrators');
-    assert.equal(page.leadershipCollapsed.summary[0].value, 'There are 2 administrators');
+    assert.equal(page.details.leadershipCollapsed.summary.length, 1);
+    assert.equal(page.details.leadershipCollapsed.summary[0].name, 'Administrators');
+    assert.equal(page.details.leadershipCollapsed.summary[0].value, 'There are 2 administrators');
   });
 
   test('list leadership', async function (assert) {
     assert.expect(4);
     await page.visit({ reportId: 1, leadershipDetails: true });
 
-    assert.equal(page.leadershipExpanded.title, 'Curriculum Inventory Report Leadership');
-    const { administrators } = page.leadershipExpanded.leadershipList;
+    assert.equal(page.details.leadershipExpanded.title, 'Curriculum Inventory Report Leadership');
+    const { administrators } = page.details.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '3 guy M. Mc3son');
@@ -50,8 +50,8 @@ module('Acceptance | Curriculum Inventory Report - Leadership', function(hooks) 
   test('search administrators', async function (assert) {
     assert.expect(11);
     await page.visit({ reportId: 1, leadershipDetails: true });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
     assert.equal(manager.administratorSearch.results.length, 5);
     assert.equal(manager.administratorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
@@ -69,8 +69,8 @@ module('Acceptance | Curriculum Inventory Report - Leadership', function(hooks) 
   test('manage leadership', async function (assert) {
     assert.expect(6);
     await page.visit({ reportId: 1, leadershipDetails: true });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
 
     const { selectedAdministrators } = manager;
 
@@ -91,16 +91,16 @@ module('Acceptance | Curriculum Inventory Report - Leadership', function(hooks) 
   test('cancel leadership changes', async function (assert) {
     assert.expect(3);
     await page.visit({ reportId: 1, leadershipDetails: true });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
     await selectedAdministrators[1].remove();
 
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
 
-    await page.leadershipExpanded.cancel();
-    const { administrators } = page.leadershipExpanded.leadershipList;
+    await page.details.leadershipExpanded.cancel();
+    const { administrators } = page.details.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '3 guy M. Mc3son');
@@ -110,15 +110,15 @@ module('Acceptance | Curriculum Inventory Report - Leadership', function(hooks) 
   test('save leadership changes', async function (assert) {
     assert.expect(3);
     await page.visit({ reportId: 1, leadershipDetails: true });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
     await selectedAdministrators[1].remove();
 
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
-    await page.leadershipExpanded.save();
-    const { administrators } = page.leadershipExpanded.leadershipList;
+    await page.details.leadershipExpanded.save();
+    const { administrators } = page.details.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '1 guy M. Mc1son');
