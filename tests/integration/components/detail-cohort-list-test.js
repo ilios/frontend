@@ -8,7 +8,7 @@ module('Integration | Component | detail cohort list', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(13);
+    assert.expect(10);
     const school1 = EmberObject.create({
       title: 'School of Life'
     });
@@ -36,14 +36,13 @@ module('Integration | Component | detail cohort list', function(hooks) {
       title: 'Aardvark',
       classOfYear: programYear1.get('classOfYear'),
       programYear: programYear1,
-      school: school1,
-      currentLevel: 1
+      school: school1
     });
     const cohort2 = EmberObject.create({
       classOfYear: programYear2.get('classOfYear'),
       programYear: programYear2,
-      school: school2,
-      currentLevel: 2
+      school: school2
+
     });
 
     const cohorts = [ cohort1, cohort2 ];
@@ -54,16 +53,13 @@ module('Integration | Component | detail cohort list', function(hooks) {
     assert.dom('th').hasText('School');
     assert.dom(findAll('th')[1]).hasText('Program');
     assert.dom(findAll('th')[2]).hasText('Cohort');
-    assert.dom(findAll('th')[3]).hasText('Level');
     assert.dom('tbody tr').exists({ count: 2 });
     assert.dom('tbody tr:nth-of-type(1) td').hasText('School of Life');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Professional Pie Eating');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Aardvark');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText('1');
     assert.dom('tbody tr:nth-of-type(2) td').hasText('Starfleet Academy');
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Doctor of Rocket Surgery');
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Class of 2011');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText('2');
   });
 });
 
