@@ -94,7 +94,7 @@ module.exports = function (environment) {
     },
     featureFlags: {
       sessionLinkingAdminUi: true,
-      globalSearch: false,
+      globalSearch: true,
     }
   };
 
