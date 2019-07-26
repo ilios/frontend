@@ -14,7 +14,7 @@ const UserValidations = buildValidations({
   firstName: [
     validator('presence', true),
     validator('length', {
-      max: 20
+      max: 50
     }),
   ],
   middleName: [
@@ -25,7 +25,7 @@ const UserValidations = buildValidations({
   lastName: [
     validator('presence', true),
     validator('length', {
-      max: 20
+      max: 50
     }),
   ],
   username: [
