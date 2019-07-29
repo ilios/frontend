@@ -1,5 +1,6 @@
 general:
   aamcMethod: "AAMC Method"
+  aamcSchoolId: "AAMC School ID (e.g. \"Institution ID\")"
   academicLevel: "Academic Level"
   academicLevels: "Academic Levels"
   academicYear: "Academic Year"
@@ -44,6 +45,7 @@ general:
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
   childSequenceOrder: "Child Sequence Order"
+  city: City
   clearDates: "Clear Dates"
   clearErrors: "Clear Errors and Return to Ilios"
   clerkship: Clerkship
@@ -68,6 +70,7 @@ general:
   copyWithoutLearners: "Copy Without Learners"
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
   countAsOneOffering: "Count as one offering"
+  country: Country
   courseDirector: "Course Director"
   courseTitleFilterPlaceholder: "Filter by course title"
   create: "Create New User"
@@ -77,6 +80,7 @@ general:
   currentCompetency: "Current Competency"
   currentSchool: "Current School"
   curriculumInventory: "Curriculum Inventory"
+  curriculumInventoryInstitutionalInfo: "Curriculum Inventory Institutional Information"
   curriculumInventoryReport: "Curriculum Inventory Report"
   curriculumInventoryReportLeadership: "Curriculum Inventory Report Leadership"
   curriculumInventoryReportRollover: "Rollover Report"
@@ -166,6 +170,7 @@ general:
   manage: Manage
   manageAPITokens: "Manage API Tokens"
   manageCompetencies: "Manage Competencies"
+  manageInstitutionalInfo: "Manage CIR Institutional Info"
   manageSessionAttributes: "Manage Session Attributes"
   manageUsers: "Manage Users"
   manageUsersSummaryTitle: "Ilios Users"
@@ -211,6 +216,7 @@ general:
   noAccountExists: "Your account {accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator."
   noAvailableCohorts: "No available cohorts"
   noCourses: "There are no courses in this school"
+  noCurriculumInventoryInstitutionalInfo: "No institutional information has been configured for this school."
   noLearnerGroups: "No learner groups"
   nonStudent: "Non-Student"
   noOfferingLearnerGroups: "No Groups"
@@ -301,6 +307,7 @@ general:
   root: Root
   sampleFile: "Sample File"
   saved: "New User Saved Successfully"
+  schoolName: "School Name"
   schoolLeadership: "School Leadership"
   schools: Schools
   searchDirectory: "Search directory for new users"
@@ -325,8 +332,10 @@ general:
   singleDay: "Single Day"
   singleGroup: "Single Group"
   startOver: "Start Over"
+  stateOrProvince: "State or Province"
   stewardingSchoolsAndDepartments: "Stewarding Schools and Departments"
   stewardsManageTitle: "Manage Stewards"
+  street: Street
   strong: Strong
   student: Student
   subgroupName: "Subgroup Name"
@@ -377,3 +386,4 @@ general:
   whichIs: "which is"
   write: Write
   yesPopulateGroup: "Yes!  Add entire cohort to my new group."
+  zipCode: "ZIP Code"

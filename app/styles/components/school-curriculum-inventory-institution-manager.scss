@@ -1,0 +1,37 @@
+.school-curriculum-inventory-institution-manager {
+  @include detail-container($ilios-orange);
+
+  .school-curriculum-inventory-institution-manager-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .school-curriculum-inventory-institution-manager-content {
+    @include detail-container-content;
+
+    .form {
+      @include ilios-form;
+      grid-template-columns: 1fr;
+      margin-top: 1em;
+
+      @include for-laptop-and-up {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .validation-error-message {
+      color: $ilios-red;
+      display: block;
+      font-size: 12px;
+      font-style: italic;
+      margin-top: .25rem;
+    }
+  }
+}

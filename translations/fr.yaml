@@ -1,5 +1,6 @@
 general:
   aamcMethod: "AAMC Méthode"
+  aamcSchoolId: "Identifiant d'école AAMC (\"Identifiant d'institution\")"
   academicLevel: "Niveau scolaire"
   academicLevels: "Niveaux scolaire"
   academicYear: "Année Scolaire"
@@ -42,6 +43,7 @@ general:
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
   childSequenceOrder: "Ordre séquentiel des enfants"
+  city: Ville
   clearDates: "Supprimer dates"
   clearErrors: "Supprîme les Erreurs et Retour à Ilios"
   clerkship: Stage
@@ -66,6 +68,7 @@ general:
   copyWithoutLearners: "Copiér sans étudiants"
   couldNotFindUserCampusId: "Ne pouvait pas trouver utilisateur avec le Campus ID {campusId}"
   countAsOneOffering: "Comptent pour une offre"
+  country: Pays
   courseDirector: "Directeur de Cours"
   courseTitleFilterPlaceholder: "Filtre par titre de cours"
   create: "Créez un nouvel utilisateur"
@@ -75,6 +78,7 @@ general:
   currentCompetency: "Compétence Actuelle"
   currentSchool: "Écôle Actuelle"
   curriculumInventory: "Inventaire des programmes d'études"
+  curriculumInventoryInstitutionalInfo: "Inventaire des programmes d'études informations institutionnelles"
   curriculumInventoryReport: "Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportLeadership: "Dirigeants de Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportRollover: "Roulement Rapport d'inventaire des programmes d'études"
@@ -164,6 +168,7 @@ general:
   manage: Administrer
   manageAPITokens: "Gérer des jetons de l’API"
   manageCompetencies: "Manager des Compétences"
+  manageInstitutionalInfo: "Manager les informations institutionnelles du CIR"
   manageSessionAttributes: "Gérer Attributs de Séance"
   manageUsers: "Gérer les utilisateurs"
   manageUsersSummaryTitle: "utilisateurs d'Ilios"
@@ -209,6 +214,7 @@ general:
   noAccountExists: "Votre compte d'utilisateur {accountName} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios."
   noAvailableCohorts: "Pas des Cohortes disponsibles"
   noCourses: "Il n'y a aucun des cours dans cette école."
+  noCurriculumInventoryInstitutionalInfo: "Aucune information institutionnelle n'a été configurée pour cette école."
   noLearnerGroups: "Pas de groupes des Étudiants"
   nonStudent: "Non étudiant"
   noOfferingLearnerGroups: "Aucun des groupes"
@@ -300,6 +306,7 @@ general:
   sampleFile: "Fichier échantillon"
   saved: "Nouvel utilisateur enregistré avec succès"
   schoolLeadership: "Direction des Écoles"
+  schoolName: "Nom de l'école"
   schools: "Écoles"
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
   searchUsers: "Rechercher des utilisateurs"
@@ -323,8 +330,10 @@ general:
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
   startOver: recommencer
+  stateOrProvince: "État ou province"
   stewardingSchoolsAndDepartments: "Écôles et Départements intendants"
   stewardsManageTitle: "Manager des intendants"
+  street: Rue
   strong: Fort
   student: "Étudiant"
   subgroupName: "nom de sous-groupe"
@@ -375,3 +384,4 @@ general:
   whichIs: "qui est"
   write: "Écriture"
   yesPopulateGroup: "Oui!  Ajoutez la cohorte entière à mon nouveau groupe"
+  zipCode: "Code postal"

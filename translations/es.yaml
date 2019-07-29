@@ -1,5 +1,6 @@
 general:
   aamcMethod: "Método de AAMC"
+  aamcSchoolId: "Identificación de la escuela AAMC (\"ID de la institución\")"
   academicLevel: "Nivel Académico"
   academicLevels: "Niveles Académicos"
   academicYear: "Año Academico"
@@ -42,6 +43,7 @@ general:
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "No se puede continuar con estos registros no válidos, por favor, corrija y vuelva a subir el archivo."
   childSequenceOrder: "Orden de Secuencia de Los Hijos"
+  city: Ciudad
   clearDates: "Borrar Fechas"
   clearErrors: "Borrar los Errores y Volver a Ilios"
   clerkship: "Rotación"
@@ -66,6 +68,7 @@ general:
   copyWithoutLearners: "Copiar Sin Alumnos"
   couldNotFindUserCampusId: "No se pudo encontrar un usuario con el campusId {campusId}"
   countAsOneOffering: "Cuenta como un Ofrecimiento"
+  country: País
   courseDirector: "Director del Curso"
   courseTitleFilterPlaceholder: "Aplicar un filtro por título de curso"
   create: "Crear Nuevo Usuario"
@@ -75,6 +78,7 @@ general:
   currentCompetency: "Competencia Actual"
   currentSchool: "Escuela Actual"
   curriculumInventory: "Inventario de plan de Estudios"
+  curriculumInventoryInstitutionalInfo: "Inventario de plan de Estudios Información Institucional"
   curriculumInventoryReport: "Informe de Inventario de Plan de Estudios"
   curriculumInventoryReportLeadership: "Liderazgo de Inventario de plan de Estudios"
   curriculumInventoryReportRollover: "Copiar Inventario de plan de Estudios"
@@ -164,6 +168,7 @@ general:
   manage: Manejar
   manageAPITokens: "Maneje Tokens de la API"
   manageCompetencies: "Maneje Competencias"
+  manageInstitutionalInfo: "Administrar información institucional del CIR"
   manageSessionAttributes: "Maneje Atributos de la Sesión"
   manageUsers: "Administrar Usuarios"
   manageUsersSummaryTitle: "Usuarios de Ilios"
@@ -209,6 +214,7 @@ general:
   noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
   noAvailableCohorts: "Ningun Clase de La Graduación Disponible"
   noCourses: "No hay ningún curso en esta escuela"
+  noCurriculumInventoryInstitutionalInfo: "No se ha configurado información institucional para esta escuela."
   noLearnerGroups: "No Grupos de Aprendedores"
   nonStudent: "No estudiante"
   noOfferingLearnerGroups: "Ningunos Grupos"
@@ -300,6 +306,7 @@ general:
   sampleFile: "Archivo de Ejemplo"
   saved: "Nuevo Usuario Salvó con Éxito"
   schoolLeadership: "Liderazgo Escolar"
+  schoolName: "Nombre de escuela"
   schools: Escuelas
   searchDirectory: "Busque el directorio para nuevos usuarios"
   searchUsers: "Buscar usuarios"
@@ -323,8 +330,10 @@ general:
   singleDay: "Un Solo Día"
   singleGroup: "Solo grupo"
   startOver: "Empezar de Nuevo"
+  stateOrProvince: "Estado o Provincia"
   stewardingSchoolsAndDepartments: "Escuelas y Departamentos Administrativos"
   stewardsManageTitle: "Maneje Administradores"
+  street: Calle
   strong: Fuerte
   student: Estudiante
   subgroupName: "Nombre del Subgrupo"
@@ -375,3 +384,4 @@ general:
   whichIs: "cuál es"
   write: Escribir
   yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
+  zipCode: "Código postal"

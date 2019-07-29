@@ -62,6 +62,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     revertTitleChanges() {
       const school = this.school;
       this.set('title', school.get('title'));
+    },
+
+    async saveInstitution(institution) {
+      if (! institution.belongsTo('school').id()) {
+        institution.set('school', this.get("school"));
+      }
+      await institution.save();
     }
   }
 });
