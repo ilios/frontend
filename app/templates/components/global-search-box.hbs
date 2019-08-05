@@ -16,7 +16,7 @@
   </span>
 
   {{#if (and this.showResults this.hasResults)}}
-    {{#click-outside action=(action (mut this.showResults) false)}}
+    {{#click-outside onClickOutside=(action (mut this.showResults) false)}}
       <ul
         class="autocomplete"
         data-test-autocomplete>
