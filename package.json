@@ -91,7 +91,7 @@
     "ember-test-selectors": "^2.1.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-uploader": "2.0.0",
-    "ember-web-app": "^2.2.0",
+    "ember-web-app": "^3.0.0",
     "eslint": "^6.1.0",
     "eslint-plugin-node": "^9.0.1",
     "file-saver": "^2.0.2",
