@@ -44,11 +44,17 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const endYear = Math.max(thisYear, reportYear) + 5;
     let years = [];
     for (let i = startYear; i < endYear; i++) {
+      if (i === reportYear) {
+        continue;
+      }
       let title = i + ' - ' + (i + 1);
       let year = EmberObject.create({ 'id': i, 'title': title });
       years.pushObject(year);
     }
-    const selectedYear = years.findBy('id', startYear + 1);
+    let selectedYear = years.findBy('id', startYear + 1);
+    if (! selectedYear) {
+      selectedYear = years.findBy('id', reportYear + 1);
+    }
     this.set('name', report.get('name'));
     this.set('description', report.get('description'));
     this.set('selectedYear', selectedYear);

@@ -32,8 +32,8 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const name = '.name input';
     const description  = '.description textarea';
 
-    for (let i = 0; i < 5; i++){
-      assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${thisYear + i} - ${thisYear + 1 + i}`);
+    for (let i = 1; i <  4; i++){
+      assert.dom(`${yearSelect} option:nth-of-type(${i})`).hasText(`${thisYear + i} - ${thisYear + 1 + i}`);
     }
     assert.dom(name).exists({ count: 1 });
     assert.equal(find(name).value.trim(), report.get('name'));
@@ -145,4 +145,5 @@ module('Integration | Component | curriculum inventory report rollover', functio
     assert.dom('.validation-error-message').exists({ count: 1 });
     assert.ok(find('.validation-error-message').textContent.includes('blank'));
   });
+
 });
