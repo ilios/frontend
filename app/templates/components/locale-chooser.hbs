@@ -1,4 +1,4 @@
-{{#click-outside action=(action (mut isOpen) false)}}
+{{#click-outside onClickOutside=(action (mut isOpen) false)}}
   <button
     aria-label={{t (concat "general.language." locale.id)}}
     role="menuitem"

@@ -9,7 +9,7 @@
   {{fa-icon "user"}} <span>{{get (await currentUser.model) "fullName"}}</span>
 </button>
 {{#if isOpen}}
-  {{#click-outside action=(action (mut isOpen) false)}}
+  {{#click-outside onClickOutside=(action (mut isOpen) false)}}
     <ul class="menu">
       <li tabindex="-1" data-test-item>{{#link-to "myprofile" invokeAction=(action (mut isOpen) false)}}{{t "general.myProfile"}}{{/link-to}}</li>
       <li tabindex="-1" data-test-item>{{#link-to "mymaterials" invokeAction=(action (mut isOpen) false)}}{{t "general.myMaterials"}}{{/link-to}}</li>
