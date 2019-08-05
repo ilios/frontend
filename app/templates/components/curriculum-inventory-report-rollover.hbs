@@ -22,16 +22,6 @@
     {{/if}}
   </div>
 
-  <div class="item description">
-    <label>{{t "general.description"}}:</label>
-    <textarea
-      value={{description}}
-      oninput={{action (mut description) value="target.value"}}
-      disabled={{isSaving}}
-      placeholder={{t "general.reportDescriptionPlaceholder"}}
-    ></textarea>
-  </div>
-
   <div class="item years">
     <label>{{t "general.academicYear"}}:</label>
     {{one-way-select
@@ -42,6 +32,48 @@
       disabled=isSaving
       update=(action (mut selectedYear))
     }}
+  </div>
+
+  <div class="item start-date">
+    <label>{{t "general.start"}}:</label>
+    <span>
+      {{pikaday-input
+        value=startDate
+        format="L"
+        onSelection=(action (mut startDate))
+        focusOut=(action "addErrorDisplayFor" "startDate")
+      }}
+      {{#if
+        (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+      }}
+        <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
+      {{/if}}
+    </span>
+  </div>
+
+  <div class="item end-date">
+    <label>{{t "general.end"}}:</label>
+    <span>
+      {{pikaday-input
+        value=endDate
+        format="L"
+        onSelection=(action (mut endDate))
+        focusOut=(action "addErrorDisplayFor" "endDate")
+      }}
+      {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
+        <span class="validation-error-message">{{v-get this "endDate" "message"}}</span>
+      {{/if}}
+    </span>
+  </div>
+
+  <div class="item description">
+    <label>{{t "general.description"}}:</label>
+    <textarea
+      value={{description}}
+      oninput={{action (mut description) value="target.value"}}
+      disabled={{isSaving}}
+      placeholder={{t "general.reportDescriptionPlaceholder"}}
+    ></textarea>
   </div>
 
   <div class="buttons">

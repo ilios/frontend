@@ -7,7 +7,6 @@
   .rollover-form {
     @include ilios-form;
     border: 1px solid $ilios-blue;
-    display: block;
     margin-top: 1rem;
     padding: 1rem;
 
@@ -21,22 +20,22 @@
 
     .description {
       grid-column: 1 / -1;
-      margin-bottom: 4rem;
+    }
+
+    .rollover-summary {
+      font-weight: 400;
+      grid-column: 1 / -1;
+      margin: 0 1rem 2rem;
+
+      @include for-laptop-and-up {
+        padding: .5rem 6rem 0 4rem;
+      }
     }
 
     .years {
       select {
         display: block;
       }
-    }
-  }
-
-  .rollover-summary {
-    font-weight: 400;
-    margin: 0 1rem 2rem;
-
-    @include for-laptop-and-up {
-      padding: .5rem 6rem 0 4rem;
     }
   }
 }
