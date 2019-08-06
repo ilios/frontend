@@ -129,7 +129,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       institution.set("addressStateOrProvince", this.addressStateOrProvince);
       institution.set("addressZipCode", this.addressZipCode);
       institution.set("addressCountryCode", this.addressCountryCode);
-      await this.get("save")(institution);
+      await this.save(institution);
       this.send('clearErrorDisplay');
       this.set('isSaving', false);
       this.manage(false);
