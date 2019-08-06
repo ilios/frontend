@@ -80,23 +80,23 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this._super(...arguments);
     if (isPresent(this.institution)) {
       this.setProperties({
-        "name": this.institution.get("name"),
-        "aamcCode": this.institution.get("aamcCode"),
-        "addressStreet": this.institution.get("addressStreet"),
-        "addressCity": this.institution.get("addressCity"),
-        "addressStateOrProvince": this.institution.get("addressStateOrProvince"),
-        "addressZipCode": this.institution.get("addressZipCode"),
-        "addressCountryCode": this.institution.get("addressCountryCode")
+        name: this.institution.get("name"),
+        aamcCode: this.institution.get("aamcCode"),
+        addressStreet: this.institution.get("addressStreet"),
+        addressCity: this.institution.get("addressCity"),
+        addressStateOrProvince: this.institution.get("addressStateOrProvince"),
+        addressZipCode: this.institution.get("addressZipCode"),
+        addressCountryCode: this.institution.get("addressCountryCode")
       });
     } else {
       this.setProperties({
-        "name": "",
-        "aamcCode": "",
-        "addressStreet": "",
-        "addressCity": "",
-        "addressStateOrProvince": "",
-        "addressZipCode": "",
-        "addressCountryCode": ""
+        name: "",
+        aamcCode: "",
+        addressStreet: "",
+        addressCity: "",
+        addressStateOrProvince: "",
+        addressZipCode: "",
+        addressCountryCode: ""
       });
     }
   },
