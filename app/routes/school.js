@@ -29,7 +29,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       'configurations',
       'directors',
       'sessionTypes',
-      'vocabularies')
+      'vocabularies',
+      'curriculumInventoryInstitution')
     );
   },
   setupController(controller, model) {

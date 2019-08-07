@@ -122,4 +122,18 @@
     isManaging=schoolManageSessionAttributes
     manage=setSchoolManageSessionAttributes
   }}
+  {{#if schoolManageInstitution}}
+    <SchoolCurriculumInventoryInstitutionManager
+      @canUpdate={{canUpdateSchool}}
+      @manage={{setSchoolManageInstitution}}
+      @institution={{await school.curriculumInventoryInstitution}}
+      @save={{action "saveInstitution"}}
+    />
+  {{else}}
+    <SchoolCurriculumInventoryInstitutionDetails
+      @canUpdate={{canUpdateSchool}}
+      @manage={{setSchoolManageInstitution}}
+      @school={{school}}
+    />
+  {{/if}}
 </div>

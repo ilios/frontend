@@ -1,0 +1,23 @@
+.school-curriculum-inventory-institution-details {
+  @include detail-container($ilios-orange);
+
+  .school-curriculum-inventory-institution-details-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .school-curriculum-inventory-institution-details-content {
+    @include detail-container-content;
+
+    label {
+      font-weight: bold;
+    }
+  }
+}
