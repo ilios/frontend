@@ -8,6 +8,9 @@
 
     {{content-for "head"}}
 
+    <link rel="manifest" href="{{rootURL}}manifest.webmanifest">
+    <meta name="msapplication-config" content="{{rootURL}}browserconfig.xml">
+
     <!-- Ilios variables set  by the web server -->
     {{content-for 'server-variables'}}
 
