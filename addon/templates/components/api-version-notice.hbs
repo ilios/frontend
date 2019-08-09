@@ -1,7 +1,7 @@
 <div
   class="api-version-notice {{if mismatched "mismatch"}}"
   hidden={{not mismatched}}
-  aria-role={{if mismatched "alert" false}}
+  role={{if mismatched "alert" false}}
   data-test-load-finished={{check.lastSuccessful.value}}
   data-test-api-version-notice
 >
