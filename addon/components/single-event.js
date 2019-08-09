@@ -27,7 +27,7 @@ export default Component.extend(EventMixin, {
     if (isEmpty(instructors)) {
       return '';
     }
-    return this.get('intl').t('general.taughtBy', { instructors });
+    return this.get('intl').t('general.taughtBy', { instructors: instructors.join(', ') });
   }),
 
   sessionIs: computed('event.sessionType', 'intl.locale', function() {
