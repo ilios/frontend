@@ -20,7 +20,7 @@
         {{/if}}
       </span>
       {{#if editable}}
-        {{fa-icon "times" class="remove"}}
+        {{fa-icon icon="times" class="remove"}}
       {{/if}}
     </li>
   {{/each}}
@@ -76,7 +76,7 @@
         {{action (perform searchMore)}}
       >
         {{fa-icon
-          (if searchMore.isRunning "spinner")
+          icon=(if searchMore.isRunning "spinner")
           spin=(if searchMore.isRunning true false)
         }}
         {{t "general.showMore" }}

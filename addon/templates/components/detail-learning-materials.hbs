@@ -16,7 +16,7 @@
   {{/if}}
   <div class="detail-learningmaterials-actions">
     {{#if displayAddNewForm}}
-      <button class="collapse-button" {{action (mut displayAddNewForm) false}}>{{fa-icon "minus"}}</button>
+      <button class="collapse-button" {{action (mut displayAddNewForm) false}}>{{fa-icon icon="minus"}}</button>
     {{else if (and editable (not isSorting) (not isManaging))}}
       {{#action-menu
         title=(t "general.add")
@@ -98,7 +98,7 @@
                 {{#if lmProxy.notes}}
                   <span class="add">{{t "general.yes"}}</span>
                   {{#if lmProxy.publicNotes}}
-                    {{fa-icon "eye"}}
+                    {{fa-icon icon="eye"}}
                   {{/if}}
                 {{else}}
                   <span class="remove">{{t "general.no"}}</span>
@@ -119,7 +119,7 @@
                 {{lmProxy.learningMaterial.status.title}}
                 <span data-test-status>{{value}}</span>
                 {{#if (or lmProxy.startDate lmProxy.endDate)}}
-                  {{fa-icon "clock" title=(t "general.timedRelease")}}
+                  {{fa-icon icon="clock" title=(t "general.timedRelease")}}
                 {{/if}}
               </td>
               <td class="text-left text-center" colspan="1">
@@ -129,10 +129,10 @@
                     role="button"
                     {{action "confirmRemoval" lmProxy}}
                   >
-                    {{fa-icon "trash" class="enabled"}}
+                    {{fa-icon icon="trash" class="enabled"}}
                   </span>
                 {{else}}
-                  {{fa-icon "trash" class="disabled"}}
+                  {{fa-icon icon="trash" class="disabled"}}
                 {{/if}}
               </td>
             </tr>

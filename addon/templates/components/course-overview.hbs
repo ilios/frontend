@@ -6,20 +6,20 @@
   <div class="course-overview-actions">
     {{#link-to "course-materials" course class="materials"}}
       {{fa-icon
-        "archive"
+        icon="archive"
         title=(t "general.learningMaterialsSummary")
         fixedWidth=true
       }}
     {{/link-to}}
     {{#link-to "print_course" course (query-params unpublished=true) class="print"}}
-      {{fa-icon "print" title=(t "general.printSummary") fixedWidth=true}}
+      {{fa-icon icon="print" title=(t "general.printSummary") fixedWidth=true}}
     {{/link-to}}
     {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
       <span
         class="clickable rollover"
         role="button"
         {{action "transitionToRollover"}}>
-        {{fa-icon "random" fixedWidth=true title=(t "general.courseRollover")}}
+        {{fa-icon icon="random" fixedWidth=true title=(t "general.courseRollover")}}
       </span>
     {{/if}}
     {{#link-to
@@ -27,7 +27,7 @@
       course
       title=(t "general.courseVisualizations")
     }}
-      {{fa-icon "chart-bar"}}
+      {{fa-icon icon="chart-bar"}}
     {{/link-to}}
   </div>
 </div>

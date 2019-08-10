@@ -26,7 +26,7 @@
           {{/if}}
         </li>
       {{else}}
-        <li>{{fa-icon "users"}}</li>
+        <li>{{fa-icon icon="users"}}</li>
       {{/each}}
     </ul>
   </div>
@@ -36,7 +36,7 @@
       {{#each (await offering.allInstructors) as |instructor|}}
         <li data-test-instructor>{{instructor.fullName}}</li>
       {{else}}
-        <li>{{fa-icon "user-plus"}}</li>
+        <li>{{fa-icon icon="user-plus"}}</li>
       {{/each}}
     </ul>
   </div>
@@ -47,7 +47,7 @@
         role="button"
         {{action (toggle "isEditing" this)}}
       >
-        {{fa-icon "edit" class="enabled"}}
+        {{fa-icon icon="edit" class="enabled"}}
       </span>
       {{#if (await userCanDelete)}}
         <span
@@ -55,10 +55,10 @@
           role="button"
           {{action "confirmRemove"}}
         >
-          {{fa-icon "trash" class="enabled"}}
+          {{fa-icon icon="trash" class="enabled"}}
         </span>
       {{else}}
-        {{fa-icon "trash" class="disabled"}}
+        {{fa-icon icon="trash" class="disabled"}}
       {{/if}}
     </div>
   {{/if}}

@@ -9,9 +9,9 @@
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" onclick={{perform save}}>
-        {{fa-icon (if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
+        {{fa-icon icon=(if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon "undo"}}</button>
+      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon icon="undo"}}</button>
     {{else if editable}}
       <button {{action setIsManaging true}}>{{t "general.manageLeadership"}}</button>
     {{/if}}

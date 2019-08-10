@@ -16,7 +16,7 @@
           <tr>
             <td colspan="3">
               {{#if lmObject.isBlanked}}
-                <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
+                <span class="lm-type-icon">{{fa-icon icon="clock" title=(t "general.timedRelease")}}</span>
                 {{lmObject.title}}
               {{else}}
                 {{lm-type-icon type=lmObject.type mimetype=lmObject.mimetype}}
@@ -26,7 +26,7 @@
                       {{lmObject.title}}
                     </a>
                     <a href={{lmObject.absoluteFileUri}} target="_blank" rel="noopener">
-                      {{fa-icon "download" title=(t "general.download")}}
+                      {{fa-icon icon="download" title=(t "general.download")}}
                     </a>
                   {{else}}
                     <a href={{lmObject.absoluteFileUri}} target="_blank" rel="noopener">{{lmObject.title}}</a>
@@ -72,5 +72,5 @@
     <p>{{t "general.none"}}</p>
   {{/if}}
 {{else}}
-  <p>{{fa-icon "spinner" spin=true}} {{t "general.loadingMaterials"}}</p>
+  <p>{{fa-icon icon="spinner" spin=true}} {{t "general.loadingMaterials"}}</p>
 {{/if}}

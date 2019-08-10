@@ -40,7 +40,7 @@
 
   {{#unless mySchedule}}
     <div class="calendar-options-control calendar-school-picker">
-      {{fa-icon "university"}}
+      {{fa-icon icon="university"}}
       {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action changeSchool value="target.value"}}>
           {{#each (sort-by "title" (await allSchools)) as |school|}}
@@ -101,7 +101,7 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon "spinner" spin=true}}
+            {{fa-icon icon="spinner" spin=true}}
           {{/if}}
         </div>
 
@@ -128,7 +128,7 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon "spinner" spin=true}}
+            {{fa-icon icon="spinner" spin=true}}
           {{/if}}
         </div>
 
@@ -145,7 +145,7 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon "spinner" spin=true}}
+            {{fa-icon icon="spinner" spin=true}}
           {{/if}}
         </div>
       {{else}}
@@ -172,7 +172,7 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon "spinner" spin=true}}
+            {{fa-icon icon="spinner" spin=true}}
           {{/if}}
         </div>
         <div
@@ -223,7 +223,7 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon "spinner" spin=true}}
+            {{fa-icon icon="spinner" spin=true}}
           {{/if}}
         </div>
       {{/liquid-if}}
@@ -240,7 +240,7 @@
           class="filter-tag {{tag.class}}"
           role="button"
           {{action "removeFilter" tag.filter}}>
-          {{tag.name}} {{fa-icon "times"}}
+          {{tag.name}} {{fa-icon icon="times"}}
         </span>
       {{/each}}
       <span

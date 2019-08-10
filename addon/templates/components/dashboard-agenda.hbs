@@ -28,17 +28,17 @@
                 <td colspan="1">
                   {{#if event.attireRequired}}
                     {{fa-icon
-                      "black-tie"
+                      icon="black-tie"
                       prefix="fab"
                       title=(t "general.whitecoatsSlashSpecialAttire")
                     }}
                   {{/if}}
-                  {{#if event.equipmentRequired}}{{fa-icon "flask" title=(t "general.specialEquipment")}}{{/if}}
+                  {{#if event.equipmentRequired}}{{fa-icon icon="flask" title=(t "general.specialEquipment")}}{{/if}}
                   {{#if event.attendanceRequired}}
-                    {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
+                    {{fa-icon icon="calendar-check" title=(t "general.attendanceIsRequired")}}
                   {{/if}}
                   {{#if (is-same-or-after event.lastModified sixDaysAgo precision="day")}}
-                    {{fa-icon "exclamation-circle" title=(t "general.newUpdates")}}
+                    {{fa-icon icon="exclamation-circle" title=(t "general.newUpdates")}}
                   {{/if}}
                 </td>
               </tr>
@@ -47,7 +47,7 @@
               <tr>
                 <td colspan="4" class="event-date">
                   {{#link-to "events" event.slug}}
-                    {{fa-icon "external-link-square-alt"}}
+                    {{fa-icon icon="external-link-square-alt"}}
                     {{#if event.ilmSession}}
                       <span class="ilm-due">{{t "general.dueBy"}}: </span>
                     {{/if}}
@@ -64,17 +64,17 @@
                 <td colspan="1">
                   {{#if event.attireRequired}}
                     {{fa-icon
-                      "black-tie"
+                      icon="black-tie"
                       prefix="fab"
                       title=(t "general.whitecoatsSlashSpecialAttire")
                     }}
                   {{/if}}
-                  {{#if event.equipmentRequired}}{{fa-icon "flask" title=(t "general.specialEquipment")}}{{/if}}
+                  {{#if event.equipmentRequired}}{{fa-icon icon="flask" title=(t "general.specialEquipment")}}{{/if}}
                   {{#if event.attendanceRequired}}
-                    {{fa-icon "calendar-check" title=(t "general.attendanceIsRequired")}}
+                    {{fa-icon icon="calendar-check" title=(t "general.attendanceIsRequired")}}
                   {{/if}}
                   {{#if (is-same-or-after event.lastModified sixDaysAgo precision="day")}}
-                    {{fa-icon "exclamation-circle" title=(t "general.newUpdates")}}
+                    {{fa-icon icon="exclamation-circle" title=(t "general.newUpdates")}}
                   {{/if}}
                 </td>
               </tr>
@@ -87,5 +87,5 @@
     {{/if}}
   </div>
 {{else}}
-  <p>{{fa-icon "spinner" spin=true}} {{t "general.loadingEvents"}}</p>
+  <p>{{fa-icon icon="spinner" spin=true}} {{t "general.loadingEvents"}}</p>
 {{/if}}

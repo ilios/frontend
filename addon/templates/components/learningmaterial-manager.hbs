@@ -122,7 +122,7 @@
       <span class="link">
         <a href={{link}} target="_blank" rel="noopener">{{link}}</a>
         {{#copy-button clipboardText=link}}
-          {{fa-icon "copy" title=(t "general.copyLink")}}
+          {{fa-icon icon="copy" title=(t "general.copyLink")}}
         {{/copy-button}}
       </span>
     </div>
@@ -136,7 +136,7 @@
             {{filename}}
           </a>
           <a href={{absoluteFileUri}} target="_blank" rel="noopener">
-            {{fa-icon "download" title=(t "general.download")}}
+            {{fa-icon icon="download" title=(t "general.download")}}
           </a>
         {{else}}
           <a href={{absoluteFileUri}} target="_blank" rel="noopener">
@@ -144,7 +144,7 @@
           </a>
         {{/if}}
         {{#copy-button clipboardText=absoluteFileUri}}
-          {{fa-icon "copy" title=(t "general.copyLink")}}
+          {{fa-icon icon="copy" title=(t "general.copyLink")}}
         {{/copy-button}}
       </span>
     </div>

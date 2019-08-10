@@ -14,7 +14,7 @@
                 role="button"
               >
                 {{t "general.removeAll"}}
-                ({{fa-icon "times"}})
+                ({{fa-icon icon="times"}})
               </span>
             </div>
           {{/if}}
@@ -35,7 +35,7 @@
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if isManaging}}
-                  {{fa-icon "times" class="remove"}}
+                  {{fa-icon icon="times" class="remove"}}
                 {{/if}}
               </li>
             {{/each}}

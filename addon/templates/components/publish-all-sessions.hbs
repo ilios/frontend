@@ -46,7 +46,7 @@
                 <td class="yes">
                   {{t "general.yes"}} ({{session.objectives.length}})
                   {{#if session.showUnlinkIcon}}
-                    {{fa-icon "unlink"
+                    {{fa-icon icon="unlink"
                       class="clickable"
                       click=(action "transitionToSession" session)}}
                   {{/if}}
@@ -107,7 +107,7 @@
                 <td class="yes">
                   {{t "general.yes"}} ({{session.objectives.length}})
                   {{#if session.showUnlinkIcon}}
-                    {{fa-icon "unlink"
+                    {{fa-icon icon="unlink"
                       class="clickable"
                       click=(action "transitionToSession" session)}}
                   {{/if}}
@@ -204,7 +204,7 @@
                 <td class="yes">
                   {{t "general.yes"}} ({{session.objectives.length}})
                   {{#if session.showUnlinkIcon}}
-                    {{fa-icon "unlink"
+                    {{fa-icon icon="unlink"
                       class="clickable"
                       click=(action "transitionToSession" session)}}
                   {{/if}}
@@ -232,10 +232,10 @@
       data-test-unlinked-warning>
       {{t "general.unlinkedObjectives"}}
     </span>
-    {{fa-icon "unlink"
+    {{fa-icon icon="unlink"
       class="clickable"
       click=(action "transitionToCourse")}}
-    {{fa-icon "chart-bar"
+    {{fa-icon icon="chart-bar"
       class="clickable"
       click=(action "transitionToVisualizeObjectives")}}
   {{/if}}
