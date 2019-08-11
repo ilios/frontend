@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
@@ -41,9 +40,8 @@ export default Component.extend({
   }),
 
   search: task(function* () {
-    const q = cleanQuery(this.query);
-    this.onQuery(q);
-    const { courses } = yield this.iliosSearch.forCurriculum(q);
+    this.onQuery(this.query);
+    const { courses } = yield this.iliosSearch.forCurriculum(this.query);
     this.setUpYearFilter(courses.mapBy('year'));
 
     return courses;
