@@ -6,7 +6,8 @@
     value={{this.query}}
     oninput={{action (queue
       (action (mut this.query) value="target.value")
-      (perform this.autocomplete))}}>
+      (perform this.autocomplete))}}
+  >
 
   <span
     class="search-icon"

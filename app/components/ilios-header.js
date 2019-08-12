@@ -16,6 +16,8 @@ export default Component.extend({
   ariaRole: 'banner',
   title: null,
 
+  'data-test-ilios-header': true,
+
   showSearch: computed('session.isAuthenticated', 'router.currentRouteName', function () {
     return this.session.isAuthenticated && this.router.currentRouteName !== 'search';
   }),

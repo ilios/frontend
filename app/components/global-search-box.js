@@ -43,7 +43,7 @@ export default Component.extend({
 
       if (q.length > 0) {
         this.autocompleteCache = [];
-        this.search(q);
+        this.search(this.query);
         this.set('showResults', false);
       }
     },
@@ -190,7 +190,7 @@ export default Component.extend({
       return [];
     }
 
-    const cachedResults = this.findCachedAutocomplete(q);
+    const cachedResults = this.findCachedAutocomplete(this.query);
     if (cachedResults.length) {
       return cachedResults.map(text => {
         return { text };
@@ -199,8 +199,8 @@ export default Component.extend({
 
     yield timeout(DEBOUNCE_MS);
 
-    const { autocomplete } = yield this.iliosSearch.forCurriculum(q, true);
-    this.autocompleteCache.pushObject({ q, autocomplete });
+    const { autocomplete } = yield this.iliosSearch.forCurriculum(this.query, true);
+    this.autocompleteCache.pushObject({ q: this.query, autocomplete });
 
     return autocomplete.map(text => {
       return { text };
