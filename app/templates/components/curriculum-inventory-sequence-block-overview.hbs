@@ -68,7 +68,7 @@
           save=(action "changeRequired")
           close=(action "revertRequiredChanges")
         }}
-          <select onchange={{action (mut required) value="target.value"}}>
+          <select onchange={{action "setRequired" value="target.value"}}>
             <option value="1" selected={{eq required "1"}}>{{t "general.required"}}</option>
             <option value="2" selected={{eq required "2"}}>{{t "general.optionalElective"}}</option>
             <option value="3" selected={{eq required "3"}}>{{t "general.requiredInTrack"}}</option>
@@ -197,29 +197,31 @@
     {{#unless isEditingMinMax}}
       <div class="block minimum">
         <label>{{t "general.minimum"}}:</label>
-        {{#if canUpdate}}
+        {{#if (and canUpdate (not isElective))}}
           <span class="editinplace">
-            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.minimum}}</span>
+            <span {{action "editMinMax"}} class="editable">{{this.minimum}}</span>
           </span>
         {{else}}
-          <span>{{sequenceBlock.minimum}}</span>
+          <span>{{this.minimum}}</span>
         {{/if}}
       </div>
       <div class="block maximum">
         <label>{{t "general.maximum"}}:</label>
         {{#if canUpdate}}
           <span class="editinplace">
-            <span {{action "editMinMax"}} class="editable">{{sequenceBlock.maximum}}</span>
+            <span {{action "editMinMax"}} class="editable">{{this.maximum}}</span>
           </span>
         {{else}}
-          <span>{{sequenceBlock.maximum}}</span>
+          <span>{{this.maximum}}</span>
         {{/if}}
       </div>
     {{else}}
       {{curriculum-inventory-sequence-block-min-max-editor
-        sequenceBlock=sequenceBlock
+        minimum=minimum
+        maximum=maximum
         save=(action "changeMinMax")
         cancel=(action "cancelMinMaxEditing")
+        isElective=isElective
       }}
     {{/unless}}
     <div class="block academic-level">

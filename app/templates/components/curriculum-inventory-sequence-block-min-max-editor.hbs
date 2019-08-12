@@ -2,9 +2,9 @@
   <label>{{t "general.minimum"}}:</label>
   <input
     type="text"
-    value={{minimum}}
+    value={{if isElective "0" minimum}}
     oninput={{action (mut minimum) value="target.value"}}
-    disabled={{isSaving}}
+    disabled={{or isSaving isElective}}
     onkeyup={{action "addErrorDisplayFor" "minimum"}}
   >
   {{#if (and (v-get this "minimum" "isInvalid") (is-in showErrorsFor "minimum"))}}
