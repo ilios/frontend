@@ -61,7 +61,7 @@
       {{#if (is-pending @materials)}}
         <tr>
           <td class="text-center" colspan="11">
-            {{fa-icon "spinner" class="orange" size="2x" spin=true}}
+            {{fa-icon icon="spinner" class="orange" size="2x" spin=true}}
           </td>
         </tr>
       {{else}}
@@ -76,7 +76,7 @@
             <td colspan="3" data-test-title>
               {{#if lmObject.isBlanked}}
                 <span class="lm-type-icon">
-                  {{fa-icon "clock" title=(t "general.timedRelease")}}
+                  {{fa-icon icon="clock" title=(t "general.timedRelease")}}
                 </span>
                 {{lmObject.title}}
                 <span class="timed-release-info">
@@ -97,7 +97,7 @@
                       href={{lmObject.absoluteFileUri}}
                       rel="noopener"
                       target="_blank">
-                      {{fa-icon "download" title=(t "general.download")}}
+                      {{fa-icon icon="download" title=(t "general.download")}}
                     </a>
                   {{else}}
                     <a

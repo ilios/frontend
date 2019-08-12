@@ -12,9 +12,9 @@
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" {{action "save"}}>
-        {{fa-icon (if isSaving "spinner" "check") spin=(if isSaving true false)}}
+        {{fa-icon icon=(if isSaving "spinner" "check") spin=(if isSaving true false)}}
       </button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
     {{else if editable}}
       <button {{action "manage"}}>{{t "general.cohortsManageTitle"}}</button>
     {{/if}}

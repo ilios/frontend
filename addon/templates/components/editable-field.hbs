@@ -3,7 +3,7 @@
     <span>
       {{#if value}}
         {{#if looksEmpty}}
-          {{fa-icon "edit"
+          {{fa-icon icon="edit"
             class="enabled"
             data-test-edit=""
             click=(perform edit)}}
@@ -33,14 +33,14 @@
           title={{t "general.save"}}
           {{action (perform saveData)}}
         >
-          {{fa-icon (if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
+          {{fa-icon icon=(if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
         </button>
         <button
           class="cancel"
           title={{t "general.cancel"}}
           {{action (perform closeEditor)}}
         >
-          {{fa-icon "times"}}
+          {{fa-icon icon="times"}}
         </button>
       </span>
     </span>

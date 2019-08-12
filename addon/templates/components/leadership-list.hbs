@@ -14,7 +14,7 @@
               {{#each (sort-by "lastName" "firstName" directors) as |user|}}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
+                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
                   {{/unless}}
                   <span data-test-name>{{user.fullName}}</span>
                 </li>
@@ -34,7 +34,7 @@
               {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
+                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
                   {{/unless}}
                   <span data-test-name>{{user.fullName}}</span>
                 </li>

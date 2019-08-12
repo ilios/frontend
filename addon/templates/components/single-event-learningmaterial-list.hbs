@@ -3,7 +3,7 @@
     {{#each learningMaterials as |lm|}}
       <li class="single-event-learningmaterial-item">
         {{#if lm.isBlanked}}
-          <span class="lm-type-icon">{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
+          <span class="lm-type-icon">{{fa-icon icon="clock" title=(t "general.timedRelease")}}</span>
           <div class="single-event-learningmaterial-item-title">
             {{lm.title}}
           </div>
@@ -11,12 +11,12 @@
           {{lm-type-icon type=lm.type mimetype=lm.mimetype listItem=true}}
           <div class="single-event-learningmaterial-item-title">
             {{#if lm.required}}
-              {{fa-icon "star" title=(t "general.required")}}
+              {{fa-icon icon="star" title=(t "general.required")}}
             {{/if}}
             {{#if lm.absoluteFileUri}}
               {{#if (eq lm.mimetype "application/pdf")}}
                 <a href="{{lm.absoluteFileUri}}?inline">{{lm.title}}</a>
-                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">{{fa-icon "download" title=(t "general.download")}}</a>
+                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">{{fa-icon icon="download" title=(t "general.download")}}</a>
               {{else}}
                 <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">{{lm.title}}</a>
               {{/if}}
@@ -52,7 +52,7 @@
           {{#if lm.publicNotes}}
             <div class="single-event-learningmaterial-item-notes">
               {{! template-lint-disable no-triple-curlies }}
-              {{fa-icon "pen-square"}}<p>{{{lm.publicNotes}}}</p>
+              {{fa-icon icon="pen-square"}}<p>{{{lm.publicNotes}}}</p>
             </div>
           {{/if}}
         {{/if}}

@@ -54,7 +54,7 @@
 
 <section class="session-overview">
   <div class="last-update">
-    {{fa-icon "history" title=(t "general.lastUpdate")}}
+    {{fa-icon icon="history" title=(t "general.lastUpdate")}}
     {{t "general.lastUpdate"}}:
     {{this.updatedAt}}
   </div>
@@ -68,7 +68,7 @@
     <div class="session-overview-actions">
       {{#if (and (is-fulfilled showCopy) (await showCopy))}}
         {{#link-to "session.copy" session class="copy"}}
-          {{fa-icon "copy" title=(t "general.copySession") fixedWidth=true}}
+          {{fa-icon icon="copy" title=(t "general.copySession") fixedWidth=true}}
         {{/link-to}}
       {{/if}}
     </div>
@@ -255,7 +255,7 @@
         <label>
           {{#if session.hasPostrequisite}}
             {{#link-to "session.index" (await session.postrequisite.course) (await session.postrequisite)}}
-              {{fa-icon  "external-link-square-alt"}} {{t "general.duePriorTo"}}:
+              {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
             {{/link-to}}
           {{else}}
             {{t "general.duePriorTo"}}:
@@ -296,7 +296,7 @@
         {{#if session.hasPrerequisites}}
           <span>
             {{#each (await session.prerequisites) as |prerequisite|~}}
-              {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  "external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
+              {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
               {{#unless (eq prerequisite session.prerequisites.lastObject)}}, {{/unless}}
             {{~/each}}
           </span>

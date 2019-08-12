@@ -45,7 +45,7 @@
             {{action (perform searchMore)}}
           >
             {{fa-icon
-              (if searchMore.isRunning "spinner")
+              icon=(if searchMore.isRunning "spinner")
               spin=(if searchMore.isRunning true false)
             }}
             {{t "general.showMore" }}

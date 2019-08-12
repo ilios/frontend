@@ -12,9 +12,9 @@
           <ul>
             {{#each (sort-by "lastName" "firstName" directors) as |user|}}
               <li>
-                {{fa-icon "times" class="clickable remove" click=(action removeDirector user)}}
+                {{fa-icon icon="times" class="clickable remove" click=(action removeDirector user)}}
                 {{#unless user.enabled}}
-                  {{fa-icon "user-times" title=(t "general.disabled") class="disabled-user"}}
+                  {{fa-icon icon="user-times" title=(t "general.disabled") class="disabled-user"}}
                 {{/unless}}
                 <span data-test-name>{{user.fullName}}</span>
               </li>
@@ -30,12 +30,12 @@
             {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
               <li>
                 {{fa-icon
-                  "times"
+                  icon="times"
                   class="clickable remove"
                   click=(action removeAdministrator user)
                 }}
                 {{#unless user.enabled}}
-                  {{fa-icon "user-times" title=(t "general.disabled") class="disabled-user"}}
+                  {{fa-icon icon="user-times" title=(t "general.disabled") class="disabled-user"}}
                 {{/unless}}
                 <span data-test-name>{{user.fullName}}</span>
               </li>

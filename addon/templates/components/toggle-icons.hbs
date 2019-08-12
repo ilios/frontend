@@ -19,14 +19,14 @@
 <div class="icons">
   {{#if firstOptionSelected}}
     {{fa-icon
-      firstIcon
+      icon=firstIcon
       class="first"
       title=secondLabel
       click=(action "secondChoice")
     }}
   {{else}}
     {{fa-icon
-      secondIcon
+      icon=secondIcon
       class="second"
       title=firstLabel
       click=(action "firstChoice")

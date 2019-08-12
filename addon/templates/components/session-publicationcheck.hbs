@@ -6,7 +6,7 @@
 }}
 <div class="back-to-session">
   {{#link-to "session.index" (await session.course) session}}
-    {{fa-icon "undo"}} {{t "general.backToTitle" title=session.title}}
+    {{fa-icon icon="undo"}} {{t "general.backToTitle" title=session.title}}
   {{/link-to}}
 </div>
 
@@ -44,7 +44,7 @@
             <td class="yes">
               {{t "general.yes"}} ({{@session.objectives.length}})
               {{#if this.showUnlinkIcon}}
-                {{fa-icon "unlink"
+                {{fa-icon icon="unlink"
                   class="clickable"
                   click=(action "transitionToSession")}}
               {{/if}}

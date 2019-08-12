@@ -12,7 +12,7 @@
     {{/attach-tooltip}}
     {{#if recentlyUpdated}}
       {{fa-icon
-        "exclamation-circle"
+        icon="exclamation-circle"
         class="recently-updated-icon"
         title=(t "general.newUpdates")
       }}
@@ -20,9 +20,9 @@
 
     {{#unless isMonth}}
       {{#if (not event.isPublished)}}
-        {{fa-icon "file-signature"}}
+        {{fa-icon icon="file-signature"}}
       {{else if event.isScheduled}}
-        {{fa-icon "clock"}}
+        {{fa-icon icon="clock"}}
       {{/if}}
     {{/unless}}
     <span class="ilios-calendar-event-time">

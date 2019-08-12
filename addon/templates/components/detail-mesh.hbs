@@ -11,8 +11,8 @@
 
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" {{action "save"}}>{{fa-icon "check"}}</button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+      <button class="bigadd" {{action "save"}}>{{fa-icon icon="check"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
     {{else if editable}}
       <button {{action "manage"}}>{{t "general.meshManageTitle"}}</button>
     {{/if}}

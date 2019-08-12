@@ -7,9 +7,9 @@
     <div class="session-row">
       <span class="expand-collapse-control" data-test-expand-collapse-control>
         {{#if (contains obj.session.id expandedSessionIds)}}
-          {{fa-icon "caret-down" class="link" click=(action closeSession obj.session)}}
+          {{fa-icon icon="caret-down" class="link" click=(action closeSession obj.session)}}
         {{else}}
-          {{fa-icon "caret-right"
+          {{fa-icon icon="caret-right"
             class=(if (gt obj.offeringCount 0) "link" "disabled")
             title=(if (eq obj.offeringCount 0) (t "general.noOfferings"))
             click=(action "expandSession" obj)}}
@@ -29,7 +29,7 @@
           {{#if obj.isIlm}}
             {{#if obj.postrequisite}}
               <strong>
-                {{t "general.ilm"}}: {{fa-icon "user-clock"}}
+                {{t "general.ilm"}}: {{fa-icon icon="user-clock"}}
                 {{t "general.duePriorTo"}}:
               </strong>
               {{#link-to "session" obj.course.id obj.postrequisite.id}}
@@ -42,7 +42,7 @@
           {{else}}
             {{#if obj.postrequisite}}
               <strong>
-                {{fa-icon "user-clock"}} {{t "general.duePriorTo"}}:
+                {{fa-icon icon="user-clock"}} {{t "general.duePriorTo"}}:
               </strong>
               {{#link-to "session" obj.course.id obj.postrequisite.id}}
                 {{truncate obj.postrequisite.title 18 true}}
@@ -56,7 +56,7 @@
       <span class="session-grid-offerings">{{obj.offeringCount}}</span>
       <span class="session-grid-status" data-test-status>
         {{#if (and obj.canUpdate obj.instructionalNotes.length)}}
-          {{fa-icon "clipboard-list"
+          {{fa-icon icon="clipboard-list"
             ariaHidden=false
             class="instructional-notes"
             prefix="fal"
@@ -66,13 +66,13 @@
       </span>
       <span class="session-grid-actions" data-test-actions>
         {{#if obj.canUpdate}}
-          {{fa-icon "trash"
+          {{fa-icon icon="trash"
             ariaHidden=false
             class="clickable remove enabled"
             title=(t "general.remove")
             click=(action "confirmDelete" obj.session.id)}}
         {{else}}
-          {{fa-icon "trash"
+          {{fa-icon icon="trash"
             ariaHidden=false
             class="disabled"
             title=(t "general.remove")}}

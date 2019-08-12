@@ -38,7 +38,7 @@
     <span class="session-attributes" data-test-session-attributes>
       {{#if @event.attireRequired}}
         {{fa-icon
-          "black-tie"
+          icon="black-tie"
           prefix="fab"
           ariaHidden=false
           title=(t "general.whitecoatsSlashSpecialAttire")
@@ -46,21 +46,21 @@
       {{/if}}
       {{#if @event.equipmentRequired}}
         {{fa-icon
-          "flask"
+          icon="flask"
           ariaHidden=false
           title=(t "general.specialEquipment")
         }}
       {{/if}}
       {{#if @event.attendanceRequired}}
         {{fa-icon
-          "calendar-check"
+          icon="calendar-check"
           ariaHidden=false
           title=(t "general.attendanceIsRequired")
         }}
       {{/if}}
       {{#if @event.supplemental}}
         {{fa-icon
-          "calendar-minus"
+          icon="calendar-minus"
           ariaHidden=false
           title=(t "general.supplementalCurriculum")
         }}
@@ -82,7 +82,7 @@
     {{#each (filter-by "sessionLearningMaterial" @event.learningMaterials) as |lm|}}
       <li class="learning-material"  data-test-learning-material>
         {{#if lm.isBlanked}}
-          <span class="lm-type-icon" data-test-type-icon>{{fa-icon "clock" title=(t "general.timedRelease")}}</span>
+          <span class="lm-type-icon" data-test-type-icon>{{fa-icon icon="clock" title=(t "general.timedRelease")}}</span>
           <span data-test-material-title>{{lm.title}}</span>
         {{else}}
           {{lm-type-icon type=(lm-type lm) mimetype=lm.mimetype}}
@@ -92,7 +92,7 @@
                 {{lm.title}}
               </a>
               <a href={{lm.absoluteFileUri}} target="_blank" rel="noopener">
-                {{fa-icon "download" title=(t "general.download")}}
+                {{fa-icon icon="download" title=(t "general.download")}}
               </a>
             {{else}}
               <a
