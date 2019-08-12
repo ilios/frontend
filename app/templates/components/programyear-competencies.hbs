@@ -18,11 +18,11 @@
       {{#if isManaging}}
         <button class="bigadd" onclick={{perform save}}>
           {{fa-icon
-            (if save.isRunning "spinner" "check")
+            icon=(if save.isRunning "spinner" "check")
             spin=(if save.isRunning true false)
           }}
         </button>
-        <button class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+        <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
       {{else}}
         <button {{action setIsManaging true}}>{{t "general.competenciesManageTitle"}}</button>
       {{/if}}

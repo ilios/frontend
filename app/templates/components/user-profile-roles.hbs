@@ -2,13 +2,13 @@
   {{#if isManaging}}
     <button class="bigadd" {{action (perform save)}} data-test-save>
       {{fa-icon
-        (if save.isRunning "spinner" "check")
+        icon=(if save.isRunning "spinner" "check")
         spin=(if save.isRunning true false)
       }}
     </button>
-    <button disabled={{save.isRunning}} class="bigcancel" {{action "cancel"}}>{{fa-icon "undo"}}</button>
+    <button disabled={{save.isRunning}} class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
   {{else if isManageable}}
-    <button class="manage" {{action setIsManaging true}} data-test-manage>{{fa-icon "edit"}}</button>
+    <button class="manage" {{action setIsManaging true}} data-test-manage>{{fa-icon icon="edit"}}</button>
   {{/if}}
 </div>
 <div class="form">

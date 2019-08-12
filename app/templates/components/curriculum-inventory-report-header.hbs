@@ -24,14 +24,14 @@
       {{/if}}
     {{/editable-field}}
   {{else}}
-    <h2>{{fa-icon "lock"}} {{report.name}}</h2>
+    <h2>{{fa-icon icon="lock"}} {{report.name}}</h2>
   {{/if}}
 </div>
 <div class ="actions">
   <a class="button" {{action (perform downloadReport report)}}>
     <button class="download">
       {{fa-icon
-        (if downloadReport.isRunning "spinner" "download")
+        icon=(if downloadReport.isRunning "spinner" "download")
         spin=(if downloadReport.isRunning true false)
       }}
       {{t "general.download"}}

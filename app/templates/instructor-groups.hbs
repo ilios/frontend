@@ -2,7 +2,7 @@
 <section class="instructorgroups-list" data-test-instructor-groups-list>
   <div class="filters">
     <div class="schoolsfilter" data-test-school-filter>
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" model.schools) as |school|}}
@@ -50,7 +50,7 @@
       {{#if newInstructorGroup}}
         <div class="saved-result">
           {{#link-to "instructorGroup" newInstructorGroup}}
-            {{fa-icon "external-link-square-alt"}} {{newInstructorGroup.title}}
+            {{fa-icon icon="external-link-square-alt"}} {{newInstructorGroup.title}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>

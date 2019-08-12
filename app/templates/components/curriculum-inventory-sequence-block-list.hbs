@@ -22,7 +22,7 @@
     {{#if saved}}
       <div class="saved-result">
         {{#link-to "curriculumInventorySequenceBlock" savedBlock}}
-          {{fa-icon "external-link-square-alt"}} {{savedBlock.title}}
+          {{fa-icon icon="external-link-square-alt"}} {{savedBlock.title}}
         {{/link-to}}
         {{t "general.savedSuccessfully"}}
       </div>
@@ -82,14 +82,14 @@
                 </td>
                 <td class="text-center" colspan="1">
                   {{#link-to "curriculumInventorySequenceBlock" block.content class="edit"}}
-                    {{fa-icon "edit" class="enabled"}}
+                    {{fa-icon icon="edit" class="enabled"}}
                   {{/link-to}}
                   {{#if canUpdate}}
                     <span class="clickable remove" {{action "confirmRemove" block}}>
-                      {{fa-icon "trash" class="enabled"}}
+                      {{fa-icon icon="trash" class="enabled"}}
                     </span>
                   {{else}}
-                    {{fa-icon "trash" class="disabled"}}
+                    {{fa-icon icon="trash" class="disabled"}}
                   {{/if}}
                 </td>
               </tr>

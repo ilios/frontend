@@ -14,7 +14,7 @@
         <td>{{t "general.attendanceRequired"}}</td>
         <td>
           {{fa-icon
-            (if showSessionAttendanceRequired "check" "ban")
+            icon=(if showSessionAttendanceRequired "check" "ban")
             class=(if showSessionAttendanceRequired "yes" "no")
           }}
         </td>
@@ -23,7 +23,7 @@
         <td>{{t "general.supplementalCurriculum"}}</td>
         <td>
           {{fa-icon
-            (if showSessionSupplemental "check" "ban")
+            icon=(if showSessionSupplemental "check" "ban")
             class=(if showSessionSupplemental "yes" "no")
           }}
         </td>
@@ -32,7 +32,7 @@
         <td>{{t "general.specialAttireRequired"}}</td>
         <td>
           {{fa-icon
-            (if showSessionSpecialAttireRequired "check" "ban")
+            icon=(if showSessionSpecialAttireRequired "check" "ban")
             class=(if showSessionSpecialAttireRequired "yes" "no")
           }}
         </td>
@@ -41,7 +41,7 @@
         <td>{{t "general.specialEquipmentRequired"}}</td>
         <td>
           {{fa-icon
-            (if showSessionSpecialEquipmentRequired "check" "ban")
+            icon=(if showSessionSpecialEquipmentRequired "check" "ban")
             class=(if showSessionSpecialEquipmentRequired "yes" "no")
           }}
         </td>

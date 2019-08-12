@@ -3,7 +3,7 @@
     class="prev-link link clickable {{if this.disablePrev "inactive"}}"
     role="button"
     {{action "selectPage" -1}}>
-    {{fa-icon "angle-left"}}{{t "general.prev"}}
+    {{fa-icon icon="angle-left"}}{{t "general.prev"}}
   </span>
 
   {{#each this.pages as |pageNumber|}}
@@ -22,6 +22,6 @@
     class="next-link link clickable {{if this.disableNext "inactive"}}"
     role="button"
     {{action "selectPage" 1}}>
-    {{t "general.next"}}{{fa-icon "angle-right"}}
+    {{t "general.next"}}{{fa-icon icon="angle-right"}}
   </span>
 {{/if}}

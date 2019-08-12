@@ -24,7 +24,7 @@
   <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}">
     {{#if this.isLoading}}
       <li class="searching">
-        {{fa-icon "spinner" class="orange" spin=true}}
+        {{fa-icon icon="spinner" class="orange" spin=true}}
         {{t "general.currentlySearchingPrompt"}}
       </li>
     {{else}}

@@ -2,7 +2,7 @@
 <section id="curriculumInventoryReports" class="curriculum-inventory-reports">
   <div class="filter-tools">
     <div class="schoolsfilter">
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
@@ -21,7 +21,7 @@
     </div>
 
     <div class="programsfilter">
-      {{fa-icon "list-alt" fixedWidth=true}}
+      {{fa-icon icon="list-alt" fixedWidth=true}}
       {{#if (gt (get (await programs) "length") 1)}}
         <select onchange={{action "changeSelectedProgram" value="target.value"}}>
           {{#each (sort-by "title" (await programs)) as |program|}}
@@ -69,7 +69,7 @@
       {{#if newReport}}
         <div class="saved-result">
           {{#link-to "curriculumInventoryReport" newReport}}
-            {{fa-icon "external-link-square-alt"}} {{newReport.name}}
+            {{fa-icon icon="external-link-square-alt"}} {{newReport.name}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>

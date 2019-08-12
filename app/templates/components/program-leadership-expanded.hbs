@@ -6,12 +6,12 @@
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" onclick={{perform this.save}}>
-        {{fa-icon (if this.isSaving "spinner" "check") spin=this.isSaving}}
+        {{fa-icon icon=(if this.isSaving "spinner" "check") spin=this.isSaving}}
       </button>
       <button
         class="bigcancel"
         onclick={{action "cancel"}}>
-        {{fa-icon "undo"}}
+        {{fa-icon icon="undo"}}
       </button>
     {{else if @canUpdate}}
       <button onclick={{action @setIsManaging true}}>

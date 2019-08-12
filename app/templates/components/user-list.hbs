@@ -13,7 +13,7 @@
       <tr class={{unless user.enabled "disabled-user-account" ""}}>
         <td class="text-left" colspan="1">
           {{#unless user.enabled}}
-            {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
+            {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
           {{/unless}}
         </td>
         <td class="text-left" colspan="3">{{#link-to "user" user}}{{user.fullName}}{{/link-to}}</td>

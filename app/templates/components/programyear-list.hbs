@@ -19,7 +19,7 @@
     {{#if saved}}
       <div class="saved-result">
         {{#link-to "programYear.index" program savedProgramYear}}
-          {{fa-icon "external-link-square-alt"}} {{savedProgramYear.academicYear}}
+          {{fa-icon icon="external-link-square-alt"}} {{savedProgramYear.academicYear}}
         {{/link-to}}
         {{t "general.savedSuccessfully"}}
       </div>
@@ -47,7 +47,7 @@
               <tr class={{if programYearProxy.showRemoveConfirmation "confirm-removal" ""}}>
                 <td class="text-left">
                   {{#link-to "programYear.index" program programYearProxy.content}}
-                    {{fa-icon "external-link-square-alt"}} {{programYearProxy.academicYear}}
+                    {{fa-icon icon="external-link-square-alt"}} {{programYearProxy.academicYear}}
                   {{/link-to}}
                 </td>
                 <td class="text-left hide-from-small-screen">
@@ -62,36 +62,36 @@
                   {{#if programYearProxy.competencies.length}}
                     {{programYearProxy.competencies.length}}
                   {{else}}
-                    {{fa-icon "exclamation-triangle" class="warning"}}
+                    {{fa-icon icon="exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.objectives.length}}
                     {{programYearProxy.objectives.length}}
                   {{else}}
-                    {{fa-icon "exclamation-triangle" class="warning"}}
+                    {{fa-icon icon="exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.directors.length}}
                     {{programYearProxy.directors.length}}
                   {{else}}
-                    {{fa-icon "exclamation-triangle" class="warning"}}
+                    {{fa-icon icon="exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen">
                   {{#if programYearProxy.terms.length}}
                     {{programYearProxy.terms.length}}
                   {{else}}
-                    {{fa-icon "exclamation-triangle" class="warning"}}
+                    {{fa-icon icon="exclamation-triangle" class="warning"}}
                   {{/if}}
                 </td>
 
                 <td class="text-center hide-from-small-screen">
                   {{#if (and programYearProxy.isPublished (not programYearProxy.isScheduled))}}
-                    {{fa-icon "circle" class="yes" title=(capitalize (t "general.active"))}}
+                    {{fa-icon icon="circle" class="yes" title=(capitalize (t "general.active"))}}
                   {{else}}
-                    {{fa-icon "circle" class="warning" title=(capitalize (t "general.inactive"))}}
+                    {{fa-icon icon="circle" class="warning" title=(capitalize (t "general.inactive"))}}
                   {{/if}}
                 </td>
                 <td class="text-right" colspan="2">
@@ -106,32 +106,32 @@
                     {{#if programYearProxy.locked}}
                       {{#if (await programYearProxy.userCanUnLock)}}
                         {{fa-icon
-                          "lock"
+                          icon="lock"
                           class="clickable enabled"
                           click=(action "unlockProgramYear" programYearProxy)
                         }}
                       {{else}}
-                        {{fa-icon "lock"}}
+                        {{fa-icon icon="lock"}}
                       {{/if}}
                     {{else}}
                       {{#if (await programYearProxy.userCanLock)}}
                         {{fa-icon
-                          "unlock"
+                          icon="unlock"
                           class="clickable enabled"
                           click=(action "lockProgramYear" programYearProxy)
                         }}
                       {{else}}
-                        {{fa-icon "unlock"}}
+                        {{fa-icon icon="unlock"}}
                       {{/if}}
                     {{/if}}
                     {{#if (await programYearProxy.userCanDelete)}}
                       {{fa-icon
-                        "trash"
+                        icon="trash"
                         class="clickable remove enabled"
                         click=(action "remove" programYearProxy)
                       }}
                     {{else}}
-                      {{fa-icon "trash" class="disabled"}}
+                      {{fa-icon icon="trash" class="disabled"}}
                     {{/if}}
                   {{/if}}
                 </td>

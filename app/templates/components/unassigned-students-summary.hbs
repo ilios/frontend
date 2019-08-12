@@ -1,13 +1,13 @@
 <h3>
   {{#if (gt (get (await unassignedStudents) "length") 1)}}
-    {{fa-icon "exclamation-triangle"  class="no"}}
+    {{fa-icon icon="exclamation-triangle"  class="no"}}
   {{/if}}
   {{t "general.unassignedStudentsSummaryTitle"}}
 </h3>
 {{#if (is-fulfilled schools)}}
   <div id="schoolsfilter" class="filter">
     <label class="inline-label">
-      {{fa-icon "university"}}
+      {{fa-icon icon="university"}}
     </label>
     <div id="school-selection" class="inline-data">
       {{#if (gt (get schools "length") 1)}}

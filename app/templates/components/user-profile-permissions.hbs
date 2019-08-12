@@ -2,7 +2,7 @@
 <h3 class="title">{{t "general.permissions"}} {{#unless (is-fulfilled isLoaded)}}{{loading-spinner}}{{/unless}}</h3>
 
 <span>
-  {{fa-icon "university" fixedWidth=true}}
+  {{fa-icon icon="university" fixedWidth=true}}
   <select onchange={{action (mut selectedSchoolId) value="target.value"}}>
     {{#each (sort-by "title" (await schools)) as |school|}}
       <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
@@ -13,7 +13,7 @@
 </span>
 
 <span>
-  {{fa-icon "calendar" fixedWidth=true}}
+  {{fa-icon icon="calendar" fixedWidth=true}}
   <select onchange={{action (mut selectedYearId) value="target.value"}}>
     {{#each (sort-by "title" (await academicYears)) as |year|}}
       <option value={{year.id}} selected={{is-equal year (await selectedYear)}}>

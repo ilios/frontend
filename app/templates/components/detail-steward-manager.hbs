@@ -8,7 +8,7 @@
       }}
         <li>
           <span class="removable" onclick={{perform removeSchool obj.school}}>
-            {{fa-icon "times"}} {{obj.school.title}}
+            {{fa-icon icon="times"}} {{obj.school.title}}
           </span>
           <ul>
             {{#each (sort-by "title" obj.departments) as |department|}}
@@ -16,7 +16,7 @@
                 class="clickable"
                 onclick={{perform removeDepartment obj.school department}}
               >
-                {{fa-icon "times"}} {{department.title}}
+                {{fa-icon icon="times"}} {{department.title}}
               </li>
             {{/each}}
           </ul>

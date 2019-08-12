@@ -2,7 +2,7 @@
 <section class="programs-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" model.schools) as |school|}}
@@ -45,7 +45,7 @@
       {{#if newProgram}}
         <div class="saved-result">
           {{#link-to "program" newProgram}}
-            {{fa-icon "external-link-square-alt"}} {{newProgram.title}}
+            {{fa-icon icon="external-link-square-alt"}} {{newProgram.title}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>

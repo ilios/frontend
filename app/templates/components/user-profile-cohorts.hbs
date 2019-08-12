@@ -6,7 +6,7 @@
       {{#if isManaging}}
         <button class="bigadd" {{action (perform save)}}>
           {{fa-icon
-            (if save.isRunning "spinner" "check")
+            icon=(if save.isRunning "spinner" "check")
             spin=(if save.isRunning true false)
           }}
         </button>
@@ -14,10 +14,10 @@
           disabled={{save.isRunning}}
           class="bigcancel" {{action setIsManaging false}}
         >
-          {{fa-icon "undo"}}
+          {{fa-icon icon="undo"}}
         </button>
       {{else if isManageable}}
-        <button class="manage" {{action setIsManaging true}}>{{fa-icon "edit"}}</button>
+        <button class="manage" {{action setIsManaging true}}>{{fa-icon icon="edit"}}</button>
       {{/if}}
     </div>
   </div>
@@ -29,7 +29,7 @@
       }}
         {{#if isManaging}}
           {{fa-icon
-            "level-down-alt"
+            icon="level-down-alt"
             class="clickable remove"
             title=(t "general.removePrimaryCohort")
             click=(action (mut primaryCohort) null)
@@ -56,13 +56,13 @@
             {{#if (and (is-fulfilled cohort.school) (is-fulfilled cohort.program))}}
               {{#if isManaging}}
                 {{fa-icon
-                  "level-up-alt"
+                  icon="level-up-alt"
                   class="clickable add"
                   title=(t "general.promoteToPrimaryCohort")
                   click=(action (mut primaryCohort) cohort)
                 }}
                 {{fa-icon
-                  "times"
+                  icon="times"
                   class="clickable remove"
                   title=(t "general.removeCohort")
                   click=(action "removeSelectedCohort" cohort)
@@ -84,7 +84,7 @@
     <p class="select-available-cohort" >
       <h4>{{t "general.availableCohorts"}}</h4>
       <div class="schoolsfilter">
-        {{fa-icon "university" fixedWidth=true}}
+        {{fa-icon icon="university" fixedWidth=true}}
         {{#if (gt schools.length 1)}}
           <select
             onchange={{action (mut selectedSchoolId) value="target.value"}}
@@ -113,7 +113,7 @@
             }}
               <li>
                 {{fa-icon
-                  "plus"
+                  icon="plus"
                   class="clickable add"
                   title=(t "general.addCohort")
                   click=(action "addSelectedCohort" cohort)

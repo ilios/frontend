@@ -6,7 +6,7 @@
   data-test-toggle
   {{action "toggleMenu"}}
 >
-  {{fa-icon "user"}} <span>{{get (await currentUser.model) "fullName"}}</span>
+  {{fa-icon icon="user"}} <span>{{get (await currentUser.model) "fullName"}}</span>
 </button>
 {{#if isOpen}}
   {{#click-outside onClickOutside=(action (mut isOpen) false)}}

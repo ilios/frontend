@@ -10,7 +10,7 @@
       }}
     </div>
     <div class="schoolsfilter" data-test-school-filter>
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
@@ -24,7 +24,7 @@
       {{/if}}
     </div>
     <div class="yearsfilter">
-      {{fa-icon "calendar" fixedWidth=true}}
+      {{fa-icon icon="calendar" fixedWidth=true}}
       <select
         onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-year-filter
@@ -72,7 +72,7 @@
       {{#if newCourse}}
         <div class="saved-result" data-test-new-course>
           {{#link-to "course" newCourse}}
-            {{fa-icon "external-link-square-alt"}} {{newCourse.title}}
+            {{fa-icon icon="external-link-square-alt"}} {{newCourse.title}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>

@@ -5,7 +5,7 @@
       {{action (perform save)}}
     >
       {{fa-icon
-        (if save.isRunning "spinner" "check")
+        icon=(if save.isRunning "spinner" "check")
         spin=(if save.isRunning true false)
       }}
     </button>
@@ -14,10 +14,10 @@
       class="bigcancel"
       {{action (perform cancel)}}
     >
-      {{fa-icon "undo"}}
+      {{fa-icon icon="undo"}}
     </button>
   {{else if isManageable}}
-    <button class="manage" {{action (perform manage)}}>{{fa-icon "edit"}}</button>
+    <button class="manage" {{action (perform manage)}}>{{fa-icon icon="edit"}}</button>
   {{/if}}
 </div>
 {{#if (await usernameMissing)}}
@@ -109,7 +109,7 @@
           {{action (perform directorySync)}}
         >
           {{fa-icon
-            (if (and (not syncComplete) directorySync.isRunning) "spinner" "sync")
+            icon=(if (and (not syncComplete) directorySync.isRunning) "spinner" "sync")
             spin=(if (and (not syncComplete) directorySync.isRunning) true false)
           }}
         </button>

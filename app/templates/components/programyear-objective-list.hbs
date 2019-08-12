@@ -13,7 +13,7 @@
       <a class="button" {{action (perform downloadReport subject)}}>
         <button class="download">
           {{fa-icon
-            (if downloadReport.isRunning "spinner" "download")
+            icon=(if downloadReport.isRunning "spinner" "download")
             spin=(if downloadReport.isRunning true false)
           }}
           {{t "general.downloadCompetencyMap"}}
