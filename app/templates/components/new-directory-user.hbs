@@ -172,7 +172,7 @@
                     <td class="text-right" colspan="1">
                       {{#if user.user}}
                         {{fa-icon
-                          "sun"
+                          icon="sun"
                           class="warning clickable"
                           click=(action attrs.transitionToUser user.user)
                           title=(t "general.goToUser")
@@ -180,14 +180,14 @@
                       {{else}}
                         {{#if user.addable}}
                           {{fa-icon
-                            "plus"
+                            icon="plus"
                             class="yes clickable"
                             click=(action "pickUser" user)
                             title=(t "general.addNew")
                           }}
                         {{else}}
                           {{fa-icon
-                            "ambulance"
+                            icon="ambulance"
                             class="no"
                             title=(t "general.userNotAddableFromDirectory")
                           }}

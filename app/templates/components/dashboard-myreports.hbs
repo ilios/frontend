@@ -11,11 +11,11 @@
           {{action (perform downloadReport)}}
         >
           {{#if finishedBuildingReport}}
-            {{fa-icon "check"}}
+            {{fa-icon icon="check"}}
           {{else if downloadReport.isRunning}}
             {{loading-spinner}}
           {{else}}
-            {{fa-icon "download"}}
+            {{fa-icon icon="download"}}
           {{/if}}
           {{t "general.downloadResults"}}
         </button>
@@ -93,7 +93,7 @@
                 report=report
                 onReportSelect=@onReportSelect}}
               {{fa-icon
-                "trash"
+                icon="trash"
                 class="clickable remove enabled"
                 click=(action "deleteReport" report)
               }}

@@ -4,7 +4,7 @@
 <section class="assign-students">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
 
       {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action (mut this.schoolId) value="target.value"}}>

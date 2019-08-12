@@ -77,7 +77,7 @@
           data-test-status
           {{action "edit" report}}>
           {{#if report.isFinalized}}
-            {{fa-icon "lock" class="enabled"}}
+            {{fa-icon icon="lock" class="enabled"}}
           {{/if}}
           {{publication-status
             item=report
@@ -90,7 +90,7 @@
           colspan="2"
           data-test-actions>
           {{#link-to "curriculumInventoryReport" report.content}}
-            {{fa-icon "edit" class="enabled"}}
+            {{fa-icon icon="edit" class="enabled"}}
           {{/link-to}}
           <span>
             <a
@@ -98,15 +98,15 @@
               href={{report.content.absoluteFileUri}}
               rel="noopener"
               target="_blank">
-              {{fa-icon "download" class="enabled"}}
+              {{fa-icon icon="download" class="enabled"}}
             </a>
           </span>
           {{#if (await report.userCanDelete)}}
             <span class="clickable remove" {{action "confirmRemove" report}}>
-              {{fa-icon "trash" class="enabled"}}
+              {{fa-icon icon="trash" class="enabled"}}
             </span>
           {{else}}
-            {{fa-icon "trash" class="disabled"}}
+            {{fa-icon icon="trash" class="disabled"}}
           {{/if}}
         </td>
       </tr>

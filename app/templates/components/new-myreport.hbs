@@ -94,7 +94,7 @@
       {{#if (is-equal currentPrepositionalObject "instructor")}}
         {{#if selectedUser}}
           <ul class="removable-list tag-list">
-            <li {{action "changePrepositionalObjectId" null}}>{{selectedUser.fullName}} {{fa-icon "times"}}</li>
+            <li {{action "changePrepositionalObjectId" null}}>{{selectedUser.fullName}} {{fa-icon icon="times"}}</li>
           </ul>
         {{else}}
           {{user-search
@@ -114,7 +114,7 @@
                   {{/if}}
                 </span>
               </div>
-              {{fa-icon "times"}}
+              {{fa-icon icon="times"}}
             </li>
           </ul>
         {{else}}

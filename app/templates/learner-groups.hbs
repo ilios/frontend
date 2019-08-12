@@ -2,7 +2,7 @@
 <section class="learnergroups-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon "university" fixedWidth=true}}
+      {{fa-icon icon="university" fixedWidth=true}}
       {{#if (get (await sortedSchools) "length")}}
         {{#if (gt (get (await sortedSchools) "length") 1)}}
           <select onchange={{action "changeSelectedSchool" value="target.value"}}>
@@ -20,7 +20,7 @@
       {{/if}}
     </div>
     <div class="programsfilter">
-      {{fa-icon "users" fixedWidth=true}}
+      {{fa-icon icon="users" fixedWidth=true}}
       {{#if (get (await sortedPrograms) "length")}}
         {{#if (gt (get (await sortedPrograms) "length") 1)}}
           <select onchange={{action "changeSelectedProgram" value="target.value"}}>
@@ -41,7 +41,7 @@
       {{/if}}
     </div>
     <div class="programyearsfilter">
-      {{fa-icon "calendar" fixedWidth=true}}
+      {{fa-icon icon="calendar" fixedWidth=true}}
       {{#if (get (await sortedProgramYears) "length")}}
         {{#if (gt (get (await sortedProgramYears) "length") 1)}}
           <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
@@ -96,7 +96,7 @@
       {{#if this.newGroup}}
         <div class="saved-result">
           {{#link-to "learnerGroup" this.newGroup}}
-            {{fa-icon "external-link-square-alt"}} {{this.newGroup.title}}
+            {{fa-icon icon="external-link-square-alt"}} {{this.newGroup.title}}
           {{/link-to}}
           {{t "general.savedSuccessfully"}}
         </div>

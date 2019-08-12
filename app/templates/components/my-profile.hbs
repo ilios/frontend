@@ -77,14 +77,14 @@
           <h3>{{t "general.newToken"}}:</h3>
           <input readonly value={{generatedJwt}}>
           {{#copy-button success="tokenCopied" clipboardText=generatedJwt}}
-            {{fa-icon "copy"}}
+            {{fa-icon icon="copy"}}
           {{/copy-button}}
           <button
             class="bigcancel"
             data-test-result-reset
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
-            {{fa-icon "times"}}
+            {{fa-icon icon="times"}}
           </button>
         </div>
       {{else}}
@@ -106,14 +106,14 @@
             {{#if createNewToken.isRunning}}
               {{loading-spinner}}
             {{else}}
-              {{fa-icon "check"}}
+              {{fa-icon icon="check"}}
             {{/if}}
           </button>
           <button
             class="bigcancel"
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
-            {{fa-icon "times"}}
+            {{fa-icon icon="times"}}
           </button>
         </div>
       {{/if}}

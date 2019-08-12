@@ -25,9 +25,9 @@
         <td class="hide-from-small-screen">{{sessionType.sessionCount}}</td>
         <td>
           {{#if sessionType.assessment}}
-            {{fa-icon "check" class="yes"}}
+            {{fa-icon icon="check" class="yes"}}
           {{else}}
-            {{fa-icon "ban" class="no"}}
+            {{fa-icon icon="ban" class="no"}}
           {{/if}}
         </td>
         <td class="hide-from-small-screen" colspan="2">{{get (await sessionType.assessmentOption) "name"}}</td>
@@ -46,7 +46,7 @@
         </td>
         <td>
           {{fa-icon
-            "edit"
+            icon="edit"
             class="edit clickable enabled"
             click=(action manageSessionType sessionType.id)
           }}
@@ -55,16 +55,16 @@
               {{loading-spinner}}
             {{else if canDelete}}
               {{fa-icon
-                "trash"
+                icon="trash"
                 class=(if deleteSessionType.isRunning "inactive" "clickable remove enabled")
                 click=(perform deleteSessionType sessionType)
               }}
             {{/if}}
           {{else}}
-            {{fa-icon "trash" class="disabled"}}
+            {{fa-icon icon="trash" class="disabled"}}
           {{/if}}
           {{#link-to "session-type-visualize-vocabularies" sessionType}}
-            {{fa-icon "chart-bar" class="enabled"}}
+            {{fa-icon icon="chart-bar" class="enabled"}}
           {{/link-to}}
         </td>
       </tr>

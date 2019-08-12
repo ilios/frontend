@@ -26,22 +26,22 @@
             {{#if (eq
               (get (await this.objectivesWithCompentency) "length")
               (get (await this.objectives) "length"))}}
-              {{fa-icon "circle" class="yes"}}
+              {{fa-icon icon="circle" class="yes"}}
             {{else if (gte (get (await this.objectivesWithCompentency) "length") 1)}}
-              {{fa-icon "circle" class="maybe"}}
+              {{fa-icon icon="circle" class="maybe"}}
             {{else}}
-              {{fa-icon "ban" class="no"}}
+              {{fa-icon icon="ban" class="no"}}
             {{/if}}
           </td>
           <td class="text-middle text-center" rowspan="3">
             {{#if (eq
               (get (await this.objectivesWithMesh) "length")
               (get (await this.objectives) "length"))}}
-              {{fa-icon "circle" class="yes"}}
+              {{fa-icon icon="circle" class="yes"}}
             {{else if (gte (get (await this.objectivesWithMesh) "length") 1)}}
-              {{fa-icon "circle" class="maybe"}}
+              {{fa-icon icon="circle" class="maybe"}}
             {{else}}
-              {{fa-icon "ban" class="no"}}
+              {{fa-icon icon="ban" class="no"}}
             {{/if}}
           </td>
         </tr>

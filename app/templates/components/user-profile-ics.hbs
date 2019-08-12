@@ -8,7 +8,7 @@
       {{action (perform refreshKey)}}
     >
       {{fa-icon
-        (if refreshKey.isRunning "spinner" "sync")
+        icon=(if refreshKey.isRunning "spinner" "sync")
         spin=(if refreshKey.isRunning true false)
       }}
     </button>
@@ -17,7 +17,7 @@
       class="bigcancel"
       {{action setIsManaging false}}
     >
-      {{fa-icon "undo"}}
+      {{fa-icon icon="undo"}}
     </button>
   {{else if isManageable}}
     <button
@@ -25,7 +25,7 @@
       title={{t "general.refreshIcsFeedKey"}}
       {{action setIsManaging true}}
     >
-      {{fa-icon "edit"}}
+      {{fa-icon icon="edit"}}
     </button>
   {{/if}}
 </div>
@@ -35,7 +35,7 @@
     <p class="ics-instructions">{{t "general.icsAdminInstructions"}}</p>
     <p>
       {{#copy-button clipboardText=icsFeedUrl success=(perform textCopied)}}
-        {{fa-icon "copy"}} {{t "general.link"}}
+        {{fa-icon icon="copy"}} {{t "general.link"}}
       {{/copy-button}}
       {{#if showCopySuccessMessage}}
         <span class="yes">{{t "general.copiedSuccessfully"}}</span>

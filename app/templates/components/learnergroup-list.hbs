@@ -62,23 +62,23 @@
                 {{action "confirmRemove" learnerGroup}}
                 data-test-remove
               >
-                {{fa-icon "trash" class="enabled"}}
+                {{fa-icon icon="trash" class="enabled"}}
               </span>
             {{else}}
-              {{fa-icon "trash" class="disabled"}}
+              {{fa-icon icon="trash" class="disabled"}}
             {{/if}}
           {{else}}
             {{loading-spinner}}
           {{/if}}
           {{#if @canCreate}}
-            {{fa-icon "copy"
+            {{fa-icon icon="copy"
               class="clickable enabled"
               title=(t "general.copy")
               click=(action "startCopy" learnerGroup)
               data-test-copy=true
             }}
           {{else}}
-            {{fa-icon "copy" class="disabled"}}
+            {{fa-icon icon="copy" class="disabled"}}
           {{/if}}
         </td>
       </tr>

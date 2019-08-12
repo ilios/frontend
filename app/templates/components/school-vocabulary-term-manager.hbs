@@ -37,9 +37,9 @@
         <span class="validation-error-message" data-test-title-error-message>{{v-get this "termTitle" "message"}}</span>
       {{/if}}
       {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
-        {{fa-icon "trash" class="clickable remove enabled" click=(action "deleteTerm")}}
+        {{fa-icon icon="trash" class="clickable remove enabled" click=(action "deleteTerm")}}
       {{else}}
-        {{fa-icon "trash" class="disabled"}}
+        {{fa-icon icon="trash" class="disabled"}}
       {{/if}}
     </div>
     <div class="block is-active" data-test-is-active>
@@ -89,7 +89,7 @@
   {{#if newTerm}}
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
-        {{fa-icon "external-link-square-alt"}} {{newTerm.title}}
+        {{fa-icon icon="external-link-square-alt"}} {{newTerm.title}}
       </span>
       {{t "general.savedSuccessfully"}}
     </div>

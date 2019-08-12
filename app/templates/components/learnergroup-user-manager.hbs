@@ -73,7 +73,7 @@
                   {{/if}}
                 {{/if}}
                 {{#if (not user.enabled)}}
-                  {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
+                  {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
                 {{/if}}
               </td>
               <td class="text-left" colspan="2">{{user.firstName}}</td>
@@ -96,7 +96,7 @@
                   {{else if user.enabled}}
                     {{#if (eq selectedUsers.length 0)}}
                       {{fa-icon
-                        "minus"
+                        icon="minus"
                         class="no clickable"
                         title=(t "general.removeLearnerToCohort" cohort=cohortTitle count=1)
                         click=(perform removeSingleUser user.content)
@@ -129,7 +129,7 @@
                     {{/if}}
                   {{/if}}
                   {{#if (not user.enabled)}}
-                    {{fa-icon "user-times" title=(t "general.disabled") class="error"}}
+                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
                   {{/if}}
                 </td>
                 <td class="text-left" colspan="2">{{user.firstName}}</td>
@@ -152,7 +152,7 @@
                     {{else if user.enabled}}
                       {{#if (eq selectedUsers.length 0)}}
                         {{fa-icon
-                          "plus"
+                          icon="plus"
                           class="yes clickable"
                           title=(t "general.moveToGroup" groupTitle=learnerGroupTitle count=1)
                           click=(perform addSingleUser user.content)

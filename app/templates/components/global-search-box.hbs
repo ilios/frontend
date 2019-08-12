@@ -12,7 +12,7 @@
     class="search-icon"
     data-test-search-icon
     onclick={{pipe-action (action "focus") (action "search")}}>
-    {{fa-icon "search" class="clickable"}}
+    {{fa-icon icon="search" class="clickable"}}
   </span>
 
   {{#if (and this.showResults this.hasResults)}}
@@ -28,7 +28,7 @@
               (action "search")}}
             onfocus={{action (mut this.query) result.text}}
             onmouseover={{action "addActiveClass"}}>
-            {{fa-icon "search"}}
+            {{fa-icon icon="search"}}
             <span class="result-text">{{result.text}}</span>
           </li>
         {{/each}}

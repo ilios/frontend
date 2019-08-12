@@ -28,9 +28,9 @@
         </td>
         <td class="text-center hide-from-small-screen">
           {{#if (and program.isPublished (not program.isScheduled))}}
-            {{fa-icon "circle" class="yes" title=(capitalize (t "general.active"))}}
+            {{fa-icon icon="circle" class="yes" title=(capitalize (t "general.active"))}}
           {{else}}
-            {{fa-icon "circle" class="warning" title=(capitalize (t "general.inactive"))}}
+            {{fa-icon icon="circle" class="warning" title=(capitalize (t "general.inactive"))}}
           {{/if}}
         </td>
         <td class="text-right" colspan="2">
@@ -40,14 +40,14 @@
             </button>
           {{/if}}
           {{#link-to "program" program.content class="edit"}}
-            {{fa-icon "edit" class="enabled"}}
+            {{fa-icon icon="edit" class="enabled"}}
           {{/link-to}}
           {{#if (await program.canDelete)}}
             <span class="clickable remove" {{action "confirmRemove" program}}>
-              {{fa-icon "trash" class="enabled"}}
+              {{fa-icon icon="trash" class="enabled"}}
             </span>
           {{else}}
-            {{fa-icon "trash" class="disabled"}}
+            {{fa-icon icon="trash" class="disabled"}}
           {{/if}}
         </td>
       </tr>
