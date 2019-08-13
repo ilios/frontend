@@ -8,8 +8,14 @@ function startSentry(config) {
     ...config.sentry,
     integrations: [new Ember()],
     release: config.APP.version.match(versionRegExp)[0],
-    beforeSend(event) {
+    beforeSend(event, hint) {
       if (!captureErrors) {
+        return null;
+      }
+      const error = hint.originalException;
+
+      // ignore aborted route transitions from the Ember.js router
+      if (error && error.name === 'TransitionAborted') {
         return null;
       }
 
