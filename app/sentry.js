@@ -4,15 +4,22 @@ import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 
 function startSentry(config) {
   const captureErrors = isErrorCaptureEnabled(config);
+  const isDevelopmentEnvironment = config.environment !== 'production';
+
   Sentry.init({
     ...config.sentry,
     integrations: [new Ember()],
     release: config.APP.version.match(versionRegExp)[0],
     beforeSend(event, hint) {
+      const error = hint.originalException;
+
+      //print everything to the console when not in production
+      if (isDevelopmentEnvironment && error) {
+        console.error(error);
+      }
       if (!captureErrors) {
         return null;
       }
-      const error = hint.originalException;
 
       // ignore aborted route transitions from the Ember.js router
       if (error && error.name === 'TransitionAborted') {
