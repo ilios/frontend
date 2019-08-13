@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'ilios/config/environment';
 import { all } from 'rsvp';
+import * as Sentry from '@sentry/browser';
 
 export default Route.extend(ApplicationRouteMixin, {
   commonAjax: service(),
@@ -65,6 +66,10 @@ export default Route.extend(ApplicationRouteMixin, {
         }
       }
     });
+    const { currentUserId } = this.currentUser;
+    if (currentUserId) {
+      Sentry.setUser({id: currentUserId});
+    }
   },
 
   deactivate() {
@@ -88,6 +93,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
   //Override the default session invalidator so we can do auth stuff
   sessionInvalidated() {
+    Sentry.configureScope(scope => scope.clear());
     if (config.environment !== 'test') {
       let logoutUrl = '/auth/logout';
       return this.commonAjax.request(logoutUrl).then(response => {
