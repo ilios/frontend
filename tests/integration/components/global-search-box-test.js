@@ -46,7 +46,7 @@ module('Integration | Component | global search box', function(hooks) {
   test('displays initial passed down value', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{global-search-box initialQuery="course"}}`);
+    await render(hbs`{{global-search-box query="course"}}`);
     assert.equal(component.inputValue, 'course');
   });
 
@@ -162,5 +162,29 @@ module('Integration | Component | global search box', function(hooks) {
     await component.input('typed it');
     await component.keyUp.up();
     await component.keyUp.enter();
+  });
+
+  test('can empty with backspace', async function(assert) {
+    assert.expect(3);
+    this.set('query', 'test value');
+    await render(hbs`<GlobalSearchBox @query={{this.query}} />`);
+    assert.equal(component.inputValue, 'test value');
+    await component.input('typed it');
+    assert.equal(component.inputValue, 'typed it');
+    await component.input('');
+    assert.equal(component.inputValue, '');
+  });
+
+  test('can empty with backspace after choosing autocomplete', async function(assert) {
+    assert.expect(4);
+    this.set('query', 'test value');
+    await render(hbs`<GlobalSearchBox @query={{this.query}} />`);
+    assert.equal(component.inputValue, 'test value');
+    await component.input('typed it');
+    assert.equal(component.inputValue, 'typed it');
+    await component.keyUp.down();
+    assert.equal(component.inputValue, 'first');
+    await component.input('');
+    assert.equal(component.inputValue, '');
   });
 });

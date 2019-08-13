@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
@@ -13,23 +14,27 @@ export default Component.extend({
   iliosSearch: service('search'),
 
   autocompleteCache: null,
-  initialQuery: null,
+  autocompleteSelectedQuery: null,
+  internalQuery: null,
   query: null,
-  savedQuery: null,
-  showResults: true,
   search() {},
 
-  isLoading: reads('autocomplete.isRunning'),
   hasResults: reads('results.length'),
   results: reads('autocomplete.lastSuccessful.value'),
+
+  computedQuery: computed('autocompleteSelectedQuery', 'query', 'internalQuery', function () {
+    if (typeof (this.autocompleteSelectedQuery) === 'string') {
+      return this.autocompleteSelectedQuery;
+    }
+    if (typeof (this.internalQuery) === 'string') {
+      return this.internalQuery;
+    }
+    return this.query;
+  }),
 
   init() {
     this._super(...arguments);
     this.autocompleteCache = [];
-
-    if (this.initialQuery) {
-      this.set('query', this.initialQuery);
-    }
   },
 
   actions: {
@@ -39,22 +44,24 @@ export default Component.extend({
     },
 
     search() {
-      const q = cleanQuery(this.query);
-
-      if (q.length > 0) {
-        this.autocompleteCache = [];
-        this.search(this.query);
-        this.set('showResults', false);
+      if (cleanQuery(this.computedQuery).length > 0) {
+        this.search(this.computedQuery);
+        this.clear();
       }
     },
+  },
 
-    addActiveClass({ target }) {
-      const container = target.parentElement;
-      const list = container.getElementsByClassName('autocomplete-row');
-      const listArray = Array.from(list);
-      this.removeActiveClass(listArray);
-      target.classList.add('active');
-    }
+  /**
+   * Clear all the caches and query local copies
+   * This component is complicated by the many types of user interaction
+   * it accepts and it's need to go back into a default state so there are
+   * several things to clear
+   */
+  clear() {
+    this.autocompleteCache = [];
+    this.set('internalQuery', null);
+    this.set('autocompleteSelectedQuery', null);
+    this.autocomplete.perform();
   },
 
   keyUp({ keyCode, target }) {
@@ -75,12 +82,13 @@ export default Component.extend({
     }
 
     if (this.isEnterKey(keyCode)) {
-      this.send('search');
-      this.set('showResults', false);
+      this.search(this.computedQuery);
+      this.clear();
     }
 
     if (this.isEscapeKey(keyCode)) {
-      this.setProperties({ query: '', showResults: false });
+      this.clear();
+      this.search('');
     }
   },
 
@@ -102,16 +110,15 @@ export default Component.extend({
     } else {
       const selector = keyCode === 40 ? 'first' : 'last';
       const option = container.querySelector(`.autocomplete li:${selector}-child`);
-      this.set('savedQuery', this.query);
       option.classList.add('active');
-      option.onfocus();
+      this.set('autocompleteSelectedQuery', option.innerText.trim());
     }
   },
 
   resultListAction(listArray, keyCode) {
     if (this.hasFocusOnEdge(listArray, keyCode === 40)) {
       this.removeActiveClass(listArray);
-      this.set('query', this.savedQuery);
+      this.set('autocompleteSelectedQuery', null);
     } else {
       this.addClassToNext(listArray, keyCode === 38);
     }
@@ -142,7 +149,7 @@ export default Component.extend({
       } else if (shouldAddClass) {
         classList.add('active');
         shouldAddClass = false;
-        element.onfocus();
+        this.set('autocompleteSelectedQuery', element.innerText.trim());
       }
     });
   },
@@ -183,14 +190,13 @@ export default Component.extend({
   },
 
   autocomplete: task(function* () {
-    this.set('showResults', true);
-    const q = cleanQuery(this.query);
+    const q = cleanQuery(this.internalQuery);
 
     if (isBlank(q) || q.length < MIN_INPUT) {
       return [];
     }
 
-    const cachedResults = this.findCachedAutocomplete(this.query);
+    const cachedResults = this.findCachedAutocomplete(this.internalQuery);
     if (cachedResults.length) {
       return cachedResults.map(text => {
         return { text };
@@ -199,8 +205,8 @@ export default Component.extend({
 
     yield timeout(DEBOUNCE_MS);
 
-    const { autocomplete } = yield this.iliosSearch.forCurriculum(this.query, true);
-    this.autocompleteCache.pushObject({ q: this.query, autocomplete });
+    const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
+    this.autocompleteCache.pushObject({ q: this.internalQuery, autocomplete });
 
     return autocomplete.map(text => {
       return { text };

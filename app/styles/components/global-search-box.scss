@@ -86,7 +86,8 @@
         }
       }
 
-      &.active {
+      &.active,
+      &:hover {
         background: $grey;
       }
     }
