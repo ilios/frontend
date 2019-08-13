@@ -3,14 +3,19 @@ import { Ember } from '@sentry/integrations/esm/ember';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 
 function startSentry(config) {
-  if (isErrorCaptureEnabled(config)) {
-    const sentryConfiguration = {
-      ...config.sentry,
-      integrations: [new Ember()],
-      release: config.APP.version.match(versionRegExp)[0]
-    };
-    Sentry.init(sentryConfiguration);
-  }
+  const captureErrors = isErrorCaptureEnabled(config);
+  Sentry.init({
+    ...config.sentry,
+    integrations: [new Ember()],
+    release: config.APP.version.match(versionRegExp)[0],
+    beforeSend(event) {
+      if (!captureErrors) {
+        return null;
+      }
+
+      return event;
+    },
+  });
 }
 
 /**
