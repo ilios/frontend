@@ -26,6 +26,14 @@ function startSentry(config) {
         return null;
       }
 
+      // ignore aborted ajax calls, these happen when users navigate quickly between routes
+      if (error && (
+        error.message === 'The ajax operation was aborted' ||
+        error.message === 'The adapter operation was aborted'
+      )) {
+        return null;
+      }
+
       return event;
     },
   });
