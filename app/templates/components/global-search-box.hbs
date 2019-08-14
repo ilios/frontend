@@ -3,9 +3,10 @@
     class="global-search-input"
     data-test-input
     type="search"
-    value={{this.query}}
+    value={{this.computedQuery}}
     oninput={{action (queue
-      (action (mut this.query) value="target.value")
+      (action (mut this.internalQuery) value="target.value")
+      (action (mut this.autocompleteSelectedQuery) null)
       (perform this.autocomplete))}}
   >
 
@@ -16,19 +17,20 @@
     {{fa-icon icon="search" class="clickable"}}
   </span>
 
-  {{#if (and this.showResults this.hasResults)}}
-    {{#click-outside onClickOutside=(action (mut this.showResults) false)}}
+  {{#if this.hasResults}}
+    {{#click-outside onClickOutside=(action (mut this.autocompleteResults) null)}}
       <ul
         class="autocomplete"
-        data-test-autocomplete>
+        data-test-autocomplete
+      >
         {{#each this.results as |result|}}
           <li
             class="autocomplete-row"
             onclick={{pipe-action
-              (action (mut this.query) result.text)
+              (action (mut this.autocompleteSelectedQuery) null)
+              (action (mut this.internalQuery) result.text)
               (action "search")}}
-            onfocus={{action (mut this.query) result.text}}
-            onmouseover={{action "addActiveClass"}}>
+          >
             {{fa-icon icon="search"}}
             <span class="result-text">{{result.text}}</span>
           </li>
