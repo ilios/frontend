@@ -82,7 +82,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
       childSequenceOrder: 1,
       orderInSequence: 1,
       course,
-      required: 2,
+      required: 3,
       track: true,
       minimum: 2,
       maximum: 15,
@@ -126,7 +126,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.description label').hasText('Description:', 'Description label is correct.');
     assert.dom('.description .editinplace').hasText(block.description, 'Description is visible.');
     assert.dom('.required label').hasText('Required:', 'Required label is correct.');
-    assert.dom('.required .editinplace').hasText('Optional (elective)', 'Required is visible.');
+    assert.dom('.required .editinplace').hasText('Required In Track', 'Required is visible.');
     assert.dom('.track label').hasText('Is Track:', 'Track label is correct.');
     assert.dom('.track input').isChecked('Track toggle is set to "yes"');
     assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
@@ -851,5 +851,49 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom(
       findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(3) td')[2]
     ).hasText('Session C', 'Sessions are sorted by title.');
+  });
+
+  test('flagging block as elective sets minimum value to 0', async function(assert) {
+    assert.expect(3);
+    const school = this.server.create('school');
+    const program = this.server.create('program', {
+      school
+    });
+    const academicLevel = this.server.create('curriculum-inventory-academic-level');
+
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels: [academicLevel],
+      year: '2016',
+      program,
+      isFinalized: false,
+    });
+
+    this.server.create('curriculum-inventory-sequence-block', {
+      report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel,
+    });
+
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', null);
+    this.set('setSortBy', null);
+    await render(hbs`{{curriculum-inventory-sequence-block-overview
+      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+
+    assert.dom('.minimum .editinplace').hasText('10');
+    await click('.required .editinplace .clickable');
+    await fillIn('.required select', "2");
+    assert.dom('.minimum .editinplace').isNotVisible();
+    assert.dom('.minimum span').hasText('0');
   });
 });
