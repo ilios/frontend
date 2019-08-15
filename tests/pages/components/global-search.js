@@ -4,6 +4,7 @@ import {
   create,
   fillable,
   isVisible,
+  property,
   text,
   value
 } from 'ember-cli-page-object';
@@ -16,7 +17,12 @@ const definition = {
   academicYear: value('[data-test-academic-year-filter]'),
   academicYearOptions: text('[data-test-academic-year-filter]'),
   courseTitleLinks: collection('.course-title-link'),
-  selectAcademicYear: fillable('[data-test-academic-year-filter]')
+  selectAcademicYear: fillable('[data-test-academic-year-filter]'),
+  schoolFilters: collection('[data-test-school-filters] [data-test-school-filter]', {
+    isSelected: property('checked', 'input'),
+    school: text('label'),
+    toggle: clickable('label'),
+  }),
 };
 
 export default definition;

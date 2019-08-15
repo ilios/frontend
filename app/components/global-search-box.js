@@ -17,7 +17,9 @@ export default Component.extend({
   autocompleteSelectedQuery: null,
   internalQuery: null,
   query: null,
-  search() {},
+  classNames: ['global-search-box'],
+  'data-test-global-search-box': true,
+  search() { },
 
   hasResults: reads('results.length'),
   results: reads('autocomplete.lastSuccessful.value'),

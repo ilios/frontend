@@ -12,6 +12,7 @@ export default Component.extend({
   page: null,
   query: null,
   selectedYear: null,
+  unselectedSchools: null,
   size: 10,
   yearOptions: null,
   onQuery() {},
@@ -21,14 +22,10 @@ export default Component.extend({
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
 
-  filteredResults: computed('results.[]', 'selectedYear', function() {
-    const results = this.results;
-    const selectedYear = this.selectedYear;
-
-    if (results) {
-      return selectedYear
-        ? results.filterBy('year', this.selectedYear)
-        : results;
+  filteredResults: computed('results.[]', 'selectedYear', 'unselectedSchools.[]', function() {
+    if (this.results) {
+      const yearFilteredResults = this.results.filter(course => this.selectedYear ? course.year === this.selectedYear : true);
+      return yearFilteredResults.filter(course => !this.unselectedSchools.includes(course.school));
     } else {
       return [];
     }
@@ -37,6 +34,14 @@ export default Component.extend({
   paginatedResults: computed('filteredResults.[]', 'page', 'size', function() {
     const { page, size } = this.getProperties('page', 'size');
     return this.filteredResults.slice((page * size) - size, page * size);
+  }),
+
+  schoolOptions: computed('results.[]', function() {
+    if (this.results && this.results.length) {
+      return this.results.mapBy('school').uniq().sort();
+    } else {
+      return [];
+    }
   }),
 
   search: task(function* () {
@@ -49,6 +54,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
+    this.set('unselectedSchools', []);
 
     if (this.query) {
       this.search.perform();
@@ -59,6 +65,13 @@ export default Component.extend({
     setSelectedYear(year) {
       this.set('selectedYear', year ? parseInt(year, 10) : null);
       this.onSelectPage(1);
+    },
+    toggleSchoolSelection(school) {
+      if (this.unselectedSchools.includes(school)) {
+        this.unselectedSchools.removeObject(school);
+      } else {
+        this.unselectedSchools.pushObject(school);
+      }
     }
   },
 

@@ -328,6 +328,7 @@ general:
   sequenceNumber: "Sequence #"
   sessionAttributes: "Session Attributes"
   sessionTitlePlaceholder: "Enter a title for this session"
+  showResultsFor: "Show Results For"
   showSubgroupEvents: "Show events for all subgroups"
   singleDay: "Single Day"
   singleGroup: "Single Group"

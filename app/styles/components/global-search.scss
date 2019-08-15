@@ -1,29 +1,62 @@
 .global-search {
+  display: grid;
+  grid-template-areas:
+  'search'
+  'filters'
+  'results';
+  grid-column-gap: 0;
+  grid-row-gap: 1rem;
+
+  @include for-tablet-and-up {
+    grid-template-areas:
+    'search search'
+    'results filters';
+    grid-template-columns: auto 12rem;
+  }
+
   .global-search-box {
+    grid-area: search;
     margin: .75rem 0 1rem 10%;
     width: 80%;
   }
 
   .filters {
-    margin: 0 0 1rem 10%;
-    width: 80%;
+    grid-area: filters;
 
-    select {
-      margin-left: .25rem;
-      outline: none;
+    @include for-tablet-and-up {
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      margin: 0 1rem 0 0;
+      padding: 0;
+    }
+
+    .year-filters,
+    .school-filters {
+      margin-left: 1rem;
+    }
+
+    .school-filters {
+      display: flex;
+      justify-content: start;
+      margin-top: .5rem;
+
+      @include for-tablet-and-up {
+        flex-direction: column;
+      }
+
+      label {
+        margin: 0 1rem 0 .1rem;
+      }
     }
   }
 
-  hr {
-    background: $base-border-color;
-  }
-
   .results {
+    border-right: 1px solid $text-grey;
+    grid-area: results;
     list-style-type: none;
-    margin: 1rem 10% auto;
-    max-width: 40rem;
-    padding: 0;
-    width: 80%;
+    padding: 0 2rem;
 
     .searching, .no-results {
       text-align: center;

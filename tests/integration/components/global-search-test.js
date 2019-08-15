@@ -88,21 +88,122 @@ module('Integration | Component | global-search', function(hooks) {
     assert.equal(component.academicYear, '');
     assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
     assert.equal(component.courseTitleLinks.length, 4);
-    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 1');
-    assert.equal(component.courseTitleLinks.objectAt(1).text, 'Course 2');
-    assert.equal(component.courseTitleLinks.objectAt(2).text, 'Course 3');
-    assert.equal(component.courseTitleLinks.objectAt(3).text, 'Course 4');
+    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
+    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
+    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
     await component.selectAcademicYear('2021');
     assert.equal(component.courseTitleLinks.length, 2);
-    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 3');
-    assert.equal(component.courseTitleLinks.objectAt(1).text, 'Course 4');
+    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
+    assert.equal(component.courseTitleLinks[1].text, 'Course 4');
     await component.selectAcademicYear('2020');
     assert.equal(component.academicYear, '2020');
     assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 2');
+    assert.equal(component.courseTitleLinks[0].text, 'Course 2');
     await component.selectAcademicYear('2019');
     assert.equal(component.academicYear, '2019');
     assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks.objectAt(0).text, 'Course 1');
+    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+  });
+
+  test('school filter works properly', async function(assert) {
+    assert.expect(51);
+
+    this.server.get('search/v1/curriculum', () => {
+      return {
+        results: {
+          autocomplete: ['first', 'second', 'third'],
+          courses: [{
+            title: 'Course 1',
+            year: 2019,
+            school: 'Medicine',
+            sessions: []
+          }, {
+            title: 'Course 2',
+            year: 2020,
+            school: 'Medicine',
+            sessions: []
+          }, {
+            title: 'Course 3',
+            year: 2021,
+            school: 'Pharmacy',
+            sessions: []
+          }, {
+            title: 'Course 4',
+            year: 2021,
+            school: 'Dentistry',
+            sessions: []
+          }]
+        }
+      };
+    });
+
+    this.set('query', 'hello world');
+    await render(hbs`<GlobalSearch @page=1 @query={{this.query}} />`);
+    assert.equal(component.courseTitleLinks.length, 4);
+    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
+    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
+    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
+    assert.equal(component.schoolFilters.length, 3);
+    assert.equal(component.schoolFilters[0].school, 'Dentistry');
+    assert.ok(component.schoolFilters[0].isSelected);
+    assert.equal(component.schoolFilters[1].school, 'Medicine');
+    assert.ok(component.schoolFilters[1].isSelected);
+    assert.equal(component.schoolFilters[2].school, 'Pharmacy');
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    await component.schoolFilters[1].toggle();
+
+    assert.equal(component.courseTitleLinks.length, 2);
+    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
+    assert.equal(component.courseTitleLinks[1].text, 'Course 4');
+    assert.equal(component.schoolFilters.length, 3);
+    assert.equal(component.schoolFilters[0].school, 'Dentistry');
+    assert.ok(component.schoolFilters[0].isSelected);
+    assert.equal(component.schoolFilters[1].school, 'Medicine');
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.equal(component.schoolFilters[2].school, 'Pharmacy');
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    await component.schoolFilters[0].toggle();
+
+    assert.equal(component.courseTitleLinks.length, 1);
+    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
+    assert.equal(component.schoolFilters.length, 3);
+    assert.equal(component.schoolFilters[0].school, 'Dentistry');
+    assert.notOk(component.schoolFilters[0].isSelected);
+    assert.equal(component.schoolFilters[1].school, 'Medicine');
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.equal(component.schoolFilters[2].school, 'Pharmacy');
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    await component.schoolFilters[2].toggle();
+
+    assert.equal(component.courseTitleLinks.length, 0);
+    assert.equal(component.schoolFilters.length, 3);
+    assert.equal(component.schoolFilters[0].school, 'Dentistry');
+    assert.notOk(component.schoolFilters[0].isSelected);
+    assert.equal(component.schoolFilters[1].school, 'Medicine');
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.equal(component.schoolFilters[2].school, 'Pharmacy');
+    assert.notOk(component.schoolFilters[2].isSelected);
+
+    await component.schoolFilters[0].toggle();
+    await component.schoolFilters[1].toggle();
+    await component.schoolFilters[2].toggle();
+
+    assert.equal(component.courseTitleLinks.length, 4);
+    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
+    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
+    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
+    assert.equal(component.schoolFilters.length, 3);
+    assert.equal(component.schoolFilters[0].school, 'Dentistry');
+    assert.ok(component.schoolFilters[0].isSelected);
+    assert.equal(component.schoolFilters[1].school, 'Medicine');
+    assert.ok(component.schoolFilters[1].isSelected);
+    assert.equal(component.schoolFilters[2].school, 'Pharmacy');
+    assert.ok(component.schoolFilters[2].isSelected);
   });
 });
