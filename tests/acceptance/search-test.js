@@ -133,4 +133,26 @@ module('Acceptance | search', function(hooks) {
     assert.equal(page.searchBox.inputValue, firstInput);
     assert.equal(page.searchBox.autocompleteResults.length, 0);
   });
+
+  test('search requires three chars #4769', async function(assert) {
+    assert.expect(3);
+    const input = 'br';
+
+    await page.visit();
+    await page.searchBox.input(input);
+    await page.searchBox.clickIcon();
+    assert.equal(page.results.length, 0);
+    assert.equal(page.searchBox.autocompleteResults.length, 1);
+    assert.equal(page.searchBox.autocompleteResults[0].text, 'keep typing...');
+  });
+
+  test('search requires three chars in URL #4769', async function(assert) {
+    assert.expect(2);
+    const input = 'br';
+
+    await page.visit({ q: input });
+    assert.equal(page.searchBox.inputValue, input);
+    await page.searchBox.clickIcon();
+    assert.equal(page.results.length, 0);
+  });
 });
