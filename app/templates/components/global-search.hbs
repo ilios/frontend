@@ -1,25 +1,39 @@
 <div class="global-search" data-test-global-search>
   <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
 
-  {{#if this.paginatedResults}}
-    <div class="filters">
-      <label>{{t "general.academicYear"}}:</label>
-      <select
-        data-test-academic-year-filter
-        onchange={{action "setSelectedYear" value="target.value"}}>
-        <option selected={{is-equal null this.selectedYear}} value="">
-          {{t "general.allAcademicYears"}}
-        </option>
-        {{#each this.yearOptions as |year|}}
-          <option selected={{is-equal year this.selectedYear}} value={{year}}>
-            {{year}} - {{inc year}}
+  {{#if this.hasResults}}
+    <fieldset class="filters">
+      <legend>{{t "general.showResultsFor"}}</legend>
+      <div class="year-filters">
+        <select
+          data-test-academic-year-filter
+          onchange={{action "setSelectedYear" value="target.value"}}>
+          <option selected={{is-equal null this.selectedYear}} value="">
+            {{t "general.allAcademicYears"}}
           </option>
-        {{/each}}
-      </select>
-    </div>
-  {{/if}}
+          {{#each this.yearOptions as |year|}}
+            <option selected={{is-equal year this.selectedYear}} value={{year}}>
+              {{year}} - {{inc year}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
 
-  <hr>
+      <div class="school-filters" data-test-school-filters>
+        {{#each this.schoolOptions as |school index|}}
+          <span data-test-school-filter>
+            <input
+              id="school={{index}}"
+              type="checkbox"
+              checked={{not (contains school unselectedSchools)}}
+              onclick={{action "toggleSchoolSelection" school}}
+            >
+            <label for="school={{index}}">{{school}}</label>
+          </span>
+        {{/each}}
+      </div>
+    </fieldset>
+  {{/if}}
 
   <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}">
     {{#if this.isLoading}}

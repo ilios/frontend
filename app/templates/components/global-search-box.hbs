@@ -1,41 +1,39 @@
-<div class="global-search-box" data-test-global-search-box>
-  <input
-    class="global-search-input"
-    data-test-input
-    type="search"
-    value={{this.computedQuery}}
-    oninput={{action (queue
-      (action (mut this.internalQuery) value="target.value")
-      (action (mut this.autocompleteSelectedQuery) null)
-      (perform this.autocomplete))}}
-  >
+<input
+  class="global-search-input"
+  data-test-input
+  type="search"
+  value={{this.computedQuery}}
+  oninput={{action (queue
+    (action (mut this.internalQuery) value="target.value")
+    (action (mut this.autocompleteSelectedQuery) null)
+    (perform this.autocomplete))}}
+>
 
-  <span
-    class="search-icon"
-    data-test-search-icon
-    onclick={{pipe-action (action "focus") (action "search")}}>
-    {{fa-icon icon="search" class="clickable"}}
-  </span>
+<span
+  class="search-icon"
+  data-test-search-icon
+  onclick={{pipe-action (action "focus") (action "search")}}>
+  {{fa-icon icon="search" class="clickable"}}
+</span>
 
-  {{#if this.hasResults}}
-    {{#click-outside onClickOutside=(action (mut this.autocompleteResults) null)}}
-      <ul
-        class="autocomplete"
-        data-test-autocomplete
-      >
-        {{#each this.results as |result|}}
-          <li
-            class="autocomplete-row"
-            onclick={{pipe-action
-              (action (mut this.autocompleteSelectedQuery) null)
-              (action (mut this.internalQuery) result.text)
-              (action "search")}}
-          >
-            {{fa-icon icon="search"}}
-            <span class="result-text">{{result.text}}</span>
-          </li>
-        {{/each}}
-      </ul>
-    {{/click-outside}}
-  {{/if}}
-</div>
+{{#if this.hasResults}}
+  {{#click-outside onClickOutside=(action (mut this.autocompleteResults) null)}}
+    <ul
+      class="autocomplete"
+      data-test-autocomplete
+    >
+      {{#each this.results as |result|}}
+        <li
+          class="autocomplete-row"
+          onclick={{pipe-action
+            (action (mut this.autocompleteSelectedQuery) null)
+            (action (mut this.internalQuery) result.text)
+            (action "search")}}
+        >
+          {{fa-icon icon="search"}}
+          <span class="result-text">{{result.text}}</span>
+        </li>
+      {{/each}}
+    </ul>
+  {{/click-outside}}
+{{/if}}

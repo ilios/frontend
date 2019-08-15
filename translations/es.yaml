@@ -326,6 +326,7 @@ general:
   sequenceNumber: "No. de Secuencia"
   sessionAttributes: "Atributos de la Sesión"
   sessionTitlePlaceholder: "Entre en un titulo para esta sesión"
+  showResultsFor: "Mostrar Resultados Para"
   showSubgroupEvents: "Mostrar eventos para todos los grupos subordinados"
   singleDay: "Un Solo Día"
   singleGroup: "Solo grupo"
