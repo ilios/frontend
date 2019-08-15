@@ -47,8 +47,16 @@ export default Component.extend({
   }),
 
   isElective: computed('required', function() {
-    console.log(this.required === '2');
     return this.required === '2';
+  }),
+
+  isSelective: computed('isElective', 'minimum', 'maximum', function () {
+    if (this.isElective) {
+      return false;
+    }
+    const minimum = parseInt(this.minimum, 10);
+    const maximum = parseInt(this.maximum, 10);
+    return minimum > 0 && minimum !== maximum;
   }),
 
   childSequenceOrderLabel: computed('childSequenceOrder', function() {

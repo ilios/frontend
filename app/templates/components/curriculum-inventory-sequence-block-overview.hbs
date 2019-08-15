@@ -191,8 +191,8 @@
         {{/if}}
       </span>
     </div>
-    <div class="block selective">
-      <label>{{t "general.isSelective"}}?</label>
+    <div class="block is-selective {{if (not isSelective) "hidden"}}">
+      <label>{{t "general.sequenceBlockIsSelective"}}</label>
     </div>
     {{#unless isEditingMinMax}}
       <div class="block minimum">

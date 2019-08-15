@@ -38,11 +38,14 @@
     }
   }
 
-  .selective {
+  .is-selective {
     font-style: italic;
     grid-column: 1 / -1;
     padding-top: .5rem;
 
+    &.hidden {
+      visibility: hidden;
+    }
   }
 
   .sessions-list {

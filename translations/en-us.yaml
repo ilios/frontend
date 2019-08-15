@@ -323,6 +323,7 @@ general:
   sequenceBlock: "Sequence Block"
   sequenceBlockConfirmRemove: "Are you sure you want to delete this sequence block? This action cannot be undone."
   sequenceBlockDescriptionPlaceholder: "Please enter a description for this sequence block."
+  sequenceBlockIsSelective: "This sequence block has been marked as a selective."
   sequenceBlocks: "Sequence Blocks"
   sequenceBlockTitlePlaceholder: "Please enter a title for this sequence block."
   sequenceNumber: "Sequence #"
