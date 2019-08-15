@@ -16,7 +16,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(38);
+    assert.expect(37);
 
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
@@ -139,7 +139,6 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.child-sequence-order .editinplace').hasText('Ordered', 'Child sequence order is visible.');
     assert.dom('.order-in-sequence label').hasText('Order in Sequence:', 'Order in sequence label is visible.');
     assert.dom('.order-in-sequence .editinplace').hasText(block.orderInSequence.toString(), 'Order in sequence is visible.');
-    assert.dom('.selective label').hasText('Is Selective?', 'Is Selective label correct.');
     assert.dom('.minimum label').hasText('Minimum:', 'Minimum label is correct.');
     assert.dom('.minimum .editinplace').hasText(block.minimum.toString(), 'Minimum is visible.');
     assert.dom('.maximum label').hasText('Maximum:', 'Maximum label is correct.');
@@ -895,5 +894,56 @@ module('Integration | Component | curriculum inventory sequence block overview',
     await fillIn('.required select', "2");
     assert.dom('.minimum .editinplace').isNotVisible();
     assert.dom('.minimum span').hasText('0');
+  });
+
+  test('selectives are indicated as such', async function(assert) {
+    assert.expect(6);
+    const school = this.server.create('school');
+    const program = this.server.create('program', {
+      school
+    });
+    const academicLevel = this.server.create('curriculum-inventory-academic-level');
+
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels: [academicLevel],
+      year: '2016',
+      program,
+      isFinalized: false,
+    });
+
+    this.server.create('curriculum-inventory-sequence-block', {
+      report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel,
+    });
+
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', null);
+    this.set('setSortBy', null);
+    await render(hbs`{{curriculum-inventory-sequence-block-overview
+      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+
+    assert.dom('.is-selective').hasNoClass('hidden');
+    assert.dom('.is-selective').hasText('This sequence block has been marked as a selective.');
+    await click('.required .editinplace .clickable');
+    await click('.minimum .editinplace .editable');
+    await fillIn('.required select', "2"); // selected "elective"
+    assert.dom('.is-selective').hasClass('hidden');
+    await fillIn('.required select', "1"); // switch back to "required"
+    assert.dom('.is-selective').hasNoClass('hidden');
+    await fillIn('.minimum input', "20"); // set min to equal max value
+    assert.dom('.is-selective').hasClass('hidden');
+    await fillIn('.minimum input', "0"); // set min to less than 1
+    assert.dom('.is-selective').hasClass('hidden');
   });
 });
