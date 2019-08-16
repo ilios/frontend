@@ -20,6 +20,7 @@ const definition = {
   selectAcademicYear: fillable('[data-test-academic-year-filter]'),
   schoolFilters: collection('[data-test-school-filters] [data-test-school-filter]', {
     isSelected: property('checked', 'input'),
+    isDisabled: property('disabled', 'input'),
     school: text('label'),
     toggle: clickable('label'),
   }),

@@ -97,6 +97,7 @@ module('Acceptance | search', function(hooks) {
         id: i,
         title: `course ${i}`,
         year: 2019,
+        school: school.title,
         sessions: []
       });
     }

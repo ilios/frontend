@@ -10,6 +10,7 @@ export default Component.extend({
   iliosConfig: service(),
   intl: service(),
   iliosSearch: service('search'),
+  store: service(),
 
   page: null,
   query: null,
@@ -23,6 +24,7 @@ export default Component.extend({
   isLoading: reads('search.isRunning'),
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
+  allSchools: reads('loadSchools.lastSuccessful.value'),
 
   filteredResults: computed('results.[]', 'selectedYear', 'unselectedSchools.[]', function() {
     if (this.results) {
@@ -38,9 +40,21 @@ export default Component.extend({
     return this.filteredResults.slice((page * size) - size, page * size);
   }),
 
-  schoolOptions: computed('results.[]', function() {
-    if (this.results && this.results.length) {
-      return this.results.mapBy('school').uniq().sort();
+  schoolOptions: computed('allSchools.[]', 'results.[]', function () {
+    if (this.results && this.results.length && this.allSchools && this.allSchools.length) {
+      const emptySchools = this.allSchools.map(title => {
+        return {
+          title,
+          results: 0
+        };
+      }).sortBy('title');
+      const options = this.results.reduce((set, course) => {
+        let schoolOption = set.findBy('title', course.school);
+        schoolOption.results++;
+
+        return set;
+      }, emptySchools);
+      return options;
     } else {
       return [];
     }
@@ -57,6 +71,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('unselectedSchools', []);
+    this.loadSchools.perform();
 
     if (this.query && this.query.length >= MIN_INPUT) {
       this.search.perform();
@@ -76,6 +91,11 @@ export default Component.extend({
       }
     }
   },
+
+  loadSchools: task(function* () {
+    const schools = yield this.store.findAll('school');
+    return schools.mapBy('title');
+  }),
 
   setUpYearFilter(years) {
     const yearOptions = years.uniq().sort().reverse();
