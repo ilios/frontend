@@ -321,6 +321,7 @@ general:
   sequenceBlock: "Bloc séquence"
   sequenceBlockConfirmRemove: "Êtes-vous sûrs que vous voulez supprimer ce bloc séquence? Cette action ne peut pas être défaite."
   sequenceBlockDescriptionPlaceholder: "Entrez S'il vous plaît dans une description pour ceci bloc séquence."
+  sequenceBlockIsSelective: "Cette bloc séquence a été marquée comme sélective."
   sequenceBlocks: "Blocs séquence"
   sequenceBlockTitlePlaceholder: "Entrez S'il vous plaît dans une titre pour ceci bloc séquence."
   sequenceNumber: "No. de séquence"

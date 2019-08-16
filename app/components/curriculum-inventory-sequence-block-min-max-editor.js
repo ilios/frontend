@@ -33,14 +33,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   minimum: null,
   sequenceBlock: null,
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const sequenceBlock = this.sequenceBlock;
-    const minimum =  sequenceBlock.get('minimum');
-    const maximum = sequenceBlock.get('maximum');
-    this.setProperties({ minimum, maximum });
-  },
-
   actions: {
     save() {
       this.set('isSaving', true);

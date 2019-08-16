@@ -46,6 +46,19 @@ export default Component.extend({
     }
   }),
 
+  isElective: computed('required', function() {
+    return this.required === '2';
+  }),
+
+  isSelective: computed('isElective', 'minimum', 'maximum', function () {
+    if (this.isElective) {
+      return false;
+    }
+    const minimum = parseInt(this.minimum, 10);
+    const maximum = parseInt(this.maximum, 10);
+    return minimum > 0 && minimum !== maximum;
+  }),
+
   childSequenceOrderLabel: computed('childSequenceOrder', function() {
     const intl = this.intl;
     const childSequenceOrder = this.childSequenceOrder;
@@ -131,12 +144,26 @@ export default Component.extend({
     changeRequired() {
       let block = this.sequenceBlock;
       block.set('required', parseInt(this.required, 10));
+      if ('2' === this.required) {
+        block.set('minimum', 0);
+      }
       block.save();
+    },
+
+    setRequired(required) {
+      const block = this.sequenceBlock;
+      this.set('required', required);
+      if ('2' === required) {
+        this.set('minimum', 0);
+      } else {
+        this.set('minimum', block.get('minimum'));
+      }
     },
 
     revertRequiredChanges() {
       let block = this.sequenceBlock;
       this.set('required', '' + block.get('required'));
+      this.set('minimum', block.get('minimum'));
     },
 
     changeCourse() {
@@ -248,7 +275,10 @@ export default Component.extend({
     },
 
     cancelMinMaxEditing() {
+      let block = this.sequenceBlock;
       this.set('isEditingMinMax', false);
+      this.set('minimum', block.get('minimum'));
+      this.set('maximum', block.get('maximum'));
     },
 
     toggleManagingSessions() {
@@ -294,6 +324,8 @@ export default Component.extend({
     const orderInSequence = sequenceBlock.get('orderInSequence');
     const description = sequenceBlock.get('description');
     const course = yield sequenceBlock.get('course');
+    const minimum = sequenceBlock.get('minimum');
+    const maximum = sequenceBlock.get('maximum');
     this.setProperties({
       parent,
       report,
@@ -310,6 +342,8 @@ export default Component.extend({
       linkedSessions,
       course,
       required,
+      minimum,
+      maximum,
     });
   }),
 

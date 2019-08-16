@@ -321,6 +321,7 @@ general:
   sequenceBlock: "Bloque de Secuencia"
   sequenceBlockConfirmRemove: "¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer."
   sequenceBlockDescriptionPlaceholder: "Por favor, introduzca una descripción para este bloque de la secuencia."
+  sequenceBlockIsSelective: "Esta bloque de la secuencia ha sido marcada como selectiva."
   sequenceBlocks: "Bloques de la Secuencia"
   sequenceBlockTitlePlaceholder: "Por favor, introduzca un título para esta bloque de la secuencia."
   sequenceNumber: "No. de Secuencia"
