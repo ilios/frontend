@@ -4,6 +4,7 @@ import { equal } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['pagination-links'],
+  'data-test-pagination-links': true,
 
   page: null,
   results: null,

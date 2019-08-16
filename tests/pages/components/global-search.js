@@ -23,6 +23,10 @@ const definition = {
     school: text('label'),
     toggle: clickable('label'),
   }),
+  results: collection('[data-test-results] [data-test-course-search-result]', {
+    courseTitle: text('a:first-of-type'),
+    clickCourse: clickable('a:first-of-type'),
+  }),
 };
 
 export default definition;
