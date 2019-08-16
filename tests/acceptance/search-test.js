@@ -86,6 +86,49 @@ module('Acceptance | search', function(hooks) {
     assert.equal(find(searchBox).value, input);
   });
 
+  test('clicking back from course to search works #4768', async function(assert) {
+    assert.expect(8);
+
+    const school = this.server.create('school');
+    this.server.createList('course', 25, { school });
+    let courses = [];
+    for (let i = 1; i < 25; i++) {
+      courses.push({
+        id: i,
+        title: `course ${i}`,
+        year: 2019,
+        sessions: []
+      });
+    }
+    const firstInput = 'first';
+
+    this.server.get('search/v1/curriculum', () => {
+      return {
+        results: {
+          autocomplete: [],
+          courses
+        }
+      };
+    });
+    await page.visit();
+    assert.equal(currentURL(), '/search');
+    await page.searchBox.input(firstInput);
+    await page.searchBox.clickIcon();
+    await page.paginationLinks[1].click();
+    assert.equal(page.globalSearch.results.length, 10);
+    assert.equal(page.globalSearch.results[0].courseTitle, 'course 11');
+    assert.equal(page.searchBox.inputValue, firstInput);
+    assert.equal(currentURL(), `/search?page=2&q=${firstInput}`);
+    await page.globalSearch.results[0].clickCourse();
+    assert.equal(currentURL(), `/courses/11`);
+    await page.visit({
+      page: 2,
+      q: firstInput
+    });
+    assert.equal(page.globalSearch.results.length, 10);
+    assert.equal(page.globalSearch.results[0].courseTitle, 'course 11');
+  });
+
   test('clicking back on search updates results and input #4759', async function(assert) {
     assert.expect(11);
 
@@ -141,7 +184,7 @@ module('Acceptance | search', function(hooks) {
     await page.visit();
     await page.searchBox.input(input);
     await page.searchBox.clickIcon();
-    assert.equal(page.results.length, 0);
+    assert.equal(page.globalSearch.results.length, 0);
     assert.equal(page.searchBox.autocompleteResults.length, 1);
     assert.equal(page.searchBox.autocompleteResults[0].text, 'keep typing...');
   });
@@ -153,6 +196,6 @@ module('Acceptance | search', function(hooks) {
     await page.visit({ q: input });
     assert.equal(page.searchBox.inputValue, input);
     await page.searchBox.clickIcon();
-    assert.equal(page.results.length, 0);
+    assert.equal(page.globalSearch.results.length, 0);
   });
 });
