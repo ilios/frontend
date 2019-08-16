@@ -6,10 +6,10 @@ import { computed, observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 
 export default Component.extend({
+  currentUser: service(),
   session: service(),
   pageTitleList: service(),
   router: service(),
-  features: service(),
 
   classNames: ['ilios-header'],
   tagName: 'header',
@@ -18,8 +18,10 @@ export default Component.extend({
 
   'data-test-ilios-header': true,
 
-  showSearch: computed('session.isAuthenticated', 'router.currentRouteName', function () {
-    return this.session.isAuthenticated && this.router.currentRouteName !== 'search';
+  showSearch: computed('currentUser.performsNonLearnerFunction', 'session.isAuthenticated', 'router.currentRouteName', function () {
+    return this.session.isAuthenticated &&
+      this.router.currentRouteName !== 'search' &&
+      this.currentUser.performsNonLearnerFunction;
   }),
 
   /**

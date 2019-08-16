@@ -10,8 +10,7 @@ module('Acceptance | search', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function() {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    await setupAuthentication({}, true);
   });
 
   test('visiting /search', async function(assert) {
