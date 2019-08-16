@@ -12,6 +12,7 @@ const MIN_INPUT = 3;
 export default Component.extend({
   iliosConfig: service(),
   iliosSearch: service('search'),
+  intl: service(),
 
   autocompleteCache: null,
   autocompleteSelectedQuery: null,
@@ -46,7 +47,7 @@ export default Component.extend({
     },
 
     search() {
-      if (cleanQuery(this.computedQuery).length > 0) {
+      if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
         this.search(this.computedQuery);
         this.clear();
       }
@@ -84,8 +85,10 @@ export default Component.extend({
     }
 
     if (this.isEnterKey(keyCode)) {
-      this.search(this.computedQuery);
-      this.clear();
+      if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
+        this.search(this.computedQuery);
+        this.clear();
+      }
     }
 
     if (this.isEscapeKey(keyCode)) {
@@ -194,8 +197,14 @@ export default Component.extend({
   autocomplete: task(function* () {
     const q = cleanQuery(this.internalQuery);
 
-    if (isBlank(q) || q.length < MIN_INPUT) {
+    if (isBlank(q)) {
       return [];
+    }
+
+    if (q.length < MIN_INPUT) {
+      return [{
+        text: this.intl.t('general.moreInputRequiredPrompt')
+      }];
     }
 
     const cachedResults = this.findCachedAutocomplete(this.internalQuery);

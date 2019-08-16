@@ -187,4 +187,19 @@ module('Integration | Component | global search box', function(hooks) {
     await component.input('');
     assert.equal(component.inputValue, '');
   });
+
+  test('require at least three chars to run autocomplete #4769', async function (assert) {
+    assert.expect(2);
+
+    const input = 'ty';
+
+    this.set('search', () => {
+      assert.ok(false, 'search should not be called');
+    });
+    await render(hbs`{{global-search-box search=(action this.search)}}`);
+    await component.input(input);
+    await component.triggerInput();
+    assert.equal(component.autocompleteResults.length, 1);
+    assert.equal(component.autocompleteResults[0].text, 'keep typing...');
+  });
 });

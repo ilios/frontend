@@ -35,7 +35,7 @@
     </fieldset>
   {{/if}}
 
-  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}">
+  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}" data-test-results>
     {{#if this.isLoading}}
       <li class="searching">
         {{fa-icon icon="spinner" class="orange" spin=true}}

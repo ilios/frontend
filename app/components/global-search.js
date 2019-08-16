@@ -4,6 +4,8 @@ import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
+const MIN_INPUT = 3;
+
 export default Component.extend({
   iliosConfig: service(),
   intl: service(),
@@ -56,7 +58,7 @@ export default Component.extend({
     this._super(...arguments);
     this.set('unselectedSchools', []);
 
-    if (this.query) {
+    if (this.query && this.query.length >= MIN_INPUT) {
       this.search.perform();
     }
   },
