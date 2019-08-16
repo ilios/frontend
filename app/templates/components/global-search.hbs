@@ -1,6 +1,21 @@
 <div class="global-search" data-test-global-search>
   <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
 
+  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}" data-test-results>
+    {{#if this.isLoading}}
+      <li class="searching">
+        {{fa-icon icon="spinner" class="orange" spin=true}}
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
+    {{else}}
+      {{#each this.paginatedResults as |course|}}
+        {{course-search-result course=course}}
+      {{else}}
+        <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>
+      {{/each}}
+    {{/if}}
+  </ul>
+
   {{#if this.hasResults}}
     <fieldset class="filters">
       <legend>{{t "general.showResultsFor"}}</legend>
@@ -19,37 +34,26 @@
         </select>
       </div>
 
-      <div class="school-filters" data-test-school-filters>
-        {{#each this.schoolOptions as |school index|}}
-          <span data-test-school-filter>
-            <input
-              id="school={{index}}"
-              type="checkbox"
-              checked={{not (contains school unselectedSchools)}}
-              onclick={{action "toggleSchoolSelection" school}}
-            >
-            <label for="school={{index}}">{{school}}</label>
-          </span>
-        {{/each}}
-      </div>
+      {{#if (gt (get allSchools "length") 1)}}
+        <div class="school-filters" data-test-school-filters>
+          {{#each this.schoolOptions as |obj index|}}
+            <span class="filter" data-test-school-filter>
+              <input
+                id="school={{index}}"
+                type="checkbox"
+                checked={{or (eq obj.results 0) (not (contains obj.title unselectedSchools))}}
+                onclick={{action "toggleSchoolSelection" obj.title}}
+                disabled={{eq obj.results 0}}
+              >
+              <label for="school={{index}}">{{obj.title}} ({{obj.results}})</label>
+            </span>
+          {{/each}}
+        </div>
+      {{/if}}
     </fieldset>
   {{/if}}
-
-  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}" data-test-results>
-    {{#if this.isLoading}}
-      <li class="searching">
-        {{fa-icon icon="spinner" class="orange" spin=true}}
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    {{else}}
-      {{#each this.paginatedResults as |course|}}
-        {{course-search-result course=course}}
-      {{else}}
-        <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>
-      {{/each}}
-    {{/if}}
-  </ul>
 </div>
+
 
 <PaginationLinks
   @page={{this.page}}

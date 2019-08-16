@@ -11,7 +11,7 @@
     grid-template-areas:
     'search search'
     'results filters';
-    grid-template-columns: auto 12rem;
+    grid-template-columns: 1fr auto;
   }
 
   .global-search-box {
@@ -27,9 +27,9 @@
       border: 0;
       display: flex;
       flex-direction: column;
-      justify-content: start;
-      margin: 0 1rem 0 0;
-      padding: 0;
+      justify-content: flex-start;
+      margin: 0;
+      padding: 0 0 0 .5rem;
     }
 
     .year-filters,
@@ -39,15 +39,17 @@
 
     .school-filters {
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
       margin-top: .5rem;
+      flex-direction: column;
 
-      @include for-tablet-and-up {
-        flex-direction: column;
+      .filter {
+        white-space: nowrap;
       }
 
       label {
         margin: 0 1rem 0 .1rem;
+        white-space: nowrap;
       }
     }
   }
