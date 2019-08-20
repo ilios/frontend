@@ -29,7 +29,8 @@ export default Component.extend({
         hashedEvents[hash].pushObject(copy(event));
       });
       let compiledEvents = [];
-      for (let hash in hashedEvents) {
+      let hash;
+      for (hash in hashedEvents) {
         let arr = hashedEvents[hash];
         let event = arr[0];
         if (arr.length > 1) {

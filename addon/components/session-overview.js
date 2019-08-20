@@ -127,14 +127,16 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     }
     const user = await currentUser.get('model');
     const allRelatedCourses = await user.get('allRelatedCourses');
-    for (let relatedCourse of allRelatedCourses) {
+    let relatedCourse;
+    for (relatedCourse of allRelatedCourses) {
       if (await permissionChecker.canCreateSession(relatedCourse)) {
         return true;
       }
     }
     const school = await course.get('school');
     const schoolCourses = school.get('courses');
-    for (let schoolCourse of schoolCourses) {
+    let schoolCourse;
+    for (schoolCourse of schoolCourses) {
       if (await permissionChecker.canCreateSession(schoolCourse)) {
         return true;
       }
