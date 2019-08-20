@@ -40,7 +40,8 @@ const OfferingDateBlock = OfferingBlock.extend({
     });
     //convert indexed object to array
     let offeringGroupArray = [];
-    for(let key in offeringGroups){
+    let key;
+    for(key in offeringGroups){
       offeringGroupArray.pushObject(offeringGroups[key]);
     }
 

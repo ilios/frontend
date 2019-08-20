@@ -39,7 +39,8 @@ export default Component.extend({
     });
     //convert indexed object to array
     let dateBlockArray = [];
-    for (let key in dateBlocks) {
+    let key;
+    for (key in dateBlocks) {
       dateBlockArray.pushObject(dateBlocks[key]);
     }
     return dateBlockArray.sortBy('dateStamp');
