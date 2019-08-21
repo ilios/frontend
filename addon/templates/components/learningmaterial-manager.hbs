@@ -3,7 +3,7 @@
 {{else}}
   <div class="item displayname">
     <label>{{t "general.displayName"}}:</label>
-    {{#if (and editable (await canEditTitle))}}
+    {{#if (and editable (await isLinkedOnlyOnce))}}
       <input
         type="text"
         value={{title}}
@@ -90,8 +90,15 @@
   <div class="item">
     <label>{{t "general.description"}}:</label>
     <span class="description">
-      {{! template-lint-disable no-triple-curlies }}
-      {{{ description }}}
+      {{#if (and editable (await isLinkedOnlyOnce))}}
+        {{html-editor
+            content=description
+            update=(action (mut description))
+        }}
+      {{else}}
+        {{! template-lint-disable no-triple-curlies }}
+        <span>{{{description}}}</span>
+      {{/if}}
     </span>
   </div>
   {{#if copyrightPermission}}
