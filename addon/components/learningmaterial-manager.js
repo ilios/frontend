@@ -77,7 +77,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return parentMaterial.hasMany('sessionLearningMaterials').ids();
   }),
 
-  canEditTitle: computed('courseLearningMaterialIds.[]', 'sessionLearningMaterialIds.[]', async function() {
+  /**
+   * Whether the given learning material is linked to no more than one session or course.
+   * @property isUnlinked
+   * @type {Ember.computed}
+   * @public
+   */
+  isLinkedOnlyOnce: computed('courseLearningMaterialIds.[]', 'sessionLearningMaterialIds.[]', async function() {
     const cLmIds = await this.get('courseLearningMaterialIds');
     const sLmIds = await this.get('sessionLearningMaterialIds');
 
@@ -184,6 +190,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     this.send('clearErrorDisplay');
     const {
+      description,
       learningMaterial,
       title,
       notes,
@@ -194,7 +201,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       statusId,
       terms,
       closeManager,
-    } = this.getProperties('learningMaterial', 'title', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
+    } = this.getProperties('description', 'learningMaterial', 'title', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
     learningMaterial.set('publicNotes', publicNotes);
     learningMaterial.set('required', required);
     learningMaterial.set('notes', notes);
@@ -207,6 +214,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const parent = yield learningMaterial.get('learningMaterial');
     parent.set('status', status);
     parent.set('title', title);
+    parent.set('description', description);
 
     learningMaterial.set('meshDescriptors', terms);
     yield learningMaterial.save();

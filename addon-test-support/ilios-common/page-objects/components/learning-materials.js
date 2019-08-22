@@ -56,7 +56,12 @@ export default {
     },
     nameValue: text('.displayname span'),
     author: text('.originalauthor'),
-    description: text('.description'),
+    description: {
+      scope: '.description',
+      value: text(),
+      update: fillInFroalaEditor('.fr-box'),
+      editorValue: froalaEditorValue('.fr-box')
+    },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
     uploadDate: text('.upload-date'),
@@ -73,8 +78,11 @@ export default {
     publicNotes: clickable('.publicnotes .switch-handle'),
     status: fillable('select', { at: 0 }),
     statusValue: value('select', { at: 0 }),
-    notes: fillInFroalaEditor('.fr-box'),
-    notesValue: froalaEditorValue('.fr-box'),
+    notes: {
+      scope: '.notes',
+      update: fillInFroalaEditor('.fr-box'),
+      value: froalaEditorValue('.fr-box'),
+    },
     addStartDate: clickable('[data-test-add-start-date]'),
     addEndDate: clickable('[data-test-add-end-date]'),
     timedReleaseSummary: text('.timed-release-schedule'),
