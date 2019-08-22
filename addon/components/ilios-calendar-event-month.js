@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { default as CalendarEvent } from 'el-calendar/components/calendar-event';
+import { default as CalendarEvent } from 'elemental-calendar/components/calendar-event';
 import layout from '../templates/components/ilios-calendar-event-month';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
