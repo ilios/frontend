@@ -41,8 +41,8 @@
               <input
                 id="school={{index}}"
                 type="checkbox"
-                checked={{or (eq obj.results 0) (not (contains obj.title unselectedSchools))}}
-                onclick={{action "toggleSchoolSelection" obj.title}}
+                checked={{or (eq obj.results 0) (not (contains obj.id ignoredSchoolIds))}}
+                onclick={{action "toggleSchoolSelection" obj.id}}
                 disabled={{eq obj.results 0}}
               >
               <label for="school={{index}}">{{obj.title}} ({{obj.results}})</label>
