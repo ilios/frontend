@@ -33,7 +33,7 @@
     "broccoli-file-creator": "^2.1.1",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.1",
-    "elemental-calendar": "^0.1.0",
+    "elemental-calendar": "^0.2.0",
     "ember-attacher": "^0.15.1",
     "ember-auto-import": "^1.2.13",
     "ember-cli-babel": "^7.7.3",
