@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
 import { htmlSafe } from '@ember/string';
-import { default as CalendarEvent } from 'el-calendar/components/calendar-event';
+import { default as CalendarEvent } from 'elemental-calendar/components/calendar-event';
 import layout from '../templates/components/ilios-calendar-event';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
