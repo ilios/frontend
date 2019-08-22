@@ -3,4 +3,8 @@
   @query={{this.query}}
   @onQuery={{action "setQuery"}}
   @onSelectPage={{action (mut this.page)}}
+  @ignoredSchoolIds={{this.ignoredSchoolIdsArray}}
+  @setIgnoredSchoolIds={{action "setIgnoredSchools"}}
+  @selectedYear={{this.selectedYearInt}}
+  @setSelectedYear={{action (mut this.selectedYear)}}
 />

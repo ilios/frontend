@@ -198,4 +198,76 @@ module('Acceptance | search', function(hooks) {
     await page.searchBox.clickIcon();
     assert.equal(page.globalSearch.results.length, 0);
   });
+
+  test('school filter in query param', async function(assert) {
+    assert.expect(9);
+
+    const schools = this.server.createList('school', 3);
+    let courses = [];
+    for (let i = 0; i < 3; i++) {
+      courses.push({
+        title: `Course ${i}`,
+        year: 2019,
+        school: schools[i].title,
+        sessions: []
+      });
+    }
+
+    this.server.get('search/v1/curriculum', () => {
+      return {
+        results: {
+          autocomplete: [],
+          courses
+        }
+      };
+    });
+
+    await page.visit({
+      q: 'something',
+      ignoredSchools: '1-3'
+    });
+    assert.equal(page.globalSearch.courseTitleLinks.length, 1);
+    assert.equal(page.globalSearch.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(page.globalSearch.schoolFilters.length, 3);
+    assert.equal(page.globalSearch.schoolFilters[0].school, 'school 0 (1)');
+    assert.notOk(page.globalSearch.schoolFilters[0].isSelected);
+    assert.equal(page.globalSearch.schoolFilters[1].school, 'school 1 (1)');
+    assert.ok(page.globalSearch.schoolFilters[1].isSelected);
+    assert.equal(page.globalSearch.schoolFilters[2].school, 'school 2 (1)');
+    assert.notOk(page.globalSearch.schoolFilters[2].isSelected);
+  });
+
+  test('year filter in query param', async function(assert) {
+    assert.expect(3);
+
+    this.server.get('search/v1/curriculum', () => {
+      return {
+        results: {
+          autocomplete: [],
+          courses: [
+            {
+              title: 'course 1',
+              year: 2019,
+              school: 'school 1',
+              sessions: []
+            },
+            {
+              title: 'course 2',
+              year: 2020,
+              school: 'school 1',
+              sessions: []
+            }
+          ]
+        }
+      };
+    });
+
+    await page.visit({
+      q: 'something',
+      year: '2020'
+    });
+    assert.equal(page.globalSearch.courseTitleLinks.length, 1);
+    assert.equal(page.globalSearch.courseTitleLinks[0].text, 'course 2');
+    assert.equal(page.globalSearch.academicYear, '2020');
+  });
 });

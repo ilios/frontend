@@ -84,7 +84,13 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`{{global-search page=1 query=this.query}}`);
+    this.set('selectedYear', null);
+    await render(hbs`<GlobalSearch
+      @page=1
+      @query={{this.query}}
+      @selectedYear={{this.selectedYear}}
+      @setSelectedYear={{action (mut this.selectedYear)}}
+    />`);
     assert.equal(component.academicYear, '');
     assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
     assert.equal(component.courseTitleLinks.length, 4);
@@ -142,7 +148,13 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`<GlobalSearch @page=1 @query={{this.query}} />`);
+    this.set('ignoredSchoolIds', []);
+    await render(hbs`<GlobalSearch
+      @page=1
+      @query={{this.query}}
+      @ignoredSchoolIds={{this.ignoredSchoolIds}}
+      @setIgnoredSchoolIds={{action (mut this.ignoredSchoolIds)}}
+    />`);
     assert.equal(component.courseTitleLinks.length, 4);
     assert.equal(component.courseTitleLinks[0].text, 'Course 1');
     assert.equal(component.courseTitleLinks[1].text, 'Course 2');

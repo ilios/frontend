@@ -15,21 +15,33 @@ export default Component.extend({
   page: null,
   query: null,
   selectedYear: null,
-  unselectedSchools: null,
+  ignoredSchoolIds: null,
   size: 10,
   yearOptions: null,
   onQuery() {},
   onSelectPage() {},
+  setIgnoredSchoolIds() {},
+  setSelectedYear() {},
 
   isLoading: reads('search.isRunning'),
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),
   allSchools: reads('loadSchools.lastSuccessful.value'),
 
-  filteredResults: computed('results.[]', 'selectedYear', 'unselectedSchools.[]', function() {
+  ignoredSchoolTitles: computed('ignoredSchoolIds.[]', 'allSchools.[]', function() {
+    if (!this.ignoredSchoolIds) {
+      return [];
+    }
+    return this.ignoredSchoolIds.map(id => {
+      const school = this.allSchools.findBy('id', id);
+      return school ? school.title : '';
+    });
+  }),
+
+  filteredResults: computed('results.[]', 'selectedYear', 'ignoredSchoolTitles.[]', function() {
     if (this.results) {
       const yearFilteredResults = this.results.filter(course => this.selectedYear ? course.year === this.selectedYear : true);
-      return yearFilteredResults.filter(course => !this.unselectedSchools.includes(course.school));
+      return yearFilteredResults.filter(course => !this.ignoredSchoolTitles.includes(course.school));
     } else {
       return [];
     }
@@ -42,8 +54,9 @@ export default Component.extend({
 
   schoolOptions: computed('allSchools.[]', 'results.[]', function () {
     if (this.results && this.results.length && this.allSchools && this.allSchools.length) {
-      const emptySchools = this.allSchools.map(title => {
+      const emptySchools = this.allSchools.map(({id, title}) => {
         return {
+          id,
           title,
           results: 0
         };
@@ -70,7 +83,6 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('unselectedSchools', []);
     this.loadSchools.perform();
 
     if (this.query && this.query.length >= MIN_INPUT) {
@@ -80,21 +92,26 @@ export default Component.extend({
 
   actions: {
     setSelectedYear(year) {
-      this.set('selectedYear', year ? parseInt(year, 10) : null);
+      this.setSelectedYear(year ? parseInt(year, 10) : null);
       this.onSelectPage(1);
     },
-    toggleSchoolSelection(school) {
-      if (this.unselectedSchools.includes(school)) {
-        this.unselectedSchools.removeObject(school);
+    toggleSchoolSelection(id) {
+      let ignoredSchoolIds = this.ignoredSchoolIds ? [...this.ignoredSchoolIds] : [];
+
+      if (ignoredSchoolIds.includes(id)) {
+        ignoredSchoolIds.removeObject(id);
       } else {
-        this.unselectedSchools.pushObject(school);
+        ignoredSchoolIds.pushObject(id);
       }
+
+      this.onSelectPage(1);
+      this.setIgnoredSchoolIds(ignoredSchoolIds);
     }
   },
 
   loadSchools: task(function* () {
     const schools = yield this.store.findAll('school');
-    return schools.mapBy('title');
+    return schools;
   }),
 
   setUpYearFilter(years) {
