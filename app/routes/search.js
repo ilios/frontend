@@ -4,9 +4,11 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
+  iliosConfig: service(),
 
-  beforeModel() {
-    if (!this.currentUser.performsNonLearnerFunction) {
+  async beforeModel() {
+    const searchEnabled = await this.iliosConfig.searchEnabled;
+    if (!searchEnabled || !this.currentUser.performsNonLearnerFunction) {
       this.transitionTo('dashboard');
     }
   }

@@ -10,6 +10,7 @@ export default Component.extend({
   session: service(),
   pageTitleList: service(),
   router: service(),
+  iliosConfig: service(),
 
   classNames: ['ilios-header'],
   tagName: 'header',
@@ -18,11 +19,19 @@ export default Component.extend({
 
   'data-test-ilios-header': true,
 
-  showSearch: computed('currentUser.performsNonLearnerFunction', 'session.isAuthenticated', 'router.currentRouteName', function () {
-    return this.session.isAuthenticated &&
-      this.router.currentRouteName !== 'search' &&
-      this.currentUser.performsNonLearnerFunction;
-  }),
+  showSearch: computed(
+    'currentUser.performsNonLearnerFunction',
+    'session.isAuthenticated',
+    'router.currentRouteName',
+    'iliosConfig.searchEnabled',
+    async function () {
+      const searchEnabled = await this.iliosConfig.searchEnabled;
+      return searchEnabled &&
+        this.session.isAuthenticated &&
+        this.router.currentRouteName !== 'search' &&
+        this.currentUser.performsNonLearnerFunction;
+    }
+  ),
 
   /**
    * We have to use an observer here

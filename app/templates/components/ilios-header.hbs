@@ -6,7 +6,7 @@
 {{/link-to}}
 <h1>{{title}}</h1>
 <div class="tools">
-  {{#if showSearch}}
+  {{#if (await showSearch)}}
     <GlobalSearchBox @search={{action "search"}} />
   {{/if}}
   {{locale-chooser}}
