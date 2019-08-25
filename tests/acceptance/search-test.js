@@ -11,6 +11,11 @@ module('Acceptance | search', function(hooks) {
 
   hooks.beforeEach(async function() {
     await setupAuthentication({}, true);
+    this.server.get('application/config', function() {
+      return { config: {
+        searchEnabled: true,
+      }};
+    });
   });
 
   test('visiting /search', async function(assert) {
