@@ -78,7 +78,7 @@
     "ember-load": "0.0.17",
     "ember-load-initializers": "^2.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-metrics": "0.13.0",
+    "ember-metrics": "0.14.0",
     "ember-noscript": "^3.0.0",
     "ember-page-title": "^5.0.1",
     "ember-qunit": "^4.4.1",
