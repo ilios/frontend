@@ -2,13 +2,19 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | school manager', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    this.set('nothing', () => {});
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('nothing', () => { });
+    this.set('school', schoolModel);
     await render(hbs`{{school-manager
+      school=school
       setSchoolCompetencyDetails=(action nothing)
       setSchoolManageCompetencies=(action nothing)
       setSchoolVocabularyDetails=(action nothing)
@@ -20,6 +26,6 @@ module('Integration | Component | school manager', function(hooks) {
       setSchoolManagedSessionType=(action nothing)
     }}`);
 
-    assert.notEqual(this.element.textContent.search(/Back to Schools List/), -1);
+    assert.ok(this.element.textContent.includes("Back to Schools List"));
   });
 });
