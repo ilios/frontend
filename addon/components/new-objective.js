@@ -22,19 +22,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSaving: false,
 
   actions: {
-    save() {
+    async save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          this.send('removeErrorDisplayFor', 'title');
-          return this.get('save')(this.get('title')).finally(() =>{
-            this.set('title', null);
-          });
-        }
-      }).finally(() => {
-        this.set('isSaving', false);
-      });
+      const { validations } = await this.validate();
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'title');
+        await this.save(this.title);
+        this.set('title', null);
+      }
+      this.set('isSaving', false);
     },
     changeTitle(contents){
       this.send('addErrorDisplayFor', 'title');
