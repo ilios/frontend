@@ -144,7 +144,7 @@ export default Model.extend({
     return title;
   }),
 
-  allParentTitles: computed('isTopLevelGroup', 'parent.allParentTitles.[]', 'parent.title', async function(){
+  allParentTitles: computed('isTopLevelGroup', 'parent.allParentTitles.[]', async function(){
     const titles = [];
     const parent = await this.get('parent');
     if (parent) {
@@ -203,7 +203,7 @@ export default Model.extend({
     return flat.join('');
   }),
 
-  allParents: computed('parent', 'parent.allParents.[]', async function(){
+  allParents: computed('parent.allParents.[]', async function(){
     const parent = await this.get('parent');
     if (!parent) {
       return [];
