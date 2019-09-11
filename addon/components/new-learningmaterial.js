@@ -6,7 +6,7 @@ import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display
 import { task } from 'ember-concurrency';
 import layout from '../templates/components/new-learningmaterial';
 
-const { equal, not, reads } = computed;
+const { equal, reads } = computed;
 
 const Validations = buildValidations({
   title: [
@@ -27,37 +27,45 @@ const Validations = buildValidations({
     validator('presence', {
       presence: true,
       dependentKeys: ['model.isFile'],
-      disabled: not('model.isFile')
+      disabled(model) {
+        return !model.get('isFile');
+      }
     }),
   ],
   filename: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.isFile'],
-      disabled: not('model.isFile')
+      disabled(model) {
+        return !model.get('isFile');
+      }
     }),
   ],
   link: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.isLink'],
-      disabled: not('model.isLink')
+      disabled(model) {
+        return !model.get('isLink');
+      }
     }),
   ],
   citation: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.isCitation'],
-      disabled: not('model.isCitation')
+      disabled(model) {
+        return !model.get('isCitation');
+      }
     }),
   ],
   copyrightRationale: [
     validator('presence', {
       presence: true,
-      dependentKeys: ['model.copyrightPermission'],
-      disabled: computed('model.isFile', 'model.copyrightPermission', function(){
-        return !this.get('model.isFile') || this.get('model.copyrightPermission');
-      })
+      dependentKeys: ['model.isFile', 'model.copyrightPermission'],
+      disabled(model) {
+        return !model.get('isFile') || model.get('copyrightPermission');
+      }
     }),
     validator('length', {
       min: 2,
