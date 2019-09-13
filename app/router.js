@@ -85,6 +85,10 @@ Router.map(function() {
     path: 'curriculum-inventory-reports/:curriculum_inventory_report_id'
   }, function() {
     this.route('rollover', { path: '/rollover'});
+
+    this.route('verificationPreview', {
+      path: '/verification-preview'
+    });
   });
   this.route('curriculumInventorySequenceBlock', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id'
