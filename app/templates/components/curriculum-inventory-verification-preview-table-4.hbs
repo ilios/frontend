@@ -1,0 +1,29 @@
+<table>
+  <caption>{{t "general.table4InstructionalMethodCounts"}}</caption>
+  <thead>
+    <tr>
+      <th>{{t "general.itemCode"}}</th>
+      <th>{{t "general.instructionalMethod"}}</th>
+      <th>{{t "general.numberOfEventsFeaturingThisAsThePrimaryMethod"}}</th>
+      <th>{{t "general.numberOfNonPrimaryOccurrencesOfThisMethod"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await data) as |row|}}
+      <tr>
+        <td>{{row.id}}</td>
+        <td>{{row.title}}</td>
+        <td>{{row.num_events_primary_method}}</td>
+        <td>{{row.num_events_non_primary_method}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td>{{t "general.total"}}</td>
+      <td>{{await totalNumEventsPrimaryMethod}}</td>
+      <td>{{await totalNumEventsNonPrimaryMethod}}</td>
+    </tr>
+  </tfoot>
+</table>

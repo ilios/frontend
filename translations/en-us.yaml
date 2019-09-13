@@ -28,6 +28,7 @@ general:
   attribute: Attribute
   available: Available
   availableCohorts: "Available Cohorts"
+  averageHoursOfInstructionPerWeek: "Average Hours of Instruction Per Week"
   backToAdminDashboard: "Back to Admin Dashboard"
   backToCalendar: "Back to Calendar"
   backToDetails: "Back to Session Details"
@@ -49,6 +50,7 @@ general:
   clearDates: "Clear Dates"
   clearErrors: "Clear Errors and Return to Ilios"
   clerkship: Clerkship
+  clerkshipSequenceBlocks: "Clerkship Sequence Blocks"
   clickToAddDescription: "Click to add a description."
   clickToAddTermDescription: "Click to add descriptive notes"
   cohortMembersNotInGroup: "Cohort Members NOT assigned to {groupTitle} "
@@ -126,6 +128,7 @@ general:
   findDirector: "Find Director"
   firstName: "First Name"
   for: For
+  formativeAssessment: "Formative Assessment"
   formerStudent: "Former Student"
   fullName: "Full Name"
   globalSearchPlaceholder: "Find Users..."
@@ -139,6 +142,8 @@ general:
   ignore: Ignore
   ilios: Ilios
   iliosUpdatePending: "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
+  includedInGrade: "Included in Grade"
+  instructionalMethod: "Instructional Method"
   instructionalMethods: "Instructional Methods"
   instructorGroup: "Instructor Group"
   instructorGroupTitle: "Instructor Group Title"
@@ -150,6 +155,7 @@ general:
   invalidUsers: "Invalid Users"
   isSelective: "Is Selective"
   isTrack: "Is Track"
+  itemCode: "Item Code"
   language:
     en-us: "English (en)"
     es: "Español (es)"
@@ -197,6 +203,7 @@ general:
   myProfile: "My Profile"
   myReports: "My Reports"
   name: Name
+  narrativeAssessment: "Narrative Assessment"
   newCourse: "New Course"
   newCurriculumInventoryReport: "New Curriculum Inventory Report"
   newDomain: "New Domain"
@@ -218,6 +225,7 @@ general:
   noCourses: "There are no courses in this school"
   noCurriculumInventoryInstitutionalInfo: "No institutional information has been configured for this school."
   noLearnerGroups: "No learner groups"
+  nonClerkshipSequenceBlocks: "Non-Clerkship Sequence Blocks"
   nonStudent: "Non-Student"
   noOfferingLearnerGroups: "No Groups"
   noPermissionsInOtherSchools: "You do not have the necessary permissions to modify access for this user in any other schools."
@@ -235,8 +243,15 @@ general:
   notApplicableAbbr: "n/a"
   noUnselectedCompetencies: "There are no unselected competencies"
   noUnselectedLearnerGroupsInCohort: "There are no unselected learner groups in this cohort"
+  numberOfEvents: "Number of Events"
+  numberOfEventsFeaturingThisAsThePrimaryMethod: "Number of Events Featuring This as the Primary Method"
+  numberOfExams: "Number of Exams"
+  numberOfFormalInstructionalHoursPerCourse: "Number of Formal Instructional Hours Per Course"
+  numberOfFormativeAssessments: "Number of Formative Assessments"
   numberOfGroups: "Number of Groups"
   numberOfGroupsToGenerate: "Number of groups to generate."
+  numberOfNonPrimaryOccurrencesOfThisMethod: "Number of Non-Primary Occurrences of This Method"
+  numberOfSummativeAssessments: "Number of Summative Assessments"
   objective: Objective
   objectiveMap: "Objective Map"
   objectiveParentsTitle: "Select Parent Objectives"
@@ -266,12 +281,16 @@ general:
   permissionsInOtherSchools: "Permissions in Other Schools"
   perPage: "Per Page"
   phone: Phone
+  physicianCompetencyReferenceSet: "Physician Competency Reference Set"
+  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: "Do you want to auto-populate this group?"
   preferredEmail: 'Preferred Email'
   prev: Prev
   primary: Primary
   primaryCohort: "Primary Cohort"
   primarySchool: "Primary School"
+  programExpectations: "Program Expectations"
+  programExpectationsId: "Program Expectations ID"
   programLeadership: "Program Leadership"
   programs: Programs
   programTitle: "Program Title"
@@ -305,6 +324,7 @@ general:
   reportNamePlaceholder: "Please enter a report name."
   reportTitle: "Report Title"
   requiredInTrack: "Required In Track"
+  resourceTypes: "Resource Types"
   root: Root
   sampleFile: "Sample File"
   saved: "New User Saved Successfully"
@@ -348,14 +368,25 @@ general:
   successfullyAddedTerm: "Term Added Successfully"
   successfullyInvalidatedTokens: "All existing tokens were successfully invalidated"
   successfullyRemovedTerm: "Term Deleted Successfully"
+  table1ProgramExpectationsMappedToPcrs: "Table 1: Program Expectations Mapped to PCRS"
+  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Table 2: Primary Instructional Method by Non-Clerkship Sequence Block"
+  table3aNonClerkshipSequenceBlockInstructionalTime: "Table 3-A: Non-Clerkship Sequence Block Instructional Time"
+  table3bClerkshipSequenceBlockInstructionalTime: "Table 3-B: Clerkship Sequence Block Instructional Time"
+  table4InstructionalMethodCounts: "Table 4: Instructional Method Counts"
+  table5NonClerkshipSequenceBlockAssessmentMethods: "Table 5: Non-Clerkship Sequence Block Assessment Methods"
+  table6ClerkshipSequenceBlockAssessmentMethods: "Table 6: Clerkship Sequence Block Assessment Methods"
+  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
+  table8AllResourceTypes: "Table 8: All Resource Types"
   term: Term
   termCount: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   termsBySessionType: "Terms by Session Type"
   thisReportIsNoLongerAvailable: "This report is no longer available."
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "Search returned more than {count} results.  To see better results try your search again with more terms."
+  total: "Total"
   totalErrors: "{count, plural, =1 {There is an error} other {There are # errors}}"
   totalTime: "Total time"
+  totalWeeks: "Total Weeks"
   transitionErrorMessage: "Sorry, we can’t get you where you asked to go: something seems to be broken..."
   tryHarder: "Try Harder"
   unableToReconnect: "Unable to Reconnect!"

@@ -1,0 +1,30 @@
+<table>
+  <caption>{{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}</caption>
+  <thead>
+    <tr>
+      <th rowspan="2">{{t "general.clerkshipSequenceBlocks"}}</th>
+      <th rowspan="2">{{t "general.academicLevel"}}</th>
+      <th colspan={{get (await data.methods) "length"}}>{{t "general.includedInGrade"}}</th>
+      <th rowspan="2">{{t "general.formativeAssessment"}}</th>
+      <th rowspan="2">{{t "general.narrativeAssessment"}}</th>
+    </tr>
+    <tr>
+      {{#each (await data.methods) as |method|}}
+        <th>{{method}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await clerkships) as |clerkship|}}
+      <tr>
+        <td>{{clerkship.title}}</td>
+        <td>{{clerkship.level}}</td>
+        {{#each clerkship.methods as |method|}}
+          <td>{{method}}</td>
+        {{/each}}
+        <td>{{clerkship.hasFormativeAssessments}}</td>
+        <td>{{clerkship.hasNarrativeAssessments}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

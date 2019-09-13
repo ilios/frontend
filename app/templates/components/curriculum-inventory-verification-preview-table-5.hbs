@@ -1,0 +1,32 @@
+<table>
+  <caption>{{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}</caption>
+  <thead>
+    <tr>
+      <th rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
+      <th rowspan="2">{{t "general.academicLevel"}}</th>
+      <th colspan={{add 1 (get (await data.methods) "length")}}>{{t "general.includedInGrade"}}</th>
+      <th rowspan="2">{{t "general.formativeAssessment"}}</th>
+      <th rowspan="2">{{t "general.narrativeAssessment"}}</th>
+    </tr>
+    <tr>
+      <th>{{t "general.numberOfExams"}}</th>
+      {{#each (await data.methods) as |method|}}
+        <th>{{method}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await nonClerkships) as |nonClerkship|}}
+      <tr>
+        <td>{{nonClerkship.title}}</td>
+        <td>{{nonClerkship.level}}</td>
+        <td>{{nonClerkship.numExams}}</td>
+        {{#each nonClerkship.methods as |method|}}
+          <td>{{method}}</td>
+        {{/each}}
+        <td>{{nonClerkship.hasFormativeAssessments}}</td>
+        <td>{{nonClerkship.hasNarrativeAssessments}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,19 @@
+<table>
+  <caption>{{t "general.table8AllResourceTypes"}}</caption>
+  <thead>
+    <tr>
+      <th>{{t "general.itemCode"}}</th>
+      <th>{{t "general.resourceTypes"}}</th>
+      <th>{{t "general.numberOfEvents"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await data) as |row|}}
+      <tr>
+        <td>{{row.id}}</td>
+        <td>{{row.title}}</td>
+        <td>{{row.count}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,21 @@
+<table>
+  <caption>{{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}</caption>
+  <thead>
+    <tr>
+      <th>{{t "general.clerkshipSequenceBlocks"}}</th>
+      <th>{{t "general.academicLevel"}}</th>
+      <th>{{t "general.totalWeeks"}}</th>
+      <th>{{t "general.averageHoursOfInstructionPerWeek"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await data) as |row|}}
+      <tr>
+        <td>{{row.title}}</td>
+        <td>{{row.level}}</td>
+        <td>{{row.weeks}}</td>
+        <td>{{row.avg}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

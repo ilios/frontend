@@ -26,6 +26,7 @@ general:
   attribute: Attribut
   available: Disponible
   availableCohorts: "Cohortes Disponsibles"
+  averageHoursOfInstructionPerWeek: "Average Hours of Instruction Per Week"
   backToAdminDashboard: "Rétour au Page Admin"
   backToCalendar: "Retour au Calendrier"
   backToDetails: "Retour à détails de la Séance"
@@ -47,6 +48,7 @@ general:
   clearDates: "Supprimer dates"
   clearErrors: "Supprîme les Erreurs et Retour à Ilios"
   clerkship: Stage
+  clerkshipSequenceBlocks: "Clerkship Sequence Blocks"
   clickToAddDescription: "Cliquez pour ajouter une description"
   clickToAddTermDescription: "Cliquez pour ajouter des notices descriptives"
   cohortMembersNotInGroup: "Membres de la Cohorte sans affectation à {groupTitle} "
@@ -124,6 +126,7 @@ general:
   findDirector: "Découvrir Directeur"
   firstName: "Prénom"
   for: Pour
+  formativeAssessment: "Formative Assessment"
   formerStudent: "Ancien Étudiant"
   fullName: "Nom complet"
   globalSearchPlaceholder: "Trouver des utilisateurs..."
@@ -137,6 +140,8 @@ general:
   ignore: Ignorer
   ilios: Ilios
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
+  includedInGrade: "Included in Grade"
+  instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"
   instructorGroup: "Groupe des Instructeurs"
   instructorGroupTitle: "Titre de Groupe des Instructeurs"
@@ -147,6 +152,7 @@ general:
   invalidDatetimes: "Dates/Heures invalides"
   invalidUsers: "Utilisateurs non valides"
   isSelective: "Est sélectif"
+  itemCode: "Item Code"
   isTrack: "Est une piste"
   language:
     en-us: "English (en)"
@@ -195,6 +201,7 @@ general:
   myProfile: "Mon profil"
   myReports: "Mes Rapports"
   name: Nom
+  narrativeAssessment: "Narrative Assessment"
   newCourse: "Cours neuf"
   newCurriculumInventoryReport: "Nouveau Rapport d'inventaire des Programmes d'études"
   newDomain: "Domaine nouvelle"
@@ -216,6 +223,7 @@ general:
   noCourses: "Il n'y a aucun des cours dans cette école."
   noCurriculumInventoryInstitutionalInfo: "Aucune information institutionnelle n'a été configurée pour cette école."
   noLearnerGroups: "Pas de groupes des Étudiants"
+  nonClerkshipSequenceBlocks: "Non-Clerkship Sequence Blocks"
   nonStudent: "Non étudiant"
   noOfferingLearnerGroups: "Aucun des groupes"
   noPermissionsInOtherSchools: "Vous n'avez pas les permissions nécessaires pour ajouter cet utilisateur à toute autres écoles"
@@ -233,8 +241,15 @@ general:
   notApplicableAbbr: "n.d."
   noUnselectedCompetencies: "Il n'y a pas des compétences non sélectionné "
   noUnselectedLearnerGroupsInCohort: "Il n'y a aucune groupes d'apprenants disponsibles dans cette cohorte"
+  numberOfEvents: "Number of Events"
+  numberOfEventsFeaturingThisAsThePrimaryMethod: "Number of Events Featuring This as the Primary Method"
+  numberOfExams: "Number of Exams"
+  numberOfFormalInstructionalHoursPerCourse: "Number of Formal Instructional Hours Per Course"
+  numberOfFormativeAssessments: "Number of Formative Assessments"
   numberOfGroups: "Nombre de groupes"
   numberOfGroupsToGenerate: "Nombre de groupes pour générer."
+  numberOfNonPrimaryOccurrencesOfThisMethod: "Number of Non-Primary Occurrences of This Method"
+  numberOfSummativeAssessments: "Number of Summative Assessments"
   objective: Objectif
   objectiveMap: "Tableau Objectifs"
   objectiveParentsTitle: "Affichez objectifs mères"
@@ -264,12 +279,16 @@ general:
   permissionsInOtherSchools: "Permissions en Autres Écoles"
   perPage: "Par Page"
   phone: "Téléphone"
+  physicianCompetencyReferenceSet: "Physician Competency Reference Set"
+  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: "Voulez-vous remplir cette groupe?"
   preferredEmail: 'Email préféré'
   prev: "Précéd."
   primary: Première
   primaryCohort: "Cohorte Première"
   primarySchool: "École Première"
+  programExpectations: "Program Expectations"
+  programExpectationsId: "Program Expectations ID"
   programLeadership: "Direction de Diplôme"
   programs: "Diplômes"
   programTitle: "Titre de Diplôme"
@@ -303,6 +322,7 @@ general:
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
   reportTitle: "Titre du Rapport"
   requiredInTrack: "Requis en piste"
+  resourceTypes: "Resource Types"
   root: Root
   sampleFile: "Fichier échantillon"
   saved: "Nouvel utilisateur enregistré avec succès"
@@ -346,14 +366,25 @@ general:
   successfullyAddedTerm: "Le terme soit correctement ajouté"
   successfullyInvalidatedTokens: "Tous les jetons existant ont été invalidés avec succès."
   successfullyRemovedTerm: "Le terme soit correctement supprimé"
+  table1ProgramExpectationsMappedToPcrs: "Table 1: Program Expectations Mapped to PCRS"
+  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Table 2: Primary Instructional Method by Non-Clerkship Sequence Block"
+  table3aNonClerkshipSequenceBlockInstructionalTime: "Table 3-A: Non-Clerkship Sequence Block Instructional Time"
+  table3bClerkshipSequenceBlockInstructionalTime: "Table 3-B: Clerkship Sequence Block Instructional Time"
+  table4InstructionalMethodCounts: "Table 4: Instructional Method Counts"
+  table5NonClerkshipSequenceBlockAssessmentMethods: "Table 5: Non-Clerkship Sequence Block Assessment Methods"
+  table6ClerkshipSequenceBlockAssessmentMethods: "Table 6: Clerkship Sequence Block Assessment Methods"
+  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
+  table8AllResourceTypes: "Table 8: All Resource Types"
   term: Terme
   termCount: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   termsBySessionType: "Termes par Type de Seance"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "Votre recherche présente plus que les {count} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes."
+  total: "Total"
   totalErrors: "{count, plural, =1 {Il y a une erreur} other {Il y a # erreurs}}"
   totalTime: "Heures Totales"
+  totalWeeks: "Total Weeks"
   transitionErrorMessage: "Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé."
   tryHarder: "Faire un effort"
   unableToReconnect: "Ne pouver reconnecter!"

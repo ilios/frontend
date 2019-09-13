@@ -1,1 +1,32 @@
-{{yield}}
+{{#if (is-fulfilled tables)}}
+  {{curriculum-inventory-verification-preview-table-1
+    data=(get (await tables) "program_expectations_mapped_to_pcrs")
+  }}
+  {{curriculum-inventory-verification-preview-table-2
+    data=(get (await tables) "primary_instructional_methods_by_non_clerkship_sequence_blocks")
+  }}
+  {{curriculum-inventory-verification-preview-table-3a
+    data=(get (await tables) "non_clerkship_sequence_block_instructional_time")
+  }}
+  {{curriculum-inventory-verification-preview-table-3b
+    data=(get (await tables) "clerkship_sequence_block_instructional_time")
+  }}
+  {{curriculum-inventory-verification-preview-table-4
+    data=(get (await tables) "instructional_method_counts")
+  }}
+  {{curriculum-inventory-verification-preview-table-5
+    data=(get (await tables) "non_clerkship_sequence_block_assessment_methods")
+  }}
+  {{curriculum-inventory-verification-preview-table-6
+    data=(get (await tables) "clerkship_sequence_block_assessment_methods")
+  }}
+  {{curriculum-inventory-verification-preview-table-7
+    data=(get (await tables) "all_events_with_assessments_tagged_as_formative_or_summative")
+  }}
+  {{curriculum-inventory-verification-preview-table-8
+    data=(get (await tables) "all_resource_types")
+  }}
+{{else}}
+  {{loading-spinner}}
+{{/if}}
+

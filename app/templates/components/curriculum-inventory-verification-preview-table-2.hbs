@@ -1,0 +1,40 @@
+<table>
+  <caption>{{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}</caption>
+  <thead>
+    <tr>
+      <th rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
+      <th rowspan="2">{{t "general.academicLevel"}}</th>
+      <th colspan={{add 1 (get (await data.methods) "length")}}>
+        {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
+      </th>
+    </tr>
+    <tr>
+      {{#each (await data.methods) as |method|}}
+        <th>{{method.title}}</th>
+      {{/each}}
+      <th>{{t "general.total"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each (await nonClerkships) as |clerkship|}}
+      <tr>
+        <td>{{clerkship.title}}</td>
+        <td>{{clerkship.level}}</td>
+        {{#each (await clerkship.methods) as |method|}}
+          <td>{{method}}</td>
+        {{/each}}
+        <td>{{clerkship.total}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>{{t "general.total"}}</td>
+      <td></td>
+      {{#each (await methodTotals) as |total|}}
+        <td>{{total}}</td>
+      {{/each}}
+      <td>{{await sumTotal}}</td>
+    </tr>
+  </tfoot>
+</table>

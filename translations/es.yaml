@@ -26,6 +26,7 @@ general:
   attribute: Atributo
   available: Disponible
   availableCohorts: "Clases de La Graduación Disponibles"
+  averageHoursOfInstructionPerWeek: "Average Hours of Instruction Per Week"
   backToAdminDashboard: "Atrás a Panel de Control"
   backToCalendar: "Atrás a Calendario"
   backToDetails: "Atrás a Las Detalles de la Sesión"
@@ -47,6 +48,7 @@ general:
   clearDates: "Borrar Fechas"
   clearErrors: "Borrar los Errores y Volver a Ilios"
   clerkship: "Rotación"
+  clerkshipSequenceBlocks: "Clerkship Sequence Blocks"
   clickToAddDescription: "Haga clic para añadir una descripción"
   clickToAddTermDescription: "Haga clic para agregar notas descriptivas"
   cohortMembersNotInGroup: "Miembros de la Clase NO Asignados a {groupTitle} "
@@ -124,6 +126,7 @@ general:
   findDirector: "Buscar Director"
   firstName: Nombre
   for: Para
+  formativeAssessment: "Formative Assessment"
   formerStudent: "Antiguo Estudiante"
   fullName: "Nombre completo"
   globalSearchPlaceholder: "Encontrar Usuarios..."
@@ -137,6 +140,8 @@ general:
   ignore: Ignorar
   ilios: Ilios
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
+  includedInGrade: "Included in Grade"
+  instructionalMethod: "Método de Instrucción"
   instructionalMethods: "Métodos de Instrucción"
   instructorGroup: "Grupo de Instructores"
   instructorGroupTitle: "Titulo de Grupo de Instructores"
@@ -147,6 +152,7 @@ general:
   invalidDatetimes: "Fecha/Hora Inválida"
   invalidUsers: "Usuarios no Válidos"
   isSelective: "Es selectivo"
+  itemCode: "Item Code"
   isTrack: "Es la Pista"
   language:
     en-us: "English (en)"
@@ -195,6 +201,7 @@ general:
   myProfile: "Mi Perfil"
   myReports: "Mis Reportes"
   name: Nombre
+  narrativeAssessment: "Narrative Assessment"
   newCourse: "Curso Nuevo"
   newCurriculumInventoryReport: "Nuevo Informe de Inventario de Plan de Estudios"
   newDomain: "Nuevo Dominio"
@@ -216,6 +223,7 @@ general:
   noCourses: "No hay ningún curso en esta escuela"
   noCurriculumInventoryInstitutionalInfo: "No se ha configurado información institucional para esta escuela."
   noLearnerGroups: "No Grupos de Aprendedores"
+  nonClerkshipSequenceBlocks: "Non-Clerkship Sequence Blocks"
   nonStudent: "No estudiante"
   noOfferingLearnerGroups: "Ningunos Grupos"
   noPermissionsInOtherSchools: "No tiene los permisos necesarios de añadir a este usuario a cualquier otra escuela."
@@ -233,8 +241,15 @@ general:
   notApplicableAbbr: "n/d"
   noUnselectedCompetencies: "No hay competencias disponibles para selección"
   noUnselectedLearnerGroupsInCohort: "No hay grupos de aprendedores no seleccionados en este Clase de La Graduación"
+  numberOfEvents: "Number of Events"
+  numberOfEventsFeaturingThisAsThePrimaryMethod: "Number of Events Featuring This as the Primary Method"
+  numberOfExams: "Number of Exams"
+  numberOfFormalInstructionalHoursPerCourse: "Number of Formal Instructional Hours Per Course"
+  numberOfFormativeAssessments: "Number of Formative Assessments"
   numberOfGroups: "Número de grupos"
   numberOfGroupsToGenerate: "número de grupos para generar."
+  numberOfNonPrimaryOccurrencesOfThisMethod: "Number of Non-Primary Occurrences of This Method"
+  numberOfSummativeAssessments: "Number of Summative Assessments"
   objective: Objetivo
   objectiveMap: "Mapa de Objetivos"
   objectiveParentsTitle: "Seleccione Objetivos Matrices"
@@ -264,12 +279,16 @@ general:
   permissionsInOtherSchools: "Permisos en Otras Escuelas"
   perPage: "Por Página"
   phone: "Teléfono"
+  physicianCompetencyReferenceSet: "Physician Competency Reference Set"
+  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: "¿Quieres auto-llenar este grupo?"
   preferredEmail: 'Email preferido'
   prev: Anterior
   primary: Principal
   primaryCohort: "Clase de la Graduación Principal"
   primarySchool: "Escuela Primaria"
+  programExpectations: "Program Expectations"
+  programExpectationsId: "Program Expectations ID"
   programLeadership: "Liderazgo del Programa"
   programs: Programas
   programTitle: "Titulo de Programa"
@@ -303,6 +322,7 @@ general:
   reportNamePlaceholder: "Por favor Introduzca un Nombre de Informe"
   reportTitle: "Título de Informe"
   requiredInTrack: "Requerido en Pista"
+  resourceTypes: "Resource Types"
   root: Root
   sampleFile: "Archivo de Ejemplo"
   saved: "Nuevo Usuario Salvó con Éxito"
@@ -346,14 +366,25 @@ general:
   successfullyAddedTerm: "Término Agregado Correctamente"
   successfullyInvalidatedTokens: "Todas los tokens existentes fueron con éxito invalidadas"
   successfullyRemovedTerm: "Término Eliminado Correctamente"
+  table1ProgramExpectationsMappedToPcrs: "Table 1: Program Expectations Mapped to PCRS"
+  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Table 2: Primary Instructional Method by Non-Clerkship Sequence Block"
+  table3aNonClerkshipSequenceBlockInstructionalTime: "Table 3-A: Non-Clerkship Sequence Block Instructional Time"
+  table3bClerkshipSequenceBlockInstructionalTime: "Table 3-B: Clerkship Sequence Block Instructional Time"
+  table4InstructionalMethodCounts: "Table 4: Instructional Method Counts"
+  table5NonClerkshipSequenceBlockAssessmentMethods: "Table 5: Non-Clerkship Sequence Block Assessment Methods"
+  table6ClerkshipSequenceBlockAssessmentMethods: "Table 6: Clerkship Sequence Block Assessment Methods"
+  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
+  table8AllResourceTypes: "Table 8: All Resource Types"
   term: "Término"
   termCount: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   termsBySessionType: "Términos por Tipo de Sesión"
   thisReportIsNoLongerAvailable: "Este informe ya no está disponible."
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "La búsqueda ha devuelto más de {count} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales."
+  total: "Total"
   totalErrors: "{count, plural, =1 {Hay un error} other {Hay # errores}}"
   totalTime: "Horas Totales"
+  totalWeeks: "Total Weeks"
   transitionErrorMessage: "Lo sentimos! No le podemos conseguir donde pidió ir..."
   tryHarder: "Esforzarse Más"
   unableToReconnect: "¡No se puede volver a conectar!"
