@@ -99,7 +99,7 @@
     "ilios-common": "^29.0.0",
     "loader.js": "^4.7.0",
     "normalize.css": "^8.0.0",
-    "papaparse": "^5.0.2",
+    "papaparse": "^5.1.0",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^0.8.5",
     "stylelint": "^10.1.0",
