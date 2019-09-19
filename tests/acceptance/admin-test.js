@@ -97,7 +97,7 @@ module('Acceptance | Admin', function(hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('search/v1/users', ({ db }, { queryParams }) => {
+    this.server.get('api/search/v1/users', ({ db }, { queryParams }) => {
       assert.ok('q' in queryParams);
       assert.equal(queryParams.q, 'son');
       assert.ok('size' in queryParams);
