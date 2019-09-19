@@ -22,7 +22,7 @@ module('Acceptance | search', function(hooks) {
     assert.expect(8);
     const input = 'hello';
 
-    this.server.get('search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
       assert.equal(queryParams.q, input);
 
@@ -48,7 +48,7 @@ module('Acceptance | search', function(hooks) {
 
     const input = 'H&L+foo=bar';
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: [],
@@ -71,7 +71,7 @@ module('Acceptance | search', function(hooks) {
 
     const input = 'H&L+foo=bar';
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: [],
@@ -107,7 +107,7 @@ module('Acceptance | search', function(hooks) {
     }
     const firstInput = 'first';
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: [],
@@ -141,7 +141,7 @@ module('Acceptance | search', function(hooks) {
     const secondInput = 'second';
 
     let searchRun = 0;
-    this.server.get('search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       if (!queryParams.onlySuggest) {
         switch (searchRun) {
         case 0:
@@ -218,7 +218,7 @@ module('Acceptance | search', function(hooks) {
       });
     }
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: [],
@@ -245,7 +245,7 @@ module('Acceptance | search', function(hooks) {
   test('year filter in query param', async function(assert) {
     assert.expect(3);
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: [],

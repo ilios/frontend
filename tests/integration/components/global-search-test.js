@@ -18,7 +18,7 @@ module('Integration | Component | global-search', function(hooks) {
 
   test('handles empty and non-empty query', async function(assert) {
     assert.expect(4);
-    this.server.get('search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
       assert.equal(q, 'hello world');
       assert.notOk(onlySuggest);
       return {
@@ -38,7 +38,7 @@ module('Integration | Component | global-search', function(hooks) {
 
   test('bubbles action properly', async function(assert) {
     assert.expect(3);
-    this.server.get('search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
       assert.equal(q, 'typed it');
       assert.ok(onlySuggest);
       return {
@@ -58,7 +58,7 @@ module('Integration | Component | global-search', function(hooks) {
   test('academic year filter works properly', async function(assert) {
     assert.expect(16);
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
@@ -118,7 +118,7 @@ module('Integration | Component | global-search', function(hooks) {
     this.server.create('school', { title: 'Dentistry' });
     this.server.create('school', { title: 'Pharmacy' });
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
@@ -226,7 +226,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.expect(9);
     this.server.createList('school', 3);
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
@@ -257,7 +257,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.expect(3);
     this.server.create('school');
 
-    this.server.get('search/v1/curriculum', () => {
+    this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
