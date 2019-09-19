@@ -17,7 +17,7 @@ module('Unit | Service | search', function(hooks) {
       { id: 1, title: 'Sweet', sessions: [] },
     ];
     const autocomplete = ['one', 'two'];
-    this.server.get('search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
       assert.equal(queryParams.size, 1000);
       return {
@@ -34,7 +34,7 @@ module('Unit | Service | search', function(hooks) {
 
   test('test search for users', async function (assert) {
     assert.expect(9);
-    this.server.get('search/v1/users', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
       assert.equal(queryParams.size, 100);
       return {
@@ -62,7 +62,7 @@ module('Unit | Service | search', function(hooks) {
 
   test('test search for users with size parameters', async function (assert) {
     assert.expect(2);
-    this.server.get('search/v1/users', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
       assert.equal(queryParams.size, 9);
       return {
@@ -78,7 +78,7 @@ module('Unit | Service | search', function(hooks) {
 
   test('test search for users with onlySuggest parameters', async function (assert) {
     assert.expect(3);
-    this.server.get('search/v1/users', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
       assert.equal(queryParams.size, 19);
       assert.equal(queryParams.onlySuggest, 'true');
@@ -95,7 +95,7 @@ module('Unit | Service | search', function(hooks) {
 
   test('test search for curriculum with onlySuggest parameters', async function (assert) {
     assert.expect(3);
-    this.server.get('search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
       assert.equal(queryParams.size, 1000);
       assert.equal(queryParams.onlySuggest, 'true');

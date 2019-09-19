@@ -49,7 +49,7 @@ export default Service.extend({
 
   async search(type, q, size, onlySuggestEnabled) {
     const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
-    const url = `${this.host}/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
+    const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
 
     const response = await fetch(url, {
       headers: this.authHeaders
