@@ -414,6 +414,7 @@ general:
   usersSelected: "{count, plural, =1 {1 utilisateur sélectionné} other {# utilisateurs sélectionnés}}"
   validUntil: "Quand ce jeton devrais arrêter de travailler?"
   validUsers: "utilisateurs valides"
+  verificationPreviewFor: "Verification Preview for {name}"
   viewAll: "Voir Tous"
   weak: Faible
   whichIs: "qui est"

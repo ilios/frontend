@@ -414,6 +414,7 @@ general:
   usersSelected: "{count, plural, =1 {1 usuario seleccionado} other {# usuarios seleccionados}}"
   validUntil: "¿Cuándo debe este símbolo (token) deje de funcionar??"
   validUsers: "Usuarios Válidos"
+  verificationPreviewFor: "Verification Preview for {name}"
   viewAll: "Ver Todos"
   weak: "Débil"
   whichIs: "cuál es"

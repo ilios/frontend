@@ -416,6 +416,7 @@ general:
   usersSelected: "{count, plural, =1 {1 user selected} other {# users selected}}"
   validUntil: "When should this token stop working?"
   validUsers: "Valid Users"
+  verificationPreviewFor: "Verification Preview for {name}"
   viewAll: "View All"
   weak: Weak
   whichIs: "which is"
