@@ -308,6 +308,7 @@ general:
   schoolLeadership: "Direction des Écoles"
   schoolName: "Nom de l'école"
   schools: "Écoles"
+  search: Rechercher
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
   searchUsers: "Rechercher des utilisateurs"
   secondaryCohorts: "Cohortes Secondaires"

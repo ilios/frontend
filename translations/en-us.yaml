@@ -310,6 +310,7 @@ general:
   schoolName: "School Name"
   schoolLeadership: "School Leadership"
   schools: Schools
+  search: Search
   searchDirectory: "Search directory for new users"
   searchUsers: "Search for users"
   secondaryCohorts: "Secondary Cohorts"
