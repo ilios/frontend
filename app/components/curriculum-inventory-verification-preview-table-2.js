@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  classNames: ['curriculum-inventory-verification-preview-table-2'],
 
   methodTotals: computed('data.methods', async function ()  {
     const data = await this.get('data');
