@@ -267,6 +267,7 @@ general:
   populateGroup: "Voulez-vous remplir cette groupe?"
   preferredEmail: 'Email préféré'
   prev: "Précéd."
+  primary: Première
   primaryCohort: "Cohorte Première"
   primarySchool: "École Première"
   programLeadership: "Direction de Diplôme"

@@ -269,6 +269,7 @@ general:
   populateGroup: "Do you want to auto-populate this group?"
   preferredEmail: 'Preferred Email'
   prev: Prev
+  primary: Primary
   primaryCohort: "Primary Cohort"
   primarySchool: "Primary School"
   programLeadership: "Program Leadership"

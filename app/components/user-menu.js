@@ -7,6 +7,10 @@ export default Component.extend({
   currentUser: service(),
   tagName: 'nav',
   classNameBindings: [':user-menu', 'isOpen'],
+  attributeBindings: [
+    'ariaLabelledBy:aria-labelledby',
+  ],
+  ariaLabelledBy: 'user-menu-title',
   isOpen: false,
   'data-test-user-menu': true,
 

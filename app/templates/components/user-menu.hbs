@@ -1,12 +1,12 @@
 <button
-  aria-label={{get (await currentUser.model) "fullName"}}
+  aria-labelledby="user-menu-title"
   class="toggle"
   aria-haspopup="true"
   aria-expanded={{if isOpen "true" "false"}}
   data-test-toggle
   {{action "toggleMenu"}}
 >
-  {{fa-icon icon="user"}} <span>{{get (await currentUser.model) "fullName"}}</span>
+  {{fa-icon icon="user"}} <span id="user-menu-title">{{get (await currentUser.model) "fullName"}}</span>
 </button>
 {{#if isOpen}}
   {{#click-outside onClickOutside=(action (mut isOpen) false)}}
