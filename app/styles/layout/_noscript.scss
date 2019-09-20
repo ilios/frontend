@@ -2,9 +2,14 @@ noscript {
   p {
     background-color: $background-grey;
     border: 2px dashed $ilios-orange;
-    color: $ilios-orange;
+    color: $text-grey;
+    font-size: 2em;
     font-weight: bold;
     margin: 2rem;
     padding: 2rem;
+  }
+
+  a {
+    text-decoration: underline;
   }
 }
