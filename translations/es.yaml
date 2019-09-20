@@ -267,6 +267,7 @@ general:
   populateGroup: "¿Quieres auto-rellenar este grupo?"
   preferredEmail: 'Email preferido'
   prev: Anterior
+  primary: Principal
   primaryCohort: "Clase de la Graduación Principal"
   primarySchool: "Escuela Primaria"
   programLeadership: "Liderazgo del Programa"
