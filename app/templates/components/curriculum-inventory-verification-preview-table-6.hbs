@@ -2,7 +2,7 @@
   <caption>{{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}</caption>
   <thead>
     <tr>
-      <th rowspan="2">{{t "general.clerkshipSequenceBlocks"}}</th>
+      <th colspan="2" rowspan="2">{{t "general.clerkshipSequenceBlocks"}}</th>
       <th rowspan="2">{{t "general.academicLevel"}}</th>
       <th colspan={{get (await data.methods) "length"}}>{{t "general.includedInGrade"}}</th>
       <th rowspan="2">{{t "general.formativeAssessment"}}</th>
@@ -17,7 +17,7 @@
   <tbody>
     {{#each (await clerkships) as |clerkship|}}
       <tr>
-        <td>{{clerkship.title}}</td>
+        <td colspan="2">{{clerkship.title}}</td>
         <td>{{clerkship.level}}</td>
         {{#each clerkship.methods as |method|}}
           <td>{{method}}</td>

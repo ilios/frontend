@@ -2,5 +2,17 @@
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
+
+    th, td {
+      vertical-align: top;
+    }
+
+    tfoot td {
+      font-weight: bold;
+    }
+
+    td:nth-last-child(1) {
+      font-weight: bold;
+    }
   }
 }

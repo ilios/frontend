@@ -3,16 +3,16 @@
   <thead>
     <tr>
       <th>{{t "general.programExpectationsId"}}</th>
-      <th>{{t "general.programExpectations"}}</th>
-      <th>{{t "general.physicianCompetencyReferenceSet"}} ({{t "general.physicianCompetencyReferenceSetAbbr"}})</th>
+      <th colspan="3">{{t "general.programExpectations"}}</th>
+      <th colspan="2">{{t "general.physicianCompetencyReferenceSet"}} ({{t "general.physicianCompetencyReferenceSetAbbr"}})</th>
     </tr>
   </thead>
   <tbody>
     {{#each (await data) as |row|}}
       <tr>
         <td>{{t "general.notApplicableAbbr"}}</td>
-        <td>{{{row.title}}}</td>
-        <td>
+        <td colspan="3">{{{row.title}}}</td>
+        <td colspan="2">
           <ul>
             {{#each row.pcrs as |pcrs|}}
               <li>{{pcrs}}</li>

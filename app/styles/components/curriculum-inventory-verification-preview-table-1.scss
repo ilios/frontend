@@ -2,5 +2,15 @@
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
+
+    td {
+      &:nth-child(3) ul {
+        margin: 0;
+      }
+    }
+
+    th, td {
+      vertical-align: top;
+    }
   }
 }

@@ -2,7 +2,7 @@
   <caption>{{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}</caption>
   <thead>
     <tr>
-      <th rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
+      <th colspan="2" rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
       <th rowspan="2">{{t "general.academicLevel"}}</th>
       <th colspan={{add 1 (get (await data.methods) "length")}}>
         {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
@@ -18,7 +18,7 @@
   <tbody>
     {{#each (await nonClerkships) as |clerkship|}}
       <tr>
-        <td>{{clerkship.title}}</td>
+        <td colspan="2">{{clerkship.title}}</td>
         <td>{{clerkship.level}}</td>
         {{#each (await clerkship.methods) as |method|}}
           <td>{{method}}</td>

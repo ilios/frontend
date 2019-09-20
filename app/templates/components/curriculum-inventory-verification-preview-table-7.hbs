@@ -3,7 +3,7 @@
   <thead>
     <tr>
       <th>{{t "general.itemCode"}}</th>
-      <th>{{t "general.assessmentMethods"}}</th>
+      <th colspan="2">{{t "general.assessmentMethods"}}</th>
       <th>{{t "general.numberOfSummativeAssessments"}}</th>
       <th>{{t "general.numberOfFormativeAssessments"}}</th>
     </tr>
@@ -12,7 +12,7 @@
     {{#each (await data) as |row|}}
       <tr>
         <td>{{row.id}}</td>
-        <td>{{row.title}}</td>
+        <td colspan="2">{{row.title}}</td>
         <td>{{row.num_summative_assessments}}</td>
         <td>{{row.num_formative_assessments}}</td>
       </tr>
@@ -21,7 +21,7 @@
   <tfoot>
     <tr>
       <td></td>
-      <td>{{t "general.total"}}</td>
+      <td colspan="2">{{t "general.total"}}</td>
       <td>{{await totalNumSummativeAssessments}}</td>
       <td>{{await totalNumFormativeAssessments}}</td>
     </tr>
