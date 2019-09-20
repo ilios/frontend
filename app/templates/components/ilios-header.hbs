@@ -4,7 +4,9 @@
   </h1>
   <span class="image"></span>
 {{/link-to}}
-<h1>{{title}}</h1>
+{{#if @title}}
+  <h1 data-test-title>{{@title}}</h1>
+{{/if}}
 <div class="tools">
   {{#if (await showSearch)}}
     <GlobalSearchBox @search={{action "search"}} />
