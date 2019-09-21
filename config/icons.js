@@ -58,6 +58,7 @@ module.exports = function() {
       'sun',
       'superscript',
       'sync',
+      'table',
       'university',
       'unlock',
       'user-md',
