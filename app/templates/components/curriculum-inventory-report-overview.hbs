@@ -3,14 +3,11 @@
   <div class="report-overview-header">
     <div class="title">{{t "general.overview"}}</div>
     <div class="report-overview-actions">
-      <span
-        class="link"
-        role="button"
-        {{action "transitionToVerificationPreview"}}>
+      {{#link-to "verificationPreview" report}}
         {{fa-icon icon="table"
           fixedWidth=true
-          title=(t "general.curriculumInventoryVerificationPreviewFor" name=report.title)}}
-      </span>
+          title=(t "general.verificationPreviewFor" name=report.name)}}
+      {{/link-to}}
       {{#if (and (is-fulfilled showRollover) (await showRollover))}}
         <span
           class="link rollover"
