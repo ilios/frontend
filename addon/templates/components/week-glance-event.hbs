@@ -1,11 +1,15 @@
 <div class="event" data-test-week-glance-event>
   <h4 id={{concat "event" @event.slug}}>
-    <span class="title" data-test-event-title>
-      {{#link-to "events" @event.slug}}
+    <span id={{concat "event" @event.slug "title"}} class="title" data-test-event-title>
+      <LinkTo
+        @route="events"
+        @model={{@event.slug}}
+        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}}"
+      >
         {{@event.name}}
-      {{/link-to}}
+      </LinkTo>
     </span>
-    <span class="date" data-test-date>
+    <span id={{concat "event" @event.slug "date"}} class="date" data-test-date>
       {{#if @event.ilmSession}}
         <span class="ilm-due">{{t "general.dueBy"}}</span>
       {{/if}}
@@ -79,8 +83,8 @@
     </p>
   {{/if}}
   <ul class="learning-materials" data-test-learning-materials>
-    {{#each (filter-by "sessionLearningMaterial" @event.learningMaterials) as |lm|}}
-      <li class="learning-material"  data-test-learning-material>
+    {{#each (filter-by "sessionLearningMaterial" @event.learningMaterials) as |lm index|}}
+      <li class="learning-material" data-test-learning-material>
         {{#if lm.isBlanked}}
           <span class="lm-type-icon" data-test-type-icon>{{fa-icon icon="clock" title=(t "general.timedRelease")}}</span>
           <span data-test-material-title>{{lm.title}}</span>
@@ -88,15 +92,26 @@
           {{lm-type-icon type=(lm-type lm) mimetype=lm.mimetype}}
           {{#if lm.absoluteFileUri}}
             {{#if (eq lm.mimetype "application/pdf")}}
-              <a href="{{lm.absoluteFileUri}}?inline" data-test-material-title>
+              <a
+                id={{concat "event" @event.slug "lm" index}}
+                href="{{lm.absoluteFileUri}}?inline"
+                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
+                data-test-material-title>
                 {{lm.title}}
               </a>
-              <a href={{lm.absoluteFileUri}} target="_blank" rel="noopener">
+              <a
+                id={{concat "event" @event.slug "lmdownload" index}}
+                href={{lm.absoluteFileUri}}
+                aria-labelledby="{{concat "event" @event.slug "lmdownload" index}} {{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
+                target="_blank" rel="noopener"
+              >
                 {{fa-icon icon="download" title=(t "general.download")}}
               </a>
             {{else}}
               <a
+                id={{concat "event" @event.slug "lm" index}}
                 href={{lm.absoluteFileUri}}
+                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
                 target="_blank"
                 rel="noopener"
                 data-test-material-title
@@ -105,7 +120,16 @@
               </a>
             {{/if}}
           {{else if lm.link}}
-            <a href={{lm.link}} target="_blank" rel="noopener" data-test-material-title>{{lm.title}}</a>
+            <a
+              id={{concat "event" @event.slug "lm" index}}
+              href={{lm.link}}
+              aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
+              target="_blank"
+              rel="noopener"
+              data-test-material-title
+            >
+              {{lm.title}}
+            </a>
           {{else}}
             <span data-test-material-title>{{lm.title}}</span>
             <ul data-test-citation>
