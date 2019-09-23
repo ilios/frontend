@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | curriculum-inventory-verification-preview-table-5', function(hooks) {
+module('Integration | Component | curriculum-inventory-verification-preview-table5', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {

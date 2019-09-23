@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | curriculum-inventory-verification-preview-table-3b', function(hooks) {
+module('Integration | Component | curriculum-inventory-verification-preview-table7', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable3b />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable7 />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <CurriculumInventoryVerificationPreviewTable3b>
+      <CurriculumInventoryVerificationPreviewTable7>
         template block text
-      </CurriculumInventoryVerificationPreviewTable3b>
+      </CurriculumInventoryVerificationPreviewTable7>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');
