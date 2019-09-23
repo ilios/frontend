@@ -1,6 +1,6 @@
 {{title (t "general.curriculumInventoryReports")}}
 <div class="backtolink">
-  {{#link-to "curriculumInventoryReport" model}}{{t "general.backToReport"}}{{/link-to}}
+  <LinkTo @route="curriculumInventoryReport" @model={{model}}>{{t "general.backToReport"}}</LinkTo>
 </div>
-{{curriculum-inventory-verification-preview-header report=model}}
-{{curriculum-inventory-verification-preview report=model}}
+<CurriculumInventoryVerificationPreviewHeader @report={{this.model}} />
+<CurriculumInventoryVerificationPreview @report={{this.model}} />
