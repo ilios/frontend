@@ -37,6 +37,7 @@ general:
   backToReport: "Atrás a Reporte"
   backToReports: "Atrás a Reportes"
   backToSchools: "Atrás a la Lista de Escuelas"
+  backToTableOfContents: "Back to Table of Contents"
   bad: Malo
   badCredentials: "Incorrecta contraseña o nombre de usuario"
   calendarOff: "Calendario Apagado"

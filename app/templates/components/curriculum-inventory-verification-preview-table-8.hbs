@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (await data) as |row|}}
+    {{#each (await @data) as |row|}}
       <tr>
         <td>{{row.id}}</td>
         <td colspan="2">{{row.title}}</td>
@@ -17,3 +17,6 @@
     {{/each}}
   </tbody>
 </table>
+{{#if @tocId}}
+  <a href="#{{@tocId}}">{{t "general.backToTableOfContents"}}</a>
+{{/if}}

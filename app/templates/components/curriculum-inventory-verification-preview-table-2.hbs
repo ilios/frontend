@@ -4,19 +4,19 @@
     <tr>
       <th colspan="2" rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
       <th rowspan="2">{{t "general.academicLevel"}}</th>
-      <th colspan={{add 1 (get (await data.methods) "length")}}>
+      <th colspan={{add 1 (get (await @data.methods) "length")}}>
         {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
       </th>
     </tr>
     <tr>
-      {{#each (await data.methods) as |method|}}
+      {{#each (await @data.methods) as |method|}}
         <th>{{method.title}}</th>
       {{/each}}
       <th>{{t "general.total"}}</th>
     </tr>
   </thead>
   <tbody>
-    {{#each (await nonClerkships) as |clerkship|}}
+    {{#each (await this.nonClerkships) as |clerkship|}}
       <tr>
         <td colspan="2">{{clerkship.title}}</td>
         <td>{{clerkship.level}}</td>
@@ -31,10 +31,13 @@
     <tr>
       <td colspan="2">{{t "general.total"}}</td>
       <td></td>
-      {{#each (await methodTotals) as |total|}}
+      {{#each (await this.methodTotals) as |total|}}
         <td>{{total}}</td>
       {{/each}}
-      <td>{{await sumTotal}}</td>
+      <td>{{await this.sumTotal}}</td>
     </tr>
   </tfoot>
 </table>
+{{#if @tocId}}
+  <a href="#{{@tocId}}">{{t "general.backToTableOfContents"}}</a>
+{{/if}}

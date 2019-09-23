@@ -4,19 +4,19 @@
     <tr>
       <th colspan="2" rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
       <th rowspan="2">{{t "general.academicLevel"}}</th>
-      <th colspan={{add 1 (get (await data.methods) "length")}}>{{t "general.includedInGrade"}}</th>
+      <th colspan={{add 1 (get (await @data.methods) "length")}}>{{t "general.includedInGrade"}}</th>
       <th rowspan="2">{{t "general.formativeAssessment"}}</th>
       <th rowspan="2">{{t "general.narrativeAssessment"}}</th>
     </tr>
     <tr>
       <th>{{t "general.numberOfExams"}}</th>
-      {{#each (await data.methods) as |method|}}
+      {{#each (await @data.methods) as |method|}}
         <th>{{method}}</th>
       {{/each}}
     </tr>
   </thead>
   <tbody>
-    {{#each (await nonClerkships) as |nonClerkship|}}
+    {{#each (await this.nonClerkships) as |nonClerkship|}}
       <tr>
         <td colspan="2">{{nonClerkship.title}}</td>
         <td>{{nonClerkship.level}}</td>
@@ -30,3 +30,6 @@
     {{/each}}
   </tbody>
 </table>
+{{#if @tocId}}
+  <a href="#{{@tocId}}">{{t "general.backToTableOfContents"}}</a>
+{{/if}}

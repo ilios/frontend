@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (await data) as |row|}}
+    {{#each (await @data) as |row|}}
       <tr>
         <td>{{row.id}}</td>
         <td colspan="2">{{row.title}}</td>
@@ -22,8 +22,11 @@
     <tr>
       <td></td>
       <td colspan="2">{{t "general.total"}}</td>
-      <td>{{await totalNumEventsPrimaryMethod}}</td>
-      <td>{{await totalNumEventsNonPrimaryMethod}}</td>
+      <td>{{await this.totalNumEventsPrimaryMethod}}</td>
+      <td>{{await this.totalNumEventsNonPrimaryMethod}}</td>
     </tr>
   </tfoot>
 </table>
+{{#if @tocId}}
+  <a href="#{{@tocId}}">{{t "general.backToTableOfContents"}}</a>
+{{/if}}

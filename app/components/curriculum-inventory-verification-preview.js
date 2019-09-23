@@ -6,7 +6,9 @@ import { reads } from '@ember/object/computed';
 export default Component.extend({
   commonAjax: service(),
   iliosConfig: service(),
+  classNames: ['curriculum-inventory-verification-preview'],
   report: null,
+  tocId: 'verification-preview-toc',
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
 
