@@ -21,6 +21,7 @@ general:
   apiVersionMismatch: "API Version Mismatch"
   apiVersionMismatchDetails: "This frontend does not match the version of the API that it is communicating with. Please notify an administrator or technical owner of the system regarding this error <em>immediately</em>, You cannot work with Ilios until this is resolved"
   assessment: Assessment
+  assessments: Assessments
   assessmentMethods: "Assessment Methods"
   assessmentOption: "Assessment Option"
   associatedCourses: "Associated Courses"
@@ -129,7 +130,7 @@ general:
   findDirector: "Find Director"
   firstName: "First Name"
   for: For
-  formativeAssessment: "Formative Assessment"
+  formative: "Formative"
   formerStudent: "Former Student"
   fullName: "Full Name"
   globalSearchPlaceholder: "Find Users..."
@@ -204,7 +205,7 @@ general:
   myProfile: "My Profile"
   myReports: "My Reports"
   name: Name
-  narrativeAssessment: "Narrative Assessment"
+  narrative: "Narrative"
   newCourse: "New Course"
   newCurriculumInventoryReport: "New Curriculum Inventory Report"
   newDomain: "New Domain"

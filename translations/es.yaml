@@ -19,6 +19,7 @@ general:
   allVocabularies: "Todos los Vocabularios"
   anything: "Caulquier Cosa"
   assessment: "Evaluación"
+  assessments: "Evaluacións"
   assessmentMethods: "Métodos de Evaluación"
   assessmentOption: "Opción de Evaluación"
   associatedCourses: "Cursos Asociados"
@@ -127,7 +128,7 @@ general:
   findDirector: "Buscar Director"
   firstName: Nombre
   for: Para
-  formativeAssessment: "Evaluación formativa"
+  formative: "formativa"
   formerStudent: "Antiguo Estudiante"
   fullName: "Nombre completo"
   globalSearchPlaceholder: "Encontrar Usuarios..."
@@ -202,7 +203,7 @@ general:
   myProfile: "Mi Perfil"
   myReports: "Mis Reportes"
   name: Nombre
-  narrativeAssessment: "Evaluación narrativa"
+  narrative: "narrativa"
   newCourse: "Curso Nuevo"
   newCurriculumInventoryReport: "Nuevo Informe de Inventario de Plan de Estudios"
   newDomain: "Nuevo Dominio"

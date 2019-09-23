@@ -5,13 +5,14 @@
       <th colspan="2" rowspan="2">{{t "general.clerkshipSequenceBlocks"}}</th>
       <th rowspan="2">{{t "general.academicLevel"}}</th>
       <th colspan={{get (await @data.methods) "length"}}>{{t "general.includedInGrade"}}</th>
-      <th rowspan="2">{{t "general.formativeAssessment"}}</th>
-      <th rowspan="2">{{t "general.narrativeAssessment"}}</th>
+      <th colspan="2">{{t "general.assessments"}}</th>
     </tr>
     <tr>
       {{#each (await @data.methods) as |method|}}
         <th>{{method}}</th>
       {{/each}}
+      <th>{{t "general.formative"}}</th>
+      <th>{{t "general.narrative"}}</th>
     </tr>
   </thead>
   <tbody>
