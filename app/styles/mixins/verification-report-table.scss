@@ -1,0 +1,13 @@
+@mixin verification-report-table() {
+  td, th {
+    border: 1px solid darken($base-border-color, 15);
+  }
+
+  th {
+    vertical-align: top;
+  }
+
+  tfoot td {
+    font-weight: bold;
+  }
+}

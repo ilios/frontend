@@ -2,9 +2,6 @@
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
-
-    th {
-      vertical-align: top;
-    }
+    @include verification-report-table;
   }
 }
