@@ -5,7 +5,7 @@ export default Component.extend({
   classNames: ['curriculum-inventory-verification-preview-table-6'],
 
   clerkships: computed('data.rows', 'data.methods', async function ()  {
-    const data = await this.get('data');
+    const data = await this.data;
     const methods = data.methods;
     return data.rows.map(row => {
       return {
