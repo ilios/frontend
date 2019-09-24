@@ -2,7 +2,7 @@
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
-    @include verification-report-table;
+    @include verification-preview-table;
 
 
     td {
