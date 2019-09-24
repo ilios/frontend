@@ -4,10 +4,9 @@ import { computed } from '@ember/object';
 export default Component.extend({
   classNames: ['curriculum-inventory-verification-preview-table-5'],
 
-  nonClerkships: computed('data.rows', 'data.methods', async function ()  {
-    const data = await this.data;
-    const methods = data.methods;
-    return data.rows.map(row => {
+  nonClerkships: computed('data.rows', 'data.methods', function ()  {
+    const methods = this.data.methods;
+    return this.data.rows.map(row => {
       return {
         hasFormativeAssessments: row.has_formative_assessments ? 'Y' : '',
         hasNarrativeAssessments: row.has_narrative_assessments ? 'Y' : '',

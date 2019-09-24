@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (await @data) as |row|}}
+    {{#each @data as |row|}}
       <tr>
         <td>{{row.id}}</td>
         <td colspan="2">{{row.title}}</td>
@@ -22,8 +22,8 @@
     <tr>
       <td></td>
       <td colspan="2">{{t "general.total"}}</td>
-      <td>{{await this.totalNumSummativeAssessments}}</td>
-      <td>{{await this.totalNumFormativeAssessments}}</td>
+      <td>{{this.totalNumSummativeAssessments}}</td>
+      <td>{{this.totalNumFormativeAssessments}}</td>
     </tr>
   </tfoot>
 </table>

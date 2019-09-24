@@ -1,5 +1,4 @@
-{{#if (is-fulfilled this.tables)}}
-
+{{#if this.tables}}
   <ul id={{this.tocId}} class="table-of-contents">
     <li><a href="#verification-preview-table-1">{{t "general.table1ProgramExpectationsMappedToPcrs"}}</a></li>
     <li>
@@ -27,39 +26,39 @@
   </ul>
 
   <CurriculumInventoryVerificationPreviewTable1
-    @data={{get (await this.tables) "program_expectations_mapped_to_pcrs"}}
+    @data={{this.tables.program_expectations_mapped_to_pcrs}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable2
-    @data={{get (await this.tables) "primary_instructional_methods_by_non_clerkship_sequence_blocks"}}
+    @data={{this.tables.primary_instructional_methods_by_non_clerkship_sequence_blocks}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable3a
-    @data={{get (await this.tables) "non_clerkship_sequence_block_instructional_time"}}
+    @data={{this.tables.non_clerkship_sequence_block_instructional_time}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable3b
-    @data={{get (await this.tables) "clerkship_sequence_block_instructional_time"}}
+    @data={{this.tables.clerkship_sequence_block_instructional_time}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable4
-    @data={{get (await this.tables) "instructional_method_counts"}}
+    @data={{this.tables.instructional_method_counts}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable5
-    @data={{get (await this.tables) "non_clerkship_sequence_block_assessment_methods"}}
+    @data={{this.tables.non_clerkship_sequence_block_assessment_methods}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable6
-    @data={{get (await this.tables) "clerkship_sequence_block_assessment_methods"}}
+    @data={{this.tables.clerkship_sequence_block_assessment_methods}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable7
-    @data={{get (await this.tables) "all_events_with_assessments_tagged_as_formative_or_summative"}}
+    @data={{this.tables.all_events_with_assessments_tagged_as_formative_or_summative}}
     @tocId={{this.tocId}}
   />
   <CurriculumInventoryVerificationPreviewTable8
-    @data={{get (await this.tables) "all_resource_types"}}
+    @data={{this.tables.all_resource_types}}
     @tocId={{this.tocId}}
   />
 {{else}}

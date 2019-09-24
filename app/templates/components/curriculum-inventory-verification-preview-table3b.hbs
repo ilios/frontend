@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (await @data) as |row|}}
+    {{#each @data as |row|}}
       <tr>
         <td colspan="2">{{row.title}}</td>
         <td>{{row.level}}</td>

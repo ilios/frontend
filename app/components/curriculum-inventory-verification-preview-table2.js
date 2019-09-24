@@ -4,17 +4,15 @@ import { computed } from '@ember/object';
 export default Component.extend({
   classNames: ['curriculum-inventory-verification-preview-table-2'],
 
-  methodTotals: computed('data.methods', async function ()  {
-    const data = await this.data;
-    return data.methods.map(method => {
+  methodTotals: computed('data.methods', function ()  {
+    return this.data.methods.map(method => {
       return (method.total / 60).toFixed(2);
     });
   }),
 
-  nonClerkships: computed('data.rows', 'data.methods', async function ()  {
-    const data = await this.data;
-    const methods = data.methods;
-    return data.rows.map(row => {
+  nonClerkships: computed('data.rows', 'data.methods', function ()  {
+    const methods = this.data.methods;
+    return this.data.rows.map(row => {
       return {
         title: row.title,
         level: row.level,
@@ -30,9 +28,8 @@ export default Component.extend({
     });
   }),
 
-  sumTotal: computed('data.methods', async function () {
-    const data = await this.data;
-    const sumTotal = data.methods.reduce((value, method) => {
+  sumTotal: computed('data.methods', function () {
+    const sumTotal = this.data.methods.reduce((value, method) => {
       return value + method.total;
     }, 0);
     return (sumTotal / 60).toFixed(2);
