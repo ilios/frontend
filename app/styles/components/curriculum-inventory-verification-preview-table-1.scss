@@ -4,7 +4,10 @@
     @include ilios-table-colors;
     @include verification-report-table;
 
+
     td {
+      vertical-align: top;
+
       &:nth-child(3) ul {
         margin: 0;
       }
