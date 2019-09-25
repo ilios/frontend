@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   commonAjax: service(),
   iliosConfig: service(),
+  'data-test-curriculum-inventory-verification-preview': true,
   classNames: ['curriculum-inventory-verification-preview'],
   report: null,
   tables: null,

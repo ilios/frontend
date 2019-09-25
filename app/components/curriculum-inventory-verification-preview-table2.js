@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  'data-test-curriculum-inventory-verification-preview-table2': true,
   classNames: ['curriculum-inventory-verification-preview-table-2'],
 
   methodTotals: computed('data.methods', function ()  {
