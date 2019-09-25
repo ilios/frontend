@@ -12,5 +12,6 @@
   &:focus {
     color: darken($base-link-color, 15);
     outline: none;
+    text-decoration: underline;
   }
 }
