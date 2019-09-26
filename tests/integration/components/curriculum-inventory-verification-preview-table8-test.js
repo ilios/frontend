@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table8';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table8';
 
 module('Integration | Component | curriculum-inventory-verification-preview-table8', function(hooks) {
   setupRenderingTest(hooks);
@@ -13,10 +13,8 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {id: '001', title: 'foo', count: 10},
       {id: '003', title: 'bar', count: 5},
     ];
-    const tocId = '23';
     this.set('data', data);
-    this.set('tocId', tocId);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable8 @data={{data}} @tocId={{tocId}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable8 @data={{data}} />`);
     assert.equal(component.title, 'Table 8: All Resource Types');
     assert.equal(component.table.headings.length, 3);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

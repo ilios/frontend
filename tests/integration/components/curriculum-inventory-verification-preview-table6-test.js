@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table6';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table6';
 
 module('Integration | Component | curriculum-inventory-verification-preview-table6', function(hooks) {
   setupRenderingTest(hooks);
@@ -40,10 +40,8 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       ]
     };
 
-    const tocId = '23';
     this.set('data', data);
-    this.set('tocId', tocId);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable6 @data={{data}} @tocId={{tocId}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable6 @data={{data}} />`);
     assert.equal(component.title, 'Table 6: Clerkship Sequence Block Assessment Methods');
     assert.equal(component.table.firstHeadings.length, 4);
     assert.equal(component.table.firstHeadings.objectAt(0).text, 'Clerkship Sequence Blocks');

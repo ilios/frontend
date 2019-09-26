@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table4';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table4';
 
 module('Integration | Component | curriculum-inventory-verification-preview-table4', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,10 +16,8 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {id: '002', title: 'bar', num_events_primary_method: 15, num_events_non_primary_method: 110}
     ];
 
-    const tocId = '23';
     this.set('data', data);
-    this.set('tocId', tocId);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable4 @data={{data}} @tocId={{tocId}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable4 @data={{data}} />`);
     assert.equal(component.title, 'Table 4: Instructional Method Counts');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

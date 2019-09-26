@@ -14,7 +14,7 @@ import table6 from 'ilios/tests/pages/components/curriculum-inventory-verificati
 import table7 from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table7';
 import table8 from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table8';
 
-export default create({
+const definition = {
   scope: '[data-test-curriculum-inventory-verification-preview]',
   tableOfContents: {
     scope: '[data-test-table-of-contents]',
@@ -32,4 +32,7 @@ export default create({
   table6,
   table7,
   table8,
-});
+};
+
+export default definition;
+export const component = create(definition);

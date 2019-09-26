@@ -4,7 +4,7 @@ import {
   text,
 } from 'ember-cli-page-object';
 
-export default create({
+const definition = {
   scope: '[data-test-curriculum-inventory-verification-preview-table3b]',
   title: text('[data-test-title]'),
   table: {
@@ -17,4 +17,7 @@ export default create({
       avg: text('td', {at: 3}),
     }),
   },
-});
+};
+
+export default definition;
+export const component = create(definition);

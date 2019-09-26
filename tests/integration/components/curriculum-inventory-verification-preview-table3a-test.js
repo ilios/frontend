@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table3a';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table3a';
 
 module('Integration | Component | curriculum-inventory-verification-preview-table3a', function(hooks) {
   setupRenderingTest(hooks);
@@ -15,10 +15,8 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {title: 'bar', level: 4, weeks: 1.5, avg: 20.33},
     ];
 
-    const tocId = '23';
     this.set('data', data);
-    this.set('tocId', tocId);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable3a @data={{data}} @tocId={{tocId}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable3a @data={{data}} />`);
     assert.equal(component.title, 'Table 3-A: Non-Clerkship Sequence Block Instructional Time');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Non-Clerkship Sequence Blocks');

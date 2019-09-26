@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table7';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table7';
 
 module('Integration | Component | curriculum-inventory-verification-preview-table7', function(hooks) {
   setupRenderingTest(hooks);
@@ -14,10 +14,8 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {id: 'AM001', title: 'foo', num_summative_assessments: 10, num_formative_assessments: 20},
       {id: 'AM003', title: 'bar', num_summative_assessments: 5, num_formative_assessments: 0},
     ];
-    const tocId = '23';
     this.set('data', data);
-    this.set('tocId', tocId);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable7 @data={{data}} @tocId={{tocId}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable7 @data={{data}} />`);
     assert.equal(component.title, 'Table 7: All Events with Assessments Tagged as Formative or Summative');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

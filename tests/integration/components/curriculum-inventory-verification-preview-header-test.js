@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import component from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-header';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-header';
 
 module('Integration | Component | curriculum-inventory-verification-preview-header', function(hooks) {
   setupRenderingTest(hooks);
