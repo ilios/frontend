@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   'data-test-curriculum-inventory-verification-preview-table2': true,
-  classNames: ['curriculum-inventory-verification-preview-table-2'],
+  classNames: ['curriculum-inventory-verification-preview-table2'],
 
   methodTotals: computed('data.methods', function ()  {
     return this.data.methods.map(method => {
