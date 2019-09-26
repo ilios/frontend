@@ -19,6 +19,7 @@ general:
   allVocabularies: "Touts vocabulaires"
   anything: "Quelque chose"
   assessment: "Évaluation"
+  assessments: "Évaluations"
   assessmentMethods: "Méthodes d'Évaluation"
   assessmentOption: "Option d'Évaluation"
   associatedCourses: "Cours Associés"
@@ -26,6 +27,7 @@ general:
   attribute: Attribut
   available: Disponible
   availableCohorts: "Cohortes Disponsibles"
+  averageHoursOfInstructionPerWeek: "Nombre moyen d'heures d'enseignement par semaine"
   backToAdminDashboard: "Rétour au Page Admin"
   backToCalendar: "Retour au Calendrier"
   backToDetails: "Retour à détails de la Séance"
@@ -36,6 +38,7 @@ general:
   backToReport: "Retour à rapport"
   backToReports: "Retour à rapports"
   backToSchools: "Retour à liste d'écoles"
+  backToTableOfContents: "Retour à la table des matières"
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   calendarOff: "Calendrier Éteindé"
@@ -47,6 +50,7 @@ general:
   clearDates: "Supprimer dates"
   clearErrors: "Supprîme les Erreurs et Retour à Ilios"
   clerkship: Stage
+  clerkshipSequenceBlocks: "Blocs de séquence de stage"
   clickToAddDescription: "Cliquez pour ajouter une description"
   clickToAddTermDescription: "Cliquez pour ajouter des notices descriptives"
   cohortMembersNotInGroup: "Membres de la Cohorte sans affectation à {groupTitle} "
@@ -124,6 +128,7 @@ general:
   findDirector: "Découvrir Directeur"
   firstName: "Prénom"
   for: Pour
+  formative: "formative"
   formerStudent: "Ancien Étudiant"
   fullName: "Nom complet"
   globalSearchPlaceholder: "Trouver des utilisateurs..."
@@ -137,6 +142,8 @@ general:
   ignore: Ignorer
   ilios: Ilios
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
+  includedInGrade: "Inclus dans le grade"
+  instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"
   instructorGroup: "Groupe des Instructeurs"
   instructorGroupTitle: "Titre de Groupe des Instructeurs"
@@ -147,6 +154,7 @@ general:
   invalidDatetimes: "Dates/Heures invalides"
   invalidUsers: "Utilisateurs non valides"
   isSelective: "Est sélectif"
+  itemCode: "Code d'article"
   isTrack: "Est une piste"
   language:
     en-us: "English (en)"
@@ -195,6 +203,7 @@ general:
   myProfile: "Mon profil"
   myReports: "Mes Rapports"
   name: Nom
+  narrative: "narrative"
   newCourse: "Cours neuf"
   newCurriculumInventoryReport: "Nouveau Rapport d'inventaire des Programmes d'études"
   newDomain: "Domaine nouvelle"
@@ -216,6 +225,7 @@ general:
   noCourses: "Il n'y a aucun des cours dans cette école."
   noCurriculumInventoryInstitutionalInfo: "Aucune information institutionnelle n'a été configurée pour cette école."
   noLearnerGroups: "Pas de groupes des Étudiants"
+  nonClerkshipSequenceBlocks: "Blocs de séquence non stage"
   nonStudent: "Non étudiant"
   noOfferingLearnerGroups: "Aucun des groupes"
   noPermissionsInOtherSchools: "Vous n'avez pas les permissions nécessaires pour ajouter cet utilisateur à toute autres écoles"
@@ -233,8 +243,15 @@ general:
   notApplicableAbbr: "n.d."
   noUnselectedCompetencies: "Il n'y a pas des compétences non sélectionné "
   noUnselectedLearnerGroupsInCohort: "Il n'y a aucune groupes d'apprenants disponsibles dans cette cohorte"
+  numberOfEvents: "Nombre d'événements"
+  numberOfEventsFeaturingThisAsThePrimaryMethod: "Nombre d'événements avec ceci comme méthode principale"
+  numberOfExams: "Nombre d'examens"
+  numberOfFormalInstructionalHoursPerCourse: "Nombre d'heures d'enseignement formel par cours"
+  numberOfFormativeAssessments: "Nombre d'évaluations formatives"
   numberOfGroups: "Nombre de groupes"
   numberOfGroupsToGenerate: "Nombre de groupes pour générer."
+  numberOfNonPrimaryOccurrencesOfThisMethod: "Nombre d'occurrences non primaires de cette méthode"
+  numberOfSummativeAssessments: "Nombre d'évaluations sommatives"
   objective: Objectif
   objectiveMap: "Tableau Objectifs"
   objectiveParentsTitle: "Affichez objectifs mères"
@@ -264,12 +281,16 @@ general:
   permissionsInOtherSchools: "Permissions en Autres Écoles"
   perPage: "Par Page"
   phone: "Téléphone"
+  physicianCompetencyReferenceSet: "Ensemble de références de compétences de médecin"
+  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: "Voulez-vous remplir cette groupe?"
   preferredEmail: 'Email préféré'
   prev: "Précéd."
   primary: Première
   primaryCohort: "Cohorte Première"
   primarySchool: "École Première"
+  programExpectations: "Attentes du programme"
+  programExpectationsId: "Identifiant des attentes du programme"
   programLeadership: "Direction de Diplôme"
   programs: "Diplômes"
   programTitle: "Titre de Diplôme"
@@ -303,6 +324,7 @@ general:
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
   reportTitle: "Titre du Rapport"
   requiredInTrack: "Requis en piste"
+  resourceTypes: "Types de ressources"
   root: Root
   sampleFile: "Fichier échantillon"
   saved: "Nouvel utilisateur enregistré avec succès"
@@ -346,14 +368,25 @@ general:
   successfullyAddedTerm: "Le terme soit correctement ajouté"
   successfullyInvalidatedTokens: "Tous les jetons existant ont été invalidés avec succès."
   successfullyRemovedTerm: "Le terme soit correctement supprimé"
+  table1ProgramExpectationsMappedToPcrs: "Tableau 1: Attentes du programme mappées sur le PCRS"
+  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Tableau 2: Méthode d'instruction primaire par bloc de séquence non stage"
+  table3aNonClerkshipSequenceBlockInstructionalTime: "Tableau 3-A: Durée d'instruction du bloc de séquence non stage"
+  table3bClerkshipSequenceBlockInstructionalTime: "Tableau 3-B: Temps d'instruction du bloc de séquence de stage"
+  table4InstructionalMethodCounts: "Tableau 4: Nombre de méthodes pédagogiques"
+  table5NonClerkshipSequenceBlockAssessmentMethods: "Tableau 5: Méthodes d’évaluation du bloc de séquence non stage"
+  table6ClerkshipSequenceBlockAssessmentMethods: "Tableau 6: Méthodes d’évaluation du bloc de séquences stage"
+  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tableau 7: Tous les événements avec des évaluations marquées en tant que formatif ou sommatif"
+  table8AllResourceTypes: "Tableau 8: Tous les types de ressources"
   term: Terme
   termCount: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   termsBySessionType: "Termes par Type de Seance"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à <a href=\"{apiDocsUrl}\">{apiDocsUrl}</a>."
   tooManyResults: "Votre recherche présente plus que les {count} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes."
+  total: "Total"
   totalErrors: "{count, plural, =1 {Il y a une erreur} other {Il y a # erreurs}}"
   totalTime: "Heures Totales"
+  totalWeeks: "Total de Semaines"
   transitionErrorMessage: "Désolé, nous ne pouvons pas vous faire demander où vous aller : quelque chose semble être cassé."
   tryHarder: "Faire un effort"
   unableToReconnect: "Ne pouver reconnecter!"
@@ -383,6 +416,7 @@ general:
   usersSelected: "{count, plural, =1 {1 utilisateur sélectionné} other {# utilisateurs sélectionnés}}"
   validUntil: "Quand ce jeton devrais arrêter de travailler?"
   validUsers: "utilisateurs valides"
+  verificationPreviewFor: "Aperçu de vérification pour {name}"
   viewAll: "Voir Tous"
   weak: Faible
   whichIs: "qui est"

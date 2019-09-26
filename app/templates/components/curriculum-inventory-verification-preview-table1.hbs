@@ -1,0 +1,25 @@
+<h4 data-test-title id="verification-preview-table1">{{t "general.table1ProgramExpectationsMappedToPcrs"}}</h4>
+<table>
+  <thead>
+    <tr>
+      <th>{{t "general.programExpectationsId"}}</th>
+      <th colspan="3">{{t "general.programExpectations"}}</th>
+      <th colspan="2">{{t "general.physicianCompetencyReferenceSet"}} ({{t "general.physicianCompetencyReferenceSetAbbr"}})</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each @data as |row|}}
+      <tr>
+        <td>{{t "general.notApplicableAbbr"}}</td>
+        <td colspan="3">{{{row.title}}}</td>
+        <td colspan="2">
+          <ul>
+            {{#each row.pcrs as |pcrs|}}
+              <li>{{pcrs}}</li>
+            {{/each}}
+          </ul>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

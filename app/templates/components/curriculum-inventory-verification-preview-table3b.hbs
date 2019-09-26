@@ -1,0 +1,23 @@
+<h4 data-test-title id="verification-preview-table3b">
+  {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
+</h4>
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">{{t "general.clerkshipSequenceBlocks"}}</th>
+      <th>{{t "general.academicLevel"}}</th>
+      <th>{{t "general.totalWeeks"}}</th>
+      <th>{{t "general.averageHoursOfInstructionPerWeek"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each @data as |row|}}
+      <tr>
+        <td colspan="2">{{row.title}}</td>
+        <td>{{row.level}}</td>
+        <td>{{row.weeks}}</td>
+        <td>{{row.avg}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

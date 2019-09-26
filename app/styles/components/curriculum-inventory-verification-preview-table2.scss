@@ -1,0 +1,15 @@
+.curriculum-inventory-verification-preview-table2 {
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+    @include verification-preview-table;
+
+    td {
+      vertical-align: top;
+    }
+
+    td:nth-last-child(1) {
+      font-weight: bold;
+    }
+  }
+}

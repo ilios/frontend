@@ -78,6 +78,9 @@ Router.map(function() {
   this.route('myprofile');
   this.route('mymaterials');
   this.route('course-rollover');
+  this.route('verificationPreview', {
+    path: 'curriculum-inventory-reports/:curriculum_inventory_report_id/verification-preview',
+  });
   this.route('curriculumInventoryReports', {
     path: 'curriculum-inventory-reports'
   });

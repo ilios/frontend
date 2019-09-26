@@ -1,0 +1,7 @@
+.curriculum-inventory-verification-preview-table7 {
+  table {
+    @include ilios-table-structure;
+    @include ilios-table-colors;
+    @include verification-preview-table;
+  }
+}

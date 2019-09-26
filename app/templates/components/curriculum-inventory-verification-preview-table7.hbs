@@ -1,0 +1,29 @@
+<h4 data-test-title id="verification-preview-table7">{{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"}}</h4>
+<table>
+  <thead>
+    <tr>
+      <th>{{t "general.itemCode"}}</th>
+      <th colspan="2">{{t "general.assessmentMethods"}}</th>
+      <th>{{t "general.numberOfSummativeAssessments"}}</th>
+      <th>{{t "general.numberOfFormativeAssessments"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each @data as |row|}}
+      <tr>
+        <td>{{row.id}}</td>
+        <td colspan="2">{{row.title}}</td>
+        <td>{{row.num_summative_assessments}}</td>
+        <td>{{row.num_formative_assessments}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td colspan="2">{{t "general.total"}}</td>
+      <td>{{this.totalNumSummativeAssessments}}</td>
+      <td>{{this.totalNumFormativeAssessments}}</td>
+    </tr>
+  </tfoot>
+</table>
