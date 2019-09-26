@@ -65,7 +65,5 @@ module('Integration | Component | curriculum-inventory-verification-preview', fu
     assert.equal(component.table6.title, 'Table 6: Clerkship Sequence Block Assessment Methods');
     assert.equal(component.table7.title, 'Table 7: All Events with Assessments Tagged as Formative or Summative');
     assert.equal(component.table8.title, 'Table 8: All Resource Types');
-
-
   });
 });

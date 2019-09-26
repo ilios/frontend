@@ -1,5 +1,4 @@
 import {
-  attribute,
   create,
   collection,
   text,
@@ -18,9 +17,5 @@ export default create({
       numFormative: text('td', {at: 3}),
     }),
     footer: collection('tfoot tr td'),
-  },
-  backToTop: {
-    scope: '[data-test-back-to-top]',
-    link: attribute('href'),
   },
 });

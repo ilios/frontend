@@ -1,5 +1,4 @@
 import {
-  attribute,
   create,
   collection,
   text,
@@ -16,9 +15,5 @@ export default create({
       cells: collection('td'),
     }),
     footer: collection('tfoot tr td'),
-  },
-  backToTop: {
-    scope: '[data-test-back-to-top]',
-    link: attribute('href'),
   },
 });

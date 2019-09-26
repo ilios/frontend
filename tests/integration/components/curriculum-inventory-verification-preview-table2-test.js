@@ -9,7 +9,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(28);
+    assert.expect(27);
     const data = {
       methods: [
         {title: 'foo', total: 200},
@@ -62,6 +62,5 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     assert.equal(component.table.footer.objectAt(2).text, '3.33');
     assert.equal(component.table.footer.objectAt(3).text, '6.67');
     assert.equal(component.table.footer.objectAt(4).text, '10.00');
-    assert.equal(component.backToTop.link, `#${tocId}`);
   });
 });

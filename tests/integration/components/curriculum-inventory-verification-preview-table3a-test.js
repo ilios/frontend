@@ -8,7 +8,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(16);
+    assert.expect(15);
 
     const data = [
       {title: 'foo', level: 2, weeks: 10, avg: 30},
@@ -34,7 +34,5 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     assert.equal(component.table.rows.objectAt(1).level, '4');
     assert.equal(component.table.rows.objectAt(1).weeks, '1.5');
     assert.equal(component.table.rows.objectAt(1).avg, '20.33');
-
-    assert.equal(component.backToTop.link, `#${tocId}`);
   });
 });

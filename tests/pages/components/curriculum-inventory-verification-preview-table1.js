@@ -1,5 +1,4 @@
 import {
-  attribute,
   create,
   collection,
   text,
@@ -16,9 +15,5 @@ export default create({
       expectation: text('td', {at: 1}),
       pcrs: text('td', {at: 2}),
     }),
-  },
-  backToTop: {
-    scope: '[data-test-back-to-top]',
-    link: attribute('href'),
   },
 });

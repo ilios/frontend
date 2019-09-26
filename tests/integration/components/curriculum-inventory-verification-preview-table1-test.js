@@ -8,7 +8,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(13);
+    assert.expect(12);
     const data = [
       {title: 'bar', pcrs: ['alpha', 'beta']},
       {title: 'foo', pcrs: [] },
@@ -29,6 +29,5 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     assert.equal(component.table.rows.objectAt(1).id, 'n/a');
     assert.equal(component.table.rows.objectAt(1).expectation, 'foo');
     assert.equal(component.table.rows.objectAt(1).pcrs, '');
-    assert.equal(component.backToTop.link, `#${tocId}`);
   });
 });

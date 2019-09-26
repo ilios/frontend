@@ -1,5 +1,4 @@
 import {
-  attribute,
   create,
   collection,
   text,
@@ -17,9 +16,5 @@ export default create({
       weeks: text('td', {at: 2}),
       avg: text('td', {at: 3}),
     }),
-  },
-  backToTop: {
-    scope: '[data-test-back-to-top]',
-    link: attribute('href'),
   },
 });

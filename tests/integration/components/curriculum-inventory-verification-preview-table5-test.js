@@ -9,7 +9,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(32);
+    assert.expect(31);
     const data = {
       methods: ['foo', 'bar', 'baz'],
       rows: [
@@ -75,6 +75,5 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     assert.equal(component.table.rows.objectAt(1).cells.objectAt(5).text, 'X');
     assert.equal(component.table.rows.objectAt(1).cells.objectAt(6).text, '');
     assert.equal(component.table.rows.objectAt(1).cells.objectAt(7).text, 'Y');
-    assert.equal(component.backToTop.link, `#${tocId}`);
   });
 });

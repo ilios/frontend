@@ -9,7 +9,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(20);
+    assert.expect(19);
     const data = [
       {id: 'AM001', title: 'foo', num_summative_assessments: 10, num_formative_assessments: 20},
       {id: 'AM003', title: 'bar', num_summative_assessments: 5, num_formative_assessments: 0},
@@ -39,6 +39,5 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     assert.equal(component.table.footer.objectAt(1).text, 'Total');
     assert.equal(component.table.footer.objectAt(2).text, '15');
     assert.equal(component.table.footer.objectAt(3).text, '20');
-    assert.equal(component.backToTop.link, `#${tocId}`);
   });
 });
