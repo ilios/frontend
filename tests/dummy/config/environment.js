@@ -37,6 +37,12 @@ module.exports = function(environment) {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
     },
+    'ember-a11y-testing': {
+      componentOptions: {
+        turnAuditOff: process.env.SKIP_A11Y || false,
+        visualNoiseLevel: 1,
+      },
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
