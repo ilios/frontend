@@ -13,9 +13,12 @@
     @include ilios-overview-actions;
 
     a, span {
-      color: $header-blue;
       font-size: 1.2rem;
       margin-right: .5rem;
+    }
+
+    span {
+      color: $ilios-blue;
     }
   }
 

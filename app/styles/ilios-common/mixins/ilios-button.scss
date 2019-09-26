@@ -1,12 +1,13 @@
 @mixin ilios-button () {
   appearance: none;
-  background-color: $ilios-blue;
+  background-color: $dark-blue;
   border: 0;
   border-radius: $base-border-radius;
   box-sizing: border-box;
   color: $white;
   cursor: pointer;
   display: inline-block;
+  font-size: 1rem;
   padding: .3em 1em;
   vertical-align: middle;
   white-space: nowrap;
