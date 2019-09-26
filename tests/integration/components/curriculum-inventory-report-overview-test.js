@@ -68,7 +68,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(() => {
       assert.dom('.title').hasText('Overview', 'Component title is visible.');
       assert.dom('.report-overview-actions .verification-preview').exists({ count: 1 }, 'Rollover course button is visible.');
-      assert.dom('.report-overview-actions .rollover').exists({ count: 1 }, 'Rollover course button is visible.');
+      assert.dom('.report-overview-actions .rollover').exists({ count: 1 }, 'Verification preview link is visible.');
       assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
       assert.dom('.start-date .editinplace').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
       assert.dom('.end-date label').hasText('End:', 'End date label is correct.');
