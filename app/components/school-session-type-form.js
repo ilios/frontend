@@ -25,7 +25,6 @@ const Validations = buildValidations({
         return true;
       }
       const assessment = model.get('assessment');
-      console.log(model);
       const lookup = assessment?'AM':'IM';
       if (aamcMethodId.indexOf(lookup) !== 0) {
         return this.createErrorMessage(options.messageKey, aamcMethodId, options);
