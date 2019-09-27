@@ -65,11 +65,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isActive: null,
   classNames: ['school-vocabulary-term-manager'],
   'data-test-school-vocabulary-term-manager': true,
-  sortedTerms: computed('term.children.[]', 'newTerm', async function(){
-    if (isPresent(this.term)) {
-      const terms = await this.term.children;
-      return terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title');
+  sortedTerms: computed('term.children.[]', 'newTerm', async function () {
+    if (!this.term) {
+      return [];
     }
+    const terms = await this.term.get('children');
+    return terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title');
   }),
   allParents: computed('term.allParents.[]', async function(){
     if (isPresent(this.term)) {

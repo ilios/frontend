@@ -21,24 +21,22 @@ export default Component.extend({
     return this.sortBy.search(/desc/) === -1;
   }),
 
-  sortedLearnerGroups: computed('learnerGroups.[]', 'sortBy', 'sortedAscending', function() {
-    const learnerGroups = this.learnerGroups;
-    const sortedAscending = this.sortedAscending;
-    let sortBy = this.sortBy;
-
-    if (learnerGroups) {
-      if (sortBy.indexOf(':') !== -1) {
-        sortBy = sortBy.split(':', 1)[0];
-      }
-
-      let sortedLearnerGroups = learnerGroups.sortBy(sortBy);
-
-      if (!sortedAscending) {
-        sortedLearnerGroups = sortedLearnerGroups.slice().reverse();
-      }
-
-      return sortedLearnerGroups;
+  sortedLearnerGroups: computed('learnerGroups.[]', 'sortBy', 'sortedAscending', function () {
+    if (!this.learnerGroups) {
+      return [];
     }
+    let sortBy = this.sortBy;
+    if (sortBy.indexOf(':') !== -1) {
+      sortBy = sortBy.split(':', 1)[0];
+    }
+
+    let sortedLearnerGroups = this.learnerGroups.sortBy(sortBy);
+
+    if (!this.sortedAscending) {
+      sortedLearnerGroups = sortedLearnerGroups.slice().reverse();
+    }
+
+    return sortedLearnerGroups;
   }),
 
   init() {
