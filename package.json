@@ -100,6 +100,7 @@
     "loader.js": "^4.7.0",
     "normalize.css": "^8.0.0",
     "papaparse": "^5.1.0",
+    "postcss-scss": "^2.0.0",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^0.8.5",
     "stylelint": "^11.0.0",
