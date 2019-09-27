@@ -190,6 +190,8 @@ export default Component.extend({
       await this.instructedCourses;
       await this.administeredSessions;
       await this.instructedSessions;
+
+      return true;
     }
   ),
 });

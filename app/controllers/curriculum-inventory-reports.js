@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { gt, oneWay, sort } from '@ember/object/computed';
+import { gt, sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 
@@ -23,7 +23,6 @@ export default Controller.extend({
   sortReportsBy: 'name',
 
   hasMoreThanOneSchool: gt('model.length', 1),
-  schools: oneWay('model'),
   sortedSchools: sort('model', 'sortByTitle'),
 
   /**
@@ -32,20 +31,13 @@ export default Controller.extend({
    * @type {Ember.computed}
    * @public
    */
-  selectedSchool: computed('model.[]', 'schoolId', async function() {
-    const schools = this.model;
-    const schoolId = this.schoolId;
-
-    if (isPresent(schoolId)){
-      const school = schools.findBy('id', schoolId);
-
-      if (school) {
-        return school;
-      }
-    } else {
+  selectedSchool: computed('model.[]', 'schoolId', async function () {
+    if (!this.schoolId) {
       const user = await this.currentUser.model;
       return await user.school;
     }
+
+    return this.model.findBy('id', this.schoolIds);
   }),
 
   /**

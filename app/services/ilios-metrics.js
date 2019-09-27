@@ -26,7 +26,7 @@ export default Service.extend({
   },
 
   track(page, title) {
-    scheduleOnce('afterRender', this, async () => {
+    const setContext = async () => {
       const setupSuccessful = await this.setup();
 
       if (setupSuccessful) {
@@ -39,6 +39,7 @@ export default Service.extend({
 
         metrics.trackPage({ page, title });
       }
-    });
+    };
+    scheduleOnce('afterRender', this, setContext);
   }
 });

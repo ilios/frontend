@@ -43,6 +43,8 @@ export default Component.extend({
       return intl.t('general.optionalElective');
     case '3':
       return intl.t('general.requiredInTrack');
+    default:
+      return null;
     }
   }),
 
@@ -69,6 +71,8 @@ export default Component.extend({
       return intl.t('general.unordered');
     case '3':
       return intl.t('general.parallel');
+    default:
+      return null;
     }
   }),
 

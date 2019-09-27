@@ -8,13 +8,11 @@ export default Controller.extend(DashboardController, {
   report: null,
   reportYear: '',
 
-  selectedReport: computed('report', async function() {
-    const reportId = this.report;
-    const store = this.store;
-
-    if (reportId) {
-      const report = store.peekRecord('report', reportId);
-      return report ? report : await store.findRecord('report', reportId);
+  selectedReport: computed('report', async function () {
+    if (!this.report) {
+      return null;
     }
+    const report = this.store.peekRecord('report', this.report);
+    return report ? report : await this.store.findRecord('report', this.report);
   })
 });

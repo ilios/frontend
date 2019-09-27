@@ -61,15 +61,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   newTerm: null,
   classNames: ['school-vocabulary-manager'],
   'data-test-school-vocabulary-manager': true,
-  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', async function(){
-    const vocabulary = this.vocabulary;
-    if (isPresent(vocabulary)) {
-      const terms = await vocabulary.terms;
-      return terms.filterBy('isTopLevel')
-        .filterBy('isNew', false)
-        .filterBy('isDeleted', false)
-        .sortBy('title');
+  sortedTerms: computed('vocabulary.terms.[]', 'newTerm', async function () {
+    if (!this.vocabulary) {
+      return [];
     }
+    const terms = await this.vocabulary.terms;
+    return terms.filterBy('isTopLevel')
+      .filterBy('isNew', false)
+      .filterBy('isDeleted', false)
+      .sortBy('title');
   }),
   didReceiveAttrs(){
     this._super(...arguments);
