@@ -181,6 +181,8 @@ export default Component.extend(EventMixin, {
     if (this.event.postrequisites.length) {
       return this.router.urlFor('events', this.event.postrequisites[0].slug);
     }
+
+    return '';
   }),
 
   actions: {
