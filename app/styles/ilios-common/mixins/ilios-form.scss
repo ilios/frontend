@@ -75,12 +75,11 @@
       color: $text-grey;
 
       &:enabled {
-        &:hover {
-          background-color: $ilios-green;
-        }
+        &:hover,
         &:active,
         &.active {
-          background-color: darken($ilios-green, 10);
+          background-color: $ilios-green;
+          color: $white;
         }
       }
     }
