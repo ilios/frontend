@@ -35,7 +35,7 @@ const Validations = buildValidations({
     }),
     validator('async-exclusion', {
       dependentKeys: ['model.vocabulary.@each.terms'],
-      in: computed('model.vocabulary.@each.terms.title', async function(){
+      in: computed('model.vocabulary.@each.terms', async function(){
         const vocabulary = this.get('model.vocabulary');
         if (isPresent(vocabulary)) {
           const terms = await vocabulary.terms;
