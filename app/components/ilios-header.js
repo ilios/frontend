@@ -39,12 +39,13 @@ export default Component.extend({
    */
   titleChangeObserver: on('init', observer('pageTitleList.sortedTokens.[]', function () {
     const pageTitleList = this.pageTitleList;
-    once(this, function () {
+    const setTitle = function () {
       const tokens = pageTitleList.get('sortedTokens');
       if (tokens.length) {
         this.set('title', tokens[0].title);
       }
-    });
+    };
+    once(this, setTitle);
   })),
 
   actions: {
