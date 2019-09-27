@@ -8,37 +8,45 @@
       {{t "general.mesh"}} ({{terms.length}})
     {{/if}}
   </div>
-
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" {{action "save"}}>{{fa-icon icon="check"}}</button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigadd" {{action "save"}}>
+        <FaIcon @icon="check" />
+      </button>
+      <button class="bigcancel" {{action "cancel"}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if editable}}
-      <button {{action "manage"}}>{{t "general.meshManageTitle"}}</button>
+      <button {{action "manage"}}>
+        {{t "general.meshManageTitle"}}
+      </button>
     {{/if}}
   </div>
 </div>
 <div class="content">
   {{#if isManaging}}
-    {{mesh-manager
-      editable=editable
-      terms=bufferTerms
-      add=(action "addTermToBuffer")
-      remove=(action "removeTermFromBuffer")
-    }}
+    <MeshManager
+      @editable={{editable}}
+      @terms={{bufferTerms}}
+      @add={{action "addTermToBuffer"}}
+      @remove={{action "removeTermFromBuffer"}}
+    />
   {{else}}
     <ul class="selected-mesh-terms">
       {{#each sortedTerms as |term|}}
         <li>
-          <span class="term-title">{{term.name}}</span>
+          <span class="term-title">
+            {{term.name}}
+          </span>
           <span class="term-details">
             {{term.id}}
             {{#if term.deleted}}
-              - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-            {{else}}
-              {{#if term.trees}}
-                - {{term.trees.lastObject.treeNumber}}
-              {{/if}}
+              -
+              <span class="deprecated">
+                ({{t "general.deprecatedAbbreviation"}})
+              </span>
+            {{else if term.trees}}
+              - {{term.trees.lastObject.treeNumber}}
             {{/if}}
           </span>
         </li>
@@ -46,3 +54,4 @@
     </ul>
   {{/if}}
 </div>
+

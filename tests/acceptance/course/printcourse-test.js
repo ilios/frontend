@@ -85,7 +85,7 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.dom(values[1]).hasText('file');
     assert.dom(values[2]).hasText('No');
     assert.dom(values[4]).hasText(
-      'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
+      'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines. Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
     );
   });
 

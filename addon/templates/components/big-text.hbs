@@ -2,7 +2,8 @@
   class="clickable {{if renderHtml "list-reset"}} editable"
   data-test-edit
   role="button"
-  onclick={{action onEdit}}>
+  onclick={{action onEdit}}
+>
   {{displayText}}
 </span>
 {{#if showIcons}}
@@ -10,7 +11,10 @@
     class="clickable"
     data-test-edit
     role="button"
-    {{action (mut expanded) true}}>
-    {{fa-icon icon=ellipsis classNames="text-bottom"}} {{fa-icon icon=expandIcon}}
+    {{action (mut expanded) true}}
+  >
+    <FaIcon @icon={{ellipsis}} @classNames="text-bottom" />
+    <FaIcon @icon={{expandIcon}} />
   </span>
 {{/if}}
+

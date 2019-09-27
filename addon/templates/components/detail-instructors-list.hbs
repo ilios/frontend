@@ -1,5 +1,7 @@
 {{#if sortedInstructorGroups.length}}
-  <h4>{{t "general.instructorGroups"}}</h4>
+  <h4>
+    {{t "general.instructorGroups"}}
+  </h4>
   <ul data-test-instructor-groups>
     {{#each sortedInstructorGroups as |instructorGroup|}}
       <li>
@@ -8,9 +10,10 @@
     {{/each}}
   </ul>
 {{/if}}
-
 {{#if sortedInstructors.length}}
-  <h4>{{t "general.instructors"}}</h4>
+  <h4>
+    {{t "general.instructors"}}
+  </h4>
   <ul data-test-instructors>
     {{#each sortedInstructors as |user|}}
       <li>
@@ -19,3 +22,4 @@
     {{/each}}
   </ul>
 {{/if}}
+

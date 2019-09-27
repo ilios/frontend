@@ -1,10 +1,13 @@
-<div class="ilios-calendar-pre-work-event" data-test-ilios-calendar-pre-work-event>
+<div
+  class="ilios-calendar-pre-work-event"
+  data-test-ilios-calendar-pre-work-event
+>
   <h4>
     <span class="title" data-test-event-title>
       {{#if @areEventsSelectable}}
-        {{#link-to "events" @event.slug}}
+        <LinkTo @route="events" @model={{@event.slug}}>
           {{@event.name}}
-        {{/link-to}}
+        </LinkTo>
       {{else}}
         {{@event.name}}
       {{/if}}
@@ -28,3 +31,4 @@
     </span>
   </h4>
 </div>
+

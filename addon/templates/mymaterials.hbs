@@ -1,10 +1,10 @@
 {{title (t "general.learningMaterials")}}
-
-{{my-materials
-  courseIdFilter=this.course
-  filter=this.filter
-  materials=this.materials
-  sortBy=this.sortBy
-  setCourseIdFilter=(action (mut this.course))
-  setFilter=(action (mut this.filter))
-  setSortBy=(action (mut this.sortBy))}}
+<MyMaterials
+  @courseIdFilter={{this.course}}
+  @filter={{this.filter}}
+  @materials={{this.materials}}
+  @sortBy={{this.sortBy}}
+  @setCourseIdFilter={{action (mut this.course)}}
+  @setFilter={{action (mut this.filter)}}
+  @setSortBy={{action (mut this.sortBy)}}
+/>

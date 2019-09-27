@@ -4,31 +4,45 @@
     {{t "general.overview"}}
   </div>
   <div class="course-overview-actions">
-    {{#link-to "course-materials" course class="materials"}}
-      {{fa-icon
-        icon="archive"
-        title=(t "general.learningMaterialsSummary")
-        fixedWidth=true
-      }}
-    {{/link-to}}
-    {{#link-to "print_course" course (query-params unpublished=true) class="print"}}
-      {{fa-icon icon="print" title=(t "general.printSummary") fixedWidth=true}}
-    {{/link-to}}
+    <LinkTo @route="course-materials" @model={{course}} class="materials">
+      <FaIcon
+        @icon="archive"
+        @title={{t "general.learningMaterialsSummary"}}
+        @fixedWidth={{true}}
+      />
+    </LinkTo>
+    <LinkTo
+      @route="print_course"
+      @model={{course}}
+      @query={{hash unpublished=true}}
+      class="print"
+    >
+      <FaIcon
+        @icon="print"
+        @title={{t "general.printSummary"}}
+        @fixedWidth={{true}}
+      />
+    </LinkTo>
     {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
       <span
         class="clickable rollover"
         role="button"
-        {{action "transitionToRollover"}}>
-        {{fa-icon icon="random" fixedWidth=true title=(t "general.courseRollover")}}
+        {{action "transitionToRollover"}}
+      >
+        <FaIcon
+          @icon="random"
+          @fixedWidth={{true}}
+          @title={{t "general.courseRollover"}}
+        />
       </span>
     {{/if}}
-    {{#link-to
-      "course-visualizations"
-      course
-      title=(t "general.courseVisualizations")
-    }}
-      {{fa-icon icon="chart-bar"}}
-    {{/link-to}}
+    <LinkTo
+      @route="course-visualizations"
+      @model={{course}}
+      @title={{t "general.courseVisualizations"}}
+    >
+      <FaIcon @icon="chart-bar" />
+    </LinkTo>
   </div>
 </div>
 <div class="course-overview-content">
@@ -36,14 +50,13 @@
     <label>{{t "general.externalId"}}:</label>
     <span>
       {{#if editable}}
-        {{#editable-field
-          value=(if externalId externalId (t "general.clickToEdit"))
-          save=(action "changeExternalId")
-          close=(action "revertExternalIdChanges")
-          saveOnEnter=true
-          closeOnEscape=true
-        as |isSaving|
-        }}
+        <EditableField
+          @value={{if externalId externalId (t "general.clickToEdit")}}
+          @save={{action "changeExternalId"}}
+          @close={{action "revertExternalIdChanges"}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
           <input
             type="text"
             value={{externalId}}
@@ -52,11 +65,16 @@
             onkeyup={{action "addErrorDisplayFor" "externalId"}}
           >
           {{#if
-            (and (v-get this "externalId" "isInvalid") (is-in showErrorsFor "externalId"))
+            (and
+              (v-get this "externalId" "isInvalid")
+              (is-in showErrorsFor "externalId")
+            )
           }}
-            <span class="validation-error-message">{{v-get this "externalId" "message"}}</span>
+            <span class="validation-error-message">
+              {{v-get this "externalId" "message"}}
+            </span>
           {{/if}}
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{externalId}}&nbsp;
       {{/if}}
@@ -66,26 +84,37 @@
     <label>{{t "general.clerkshipType"}}:</label>
     <span>
       {{#if editable}}
-        {{#editable-field
-          value=(await clerkshipTypeTitle)
-          save=(action "changeClerkshipType")
-          close=(action "revertClerkshipTypeChanges")
-        }}
-          <select onchange={{action "setCourseClerkshipType" value="target.value"}}>
-            <option value="null" selected={{is-empty (await selectedClerkshipType)}}>{{t "general.notAClerkship"}}</option>
-            {{#each (sort-by "title" (await clerkshipTypeOptions)) as |clerkshipType|}}
-              <option value={{clerkshipType.id}} selected={{is-equal clerkshipType (await selectedClerkshipType)}}>
+        <EditableField
+          @value={{await clerkshipTypeTitle}}
+          @save={{action "changeClerkshipType"}}
+          @close={{action "revertClerkshipTypeChanges"}}
+        >
+          <select
+            onchange={{action "setCourseClerkshipType" value="target.value"}}
+          >
+            <option
+              value="null"
+              selected={{is-empty (await selectedClerkshipType)}}
+            >
+              {{t "general.notAClerkship"}}
+            </option>
+            {{#each
+              (sort-by "title" (await clerkshipTypeOptions)) as |clerkshipType|
+            }}
+              <option
+                value={{clerkshipType.id}}
+                selected={{is-equal clerkshipType (await selectedClerkshipType)
+                }}
+              >
                 {{clerkshipType.title}}
               </option>
             {{/each}}
           </select>
-        {{/editable-field}}
+        </EditableField>
+      {{else if course.clerkshipType}}
+        {{course.clerkshipType.title}}
       {{else}}
-        {{#if course.clerkshipType}}
-          {{course.clerkshipType.title}}
-        {{else}}
-          {{t "general.notAClerkship"}}
-        {{/if}}
+        {{t "general.notAClerkship"}}
       {{/if}}
     </span>
   </div>
@@ -93,23 +122,28 @@
     <label>{{t "general.start"}}:</label>
     <span>
       {{#if editable}}
-        {{#editable-field
-          value=(moment-format course.startDate "L")
-          save=(action "changeStartDate")
-          close=(action "revertStartDateChanges")
-        }}
-          {{pikaday-input
-            value=startDate
-            format="L"
-            onSelection=(action (mut startDate))
-            focusOut=(action "addErrorDisplayFor" "startDate")
-          }}
+        <EditableField
+          @value={{moment-format course.startDate "L"}}
+          @save={{action "changeStartDate"}}
+          @close={{action "revertStartDateChanges"}}
+        >
+          <PikadayInput
+            @value={{startDate}}
+            @format="L"
+            @onSelection={{action (mut startDate)}}
+            @focusOut={{action "addErrorDisplayFor" "startDate"}}
+          />
           {{#if
-            (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+            (and
+              (v-get this "startDate" "isInvalid")
+              (is-in showErrorsFor "startDate")
+            )
           }}
-            <span class="validation-error-message">{{v-get this "startDate" "message"}}</span>
+            <span class="validation-error-message">
+              {{v-get this "startDate" "message"}}
+            </span>
           {{/if}}
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{moment-format course.startDate "L"}}&nbsp;
       {{/if}}
@@ -119,21 +153,27 @@
     <label>{{t "general.end"}}:</label>
     <span>
       {{#if editable}}
-        {{#editable-field
-          value=(moment-format course.endDate "L")
-          save=(action "changeEndDate")
-          close=(action "revertEndDateChanges")
-        }}
-          {{pikaday-input
-            value=endDate
-            format="L"
-            onSelection=(action (mut endDate))
-            focusOut=(action "addErrorDisplayFor" "endDate")
+        <EditableField
+          @value={{moment-format course.endDate "L"}}
+          @save={{action "changeEndDate"}}
+          @close={{action "revertEndDateChanges"}}
+        >
+          <PikadayInput
+            @value={{endDate}}
+            @format="L"
+            @onSelection={{action (mut endDate)}}
+            @focusOut={{action "addErrorDisplayFor" "endDate"}}
+          />
+          {{#if
+            (and
+              (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate")
+            )
           }}
-          {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
-            <span class="validation-error-message">{{v-get this "endDate" "message"}}</span>
+            <span class="validation-error-message">
+              {{v-get this "endDate" "message"}}
+            </span>
           {{/if}}
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{moment-format course.endDate "L"}}&nbsp;
       {{/if}}
@@ -143,11 +183,11 @@
     <label>{{t "general.level"}}:</label>
     <span>
       {{#if editable}}
-        {{#editable-field
-          value=level
-          save=(action "changeLevel")
-          close=(action "revertLevelChanges")
-        }}
+        <EditableField
+          @value={{level}}
+          @save={{action "changeLevel"}}
+          @close={{action "revertLevelChanges"}}
+        >
           {{one-way-select
             level
             options=levelOptions
@@ -155,7 +195,7 @@
             optionLabelPath="title"
             update=(action (mut level))
           }}
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{level}}&nbsp;
       {{/if}}
@@ -163,7 +203,11 @@
   </div>
   <div class="block">
     <label>{{t "general.universalLocator"}}:</label>
-    <span class="universallocator"><strong>{{universalLocator}}{{course.id}}</strong></span>
+    <span class="universallocator">
+      <strong>
+        {{concat universalLocator course.id}}
+      </strong>
+    </span>
   </div>
-
 </div>
+

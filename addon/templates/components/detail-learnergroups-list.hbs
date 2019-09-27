@@ -3,7 +3,9 @@
   <div class="trees">
     {{#each (sort-by "topLevelGroup.title" (await trees)) as |tree|}}
       <fieldset>
-        <legend>{{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})</legend>
+        <legend>
+          {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
+        </legend>
         {{#if (is-fulfilled tree.groups)}}
           {{#if isManaging}}
             <div class="remove-all-subgroups">
@@ -13,8 +15,7 @@
                 data-test-remove-all
                 role="button"
               >
-                {{t "general.removeAll"}}
-                ({{fa-icon icon="times"}})
+                {{t "general.removeAll"}} (<FaIcon @icon="times" />)
               </span>
             </div>
           {{/if}}
@@ -22,20 +23,23 @@
             <li class="top-level-group">
               {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup "users"}})
             </li>
-
             {{#each
-              (without tree.topLevelGroup (await tree.groups))
-              as |learnerGroup|
+              (without tree.topLevelGroup (await tree.groups)) as |learnerGroup|
             }}
               {{! template-lint-disable no-invalid-interactive}}
               <li
-                class="{{if (contains learnerGroup (await lowestLeaves)) "lowest-leaf"}} {{if isManaging "clickable"}}"
+                class="{{if
+                    (contains learnerGroup (await lowestLeaves))
+                    "lowest-leaf"
+                  }}
+
+                  {{if isManaging "clickable"}}"
                 onclick={{if isManaging (action remove learnerGroup)}}
                 role={{if isManaging "button"}}
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if isManaging}}
-                  {{fa-icon icon="times" class="remove"}}
+                  <FaIcon @icon="times" class="remove" />
                 {{/if}}
               </li>
             {{/each}}
@@ -45,5 +49,6 @@
     {{/each}}
   </div>
 {{else}}
-  {{loading-spinner}}
+  <LoadingSpinner />
 {{/if}}
+

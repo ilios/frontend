@@ -1,10 +1,12 @@
 {{#if (has-route "courses")}}
   <div class="back-to-courses-list">
-    {{#link-to "courses"}}{{t "general.backToCourses"}}{{/link-to}}
+    <LinkTo @route="courses">
+      {{t "general.backToCourses"}}
+    </LinkTo>
   </div>
 {{/if}}
-{{course-header course=course editable=editable}}
-{{course-overview course=course editable=editable}}
+<CourseHeader @course={{course}} @editable={{editable}} />
+<CourseOverview @course={{course}} @editable={{editable}} />
 {{#if (not showDetails)}}
   <div
     class="detail-collapsed-control"
@@ -13,32 +15,29 @@
   >
     <span>
       {{t "general.expandDetail"}}
-      {{fa-icon icon="plus-square" class="expand-collapse-icon"}}
+      <FaIcon @icon="plus-square" class="expand-collapse-icon" />
     </span>
   </div>
 {{else}}
-  {{course-editing
-    course=course
-    editable=editable
-    courseLeadershipDetails=courseLeadershipDetails
-    courseObjectiveDetails=courseObjectiveDetails
-    courseTaxonomyDetails = courseTaxonomyDetails
-    courseCompetencyDetails = courseCompetencyDetails
-    courseManageLeadership = courseManageLeadership
-    setCourseObjectiveDetails=(action setCourseObjectiveDetails)
-    setCourseLeadershipDetails=(action setCourseLeadershipDetails)
-    setCourseTaxonomyDetails=(action setCourseTaxonomyDetails)
-    setCourseCompetencyDetails=(action setCourseCompetencyDetails)
-    setCourseManageLeadership=(action setCourseManageLeadership)
-  }}
-  <div
-    class="detail-collapsed-control"
-    role="button"
-    {{action "collapse"}}
-  >
+  <CourseEditing
+    @course={{course}}
+    @editable={{editable}}
+    @courseLeadershipDetails={{courseLeadershipDetails}}
+    @courseObjectiveDetails={{courseObjectiveDetails}}
+    @courseTaxonomyDetails={{courseTaxonomyDetails}}
+    @courseCompetencyDetails={{courseCompetencyDetails}}
+    @courseManageLeadership={{courseManageLeadership}}
+    @setCourseObjectiveDetails={{action setCourseObjectiveDetails}}
+    @setCourseLeadershipDetails={{action setCourseLeadershipDetails}}
+    @setCourseTaxonomyDetails={{action setCourseTaxonomyDetails}}
+    @setCourseCompetencyDetails={{action setCourseCompetencyDetails}}
+    @setCourseManageLeadership={{action setCourseManageLeadership}}
+  />
+  <div class="detail-collapsed-control" role="button" {{action "collapse"}}>
     <span class="is-expanded">
       {{t "general.collapseDetail"}}
-      {{fa-icon icon="minus-square" class="expand-collapse-icon"}}
+      <FaIcon @icon="minus-square" class="expand-collapse-icon" />
     </span>
   </div>
 {{/if}}
+

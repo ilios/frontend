@@ -3,22 +3,26 @@
     <span>
       {{#if value}}
         {{#if looksEmpty}}
-          {{fa-icon icon="edit"
+          <FaIcon
+            @icon="edit"
             class="enabled"
-            data-test-edit=""
-            click=(perform edit)}}
+            data-test-edit
+            @click={{perform edit}}
+          />
         {{else}}
-          {{big-text
-            renderHtml=renderHtml
-            text=value
-            onEdit=(perform edit)}}
+          <BigText
+            @renderHtml={{renderHtml}}
+            @text={{value}}
+            @onEdit={{perform edit}}
+          />
         {{/if}}
       {{else}}
         <span
           class="clickable editable"
           data-test-edit
           role="button"
-          {{action (perform edit)}}>
+          {{action (perform edit)}}
+        >
           {{clickPrompt}}
         </span>
       {{/if}}
@@ -33,16 +37,20 @@
           title={{t "general.save"}}
           {{action (perform saveData)}}
         >
-          {{fa-icon icon=(if saveData.isRunning "spinner" "check") spin=saveData.isRunning}}
+          <FaIcon
+            @icon={{if saveData.isRunning "spinner" "check"}}
+            @spin={{saveData.isRunning}}
+          />
         </button>
         <button
           class="cancel"
           title={{t "general.cancel"}}
           {{action (perform closeEditor)}}
         >
-          {{fa-icon icon="times"}}
+          <FaIcon @icon="times" />
         </button>
       </span>
     </span>
   {{/unless}}
 </span>
+

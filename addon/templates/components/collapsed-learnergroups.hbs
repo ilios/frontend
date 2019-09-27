@@ -1,14 +1,17 @@
 <div class="title clickable" onclick={{action expand}} role="button">
   {{t "general.learnerGroups"}} ({{get (await subject.learnerGroups) "length"}})
 </div>
-
 <div class="collapsed-learnergroups-content">
   {{#if (is-fulfilled cohortSummaries)}}
     <table>
       <thead>
         <tr>
-          <th colspan="4">{{t "general.cohort"}}</th>
-          <th>{{t "general.learnerGroups"}}</th>
+          <th colspan="4">
+            {{t "general.cohort"}}
+          </th>
+          <th>
+            {{t "general.learnerGroups"}}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +28,7 @@
       </tbody>
     </table>
   {{else}}
-    {{loading-spinner}}
+    <LoadingSpinner />
   {{/if}}
 </div>
+

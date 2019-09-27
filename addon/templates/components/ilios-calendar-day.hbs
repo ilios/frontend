@@ -1,7 +1,6 @@
-{{#el-daily-calendar date=date events=singleDayEvents as |hours|}}
+<ElDailyCalendar @date={{date}} @events={{singleDayEvents}} as |hours|>
   <div class="row week-titles">
-    <div class="cell">
-    </div>
+    <div class="cell"></div>
     <div class="cell title">
       {{moment-format date "dddd, MMMM Do YYYY"}}
     </div>
@@ -9,19 +8,20 @@
   <div class="week">
     <ul class="week-hours">
       {{#each hours as |hour|}}
-        <li class="week-hour">{{hour.formattedHour}}</li>
+        <li class="week-hour">
+          {{hour.formattedHour}}
+        </li>
       {{/each}}
     </ul>
-
     <ul class="week-day-full">
       <li class="event-column">
         {{#each hours as |hour|}}
           {{#each hour.events as |event|}}
-            {{ilios-calendar-event
-              event=event
-              selectEvent=(action selectEvent event)
-              isDay=true
-            }}
+            <IliosCalendarEvent
+              @event={{event}}
+              @selectEvent={{action selectEvent event}}
+              @isDay={{true}}
+            />
           {{/each}}
         {{/each}}
       </li>
@@ -33,11 +33,13 @@
       {{/each}}
     </ul>
   </div>
-{{/el-daily-calendar}}
+</ElDailyCalendar>
+<IliosCalendarPreWorkEvents
+  @events={{ilmPreWorkEvents}}
+  @areEventsSelectable={{areEventsSelectable}}
+/>
+<IliosCalendarMultidayEvents
+  @events={{multiDayEvents}}
+  @selectEvent={{action selectEvent event}}
+/>
 
-<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} @areEventsSelectable={{areEventsSelectable}} />
-
-{{ilios-calendar-multiday-events
-  events=multiDayEvents
-  selectEvent=(action selectEvent event)
-}}

@@ -1,20 +1,26 @@
 {{#if term.description.length}}
-  {{#attach-tooltip lazy-render=true animation="shift"}}
+  <AttachTooltip @lazy-render={{true}} @animation="shift">
     {{term.description}}
-  {{/attach-tooltip}}
+  </AttachTooltip>
 {{/if}}
 {{#if term.isTopLevel}}
   {{term.title}}
 {{else}}
   {{#each (await term.allParentTitles) as |title|}}
     {{! template-lint-disable no-bare-strings}}
-    <span class="muted">{{title}} &raquo;</span>
+    <span class="muted">
+      {{title}}
+      &raquo;
+    </span>
   {{/each}}
   {{term.title}}
 {{/if}}
 {{#if (and canEdit (not (await term.isActiveInTree)))}}
-  <span class="inactive">({{t "general.inactive"}})</span>
+  <span class="inactive">
+    ({{t "general.inactive"}})
+  </span>
 {{/if}}
 {{#if canEdit}}
-  {{fa-icon icon="times" class="remove"}}
+  <FaIcon @icon="times" class="remove" />
 {{/if}}
+

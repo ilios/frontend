@@ -13,7 +13,9 @@
           {{domain.title}}
           <ul>
             {{#each (await domain.subCompetencies) as |competency|}}
-              <li>{{competency.title}}</li>
+              <li>
+                {{competency.title}}
+              </li>
             {{/each}}
           </ul>
         </li>
@@ -21,3 +23,4 @@
     </ul>
   </div>
 {{/if}}
+

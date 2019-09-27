@@ -1,39 +1,38 @@
-{{dashboard-view-picker
-  show=show
-  change=setShow
-}}
+<DashboardViewPicker @show={{show}} @change={{setShow}} />
 {{#if (eq show "calendar")}}
-  {{dashboard-calendar
-    selectedDate=selectedDate
-    selectedView=selectedView
-    mySchedule=mySchedule
-    showFilters=showFilters
-    changeDate=changeDate
-    changeView=changeView
-    selectEvent=selectEvent
-    toggleMySchedule=toggleMySchedule
-    toggleShowFilters=toggleShowFilters
-    selectedAcademicYear=selectedAcademicYear
-    selectedSchool=selectedSchool
-    changeAcademicYear=changeAcademicYear
-    changeSchool=changeSchool
-    courseFilters=courseFilters
-    toggleCourseFilters=toggleCourseFilters
-    selectedCohorts=@selectedCohorts
-    selectedCourseLevels=@selectedCourseLevels
-    selectedCourses=@selectedCourses
-    selectedSessionTypes=@selectedSessionTypes
-    selectedTerms=@selectedTerms
-    onClearFilters=@onClearFilters
-    onUpdateCohorts=@onUpdateCohorts
-    onUpdateCourseLevels=@onUpdateCourseLevels
-    onUpdateCourses=@onUpdateCourses
-    onUpdateSessionTypes=@onUpdateSessionTypes
-    onUpdateTerms=@onUpdateTerms}}
+  <DashboardCalendar
+    @selectedDate={{selectedDate}}
+    @selectedView={{selectedView}}
+    @mySchedule={{mySchedule}}
+    @showFilters={{showFilters}}
+    @changeDate={{changeDate}}
+    @changeView={{changeView}}
+    @selectEvent={{selectEvent}}
+    @toggleMySchedule={{toggleMySchedule}}
+    @toggleShowFilters={{toggleShowFilters}}
+    @selectedAcademicYear={{selectedAcademicYear}}
+    @selectedSchool={{selectedSchool}}
+    @changeAcademicYear={{changeAcademicYear}}
+    @changeSchool={{changeSchool}}
+    @courseFilters={{courseFilters}}
+    @toggleCourseFilters={{toggleCourseFilters}}
+    @selectedCohorts={{@selectedCohorts}}
+    @selectedCourseLevels={{@selectedCourseLevels}}
+    @selectedCourses={{@selectedCourses}}
+    @selectedSessionTypes={{@selectedSessionTypes}}
+    @selectedTerms={{@selectedTerms}}
+    @onClearFilters={{@onClearFilters}}
+    @onUpdateCohorts={{@onUpdateCohorts}}
+    @onUpdateCourseLevels={{@onUpdateCourseLevels}}
+    @onUpdateCourses={{@onUpdateCourses}}
+    @onUpdateSessionTypes={{@onUpdateSessionTypes}}
+    @onUpdateTerms={{@onUpdateTerms}}
+  />
 {{else if (eq show "materials")}}
-  {{dashboard-materials}}
+  <DashboardMaterials />
 {{else if (eq show "agenda")}}
-  {{dashboard-agenda}}
+  <DashboardAgenda />
 {{else if (eq show "week")}}
-  {{dashboard-week}}
+  <DashboardWeek />
 {{/if}}
+

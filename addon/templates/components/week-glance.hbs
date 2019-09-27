@@ -1,5 +1,7 @@
 <h3
-  class="{{if collapsible "clickable collapsible"}} {{if collapsed "collapsed" "expanded"}}"
+  class="{{if collapsible "clickable collapsible"}}
+
+    {{if collapsed "collapsed" "expanded"}}"
   role="button"
   data-test-week-title
   {{action (optional toggleCollapsed) collapsed}}
@@ -13,21 +15,28 @@
   {{#if (is-fulfilled publishedWeekEvents)}}
     <div class="ilm-pre-work">
       {{#if (gt (get (await ilmPreWork) "length") 0)}}
-        <h4>{{t "general.preWork"}}</h4>
+        <h4>
+          {{t "general.preWork"}}
+        </h4>
         {{#each (await ilmPreWork) as |ilmGroup|}}
           <WeekGlancePreWork @events={{ilmGroup}} />
         {{/each}}
       {{/if}}
     </div>
-
     {{#if (gt (get (await nonIlmPreWorkEvents) "length") 0)}}
       {{#each (await nonIlmPreWorkEvents) as |event|}}
         <WeekGlanceEvent @event={{event}} />
       {{/each}}
     {{else}}
-      <p>{{t "general.none"}}</p>
+      <p>
+        {{t "general.none"}}
+      </p>
     {{/if}}
   {{else}}
-    <p>{{fa-icon icon="spinner" spin=true}} {{t "general.loadingEvents"}}</p>
+    <p>
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+    </p>
   {{/if}}
 {{/liquid-unless}}
+

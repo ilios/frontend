@@ -3,49 +3,86 @@
   {{! template-lint-disable no-triple-curlies }}
   {{{objective.title}}}
 </div>
-
 {{#if (gt (get (await competencies) "length") 0)}}
   <ul class="parent-picker">
     {{#each (sort-by "title" (await domains)) as |domain|}}
       {{#if (contains domain.id (map-by "id" (await domainsWithNoChildren)))}}
         <li
-          class="competency-title {{if (eq domain.id objective.competency.id) "selected"}}"
+          class="competency-title
+            {{if (eq domain.id objective.competency.id) "selected"}}"
         >
           <h5>
             {{#if (eq domain.id objective.competency.id)}}
-              <input {{action "removeCurrentCompetency" domain}}
+              <input
                 type="checkbox"
-                checked
+                checked=""
+                {{action "removeCurrentCompetency" domain}}
               >
-              <span {{action "removeCurrentCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
+              <span
+                class="clickable"
+                role="button"
+                {{action "removeCurrentCompetency" domain}}
+              >
+                {{domain.title}}
+              </span>
             {{else}}
-              <input {{action "changeCompetency" domain}}
-                type="checkbox"
+              <input type="checkbox" {{action "changeCompetency" domain}}>
+              <span
+                class="clickable"
+                role="button"
+                {{action "changeCompetency" domain}}
               >
-              <span {{action "changeCompetency" domain}} class="clickable" role="button">{{domain.title}}</span>
+                {{domain.title}}
+              </span>
             {{/if}}
           </h5>
         </li>
       {{else}}
         <li>
-          <h5 class="competency-title {{if (contains domain.id (map-by "id" (await competenciesWithSelectedChildren))) "selected"}}">
+          <h5
+            class="competency-title
+              {{if
+                (contains
+                  domain.id
+                  (map-by "id" (await competenciesWithSelectedChildren))
+                )
+                "selected"
+              }}"
+          >
             {{domain.title}}
           </h5>
           <ul>
             {{#each (sort-by "title" (await domain.children)) as |competency|}}
               {{#if (contains competency.id (map-by "id" (await competencies)))}}
-                <li class="competency-title {{if (eq competency.id objective.competency.id) "selected"}}">
+                <li
+                  class="competency-title
+                    {{if (eq competency.id objective.competency.id) "selected"}}"
+                >
                   {{#if (eq competency.id objective.competency.id)}}
-                    <input {{action "removeCurrentCompetency" competency}}
+                    <input
                       type="checkbox"
-                      checked
+                      checked=""
+                      {{action "removeCurrentCompetency" competency}}
                     >
-                    <span {{action "removeCurrentCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
+                    <span
+                      class="clickable"
+                      role="button"
+                      {{action "removeCurrentCompetency" competency}}
+                    >
+                      {{competency.title}}
+                    </span>
                   {{else}}
-                    <input {{action "changeCompetency" competency}}
+                    <input
                       type="checkbox"
+                      {{action "changeCompetency" competency}}
                     >
-                    <span {{action "changeCompetency" competency}} class="clickable" role="button">{{competency.title}}</span>
+                    <span
+                      class="clickable"
+                      role="button"
+                      {{action "changeCompetency" competency}}
+                    >
+                      {{competency.title}}
+                    </span>
                   {{/if}}
                 </li>
               {{/if}}
@@ -62,3 +99,4 @@
     </p>
   </div>
 {{/if}}
+

@@ -1,23 +1,24 @@
 <td id="objective-{{objective.id}}" class="text-left text-top" colspan="3">
   {{#if editable}}
-    {{#editable-field
-      value=title
-      renderHtml=true
-      isSaveDisabled=(and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
-      save=(action "saveTitleChanges" )
-      close=(action "revertTitleChanges")
-    }}
-      {{html-editor
-        content=title
-        update=(action "changeTitle")
+    <EditableField
+      @value={{title}}
+      @renderHtml={{true}}
+      @isSaveDisabled={{and
+        (v-get this "title" "isInvalid")
+        (is-in showErrorsFor "title")
       }}
+      @save={{action "saveTitleChanges"}}
+      @close={{action "revertTitleChanges"}}
+    >
+      <HtmlEditor @content={{title}} @update={{action "changeTitle"}} />
       {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+        <span class="validation-error-message">
+          {{v-get this "title" "message"}}
+        </span>
       {{/if}}
-    {{/editable-field}}
+    </EditableField>
   {{else}}
-    {{! template-lint-disable no-triple-curlies }}
-    {{{objective.title}}}
+    {{! template-lint-disable no-triple-curlies }}{{{objective.title}}}
   {{/if}}
 </td>
 <td class="text-left text-top" colspan="2">
@@ -54,12 +55,12 @@
       {{/if}}
       <br>
     {{/each}}
+  {{else if editable}}
+    <button {{action manageParents objective}}>
+      {{t "general.addNew"}}
+    </button>
   {{else}}
-    {{#if editable}}
-      <button {{action manageParents objective}}>{{t "general.addNew"}}</button>
-    {{else}}
-      {{t "general.none"}}
-    {{/if}}
+    {{t "general.none"}}
   {{/if}}
 </td>
 <td class="text-left text-top" colspan="2">
@@ -75,12 +76,16 @@
           {{descriptor.name}}
         </li>
       {{else}}
-        <li data-test-term>{{descriptor.name}}</li>
+        <li data-test-term>
+          {{descriptor.name}}
+        </li>
       {{/if}}
     {{else}}
       <li>
         {{#if editable}}
-          <button {{action manageDescriptors objective}}>{{t "general.addNew"}}</button>
+          <button {{action manageDescriptors objective}}>
+            {{t "general.addNew"}}
+          </button>
         {{else}}
           {{t "general.none"}}
         {{/if}}
@@ -90,10 +95,11 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if editable}}
-    <span {{action remove objective}} class="clickable remove" role="button">
-      {{fa-icon icon="trash" class="enabled"}}
+    <span class="clickable remove" role="button" {{action remove objective}}>
+      <FaIcon @icon="trash" class="enabled" />
     </span>
   {{else}}
-    {{fa-icon icon="trash" class="disabled"}}
+    <FaIcon @icon="trash" class="disabled" />
   {{/if}}
 </td>
+

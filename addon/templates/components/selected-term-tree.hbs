@@ -6,13 +6,16 @@
       checked={{is-in selectedTerms term}}
       {{action toggle term on="change"}}
     >
-    <span {{action toggle term}} class="list-indentation" role="button">{{term.title}}</span>
+    <span class="list-indentation" role="button" {{action toggle term}}>
+      {{term.title}}
+    </span>
     {{#if (gt (get (await term.children) "length") 0)}}
-      {{selected-term-tree
-        terms=(await term.children)
-        selectedTerms=selectedTerms
-        toggle=toggle
-      }}
+      <SelectedTermTree
+        @terms={{await term.children}}
+        @selectedTerms={{selectedTerms}}
+        @toggle={{toggle}}
+      />
     {{/if}}
   </li>
 {{/each}}
+

@@ -1,5 +1,10 @@
 {{#if value}}
-  <button class="collapse-button" onclick={{@action}}>{{fa-icon icon="minus"}}</button>
+  <button class="collapse-button" onclick={{@action}}>
+    <FaIcon @icon="minus" />
+  </button>
 {{else}}
-  <button class="expand-button" onclick={{@action}}>{{fa-icon icon="plus"}}</button>
+  <button class="expand-button" onclick={{@action}}>
+    <FaIcon @icon="plus" />
+  </button>
 {{/if}}
+

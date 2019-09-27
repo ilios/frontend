@@ -1,10 +1,16 @@
 {{#if events.length}}
   <div class="ilios-calendar-pre-work-events">
-    <h4>{{t "general.preWork"}}</h4>
+    <h4>
+      {{t "general.preWork"}}
+    </h4>
     <ul>
       {{#each events as |event|}}
-        <IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{areEventsSelectable}} />
+        <IliosCalendarPreWorkEvent
+          @event={{event}}
+          @areEventsSelectable={{areEventsSelectable}}
+        />
       {{/each}}
     </ul>
   </div>
 {{/if}}
+

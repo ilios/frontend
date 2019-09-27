@@ -9,32 +9,40 @@
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" onclick={{perform save}}>
-        {{fa-icon icon=(if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
+        <FaIcon
+          @icon={{if save.isRunning "spinner" "check"}}
+          @spin={{if isSaving true false}}
+        />
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigcancel" {{action setIsManaging false}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if editable}}
-      <button {{action setIsManaging true}}>{{t "general.manageLeadership"}}</button>
+      <button {{action setIsManaging true}}>
+        {{t "general.manageLeadership"}}
+      </button>
     {{/if}}
   </div>
 </div>
 <div class="course-leadership-expanded-content">
   {{#if (and (is-array directors) (is-array administrators))}}
     {{#if isManaging}}
-      {{leadership-manager
-        directors=directors
-        administrators=administrators
-        removeDirector=(action "removeDirector")
-        addDirector=(action "addDirector")
-        removeAdministrator=(action "removeAdministrator")
-        addAdministrator=(action "addAdministrator")
-      }}
+      <LeadershipManager
+        @directors={{directors}}
+        @administrators={{administrators}}
+        @removeDirector={{action "removeDirector"}}
+        @addDirector={{action "addDirector"}}
+        @removeAdministrator={{action "removeAdministrator"}}
+        @addAdministrator={{action "addAdministrator"}}
+      />
     {{else}}
-      {{leadership-list
-        directors=directors
-        administrators=administrators
-      }}
+      <LeadershipList
+        @directors={{directors}}
+        @administrators={{administrators}}
+      />
     {{/if}}
   {{else}}
-    {{loading-spinner tagName="h3"}}
+    <LoadingSpinner @tagName="h3" />
   {{/if}}
 </div>
+
