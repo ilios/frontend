@@ -31,6 +31,8 @@ export default Model.extend({
     if (this.get('link')) {
       return 'link';
     }
+
+    return null;
   }),
   url: computed('link', 'citation', 'absoluteFileUri', function(){
     if(this.get('type') === 'file'){
@@ -39,10 +41,8 @@ export default Model.extend({
     if(this.get('type') === 'link'){
       return this.get('link');
     }
-    if(this.get('type') === 'citation'){
-      return null;
-    }
 
+    return null;
   }),
   isFile: computed('type', function() {
     return (this.get('type') === 'file');
