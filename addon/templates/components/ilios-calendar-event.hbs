@@ -1,15 +1,15 @@
 {{#if event}}
   <div>
-    <AttachTooltip
-      @lazyRender={{true}}
-      @placement="left"
-      @interactive={{true}}
-      @animation="shift"
+    {{#attach-tooltip
+      lazyRender=true
+      placement="left"
+      interactive=true
+      animation="shift"
       class="ilios-calendar-event-tooltip"
-    >
+     }}
       {{! template-lint-disable no-triple-curlies }}
       {{{tooltipContent}}}
-    </AttachTooltip>
+    {{/attach-tooltip}}
     {{#if recentlyUpdated}}
       <FaIcon
         @icon="exclamation-circle"

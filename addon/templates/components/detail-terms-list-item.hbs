@@ -1,7 +1,10 @@
 {{#if term.description.length}}
-  <AttachTooltip @lazy-render={{true}} @animation="shift">
+  {{#attach-tooltip
+    lazyRender=true
+    animation="shift"
+    }}
     {{term.description}}
-  </AttachTooltip>
+  {{/attach-tooltip}}
 {{/if}}
 {{#if term.isTopLevel}}
   {{term.title}}
