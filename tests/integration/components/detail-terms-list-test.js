@@ -62,7 +62,11 @@ module('Integration | Component | detail terms list', function(hooks) {
     const selectedTerms = [ term1, term2, term3, term4 ];
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
-    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
+    await render(hbs`<DetailTermsList
+      @vocabulary={{vocabulary}}
+      @terms={{terms}}
+      @canEdit={{false}}
+    />`);
     assert.dom('[data-test-title]').hasText('Topics (Medicine)');
     assert.dom('li').exists({ count: 2 });
     assert.dom('li').hasText('bar');
@@ -117,7 +121,11 @@ module('Integration | Component | detail terms list', function(hooks) {
     const selectedTerms = [ term1, term2, term3, term4 ];
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
-    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=false}}`);
+    await render(hbs`<DetailTermsList
+      @vocabulary={{vocabulary}}
+      @terms={{terms}}
+      @canEdit={{false}}
+    />`);
     await settled();
     assert.dom('[data-test-title]').hasText('Topics (Medicine)');
     assert.dom('li').doesNotExist();
@@ -150,7 +158,12 @@ module('Integration | Component | detail terms list', function(hooks) {
 
     this.set('vocabulary', vocabulary);
     this.set('terms', selectedTerms);
-    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms remove=(action remove) canEdit=true}}`);
+    await render(hbs`<DetailTermsList
+      @vocabulary={{vocabulary}}
+      @terms={{terms}}
+      @remove={{action remove}}
+      @canEdit={{true}}
+    />`);
     await settled();
     assert.dom('li:nth-of-type(1) .fa-times').exists({ count: 1 });
     await click(find('li'));
@@ -171,7 +184,11 @@ module('Integration | Component | detail terms list', function(hooks) {
 
     this.set('vocabulary', vocabulary);
     this.set('terms', []);
-    await render(hbs`{{detail-terms-list vocabulary=vocabulary terms=terms canEdit=true}}`);
+    await render(hbs`<DetailTermsList
+      @vocabulary={{vocabulary}}
+      @terms={{terms}}
+      @canEdit={{true}}
+    />`);
     await settled();
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });

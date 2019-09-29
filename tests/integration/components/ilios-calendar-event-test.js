@@ -7,13 +7,13 @@ module('Integration | Component | ilios calendar event', function(hooks) {
 
   //@todo needs some real tests JJ 6/2017
   skip('it renders', function(assert) {
-    this.render(hbs`{{ilios-calendar-event}}`);
+    this.render(hbs`<IliosCalendarEvent />`);
 
     assert.dom(this.element).hasText('');
   });
 
   skip('it calculates recentlyUpdated correctly', function(assert) {
-    this.render(hbs`{{ilios-calendar-event}}`);
+    this.render(hbs`<IliosCalendarEvent />`);
 
     assert.dom(this.element).hasText('');
   });

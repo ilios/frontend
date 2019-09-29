@@ -7,7 +7,7 @@ module('Integration | Component | big text', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{big-text}}`);
+    await render(hbs`<BigText />`);
     assert.dom(this.element).hasText('');
   });
 });

@@ -7,7 +7,7 @@ module('Integration | Component | boolean-check', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{boolean-check}}`);
+    await render(hbs`<BooleanCheck />`);
 
     assert.dom(this.element).hasText('');
   });

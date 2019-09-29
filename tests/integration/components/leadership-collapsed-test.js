@@ -13,12 +13,12 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
     this.set('click', () => {});
-    await render(hbs`{{leadership-collapsed
-      title=title
-      directorsCount=directorsCount
-      administratorsCount=administratorsCount
-      expand=(action click)
-    }}`);
+    await render(hbs`<LeadershipCollapsed
+      @title={{title}}
+      @directorsCount={{directorsCount}}
+      @administratorsCount={{administratorsCount}}
+      @expand={{action click}}
+    />`);
     const title = '.title';
     const table = 'table';
     const directorsRow = `${table} tbody tr:nth-of-type(1)`;
@@ -37,11 +37,11 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`{{leadership-collapsed
-      directorsCount=0
-      administratorsCount=0
-      expand=(action click)
-    }}`);
+    await render(hbs`<LeadershipCollapsed
+      @directorsCount={{0}}
+      @administratorsCount={{0}}
+      @expand={{action click}}
+    />`);
     const title = '.title';
 
     await click(title);
@@ -54,13 +54,13 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
     this.set('click', () => {});
-    await render(hbs`{{leadership-collapsed
-      title=title
-      showDirectors=false
-      directorsCount=directorsCount
-      administratorsCount=administratorsCount
-      expand=(action click)
-    }}`);
+    await render(hbs`<LeadershipCollapsed
+      @title={{title}}
+      @showDirectors={{false}}
+      @directorsCount={{directorsCount}}
+      @administratorsCount={{administratorsCount}}
+      @expand={{action click}}
+    />`);
     const title = '.title';
     const table = 'table';
     const administratorsRow = `${table} tbody tr:nth-of-type(1)`;
@@ -77,13 +77,13 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
     this.set('click', () => {});
-    await render(hbs`{{leadership-collapsed
-      title=title
-      showAdministrators=false
-      directorsCount=directorsCount
-      administratorsCount=administratorsCount
-      expand=(action click)
-    }}`);
+    await render(hbs`<LeadershipCollapsed
+      @title={{title}}
+      @showAdministrators={{false}}
+      @directorsCount={{directorsCount}}
+      @administratorsCount={{administratorsCount}}
+      @expand={{action click}}
+    />`);
     const title = '.title';
     const table = 'table';
     const directorsRow = `${table} tbody tr:nth-of-type(1)`;

@@ -50,12 +50,12 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials
-      subject=subject
-      isCourse=true
-      isCourse=true
-      editable=true
-    }}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
     assert.dom(rows).exists({ count: 1 });
     assert.ok(find(title).textContent.trim().startsWith('Citation'));
     assert.ok(find(title).textContent.trim().endsWith('test title'));
@@ -91,7 +91,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
 
     return settled().then(() => {
       assert.dom('.sort-materials-btn').exists({ count: 1 });
@@ -117,7 +121,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=false }}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{false}}
+    />`);
 
     return settled().then(() => {
       assert.dom('.sort-materials-btn').doesNotExist();
@@ -134,7 +142,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
 
     return settled().then(() => {
       assert.dom('.sort-materials-btn').doesNotExist();
@@ -158,7 +170,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
 
     return settled().then(() => {
       assert.dom('.sort-materials-btn').doesNotExist();
@@ -190,7 +206,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
 
     return settled().then(async () => {
       assert.dom('.sort-materials-btn').exists({ count: 1 }, 'Sort materials button is visible');
@@ -242,7 +262,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{detail-learning-materials subject=subject isCourse=true editable=true}}`);
+    await render(hbs`<DetailLearningMaterials
+      @subject={{subject}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
 
     return settled().then(async () => {
       await click('.sort-materials-btn');

@@ -17,14 +17,14 @@ module('Integration | Component | ilios calendar', function(hooks) {
     this.set('date', date);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{ilios-calendar
-      selectedDate=date
-      selectedView='day'
-      calendarEventsPromise=events
-      changeDate=(action nothing)
-      changeView=(action nothing)
-      selectEvent=(action nothing)
-    }}`);
+    await render(hbs`<IliosCalendar
+      @selectedDate={{date}}
+      @selectedView="day"
+      @calendarEventsPromise={{events}}
+      @changeDate={{action nothing}}
+      @changeView={{action nothing}}
+      @selectEvent={{action nothing}}
+    />`);
 
     assert.ok(this.element.textContent.includes('Wednesday, September 30th 2015'));
   });

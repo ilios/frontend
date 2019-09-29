@@ -10,7 +10,7 @@ module('Integration | Component | visualizer-course-session-types', function(hoo
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{visualizer-course-session-types}}`);
+    await render(hbs`<VisualizerCourseSessionTypes />`);
 
     assert.dom(this.element).hasText('');
   });

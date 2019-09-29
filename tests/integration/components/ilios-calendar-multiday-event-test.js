@@ -26,7 +26,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
     let event = getEvent();
     this.set('event', event);
     this.set('nothing', parseInt);
-    await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=(action nothing)}}`);
+    await render(hbs`<IliosCalendarMultidayEvent @event={{event}} @selectEvent={{action nothing}} />`);
 
     assert.equal(this.element.textContent.search(/11\/11\/84/), 0);
     assert.equal(this.element.textContent.search(/11\/12\/84/), 19);
@@ -44,7 +44,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
     this.set('selectEvent', (value) => {
       assert.deepEqual(event, value);
     });
-    await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=selectEvent}}`);
+    await render(hbs`<IliosCalendarMultidayEvent @event={{event}} @selectEvent={{selectEvent}} />`);
     assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
 
     await click('[data-test-event-name]');
@@ -59,7 +59,10 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       //this should never get called
       assert.ok(false);
     };
-    await render(hbs`{{ilios-calendar-multiday-event event=event selectEvent=(action 'handleAction')}}`);
+    await render(hbs`<IliosCalendarMultidayEvent
+      @event={{event}}
+      @selectEvent={{action "handleAction"}}
+    />`);
     assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
 
     await click('[data-test-event-name]');
@@ -75,11 +78,12 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       //this should never get called
       assert.ok(false);
     };
-    await render(
-      hbs`{{ilios-calendar-multiday-event event=event isEventSelectable=false selectEvent=(action 'handleAction')}}`
-    );
+    await render(hbs`<IliosCalendarMultidayEvent
+      @event={{event}}
+      @isEventSelectable={{false}}
+      @selectEvent={{action "handleAction"}}
+    />`);
     assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
-
 
     await click('[data-test-event-name]');
   });

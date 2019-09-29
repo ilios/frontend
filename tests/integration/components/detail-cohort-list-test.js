@@ -48,7 +48,7 @@ module('Integration | Component | detail cohort list', function(hooks) {
     const cohorts = [ cohort1, cohort2 ];
 
     this.set('cohorts', cohorts);
-    await render(hbs`{{detail-cohort-list cohorts=cohorts}}`);
+    await render(hbs`<DetailCohortList @cohorts={{cohorts}} />`);
     await settled();
     assert.dom('th').hasText('School');
     assert.dom(findAll('th')[1]).hasText('Program');
@@ -62,4 +62,3 @@ module('Integration | Component | detail cohort list', function(hooks) {
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Class of 2011');
   });
 });
-

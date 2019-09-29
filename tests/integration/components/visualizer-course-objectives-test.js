@@ -12,7 +12,7 @@ module('Integration | Component | visualizer course objectives', function(hooks)
       title: 'test'
     });
     this.set('course', course);
-    await render(hbs`{{visualizer-course-objectives course=course isIcon=true}}`);
+    await render(hbs`<VisualizerCourseObjectives @course={{course}} @isIcon={{true}} />`);
 
     assert.dom(this.element).hasText('');
   });

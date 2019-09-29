@@ -8,10 +8,7 @@ module('Integration | Component | common dashboard', function(hooks) {
 
   test('it renders', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{common-dashboard
-      show='week'
-      setShow=(action nothing)
-    }}`);
+    await render(hbs`<CommonDashboard @show="week" @setShow={{action nothing}} />`);
     assert.ok(this.element.textContent.includes('Week at a Glance'));
     assert.ok(this.element.textContent.includes('Activities'));
     assert.ok(this.element.textContent.includes('Materials'));

@@ -13,21 +13,21 @@ module('Integration | Component | publish menu', function(hooks) {
     });
     this.set('testObj', testObj);
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      title='title'
-      showAsIs=true
-      showPublish=true
-      showReview=true
-      showTbd=true
-      showUnPublish=true
-      publishTranslation='general.publishCourse'
-      unPublishTranslation='general.unPublishCourse'
-      reviewRoute='course.publication_check'
-      reviewObject=testObj
-      publish=(action nothing)
-      publishAsTbd=(action nothing)
-      unpublish=(action nothing)
-    }}`);
+    await render(hbs`<PublishMenu
+      @title="title"
+      @showAsIs={{true}}
+      @showPublish={{true}}
+      @showReview={{true}}
+      @showTbd={{true}}
+      @showUnPublish={{true}}
+      @publishTranslation="general.publishCourse"
+      @unPublishTranslation="general.unPublishCourse"
+      @reviewRoute="course.publication_check"
+      @reviewObject={{testObj}}
+      @publish={{action nothing}}
+      @publishAsTbd={{action nothing}}
+      @unpublish={{action nothing}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const icon = `${toggle} svg`;
     const dropDownItems = '.rl-dropdown button';
@@ -55,12 +55,12 @@ module('Integration | Component | publish menu', function(hooks) {
       assert.ok(true, 'action fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      showAsIs=true
-      publish=(action click)
-      publishAsTbd=(action nothing)
-      unpublish=(action nothing)
-    }}`);
+    await render(hbs`<PublishMenu
+      @showAsIs={{true}}
+      @publish={{action click}}
+      @publishAsTbd={{action nothing}}
+      @unpublish={{action nothing}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:nth-of-type(1)`;
@@ -76,13 +76,13 @@ module('Integration | Component | publish menu', function(hooks) {
       assert.ok(true, 'action fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      showPublish=true
-      publishTranslation='general.publishCourse'
-      publish=(action click)
-      publishAsTbd=(action nothing)
-      unpublish=(action nothing)
-    }}`);
+    await render(hbs`<PublishMenu
+      @showPublish={{true}}
+      @publishTranslation="general.publishCourse"
+      @publish={{action click}}
+      @publishAsTbd={{action nothing}}
+      @unpublish={{action nothing}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:nth-of-type(1)`;
@@ -98,12 +98,12 @@ module('Integration | Component | publish menu', function(hooks) {
       assert.ok(true, 'action fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      showTbd=true
-      publish=(action nothing)
-      publishAsTbd=(action click)
-      unpublish=(action nothing)
-    }}`);
+    await render(hbs`<PublishMenu
+      @showTbd={{true}}
+      @publish={{action nothing}}
+      @publishAsTbd={{action click}}
+      @unpublish={{action nothing}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:nth-of-type(1)`;
@@ -119,13 +119,13 @@ module('Integration | Component | publish menu', function(hooks) {
       assert.ok(true, 'action fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      showUnPublish=true
-      unPublishTranslation='general.unPublishCourse'
-      publish=(action nothing)
-      publishAsTbd=(action nothing)
-      unpublish=(action click)
-    }}`);
+    await render(hbs`<PublishMenu
+      @showUnPublish={{true}}
+      @unPublishTranslation="general.unPublishCourse"
+      @publish={{action nothing}}
+      @publishAsTbd={{action nothing}}
+      @unpublish={{action click}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const dropDownItems = '.rl-dropdown button';
     const item = `${dropDownItems}:nth-of-type(1)`;
@@ -145,22 +145,22 @@ module('Integration | Component | publish menu', function(hooks) {
     this.set('testObj', testObj);
     this.set('parentTestObject', parentTestObject);
     this.set('nothing', parseInt);
-    await render(hbs`{{publish-menu
-      title='title'
-      showAsIs=true
-      showPublish=true
-      showReview=true
-      showTbd=true
-      showUnPublish=true
-      publishTranslation='general.publishCourse'
-      unPublishTranslation='general.unPublishCourse'
-      reviewRoute='course.publication_check'
-      reviewObject=testObj
-      parentObject=parentTestObject
-      publish=(action nothing)
-      publishAsTbd=(action nothing)
-      unpublish=(action nothing)
-    }}`);
+    await render(hbs`<PublishMenu
+      @title="title"
+      @showAsIs={{true}}
+      @showPublish={{true}}
+      @showReview={{true}}
+      @showTbd={{true}}
+      @showUnPublish={{true}}
+      @publishTranslation="general.publishCourse"
+      @unPublishTranslation="general.unPublishCourse"
+      @reviewRoute="course.publication_check"
+      @reviewObject={{testObj}}
+      @parentObject={{parentTestObject}}
+      @publish={{action nothing}}
+      @publishAsTbd={{action nothing}}
+      @unpublish={{action nothing}}
+    />`);
     const toggle = '.rl-dropdown-toggle';
     const icon = `${toggle} svg`;
     const dropDownItems = '.rl-dropdown button';

@@ -43,11 +43,11 @@ module('Integration | Component | course materials', function(hooks) {
       courseSort: 'title',
       sessionSort: 'firstOfferingDate'
     });
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
 
     const courseMaterials = `${COURSE_TABLE} tbody tr`;
     const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -121,12 +121,12 @@ module('Integration | Component | course materials', function(hooks) {
       courseSort: 'title',
       sessionSort: 'firstOfferingDate'
     });
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort
-        onSessionSort=(action nothing)}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+      @onSessionSort={{action nothing}}
+    />`);
 
     const courseMaterials = `${COURSE_TABLE} tbody tr`;
     const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -213,13 +213,13 @@ module('Integration | Component | course materials', function(hooks) {
       sessionSort: 'firstOfferingDate'
     });
 
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort
-        onCourseSort=(action cSortBy)
-        onSessionSort=(action sSortBy)}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+      @onCourseSort={{action cSortBy}}
+      @onSessionSort={{action sSortBy}}
+    />`);
 
     const cHeaders = `${COURSE_TABLE} thead th`;
     const cTitle = `${cHeaders}:nth-of-type(1)`;
@@ -261,11 +261,11 @@ module('Integration | Component | course materials', function(hooks) {
       sessionSort: 'firstOfferingDate'
     });
 
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -289,11 +289,11 @@ module('Integration | Component | course materials', function(hooks) {
       sessionSort: 'firstOfferingDate'
     });
 
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -317,11 +317,11 @@ module('Integration | Component | course materials', function(hooks) {
       sessionSort: 'firstOfferingDate'
     });
 
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
 
     const sessionMaterials = `${SESSION_TABLE} tbody tr`;
     const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
@@ -345,11 +345,11 @@ module('Integration | Component | course materials', function(hooks) {
       sessionSort: 'firstOfferingDate'
     });
 
-    await render(hbs`
-      {{course-materials
-        course=course
-        courseSort=courseSort
-        sessionSort=sessionSort}}`);
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
 
     const sessionTable = SESSION_TABLE;
     const sessionMaterials = `${sessionTable} tbody tr`;

@@ -22,12 +22,12 @@ module('Integration | Component | user search', function(hooks) {
 
 
   test('it renders', async function(assert) {
-    await render(hbs`{{user-search}}`);
+    await render(hbs`<UserSearch />`);
     assert.dom('input').exists({ count: 1 });
   });
 
   test('less than 3 charecters triggers warning', async function(assert) {
-    await render(hbs`{{user-search}}`);
+    await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'ab');
     assert.dom('ul').hasText('keep typing...');
@@ -39,7 +39,7 @@ module('Integration | Component | user search', function(hooks) {
       assert.equal(queryParams['q'], 'search words');
       return schema.users.all();
     });
-    await render(hbs`{{user-search}}`);
+    await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'search words');
 
@@ -48,7 +48,7 @@ module('Integration | Component | user search', function(hooks) {
   });
 
   test('no results displays messages', async function(assert) {
-    await render(hbs`{{user-search}}`);
+    await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'search words');
     assert.dom('li').hasText('no results');
@@ -58,7 +58,7 @@ module('Integration | Component | user search', function(hooks) {
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
-    await render(hbs`{{user-search availableInstructorGroups=availableInstructorGroups}}`);
+    await render(hbs`<UserSearch @availableInstructorGroups={{availableInstructorGroups}} />`);
 
     await fillIn('input', 'group');
     assert.dom('li').hasText('2 Results');
@@ -72,7 +72,7 @@ module('Integration | Component | user search', function(hooks) {
     this.set('action', passedUser => {
       assert.equal(user.id, passedUser.id);
     });
-    await render(hbs`{{user-search addUser=(action action)}}`);
+    await render(hbs`<UserSearch @addUser={{action action}} />`);
 
     await fillIn('input', 'test');
     assert.equal(findAll('li')[1].textContent.replace(/[\t\n\s]+/g, ""), '0guyM.Mc0sonuser@example.edu');
@@ -87,9 +87,10 @@ module('Integration | Component | user search', function(hooks) {
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
 
-    await render(
-      hbs`{{user-search availableInstructorGroups=availableInstructorGroups addInstructorGroup=(action action)}}`
-    );
+    await render(hbs`<UserSearch
+      @availableInstructorGroups={{availableInstructorGroups}}
+      @addInstructorGroup={{action action}}
+    />`);
 
     await fillIn('input', 'group');
     assert.dom(findAll('li')[1]).hasText('instructor group 0');
@@ -113,7 +114,7 @@ module('Integration | Component | user search', function(hooks) {
       lastName: 'person',
     });
 
-    await render(hbs`{{user-search}}`);
+    await render(hbs`<UserSearch />`);
     await fillIn('input', 'person');
 
     const items = '.results li';

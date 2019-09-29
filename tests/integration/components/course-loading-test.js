@@ -7,7 +7,7 @@ module('Integration | Component | course loading', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{course-loading}}`);
+    await render(hbs`<CourseLoading />`);
 
     assert.dom(this.element).hasText('');
   });

@@ -11,16 +11,14 @@ module('Integration | Component | sortable th', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
 
-    await render(hbs`{{sortable-th}}`);
+    await render(hbs`<SortableTh />`);
 
     assert.dom(this.element).hasText('');
 
     // Template block usage:" + EOL +
-    await render(hbs`
-      {{#sortable-th}}
-        template block text
-      {{/sortable-th}}
-    `);
+    await render(hbs`<SortableTh>
+      template block text
+    </SortableTh>`);
 
     assert.dom(this.element).hasText('template block text');
   });

@@ -7,7 +7,7 @@ module('Integration | Component | progress bar', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders at default 0%', async function(assert) {
-    await render(hbs`{{progress-bar}}`);
+    await render(hbs`<ProgressBar />`);
 
     assert.dom(this.element).hasText('0%');
   });
@@ -16,7 +16,7 @@ module('Integration | Component | progress bar', function(hooks) {
 
     this.set('passedValue', 42);
 
-    await render(hbs`{{progress-bar percentage=passedValue}}`);
+    await render(hbs`<ProgressBar @percentage={{passedValue}} />`);
 
     assert.equal(find('.meter').getAttribute('style').trim(), 'width: 42%');
 
@@ -28,7 +28,7 @@ module('Integration | Component | progress bar', function(hooks) {
 
     this.set('passedValue', 42);
 
-    await render(hbs`{{progress-bar percentage=passedValue}}`);
+    await render(hbs`<ProgressBar @percentage={{passedValue}} />`);
 
     assert.dom(this.element).hasText('42%');
 

@@ -14,12 +14,12 @@ module('Integration | Component | click choice buttons', function(hooks) {
     const activeClass = 'active';
 
     this.set('nothing', parseInt);
-    await render(hbs`{{click-choice-buttons
-      action=(action nothing)
-      firstChoicePicked=true
-      buttonContent1='Left Button'
-      buttonContent2='Right Button'
-    }}`);
+    await render(hbs`<ClickChoiceButtons
+      @action={{action nothing}}
+      @firstChoicePicked={{true}}
+      @buttonContent1="Left Button"
+      @buttonContent2="Right Button"
+    />`);
     assert.dom(firstButton).hasText('Left Button', 'first button has correct text');
     assert.dom(secondButton).hasText('Right Button', 'second button has correct text');
     assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
@@ -44,12 +44,12 @@ module('Integration | Component | click choice buttons', function(hooks) {
       this.set('firstChoicePicked', newValue);
       called ++;
     });
-    await render(hbs`{{click-choice-buttons
-      toggle=(action toggle)
-      firstChoicePicked=firstChoicePicked
-      buttonContent1='Left Button'
-      buttonContent2='Right Button'
-    }}`);
+    await render(hbs`<ClickChoiceButtons
+      @toggle={{action toggle}}
+      @firstChoicePicked={{firstChoicePicked}}
+      @buttonContent1="Left Button"
+      @buttonContent2="Right Button"
+    />`);
 
     assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
     assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
@@ -75,12 +75,12 @@ module('Integration | Component | click choice buttons', function(hooks) {
     this.set('toggle', () => {
       assert.ok(false, 'this should not be fired');
     });
-    await render(hbs`{{click-choice-buttons
-      toggle=(action toggle)
-      firstChoicePicked=true
-      buttonContent1='Left Button'
-      buttonContent2='Right Button'
-    }}`);
+    await render(hbs`<ClickChoiceButtons
+      @toggle={{action toggle}}
+      @firstChoicePicked={{true}}
+      @buttonContent1="Left Button"
+      @buttonContent2="Right Button"
+    />`);
 
     assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
     assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');

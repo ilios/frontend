@@ -12,7 +12,7 @@ module('Integration | Component | search box', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{search-box}}`);
+    await render(hbs`<SearchBox />`);
 
     assert.dom('input[type=search]').exists({ count: 1 });
   });
@@ -21,7 +21,7 @@ module('Integration | Component | search box', function(hooks) {
     this.set('search', value => {
       assert.equal(value, '');
     });
-    await render(hbs`{{search-box search=(action search)}}`);
+    await render(hbs`<SearchBox @search={{action search}} />`);
     const searchBoxIcon = '.search-icon';
     await click(searchBoxIcon);
   });
@@ -30,7 +30,7 @@ module('Integration | Component | search box', function(hooks) {
     this.set('search', value => {
       assert.equal(value, 'typed it');
     });
-    await render(hbs`{{search-box search=(action search)}}`);
+    await render(hbs`<SearchBox @search={{action search}} />`);
     await fillIn('input', 'typed it');
   });
 
@@ -39,7 +39,7 @@ module('Integration | Component | search box', function(hooks) {
       assert.ok(true);
     });
     this.set('nothing', () => { });
-    await render(hbs`{{search-box search=(action nothing) clear=(action clear)}}`);
+    await render(hbs`<SearchBox @search={{action nothing}} @clear={{action clear}} />`);
     await fillIn('input', 'typed it');
     await triggerKeyEvent('input', 'keyup', 27);
   });

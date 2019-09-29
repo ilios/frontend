@@ -22,14 +22,14 @@ module('Integration | Component | leadership manager', function(hooks) {
     this.set('administrators', users);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action nothing)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action nothing}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
@@ -46,14 +46,14 @@ module('Integration | Component | leadership manager', function(hooks) {
     this.set('administrators', []);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action nothing)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action nothing}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
@@ -72,14 +72,14 @@ module('Integration | Component | leadership manager', function(hooks) {
       assert.equal(who, user);
     });
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action remove)
-      addDirector=(action nothing)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action remove}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action nothing}}
+    />`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const icon = `${list}:nth-of-type(1) svg`;
 
@@ -99,14 +99,14 @@ module('Integration | Component | leadership manager', function(hooks) {
       assert.equal(who, user);
     });
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action nothing)
-      removeAdministrator=(action remove)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action remove}}
+      @addAdministrator={{action nothing}}
+    />`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const icon = `${list}:nth-of-type(1) svg`;
 
@@ -127,14 +127,14 @@ module('Integration | Component | leadership manager', function(hooks) {
       this.set('directors', [who]);
     });
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action add)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action add}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action nothing}}
+    />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const directorSearch = '[data-test-director-search] input';
@@ -162,14 +162,14 @@ module('Integration | Component | leadership manager', function(hooks) {
       this.set('administrators', [who]);
     });
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action nothing)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action add)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action add}}
+    />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const administratorSearch = '[data-test-administrator-search] input';
@@ -200,14 +200,14 @@ module('Integration | Component | leadership manager', function(hooks) {
     this.set('administrators', users);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{leadership-manager
-      directors=directors
-      administrators=administrators
-      removeDirector=(action nothing)
-      addDirector=(action nothing)
-      removeAdministrator=(action nothing)
-      addAdministrator=(action nothing)
-    }}`);
+    await render(hbs`<LeadershipManager
+      @directors={{directors}}
+      @administrators={{administrators}}
+      @removeDirector={{action nothing}}
+      @addDirector={{action nothing}}
+      @removeAdministrator={{action nothing}}
+      @addAdministrator={{action nothing}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const disabledDirectors = `${directors} .fa-user-times`;

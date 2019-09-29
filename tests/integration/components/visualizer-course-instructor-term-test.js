@@ -10,7 +10,7 @@ module('Integration | Component | visualizer-course-instructor-term', function(h
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{visualizer-course-instructor-term}}`);
+    await render(hbs`<VisualizerCourseInstructorTerm />`);
 
     assert.dom(this.element).hasText('');
   });

@@ -20,7 +20,7 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      sessionDescription: 'Best <strong>Session</strong>For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -58,7 +58,10 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
 
   test('it renders with links enabled', async function (assert) {
     this.set('selectable', true);
-    await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{selectable}} />`);
+    await render(hbs`<IliosCalendarPreWorkEvent
+      @event={{event}}
+      @areEventsSelectable={{selectable}}
+    />`);
     assert.equal(component.title, 'Learn to Learn');
     assert.equal(component.titleUrl, '/events/abc');
     assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
@@ -67,7 +70,10 @@ module('Integration | Component | ilios-calendar-pre-work-event', function(hooks
 
   test('it renders without links enabled', async function (assert) {
     this.set('selectable', false);
-    await render(hbs`<IliosCalendarPreWorkEvent @event={{event}} @areEventsSelectable={{selectable}} />`);
+    await render(hbs`<IliosCalendarPreWorkEvent
+      @event={{event}}
+      @areEventsSelectable={{selectable}}
+    />`);
     assert.equal(component.title, 'Learn to Learn');
     assert.notOk(component.titleUrlIsPresent);
     assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);

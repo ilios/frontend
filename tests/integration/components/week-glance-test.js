@@ -93,13 +93,13 @@ module('Integration | Component | week glance', function(hooks) {
     assert.expect(5);
     this.owner.register('service:user-events', this.userEventsMock);
     this.set('today', today);
-    await render(hbs`{{week-glance
-      collapsible=false
-      collapsed=false
-      showFullTitle=true
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{false}}
+      @collapsed={{false}}
+      @showFullTitle={{true}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+    />`);
 
     assert.equal(component.title, this.getTitle(true));
 
@@ -115,13 +115,13 @@ module('Integration | Component | week glance', function(hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
-    await render(hbs`{{week-glance
-      collapsible=false
-      collapsed=false
-      showFullTitle=true
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{false}}
+      @collapsed={{false}}
+      @showFullTitle={{true}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+    />`);
     const title = 'h3';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
@@ -139,13 +139,13 @@ module('Integration | Component | week glance', function(hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
-    await render(hbs`{{week-glance
-      collapsible=false
-      collapsed=false
-      showFullTitle=false
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{false}}
+      @collapsed={{false}}
+      @showFullTitle={{false}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+    />`);
     const title = 'h3';
     const expectedTitle = this.getTitle(false);
     await settled();
@@ -159,13 +159,13 @@ module('Integration | Component | week glance', function(hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     this.set('today', today);
-    await render(hbs`{{week-glance
-      collapsible=true
-      collapsed=true
-      showFullTitle=false
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{true}}
+      @collapsed={{true}}
+      @showFullTitle={{false}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+    />`);
     const title = 'h3';
     const body = 'p';
     const expectedTitle = this.getTitle(false);
@@ -186,14 +186,14 @@ module('Integration | Component | week glance', function(hooks) {
     this.set('toggle', value => {
       assert.ok(value);
     });
-    await render(hbs`{{week-glance
-      collapsible=true
-      collapsed=true
-      showFullTitle=false
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-      toggleCollapsed=(action toggle)
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{true}}
+      @collapsed={{true}}
+      @showFullTitle={{false}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+      @toggleCollapsed={{action toggle}}
+    />`);
     const title = 'h3';
     await settled();
     await click(title);
@@ -208,14 +208,14 @@ module('Integration | Component | week glance', function(hooks) {
     this.set('toggle', value => {
       assert.notOk(value);
     });
-    await render(hbs`{{week-glance
-      collapsible=true
-      collapsed=false
-      showFullTitle=false
-      year=(moment-format today 'YYYY')
-      week=(moment-format today 'W')
-      toggleCollapsed=(action toggle)
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{true}}
+      @collapsed={{false}}
+      @showFullTitle={{false}}
+      @year={{moment-format today "YYYY"}}
+      @week={{moment-format today "W"}}
+      @toggleCollapsed={{action toggle}}
+    />`);
     const title = 'h3';
     await settled();
     await click(title);
@@ -257,13 +257,13 @@ module('Integration | Component | week glance', function(hooks) {
     let year = today.format('YYYY');
     this.set('year', year);
     this.set('today', today);
-    await render(hbs`{{week-glance
-      collapsible=false
-      collapsed=false
-      showFullTitle=true
-      year=year
-      week=(moment-format today 'W')
-    }}`);
+    await render(hbs`<WeekGlance
+      @collapsible={{false}}
+      @collapsed={{false}}
+      @showFullTitle={{true}}
+      @year={{year}}
+      @week={{moment-format today "W"}}
+    />`);
     const title = 'h3';
     const body = 'p';
     const expectedTitle = this.getTitle(true);

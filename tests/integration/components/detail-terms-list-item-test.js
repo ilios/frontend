@@ -16,7 +16,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
     });
 
     this.set('term', term);
-    await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
 
   });
@@ -30,7 +30,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
     });
 
     this.set('term', term);
-    await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.dom('.muted').hasText('Lorem »');
     assert.dom(findAll('.muted')[1]).hasText('Ipsum »');
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
@@ -49,7 +49,11 @@ module('Integration | Component | detail terms list item', function(hooks) {
     this.set('remove', val => {
       assert.equal(term, val);
     });
-    await render(hbs`{{detail-terms-list-item term=term canEdit=true remove=(action remove)}}`);
+    await render(hbs`<DetailTermsListItem
+      @term={{term}}
+      @canEdit={{true}}
+      @remove={{action remove}}
+    />`);
     assert.dom('.fa-times').exists({ count: 1 });
     await click('.fa-times');
   });
@@ -63,7 +67,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
     });
 
     this.set('term', term);
-    await render(hbs`{{detail-terms-list-item term=term canEdit=true}}`);
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{true}} />`);
     assert.dom('.inactive').hasText('(inactive)');
     assert.dom('.fa-times').exists({ count: 1 });
   });
@@ -77,7 +81,7 @@ module('Integration | Component | detail terms list item', function(hooks) {
     });
 
     this.set('term', term);
-    await render(hbs`{{detail-terms-list-item term=term canEdit=false}}`);
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.dom('.inactive').doesNotExist();
     assert.dom('.fa-times').doesNotExist();
   });

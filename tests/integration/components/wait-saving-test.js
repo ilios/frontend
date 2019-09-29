@@ -12,7 +12,7 @@ module('Integration | Component | wait saving', function(hooks) {
     assert.expect(1);
     let modalDialogService = this.owner.lookup('service:modal-dialog');
     modalDialogService.set('destinationElementId', 'modal-testing-div');
-    await render(hbs`<div id='modal-testing-div'></div>{{wait-saving}}`);
+    await render(hbs`<div id="modal-testing-div"></div><WaitSaving />`);
 
     assert.dom(this.element).hasText('saving... one moment...');
   });

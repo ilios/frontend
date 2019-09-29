@@ -10,12 +10,12 @@ module('Integration | Component | weekly events', function(hooks) {
     this.set('year', 2017);
     this.set('expandedWeeks', []);
     this.set('nothing', parseInt);
-    await render(hbs`{{weekly-events
-      year=year
-      expandedWeeks=expandedWeeks
-      setYear=(action nothing)
-      toggleOpenWeek=(action nothing)
-    }}`);
+    await render(hbs`<WeeklyEvents
+      @year={{year}}
+      @expandedWeeks={{expandedWeeks}}
+      @setYear={{action nothing}}
+      @toggleOpenWeek={{action nothing}}
+    />`);
     const yearPickers = '.year';
     const weeks = '.week-glance';
 
@@ -35,12 +35,12 @@ module('Integration | Component | weekly events', function(hooks) {
       assert.equal(2018, newYear, 'we moved forward');
       this.set('year', newYear);
     });
-    await render(hbs`{{weekly-events
-      year=year
-      expandedWeeks=expandedWeeks
-      setYear=(action setYear)
-      toggleOpenWeek=(action nothing)
-    }}`);
+    await render(hbs`<WeeklyEvents
+      @year={{year}}
+      @expandedWeeks={{expandedWeeks}}
+      @setYear={{action setYear}}
+      @toggleOpenWeek={{action nothing}}
+    />`);
     const yearPickers = '.year';
     const moveForward = `${yearPickers}:nth-of-type(1) .fa-forward`;
     const weeks = '.week-glance';
@@ -63,12 +63,12 @@ module('Integration | Component | weekly events', function(hooks) {
       assert.equal(2016, newYear, 'we moved backward');
       this.set('year', newYear);
     });
-    await render(hbs`{{weekly-events
-      year=year
-      expandedWeeks=expandedWeeks
-      setYear=(action setYear)
-      toggleOpenWeek=(action nothing)
-    }}`);
+    await render(hbs`<WeeklyEvents
+      @year={{year}}
+      @expandedWeeks={{expandedWeeks}}
+      @setYear={{action setYear}}
+      @toggleOpenWeek={{action nothing}}
+    />`);
     const yearPickers = '.year';
     const moveBackward = `${yearPickers}:nth-of-type(1) .fa-backward`;
     const weeks = '.week-glance';

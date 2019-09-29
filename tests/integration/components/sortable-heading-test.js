@@ -10,16 +10,14 @@ module('Integration | Component | sortable-heading', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{sortable-heading}}`);
+    await render(hbs`<SortableHeading />`);
 
     assert.dom(this.element).hasText('');
 
     // Template block usage:
-    await render(hbs`
-      {{#sortable-heading}}
-        template block text
-      {{/sortable-heading}}
-    `);
+    await render(hbs`<SortableHeading>
+      template block text
+    </SortableHeading>`);
 
     assert.dom(this.element).hasText('template block text');
   });

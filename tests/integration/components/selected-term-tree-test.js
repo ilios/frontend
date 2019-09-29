@@ -27,11 +27,11 @@ module('Integration | Component | selected term tree', function(hooks) {
     this.set('tree', tree);
     this.set('selectedTerms', [tree[1].children[0]]);
     this.set('toggle', () => { });
-    await render(hbs`{{selected-term-tree
-      terms=tree
-      selectedTerms=selectedTerms
-      toggle=(action toggle)
-    }}`);
+    await render(hbs`<SelectedTermTree
+      @terms={{tree}}
+      @selectedTerms={{selectedTerms}}
+      @toggle={{action toggle}}
+    />`);
     const topTerms = 'ul:nth-of-type(1) > li';
     const firstTopTerm = `${topTerms}:nth-of-type(1)`;
     const firstTopTermCheckbox = `${firstTopTerm} input`;
@@ -56,11 +56,11 @@ module('Integration | Component | selected term tree', function(hooks) {
     this.set('toggle', (term) => {
       assert.equal(term, tree[1]);
     });
-    await render(hbs`{{selected-term-tree
-      terms=tree
-      selectedTerms=selectedTerms
-      toggle=(action toggle)
-    }}`);
+    await render(hbs`<SelectedTermTree
+      @terms={{tree}}
+      @selectedTerms={{selectedTerms}}
+      @toggle={{action toggle}}
+    />`);
     const topTerms = 'ul:nth-of-type(1) > li';
     const secondTopTerm = `${topTerms}:nth-of-type(2)`;
     const secondTermCheckbox = `${secondTopTerm} input:nth-of-type(1)`;
@@ -75,11 +75,11 @@ module('Integration | Component | selected term tree', function(hooks) {
     this.set('toggle', (term) => {
       assert.equal(term, tree[1]);
     });
-    await render(hbs`{{selected-term-tree
-      terms=tree
-      selectedTerms=selectedTerms
-      toggle=(action toggle)
-    }}`);
+    await render(hbs`<SelectedTermTree
+      @terms={{tree}}
+      @selectedTerms={{selectedTerms}}
+      @toggle={{action toggle}}
+    />`);
     const topTerms = 'ul:nth-of-type(1) > li';
     const secondTopTerm = `${topTerms}:nth-of-type(2)`;
     const secondTermCheckbox = `${secondTopTerm} span:nth-of-type(1)`;

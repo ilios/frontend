@@ -13,7 +13,7 @@ module('Integration | Component | toggle yesno', function(hooks) {
     const state = 'input';
 
     this.set('value', true);
-    await render(hbs`{{toggle-yesno yes=value action='clicked'}}`);
+    await render(hbs`<ToggleYesno @yes={{value}} @action="clicked" />`);
 
     assert.dom(state).isChecked();
 
@@ -32,7 +32,7 @@ module('Integration | Component | toggle yesno', function(hooks) {
       assert.equal(!value, val);
       this.set('value', val);
     });
-    await render(hbs`{{toggle-yesno yes=value toggle=(action toggle)}}`);
+    await render(hbs`<ToggleYesno @yes={{value}} @toggle={{action toggle}} />`);
     assert.dom(state).isChecked();
     await click(element);
 

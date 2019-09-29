@@ -122,7 +122,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     });
 
     this.set('event', ourEvent);
-    await render(hbs`{{single-event event=event}}`);
+    await render(hbs`<SingleEvent @event={{event}} />`);
 
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test course'), 'course title is displayed');
     assert.ok(this.element.querySelector('.single-event-summary').textContent.includes('test session'), 'session title is displayed');
@@ -181,7 +181,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`{{single-event event=event}}`);
+    await render(hbs`<SingleEvent @event={{event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
     assert.equal(component.offeredAt, today.format('dddd, MMMM Do YYYY, h:mm a'));
   });
@@ -213,7 +213,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`{{single-event event=event}}`);
+    await render(hbs`<SingleEvent @event={{event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
     const formatedDate = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
     assert.equal(component.offeredAt, `Due Before postrequisite session (${formatedDate})`);
@@ -251,7 +251,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`{{single-event event=event}}`);
+    await render(hbs`<SingleEvent @event={{event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
     assert.equal(component.preWork.length, 2);
     assert.equal(component.preWork[0].title, 'prework 1');
@@ -288,7 +288,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`{{single-event event=event}}`);
+    await render(hbs`<SingleEvent @event={{event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
     const formattedTomorrow = tomorrow.format('dddd, MMMM Do YYYY, h:mm a');
     const formattedToday = today.format('dddd, MMMM Do YYYY, h:mm a');

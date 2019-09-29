@@ -8,7 +8,7 @@ module('Integration | Component | html editor', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{html-editor}}`);
+    await render(hbs`<HtmlEditor />`);
 
     await later(() => {
       assert.dom(this.element).hasText('BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');

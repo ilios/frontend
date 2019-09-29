@@ -7,7 +7,7 @@ module('Integration | Component | back link', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{back-link}}`);
+    await render(hbs`<BackLink />`);
 
     assert.dom(this.element).hasText('Back');
   });
