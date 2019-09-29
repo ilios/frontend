@@ -124,10 +124,10 @@ module('Integration | Component | user search', function(hooks) {
     const fourth = `${items}:nth-of-type(4)`;
     const fifth = `${items}:nth-of-type(5)`;
 
-    assert.ok(find(first).textContent.includes('4 Results'));
-    assert.ok(find(second).textContent.includes('person'));
-    assert.ok(find(third).textContent.includes('3'));
-    assert.ok(find(fourth).textContent.includes('10'));
-    assert.ok(find(fifth).textContent.includes('20'));
+    assert.dom(first).hasText('4 Results');
+    assert.dom(second).includesText('person');
+    assert.dom(third).includesText('3');
+    assert.dom(fourth).includesText('10');
+    assert.dom(fifth).includesText('20');
   });
 });
