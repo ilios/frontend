@@ -16,7 +16,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     let date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
-    await render(hbs`{{ilios-calendar-week date=date}}`);
+    await render(hbs`<IliosCalendarWeek @date={{date}} />`);
     assert.equal(this.element.textContent.trim().search(/^Week of September/), 0);
     assert.equal(this.element.querySelectorAll('.event').length, 0);
   });
@@ -33,11 +33,11 @@ module('Integration | Component | ilios calendar week', function(hooks) {
       assert.equal(newView, 'day');
     };
 
-    await render(hbs`{{ilios-calendar-week
-      date=date
-      changeDate=(action 'changeDate')
-      changeView=(action 'changeView')
-    }}`);
+    await render(hbs`<IliosCalendarWeek
+      @date={{date}}
+      @changeDate={{action "changeDate"}}
+      @changeView={{action "changeView"}}
+    />`);
 
     const weekTitles = '.week-titles .cell';
     const sunday = `${weekTitles}:nth-of-type(2)`;
@@ -55,12 +55,12 @@ module('Integration | Component | ilios calendar week', function(hooks) {
       assert.ok(false, 'this should never be called');
     });
 
-    await render(hbs`{{ilios-calendar-week
-      date=date
-      areDaysSelectable=false
-      changeDate=(action nothing)
-      changeView=(action nothing)
-    }}`);
+    await render(hbs`<IliosCalendarWeek
+      @date={{date}}
+      @areDaysSelectable={{false}}
+      @changeDate={{action nothing}}
+      @changeView={{action nothing}}
+    />`);
 
     const weekTitles = '.week-titles .cell';
     const sunday = `${weekTitles}:nth-of-type(2)`;

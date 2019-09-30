@@ -20,7 +20,11 @@ module('Integration | Component | selectable terms list item', function(hooks) {
       assert.equal(term, term1);
     });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term remove=(action remove)}}`);
+    await render(hbs`<SelectableTermsListItem
+      @selectedTerms={{selectedTerms}}
+      @term={{term}}
+      @remove={{action remove}}
+    />`);
 
     assert.dom('.selected').exists({ count: 1 });
     assert.dom('.actions .fa-times').exists({ count: 1 });
@@ -40,7 +44,11 @@ module('Integration | Component | selectable terms list item', function(hooks) {
       assert.equal(term, term1);
     });
 
-    await render(hbs`{{selectable-terms-list-item selectedTerms=selectedTerms term=term add=(action add)}}`);
+    await render(hbs`<SelectableTermsListItem
+      @selectedTerms={{selectedTerms}}
+      @term={{term}}
+      @add={{action add}}
+    />`);
 
     assert.dom('.selected').doesNotExist();
     assert.dom('.actions .fa-plus').exists({ count: 1 });

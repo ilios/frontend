@@ -7,7 +7,7 @@ module('Integration | Component | ilios calendar event month', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{ilios-calendar-event-month}}`);
+    await render(hbs`<IliosCalendarEventMonth />`);
 
     assert.dom(this.element).hasText('');
   });

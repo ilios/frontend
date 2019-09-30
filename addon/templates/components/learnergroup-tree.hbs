@@ -10,15 +10,18 @@
   <ul>
     {{#if (is-fulfilled learnerGroup.children)}}
       {{#each (sort-by "title" (await learnerGroup.children)) as |child|}}
-        {{learnergroup-tree
-          learnerGroup=child
-          selectedGroups=selectedGroups
-          filter=filter
-          add=(action add)
-        }}
+        <LearnergroupTree
+          @learnerGroup={{child}}
+          @selectedGroups={{selectedGroups}}
+          @filter={{filter}}
+          @add={{action add}}
+        />
       {{/each}}
     {{else}}
-      <li>{{loading-spinner}}</li>
+      <li>
+        <LoadingSpinner />
+      </li>
     {{/if}}
   </ul>
 {{/if}}
+

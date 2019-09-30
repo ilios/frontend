@@ -1,16 +1,16 @@
 {{#if (and isEditing (is-fulfilled offering.session.course.cohorts))}}
-  {{offering-form
-    showRoom=true
-    showInstructors=true
-    cohorts=(await offering.session.course.cohorts)
-    courseStartDate=(await offering.session.course.startDate)
-    courseEndDate=(await offering.session.course.startDate)
-    close=(toggle "isEditing" this)
-    save=(action "save")
-    smallGroupMode=false
-    offering=offering
-    session=(await offering.session)
-  }}
+  <OfferingForm
+    @showRoom={{true}}
+    @showInstructors={{true}}
+    @cohorts={{await offering.session.course.cohorts}}
+    @courseStartDate={{await offering.session.course.startDate}}
+    @courseEndDate={{await offering.session.course.startDate}}
+    @close={{toggle "isEditing" this}}
+    @save={{action "save"}}
+    @smallGroupMode={{false}}
+    @offering={{offering}}
+    @session={{await offering.session}}
+  />
 {{else}}
   <div class="offering-manager-learner-groups">
     <ul>
@@ -18,25 +18,36 @@
         <li>
           {{learnerGroup.title}}
           {{#if
-            (and (not learnerGroup.isTopLevelGroup) (is-fulfilled learnerGroup.allParents))
+            (and
+              (not learnerGroup.isTopLevelGroup)
+              (is-fulfilled learnerGroup.allParents)
+            )
           }}
-            {{#attach-tooltip lazy-render=true animation="shift"}}
+            {{#attach-tooltip lazyRender=true animation="shift"}}
               {{join " > " (map-by "title" (await learnerGroup.allParents))}}
             {{/attach-tooltip}}
           {{/if}}
         </li>
       {{else}}
-        <li>{{fa-icon icon="users"}}</li>
+        <li>
+          <FaIcon @icon="users" />
+        </li>
       {{/each}}
     </ul>
   </div>
-  <div class="offering-manager-location">{{offering.room}}</div>
+  <div class="offering-manager-location">
+    {{offering.room}}
+  </div>
   <div class="offering-manager-instructors">
     <ul>
       {{#each (await offering.allInstructors) as |instructor|}}
-        <li data-test-instructor>{{instructor.fullName}}</li>
+        <li data-test-instructor>
+          {{instructor.fullName}}
+        </li>
       {{else}}
-        <li>{{fa-icon icon="user-plus"}}</li>
+        <li>
+          <FaIcon @icon="user-plus" />
+        </li>
       {{/each}}
     </ul>
   </div>
@@ -47,30 +58,35 @@
         role="button"
         {{action (toggle "isEditing" this)}}
       >
-        {{fa-icon icon="edit" class="enabled"}}
+        <FaIcon @icon="edit" class="enabled" />
       </span>
       {{#if (await userCanDelete)}}
-        <span
-          class="clickable remove"
-          role="button"
-          {{action "confirmRemove"}}
-        >
-          {{fa-icon icon="trash" class="enabled"}}
+        <span class="clickable remove" role="button" {{action "confirmRemove"}}>
+          <FaIcon @icon="trash" class="enabled" />
         </span>
       {{else}}
-        {{fa-icon icon="trash" class="disabled"}}
+        <FaIcon @icon="trash" class="disabled" />
       {{/if}}
     </div>
   {{/if}}
   {{#if showRemoveConfirmation class="vertical"}}
     <div class="confirm-removal">
       <div class="confirm-message">
-        {{t "general.confirmRemove" learnerGroupCount=offering.learnerGroups.length}} <br>
+        {{t
+          "general.confirmRemove"
+          learnerGroupCount=offering.learnerGroups.length
+        }}
+        <br>
         <div class="confirm-buttons">
-          <button {{action "remove"}} class="remove text">{{t "general.yes"}}</button>
-          <button {{action "cancelRemove"}} class="cancel text">{{t "general.cancel"}}</button>
+          <button class="remove text" {{action "remove"}}>
+            {{t "general.yes"}}
+          </button>
+          <button class="cancel text" {{action "cancelRemove"}}>
+            {{t "general.cancel"}}
+          </button>
         </div>
       </div>
     </div>
   {{/if}}
 {{/if}}
+

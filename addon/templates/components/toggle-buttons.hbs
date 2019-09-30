@@ -5,7 +5,9 @@
   checked={{eq firstOptionSelected true}}
   onclick={{action "firstChoice"}}
 >
-<label for={{concat "first-toggle-" elementId}}>{{firstLabel}}</label>
+<label for={{concat "first-toggle-" elementId}}>
+  {{firstLabel}}
+</label>
 <input
   type="radio"
   id={{concat "second-toggle-" elementId}}
@@ -13,4 +15,7 @@
   checked={{eq firstOptionSelected false}}
   onclick={{action "secondChoice"}}
 >
-<label for={{concat "second-toggle-" elementId}}>{{secondLabel}}</label>
+<label for={{concat "second-toggle-" elementId}}>
+  {{secondLabel}}
+</label>
+

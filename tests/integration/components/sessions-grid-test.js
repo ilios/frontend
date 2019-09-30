@@ -12,11 +12,11 @@ module('Integration | Component | sessions-grid', function(hooks) {
     this.set('sessions', []);
     this.set('sortBy', 'title');
     this.set('setSortBy', () => { });
-    await render(hbs`{{sessions-grid
-      sessions=sessions
-      sortBy=sortBy
-      setSortBy=(action setSortBy)
-    }}`);
+    await render(hbs`<SessionsGrid
+      @sessions={{sessions}}
+      @sortBy={{sortBy}}
+      @setSortBy={{action setSortBy}}
+    />`);
 
     assert.dom(this.element).hasText('');
   });
@@ -34,12 +34,12 @@ module('Integration | Component | sessions-grid', function(hooks) {
     this.set('expandSession', (s) => {
       assert.equal(s, session);
     });
-    await render(hbs`{{sessions-grid
-      sessions=sessions
-      sortBy=sortBy
-      setSortBy=(action setSortBy)
-      expandSession=(action expandSession)
-    }}`);
+    await render(hbs`<SessionsGrid
+      @sessions={{sessions}}
+      @sortBy={{sortBy}}
+      @setSortBy={{action setSortBy}}
+      @expandSession={{action expandSession}}
+    />`);
 
     await click('[data-test-expand-collapse-control] svg');
   });
@@ -58,12 +58,12 @@ module('Integration | Component | sessions-grid', function(hooks) {
     this.set('expandSession', () => {
       assert.ok(false);
     });
-    await render(hbs`{{sessions-grid
-      sessions=sessions
-      sortBy=sortBy
-      setSortBy=(action setSortBy)
-      expandSession=(action expandSession)
-    }}`);
+    await render(hbs`<SessionsGrid
+      @sessions={{sessions}}
+      @sortBy={{sortBy}}
+      @setSortBy={{action setSortBy}}
+      @expandSession={{action expandSession}}
+    />`);
 
     await click('[data-test-expand-collapse-control] svg');
   });

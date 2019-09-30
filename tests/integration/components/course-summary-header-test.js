@@ -37,7 +37,7 @@ module('Integration | Component | course summary header', function(hooks) {
       isSchedule: false,
     });
     this.set('course', course);
-    await render(hbs`{{course-summary-header course=course}}`);
+    await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const title = 'h2';
     const actions = '.course-summary-actions';
     const materialsIcon = `${actions} a:nth-of-type(1) svg`;
@@ -83,7 +83,7 @@ module('Integration | Component | course summary header', function(hooks) {
       endDate: new Date(2020, 11, 11, 12),
     });
     this.set('course', course);
-    await render(hbs`{{course-summary-header course=course}}`);
+    await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const printIcon = `${actions}:nth-of-type(1) svg`;
     const rolloverIcon = `${actions}:nth-of-type(2) svg`;
@@ -106,7 +106,7 @@ module('Integration | Component | course summary header', function(hooks) {
       endDate: new Date(2020, 11, 11, 12),
     });
     this.set('course', course);
-    await render(hbs`{{course-summary-header course=course}}`);
+    await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
     const printIcon = `${actions}:nth-of-type(2) svg`;
@@ -138,7 +138,7 @@ module('Integration | Component | course summary header', function(hooks) {
       endDate: new Date(2020, 11, 11, 12),
     });
     this.set('course', course);
-    await render(hbs`{{course-summary-header course=course}}`);
+    await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
     const printIcon = `${actions}:nth-of-type(2) svg`;

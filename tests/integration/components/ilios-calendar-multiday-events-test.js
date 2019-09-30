@@ -10,7 +10,7 @@ module('Integration | Component | ilios calendar multiday events', function(hook
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    this.render(hbs`{{ilios-calendar-multiday-events}}`);
+    this.render(hbs`<IliosCalendarMultidayEvents />`);
 
     assert.dom(this.element).hasText('');
   });

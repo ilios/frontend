@@ -1,4 +1,6 @@
-{{moment-format event.startDate "M/D/YY h:mma"}} - {{moment-format event.endDate "M/D/YY h:mma"}}
+{{moment-format event.startDate "M/D/YY h:mma"}}
+-
+{{moment-format event.endDate "M/D/YY h:mma"}}
 <span
   class={{if (and clickable isEventSelectable) "clickable"}}
   role="button"
@@ -8,3 +10,4 @@
   {{event.name}}
 </span>
 {{event.location}}
+

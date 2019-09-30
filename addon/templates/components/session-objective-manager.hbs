@@ -2,10 +2,11 @@
   {{! template-lint-disable no-triple-curlies}}
   {{{sessionObjective.title}}}
 </div>
-
 {{#if (await showObjectiveList) class="vertical"}}
   <div class="parent-picker">
-    <h5>{{get (await course) "title"}}</h5>
+    <h5>
+      {{get (await course) "title"}}
+    </h5>
     <ul>
       {{#each (await proxiedObjectives) as |objective|}}
         {{#if objective.selected}}
@@ -14,16 +15,12 @@
             role="button"
             {{action "removeParent" objective}}
           >
-            {{input type="checkbox" checked=true}}
+            <Input @type="checkbox" @checked={{true}} />
             {{objective.textTitle}}
           </li>
         {{else}}
-          <li
-            class="clickable"
-            role="button"
-            {{action "addParent" objective}}
-          >
-            {{input type="checkbox" checked=false}}
+          <li class="clickable" role="button" {{action "addParent" objective}}>
+            <Input @type="checkbox" @checked={{false}} />
             {{objective.textTitle}}
           </li>
         {{/if}}
@@ -37,3 +34,4 @@
     </p>
   </div>
 {{/if}}
+

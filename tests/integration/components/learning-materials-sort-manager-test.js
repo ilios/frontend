@@ -75,7 +75,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
 
     this.set('subject', subject);
 
-    await render(hbs`{{learning-materials-sort-manager subject=subject}}`);
+    await render(hbs`<LearningMaterialsSortManager @subject={{subject}} />`);
 
     return settled().then(() => {
       assert.dom('.draggable-object').exists({ count: 2 });
@@ -124,7 +124,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
       assert.ok(true, 'Cancel action was invoked correctly.');
     });
 
-    await render(hbs`{{learning-materials-sort-manager subject=subject cancel=(action cancel)}}`);
+    await render(hbs`<LearningMaterialsSortManager @subject={{subject}} @cancel={{action cancel}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigcancel');
@@ -162,7 +162,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
       assert.ok(data.includes(clm2));
     });
 
-    await render(hbs`{{learning-materials-sort-manager subject=subject save=(action save)}}`);
+    await render(hbs`<LearningMaterialsSortManager @subject={{subject}} @save={{action save}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigadd');

@@ -14,7 +14,7 @@ module('Integration | Component | learningmaterial search', function(hooks) {
   test('search shows results', async function(assert) {
     assert.expect(1);
     this.server.createList('learning-material', 2);
-    await render(hbs`{{learningmaterial-search}}`);
+    await render(hbs`<LearningmaterialSearch />`);
     await component.search('material');
     assert.equal(component.searchResults.length, 2);
   });
@@ -22,7 +22,7 @@ module('Integration | Component | learningmaterial search', function(hooks) {
   test('empty search clears results', async function(assert) {
     assert.expect(2);
     this.server.createList('learning-material', 2);
-    await render(hbs`{{learningmaterial-search}}`);
+    await render(hbs`<LearningmaterialSearch />`);
     await component.search('    material    ');
     assert.equal(component.searchResults.length, 2);
     await component.search('        ');

@@ -1,7 +1,6 @@
-{{#el-weekly-calendar date=date events=singleDayEvents as |days|}}
+<ElWeeklyCalendar @date={{date}} @events={{singleDayEvents}} as |days|>
   <div class="row">
-    <div class="cell">
-    </div>
+    <div class="cell"></div>
     <div class="cell title">
       {{t "general.weekOf" date=weekOf}}
     </div>
@@ -21,7 +20,9 @@
   <div class="week">
     <ul class="week-hours">
       {{#each days.firstObject.hours as |hour|}}
-        <li class="week-hour">{{hour.formattedHour}}</li>
+        <li class="week-hour">
+          {{hour.formattedHour}}
+        </li>
       {{/each}}
     </ul>
     {{#each days as |day|}}
@@ -29,17 +30,17 @@
         <li class="event-column">
           {{#each day.events as |event|}}
             {{#if event.isMulti}}
-              {{ilios-calendar-event
-                event=event
-                selectEvent=(action "changeToDayView" event.startDate)
-                clickable=areEventsSelectable
-              }}
+              <IliosCalendarEvent
+                @event={{event}}
+                @selectEvent={{action "changeToDayView" event.startDate}}
+                @clickable={{areEventsSelectable}}
+              />
             {{else}}
-              {{ilios-calendar-event
-                event=event
-                selectEvent=(action "selectEvent" event)
-                clickable=areEventsSelectable
-              }}
+              <IliosCalendarEvent
+                @event={{event}}
+                @selectEvent={{action "selectEvent" event}}
+                @clickable={{areEventsSelectable}}
+              />
             {{/if}}
           {{/each}}
         </li>
@@ -52,12 +53,14 @@
       </ul>
     {{/each}}
   </div>
-{{/el-weekly-calendar}}
+</ElWeeklyCalendar>
+<IliosCalendarPreWorkEvents
+  @events={{ilmPreWorkEvents}}
+  @areEventsSelectable={{areEventsSelectable}}
+/>
+<IliosCalendarMultidayEvents
+  @events={{multiDayEventsList}}
+  @selectEvent={{action "selectEvent"}}
+  @areEventsSelectable={{areDaysSelectable}}
+/>
 
-<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} @areEventsSelectable={{areEventsSelectable}} />
-
-{{ilios-calendar-multiday-events
-  events=multiDayEventsList
-  selectEvent=(action "selectEvent")
-  areEventsSelectable=areDaysSelectable
-}}

@@ -97,7 +97,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
       }
     });
     this.owner.register('service:commonAjax', ajaxMock);
-    await render(hbs`{{dashboard-materials}}`);
+    await render(hbs`<DashboardMaterials />`);
 
     const title = 'h3';
     const table = 'table:nth-of-type(1)';
@@ -216,7 +216,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const title = 'h3';
     const body = 'p';
 
-    await render(hbs`{{dashboard-materials}}`);
+    await render(hbs`<DashboardMaterials />`);
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });

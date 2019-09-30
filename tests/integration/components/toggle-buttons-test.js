@@ -15,14 +15,14 @@ module('Integration | Component | toggle buttons', function(hooks) {
     const secondRadio = 'input:nth-of-type(2)';
 
     this.set('nothing', parseInt);
-    await render(hbs`{{toggle-buttons
-      action=(action nothing)
-      firstOptionSelected=true
-      firstLabel='First'
-      firstIcon='user'
-      secondLabel='Second'
-      secondIcon='expand'
-    }}`);
+    await render(hbs`<ToggleButtons
+      @action={{action nothing}}
+      @firstOptionSelected={{true}}
+      @firstLabel="First"
+      @firstIcon="user"
+      @secondLabel="Second"
+      @secondIcon="expand"
+    />`);
     assert.dom(firstLabel).hasText('First', 'first label has correct text');
     assert.dom(firstRadio).isChecked('first radio is checked');
     assert.dom(firstLabel).hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
@@ -50,12 +50,12 @@ module('Integration | Component | toggle buttons', function(hooks) {
       this.set('firstOptionSelected', newValue);
       called ++;
     });
-    await render(hbs`{{toggle-buttons
-      toggle=(action toggle)
-      firstOptionSelected=firstOptionSelected
-      firstLabel='Left'
-      secondLabel='Right'
-    }}`);
+    await render(hbs`<ToggleButtons
+      @toggle={{action toggle}}
+      @firstOptionSelected={{firstOptionSelected}}
+      @firstLabel="Left"
+      @secondLabel="Right"
+    />`);
 
     await click(second);
     await click(first);
@@ -70,12 +70,12 @@ module('Integration | Component | toggle buttons', function(hooks) {
     this.set('toggle', () => {
       assert.ok(false, 'this should not be fired');
     });
-    await render(hbs`{{toggle-buttons
-      toggle=(action toggle)
-      firstOptionSelected=firstOptionSelected
-      firstLabel='Left'
-      secondLabel='Right'
-    }}`);
+    await render(hbs`<ToggleButtons
+      @toggle={{action toggle}}
+      @firstOptionSelected={{firstOptionSelected}}
+      @firstLabel="Left"
+      @secondLabel="Right"
+    />`);
 
     await click(first);
     assert.equal(this.get('firstOptionSelected'), true);

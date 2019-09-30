@@ -1,50 +1,77 @@
 <div class="title">
   {{t "general.missingItems"}} ({{course.allPublicationIssuesLength}})
 </div>
-
 <div class="course-publicationcheck-content">
   <table>
     <thead>
       <tr>
-        <th>{{t "general.courseTitle"}}</th>
-        <th>{{t "general.cohorts"}}</th>
-        <th>{{t "general.terms"}}</th>
-        <th>{{t "general.objectives"}}</th>
-        <th>{{t "general.meshTerms"}}</th>
+        <th>
+          {{t "general.courseTitle"}}
+        </th>
+        <th>
+          {{t "general.cohorts"}}
+        </th>
+        <th>
+          {{t "general.terms"}}
+        </th>
+        <th>
+          {{t "general.objectives"}}
+        </th>
+        <th>
+          {{t "general.meshTerms"}}
+        </th>
       </tr>
     </thead>
-
     <tbody>
       <tr>
-        <td>{{course.title}}</td>
+        <td>
+          {{course.title}}
+        </td>
         {{#if course.cohorts.length}}
-          <td class="yes">{{t "general.yes"}} ({{course.cohorts.length}})</td>
+          <td class="yes">
+            {{t "general.yes"}} ({{course.cohorts.length}})
+          </td>
         {{else}}
-          <td class="no">{{t "general.no"}}</td>
+          <td class="no">
+            {{t "general.no"}}
+          </td>
         {{/if}}
         {{#if course.terms.length}}
-          <td class="yes">{{t "general.yes"}} ({{course.terms.length}})</td>
+          <td class="yes">
+            {{t "general.yes"}} ({{course.terms.length}})
+          </td>
         {{else}}
-          <td class="no">{{t "general.no"}}</td>
+          <td class="no">
+            {{t "general.no"}}
+          </td>
         {{/if}}
         {{#if @course.objectives.length}}
           <td class="yes">
             {{t "general.yes"}} ({{@course.objectives.length}})
             {{#if this.showUnlinkIcon}}
-              {{fa-icon icon="unlink"
+              <FaIcon
+                @icon="unlink"
                 class="clickable"
-                click=(action "transitionToCourse")}}
+                @click={{action "transitionToCourse"}}
+              />
             {{/if}}
           </td>
         {{else}}
-          <td class="no">{{t "general.no"}}</td>
+          <td class="no">
+            {{t "general.no"}}
+          </td>
         {{/if}}
         {{#if course.meshDescriptors.length}}
-          <td class="yes">{{t "general.yes"}} ({{course.meshDescriptors.length}})</td>
+          <td class="yes">
+            {{t "general.yes"}} ({{course.meshDescriptors.length}})
+          </td>
         {{else}}
-          <td class="no">{{t "general.no"}}</td>
+          <td class="no">
+            {{t "general.no"}}
+          </td>
         {{/if}}
       </tr>
     </tbody>
   </table>
 </div>
+

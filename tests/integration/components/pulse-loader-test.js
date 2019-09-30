@@ -7,7 +7,7 @@ module('Integration | Component | pulse loader', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{pulse-loader}}`);
+    await render(hbs`<PulseLoader />`);
     assert.dom(this.element).hasText('');
   });
 });

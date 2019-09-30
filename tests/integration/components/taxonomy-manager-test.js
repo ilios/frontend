@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -102,14 +102,17 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     this.set('selectedTerms', selectedTerms);
     this.set('nothing', () => {});
 
-    await render(hbs`{{taxonomy-manager subject=subject selectedTerms=selectedTerms add=(action nothing) remove=(action nothing)}}`);
-
-    await settled();
+    await render(hbs`<TaxonomyManager
+      @subject={{subject}}
+      @selectedTerms={{selectedTerms}}
+      @add={{action nothing}}
+      @remove={{action nothing}}
+    />`);
     assert.dom('.detail-terms-list').exists({ count: 2 });
-    assert.ok(find('.detail-terms-list').textContent.indexOf('Foo (Medicine)') !== -1);
+    assert.dom('.detail-terms-list:nth-of-type(1)').includesText('Foo (Medicine)');
     assert.dom('.detail-terms-list:nth-of-type(1) .detail-terms-list-item').hasText('Alpha');
-    assert.dom(findAll('.detail-terms-list:nth-of-type(1) .detail-terms-list-item')[1]).hasText('Beta');
-    assert.ok(find(findAll('.detail-terms-list')[1]).textContent.indexOf('Bar (Medicine)') !== -1);
+    assert.dom('.detail-terms-list:nth-of-type(1) .detail-terms-list-item:nth-of-type(2)').hasText('Beta');
+    assert.dom('.detail-terms-list:nth-of-type(2)').includesText('Bar (Medicine)');
     assert.dom('.detail-terms-list:nth-of-type(2) .detail-terms-list-item').hasText('Gamma');
 
     assert.dom('.vocabulary-picker option').exists({ count: 1 });

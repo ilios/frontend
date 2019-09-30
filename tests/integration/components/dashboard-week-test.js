@@ -84,7 +84,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     assert.expect(5);
     this.owner.register('service:user-events', this.userEventsMock);
 
-    await render(hbs`{{dashboard-week}}`);
+    await render(hbs`<DashboardWeek />`);
     const expectedTitle = getTitle();
     assert.equal(component.weeklyLink, 'All Weeks');
     assert.equal(component.weekGlance.title, expectedTitle);
@@ -98,7 +98,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`{{dashboard-week}}`);
+    await render(hbs`<DashboardWeek />`);
     const expectedTitle = getTitle();
     assert.equal(component.weeklyLink, 'All Weeks');
     assert.equal(component.weekGlance.title, expectedTitle);

@@ -14,7 +14,7 @@ module('Integration | Component | learnergroup tree', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-tree learnerGroup=learnerGroup add=(action nothing)}}`);
+    await render(hbs`<LearnergroupTree @learnerGroup={{learnerGroup}} @add={{action nothing}} />`);
 
     assert.dom(this.element).hasText('');
   });

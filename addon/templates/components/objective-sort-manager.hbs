@@ -1,27 +1,34 @@
 {{#unless loadAttr.isRunning}}
   <div class="actions">
-    <button class="bigadd" {{action "save"}}>{{fa-icon icon="check"}}</button>
-    <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
+    <button class="bigadd" {{action "save"}}>
+      <FaIcon @icon="check" />
+    </button>
+    <button class="bigcancel" {{action "cancel"}}>
+      <FaIcon @icon="undo" />
+    </button>
   </div>
   <div class="content">
-    {{#sortable-objects
-      sortableObjectList=sortableObjectList
-      enableSort=true
-      useSwap=true
-      sortingScope="sortingGroup"
-    }}
+    <SortableObjects
+      @sortableObjectList={{sortableObjectList}}
+      @enableSort={{true}}
+      @useSwap={{true}}
+      @sortingScope="sortingGroup"
+    >
       {{#each sortableObjectList as |item|}}
-        {{#draggable-object
-          content=item
-          isSortable=true
-          sortingScope="sortingGroup"
-        }}
-          {{fa-icon icon="arrows-alt"}}
+        <DraggableObject
+          @content={{item}}
+          @isSortable={{true}}
+          @sortingScope="sortingGroup"
+        >
+          <FaIcon @icon="arrows-alt" />
           <span class="draggable-object-content">
-            <span>{{big-text text=item.title}}</span>
+            <span>
+              <BigText @text={{item.title}} />
+            </span>
           </span>
-        {{/draggable-object}}
+        </DraggableObject>
       {{/each}}
-    {{/sortable-objects}}
+    </SortableObjects>
   </div>
 {{/unless}}
+

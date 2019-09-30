@@ -57,9 +57,12 @@ module('Integration | Component | selectable terms list', function(hooks) {
     this.set('selectedTerms', []);
     this.set('topLevelTerms', topLevelTerms);
     this.set('nothing', () => {});
-    await render(
-      hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
-    );
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{selectedTerms}}
+      @terms={{topLevelTerms}}
+      @add="nothing"
+      @remove="nothing"
+    />`);
 
     const items = findAll('li');
     assert.equal(items.length, 5);
@@ -124,9 +127,12 @@ module('Integration | Component | selectable terms list', function(hooks) {
     this.set('selectedTerms', []);
     this.set('topLevelTerms', topLevelTerms);
     this.set('nothing', () => {});
-    await render(
-      hbs`{{selectable-terms-list selectedTerms=selectedTerms terms=topLevelTerms add='nothing' remove='nothing'}}`
-    );
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{selectedTerms}}
+      @terms={{topLevelTerms}}
+      @add="nothing"
+      @remove="nothing"
+    />`);
 
     const items = findAll('li');
     assert.equal(items.length, 2);

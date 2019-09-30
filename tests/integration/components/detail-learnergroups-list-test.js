@@ -91,7 +91,10 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     this.set('learnerGroups', [tlg1, subGroup1, subSubGroup1, subGroup2]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{detail-learnergroups-list learnerGroups=learnerGroups remove=(action nothing)}}`);
+    await render(hbs`<DetailLearnergroupsList
+      @learnerGroups={{learnerGroups}}
+      @remove={{action nothing}}
+    />`);
     await settled();
 
     assert.dom(set1Legend).hasText('tlg1 ( )');

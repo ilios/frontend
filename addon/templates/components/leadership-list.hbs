@@ -1,8 +1,16 @@
 <table>
   <thead>
     <tr>
-      {{#if showDirectors}}<th>{{t "general.directors"}}</th>{{/if}}
-      {{#if showAdministrators}}<th>{{t "general.administrators"}}</th>{{/if}}
+      {{#if showDirectors}}
+        <th>
+          {{t "general.directors"}}
+        </th>
+      {{/if}}
+      {{#if showAdministrators}}
+        <th>
+          {{t "general.administrators"}}
+        </th>
+      {{/if}}
     </tr>
   </thead>
   <tbody>
@@ -14,15 +22,23 @@
               {{#each (sort-by "lastName" "firstName" directors) as |user|}}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
                   {{/unless}}
-                  <span data-test-name>{{user.fullName}}</span>
+                  <span data-test-name>
+                    {{user.fullName}}
+                  </span>
                 </li>
               {{else}}
-                <li>{{t "general.none"}}</li>
+                <li>
+                  {{t "general.none"}}
+                </li>
               {{/each}}
             {{else}}
-              {{loading-spinner}}
+              <LoadingSpinner />
             {{/if}}
           </ul>
         </td>
@@ -31,18 +47,27 @@
         <td class="text-top" data-test-administrators>
           <ul>
             {{#if (is-array administrators)}}
-              {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
+              {{#each (sort-by "lastName" "firstName" administrators) as |user|
+              }}
                 <li>
                   {{#unless user.enabled}}
-                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
                   {{/unless}}
-                  <span data-test-name>{{user.fullName}}</span>
+                  <span data-test-name>
+                    {{user.fullName}}
+                  </span>
                 </li>
               {{else}}
-                <li>{{t "general.none"}}</li>
+                <li>
+                  {{t "general.none"}}
+                </li>
               {{/each}}
             {{else}}
-              {{loading-spinner}}
+              <LoadingSpinner />
             {{/if}}
           </ul>
         </td>
@@ -50,3 +75,4 @@
     </tr>
   </tbody>
 </table>
+

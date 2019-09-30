@@ -1,46 +1,43 @@
 <section class="calendar-controls">
   <div class="calendar-options-control togglemyschedule">
-    {{toggle-buttons
-      firstOptionSelected=mySchedule
-      firstLabel=(t "general.mySchedule")
-      secondLabel=(t "general.allEvents")
-      toggle=toggleMySchedule
-    }}
+    <ToggleButtons
+      @firstOptionSelected={{mySchedule}}
+      @firstLabel={{t "general.mySchedule"}}
+      @secondLabel={{t "general.allEvents"}}
+      @toggle={{toggleMySchedule}}
+    />
   </div>
-
   <div class="calendar-options-control showfilters">
-    {{toggle-buttons
-      firstOptionSelected=(not showFilters)
-      firstLabel=(t "general.hideFilters")
-      secondLabel=(t "general.showFilters")
-      toggle=toggleShowFilters
-    }}
+    <ToggleButtons
+      @firstOptionSelected={{not showFilters}}
+      @firstLabel={{t "general.hideFilters"}}
+      @secondLabel={{t "general.showFilters"}}
+      @toggle={{toggleShowFilters}}
+    />
   </div>
-
   {{#if showFilters}}
     <div class="calendar-options-control togglecoursefilters">
-      {{toggle-buttons
-        firstOptionSelected=courseFilters
-        firstLabel=(t "general.courseOrType")
-        secondLabel=(t "general.detail")
-        toggle=toggleCourseFilters
-      }}
+      <ToggleButtons
+        @firstOptionSelected={{courseFilters}}
+        @firstLabel={{t "general.courseOrType"}}
+        @secondLabel={{t "general.detail"}}
+        @toggle={{toggleCourseFilters}}
+      />
     </div>
-
     {{#if showClearFilters}}
       <span
         id="calendar-clear-filters"
         class="calendar-clear-filters"
         role="button"
-        {{action @onClearFilters}}>
+        {{action @onClearFilters}}
+      >
         {{t "general.clearFilters"}}
       </span>
     {{/if}}
   {{/if}}
-
   {{#unless mySchedule}}
     <div class="calendar-options-control calendar-school-picker">
-      {{fa-icon icon="university"}}
+      <FaIcon @icon="university" />
       {{#if (await hasMoreThanOneSchool)}}
         <select onchange={{action changeSchool value="target.value"}}>
           {{#each (sort-by "title" (await allSchools)) as |school|}}
@@ -74,14 +71,17 @@
       </select>
     </div>
   {{/if}}
-
   <div class="calendar-filters">
     {{#liquid-if showFilters class="vertical"}}
       {{#liquid-if courseFilters class="crossFade"}}
         <div
           id="calendar-coursefilter"
-          class="calendar-filter-list large-filter-list coursefilter">
-          <h5>{{get (await bestSelectedAcademicYear) "academicYearTitle"}} {{t "general.courses"}}</h5>
+          class="calendar-filter-list large-filter-list coursefilter"
+        >
+          <h5>
+            {{get (await bestSelectedAcademicYear) "academicYearTitle"}}
+            {{t "general.courses"}}
+          </h5>
           {{#if (is-fulfilled courses)}}
             <ul>
               {{#each (await courses) as |course|}}
@@ -90,8 +90,13 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCourses) course}}
-                    {{action @onUpdateCourses course.id on="change"}}>
-                  <span {{action @onUpdateCourses course.id}} class="list-indentation" role="button">
+                    {{action @onUpdateCourses course.id on="change"}}
+                  >
+                  <span
+                    class="list-indentation"
+                    role="button"
+                    {{action @onUpdateCourses course.id}}
+                  >
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
@@ -101,14 +106,16 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon icon="spinner" spin=true}}
+            <FaIcon @icon="spinner" @spin={{true}} />
           {{/if}}
         </div>
-
         <div
           id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter">
-          <h5>{{t "general.sessionTypes"}}</h5>
+          class="calendar-filter-list sessiontypefilter"
+        >
+          <h5>
+            {{t "general.sessionTypes"}}
+          </h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
@@ -117,42 +124,51 @@
                     checked={{is-in (await @selectedSessionTypes) type}}
                     class="checkbox"
                     type="checkbox"
-                    {{action @onUpdateSessionTypes type.id on="change"}}>
+                    {{action @onUpdateSessionTypes type.id on="change"}}
+                  >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateSessionTypes type.id}}>
+                    {{action @onUpdateSessionTypes type.id}}
+                  >
                     {{type.title}}
                   </span>
                 </li>
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon icon="spinner" spin=true}}
+            <FaIcon @icon="spinner" @spin={{true}} />
           {{/if}}
         </div>
-
         <div class="calendar-filter-list vocabularyfilter">
-          <h5>{{t "general.terms"}}</h5>
+          <h5>
+            {{t "general.terms"}}
+          </h5>
           {{#if (is-fulfilled vocabularies)}}
             <ul>
               {{#each (await vocabularies) as |vocabulary|}}
-                <h6>{{vocabulary.title}}</h6>
-                {{selected-term-tree
-                  selectedTerms=(await @selectedTerms)
-                  terms=(await vocabulary.topLevelTerms)
-                  toggle=(action @onUpdateTerms)}}
+                <h6>
+                  {{vocabulary.title}}
+                </h6>
+                <SelectedTermTree
+                  @selectedTerms={{await @selectedTerms}}
+                  @terms={{await vocabulary.topLevelTerms}}
+                  @toggle={{action @onUpdateTerms}}
+                />
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon icon="spinner" spin=true}}
+            <FaIcon @icon="spinner" @spin={{true}} />
           {{/if}}
         </div>
       {{else}}
         <div
           id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter">
-          <h5>{{t "general.sessionTypes"}}</h5>
+          class="calendar-filter-list sessiontypefilter"
+        >
+          <h5>
+            {{t "general.sessionTypes"}}
+          </h5>
           {{#if (is-fulfilled sessionTypes)}}
             <ul>
               {{#each (await sessionTypes) as |type|}}
@@ -161,24 +177,29 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedSessionTypes) type}}
-                    {{action @onUpdateSessionTypes type.id on="change"}}>
+                    {{action @onUpdateSessionTypes type.id on="change"}}
+                  >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateSessionTypes type.id}}>
+                    {{action @onUpdateSessionTypes type.id}}
+                  >
                     {{type.title}}
                   </span>
                 </li>
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon icon="spinner" spin=true}}
+            <FaIcon @icon="spinner" @spin={{true}} />
           {{/if}}
         </div>
         <div
           id="calendar-courselevelfilter"
-          class="calendar-filter-list small-filter-list courselevelfilter">
-          <h5>{{t "general.courseLevels"}}</h5>
+          class="calendar-filter-list small-filter-list courselevelfilter"
+        >
+          <h5>
+            {{t "general.courseLevels"}}
+          </h5>
           <ul>
             {{#each courseLevels as |level|}}
               <li class="clickable">
@@ -186,11 +207,13 @@
                   class="checkbox"
                   type="checkbox"
                   checked={{contains level @selectedCourseLevels}}
-                  {{action @onUpdateCourseLevels level on="change"}}>
+                  {{action @onUpdateCourseLevels level on="change"}}
+                >
                 <span
                   class="list-indentation"
                   role="button"
-                  {{action @onUpdateCourseLevels level}}>
+                  {{action @onUpdateCourseLevels level}}
+                >
                   {{level}}
                 </span>
               </li>
@@ -201,7 +224,10 @@
           id="calendar-cohortfilter"
           class="calendar-filter-list large-filter-list cohortfilter"
         >
-          <h5>{{get (await bestSelectedAcademicYear) "academicYearTitle"}} {{t "general.programAndCohort"}}</h5>
+          <h5>
+            {{get (await bestSelectedAcademicYear) "academicYearTitle"}}
+            {{t "general.programAndCohort"}}
+          </h5>
           {{#if (is-fulfilled cohorts)}}
             <ul>
               {{#each (await cohorts) as |cohort|}}
@@ -210,8 +236,13 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCohorts) cohort}}
-                    {{action @onUpdateCohorts cohort.id on="change"}}>
-                  <span {{action @onUpdateCohorts cohort.id}} class="list-indentation" role="button">
+                    {{action @onUpdateCohorts cohort.id on="change"}}
+                  >
+                  <span
+                    class="list-indentation"
+                    role="button"
+                    {{action @onUpdateCohorts cohort.id}}
+                  >
                     {{#if cohort.title}}
                       {{cohort.title}}
                     {{else}}
@@ -223,46 +254,50 @@
               {{/each}}
             </ul>
           {{else}}
-            {{fa-icon icon="spinner" spin=true}}
+            <FaIcon @icon="spinner" @spin={{true}} />
           {{/if}}
         </div>
       {{/liquid-if}}
     {{/liquid-if}}
   </div>
 </section>
-
 {{#if (gt (get (await activeFilters) "length") 0)}}
   <section class="filters-list">
-    <header class="filters-header">{{t "general.activeFilters"}}:</header>
+    <header class="filters-header">
+      {{t "general.activeFilters"}}:
+    </header>
     <div class="filter-tags">
       {{#each (await filterTags) as |tag|}}
         <span
           class="filter-tag {{tag.class}}"
           role="button"
-          {{action "removeFilter" tag.filter}}>
-          {{tag.name}} {{fa-icon icon="times"}}
+          {{action "removeFilter" tag.filter}}
+        >
+          {{tag.name}}
+          <FaIcon @icon="times" />
         </span>
       {{/each}}
       <span
         id="calendar-clear-filters"
         class="filters-clear-filters"
         role="button"
-        {{action @onClearFilters}}>
+        {{action @onClearFilters}}
+      >
         {{t "general.clearFilters"}}
       </span>
     </div>
   </section>
 {{/if}}
-
 <section class="fullwidth ilios-calendar-container">
-  {{ilios-calendar
-    calendarEventsPromise=filteredEvents
-    selectedDate=calendarDate
-    selectedView=selectedView
-    changeDate=changeDate
-    changeView=changeView
-    selectEvent=selectEvent
-    icsFeedUrl=(await absoluteIcsUri)
-    icsInstructions=icsInstructionsTranslation
-  }}
+  <IliosCalendar
+    @calendarEventsPromise={{filteredEvents}}
+    @selectedDate={{calendarDate}}
+    @selectedView={{selectedView}}
+    @changeDate={{changeDate}}
+    @changeView={{changeView}}
+    @selectEvent={{selectEvent}}
+    @icsFeedUrl={{await absoluteIcsUri}}
+    @icsInstructions={{icsInstructionsTranslation}}
+  />
 </section>
+

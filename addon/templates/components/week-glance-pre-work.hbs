@@ -1,9 +1,9 @@
 <div class="week-glance-pre-work" data-test-week-glance-pre-work>
   <h4>
     <span class="title" data-test-event-title>
-      {{#link-to "events" @events.firstObject.slug}}
+      <LinkTo @route="events" @model={{@events.firstObject.slug}}>
         {{@events.firstObject.name}}
-      {{/link-to}}
+      </LinkTo>
     </span>
     <span class="date" data-test-date>
       {{t
@@ -21,3 +21,4 @@
     {{/if}}
   </h4>
 </div>
+

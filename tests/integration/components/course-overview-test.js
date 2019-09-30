@@ -22,7 +22,7 @@ module('Integration | Component | course overview', function(hooks) {
       clerkshipType: resolve(EmberObject.create())
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course editable=true}}`);
+    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
     assert.notEqual(find('.courseexternalid').textContent.search(/Course ID:/), -1);
     assert.notEqual(find('.courseexternalid').textContent.search(/Click to edit/), -1);
@@ -33,7 +33,7 @@ module('Integration | Component | course overview', function(hooks) {
       clerkshipType: resolve(EmberObject.create()),
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course editable=true}}`);
+    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
@@ -52,7 +52,7 @@ module('Integration | Component | course overview', function(hooks) {
       clerkshipType: resolve(EmberObject.create()),
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course editable=true}}`);
+    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
@@ -82,7 +82,7 @@ module('Integration | Component | course overview', function(hooks) {
       }
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course editable=true}}`);
+    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;
@@ -112,7 +112,7 @@ module('Integration | Component | course overview', function(hooks) {
       }
     });
     this.set('course', course);
-    await render(hbs`{{course-overview course=course editable=true}}`);
+    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
     const item = '.courseexternalid';
     const error = `${item} .validation-error-message`;

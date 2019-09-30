@@ -35,7 +35,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`{{objective-sort-manager subject=subject}}`);
+    await render(hbs`<ObjectiveSortManager @subject={{subject}} />`);
 
     return settled().then(() => {
       assert.dom('.draggable-object').exists({ count: 2 });
@@ -65,7 +65,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
       assert.ok(true, 'Cancel action was invoked correctly.');
     });
 
-    await render(hbs`{{objective-sort-manager subject=subject cancel=(action cancel)}}`);
+    await render(hbs`<ObjectiveSortManager @subject={{subject}} @cancel={{action cancel}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigcancel');
@@ -97,7 +97,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
       assert.ok(data.includes(objective2));
     });
 
-    await render(hbs`{{objective-sort-manager subject=subject save=(action save)}}`);
+    await render(hbs`<ObjectiveSortManager @subject={{subject}} @save={{action save}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigadd');

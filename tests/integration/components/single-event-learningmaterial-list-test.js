@@ -14,7 +14,7 @@ module('Integration | Component | ilios calendar single event learningmaterial l
       {title: 'second one', mimetype: 'audio/wav', absoluteFileUri: 'http://secondlink'},
       {title: 'third one', endDate: new Date('2013-03-01T01:10:00'), isBlanked: true}
     ]);
-    await render(hbs`{{single-event-learningmaterial-list learningMaterials=learningMaterials}}`);
+    await render(hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`);
 
 
     assert.ok(this.element.querySelector('li:nth-of-type(1)').textContent.includes('first one'));
@@ -35,9 +35,7 @@ module('Integration | Component | ilios calendar single event learningmaterial l
     assert.expect(1);
 
     this.set('learningMaterials', []);
-    await render(hbs`{{single-event-learningmaterial-list
-      learningMaterials=learningMaterials
-    }}`);
+    await render(hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`);
 
     assert.dom(this.element.querySelector('.no-content')).hasText('None');
   });

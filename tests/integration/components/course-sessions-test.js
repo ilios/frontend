@@ -21,13 +21,13 @@ module('Integration | Component | course sessions', function(hooks) {
 
     this.set('course', course);
     this.set('nothing', ()=>{});
-    await render(hbs`{{course-sessions
-      course=course
-      sortBy='title'
-      setSortBy=(action nothing)
-      filterBy=null
-      setFilterBy=(action nothing)
-    }}`);
+    await render(hbs`<CourseSessions
+      @course={{course}}
+      @sortBy="title"
+      @setSortBy={{action nothing}}
+      @filterBy={{null}}
+      @setFilterBy={{action nothing}}
+    />`);
 
     assert.dom(title).hasText('Sessions (0)');
   });

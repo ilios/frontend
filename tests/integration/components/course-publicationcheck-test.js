@@ -16,7 +16,7 @@ module('Integration | Component | course-publicationcheck', function(hooks) {
       objectives: [objective1, objective2]
     });
     this.set('model', course);
-    await render(hbs`{{course-publicationcheck course=model}}`);
+    await render(hbs`<CoursePublicationcheck @course={{model}} />`);
     assert.ok(!!find('.fa-unlink'));
   });
 
@@ -26,7 +26,7 @@ module('Integration | Component | course-publicationcheck', function(hooks) {
       objectives: [objective1, objective2]
     });
     this.set('model', course);
-    await render(hbs`{{course-publicationcheck course=model}}`);
+    await render(hbs`<CoursePublicationcheck @course={{model}} />`);
     assert.notOk(!!find('.fa-unlink'));
   });
 });

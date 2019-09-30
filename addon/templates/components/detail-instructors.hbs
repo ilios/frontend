@@ -8,31 +8,37 @@
       {{t "general.instructors"}} ({{titleCount}})
     {{/if}}
   </div>
-
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" {{action "save"}}>{{fa-icon icon="check"}}</button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigadd" {{action "save"}}>
+        <FaIcon @icon="check" />
+      </button>
+      <button class="bigcancel" {{action "cancel"}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if editable}}
-      <button {{action "manage"}}>{{t "general.instructorsManageTitle"}}</button>
+      <button {{action "manage"}}>
+        {{t "general.instructorsManageTitle"}}
+      </button>
     {{/if}}
   </div>
 </div>
 <div class="detail-instructors-content">
   {{#if isManaging class="horizontal"}}
-    {{instructor-selection-manager
-      addInstructor=(action "addInstructorToBuffer")
-      addInstructorGroup=(action "addInstructorGroupToBuffer")
-      removeInstructor=(action "removeInstructorFromBuffer")
-      removeInstructorGroup=(action "removeInstructorGroupFromBuffer")
-      availableInstructorGroups=(await availableInstructorGroups)
-      instructorGroups=instructorGroupBuffer
-      instructors=instructorBuffer
-    }}
+    <InstructorSelectionManager
+      @addInstructor={{action "addInstructorToBuffer"}}
+      @addInstructorGroup={{action "addInstructorGroupToBuffer"}}
+      @removeInstructor={{action "removeInstructorFromBuffer"}}
+      @removeInstructorGroup={{action "removeInstructorGroupFromBuffer"}}
+      @availableInstructorGroups={{await availableInstructorGroups}}
+      @instructorGroups={{instructorGroupBuffer}}
+      @instructors={{instructorBuffer}}
+    />
   {{else}}
-    {{detail-instructors-list
-      instructorGroups=ilmSession.instructorGroups
-      instructors=ilmSession.instructors
-    }}
+    <DetailInstructorsList
+      @instructorGroups={{ilmSession.instructorGroups}}
+      @instructors={{ilmSession.instructors}}
+    />
   {{/if}}
 </div>
+

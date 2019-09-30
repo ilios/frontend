@@ -42,7 +42,12 @@ module('Integration | Component | offering-calendar', function(hooks) {
     this.set('endDate', tomorrow.toDate());
     this.set('session', sessionModel);
     this.set('learnerGroups', [learnerGroupModel]);
-    await render(hbs`{{offering-calendar learnerGroups=learnerGroups session=session startDate=startDate endDate=endDate}}`);
+    await render(hbs`<OfferingCalendar
+      @learnerGroups={{learnerGroups}}
+      @session={{session}}
+      @startDate={{startDate}}
+      @endDate={{endDate}}
+    />`);
     const events = '.ilios-calendar-event';
     assert.dom(events).exists({ count: 4 });
   });

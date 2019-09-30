@@ -1,8 +1,16 @@
 <table>
   <thead>
     <tr>
-      {{#if showDirectors}}<th>{{t "general.directors"}}</th>{{/if}}
-      {{#if showAdministrators}}<th>{{t "general.administrators"}}</th>{{/if}}
+      {{#if showDirectors}}
+        <th>
+          {{t "general.directors"}}
+        </th>
+      {{/if}}
+      {{#if showAdministrators}}
+        <th>
+          {{t "general.administrators"}}
+        </th>
+      {{/if}}
     </tr>
   </thead>
   <tbody>
@@ -12,11 +20,21 @@
           <ul>
             {{#each (sort-by "lastName" "firstName" directors) as |user|}}
               <li>
-                {{fa-icon icon="times" class="clickable remove" click=(action removeDirector user)}}
+                <FaIcon
+                  @icon="times"
+                  class="clickable remove"
+                  @click={{action removeDirector user}}
+                />
                 {{#unless user.enabled}}
-                  {{fa-icon icon="user-times" title=(t "general.disabled") class="disabled-user"}}
+                  <FaIcon
+                    @icon="user-times"
+                    @title={{t "general.disabled"}}
+                    class="disabled-user"
+                  />
                 {{/unless}}
-                <span data-test-name>{{user.fullName}}</span>
+                <span data-test-name>
+                  {{user.fullName}}
+                </span>
               </li>
             {{else}}
               {{t "general.none"}}
@@ -29,15 +47,21 @@
           <ul>
             {{#each (sort-by "lastName" "firstName" administrators) as |user|}}
               <li>
-                {{fa-icon
-                  icon="times"
+                <FaIcon
+                  @icon="times"
                   class="clickable remove"
-                  click=(action removeAdministrator user)
-                }}
+                  @click={{action removeAdministrator user}}
+                />
                 {{#unless user.enabled}}
-                  {{fa-icon icon="user-times" title=(t "general.disabled") class="disabled-user"}}
+                  <FaIcon
+                    @icon="user-times"
+                    @title={{t "general.disabled"}}
+                    class="disabled-user"
+                  />
                 {{/unless}}
-                <span data-test-name>{{user.fullName}}</span>
+                <span data-test-name>
+                  {{user.fullName}}
+                </span>
               </li>
             {{else}}
               {{t "general.none"}}
@@ -49,14 +73,21 @@
     <tr>
       {{#if showDirectors}}
         <td data-test-director-search>
-          {{leadership-search existingUsers=directors selectUser=addDirector}}
+          <LeadershipSearch
+            @existingUsers={{directors}}
+            @selectUser={{addDirector}}
+          />
         </td>
       {{/if}}
       {{#if showAdministrators}}
         <td data-test-administrator-search>
-          {{leadership-search existingUsers=administrators selectUser=addAdministrator}}
+          <LeadershipSearch
+            @existingUsers={{administrators}}
+            @selectUser={{addAdministrator}}
+          />
         </td>
       {{/if}}
     </tr>
   </tbody>
 </table>
+

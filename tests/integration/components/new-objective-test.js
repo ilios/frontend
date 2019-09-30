@@ -9,7 +9,7 @@ module('Integration | Component | new objective', function(hooks) {
   test('it renders', async function(assert) {
     this.set('cancel', () => {});
 
-    await render(hbs`{{new-objective cancel=(action cancel)}}`);
+    await render(hbs`<NewObjective @cancel={{action cancel}} />`);
     let content = this.element.textContent.trim();
     assert.ok(content.includes('New Objective'));
     assert.ok(content.includes('Description'));
@@ -19,7 +19,7 @@ module('Integration | Component | new objective', function(hooks) {
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });
-    await render(hbs`{{new-objective cancel=(action cancel)}}`);
+    await render(hbs`<NewObjective @cancel={{action cancel}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -27,7 +27,7 @@ module('Integration | Component | new objective', function(hooks) {
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });
-    await render(hbs`{{new-objective cancel=(action cancel)}}`);
+    await render(hbs`<NewObjective @cancel={{action cancel}} />`);
     await click('.done');
     let boxes = findAll('.form-data');
     assert.ok(boxes[0].textContent.includes('blank'));

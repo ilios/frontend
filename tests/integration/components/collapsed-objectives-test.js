@@ -65,7 +65,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
 
     this.set('subject', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
 
     assert.dom('.title').hasText('Objectives (3)');
     assert.dom('table tr').exists({ count: 4 });
@@ -89,7 +89,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
       assert.ok(true);
     });
 
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
     await settled();
 
     assert.dom('.title').hasText('Objectives ()');
@@ -105,7 +105,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
 
     this.set('subject', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
     await settled();
 
     assert.dom('.title').hasText('Objectives (1)');
@@ -123,7 +123,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
 
     this.set('subject', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
     await settled();
 
     assert.dom('.title').hasText('Objectives (1)');
@@ -141,7 +141,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
 
     this.set('subject', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
     await settled();
 
     assert.dom('.title').hasText('Objectives (1)');
@@ -159,7 +159,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
 
     this.set('subject', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-objectives subject=subject expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
     await settled();
 
     assert.dom('.title').hasText('Objectives (1)');

@@ -11,13 +11,13 @@ module('Integration | Component | new offering', function(hooks) {
     this.set('nothing', parseInt);
     this.set('today', new Date());
     this.set('cohorts', []);
-    await render(hbs`{{new-offering
-      session=session
-      cohorts=cohorts
-      courseStartDate=today
-      courseEndDate=today
-      close=(action nothing)
-    }}`);
+    await render(hbs`<NewOffering
+      @session={{session}}
+      @cohorts={{cohorts}}
+      @courseStartDate={{today}}
+      @courseEndDate={{today}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom('.new-offering-title').hasText('New Offering');
   });

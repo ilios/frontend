@@ -6,11 +6,13 @@
   data-test-api-version-notice
 >
   <h2>
-    {{fa-icon icon="exclamation-circle"}}
+    <FaIcon @icon="exclamation-circle" />
     {{t "general.apiVersionMismatch"}}
   </h2>
   <div class="details">
-    <p>{{t "general.apiVersionMismatchDetails"}}</p>
+    <p>
+      {{t "general.apiVersionMismatchDetails"}}
+    </p>
     {{#if updateAvailable}}
       <p>
         {{t "general.autoUpdatingSeconds" count=countdownToUpdate}}
@@ -20,7 +22,9 @@
       </p>
     {{/if}}
     {{#if update.isRunning}}
-      <p>{{t "general.updatePending"}}</p>
+      <p>
+        {{t "general.updatePending"}}
+      </p>
     {{/if}}
     {{#if showReloadButton}}
       <p>
@@ -31,3 +35,4 @@
     {{/if}}
   </div>
 </div>
+

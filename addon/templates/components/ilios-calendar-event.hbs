@@ -6,40 +6,40 @@
       interactive=true
       animation="shift"
       class="ilios-calendar-event-tooltip"
-    }}
+     }}
       {{! template-lint-disable no-triple-curlies }}
       {{{tooltipContent}}}
     {{/attach-tooltip}}
     {{#if recentlyUpdated}}
-      {{fa-icon
-        icon="exclamation-circle"
+      <FaIcon
+        @icon="exclamation-circle"
         class="recently-updated-icon"
-        title=(t "general.newUpdates")
-      }}
+        @title={{t "general.newUpdates"}}
+      />
     {{/if}}
-
     {{#unless isMonth}}
       {{#if (not event.isPublished)}}
-        {{fa-icon icon="file-signature"}}
+        <FaIcon @icon="file-signature" />
       {{else if event.isScheduled}}
-        {{fa-icon icon="clock"}}
+        <FaIcon @icon="clock" />
       {{/if}}
     {{/unless}}
     <span class="ilios-calendar-event-time">
       {{#if isIlm}}
         <span class="ilios-calendar-event-start">
-          {{t "general.ilmDue"}}: {{moment-format event.startDate "h:mma"}}
+          {{t "general.ilmDue"}}:
+          {{moment-format event.startDate "h:mma"}}
         </span>
       {{else}}
         <span class="ilios-calendar-event-start">
           {{moment-format event.startDate "h:mma"}}
         </span>
         <span class="ilios-calendar-event-end">
-          - {{moment-format event.endDate "h:mma"}}
+          -
+          {{moment-format event.endDate "h:mma"}}
         </span>
       {{/if}}
     </span>
-
     {{#unless event.isMulti}}
       <span class="ilios-calendar-event-location">
         {{#if event.location.length}}
@@ -47,9 +47,14 @@
         {{/if}}
       </span>
     {{/unless}}
-
     <span class="ilios-calendar-event-name">
-      {{event.name}}{{#if event.isMulti}}, <em>{{t "general.multiple"}}</em>{{/if}}
+      {{event.name}}
+      {{#if event.isMulti}}
+        ,
+        <em>
+          {{t "general.multiple"}}
+        </em>
+      {{/if}}
     </span>
     {{! list instructors in day view, if available }}
     {{#if isDay}}
@@ -59,8 +64,11 @@
         </span>
       {{/if}}
       {{#if event.courseTitle}}
-        <span class="ilios-calendar-event-coursetitle">{{event.courseTitle}}</span>
+        <span class="ilios-calendar-event-coursetitle">
+          {{event.courseTitle}}
+        </span>
       {{/if}}
     {{/if}}
   </div>
 {{/if}}
+

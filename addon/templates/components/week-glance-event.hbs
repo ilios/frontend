@@ -1,30 +1,41 @@
 <div class="event" data-test-week-glance-event>
   <h4 id={{concat "event" @event.slug}}>
-    <span id={{concat "event" @event.slug "title"}} class="title" data-test-event-title>
+    <span
+      id={{concat "event" @event.slug "title"}}
+      class="title"
+      data-test-event-title
+    >
       <LinkTo
         @route="events"
         @model={{@event.slug}}
-        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}}"
+        aria-labelledby="{{concat "event" @event.slug "title"}}
+
+          {{concat "event" @event.slug "date"}}"
       >
         {{@event.name}}
       </LinkTo>
     </span>
     <span id={{concat "event" @event.slug "date"}} class="date" data-test-date>
       {{#if @event.ilmSession}}
-        <span class="ilm-due">{{t "general.dueBy"}}</span>
+        <span class="ilm-due">
+          {{t "general.dueBy"}}
+        </span>
       {{/if}}
       {{moment-format @event.startDate "dddd h:mma"}}
     </span>
   </h4>
   {{#if @event.prerequisites.length}}
     <p class="pre-work" data-test-pre-work>
-      <strong>{{t "general.preWork"}}</strong>:
+      <strong>
+        {{t "general.preWork"}}
+      </strong>
+      :
       <ol>
         {{#each @event.prerequisites as |event|}}
           <li>
-            {{#link-to "events" event.slug}}
+            <LinkTo @route="events" @model={{event.slug}}>
               {{event.name}}
-            {{/link-to}}
+            </LinkTo>
           </li>
         {{/each}}
       </ol>
@@ -41,77 +52,98 @@
     {{/if}}
     <span class="session-attributes" data-test-session-attributes>
       {{#if @event.attireRequired}}
-        {{fa-icon
-          icon="black-tie"
-          prefix="fab"
-          ariaHidden=false
-          title=(t "general.whitecoatsSlashSpecialAttire")
-        }}
+        <FaIcon
+          @icon="black-tie"
+          @prefix="fab"
+          @ariaHidden={{false}}
+          @title={{t "general.whitecoatsSlashSpecialAttire"}}
+        />
       {{/if}}
       {{#if @event.equipmentRequired}}
-        {{fa-icon
-          icon="flask"
-          ariaHidden=false
-          title=(t "general.specialEquipment")
-        }}
+        <FaIcon
+          @icon="flask"
+          @ariaHidden={{false}}
+          @title={{t "general.specialEquipment"}}
+        />
       {{/if}}
       {{#if @event.attendanceRequired}}
-        {{fa-icon
-          icon="calendar-check"
-          ariaHidden=false
-          title=(t "general.attendanceIsRequired")
-        }}
+        <FaIcon
+          @icon="calendar-check"
+          @ariaHidden={{false}}
+          @title={{t "general.attendanceIsRequired"}}
+        />
       {{/if}}
       {{#if @event.supplemental}}
-        {{fa-icon
-          icon="calendar-minus"
-          ariaHidden=false
-          title=(t "general.supplementalCurriculum")
-        }}
+        <FaIcon
+          @icon="calendar-minus"
+          @ariaHidden={{false}}
+          @title={{t "general.supplementalCurriculum"}}
+        />
       {{/if}}
     </span>
   </p>
   {{#if @event.instructors.length}}
     <div class="instructors" data-test-instructors>
-      <label>{{t "general.instructors"}}:</label>
+      <label>
+        {{t "general.instructors"}}:
+      </label>
       {{join ", " (sort-by (action "sortString") @event.instructors)}}
     </div>
   {{/if}}
   {{#if @event.sessionDescription.length}}
     <p class="description" data-test-description>
-      {{big-text text=@event.sessionDescription length=50}}
+      <BigText @text={{@event.sessionDescription}} @length={{50}} />
     </p>
   {{/if}}
   <ul class="learning-materials" data-test-learning-materials>
-    {{#each (filter-by "sessionLearningMaterial" @event.learningMaterials) as |lm index|}}
+    {{#each
+      (filter-by
+        "sessionLearningMaterial" @event.learningMaterials
+      ) as |lm index|
+    }}
       <li class="learning-material" data-test-learning-material>
         {{#if lm.isBlanked}}
-          <span class="lm-type-icon" data-test-type-icon>{{fa-icon icon="clock" title=(t "general.timedRelease")}}</span>
-          <span data-test-material-title>{{lm.title}}</span>
+          <span class="lm-type-icon" data-test-type-icon>
+            <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
+          </span>
+          <span data-test-material-title>
+            {{lm.title}}
+          </span>
         {{else}}
-          {{lm-type-icon type=(lm-type lm) mimetype=lm.mimetype}}
+          <LmTypeIcon @type={{lm-type lm}} @mimetype={{lm.mimetype}} />
           {{#if lm.absoluteFileUri}}
             {{#if (eq lm.mimetype "application/pdf")}}
               <a
-                id={{concat "event" @event.slug "lm" index}}
+                id={{concat "event" @event.slug "lm" index}}
                 href="{{lm.absoluteFileUri}}?inline"
-                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
-                data-test-material-title>
+                aria-labelledby="{{concat "event" @event.slug "lm" index}}
+
+                  {{concat "event" @event.slug "title"}}"
+                data-test-material-title
+              >
                 {{lm.title}}
               </a>
               <a
-                id={{concat "event" @event.slug "lmdownload" index}}
+                id={{concat "event" @event.slug "lmdownload" index}}
                 href={{lm.absoluteFileUri}}
-                aria-labelledby="{{concat "event" @event.slug "lmdownload" index}} {{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
-                target="_blank" rel="noopener"
+                aria-labelledby="{{concat "event" @event.slug "lmdownload" index
+                  }}
+
+                  {{concat "event" @event.slug "lm" index}}
+
+                  {{concat "event" @event.slug "title"}}"
+                target="_blank"
+                rel="noopener"
               >
-                {{fa-icon icon="download" title=(t "general.download")}}
+                <FaIcon @icon="download" @title={{t "general.download"}} />
               </a>
             {{else}}
               <a
-                id={{concat "event" @event.slug "lm" index}}
+                id={{concat "event" @event.slug "lm" index}}
                 href={{lm.absoluteFileUri}}
-                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
+                aria-labelledby="{{concat "event" @event.slug "lm" index}}
+
+                  {{concat "event" @event.slug "title"}}"
                 target="_blank"
                 rel="noopener"
                 data-test-material-title
@@ -121,9 +153,11 @@
             {{/if}}
           {{else if lm.link}}
             <a
-              id={{concat "event" @event.slug "lm" index}}
+              id={{concat "event" @event.slug "lm" index}}
               href={{lm.link}}
-              aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
+              aria-labelledby="{{concat "event" @event.slug "lm" index}}
+
+                {{concat "event" @event.slug "title"}}"
               target="_blank"
               rel="noopener"
               data-test-material-title
@@ -131,23 +165,32 @@
               {{lm.title}}
             </a>
           {{else}}
-            <span data-test-material-title>{{lm.title}}</span>
+            <span data-test-material-title>
+              {{lm.title}}
+            </span>
             <ul data-test-citation>
-              <li><small>{{lm.citation}}</small></li>
+              <li>
+                <small>
+                  {{lm.citation}}
+                </small>
+              </li>
             </ul>
           {{/if}}
           {{#if lm.publicNotes}}
-            <p class="public-notes" data-test-public-notes>{{big-text text=lm.publicNotes length=50}}</p>
+            <p class="public-notes" data-test-public-notes>
+              <BigText @text={{lm.publicNotes}} @length={{50}} />
+            </p>
           {{/if}}
         {{/if}}
         <span class="timed-release-info" data-test-time-release-info>
-          {{timed-release-schedule
-            startDate=lm.startDate
-            endDate=lm.endDate
-            showNoSchedule=false
-          }}
+          <TimedReleaseSchedule
+            @startDate={{lm.startDate}}
+            @endDate={{lm.endDate}}
+            @showNoSchedule={{false}}
+          />
         </span>
       </li>
     {{/each}}
   </ul>
 </div>
+

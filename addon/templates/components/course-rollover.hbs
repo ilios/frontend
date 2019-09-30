@@ -1,13 +1,17 @@
-{{#link-to "course" course}}{{t "general.backToTitle" title=course.title}}{{/link-to}}
-
-
+<LinkTo @route="course" @model={{course}}>
+  {{t "general.backToTitle" title=course.title}}
+</LinkTo>
 <div class="rollover-form">
-  <h3 class="title">{{t "general.courseRollover"}}</h3>
-
-  <p class="rollover-summary">{{t "general.courseRolloverSummary"}}</p>
-
+  <h3 class="title">
+    {{t "general.courseRollover"}}
+  </h3>
+  <p class="rollover-summary">
+    {{t "general.courseRolloverSummary"}}
+  </p>
   <div class="item title">
-    <label>{{t "general.title"}}:</label>
+    <label>
+      {{t "general.title"}}:
+    </label>
     <input
       type="text"
       value={{title}}
@@ -20,16 +24,21 @@
       placeholder={{t "general.courseTitlePlaceholder"}}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "title" "message"}}
+      </span>
     {{/if}}
   </div>
-
   <div class="item year-select">
-    <label>{{t "general.year"}}:</label>
+    <label>
+      {{t "general.year"}}:
+    </label>
     {{#if loadUnavailableYears.isRunning}}
-      {{loading-spinner}}
+      <LoadingSpinner />
     {{else}}
-      <select onchange={{action (perform changeSelectedYear) value="target.value"}}>
+      <select
+        onchange={{action (perform changeSelectedYear) value="target.value"}}
+      >
         {{#each years as |year|}}
           <option
             disabled={{contains year loadUnavailableYears.lastSuccessful.value}}
@@ -45,31 +54,38 @@
       </select>
     {{/if}}
     {{#if
-      (and (v-get this "selectedYear" "isInvalid") (is-in showErrorsFor "selectedYear"))
+      (and
+        (v-get this "selectedYear" "isInvalid")
+        (is-in showErrorsFor "selectedYear")
+      )
     }}
-      <span class="validation-error-message">{{v-get this "selectedYear" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "selectedYear" "message"}}
+      </span>
     {{/if}}
   </div>
-
   <div class="advanced-options">
     <div class="item">
       <label>
-        {{t "general.startDate"}}:<br>
-        <small>({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})</small>
+        {{t "general.startDate"}}:
+        <br>
+        <small>
+          ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
+        </small>
       </label>
-      {{pikaday-input
-        size=10
-        value=startDate
-        minDate=course.startDate
-        format="YYYY-MM-DD"
-        onSelection=(action (mut startDate))
-        options=(hash disableDayFn=disableDayFn course=course)
-      }}
-
+      <PikadayInput
+        @size={{10}}
+        @value={{startDate}}
+        @minDate={{course.startDate}}
+        @format="YYYY-MM-DD"
+        @onSelection={{action (mut startDate)}}
+        @options={{hash disableDayFn=disableDayFn course=course}}
+      />
     </div>
-
     <div class="included">
-      <span class="title">{{t "general.include"}}:</span>
+      <span class="title">
+        {{t "general.include"}}:
+      </span>
       <div class="include">
         <input
           type="checkbox"
@@ -77,25 +93,28 @@
           onclick={{toggle "skipOfferings" this}}
           data-test-skip-offerings
         >
-        <span>{{t "general.offerings"}}</span>
+        <span>
+          {{t "general.offerings"}}
+        </span>
       </div>
     </div>
-
     <div class="cohorts">
-      <span class="title">{{t "general.selectCohortsToAttach"}}:</span>
-      {{detail-cohort-manager
-        selectedCohorts=selectedCohorts
-        school=(await course.school)
-        add=(action "addCohort")
-        remove=(action "removeCohort")
-      }}
+      <span class="title">
+        {{t "general.selectCohortsToAttach"}}:
+      </span>
+      <DetailCohortManager
+        @selectedCohorts={{selectedCohorts}}
+        @school={{await course.school}}
+        @add={{action "addCohort"}}
+        @remove={{action "removeCohort"}}
+      />
     </div>
   </div>
-
   <div class="buttons">
     <button
       disabled={{if
-        (or isSaving
+        (or
+          isSaving
           (not selectedYear)
           (contains selectedYear loadUnavailableYears.lastSuccessful.value)
         )
@@ -105,13 +124,16 @@
       {{action (perform save)}}
     >
       {{#if isSaving}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    {{#link-to "course" course}}
-      <button class="cancel text">{{t "general.cancel"}}</button>
-    {{/link-to}}
+    <LinkTo @route="course" @model={{course}}>
+      <button class="cancel text">
+        {{t "general.cancel"}}
+      </button>
+    </LinkTo>
   </div>
 </div>
+

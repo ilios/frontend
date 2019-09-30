@@ -53,7 +53,7 @@ export default Component.extend({
     let children = yield learnerGroup.get('children');
     let hasUnSelectedChildren = yield this.hasUnSelectedChildren(children);
     let filterMatch = true;
-    if (filterString.length > 0) {
+    if (filterString && filterString.length > 0) {
       let filterTitle = yield learnerGroup.get('filterTitle');
       filterMatch = filterTitle.match(exp) != null;
     }

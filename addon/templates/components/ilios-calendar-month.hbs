@@ -1,7 +1,6 @@
-{{#el-monthly-calendar date=date events=nonIlmPreWorkEvents as |weeks|}}
+<ElMonthlyCalendar @date={{date}} @events={{nonIlmPreWorkEvents}} as |weeks|>
   <div class="row month-titles">
-    <div class="cell">
-    </div>
+    <div class="cell"></div>
     <div class="cell title">
       {{moment-format date "MMMM YYYY"}}
     </div>
@@ -17,22 +16,26 @@
     <div class="week">
       {{#each week.days as |day|}}
         <div class="day">
-          <span {{action "changeToDayView" day.date}} class="clickable" role="button">
+          <span
+            class="clickable"
+            role="button"
+            {{action "changeToDayView" day.date}}
+          >
             {{moment-format day.date "D"}}
           </span>
           <div class="events">
             {{#if (gt day.events.length 2)}}
               {{#each (slice 0 2 day.events) as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month
-                    event=event
-                    selectEvent=(action "changeToDayView" event.startDate)
-                  }}
+                  <IliosCalendarEventMonth
+                    @event={{event}}
+                    @selectEvent={{action "changeToDayView" event.startDate}}
+                  />
                 {{else}}
-                  {{ilios-calendar-event-month
-                    event=event
-                    selectEvent=(action selectEvent event)
-                  }}
+                  <IliosCalendarEventMonth
+                    @event={{event}}
+                    @selectEvent={{action selectEvent event}}
+                  />
                 {{/if}}
               {{/each}}
               <span
@@ -40,20 +43,22 @@
                 role="button"
                 {{action "changeToDayView" day.date}}
               >
-                {{fa-icon icon="ellipsis-h"}} {{showMore}} {{fa-icon icon="angle-double-down"}}
+                <FaIcon @icon="ellipsis-h" />
+                {{showMore}}
+                <FaIcon @icon="angle-double-down" />
               </span>
             {{else}}
               {{#each day.events as |event|}}
                 {{#if event.isMulti}}
-                  {{ilios-calendar-event-month
-                    event=event
-                    selectEvent=(action "changeToDayView" event.startDate)
-                  }}
+                  <IliosCalendarEventMonth
+                    @event={{event}}
+                    @selectEvent={{action "changeToDayView" event.startDate}}
+                  />
                 {{else}}
-                  {{ilios-calendar-event-month
-                    event=event
-                    selectEvent=(action selectEvent event)
-                  }}
+                  <IliosCalendarEventMonth
+                    @event={{event}}
+                    @selectEvent={{action selectEvent event}}
+                  />
                 {{/if}}
               {{/each}}
             {{/if}}
@@ -62,6 +67,9 @@
       {{/each}}
     </div>
   {{/each}}
-{{/el-monthly-calendar}}
+</ElMonthlyCalendar>
+<IliosCalendarPreWorkEvents
+  @events={{ilmPreWorkEvents}}
+  @areEventsSelectable={{areEventsSelectable}}
+/>
 
-<IliosCalendarPreWorkEvents @events={{ilmPreWorkEvents}} @areEventsSelectable={{areEventsSelectable}} />

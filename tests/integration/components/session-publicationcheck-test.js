@@ -21,7 +21,7 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
       sessionType: resolve()
     });
     this.set('model', session);
-    await render(hbs`{{session-publicationcheck session=model}}`);
+    await render(hbs`<SessionPublicationcheck @session={{model}} />`);
     assert.ok(!!find('.fa-unlink'));
   });
 
@@ -35,7 +35,7 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
       sessionType: resolve()
     });
     this.set('model', session);
-    await render(hbs`{{session-publicationcheck session=model}}`);
+    await render(hbs`<SessionPublicationcheck @session={{model}} />`);
     assert.notOk(!!find('.fa-unlink'));
   });
 });

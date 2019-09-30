@@ -26,7 +26,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
 
     this.set('course', course);
     this.set('click', () => {});
-    await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
+    await render(hbs`<CollapsedCompetencies @subject={{course}} @expand={{action click}} />`);
     let content = this.element.textContent.trim();
     assert.equal(content.search(/Competencies \(2\)/), 0);
     assert.notEqual(content.search(/School(\s+)Competencies/), -1);
@@ -52,7 +52,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`{{collapsed-competencies subject=course expand=(action click)}}`);
+    await render(hbs`<CollapsedCompetencies @subject={{course}} @expand={{action click}} />`);
     return settled().then(async () => {
       assert.equal(this.element.textContent.trim().search(/Competencies \(2\)/), 0);
       await click('.title');

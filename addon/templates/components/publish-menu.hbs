@@ -1,34 +1,48 @@
-{{#rl-dropdown-container}}
-  {{#rl-dropdown-toggle}}
-    {{fa-icon icon=icon}}
-    <span>{{title}}</span>
-  {{/rl-dropdown-toggle}}
-
-  {{#rl-dropdown closeOnChildClick="button"}}
+<RlDropdownContainer>
+  <RlDropdownToggle>
+    <FaIcon @icon={{icon}} />
+    <span>
+      {{title}}
+    </span>
+  </RlDropdownToggle>
+  <RlDropdown @closeOnChildClick="button">
     {{#if showAsIs}}
-      <button class="danger" {{action publish}}>{{t "general.publishAsIs"}}</button>
+      <button class="danger" {{action publish}}>
+        {{t "general.publishAsIs"}}
+      </button>
     {{/if}}
     {{#if showPublish}}
-      <button class="good" {{action publish}}>{{t publishTranslation}}</button>
+      <button class="good" {{action publish}}>
+        {{t publishTranslation}}
+      </button>
     {{/if}}
     {{#if (and showReview reviewRoute reviewObject)}}
       {{#if parentObject}}
         <button class="good" {{action "scrollToSessionPublication"}}>
-          {{t "general.reviewMissingItems"
-            count=(get this.reviewObject "allPublicationIssuesLength")}}
+          {{t
+            "general.reviewMissingItems"
+            count=(get this.reviewObject "allPublicationIssuesLength")
+          }}
         </button>
       {{else}}
         <button class="good" {{action "scrollToCoursePublication"}}>
-          {{t "general.reviewMissingItems"
-            count=(get this.reviewObject "allPublicationIssuesLength")}}
+          {{t
+            "general.reviewMissingItems"
+            count=(get this.reviewObject "allPublicationIssuesLength")
+          }}
         </button>
       {{/if}}
     {{/if}}
     {{#if showTbd}}
-      <button class="good" {{action publishAsTbd}}>{{t "general.markAsScheduled"}}</button>
+      <button class="good" {{action publishAsTbd}}>
+        {{t "general.markAsScheduled"}}
+      </button>
     {{/if}}
     {{#if showUnPublish}}
-      <button class="danger" {{action unpublish}}>{{t unPublishTranslation}}</button>
+      <button class="danger" {{action unpublish}}>
+        {{t unPublishTranslation}}
+      </button>
     {{/if}}
-  {{/rl-dropdown}}
-{{/rl-dropdown-container}}
+  </RlDropdown>
+</RlDropdownContainer>
+

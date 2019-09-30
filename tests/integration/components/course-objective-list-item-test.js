@@ -18,12 +18,12 @@ module('Integration | Component | course objective list item', function(hooks) {
     this.set('objective', objective);
     this.set('nothing', () => {});
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageParents=(action nothing)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     assert.dom('td').hasText('fake title');
     assert.dom('td:nth-of-type(2) button').hasText('Add New');
@@ -38,13 +38,13 @@ module('Integration | Component | course objective list item', function(hooks) {
     this.set('objective', objective);
     this.set('nothing', () => {});
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      showRemoveConfirmation=true
-      remove=(action nothing)
-      manageParents=(action nothing)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @showRemoveConfirmation={{true}}
+      @remove={{action nothing}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     assert.dom('tr').hasClass('confirm-removal');
   });
@@ -60,12 +60,12 @@ module('Integration | Component | course objective list item', function(hooks) {
     this.set('objective', objective);
     this.set('nothing', () => {});
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageParents=(action nothing)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     await click('td:nth-of-type(1) [data-test-edit]');
     await fillInFroalaEditor('td:nth-of-type(1) .froala-editor-container', 'new title');
@@ -82,12 +82,12 @@ module('Integration | Component | course objective list item', function(hooks) {
       assert.ok(true);
     });
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageParents=(action something)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageParents={{action something}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     await click('td:nth-of-type(2) button');
 
@@ -103,12 +103,12 @@ module('Integration | Component | course objective list item', function(hooks) {
       assert.ok(true);
     });
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageParents=(action nothing)
-      manageDescriptors=(action something)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action something}}
+    />`);
 
     await click('td:nth-of-type(3) button');
 
@@ -124,12 +124,12 @@ module('Integration | Component | course objective list item', function(hooks) {
       assert.ok(true);
     });
 
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      remove=(action something)
-      manageParents=(action nothing)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @remove={{action something}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     await click('td:nth-of-type(4) svg');
 
@@ -141,13 +141,13 @@ module('Integration | Component | course objective list item', function(hooks) {
     });
     this.set('objective', objective);
     this.set('nothing', () => {});
-    await render(hbs`{{course-objective-list-item
-      objective=objective
-      editable=false
-      remove=(action nothing)
-      manageParents=(action nothing)
-      manageDescriptors=(action nothing)
-    }}`);
+    await render(hbs`<CourseObjectiveListItem
+      @objective={{objective}}
+      @editable={{false}}
+      @remove={{action nothing}}
+      @manageParents={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     assert.dom('td').hasText('fake title');
     assert.dom('td:nth-of-type(1) .editable').doesNotExist('No in-place editor in read-only mode');

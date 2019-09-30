@@ -56,7 +56,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
     let sessions = [unpublishableSession, completeSession, publishableSession];
     this.set('sessions', resolve(sessions));
 
-    await render(hbs`{{publish-all-sessions sessions=sessions}}`);
+    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
     await settled();
 
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
@@ -73,7 +73,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
     const reviewButtons = '.publish-all-sessions-overridable button';
     const reviewTable = '.publish-all-sessions-overridable table';
 
-    await render(hbs`{{publish-all-sessions sessions=sessions}}`);
+    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
     await settled();
 
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
@@ -92,7 +92,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
     const sessions = [unpublishableSession];
     this.set('sessions', sessions);
-    await render(hbs`{{publish-all-sessions sessions=sessions}}`);
+    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
     await settled();
     assert.dom('[data-test-unlinked-warning]').hasText('This course has unlinked objective(s)');
     assert.ok(!!find('.fa-unlink'));

@@ -8,29 +8,34 @@
       {{t "general.programCohorts"}} ({{course.cohorts.length}})
     {{/if}}
   </div>
-
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" {{action "save"}}>
-        {{fa-icon icon=(if isSaving "spinner" "check") spin=(if isSaving true false)}}
+        <FaIcon
+          @icon={{if isSaving "spinner" "check"}}
+          @spin={{if isSaving true false}}
+        />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if editable}}
-      <button {{action "manage"}}>{{t "general.cohortsManageTitle"}}</button>
+      <button {{action "manage"}}>
+        {{t "general.cohortsManageTitle"}}
+      </button>
     {{/if}}
   </div>
 </div>
 <div class="detail-cohorts-content">
   {{#if isManaging class="horizontal"}}
-    {{detail-cohort-manager
-      school=(await course.school)
-      selectedCohorts=bufferedCohorts
-      add=(action "addCohortToBuffer")
-      remove=(action "removeCohortFromBuffer")
-    }}
+    <DetailCohortManager
+      @school={{await course.school}}
+      @selectedCohorts={{bufferedCohorts}}
+      @add={{action "addCohortToBuffer"}}
+      @remove={{action "removeCohortFromBuffer"}}
+    />
   {{else}}
-    {{detail-cohort-list
-      cohorts=(await course.cohorts)
-    }}
+    <DetailCohortList @cohorts={{await course.cohorts}} />
   {{/if}}
 </div>
+

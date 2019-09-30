@@ -10,7 +10,7 @@ module('Integration | Component | visualizer-course-vocabularies', function(hook
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{visualizer-course-vocabularies}}`);
+    await render(hbs`<VisualizerCourseVocabularies />`);
 
     assert.dom(this.element).hasText('');
   });

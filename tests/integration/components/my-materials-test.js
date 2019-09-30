@@ -66,12 +66,12 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.expect(1);
 
     this.setProperties({ materials: [], nothing: parseInt});
-    await render(hbs`{{my-materials
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action this.nothing)
-    }}`);
+    await render(hbs`<MyMaterials
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action this.nothing}}
+    />`);
     assert.dom('[data-test-none]').exists();
   });
 
@@ -80,12 +80,12 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.set('nothing', parseInt);
-    await render(hbs`{{my-materials
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action this.nothing)
-    }}`);
+    await render(hbs`<MyMaterials
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action this.nothing}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -193,13 +193,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ nothing: parseInt, filter: null });
-    await render(hbs`{{my-materials
-      filter=this.filter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action nothing)
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @filter={{this.filter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action nothing}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -217,13 +217,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ nothing: parseInt, filter: null });
-    await render(hbs`{{my-materials
-      filter=this.filter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @filter={{this.filter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -243,13 +243,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ nothing: parseInt, filter: null });
-    await render(hbs`{{my-materials
-      filter=this.filter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @filter={{this.filter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -267,13 +267,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ nothing: parseInt, filter: null });
-    await render(hbs`{{my-materials
-      filter=this.filter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @filter={{this.filter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -291,13 +291,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ course: '', filter: null });
-    await render(hbs`{{my-materials
-      courseIdFilter=this.course
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action (mut this.course))
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @courseIdFilter={{this.course}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action (mut this.course)}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
@@ -326,13 +326,13 @@ module('Integration | Component | my-materials', function(hooks) {
     });
     this.set('sortBy', 'firstOfferingDate');
 
-    await render(hbs`{{my-materials
-      materials=this.materials
-      sortBy=this.sortBy
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action this.nothing)
-      setSortBy=(action this.setSortBy)
-    }}`);
+    await render(hbs`<MyMaterials
+      @materials={{this.materials}}
+      @sortBy={{this.sortBy}}
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action this.nothing}}
+      @setSortBy={{action this.setSortBy}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const headers = `${table} thead th`;
@@ -364,13 +364,13 @@ module('Integration | Component | my-materials', function(hooks) {
     });
     this.set('courseIdFilter', null);
 
-    await render(hbs`{{my-materials
-      courseIdFilter=this.courseIdFilter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.setCourseIdFilter)
-      setFilter=(action this.nothing)
-    }}`);
+    await render(hbs`<MyMaterials
+      @courseIdFilter={{this.courseIdFilter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.setCourseIdFilter}}
+      @setFilter={{action this.nothing}}
+    />`);
 
     const select = '.course-filter select';
     await fillIn(select, '1');
@@ -383,13 +383,13 @@ module('Integration | Component | my-materials', function(hooks) {
 
     this.set('materials', createMaterials());
     this.setProperties({ filter: null, nothing: parseInt });
-    await render(hbs`{{my-materials
-      filter=this.filter
-      materials=this.materials
-      sortBy="firstOfferingDate"
-      setCourseIdFilter=(action this.nothing)
-      setFilter=(action (mut this.filter))
-    }}`);
+    await render(hbs`<MyMaterials
+      @filter={{this.filter}}
+      @materials={{this.materials}}
+      @sortBy="firstOfferingDate"
+      @setCourseIdFilter={{action this.nothing}}
+      @setFilter={{action (mut this.filter)}}
+    />`);
 
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;

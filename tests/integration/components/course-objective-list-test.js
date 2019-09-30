@@ -63,4 +63,3 @@ module('Integration | Component | course objective list', function(hooks) {
     assert.dom('tbody tr:nth-of-type(1) td').hasText('objective 0', 'Objective is visible');
   });
 });
-

@@ -38,11 +38,12 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     const events = '.event';
     const more = '.month-more-events';
 
-    await render(hbs`{{ilios-calendar-month
-      date=date
-      calendarEvents=events
-      selectEvent=(action nothing)
-      showMore='Show More'}}`);
+    await render(hbs`<IliosCalendarMonth
+      @date={{date}}
+      @calendarEvents={{events}}
+      @selectEvent={{action nothing}}
+      @showMore="Show More"
+    />`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
     assert.equal(this.element.querySelectorAll(events).length, 2);
@@ -71,11 +72,12 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     const events = '.event';
     const more = '.month-more-events';
 
-    await render(hbs`{{ilios-calendar-month
-      date=date
-      calendarEvents=events
-      selectEvent=(action nothing)
-      showMore='Show More'}}`);
+    await render(hbs`<IliosCalendarMonth
+      @date={{date}}
+      @calendarEvents={{events}}
+      @selectEvent={{action nothing}}
+      @showMore="Show More"
+    />`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
     assert.equal(this.element.querySelectorAll(events).length, 2);
@@ -95,12 +97,12 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       assert.equal(newView, 'day');
     };
 
-    await render(hbs`{{ilios-calendar-month
-      date=date
-      changeDate=(action 'changeDate')
-      changeView=(action 'changeView')
-      calendarEvents=events
-    }}`);
+    await render(hbs`<IliosCalendarMonth
+      @date={{date}}
+      @changeDate={{action "changeDate"}}
+      @changeView={{action "changeView"}}
+      @calendarEvents={{events}}
+    />`);
 
     click('.day:nth-of-type(1) .clickable');
   });

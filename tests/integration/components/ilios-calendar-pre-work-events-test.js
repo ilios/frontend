@@ -7,7 +7,7 @@ module('Integration | Component | ilios-calendar-pre-work-events', function(hook
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{ilios-calendar-pre-work-events}}`);
+    await render(hbs`<IliosCalendarPreWorkEvents />`);
 
     assert.dom(this.element).hasText('');
   });
