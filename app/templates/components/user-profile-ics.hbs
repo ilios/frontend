@@ -1,4 +1,6 @@
-<h3 class="title">{{t "general.icsFeed"}}</h3>
+<h3 class="title">
+  {{t "general.icsFeed"}}
+</h3>
 <div class="actions">
   {{#if isManaging}}
     <button
@@ -7,17 +9,17 @@
       class="refresh-key"
       {{action (perform refreshKey)}}
     >
-      {{fa-icon
-        icon=(if refreshKey.isRunning "spinner" "sync")
-        spin=(if refreshKey.isRunning true false)
-      }}
+      <FaIcon
+        @icon={{if refreshKey.isRunning "spinner" "sync"}}
+        @spin={{if refreshKey.isRunning true false}}
+      />
     </button>
     <button
       disabled={{refreshKey.isRunning}}
       class="bigcancel"
       {{action setIsManaging false}}
     >
-      {{fa-icon icon="undo"}}
+      <FaIcon @icon="undo" />
     </button>
   {{else if isManageable}}
     <button
@@ -25,20 +27,24 @@
       title={{t "general.refreshIcsFeedKey"}}
       {{action setIsManaging true}}
     >
-      {{fa-icon icon="edit"}}
+      <FaIcon @icon="edit" />
     </button>
   {{/if}}
 </div>
-
 <p>
   {{#if icsFeedKey.length}}
-    <p class="ics-instructions">{{t "general.icsAdminInstructions"}}</p>
+    <p class="ics-instructions">
+      {{t "general.icsAdminInstructions"}}
+    </p>
     <p>
-      {{#copy-button clipboardText=icsFeedUrl success=(perform textCopied)}}
-        {{fa-icon icon="copy"}} {{t "general.link"}}
-      {{/copy-button}}
+      <CopyButton @clipboardText={{icsFeedUrl}} @success={{perform textCopied}}>
+        <FaIcon @icon="copy" />
+        {{t "general.link"}}
+      </CopyButton>
       {{#if showCopySuccessMessage}}
-        <span class="yes">{{t "general.copiedSuccessfully"}}</span>
+        <span class="yes">
+          {{t "general.copiedSuccessfully"}}
+        </span>
       {{/if}}
     </p>
   {{else}}

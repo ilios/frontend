@@ -2,28 +2,30 @@
 <section id="curriculumInventoryReports" class="curriculum-inventory-reports">
   <div class="filter-tools">
     <div class="schoolsfilter">
-      {{fa-icon icon="university" fixedWidth=true}}
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
-            <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+            <option
+              value={{school.id}}
+              selected={{is-equal school (await selectedSchool)}}
+            >
               {{school.title}}
             </option>
           {{/each}}
         </select>
+      {{else if (await selectedSchool)}}
+        {{get (await selectedSchool) "title"}}
       {{else}}
-        {{#if (await selectedSchool)}}
-          {{get (await selectedSchool) "title"}}
-        {{else}}
-          {{t "general.none"}}
-        {{/if}}
+        {{t "general.none"}}
       {{/if}}
     </div>
-
     <div class="programsfilter">
-      {{fa-icon icon="list-alt" fixedWidth=true}}
+      <FaIcon @icon="list-alt" @fixedWidth={{true}} />
       {{#if (gt (get (await programs) "length") 1)}}
-        <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+        <select
+          onchange={{action "changeSelectedProgram" value="target.value"}}
+        >
           {{#each (sort-by "title" (await programs)) as |program|}}
             <option
               value={{program.id}}
@@ -33,13 +35,11 @@
             </option>
           {{/each}}
         </select>
-      {{else}}
-        {{#if (is-fulfilled selectedProgram)}}
-          {{#if (await selectedProgram)}}
-            {{get (await selectedProgram) "title"}}
-          {{else}}
-            {{t "general.none"}}
-          {{/if}}
+      {{else if (is-fulfilled selectedProgram)}}
+        {{#if (await selectedProgram)}}
+          {{get (await selectedProgram) "title"}}
+        {{else}}
+          {{t "general.none"}}
         {{/if}}
       {{/if}}
     </div>
@@ -47,44 +47,48 @@
   <section class="reports">
     <div class="header">
       <div class="title">
-        <h2>{{t "general.curriculumInventoryReports"}}</h2>
+        <h2>
+          {{t "general.curriculumInventoryReports"}}
+        </h2>
       </div>
       {{#if (and (await canCreate) (await selectedProgram))}}
         <div class="actions">
-          {{expand-collapse-button
-            value=showNewCurriculumInventoryReportForm
-            action=(action "toggleNewCurriculumInventoryReportForm")
-          }}
+          <ExpandCollapseButton
+            @value={{showNewCurriculumInventoryReportForm}}
+            @action={{action "toggleNewCurriculumInventoryReportForm"}}
+          />
         </div>
       {{/if}}
     </div>
     <section class="new">
       {{#liquid-if showNewCurriculumInventoryReportForm class="vertical"}}
-        {{new-curriculum-inventory-report
-          currentProgram=(await selectedProgram)
-          save=(action "saveNewCurriculumInventoryReport")
-          cancel=(action "cancel")
-        }}
+        <NewCurriculumInventoryReport
+          @currentProgram={{await selectedProgram}}
+          @save={{action "saveNewCurriculumInventoryReport"}}
+          @cancel={{action "cancel"}}
+        />
       {{/liquid-if}}
       {{#if newReport}}
         <div class="saved-result">
-          {{#link-to "curriculumInventoryReport" newReport}}
-            {{fa-icon icon="external-link-square-alt"}} {{newReport.name}}
-          {{/link-to}}
+          <LinkTo @route="curriculumInventoryReport" @model={{newReport}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{newReport.name}}
+          </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
     <div class="list">
       {{#if (is-fulfilled this.reports)}}
-        {{curriculum-inventory-report-list
-          program=(await selectedProgram)
-          sortBy=this.sortReportsBy
-          edit=(action "editCurriculumInventoryReport")
-          remove=(action "removeCurriculumInventoryReport")
-          setSortBy=(action (mut this.sortReportsBy))}}
+        <CurriculumInventoryReportList
+          @program={{await selectedProgram}}
+          @sortBy={{this.sortReportsBy}}
+          @edit={{action "editCurriculumInventoryReport"}}
+          @remove={{action "removeCurriculumInventoryReport"}}
+          @setSortBy={{action (mut this.sortReportsBy)}}
+        />
       {{else}}
-        {{pulse-loader}}
+        <PulseLoader />
       {{/if}}
     </div>
   </section>

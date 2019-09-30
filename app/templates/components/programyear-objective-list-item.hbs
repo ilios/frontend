@@ -1,27 +1,30 @@
 <td colspan="1" class="link" {{action toggleExpand objective.id}}>
   {{#if expanded}}
-    {{fa-icon icon="caret-down"}}
+    <FaIcon @icon="caret-down" />
   {{else}}
-    {{fa-icon icon="caret-right"}}
+    <FaIcon @icon="caret-right" />
   {{/if}}
 </td>
 <td id="objective-{{objective.id}}" class="text-left text-top" colspan="12">
   {{#if editable}}
-    {{#editable-field
-      value=title
-      renderHtml=true
-      isSaveDisabled=(and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
-      save=(action "saveTitleChanges" )
-      close=(action "revertTitleChanges")
-    }}
-      {{html-editor
-        content=title
-        update=(action "changeTitle")
+    <EditableField
+      @value={{title}}
+      @renderHtml={{true}}
+      @isSaveDisabled={{and
+        (v-get this "title" "isInvalid")
+        (is-in showErrorsFor "title")
       }}
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      @save={{action "saveTitleChanges"}}
+      @close={{action "revertTitleChanges"}}
+    >
+      <HtmlEditor @content={{title}} @update={{action "changeTitle"}} />
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      }}
+        <span class="validation-error-message">
+          {{v-get this "title" "message"}}
+        </span>
       {{/if}}
-    {{/editable-field}}
+    </EditableField>
   {{else}}
     {{{title}}}
   {{/if}}
@@ -36,16 +39,19 @@
       {{get (await objective.competency) "title"}}
     {{/if}}
     {{#if
-      (not-eq (get (await objective.competency) "id") (get (await objective.competency.domain) "id"))
+      (not-eq
+        (get (await objective.competency) "id")
+        (get (await objective.competency.domain) "id")
+      )
     }}
       ({{get (await objective.competency.domain) "title"}})
     {{/if}}
+  {{else if editable}}
+    <button {{action manageCompetency objective}}>
+      {{t "general.addNew"}}
+    </button>
   {{else}}
-    {{#if editable}}
-      <button {{action manageCompetency objective}}>{{t "general.addNew"}}</button>
-    {{else}}
-      {{t "general.none"}}
-    {{/if}}
+    {{t "general.none"}}
   {{/if}}
 </td>
 <td class="text-left text-top" colspan="8">
@@ -53,17 +59,21 @@
     <ul>
       {{#each (await objective.meshDescriptors) as |descriptor|}}
         {{#if editable}}
-          <li class="clickable link" {{action manageDescriptors objective}}>{{descriptor.name}}</li>
+          <li class="clickable link" {{action manageDescriptors objective}}>
+            {{descriptor.name}}
+          </li>
         {{else}}
-          <li>{{descriptor.name}}</li>
+          <li>
+            {{descriptor.name}}
+          </li>
         {{/if}}
       {{/each}}
     </ul>
+  {{else if editable}}
+    <button {{action manageDescriptors objective}}>
+      {{t "general.addNew"}}
+    </button>
   {{else}}
-    {{#if editable}}
-      <button {{action manageDescriptors objective}}>{{t "general.addNew"}}</button>
-    {{else}}
-      {{t "general.none"}}
-    {{/if}}
+    {{t "general.none"}}
   {{/if}}
 </td>

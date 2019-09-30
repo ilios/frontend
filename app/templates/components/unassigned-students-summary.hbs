@@ -1,19 +1,22 @@
 <h3>
   {{#if (gt (get (await unassignedStudents) "length") 1)}}
-    {{fa-icon icon="exclamation-triangle"  class="no"}}
+    <FaIcon @icon="exclamation-triangle" class="no" />
   {{/if}}
   {{t "general.unassignedStudentsSummaryTitle"}}
 </h3>
 {{#if (is-fulfilled schools)}}
   <div id="schoolsfilter" class="filter">
     <label class="inline-label">
-      {{fa-icon icon="university"}}
+      <FaIcon @icon="university" />
     </label>
     <div id="school-selection" class="inline-data">
       {{#if (gt (get schools "length") 1)}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" schools) as |school|}}
-            <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+            <option
+              value={{school.id}}
+              selected={{is-equal school (await selectedSchool)}}
+            >
               {{school.title}}
             </option>
           {{/each}}
@@ -24,7 +27,6 @@
     </div>
   </div>
 {{/if}}
-
 {{#if (is-fulfilled unassignedStudents)}}
   <p>
     {{t
@@ -34,12 +36,16 @@
   </p>
   {{#if (gt (get (await unassignedStudents) "length") 0)}}
     <div class="actions">
-      {{#link-to "assign-students"
-        (query-params schoolId=(get (await selectedSchool) "id"))}}
-        <button>{{t "general.manage"}}</button>
-      {{/link-to}}
+      <LinkTo
+        @route="assign-students"
+        @query={{hash schoolId=(get (await selectedSchool) "id")}}
+      >
+        <button>
+          {{t "general.manage"}}
+        </button>
+      </LinkTo>
     </div>
   {{/if}}
 {{else}}
-  {{loading-spinner}}
+  <LoadingSpinner />
 {{/if}}

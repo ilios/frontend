@@ -1,58 +1,68 @@
-{{! template-lint-disable attribute-indentation }}
-{{learnergroup-header
-  learnerGroup=learnerGroup
-  sortUsersBy=sortUsersBy
-  canUpdate=canUpdate
-}}
+<LearnergroupHeader
+  @learnerGroup={{learnerGroup}}
+  @sortUsersBy={{sortUsersBy}}
+  @canUpdate={{canUpdate}}
+/>
 <section class="learnergroup-overview">
   <div class="learnergroup-overview-actions">
     {{#if (or isEditing isBulkAssigning)}}
-      <button {{action (pipe (action setIsEditing false) (action setIsBulkAssigning false))}}>
+      <button
+        {{action
+          (pipe (action setIsEditing false) (action setIsBulkAssigning false))
+        }}
+      >
         {{t "general.close"}}
       </button>
     {{else if canUpdate}}
-      <button {{action setIsBulkAssigning true}} data-test-activate-bulk-assign>{{t "general.uploadGroupAssignments"}}</button>
-      <button {{action setIsEditing true}} data-test-manage>{{t "general.manage"}}</button>
+      <button data-test-activate-bulk-assign {{action setIsBulkAssigning true}}>
+        {{t "general.uploadGroupAssignments"}}
+      </button>
+      <button data-test-manage {{action setIsEditing true}}>
+        {{t "general.manage"}}
+      </button>
     {{/if}}
   </div>
   {{#if isBulkAssigning}}
-    {{learnergroup-bulk-assignment
-      learnerGroup=learnerGroup
-      done=(action setIsBulkAssigning false)
-    }}
+    <LearnergroupBulkAssignment
+      @learnerGroup={{learnerGroup}}
+      @done={{action setIsBulkAssigning false}}
+    />
   {{else if createUsersToPassToManager.lastSuccessful}}
     <div class="learnergroup-overview-content">
-      {{learnergroup-user-manager
-        learnerGroupId=learnerGroupId
-        learnerGroupTitle=learnerGroupTitle
-        topLevelGroupTitle=topLevelGroupTitle
-        cohortTitle=cohortTitle
-        users=createUsersToPassToManager.lastSuccessful.value
-        sortBy=sortUsersBy
-        setSortBy=setSortUsersBy
-        isEditing=isEditing
-        addUserToGroup=(perform addUserToGroup)
-        removeUserFromGroup=(perform removeUserToCohort)
-        addUsersToGroup=(perform addUsersToGroup)
-        removeUsersFromGroup=(perform removeUsersToCohort)
-      }}
+      <LearnergroupUserManager
+        @learnerGroupId={{learnerGroupId}}
+        @learnerGroupTitle={{learnerGroupTitle}}
+        @topLevelGroupTitle={{topLevelGroupTitle}}
+        @cohortTitle={{cohortTitle}}
+        @users={{createUsersToPassToManager.lastSuccessful.value}}
+        @sortBy={{sortUsersBy}}
+        @setSortBy={{setSortUsersBy}}
+        @isEditing={{isEditing}}
+        @addUserToGroup={{perform addUserToGroup}}
+        @removeUserFromGroup={{perform removeUserToCohort}}
+        @addUsersToGroup={{perform addUsersToGroup}}
+        @removeUsersFromGroup={{perform removeUsersToCohort}}
+      />
     </div>
   {{else}}
-    <h1 class="text-center">{{loading-spinner}}</h1>
+    <h1 class="text-center">
+      <LoadingSpinner />
+    </h1>
   {{/if}}
-
   <div class="block defaultlocation">
-    <label>{{t "general.defaultLocation"}}:</label>
+    <label>
+      {{t "general.defaultLocation"}}
+      :
+    </label>
     <span>
       {{#if canUpdate}}
-        {{#editable-field
-          value=(if location location (t "general.clickToEdit"))
-          save=(action "changeLocation")
-          close=(action "revertLocationChanges")
-          saveOnEnter=true
-          closeOnEscape=true
-          as |isSaving|
-        }}
+        <EditableField
+          @value={{if location location (t "general.clickToEdit")}}
+          @save={{action "changeLocation"}}
+          @close={{action "revertLocationChanges"}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
           <input
             type="text"
             value={{location}}
@@ -61,36 +71,48 @@
             onkeyup={{action "addErrorDisplayFor" "location"}}
           >
           {{#if
-            (and (v-get this "location" "isInvalid") (is-in showErrorsFor "location"))
+            (and
+              (v-get this "location" "isInvalid")
+              (is-in showErrorsFor "location")
+            )
           }}
-            <span class="validation-error-message">{{v-get this "location" "message"}}</span>
+            <span class="validation-error-message">
+              {{v-get this "location" "message"}}
+            </span>
           {{/if}}
-        {{/editable-field}}
+        </EditableField>
+      {{else if location}}
+        {{location}}
       {{else}}
-        {{#if location}}
-          {{location}}
-        {{else}}
-          {{t "general.none"}}
-        {{/if}}
+        {{t "general.none"}}
       {{/if}}
     </span>
   </div>
   <div class="block defaultinstructors">
-    <label>{{t "general.defaultInstructors"}}:</label>
+    <label>
+      {{t "general.defaultInstructors"}}
+      :
+    </label>
     <div>
       {{#if (is-fulfilled learnerGroup.allInstructors)}}
         {{#liquid-if manageInstructors class="crossFade"}}
-          {{learnergroup-instructor-manager
-            learnerGroup=learnerGroup
-            save=(action "saveInstructors")
-            close=(toggle-action "manageInstructors" this)
-          }}
+          <LearnergroupInstructorManager
+            @learnerGroup={{learnerGroup}}
+            @save={{action "saveInstructors"}}
+            @close={{toggle-action "manageInstructors" this}}
+          />
         {{else}}
-          <span class={{if canUpdate "clickable link"}} {{action "manageInstructors"}}>
+          <span
+            class={{if canUpdate "clickable link"}}
+            {{action "manageInstructors"}}
+          >
             {{#if (get (await learnerGroup.allInstructors) "length")}}
               {{join
                 "; "
-                (map-by "fullName" (sort-by "lastName" (await learnerGroup.allInstructors)))
+                (map-by
+                  "fullName"
+                  (sort-by "lastName" (await learnerGroup.allInstructors))
+                )
               }}
             {{else}}
               {{t "general.none"}}
@@ -98,12 +120,15 @@
           </span>
         {{/liquid-if}}
       {{else}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{/if}}
     </div>
   </div>
   <div class="block associatedcourses">
-    <label>{{t "general.associatedCourses"}}:</label>
+    <label>
+      {{t "general.associatedCourses"}}
+      :
+    </label>
     <div>
       {{#if (is-fulfilled learnerGroup.courses)}}
         {{#if (get (await learnerGroup.courses) "length")}}
@@ -112,45 +137,40 @@
           {{t "general.none"}}
         {{/if}}
       {{else}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{/if}}
     </div>
   </div>
-
   <p class="block" data-test-toggle-learnergroup-calendar>
-    {{toggle-buttons
-      firstOptionSelected=(not showLearnerGroupCalendar)
-      firstLabel=(t "general.hideCalendar")
-      secondLabel=(t "general.showCalendar")
-      toggle=(toggle "showLearnerGroupCalendar" this)
-    }}
+    <ToggleButtons
+      @firstOptionSelected={{not showLearnerGroupCalendar}}
+      @firstLabel={{t "general.hideCalendar"}}
+      @secondLabel={{t "general.showCalendar"}}
+      @toggle={{toggle "showLearnerGroupCalendar" this}}
+    />
   </p>
   {{#if showLearnerGroupCalendar}}
-    {{learnergroup-calendar learnerGroup=learnerGroup}}
+    <LearnergroupCalendar @learnerGroup={{learnerGroup}} />
   {{/if}}
 </section>
-
-
-{{learnergroup-subgroup-list
-  parentGroup=learnerGroup
-  canCreate=canCreate
-  canDelete=canDelete
-}}
-
+<LearnergroupSubgroupList
+  @parentGroup={{learnerGroup}}
+  @canCreate={{canCreate}}
+  @canDelete={{canDelete}}
+/>
 <section class="cohortmembers">
   {{#if createUsersToPassToCohortManager.lastSuccessful}}
-    {{learnergroup-cohort-user-manager
-      users=createUsersToPassToCohortManager.lastSuccessful.value
-      canUpdate=canUpdate
-      learnerGroupTitle=learnerGroupTitle
-      topLevelGroupTitle=topLevelGroupTitle
-      sortBy=sortUsersBy
-      setSortBy=setSortUsersBy
-      addUserToGroup=(perform addUserToGroup)
-      addUsersToGroup=(perform addUsersToGroup)
-    }}
+    <LearnergroupCohortUserManager
+      @users={{createUsersToPassToCohortManager.lastSuccessful.value}}
+      @canUpdate={{canUpdate}}
+      @learnerGroupTitle={{learnerGroupTitle}}
+      @topLevelGroupTitle={{topLevelGroupTitle}}
+      @sortBy={{sortUsersBy}}
+      @setSortBy={{setSortUsersBy}}
+      @addUserToGroup={{perform addUserToGroup}}
+      @addUsersToGroup={{perform addUsersToGroup}}
+    />
   {{else}}
-    {{loading-spinner class="cohortmembers-loading"}}
+    <LoadingSpinner class="cohortmembers-loading" />
   {{/if}}
 </section>
-

@@ -1,10 +1,10 @@
 <div class="user-profile-loading">
   <div class="blocks">
-    {{manage-users-summary canCreate=canCreate}}
+    <ManageUsersSummary @canCreate={{canCreate}} />
   </div>
-
-  <h1>{{t "general.loading"}}</h1>
-
+  <h1>
+    {{t "general.loading"}}
+  </h1>
   <div class="blocks">
     <div class="loading small-component has-not-saved"></div>
     <div class="loading small-component has-not-saved"></div>

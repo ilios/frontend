@@ -1,8 +1,11 @@
-<h4 class="title" data-test-newprogramyear-title>{{t "general.newProgramYear"}}</h4>
-
+<h4 class="title" data-test-newprogramyear-title>
+  {{t "general.newProgramYear"}}
+</h4>
 <div class="form">
   <div class="startyear-select" data-test-newprogramyear-startyear>
-    <label>{{t "general.academicYear"}}:</label>
+    <label>
+      {{t "general.academicYear"}}:
+    </label>
     <select onchange={{action (mut year) value="target.value"}}>
       {{#each (sort-by "value" availableAcademicYears) as |obj|}}
         <option value={{obj.value}} selected={{eq obj selectedYear}}>
@@ -11,15 +14,16 @@
       {{/each}}
     </select>
   </div>
-
   <div class="buttons">
     <button class="done text" {{action (perform saveNewYear)}}>
       {{#if saveNewYear.isRunning}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" {{action cancel}}>
+      {{t "general.cancel"}}
+    </button>
   </div>
 </div>

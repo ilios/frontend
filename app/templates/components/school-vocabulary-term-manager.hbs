@@ -1,73 +1,94 @@
 {{#if (is-fulfilled allParents)}}
   <div class="breadcrumbs" data-test-breadcrumbs>
-    <span {{action "clearVocabAndTerm"}} data-test-all>{{t "general.allVocabularies"}}</span>
-    <span {{action manageTerm null}} data-test-vocabulary>{{vocabulary.title}}</span>
+    <span data-test-all {{action "clearVocabAndTerm"}}>
+      {{t "general.allVocabularies"}}
+    </span>
+    <span data-test-vocabulary {{action manageTerm null}}>
+      {{vocabulary.title}}
+    </span>
     {{#each (await allParents) as |parent|}}
-      <span {{action manageTerm parent.id}} data-test-term>{{parent.title}}</span>
+      <span data-test-term {{action manageTerm parent.id}}>
+        {{parent.title}}
+      </span>
     {{/each}}
-    <span data-test-term>{{term.title}}</span>
+    <span data-test-term>
+      {{term.title}}
+    </span>
   </div>
 {{/if}}
-
 {{#if term}}
   <div class="school-vocabulary-term-manager-properties">
     <div class="block term-title" data-test-title>
-      <h4>{{t "general.title"}}:</h4>
+      <h4>
+        {{t "general.title"}}:
+      </h4>
       {{#if canUpdate}}
-        {{#editable-field
-          value=(if termTitle termTitle (t "general.clickToEdit"))
-          save=(action "changeTermTitle")
-          close=(action "revertTermTitleChanges")
-          saveOnEnter=true
-          closeOnEscape=true
-          as |isSaving|
-        }}
+        <EditableField
+          @value={{if termTitle termTitle (t "general.clickToEdit")}}
+          @save={{action "changeTermTitle"}}
+          @close={{action "revertTermTitleChanges"}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
           <input
             value={{termTitle}}
             oninput={{action (mut termTitle) value="target.value"}}
             disabled={{isSaving}}
           >
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{termTitle}}
       {{/if}}
       {{#if
-        (and (v-get this "termTitle" "isInvalid") (is-in showErrorsFor "termTitle"))
+        (and
+          (v-get this "termTitle" "isInvalid") (is-in showErrorsFor "termTitle")
+        )
       }}
-        <span class="validation-error-message" data-test-title-error-message>{{v-get this "termTitle" "message"}}</span>
+        <span class="validation-error-message" data-test-title-error-message>
+          {{v-get this "termTitle" "message"}}
+        </span>
       {{/if}}
       {{#if (and canDelete (not term.hasChildren) (not term.hasAssociations))}}
-        {{fa-icon icon="trash" class="clickable remove enabled" click=(action "deleteTerm")}}
+        <FaIcon
+          @icon="trash"
+          class="clickable remove enabled"
+          @click={{action "deleteTerm"}}
+        />
       {{else}}
-        {{fa-icon icon="trash" class="disabled"}}
+        <FaIcon @icon="trash" class="disabled" />
       {{/if}}
     </div>
     <div class="block is-active" data-test-is-active>
-      <label>{{t "general.active"}}:</label>
+      <label>
+        {{t "general.active"}}:
+      </label>
       {{#if canUpdate}}
-        {{toggle-yesno
-          yes=isActive
-          disabled=(if changeIsActive.isRunning true false)
-          toggle=(action (perform changeIsActive))
-        }}
+        <ToggleYesno
+          @yes={{isActive}}
+          @disabled={{if changeIsActive.isRunning true false}}
+          @toggle={{action (perform changeIsActive)}}
+        />
+      {{else if isActive}}
+        {{t "general.yes"}}
       {{else}}
-        {{#if isActive}}
-          {{t "general.yes"}}
-        {{else}}
-          {{t "general.no"}}
-        {{/if}}
+        {{t "general.no"}}
       {{/if}}
     </div>
     <div class="block term-description" data-test-description>
-      <label>{{t "general.description"}}:</label>
+      <label>
+        {{t "general.description"}}:
+      </label>
       {{#if canUpdate}}
-        {{#editable-field
-          value=(if description description (t "general.clickToAddTermDescription"))
-          save=(action "changeTermDescription")
-          close=(action "revertTermDescriptionChanges")
-          closeOnEscape=true
-          as |isSaving|
-        }}
+        <EditableField
+          @value={{if
+            description
+            description
+            (t "general.clickToAddTermDescription")
+          }}
+          @save={{action "changeTermDescription"}}
+          @close={{action "revertTermDescriptionChanges"}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
           <textarea
             value={{description}}
             oninput={{action (mut description) value="target.value"}}
@@ -75,21 +96,22 @@
           >
             {{description}}
           </textarea>
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{description}}
       {{/if}}
     </div>
   </div>
 {{/if}}
-
-<h5>{{t "general.subTerms"}}:</h5>
-
+<h5>
+  {{t "general.subTerms"}}:
+</h5>
 <div class="terms" data-test-sub-terms>
   {{#if newTerm}}
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
-        {{fa-icon icon="external-link-square-alt"}} {{newTerm.title}}
+        <FaIcon @icon="external-link-square-alt" />
+        {{newTerm.title}}
       </span>
       {{t "general.savedSuccessfully"}}
     </div>
@@ -104,28 +126,37 @@
       >
       <button class="save text" {{action "createTerm"}}>
         {{#if isSavingNewTerm}}
-          {{loading-spinner}}
+          <LoadingSpinner />
         {{else}}
           {{t "general.add"}}
         {{/if}}
       </button>
       {{#if
-        (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))
+        (and
+          (v-get this "newTermTitle" "isInvalid")
+          (is-in showErrorsFor "newTermTitle")
+        )
       }}
-        <span class="validation-error-message" data-test-error-message>{{v-get this "newTermTitle" "message"}}</span>
+        <span class="validation-error-message" data-test-error-message>
+          {{v-get this "newTermTitle" "message"}}
+        </span>
       {{/if}}
     </div>
   {{/if}}
-
   {{#if (is-fulfilled sortedTerms)}}
     <ul data-test-term-list>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action manageTerm term.id}} data-test-term>
-          {{term.title}}{{#if (not term.active)}} <em>({{t "general.inactive"}})</em>{{/if}}
+        <li data-test-term {{action manageTerm term.id}}>
+          {{term.title}}
+          {{#if (not term.active)}}
+            <em>
+              ({{t "general.inactive"}})
+            </em>
+          {{/if}}
         </li>
       {{/each}}
     </ul>
   {{else}}
-    {{loading-spinner}}
+    <LoadingSpinner />
   {{/if}}
 </div>

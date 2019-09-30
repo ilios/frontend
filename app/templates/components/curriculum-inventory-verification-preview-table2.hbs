@@ -4,39 +4,61 @@
 <table>
   <thead>
     <tr>
-      <th colspan="2" rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
-      <th rowspan="2">{{t "general.academicLevel"}}</th>
+      <th colspan="2" rowspan="2">
+        {{t "general.nonClerkshipSequenceBlocks"}}
+      </th>
+      <th rowspan="2">
+        {{t "general.academicLevel"}}
+      </th>
       <th colspan={{add 1 @data.methods.length}}>
         {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
       </th>
     </tr>
     <tr>
       {{#each @data.methods as |method|}}
-        <th>{{method.title}}</th>
+        <th>
+          {{method.title}}
+        </th>
       {{/each}}
-      <th>{{t "general.total"}}</th>
+      <th>
+        {{t "general.total"}}
+      </th>
     </tr>
   </thead>
   <tbody>
     {{#each this.nonClerkships as |clerkship|}}
       <tr>
-        <td colspan="2">{{clerkship.title}}</td>
-        <td>{{clerkship.level}}</td>
+        <td colspan="2">
+          {{clerkship.title}}
+        </td>
+        <td>
+          {{clerkship.level}}
+        </td>
         {{#each clerkship.methods as |method|}}
-          <td>{{method}}</td>
+          <td>
+            {{method}}
+          </td>
         {{/each}}
-        <td>{{clerkship.total}}</td>
+        <td>
+          {{clerkship.total}}
+        </td>
       </tr>
     {{/each}}
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="2">{{t "general.total"}}</td>
+      <td colspan="2">
+        {{t "general.total"}}
+      </td>
       <td></td>
       {{#each this.methodTotals as |total|}}
-        <td>{{total}}</td>
+        <td>
+          {{total}}
+        </td>
       {{/each}}
-      <td>{{this.sumTotal}}</td>
+      <td>
+        {{this.sumTotal}}
+      </td>
     </tr>
   </tfoot>
 </table>

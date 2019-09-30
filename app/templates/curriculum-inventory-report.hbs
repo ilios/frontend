@@ -1,14 +1,15 @@
 {{title (t "general.curriculumInventoryReports")}}
 <div class="backtolink">
-  {{#link-to "curriculumInventoryReports"}}{{t "general.backToReports"}}{{/link-to}}
+  <LinkTo @route="curriculumInventoryReports">
+    {{t "general.backToReports"}}
+  </LinkTo>
 </div>
-
-{{curriculum-inventory-report-details
-  report=model
-  canUpdate=(and (not model.isFinalized) canUpdate)
-  leadershipDetails=leadershipDetails
-  setLeadershipDetails=(action (mut leadershipDetails))
-  manageLeadership=manageLeadership
-  setManageLeadership=(action (mut manageLeadership))
-}}
+<CurriculumInventoryReportDetails
+  @report={{model}}
+  @canUpdate={{and (not model.isFinalized) canUpdate}}
+  @leadershipDetails={{leadershipDetails}}
+  @setLeadershipDetails={{action (mut leadershipDetails)}}
+  @manageLeadership={{manageLeadership}}
+  @setManageLeadership={{action (mut manageLeadership)}}
+/>
 {{outlet}}

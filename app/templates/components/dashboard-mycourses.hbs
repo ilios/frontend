@@ -1,7 +1,8 @@
 <div class="dashboard-block-header">
-  <h3>{{t "general.myCourses"}}</h3>
+  <h3>
+    {{t "general.myCourses"}}
+  </h3>
 </div>
-
 <div class="dashboard-block-body">
   {{#if (is-fulfilled listOfCourses)}}
     {{#if (get (await listOfCourses) "length")}}
@@ -10,20 +11,29 @@
           {{#each (await listOfCourses) as |course|}}
             {{#if (await canEditCourses)}}
               <tr class="clickable">
-                <td>{{#link-to "course" course}}{{fa-icon icon="external-link-square-alt"}} {{course.academicYear}}{{/link-to}}</td>
                 <td>
-                  {{#link-to "course" course}}
+                  <LinkTo @route="course" @model={{course}}>
+                    <FaIcon @icon="external-link-square-alt" />
+                    {{course.academicYear}}
+                  </LinkTo>
+                </td>
+                <td>
+                  <LinkTo @route="course" @model={{course}}>
                     {{course.title}}
                     {{#if course.externalId}}
                       ({{course.externalId}})
                     {{/if}}
-                  {{/link-to}}
+                  </LinkTo>
                 </td>
               </tr>
             {{else}}
               <tr>
-                <td>{{course.academicYear}}</td>
-                <td>{{course.title}}</td>
+                <td>
+                  {{course.academicYear}}
+                </td>
+                <td>
+                  {{course.title}}
+                </td>
               </tr>
             {{/if}}
           {{/each}}
@@ -33,6 +43,6 @@
       {{t "general.none"}}
     {{/if}}
   {{else}}
-    {{loading-spinner tagName="h1"}}
+    <LoadingSpinner @tagName="h1" />
   {{/if}}
 </div>

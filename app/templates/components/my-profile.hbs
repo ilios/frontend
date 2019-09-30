@@ -1,21 +1,25 @@
 <h1 class="name">
   {{user.fullName}}
 </h1>
-
 {{#if (await user.isStudent)}}
-  <span class="is-student"><h2>{{t "general.student"}}</h2></span>
+  <span class="is-student">
+    <h2>
+      {{t "general.student"}}
+    </h2>
+  </span>
 {{/if}}
-
 <div class="blocks">
-  {{user-profile-roles
-    user=user
-    isManageable=false
-    setIsManaging=nothing
-  }}
-
+  <UserProfileRoles
+    @user={{user}}
+    @isManageable={{false}}
+    @setIsManaging={{nothing}}
+  />
   <div class="small-component" data-test-info>
     <div>
-      <label>{{t "general.primarySchool"}}:</label>
+      <label>
+        {{t "general.primarySchool"}}
+        :
+      </label>
       {{#if (await user.school)}}
         {{get (await user.school) "title"}}
       {{else}}
@@ -23,7 +27,10 @@
       {{/if}}
     </div>
     <div>
-      <label>{{t "general.primaryCohort"}}:</label>
+      <label>
+        {{t "general.primaryCohort"}}
+        :
+      </label>
       {{#if (await user.primaryCohort)}}
         {{get (await user.primaryCohort) "title"}}
       {{else}}
@@ -31,13 +38,20 @@
       {{/if}}
     </div>
     <div>
-      <label>{{t "general.secondaryCohorts"}}:</label>
+      <label>
+        {{t "general.secondaryCohorts"}}
+        :
+      </label>
       {{#if (get (await user.secondaryCohorts) "length")}}
         <ul class="secondary-cohorts details-list">
           {{#each (sort-by "title" (await user.secondaryCohorts)) as |cohort|}}
             <li>
-              <span class="title">{{cohort.title}} </span>
-              <span class="content">{{cohort.programYear.program.title}}</span>
+              <span class="title">
+                {{cohort.title}}
+              </span>
+              <span class="content">
+                {{cohort.programYear.program.title}}
+              </span>
             </li>
           {{/each}}
         </ul>
@@ -46,16 +60,16 @@
       {{/if}}
     </div>
   </div>
-
-  {{user-profile-permissions
-    user=user
-  }}
-  {{user-profile-learnergroups user=user}}
+  <UserProfilePermissions @user={{user}} />
+  <UserProfileLearnergroups @user={{user}} />
 </div>
-
 <section class="token-maintenance">
-  <h3>{{t "general.manageAPITokens"}}</h3>
-  <p>{{t "general.tokenInfo" apiDocsUrl=apiDocsUrl htmlSafe=true}}</p>
+  <h3>
+    {{t "general.manageAPITokens"}}
+  </h3>
+  <p>
+    {{t "general.tokenInfo" apiDocsUrl=apiDocsUrl htmlSafe=true}}
+  </p>
   {{#unless (or showInvalidateTokens showCreateNewToken)}}
     <button
       class="new-token done text"
@@ -74,62 +88,73 @@
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
         <div class="new-token-result">
-          <h3>{{t "general.newToken"}}:</h3>
-          <input readonly value={{generatedJwt}}>
-          {{#copy-button success="tokenCopied" clipboardText=generatedJwt}}
-            {{fa-icon icon="copy"}}
-          {{/copy-button}}
+          <h3>
+            {{t "general.newToken"}}
+            :
+          </h3>
+          <input readonly="" value={{generatedJwt}}>
+          <CopyButton @success="tokenCopied" @clipboardText={{generatedJwt}}>
+            <FaIcon @icon="copy" />
+          </CopyButton>
           <button
             class="bigcancel"
             data-test-result-reset
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
-            {{fa-icon icon="times"}}
+            <FaIcon @icon="times" />
           </button>
         </div>
       {{else}}
         <div class="new-token-form">
-          <label>{{t "general.validUntil"}}</label>
-          {{pikaday-input
-            size=10
-            value=expiresAt
-            maxDate=maxDate
-            minDate=minDate
-            format="YYYY-MM-DD"
-            onSelection=(action "selectExpiresAtDate")
-          }}
+          <label>
+            {{t "general.validUntil"}}
+          </label>
+          <PikadayInput
+            @size={{10}}
+            @value={{expiresAt}}
+            @maxDate={{maxDate}}
+            @minDate={{minDate}}
+            @format="YYYY-MM-DD"
+            @onSelection={{action "selectExpiresAtDate"}}
+          />
           <button
             class="bigadd"
             data-test-new-token-create
             {{action (perform createNewToken)}}
           >
             {{#if createNewToken.isRunning}}
-              {{loading-spinner}}
+              <LoadingSpinner />
             {{else}}
-              {{fa-icon icon="check"}}
+              <FaIcon @icon="check" />
             {{/if}}
           </button>
           <button
             class="bigcancel"
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
-            {{fa-icon icon="times"}}
+            <FaIcon @icon="times" />
           </button>
         </div>
       {{/if}}
     {{/if}}
     {{#if showInvalidateTokens}}
       <div class="invalidate-tokens-form">
-        <h3>{{t "general.invalidateTokens"}}</h3>
-        <p>{{t "general.invalidateTokensConfirmation"}}</p>
+        <h3>
+          {{t "general.invalidateTokens"}}
+        </h3>
+        <p>
+          {{t "general.invalidateTokensConfirmation"}}
+        </p>
         <button class="done text" {{action (perform invalidateTokens)}}>
           {{#if invalidateTokens.isRunning}}
-            {{loading-spinner}}
+            <LoadingSpinner />
           {{else}}
             {{t "general.yes"}}
           {{/if}}
         </button>
-        <button class="cancel text" {{action toggleShowInvalidateTokens}}>{{t "general.cancel"}}</button>
+        <button class="cancel text" {{action toggleShowInvalidateTokens}}>
+          {{t "general.cancel"}}
+        </button>
       </div>
     {{/if}}
   {{/unless}}

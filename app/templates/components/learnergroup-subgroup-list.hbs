@@ -1,61 +1,61 @@
 {{#liquid-if isSaving class="crossFade"}}
-  {{wait-saving
-    showProgress=true
-    totalProgress=totalGroupsToSave
-    currentProgress=currentGroupsSaved
-  }}
+  <WaitSaving
+    @showProgress={{true}}
+    @totalProgress={{totalGroupsToSave}}
+    @currentProgress={{currentGroupsSaved}}
+  />
 {{/liquid-if}}
 <div class="learnergroup-subgroup-list-header">
   <div class="title">
-    {{t "general.subgroups"}} ({{get (await parentGroup.children) "length"}})
+    {{t "general.subgroups"}}
+    (
+    {{get (await parentGroup.children) "length"}}
+    )
   </div>
-
   <div class="learnergroup-subgroup-list-actions">
     {{#if canCreate}}
-      {{expand-collapse-button
-        value=showNewLearnerGroupForm
-        action=(toggle "showNewLearnerGroupForm" this)
-      }}
+      <ExpandCollapseButton
+        @value={{showNewLearnerGroupForm}}
+        @action={{toggle "showNewLearnerGroupForm" this}}
+      />
     {{/if}}
   </div>
 </div>
-
 <div class="learnergroup-subgroup-list-content">
   <section class="learnergroup-subgroup-list-new">
     {{#liquid-if showNewLearnerGroupForm class="vertical"}}
-      {{new-learnergroup
-        save=(action "saveNewLearnerGroup")
-        cancel=(action (toggle "showNewLearnerGroupForm" this))
-        generateNewLearnerGroups=(action "generateNewLearnerGroups")
-        multiModeSupported=true
-      }}
+      <NewLearnergroup
+        @save={{action "saveNewLearnerGroup"}}
+        @cancel={{action (toggle "showNewLearnerGroupForm" this)}}
+        @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
+        @multiModeSupported={{true}}
+      />
     {{/liquid-if}}
   </section>
-
   {{#if saved}}
     <div class="saved-result">
-      {{#link-to "learnerGroup" savedGroup}}
-        {{fa-icon icon="external-link-square-alt"}} {{savedGroup.title}}
-      {{/link-to}}
+      <LinkTo @route="learnerGroup" @model={{savedGroup}}>
+        <FaIcon @icon="external-link-square-alt" />
+        {{savedGroup.title}}
+      </LinkTo>
       {{t "general.savedSuccessfully"}}
     </div>
   {{/if}}
-
   <div class="learnergroup-subgroup-list-list">
     {{#if (is-fulfilled parentGroup.children)}}
       {{#if (get (await parentGroup.children) "length")}}
-        {{learnergroup-list
-          bubbleSort=false
-          learnerGroups=(await parentGroup.children)
-          canDelete=canDelete
-          canCreate=canCreate
-          canCopyWithLearners=false
-          remove=(action "removeLearnerGroup")
-          copy=(perform copyGroup)
-        }}
+        <LearnergroupList
+          @bubbleSort={{false}}
+          @learnerGroups={{await parentGroup.children}}
+          @canDelete={{canDelete}}
+          @canCreate={{canCreate}}
+          @canCopyWithLearners={{false}}
+          @remove={{action "removeLearnerGroup"}}
+          @copy={{perform copyGroup}}
+        />
       {{/if}}
     {{else}}
-      {{loading-spinner}}
+      <LoadingSpinner />
     {{/if}}
   </div>
 </div>

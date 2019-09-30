@@ -1,15 +1,13 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="title">
   <h4>
     {{#if canUpdate}}
-      {{#editable-field
-        value=programTitle
-        save=(action "changeTitle")
-        close=(action "revertTitleChanges")
-        saveOnEnter=true
-        closeOnEscape=true
-        as |isSaving|
-      }}
+      <EditableField
+        @value={{programTitle}}
+        @save={{action "changeTitle"}}
+        @close={{action "revertTitleChanges"}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
+      >
         <input
           type="text"
           value={{programTitle}}
@@ -18,11 +16,16 @@
           onkeyup={{action "addErrorDisplayFor" "programTitle"}}
         >
         {{#if
-          (and (v-get this "programTitle" "isInvalid") (is-in showErrorsFor "programTitle"))
+          (and
+            (v-get this "programTitle" "isInvalid")
+            (is-in showErrorsFor "programTitle")
+          )
         }}
-          <span class="validation-error-message">{{v-get this "programTitle" "message"}}</span>
+          <span class="validation-error-message">
+            {{v-get this "programTitle" "message"}}
+          </span>
         {{/if}}
-      {{/editable-field}}
+      </EditableField>
     {{else}}
       {{programTitle}}
     {{/if}}
@@ -30,6 +33,8 @@
 </div>
 <div class="program-publication">
   {{#if (and canUpdate (or program.isScheduled (not program.isPublished)))}}
-    <button {{action "activate" program}}>{{t "general.activate"}}</button>
+    <button {{action "activate" program}}>
+      {{t "general.activate"}}
+    </button>
   {{/if}}
 </div>

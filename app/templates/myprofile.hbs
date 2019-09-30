@@ -1,8 +1,8 @@
 {{title (t "general.myProfile")}}
-{{my-profile
-  user=model
-  showCreateNewToken=showCreateNewToken
-  toggleShowCreateNewToken=(toggle-action "showCreateNewToken" this)
-  showInvalidateTokens=showInvalidateTokens
-  toggleShowInvalidateTokens=(toggle-action "showInvalidateTokens" this)
-}}
+<MyProfile
+  @user={{model}}
+  @showCreateNewToken={{showCreateNewToken}}
+  @toggleShowCreateNewToken={{toggle-action "showCreateNewToken" this}}
+  @showInvalidateTokens={{showInvalidateTokens}}
+  @toggleShowInvalidateTokens={{toggle-action "showInvalidateTokens" this}}
+/>

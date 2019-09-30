@@ -1,23 +1,26 @@
 <div class="actions">
   <button class="bigadd" {{action (perform saveChanges)}}>
-    {{fa-icon
-      icon=(if saveChanges.isRunning "spinner" "check")
-      spin=(if saveChanges.isRunning true false)
-    }}
+    <FaIcon
+      @icon={{if saveChanges.isRunning "spinner" "check"}}
+      @spin={{if saveChanges.isRunning true false}}
+    />
   </button>
-  <button class="bigcancel" {{action close}}>{{fa-icon icon="undo"}}</button>
+  <button class="bigcancel" {{action close}}>
+    <FaIcon @icon="undo" />
+  </button>
 </div>
 <div class="selected-directors">
   <ul>
     {{#each (sort-by "lastName" directors) as |user|}}
       <li {{action "removeDirector" user}}>
-        {{user.fullName}} {{fa-icon icon="times" class="remove"}}
+        {{user.fullName}}
+        <FaIcon @icon="times" class="remove" />
       </li>
     {{/each}}
   </ul>
 </div>
-{{user-search
-  addUser=(action "addDirector")
-  roles="1"
-  currentlyActiveUsers=directors
-}}
+<UserSearch
+  @addUser={{action "addDirector"}}
+  @roles="1"
+  @currentlyActiveUsers={{directors}}
+/>

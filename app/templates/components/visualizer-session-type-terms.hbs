@@ -1,26 +1,32 @@
-{{! template-lint-disable attribute-indentation }}
 {{#if (or isIcon (gt (get (await data) "length") 0))}}
-  {{#simple-chart
-    name="donut"
-    isIcon=isIcon
-    data=(await data)
-    hover=(perform donutHover)
-    leave=(perform donutHover)
-
-    as |chart|
-  }}
+  <SimpleChart
+    @name="donut"
+    @isIcon={{isIcon}}
+    @data={{await data}}
+    @hover={{perform donutHover}}
+    @leave={{perform donutHover}} as |chart|
+  >
     {{#if tooltipContent}}
-      {{#chart.tooltip title=tooltipTitle}}
-        <h5>{{t "general.courses"}}</h5>
-        <p>{{tooltipContent.courses}}</p>
-        <h5>{{t "general.sessions"}}</h5>
-        <p>{{tooltipContent.sessions}}</p>
-      {{/chart.tooltip}}
+      <chart.tooltip @title={{tooltipTitle}}>
+        <h5>
+          {{t "general.courses"}}
+        </h5>
+        <p>
+          {{tooltipContent.courses}}
+        </p>
+        <h5>
+          {{t "general.sessions"}}
+        </h5>
+        <p>
+          {{tooltipContent.sessions}}
+        </p>
+      </chart.tooltip>
     {{/if}}
-  {{/simple-chart}}
-
+  </SimpleChart>
 {{else}}
   <div class="with-hours">
-    <h4>{{fa-icon icon="meh" class="meh-o"}}</h4>
+    <h4>
+      <FaIcon @icon="meh" class="meh-o" />
+    </h4>
   </div>
 {{/if}}

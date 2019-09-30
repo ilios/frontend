@@ -1,18 +1,32 @@
-<h4 data-test-title id="verification-preview-table8">{{t "general.table8AllResourceTypes"}}</h4>
+<h4 data-test-title id="verification-preview-table8">
+  {{t "general.table8AllResourceTypes"}}
+</h4>
 <table>
   <thead>
     <tr>
-      <th>{{t "general.itemCode"}}</th>
-      <th colspan="2">{{t "general.resourceTypes"}}</th>
-      <th>{{t "general.numberOfEvents"}}</th>
+      <th>
+        {{t "general.itemCode"}}
+      </th>
+      <th colspan="2">
+        {{t "general.resourceTypes"}}
+      </th>
+      <th>
+        {{t "general.numberOfEvents"}}
+      </th>
     </tr>
   </thead>
   <tbody>
     {{#each @data as |row|}}
       <tr>
-        <td>{{row.id}}</td>
-        <td colspan="2">{{row.title}}</td>
-        <td>{{row.count}}</td>
+        <td>
+          {{row.id}}
+        </td>
+        <td colspan="2">
+          {{row.title}}
+        </td>
+        <td>
+          {{row.count}}
+        </td>
       </tr>
     {{/each}}
   </tbody>

@@ -3,41 +3,46 @@
     {{t "general.noAccountExists" accountName=noAccountExistsAccount}}
   </div>
 {{else}}
-  <h2>{{t "general.login"}}</h2>
+  <h2>
+    {{t "general.login"}}
+  </h2>
   {{#each error.keys as |key|}}
-    <div class="error">{{t key}}</div>
+    <div class="error">
+      {{t key}}
+    </div>
   {{/each}}
-
   <form {{action (perform authenticate) on="submit"}}>
     <div class="item">
       <label for={{concat elementId "-username-input"}}>
-        {{t "general.username"}}:
+        {{t "general.username"}}
+        :
       </label>
       <input
         autocapitalize="off"
         autocorrect="off"
-        autofocus
+        autofocus=""
         id={{concat elementId "-username-input"}}
         type="text"
         value={{username}}
-        oninput={{action (mut username) value="target.value"}}>
+        oninput={{action (mut username) value="target.value"}}
+      >
     </div>
-
     <div class="item">
       <label for={{concat elementId "-password-input"}}>
-        {{t "general.password"}}:
+        {{t "general.password"}}
+        :
       </label>
       <input
         id={{concat elementId "-password-input"}}
         type="password"
         value={{password}}
-        oninput={{action (mut password) value="target.value"}}>
+        oninput={{action (mut password) value="target.value"}}
+      >
     </div>
-
     <div class="buttons">
       <button type="submit" class="done {{if authenticate.isRunning "active"}}">
         {{#if authenticate.isRunning}}
-          {{loading-spinner}}
+          <LoadingSpinner />
         {{else}}
           {{t "general.login"}}
         {{/if}}

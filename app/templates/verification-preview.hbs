@@ -1,6 +1,8 @@
 {{title (t "general.curriculumInventoryReports")}}
 <div data-test-back-to-report class="backtolink">
-  <LinkTo @route="curriculumInventoryReport" @model={{this.model}}>{{t "general.backToReport"}}</LinkTo>
+  <LinkTo @route="curriculumInventoryReport" @model={{this.model}}>
+    {{t "general.backToReport"}}
+  </LinkTo>
 </div>
 <CurriculumInventoryVerificationPreviewHeader @report={{this.model}} />
 <CurriculumInventoryVerificationPreview @report={{this.model}} />

@@ -1,23 +1,32 @@
-{{curriculum-inventory-sequence-block-header
-  canUpdate=canUpdate
-  sequenceBlock=sequenceBlock
-}}
+<CurriculumInventorySequenceBlockHeader
+  @canUpdate={{canUpdate}}
+  @sequenceBlock={{sequenceBlock}}
+/>
 {{#if (is-fulfilled sequenceBlock.allParents)}}
   <div class="breadcrumbs">
     <span>
-      {{#link-to "curriculumInventoryReport" sequenceBlock.report}}
+      <LinkTo
+        @route="curriculumInventoryReport"
+        @model={{sequenceBlock.report}}
+      >
         {{t "general.curriculumInventoryReport"}}
-      {{/link-to}}
+      </LinkTo>
     </span>
     {{#each (reverse (await sequenceBlock.allParents)) as |parent|}}
-      <span>{{#link-to "curriculumInventorySequenceBlock" parent}}{{parent.title}}{{/link-to}}</span>
+      <span>
+        <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
+          {{parent.title}}
+        </LinkTo>
+      </span>
     {{/each}}
-    <span>{{sequenceBlock.title}}</span>
+    <span>
+      {{sequenceBlock.title}}
+    </span>
   </div>
 {{/if}}
-{{curriculum-inventory-sequence-block-overview
-  sequenceBlock=sequenceBlock
-  canUpdate=canUpdate
-  sortBy=sortSessionsBy
-  setSortBy=setSortSessionBy
-}}
+<CurriculumInventorySequenceBlockOverview
+  @sequenceBlock={{sequenceBlock}}
+  @canUpdate={{canUpdate}}
+  @sortBy={{sortSessionsBy}}
+  @setSortBy={{setSortSessionBy}}
+/>

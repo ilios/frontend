@@ -1,27 +1,37 @@
 <div class="detail-stewards-header">
   {{#if isManaging}}
     <div class="title">
-      <span class="detail-specific-title">{{t "general.stewardingSchoolsAndDepartments"}}</span>
+      <span class="detail-specific-title">
+        {{t "general.stewardingSchoolsAndDepartments"}}
+      </span>
     </div>
   {{else}}
     <div
       class="title {{if showCollapsible "clickable collapsible"}}"
       {{action "collapse"}}
     >
-      {{t "general.stewardingSchoolsAndDepartments"}} ({{programYear.stewards.length}})
+      {{t "general.stewardingSchoolsAndDepartments"}}
+      (
+      {{programYear.stewards.length}}
+      )
     </div>
   {{/if}}
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" onclick={{perform save}}>
-        {{fa-icon icon=(if save.isRunning "spinner" "check") spin=save.isRunning}}
+        <FaIcon
+          @icon={{if save.isRunning "spinner" "check"}}
+          @spin={{save.isRunning}}
+        />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigcancel" {{action "cancel"}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if editable}}
       <button class="manage" onclick={{perform manage}}>
         {{t "general.stewardsManageTitle"}}
         {{#if manage.isRunning}}
-          {{loading-spinner}}
+          <LoadingSpinner />
         {{/if}}
       </button>
     {{/if}}
@@ -29,12 +39,12 @@
 </div>
 <div class="detail-stewards-content">
   {{#if isManaging}}
-    {{detail-steward-manager
-      stewards=bufferStewards
-      isSaving=save.isRunning
-      add=(action "addStewardToBuffer")
-      remove=(action "removeStewardFromBuffer")
-    }}
+    <DetailStewardManager
+      @stewards={{bufferStewards}}
+      @isSaving={{save.isRunning}}
+      @add={{action "addStewardToBuffer"}}
+      @remove={{action "removeStewardFromBuffer"}}
+    />
   {{else}}
     <ul class="static-list">
       {{#if (is-fulfilled stewardsBySchool)}}
@@ -43,17 +53,23 @@
             {{obj.schoolTitle}}
             {{#if obj.departments.length}}
               <ul>
-                {{#each (sort-by "departmentTitle" obj.departments) as |depObject|}}
-                  <li>{{depObject.departmentTitle}}</li>
+                {{#each
+                  (sort-by "departmentTitle" obj.departments) as |depObject|
+                }}
+                  <li>
+                    {{depObject.departmentTitle}}
+                  </li>
                 {{/each}}
               </ul>
             {{/if}}
           </li>
         {{else}}
-          <li>{{t "general.none"}}</li>
+          <li>
+            {{t "general.none"}}
+          </li>
         {{/each}}
       {{else}}
-        {{loading-spinner tagName="div" class="loading"}}
+        <LoadingSpinner @tagName="div" class="loading" />
       {{/if}}
     </ul>
   {{/if}}

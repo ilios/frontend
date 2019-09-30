@@ -4,31 +4,59 @@
 <table>
   <thead>
     <tr>
-      <th colspan="2" rowspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
-      <th rowspan="2">{{t "general.academicLevel"}}</th>
-      <th colspan={{add 1 @data.methods.length}}>{{t "general.includedInGrade"}}</th>
-      <th colspan="2">{{t "general.assessments"}}</th>
+      <th colspan="2" rowspan="2">
+        {{t "general.nonClerkshipSequenceBlocks"}}
+      </th>
+      <th rowspan="2">
+        {{t "general.academicLevel"}}
+      </th>
+      <th colspan={{add 1 @data.methods.length}}>
+        {{t "general.includedInGrade"}}
+      </th>
+      <th colspan="2">
+        {{t "general.assessments"}}
+      </th>
     </tr>
     <tr>
-      <th>{{t "general.numberOfExams"}}</th>
+      <th>
+        {{t "general.numberOfExams"}}
+      </th>
       {{#each @data.methods as |method|}}
-        <th>{{method}}</th>
+        <th>
+          {{method}}
+        </th>
       {{/each}}
-      <th>{{t "general.formative"}}</th>
-      <th>{{t "general.narrative"}}</th>
+      <th>
+        {{t "general.formative"}}
+      </th>
+      <th>
+        {{t "general.narrative"}}
+      </th>
     </tr>
   </thead>
   <tbody>
     {{#each this.nonClerkships as |nonClerkship|}}
       <tr>
-        <td colspan="2">{{nonClerkship.title}}</td>
-        <td>{{nonClerkship.level}}</td>
-        <td>{{nonClerkship.numExams}}</td>
+        <td colspan="2">
+          {{nonClerkship.title}}
+        </td>
+        <td>
+          {{nonClerkship.level}}
+        </td>
+        <td>
+          {{nonClerkship.numExams}}
+        </td>
         {{#each nonClerkship.methods as |method|}}
-          <td>{{method}}</td>
+          <td>
+            {{method}}
+          </td>
         {{/each}}
-        <td>{{nonClerkship.hasFormativeAssessments}}</td>
-        <td>{{nonClerkship.hasNarrativeAssessments}}</td>
+        <td>
+          {{nonClerkship.hasFormativeAssessments}}
+        </td>
+        <td>
+          {{nonClerkship.hasNarrativeAssessments}}
+        </td>
       </tr>
     {{/each}}
   </tbody>

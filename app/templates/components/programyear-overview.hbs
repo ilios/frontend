@@ -1,30 +1,40 @@
 <div class="programyear-overview-header">
-  <h5>{{t "general.overview"}}</h5>
+  <h5>
+    {{t "general.overview"}}
+  </h5>
   <div class="programyear-overview-actions">
     {{#if programYearVisualizations}}
-      {{#link-to
-        "program-year-visualizations"
-        programYear
-        title=(t "general.programYearVisualizations")
-      }}
-        {{fa-icon icon="chart-bar"}}
-      {{/link-to}}
+      <LinkTo
+        @route="program-year-visualizations"
+        @model={{programYear}}
+        @title={{t "general.programYearVisualizations"}}
+      >
+        <FaIcon @icon="chart-bar" />
+      </LinkTo>
     {{/if}}
   </div>
 </div>
 <div class="programyear-overview-content">
-  <label>{{t "general.directors"}}:</label>
+  <label>
+    {{t "general.directors"}}
+    :
+  </label>
   <div>
     {{#if canUpdate}}
       <ul class="removable-directors">
         {{#each sortedDirectors as |user|}}
-          <li {{action "removeDirector" user}}>{{user.fullName}}{{fa-icon icon="times" class="remove"}}</li>
+          <li {{action "removeDirector" user}}>
+            {{user.fullName}}
+            <FaIcon @icon="times" class="remove" />
+          </li>
         {{/each}}
       </ul>
     {{else}}
       <ul class="directors">
         {{#each sortedDirectors as |user|}}
-          <li>{{user.fullName}}</li>
+          <li>
+            {{user.fullName}}
+          </li>
         {{else}}
           {{t "general.none"}}
         {{/each}}
@@ -32,9 +42,9 @@
     {{/if}}
   </div>
   {{#if canUpdate}}
-    {{user-search
-      addUser=(action "addDirector")
-      currentlyActiveUsers=(await programYear.directors)
-    }}
+    <UserSearch
+      @addUser={{action "addDirector"}}
+      @currentlyActiveUsers={{await programYear.directors}}
+    />
   {{/if}}
 </div>

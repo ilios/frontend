@@ -1,13 +1,19 @@
 <table class="condensed">
   <thead>
     <tr>
-      <th class="text-left">{{t "general.attribute"}}</th>
-      <th class="text-left">{{t "general.enabled"}}</th>
+      <th class="text-left">
+        {{t "general.attribute"}}
+      </th>
+      <th class="text-left">
+        {{t "general.enabled"}}
+      </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>{{t "general.attendanceRequired"}}</td>
+      <td>
+        {{t "general.attendanceRequired"}}
+      </td>
       <td>
         {{#if showSessionAttendanceRequired}}
           <input
@@ -16,22 +22,33 @@
             {{action disable "showSessionAttendanceRequired"}}
           >
         {{else}}
-          <input type="checkbox" {{action enable "showSessionAttendanceRequired"}}>
+          <input
+            type="checkbox"
+            {{action enable "showSessionAttendanceRequired"}}
+          >
         {{/if}}
       </td>
     </tr>
     <tr>
-      <td>{{t "general.supplementalCurriculum"}}</td>
+      <td>
+        {{t "general.supplementalCurriculum"}}
+      </td>
       <td>
         {{#if showSessionSupplemental}}
-          <input type="checkbox" checked={{true}} {{action disable "showSessionSupplemental"}}>
+          <input
+            type="checkbox"
+            checked={{true}}
+            {{action disable "showSessionSupplemental"}}
+          >
         {{else}}
-          <input type="checkbox" {{action enable "showSessionSupplemental"}}>
+          <input type="checkbox" {{action enable "showSessionSupplemental"}} >
         {{/if}}
       </td>
     </tr>
     <tr>
-      <td>{{t "general.specialAttireRequired"}}</td>
+      <td>
+        {{t "general.specialAttireRequired"}}
+      </td>
       <td>
         {{#if showSessionSpecialAttireRequired}}
           <input
@@ -40,12 +57,17 @@
             {{action disable "showSessionSpecialAttireRequired"}}
           >
         {{else}}
-          <input type="checkbox" {{action enable "showSessionSpecialAttireRequired"}}>
+          <input
+            type="checkbox"
+            {{action enable "showSessionSpecialAttireRequired"}}
+          >
         {{/if}}
       </td>
     </tr>
     <tr>
-      <td>{{t "general.specialEquipmentRequired"}}</td>
+      <td>
+        {{t "general.specialEquipmentRequired"}}
+      </td>
       <td>
         {{#if showSessionSpecialEquipmentRequired}}
           <input
@@ -54,10 +76,12 @@
             {{action disable "showSessionSpecialEquipmentRequired"}}
           >
         {{else}}
-          <input type="checkbox" {{action enable "showSessionSpecialEquipmentRequired"}}>
+          <input
+            type="checkbox"
+            {{action enable "showSessionSpecialEquipmentRequired"}}
+          >
         {{/if}}
       </td>
     </tr>
-
   </tbody>
 </table>

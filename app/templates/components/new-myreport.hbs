@@ -1,8 +1,12 @@
-{{! template-lint-disable attribute-indentation }}
-<div class="title">{{t "general.newReport"}}</div>
+<div class="title">
+  {{t "general.newReport"}}
+</div>
 <div class="new-myreport-content" data-test-new-report>
   <p data-test-title>
-    <label>{{t "general.reportTitle"}}:</label>
+    <label>
+      {{t "general.reportTitle"}}
+      :
+    </label>
     <input
       type="text"
       value={{title}}
@@ -12,11 +16,15 @@
       data-test-report-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "title" "message"}}
+      </span>
     {{/if}}
   </p>
   <p data-test-school>
-    <label>{{t "general.for"}}</label>
+    <label>
+      {{t "general.for"}}
+    </label>
     {{#if (is-fulfilled currentSchool)}}
       <select
         onchange={{perform changeSchool value="target.value"}}
@@ -37,23 +45,24 @@
     {{/if}}
   </p>
   <p data-test-subject>
-    <label>{{t "general.all"}}</label>
+    <label>
+      {{t "general.all"}}
+    </label>
     <select
       onchange={{action "changeSubject" value="target.value"}}
       data-test-report-subject
     >
       {{#each subjectList as |o|}}
-        <option
-          value={{o.value}}
-          selected={{is-equal o.value currentSubject}}
-        >
+        <option value={{o.value}} selected={{is-equal o.value currentSubject}}>
           {{o.label}}
         </option>
       {{/each}}
     </select>
   </p>
   <p data-test-object>
-    <label>{{t "general.associatedWith"}}</label>
+    <label>
+      {{t "general.associatedWith"}}
+    </label>
     <select
       onchange={{action "changePrepositionalObject" value="target.value"}}
       data-test-report-object-type
@@ -75,94 +84,109 @@
     {{#if (contains this.currentPrepositionalObject (w "course session"))}}
       <select
         data-test-report-year-filter
-        onchange={{action "changeSelectedYear" value="target.value"}}>
+        onchange={{action "changeSelectedYear" value="target.value"}}
+      >
         <option selected={{is-empty this.selectedYear}} value="">
           {{t "general.allAcademicYears"}}
         </option>
-        {{#each (sort-by "academicYearTitle:desc" (await this.allAcademicYears)) as |year|}}
+        {{#each
+          (sort-by
+            "academicYearTitle:desc" (await this.allAcademicYears)
+          ) as |year|
+        }}
           <option
             selected={{is-equal year.id this.selectedYear}}
-            value={{year.id}}>
+            value={{year.id}}
+          >
             {{year.academicYearTitle}}
           </option>
         {{/each}}
       </select>
     {{/if}}
-
     <p>
-      <label>{{t "general.whichIs"}}</label>
+      <label>
+        {{t "general.whichIs"}}
+      </label>
       {{#if (is-equal currentPrepositionalObject "instructor")}}
         {{#if selectedUser}}
           <ul class="removable-list tag-list">
-            <li {{action "changePrepositionalObjectId" null}}>{{selectedUser.fullName}} {{fa-icon icon="times"}}</li>
+            <li {{action "changePrepositionalObjectId" null}}>
+              {{selectedUser.fullName}}
+              <FaIcon @icon="times" />
+            </li>
           </ul>
         {{else}}
-          {{user-search
-            addUser=(action "chooseInstructor")
-          }}
+          <UserSearch @addUser={{action "chooseInstructor"}} />
         {{/if}}
       {{else if (is-equal currentPrepositionalObject "mesh term")}}
         {{#if selectedMeshTerm}}
           <ul class="removable-list tag-list details-list">
             <li>
               <div class="content">
-                <span class="title">{{selectedMeshTerm.name}}</span>
+                <span class="title">
+                  {{selectedMeshTerm.name}}
+                </span>
                 <span class="details">
                   {{selectedMeshTerm.id}}
                   {{#if selectedMeshTerm.trees}}
-                    - {{selectedMeshTerm.trees.lastObject.treeNumber}}
+                    -{{selectedMeshTerm.trees.lastObject.treeNumber}}
                   {{/if}}
                 </span>
               </div>
-              {{fa-icon icon="times"}}
+              <FaIcon @icon="times" />
             </li>
           </ul>
         {{else}}
-          {{mesh-manager
-            add=(action "chooseMeshTerm")
-            editable=true
+          <MeshManager @add={{action "chooseMeshTerm"}} @editable={{true}} />
+        {{/if}}
+      {{else if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
+        <select
+          data-test-report-object
+          onchange={{action "changePrepositionalObjectId" value="target.value"}}
+        >
+          {{#each
+            (sort-by
+              "active:desc"
+              "academicYear"
+              "label"
+              (await this.filteredPrepositionalObjectIdList)
+            ) as |o|
           }}
-        {{/if}}
+            <option
+              selected={{is-equal o.value this.currentPrepositionalObjectId}}
+              value={{o.value}}
+            >
+              {{#if o.academicYear}}
+                {{o.academicYear}}|
+              {{/if}}
+              {{#if (and this.isCourse o.externalId)}}
+                [{{o.externalId}}] |{{o.label}}
+              {{else if this.isSession}}
+                {{o.label}}|{{o.courseTitle}}
+              {{else}}
+                {{o.label}}
+              {{/if}}
+              {{#unless o.active}}
+                ({{t "general.inactive"}})
+              {{/unless}}
+            </option>
+          {{/each}}
+        </select>
       {{else}}
-        {{#if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
-          <select
-            data-test-report-object
-            onchange={{action "changePrepositionalObjectId" value="target.value"}}>
-            {{#each (sort-by "active:desc" "academicYear" "label"
-              (await this.filteredPrepositionalObjectIdList)) as |o|}}
-              <option
-                selected={{is-equal o.value this.currentPrepositionalObjectId}}
-                value={{o.value}}>
-                {{#if o.academicYear}}
-                  {{o.academicYear}} |
-                {{/if}}
-                {{#if (and this.isCourse o.externalId)}}
-                  [{{o.externalId}}] | {{o.label}}
-                {{else if this.isSession}}
-                  {{o.label}} | {{o.courseTitle}}
-                {{else}}
-                  {{o.label}}
-                {{/if}}
-                {{#unless o.active}}
-                  ({{t "general.inactive"}})
-                {{/unless}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{loading-spinner}}
-        {{/if}}
+        <LoadingSpinner />
       {{/if}}
     </p>
   {{/if}}
   <div class="input-buttons">
     <button class="done text" onclick={{perform save}} data-test-report-save>
       {{#if save.isRunning}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.save"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action close}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" {{action close}}>
+      {{t "general.cancel"}}
+    </button>
   </div>
 </div>

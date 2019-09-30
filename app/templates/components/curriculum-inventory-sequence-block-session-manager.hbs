@@ -1,12 +1,14 @@
 {{#unless loadAttr.isRunning}}
   <div class="actions">
     <button class="bigadd" {{action (perform saveChanges)}}>
-      {{fa-icon
-        icon=(if saveChanges.isRunning "spinner" "check")
-        spin=(if saveChanges.isRunning true false)
-      }}
+      <FaIcon
+        @icon={{if saveChanges.isRunning "spinner" "check"}}
+        @spin={{if saveChanges.isRunning true false}}
+      />
     </button>
-    <button class="bigcancel" {{action "close"}}>{{fa-icon icon="undo"}}</button>
+    <button class="bigcancel" {{action "close"}}>
+      <FaIcon @icon="undo" />
+    </button>
   </div>
   <div class="list">
     <table>
@@ -30,74 +32,88 @@
             >
             {{t "general.exclude"}}
           </th>
-          {{#sortable-th
-            colspan=3
-            click=(action "sortBy" "title")
-            sortedBy=(or (eq sortBy "title") (eq sortBy "title:desc"))
-            sortedAscending=sortedAscending
-          }}
+          <SortableTh
+            @colspan={{3}}
+            @click={{action "sortBy" "title"}}
+            @sortedBy={{or (eq sortBy "title") (eq sortBy "title:desc")}}
+            @sortedAscending={{sortedAscending}}
+          >
             {{t "general.sessionTitle"}}
-          {{/sortable-th}}
-          {{#sortable-th
-            colspan=3
-            click=(action "sortBy" "sessionType.title")
-            sortedBy=(or (eq sortBy "sessionType.title") (eq sortBy "sessionType.title:desc"))
-            sortedAscending=sortedAscending
-          }}
+          </SortableTh>
+          <SortableTh
+            @colspan={{3}}
+            @click={{action "sortBy" "sessionType.title"}}
+            @sortedBy={{or
+              (eq sortBy "sessionType.title")
+              (eq sortBy "sessionType.title:desc")
+            }}
+            @sortedAscending={{sortedAscending}}
+          >
             {{t "general.sessionType"}}
-          {{/sortable-th}}
-          <th class="text-center" colspan="1">{{t "general.totalTime"}}</th>
-          {{#sortable-th
-            colspan=1
-            click=(action "sortBy" "offerings.length")
-            sortedBy=(or (eq sortBy "offerings.length") (eq sortBy "offerings.length:desc"))
-            sortedAscending=sortedAscending
-            sortType="numeric"
-          }}
+          </SortableTh>
+          <th class="text-center" colspan="1">
+            {{t "general.totalTime"}}
+          </th>
+          <SortableTh
+            @colspan={{1}}
+            @click={{action "sortBy" "offerings.length"}}
+            @sortedBy={{or
+              (eq sortBy "offerings.length")
+              (eq sortBy "offerings.length:desc")
+            }}
+            @sortedAscending={{sortedAscending}}
+            @sortType="numeric"
+          >
             {{t "general.offerings"}}
-          {{/sortable-th}}
+          </SortableTh>
         </tr>
       </thead>
       <tbody>
         {{#each (sort-by sortBy sessionsBuffer) as |session|}}
           <tr>
             <td class="text-center" colspan="2">
-              {{input
-                type="checkbox"
-                checked=(is-in linkedSessionsBuffer session)
-                change=(action "changeSession" session)
-              }}
+              <Input
+                @type="checkbox"
+                @checked={{is-in linkedSessionsBuffer session}}
+                @change={{action "changeSession" session}}
+              />
             </td>
             <td class="text-center" colspan="2">
-              {{input
-                type="checkbox"
-                checked=(is-in excludedSessionsBuffer session)
-                change=(action "excludeSession" session)
-              }}
+              <Input
+                @type="checkbox"
+                @checked={{is-in excludedSessionsBuffer session}}
+                @change={{action "excludeSession" session}}
+              />
             </td>
             <td class="text-left" colspan="3">
               {{#if session.isIndependentLearning}}
-                <strong>({{t "general.ilm"}})</strong>
+                <strong>
+                  ({{t "general.ilm"}})
+                </strong>
               {{/if}}
               {{session.title}}
             </td>
-            <td class="text-left" colspan="3">{{get (await session.sessionType) "title"}}</td>
+            <td class="text-left" colspan="3">
+              {{get (await session.sessionType) "title"}}
+            </td>
             <td class="text-center" colspan="1">
               {{#if (is-in linkedSessionsBuffer session)}}
                 {{#unless (is-fulfilled session.maxDuration)}}
-                  {{loading-spinner}}
+                  <LoadingSpinner />
                 {{else}}
                   {{await session.maxDuration}}
                 {{/unless}}
               {{else}}
                 {{#unless (is-fulfilled session.totalSumDuration)}}
-                  {{loading-spinner}}
+                  <LoadingSpinner />
                 {{else}}
                   {{await session.totalSumDuration}}
                 {{/unless}}
               {{/if}}
             </td>
-            <td class="text-center" colspan="1">{{get (await session.offerings) "length"}}</td>
+            <td class="text-center" colspan="1">
+              {{get (await session.offerings) "length"}}
+            </td>
           </tr>
         {{/each}}
       </tbody>

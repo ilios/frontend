@@ -1,7 +1,11 @@
-<h4>{{t "general.newProgram"}}</h4>
+<h4>
+  {{t "general.newProgram"}}
+</h4>
 <div class="form">
   <div class="item newprogram-title" data-test-newprogram-title>
-    <label>{{t "general.title"}}:</label>
+    <label>
+      {{t "general.title"}}:
+    </label>
     <input
       type="text"
       value={{title}}
@@ -11,17 +15,21 @@
       placeholder={{t "general.programTitlePlaceholder"}}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "title" "message"}}
+      </span>
     {{/if}}
   </div>
   <div class="buttons">
     <button class="done text" {{action "save"}}>
       {{#if isSaving}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action cancel}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" {{action cancel}}>
+      {{t "general.cancel"}}
+    </button>
   </div>
 </div>

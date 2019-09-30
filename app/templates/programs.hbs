@@ -2,11 +2,14 @@
 <section class="programs-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon icon="university" fixedWidth=true}}
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" model.schools) as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+            <option
+              value={{school.id}}
+              selected={{is-equal school selectedSchool}}
+            >
               {{school.title}}
             </option>
           {{/each}}
@@ -26,47 +29,53 @@
   <section class="programs">
     <div class="header">
       <div class="title">
-        <h2>{{t "general.programs"}}</h2>
+        <h2>
+          {{t "general.programs"}}
+        </h2>
       </div>
       <div class="actions">
         {{#if (await canCreate)}}
-          {{expand-collapse-button
-            value=showNewProgramForm
-            action=(action "toggleEditor")
-          }}
+          <ExpandCollapseButton
+            @value={{showNewProgramForm}}
+            @action={{action "toggleEditor"}}
+          />
         {{/if}}
       </div>
     </div>
     <section class="new">
       {{#liquid-if showNewProgramForm class="vertical"}}
-        {{new-program save=(action "saveNewProgram") cancel=(action "cancel")}}
+        <NewProgram
+          @save={{action "saveNewProgram"}}
+          @cancel={{action "cancel"}}
+        />
       {{/liquid-if}}
-
       {{#if newProgram}}
         <div class="saved-result">
-          {{#link-to "program" newProgram}}
-            {{fa-icon icon="external-link-square-alt"}} {{newProgram.title}}
-          {{/link-to}}
+          <LinkTo @route="program" @model={{newProgram}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{newProgram.title}}
+          </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
     {{#if deleted}}
       <div class="saved-program">
-        {{savedProgram.title}} {{t "general.removedSuccessfully"}}
+        {{savedProgram.title}}
+        {{t "general.removedSuccessfully"}}
       </div>
     {{/if}}
-
     <div class="list">
       {{#if (is-fulfilled this.filteredPrograms)}}
-        {{program-list
-          programs=(await this.filteredPrograms)
-          query=this.titleFilter
-          activate=(action "activateProgram")
-          edit=(action "editProgram")
-          remove=(action "removeProgram")}}
+        <ProgramList
+          @programs={{await this.filteredPrograms}}
+          @query={{this.titleFilter}}
+          @activate={{action "activateProgram"}}
+          @edit={{action "editProgram"}}
+          @remove={{action "removeProgram"}}
+        />
       {{else}}
-        {{pulse-loader}}
+        <PulseLoader />
       {{/if}}
     </div>
   </section>

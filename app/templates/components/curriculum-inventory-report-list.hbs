@@ -1,112 +1,122 @@
 <table>
   <thead>
     <tr>
-      {{#sortable-th
-        colspan=4
-        sortedAscending=this.sortedAscending
-        sortedBy=(or (eq sortBy "name") (eq sortBy "name:desc"))
-        click=(action "sortBy" "name")}}
+      <SortableTh
+        @colspan={{4}}
+        @sortedAscending={{this.sortedAscending}}
+        @sortedBy={{or (eq sortBy "name") (eq sortBy "name:desc")}}
+        @click={{action "sortBy" "name"}}
+      >
         {{t "general.reportName"}}
-      {{/sortable-th}}
+      </SortableTh>
       <th class="text-center hide-from-small-screen" colspan="2">
         {{t "general.program"}}
       </th>
-      {{#sortable-th
-        align="center"
-        colspan=2
-        hideFromSmallScreen=true
-        sortedAscending=this.sortedAscending
-        sortedBy=(or (eq sortBy "year") (eq sortBy "year:desc"))
-        sortType="numeric"
-        click=(action "sortBy" "year")}}
+      <SortableTh
+        @align="center"
+        @colspan={{2}}
+        @hideFromSmallScreen={{true}}
+        @sortedAscending={{this.sortedAscending}}
+        @sortedBy={{or (eq sortBy "year") (eq sortBy "year:desc")}}
+        @sortType="numeric"
+        @click={{action "sortBy" "year"}}
+      >
         {{t "general.academicYear"}}
-      {{/sortable-th}}
+      </SortableTh>
       <th class="text-center hide-from-small-screen" colspan="2">
         {{t "general.startDate"}}
       </th>
       <th class="text-center hide-from-small-screen" colspan="2">
         {{t "general.endDate"}}
       </th>
-      <th class="text-center" colspan="2">{{t "general.status"}}</th>
-      <th class="text-right" colspan="2">{{t "general.actions"}}</th>
+      <th class="text-center" colspan="2">
+        {{t "general.status"}}
+      </th>
+      <th class="text-right" colspan="2">
+        {{t "general.actions"}}
+      </th>
     </tr>
   </thead>
-
   <tbody>
     {{#each (sort-by sortBy (await this.proxiedReports)) as |report index|}}
       <tr
         class={{if report.showRemoveConfirmation "confirm-removal"}}
         data-test-active-row
-        data-test-report={{index}}>
+        data-test-report={{index}}
+      >
         <td class="text-left" colspan="4" data-test-name>
-          {{#link-to "curriculumInventoryReport" report.content}}
+          <LinkTo @route="curriculumInventoryReport" @model={{report.content}}>
             {{report.name}}
-          {{/link-to}}
+          </LinkTo>
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-program
-          {{action "edit" report}}>
+          {{action "edit" report}}
+        >
           {{report.program.title}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-year
-          {{action "edit" report}}>
+          {{action "edit" report}}
+        >
           {{report.yearLabel}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-start-date
-          {{action "edit" report}}>
+          {{action "edit" report}}
+        >
           {{moment-format report.startDate "L"}}
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
           data-test-end-date
-          {{action "edit" report}}>
+          {{action "edit" report}}
+        >
           {{moment-format report.endDate "L"}}
         </td>
         <td
           class="text-center"
           colspan="2"
           data-test-status
-          {{action "edit" report}}>
+          {{action "edit" report}}
+        >
           {{#if report.isFinalized}}
-            {{fa-icon icon="lock" class="enabled"}}
+            <FaIcon @icon="lock" class="enabled" />
           {{/if}}
-          {{publication-status
-            item=report
-            notPublishedLangKey="general.draft"
-            publishedLangKey="general.finalized"
-            showIcon=false}}
+          <PublicationStatus
+            @item={{report}}
+            @notPublishedLangKey="general.draft"
+            @publishedLangKey="general.finalized"
+            @showIcon={{false}}
+          />
         </td>
-        <td
-          class="text-right report-actions"
-          colspan="2"
-          data-test-actions>
-          {{#link-to "curriculumInventoryReport" report.content}}
-            {{fa-icon icon="edit" class="enabled"}}
-          {{/link-to}}
+        <td class="text-right report-actions" colspan="2" data-test-actions>
+          <LinkTo @route="curriculumInventoryReport" @model={{report.content}}>
+            <FaIcon @icon="edit" class="enabled" />
+          </LinkTo>
           <span>
             <a
               download="report.xml"
               href={{report.content.absoluteFileUri}}
               rel="noopener"
-              target="_blank">
-              {{fa-icon icon="download" class="enabled"}}
+              target="_blank"
+            >
+              <FaIcon @icon="download" class="enabled" />
             </a>
           </span>
           {{#if (await report.userCanDelete)}}
             <span class="clickable remove" {{action "confirmRemove" report}}>
-              {{fa-icon icon="trash" class="enabled"}}
+              <FaIcon @icon="trash" class="enabled" />
             </span>
           {{else}}
-            {{fa-icon icon="trash" class="disabled"}}
+            <FaIcon @icon="trash" class="disabled" />
           {{/if}}
         </td>
       </tr>
@@ -114,16 +124,16 @@
         <tr class="confirm-removal" data-test-confirm-removal={{index}}>
           <td colspan="16">
             <div class="confirm-message">
-              {{t "general.reportConfirmRemove"}} <br>
+              {{t "general.reportConfirmRemove"}}
+              <br>
               <div class="confirm-buttons">
-                <button
-                  class="remove text"
-                  onclick={{action "remove" report}}>
+                <button class="remove text" onclick={{action "remove" report}}>
                   {{t "general.yes"}}
                 </button>
                 <button
                   class="done text"
-                  onclick={{action "cancelRemove" report}}>
+                  onclick={{action "cancelRemove" report}}
+                >
                   {{t "general.cancel"}}
                 </button>
               </div>

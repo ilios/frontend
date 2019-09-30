@@ -1,34 +1,36 @@
 {{title (t "general.programs")}}
 <section class="program-year-visualizations">
   <div class="backtolink">
-    {{#link-to "programYear.index" model.program model}}
+    <LinkTo @route="programYear.index" @models={{array model.program model}}>
       {{t "general.backToProgramYear"}}
-    {{/link-to}}
+    </LinkTo>
   </div>
-  <h2>{{t "general.programYearVisualizations"}}</h2>
+  <h2>
+    {{t "general.programYearVisualizations"}}
+  </h2>
   <h3>
-    {{#link-to "program" model.program}}
+    <LinkTo @route="program" @model={{model.program}}>
       {{get (await model.program) "title"}}
-    {{/link-to}}
-    {{#link-to "programYear" model.program model}}
+    </LinkTo>
+    <LinkTo @route="programYear" @models={{array model.program model}}>
       {{#if (get (await model.cohort) "title")}}
         {{get (await model.cohort) "title"}}
       {{else}}
         {{t "general.classOf" year=(await model.classOfYear)}}
       {{/if}}
-    {{/link-to}}
+    </LinkTo>
   </h3>
-
-
   <div class="visualizations">
     <div>
-      {{#link-to "program-year-visualize-competencies" model}}
+      <LinkTo @route="program-year-visualize-competencies" @model={{model}}>
         <h4>
           {{t "general.objectiveMap"}}
         </h4>
-        {{visualizer-program-year-competencies isIcon=true programYear=model}}
-      {{/link-to}}
+        <VisualizerProgramYearCompetencies
+          @isIcon={{true}}
+          @programYear={{model}}
+        />
+      </LinkTo>
     </div>
   </div>
-
 </section>

@@ -1,7 +1,9 @@
 <td>
-  <span data-test-group-name>{{groupName}}</span>
+  <span data-test-group-name>
+    {{groupName}}
+  </span>
   {{#if noGroupWithThisName}}
-    <button {{action createGroup groupName}} data-test-create-group>
+    <button data-test-create-group {{action createGroup groupName}}>
       {{t "general.createNewGroup" title=groupName}}
     </button>
   {{/if}}

@@ -3,29 +3,89 @@
     class="expand-navigation link clickable"
     onclick={{action (toggle "expanded" this)}}
   >
-    <li title={{t "general.menu"}}>{{fa-icon icon="bars"}}</li>
+    <li title={{t "general.menu"}}>
+      <FaIcon @icon="bars" />
+    </li>
   </ul>
   <ul class="navigation-links">
-    <li>{{#link-to "dashboard"}}{{fa-icon icon="home" fixedWidth=true title=(t "general.dashboard")}}<span class="text">{{t "general.dashboard"}}</span>{{/link-to}}</li>
+    <li>
+      <LinkTo @route="dashboard">
+        <FaIcon
+          @icon="home"
+          @fixedWidth={{true}}
+          @title={{t "general.dashboard"}}
+        />
+        <span class="text">
+          {{t "general.dashboard"}}
+        </span>
+      </LinkTo>
+    </li>
     {{#if currentUser.performsNonLearnerFunction}}
-      <li>{{#link-to "courses" title=(t "general.coursesAndSessions")}}{{fa-icon icon="book" fixedWidth=true}}<span class="text">{{t "general.coursesAndSessions"}}</span>{{/link-to}}</li>
-      <li>{{#link-to "learnerGroups" title=(t "general.learnerGroups")}}{{fa-icon icon="graduation-cap" fixedWidth=true}}<span class="text">{{t "general.learnerGroups"}}</span>{{/link-to}}</li>
-      <li>{{#link-to "instructorGroups" title=(t "general.instructorGroups")}}{{fa-icon icon="user-md" fixedWidth=true}}<span class="text">{{t "general.instructorGroups"}}</span>{{/link-to}}</li>
-      <li>{{#link-to "schools" title=(t "general.schools")}}{{fa-icon icon="university" fixedWidth=true}}<span class="text">{{t "general.schools"}}</span>{{/link-to}}</li>
-      <li>{{#link-to "programs" title=(t "general.programs")}}{{fa-icon icon="list-alt" fixedWidth=true}}<span class="text">{{t "general.programs"}}</span>{{/link-to}}</li>
+      <li>
+        <LinkTo @route="courses" @title={{t "general.coursesAndSessions"}}>
+          <FaIcon @icon="book" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.coursesAndSessions"}}
+          </span>
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="learnerGroups" @title={{t "general.learnerGroups"}}>
+          <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.learnerGroups"}}
+          </span>
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo
+          @route="instructorGroups"
+          @title={{t "general.instructorGroups"}}
+        >
+          <FaIcon @icon="user-md" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.instructorGroups"}}
+          </span>
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="schools" @title={{t "general.schools"}}>
+          <FaIcon @icon="university" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.schools"}}
+          </span>
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="programs" @title={{t "general.programs"}}>
+          <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.programs"}}
+          </span>
+        </LinkTo>
+      </li>
     {{/if}}
     {{#if currentUser.canCreateOrUpdateUserInAnySchool}}
-      <li>{{#link-to "admin-dashboard" title=(t "general.admin")}}{{fa-icon icon="cogs" fixedWidth=true}}<span class="text">{{t "general.admin"}}</span>{{/link-to}}</li>
+      <li>
+        <LinkTo @route="admin-dashboard" @title={{t "general.admin"}}>
+          <FaIcon @icon="cogs" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.admin"}}
+          </span>
+        </LinkTo>
+      </li>
     {{/if}}
     {{#if currentUser.performsNonLearnerFunction}}
       <li>
-        {{#link-to
-          "curriculumInventoryReports"
-          title=(t "general.curriculumInventory")
-        }}
-          {{fa-icon icon="chart-bar" fixedWidth=true}}
-          <span class="text">{{t "general.curriculumInventory"}}</span>
-        {{/link-to}}
+        <LinkTo
+          @route="curriculumInventoryReports"
+          @title={{t "general.curriculumInventory"}}
+        >
+          <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.curriculumInventory"}}
+          </span>
+        </LinkTo>
       </li>
     {{/if}}
   </ul>

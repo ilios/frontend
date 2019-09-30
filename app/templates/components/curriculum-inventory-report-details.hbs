@@ -1,43 +1,50 @@
-{{curriculum-inventory-report-header
-  report=report
-  finalize=(action "confirmFinalization")
-  canUpdate=canUpdate
-}}
+<CurriculumInventoryReportHeader
+  @report={{report}}
+  @finalize={{action "confirmFinalization"}}
+  @canUpdate={{canUpdate}}
+/>
 {{#if showFinalizeConfirmation}}
   <div class="confirm-finalize">
     <div class="confirm-message">
-      {{t "general.finalizeReportConfirmation"}} <br>
+      {{t "general.finalizeReportConfirmation"}}
+      <br>
       <div class="confirm-buttons">
-        <button {{action "finalize"}} class="finalize text">{{t "general.yes"}}</button>
-        <button {{action "cancelFinalization"}} class="done text">{{t "general.cancel"}}</button>
+        <button class="finalize text" {{action "finalize"}}>
+          {{t "general.yes"}}
+        </button>
+        <button class="done text" {{action "cancelFinalization"}}>
+          {{t "general.cancel"}}
+        </button>
       </div>
     </div>
   </div>
 {{/if}}
-{{curriculum-inventory-report-overview report=report canUpdate=canUpdate}}
+<CurriculumInventoryReportOverview
+  @report={{report}}
+  @canUpdate={{canUpdate}}
+/>
 {{#if leadershipDetails}}
-  {{curriculum-inventory-leadership-expanded
-    report=report
-    canUpdate=canUpdate
-    collapse=(action setLeadershipDetails false)
-    expand=(action setLeadershipDetails true)
-    isManaging=manageLeadership
-    setIsManaging=setManageLeadership
-  }}
+  <CurriculumInventoryLeadershipExpanded
+    @report={{report}}
+    @canUpdate={{canUpdate}}
+    @collapse={{action setLeadershipDetails false}}
+    @expand={{action setLeadershipDetails true}}
+    @isManaging={{manageLeadership}}
+    @setIsManaging={{setManageLeadership}}
+  />
 {{else}}
-  {{leadership-collapsed
-    title=(t "general.curriculumInventoryReportLeadership")
-    showDirectors=false
-    administratorsCount=(has-many-length report "administrators")
-    expand=(action setLeadershipDetails true)
-  }}
+  <LeadershipCollapsed
+    @title={{t "general.curriculumInventoryReportLeadership"}}
+    @showDirectors={{false}}
+    @administratorsCount={{has-many-length report "administrators"}}
+    @expand={{action setLeadershipDetails true}}
+  />
 {{/if}}
 {{#liquid-if isFinalizing class="crossFade"}}
-  {{#modal-dialog
-    translucentOverlay=true
-    animatable=false
-  }}
-    {{pulse-loader}}
-    <h2 class="page-title">{{t "general.finalizingReport"}}</h2>
-  {{/modal-dialog}}
+  <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
+    <PulseLoader />
+    <h2 class="page-title">
+      {{t "general.finalizingReport"}}
+    </h2>
+  </ModalDialog>
 {{/liquid-if}}

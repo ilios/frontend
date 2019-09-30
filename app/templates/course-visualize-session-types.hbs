@@ -1,9 +1,17 @@
 <section class="course-visualize-session-types">
   <div class="backtolink">
-    {{#link-to "course-visualizations" model}}{{t "general.otherVisualizations"}}{{/link-to}}
+    <LinkTo @route="course-visualizations" @model={{model}}>
+      {{t "general.otherVisualizations"}}
+    </LinkTo>
   </div>
-  <h2>{{t "general.sessionTypes"}}</h2>
-  <h3 class="clickable">{{#link-to "course" model}}{{model.title}} {{model.academicYear}}{{/link-to}}</h3>
-
-  {{visualizer-course-session-types course=model}}
+  <h2>
+    {{t "general.sessionTypes"}}
+  </h2>
+  <h3 class="clickable">
+    <LinkTo @route="course" @model={{model}}>
+      {{model.title}}
+      {{model.academicYear}}
+    </LinkTo>
+  </h3>
+  <VisualizerCourseSessionTypes @course={{model}} />
 </section>
