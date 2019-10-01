@@ -2,9 +2,7 @@
   <section>
     <div class="detail-title">
       {{t "general.missingItems"}}
-      (
-      {{model.allPublicationIssuesLength}}
-      )
+      ({{model.allPublicationIssuesLength}})
     </div>
     <div class="detail-content">
       <table>
@@ -38,9 +36,7 @@
             {{#if model.programYears.length}}
               <td class="yes">
                 {{t "general.yes"}}
-                (
-                {{model.programYears.length}}
-                )
+                ({{model.programYears.length}})
               </td>
             {{else}}
               <td class="no">

@@ -8,9 +8,7 @@
 <div class="learnergroup-subgroup-list-header">
   <div class="title">
     {{t "general.subgroups"}}
-    (
-    {{get (await parentGroup.children) "length"}}
-    )
+    ({{get (await parentGroup.children) "length"}})
   </div>
   <div class="learnergroup-subgroup-list-actions">
     {{#if canCreate}}

@@ -56,16 +56,14 @@
   <div class="upload-users">
     <label>
       {{t "general.uploadUsers"}}
-      (
-      <a
-        target="_blank"
-        rel="noopener"
-        download="SampleUserUpload.tsv"
-        href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}"
-      >
-        {{t "general.sampleFile"}}
-      </a>
-      ):
+      (<a
+         target="_blank"
+         rel="noopener"
+         download="SampleUserUpload.tsv"
+         href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}"
+       >
+         {{t "general.sampleFile"}}
+       </a>):
     </label>
     <input
       type="file"

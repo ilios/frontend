@@ -22,9 +22,7 @@
             @competency={{competency}}
             @canUpdate={{canUpdate}}
           />
-          (
-          {{competency.objectives.length}}
-          )
+          ({{competency.objectives.length}})
           {{#if (and canDelete (eq competency.objectives.length 0))}}
             <FaIcon
               @icon="trash"

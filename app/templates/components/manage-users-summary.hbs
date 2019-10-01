@@ -1,14 +1,12 @@
 <div class="header">
   <h2 class="title">
     {{t "general.manageUsersSummaryTitle"}}
-    (
-    <LinkTo
-      @route="users"
-      @query={{hash showBulkNewUserForm=false showNewUserForm=false}}
-    >
-      {{t "general.viewAll"}}
-    </LinkTo>
-    )
+    (<LinkTo
+       @route="users"
+       @query={{hash showBulkNewUserForm=false showNewUserForm=false}}
+     >
+       {{t "general.viewAll"}}
+     </LinkTo>)
   </h2>
   <div class="actions">
     {{#if canCreate}}

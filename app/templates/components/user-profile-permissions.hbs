@@ -31,9 +31,7 @@
   <p>
     <h5>
       {{t "general.school"}}
-      (
-      {{get (await selectedSchool) "title"}}
-      )
+      ({{get (await selectedSchool) "title"}})
     </h5>
     <span class="hide-on-collapse">
       <strong>
@@ -53,9 +51,7 @@
   <p class={{if programCollapsed "collapsed" "expanded"}}>
     <h5 {{action (toggle "programCollapsed" this)}}>
       {{t "general.programs"}}
-      (
-      {{get (await directedPrograms) "length"}}
-      )
+      ({{get (await directedPrograms) "length"}})
     </h5>
     <h6>
       {{t "general.director"}}
@@ -75,9 +71,7 @@
   <p class={{if programYearCollapsed "collapsed" "expanded"}}>
     <h5 {{action (toggle "programYearCollapsed" this)}}>
       {{t "general.programYears"}}
-      (
-      {{get (await directedProgramYears) "length"}}
-      )
+      ({{get (await directedProgramYears) "length"}})
     </h5>
     <h6>
       {{t "general.director"}}
@@ -104,9 +98,7 @@
   <p class={{if courseCollapsed "collapsed" "expanded"}}>
     <h5 {{action (toggle "courseCollapsed" this)}}>
       {{t "general.courses"}}
-      (
-      {{await courseCount}}
-      )
+      ({{await courseCount}})
     </h5>
     <h6>
       {{t "general.director"}}
@@ -163,9 +155,7 @@
   <p class={{if sessionCollapsed "collapsed" "expanded"}}>
     <h5 {{action (toggle "sessionCollapsed" this)}}>
       {{t "general.sessions"}}
-      (
-      {{await sessionCount}}
-      )
+      ({{await sessionCount}})
     </h5>
     <h6>
       {{t "general.administrator"}}

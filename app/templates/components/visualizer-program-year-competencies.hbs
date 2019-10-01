@@ -11,18 +11,14 @@
         <div>
           <h5>
             {{t "general.courses"}}
-            (
-            {{tooltipCourses.length}}
-            )
+            ({{tooltipCourses.length}})
           </h5>
           {{truncate (join ", " tooltipCourses) 200 true}}
         </div>
         <div>
           <h5>
             {{t "general.sessions"}}
-            (
-            {{tooltipSessions.length}}
-            )
+            ({{tooltipSessions.length}})
           </h5>
           {{truncate (join ", " tooltipSessions) 200 true}}
         </div>
