@@ -64,7 +64,7 @@
     "stylelint-scss": "^3.11.1"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": ">= 10.*"
   },
   "ember-addon": {
     "paths": [
