@@ -24,8 +24,7 @@
     @onSelection={{action "changeEndDate"}}
     @format="M/D/YYYY"
   />
-  {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))
-  }}
+  {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
     <span class="validation-error-message">
       {{v-get this "endDate" "message"}}
     </span>
