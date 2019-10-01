@@ -126,8 +126,8 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       removeUsersFromGroup=(action nothing)
     }}`);
 
-    assert.ok(find('[data-test-group-members]').textContent.includes('Members of current group (2)'));
-    assert.ok(find('[data-test-all-other-members]').textContent.includes('All other members of top group (0)'));
+    assert.dom('[data-test-group-members]').hasText('Members of current group (2)');
+    assert.dom('[data-test-all-other-members]').hasText('All other members of top group (0)');
     assert.dom(userList).exists({ count: 2 });
     assert.dom(user1CheckBox).exists({ count: 1 });
     assert.dom(user1CheckBox).isNotChecked();
