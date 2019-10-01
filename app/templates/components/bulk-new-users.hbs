@@ -44,8 +44,7 @@
 <div class="new-user-form">
   <div class="choose-form-type">
     <label>
-      {{t "general.createNew"}}
-      :
+      {{t "general.createNew"}}:
     </label>
     <ClickChoiceButtons
       @buttonContent1={{t "general.nonStudent"}}
@@ -161,8 +160,7 @@
   {{/if}}
   <div class="item last">
     <label>
-      {{t "general.primarySchool"}}
-      :
+      {{t "general.primarySchool"}}:
     </label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select
@@ -188,8 +186,7 @@
   }}
     <div class="item last">
       <label>
-        {{t "general.primaryCohort"}}
-        :
+        {{t "general.primaryCohort"}}:
       </label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select

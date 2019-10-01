@@ -4,8 +4,7 @@
 <div class="new-user-form">
   <div class="choose-form-type" data-test-user-type>
     <label>
-      {{t "general.createNew"}}
-      :
+      {{t "general.createNew"}}:
     </label>
     <ClickChoiceButtons
       @buttonContent1={{t "general.nonStudent"}}
@@ -16,8 +15,7 @@
   </div>
   <div class="item" data-test-first-name>
     <label>
-      {{t "general.firstName"}}
-      :
+      {{t "general.firstName"}}:
     </label>
     <input
       type="text"
@@ -37,8 +35,7 @@
   </div>
   <div class="item" data-test-middle-name>
     <label>
-      {{t "general.middleName"}}
-      :
+      {{t "general.middleName"}}:
     </label>
     <input
       type="text"
@@ -58,8 +55,7 @@
   </div>
   <div class="item" data-test-last-name>
     <label>
-      {{t "general.lastName"}}
-      :
+      {{t "general.lastName"}}:
     </label>
     <input
       type="text"
@@ -77,8 +73,7 @@
   </div>
   <div class="item" data-test-campus-id>
     <label>
-      {{t "general.campusId"}}
-      :
+      {{t "general.campusId"}}:
     </label>
     <input
       type="text"
@@ -96,8 +91,7 @@
   </div>
   <div class="item" data-test-other-id>
     <label>
-      {{t "general.otherId"}}
-      :
+      {{t "general.otherId"}}:
     </label>
     <input
       type="text"
@@ -115,8 +109,7 @@
   </div>
   <div class="item" data-test-email>
     <label>
-      {{t "general.email"}}
-      :
+      {{t "general.email"}}:
     </label>
     <input
       type="text"
@@ -132,8 +125,7 @@
   </div>
   <div class="item" data-test-phone>
     <label>
-      {{t "general.phone"}}
-      :
+      {{t "general.phone"}}:
     </label>
     <input
       type="text"
@@ -149,8 +141,7 @@
   </div>
   <div class="item" data-test-username>
     <label>
-      {{t "general.username"}}
-      :
+      {{t "general.username"}}:
     </label>
     <input
       type="text"
@@ -168,8 +159,7 @@
   </div>
   <div class="item" data-test-password>
     <label>
-      {{t "general.password"}}
-      :
+      {{t "general.password"}}:
     </label>
     <input
       type="text"
@@ -187,8 +177,7 @@
   </div>
   <div class="item" data-test-school>
     <label>
-      {{t "general.primarySchool"}}
-      :
+      {{t "general.primarySchool"}}:
     </label>
     {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
       <select onchange={{action "setSchool" value="target.value"}}>
@@ -211,8 +200,7 @@
   }}
     <div class="item last" data-test-cohort>
       <label>
-        {{t "general.primaryCohort"}}
-        :
+        {{t "general.primaryCohort"}}:
       </label>
       {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
         <select onchange={{action "setPrimaryCohort" value="target.value"}}>

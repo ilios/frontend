@@ -2,8 +2,7 @@
 <div class="form">
   <div class="item" data-test-title>
     <label>
-      {{t "general.title"}}
-      :
+      {{t "general.title"}}:
     </label>
     {{#if canEditTitle}}
       <input
@@ -72,8 +71,7 @@
   </div>
   <div class="item calendar-color" data-test-color>
     <label>
-      {{t "general.color"}}
-      :
+      {{t "general.color"}}:
     </label>
     {{#if canEditCalendarColor}}
       <input
@@ -104,8 +102,7 @@
   </div>
   <div class="item" data-test-assessment>
     <label>
-      {{t "general.assessment"}}
-      :
+      {{t "general.assessment"}}:
     </label>
     {{#if canEditAssessment}}
       <ToggleYesno @yes={{assessment}} @toggle={{action "updateAssessment"}} />
@@ -122,8 +119,7 @@
   {{#if (and assessment (is-fulfilled assessmentOptions))}}
     <div class="item" data-test-assessment-option>
       <label>
-        {{t "general.assessmentOption"}}
-        :
+        {{t "general.assessmentOption"}}:
       </label>
       {{#if canEditAssessmentOption}}
         <select
@@ -150,8 +146,7 @@
   {{/if}}
   <div class="item" data-test-active>
     <label>
-      {{t "general.active"}}
-      :
+      {{t "general.active"}}:
     </label>
     {{#if canEditActive}}
       <ToggleYesno @yes={{isActive}} @toggle={{action (mut isActive)}} />

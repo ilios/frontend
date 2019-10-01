@@ -5,11 +5,7 @@
 </div>
 <div class="form">
   <label>
-    {{t
-      "general.unassignedStudentsConfirmation"
-      count=this.selectedUserIds.length
-    }}
-    :
+    {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
   </label>
   {{#if this.isLoading}}
     <LoadingSpinner />

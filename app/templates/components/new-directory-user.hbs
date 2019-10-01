@@ -103,8 +103,7 @@
     {{#if (await allowCustomUserName)}}
       <div class="item" data-test-password>
         <label>
-          {{t "general.password"}}
-          :
+          {{t "general.password"}}:
         </label>
         <input
           type="text"
@@ -148,8 +147,7 @@
     }}
       <div class="item" data-test-cohort>
         <label>
-          {{t "general.primaryCohort"}}
-          :
+          {{t "general.primaryCohort"}}:
         </label>
         {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
           <select onchange={{action "setPrimaryCohort" value="target.value"}}>

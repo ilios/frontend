@@ -4,8 +4,7 @@
 <div data-test-new-course>
   <div class="item">
     <label>
-      {{t "general.title"}}
-      :
+      {{t "general.title"}}:
     </label>
     <input
       class="course-title"
@@ -27,8 +26,7 @@
   </div>
   <div class="item">
     <label>
-      {{t "general.academicYear"}}
-      :
+      {{t "general.academicYear"}}:
     </label>
     <select data-test-year onchange={{action "setYear" value="target.value"}}>
       <option disabled="" selected={{is-empty this.selectedYear}} value="">

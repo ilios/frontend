@@ -17,8 +17,7 @@
   <div class="small-component" data-test-info>
     <div>
       <label>
-        {{t "general.primarySchool"}}
-        :
+        {{t "general.primarySchool"}}:
       </label>
       {{#if (await user.school)}}
         {{get (await user.school) "title"}}
@@ -28,8 +27,7 @@
     </div>
     <div>
       <label>
-        {{t "general.primaryCohort"}}
-        :
+        {{t "general.primaryCohort"}}:
       </label>
       {{#if (await user.primaryCohort)}}
         {{get (await user.primaryCohort) "title"}}
@@ -39,8 +37,7 @@
     </div>
     <div>
       <label>
-        {{t "general.secondaryCohorts"}}
-        :
+        {{t "general.secondaryCohorts"}}:
       </label>
       {{#if (get (await user.secondaryCohorts) "length")}}
         <ul class="secondary-cohorts details-list">
@@ -89,8 +86,7 @@
       {{#if generatedJwt}}
         <div class="new-token-result">
           <h3>
-            {{t "general.newToken"}}
-            :
+            {{t "general.newToken"}}:
           </h3>
           <input readonly="" value={{generatedJwt}}>
           <CopyButton @success="tokenCopied" @clipboardText={{generatedJwt}}>
