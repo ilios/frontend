@@ -60,7 +60,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     this.set('user', user);
-    await render(hbs`{{user-profile-bio user=user}}`);
+    await render(hbs`<UserProfileBio @user={{user}} />`);
     const primarySchool = '.primary-school';
     const fields = '.item';
     const firstName = `${fields}:nth-of-type(1) span`;
@@ -94,7 +94,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     this.set('user', user);
-    await render(hbs`{{user-profile-bio user=user}}`);
+    await render(hbs`<UserProfileBio @user={{user}} />`);
 
     const fields = '.item';
     const firstName = `${fields}:nth-of-type(1) span`;
@@ -133,7 +133,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('click', (what) =>{
       assert.ok(what, 'received boolean true value');
     });
-    await render(hbs`{{user-profile-bio user=user isManageable=true setIsManaging=(action click)}}`);
+    await render(hbs`<UserProfileBio @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`);
     const manage = 'button.manage';
     await click(manage);
   });
@@ -180,7 +180,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(authentication.get('password'), undefined, 'password is saved');
     });
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -245,7 +245,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -311,7 +311,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -368,7 +368,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const inputs = 'input';
     const password = `[data-test-password-input]`;
     const activatePasswordField = '.activate-password-field';
@@ -391,7 +391,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -410,7 +410,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -430,7 +430,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -450,7 +450,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -470,7 +470,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -508,7 +508,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const items = '.item';
     const firstName = `${items}:nth-of-type(1)`;
     const middleName = `${items}:nth-of-type(2)`;
@@ -580,7 +580,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const preferredEmailInput = '[data-test-preferred-email-input]';
     assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
     await fillIn(preferredEmailInput, '');
@@ -599,7 +599,7 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`{{user-profile-bio isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const displayNameInput = '[data-test-display-name-input]';
     assert.dom(displayNameInput).hasValue('Best Name', 'preferred email is set');
     await fillIn(displayNameInput, '');

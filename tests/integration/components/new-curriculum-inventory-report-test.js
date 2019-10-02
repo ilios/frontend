@@ -25,7 +25,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
 
     this.set('program', programModel);
 
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} />`);
 
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const currentYearLabel = `${currentYear} - ${currentYear + 1}`;
@@ -89,7 +89,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       return resolve(true);
     });
 
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} @save={{action saveReport}} />`);
     await fillIn('[data-test-name] input', 'new report');
     await fillIn('[data-test-description] textarea', 'lorem ipsum');
     await fillIn('[data-test-academic-year] select', expectedSelectedYear);
@@ -106,7 +106,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     this.set('cancelReport', () => {
       assert.ok(true, 'Cancel action got invoked.');
     });
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program cancel=(action cancelReport)}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} @cancel={{action cancelReport}} />`);
     await click('button.cancel');
   });
 
@@ -122,7 +122,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       return resolve(true);
     });
 
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program save=(action saveReport)}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} @save={{action saveReport}} />`);
     await fillIn('[data-test-name] input', 'new report');
     await triggerKeyEvent('[data-test-name] input', 'keyup', 13);
   });
@@ -133,7 +133,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -143,7 +143,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} />`);
     await click('button.done');
     assert.dom('.validation-error-message').exists({ count: 1 });
   });
@@ -154,7 +154,7 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    await render(hbs`{{new-curriculum-inventory-report currentProgram=program}}`);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{program}} />`);
     await fillIn('[data-test-name] input', '0123456789'.repeat(7));
     await click('button.done');
     assert.dom('.validation-error-message').exists({ count: 1 });

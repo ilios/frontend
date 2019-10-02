@@ -54,7 +54,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
 
   test('it renders', async function(assert) {
     this.set('user', this.user);
-    await render(hbs`{{user-profile-cohorts user=user}}`);
+    await render(hbs`<UserProfileCohorts @user={{user}} />`);
     const primaryCohort = '[data-test-primary-cohort]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
     await settled();
@@ -70,7 +70,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     this.set('click', (what) =>{
       assert.ok(what, 'recieved boolean true value');
     });
-    await render(hbs`{{user-profile-cohorts user=user isManageable=true setIsManaging=(action click)}}`);
+    await render(hbs`<UserProfileCohorts @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`);
     const manage = 'button.manage';
     await click(manage);
   });
@@ -90,7 +90,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
       assert.ok(attrs.user.cohorts.includes(this.cohort4.id), 'cohort4 has been added');
     });
 
-    await render(hbs`{{user-profile-cohorts isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
     const firstSecondaryCohortTitle = `${secondaryCohorts}:nth-of-type(1) [data-test-title]`;

@@ -18,7 +18,10 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     const maximum = '10';
     this.set('minimum', minimum);
     this.set('maximum', maximum);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+    />`);
     assert.dom('.minimum label').hasText('Minimum:', 'Minimum is labeled correctly.');
     assert.dom('.minimum input').hasValue(minimum, 'Minimum input has correct value.');
     assert.dom('.maximum label').hasText('Maximum:', 'Maximum input is labeled correctly.');
@@ -40,7 +43,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+    />`);
     await fillIn('.minimum input', newMinimum);
     await triggerEvent('.minimum input', 'input');
     await fillIn('.maximum input', newMaximum);
@@ -58,7 +65,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('cancelAction', cancelAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum cancel=cancelAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @cancel={{cancelAction}}
+    />`);
     await click('.buttons .cancel');
   });
 
@@ -72,7 +83,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '100');
     await triggerEvent('.minimum input', 'input');
@@ -94,7 +109,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '-1');
     await triggerEvent('.minimum input', 'input');
@@ -116,7 +135,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '');
     await triggerEvent('.minimum input', 'input');
@@ -138,7 +161,11 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('minimum', minimum);
     this.set('maximum', maximum);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.minimum input', '0');
     await triggerEvent('.minimum input', 'input');
@@ -162,7 +189,12 @@ module('Integration | Component | curriculum inventory sequence block min max ed
     this.set('maximum', maximum);
     this.set('isElective', isElective);
     this.set('saveAction', saveAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-min-max-editor minimum=minimum maximum=maximum save=saveAction isElective=isElective}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      @minimum={{minimum}}
+      @maximum={{maximum}}
+      @save={{saveAction}}
+      @isElective={{isElective}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     assert.dom('.minimum input').hasValue('0');
     assert.dom('.minimum input').hasAttribute('disabled');

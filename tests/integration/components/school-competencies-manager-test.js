@@ -61,9 +61,14 @@ module('Integration | Component | school competencies manager', function(hooks) 
     let competencies = [domain1, competency1, competency2];
     this.set('competencies', competencies);
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action nothing) remove=(action nothing) competencies=competencies}}`
-    );
+    await render(hbs`<SchoolCompetenciesManager
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+      @add={{action nothing}}
+      @remove={{action nothing}}
+      @competencies={{competencies}}
+    />`);
 
     const title = 'h5';
     const input = 'input';
@@ -98,9 +103,14 @@ module('Integration | Component | school competencies manager', function(hooks) 
     this.set('remove', (what) => {
       assert.equal(what, domain1);
     });
-    await render(
-      hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action nothing) remove=(action remove) competencies=competencies}}`
-    );
+    await render(hbs`<SchoolCompetenciesManager
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+      @add={{action nothing}}
+      @remove={{action remove}}
+      @competencies={{competencies}}
+    />`);
 
     const domains = '.domain';
     const domain1Icon = `${domains} svg`;
@@ -122,9 +132,14 @@ module('Integration | Component | school competencies manager', function(hooks) 
       assert.equal(what, domain1);
       assert.equal(title, 'new c');
     });
-    await render(
-      hbs`{{school-competencies-manager canUpdate=true canDelete=true canCreate=true add=(action add) remove=(action nothing) competencies=competencies}}`
-    );
+    await render(hbs`<SchoolCompetenciesManager
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+      @add={{action add}}
+      @remove={{action nothing}}
+      @competencies={{competencies}}
+    />`);
 
     const domains = '.domain';
     const domain1Input = `${domains} input:nth-of-type(1)`;

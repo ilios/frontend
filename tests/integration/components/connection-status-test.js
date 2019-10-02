@@ -7,7 +7,7 @@ module('Integration | Component | connection status', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders offline and therefor hidden', async function(assert) {
-    await render(hbs`{{connection-status}}`);
+    await render(hbs`<ConnectionStatus />`);
     assert.dom(this.element).hasNoClass('offline');
   });
 });

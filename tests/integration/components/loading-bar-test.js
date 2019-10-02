@@ -12,7 +12,7 @@ module('Integration | Component | loading bar', function(hooks) {
     this.set('isLoading', true);
 
     // don't `await` this render as the internal task that never stops will keep this test running forever
-    render(hbs`{{loading-bar isLoading=isLoading}}`);
+    render(hbs`<LoadingBar @isLoading={{isLoading}} />`);
     await waitUntil(() => {
       const value = parseInt(find(bar).getAttribute('value').trim(), 10);
       return value > 0;

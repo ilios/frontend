@@ -32,9 +32,12 @@ module('Integration | Component | programyear objective list', function(hooks) {
     this.set('nothing', () => {});
     this.set('subject', programYear);
 
-    await render(
-      hbs`{{programyear-objective-list subject=subject manageCompetency=(action nothing) manageDescriptors=(action nothing) editable=true}}`
-    );
+    await render(hbs`<ProgramyearObjectiveList
+      @subject={{subject}}
+      @manageCompetency={{action nothing}}
+      @manageDescriptors={{action nothing}}
+      @editable={{true}}
+    />`);
     return settled().then(() => {
       assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
       assert.dom('button.download').exists({ count: 1 }, 'Download button shows.');
@@ -54,7 +57,7 @@ module('Integration | Component | programyear objective list', function(hooks) {
       objectives: resolve([]),
     });
     this.set('subject', programYear);
-    await render(hbs`{{programyear-objective-list subject=subject}}`);
+    await render(hbs`<ProgramyearObjectiveList @subject={{subject}} />`);
     let container = findAll('.programyear-objective-list');
     assert.equal(container.length, 1, 'Component container element exists.');
     assert.dom(container[0]).hasText('', 'No content is shown.');
@@ -72,9 +75,11 @@ module('Integration | Component | programyear objective list', function(hooks) {
     this.set('nothing', () => {});
     this.set('subject', programYear);
 
-    await render(
-      hbs`{{programyear-objective-list subject=subject manageCompetency=(action nothing) manageDescriptors=(action nothing)}}`
-    );
+    await render(hbs`<ProgramyearObjectiveList
+      @subject={{subject}}
+      @manageCompetency={{action nothing}}
+      @manageDescriptors={{action nothing}}
+    />`);
 
     return settled().then(() => {
       assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');

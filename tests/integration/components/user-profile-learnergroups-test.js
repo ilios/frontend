@@ -77,7 +77,7 @@ module('Integration | Component | user profile learnergroups', function(hooks) {
 
   test('it renders', async function(assert) {
     this.set('user', user);
-    await render(hbs`{{user-profile-learnergroups user=user}}`);
+    await render(hbs`<UserProfileLearnergroups @user={{user}} />`);
     const learnerGroups = 'ul:nth-of-type(1) li';
     const firstLearnerGroup = `${learnerGroups}:nth-of-type(1)`;
     const secondLearnerGroup = `${learnerGroups}:nth-of-type(2)`;

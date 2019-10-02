@@ -24,7 +24,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
 
     assert.dom('h2').hasText('our group');
     assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
@@ -39,7 +39,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} @canUpdate={{true}} />`);
 
     assert.dom('h2').hasText('our group');
     await click('h2 .editable');
@@ -67,7 +67,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup}}`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
 
     assert.dom('header .info').hasText('Members: 1 / 2');
   });
@@ -88,7 +88,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`{{learnergroup-header learnerGroup=learnerGroup canUpdate=true}}`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} @canUpdate={{true}} />`);
 
     assert.dom(title).hasText('our group', 'title is correct');
     assert.dom(errors).doesNotExist('there are no errors');

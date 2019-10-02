@@ -13,7 +13,7 @@ module('Integration | Component | new program', function(hooks) {
     this.set('cancel', () => {});
     this.set('save', () => {});
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
 
     const titleLabel = find('[data-test-newprogram-title] label');
     const titleInput = find('[data-test-newprogram-title] input');
@@ -32,7 +32,7 @@ module('Integration | Component | new program', function(hooks) {
     });
     this.set('save', () => {});
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const cancelBtn = find('.buttons .cancel');
     click(cancelBtn);
   });
@@ -42,7 +42,7 @@ module('Integration | Component | new program', function(hooks) {
     this.set('cancel', () => {});
     this.set('save', () => {});
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const validationError = '[data-test-newprogram-title] .validation-error-message';
     assert.dom(validationError).doesNotExist();
@@ -55,7 +55,7 @@ module('Integration | Component | new program', function(hooks) {
     this.set('cancel', () => {});
     this.set('save', () => {});
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     const validationError = '[data-test-newprogram-title] .validation-error-message';
@@ -70,7 +70,7 @@ module('Integration | Component | new program', function(hooks) {
     this.set('cancel', () => {});
     this.set('save', () => {});
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     let validationError = '[data-test-newprogram-title] .validation-error-message';
@@ -89,7 +89,7 @@ module('Integration | Component | new program', function(hooks) {
       assert.equal(program.get('publishedAsTbd'), false);
     });
 
-    await render(hbs`{{new-program save=(action save) cancel=(action cancel)}}`);
+    await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
     let validationError = '[data-test-newprogram-title] .validation-error-message';

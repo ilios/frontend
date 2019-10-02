@@ -7,7 +7,7 @@ module('Integration | Component | flash-messages', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{flash-messages}}`);
+    await render(hbs`<FlashMessages />`);
 
     assert.dom(this.element).hasText('');
 

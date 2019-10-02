@@ -23,10 +23,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
       objectives: resolve([hasMesh, hasCompetency, plain])
     });
     this.setProperties({ subject, click: () => {} });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     assert.dom('.title').hasText('Objectives (3)');
     assert.dom('table tr').exists({ count: 4 });
     assert.dom('tr td').hasText('There are 3 objectives');
@@ -43,10 +43,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
 
     const subject = EmberObject.create();
     this.setProperties({ subject, click: () => assert.ok(true) });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     await settled();
     assert.dom('.title').hasText('Objectives ()');
     await click('.title');
@@ -59,10 +59,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
       objectives: resolve([hasCompetency])
     });
     this.setProperties({ subject, click: () => {} });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     await settled();
     assert.dom('.title').hasText('Objectives (1)');
     assert.dom('table tr').exists({ count: 4 });
@@ -77,10 +77,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
       objectives: resolve([plain])
     });
     this.setProperties({ subject, click: () => {} });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     await settled();
     assert.dom('.title').hasText('Objectives (1)');
     assert.dom('table tr').exists({ count: 4 });
@@ -95,10 +95,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
       objectives: resolve([hasMesh])
     });
     this.setProperties({ subject, click: () => {} });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     await settled();
     assert.dom('.title').hasText('Objectives (1)');
     assert.dom('table tr').exists({ count: 4 });
@@ -113,10 +113,10 @@ module('Integration | Component | collapsed-objectives-program-years', function(
       objectives: resolve([plain])
     });
     this.setProperties({ subject, click: () => {} });
-    await render(hbs`
-      {{collapsed-objectives-program-years
-        subject=subject
-        expand=(action click)}}`);
+    await render(hbs`<CollapsedObjectivesProgramYears
+      @subject={{subject}}
+      @expand={{action click}}
+    />`);
     await settled();
     assert.dom('.title').hasText('Objectives (1)');
     assert.dom('table tr').exists({ count: 4 });

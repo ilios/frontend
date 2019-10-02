@@ -19,7 +19,7 @@ module('Integration | Component | competency title editor', function(hooks) {
       title: 'test'
     });
     this.set('competency', competency);
-    await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
+    await render(hbs`<CompetencyTitleEditor @competency={{competency}} @canUpdate={{true}} />`);
     return settled().then(()=>{
       assert.dom('.validation-error-message').doesNotExist();
     });
@@ -31,7 +31,7 @@ module('Integration | Component | competency title editor', function(hooks) {
       title: 'test'
     });
     this.set('competency', competency);
-    await render(hbs`{{competency-title-editor competency=competency canUpdate=true}}`);
+    await render(hbs`<CompetencyTitleEditor @competency={{competency}} @canUpdate={{true}} />`);
     await click(find('.content .editable'));
     await fillIn('input', '');
     await click('button.done');

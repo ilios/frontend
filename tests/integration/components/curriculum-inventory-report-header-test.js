@@ -22,7 +22,7 @@ module('Integration | Component | curriculum inventory report header', function(
       name: 'Report name'
     });
     this.set('report', report);
-    await render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportHeader @report={{report}} @canUpdate={{true}} />`);
     assert.dom('.title').hasText(report.name, 'Report name shows.');
     assert.dom('.editable').exists({ count: 1 }, 'Report name is editable.');
     assert.dom(`.actions .finalize`).exists({ count: 1 }, 'Finalize button shows.');
@@ -35,7 +35,7 @@ module('Integration | Component | curriculum inventory report header', function(
       name: 'Report name'
     });
     this.set('report', report);
-    await render(hbs`{{curriculum-inventory-report-header report=report canUpdate=false}}`);
+    await render(hbs`<CurriculumInventoryReportHeader @report={{report}} @canUpdate={{false}} />`);
     assert.dom('.title .fa-lock').exists({ count: 1 }, 'Lock icon is showing in title.');
     assert.dom('.editable').doesNotExist('Report name is not editable.');
     assert.dom('.actions .download').exists({ count: 1 }, 'Download button shows.');
@@ -55,7 +55,7 @@ module('Integration | Component | curriculum inventory report header', function(
       }
     });
     this.set('report', report);
-    await render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportHeader @report={{report}} @canUpdate={{true}} />`);
     assert.dom('.editinplace').hasText(report.name);
     await click('.editable');
     await fillIn('.editinplace input', newName);
@@ -75,7 +75,7 @@ module('Integration | Component | curriculum inventory report header', function(
       }
     });
     this.set('report', report);
-    await render(hbs`{{curriculum-inventory-report-header report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportHeader @report={{report}} @canUpdate={{true}} />`);
     await click('.editable');
     assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
     await fillIn('.editinplace input', '');
@@ -95,9 +95,11 @@ module('Integration | Component | curriculum inventory report header', function(
     };
     this.set('report', report);
     this.set('finalizeAction', finalizeAction);
-    await render(
-      hbs`{{curriculum-inventory-report-header report=report canUpdate=true finalize=(action finalizeAction)}}`
-    );
+    await render(hbs`<CurriculumInventoryReportHeader
+      @report={{report}}
+      @canUpdate={{true}}
+      @finalize={{action finalizeAction}}
+    />`);
     await click('button.finalize');
   });
 });

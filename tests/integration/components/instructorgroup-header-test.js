@@ -26,7 +26,7 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     });
 
     this.set('instructorGroup', instructorGroup);
-    await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup}}`);
+    await render(hbs`<InstructorgroupHeader @instructorGroup={{instructorGroup}} />`);
 
     assert.dom('.school-title').hasText('medicine >');
     assert.dom('[data-test-group-title]').hasText('lorem ipsum');
@@ -44,7 +44,10 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     });
 
     this.set('instructorGroup', instructorGroup);
-    await render(hbs`{{instructorgroup-header instructorGroup=instructorGroup canUpdate=true}}`);
+    await render(hbs`<InstructorgroupHeader
+      @instructorGroup={{instructorGroup}}
+      @canUpdate={{true}}
+    />`);
 
     assert.dom('[data-test-group-title]').hasText('lorem ipsum');
     await click('.editable');

@@ -21,7 +21,7 @@ module('Integration | Component | school list', function(hooks) {
     const schools = [school1, school2].map(obj => EmberObject.create(obj));
 
     this.set('schools', schools);
-    await render(hbs`{{school-list schools=schools}}`);
+    await render(hbs`<SchoolList @schools={{schools}} />`);
     assert.dom('tbody tr:nth-of-type(1) td').hasText('school 0');
     assert.dom('tbody tr:nth-of-type(2) td').hasText('school 1');
   });
@@ -33,7 +33,7 @@ module('Integration | Component | school list', function(hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`{{school-list schools=schools}}`);
+    await render(hbs`<SchoolList @schools={{schools}} />`);
     assert.dom('.header .actions .expand-button').exists({ count: 1 });
   });
 
@@ -44,7 +44,7 @@ module('Integration | Component | school list', function(hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`{{school-list schools=schools}}`);
+    await render(hbs`<SchoolList @schools={{schools}} />`);
     assert.dom('.header .actions .expand-button').doesNotExist();
   });
 });

@@ -26,12 +26,12 @@ module('Integration | Component | school session attributes', function(hooks) {
 
     this.set('school', school);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-attributes
-      school=school
-      manage=(action nothing)
-      collapse=(action nothing)
-      expand=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionAttributes
+      @school={{school}}
+      @manage={{action nothing}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+    />`);
     await settled();
 
     const rows = 'table tbody tr';
@@ -78,13 +78,13 @@ module('Integration | Component | school session attributes', function(hooks) {
 
     this.set('school', school);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-attributes
-      school=school
-      details=true
-      manage=(action nothing)
-      collapse=(action nothing)
-      expand=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionAttributes
+      @school={{school}}
+      @details={{true}}
+      @manage={{action nothing}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+    />`);
     await settled();
 
     const rows = 'table tbody tr';
@@ -129,12 +129,12 @@ module('Integration | Component | school session attributes', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'action fired');
     });
-    await render(hbs`{{school-session-attributes
-      school=school
-      manage=(action nothing)
-      collapse=(action nothing)
-      expand=(action click)
-    }}`);
+    await render(hbs`<SchoolSessionAttributes
+      @school={{school}}
+      @manage={{action nothing}}
+      @collapse={{action nothing}}
+      @expand={{action click}}
+    />`);
     await settled();
 
     const title = '.title';
@@ -154,13 +154,13 @@ module('Integration | Component | school session attributes', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'action fired');
     });
-    await render(hbs`{{school-session-attributes
-      school=school
-      details=true
-      manage=(action nothing)
-      collapse=(action click)
-      expand=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionAttributes
+      @school={{school}}
+      @details={{true}}
+      @manage={{action nothing}}
+      @collapse={{action click}}
+      @expand={{action nothing}}
+    />`);
     await settled();
 
     const title = '.title';

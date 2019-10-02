@@ -14,7 +14,7 @@ module('Integration | Component | ilios-navigation', function(hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    await render(hbs`{{ilios-navigation}}`);
+    await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
     const link = '.navigation-links li:nth-of-type';
 
@@ -34,7 +34,7 @@ module('Integration | Component | ilios-navigation', function(hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    await render(hbs`{{ilios-navigation}}`);
+    await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
     const link = '.navigation-links li:nth-of-type';
 

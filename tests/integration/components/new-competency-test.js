@@ -12,7 +12,7 @@ module('Integration | Component | new competency', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{new-competency}}`);
+    await render(hbs`<NewCompetency />`);
 
     assert.dom('input').exists({ count: 1 });
     assert.dom('button').hasText('Add');
@@ -23,7 +23,7 @@ module('Integration | Component | new competency', function(hooks) {
     this.set('add', (value) => {
       assert.equal(value, 'new co');
     });
-    await render(hbs`{{new-competency add=(action add)}}`);
+    await render(hbs`<NewCompetency @add={{action add}} />`);
     await fillIn('input', 'new co');
     await click('button');
 
@@ -33,14 +33,14 @@ module('Integration | Component | new competency', function(hooks) {
   test('validation errors do not show up initially', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{new-competency}}`);
+    await render(hbs`<NewCompetency />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('validation errors show up when saving', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{new-competency}}`);
+    await render(hbs`<NewCompetency />`);
     await click('button.save');
     assert.dom('.validation-error-message').exists({ count: 1 });
     return settled();

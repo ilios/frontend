@@ -36,7 +36,7 @@ module('Integration | Component | user profile ics', function(hooks) {
     this.set('click', (what) =>{
       assert.ok(what, 'recieved boolean true value');
     });
-    await render(hbs`{{user-profile-ics user=user isManageable=true setIsManaging=(action click)}}`);
+    await render(hbs`<UserProfileIcs @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`);
     await click('button.manage');
   });
 
@@ -53,7 +53,7 @@ module('Integration | Component | user profile ics', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`{{user-profile-ics isManaging=true user=user setIsManaging=(action nothing)}}`);
+    await render(hbs`<UserProfileIcs @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
     await click('.refresh-key');
   });
 
@@ -65,7 +65,7 @@ module('Integration | Component | user profile ics', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     this.set('user', user);
-    await render(hbs`{{user-profile-ics user=user}}`);
+    await render(hbs`<UserProfileIcs @user={{user}} />`);
     const button = 'button.copy-btn';
     const successMessage = '.yes';
 

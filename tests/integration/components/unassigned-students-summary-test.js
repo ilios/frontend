@@ -54,7 +54,7 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     this.owner.register('service:currentUser', currentUserMock);
 
     this.set('schools', [school1Mock, school2Mock]);
-    await render(hbs`{{unassigned-students-summary schools=schools}}`);
+    await render(hbs`<UnassignedStudentsSummary @schools={{schools}} />`);
 
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
@@ -83,7 +83,7 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     this.owner.register('service:currentUser', currentUserMock);
 
     this.set('schools', [primarySchool]);
-    await render(hbs`{{unassigned-students-summary schools=schools}}`);
+    await render(hbs`<UnassignedStudentsSummary @schools={{schools}} />`);
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
 

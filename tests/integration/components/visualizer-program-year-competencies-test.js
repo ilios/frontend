@@ -10,7 +10,7 @@ module('Integration | Component | visualizer-program-year-competencies', functio
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{visualizer-program-year-competencies}}`);
+    await render(hbs`<VisualizerProgramYearCompetencies />`);
 
     assert.dom(this.element).hasText('');
   });

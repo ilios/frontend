@@ -15,14 +15,14 @@ module('Integration | Component | school session attributes manager', function(h
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-attributes-manager
-      showSessionAttendanceRequired=showSessionAttendanceRequired
-      showSessionSupplemental=showSessionSupplemental
-      showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
-      showSessionSpecialEquipmentRequired=showSessionSpecialEquipmentRequired
-      enable=(action nothing)
-      disable=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionAttributesManager
+      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
+      @showSessionSupplemental={{showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @enable={{action nothing}}
+      @disable={{action nothing}}
+    />`);
 
     const rows = 'table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
@@ -59,14 +59,14 @@ module('Integration | Component | school session attributes manager', function(h
       context.set(sentName, true);
     });
     context.set('nothing', parseInt);
-    await context.render(hbs`{{school-session-attributes-manager
-      showSessionAttendanceRequired=showSessionAttendanceRequired
-      showSessionSupplemental=showSessionSupplemental
-      showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
-      showSessionSpecialEquipmentRequired=showSessionSpecialEquipmentRequired
-      enable=(action enable)
-      disable=(action nothing)
-    }}`);
+    await context.render(hbs`<SchoolSessionAttributesManager
+      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
+      @showSessionSupplemental={{showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @enable={{action enable}}
+      @disable={{action nothing}}
+    />`);
 
     const rows = 'table tbody tr';
     const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
@@ -103,14 +103,14 @@ module('Integration | Component | school session attributes manager', function(h
       context.set(sentName, false);
     });
     context.set('nothing', parseInt);
-    await context.render(hbs`{{school-session-attributes-manager
-      showSessionAttendanceRequired=showSessionAttendanceRequired
-      showSessionSupplemental=showSessionSupplemental
-      showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
-      showSessionSpecialEquipmentRequired=showSessionSpecialEquipmentRequired
-      enable=(action nothing)
-      disable=(action disable)
-    }}`);
+    await context.render(hbs`<SchoolSessionAttributesManager
+      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
+      @showSessionSupplemental={{showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @enable={{action nothing}}
+      @disable={{action disable}}
+    />`);
 
     const rows = 'table tbody tr';
     const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;

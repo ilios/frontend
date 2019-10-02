@@ -37,7 +37,7 @@ module('Integration | Component | new user', function(hooks) {
   test('it renders', async function (assert) {
     this.set('close', () => {});
 
-    await render(hbs`{{new-user close=(action close)}}`);
+    await render(hbs`<NewUser @close={{action close}} />`);
 
     let content = this.element.textContent.trim();
     assert.ok(content.includes('New User'));
@@ -64,7 +64,7 @@ module('Integration | Component | new user', function(hooks) {
     this.set('close', () => {
       assert.ok(false); //shouldn't be called
     });
-    await render(hbs`{{new-user close=(action close)}}`);
+    await render(hbs`<NewUser @close={{action close}} />`);
     assert.dom('.message').doesNotExist();
   });
 
@@ -72,7 +72,7 @@ module('Integration | Component | new user', function(hooks) {
     this.set('close', () => {
       assert.ok(false); //shouldn't be called
     });
-    await render(hbs`{{new-user close=(action close)}}`);
+    await render(hbs`<NewUser @close={{action close}} />`);
 
     await click('.done');
     assert.dom('.message').exists({ count: 5 });
@@ -95,7 +95,7 @@ module('Integration | Component | new user', function(hooks) {
     this.set('transitionToUser', (userId)=>{
       assert.equal(userId, 2);
     });
-    await render(hbs`{{new-user close=(action nothing) transitionToUser=(action transitionToUser)}}`);
+    await render(hbs`<NewUser @close={{action nothing}} @transitionToUser={{action transitionToUser}} />`);
     const firstName = '[data-test-first-name] input';
     const middleName = '[data-test-middle-name] input';
     const lastName = '[data-test-last-name] input';
@@ -150,7 +150,7 @@ module('Integration | Component | new user', function(hooks) {
     this.set('transitionToUser', (userId)=>{
       assert.equal(userId, 2);
     });
-    await render(hbs`{{new-user close=(action nothing) transitionToUser=(action transitionToUser)}}`);
+    await render(hbs`<NewUser @close={{action nothing}} @transitionToUser={{action transitionToUser}} />`);
     const student = '[data-test-user-type] [data-test-second-button]';
     const firstName = '[data-test-first-name] input';
     const middleName = '[data-test-middle-name] input';

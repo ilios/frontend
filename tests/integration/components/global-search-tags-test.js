@@ -10,7 +10,7 @@ module('Integration | Component | global-search-tags', function(hooks) {
     assert.expect(4);
 
     this.set('tags', ['terms', 'meshdescriptors', 'id', 'learningmaterials']);
-    await render(hbs`{{global-search-tags tags=tags}}`);
+    await render(hbs`<GlobalSearchTags @tags={{tags}} />`);
     const [tag1, tag2, tag3, tag4] = findAll('.global-search-tag');
     assert.equal(tag1.textContent.trim(), 'Terms');
     assert.equal(tag2.textContent.trim(), 'MeSH');

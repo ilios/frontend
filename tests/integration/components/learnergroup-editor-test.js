@@ -10,16 +10,12 @@ module('Integration | Component | learnergroup editor', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{learnergroup-editor}}`);
+    await render(hbs`<LearnergroupEditor />`);
 
     assert.dom(this.element).hasText('');
 
     // Template block usage:
-    await render(hbs`
-      {{#learnergroup-editor}}
-        template block text
-      {{/learnergroup-editor}}
-    `);
+    await render(hbs`<LearnergroupEditor>template block text</LearnergroupEditor>`);
 
     assert.dom(this.element).hasText('template block text');
   });

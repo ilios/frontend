@@ -85,7 +85,12 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      @sessions={{await sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('thead th').hasText('Count as one offering', 'Column header is labeled correctly.');
     assert.dom(findAll('thead th')[1]).hasText('Exclude', 'Column header is labeled correctly.');
     assert.dom(findAll('thead th')[2]).hasText('Session Title', 'Column header is labeled correctly.');
@@ -135,7 +140,12 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      @sessions={{await sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
     assert.dom('tbody tr').doesNotExist('but table body is empty.');
   });
@@ -161,7 +171,12 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('setSortBy', function(what){
       assert.equal(what, 'title', "Sorting callback gets called for session titles.");
     });
-    await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      @sessions={{await sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[2]);
   });
 
@@ -186,7 +201,12 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('setSortBy', function(what){
       assert.equal(what, 'sessionType.title', "Sorting callback gets called for session type titles.");
     });
-    await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[3]);
   });
 
@@ -211,7 +231,12 @@ module('Integration | Component | curriculum inventory sequence block session li
     this.set('setSortBy', function(what){
       assert.equal(what, 'offerings.length', "Sorting callback gets called for offerings length.");
     });
-    await this.render(hbs`{{curriculum-inventory-sequence-block-session-list sessions=(await sessions) sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`);
+    await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      @sessions={{await sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[5]);
   });
 });

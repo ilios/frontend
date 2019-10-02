@@ -74,9 +74,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
 
     this.set('report', report);
     this.set('removeSequenceBlock', function() {});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove='removeSequenceBlock'}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @report={{report}}
+      @sequenceBlocks={{await report.topLevelSequenceBlocks}}
+      @canUpdate={{true}}
+      @remove="removeSequenceBlock"
+    />`);
     return settled().then(() => {
       assert.dom('.title').hasText(
         `Sequence Blocks (${blocks.length})`,
@@ -186,9 +189,13 @@ module('Integration | Component | curriculum inventory sequence block list', fun
 
     this.set('parent', parentBlock);
     this.set('removeSequenceBlock', function() {});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children) canUpdate=true remove='removeSequenceBlock'}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @parent={{parent}}
+      @report={{await parent.report}}
+      @sequenceBlocks={{await parent.children}}
+      @canUpdate={{true}}
+      @remove="removeSequenceBlock"
+    />`);
     return settled().then(() => {
       assert.dom('.title').hasText(
         `Sequence Blocks (${nestedBlocks.length})`,
@@ -251,9 +258,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
 
     this.set('report', report);
     this.set('removeSequenceBlock', function() {});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=false remove='removeSequenceBlock'}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @report={{report}}
+      @sequenceBlocks={{await report.topLevelSequenceBlocks}}
+      @canUpdate={{false}}
+      @remove="removeSequenceBlock"
+    />`);
     return settled().then(() => {
       assert.dom('.actions .expand-button').doesNotExist('Add new button is not visible.');
       assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7) .edit').exists({ count: 1 }, 'Edit link is visible.');
@@ -300,9 +310,12 @@ module('Integration | Component | curriculum inventory sequence block list', fun
       assert.equal(block, block1, 'Remove action was invoked, and sequence block was passed.');
       report.set('toLevelSequenceBlocks', resolve([ block1 ])); // fake deletion.
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list report=report sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true remove=(action removeSequenceBlock)}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @report={{report}}
+      @sequenceBlocks={{await report.topLevelSequenceBlocks}}
+      @canUpdate={{true}}
+      @remove={{action removeSequenceBlock}}
+    />`);
     await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     assert.equal(find('tbody tr:nth-of-type(2) .confirm-message').textContent.trim().indexOf('Are you sure you want to delete'), 0,
       'Confirmation message is visible.');
@@ -346,9 +359,11 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     });
 
     this.set('report', report);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list report=report  sequenceBlocks=(await report.topLevelSequenceBlocks) canUpdate=true}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @report={{report}}
+      @sequenceBlocks={{await report.topLevelSequenceBlocks}}
+      @canUpdate={{true}}
+    />`);
     await click('tbody tr:nth-of-type(1) td:nth-of-type(7) .remove');
     await settled();
     assert.dom('tbody .confirm-message').exists({ count: 1 }, 'Confirmation dialog is visible.');
@@ -383,7 +398,7 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     });
 
     this.set('report', report);
-    await render(hbs`{{curriculum-inventory-sequence-block-list report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockList @report={{report}} @canUpdate={{true}} />`);
     return settled().then(() => {
       assert.dom('.title').hasText(
         `Sequence Blocks (0)`,
@@ -433,9 +448,11 @@ module('Integration | Component | curriculum inventory sequence block list', fun
     parentBlock.set('report', resolve(report));
 
     this.set('parent', parentBlock);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-list parent=parent report=(await parent.report) sequenceBlocks=(await parent.children)}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockList
+      @parent={{parent}}
+      @report={{await parent.report}}
+      @sequenceBlocks={{await parent.children}}
+    />`);
     return settled().then(() => {
       assert.dom('.title').hasText(
         `Sequence Blocks (0)`,

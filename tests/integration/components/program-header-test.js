@@ -22,7 +22,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.dom('.title h4').hasText('Aardvark');
     assert.dom('.title h4 .clickable').exists();
     assert.dom('.program-publication button').exists();
@@ -42,7 +42,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', false);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.dom('.title h4').hasText('Aardvark');
     assert.dom('.title h4 .clickable').doesNotExist();
     assert.dom('.program-publication button').doesNotExist();
@@ -62,7 +62,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', false);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.dom('.program-publication button').doesNotExist();
   });
 
@@ -80,7 +80,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     await click('.title h4 .clickable');
     assert.dom('.validation-error-message').doesNotExist();
     fillIn('.title h4 input', 'ab');
@@ -102,7 +102,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     await click('.title h4 .clickable');
     assert.dom('.validation-error-message').doesNotExist();
     fillIn('.title h4 input', '');
@@ -124,7 +124,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     await click('.title h4 .clickable');
     assert.dom('.validation-error-message').doesNotExist();
     fillIn('.title h4 input', '0123456789'.repeat(21));
@@ -146,7 +146,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.equal(programModel.get('title'), 'Aardvark');
     await click('.title h4 .clickable');
     fillIn('.title h4 input', 'Zeppelin');
@@ -169,7 +169,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('program', programModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.equal(programModel.get('title'), 'Aardvark');
     await click('.title h4 .clickable');
     fillIn('.title h4 input', 'Zeppelin');
@@ -193,7 +193,7 @@ module('Integration | Component | program header', function(hooks) {
     this.set('canUpdate', true);
 
     const activationBtn = '.program-publication button';
-    await render(hbs`{{program-header program=program canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.equal(programModel.get('published'), false);
     assert.equal(programModel.get('publishedAsTbd'), true);
     await click(activationBtn);

@@ -27,7 +27,11 @@ module('Integration | Component | school-curriculum-inventory-institution-detail
     this.set('school', schoolModel);
     this.set('canUpdate', true);
     this.set('manage', parseInt);
-    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails @school={{school}} @canUpdate={{canUpdate}} @manage={{manage}} />`);
+    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
+      @school={{school}}
+      @canUpdate={{canUpdate}}
+      @manage={{manage}}
+    />`);
 
     assert.equal(component.header.title, "Curriculum Inventory Institutional Information");
     assert.equal(component.header.manageTitle, "Manage CIR Institutional Info");
@@ -58,7 +62,11 @@ module('Integration | Component | school-curriculum-inventory-institution-detail
     this.set('school', schoolModel);
     this.set('canUpdate', false);
     this.set('manage', parseInt);
-    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails @school={{school}} @canUpdate={{canUpdate}} @manage={{manage}} />`);
+    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
+      @school={{school}}
+      @canUpdate={{canUpdate}}
+      @manage={{manage}}
+    />`);
     assert.notOk(component.header.hasManageAction);
   });
 
@@ -76,7 +84,11 @@ module('Integration | Component | school-curriculum-inventory-institution-detail
     this.set('manage', (isManaging) => {
       assert.ok(isManaging);
     });
-    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails @school={{school}} @canUpdate={{canUpdate}} @manage={{manage}} />`);
+    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
+      @school={{school}}
+      @canUpdate={{canUpdate}}
+      @manage={{manage}}
+    />`);
     await component.header.manage();
   });
 
@@ -88,7 +100,11 @@ module('Integration | Component | school-curriculum-inventory-institution-detail
     this.set('school', schoolModel);
     this.set('canUpdate', true);
     this.set('manage', parseInt);
-    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails @school={{school}} @canUpdate={{canUpdate}} @manage={{manage}} />`);
+    await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
+      @school={{school}}
+      @canUpdate={{canUpdate}}
+      @manage={{manage}}
+    />`);
     await assert.equal(component.content.noInfo, "No institutional information has been configured for this school.");
   });
 });

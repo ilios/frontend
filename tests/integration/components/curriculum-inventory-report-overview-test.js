@@ -64,7 +64,7 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.owner.register('service:permission-checker', permissionCheckerMock);
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(() => {
       assert.dom('.title').hasText('Overview', 'Component title is visible.');
       assert.dom('.report-overview-actions .verification-preview').exists({ count: 1 }, 'Rollover course button is visible.');
@@ -125,7 +125,8 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=false}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{false}} />`);
+
     return settled().then(() => {
       assert.dom('.start-date > span').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
       assert.dom('.end-date > span').hasText(moment(report.get('endDate')).format('L'), 'End date is visible.');
@@ -184,7 +185,8 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.owner.register('service:permission-checker', permissionCheckerMock);
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
+
     return settled().then(() => {
       assert.dom('.report-overview-actions .rollover').doesNotExist('Rollover course button is not visible.');
     });
@@ -231,7 +233,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
@@ -291,7 +293,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
@@ -348,7 +350,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
@@ -408,7 +410,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
@@ -464,7 +466,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.academic-year .editinplace .editable');
       return settled().then(async () => {
@@ -519,7 +521,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(() => {
       assert.dom('.academic-year > span').hasText(
         report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
@@ -569,7 +571,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       assert.dom('.description .editinplace').hasText('Click to edit');
       await click('.description .editinplace .editable');
@@ -622,7 +624,7 @@ module('Integration | Component | curriculum inventory report overview', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-overview report=report canUpdate=true}}`);
+    await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       assert.dom('.description .editinplace').hasText('Click to edit');
       await click('.description .editinplace .editable');

@@ -45,20 +45,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [user1, user2]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=false
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{false}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.dom('.title').hasText('Members (2)');
     assert.dom(userList).exists({ count: 2 });
@@ -111,20 +111,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [user1, user2]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.dom('[data-test-group-members]').hasText('Members of current group (2)');
     assert.dom('[data-test-all-other-members]').hasText('All other members of top group (0)');
@@ -164,21 +164,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [user1, user2]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='firstName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
-
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="firstName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.dom(userList).exists({ count: 2 });
     assert.dom(user1FirstName).hasText('Jackson');
@@ -203,20 +202,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       assert.equal(user, user1);
     });
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action addMany)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action addMany}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.dom(button).doesNotExist();
     await click(user1CheckBox);
@@ -246,20 +245,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       assert.equal(user, user1);
     });
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action removeMany)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action removeMany}}
+    />`);
 
     assert.dom(button).doesNotExist();
     await click(user1CheckBox);
@@ -287,20 +286,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       assert.equal(user1, user);
     });
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action removeOne)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action removeOne}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     await click(action);
 
@@ -323,20 +322,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       assert.equal(user1, user);
     });
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action addOne)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action addOne}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     await click(action);
 
@@ -365,20 +364,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     await click(user1CheckBox);
     assert.dom(action1).doesNotExist();
@@ -413,20 +412,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       assert.equal(user2, userB);
     });
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action addMany)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action addMany}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     await click(checkAllBox);
     assert.dom(user1CheckBox).isChecked();
@@ -458,20 +457,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     await click(user1CheckBox);
     assert.ok(find(checkAllBox).indeterminate);
@@ -502,20 +501,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [ObjectProxy.create({content: user1})]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.equal(1, findAll(userCheckbox).length, 'Checkbox visible');
     assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');
@@ -541,20 +540,20 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     this.set('users', [ObjectProxy.create({content: user1})]);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{learnergroup-user-manager
-      learnerGroupId=1
-      learnerGroupTitle='this group'
-      topLevelGroupTitle='top group'
-      cohortTitle='this cohort'
-      users=users
-      sortBy='lastName'
-      setSortBy=(action nothing)
-      isEditing=true
-      addUserToGroup=(action nothing)
-      removeUserFromGroup=(action nothing)
-      addUsersToGroup=(action nothing)
-      removeUsersFromGroup=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{1}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{users}}
+      @sortBy="lastName"
+      @setSortBy={{action nothing}}
+      @isEditing={{true}}
+      @addUserToGroup={{action nothing}}
+      @removeUserFromGroup={{action nothing}}
+      @addUsersToGroup={{action nothing}}
+      @removeUsersFromGroup={{action nothing}}
+    />`);
 
     assert.equal(0, findAll(userCheckbox).length, 'Checkbox is not visible');
     assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');

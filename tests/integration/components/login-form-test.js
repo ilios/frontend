@@ -8,7 +8,7 @@ module('Integration | Component | login-form', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{login-form}}`);
+    await render(hbs`<LoginForm />`);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -17,7 +17,7 @@ module('Integration | Component | login-form', function(hooks) {
     const accountName = "Al"; // Al stands for Alex, sometimes.
     this.set("account", accountName);
     this.set("error", true);
-    await render(hbs`{{login-form noAccountExistsError=error noAccountExistsAccount=account}}`);
+    await render(hbs`<LoginForm @noAccountExistsError={{error}} @noAccountExistsAccount={{account}} />`);
     assert.dom('.error').hasText(
       `Your account ${accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.`
     );

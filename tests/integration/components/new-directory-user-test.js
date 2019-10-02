@@ -40,7 +40,7 @@ module('Integration | Component | new directory user', function(hooks) {
   test('it renders', async function(assert) {
     this.set('nothing', () => {});
 
-    await render(hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing)}}`);
+    await render(hbs`<NewDirectoryUser @close={{action nothing}} @setSearchTerms={{action nothing}} />`);
     assert.ok(this.element.textContent.includes('Search directory for new users'));
   });
 
@@ -51,9 +51,11 @@ module('Integration | Component | new directory user', function(hooks) {
     this.set('setSearchTerms', (val)=>{
       assert.equal(val, searchTerm, 'changes to search get sent as action');
     });
-    await render(
-      hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action setSearchTerms) searchTerms=startingSearchTerms}}`
-    );
+    await render(hbs`<NewDirectoryUser
+      @close={{action nothing}}
+      @setSearchTerms={{action setSearchTerms}}
+      @searchTerms={{startingSearchTerms}}
+    />`);
     const searchBox = '.new-directory-user-search-tools';
     const searchInput = `${searchBox} input`;
     await fillIn(searchInput, searchTerm);
@@ -74,9 +76,11 @@ module('Integration | Component | new directory user', function(hooks) {
     this.owner.register('service:commonAjax', ajaxMock);
     this.set('nothing', parseInt);
     this.set('startingSearchTerms', startingSearchTerms);
-    await render(
-      hbs`{{new-directory-user close=(action nothing) setSearchTerms=(action nothing) searchTerms=startingSearchTerms}}`
-    );
+    await render(hbs`<NewDirectoryUser
+      @close={{action nothing}}
+      @setSearchTerms={{action nothing}}
+      @searchTerms={{startingSearchTerms}}
+    />`);
     const searchBox = '.new-directory-user-search-tools';
     const searchInput = `${searchBox} input`;
     assert.dom(searchInput).hasValue(startingSearchTerms, 'passed value is in the box');
@@ -151,12 +155,12 @@ module('Integration | Component | new directory user', function(hooks) {
     this.set('transitionToUser', (userId)=>{
       assert.equal(userId, 5, 'after saving we transition to the right user');
     });
-    await render(hbs`{{new-directory-user
-      close=(action nothing)
-      setSearchTerms=(action nothing)
-      transitionToUser=(action transitionToUser)
-      searchTerms='searchterm'
-    }}`);
+    await render(hbs`<NewDirectoryUser
+      @close={{action nothing}}
+      @setSearchTerms={{action nothing}}
+      @transitionToUser={{action transitionToUser}}
+      @searchTerms="searchterm"
+    />`);
 
     const results = '.new-directory-user-search-results';
     const firstResultValues = `${results} tbody tr:nth-of-type(1) td`;

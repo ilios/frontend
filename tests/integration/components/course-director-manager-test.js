@@ -19,11 +19,11 @@ module('Integration | Component | course director manager', function(hooks) {
     this.set('nothing', parseInt);
     this.set('users', [fakeUser1, fakeUser2]);
 
-    await render(hbs`{{course-director-manager
-      directors=users
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<CourseDirectorManager
+      @directors={{users}}
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom('li').hasText('test person 1');
     assert.dom(findAll('li')[1]).hasText('test person 2');
@@ -45,11 +45,11 @@ module('Integration | Component | course director manager', function(hooks) {
     });
     this.set('users', [fakeUser1, fakeUser2]);
 
-    await render(hbs`{{course-director-manager
-      directors=users
-      save=(action save)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<CourseDirectorManager
+      @directors={{users}}
+      @save={{action save}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom(user1).hasText('test person 1');
     assert.dom(user2).hasText('test person 2');
@@ -66,10 +66,7 @@ module('Integration | Component | course director manager', function(hooks) {
       assert.ok(true);
     });
 
-    await render(hbs`{{course-director-manager
-      save=(action nothing)
-      close=(action close)
-    }}`);
+    await render(hbs`<CourseDirectorManager @save={{action nothing}} @close={{action close}} />`);
 
     await click('.bigcancel');
   });

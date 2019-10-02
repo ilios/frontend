@@ -15,13 +15,13 @@ module('Integration | Component | school session attributes collapsed', function
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-attributes-collapsed
-      showSessionAttendanceRequired=showSessionAttendanceRequired
-      showSessionSupplemental=showSessionSupplemental
-      showSessionSpecialAttireRequired=showSessionSpecialAttireRequired
-      showSessionSpecialEquipmentRequired=showSessionSpecialEquipmentRequired
-      expand=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionAttributesCollapsed
+      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
+      @showSessionSupplemental={{showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @expand={{action nothing}}
+    />`);
 
     await settled();
 

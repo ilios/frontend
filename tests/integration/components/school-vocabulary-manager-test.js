@@ -25,11 +25,11 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.equal(component.breadcrumbs.all, 'All Vocabularies');
     assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
@@ -47,12 +47,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     await component.editTitle();
     await component.changeTitle('new title');
@@ -69,12 +69,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -98,12 +98,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -123,12 +123,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.equal(component.terms.list.length, 0);
 
@@ -149,12 +149,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.equal(component.terms.list.length, 0);
 
@@ -178,12 +178,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{school-vocabulary-manager
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyManager
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.equal(component.terms.list.length, 1);
 

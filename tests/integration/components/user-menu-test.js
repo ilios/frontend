@@ -21,7 +21,7 @@ module('Integration | Component | user-menu', function(hooks) {
   });
 
   test('it renders and is accessible', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    await render(hbs`<UserMenu />`);
 
     await a11yAudit(this.element);
     assert.equal(component.text, 'Test Person');
@@ -32,7 +32,7 @@ module('Integration | Component | user-menu', function(hooks) {
   });
 
   test('click opens menu', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    await render(hbs`<UserMenu />`);
 
     assert.equal(component.links.length, 0);
     await component.toggle.click();
@@ -41,7 +41,7 @@ module('Integration | Component | user-menu', function(hooks) {
   });
 
   test('down opens menu', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    await render(hbs`<UserMenu />`);
 
     assert.equal(component.links.length, 0);
     await component.toggle.down();
@@ -49,7 +49,7 @@ module('Integration | Component | user-menu', function(hooks) {
   });
 
   test('escape closes menu', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
     assert.equal(component.links.length, 3);
@@ -58,7 +58,7 @@ module('Integration | Component | user-menu', function(hooks) {
   });
 
   test('click closes menu', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
     assert.equal(component.links.length, 3);

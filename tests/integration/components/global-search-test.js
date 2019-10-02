@@ -12,7 +12,7 @@ module('Integration | Component | global-search', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{global-search}}`);
+    await render(hbs`<GlobalSearch />`);
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
@@ -30,7 +30,7 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', '');
-    await render(hbs`{{global-search query=this.query}}`);
+    await render(hbs`<GlobalSearch @query={{this.query}} />`);
     assert.ok(component.noResultsIsVisible);
     this.set('query', 'hello world');
     assert.notOk(component.noResultsIsVisible);
@@ -50,7 +50,7 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', (value) => assert.equal(value, 'typed it'));
-    await render(hbs`{{global-search onQuery=(action this.query)}}`);
+    await render(hbs`<GlobalSearch @onQuery={{action this.query}} />`);
     await component.input('typed it');
     await component.clickIcon();
   });
@@ -86,7 +86,7 @@ module('Integration | Component | global-search', function(hooks) {
     this.set('query', 'hello world');
     this.set('selectedYear', null);
     await render(hbs`<GlobalSearch
-      @page=1
+      @page="1"
       @query={{this.query}}
       @selectedYear={{this.selectedYear}}
       @setSelectedYear={{action (mut this.selectedYear)}}
@@ -150,7 +150,7 @@ module('Integration | Component | global-search', function(hooks) {
     this.set('query', 'hello world');
     this.set('ignoredSchoolIds', []);
     await render(hbs`<GlobalSearch
-      @page=1
+      @page="1"
       @query={{this.query}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{action (mut this.ignoredSchoolIds)}}
@@ -241,7 +241,7 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`<GlobalSearch @page=1 @query={{this.query}} />`);
+    await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
     assert.equal(component.courseTitleLinks.length, 1);
     assert.equal(component.courseTitleLinks[0].text, 'Course 1');
     assert.equal(component.schoolFilters.length, 3);
@@ -272,7 +272,7 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`<GlobalSearch @page=1 @query={{this.query}} />`);
+    await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
     assert.equal(component.courseTitleLinks.length, 1);
     assert.equal(component.courseTitleLinks[0].text, 'Course 1');
     assert.equal(component.schoolFilters.length, 0);
