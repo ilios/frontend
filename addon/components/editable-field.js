@@ -41,8 +41,13 @@ export default Component.extend({
   edit: task(function * () {
     this.set('isEditing', true);
     yield timeout(10);
-    const control = this.$('.editor').find('input,textarea,select,.fr-element').filter(':visible:first');
-    control.focus();
+    const elements = this.element.querySelectorAll('input,textarea,select,.fr-element');
+    if (elements.length) {
+      const visibleControls = Array.from(elements).filter(el => {
+        return !el.hidden;
+      });
+      visibleControls[0].focus();
+    }
   }).drop(),
 
   keyUp(event) {
